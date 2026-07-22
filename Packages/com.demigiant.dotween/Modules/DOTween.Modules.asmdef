@@ -1,0 +1,16 @@
+{
+    "name": "DOTween.Modules",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DOTWEEN"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
