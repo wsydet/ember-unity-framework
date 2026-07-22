@@ -1,0 +1,21 @@
+{
+  "name": "com.demigiant.dotween",
+  "version": "1.2.815",
+  "displayName": "DOTween",
+  "description": "A Unity C# animation/tween engine. HOTween v2 — a powerful, user-friendly tween engine for Unity.",
+  "unity": "6000.0",
+  "keywords": [
+    "tween",
+    "animation",
+    "easing",
+    "interpolation"
+  ],
+  "author": {
+    "name": "Demigiant",
+    "email": "info@demigiant.com",
+    "url": "http://dotween.demigiant.com"
+  },
+  "license": "See LICENSE.md",
+  "documentationUrl": "http://dotween.demigiant.com/documentation.php",
+  "changelogUrl": "http://dotween.demigiant.com/download.php"
+}
