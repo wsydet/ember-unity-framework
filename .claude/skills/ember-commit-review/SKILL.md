@@ -101,6 +101,11 @@ git diff --cached --stat # 已暂存文件的统计
 <type>(<scope>): <subject>
 ```
 
+**语言规则**：
+- `type` 和 `scope` 保持英文小写（符合 Conventional Commits 规范，便于 changelog 工具解析）
+- `subject` 使用中文，简洁描述改动内容，结尾不加句号
+- 示例：`docs: 将文档按受众重组为 user/ 和 dev/ 目录`、`feat(core): 新增 EventBus 发布订阅系统`
+
 scope 从文件路径推断：
 - `Assets/Ember/Core/` → scope: `core`
 - `Assets/Ember/UI/` → scope: `ui`
@@ -170,6 +175,7 @@ scope 从文件路径推断：
 
 - `.meta` 文件必须和源文件一起提交，不能只提交一个
 - `packages-lock.json` 的变更往往伴随 `manifest.json` 的变更，分开检查
+- subject 部分用中文描述，不要混用英文；type 和 scope 保持英文小写
 - 不要建议用 `git add .`，每次提交都精确指定文件
 - `ProjectSettings/` 的变更通常是 Unity 自动产生的，但应该提交（除非是 UserSettings）
 - 如果 diff 中出现了 `.csproj` 或 `.sln` 变更，检查是否因为新增/删除了 `.asmdef`
