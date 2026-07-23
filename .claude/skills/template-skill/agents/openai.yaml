@@ -1,0 +1,3 @@
+display_name: template-skill
+short_description: Skill 模板，新建 Skill 时参考此模板的结构和规范
+default_prompt: 帮我创建一个新的 skill，叫 $skill-name
