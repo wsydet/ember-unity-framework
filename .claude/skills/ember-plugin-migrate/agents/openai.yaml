@@ -1,0 +1,3 @@
+display_name: ember-plugin-migrate
+short_description: 分析 Assets/Plugins 下的插件，查询 OpenUPM 和 Git 源，推荐并执行迁移到 Package Manager
+default_prompt: 帮我扫描一下 Plugins 目录，看看有哪些插件可以迁移到包管理
