@@ -10,7 +10,7 @@
 
 | 包名 | 版本 | 用途 | 来源 |
 |------|------|------|------|
-| com.demigiant.dotween | - | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
+| com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 
 > DOTween 作为 embedded package 放在 `Packages/com.demigiant.dotween/`，不需要额外安装。
 
@@ -24,6 +24,15 @@
 > ```json
 > { "name": "OpenUPM", "url": "https://package.openupm.com", "scopes": ["com.neuecc"] }
 > ```
+
+### 1.3 传统 Plugins 插件（`Assets/ThirdParty/Plugins/`）
+
+| 插件名 | 版本 | 用途 | 来源 |
+|-------|------|------|------|
+| Sirenix (Odin Inspector) | [TODO] | 编辑器扩展，增强 Inspector 面板 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) → 手动安装 |
+
+> Odin Inspector 是付费 Asset Store 产品，以预编译 DLL 形式放在 `Assets/ThirdParty/Plugins/Sirenix/`。
+> `Assets/Plugins/` 目录保留给框架使用者，不要占用。
 
 ---
 
