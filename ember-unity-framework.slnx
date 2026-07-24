@@ -2,5 +2,7 @@
   <Project Path="DOTween.Modules.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
+  <Project Path="FlyingWorm.ConsolePro.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="FlyingWorm.ConsolePro.Runtime.csproj" />
 </Solution>

@@ -6,6 +6,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.flyingworm.consolepro": {
+      "version": "file:com.flyingworm.consolepro",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.neuecc.unirx": {
       "version": "7.1.0",
       "depth": 0,
