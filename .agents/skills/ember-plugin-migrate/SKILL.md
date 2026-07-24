@@ -1,17 +1,18 @@
 ---
 name: ember-plugin-migrate
 description: >-
-  Use when the user wants to migrate Assets/Plugins/ packages to UPM (Unity Package Manager),
+  Use when the user wants to migrate third-party plugins to UPM (Unity Package Manager),
   mentions "/plugin-migrate", "插件迁移", "包管理", "package manager", "migrate plugin",
   "插件转包管理", "扫描插件", or asks about converting imported plugins to package management.
+  Do not use for project code under Assets/Ember/ or Assets/Game/.
 ---
 
 # ember-plugin-migrate — 插件迁移到 Package Manager
 
 ## 概述
 
-扫描 `Assets/Plugins/` 目录下的所有插件，分析每个插件的结构、版本和可用的迁移方案，
-生成完整的迁移报告。用户确认后，对选定的插件执行迁移操作。
+扫描 `Assets/` 下的所有第三方插件（不限于 `Plugins/` 目录），分析每个插件的结构、
+版本和可用的迁移方案，生成完整的迁移报告。用户确认后，对选定的插件执行迁移操作。
 
 **迁移策略优先级**：OpenUPM > Git URL > 本地嵌入式 Package > 保持现状
 
@@ -19,9 +20,8 @@ description: >-
 
 ## 前置条件
 
-1. 确认 `Assets/Plugins/` 目录存在且非空
-2. 确认 `Packages/manifest.json` 可读写
-3. 网络可用（用于查询 OpenUPM / GitHub）
+1. 确认 `Packages/manifest.json` 可读写
+2. 网络可用（用于查询 OpenUPM / GitHub）
 
 ---
 
@@ -29,20 +29,54 @@ description: >-
 
 ### Step 1: 发现插件
 
-扫描 `Assets/Plugins/` 的一级子目录，每个子目录视为一个独立的插件。
+扫描 `Assets/` 的一级子目录，识别潜在的第三方插件。
 
 ```bash
-ls -d Assets/Plugins/*/
+ls -d Assets/*/
 ```
 
-排除以下情况：
-- `Assets/Plugins/` 目录不存在 → 报告 "无插件，无需迁移"
-- 目录为空 → 报告 "Plugins 目录为空"
+**排除以下项目代码目录**（扫描时跳过，不进行分析）：
 
-对每个插件目录，记录：
+| 排除目录 | 原因 |
+|----------|------|
+| `Assets/Ember/` | 框架自身代码 |
+| `Assets/Game/` | 业务逻辑代码 |
+| `Assets/Scenes/` | Unity 场景目录 |
+| `Assets/Settings/` | 项目设置 |
+| `Assets/Resources/` | Unity 资源目录 |
+| `Assets/StreamingAssets/` | Unity 流式资源 |
+| `Assets/Editor/` | 项目自有的编辑器脚本 |
+| `Assets/Editor Default Resources/` | Unity 默认资源 |
+| `Assets/TutorialInfo/` | 模板教程 |
+| `Assets/GeneratedLocalRepo/` | 本地生成文件 |
+| `Assets/Reports/` | 报告输出 |
+| `Assets/ArtWhiteBoxAsset/` | 美术资源 |
+| `Assets/ContentPreview/` | 内容预览 |
+| `Assets/Burner/` | 特定项目目录 |
+
+**插件识别特征**（满足任一即视为候选插件）：
+
+- 包含 `.dll` 文件
+- 有独立的 `.asmdef` 且目录名不匹配项目模块
+- 包含 `README*`、`LICENSE*`、`CHANGELOG*` 等第三方特征文件
+- 目录名/结构与已知的 Asset Store 插件匹配
+
+对每个候选插件目录，记录：
 - 插件名称（目录名）
+- 当前路径（`Assets/<目录名>/` 或 `Assets/<父目录>/<子目录>/`）
 - 文件总数和总大小
 - 顶层结构（有哪些子目录和关键文件）
+
+### Step 0: 预过滤 —— 不可迁移名单
+
+以下插件在扫描前直接跳过，标记为"不可迁移"：
+
+| 插件 | 原因 |
+|------|------|
+| **Odin Inspector** | 安装脚本复杂，深度依赖 Plugins/ 特殊编译顺序，与 Unity 序列化系统深度集成，迁移会破坏编辑器功能 |
+| 任何匹配 `Sirenix*`、`Odin*` 的目录 | 同 Odin，整个 Sirenix 套件不可迁移 |
+
+> 用户无需针对这些插件做任何确认——skill 自动跳过并在报告中注明。
 
 ### Step 2: 分析插件结构
 
@@ -103,16 +137,17 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 - 优先匹配官方包（作者/组织名匹配插件作者）
 - 记录：包名、最新版本、发布日期
 
-常见插件的 OpenUPM 映射表（优先参考）：
+常见插件的映射表（优先参考）：
 
-| 插件 | OpenUPM 包名 | 备注 |
-|------|-------------|------|
-| UniRx | `com.neuecc.unirx` | 官方发布 |
-| DOTween | ❌ 无官方包 | 只能本地嵌入 |
-| DoTween Pro | ❌ 无 | 付费插件，本地嵌入 |
+| 插件 | 推荐方案 | 备注 |
+|------|---------|------|
+| UniRx | OpenUPM `com.neuecc.unirx` | 官方发布 |
+| DOTween | 本地嵌入 | 无官方 UPM 包 |
+| DoTween Pro | 本地嵌入 | 付费插件 |
 | TextMesh Pro | 已内置 Unity | 无需迁移 |
-| Odin Inspector | ❌ 无 | 付费插件，本地嵌入 |
-| Zenject / Extenject | `com.svermeulen.extenject` | 社区维护 |
+| Odin Inspector | 🚫 不可迁移 | 深度依赖 Plugins/ 编译顺序，自动跳过 |
+| Sirenix 系列（任何） | 🚫 不可迁移 | 同 Odin |
+| Zenject / Extenject | OpenUPM `com.svermeulen.extenject` | 社区维护 |
 | Addressables | 已内置 Unity | 无需迁移 |
 
 #### 3b. 查询 Git URL
@@ -136,7 +171,7 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 以下情况标记为"建议保持现状"：
 - 纯资源型插件（大量 `.prefab`、`.asset`、贴图）
 - 依赖 `Plugins/` 特殊编译顺序的 DLL
-- 有复杂安装脚本的插件（如 Odin）
+- 有复杂安装脚本的插件（如 Odin——已在前置过滤中自动跳过）
 - 文件数量极其庞大（> 500 文件）
 - 插件已被深度定制/修改，迁移后难以合并
 
@@ -151,11 +186,12 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 
 | 属性 | 值 |
 |------|-----|
+| 路径 | `Assets/<实际路径>/` |
 | 类型 | `纯源码` / `纯 DLL` / `混合型` / `资源型` |
 | 版本 | `<版本号>` (来源: `<来源>`) |
 | .asmdef | `有 (N 个)` / `无` |
 | 项目引用 | `N 个文件引用` / `无引用` |
-| 推荐方案 | `OpenUPM` / `Git URL` / `本地嵌入` / `保持现状` |
+| 推荐方案 | `OpenUPM` / `Git URL` / `本地嵌入` / `保持现状` / `🚫 不可迁移` |
 
 **迁移方案详情：**
 
@@ -231,7 +267,8 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 ## 🔍 插件迁移扫描报告
 
 **扫描时间**：<时间戳>
-**发现插件**：N 个
+**扫描范围**：`Assets/` 全目录（已排除项目代码目录）
+**发现候选插件**：N 个
 
 ---
 
@@ -246,13 +283,22 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 
 ---
 
+### 🚫 不可迁移（N 个）
+
+| 插件 | 路径 | 原因 |
+|------|------|------|
+| Odin Inspector | Assets/Plugins/Sirenix/ | 深度依赖 Plugins/ 编译顺序 |
+
+---
+
 ### 📊 汇总
 
-| 插件 | 推荐方案 | 可迁移 |
-|------|---------|--------|
-| PluginA | OpenUPM | ✅ |
-| PluginB | 本地嵌入 | ✅ |
-| PluginC | 保持现状 | ❌ |
+| 插件 | 路径 | 推荐方案 | 可迁移 |
+|------|------|---------|--------|
+| PluginA | Assets/Plugins/ | OpenUPM | ✅ |
+| PluginB | Assets/ThirdParty/ | 本地嵌入 | ✅ |
+| PluginC | Assets/Plugins/ | 保持现状 | ❌ |
+| Odin Inspector | Assets/Plugins/Sirenix/ | 🚫 不可迁移 | ❌ |
 ```
 
 ---

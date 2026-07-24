@@ -11,6 +11,7 @@
 | 包名 | 版本 | 用途 | 来源 |
 |------|------|------|------|
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
+| com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 
 > DOTween 作为 embedded package 放在 `Packages/com.demigiant.dotween/`，不需要额外安装。
 
