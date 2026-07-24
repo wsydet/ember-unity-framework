@@ -12,7 +12,7 @@ description: >-
 ## 概述
 
 审查本地未提交的改动，分类为"需要提交 / 需要忽略 / 需要丢弃"三类，
-对需要提交的文件按 `docs/user/contributing.md` 规范推荐提交信息。
+对需要提交的文件按 `docs/dev/contributing.md` 规范推荐提交信息。
 
 **只读分析，不自动执行任何 git 操作。**
 
@@ -20,7 +20,7 @@ description: >-
 
 ## 前置条件
 
-1. 读取 `docs/user/contributing.md`，缓存提交格式规则
+1. 读取 `docs/dev/contributing.md`，缓存提交格式规则
 2. 确认当前分支：
    - 若在 `main` 分支：提醒当前处于初始搭建期，可直接提交，后续应切到 feature 分支
    - 若在 `feature/*` 分支：按正常流程处理
@@ -96,7 +96,7 @@ git diff --cached --stat # 已暂存文件的统计
 - 不同类型的改动（feat / fix / chore）分开提交
 - 每组 3-10 个文件为宜，超过则考虑拆分
 
-提交信息格式（严格按 `docs/user/contributing.md`）：
+提交信息格式（严格按 `docs/dev/contributing.md`）：
 ```
 <type>(<scope>): <subject>
 ```
@@ -185,5 +185,5 @@ scope 从文件路径推断：
 ## 验证
 
 - 确认推荐的分组之间没有重叠文件
-- 确认推荐的提交信息格式符合 `docs/user/contributing.md`
+- 确认推荐的提交信息格式符合 `docs/dev/contributing.md`
 - 确认没有遗漏任何 git status 中列出的文件
