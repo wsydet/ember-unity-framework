@@ -1,0 +1,20 @@
+{
+    "name": "FlyingWorm.ConsolePro.Editor",
+    "rootNamespace": "FlyingWormConsole3",
+    "references": [
+        "FlyingWorm.ConsolePro.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "ConsolePro.Editor.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

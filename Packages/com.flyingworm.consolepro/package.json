@@ -1,0 +1,13 @@
+{
+  "name": "com.flyingworm.consolepro",
+  "version": "3.9.81",
+  "displayName": "Console Pro",
+  "description": "Console Pro is an advanced Unity Editor console replacement with filtering, searching, remote logging, and deep customization.",
+  "unity": "6000.0",
+  "author": {
+    "name": "Flying Worm",
+    "email": "figbash@gmail.com",
+    "url": "https://assetstore.unity.com/packages/tools/utilities/console-pro-3"
+  },
+  "type": "tool"
+}
