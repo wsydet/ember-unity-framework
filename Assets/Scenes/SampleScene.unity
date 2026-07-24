@@ -476,11 +476,14 @@ MonoBehaviour:
     weight: 0.5
   difficulty: 1
   heroClass: "\u6218\u58EB"
+  level: 1
+  hp: 500
+  mp: 200
   weapon:
     weaponName: "\u65B0\u624B\u5251"
     attack: 10
     criticalChance: 0.15
-  previewTexture: {fileID: 0}
+  previewTexture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
   somePrefab: {fileID: 0}
   someSceneObject: {fileID: 0}
   notes: "Odin \u6781\u5927\u5730\u589E\u5F3A\u4E86 Unity Inspector \u7684\u7F16\u8F91\u4F53\u9A8C\u3002"
