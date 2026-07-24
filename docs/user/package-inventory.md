@@ -25,14 +25,14 @@
 > { "name": "OpenUPM", "url": "https://package.openupm.com", "scopes": ["com.neuecc"] }
 > ```
 
-### 1.3 传统 Plugins 插件（`Assets/ThirdParty/Plugins/`）
+### 1.3 传统 Plugins（`Assets/Plugins/`）
 
 | 插件名 | 版本 | 用途 | 来源 |
 |-------|------|------|------|
 | Sirenix (Odin Inspector) | [TODO] | 编辑器扩展，增强 Inspector 面板 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) → 手动安装 |
 
-> Odin Inspector 是付费 Asset Store 产品，以预编译 DLL 形式放在 `Assets/ThirdParty/Plugins/Sirenix/`。
-> `Assets/Plugins/` 目录保留给框架使用者，不要占用。
+> Odin Inspector 是付费 Asset Store 产品，以预编译 DLL 形式放在 `Assets/Plugins/Sirenix/`。
+> 因 Odin 依赖结构复杂无法迁移为 UPM embedded package，保留在 Plugins 目录中。
 
 ---
 

@@ -1,6 +1,6 @@
 ﻿<Solution>
   <Project Path="DOTween.Modules.csproj" />
-  <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>
