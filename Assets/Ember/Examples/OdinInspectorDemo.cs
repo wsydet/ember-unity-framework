@@ -85,19 +85,15 @@ namespace Ember.Editor
         // ----------
 
         [Title("🔢 数值范围")]
-        [HorizontalGroup("Stats")]
-        [ShowInInspector, MinValue(1), MaxValue(99)]
+        [SerializeField, MinValue(1), MaxValue(99)]
         private int level = 1;
 
-        [HorizontalGroup("Stats")]
-        [ShowInInspector, MinValue(0), MaxValue(9999)]
+        [SerializeField, MinValue(0), MaxValue(9999)]
         private int hp = 500;
 
-        [HorizontalGroup("Stats")]
-        [ShowInInspector, MinValue(0), MaxValue(999)]
+        [SerializeField, MinValue(0), MaxValue(999)]
         private int mp = 200;
 
-        [HorizontalGroup("Stats")]
         [ShowInInspector, ReadOnly]
         private string CombatPower => $"Lv.{level}  HP:{hp}  MP:{mp}";
 
