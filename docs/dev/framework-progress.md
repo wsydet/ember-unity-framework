@@ -71,6 +71,67 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 服务定位 | 无（Singleton.Instance + 反射） | EmberServiceLocator | 解耦接口与实现，方便测试和替换 |
 | 对象池 | 最小实现（仅 Stack） | 带容量/统计/IPoolable | 更完整的生产级实现 |
 
+### 事件通信分层策略
+
+项目已引入 UniRx，其 `MessageBroker` 天然支持类型安全的消息发布/订阅。
+EmberEventBus 与 UniRx MessageBroker 不是替代关系，而是按层级分工：
+
+```
+┌────────────────────────────────────────────┐
+│  UniRx MessageBroker（业务层）              │
+│  - 类型安全，编译期检查消息类型               │
+│  - 丰富操作符：Where / Throttle / Delay /   │
+│    Batch / Select / Merge ...               │
+│  - 生命周期：AddTo(this) 自动取消订阅         │
+│  适用：游戏内复杂的业务事件流                  │
+├────────────────────────────────────────────┤
+│  EmberEventBus（框架层）                    │
+│  - 轻量 string-key 通道，零外部依赖           │
+│  - 框架使用者不必安装 UniRx                   │
+│  - 框架模块间通信不绑定第三方库                │
+│  适用：框架内部模块间的基础事件通知            │
+└────────────────────────────────────────────┘
+```
+
+**选择规则**：
+
+| 场景 | 用什么 | 理由 |
+|------|--------|------|
+| Core 内部通知、框架模块间通信 | EmberEventBus | 框架不得强制依赖 UniRx |
+| 业务层游戏逻辑（战斗、技能、AI） | UniRx MessageBroker | 类型安全 + 操作符，体验更好 |
+| 框架事件需要被业务层消费 | EmberEventBus → UniRx 桥接 | 通过适配器转成 `IObservable<T>` |
+
+#### 桥接示例
+
+```csharp
+public static class EmberEventBusExtensions
+{
+    /// <summary>
+    /// 将 EmberEventBus 的 string-key 事件转为 UniRx IObservable，
+    /// 让业务层可以享受操作符便利而不直接依赖 EmberEventBus 的 string API。
+    /// </summary>
+    public static IObservable<T> OnEvent<T>(string eventKey)
+    {
+        return Observable.FromEvent<Action<T>, T>(
+            h => EmberEventBus.Subscribe(eventKey, h),
+            h => EmberEventBus.Unsubscribe(eventKey, h));
+    }
+}
+
+// 业务层使用：
+EmberEventBusExtensions.OnEvent<int>("ScoreChanged")
+    .Where(score => score > 100)
+    .Throttle(TimeSpan.FromMilliseconds(300))
+    .Subscribe(score => ShowScorePopup(score))
+    .AddTo(this);
+```
+
+#### 演进路径
+
+- **当前**：EmberEventBus 保留不动，覆盖所有框架内部通信
+- **后期**：如果业务层普遍使用 UniRx MessageBroker 且反馈良好，可考虑将 EmberEventBus 标记为 deprecated，全部迁移到 UniRx 消息模型
+- **底线**：框架 Core 必须在零外部依赖下独立工作，即使未来废弃 EmberEventBus，也会将其替换为 ember 自身的轻量实现而非强制引入 UniRx
+
 ### 待设计讨论
 
 - [ ] 是否需要 Timer/TimerManager？（burner 有 `TimerManage`）
