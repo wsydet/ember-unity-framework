@@ -11,6 +11,7 @@
   <Project Path="Borodar.RainbowFolders.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
+  <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="Borodar.RainbowHierarchy.csproj" />
   <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
@@ -18,6 +19,7 @@
   <Project Path="InputDeviceDetector.csproj" />
   <Project Path="FlyingWorm.ConsolePro.Editor.csproj" />
   <Project Path="UniTask.Addressables.csproj" />
+  <Project Path="Ember.Editor.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
   <Project Path="FlyingWorm.ConsolePro.Runtime.csproj" />
 </Solution>
