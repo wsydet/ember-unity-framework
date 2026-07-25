@@ -10,21 +10,25 @@
 
 | 包名 | 版本 | 用途 | 来源 |
 |------|------|------|------|
+| com.borodar.rainbow-folders | 2.4.5 | Project 窗口文件夹自定义图标和背景色 | [GitHub](https://github.com/Borod4r/Rainbow-Folders-2) → 源码移入 |
+| com.borodar.rainbow-hierarchy | 2.6.5 | Hierarchy 窗口 GameObject 自定义图标和背景色 | [GitHub](https://github.com/Borod4r/Rainbow-Hierarchy-2) → 源码移入 |
+| com.cysharp.unitask | 2.5.10 | 零 GC 异步/等待（async/await）框架 | [GitHub](https://github.com/Cysharp/UniTask) → 从 Plugins 迁移 |
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 | com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 | com.ryanindiedev.inputdevicedetector | 1.0.0 | 输入设备检测：自动识别鼠标/键盘/手柄切换并触发事件 | [YouTube](https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ) → 手动移入 |
 
-> DOTween 作为 embedded package 放在 `Packages/com.demigiant.dotween/`，不需要额外安装。
+> 以上包均放在 `Packages/` 下作为 embedded package，随 git 提交，无需额外下载。
 
 ### 1.2 UPM 第三方（通过 OpenUPM Registry）
 
 | 包名 | 版本 | 用途 |
 |------|------|------|
+| com.github-glitchenzo.nugetforunity | 4.5.0 | NuGet 包管理器，在 Unity 中安装 .NET 第三方库 |
 | com.neuecc.unirx | 7.1.0 | 响应式编程框架，用于事件流和异步操作 |
 
 > 需要配置 OpenUPM scoped registry（已在 `manifest.json` 中配置）：
 > ```json
-> { "name": "OpenUPM", "url": "https://package.openupm.com", "scopes": ["com.neuecc"] }
+> { "name": "OpenUPM", "url": "https://package.openupm.com", "scopes": ["com.github-glitchenzo", "com.neuecc"] }
 > ```
 
 ### 1.3 传统 Plugins（`Assets/Plugins/`）
