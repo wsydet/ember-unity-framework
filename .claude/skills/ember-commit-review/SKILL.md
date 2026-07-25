@@ -122,7 +122,8 @@ scope 从文件路径推断：
 每组提交必须包含：
 
 1. **文件统计**：标注该组共多少个文件，其中新增(N)、修改(M)、删除(D) 各多少。**统计时必须包含 `.meta` 文件**——Unity 项目中每个资源和脚本都有对应的 `.meta`，它们一起构成实际需要提交的文件数。对于大量文件（如导入第三方插件），用 `find` 精确计数，杜绝估计值。
-2. **批量暂存命令**：一个可直接复制执行的 `git add` 命令，包含该组所有文件路径。文件路径按字母排序，用空格分隔。如文件过多（超过 20 个），考虑拆分为多个 `git add` 命令或使用目录级 `git add`（如 `git add Assets/Plugins/`）。注意：`git add` 对新增、修改、删除（跟踪文件被删除）的文件均适用。
+2. **可复制的文件路径**：表格中文件路径用反引号 `` `path` `` 包裹快速预览。表格下方每个文件独占一个 ```` ```text ```` 代码块，在 VS Code / 终端中会出现"复制"按钮，点击即可复制单个文件路径到剪贴板，方便在 UGit 中搜索定位。
+3. **完整提交命令**：给出可直接复制执行的 `git add ... && git commit -m "type(scope): subject"` 命令，将暂存和提交合为一步。提交信息使用 `type(scope): subject` 格式。如文件过多导致命令过长（超过 ~300 字符），拆分为 `git add` + `git commit` 两行。注意：`git add` 对新增、修改、删除（跟踪文件被删除）的文件均适用。
 
 ### Step 5: 处理建议
 
@@ -156,13 +157,28 @@ scope 从文件路径推断：
 
 | 文件 | 状态 | 改动摘要 |
 |------|------|----------|
-| path/to/file.cs | 新增 | 新增了 XXX 方法 |
-| path/to/other.cs | 修改 | 调整了 YYY 逻辑 |
-| path/to/old.cs | 删除 | 已迁移至新位置 |
+| `path/to/file.cs` | 新增 | 新增了 XXX 方法 |
+| `path/to/other.cs` | 修改 | 调整了 YYY 逻辑 |
+| `path/to/old.cs` | 删除 | 已迁移至新位置 |
+
+```text
+path/to/file.cs
+```
+```text
+path/to/other.cs
+```
+```text
+path/to/old.cs
+```
 
 ```bash
-git add path/to/file.cs path/to/other.cs path/to/old.cs
+git add path/to/file.cs path/to/other.cs path/to/old.cs && git commit -m "type(scope): subject"
 ```
+
+> 如文件过多导致命令过长，拆分为分行执行：
+> ```bash
+> git add <文件1> <文件2> ...
+> git commit -m "type(scope): subject"
 
 #### 提交 2
 
