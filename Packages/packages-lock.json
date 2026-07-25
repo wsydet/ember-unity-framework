@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.borodar.rainbow-folders": {
+      "version": "file:com.borodar.rainbow-folders",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.borodar.rainbow-hierarchy": {
+      "version": "file:com.borodar.rainbow-hierarchy",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.cysharp.unitask": {
       "version": "file:com.cysharp.unitask",
       "depth": 0,
@@ -17,6 +29,13 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
+    },
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "4.5.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.neuecc.unirx": {
       "version": "7.1.0",
