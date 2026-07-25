@@ -46,7 +46,28 @@ ls -d Assets/Plugins/*/
 
 ### Step 2: 分析插件结构
 
-对每个插件，深入分析其内部结构：
+对每个插件，深入分析其内部结构。
+
+**⚠️ 在开始详细分析之前，必须先做快速跳过检查（Step 2.0）。**
+
+#### 2.0 快速跳过检查（必须最先执行）
+
+以下已知插件**无需任何分析**，直接标记为 `保持现状` 并跳过 Step 2-3 的所有后续步骤：
+
+| 插件目录名 | 跳过原因 | 最终建议 |
+|-----------|----------|----------|
+| `Sirenix` / `Odin` | 付费插件，安装脚本复杂，依赖 `Plugins/` 编译顺序 | 🔴 保持现状 |
+| `DOTween` / `DOTween Pro` | 付费插件（Pro），有复杂的 Setup 流程和 .asset 配置 | 🔴 保持现状 |
+| `Feel` / `MoreMountains` | 资源型插件，大量 .prefab/.asset/贴图，不适合迁移 | 🔴 保持现状 |
+| `ConsolePro` / `FlyingWorm` | 纯 DLL 编辑器工具，无 UPM 包，迁移收益低 | 🔴 保持现状 |
+| `NiceVibrations` / `Lofelt` | 原生 DLL 依赖复杂，不适合迁移 | 🔴 保持现状 |
+
+**判断逻辑**：
+1. 插件目录名命中上表 → **立即标记为 `保持现状`，不执行 Step 2a-2d、Step 3 的任何分析**
+2. 插件在 Step 3a 映射表中备注为 "付费插件" 或 "无需迁移" → 同上，立即跳过
+3. 只有**未命中**快速跳过列表的插件，才进入 Step 2a 的详细分析
+
+对跳过的插件，在报告中只需输出一行简述，不需要卡片详情。
 
 #### 2a. 识别插件类型
 
@@ -103,17 +124,19 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 - 优先匹配官方包（作者/组织名匹配插件作者）
 - 记录：包名、最新版本、发布日期
 
-常见插件的 OpenUPM 映射表（优先参考）：
+常见插件的 OpenUPM 映射表（优先参考，命中后直接采用，**不再查询网络**）：
 
-| 插件 | OpenUPM 包名 | 备注 |
-|------|-------------|------|
-| UniRx | `com.neuecc.unirx` | 官方发布 |
-| DOTween | ❌ 无官方包 | 只能本地嵌入 |
-| DoTween Pro | ❌ 无 | 付费插件，本地嵌入 |
-| TextMesh Pro | 已内置 Unity | 无需迁移 |
-| Odin Inspector | ❌ 无 | 付费插件，本地嵌入 |
-| Zenject / Extenject | `com.svermeulen.extenject` | 社区维护 |
-| Addressables | 已内置 Unity | 无需迁移 |
+| 插件 | OpenUPM 包名 | 是否可迁移 | 建议操作 |
+|------|-------------|-----------|----------|
+| UniRx | `com.neuecc.unirx` | ✅ 可迁移 | 走 OpenUPM |
+| DOTween | ❌ 无官方包 | ⚠️ 可尝试 | 本地嵌入 |
+| DoTween Pro | ❌ 无 | ❌ 不可迁移 | 🔴 保持现状（付费插件） |
+| TextMesh Pro | 已内置 Unity | — | 🔴 无需迁移 |
+| Odin Inspector | ❌ 无 | ❌ 不可迁移 | 🔴 保持现状（付费插件） |
+| Zenject / Extenject | `com.svermeulen.extenject` | ✅ 可迁移 | 走 OpenUPM |
+| Addressables | 已内置 Unity | — | 🔴 无需迁移 |
+
+> **规则**：表中"建议操作"列为 🔴 的插件 = 快速跳过，不执行后续分析。
 
 #### 3b. 查询 Git URL
 
