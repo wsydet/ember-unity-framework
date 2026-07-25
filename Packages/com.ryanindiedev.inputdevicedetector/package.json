@@ -1,0 +1,14 @@
+{
+  "name": "com.ryanindiedev.inputdevicedetector",
+  "version": "1.0.0",
+  "displayName": "Input Device Detector",
+  "description": "Detects the current input device (mouse, keyboard, gamepad) and triggers events on device switch. Built on Unity Input System.",
+  "unity": "6000.0",
+  "author": {
+    "name": "RyanIndieDev",
+    "url": "https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ"
+  },
+  "dependencies": {
+    "com.unity.inputsystem": "1.19.0"
+  }
+}

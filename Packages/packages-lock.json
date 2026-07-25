@@ -19,6 +19,14 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.ryanindiedev.inputdevicedetector": {
+      "version": "file:com.ryanindiedev.inputdevicedetector",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.inputsystem": "1.19.0"
+      }
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.13",
       "depth": 0,
