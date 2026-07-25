@@ -1,0 +1,19 @@
+{
+    "name": "Ember.UI.Editor",
+    "rootNamespace": "Ember.UI.Editor",
+    "references": [
+        "Ember.Core.Runtime",
+        "Ember.UI.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

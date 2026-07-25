@@ -1,0 +1,16 @@
+{
+    "name": "Ember.Audio.Runtime",
+    "rootNamespace": "Ember.Audio",
+    "references": [
+        "Ember.Core.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

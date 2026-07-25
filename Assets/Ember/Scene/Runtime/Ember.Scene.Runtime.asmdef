@@ -1,0 +1,17 @@
+{
+    "name": "Ember.Scene.Runtime",
+    "rootNamespace": "Ember.Scene",
+    "references": [
+        "Ember.Core.Runtime",
+        "Ember.Resource.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
