@@ -5,11 +5,14 @@
   <Project Path="DOTween.Modules.csproj" />
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
+  <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Borodar.RainbowFolders.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
   <Project Path="UniTask.Editor.csproj" />
+  <Project Path="Borodar.RainbowHierarchy.csproj" />
   <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="InputDeviceDetector.csproj" />

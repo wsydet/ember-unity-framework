@@ -1,0 +1,31 @@
+namespace Borodar.RainbowHierarchy
+{
+    public enum HierarchyIconCategory
+    {
+        All,
+        Colors,
+        General,
+        Assets,
+        Collab,
+        Console,
+        Animation,
+        AR,
+        Audio,
+        Effects,
+        Events,
+        Folders,
+        Layouts,
+        Light,
+        Meshes,
+        Miscellaneous,
+        Navigation,
+        Network,
+        Physics2D,
+        Physics,
+        Playables,
+        Rendering,
+        Tilemap,
+        UI,
+        Video
+    }
+}
