@@ -29,18 +29,41 @@ description: >-
 
 ### Step 1: 发现插件
 
-扫描 `Assets/Plugins/` 的一级子目录，每个子目录视为一个独立的插件。
+**扫描范围**：第三方插件可能出现在 `Assets/` 下的多个位置，必须全部扫描：
 
 ```bash
-ls -d Assets/Plugins/*/
+# 1. 传统 Plugins 目录
+ls -d Assets/Plugins/*/ 2>/dev/null
+
+# 2. NuGetForUnity 安装的包
+ls -d Assets/NuGet/*/ 2>/dev/null
+
+# 3. Assets 根目录下可能是插件的目录（排除以下已知项目目录）
+ls -d Assets/*/ 2>/dev/null | grep -vE "Assets/(Ember|Game|Scenes|Resources|StreamingAssets|Editor|Settings|AddressableAssetsData)/"
 ```
 
-排除以下情况：
-- `Assets/Plugins/` 目录不存在 → 报告 "无插件，无需迁移"
-- 目录为空 → 报告 "Plugins 目录为空"
+**排除规则**（以下目录是项目代码/资源，不是"插件"，不纳入扫描）：
 
-对每个插件目录，记录：
+| 目录 | 原因 |
+|------|------|
+| `Assets/Ember/` | 框架层代码 |
+| `Assets/Game/` | 业务层代码 |
+| `Assets/Scenes/` | 场景文件 |
+| `Assets/Resources/` | 运行时资源 |
+| `Assets/StreamingAssets/` | 流式资源 |
+| `Assets/Editor/` | 项目编辑器脚本 |
+| `Assets/Settings/` | 项目设置 |
+| `Assets/AddressableAssetsData/` | Addressables 数据 |
+
+**插件判定标准**：一个目录被视为"第三方插件"需满足至少一项：
+- 包含 `.dll` 文件
+- 包含 `.asmdef` 文件且目录名不在排除列表中
+- 目录名匹配已知第三方插件（如 `NuGet`、`Plugins` 下的子目录）
+- 包含 `package.json`
+
+对每个发现的插件目录，记录：
 - 插件名称（目录名）
+- 完整路径（如 `Assets/NuGet/xxx`、`Assets/Plugins/xxx`）
 - 文件总数和总大小
 - 顶层结构（有哪些子目录和关键文件）
 
