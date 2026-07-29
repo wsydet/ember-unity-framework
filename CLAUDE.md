@@ -90,6 +90,61 @@ Packages/
 - 所有 `MonoBehaviour` 生命周期方法使用 `private`，避免外部调用
 - 使用 `[SerializeField]` 暴露 Inspector 字段而非 `public` 字段
 
+### 代码组织
+
+使用 `#region` 将类内成员按职责分为最多四个块，按以下顺序排列：
+
+| 顺序 | Region | 内容 | 说明 |
+|------|--------|------|------|
+| 1 | `参数` | 字段、属性、常量 | 类的所有数据成员 |
+| 2 | `外部方法` | `public` / `internal` 方法 | 对外暴露的 API |
+| 3 | `生命周期` | `Awake` / `Start` / `OnDestroy` 等 | 仅 MonoBehaviour 有此块，普通类跳过 |
+| 4 | `内部方法` | `private` 方法 | 内部实现细节和辅助方法 |
+
+```csharp
+public class ExampleManager : MonoBehaviour
+{
+    #region 参数
+
+    [SerializeField] private float _duration = 1f;
+    private bool _isRunning;
+
+    #endregion
+
+    // --------------------------------------------------------
+
+    #region 外部方法
+
+    public void StartProcess() { ... }
+    public void StopProcess() { ... }
+
+    #endregion
+
+    // --------------------------------------------------------
+
+    #region 生命周期
+
+    private void Awake() { ... }
+    private void OnDestroy() { ... }
+
+    #endregion
+
+    // --------------------------------------------------------
+
+    #region 内部方法
+
+    private void Tick() { ... }
+    private void Cleanup() { ... }
+
+    #endregion
+}
+```
+
+规则：
+- 块之间用 `// ----` 或 `// ====` 分隔线隔开
+- 如果某个块没有内容（如普通 class 没有生命周期），直接跳过，不留空 region
+- static class 通常只有 `参数`、`外部方法`、`内部方法` 三个块
+
 ### 程序集划分
 
 - 框架层每个模块有独立的 `.asmdef`，模块间通过引用链接
