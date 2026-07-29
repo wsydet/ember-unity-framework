@@ -33,9 +33,7 @@ namespace Ember.Core
     /// </summary>
     public static class EmberServiceLocator
     {
-        // ============================================================
-        // 内部数据结构
-        // ============================================================
+        #region 参数
 
         /// <summary>
         /// 已注册的服务实例字典：Type → 实例。
@@ -47,9 +45,16 @@ namespace Ember.Core
         /// </summary>
         private static readonly Dictionary<Type, Func<object>> _lazyFactories = new Dictionary<Type, Func<object>>();
 
+        /// <summary>
+        /// 获取当前已注册服务的数量（用于诊断）。
+        /// </summary>
+        public static int RegisteredCount => _services.Count + _lazyFactories.Count;
+
+        #endregion
+
         // ============================================================
-        // Register — 注册服务
-        // ============================================================
+
+        #region 外部方法
 
         /// <summary>
         /// 注册一个服务实例。同一接口只能注册一次。
@@ -112,10 +117,6 @@ namespace Ember.Core
             return true;
         }
 
-        // ============================================================
-        // Resolve — 解析服务
-        // ============================================================
-
         /// <summary>
         /// 解析指定接口的服务实例。
         /// </summary>
@@ -174,10 +175,6 @@ namespace Ember.Core
             return _services.ContainsKey(type) || _lazyFactories.ContainsKey(type);
         }
 
-        // ============================================================
-        // Unregister — 注销服务
-        // ============================================================
-
         /// <summary>
         /// 注销指定接口的服务。
         /// </summary>
@@ -189,10 +186,6 @@ namespace Ember.Core
             removed |= _lazyFactories.Remove(type);
             return removed;
         }
-
-        // ============================================================
-        // Clear — 清理
-        // ============================================================
 
         /// <summary>
         /// 清除所有已注册的服务和延迟工厂。仅在彻底重置时使用。
@@ -212,13 +205,6 @@ namespace Ember.Core
             _lazyFactories.Clear();
         }
 
-        // ============================================================
-        // Debug — 诊断
-        // ============================================================
-
-        /// <summary>
-        /// 获取当前已注册服务的数量（用于诊断）。
-        /// </summary>
-        public static int RegisteredCount => _services.Count + _lazyFactories.Count;
+        #endregion
     }
 }

@@ -4,13 +4,34 @@ using System.Collections.Generic;
 namespace Ember.Core
 {
     /// <summary>
-    /// 通用对象池。
+    /// 通用对象池 —— 用于复用纯 C# class 实例，避免高频 <c>new</c> 导致的 GC 压力。
     ///
     /// 参考 burner 的 <see cref="BattleCore.ObjectPool"/>，在此基础上扩展：
     /// - 可选最大容量，超出时丢弃
     /// - <see cref="IPoolable"/> 支持 —— 取出/归还时自动调用 Reset
     /// - 统计信息（诊断用）
     /// - <see cref="IDisposable"/> 支持 —— 清理时释放池中对象
+    ///
+    /// <para><b>何时使用 EmberObjectPool（纯 C# class）：</b></para>
+    /// <list type="bullet">
+    /// <item>战斗伤害数据 —— AOE 技能每帧命中数十个目标，每次产生 <c>DamageInfo</c> 临时对象</item>
+    /// <item>网络消息 —— 帧同步每帧广播 <c>FrameCommand</c>，60fps × 10 玩家 = 每秒 600 次分配</item>
+    /// <item>寻路请求 —— RTS 数百个单位同时发起 <c>PathRequest</c>，复用避免突发 GC</item>
+    /// <item>粒子参数 / 音效事件 / UI 弹窗数据 —— 任何在 Update 中临时创建、用完即弃的 class</item>
+    /// </list>
+    ///
+    /// <para><b>何时使用 Unity ObjectPool（GameObject / Prefab）：</b></para>
+    /// <list type="bullet">
+    /// <item>子弹 / 弹壳 / 特效 Prefab —— 必须 <c>Instantiate</c>，不能 <c>new()</c></item>
+    /// <item>列表项 UI 模板 —— 滚动列表频繁创建/销毁 GameObject</item>
+    /// <item>需要 double-release 检测的调试期对象（<c>collectionCheck</c>）</item>
+    /// </list>
+    ///
+    /// <para><b>何时不需要池化：</b></para>
+    /// <list type="bullet">
+    /// <item>struct（<c>Vector3</c> / <c>Color</c> / <c>RaycastHit</c> 等）—— 栈上分配，用完自动回收，无 GC</item>
+    /// <item>低频创建的长生命周期对象（如 Manager / Config）</item>
+    /// </list>
     ///
     /// 用法：
     /// <code>
@@ -23,13 +44,35 @@ namespace Ember.Core
     /// <typeparam name="T">池化对象类型，必须有无参构造函数</typeparam>
     public class EmberObjectPool<T> where T : class, new()
     {
+        #region 参数
+        /// <summary>
+        /// 对象池
+        /// </summary>
         private readonly Stack<T> _free;
+        /// <summary>
+        /// 池最大容量
+        /// </summary>
         private readonly int _maxCapacity;
+        /// <summary>
+        /// 启用统计信息
+        /// </summary>
         private readonly bool _trackStats;
 
-        // ---- 统计 ----
+        /// <summary>
+        /// 累计创建的对象数量。
+        /// </summary>
+
         private int _totalCreated;
+        
+        /// <summary>
+        /// 累计取出的次数。
+        /// </summary>
+
         private int _totalReturned;
+
+        /// <summary>
+        /// 累计归还的次数。
+        /// </summary>
         private int _totalRetrieved;
 
         /// <summary>
@@ -51,6 +94,12 @@ namespace Ember.Core
         /// 累计归还的次数。
         /// </summary>
         public int TotalReturned => _totalReturned;
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
 
         /// <summary>
         /// 创建对象池。
@@ -151,6 +200,8 @@ namespace Ember.Core
                     disposable.Dispose();
             }
         }
+
+        #endregion
     }
 
     // ============================================================
