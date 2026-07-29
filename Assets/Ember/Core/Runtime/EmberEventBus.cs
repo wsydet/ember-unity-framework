@@ -6,40 +6,50 @@ namespace Ember.Core
     /// <summary>
     /// 事件总线 —— 全局事件发布/订阅系统。
     ///
-    /// 设计参考了 burner 项目的 EventDispatcher，改用 string-key
-    /// 替代 int-key，提供更好的可读性和可调试性。
+    /// 设计参考了 burner 项目的 EventDispatcher。使用 int-key 配合
+    /// <see cref="EmberBroadcastEvent"/> 常量表，通过区间分配避免 Key 冲突。
+    ///
+    /// 定位：广播型生命周期事件（模块 Ready / Shutdown、场景加载等）。
+    /// 具体游戏数据事件（血量变化、物品变更）推荐使用 UniRx Subject。
     ///
     /// 特性：
     /// - 支持 0～4 个泛型参数的事件回调
+    /// - int-key + 常量表，编译期避免冲突，IDE 可跳转
     /// - 遍历中安全增删（派发中的操作延迟到本轮结束执行）
     /// - 线程不安全，仅限主线程使用（符合 Unity 规范）
     ///
     /// 用法：
     /// <code>
     /// // 订阅
-    /// EmberEventBus.Subscribe("PlayerDied", OnPlayerDied);
+    /// EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
     /// // 发布
-    /// EmberEventBus.Dispatch("PlayerDied", playerId);
+    /// EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
     /// // 取消订阅
-    /// EmberEventBus.Unsubscribe("PlayerDied", OnPlayerDied);
+    /// EmberEventBus.Unsubscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
     /// </code>
     /// </summary>
     public static class EmberEventBus
     {
-        // ---- 0 参字典（强类型 Action） ----
-        private static readonly Dictionary<string, Action> _events0 = new Dictionary<string, Action>();
-
-        // ---- 1～4 参字典（Delegate 作为通用容器） ----
-        private static readonly Dictionary<string, Delegate> _events1 = new Dictionary<string, Delegate>();
-        private static readonly Dictionary<string, Delegate> _events2 = new Dictionary<string, Delegate>();
-        private static readonly Dictionary<string, Delegate> _events3 = new Dictionary<string, Delegate>();
-        private static readonly Dictionary<string, Delegate> _events4 = new Dictionary<string, Delegate>();
+        #region 参数
 
         /// <summary>
-        /// 派发深度计数器：> 0 表示该事件正在派发中，此时
-        /// Subscribe/Unsubscribe/Clear 操作会被延迟执行。
+        /// 0 参事件字典（强类型 Action，支持 += / -= 运算符）。
         /// </summary>
-        private static readonly Dictionary<string, int> _dispatchDepth = new Dictionary<string, int>();
+        private static readonly Dictionary<int, Action> _events0 = new();
+
+        /// <summary>
+        /// 1～4 参事件字典（Delegate 作为通用容器，Dispatch 时做类型转换）。
+        /// </summary>
+        private static readonly Dictionary<int, Delegate> _events1 = new();
+        private static readonly Dictionary<int, Delegate> _events2 = new();
+        private static readonly Dictionary<int, Delegate> _events3 = new();
+        private static readonly Dictionary<int, Delegate> _events4 = new();
+
+        /// <summary>
+        /// 派发深度计数器，> 0 表示该事件正在派发中，
+        /// 此时 Subscribe / Unsubscribe / Clear 操作会被延迟执行。
+        /// </summary>
+        private static readonly Dictionary<int, int> _dispatchDepth = new();
 
         /// <summary>
         /// 延迟操作队列。每个元素是一个闭包，在派发结束后执行。
@@ -47,13 +57,20 @@ namespace Ember.Core
         /// </summary>
         private static readonly List<Action> _pendingOps = new List<Action>();
 
-        // ============================================================
-        // Subscribe — 订阅
+        #endregion
+
         // ============================================================
 
-        public static void Subscribe(string eventKey, Action handler)
+        #region 外部方法
+
+        // ======== 订阅 ========
+
+        /// <summary>
+        /// 订阅无参事件。事件 Key 使用 <see cref="EmberBroadcastEvent"/> 中的常量。
+        /// </summary>
+        public static void Subscribe(int eventKey, Action handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -67,9 +84,12 @@ namespace Ember.Core
                 _events0[eventKey] = handler;
         }
 
-        public static void Subscribe<T>(string eventKey, Action<T> handler)
+        /// <summary>
+        /// 订阅 1 参事件。
+        /// </summary>
+        public static void Subscribe<T>(int eventKey, Action<T> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -80,9 +100,12 @@ namespace Ember.Core
             CombineInto(_events1, eventKey, handler);
         }
 
-        public static void Subscribe<T1, T2>(string eventKey, Action<T1, T2> handler)
+        /// <summary>
+        /// 订阅 2 参事件。
+        /// </summary>
+        public static void Subscribe<T1, T2>(int eventKey, Action<T1, T2> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -93,9 +116,12 @@ namespace Ember.Core
             CombineInto(_events2, eventKey, handler);
         }
 
-        public static void Subscribe<T1, T2, T3>(string eventKey, Action<T1, T2, T3> handler)
+        /// <summary>
+        /// 订阅 3 参事件。
+        /// </summary>
+        public static void Subscribe<T1, T2, T3>(int eventKey, Action<T1, T2, T3> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -106,9 +132,12 @@ namespace Ember.Core
             CombineInto(_events3, eventKey, handler);
         }
 
-        public static void Subscribe<T1, T2, T3, T4>(string eventKey, Action<T1, T2, T3, T4> handler)
+        /// <summary>
+        /// 订阅 4 参事件。
+        /// </summary>
+        public static void Subscribe<T1, T2, T3, T4>(int eventKey, Action<T1, T2, T3, T4> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -119,13 +148,14 @@ namespace Ember.Core
             CombineInto(_events4, eventKey, handler);
         }
 
-        // ============================================================
-        // Unsubscribe — 取消订阅
-        // ============================================================
+        // ======== 取消订阅 ========
 
-        public static void Unsubscribe(string eventKey, Action handler)
+        /// <summary>
+        /// 取消订阅无参事件。
+        /// </summary>
+        public static void Unsubscribe(int eventKey, Action handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -136,9 +166,12 @@ namespace Ember.Core
             RemoveFrom(_events0, eventKey, handler);
         }
 
-        public static void Unsubscribe<T>(string eventKey, Action<T> handler)
+        /// <summary>
+        /// 取消订阅 1 参事件。
+        /// </summary>
+        public static void Unsubscribe<T>(int eventKey, Action<T> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -149,9 +182,12 @@ namespace Ember.Core
             RemoveDelegateFrom(_events1, eventKey, handler);
         }
 
-        public static void Unsubscribe<T1, T2>(string eventKey, Action<T1, T2> handler)
+        /// <summary>
+        /// 取消订阅 2 参事件。
+        /// </summary>
+        public static void Unsubscribe<T1, T2>(int eventKey, Action<T1, T2> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -162,9 +198,12 @@ namespace Ember.Core
             RemoveDelegateFrom(_events2, eventKey, handler);
         }
 
-        public static void Unsubscribe<T1, T2, T3>(string eventKey, Action<T1, T2, T3> handler)
+        /// <summary>
+        /// 取消订阅 3 参事件。
+        /// </summary>
+        public static void Unsubscribe<T1, T2, T3>(int eventKey, Action<T1, T2, T3> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -175,9 +214,12 @@ namespace Ember.Core
             RemoveDelegateFrom(_events3, eventKey, handler);
         }
 
-        public static void Unsubscribe<T1, T2, T3, T4>(string eventKey, Action<T1, T2, T3, T4> handler)
+        /// <summary>
+        /// 取消订阅 4 参事件。
+        /// </summary>
+        public static void Unsubscribe<T1, T2, T3, T4>(int eventKey, Action<T1, T2, T3, T4> handler)
         {
-            if (string.IsNullOrEmpty(eventKey) || handler == null) return;
+            if (handler == null) return;
 
             if (InDispatch(eventKey))
             {
@@ -188,13 +230,13 @@ namespace Ember.Core
             RemoveDelegateFrom(_events4, eventKey, handler);
         }
 
-        // ============================================================
-        // Dispatch — 派发事件
-        // ============================================================
+        // ======== 播报 ========
 
-        public static void Dispatch(string eventKey)
+        /// <summary>
+        /// 派发无参事件。
+        /// </summary>
+        public static void Dispatch(int eventKey)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
             if (!_events0.TryGetValue(eventKey, out var handler) || handler == null) return;
 
             EnterDispatch(eventKey);
@@ -208,11 +250,13 @@ namespace Ember.Core
             }
         }
 
-        public static void Dispatch<T>(string eventKey, T arg)
+        /// <summary>
+        /// 派发 1 参事件。
+        /// </summary>
+        public static void Dispatch<T>(int eventKey, T arg)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
             if (!_events1.TryGetValue(eventKey, out var del)) return;
-            if (!(del is Action<T> handler)) return;
+            if (del is not Action<T> handler) return;
 
             EnterDispatch(eventKey);
             try
@@ -225,11 +269,13 @@ namespace Ember.Core
             }
         }
 
-        public static void Dispatch<T1, T2>(string eventKey, T1 arg1, T2 arg2)
+        /// <summary>
+        /// 派发 2 参事件。
+        /// </summary>
+        public static void Dispatch<T1, T2>(int eventKey, T1 arg1, T2 arg2)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
             if (!_events2.TryGetValue(eventKey, out var del)) return;
-            if (!(del is Action<T1, T2> handler)) return;
+            if (del is not Action<T1, T2> handler) return;
 
             EnterDispatch(eventKey);
             try
@@ -242,11 +288,13 @@ namespace Ember.Core
             }
         }
 
-        public static void Dispatch<T1, T2, T3>(string eventKey, T1 arg1, T2 arg2, T3 arg3)
+        /// <summary>
+        /// 派发 3 参事件。
+        /// </summary>
+        public static void Dispatch<T1, T2, T3>(int eventKey, T1 arg1, T2 arg2, T3 arg3)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
             if (!_events3.TryGetValue(eventKey, out var del)) return;
-            if (!(del is Action<T1, T2, T3> handler)) return;
+            if (del is not Action<T1, T2, T3> handler) return;
 
             EnterDispatch(eventKey);
             try
@@ -259,11 +307,13 @@ namespace Ember.Core
             }
         }
 
-        public static void Dispatch<T1, T2, T3, T4>(string eventKey, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        /// <summary>
+        /// 派发 4 参事件。
+        /// </summary>
+        public static void Dispatch<T1, T2, T3, T4>(int eventKey, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
             if (!_events4.TryGetValue(eventKey, out var del)) return;
-            if (!(del is Action<T1, T2, T3, T4> handler)) return;
+            if (del is not Action<T1, T2, T3, T4> handler) return;
 
             EnterDispatch(eventKey);
             try
@@ -276,17 +326,26 @@ namespace Ember.Core
             }
         }
 
-        // ============================================================
-        // Clear — 清理
-        // ============================================================
+        // ======== 诊断与清理 ========
 
         /// <summary>
-        /// 清除指定事件的所有订阅者。
+        /// 检查指定事件是否有订阅者。
         /// </summary>
-        public static void Clear(string eventKey)
+        public static bool HasSubscribers(int eventKey)
         {
-            if (string.IsNullOrEmpty(eventKey)) return;
+            return (_events0.TryGetValue(eventKey, out var h0) && h0 != null)
+                || (_events1.TryGetValue(eventKey, out var h1) && h1 != null)
+                || (_events2.TryGetValue(eventKey, out var h2) && h2 != null)
+                || (_events3.TryGetValue(eventKey, out var h3) && h3 != null)
+                || (_events4.TryGetValue(eventKey, out var h4) && h4 != null);
+        }
 
+        /// <summary>
+        /// 清除指定事件的所有订阅者。通常在模块退出时调用，
+        /// 清除自身对该事件的订阅，避免野指针回调。
+        /// </summary>
+        public static void Clear(int eventKey)
+        {
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Clear(eventKey));
@@ -301,7 +360,7 @@ namespace Ember.Core
         }
 
         /// <summary>
-        /// 清除所有事件的所有订阅者。仅在彻底重置时使用。
+        /// 清除所有事件的所有订阅者。仅在程序退出或彻底重置时使用。
         /// </summary>
         public static void ClearAll()
         {
@@ -314,35 +373,33 @@ namespace Ember.Core
             _pendingOps.Clear();
         }
 
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
         /// <summary>
-        /// 检查指定事件是否有订阅者。
+        /// 判断指定事件是否正在派发中。
         /// </summary>
-        public static bool HasSubscribers(string eventKey)
-        {
-            if (string.IsNullOrEmpty(eventKey)) return false;
-            return (_events0.TryGetValue(eventKey, out var h0) && h0 != null)
-                || (_events1.TryGetValue(eventKey, out var h1) && h1 != null)
-                || (_events2.TryGetValue(eventKey, out var h2) && h2 != null)
-                || (_events3.TryGetValue(eventKey, out var h3) && h3 != null)
-                || (_events4.TryGetValue(eventKey, out var h4) && h4 != null);
-        }
-
-        // ============================================================
-        // 内部：遍历安全控制
-        // ============================================================
-
-        private static bool InDispatch(string eventKey)
+        private static bool InDispatch(int eventKey)
         {
             return _dispatchDepth.TryGetValue(eventKey, out int depth) && depth > 0;
         }
 
-        private static void EnterDispatch(string eventKey)
+        /// <summary>
+        /// 进入派发，递增嵌套深度。
+        /// </summary>
+        private static void EnterDispatch(int eventKey)
         {
             _dispatchDepth.TryGetValue(eventKey, out int depth);
             _dispatchDepth[eventKey] = depth + 1;
         }
 
-        private static void ExitDispatch(string eventKey)
+        /// <summary>
+        /// 退出派发，递减嵌套深度；当深度归零时执行所有延迟操作。
+        /// </summary>
+        private static void ExitDispatch(int eventKey)
         {
             if (!_dispatchDepth.TryGetValue(eventKey, out int depth)) return;
 
@@ -354,14 +411,14 @@ namespace Ember.Core
             }
 
             _dispatchDepth.Remove(eventKey);
-
-            // 执行所有属于该事件的延迟操作
             ExecutePendingOps();
         }
 
+        /// <summary>
+        /// 执行延迟操作队列中的所有操作（取出后清空，避免嵌套派发重复执行）。
+        /// </summary>
         private static void ExecutePendingOps()
         {
-            // 取出当前所有待处理操作并清空（避免嵌套派发导致的重复执行）
             var ops = new List<Action>(_pendingOps);
             _pendingOps.Clear();
 
@@ -371,12 +428,11 @@ namespace Ember.Core
             }
         }
 
-        // ============================================================
-        // 内部：字典操作辅助
-        // ============================================================
-
+        /// <summary>
+        /// 将 handler 合并到 Delegate 字典中（泛型版本，支持 Delegate.Combine）。
+        /// </summary>
         private static void CombineInto<TDelegate>(
-            Dictionary<string, Delegate> dict, string eventKey, TDelegate handler)
+            Dictionary<int, Delegate> dict, int eventKey, TDelegate handler)
             where TDelegate : Delegate
         {
             if (dict.TryGetValue(eventKey, out var existing))
@@ -385,8 +441,11 @@ namespace Ember.Core
                 dict[eventKey] = handler;
         }
 
+        /// <summary>
+        /// 从强类型 Action 字典中移除 handler（支持 -= 运算符）。
+        /// </summary>
         private static void RemoveFrom(
-            Dictionary<string, Action> dict, string eventKey, Action handler)
+            Dictionary<int, Action> dict, int eventKey, Action handler)
         {
             if (dict.TryGetValue(eventKey, out var existing))
             {
@@ -398,8 +457,11 @@ namespace Ember.Core
             }
         }
 
+        /// <summary>
+        /// 从 Delegate 字典中移除 handler（泛型版本，支持 Delegate.Remove）。
+        /// </summary>
         private static void RemoveDelegateFrom<TDelegate>(
-            Dictionary<string, Delegate> dict, string eventKey, TDelegate handler)
+            Dictionary<int, Delegate> dict, int eventKey, TDelegate handler)
             where TDelegate : Delegate
         {
             if (dict.TryGetValue(eventKey, out var existing))
@@ -411,5 +473,7 @@ namespace Ember.Core
                     dict[eventKey] = result;
             }
         }
+
+        #endregion
     }
 }
