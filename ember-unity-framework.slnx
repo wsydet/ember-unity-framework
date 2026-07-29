@@ -8,10 +8,10 @@
   <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="Borodar.RainbowFolders.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
-  <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="Borodar.RainbowHierarchy.csproj" />
   <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
