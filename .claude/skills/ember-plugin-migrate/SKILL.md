@@ -1,17 +1,18 @@
 ---
 name: ember-plugin-migrate
 description: >-
-  Use when the user wants to migrate Assets/Plugins/ packages to UPM (Unity Package Manager),
+  Use when the user wants to migrate third-party plugins to UPM (Unity Package Manager),
   mentions "/plugin-migrate", "插件迁移", "包管理", "package manager", "migrate plugin",
   "插件转包管理", "扫描插件", or asks about converting imported plugins to package management.
+  Do not use for project code under Assets/Ember/ or Assets/Game/.
 ---
 
 # ember-plugin-migrate — 插件迁移到 Package Manager
 
 ## 概述
 
-扫描 `Assets/Plugins/` 目录下的所有插件，分析每个插件的结构、版本和可用的迁移方案，
-生成完整的迁移报告。用户确认后，对选定的插件执行迁移操作。
+扫描 `Assets/` 下的所有第三方插件（不限于 `Plugins/` 目录），分析每个插件的结构、
+版本和可用的迁移方案，生成完整的迁移报告。用户确认后，对选定的插件执行迁移操作。
 
 **迁移策略优先级**：OpenUPM > Git URL > 本地嵌入式 Package > 保持现状
 
@@ -19,9 +20,8 @@ description: >-
 
 ## 前置条件
 
-1. 确认 `Assets/Plugins/` 目录存在且非空
-2. 确认 `Packages/manifest.json` 可读写
-3. 网络可用（用于查询 OpenUPM / GitHub）
+1. 确认 `Packages/manifest.json` 可读写
+2. 网络可用（用于查询 OpenUPM / GitHub）
 
 ---
 
@@ -29,68 +29,58 @@ description: >-
 
 ### Step 1: 发现插件
 
-**扫描范围**：第三方插件可能出现在 `Assets/` 下的多个位置，必须全部扫描：
+扫描 `Assets/` 的一级子目录，识别潜在的第三方插件。
 
 ```bash
-# 1. 传统 Plugins 目录
-ls -d Assets/Plugins/*/ 2>/dev/null
-
-# 2. NuGetForUnity 安装的包
-ls -d Assets/NuGet/*/ 2>/dev/null
-
-# 3. Assets 根目录下可能是插件的目录（排除以下已知项目目录）
-ls -d Assets/*/ 2>/dev/null | grep -vE "Assets/(Ember|Game|Scenes|Resources|StreamingAssets|Editor|Settings|AddressableAssetsData)/"
+ls -d Assets/*/
 ```
 
-**排除规则**（以下目录是项目代码/资源，不是"插件"，不纳入扫描）：
+**排除以下项目代码目录**（扫描时跳过，不进行分析）：
 
-| 目录 | 原因 |
-|------|------|
-| `Assets/Ember/` | 框架层代码 |
-| `Assets/Game/` | 业务层代码 |
-| `Assets/Scenes/` | 场景文件 |
-| `Assets/Resources/` | 运行时资源 |
-| `Assets/StreamingAssets/` | 流式资源 |
-| `Assets/Editor/` | 项目编辑器脚本 |
+| 排除目录 | 原因 |
+|----------|------|
+| `Assets/Ember/` | 框架自身代码 |
+| `Assets/Game/` | 业务逻辑代码 |
+| `Assets/Scenes/` | Unity 场景目录 |
 | `Assets/Settings/` | 项目设置 |
-| `Assets/AddressableAssetsData/` | Addressables 数据 |
+| `Assets/Resources/` | Unity 资源目录 |
+| `Assets/StreamingAssets/` | Unity 流式资源 |
+| `Assets/Editor/` | 项目自有的编辑器脚本 |
+| `Assets/Editor Default Resources/` | Unity 默认资源 |
+| `Assets/TutorialInfo/` | 模板教程 |
+| `Assets/GeneratedLocalRepo/` | 本地生成文件 |
+| `Assets/Reports/` | 报告输出 |
+| `Assets/ArtWhiteBoxAsset/` | 美术资源 |
+| `Assets/ContentPreview/` | 内容预览 |
+| `Assets/Burner/` | 特定项目目录 |
 
-**插件判定标准**：一个目录被视为"第三方插件"需满足至少一项：
+**插件识别特征**（满足任一即视为候选插件）：
+
 - 包含 `.dll` 文件
-- 包含 `.asmdef` 文件且目录名不在排除列表中
-- 目录名匹配已知第三方插件（如 `NuGet`、`Plugins` 下的子目录）
-- 包含 `package.json`
+- 有独立的 `.asmdef` 且目录名不匹配项目模块
+- 包含 `README*`、`LICENSE*`、`CHANGELOG*` 等第三方特征文件
+- 目录名/结构与已知的 Asset Store 插件匹配
 
-对每个发现的插件目录，记录：
+对每个候选插件目录，记录：
 - 插件名称（目录名）
-- 完整路径（如 `Assets/NuGet/xxx`、`Assets/Plugins/xxx`）
+- 当前路径（`Assets/<目录名>/` 或 `Assets/<父目录>/<子目录>/`）
 - 文件总数和总大小
 - 顶层结构（有哪些子目录和关键文件）
 
+### Step 0: 预过滤 —— 不可迁移名单
+
+以下插件在扫描前直接跳过，标记为"不可迁移"：
+
+| 插件 | 原因 |
+|------|------|
+| **Odin Inspector** | 安装脚本复杂，深度依赖 Plugins/ 特殊编译顺序，与 Unity 序列化系统深度集成，迁移会破坏编辑器功能 |
+| 任何匹配 `Sirenix*`、`Odin*` 的目录 | 同 Odin，整个 Sirenix 套件不可迁移 |
+
+> 用户无需针对这些插件做任何确认——skill 自动跳过并在报告中注明。
+
 ### Step 2: 分析插件结构
 
-对每个插件，深入分析其内部结构。
-
-**⚠️ 在开始详细分析之前，必须先做快速跳过检查（Step 2.0）。**
-
-#### 2.0 快速跳过检查（必须最先执行）
-
-以下已知插件**无需任何分析**，直接标记为 `保持现状` 并跳过 Step 2-3 的所有后续步骤：
-
-| 插件目录名 | 跳过原因 | 最终建议 |
-|-----------|----------|----------|
-| `Sirenix` / `Odin` | 付费插件，安装脚本复杂，依赖 `Plugins/` 编译顺序 | 🔴 保持现状 |
-| `DOTween` / `DOTween Pro` | 付费插件（Pro），有复杂的 Setup 流程和 .asset 配置 | 🔴 保持现状 |
-| `Feel` / `MoreMountains` | 资源型插件，大量 .prefab/.asset/贴图，不适合迁移 | 🔴 保持现状 |
-| `ConsolePro` / `FlyingWorm` | 纯 DLL 编辑器工具，无 UPM 包，迁移收益低 | 🔴 保持现状 |
-| `NiceVibrations` / `Lofelt` | 原生 DLL 依赖复杂，不适合迁移 | 🔴 保持现状 |
-
-**判断逻辑**：
-1. 插件目录名命中上表 → **立即标记为 `保持现状`，不执行 Step 2a-2d、Step 3 的任何分析**
-2. 插件在 Step 3a 映射表中备注为 "付费插件" 或 "无需迁移" → 同上，立即跳过
-3. 只有**未命中**快速跳过列表的插件，才进入 Step 2a 的详细分析
-
-对跳过的插件，在报告中只需输出一行简述，不需要卡片详情。
+对每个插件，深入分析其内部结构：
 
 #### 2a. 识别插件类型
 
@@ -147,19 +137,18 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 - 优先匹配官方包（作者/组织名匹配插件作者）
 - 记录：包名、最新版本、发布日期
 
-常见插件的 OpenUPM 映射表（优先参考，命中后直接采用，**不再查询网络**）：
+常见插件的映射表（优先参考）：
 
-| 插件 | OpenUPM 包名 | 是否可迁移 | 建议操作 |
-|------|-------------|-----------|----------|
-| UniRx | `com.neuecc.unirx` | ✅ 可迁移 | 走 OpenUPM |
-| DOTween | ❌ 无官方包 | ⚠️ 可尝试 | 本地嵌入 |
-| DoTween Pro | ❌ 无 | ❌ 不可迁移 | 🔴 保持现状（付费插件） |
-| TextMesh Pro | 已内置 Unity | — | 🔴 无需迁移 |
-| Odin Inspector | ❌ 无 | ❌ 不可迁移 | 🔴 保持现状（付费插件） |
-| Zenject / Extenject | `com.svermeulen.extenject` | ✅ 可迁移 | 走 OpenUPM |
-| Addressables | 已内置 Unity | — | 🔴 无需迁移 |
-
-> **规则**：表中"建议操作"列为 🔴 的插件 = 快速跳过，不执行后续分析。
+| 插件 | 推荐方案 | 备注 |
+|------|---------|------|
+| UniRx | OpenUPM `com.neuecc.unirx` | 官方发布 |
+| DOTween | 本地嵌入 | 无官方 UPM 包 |
+| DoTween Pro | 本地嵌入 | 付费插件 |
+| TextMesh Pro | 已内置 Unity | 无需迁移 |
+| Odin Inspector | 🚫 不可迁移 | 深度依赖 Plugins/ 编译顺序，自动跳过 |
+| Sirenix 系列（任何） | 🚫 不可迁移 | 同 Odin |
+| Zenject / Extenject | OpenUPM `com.svermeulen.extenject` | 社区维护 |
+| Addressables | 已内置 Unity | 无需迁移 |
 
 #### 3b. 查询 Git URL
 
@@ -182,7 +171,7 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 以下情况标记为"建议保持现状"：
 - 纯资源型插件（大量 `.prefab`、`.asset`、贴图）
 - 依赖 `Plugins/` 特殊编译顺序的 DLL
-- 有复杂安装脚本的插件（如 Odin）
+- 有复杂安装脚本的插件（如 Odin——已在前置过滤中自动跳过）
 - 文件数量极其庞大（> 500 文件）
 - 插件已被深度定制/修改，迁移后难以合并
 
@@ -197,11 +186,12 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 
 | 属性 | 值 |
 |------|-----|
+| 路径 | `Assets/<实际路径>/` |
 | 类型 | `纯源码` / `纯 DLL` / `混合型` / `资源型` |
 | 版本 | `<版本号>` (来源: `<来源>`) |
 | .asmdef | `有 (N 个)` / `无` |
 | 项目引用 | `N 个文件引用` / `无引用` |
-| 推荐方案 | `OpenUPM` / `Git URL` / `本地嵌入` / `保持现状` |
+| 推荐方案 | `OpenUPM` / `Git URL` / `本地嵌入` / `保持现状` / `🚫 不可迁移` |
 
 **迁移方案详情：**
 
@@ -277,7 +267,8 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 ## 🔍 插件迁移扫描报告
 
 **扫描时间**：<时间戳>
-**发现插件**：N 个
+**扫描范围**：`Assets/` 全目录（已排除项目代码目录）
+**发现候选插件**：N 个
 
 ---
 
@@ -292,13 +283,22 @@ curl -s "https://package.openupm.com/-/v1/search?text=<plugin_name>&size=5"
 
 ---
 
+### 🚫 不可迁移（N 个）
+
+| 插件 | 路径 | 原因 |
+|------|------|------|
+| Odin Inspector | Assets/Plugins/Sirenix/ | 深度依赖 Plugins/ 编译顺序 |
+
+---
+
 ### 📊 汇总
 
-| 插件 | 推荐方案 | 可迁移 |
-|------|---------|--------|
-| PluginA | OpenUPM | ✅ |
-| PluginB | 本地嵌入 | ✅ |
-| PluginC | 保持现状 | ❌ |
+| 插件 | 路径 | 推荐方案 | 可迁移 |
+|------|------|---------|--------|
+| PluginA | Assets/Plugins/ | OpenUPM | ✅ |
+| PluginB | Assets/ThirdParty/ | 本地嵌入 | ✅ |
+| PluginC | Assets/Plugins/ | 保持现状 | ❌ |
+| Odin Inspector | Assets/Plugins/Sirenix/ | 🚫 不可迁移 | ❌ |
 ```
 
 ---
