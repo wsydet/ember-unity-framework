@@ -1,0 +1,7 @@
+{
+    "name": "com.ember.extensions",
+    "displayName": "Ember Extensions",
+    "version": "0.1.0",
+    "description": "Ember 框架扩展方法库：Unity 类型扩展、集合操作、字符串处理等便利方法。",
+    "unity": "6000.0"
+}
