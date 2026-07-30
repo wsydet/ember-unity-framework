@@ -10,6 +10,9 @@
     }
   ],
   "dependencies": {
+    "com.ember.basic": "file:com.ember.basic",
+    "com.ember.extensions": "file:com.ember.extensions",
+    "com.ember.uiextension": "file:com.ember.uiextension",
     "com.neuecc.unirx": "7.1.0",
     "com.github-glitchenzo.nugetforunity": "4.5.0",
     "com.unity.ai.navigation": "2.0.13",
