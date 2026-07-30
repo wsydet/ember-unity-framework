@@ -24,6 +24,24 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.ember.basic": {
+      "version": "file:com.ember.basic",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.ember.extensions": {
+      "version": "file:com.ember.extensions",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.ember.uiextension": {
+      "version": "file:com.ember.uiextension",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.flyingworm.consolepro": {
       "version": "file:com.flyingworm.consolepro",
       "depth": 0,

@@ -1,0 +1,9 @@
+{
+    "name": "com.ember.uiextension",
+    "displayName": "Ember UI Extension",
+    "version": "0.1.0",
+    "description": "Ember 框架 UI 扩展包：控件绑定与代码生成工具。挂载 EmberUIBinding 到预制体上，配置控件映射，由编辑器工具自动生成 C# 绑定代码。",
+    "unity": "6000.0",
+    "dependencies": {
+    }
+}

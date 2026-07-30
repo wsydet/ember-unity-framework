@@ -1,0 +1,17 @@
+{
+    "name": "Ember.UIExtension.Runtime",
+    "rootNamespace": "Ember.UIExtension",
+    "references": [
+        "Ember.Core.Runtime",
+        "Ember.UI.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
