@@ -10,11 +10,17 @@
     }
   ],
   "dependencies": {
+    "com.borodar.rainbow-folders": "file:com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy": "file:com.borodar.rainbow-hierarchy",
+    "com.cysharp.unitask": "file:com.cysharp.unitask",
+    "com.demigiant.dotween": "file:com.demigiant.dotween",
     "com.ember.basic": "file:com.ember.basic",
     "com.ember.extensions": "file:com.ember.extensions",
     "com.ember.uiextension": "file:com.ember.uiextension",
-    "com.neuecc.unirx": "7.1.0",
+    "com.flyingworm.consolepro": "file:com.flyingworm.consolepro",
     "com.github-glitchenzo.nugetforunity": "4.5.0",
+    "com.neuecc.unirx": "7.1.0",
+    "com.ryanindiedev.inputdevicedetector": "file:com.ryanindiedev.inputdevicedetector",
     "com.unity.ai.navigation": "2.0.13",
     "com.unity.cinemachine": "3.1.7",
     "com.unity.ide.rider": "3.0.38",
