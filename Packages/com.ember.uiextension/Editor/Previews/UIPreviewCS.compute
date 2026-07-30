@@ -1,0 +1,91 @@
+#pragma kernel CalcBoundingBox
+#pragma kernel ScaleBlit
+
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+
+#define THREADS_PER_GROUP 8
+
+Texture2D FullSizeRT;
+
+RWStructuredBuffer<int2> MaxCoords;
+RWStructuredBuffer<int2> MinCoords;
+
+float4 FullSize;
+float4 ClearColor;
+float4 DispatchSize;
+
+groupshared int2 groupMaxCoords[THREADS_PER_GROUP * THREADS_PER_GROUP];
+groupshared int2 groupMinCoords[THREADS_PER_GROUP * THREADS_PER_GROUP];
+
+[numthreads(THREADS_PER_GROUP, THREADS_PER_GROUP, 1)]
+void CalcBoundingBox(uint3 groupID : SV_GroupID,
+                     uint3 groupThreadID : SV_GroupThreadID,
+                     uint3 dispatchThreadID : SV_DispatchThreadID,
+                     uint groupIndex : SV_GroupIndex)
+{
+    int2 maxCoord = int2(-1, -1);
+    int2 minCoord = int2(9999, 9999);
+    if (dispatchThreadID.x < FullSize.x && dispatchThreadID.y < FullSize.y)
+    {
+        float4 color = FullSizeRT.Load(int3(dispatchThreadID.xy, 0));
+
+        float4 absDelta = abs(color - ClearColor);
+        
+        if (any(absDelta > 0.002))
+        {
+            maxCoord = dispatchThreadID.xy;
+            minCoord = dispatchThreadID.xy;
+        }
+    }
+
+    groupMaxCoords[groupIndex] = maxCoord;
+    groupMinCoords[groupIndex] = minCoord;
+
+    if (groupIndex == 0)
+    {
+        int2 groupMaxCoord = int2(-1, -1);
+        int2 groupMinCoord = int2(9999, 9999);
+        for (int i = 0; i < THREADS_PER_GROUP * THREADS_PER_GROUP; i++)
+        {
+            groupMaxCoord = int2(max(groupMaxCoord.x, groupMaxCoords[i].x), max(groupMaxCoord.y, groupMaxCoords[i].y));
+            groupMinCoord = int2(min(groupMinCoord.x, groupMinCoords[i].x), min(groupMinCoord.y, groupMinCoords[i].y));
+        }
+
+        MaxCoords[groupID.y * (int)DispatchSize.x + groupID.x] = groupMaxCoord;
+        MinCoords[groupID.y * (int)DispatchSize.x + groupID.x] = groupMinCoord;
+    }
+}
+
+Texture2D SourceTexture;
+RWTexture2D<float4> DestinationTexture;
+
+SamplerState sampler_LinearClamp;
+
+RWStructuredBuffer<int2> test;
+
+float4 SourceTextureSize;
+float4 SourceOffsetAndSize;
+float4 DestinationOffsetAndSize;
+float4 DestinationTextureSize;
+
+[numthreads(THREADS_PER_GROUP, THREADS_PER_GROUP, 1)]
+void ScaleBlit(uint3 groupID : SV_GroupID,
+               uint3 groupThreadID : SV_GroupThreadID,
+               uint3 dispatchThreadID : SV_DispatchThreadID,
+               uint groupIndex : SV_GroupIndex)
+{
+    if (dispatchThreadID.x < DestinationTextureSize.x && dispatchThreadID.y < DestinationTextureSize.y)
+    {
+        DestinationTexture[dispatchThreadID.xy] = LinearToGamma22(float4(0.05, 0.05, 0.05, 1.0));
+        
+        if (all(dispatchThreadID >= DestinationOffsetAndSize.xy) && all(dispatchThreadID < DestinationOffsetAndSize.xy + DestinationOffsetAndSize.zw))
+        {
+            int2 destinationRelativeCoord = dispatchThreadID - DestinationOffsetAndSize.xy;
+            float2 destinationRelativeUV = destinationRelativeCoord / DestinationOffsetAndSize.zw;
+            float2 sourceRelativeCoord = destinationRelativeUV * SourceOffsetAndSize.zw + SourceOffsetAndSize.xy;
+            float2 sourceRelativeUV = sourceRelativeCoord * SourceTextureSize.zw;
+
+            DestinationTexture[dispatchThreadID.xy] = LinearToGamma22(SourceTexture.SampleLevel(sampler_LinearClamp, sourceRelativeUV, 0));
+        }
+    }
+}
