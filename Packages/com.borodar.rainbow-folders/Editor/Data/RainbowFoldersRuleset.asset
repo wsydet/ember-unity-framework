@@ -364,7 +364,7 @@ MonoBehaviour:
   - Type: 1
     Key: Assets/Ember/Resource
     Ordinal: 29
-    Priority: 0
+    Priority: -1
     IconType: 2140
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
