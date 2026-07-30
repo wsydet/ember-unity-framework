@@ -2,7 +2,8 @@
     "name": "Ember.Input.Runtime",
     "rootNamespace": "Ember.Input",
     "references": [
-        "Ember.Core.Runtime"
+        "Ember.Core.Runtime",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
