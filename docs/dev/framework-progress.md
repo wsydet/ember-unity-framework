@@ -44,6 +44,11 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 5 | **Audio** | `Ember.Audio.Runtime` | ✅ 已完成 | `AudioMgr` |
 | 6 | **Input** | `Ember.Input.Runtime` | ✅ 已完成 | Unity Input System 封装 |
 | 7 | **Editor** | `Ember.Editor` | ✅ 已完成 | 框架级编辑器工具 |
+| 8 | **Manager 自动发现** | `Ember.Core.Runtime` | ✅ 已完成 | `GameMgrCollector` + `IManager` |
+| 9 | **Update 循环管理器** | `Ember.Core.Runtime` | ✅ 已完成 | `GameUpdateManager` |
+| 10 | **Timer 定时器** | `Ember.Core.Runtime` | ⬜ 待开始 | `TimerManage`（基于 UniTask，放入 com.ember.extensions） |
+| 11 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
+| 12 | **日志系统** | `Ember.Core.Runtime` | ⬜ 待开始 | `Debuger` + `GameLogManager` |
 
 ---
 
@@ -173,9 +178,9 @@ public static class EmberEventBusExtensions
 
 ### 待设计讨论
 
-- [ ] 是否需要 Timer/TimerManager？（burner 有 `TimerManage`）
-- [ ] 是否需要 Update 循环管理器？（burner 有 `GameUpdateManager` 反射扫描 `IGameUpdate`）
-- [ ] 是否需要 Manager 自动发现机制？（burner 有 `GameMgrCollector` + `[InitOrder]`）
+- [x] ~~是否需要 Timer/TimerManager？~~ → ✅ 已完成（§10，基于 UniTask）
+- [x] ~~是否需要 Update 循环管理器？~~ → ✅ 已完成（§9）
+- [x] ~~是否需要 Manager 自动发现机制？~~ → ✅ 已完成（§8）
 
 ---
 
@@ -422,6 +427,101 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 
 ---
 
+## 8. Manager 自动发现 `Ember.Core.Runtime`
+
+> 状态：✅ 已完成
+> burner 参考：`GameMgrCollector` + `IManager` + `[InitOrder]`
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 管理器接口：Init() / Destroy() | burner `IManager` |
+| [EmberInitOrderAttribute.cs](../../Assets/Ember/Core/Runtime/EmberInitOrderAttribute.cs) | 初始化顺序特性，预定义 Core=100 → Game=700 | burner `[InitOrder]` |
+| [EmberManagerCollector.cs](../../Assets/Ember/Core/Runtime/EmberManagerCollector.cs) | 反射扫描 → 按 Order 排序 → 依次 Init / 逆序 Destroy | burner `GameMgrCollector` |
+
+---
+
+## 9. Update 循环管理器 `Ember.Core.Runtime`
+
+> 状态：✅ 已完成
+> burner 参考：`GameUpdateManager` + `IGameUpdate`
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [IEmberUpdate.cs](../../Assets/Ember/Core/Runtime/IEmberUpdate.cs) | IEmberUpdate / IEmberLateUpdate / IEmberFixedUpdate 接口 | burner `IGameUpdate` |
+| [EmberUpdateManager.cs](../../Assets/Ember/Core/Runtime/EmberUpdateManager.cs) | 反射扫描 + 每帧统一驱动所有 IEmberUpdate | burner `GameUpdateManager` |
+
+---
+
+## 10. Timer 定时器 `com.ember.extensions`
+
+> 状态：⬜ 待开始（暂定放入 com.ember.extensions，避免 Core 依赖 UniTask）
+> burner 参考：`TimerManage`
+
+### 规划
+
+- int-ID API（Delay / Interval / Schedule / Cancel），内部委托 UniTask
+- 保持 Core 零外部依赖，Timer 作为可选扩展
+
+---
+
+## 11. GameState 状态机 `Ember.Core.Runtime`
+
+> 状态：✅ 已完成
+> burner 参考：`GameStateManager` + `GameStateBase`
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [EmberStateMachine.cs](../../Assets/Ember/Core/Runtime/EmberStateMachine.cs) | 状态机引擎：Register / Start / TransitionTo / Push / Pop | burner `GameStateManager` |
+| [InitState.cs](../../Assets/Ember/Core/Runtime/InitState.cs) | 框架内置必需状态（IsRequired = true），不可注销 | — |
+
+### 设计要点
+
+**适配单机 & 网游**：状态不是枚举而是类，用户自由添加——
+
+```csharp
+fsm.Register(new InitState());       // 框架内置，IsRequired = true
+fsm.Register(new LoginState());      // 自定
+fsm.Register(new MainMenuState());   // 自定
+fsm.Register(new ConnectingState()); // 网游专用
+fsm.Register(new ReconnectingState()); // 网游专用
+fsm.Register(new BattleState());     // 自定
+```
+
+**图形化编辑器预留**：
+- `RegisteredStates` 返回所有已注册状态（反射枚举）
+- `Name` / `Description` 给编辑器展示
+- `IsRequired = true` 的状态不可注销
+- `Unregister<T>()` 拒绝删除必需状态和当前活跃状态
+
+**TransitionTo vs Push/Pop**：
+
+```csharp
+fsm.TransitionTo<BattleState>();     // Exit MainMenu → Enter Battle（替换式）
+fsm.Push<SettingsState>();           // Pause Battle → Overlay Settings（覆盖式）
+fsm.Pop();                           // Exit Settings → Resume Battle
+```
+
+---
+
+## 12. 日志系统 `Ember.Core.Runtime`
+
+> 状态：⬜ 待开始
+> burner 参考：`Debuger` + `GameLogManager`
+
+### 规划
+
+- 标签化日志：`[Audio]`、`[UI]`、`[Scene]`，方便按模块过滤
+- 运行时开关：线上关闭 Debug 级别日志，减少 GC
+- 文件写出：崩溃后可从日志文件追溯
+
+---
+
 ## 程序集依赖图
 
 ```
@@ -456,3 +556,44 @@ Ember.Core.Runtime          (零依赖，叶子)
 |------|------|
 | 2026-07-25 | 创建框架目录结构，13 个目录 + 13 个 .asmdef |
 | 2026-07-25 | 完成 burner 项目框架层全面分析 |
+| 2026-07-29 | Core 模块完成（EventBus / ServiceLocator / Singleton / ObjectPool / BroadcastEvent） |
+| 2026-07-29 | UI 模块完成（IUIView / PageDef / EmberUIManager） |
+| 2026-07-29 | Resource 模块完成（IResourceProvider / EmberResourceManager / ResourcesProvider） |
+| 2026-07-30 | Scene / Audio / Input / Editor 模块完成 |
+| 2026-07-30 | Manager 自动发现系统完成（IEmberManager + EmberManagerCollector） |
+| 2026-07-30 | Update 循环管理器完成（IEmberUpdate + EmberUpdateManager） |
+| 2026-07-30 | burner 基础包迁移（basic / extensions / uiextension，全部注释待适配） |
+
+---
+
+## 技术债务 & 待重构
+
+> 临时方案和已知问题，每次改完划掉。
+
+### 🔴 待修改（影响架构）
+
+| # | 事项 | 当前 | 目标 |
+|---|------|------|------|
+| 1 | **现有 Manager 实现 IEmberManager** | 6 个 EmberXxxManager 各自 Init | 统一 `IEmberManager` + `[EmberInitOrder]`，交给 `EmberManagerCollector` |
+| 2 | **EmberUpdateManager 去 MonoBehaviour** | 自己继承 `EmberMonoSingleton` | 纯 C# 类，由 `GameLauncher` 驱动（burner 模式） |
+| 3 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
+| 4 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
+
+### 🟡 待补完（功能完整度）
+
+| # | 事项 | 说明 |
+|---|------|------|
+| 5 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按阶段初始化，支持 `ResetModuleData()` |
+| 6 | **GameLauncher 入口** | 集中驱动 Update、Manager 初始化、状态切换 |
+| 7 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
+| 8 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
+
+### 🟢 待扩展（增强项）
+
+| # | 事项 |
+|---|------|
+| 9 | Audio 多 Category + AudioAgent 池 |
+| 10 | GameObject 预制体对象池 |
+| 11 | 本地化 |
+| 12 | Canvas 层自动挂载 CanvasScaler + Raycaster |
+| 13 | UI Pop 动画 |
