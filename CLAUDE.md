@@ -151,11 +151,19 @@ public class ExampleManager : MonoBehaviour
 - 业务层 `.asmdef` 只能引用框架层，不能反向
 - 编辑器代码放在独立的 `Editor` 程序集中
 
+## 当前状态
+
+- [x] 框架核心 Core（EventBus / ServiceLocator / Singleton / ObjectPool / BroadcastEvent）
+- [x] 资源管理 Resource（IResourceProvider / EmberResourceManager / ResourcesProvider）
+- [x] UI 管理 UI（IUIView / PageDef / EmberUIManager）
+- [x] 场景管理 Scene（EmberSceneManager）
+- [x] 音频管理 Audio（EmberAudioManager）
+- [x] 输入管理 Input（EmberInputManager）
+- [x] 编辑器工具 Editor（OdinIntegrationTest）
+- [x] burner 基础包迁移（basic / extensions / uiextension，待适配）
+
 ## 下一步计划
 
-1. [ ] 搭建框架核心：EventBus、ServiceLocator、Singleton
-2. [ ] 设计 Package 结构和 .asmdef 划分方案
-3. [ ] 实现资源管理模块
-4. [ ] 实现 UI 管理模块（界面栈 + 生命周期）
-5. [ ] 实现场景管理模块
-6. [ ] 探索蓝图编辑器技术方案
+1. [ ] 构建示例 Game 场景，展示框架用法
+2. [ ] 适配 burner 基础包到 ember（basic → extensions → uiextension）
+3. [ ] 探索蓝图编辑器技术方案

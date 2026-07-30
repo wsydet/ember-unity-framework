@@ -38,12 +38,12 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 序号 | 模块 | 程序集 | 状态 | 参考 burner |
 |------|------|--------|------|-------------|
 | 1 | **Core** | `Ember.Core.Runtime` | ✅ 已完成 | `GameCore.Runtime` + `Burner.Basic` |
-| 2 | **Resource** | `Ember.Resource.Runtime` | ⬜ 待开始 | `ResManager` + `IResourceProxy` + YooAsset |
-| 3 | **UI** | `Ember.UI.Runtime` | ⬜ 待开始 | `GameUIManager` + `Burner.UIExtension` |
-| 4 | **Scene** | `Ember.Scene.Runtime` | ⬜ 待开始 | `GameSceneManager` |
-| 5 | **Audio** | `Ember.Audio.Runtime` | ⬜ 待开始 | `AudioMgr` |
-| 6 | **Input** | `Ember.Input.Runtime` | ⬜ 待开始 | Unity Input System 封装 |
-| 7 | **Editor** | `Ember.Editor` | ⬜ 待开始 | 框架级编辑器工具 |
+| 2 | **Resource** | `Ember.Resource.Runtime` | ✅ 已完成 | `ResManager` + `IResourceProxy` + YooAsset |
+| 3 | **UI** | `Ember.UI.Runtime` | ✅ 已完成 | `GameUIManager` + `Burner.UIExtension` |
+| 4 | **Scene** | `Ember.Scene.Runtime` | ✅ 已完成 | `GameSceneManager` |
+| 5 | **Audio** | `Ember.Audio.Runtime` | ✅ 已完成 | `AudioMgr` |
+| 6 | **Input** | `Ember.Input.Runtime` | ✅ 已完成 | Unity Input System 封装 |
+| 7 | **Editor** | `Ember.Editor` | ✅ 已完成 | 框架级编辑器工具 |
 
 ---
 
@@ -105,13 +105,13 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 
 ```csharp
 // Resource 模块初始化完毕 —— 不知道谁关心，广播一下
-EmberEventBus.Dispatch("Module.Resource.Ready");
+EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
 
 // Scene 模块监听 —— "Resource Ready 了我才开始加载"
-EmberEventBus.Subscribe("Module.Resource.Ready", () => StartLoadScene());
+EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, () => StartLoadScene());
 
 // Audio 模块也监听 —— "Resource Ready 了我预热音频"
-EmberEventBus.Subscribe("Module.Resource.Ready", () => PreloadBGM());
+EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, () => PreloadBGM());
 ```
 
 **具体效果 → UniRx Subject**（数据流型）：
@@ -154,10 +154,10 @@ playerRuntime.OnHpChanged
 public static class EmberEventBusExtensions
 {
     /// <summary>
-    /// 将 EmberEventBus 的 string-key 广播事件转为 UniRx IObservable，
+    /// 将 EmberEventBus 的 int-key 广播事件转为 UniRx IObservable，
     /// 让业务层可以享受操作符便利。
     /// </summary>
-    public static IObservable<T> OnEvent<T>(string eventKey)
+    public static IObservable<T> OnEvent<T>(int eventKey)
     {
         return Observable.FromEvent<Action<T>, T>(
             h => EmberEventBus.Subscribe(eventKey, h),
@@ -181,67 +181,244 @@ public static class EmberEventBusExtensions
 
 ## 2. Resource 模块 `Ember.Resource.Runtime`
 
-> 状态：⬜ 待开始
+> 状态：✅ 已完成
 > burner 参考：`Assets/Game/GameCore/Runtime/Common/Res/`
 
-### 规划
+### 设计思路
 
-- IResourceProvider — 资源提供者接口（参考 burner `IResourceProxy`）
-- EmberResourceManager — 资源管理器门面（参考 burner `ResManager`）
-- 默认实现基于 Unity Addressables 或 Resources
-- 支持可插拔的资源后端（Addressables / AssetBundle / YooAsset）
+Resource 模块是框架资源加载的统一入口，核心思想是**接口隔离**——
+框架只定义 `IResourceProvider` 接口，具体后端由使用者实现并注册。
+上层模块通过 `EmberResourceManager` 消费资源，不感知底层是 Resources、Addressables 还是 YooAsset。
+
+```
+UI / Scene / Audio / ...
+        │
+        ▼
+EmberResourceManager (Singleton Facade)
+        │
+        ▼
+IResourceProvider (接口)
+        │
+        ├── ResourcesProvider (开发/小项目)
+        ├── AddressablesProvider (正式项目)
+        └── YooAssetProvider (热更新/大项目)
+```
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [Ember.Resource.Runtime.asmdef](../../Assets/Ember/Resource/Runtime/Ember.Resource.Runtime.asmdef) | 程序集定义，依赖 Ember.Core.Runtime | — |
+| [IResourceProvider.cs](../../Assets/Ember/Resource/Runtime/IResourceProvider.cs) | 资源提供者接口：Init / LoadAssetAsync / LoadSceneAsync / Unload / Progress | burner `IResourceProxy` |
+| [EmberResourceManager.cs](../../Assets/Ember/Resource/Runtime/EmberResourceManager.cs) | 资源管理器门面，EmberMonoSingleton，委托 Provider 执行加载，管理生命周期事件 | burner `ResManager` |
+
+### API 速览
+
+```csharp
+// 启动时
+EmberResourceManager.Instance.Initialize(new AddressablesProvider(), success => { ... });
+
+// 运行时
+EmberResourceManager.Instance.LoadAssetAsync<Sprite>("ui/icons/coin", sprite => { ... });
+EmberResourceManager.Instance.LoadSceneAsync("Battle");
+EmberResourceManager.Instance.UnloadUnusedAssets();
+```
+
+### 生命周期
+
+```
+Initialize(provider)
+    │
+    ├─→ Provider.Initialize()
+    └─→ Dispatch(ResourceReady)
+
+销毁时：
+    └─→ Dispatch(ResourceShutdown) → UnloadUnusedAssets
+```
+
+### 待扩展
+
+- [ ] 默认 `ResourcesProvider` 实现（零配置开发入门）
+- [ ] 引用计数与自动卸载策略
+- [ ] 资源加载句柄（Handle）支持取消和追踪
 
 ---
 
 ## 3. UI 模块 `Ember.UI.Runtime`
 
-> 状态：⬜ 待开始
+> 状态：✅ 已完成
 > burner 参考：`Assets/Game/GameLogic/GameManagers/UIFramework/` + `com.burner.uiextension`
 
-### 规划
+### 设计思路
 
-- IUIView — 界面生命周期接口（OnOpen / OnClose / OnPause / OnResume）
-- EmberUIManager — 界面栈管理（Push / Pop / 层级管理）
-- 支持 Canvas 层级系统：Background → Normal → Popup → TopMost → Loading
+UI 模块管理所有界面的**层级关系**和**显示/隐藏切换**。
+核心是四个 Canvas 层（每层一个界面栈）+ IUIView 生命周期的四个阶段。
+
+```
+层级：Background(0) → Normal(100) → Popup(200) → TopMost(300)
+
+每层一个栈：
+  Push → LoadAssetAsync → Instantiate → PauseTop → OnOpen → 压入栈
+  Pop  → OnClose → Destroy → ResumeTop → 弹出栈
+```
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [Ember.UI.Runtime.asmdef](../../Assets/Ember/UI/Runtime/Ember.UI.Runtime.asmdef) | 程序集定义，依赖 Ember.Core.Runtime | — |
+| [IUIView.cs](../../Assets/Ember/UI/Runtime/IUIView.cs) | 界面生命周期接口：OnOpen / OnClose / OnPause / OnResume | burner `GameUIBase` |
+| [PageDef.cs](../../Assets/Ember/UI/Runtime/PageDef.cs) | 页面元数据定义：预制体路径 + 层级，支持静态注册表 | burner `PageDef` |
+| [EmberUIManager.cs](../../Assets/Ember/UI/Runtime/EmberUIManager.cs) | UI 管理器：层级 Canvas 按需创建、界面栈推送/Pop、生命周期分发 | burner `GameUIManager` |
+
+### API 速览
+
+```csharp
+// 静态注册表（手写或工具生成）
+public static class GamePages
+{
+    public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal);
+    public static readonly PageDef Settings = new("ui/settings",  UILayer.Popup);
+    public static readonly PageDef Loading  = new("ui/loading",   UILayer.TopMost);
+}
+
+// 打开页面
+EmberUIManager.Instance.Push(GamePages.Settings, args: null);
+
+// 返回键
+EmberUIManager.Instance.Pop(UILayer.Popup);
+
+// 检查有无弹窗
+if (EmberUIManager.Instance.HasView((int)UILayer.Popup)) { ... }
+```
+
+### 生命周期
+
+```
+Push(GamePages.Settings, args)
+    │
+    ├─→ main_menu.OnPause()          ← 被遮挡
+    ├─→ EmberResourceManager.LoadAssetAsync(预制体)
+    ├─→ Instantiate
+    └─→ settings.OnOpen(args)
+
+按返回键 → Pop(UILayer.Popup)
+    ├─→ settings.OnClose()
+    ├─→ Destroy(settings)
+    └─→ main_menu.OnResume()         ← 重新可见
+```
+
+### 待扩展
+
+- [ ] Canvas 层自动挂载 Canvas + CanvasScaler + GraphicRaycaster 组件
+- [ ] Pop 动画支持（淡入淡出、滑动）
+- [ ] 按返回键自动 Pop 最顶层（内置返回键监听）
 
 ---
 
 ## 4. Scene 模块 `Ember.Scene.Runtime`
 
-> 状态：⬜ 待开始
+> 状态：✅ 已完成
 > burner 参考：`Assets/Game/GameLogic/GameManagers/GameScene/`
 
-### 规划
+### 设计思路
 
-- EmberSceneManager — 场景加载/卸载
-- 过渡效果支持（Loading 界面、淡入淡出）
-- 场景原型（Archetype）映射
+Scene 模块封装 Unity SceneManager，提供异步加载/卸载、激活前回调、过渡切换。
+核心是基于协程的进度轮询 + `allowSceneActivation` 机制，
+在场景加载到 90% 时触发 `OnBeforeActivate`，允许模块在激活前做初始化。
 
----
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [Ember.Scene.Runtime.asmdef](../../Assets/Ember/Scene/Runtime/Ember.Scene.Runtime.asmdef) | 程序集定义，依赖 Core + Resource | — |
+| [EmberSceneManager.cs](../../Assets/Ember/Scene/Runtime/EmberSceneManager.cs) | 场景管理器：异步加载/卸载/过渡，OnBeforeActivate 回调 | burner `GameSceneManager` |
+
+### API 速览
+
+```csharp
+// 叠加加载
+EmberSceneManager.Instance.LoadSceneAsync("Battle", () => Debug.Log("就绪"));
+
+// 切换（加载新 + 卸载旧）
+EmberSceneManager.Instance.TransitionTo("Battle", "MainMenu");
+
+// 激活前回调（初始化时机）
+EmberSceneManager.Instance.OnBeforeActivate += (scene, activate) =>
+{
+    // 初始化操作...
+    activate(); // 完成后激活场景
+};
+```
+
+### 生命周期
+
+```
+LoadSceneAsync("Battle")
+    │
+    ├─→ Progress: 0.0 → 0.9
+    ├─→ OnBeforeActivate(scene, activate)
+    ├─→ activate()  ← 由业务层调用
+    ├─→ Progress: 1.0
+    └─→ Dispatch(SceneLoaded)
+```
 
 ## 5. Audio 模块 `Ember.Audio.Runtime`
 
-> 状态：⬜ 待开始
+> 状态：✅ 已完成
 > burner 参考：`Assets/Game/GameLogic/GameManagers/Audio/`
 
-### 规划
+### 文件清单
 
-- EmberAudioManager — 音频管理（BGM / SFX 分离）
-- AudioGroup 音量分组控制
-- 基于 Unity Audio Mixer
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [Ember.Audio.Runtime.asmdef](../../Assets/Ember/Audio/Runtime/Ember.Audio.Runtime.asmdef) | 程序集定义，依赖 Ember.Core.Runtime | — |
+| [EmberAudioManager.cs](../../Assets/Ember/Audio/Runtime/EmberAudioManager.cs) | 音频管理器：BGM/SFX 分离、Mixer 音量控制 | burner `AudioMgr` |
+
+### API 速览
+
+```csharp
+EmberAudioManager.Instance.Init(mixer);
+EmberAudioManager.Instance.PlayBGM(bgmClip, loop: true);
+EmberAudioManager.Instance.PlaySFX(sfxClip);
+EmberAudioManager.Instance.SetBGMVolume(0.8f);
+```
 
 ---
 
 ## 6. Input 模块 `Ember.Input.Runtime`
 
-> 状态：⬜ 待开始
+> 状态：✅ 已完成
 > burner 参考：Unity Input System 封装
 
-### 规划
+### 文件清单
 
-- 基于 Unity Input System 的抽象层
-- 支持运行时切换输入 Action Map
-- 输入事件桥接到 EmberEventBus
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [Ember.Input.Runtime.asmdef](../../Assets/Ember/Input/Runtime/Ember.Input.Runtime.asmdef) | 程序集定义，依赖 Ember.Core.Runtime | — |
+| [EmberInputManager.cs](../../Assets/Ember/Input/Runtime/EmberInputManager.cs) | 输入管理器：Action Map 切换、GetAxis/IsPressed | Unity Input System |
+
+### API 速览
+
+```csharp
+EmberInputManager.Instance.Init(inputActions, defaultMap: "Gameplay");
+EmberInputManager.Instance.SwitchMap("UI");
+var move = EmberInputManager.Instance.GetAxis("Move");
+if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
+```
+
+---
+
+## 7. Editor 模块 `Ember.Editor`
+
+> 状态：✅ 已完成
+
+### 文件清单
+
+| 文件 | 职责 |
+|------|------|
+| [Ember.Editor.asmdef](../../Assets/Ember/Editor/Ember.Editor.asmdef) | 编辑器程序集，依赖 Core.Runtime + Core.Editor |
+| [OdinIntegrationTest.cs](../../Assets/Ember/Editor/OdinIntegrationTest.cs) | Odin Inspector 集成检测工具 |
 
 ---
 
