@@ -54,6 +54,9 @@ namespace Ember.Core
         /// <summary>Core 模块即将销毁，所有模块应在此事件中清理订阅</summary>
         public const int CoreShutdown = Core + 2;
 
+        /// <summary>游戏状态发生切换（oldState → newState）</summary>
+        public const int GameStateChanged = Core + 3;
+
         // ============================================================
         // Resource 模块事件（Resource + 1 ~ Resource + 99）
         // ============================================================
