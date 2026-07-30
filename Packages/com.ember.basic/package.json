@@ -1,0 +1,7 @@
+{
+    "name": "com.ember.basic",
+    "displayName": "Ember Basic",
+    "version": "0.1.0",
+    "description": "Ember 框架基础库：数学工具、集合扩展、Debug 工具等底层通用能力。",
+    "unity": "6000.0"
+}
