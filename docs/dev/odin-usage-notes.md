@@ -131,7 +131,7 @@ public int mp;
 ### 2.4 参考脚本
 
 完整的 Odin 特性演示和正确用法见：
-`Assets/Ember/Examples/OdinInspectorDemo.cs`
+`Assets/Tem/Examples/OdinInspectorDemo.cs`
 
 ---
 

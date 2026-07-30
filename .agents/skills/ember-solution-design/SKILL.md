@@ -74,7 +74,7 @@ description: >-
 | 文件 | 相关性 | 说明 |
 |------|--------|------|
 | Assets/Game/UI/MainPanel.cs | 直接相关 | 需要添加动画的面板脚本 |
-| Assets/Ember/Examples/OdinInspectorDemo.cs | 参考 | 使用了类似的属性面板模式 |
+| Assets/Tem/Examples/OdinInspectorDemo.cs | 参考 | 使用了类似的属性面板模式 |
 
 **可用的框架能力：**
 - DOTween：补间动画（`transform.DOMove`、`DOFade` 等）

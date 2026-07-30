@@ -11,7 +11,7 @@ description: >-
 ## 概述
 
 检查指定脚本的 Odin Inspector 面板定义，对照 `docs/dev/odin-usage-notes.md`
-和 `Assets/Ember/Examples/OdinInspectorDemo.cs` 中的规范，
+和 `Assets/Tem/Examples/OdinInspectorDemo.cs` 中的规范，
 发现兼容性问题并给出修正建议。
 
 **只读分析，用户确认后再写入。**
@@ -21,7 +21,7 @@ description: >-
 ## 前置条件
 
 1. 读取 `docs/dev/odin-usage-notes.md`，缓存所有已知问题、规则和示例
-2. 读取 `Assets/Ember/Examples/OdinInspectorDemo.cs`，缓存正确的 Odin 用法示范
+2. 读取 `Assets/Tem/Examples/OdinInspectorDemo.cs`，缓存正确的 Odin 用法示范
 
 ---
 

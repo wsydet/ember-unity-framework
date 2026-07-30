@@ -22,7 +22,7 @@ description: >-
 ## 前置条件
 
 1. 读取 `docs/dev/odin-usage-notes.md`，缓存所有已有规则
-2. 读取 `Assets/Ember/Examples/OdinInspectorDemo.cs`，缓存参考脚本的现有模式
+2. 读取 `Assets/Tem/Examples/OdinInspectorDemo.cs`，缓存参考脚本的现有模式
 
 ---
 
