@@ -102,20 +102,20 @@ feature/核心事件系统            # ❌ 中文
 
 | type | 说明 | 示例 |
 |------|------|------|
-| `feat` | 新功能 | `feat(core): add EventBus system` |
-| `fix` | 修复 bug | `fix(ui): fix page stack pop order` |
-| `refactor` | 重构（不改变功能） | `refactor(resource): simplify load path` |
-| `docs` | 文档变更 | `docs: add git conventions` |
-| `style` | 格式调整（空格、缩进等） | `style(core): format code` |
-| `chore` | 工程配置、依赖更新 | `chore: add DOTween package` |
-| `test` | 测试相关 | `test(core): add EventBus unit test` |
-| `build` | 构建/CI 相关 | `build: configure Android build` |
+| `feat` | 新功能 | `feat(core): 新增 EventBus 发布订阅系统` |
+| `fix` | 修复 bug | `fix(ui): 修复界面栈弹出顺序错误` |
+| `refactor` | 重构（不改变功能） | `refactor(resource): 简化资源加载路径` |
+| `docs` | 文档变更 | `docs: 新增 Git 提交规范文档` |
+| `style` | 格式调整（空格、缩进等） | `style(core): 统一代码格式` |
+| `chore` | 工程配置、依赖更新 | `chore: 添加 DOTween 嵌入式包` |
+| `test` | 测试相关 | `test(core): 新增 EventBus 单元测试` |
+| `build` | 构建/CI 相关 | `build: 配置 Android 构建参数` |
 
 不需要 scope 时可省略括号：
 
 ```
-docs: update CLAUDE.md
-chore: upgrade Unity to 6000.5.4
+docs: 更新 CLAUDE.md 项目概述
+chore: 升级 Unity 至 6000.5.4
 ```
 
 ### 2.3 scope（范围）
@@ -135,9 +135,8 @@ chore: upgrade Unity to 6000.5.4
 
 ### 2.4 subject（描述）
 
-- 使用英文
-- 全部小写
-- 简洁清晰，一句话说清做了什么
+- **使用中文**，简洁清晰，一句话说清做了什么
+- type 和 scope 保持英文小写（符合 Conventional Commits 规范）
 - 结尾不加句号
 - 不超过 72 个字符
 
@@ -145,16 +144,16 @@ chore: upgrade Unity to 6000.5.4
 
 ```
 # ✅ 好的提交
-feat(core): add EventBus with pub/sub support
-fix(ui): fix null reference when closing panel
-refactor(resource): extract resource proxy interface
-docs: add git branch and commit conventions
-chore: add DOTween as embedded package
+feat(core): 新增 EventBus 发布订阅系统
+fix(ui): 修复关闭界面时的空引用异常
+refactor(resource): 提取资源代理接口
+docs: 新增 Git 分支与提交规范
+chore: 添加 DOTween 为嵌入式包
 
 # ❌ 不好的提交
 update code                        # 太模糊
-feat: 添加了事件系统                  # 混用中文
-feat(core): add EventBus system.   # 结尾有句号
+feat(core): add EventBus system    # subject 应为中文
+feat(core): 新增 EventBus 系统。    # 结尾有句号
 fix bug                            # 缺少 type 和描述
 ```
 
