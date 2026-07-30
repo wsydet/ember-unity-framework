@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using Ember.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,8 +36,28 @@ namespace Ember.Scene
         /// <summary>是否正在加载场景中</summary>
         public bool IsLoading { get; private set; }
 
-        /// <summary>当前加载进度（0.0 ~ 1.0），未加载时为 1.0</summary>
+        /// <summary>真实加载进度（0.0 ~ 1.0），未加载时为 1.0</summary>
         public float Progress { get; private set; }
+
+        /// <summary>
+        /// 展示用进度（0.0 ~ 1.0），经过平滑处理，适合 UI 绑定。
+        /// 真实加载完成时约为 <see cref="_displayMaxRatio"/>，
+        /// 随后在 <see cref="_smoothDuration"/> 秒内平滑过渡到 1.0。
+        /// </summary>
+        public float DisplayProgress { get; private set; }
+
+        /// <summary>
+        /// 真实加载完成时，展示进度映射到的比例（0.0 ~ 1.0），默认 0.6。
+        /// 值越大，玩家看到的进度条"填充感"越强，但平滑收尾的余地越小。
+        /// 调参建议：小场景 0.5 / 中型场景 0.6 / 大型场景 0.7。
+        /// </summary>
+        [SerializeField] private float _displayMaxRatio = 0.6f;
+
+        /// <summary>
+        /// 加载完成后，展示进度平滑过渡到 1.0 的时长（秒），默认 1.0。
+        /// 调参建议：小场景 0.5s / 中型场景 1.0s / 大型场景 1.5s。
+        /// </summary>
+        [SerializeField] private float _smoothDuration = 1f;
 
         /// <summary>
         /// 场景加载完成、尚未激活时的回调。
@@ -161,6 +181,7 @@ namespace Ember.Scene
         {
             IsLoading = true;
             Progress = 0f;
+            DisplayProgress = 0f;
             CurrentScene = sceneName;
 
             var op = SceneManager.LoadSceneAsync(sceneName, mode);
@@ -169,6 +190,7 @@ namespace Ember.Scene
                 Debug.LogError($"[Ember] EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
                 IsLoading = false;
                 Progress = 1f;
+                DisplayProgress = 1f;
                 onComplete?.Invoke();
                 return;
             }
@@ -177,47 +199,71 @@ namespace Ember.Scene
             // 触发 OnBeforeActivate 后再激活
             op.allowSceneActivation = false;
 
-            // 启动协程轮询进度
-            StartCoroutine(LoadRoutine(op, sceneName, onComplete));
+            // 使用 UniTask 异步驱动加载流程（比协程性能更优）
+            LoadAsync(op, sceneName, onComplete).Forget();
         }
 
-        private IEnumerator LoadRoutine(AsyncOperation op, string sceneName, Action onComplete)
+        private async UniTask LoadAsync(AsyncOperation op, string sceneName, Action onComplete)
         {
-            var wait = new WaitForEndOfFrame();
-
+            // Phase 1: 等待加载到 0.9，同时更新展示进度（按比例映射）
             while (op.progress < 0.9f)
             {
                 Progress = op.progress;
-                yield return wait;
+                DisplayProgress = Progress * _displayMaxRatio;
+                await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
             Progress = 0.9f;
+            DisplayProgress = Progress * _displayMaxRatio;
 
+            // Phase 2: OnBeforeActivate 回调（使用 TCS 桥接回调到 async/await）
             UnityEngine.SceneManagement.Scene scene = SceneManager.GetSceneByName(sceneName);
             if (OnBeforeActivate != null)
             {
-                var activated = false;
+                var tcs = new UniTaskCompletionSource();
                 OnBeforeActivate.Invoke(scene, () =>
                 {
                     op.allowSceneActivation = true;
-                    activated = true;
+                    tcs.TrySetResult();
                 });
-
-                while (!activated)
-                    yield return wait;
+                await tcs.Task;
             }
             else
             {
                 op.allowSceneActivation = true;
             }
 
+            // Phase 3: 等待场景激活完成
             while (!op.isDone)
-                yield return wait;
+                await UniTask.Yield(PlayerLoopTiming.Update);
 
             Progress = 1f;
+
+            // Phase 4: 展示进度平滑过渡（60% → 100%），作为场景切换的视觉缓冲
+            await SmoothProgressAsync();
+
             IsLoading = false;
             EmberEventBus.Dispatch(EmberBroadcastEvent.SceneLoaded);
             onComplete?.Invoke();
+        }
+
+        /// <summary>
+        /// 将 <see cref="DisplayProgress"/> 从当前值平滑过渡到 1.0，
+        /// 持续 <see cref="_smoothDuration"/> 秒，消除真实进度的跳跃感。
+        /// </summary>
+        private async UniTask SmoothProgressAsync()
+        {
+            float elapsed = 0f;
+            float start = DisplayProgress;
+
+            while (elapsed < _smoothDuration)
+            {
+                elapsed += Time.deltaTime;
+                DisplayProgress = Mathf.Lerp(start, 1f, elapsed / _smoothDuration);
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
+            DisplayProgress = 1f;
         }
 
         #endregion

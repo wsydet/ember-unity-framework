@@ -3,7 +3,8 @@
     "rootNamespace": "Ember.Scene",
     "references": [
         "Ember.Core.Runtime",
-        "Ember.Resource.Runtime"
+        "Ember.Resource.Runtime",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
