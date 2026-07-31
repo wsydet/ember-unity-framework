@@ -25,7 +25,8 @@ namespace Ember.Input
     /// var move = EmberInputManager.Instance.GetAxis("Move");
     /// </code>
     /// </summary>
-    public class EmberInputManager : EmberMonoSingleton<EmberInputManager>
+    [EmberInitOrder(EmberInitOrderAttribute.Input)]
+    public class EmberInputManager : EmberSingleton<EmberInputManager>, IEmberManager
     {
         private const string TAG = LogTags.InputManager;
         #region 参数
@@ -53,10 +54,17 @@ namespace Ember.Input
         {
             if (_initialized) return;
 
+            var host = GameLauncher.Instance.InputHost;
+            if (host == null)
+            {
+                EmberDebug.LogError(TAG, "GameBoot 下缺少 InputHost 子节点，InputManager 无法初始化。");
+                return;
+            }
+
             _actionAsset = actionAsset;
-            _playerInput = GetComponent<PlayerInput>();
+            _playerInput = host.GetComponent<PlayerInput>();
             if (_playerInput == null)
-                _playerInput = gameObject.AddComponent<PlayerInput>();
+                _playerInput = host.AddComponent<PlayerInput>();
 
             _playerInput.actions = _actionAsset;
             _playerInput.notificationBehavior = PlayerNotifications.InvokeUnityEvents;
@@ -67,7 +75,7 @@ namespace Ember.Input
             }
 
             _initialized = true;
-            EmberEventBus.Dispatch(EmberBroadcastEvent.InputReady);
+            EmberEventBus.OnNext(EmberBroadcastEvent.InputReady);
         }
 
         // ======== Action Map 切换 ========
@@ -149,17 +157,61 @@ namespace Ember.Input
         /// </summary>
         public string CurrentMap => _currentMap;
 
+        // ======== IEmberManager ========
+
+        /// <summary>
+        /// 由 ManagerCollector 自动调用的无参初始化。
+        /// InputManager 需要 InputActionAsset 才能完整工作，
+        /// 在此之前仅做最小准备；完整初始化请调用 <see cref="Init(InputActionAsset, string)"/>。
+        /// </summary>
+        void IEmberManager.Init()
+        {
+            if (_initialized) return;
+
+            if (GameLauncher.Instance.InputHost == null)
+            {
+                EmberDebug.LogError(TAG, "GameBoot 下缺少 InputHost 子节点，InputManager 无法初始化。");
+                return;
+            }
+
+            EmberDebug.LogInit(TAG, "EmberInputManager basic init (awaiting InputActionAsset).");
+        }
+
+        /// <summary>
+        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// </summary>
+        void IEmberManager.Destroy()
+        {
+            DestroyInternal();
+        }
+
         #endregion
 
         // ============================================================
 
-        #region 生命周期
+        #region 内部方法
 
-        protected override void OnSingletonDestroy()
+        /// <summary>
+        /// EmberSingleton 销毁钩子。
+        /// </summary>
+        protected override void OnDestroy()
         {
-            EmberEventBus.Dispatch(EmberBroadcastEvent.InputShutdown);
+            DestroyInternal();
+        }
 
+        /// <summary>
+        /// 共享清理逻辑：广播 InputShutdown、禁用 PlayerInput、销毁组件、重置状态。
+        /// InputHost 由 GameBoot 预置，不在此销毁。
+        /// </summary>
+        private void DestroyInternal()
+        {
+            EmberEventBus.OnNext(EmberBroadcastEvent.InputShutdown);
             _playerInput?.actions?.Disable();
+            if (_playerInput != null)
+            {
+                UnityEngine.Object.Destroy(_playerInput);
+                _playerInput = null;
+            }
             _initialized = false;
         }
 

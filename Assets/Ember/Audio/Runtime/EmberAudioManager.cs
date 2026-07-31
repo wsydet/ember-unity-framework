@@ -20,8 +20,10 @@ namespace Ember.Audio
     /// EmberAudioManager.Instance.SetBGMVolume(0.8f);
     /// </code>
     /// </summary>
-    public class EmberAudioManager : EmberMonoSingleton<EmberAudioManager>
+    [EmberInitOrder(EmberInitOrderAttribute.Audio)]
+    public class EmberAudioManager : EmberSingleton<EmberAudioManager>, IEmberManager
     {
+        private const string TAG = LogTags.AudioManager;
         #region 参数
 
         [SerializeField] private AudioMixer _mixer;
@@ -49,20 +51,45 @@ namespace Ember.Audio
         /// <summary>
         /// 初始化音频管理器，创建 AudioSource 并应用 Mixer。
         /// 调用后广播 AudioReady 事件。
+        ///
+        /// 如果已通过 <see cref="IEmberManager.Init"/> 完成默认初始化（无 Mixer），
+        /// 传入 mixer 参数仍可重新配置 Mixer。
         /// </summary>
         public void Init(AudioMixer mixer = null, string bgmParam = "BGMVolume", string sfxParam = "SFXVolume")
         {
+            // 已通过 IEmberManager.Init() 完成默认初始化 + 有 mixer 需要配置
+            if (_initialized && mixer != null)
+            {
+                _mixer = mixer;
+                _bgmMixerParam = bgmParam;
+                _sfxMixerParam = sfxParam;
+                if (_bgmSource != null)
+                    _bgmSource.outputAudioMixerGroup = _mixer.FindMatchingGroups("Master")[0];
+                if (_sfxSource != null)
+                    _sfxSource.outputAudioMixerGroup = _mixer.FindMatchingGroups("Master")[0];
+                ApplyVolume();
+                EmberDebug.LogInit(TAG, "EmberAudioManager mixer configured after default init.");
+                return;
+            }
+
             if (_initialized) return;
+
+            var host = GameLauncher.Instance.AudioHost;
+            if (host == null)
+            {
+                EmberDebug.LogError(TAG, "GameBoot 下缺少 AudioHost 子节点，AudioManager 无法初始化。");
+                return;
+            }
 
             _mixer = mixer;
             _bgmMixerParam = bgmParam;
             _sfxMixerParam = sfxParam;
 
-            _bgmSource = gameObject.AddComponent<AudioSource>();
+            _bgmSource = host.AddComponent<AudioSource>();
             _bgmSource.loop = true;
             _bgmSource.playOnAwake = false;
 
-            _sfxSource = gameObject.AddComponent<AudioSource>();
+            _sfxSource = host.AddComponent<AudioSource>();
             _sfxSource.loop = false;
             _sfxSource.playOnAwake = false;
 
@@ -74,7 +101,7 @@ namespace Ember.Audio
 
             _initialized = true;
             ApplyVolume();
-            EmberEventBus.Dispatch(EmberBroadcastEvent.AudioReady);
+            EmberEventBus.OnNext(EmberBroadcastEvent.AudioReady);
         }
 
         // ======== BGM ========
@@ -119,7 +146,7 @@ namespace Ember.Audio
         {
             if (!_initialized || clip == null) return;
 
-            var temp = gameObject.AddComponent<TempAudioSource>();
+            var temp = GameLauncher.Instance.AudioHost.AddComponent<TempAudioSource>();
             temp.Play(clip, _sfxVolume * volumeScale);
         }
 
@@ -132,18 +159,44 @@ namespace Ember.Audio
             ApplyVolume();
         }
 
-        #endregion
+        // ======== IEmberManager ========
 
-        // ============================================================
-
-        #region 生命周期
-
-        protected override void OnSingletonDestroy()
+        /// <summary>
+        /// 由 ManagerCollector 自动调用的无参初始化。
+        /// 创建默认 AudioSource（不使用 Mixer）。
+        /// 完整初始化（含 Mixer 配置）请调用 <see cref="Init(AudioMixer, string, string)"/>。
+        /// </summary>
+        void IEmberManager.Init()
         {
-            EmberEventBus.Dispatch(EmberBroadcastEvent.AudioShutdown);
+            if (_initialized) return;
 
-            StopBGM();
-            _initialized = false;
+            var host = GameLauncher.Instance.AudioHost;
+            if (host == null)
+            {
+                EmberDebug.LogError(TAG, "GameBoot 下缺少 AudioHost 子节点，AudioManager 无法初始化。");
+                return;
+            }
+
+            _bgmSource = host.AddComponent<AudioSource>();
+            _bgmSource.loop = true;
+            _bgmSource.playOnAwake = false;
+
+            _sfxSource = host.AddComponent<AudioSource>();
+            _sfxSource.loop = false;
+            _sfxSource.playOnAwake = false;
+
+            _initialized = true;
+            ApplyVolume();
+            EmberEventBus.OnNext(EmberBroadcastEvent.AudioReady);
+            EmberDebug.LogInit(TAG, "EmberAudioManager initialized.");
+        }
+
+        /// <summary>
+        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// </summary>
+        void IEmberManager.Destroy()
+        {
+            DestroyInternal();
         }
 
         #endregion
@@ -151,6 +204,27 @@ namespace Ember.Audio
         // ============================================================
 
         #region 内部方法
+
+        /// <summary>
+        /// EmberSingleton 销毁钩子。
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            DestroyInternal();
+        }
+
+        /// <summary>
+        /// 共享清理逻辑：广播 AudioShutdown、停止 BGM、销毁 AudioSource 组件、重置状态。
+        /// AudioHost 由 GameBoot 预置，不在此销毁。
+        /// </summary>
+        private void DestroyInternal()
+        {
+            EmberEventBus.OnNext(EmberBroadcastEvent.AudioShutdown);
+            StopBGM();
+            if (_bgmSource != null) { UnityEngine.Object.Destroy(_bgmSource); _bgmSource = null; }
+            if (_sfxSource != null) { UnityEngine.Object.Destroy(_sfxSource); _sfxSource = null; }
+            _initialized = false;
+        }
 
         private void ApplyVolume()
         {

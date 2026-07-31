@@ -25,7 +25,8 @@ namespace Ember.Resource
     /// });
     /// </code>
     /// </summary>
-    public class EmberResourceManager : EmberMonoSingleton<EmberResourceManager>
+    [EmberInitOrder(EmberInitOrderAttribute.Resource)]
+    public class EmberResourceManager : EmberSingleton<EmberResourceManager>, IEmberManager
     {
         private const string TAG = LogTags.ResourceManager;
         #region 参数
@@ -89,7 +90,7 @@ namespace Ember.Resource
                 if (success)
                 {
                     _initialized = true;
-                    EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
+                    EmberEventBus.OnNext(EmberBroadcastEvent.ResourceReady);
                     EmberDebug.Log(TAG, "Resource system initialized successfully.");
                 }
                 else
@@ -152,20 +153,25 @@ namespace Ember.Resource
             _provider?.UnloadUnusedAssets();
         }
 
-        #endregion
+        // ======== IEmberManager ========
 
-        // ============================================================
-
-        #region 生命周期
-
-        protected override void OnSingletonDestroy()
+        /// <summary>
+        /// 由 ManagerCollector 自动调用的无参初始化。
+        /// ResourceManager 需要 IResourceProvider 才能完整工作，
+        /// 在此之前仅做最小准备；完整初始化请调用 <see cref="Initialize"/>。
+        /// </summary>
+        void IEmberManager.Init()
         {
-            EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceShutdown);
+            if (_initialized) return;
+            EmberDebug.LogInit(TAG, "EmberResourceManager basic init (awaiting provider).");
+        }
 
-            _provider?.UnloadUnusedAssets();
-            _provider = null;
-
-            _initialized = false;
+        /// <summary>
+        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// </summary>
+        void IEmberManager.Destroy()
+        {
+            DestroyInternal();
         }
 
         #endregion
@@ -173,6 +179,28 @@ namespace Ember.Resource
         // ============================================================
 
         #region 内部方法
+
+        /// <summary>
+        /// EmberSingleton 销毁钩子：当 <c>EmberSingleton&lt;T&gt;.Destroy()</c> 被调用时触发。
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            DestroyInternal();
+        }
+
+        /// <summary>
+        /// 共享清理逻辑：广播 Shutdown 事件、释放 Provider、重置状态。
+        /// 同时被 <see cref="IEmberManager.Destroy"/> 和 <see cref="OnDestroy"/> 调用。
+        /// </summary>
+        private void DestroyInternal()
+        {
+            EmberEventBus.OnNext(EmberBroadcastEvent.ResourceShutdown);
+
+            _provider?.UnloadUnusedAssets();
+            _provider = null;
+
+            _initialized = false;
+        }
 
         /// <summary>
         /// 检查 Provider 是否就绪。就绪返回 true；

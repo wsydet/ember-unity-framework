@@ -26,7 +26,8 @@ namespace Ember.Scene
     /// EmberSceneManager.Instance.TransitionTo("Battle", "MainMenu");
     /// </code>
     /// </summary>
-    public class EmberSceneManager : EmberMonoSingleton<EmberSceneManager>
+    [EmberInitOrder(EmberInitOrderAttribute.Scene)]
+    public class EmberSceneManager : EmberSingleton<EmberSceneManager>, IEmberManager
     {
         private const string TAG = LogTags.SceneManager;
         #region 参数
@@ -122,7 +123,7 @@ namespace Ember.Scene
         {
             if (SceneManager.GetSceneByName(sceneName).isLoaded)
             {
-                EmberEventBus.Dispatch(EmberBroadcastEvent.SceneUnloading);
+                EmberEventBus.OnNext(EmberBroadcastEvent.SceneUnloading);
 
                 var op = SceneManager.UnloadSceneAsync(sceneName);
                 op.completed += _ =>
@@ -161,15 +162,23 @@ namespace Ember.Scene
             });
         }
 
-        #endregion
+        // ======== IEmberManager ========
 
-        // ============================================================
-
-        #region 生命周期
-
-        protected override void OnSingletonDestroy()
+        /// <summary>
+        /// 由 ManagerCollector 自动调用的无参初始化。
+        /// SceneManager 在 Init 阶段做最小准备，实际加载由业务层按需触发。
+        /// </summary>
+        void IEmberManager.Init()
         {
-            EmberEventBus.Dispatch(EmberBroadcastEvent.SceneUnloading);
+            EmberDebug.LogInit(TAG, "EmberSceneManager initialized.");
+        }
+
+        /// <summary>
+        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// </summary>
+        void IEmberManager.Destroy()
+        {
+            DestroyInternal();
         }
 
         #endregion
@@ -244,7 +253,7 @@ namespace Ember.Scene
             await SmoothProgressAsync();
 
             IsLoading = false;
-            EmberEventBus.Dispatch(EmberBroadcastEvent.SceneLoaded);
+            EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoaded);
             onComplete?.Invoke();
         }
 
@@ -265,6 +274,23 @@ namespace Ember.Scene
             }
 
             DisplayProgress = 1f;
+        }
+
+        /// <summary>
+        /// EmberSingleton 销毁钩子。
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            DestroyInternal();
+        }
+
+        /// <summary>
+        /// 共享清理逻辑：广播 SceneUnloading 事件。
+        /// 同时被 <see cref="IEmberManager.Destroy"/> 和 <see cref="OnDestroy"/> 调用。
+        /// </summary>
+        private void DestroyInternal()
+        {
+            EmberEventBus.OnNext(EmberBroadcastEvent.SceneUnloading);
         }
 
         #endregion

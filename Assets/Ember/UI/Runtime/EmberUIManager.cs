@@ -43,7 +43,8 @@ namespace Ember.UI
     /// EmberUIManager.Instance.Pop(UILayer.Popup);
     /// </code>
     /// </summary>
-    public class EmberUIManager : EmberMonoSingleton<EmberUIManager>
+    [EmberInitOrder(EmberInitOrderAttribute.UI)]
+    public class EmberUIManager : EmberSingleton<EmberUIManager>, IEmberManager
     {
         private const string TAG = LogTags.UIManager;
         #region 参数
@@ -55,17 +56,6 @@ namespace Ember.UI
         private readonly Dictionary<int, Transform> _layerRoots = new();
 
         private bool _initialized;
-
-        #endregion
-
-        // ============================================================
-
-        #region 生命周期
-
-        protected override void OnSingletonAwake()
-        {
-            _initialized = true;
-        }
 
         #endregion
 
@@ -114,7 +104,7 @@ namespace Ember.UI
                     return;
                 }
 
-                var instance = Instantiate(prefab, _layerRoots[layer]);
+                var instance = UnityEngine.Object.Instantiate(prefab, _layerRoots[layer]);
                 instance.name = prefab.name;
 
                 var view = instance.GetComponent<IUIView>();
@@ -123,7 +113,7 @@ namespace Ember.UI
                     EmberDebug.LogError(TAG, 
                         $"EmberUIManager.Push: prefab '{page.PrefabPath}' " +
                         $"has no IUIView component. Push requires a MonoBehaviour implementing IUIView.");
-                    Destroy(instance);
+                    UnityEngine.Object.Destroy(instance);
                     return;
                 }
 
@@ -217,6 +207,34 @@ namespace Ember.UI
             return GetCount(layer) > 0;
         }
 
+        // ======== IEmberManager ========
+
+        /// <summary>
+        /// 由 ManagerCollector 自动调用的无参初始化。
+        /// </summary>
+        void IEmberManager.Init()
+        {
+            if (_initialized) return;
+
+            if (GameLauncher.Instance.UIRoot == null)
+            {
+                EmberDebug.LogError(TAG, "GameBoot 下缺少 UIRoot 子节点，EmberUIManager 无法初始化。");
+                return;
+            }
+
+            _initialized = true;
+            EmberEventBus.OnNext(EmberBroadcastEvent.UIReady);
+            EmberDebug.LogInit(TAG, "EmberUIManager initialized.");
+        }
+
+        /// <summary>
+        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// </summary>
+        void IEmberManager.Destroy()
+        {
+            DestroyInternal();
+        }
+
         #endregion
 
         // ============================================================
@@ -228,7 +246,7 @@ namespace Ember.UI
             if (_layerRoots.ContainsKey(layer)) return;
 
             var go = new GameObject($"UI Layer - {layer}");
-            go.transform.SetParent(transform);
+            go.transform.SetParent(GameLauncher.Instance.UIRoot.transform);
             _layerRoots[layer] = go.transform;
         }
 
@@ -272,7 +290,27 @@ namespace Ember.UI
         private void DestroyView(IUIView view)
         {
             if (view is MonoBehaviour mb && mb != null)
-                Destroy(mb.gameObject);
+                UnityEngine.Object.Destroy(mb.gameObject);
+        }
+
+        /// <summary>
+        /// EmberSingleton 销毁钩子。
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            DestroyInternal();
+        }
+
+        /// <summary>
+        /// 共享清理逻辑：关闭所有界面、广播 UIShutdown、重置状态。
+        /// UIRoot 由 GameBoot 预置，不在此销毁。
+        /// </summary>
+        private void DestroyInternal()
+        {
+            CloseAll();
+            EmberEventBus.OnNext(EmberBroadcastEvent.UIShutdown);
+            _layerRoots.Clear();
+            _initialized = false;
         }
 
         #endregion
