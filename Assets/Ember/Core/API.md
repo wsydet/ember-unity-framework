@@ -14,7 +14,7 @@ EmberEventBus.Subscribe(EmberBroadcastEvent.CoreReady, () =>
 {
     Debug.Log("Core 模块已就绪");
 });
-EmberEventBus.Dispatch(EmberBroadcastEvent.CoreReady);
+EmberEventBus.OnNext(EmberBroadcastEvent.CoreReady);
 ```
 
 ---

@@ -85,7 +85,33 @@ private void Cancel() { }
 private void B() { }
 ```
 
-### 1.3 AssetsOnly / SceneObjectsOnly 空值时可能触发 Shader 异常
+### 1.3 ListDrawerSettings.Expanded 已废弃
+
+**现象**：编译 warning `CS0618: 'ListDrawerSettingsAttribute.Expanded' is obsolete`
+出现在 `[ListDrawerSettings(Expanded = true)]` 上。
+
+**原因**：Odin 4.x 确认 `Expanded` 实际行为一直是控制 `ShowFoldout`，
+命名有歧义。官方标记为废弃并替换为两个独立属性。
+
+**修复**：
+
+```csharp
+// ❌ 旧写法 —— 编译 warning
+[ListDrawerSettings(Expanded = true)]
+
+// ✅ 新写法
+[ListDrawerSettings(ShowFoldout = true, DefaultExpandedState = true)]
+```
+
+| 属性 | 作用 |
+|------|------|
+| `ShowFoldout` | 列表是否显示折叠箭头（false = 完全平铺） |
+| `DefaultExpandedState` | 折叠默认状态（true = 展开，false = 折叠） |
+
+**实际应用示例**：`EmberDebugConfigSO.frameworkEntries` 使用此属性让框架标签默认展开，
+方便查看所有预定义标签。
+
+### 1.4 AssetsOnly / SceneObjectsOnly 空值时可能触发 Shader 异常
 
 **现象**：`[AssetsOnly]` 或 `[SceneObjectsOnly]` 字段未赋值时，
 Odin 渲染对象字段图标时抛出 `ArgumentNullException: Value cannot be null. Parameter name: shader`。
@@ -130,8 +156,12 @@ public int mp;
 
 ### 2.4 参考脚本
 
-完整的 Odin 特性演示和正确用法见：
-`Assets/Tem/Examples/OdinInspectorDemo.cs`
+| 脚本 | 说明 |
+|------|------|
+| [OdinInspectorDemo.cs](../../Assets/Tem/Examples/OdinInspectorDemo.cs) | 完整特性演示（MonoBehaviour） |
+| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | `[Required]` + `[Title]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
+| [EmberDebugConfigSO.cs](../../Assets/Ember/Core/Runtime/EmberDebugConfigSO.cs) | `[Title]` + `[ListDrawerSettings]` + `[DisableIf]` + `[HorizontalGroup/HideLabel]` 实战（ScriptableObject） |
+| [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |
 
 ---
 

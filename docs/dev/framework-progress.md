@@ -1,6 +1,6 @@
 # Ember Framework 开发进度
 
-> 最后更新：2026-07-25
+> 最后更新：2026-07-31
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -110,7 +110,7 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 
 ```csharp
 // Resource 模块初始化完毕 —— 不知道谁关心，广播一下
-EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
+EmberEventBus.OnNext(EmberBroadcastEvent.ResourceReady);
 
 // Scene 模块监听 —— "Resource Ready 了我才开始加载"
 EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, () => StartLoadScene());
@@ -436,7 +436,8 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 管理器接口：Init() / Destroy() | burner `IManager` |
+| [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 框架管道接口：Init() / Destroy()，启动时由 Collector 初始化 | burner `IManager` |
+| [IEmberModule.cs](../../Assets/Ember/Core/Runtime/IEmberModule.cs) | 业务模块接口：OnInit() / OnDestroy() / ResetModuleData()，由状态机按 Phase 驱动 | — |
 | [EmberInitOrderAttribute.cs](../../Assets/Ember/Core/Runtime/EmberInitOrderAttribute.cs) | 初始化顺序特性，预定义 Core=100 → Game=700 | burner `[InitOrder]` |
 | [EmberManagerCollector.cs](../../Assets/Ember/Core/Runtime/EmberManagerCollector.cs) | 反射扫描 → 按 Order 排序 → 依次 Init / 逆序 Destroy | burner `GameMgrCollector` |
 
@@ -513,24 +514,97 @@ fsm.Pop();                           // Exit Settings → Resume Battle
 
 > 状态：✅ 已完成
 > burner 参考：`Debuger`
+> 详细文档：[docs/dev/ember-debug.md](../../docs/dev/ember-debug.md)
 
 ### 文件清单
 
 | 文件 | 职责 |
 |------|------|
-| [EmberDebug.cs](../../Assets/Ember/Core/Runtime/EmberDebug.cs) | 标签化日志 + 运行时开关 + Editor 双击跳转修正 |
+| [EmberDebug.cs](../../Assets/Ember/Core/Runtime/EmberDebug.cs) | 日志核心：消息分色（Info/Init/Event/Cleanup/Warning/Error）+ 两级标签级联过滤 |
+| [EmberLogPresets.cs](../../Assets/Ember/Core/Runtime/EmberLogPresets.cs) | 集中定义：LogTags（标签常量）、LogTagColors（预定义颜色）、LogColors（消息颜色） |
+| [EmberDebugConfigSO.cs](../../Assets/Ember/Core/Runtime/EmberDebugConfigSO.cs) | SO 配置容器：全局开关、按类过滤、颜色管理 |
+| [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | SO 自定义 Inspector：锁住预定义颜色、层级缩进、批量操作 |
+| [EmberDebugConfigCreator.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigCreator.cs) | 自动创建 SO（Unity 启动时检测，无则生成） |
+| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | 游戏启动器：集中入口，驱动 Manager 初始化 → 状态机 → Update 循环 | — |
 
 ### API 速览
 
 ```csharp
-private static readonly string Tag = EmberDebug.Tag(nameof(MyClass));
+private const string TAG = LogTags.CoreEventBus;
 
-EmberDebug.Log(Tag, "正常消息");
-EmberDebug.LogWarning(Tag, "警告");
-EmberDebug.LogError(Tag, "错误");  // 不受开关控制，始终输出
+EmberDebug.Log(TAG, "普通消息");           // 白色
+EmberDebug.LogInit(TAG, "初始化完成");      // 绿色
+EmberDebug.LogEvent(TAG, "事件播报");       // 紫色
+EmberDebug.LogCleanup(TAG, "清理资源");     // 灰色
+EmberDebug.LogWarning(TAG, "异常");         // 白色+黄底
+EmberDebug.LogError(TAG, "错误");           // 白色+红底，不受开关控制
 
-EmberDebug.SetOpen(false);  // 关闭所有非 Error 日志，线上包零 GC
+// 过滤
+EmberDebug.Disable(LogTags.Audio);          // 父标签关闭 → 所有子标签静默
+EmberDebug.Disable(LogTags.CoreEventBus);   // 只关子标签
+EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 ```
+
+---
+
+## Module 系统设计（待实现）
+
+### 问题
+
+`IEmberManager` 只覆盖"应用启动即初始化"的框架管道（7 个 Manager）。
+业务模块（战斗、背包、网络）需要由状态机按需驱动 —— 进入 BattleState 才初始化，
+退出时销毁。
+
+### 两层初始化模型
+
+```
+┌────────────────────────────────────────────┐
+│  IEmberManager (框架管道)                    │
+│  ────────────────────────                   │
+│  启动 → InitializeAll() → 全局存活 → 退出销毁  │
+│  EmberUpdateManager / Resource / Audio ...  │
+│                                             │
+│  IEmberModule (业务模块)                     │
+│  ────────────────────────                   │
+│  Phase 1 → Login 后初始化                    │
+│  Phase 2 → 进 Battle/MainMenu 初始化          │
+│  状态退出 → OnDestroy / ResetModuleData      │
+└────────────────────────────────────────────┘
+```
+
+### 接口定义
+
+| 接口 | 文件 | 定位 |
+|------|------|------|
+| `IEmberManager` | [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 框架管道，启动时初始化 |
+| `IEmberModule` | [IEmberModule.cs](../../Assets/Ember/Core/Runtime/IEmberModule.cs) | 业务模块，状态机驱动 |
+
+两者**不继承**——EmberManagerCollector 只扫 `IEmberManager`，
+EmberModuleCollector（未来实现）只扫 `IEmberModule`，互不干扰。
+
+### 初始化流程
+
+```
+GameLauncher.Awake()
+│
+├─ EmberManagerCollector.InitializeAll()   ← 扫 IEmberManager（7 个管道）
+│
+└─ Fsm.Start<InitState>()
+      │
+      └─ Fsm.TransitionTo<LoginState>()
+           │
+           ├─ LoginState.OnEnter()
+           │     EmberModuleCollector.InitPhase(1)   ← 扫 IEmberModule.Phase == 1
+           │
+           └─ LoginState.OnExit()
+                 EmberModuleCollector.DestroyPhase(1)
+```
+
+### 待实现
+
+- [ ] `EmberModuleCollector`：按 Phase 分组，对接状态机生命周期
+- [ ] `Phase` 预定义常量（如 `ModulePhase.Login = 1, Gameplay = 2`）
+- [ ] 热重启：`ResetModuleData()` 在一次游戏会话中复用模块对象
 
 ---
 
@@ -575,6 +649,55 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 2026-07-30 | Manager 自动发现系统完成（IEmberManager + EmberManagerCollector） |
 | 2026-07-30 | Update 循环管理器完成（IEmberUpdate + EmberUpdateManager） |
 | 2026-07-30 | burner 基础包迁移（basic / extensions / uiextension，全部注释待适配） |
+| 2026-07-31 | GameState 状态机完成（EmberStateMachine + InitState） |
+| 2026-07-31 | Timer 决定放入 com.ember.extensions，保持 Core 零外部依赖 |
+| 2026-07-31 | EmberDebug 日志系统完成（两级标签 + 消息分色 + SO 面板 + 全框架统一） |
+| 2026-07-31 | 🔴 债务清理：5 个 Manager 统一实现 IEmberManager + [EmberInitOrder]，EmberUpdateManager 去 MonoBehaviour 化为纯 C# 类，新建 GameLauncher 集中驱动入口 |
+| 2026-07-31 | 架构固化：定义 IEmberModule 接口，明确两层初始化模型（框架管道 vs 业务模块），Manager vs Module 平行不继承 |
+| 2026-07-31 | EmberEventBus API 对齐 UniRx：Subscribe 返回 IDisposable，Dispatch 改名 OnNext |
+| 2026-07-31 | InitState 接管 Manager 初始化（对齐 burner InitProcedure 模式） |
+| 2026-07-31 | Camera 独立模块：CinemachineBrain + BlenderSettings + 相机堆栈 + 强制霸占模式 |
+| 2026-07-31 | 新建 EmberBaseSO（继承溯源面板），Core 按功能分子文件夹 |
+
+---
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- >>> CURRENT PHASE — 从这里开始，上方为历史记录，下方为待完成 <<< -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+# ▶ 下一阶段：场景集成 & 框架自检
+
+> 目标：在 Unity 场景中验证整个框架链路能跑通。
+
+### 阶段目标
+
+| 序号 | 任务 | 说明 |
+|------|------|------|
+| **S1** | 搭建 GameBoot 场景 | 创建 Init 场景，放置 GameBoot 物体，挂 GameLauncher；创建 UIRoot/AudioHost/InputHost/UICamera/MainCamera 子节点；拖入 Inspector 对应字段 |
+| **S2** | 验证 Manager 初始化链路 | Play 后观察 Console：InitState.OnEnter → InitializeAll → 7 个 Manager 依次 Init → CoreReady 事件 |
+| **S3** | 验证 Update 循环 | 确认 EmberUpdateManager.DoUpdate 每帧被调用，无报错 |
+| **S4** | 验证事件总线 | 注册一个自定义状态（TestState），在 InitState 中 TransitionTo，观察 GameStateChanged 事件 |
+| **S5** | 验证日志系统 | 打开 EmberDebugConfig.asset 面板，确认框架标签列表完整，开关生效 |
+| **S6** | 验证相机模块 | 确认 EmberCameraManager 从 GameLauncher 拿到 UICamera/MainCamera，Brain 配置成功 |
+| **S7** | 整理遗留问题 | 根据实测结果更新技术债务清单，标记已验证通过 / 需修复的项 |
+
+### 预期结果
+
+```
+Play → Console 输出：
+  [Init] GameLauncher: state machine ready.
+  [Init] InitState: bootstrapping framework...
+  [Init] EmberUpdateManager initialized.        (Order 100)
+  [Init] EmberResourceManager initialized.       (Order 200)
+  [Init] EmberAudioManager initialized.          (Order 300)
+  [Init] EmberInputManager initialized.          (Order 400)
+  [Init] EmberUIManager initialized.             (Order 500)
+  [Init] EmberSceneManager initialized.          (Order 600)
+  [Init] EmberCameraManager initialized.         (Order 1000)
+  [Event] OnNext(CoreReady)
+  [Init] InitState: framework ready.
+  [Init] GameLauncher: InitState complete, ticking...
+```
 
 ---
 
@@ -586,8 +709,8 @@ Ember.Core.Runtime          (零依赖，叶子)
 
 | # | 事项 | 当前 | 目标 |
 |---|------|------|------|
-| 1 | **现有 Manager 实现 IEmberManager** | 6 个 EmberXxxManager 各自 Init | 统一 `IEmberManager` + `[EmberInitOrder]`，交给 `EmberManagerCollector` |
-| 2 | **EmberUpdateManager 去 MonoBehaviour** | 自己继承 `EmberMonoSingleton` | 纯 C# 类，由 `GameLauncher` 驱动（burner 模式） |
+| 1 | **现有 Manager 实现 IEmberManager** | ✅ 已完成 | 5 个 EmberXxxManager + EmberUpdateManager 全部实现 IEmberManager + [EmberInitOrder]，EmberEventBus/ServiceLocator 保持 static（无需 Init） |
+| 2 | **EmberUpdateManager 去 MonoBehaviour** | ✅ 已完成 | 纯 C# 类（EmberSingleton），由 GameLauncher 驱动 |
 | 3 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
 | 4 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
 
@@ -595,8 +718,10 @@ Ember.Core.Runtime          (零依赖，叶子)
 
 | # | 事项 | 说明 |
 |---|------|------|
-| 5 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按阶段初始化，支持 `ResetModuleData()` |
-| 6 | **GameLauncher 入口** | 集中驱动 Update、Manager 初始化、状态切换 |
+| 5 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按阶段初始化，支持 `ResetModuleData()`。接口已定义，Collector 待实现。 |
+
+设计决策见 [§Module 系统设计](#module-系统设计-待实现)。
+| 6 | **GameLauncher 入口** | ✅ 已完成 | `GameLauncher` 集中驱动 Update/Manager/StateMachine |
 | 7 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
 | 8 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
 
@@ -609,3 +734,6 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 11 | 本地化 |
 | 12 | Canvas 层自动挂载 CanvasScaler + Raycaster |
 | 13 | UI Pop 动画 |
+csv
+wwise适配
+图片

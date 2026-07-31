@@ -104,13 +104,13 @@ Resource 模块是框架的资源加载统一入口。通过 `IResourceProvider`
 ## 6. 主流程
 
 **流程一：初始化**
-`[外部] Initialize(provider, onComplete)` → `[重复初始化检查]` → `[provider 判空]` → `_provider.Initialize(callback)` → `[success: 标记 _initialized]` → `EmberEventBus.Dispatch(ResourceReady)` → `onComplete?.Invoke(success)`
+`[外部] Initialize(provider, onComplete)` → `[重复初始化检查]` → `[provider 判空]` → `_provider.Initialize(callback)` → `[success: 标记 _initialized]` → `EmberEventBus.OnNext(ResourceReady)` → `onComplete?.Invoke(success)`
 
 **流程二：资源加载**
 `[外部] LoadAssetAsync<T>(path, onComplete)` → `IsProviderReady(onComplete)` → `[未就绪: LogWarning + 回调 null]` → `_provider.LoadAssetAsync<T>(path, onComplete)` → `[回调]`
 
 **流程三：销毁清理**
-`OnSingletonDestroy()` → `EmberEventBus.Dispatch(ResourceShutdown)` → `_provider.UnloadUnusedAssets()` → `_provider = null` → `_initialized = false`
+`OnSingletonDestroy()` → `EmberEventBus.OnNext(ResourceShutdown)` → `_provider.UnloadUnusedAssets()` → `_provider = null` → `_initialized = false`
 
 ---
 
