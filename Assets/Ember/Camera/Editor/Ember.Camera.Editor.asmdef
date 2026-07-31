@@ -1,9 +1,9 @@
 {
-    "name": "Ember.Core.Editor",
-    "rootNamespace": "Ember.Core.Editor",
+    "name": "Ember.Camera.Editor",
+    "rootNamespace": "Ember.Camera.Editor",
     "references": [
-        "Ember.Core.Runtime",
-        "Sirenix.OdinInspector"
+        "Ember.Camera.Runtime",
+        "Ember.Core.Runtime"
     ],
     "includePlatforms": [
         "Editor"

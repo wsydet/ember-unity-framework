@@ -1,13 +1,12 @@
 {
-    "name": "Ember.Core.Editor",
-    "rootNamespace": "Ember.Core.Editor",
+    "name": "Ember.Camera.Runtime",
+    "rootNamespace": "Ember.Camera",
     "references": [
         "Ember.Core.Runtime",
-        "Sirenix.OdinInspector"
+        "Sirenix.OdinInspector.Attributes",
+        "Unity.Cinemachine"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

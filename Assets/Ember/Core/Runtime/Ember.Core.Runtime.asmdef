@@ -1,7 +1,9 @@
 {
     "name": "Ember.Core.Runtime",
     "rootNamespace": "Ember.Core",
-    "references": [],
+    "references": [
+        "Sirenix.OdinInspector.Attributes"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
