@@ -17,6 +17,7 @@
   <Project Path="Borodar.RainbowFolders.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
+  <Project Path="Ember.Core.Editor.csproj" />
   <Project Path="Ember.Scene.Runtime.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="Borodar.RainbowHierarchy.csproj" />

@@ -1,0 +1,337 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+
+namespace Ember.Core
+{
+    /// <summary>
+    /// 框架日志工具 —— Unity Debug.Log 的增强封装。
+    ///
+    /// 特性：
+    /// - <b>彩色标签</b>：每个类名 hash 生成专属颜色，Console 中一眼识别
+    /// - <b>按类过滤</b>：运行时开启/关闭特定类的日志
+    /// - <b>全局开关</b>：一键静默所有 Info/Warning，Error 始终输出
+    /// - <b>精准跳转</b>：每条日志附 (at path:line)，Console Pro 自动识别
+    /// - <b>调试友好</b>：F11 不步入 Logger，堆栈不显示 Logger 方法
+    ///
+    /// 用法：
+    /// <code>
+    /// private const string TAG = nameof(AudioManager);
+    ///
+    /// EmberDebug.Log(TAG, "BGM loaded.");
+    /// EmberDebug.LogWarning(TAG, "Mixer not found.");
+    /// EmberDebug.LogError(TAG, "Load failed.");
+    ///
+    /// // 过滤
+    /// EmberDebug.Disable(TAG);
+    /// EmberDebug.Enable(TAG);
+    /// EmberDebug.SetGlobalOpen(false);  // 全关
+    /// </code>
+    /// </summary>
+    [System.Diagnostics.DebuggerStepThrough]
+    public static class EmberDebug
+    {
+        #region 参数
+
+        private static readonly Dictionary<string, ClassEntry> _entries = new();
+        private static EmberDebugConfigSO _config;
+        private static bool _globalOpen = true;
+        private static bool _loaded;
+
+        private class ClassEntry
+        {
+            public bool Enabled = true;
+            public Color Color = Color.white;
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        // ======== 加载 ========
+
+        /// <summary>
+        /// 从 Resources 加载 SO 配置并应用。
+        /// 不调用也会在首次 Log 时自动加载（延迟加载）。
+        /// </summary>
+        public static void LoadConfig()
+        {
+            if (_loaded) return;
+
+            _config = Resources.Load<EmberDebugConfigSO>("EmberDebugConfig");
+
+            if (_config != null)
+            {
+                _globalOpen = _config.globalOpen;
+
+                foreach (var entry in _config.classEntries)
+                {
+                    _entries[entry.className] = new ClassEntry
+                    {
+                        Enabled = entry.enabled,
+                        Color = entry.color
+                    };
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[Ember] EmberDebugConfig.asset not found. Using default config.");
+            }
+
+            _loaded = true;
+        }
+
+        /// <summary>
+        /// 获取底层 SO 配置（编辑器面板用）。
+        /// </summary>
+        public static EmberDebugConfigSO ConfigSO => _config;
+
+        // ======== 全局开关 ========
+
+        /// <summary>全局开关。关闭后所有非 Error 日志静默。</summary>
+        public static bool GlobalOpen
+        {
+            get => _globalOpen;
+            set => _globalOpen = value;
+        }
+
+        // ======== 按类过滤 ========
+
+        /// <summary>关闭指定标签的日志输出。</summary>
+        public static void Disable(string tag)
+        {
+            GetOrCreate(tag).Enabled = false;
+        }
+
+        /// <summary>开启指定标签的日志输出。</summary>
+        public static void Enable(string tag)
+        {
+            GetOrCreate(tag).Enabled = true;
+        }
+
+        /// <summary>设置指定标签的专属颜色。</summary>
+        public static void SetColor(string tag, Color color)
+        {
+            GetOrCreate(tag).Color = color;
+        }
+
+        /// <summary>
+        /// 标签当前是否允许打印。先查自身，再查父级。
+        /// 父标签关闭 → 所有子标签都静默。
+        /// </summary>
+        public static bool IsEnabled(string tag)
+        {
+            // 自身被设为 false → 直接返回
+            if (_entries.TryGetValue(tag, out var e) && !e.Enabled)
+                return false;
+
+            // 查父级
+            var parent = LogTags.GetParent(tag);
+            if (parent != null && _entries.TryGetValue(parent, out var pe) && !pe.Enabled)
+                return false;
+
+            return true;
+        }
+
+        // ======== Info（白色） ========
+
+        [HideInCallstack]
+        public static void Log(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Info, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void Log(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Info, filePath, lineNumber), context);
+        }
+
+        // ======== Init（绿色） ========
+
+        [HideInCallstack]
+        public static void LogInit(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Init, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogInit(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Init, filePath, lineNumber), context);
+        }
+
+        // ======== Event（紫色） ========
+
+        [HideInCallstack]
+        public static void LogEvent(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Event, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogEvent(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Event, filePath, lineNumber), context);
+        }
+
+        // ======== Cleanup（灰色） ========
+
+        [HideInCallstack]
+        public static void LogCleanup(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Cleanup, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogCleanup(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Cleanup, filePath, lineNumber), context);
+        }
+
+        // ======== Warning（橙色） ========
+
+        [HideInCallstack]
+        public static void LogWarning(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!_globalOpen) return;
+            Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogWarning(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!_globalOpen) return;
+            Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber), context);
+        }
+
+        // ======== Error（红色） ========
+
+        [HideInCallstack]
+        public static void LogError(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            Debug.LogError(FormatMsg(tag, message, LogColors.Error, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogError(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            Debug.LogError(FormatMsg(tag, message, LogColors.Error, filePath, lineNumber), context);
+        }
+
+        [HideInCallstack]
+        public static void LogException(string tag, System.Exception ex,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            Debug.LogError(FormatMsg(tag, ex.Message, LogColors.Error, filePath, lineNumber));
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        private static bool CanLog(string tag)
+        {
+            if (!_globalOpen) return false;
+            return IsEnabled(tag);
+        }
+
+        private static string FormatMsg(string tag, string message, string msgColor,
+            string filePath, int lineNumber)
+        {
+            var entry = GetOrCreate(tag);
+            string tagHex = ColorUtility.ToHtmlStringRGB(entry.Color);
+
+            return $"<color=#{tagHex}><b>[{tag}]</b></color> <color={msgColor}>{message}</color>\n"
+                 + $"<color={LogColors.FileInfo}><i>(at {filePath}:{lineNumber})</i></color>";
+        }
+
+        private static ClassEntry GetOrCreate(string tag)
+        {
+            // 延迟加载：首次调用时自动从 Resources 加载 SO
+            if (!_loaded) LoadConfig();
+
+            if (!_entries.TryGetValue(tag, out var entry))
+            {
+                entry = new ClassEntry
+                {
+                    Enabled = true,
+                    Color = LogTagColors.GetColor(tag) ?? HashColor(tag)
+                };
+                _entries[tag] = entry;
+
+                // 自动收集：新类写入 SO（仅编辑模式下持久化）
+#if UNITY_EDITOR
+                if (_config != null && _config.autoCollect)
+                {
+                    if (!_config.TryGet(tag, out _))
+                    {
+                        _config.classEntries.Add(new LoggerClassEntry
+                        {
+                            className = tag,
+                            enabled = true,
+                            color = entry.Color
+                        });
+                        UnityEditor.EditorUtility.SetDirty(_config);
+                    }
+                }
+#endif
+            }
+
+            return entry;
+        }
+
+        /// <summary>从字符串 hash 生成稳定颜色。</summary>
+        private static Color HashColor(string str)
+        {
+            int hash = 0;
+            foreach (char c in str)
+            {
+                hash = c + (hash << 6) + (hash << 16) - hash;
+            }
+
+            float hue = Mathf.Abs(hash) % 1000 / 1000f;
+            return Color.HSVToRGB(hue, 0.6f, 0.9f);
+        }
+
+        #endregion
+    }
+}
