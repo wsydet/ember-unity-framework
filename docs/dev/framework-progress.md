@@ -48,7 +48,7 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 9 | **Update 循环管理器** | `Ember.Core.Runtime` | ✅ 已完成 | `GameUpdateManager` |
 | 10 | **Timer 定时器** | `Ember.Core.Runtime` | ⬜ 待开始 | `TimerManage`（基于 UniTask，放入 com.ember.extensions） |
 | 11 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
-| 12 | **日志系统** | `Ember.Core.Runtime` | ⬜ 待开始 | `Debuger` + `GameLogManager` |
+| 12 | **日志系统** | `Ember.Core.Runtime` | ✅ 已完成 | `Debuger` |
 
 ---
 
@@ -511,14 +511,26 @@ fsm.Pop();                           // Exit Settings → Resume Battle
 
 ## 12. 日志系统 `Ember.Core.Runtime`
 
-> 状态：⬜ 待开始
-> burner 参考：`Debuger` + `GameLogManager`
+> 状态：✅ 已完成
+> burner 参考：`Debuger`
 
-### 规划
+### 文件清单
 
-- 标签化日志：`[Audio]`、`[UI]`、`[Scene]`，方便按模块过滤
-- 运行时开关：线上关闭 Debug 级别日志，减少 GC
-- 文件写出：崩溃后可从日志文件追溯
+| 文件 | 职责 |
+|------|------|
+| [EmberDebug.cs](../../Assets/Ember/Core/Runtime/EmberDebug.cs) | 标签化日志 + 运行时开关 + Editor 双击跳转修正 |
+
+### API 速览
+
+```csharp
+private static readonly string Tag = EmberDebug.Tag(nameof(MyClass));
+
+EmberDebug.Log(Tag, "正常消息");
+EmberDebug.LogWarning(Tag, "警告");
+EmberDebug.LogError(Tag, "错误");  // 不受开关控制，始终输出
+
+EmberDebug.SetOpen(false);  // 关闭所有非 Error 日志，线上包零 GC
+```
 
 ---
 
