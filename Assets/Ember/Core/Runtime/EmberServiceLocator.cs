@@ -33,6 +33,8 @@ namespace Ember.Core
     /// </summary>
     public static class EmberServiceLocator
     {
+        private const string TAG = LogTags.CoreServiceLocator;
+
         #region 参数
 
         /// <summary>
@@ -65,6 +67,7 @@ namespace Ember.Core
         /// <exception cref="InvalidOperationException">该接口已注册</exception>
         public static void Register<TService>(TService instance) where TService : class
         {
+            EmberDebug.LogInit(TAG, $"Register: {typeof(TService).Name}");
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
 

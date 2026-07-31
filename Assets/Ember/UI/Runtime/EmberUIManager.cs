@@ -45,6 +45,7 @@ namespace Ember.UI
     /// </summary>
     public class EmberUIManager : EmberMonoSingleton<EmberUIManager>
     {
+        private const string TAG = LogTags.UIManager;
         #region 参数
 
         /// <summary>每个层级的界面栈。栈顶是当前可见的界面。</summary>
@@ -90,13 +91,13 @@ namespace Ember.UI
         {
             if (!_initialized)
             {
-                Debug.LogError("[Ember] EmberUIManager is not initialized.");
+                EmberDebug.LogError(TAG, "EmberUIManager is not initialized.");
                 return;
             }
 
             if (page == null)
             {
-                Debug.LogError("[Ember] EmberUIManager.Push: page is null.");
+                EmberDebug.LogError(TAG, "EmberUIManager.Push: page is null.");
                 return;
             }
 
@@ -109,7 +110,7 @@ namespace Ember.UI
             {
                 if (prefab == null)
                 {
-                    Debug.LogError($"[Ember] EmberUIManager.Push: failed to load prefab '{page.PrefabPath}'.");
+                    EmberDebug.LogError(TAG, $"EmberUIManager.Push: failed to load prefab '{page.PrefabPath}'.");
                     return;
                 }
 
@@ -119,8 +120,8 @@ namespace Ember.UI
                 var view = instance.GetComponent<IUIView>();
                 if (view == null)
                 {
-                    Debug.LogError(
-                        $"[Ember] EmberUIManager.Push: prefab '{page.PrefabPath}' " +
+                    EmberDebug.LogError(TAG, 
+                        $"EmberUIManager.Push: prefab '{page.PrefabPath}' " +
                         $"has no IUIView component. Push requires a MonoBehaviour implementing IUIView.");
                     Destroy(instance);
                     return;
@@ -226,7 +227,7 @@ namespace Ember.UI
         {
             if (_layerRoots.ContainsKey(layer)) return;
 
-            var go = new GameObject($"[Ember] UI Layer - {layer}");
+            var go = new GameObject($"UI Layer - {layer}");
             go.transform.SetParent(transform);
             _layerRoots[layer] = go.transform;
         }

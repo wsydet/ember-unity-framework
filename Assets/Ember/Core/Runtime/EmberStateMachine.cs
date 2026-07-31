@@ -97,6 +97,8 @@ namespace Ember.Core
     /// </summary>
     public class EmberStateMachine
     {
+        private const string TAG = LogTags.CoreStateMachine;
+
         #region 参数
 
         private readonly Dictionary<Type, EmberGameState> _states = new();
@@ -133,7 +135,7 @@ namespace Ember.Core
             var type = state.GetType();
             if (_states.ContainsKey(type))
             {
-                Debug.LogWarning($"[Ember] StateMachine: state '{type.Name}' is already registered.");
+                EmberDebug.LogWarning(TAG, $"StateMachine: state '{type.Name}' is already registered.");
                 return;
             }
 
@@ -150,15 +152,15 @@ namespace Ember.Core
 
             if (_states.TryGetValue(type, out var state) && state.IsRequired)
             {
-                Debug.LogError(
-                    $"[Ember] StateMachine: cannot unregister required state '{type.Name}'.");
+                EmberDebug.LogError(TAG, 
+                    $"StateMachine: cannot unregister required state '{type.Name}'.");
                 return false;
             }
 
             if (_current != null && _current.GetType() == type)
             {
-                Debug.LogError(
-                    $"[Ember] StateMachine: cannot unregister the current active state '{type.Name}'.");
+                EmberDebug.LogError(TAG, 
+                    $"StateMachine: cannot unregister the current active state '{type.Name}'.");
                 return false;
             }
 
@@ -174,7 +176,7 @@ namespace Ember.Core
             var type = typeof(T);
             if (!_states.TryGetValue(type, out var state))
             {
-                Debug.LogError($"[Ember] StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
                 return;
             }
 
@@ -196,7 +198,7 @@ namespace Ember.Core
             var type = typeof(T);
             if (!_states.TryGetValue(type, out var next))
             {
-                Debug.LogError($"[Ember] StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
                 return;
             }
 
@@ -204,8 +206,8 @@ namespace Ember.Core
             {
                 if (_current.GetType() == type && !_current.AllowReEnter)
                 {
-                    Debug.LogWarning(
-                        $"[Ember] StateMachine: already in state '{type.Name}' and AllowReEnter is false.");
+                    EmberDebug.LogWarning(TAG, 
+                        $"StateMachine: already in state '{type.Name}' and AllowReEnter is false.");
                     return;
                 }
 
@@ -231,7 +233,7 @@ namespace Ember.Core
             var type = typeof(T);
             if (!_states.TryGetValue(type, out var overlay))
             {
-                Debug.LogError($"[Ember] StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
                 return;
             }
 
@@ -252,7 +254,7 @@ namespace Ember.Core
         {
             if (_overlayStack.Count == 0)
             {
-                Debug.LogWarning("[Ember] StateMachine: no overlay state to pop.");
+                EmberDebug.LogWarning(TAG, "StateMachine: no overlay state to pop.");
                 return;
             }
 
@@ -292,7 +294,7 @@ namespace Ember.Core
                 if (kvp.Value.IsRequired) return true;
             }
 
-            Debug.LogError("[Ember] StateMachine: no required state registered. At minimum, register an InitState.");
+            EmberDebug.LogError(TAG, "StateMachine: no required state registered. At minimum, register an InitState.");
             return false;
         }
 

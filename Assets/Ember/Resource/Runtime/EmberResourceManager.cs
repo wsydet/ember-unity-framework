@@ -16,7 +16,7 @@ namespace Ember.Resource
     /// <code>
     /// // 启动时
     /// EmberResourceManager.Instance.Initialize(new AddressablesProvider(), onComplete: success => {
-    ///     if (success) Debug.Log("资源系统就绪");
+    ///     if (success) EmberDebug.Log(TAG, "资源系统就绪");
     /// });
     ///
     /// // 运行时
@@ -27,6 +27,7 @@ namespace Ember.Resource
     /// </summary>
     public class EmberResourceManager : EmberMonoSingleton<EmberResourceManager>
     {
+        private const string TAG = LogTags.ResourceManager;
         #region 参数
 
         private IResourceProvider _provider;
@@ -69,14 +70,14 @@ namespace Ember.Resource
         {
             if (_initialized)
             {
-                Debug.LogWarning("[Ember] EmberResourceManager is already initialized.");
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is already initialized.");
                 onComplete?.Invoke(true);
                 return;
             }
 
             if (provider == null)
             {
-                Debug.LogError("[Ember] EmberResourceManager.Initialize: provider is null.");
+                EmberDebug.LogError(TAG, "EmberResourceManager.Initialize: provider is null.");
                 onComplete?.Invoke(false);
                 return;
             }
@@ -89,11 +90,11 @@ namespace Ember.Resource
                 {
                     _initialized = true;
                     EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
-                    Debug.Log("[Ember] Resource system initialized successfully.");
+                    EmberDebug.Log(TAG, "Resource system initialized successfully.");
                 }
                 else
                 {
-                    Debug.LogError("[Ember] Resource system initialization failed.");
+                    EmberDebug.LogError(TAG, "Resource system initialization failed.");
                 }
 
                 onComplete?.Invoke(success);
@@ -181,7 +182,7 @@ namespace Ember.Resource
         {
             if (!_initialized || _provider == null)
             {
-                Debug.LogWarning("[Ember] EmberResourceManager is not initialized. Call Initialize() first.");
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
                 onComplete?.Invoke(null);
                 return false;
             }
@@ -196,7 +197,7 @@ namespace Ember.Resource
         {
             if (!_initialized || _provider == null)
             {
-                Debug.LogWarning("[Ember] EmberResourceManager is not initialized. Call Initialize() first.");
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
                 return false;
             }
 

@@ -30,6 +30,8 @@ namespace Ember.Core
     /// </summary>
     public static class EmberEventBus
     {
+        private const string TAG = LogTags.CoreEventBus;
+
         #region 参数
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace Ember.Core
         public static void Subscribe(int eventKey, Action handler)
         {
             if (handler == null) return;
+            EmberDebug.LogEvent(TAG, $"Subscribe: key={eventKey}, handler={handler.Method.Name}");
 
             if (InDispatch(eventKey))
             {
@@ -238,6 +241,7 @@ namespace Ember.Core
         public static void Dispatch(int eventKey)
         {
             if (!_events0.TryGetValue(eventKey, out var handler) || handler == null) return;
+            EmberDebug.LogEvent(TAG, $"Dispatch: key={eventKey}");
 
             EnterDispatch(eventKey);
             try
@@ -364,6 +368,7 @@ namespace Ember.Core
         /// </summary>
         public static void ClearAll()
         {
+            EmberDebug.LogCleanup(TAG, "ClearAll");
             _events0.Clear();
             _events1.Clear();
             _events2.Clear();

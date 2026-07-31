@@ -8,6 +8,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Ember.Core;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Serialization;
@@ -22,6 +23,8 @@ namespace Ember.Editor
     /// </summary>
     public static class OdinIntegrationTest
     {
+        private const string TAG = LogTags.EmberCore;
+
         private static readonly string[] RequiredAssemblies =
         {
             "Sirenix.OdinInspector.Attributes",
@@ -47,7 +50,7 @@ namespace Ember.Editor
         [MenuItem("Ember/Test/Run Odin Integration Test")]
         public static void RunTest()
         {
-            Debug.Log("========== Odin Integration Test Start ==========");
+            EmberDebug.Log(TAG, "========== Odin Integration Test Start ==========");
 
             var allPassed = true;
 
@@ -58,20 +61,20 @@ namespace Ember.Editor
 
             if (allPassed)
             {
-                Debug.Log("<color=green>✅ Odin Integration Test — ALL PASSED</color>");
+                EmberDebug.Log(TAG, "<color=green>✅ Odin Integration Test — ALL PASSED</color>");
             }
             else
             {
-                Debug.LogError("❌ Odin Integration Test — SOME CHECKS FAILED. See details above.");
+                EmberDebug.LogError(TAG, "❌ Odin Integration Test — SOME CHECKS FAILED. See details above.");
             }
 
-            Debug.Log("========== Odin Integration Test End ==========");
+            EmberDebug.Log(TAG, "========== Odin Integration Test End ==========");
         }
 
         /// <summary>检测程序集是否加载</summary>
         private static bool TestAssemblyLoading()
         {
-            Debug.Log("[Odin Test] Checking assembly loading...");
+            EmberDebug.Log(TAG, "[Odin Test] Checking assembly loading...");
 
             var loadedAssemblies = System.AppDomain.CurrentDomain.GetAssemblies()
                 .Select(a => a.GetName().Name)
@@ -82,11 +85,11 @@ namespace Ember.Editor
             {
                 if (loadedAssemblies.Contains(asmName))
                 {
-                    Debug.Log($"  ✅ {asmName}");
+                    EmberDebug.Log(TAG, $"  ✅ {asmName}");
                 }
                 else
                 {
-                    Debug.LogWarning($"  ⚠️  {asmName} — NOT LOADED (may load on demand)");
+                    EmberDebug.LogWarning(TAG, $"  ⚠️  {asmName} — NOT LOADED (may load on demand)");
                     // Editor 程序集在 Editor 启动时延迟加载，不算硬失败
                     if (!asmName.Contains("Editor"))
                     {
@@ -101,13 +104,13 @@ namespace Ember.Editor
         /// <summary>检测关键类型是否可解析（遍历所有已加载程序集查找）</summary>
         private static bool TestKeyTypes()
         {
-            Debug.Log("[Odin Test] Resolving key types...");
+            EmberDebug.Log(TAG, "[Odin Test] Resolving key types...");
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(a => a.GetName().Name.StartsWith("Sirenix"))
                 .ToList();
 
-            Debug.Log($"  Found {assemblies.Count} Sirenix assemblies loaded");
+            EmberDebug.Log(TAG, $"  Found {assemblies.Count} Sirenix assemblies loaded");
 
             var allResolved = true;
             foreach (var typeName in KeyTypes)
@@ -121,11 +124,11 @@ namespace Ember.Editor
 
                 if (type != null)
                 {
-                    Debug.Log($"  ✅ {typeName}");
+                    EmberDebug.Log(TAG, $"  ✅ {typeName}");
                 }
                 else
                 {
-                    Debug.LogError($"  ❌ {typeName} — COULD NOT RESOLVE");
+                    EmberDebug.LogError(TAG, $"  ❌ {typeName} — COULD NOT RESOLVE");
                     allResolved = false;
                 }
             }
@@ -136,23 +139,23 @@ namespace Ember.Editor
         /// <summary>检测 OdinMenuEditorWindow 是否能正常实例化（反射创建，不实际显示）</summary>
         private static bool TestOdinEditorWindow()
         {
-            Debug.Log("[Odin Test] Checking OdinMenuEditorWindow...");
+            EmberDebug.Log(TAG, "[Odin Test] Checking OdinMenuEditorWindow...");
 
             var windowType = typeof(OdinMenuEditorWindow);
             if (windowType != null)
             {
-                Debug.Log($"  ✅ OdinMenuEditorWindow type found: {windowType.FullName}");
+                EmberDebug.Log(TAG, $"  ✅ OdinMenuEditorWindow type found: {windowType.FullName}");
                 return true;
             }
 
-            Debug.LogError("  ❌ OdinMenuEditorWindow type NOT found");
+            EmberDebug.LogError(TAG, "  ❌ OdinMenuEditorWindow type NOT found");
             return false;
         }
 
         /// <summary>验证 Odin 属性在实际类上能否正常使用（编译时已由编译器验证，此处做运行时确认）</summary>
         private static bool TestAttributeUsage()
         {
-            Debug.Log("[Odin Test] Verifying attribute usage...");
+            EmberDebug.Log(TAG, "[Odin Test] Verifying attribute usage...");
 
             var attrProps = typeof(TestMonoTarget)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -164,7 +167,7 @@ namespace Ember.Editor
                 .Where(f => f.GetCustomAttributes().Any(a => a.GetType().Namespace?.StartsWith("Sirenix") == true))
                 .ToList();
 
-            Debug.Log($"  ✅ Found {attrProps.Count} properties and {attrFields.Count} fields with Odin attributes");
+            EmberDebug.Log(TAG, $"  ✅ Found {attrProps.Count} properties and {attrFields.Count} fields with Odin attributes");
             return true;
         }
     }
@@ -188,7 +191,7 @@ namespace Ember.Editor
         [Button("Test Button")]
         public void TestButtonMethod()
         {
-            Debug.Log("[Odin Test] Button clicked — Odin attribute system is working.");
+            EmberDebug.Log(LogTags.EmberCore, "[Odin Test] Button clicked — Odin attribute system is working.");
         }
     }
 }

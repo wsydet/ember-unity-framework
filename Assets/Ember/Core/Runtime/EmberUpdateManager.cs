@@ -18,6 +18,7 @@ namespace Ember.Core
     /// </summary>
     public class EmberUpdateManager : EmberMonoSingleton<EmberUpdateManager>, IEmberManager
     {
+        private const string TAG = LogTags.CoreUpdateManager;
         #region 参数
 
         /// <summary>Update 接收者列表，按优先级分组</summary>
@@ -77,7 +78,7 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(
+                        EmberDebug.LogError(TAG, 
                             $"[Ember] Error in {updater.GetType().Name}.Update(): {ex.Message}");
                     }
                 }
@@ -98,7 +99,7 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(
+                        EmberDebug.LogError(TAG, 
                             $"[Ember] Error in {updater.GetType().Name}.LateUpdate(): {ex.Message}");
                     }
                 }
@@ -119,7 +120,7 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(
+                        EmberDebug.LogError(TAG, 
                             $"[Ember] Error in {updater.GetType().Name}.FixedUpdate(): {ex.Message}");
                     }
                 }
@@ -196,7 +197,7 @@ namespace Ember.Core
             }
             catch (Exception ex)
             {
-                Debug.LogWarning(
+                EmberDebug.LogWarning(TAG, 
                     $"[Ember] EmberUpdateManager: failed to collect {type.Name}: {ex.Message}");
             }
         }

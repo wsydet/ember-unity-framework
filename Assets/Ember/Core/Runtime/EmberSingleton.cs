@@ -44,6 +44,8 @@ namespace Ember.Core
     /// <typeparam name="T">单例类型（自身）</typeparam>
     public abstract class EmberSingleton<T> : IEmberSingletonLifecycle where T : class, new()
     {
+        private const string TAG = LogTags.CoreSingleton;
+
         private static volatile T _instance;
         private static readonly object _lock = new object();
 
@@ -136,6 +138,8 @@ namespace Ember.Core
     /// <typeparam name="T">MonoBehaviour 单例类型</typeparam>
     public abstract class EmberMonoSingleton<T> : MonoBehaviour where T : EmberMonoSingleton<T>
     {
+        private const string TAG = LogTags.CoreSingleton;
+
         private static volatile T _instance;
         private static readonly object _lock = new object();
 
@@ -188,7 +192,7 @@ namespace Ember.Core
             else if (_instance != this)
             {
                 // 场景中已存在另一个实例，销毁自身
-                Debug.LogWarning(
+                EmberDebug.LogWarning(TAG, 
                     $"[Ember] Duplicate instance of {typeof(T).Name} detected. " +
                     $"Destroying the duplicate on '{gameObject.name}'.");
                 Destroy(gameObject);

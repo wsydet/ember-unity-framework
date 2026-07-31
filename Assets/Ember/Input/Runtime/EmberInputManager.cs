@@ -27,6 +27,7 @@ namespace Ember.Input
     /// </summary>
     public class EmberInputManager : EmberMonoSingleton<EmberInputManager>
     {
+        private const string TAG = LogTags.InputManager;
         #region 参数
 
         private PlayerInput _playerInput;
@@ -92,11 +93,11 @@ namespace Ember.Input
             {
                 target.Enable();
                 _currentMap = mapName;
-                Debug.Log($"[Ember] Input map switched to: {mapName}");
+                EmberDebug.Log(TAG, $"Input map switched to: {mapName}");
             }
             else
             {
-                Debug.LogWarning($"[Ember] Input map '{mapName}' not found.");
+                EmberDebug.LogWarning(TAG, $"Input map '{mapName}' not found.");
             }
         }
 

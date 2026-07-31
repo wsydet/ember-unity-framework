@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Ember.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,7 +15,7 @@ namespace Ember.Resource
     /// 用法：
     /// <code>
     /// EmberResourceManager.Instance.Initialize(new ResourcesProvider(), success => {
-    ///     if (success) Debug.Log("资源系统就绪（Resources 模式）");
+    ///     if (success) EmberDebug.Log(TAG, "资源系统就绪（Resources 模式）");
     /// });
     ///
     /// // 加载 Resources/Config/PlayerStates/IdleState.asset
@@ -29,6 +30,7 @@ namespace Ember.Resource
     /// </summary>
     public class ResourcesProvider : IResourceProvider
     {
+        private const string TAG = LogTags.ResourceProvider;
         #region 参数
 
         private MonoBehaviour _coroutineRunner;
@@ -81,7 +83,7 @@ namespace Ember.Resource
             var op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
             if (op == null)
             {
-                Debug.LogError($"[Ember] LoadSceneAsync failed: scene '{sceneName}' not found.");
+                EmberDebug.LogError(TAG, $"LoadSceneAsync failed: scene '{sceneName}' not found.");
                 onComplete?.Invoke();
                 return;
             }

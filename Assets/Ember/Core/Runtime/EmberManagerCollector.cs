@@ -27,6 +27,8 @@ namespace Ember.Core
     /// </summary>
     public class EmberManagerCollector : EmberSingleton<EmberManagerCollector>
     {
+        private const string TAG = LogTags.EmberCore;
+
         #region 参数
 
         private readonly List<IEmberManager> _managers = new();
@@ -48,7 +50,7 @@ namespace Ember.Core
         {
             if (_initialized)
             {
-                Debug.LogWarning("[Ember] EmberManagerCollector is already initialized.");
+                EmberDebug.LogWarning(TAG, "ManagerCollector is already initialized.");
                 return;
             }
 
@@ -70,7 +72,7 @@ namespace Ember.Core
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"[Ember] Error destroying manager {_managers[i].GetType().Name}: {ex.Message}");
+                    EmberDebug.LogError(TAG, $"Error destroying manager {_managers[i].GetType().Name}: {ex.Message}");
                 }
             }
 
@@ -132,12 +134,12 @@ namespace Ember.Core
             {
                 try
                 {
-                    Debug.Log($"[Ember] Initializing manager: {mgr.GetType().Name}");
+                    EmberDebug.LogInit(TAG, $"Initializing manager: {mgr.GetType().Name}");
                     mgr.Init();
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"[Ember] Error initializing manager {mgr.GetType().Name}: {ex.Message}");
+                    EmberDebug.LogError(TAG, $"Error initializing manager {mgr.GetType().Name}: {ex.Message}");
                 }
             }
         }
@@ -154,7 +156,7 @@ namespace Ember.Core
 
             if (prop == null)
             {
-                Debug.LogWarning($"[Ember] IEmberManager type '{type.Name}' has no static Instance property. Skipping.");
+                EmberDebug.LogWarning(TAG, $"IEmberManager type '{type.Name}' has no static Instance property. Skipping.");
                 return null;
             }
 
@@ -164,7 +166,7 @@ namespace Ember.Core
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[Ember] Failed to get Instance of '{type.Name}': {ex.Message}");
+                EmberDebug.LogWarning(TAG, $"Failed to get Instance of '{type.Name}': {ex.Message}");
                 return null;
             }
         }

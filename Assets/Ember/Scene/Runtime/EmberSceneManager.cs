@@ -19,7 +19,7 @@ namespace Ember.Scene
     /// <code>
     /// // 加载场景
     /// EmberSceneManager.Instance.LoadSceneAsync("Battle", () => {
-    ///     Debug.Log("战斗场景就绪");
+    ///     EmberDebug.Log(TAG, "战斗场景就绪");
     /// });
     ///
     /// // 过渡切换
@@ -28,6 +28,7 @@ namespace Ember.Scene
     /// </summary>
     public class EmberSceneManager : EmberMonoSingleton<EmberSceneManager>
     {
+        private const string TAG = LogTags.SceneManager;
         #region 参数
 
         /// <summary>当前活跃的场景名</summary>
@@ -89,7 +90,7 @@ namespace Ember.Scene
         {
             if (IsLoading)
             {
-                Debug.LogWarning($"[Ember] EmberSceneManager is already loading a scene.");
+                EmberDebug.LogWarning(TAG, $"EmberSceneManager is already loading a scene.");
                 onComplete?.Invoke();
                 return;
             }
@@ -104,7 +105,7 @@ namespace Ember.Scene
         {
             if (IsLoading)
             {
-                Debug.LogWarning($"[Ember] EmberSceneManager is already loading a scene.");
+                EmberDebug.LogWarning(TAG, $"EmberSceneManager is already loading a scene.");
                 onComplete?.Invoke();
                 return;
             }
@@ -187,7 +188,7 @@ namespace Ember.Scene
             var op = SceneManager.LoadSceneAsync(sceneName, mode);
             if (op == null)
             {
-                Debug.LogError($"[Ember] EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
+                EmberDebug.LogError(TAG, $"EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
                 IsLoading = false;
                 Progress = 1f;
                 DisplayProgress = 1f;
