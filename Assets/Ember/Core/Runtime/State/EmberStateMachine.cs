@@ -182,7 +182,7 @@ namespace Ember.Core
 
             _current = state;
             _current.OnEnter(args);
-            EmberEventBus.Dispatch(EmberBroadcastEvent.GameStateChanged);
+            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
             OnStateChanged?.Invoke(null, _current);
         }
 
@@ -218,7 +218,7 @@ namespace Ember.Core
             _current = next;
             _current.OnEnter(args);
 
-            EmberEventBus.Dispatch(EmberBroadcastEvent.GameStateChanged);
+            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
             OnStateChanged?.Invoke(Previous, _current);
         }
 
@@ -243,7 +243,7 @@ namespace Ember.Core
             _current = overlay;
             _current.OnEnter(args);
 
-            EmberEventBus.Dispatch(EmberBroadcastEvent.GameStateChanged);
+            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
             OnStateChanged?.Invoke(Previous, _current);
         }
 
@@ -262,7 +262,7 @@ namespace Ember.Core
             _current = _overlayStack.Pop();
             _current?.OnResume();
 
-            EmberEventBus.Dispatch(EmberBroadcastEvent.GameStateChanged);
+            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
             OnStateChanged?.Invoke(Previous, _current);
         }
 

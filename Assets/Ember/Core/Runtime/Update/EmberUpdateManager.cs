@@ -12,11 +12,12 @@ namespace Ember.Core
     /// - 通过反射自动发现所有实现 <see cref="IEmberUpdate"/> / <see cref="IEmberLateUpdate"/> / <see cref="IEmberFixedUpdate"/> 的单例
     /// - 每帧统一调用，避免几十个 MonoBehaviour 各自 Update
     /// - 按模块阶段分组，当前阶段之前的模块才会被 Tick
-    /// - 同时驱动 <see cref="EmberManagerCollector"/> 中收集的 Timer（后续接入）
+    /// - 纯 C# 类，不继承 MonoBehaviour，由 <see cref="GameLauncher"/> 驱动
     ///
-    /// 使用方式：挂到场景中的 GameObject 上，或由 ManagerCollector 自动创建。
+    /// 使用方式：无需手动操作，由 GameLauncher 自动创建并驱动。
     /// </summary>
-    public class EmberUpdateManager : EmberMonoSingleton<EmberUpdateManager>, IEmberManager
+    [EmberInitOrder(EmberInitOrderAttribute.Core)]
+    public class EmberUpdateManager : EmberSingleton<EmberUpdateManager>, IEmberManager
     {
         private const string TAG = LogTags.CoreUpdateManager;
         #region 参数
@@ -33,9 +34,6 @@ namespace Ember.Core
         /// <summary>当前激活的模块阶段。只 Tick 此阶段及之前的接收者。</summary>
         public int CurrentPhase { get; set; } = int.MaxValue;
 
-        /// <summary>防止同帧重复执行</summary>
-        private long _lastFrameCount = -1;
-
         #endregion
 
         // ============================================================
@@ -45,27 +43,22 @@ namespace Ember.Core
         void IEmberManager.Init()
         {
             CollectAll();
+            EmberDebug.LogInit(TAG, "EmberUpdateManager initialized.");
         }
 
         void IEmberManager.Destroy()
         {
-            _updaters.Clear();
-            _lateUpdaters.Clear();
-            _fixedUpdaters.Clear();
+            CleanupInternal();
         }
 
-        #endregion
+        // ======== 帧驱动（由 GameLauncher 调用） ========
 
-        // ============================================================
-
-        #region 生命周期
-
-        private void Update()
+        /// <summary>
+        /// 驱动所有 <see cref="IEmberUpdate"/> 的 Update。
+        /// 由 <see cref="GameLauncher"/> 每帧调用。
+        /// </summary>
+        public void DoUpdate()
         {
-            // 防止同帧重复调用（某些 Unity 版本或 Pause 场景可能触发多次）
-            if (Time.frameCount == _lastFrameCount) return;
-            _lastFrameCount = Time.frameCount;
-
             foreach (var kvp in _updaters)
             {
                 if (kvp.Key > CurrentPhase) continue;
@@ -78,14 +71,18 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        EmberDebug.LogError(TAG, 
-                            $"[Ember] Error in {updater.GetType().Name}.Update(): {ex.Message}");
+                        EmberDebug.LogError(TAG,
+                            $"Error in {updater.GetType().Name}.Update(): {ex.Message}");
                     }
                 }
             }
         }
 
-        private void LateUpdate()
+        /// <summary>
+        /// 驱动所有 <see cref="IEmberLateUpdate"/> 的 LateUpdate。
+        /// 由 <see cref="GameLauncher"/> 每帧调用。
+        /// </summary>
+        public void DoLateUpdate()
         {
             foreach (var kvp in _lateUpdaters)
             {
@@ -99,14 +96,18 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        EmberDebug.LogError(TAG, 
-                            $"[Ember] Error in {updater.GetType().Name}.LateUpdate(): {ex.Message}");
+                        EmberDebug.LogError(TAG,
+                            $"Error in {updater.GetType().Name}.LateUpdate(): {ex.Message}");
                     }
                 }
             }
         }
 
-        private void FixedUpdate()
+        /// <summary>
+        /// 驱动所有 <see cref="IEmberFixedUpdate"/> 的 FixedUpdate。
+        /// 由 <see cref="GameLauncher"/> FixedUpdate 调用。
+        /// </summary>
+        public void DoFixedUpdate()
         {
             foreach (var kvp in _fixedUpdaters)
             {
@@ -120,8 +121,8 @@ namespace Ember.Core
                     }
                     catch (Exception ex)
                     {
-                        EmberDebug.LogError(TAG, 
-                            $"[Ember] Error in {updater.GetType().Name}.FixedUpdate(): {ex.Message}");
+                        EmberDebug.LogError(TAG,
+                            $"Error in {updater.GetType().Name}.FixedUpdate(): {ex.Message}");
                     }
                 }
             }
@@ -132,6 +133,17 @@ namespace Ember.Core
         // ============================================================
 
         #region 内部方法
+
+        /// <summary>
+        /// 共享清理逻辑：清空所有更新接收者列表。
+        /// 同时被 <see cref="IEmberManager.Destroy"/> 和 <see cref="OnDestroy"/> 调用。
+        /// </summary>
+        private void CleanupInternal()
+        {
+            _updaters.Clear();
+            _lateUpdaters.Clear();
+            _fixedUpdaters.Clear();
+        }
 
         /// <summary>
         /// 反射扫描所有已加载程序集中实现 IEmberUpdate 等接口的单例。
@@ -222,6 +234,15 @@ namespace Ember.Core
                 || name.StartsWith("Cysharp")
                 || name.StartsWith("TMPro")
                 || name.Contains(".");
+        }
+
+        /// <summary>
+        /// EmberSingleton 销毁钩子：确保通过 EmberSingleton.Destroy() 直接销毁时也能清理。
+        /// 正常情况下由 <see cref="EmberManagerCollector.DestroyAll"/> → <see cref="IEmberManager.Destroy"/> 驱动。
+        /// </summary>
+        protected override void OnDestroy()
+        {
+            CleanupInternal();
         }
 
         #endregion

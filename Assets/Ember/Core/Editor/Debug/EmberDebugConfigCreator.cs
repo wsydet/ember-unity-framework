@@ -30,13 +30,14 @@ namespace Ember.Core.Editor
                 AssetDatabase.CreateFolder(parent, folderName);
             }
 
-            // 创建 SO
+            // 创建 SO 并预填框架标签
             var config = ScriptableObject.CreateInstance<EmberDebugConfigSO>();
+            config.PopulateFrameworkEntries();
             AssetDatabase.CreateAsset(config, Path);
             AssetDatabase.SaveAssets();
 
-
-            EmberDebug.Log(LogTags.EmberCore, $"EmberDebugConfig.asset auto-created at: {Path}");
+            EmberDebug.Log(LogTags.EmberCore, $"EmberDebugConfig.asset auto-created at: {Path} " +
+                $"({config.frameworkEntries.Count} framework tags pre-populated).");
     
         }
     }

@@ -32,6 +32,8 @@ namespace Ember.Core
         public const string CoreManagerCollector = EmberCore + ".ManagerCollector";
         public const string CoreUpdateManager  = EmberCore + ".UpdateManager";
         public const string CoreStateMachine   = EmberCore + ".StateMachine";
+        public const string CoreGameLauncher   = EmberCore + ".GameLauncher";
+        public const string CoreCameraManager  = EmberCore + ".CameraManager";
 
         // Resource 子标签
         public const string ResourceManager = EmberResource + ".Manager";
@@ -56,7 +58,7 @@ namespace Ember.Core
             EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
-            CoreManagerCollector, CoreUpdateManager, CoreStateMachine,
+            CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager,
             // 其他子
             ResourceManager, ResourceProvider, UIManager, SceneManager, AudioManager, InputManager,
         };
@@ -137,7 +139,7 @@ namespace Ember.Core
     public static class LogColors
     {
         public static string Info     = "#FFFFFF";
-        public static string Init     = "#66FF66";
+        public static string Init     = "#a7f57a";
         public static string Event    = "#CC88FF";
         public static string Cleanup  = "#999999";
         public static string Warning  = "#FFFFFF";

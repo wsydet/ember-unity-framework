@@ -67,7 +67,15 @@ namespace Ember.Core
             {
                 _globalOpen = _config.globalOpen;
 
-                foreach (var entry in _config.classEntries)
+                foreach (var entry in _config.frameworkEntries)
+                {
+                    _entries[entry.className] = new ClassEntry
+                    {
+                        Enabled = entry.enabled,
+                        Color = entry.color
+                    };
+                }
+                foreach (var entry in _config.userEntries)
                 {
                     _entries[entry.className] = new ClassEntry
                     {
@@ -304,12 +312,7 @@ namespace Ember.Core
                 {
                     if (!_config.TryGet(tag, out _))
                     {
-                        _config.classEntries.Add(new LoggerClassEntry
-                        {
-                            className = tag,
-                            enabled = true,
-                            color = entry.Color
-                        });
+                        _config.GetOrCreate(tag); // 自动选择 frameworkEntries 或 userEntries
                         UnityEditor.EditorUtility.SetDirty(_config);
                     }
                 }

@@ -11,7 +11,7 @@ namespace Ember.Core
     /// 用法：
     /// <code>
     /// EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
-    /// EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
+    /// EmberEventBus.OnNext(EmberBroadcastEvent.ResourceReady);
     /// </code>
     /// </summary>
     public static class EmberBroadcastEvent

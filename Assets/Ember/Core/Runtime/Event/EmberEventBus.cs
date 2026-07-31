@@ -18,14 +18,17 @@ namespace Ember.Core
     /// - 遍历中安全增删（派发中的操作延迟到本轮结束执行）
     /// - 线程不安全，仅限主线程使用（符合 Unity 规范）
     ///
+    /// API 对齐 UniRx：<c>Subscribe</c> 返回 <see cref="IDisposable"/>，
+    /// <c>OnNext</c> 广播事件。
+    ///
     /// 用法：
     /// <code>
-    /// // 订阅
-    /// EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
-    /// // 发布
-    /// EmberEventBus.Dispatch(EmberBroadcastEvent.ResourceReady);
-    /// // 取消订阅
-    /// EmberEventBus.Unsubscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
+    /// // 订阅（返回 IDisposable，与 UniRx 一致）
+    /// var sub = EmberEventBus.Subscribe(EmberBroadcastEvent.ResourceReady, OnResourceReady);
+    /// // 发布（类似 UniRx Subject.OnNext / MessageBroker.Publish）
+    /// EmberEventBus.OnNext(EmberBroadcastEvent.ResourceReady);
+    /// // 取消订阅（Dispose 即可）
+    /// sub.Dispose();
     /// </code>
     /// </summary>
     public static class EmberEventBus
@@ -48,7 +51,7 @@ namespace Ember.Core
         private static readonly Dictionary<int, Delegate> _events4 = new();
 
         /// <summary>
-        /// 派发深度计数器，> 0 表示该事件正在派发中，
+        /// 播报深度计数器，> 0 表示该事件正在派发中，
         /// 此时 Subscribe / Unsubscribe / Clear 操作会被延迟执行。
         /// </summary>
         private static readonly Dictionary<int, int> _dispatchDepth = new();
@@ -68,87 +71,94 @@ namespace Ember.Core
         // ======== 订阅 ========
 
         /// <summary>
-        /// 订阅无参事件。事件 Key 使用 <see cref="EmberBroadcastEvent"/> 中的常量。
+        /// 订阅无参事件，返回 <see cref="IDisposable"/>（对齐 UniRx）。
+        /// Dispose 返回值即可取消订阅。
         /// </summary>
-        public static void Subscribe(int eventKey, Action handler)
+        public static IDisposable Subscribe(int eventKey, Action handler)
         {
-            if (handler == null) return;
+            if (handler == null) return Subscription.Empty;
             EmberDebug.LogEvent(TAG, $"Subscribe: key={eventKey}, handler={handler.Method.Name}");
 
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Subscribe(eventKey, handler));
-                return;
+                return new Subscription(() => Unsubscribe(eventKey, handler));
             }
 
             if (_events0.TryGetValue(eventKey, out var existing))
                 _events0[eventKey] = existing + handler;
             else
                 _events0[eventKey] = handler;
+
+            return new Subscription(() => Unsubscribe(eventKey, handler));
         }
 
         /// <summary>
-        /// 订阅 1 参事件。
+        /// 订阅 1 参事件，返回 <see cref="IDisposable"/>。
         /// </summary>
-        public static void Subscribe<T>(int eventKey, Action<T> handler)
+        public static IDisposable Subscribe<T>(int eventKey, Action<T> handler)
         {
-            if (handler == null) return;
+            if (handler == null) return Subscription.Empty;
 
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Subscribe(eventKey, handler));
-                return;
+                return new Subscription(() => Unsubscribe(eventKey, handler));
             }
 
             CombineInto(_events1, eventKey, handler);
+            return new Subscription(() => Unsubscribe(eventKey, handler));
         }
 
         /// <summary>
-        /// 订阅 2 参事件。
+        /// 订阅 2 参事件，返回 <see cref="IDisposable"/>。
         /// </summary>
-        public static void Subscribe<T1, T2>(int eventKey, Action<T1, T2> handler)
+        public static IDisposable Subscribe<T1, T2>(int eventKey, Action<T1, T2> handler)
         {
-            if (handler == null) return;
+            if (handler == null) return Subscription.Empty;
 
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Subscribe(eventKey, handler));
-                return;
+                return new Subscription(() => Unsubscribe(eventKey, handler));
             }
 
             CombineInto(_events2, eventKey, handler);
+            return new Subscription(() => Unsubscribe(eventKey, handler));
         }
 
         /// <summary>
-        /// 订阅 3 参事件。
+        /// 订阅 3 参事件，返回 <see cref="IDisposable"/>。
         /// </summary>
-        public static void Subscribe<T1, T2, T3>(int eventKey, Action<T1, T2, T3> handler)
+        public static IDisposable Subscribe<T1, T2, T3>(int eventKey, Action<T1, T2, T3> handler)
         {
-            if (handler == null) return;
+            if (handler == null) return Subscription.Empty;
 
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Subscribe(eventKey, handler));
-                return;
+                return new Subscription(() => Unsubscribe(eventKey, handler));
             }
 
             CombineInto(_events3, eventKey, handler);
+            return new Subscription(() => Unsubscribe(eventKey, handler));
         }
 
         /// <summary>
-        /// 订阅 4 参事件。
+        /// 订阅 4 参事件，返回 <see cref="IDisposable"/>。
         /// </summary>
-        public static void Subscribe<T1, T2, T3, T4>(int eventKey, Action<T1, T2, T3, T4> handler)
+        public static IDisposable Subscribe<T1, T2, T3, T4>(int eventKey, Action<T1, T2, T3, T4> handler)
         {
-            if (handler == null) return;
+            if (handler == null) return Subscription.Empty;
 
             if (InDispatch(eventKey))
             {
                 _pendingOps.Add(() => Subscribe(eventKey, handler));
-                return;
+                return new Subscription(() => Unsubscribe(eventKey, handler));
             }
 
             CombineInto(_events4, eventKey, handler);
+            return new Subscription(() => Unsubscribe(eventKey, handler));
         }
 
         // ======== 取消订阅 ========
@@ -236,9 +246,9 @@ namespace Ember.Core
         // ======== 播报 ========
 
         /// <summary>
-        /// 派发无参事件。
+        /// 播报无参事件。
         /// </summary>
-        public static void Dispatch(int eventKey)
+        public static void OnNext(int eventKey)
         {
             if (!_events0.TryGetValue(eventKey, out var handler) || handler == null) return;
             EmberDebug.LogEvent(TAG, $"Dispatch: key={eventKey}");
@@ -255,9 +265,9 @@ namespace Ember.Core
         }
 
         /// <summary>
-        /// 派发 1 参事件。
+        /// 播报 1 参事件。
         /// </summary>
-        public static void Dispatch<T>(int eventKey, T arg)
+        public static void OnNext<T>(int eventKey, T arg)
         {
             if (!_events1.TryGetValue(eventKey, out var del)) return;
             if (del is not Action<T> handler) return;
@@ -274,9 +284,9 @@ namespace Ember.Core
         }
 
         /// <summary>
-        /// 派发 2 参事件。
+        /// 播报 2 参事件。
         /// </summary>
-        public static void Dispatch<T1, T2>(int eventKey, T1 arg1, T2 arg2)
+        public static void OnNext<T1, T2>(int eventKey, T1 arg1, T2 arg2)
         {
             if (!_events2.TryGetValue(eventKey, out var del)) return;
             if (del is not Action<T1, T2> handler) return;
@@ -293,9 +303,9 @@ namespace Ember.Core
         }
 
         /// <summary>
-        /// 派发 3 参事件。
+        /// 播报 3 参事件。
         /// </summary>
-        public static void Dispatch<T1, T2, T3>(int eventKey, T1 arg1, T2 arg2, T3 arg3)
+        public static void OnNext<T1, T2, T3>(int eventKey, T1 arg1, T2 arg2, T3 arg3)
         {
             if (!_events3.TryGetValue(eventKey, out var del)) return;
             if (del is not Action<T1, T2, T3> handler) return;
@@ -312,9 +322,9 @@ namespace Ember.Core
         }
 
         /// <summary>
-        /// 派发 4 参事件。
+        /// 播报 4 参事件。
         /// </summary>
-        public static void Dispatch<T1, T2, T3, T4>(int eventKey, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static void OnNext<T1, T2, T3, T4>(int eventKey, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
             if (!_events4.TryGetValue(eventKey, out var del)) return;
             if (del is not Action<T1, T2, T3, T4> handler) return;
@@ -346,13 +356,14 @@ namespace Ember.Core
 
         /// <summary>
         /// 清除指定事件的所有订阅者。通常在模块退出时调用，
-        /// 清除自身对该事件的订阅，避免野指针回调。
+        /// 避免残留订阅导致野指针回调（类似于 UniRx 中 Dispose 所有相关 subscription）。
+        /// 与逐个 <c>sub.Dispose()</c> 效果相同，但更高效。
         /// </summary>
-        public static void Clear(int eventKey)
+        public static void ClearSubscribers(int eventKey)
         {
             if (InDispatch(eventKey))
             {
-                _pendingOps.Add(() => Clear(eventKey));
+                _pendingOps.Add(() => ClearSubscribers(eventKey));
                 return;
             }
 
@@ -365,10 +376,11 @@ namespace Ember.Core
 
         /// <summary>
         /// 清除所有事件的所有订阅者。仅在程序退出或彻底重置时使用。
+        /// 类似于 UniRx 中 <c>CompositeDisposable.Clear()</c> 的语义。
         /// </summary>
-        public static void ClearAll()
+        public static void ClearAllSubscribers()
         {
-            EmberDebug.LogCleanup(TAG, "ClearAll");
+            EmberDebug.LogCleanup(TAG, "ClearAllSubscribers");
             _events0.Clear();
             _events1.Clear();
             _events2.Clear();
@@ -480,5 +492,29 @@ namespace Ember.Core
         }
 
         #endregion
+
+        // ============================================================
+
+        /// <summary>
+        /// 订阅句柄，调用 <see cref="Dispose"/> 即可取消订阅（对齐 UniRx IDisposable 模式）。
+        /// </summary>
+        private sealed class Subscription : IDisposable
+        {
+            private Action _dispose;
+
+            public Subscription(Action dispose)
+            {
+                _dispose = dispose;
+            }
+
+            public void Dispose()
+            {
+                _dispose?.Invoke();
+                _dispose = null;
+            }
+
+            /// <summary>空订阅句柄，用于 handler 为 null 等无需取消的场景。</summary>
+            public static readonly IDisposable Empty = new Subscription(null);
+        }
     }
 }
