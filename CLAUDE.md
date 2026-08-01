@@ -92,31 +92,31 @@ Packages/
 
 ### 代码组织
 
-使用 `#region` 将类内成员按职责分为最多四个块，按以下顺序排列：
+使用 `#region` 将类内成员按职责分为最多五个块，按以下顺序排列：
 
 | 顺序 | Region | 内容 | 说明 |
 |------|--------|------|------|
-| 1 | `参数` | 字段、属性、常量 | 类的所有数据成员 |
-| 2 | `外部方法` | `public` / `internal` 方法 | 对外暴露的 API |
+| 1 | `编辑器面板参数` | `[SerializeField]` / `public` 字段 | Inspector 中可见的序列化字段 |
+| 2 | `内部参数` | `private` 字段（非序列化）、属性、常量、事件 | 不暴露在 Inspector 中的数据成员 |
 | 3 | `生命周期` | `Awake` / `Start` / `OnDestroy` 等 | 仅 MonoBehaviour 有此块，普通类跳过 |
-| 4 | `内部方法` | `private` 方法 | 内部实现细节和辅助方法 |
+| 4 | `内部方法` | `private` 方法、嵌套类型 | 内部实现细节和辅助方法 |
+| 5 | `外部方法` | `public` / `internal` 方法 | 对外暴露的 API |
 
 ```csharp
 public class ExampleManager : MonoBehaviour
 {
-    #region 参数
+    #region 编辑器面板参数
 
     [SerializeField] private float _duration = 1f;
-    private bool _isRunning;
 
     #endregion
 
     // --------------------------------------------------------
 
-    #region 外部方法
+    #region 内部参数
 
-    public void StartProcess() { ... }
-    public void StopProcess() { ... }
+    private bool _isRunning;
+    private const int MAX_COUNT = 10;
 
     #endregion
 
@@ -137,13 +137,24 @@ public class ExampleManager : MonoBehaviour
     private void Cleanup() { ... }
 
     #endregion
+
+    // --------------------------------------------------------
+
+    #region 外部方法
+
+    public void StartProcess() { ... }
+    public void StopProcess() { ... }
+
+    #endregion
 }
 ```
 
 规则：
 - 块之间用 `// ----` 或 `// ====` 分隔线隔开
 - 如果某个块没有内容（如普通 class 没有生命周期），直接跳过，不留空 region
-- static class 通常只有 `参数`、`外部方法`、`内部方法` 三个块
+- static class 通常只有 `内部参数`、`内部方法`、`外部方法` 三个块
+- `编辑器面板参数`：仅放置 Inspector 可见的序列化字段（`[SerializeField]`、`[SerializeReference]`、`public` 字段）
+- `内部参数`：放置 `private` 非序列化字段、`const`、`static`、`readonly`、属性、事件
 
 ### 程序集划分
 

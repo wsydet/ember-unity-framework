@@ -4,7 +4,7 @@ description: >-
   Use when the user invokes "/region-organizer", "/region", "代码分块", "region整理",
   "整理region", "组织代码块", or asks to reorganize C# scripts with #region blocks per
   the project convention. Accepts a file path or folder path, then reorganizes all
-  members into the standard four regions: 参数, 外部方法, 生命周期, 内部方法.
+  members into the standard five regions: 编辑器面板参数, 内部参数, 生命周期, 内部方法, 外部方法.
   Do NOT auto-trigger — the user must explicitly invoke this skill.
 ---
 
@@ -59,14 +59,15 @@ description: >-
 
 #### 2.2 成员分类
 
-将类内所有成员（字段、属性、方法、事件、委托、嵌套类型）分入四个类别：
+将类内所有成员（字段、属性、方法、事件、委托、嵌套类型）分入五个类别：
 
 | 类别 | Region 名 | 识别规则 |
 |------|-----------|----------|
-| **参数** | `参数` | 字段（含 `const`/`readonly`/`static`）、属性、事件声明 |
-| **外部方法** | `外部方法` | `public` / `internal` 方法（非生命周期） |
+| **编辑器面板参数** | `编辑器面板参数` | `[SerializeField]` / `[SerializeReference]` 修饰的 `private` 字段、`public` 字段（非 `const`/`static`/`readonly`） |
+| **内部参数** | `内部参数` | `private` / `protected` 字段（无序列化特性）、`const`、`static`、`readonly`、属性、事件声明 |
 | **生命周期** | `生命周期` | MonoBehaviour 生命周期方法（见下方清单），仅 MonoBehaviour 子类有此块 |
 | **内部方法** | `内部方法` | `private` / `protected` 方法（非生命周期）、嵌套类型 |
+| **外部方法** | `外部方法` | `public` / `internal` 方法（非生命周期） |
 
 MonoBehaviour 生命周期方法清单（仅以下方法归入"生命周期"）：
 
@@ -122,7 +123,9 @@ OnMouseExit, OnMouseOver, OnMouseDrag, OnMouseUpAsButton
 
 | 成员 | 类型 | → Region |
 |------|------|----------|
-| `_events0` | 字段 | 参数 |
+| `_duration` | [SerializeField] 字段 | 编辑器面板参数 |
+| `_isRunning` | private 字段 | 内部参数 |
+| `MAX_COUNT` | const | 内部参数 |
 | `Subscribe(...)` | public 方法 | 外部方法 |
 | `Dispatch(...)` | public 方法 | 外部方法 |
 | `Awake()` | 生命周期 | 生命周期 |
@@ -131,11 +134,11 @@ OnMouseExit, OnMouseOver, OnMouseDrag, OnMouseUpAsButton
 ### 分块结构预览
 
 \`\`\`csharp
-#region 参数
+#region 编辑器面板参数
 ...
 #endregion
 
-#region 外部方法
+#region 内部参数
 ...
 #endregion
 
@@ -146,9 +149,13 @@ OnMouseExit, OnMouseOver, OnMouseDrag, OnMouseUpAsButton
 #region 内部方法
 ...
 #endregion
+
+#region 外部方法
+...
+#endregion
 \`\`\`
 
-**共 N 个成员，4 个 region。**
+**共 N 个成员，5 个 region。**
 ```
 
 用户确认后执行写入。
@@ -170,17 +177,18 @@ namespace Xxx
 {
     public class Example : MonoBehaviour
     {
-        #region 参数
+        #region 编辑器面板参数
 
-        private int _value;
+        [SerializeField] private float _duration = 1f;
 
         #endregion
 
         // ============================================================
 
-        #region 外部方法
+        #region 内部参数
 
-        public void DoWork() { }
+        private int _value;
+        private const int MAX_COUNT = 10;
 
         #endregion
 
@@ -200,6 +208,14 @@ namespace Xxx
         private void Helper() { }
 
         #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        public void DoWork() { }
+
+        #endregion
     }
 }
 ```
@@ -208,7 +224,7 @@ namespace Xxx
 - 块之间用一行 `// ============================================================` 分隔
 - 如果某个块无内容（如 static class 无生命周期），直接跳过，不留空 region
 - 内部方法的嵌套类型（enum / struct / class）放在"内部方法"region 末尾
-- Region 名称使用中文：`参数`、`外部方法`、`生命周期`、`内部方法`
+- Region 名称使用中文：`编辑器面板参数`、`内部参数`、`生命周期`、`内部方法`、`外部方法`
 
 ---
 
@@ -219,10 +235,10 @@ namespace Xxx
 ```markdown
 ## ✅ Region 分块完成
 
-| 文件 | 成员数 | 参数 | 外部方法 | 生命周期 | 内部方法 | 备注 |
-|------|--------|------|----------|----------|----------|------|
-| `Core/EmberEventBus.cs` | 28 | 6 | 17 | — | 5 | static，无生命周期 |
-| `UI/UIPanel.cs` | 12 | 3 | 4 | 2 | 3 | |
+| 文件 | 成员数 | 编辑器面板 | 内部参数 | 外部方法 | 生命周期 | 内部方法 | 备注 |
+|------|--------|------------|----------|----------|----------|----------|------|
+| `Core/EmberEventBus.cs` | 28 | 2 | 4 | 17 | — | 5 | static，无生命周期 |
+| `UI/UIPanel.cs` | 12 | 2 | 1 | 4 | 2 | 3 | |
 
 **跳过**（N 个文件）：无成员 / 非 C# 文件 / 其他原因
 
@@ -234,11 +250,12 @@ namespace Xxx
 ## 易错点
 
 - **XML 注释不能和成员分离**——`/// <summary>` 必须紧贴在方法签名前，不能因 region 重组断开
-- **属性 (`[SerializeField]`) 必须跟随字段**，不能落到其他 region
+- **`[SerializeField]` 字段归入"编辑器面板参数"**，普通 `private` 字段归入"内部参数"——不要混放
+- **`public` 字段（非 const/static）归入"编辑器面板参数"**，因为 Unity 会默认序列化它们并在 Inspector 显示
 - **泛型参数列表中的逗号**不能误判为多个参数
 - **嵌套类型**（类中类/类中枚举）放在"内部方法"region 末尾
-- **static class** 跳过"生命周期"region，不要留空块
-- **interface** 只有"参数"和"外部方法"（接口无实现），酌情处理，不强制四块结构
+- **static class** 跳过"编辑器面板参数"和"生命周期"region，通常保留"内部参数""外部方法""内部方法"
+- **interface** 不强制 region 结构（接口无字段和实现），仅按需使用"外部方法"
 - 注释风格已有分块分隔线（`// ====`）的旧脚本，先拆除旧分隔线再加 region
 - 如果文件中已有 `#region`，先拆除旧 region，不要嵌套
 
