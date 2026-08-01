@@ -109,33 +109,22 @@ namespace Ember.Core
     }
 
     // ============================================================
-    // MonoBehaviour 版本
+    // MonoBehaviour 版本（无 DontDestroyOnLoad）
     // ============================================================
 
     /// <summary>
-    /// MonoBehaviour 单例基类。
+    /// MonoBehaviour 单例基类 —— <b>不含 DontDestroyOnLoad</b>。
     ///
-    /// 参考 burner 项目的 <see cref="SafeMonoSingleton"/>。
-    /// 用于需要挂载到 GameObject 上的 Unity 组件单例。
+    /// 用于挂载到场景 GameObject 上的组件单例。持久化由场景本身保证
+    /// （场景永不卸载即等价于 DDOL）。
     ///
     /// 特性：
-    /// - 懒初始化：首次访问 .Instance 时，若场景中不存在则自动创建
-    /// - DontDestroyOnLoad：场景切换时不销毁
     /// - 线程安全（双检锁）
+    /// - 懒初始化：.Instance 首次访问时，找不到场景对象则自动创建
     /// - 自动检测并销毁重复实例
     ///
-    /// 用法：
-    /// <code>
-    /// public class MyUIManager : EmberMonoSingleton&lt;MyUIManager&gt;
-    /// {
-    ///     protected override void OnSingletonAwake()
-    ///     {
-    ///         // 初始化逻辑
-    ///     }
-    /// }
-    /// </code>
+    /// 如需 DontDestroyOnLoad，使用 <see cref="EmberMonoSingletonDontDestroy{T}"/>。
     /// </summary>
-    /// <typeparam name="T">MonoBehaviour 单例类型</typeparam>
     public abstract class EmberMonoSingleton<T> : MonoBehaviour where T : EmberMonoSingleton<T>
     {
         private const string TAG = LogTags.CoreSingleton;
@@ -147,7 +136,7 @@ namespace Ember.Core
         /// 获取单例实例。
         /// - 若已存在则直接返回
         /// - 若场景中有，自动找到并缓存
-        /// - 若不存在，自动创建新 GameObject（挂 DontDestroyOnLoad）
+        /// - 若不存在，自动创建新 GameObject（不挂 DontDestroyOnLoad）
         /// </summary>
         public static T Instance
         {
@@ -159,15 +148,12 @@ namespace Ember.Core
                     {
                         if (_instance == null)
                         {
-                            // 先尝试在场景中找
                             _instance = FindAnyObjectByType<T>();
 
                             if (_instance == null)
                             {
-                                // 自动创建
                                 GameObject go = new GameObject($"[Ember] {typeof(T).Name}");
                                 _instance = go.AddComponent<T>();
-                                DontDestroyOnLoad(go);
                             }
                         }
                     }
@@ -186,13 +172,11 @@ namespace Ember.Core
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
                 OnSingletonAwake();
             }
             else if (_instance != this)
             {
-                // 场景中已存在另一个实例，销毁自身
-                EmberDebug.LogWarning(TAG, 
+                EmberDebug.LogWarning(TAG,
                     $"[Ember] Duplicate instance of {typeof(T).Name} detected. " +
                     $"Destroying the duplicate on '{gameObject.name}'.");
                 Destroy(gameObject);
@@ -217,5 +201,29 @@ namespace Ember.Core
         /// 替代 OnDestroy 的单例清理钩子。
         /// </summary>
         protected virtual void OnSingletonDestroy() { }
+    }
+
+    // ============================================================
+    // MonoBehaviour 版本（含 DontDestroyOnLoad）
+    // ============================================================
+
+    /// <summary>
+    /// MonoBehaviour 单例基类 —— <b>含 DontDestroyOnLoad</b>。
+    ///
+    /// 继承自 <see cref="EmberMonoSingleton{T}"/>，在 Awake 时自动标记
+    /// DontDestroyOnLoad。用于需要在场景切换时保留的对象。
+    ///
+    /// ⚠ Unity 6 已知问题：DDOL 对象树在 Editor 退出 Play Mode 时被递归销毁，
+    /// 可能触发 Hierarchy 窗口竞态（GameObjectTreeViewDataSource 索引越界）。
+    /// 优先使用多场景叠加（永不卸载的场景）替代 DDOL。
+    /// </summary>
+    public abstract class EmberMonoSingletonDontDestroy<T> : EmberMonoSingleton<T>
+        where T : EmberMonoSingletonDontDestroy<T>
+    {
+        protected override void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+            base.Awake();
+        }
     }
 }

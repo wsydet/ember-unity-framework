@@ -32,46 +32,62 @@ namespace Ember.Core
     /// </summary>
     public class GameLauncher : EmberMonoSingleton<GameLauncher>
     {
+        private const string ODIN_GROUP = "Game Launcher";
+
+        #region 编辑器面板参数
+
+        [FoldoutGroup(ODIN_GROUP, Expanded = true)]
+        [BoxGroup(ODIN_GROUP + "/配置", ShowLabel = false)]
+        [Title("宿主节点")]
+        [Required("请拖入 UI 根节点")]
+        [SerializeField] private GameObject _uiRoot;
+
+        [BoxGroup(ODIN_GROUP + "/配置")]
+        [Required("请拖入音频宿主")]
+        [SerializeField] private GameObject _audioHost;
+
+        [BoxGroup(ODIN_GROUP + "/配置")]
+        [Required("请拖入输入宿主")]
+        [SerializeField] private GameObject _inputHost;
+
+        [BoxGroup(ODIN_GROUP + "/配置")]
+        [Title("相机")]
+        [Required("请拖入 UI 相机")]
+        [SerializeField] private Camera _uiCamera;
+
+        [BoxGroup(ODIN_GROUP + "/配置")]
+        [Required("请拖入主相机")]
+        [SerializeField] private Camera _mainCamera;
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部参数
+
         private const string TAG = LogTags.CoreGameLauncher;
 
-        #region 参数
-
+        [FoldoutGroup(ODIN_GROUP)]
+        [BoxGroup(ODIN_GROUP + "/运行时", ShowLabel = false)]
+        [Title("运行时状态")]
         /// <summary>游戏状态机实例。</summary>
         [ShowInInspector, ReadOnly]
         public EmberStateMachine Fsm { get; private set; }
 
+        [BoxGroup(ODIN_GROUP + "/运行时")]
         /// <summary>启动器是否已完成初始化。</summary>
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector, ReadOnly, LabelText("已初始化")]
         public bool IsInitialized { get; private set; }
 
+        [BoxGroup(ODIN_GROUP + "/运行时")]
         /// <summary>当前活跃的状态名。</summary>
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector, ReadOnly, LabelText("当前状态")]
         private string CurrentState => Fsm?.Current?.Name ?? "—";
 
-        // ======== 宿主节点（Inspector 手动拖拽赋值） ========
-
-        [Title("宿主节点")]
-        [Required("请拖入 UI 根节点")]
-        [SerializeField] private GameObject _uiRoot;
         public GameObject UIRoot => _uiRoot;
-
-        [Required("请拖入音频宿主")]
-        [SerializeField] private GameObject _audioHost;
         public GameObject AudioHost => _audioHost;
-
-        [Required("请拖入输入宿主")]
-        [SerializeField] private GameObject _inputHost;
         public GameObject InputHost => _inputHost;
-
-        // ======== 相机（Inspector 拖入） ========
-
-        [Title("相机")]
-        [Required("请拖入 UI 相机")]
-        [SerializeField] private Camera _uiCamera;
         public Camera UICamera => _uiCamera;
-
-        [Required("请拖入主相机")]
-        [SerializeField] private Camera _mainCamera;
         public Camera MainCamera => _mainCamera;
 
         #endregion
@@ -90,33 +106,6 @@ namespace Ember.Core
 
             // Manager 初始化推迟到 InitState.OnEnter() 中执行（对齐 burner InitProcedure 模式）
             EmberDebug.LogInit(TAG, "GameLauncher: state machine ready. Entering InitState...");
-        }
-
-        /// <summary>
-        /// 配置状态机 —— 注册所有游戏状态。
-        ///
-        /// 这是状态注册的<b>唯一入口</b>。未来可视化编辑器只需修改此方法内部的代码，
-        /// 无需触碰 GameLauncher 的核心驱动逻辑（初始化顺序、Update 循环、销毁流程）。
-        ///
-        /// 扩展方式：
-        /// <list type="bullet">
-        ///   <item>手写：直接在此方法中调用 <c>fsm.Register(...)</c></item>
-        ///   <item>可视化编辑器：代码生成器修改此方法体</item>
-        ///   <item>继承：子类 override 此方法，调用 <c>base.ConfigureStateMachine(fsm)</c> 后追加自定义状态</item>
-        /// </list>
-        /// </summary>
-        /// <param name="fsm">已创建的状态机实例</param>
-        protected virtual void ConfigureStateMachine(EmberStateMachine fsm)
-        {
-            // 系统必需状态 —— 始终先注册，确保在 InitState 中完成框架自检
-            fsm.Register(new InitState());
-
-            // --- 业务状态注册 ---
-            // 在下方注册自定义状态，例如：
-            // fsm.Register(new LoginState());
-            // fsm.Register(new MainMenuState());
-            // fsm.Register(new BattleState());
-            // --- 可视化编辑器生成区域 ---
         }
 
         private void Start()
@@ -158,6 +147,39 @@ namespace Ember.Core
 
             IsInitialized = false;
             EmberDebug.LogCleanup(TAG, "GameLauncher: framework shutdown complete.");
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        /// <summary>
+        /// 配置状态机 —— 注册所有游戏状态。
+        ///
+        /// 这是状态注册的<b>唯一入口</b>。未来可视化编辑器只需修改此方法内部的代码，
+        /// 无需触碰 GameLauncher 的核心驱动逻辑（初始化顺序、Update 循环、销毁流程）。
+        ///
+        /// 扩展方式：
+        /// <list type="bullet">
+        ///   <item>手写：直接在此方法中调用 <c>fsm.Register(...)</c></item>
+        ///   <item>可视化编辑器：代码生成器修改此方法体</item>
+        ///   <item>继承：子类 override 此方法，调用 <c>base.ConfigureStateMachine(fsm)</c> 后追加自定义状态</item>
+        /// </list>
+        /// </summary>
+        /// <param name="fsm">已创建的状态机实例</param>
+        protected virtual void ConfigureStateMachine(EmberStateMachine fsm)
+        {
+            // 系统必需状态 —— 始终先注册，确保在 InitState 中完成框架自检
+            fsm.Register(new InitState());
+
+            // --- 业务状态注册 ---
+            // 在下方注册自定义状态，例如：
+            // fsm.Register(new LoginState());
+            // fsm.Register(new MainMenuState());
+            // fsm.Register(new BattleState());
+            // --- 可视化编辑器生成区域 ---
         }
 
         #endregion

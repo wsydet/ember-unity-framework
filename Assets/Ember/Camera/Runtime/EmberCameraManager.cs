@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Ember.Core;
-using Sirenix.OdinInspector;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -26,7 +25,6 @@ namespace Ember.Camera
     public class EmberCameraManager : EmberSingleton<EmberCameraManager>, IEmberManager
     {
         private const string TAG = LogTags.CoreCameraManager;
-        private const string ODIN_GROUP = "Camera Manager";
 
         #region 参数
 
@@ -40,6 +38,12 @@ namespace Ember.Camera
 
         /// <summary>MainCamera 上的 CinemachineBrain。</summary>
         public CinemachineBrain Brain { get; private set; }
+
+        /// <summary>
+        /// Cinemachine 转场配置（BlenderSettings 资产）。
+        /// 通过 Create > Cinemachine > Blender Settings 创建后拖入。
+        /// </summary>
+        public CinemachineBlenderSettings blenderSettings;
 
         // === 相机注册 ===
 
@@ -76,46 +80,6 @@ namespace Ember.Camera
             public string Key;
             public CinemachineCamera Camera;
         }
-
-        #endregion
-
-        // ============================================================
-        // Editor UI (Odin)
-        // ============================================================
-
-        #region Editor UI
-
-        [FoldoutGroup(ODIN_GROUP, Expanded = true)]
-
-        [BoxGroup(ODIN_GROUP + "/Config", ShowLabel = false)]
-        [Title("Setup", "核心引用", titleAlignment: TitleAlignments.Centered, horizontalLine: true)]
-        [LabelText("转场配置")]
-        [Tooltip("Cinemachine 原生 BlenderSettings 资产。\n通过 Create > Cinemachine > Blender Settings 创建。")]
-        public CinemachineBlenderSettings blenderSettings;
-
-        [FoldoutGroup(ODIN_GROUP)]
-        [BoxGroup(ODIN_GROUP + "/Runtime", ShowLabel = false)]
-        [Title("Runtime Info", "实时状态", titleAlignment: TitleAlignments.Centered, horizontalLine: true)]
-        [ShowInInspector, ReadOnly, LabelText("活跃相机")]
-        [GUIColor("@_active != null ? UnityEngine.Color.green : UnityEngine.Color.red")]
-        private string ActiveCameraName => _active != null ? _active.name : "None";
-
-        [BoxGroup(ODIN_GROUP + "/Runtime")]
-        [ShowInInspector, ReadOnly, LabelText("强制霸占模式")]
-        [GUIColor("@IsOverrideMode ? UnityEngine.Color.red : UnityEngine.Color.gray")]
-        private bool DebugIsOverride => IsOverrideMode;
-
-        [BoxGroup(ODIN_GROUP + "/Runtime")]
-        [ShowInInspector, ReadOnly, LabelText("霸占栈层数")]
-        private int DebugStackCount => _overrideStack.Count;
-
-        [BoxGroup(ODIN_GROUP + "/Runtime")]
-        [ShowInInspector, ReadOnly, LabelText("锁定状态")]
-        private bool DebugIsLocked => _isLocked;
-
-        [BoxGroup(ODIN_GROUP + "/Runtime")]
-        [ShowInInspector, ReadOnly, LabelText("已注册相机列表")]
-        private Dictionary<string, CinemachineCamera> DebugRegistry => _registry;
 
         #endregion
 
