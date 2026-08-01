@@ -18,4 +18,31 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
     className: EmberCore
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.GameLauncher
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.StateMachine
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.UpdateManager
+  - enabled: 1
+    color: {r: 0.42, g: 0.65, b: 0.85, a: 1}
+    className: EmberResource.Manager
+  - enabled: 1
+    color: {r: 0.9, g: 0.75, b: 0.25, a: 1}
+    className: EmberAudio.Manager
+  - enabled: 1
+    color: {r: 0.45, g: 0.8, b: 0.8, a: 1}
+    className: EmberInput.Manager
+  - enabled: 1
+    color: {r: 0.9, g: 0.55, b: 0.3, a: 1}
+    className: EmberUI.Manager
+  - enabled: 1
+    color: {r: 0.65, g: 0.5, b: 0.85, a: 1}
+    className: EmberScene.Manager
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.CameraManager
   userEntries: []

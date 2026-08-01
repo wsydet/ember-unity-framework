@@ -159,9 +159,143 @@ public int mp;
 | 脚本 | 说明 |
 |------|------|
 | [OdinInspectorDemo.cs](../../Assets/Tem/Examples/OdinInspectorDemo.cs) | 完整特性演示（MonoBehaviour） |
-| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | `[Required]` + `[Title]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
-| [EmberDebugConfigSO.cs](../../Assets/Ember/Core/Runtime/EmberDebugConfigSO.cs) | `[Title]` + `[ListDrawerSettings]` + `[DisableIf]` + `[HorizontalGroup/HideLabel]` 实战（ScriptableObject） |
+| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Required]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
+| [EmberDebugConfigSO.cs](../../Assets/Ember/Core/Runtime/EmberDebugConfigSO.cs) | SO 继承层级 `L0/L1` + `[BoxGroup]` 无名分隔 + `[GUIColor]` + `[VisibleIf]` 实战（ScriptableObject） |
+| [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | `[FoldoutGroup]` + `[BoxGroup(ShowLabel=false)]` + `[Title]` 基类面板（ScriptableObject） |
+| [EmberCameraManager.cs](../../Assets/Ember/Camera/Runtime/EmberCameraManager.cs) | `[GUIColor]` 动态状态着色 + `[LabelText]` 实战 |
 | [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |
+
+### 2.5 SO 继承层级面板 —— L*N* 模式
+
+**适用场景**：有继承链的 ScriptableObject，每层类各自占据一个独立的 `[FoldoutGroup]`，
+数字层级清晰表达继承深度。
+
+**规则**：
+- 基类定义 `const string GROUP_NAME = "L0: BaseSO"`，子类定义 `"L1: SubClassName"`
+- `[FoldoutGroup("$GROUP_NAME")]` 使用 `$` 语法引用常量，确保组名单一来源
+- 基类内参数用 `[BoxGroup("$GROUP_NAME/子组", ShowLabel = false)]` 做无名线框
+
+```csharp
+// 基类 —— L0
+public class EmberBaseSO : ScriptableObject
+{
+    private const string GROUP_NAME = "L0: BaseSO";
+
+    [PropertyOrder(-1000)]
+    [FoldoutGroup("$GROUP_NAME", Expanded = true)]
+    [BoxGroup("$GROUP_NAME/Chain", ShowLabel = false)]
+    [Title("Type Hierarchy", "自动化继承溯源")]
+    [ShowInInspector, ReadOnly]
+    private string InheritanceChain { get; }
+}
+
+// 子类 —— L1
+public class EmberDebugConfigSO : EmberBaseSO
+{
+    private const string DEBUG_GROUP = "L1: DebugConfig";
+
+    [FoldoutGroup("$DEBUG_GROUP", Expanded = true)]
+    [BoxGroup("$DEBUG_GROUP/全局设置", ShowLabel = false)]
+    public bool globalOpen = true;
+}
+```
+
+**效果**：Inspector 中基类成员折叠在 `L0: BaseSO` 下，子类成员折叠在 `L1: DebugConfig` 下，
+继承层级一目了然。普通 MonoBehaviour 不适用此模式（无继承链展示需求）。
+
+### 2.6 BoxGroup(ShowLabel=false) —— 无名线框分隔
+
+**适用场景**：同一个 FoldoutGroup 内，不同参数组之间用无标签的视觉线框隔开。
+
+**规则**：
+- `[BoxGroup("path", ShowLabel = false)]` 创建无标题的线框
+- 框内第一个成员用 `[Title("标题")]` 作为视觉段落头
+- 同组字段共享相同的 BoxGroup path
+
+```csharp
+private const string ODIN_GROUP = "Game Launcher";
+
+[FoldoutGroup(ODIN_GROUP, Expanded = true)]
+[BoxGroup(ODIN_GROUP + "/配置", ShowLabel = false)]
+[Title("宿主节点")]
+[SerializeField] private GameObject _uiRoot;
+
+[BoxGroup(ODIN_GROUP + "/配置")]
+[SerializeField] private GameObject _audioHost;
+
+[BoxGroup(ODIN_GROUP + "/运行时", ShowLabel = false)]
+[Title("运行时状态")]
+[ShowInInspector, ReadOnly]
+public bool IsInitialized { get; private set; }
+```
+
+### 2.7 GUIColor("$Property") —— 动态状态着色
+
+**适用场景**：根据运行时状态动态改变字段/属性的文字颜色，提供一目了然的状态指示。
+
+**规则**：
+- `[GUIColor("$PropertyName")]` 引用返回 `Color` 的属性
+- 也可用 `@` 表达式内联：`[GUIColor("@_active != null ? Color.green : Color.red")]`
+- 预定义/系统条目用灰色，用户条目用白色，正常用绿色，异常用红色
+
+```csharp
+// 方式一：引用属性
+private Color RowColor => IsPredefined
+    ? new Color(0.55f, 0.55f, 0.55f)
+    : Color.white;
+
+[GUIColor("$RowColor")]
+public string className;
+
+// 方式二：内联表达式
+[ShowInInspector, ReadOnly]
+[GUIColor("@_active != null ? Color.green : Color.red")]
+private string ActiveCamera { get; }
+```
+
+### 2.8 InfoBox + VisibleIf —— 条件提示
+
+**适用场景**：提示信息只在条件满足时显示，避免无关状态下占用空间。
+
+```csharp
+// 仅在 autoCollect=开 且 userEntries 为空时显示提示
+[InfoBox("运行时调用 EmberDebug.Log() 会自动收集新标签。",
+    VisibleIf = "@autoCollect && userEntries.Count == 0",
+    InfoMessageType = InfoMessageType.Info)]
+public List<LoggerClassEntry> userEntries = new();
+```
+
+**规则**：`VisibleIf` 使用 `@` 前缀的 NCalc 表达式，可引用当前类的任意 public 或 private 成员。
+
+### 2.9 LabelText —— 运行时状态中文化
+
+**适用场景**：`[ShowInInspector, ReadOnly]` 标记的运行时属性，用中文 LabelText 替代默认的 PascalCase 变量名。
+
+```csharp
+[ShowInInspector, ReadOnly, LabelText("已初始化")]
+public bool IsInitialized { get; private set; }
+
+[ShowInInspector, ReadOnly, LabelText("当前状态")]
+private string CurrentState => Fsm?.Current?.Name ?? "—";
+```
+
+### 2.10 统一 Title 规范
+
+**适用场景**：所有 `[Title]` 使用方式。
+
+**规则**：
+- **统一左对齐** —— 不加 `titleAlignment` 参数，使用默认左对齐
+- **不加横线** —— 不加 `horizontalLine: true`，用 `BoxGroup` 的分隔线替代
+- **双参数形式** —— `[Title("主标题", "副标题")]` 用于需要补充说明的段落头
+
+```csharp
+// ✅ ember 规范
+[Title("宿主节点")]
+[Title("框架标签", "Ember 框架内置的日志标签。颜色跟随预定义，不可修改。")]
+
+// ❌ 旧风格（已弃用）
+[Title("Title", titleAlignment: TitleAlignments.Centered, horizontalLine: true)]
+```
 
 ---
 

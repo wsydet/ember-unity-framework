@@ -682,46 +682,67 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 2026-07-31 | InitState 接管 Manager 初始化（对齐 burner InitProcedure 模式） |
 | 2026-07-31 | Camera 独立模块：CinemachineBrain + BlenderSettings + 相机堆栈 + 强制霸占模式 |
 | 2026-07-31 | 新建 EmberBaseSO（继承溯源面板），Core 按功能分子文件夹 |
+| 2026-08-01 | 🧪 场景验证 S1-S2 通过：GameBoot 场景搭建完成，7 个 Manager 初始化链路全部正常 |
+| 2026-08-01 | 🐛 修复退出 Play 时 Odin [ShowInInspector] 访问已销毁对象的报错 |
+| 2026-08-01 | 🔧 **架构改造：多场景叠加替代 DontDestroyOnLoad**（避开 Unity 6 DDOL 销毁竞态 bug） |
+| 2026-08-01 | 🏗️ EmberSingleton 拆分：`EmberMonoSingleton`（无 DDOL）+ `EmberMonoSingletonDontDestroy`（含 DDOL） |
+| 2026-08-01 | 📐 GameLauncher 退化为普通 `EmberMonoSingleton`（无 DDOL），由 FrameworkScene 保活 |
+| 2026-08-01 | 🔨 FrameworkSceneBootstrapper：编译 + 文件变更时自动同步 Build Settings 场景列表 |
+| 2026-08-01 | 🔘 Toolbar 自定义按钮（Unity 6 MainToolbarElement API）+ MenuItem 兜底，一键跳转 FrameworkScene |
+| 2026-08-01 | 🧪 **退出 Play Mode 无报错**：S1-S2 重新验证通过，7 个 Manager 初始化链路全部正常 |
+
 
 ---
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- >>> CURRENT PHASE — 从这里开始，上方为历史记录，下方为待完成 <<< -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
+# ▶ 下一阶段：场景集成 & 框架自检（续）
 
-# ▶ 下一阶段：场景集成 & 框架自检
-
-> 目标：在 Unity 场景中验证整个框架链路能跑通。
+> 当前进度：多场景架构已就绪，FrameworkScene 为启动入口，Manager 链路正常，退出无报错。
+> 明天继续 S3 ~ S9。
 
 ### 阶段目标
 
 | 序号 | 任务 | 说明 |
 |------|------|------|
-| **S1** | 搭建 GameBoot 场景 | 创建 Init 场景，放置 GameBoot 物体，挂 GameLauncher；创建 UIRoot/AudioHost/InputHost/UICamera/MainCamera 子节点；拖入 Inspector 对应字段 |
-| **S2** | 验证 Manager 初始化链路 | Play 后观察 Console：InitState.OnEnter → InitializeAll → 7 个 Manager 依次 Init → CoreReady 事件 |
+| **S1** | 搭建 GameBoot 场景 | ✅ 已迁移到 FrameworkScene |
+| **S2** | 验证 Manager 初始化链路 | ✅ 7 个 Manager 初始化正常，退出清理正常 |
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- >>> CURRENT PHASE — 从这里继续 <<< -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
 | **S3** | 验证 Update 循环 | 确认 EmberUpdateManager.DoUpdate 每帧被调用，无报错 |
 | **S4** | 验证事件总线 | 注册一个自定义状态（TestState），在 InitState 中 TransitionTo，观察 GameStateChanged 事件 |
 | **S5** | 验证日志系统 | 打开 EmberDebugConfig.asset 面板，确认框架标签列表完整，开关生效 |
 | **S6** | 验证相机模块 | 确认 EmberCameraManager 从 GameLauncher 拿到 UICamera/MainCamera，Brain 配置成功 |
 | **S7** | 整理遗留问题 | 根据实测结果更新技术债务清单，标记已验证通过 / 需修复的项 |
+| **S8** | 创建 LoadingPage 预制体 | InitState.OnEnter 中 Push 一个 Loading 页面（显示"框架初始化中..."），初始化完成后自动 Pop |
+| **S9** | EmberUIManager 完善 | 补充 Canvas 自动创建逻辑：Canvas + CanvasScaler + GraphicRaycaster，Canvas.worldCamera 自动绑定 UICamera |
 
-### 预期结果
+### 架构快照（明日快速恢复上下文）
 
 ```
-Play → Console 输出：
-  [Init] GameLauncher: state machine ready.
-  [Init] InitState: bootstrapping framework...
-  [Init] EmberUpdateManager initialized.        (Order 100)
-  [Init] EmberResourceManager initialized.       (Order 200)
-  [Init] EmberAudioManager initialized.          (Order 300)
-  [Init] EmberInputManager initialized.          (Order 400)
-  [Init] EmberUIManager initialized.             (Order 500)
-  [Init] EmberSceneManager initialized.          (Order 600)
-  [Init] EmberCameraManager initialized.         (Order 1000)
-  [Event] OnNext(CoreReady)
-  [Init] InitState: framework ready.
-  [Init] GameLauncher: InitState complete, ticking...
+当前架构：
+  FrameworkScene.unity（启动场景，永不卸载）
+    └── GameBoot
+        ├── GameLauncher（EmberMonoSingleton，无 DDOL）
+        ├── UIRoot / AudioHost / InputHost（宿主节点）
+        └── MainCamera / UICamera / EventSystem
+
+启动流程：
+  1. Unity 加载 FrameworkScene
+  2. GameLauncher.Awake → ConfigureStateMachine → OnSingletonAwake
+  3. GameLauncher.Start → Fsm.Start<InitState> → InitializeAll → CoreReady
+  4. 后续场景通过 EmberSceneManager.LoadSceneAsync(Additive) 叠加
+
+关键文件：
+  Assets/Ember/Core/Runtime/GameLauncher.cs          — 入口，EmberMonoSingleton<GameLauncher>
+  Assets/Ember/Core/Runtime/Service/EmberSingleton.cs — EmberMonoSingleton + EmberMonoSingletonDontDestroy
+  Assets/Ember/Core/Editor/FrameworkSceneBootstrapper.cs — 自动同步 Build Settings
+  Assets/Ember/Editor/FrameworkSceneToolbarButton.cs  — Toolbar 按钮
+  Assets/Game/Scenes/FrameworkScene.unity             — 框架场景
 ```
+
+---
 
 ---
 

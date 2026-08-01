@@ -24,6 +24,7 @@ namespace Ember.Core
         [HorizontalGroup("Row")]
         [HideLabel]
         [ReadOnly]
+        [GUIColor("$RowColor")]
         public string className;
 
         /// <summary>是否为预定义标签（不可修改颜色）。</summary>
@@ -31,6 +32,11 @@ namespace Ember.Core
 
         /// <summary>是否为子标签（带缩进）。</summary>
         private bool IsChild => className != null && className.Contains('.');
+
+        /// <summary>行色：预定义条目灰显区分。</summary>
+        private Color RowColor => IsPredefined
+            ? new Color(0.55f, 0.55f, 0.55f)
+            : Color.white;
     }
 
     /// <summary>
@@ -45,19 +51,27 @@ namespace Ember.Core
     /// </summary>
     public class EmberDebugConfigSO : EmberBaseSO
     {
+        private const string DEBUG_GROUP = "L1: DebugConfig";
+
+        [FoldoutGroup("$DEBUG_GROUP", Expanded = true)]
+        [BoxGroup("$DEBUG_GROUP/全局设置", ShowLabel = false)]
         [Title("全局设置")]
         [Tooltip("编辑器和 Development Build 下默认开启，Release 时建议关闭")]
         public bool globalOpen = true;
 
+        [BoxGroup("$DEBUG_GROUP/全局设置")]
         [Tooltip("开启后，新的类首次调用日志时自动加入列表")]
         public bool autoCollect = true;
 
+        [BoxGroup("$DEBUG_GROUP/标签", ShowLabel = false)]
         [Title("框架标签", "Ember 框架内置的日志标签。颜色跟随预定义，不可修改。")]
         [ListDrawerSettings(ShowFoldout = true, DefaultExpandedState = true)]
         public List<LoggerClassEntry> frameworkEntries = new();
 
+        [BoxGroup("$DEBUG_GROUP/标签")]
         [Title("用户标签", "使用者自己的日志标签。运行时自动收集，可自由修改颜色。")]
-        [InfoBox("运行时调用 EmberDebug.Log() 会自动收集新标签（如果开启了自动收集）。", InfoMessageType.Info)]
+        [InfoBox("运行时调用 EmberDebug.Log() 会自动收集新标签（如果开启了自动收集）。",
+            VisibleIf = "@autoCollect && userEntries.Count == 0", InfoMessageType = InfoMessageType.Info)]
         public List<LoggerClassEntry> userEntries = new();
 
         // ============================================================

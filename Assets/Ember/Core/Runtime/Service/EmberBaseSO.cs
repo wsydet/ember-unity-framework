@@ -21,11 +21,11 @@ namespace Ember.Core
         private const string GROUP_NAME = "L0: BaseSO";
 
         [PropertyOrder(L0_ORDER)]
-        [FoldoutGroup("$" + GROUP_NAME, Expanded = true)]
-        [BoxGroup(GROUP_NAME + "/Chain", ShowLabel = false)]
-        [Title("Type Hierarchy", "自动化继承溯源", titleAlignment: TitleAlignments.Centered, horizontalLine: true)]
+        [FoldoutGroup("$GROUP_NAME", Expanded = true)]
+        [BoxGroup("$GROUP_NAME/Chain", ShowLabel = false)]
+        [Title("Type Hierarchy", "自动化继承溯源")]
         [ShowInInspector, ReadOnly]
-        [TextArea(2, 100)]
+        [TextArea(1, 100)]
         private string InheritanceChain
         {
             get
