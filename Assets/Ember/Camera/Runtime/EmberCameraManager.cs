@@ -102,6 +102,8 @@ namespace Ember.Camera
             }
 
             EmberDebug.LogInit(TAG, $"EmberCameraManager initialized. " +
+                $"UICamera={(UICamera != null ? "OK" : "MISSING!")}, " +
+                $"MainCamera={(MainCamera != null ? "OK" : "MISSING!")}, " +
                 $"Brain={(Brain != null ? "OK" : "not found")}, " +
                 $"Blender={(blenderSettings != null ? "OK" : "not set")}.");
         }
