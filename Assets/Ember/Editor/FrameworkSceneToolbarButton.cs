@@ -6,28 +6,36 @@ using UnityEngine;
 namespace Ember.Core.Editor
 {
     /// <summary>
-    /// Toolbar 按钮：Play 按钮左侧，显示当前是否在 FrameworkScene 中。
+    /// Toolbar 按钮：
+    /// - 左侧按钮：指示是否在 FrameworkScene 中，点击跳转
+    /// - 右侧按钮：快速打开场景（主场景 + 叠加场景选择）
     /// </summary>
     [InitializeOnLoad]
     public static class FrameworkSceneToolbarButton
     {
         private const string ElementId = "Ember/FrameworkScene";
+        private const string QuickOpenId = "Ember/QuickOpenScene";
         private const string ScenePath = "Assets/Game/Scenes/FrameworkScene.unity";
 
         static FrameworkSceneToolbarButton()
         {
-            // 场景变化时刷新按钮状态
             EditorSceneManager.activeSceneChangedInEditMode += (_, _) =>
+            {
                 MainToolbar.Refresh(ElementId);
+                MainToolbar.Refresh(QuickOpenId);
+            };
             EditorSceneManager.sceneOpened += (_, _) =>
+            {
                 MainToolbar.Refresh(ElementId);
+                MainToolbar.Refresh(QuickOpenId);
+            };
         }
 
-        [MainToolbarElement(ElementId, defaultDockPosition = MainToolbarDockPosition.Middle)]
-        public static MainToolbarElement CreateButton()
+        /// <summary>跳转 FrameworkScene 按钮（保留原功能）</summary>
+        [MainToolbarElement(ElementId)]
+        public static MainToolbarElement CreateFrameworkButton()
         {
             var inFramework = IsFrameworkSceneLoaded();
-
             var iconName = inFramework ? "SceneAsset Icon" : "d_console.warnicon";
             var icon = EditorGUIUtility.IconContent(iconName).image as Texture2D;
 
@@ -47,6 +55,23 @@ namespace Ember.Core.Editor
                         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                             EditorSceneManager.OpenScene(ScenePath);
                     };
+                });
+        }
+
+        /// <summary>快速打开场景按钮（新增）</summary>
+        [MainToolbarElement(QuickOpenId)]
+        public static MainToolbarElement CreateQuickOpenButton()
+        {
+            return new MainToolbarButton(
+                new MainToolbarContent
+                {
+                    text = "快速打开场景",
+                    tooltip = "选择主场景 + 叠加场景，一键打开 Framework + 目标场景",
+                },
+                () =>
+                {
+                    if (EditorApplication.isPlaying) return;
+                    EmberSceneQuickOpener.Open();
                 });
         }
 

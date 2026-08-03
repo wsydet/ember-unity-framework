@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
+using Ember.Core;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Ember.Core.Editor
 {
@@ -14,12 +17,82 @@ namespace Ember.Core.Editor
     [InitializeOnLoad]
     public static class FrameworkSceneBootstrapper
     {
+        private const string TAG = "EmberCore.Editor";
         private const string ScenesFolder = "Assets/Game/Scenes";
         private const string FrameworkSceneName = "FrameworkScene";
+        private const string ScenePath = "Assets/Game/Scenes/FrameworkScene.unity";
+
+        private const string SavedScenesKey = "Ember.FrameworkBootstrapper.SavedScenes";
 
         static FrameworkSceneBootstrapper()
         {
             EditorApplication.delayCall += SyncBuildScenes;
+            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+        }
+
+        /// <summary>
+        /// 进入 Play Mode 前：保存并关闭多余场景。
+        /// 退出 Play Mode 后：恢复之前打开的场景。
+        /// </summary>
+        private static void OnPlayModeChanged(PlayModeStateChange state)
+        {
+            switch (state)
+            {
+                case PlayModeStateChange.ExitingEditMode:
+                    SaveAndCleanScenes();
+                    break;
+                case PlayModeStateChange.EnteredEditMode:
+                    RestoreScenes();
+                    break;
+            }
+        }
+
+        private static void SaveAndCleanScenes()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+            var frameworkPath = FindFrameworkScenePath();
+            if (string.IsNullOrEmpty(frameworkPath)) return;
+
+            // 保存并关闭除 FrameworkScene 外的所有场景
+            var others = new List<string>();
+            for (int i = EditorSceneManager.sceneCount - 1; i >= 0; i--)
+            {
+                var scene = EditorSceneManager.GetSceneAt(i);
+                if (scene.path != frameworkPath)
+                {
+                    others.Add(scene.path);
+                    EditorSceneManager.CloseScene(scene, true);
+                }
+            }
+            var joined = string.Join("|", others);
+            SessionState.SetString(SavedScenesKey, joined);
+            EmberDebug.Log(TAG, $"进入 Play Mode：已保存 {others.Count} 个场景并关闭。");
+        }
+
+        private static void RestoreScenes()
+        {
+            var joined = SessionState.GetString(SavedScenesKey, "");
+            if (string.IsNullOrEmpty(joined)) return;
+
+            SessionState.EraseString(SavedScenesKey);
+            var paths = joined.Split('|');
+
+            EditorApplication.delayCall += () =>
+            {
+                foreach (var path in paths)
+                {
+                    if (System.IO.File.Exists(path))
+                        EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                }
+                EmberDebug.Log(TAG, $"退出 Play Mode：已恢复 {paths.Length} 个场景。");
+            };
+        }
+
+        private static string FindFrameworkScenePath()
+        {
+            if (System.IO.File.Exists(ScenePath)) return ScenePath;
+            return null;
         }
 
         /// <summary>
@@ -62,7 +135,7 @@ namespace Ember.Core.Editor
 
             if (allScenes.Count == 0)
             {
-                Debug.LogWarning($"[Ember] No scenes found in {ScenesFolder}. Build Settings unchanged.");
+                EmberDebug.LogWarning(TAG, $"No scenes found in {ScenesFolder}. Build Settings unchanged.");
                 return;
             }
 
@@ -90,7 +163,7 @@ namespace Ember.Core.Editor
             }
             else
             {
-                Debug.LogWarning($"[Ember] {FrameworkSceneName}.unity not found in {ScenesFolder}. All scenes added alphabetically.");
+                EmberDebug.LogWarning(TAG, $"{FrameworkSceneName}.unity not found in {ScenesFolder}. All scenes added alphabetically.");
                 foreach (var s in allScenes)
                     result.Add(new EditorBuildSettingsScene(s, true));
             }
@@ -101,7 +174,7 @@ namespace Ember.Core.Editor
                 return;
 
             EditorBuildSettings.scenes = result.ToArray();
-            Debug.Log($"[Ember] Build Settings synced: {result.Count} scene(s) from {ScenesFolder}");
+            EmberDebug.LogInit(TAG, $"Build Settings synced: {result.Count} scene(s) from {ScenesFolder}");
         }
 
         private static bool ScenesEqual(EditorBuildSettingsScene[] a, List<EditorBuildSettingsScene> b)
