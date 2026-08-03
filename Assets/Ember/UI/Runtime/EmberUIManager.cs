@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Ember.Core;
 using Ember.Resource;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ember.UI
 {
@@ -247,6 +248,16 @@ namespace Ember.UI
 
             var go = new GameObject($"UI Layer - {layer}");
             go.transform.SetParent(GameLauncher.Instance.UIRoot.transform);
+
+            // 自动挂载 Canvas 渲染组件（S9）
+            var canvas = go.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            canvas.worldCamera = GameLauncher.Instance.UICamera;
+            canvas.sortingOrder = layer; // UILayer 的 int 值直接控制渲染顺序
+
+            go.AddComponent<CanvasScaler>();
+            go.AddComponent<GraphicRaycaster>();
+
             _layerRoots[layer] = go.transform;
         }
 

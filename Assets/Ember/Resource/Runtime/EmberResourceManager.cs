@@ -163,7 +163,10 @@ namespace Ember.Resource
         void IEmberManager.Init()
         {
             if (_initialized) return;
-            EmberDebug.LogInit(TAG, "EmberResourceManager basic init (awaiting provider).");
+
+            // 默认注册 ResourcesProvider（开箱即用，无需额外配置）
+            Initialize(new ResourcesProvider());
+            EmberDebug.LogInit(TAG, "EmberResourceManager initialized with default ResourcesProvider.");
         }
 
         /// <summary>
