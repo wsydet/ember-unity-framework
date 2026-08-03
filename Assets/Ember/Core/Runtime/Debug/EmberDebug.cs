@@ -99,49 +99,96 @@ namespace Ember.Core
 
         // ======== 全局开关 ========
 
-        /// <summary>全局开关。关闭后所有非 Error 日志静默。</summary>
+        /// <summary>
+        /// 全局开关。关闭后所有非 Error 日志静默。
+        /// 读取时优先从 SO 获取（反映 Inspector 实时修改），
+        /// 写入时同步更新 SO 和内存缓存。
+        /// </summary>
         public static bool GlobalOpen
         {
-            get => _globalOpen;
-            set => _globalOpen = value;
+            get => _config != null ? _config.globalOpen : _globalOpen;
+            set
+            {
+                _globalOpen = value;
+                if (_config != null) _config.globalOpen = value;
+            }
         }
 
         // ======== 按类过滤 ========
 
-        /// <summary>关闭指定标签的日志输出。</summary>
+        /// <summary>关闭指定标签的日志输出（同步更新 SO 和缓存）。</summary>
         public static void Disable(string tag)
         {
             GetOrCreate(tag).Enabled = false;
+            SyncTagToConfig(tag, enabled: false);
         }
 
-        /// <summary>开启指定标签的日志输出。</summary>
+        /// <summary>开启指定标签的日志输出（同步更新 SO 和缓存）。</summary>
         public static void Enable(string tag)
         {
             GetOrCreate(tag).Enabled = true;
+            SyncTagToConfig(tag, enabled: true);
         }
 
-        /// <summary>设置指定标签的专属颜色。</summary>
+        /// <summary>设置指定标签的专属颜色（同步更新 SO 和缓存）。</summary>
         public static void SetColor(string tag, Color color)
         {
             GetOrCreate(tag).Color = color;
+            SyncTagToConfig(tag, color: color);
+        }
+
+        /// <summary>将标签状态同步回 SO（使代码中的 Disable/Enable 即时生效）。</summary>
+        private static void SyncTagToConfig(string tag, bool? enabled = null, Color? color = null)
+        {
+            if (_config == null) return;
+            var entry = _config.GetOrCreate(tag);
+            if (enabled.HasValue) entry.enabled = enabled.Value;
+            if (color.HasValue) entry.color = color.Value;
         }
 
         /// <summary>
-        /// 标签当前是否允许打印。先查自身，再查父级。
+        /// 标签当前是否允许打印。先从 SO 读（反映 Inspector 实时修改），
+        /// SO 中没有时回退内存缓存。先查自身，再查父级。
         /// 父标签关闭 → 所有子标签都静默。
         /// </summary>
         public static bool IsEnabled(string tag)
         {
-            // 自身被设为 false → 直接返回
-            if (_entries.TryGetValue(tag, out var e) && !e.Enabled)
+            if (_config != null)
+            {
+                // 自身：SO 优先，缓存回退
+                if (!IsEnabledFromSOOrCache(tag))
+                    return false;
+
+                // 父级：SO 优先，缓存回退
+                var parent = LogTags.GetParent(tag);
+                if (parent != null && !IsEnabledFromSOOrCache(parent))
+                    return false;
+
+                return true;
+            }
+
+            // 回退：无 SO 时使用内存缓存
+            if (_entries.TryGetValue(tag, out var ce) && !ce.Enabled)
                 return false;
 
-            // 查父级
-            var parent = LogTags.GetParent(tag);
-            if (parent != null && _entries.TryGetValue(parent, out var pe) && !pe.Enabled)
+            var cachedParent = LogTags.GetParent(tag);
+            if (cachedParent != null && _entries.TryGetValue(cachedParent, out var cpe) && !cpe.Enabled)
                 return false;
 
             return true;
+        }
+
+        /// <summary>SO 中有条目则用 SO 值，否则回退缓存。找不到视为允许。</summary>
+        private static bool IsEnabledFromSOOrCache(string tag)
+        {
+            if (_config.TryGet(tag, out var e))
+                return e.enabled; // SO 中有 → 用 SO 值
+
+            // SO 中没有 → 回退缓存（autoCollect=false 时 Disable 的 tag 只存在于缓存）
+            if (_entries.TryGetValue(tag, out var ce))
+                return ce.Enabled;
+
+            return true; // 都没有 → 默认允许
         }
 
         // ======== Info（白色） ========
@@ -224,6 +271,26 @@ namespace Ember.Core
             Debug.Log(FormatMsg(tag, message, LogColors.Cleanup, filePath, lineNumber), context);
         }
 
+        // ======== Shutdown（淡紫色） ========
+
+        [HideInCallstack]
+        public static void LogShutdown(string tag, string message,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Shutdown, filePath, lineNumber));
+        }
+
+        [HideInCallstack]
+        public static void LogShutdown(string tag, string message, Object context,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            if (!CanLog(tag)) return;
+            Debug.Log(FormatMsg(tag, message, LogColors.Shutdown, filePath, lineNumber), context);
+        }
+
         // ======== Warning（橙色） ========
 
         [HideInCallstack]
@@ -231,7 +298,7 @@ namespace Ember.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0)
         {
-            if (!_globalOpen) return;
+            if (!GlobalOpen || !IsEnabled(tag)) return;
             Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber));
         }
 
@@ -240,7 +307,7 @@ namespace Ember.Core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0)
         {
-            if (!_globalOpen) return;
+            if (!GlobalOpen || !IsEnabled(tag)) return;
             Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber), context);
         }
 
@@ -278,15 +345,19 @@ namespace Ember.Core
 
         private static bool CanLog(string tag)
         {
-            if (!_globalOpen) return false;
+            // 直接从 SO 读取（反映 Inspector 实时修改），SO 不可用时回退缓存
+            bool global = _config != null ? _config.globalOpen : _globalOpen;
+            if (!global) return false;
             return IsEnabled(tag);
         }
 
         private static string FormatMsg(string tag, string message, string msgColor,
             string filePath, int lineNumber)
         {
-            var entry = GetOrCreate(tag);
-            string tagHex = ColorUtility.ToHtmlStringRGB(entry.Color);
+            // 预定义标签动态计算颜色（子标签继承父标签，代码修改实时生效）
+            // 非预定义标签回退缓存颜色（用户可通过 SO 自定义）
+            Color tagColor = LogTagColors.GetColor(tag) ?? GetOrCreate(tag).Color;
+            string tagHex = ColorUtility.ToHtmlStringRGB(tagColor);
 
             return $"<color=#{tagHex}><b>[{tag}]</b></color> <color={msgColor}>{message}</color>\n"
                  + $"<color={LogColors.FileInfo}><i>(at {filePath}:{lineNumber})</i></color>";

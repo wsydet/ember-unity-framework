@@ -140,7 +140,8 @@ namespace Ember.Core
     {
         public static string Info     = "#FFFFFF";
         public static string Init     = "#a7f57a";
-        public static string Event    = "#CC88FF";
+        public static string Shutdown = "#5e017a";
+        public static string Event    = "#C5A3FF";
         public static string Cleanup  = "#999999";
         public static string Warning  = "#FFFFFF";
         public static string Error    = "#FFFFFF";
