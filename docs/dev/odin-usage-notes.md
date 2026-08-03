@@ -164,6 +164,7 @@ public int mp;
 | [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | `[FoldoutGroup]` + `[BoxGroup(ShowLabel=false)]` + `[Title]` 基类面板（ScriptableObject） |
 | [EmberCameraManager.cs](../../Assets/Ember/Camera/Runtime/EmberCameraManager.cs) | `[GUIColor]` 动态状态着色 + `[LabelText]` 实战 |
 | [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |
+| [EmberSceneMapping.cs](../../Assets/Ember/Editor/EmberSceneMapping.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Button]` + `EmberSceneField` + `$GROUP` 引用实战（ScriptableObject） |
 
 ### 2.5 SO 继承层级面板 —— L*N* 模式
 
@@ -253,7 +254,27 @@ public string className;
 private string ActiveCamera { get; }
 ```
 
-### 2.8 InfoBox + VisibleIf —— 条件提示
+### 2.8 $ 成员引用语法 —— 不要拼接字符串
+
+Odin 的 `[FoldoutGroup]`、`[BoxGroup]`、`[GUIColor]` 等支持 `$` 前缀引用成员变量：
+
+```csharp
+private const string GROUP = "Scene Mapping";
+
+// ✅ 正确 —— $"$CONSTANT_NAME" 引用成员
+[FoldoutGroup("$GROUP")]
+[BoxGroup("$GROUP/子组", ShowLabel = false)]
+
+// ❌ 错误 —— 字符串拼接 → Odin 把 "Scene Mapping" 当成员名解析，失败
+[BoxGroup("$" + GROUP + "/子组")]  
+```
+
+**规则**：
+- `$` 后面跟**成员名**（字段/属性/常量名），不是成员值
+- 不能和 C# 字符串拼接混用
+- 路径分隔用 `/`：`"$GROUP/子组名"`
+
+### 2.9 InfoBox + VisibleIf —— 条件提示
 
 **适用场景**：提示信息只在条件满足时显示，避免无关状态下占用空间。
 
@@ -267,7 +288,7 @@ public List<LoggerClassEntry> userEntries = new();
 
 **规则**：`VisibleIf` 使用 `@` 前缀的 NCalc 表达式，可引用当前类的任意 public 或 private 成员。
 
-### 2.9 LabelText —— 运行时状态中文化
+### 2.10 LabelText —— 运行时状态中文化
 
 **适用场景**：`[ShowInInspector, ReadOnly]` 标记的运行时属性，用中文 LabelText 替代默认的 PascalCase 变量名。
 
@@ -279,7 +300,7 @@ public bool IsInitialized { get; private set; }
 private string CurrentState => Fsm?.Current?.Name ?? "—";
 ```
 
-### 2.10 统一 Title 规范
+### 2.11 统一 Title 规范
 
 **适用场景**：所有 `[Title]` 使用方式。
 

@@ -11,7 +11,7 @@ description: >-
 
 ## 概述
 
-扫描指定模块的 C# 源码，按 `docs/dev/api-doc-template.md` 模板自动生成 `API.md`，
+扫描指定模块的 C# 源码，按 `docs/dev/api-doc-template.md` 模板自动生成 `README.md`，
 输出到模块目录下。
 
 **与用户交互确认路径后再分析，展示预览，用户确认后才写入文件。**
@@ -37,7 +37,7 @@ ls -d Assets/Ember/*/
 对每个子目录：
 
 1. 检查是否包含 `.cs` 文件（递归）
-2. 检查是否已有 `API.md`
+2. 检查是否已有 `README.md`
 3. 记录状态
 
 以列表形式展示给用户选择：
@@ -61,10 +61,10 @@ ls -d Assets/Ember/*/
 同时让用户确认文档输出路径。默认推荐位置：
 
 ```
-<模块路径>/API.md
+<模块路径>/README.md
 ```
 
-例如：`Assets/Ember/Resource/API.md`
+例如：`Assets/Ember/Resource/README.md`
 
 如果用户想放别处，接受自定义路径。
 
@@ -177,7 +177,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 ### Step 6: 展示预览
 
-在对话中展示完整的 API.md 内容，让用户审查。
+在对话中展示完整的 README.md 内容，让用户审查。
 
 同时报告：
 - 覆盖了哪些文件
@@ -188,7 +188,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 用户确认（或修改后确认），写入到 Step 1 确认的输出路径。
 
-如果已存在 `API.md`，展示 diff 并确认是否覆盖。
+如果已存在 `README.md`，展示 diff 并确认是否覆盖。
 
 ---
 
@@ -203,13 +203,13 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 ---
 
-请选择要生成文档的模块，以及确认输出路径（默认：`Assets/Ember/Resource/API.md`）
+请选择要生成文档的模块，以及确认输出路径（默认：`Assets/Ember/Resource/README.md`）
 ```
 
 用户确认路径后：
 
 ```markdown
-## 资源管理（Resource）— API.md 预览
+## 资源管理（Resource）— README.md 预览
 
 （完整文档预览）
 
@@ -220,7 +220,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 ---
 
-确认写入 `Assets/Ember/Resource/API.md` 吗？
+确认写入 `Assets/Ember/Resource/README.md` 吗？
 ```
 
 ---

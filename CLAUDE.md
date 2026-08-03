@@ -89,6 +89,13 @@ Packages/
 - 避免 `GameObject.Find` 和 `FindObjectOfType`，使用依赖注入或注册机制
 - 所有 `MonoBehaviour` 生命周期方法使用 `private`，避免外部调用
 - 使用 `[SerializeField]` 暴露 Inspector 字段而非 `public` 字段
+- **禁止直接使用 `Debug.Log`**：全部日志通过 `EmberDebug` 输出（`Log`/`LogInit`/`LogEvent`/`LogCleanup`/`LogShutdown`/`LogWarning`/`LogError`），利用标签过滤和彩色输出。
+  - `LogInit`（绿色）：系统初始化、组件注册
+  - `LogEvent`（紫色）：事件播报、状态切换
+  - `LogCleanup`（灰色）：资源释放、模块卸载
+  - `LogShutdown`（淡紫色）：框架退出、最终清理（与 Init 呼应）
+  - `Log`（白色）：常规信息
+  - `LogWarning` / `LogError`：警告和错误
 
 ### 代码组织
 

@@ -1,6 +1,6 @@
 # Ember Framework 开发进度
 
-> 最后更新：2026-07-31
+> 最后更新：2026-08-03
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -498,24 +498,88 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 > 状态：✅ 已完成
 > burner 参考：`GameStateManager` + `GameStateBase`
 
+### 核心三状态体系
+
+框架强制提供三个核心状态，覆盖单机/网游通用流程：
+
+```
+                 ┌──────────────────────────┐
+                 │        Settings          │
+                 │   (Push 覆盖，可删除)      │
+                 └────┬─────────────────┬───┘
+                    Push               Push
+                      ↑                 ↑
+Init ──→ [Login] ──→ Main ←──→ Gameplay ──→ Main ──→ ...
+ 框架     网游可选     大厅      核心玩法      回到大厅
+```
+
+| 状态 | 文件 | 职责 | IsRequired |
+|------|------|------|------------|
+| **Init** | [InitState.cs](../../Assets/Ember/Core/Runtime/State/InitState.cs) | 初始化所有 Manager，广播 CoreReady，自动 TransitionTo Main | ✅ |
+| **Main** | [MainState.cs](../../Assets/Ember/Core/Runtime/State/MainState.cs) | 大厅/主界面枢纽。Init 完成后的着陆点，退出 Gameplay 后的归宿 | — |
+| **Gameplay** | [GameplayState.cs](../../Assets/Ember/Core/Runtime/State/GameplayState.cs) | 核心玩法循环。OnEnter/OnExit/OnUpdate/OnPause/OnResume 完整生命周期 | — |
+
+### 子类化模式
+
+三个状态都采用"密封外层 + 虚内层"模式，子类不需要关心日志和事件广播：
+
+```csharp
+// MainState 示例
+public class MyMainState : MainState
+{
+    protected override void OnMainEnter(object args)
+    {
+        // 显示主界面、播放 BGM
+    }
+    protected override void OnMainExit()
+    {
+        // 隐藏主界面
+    }
+}
+
+// GameplayState 示例
+public class BattleState : GameplayState
+{
+    protected override void OnGameplayEnter(object args) { /* 加载战斗场景 */ }
+    protected override void OnGameplayUpdate() { /* 战斗主循环 */ }
+    protected override void OnGameplayPause() { /* 暂停战斗 */ }
+    protected override void OnGameplayResume() { /* 继续战斗 */ }
+    protected override void OnGameplayExit() { /* 卸载战斗场景 */ }
+}
+```
+
 ### 文件清单
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [EmberStateMachine.cs](../../Assets/Ember/Core/Runtime/EmberStateMachine.cs) | 状态机引擎：Register / Start / TransitionTo / Push / Pop | burner `GameStateManager` |
-| [InitState.cs](../../Assets/Ember/Core/Runtime/InitState.cs) | 框架内置必需状态（IsRequired = true），不可注销 | — |
+| [EmberStateMachine.cs](../../Assets/Ember/Core/Runtime/State/EmberStateMachine.cs) | 状态机引擎 + EmberGameState 抽象基类 | burner `GameStateManager` |
+| [InitState.cs](../../Assets/Ember/Core/Runtime/State/InitState.cs) | 框架内置必需状态（IsRequired = true），自动过渡到 MainState | — |
+| [MainState.cs](../../Assets/Ember/Core/Runtime/State/MainState.cs) | 大厅/主界面状态 | — |
+| [GameplayState.cs](../../Assets/Ember/Core/Runtime/State/GameplayState.cs) | 核心玩法状态 | — |
+| [SettingsState.cs](../../Assets/Ember/Core/Runtime/State/SettingsState.cs) | 通用覆盖式设置状态，通过 <see cref="SettingsContext"/> 区分 Main/Gameplay 上下文 | — |
 
 ### 设计要点
 
-**适配单机 & 网游**：状态不是枚举而是类，用户自由添加——
+**标准流程（单机）**：
 
 ```csharp
-fsm.Register(new InitState());       // 框架内置，IsRequired = true
-fsm.Register(new LoginState());      // 自定
-fsm.Register(new MainMenuState());   // 自定
-fsm.Register(new ConnectingState()); // 网游专用
-fsm.Register(new ReconnectingState()); // 网游专用
-fsm.Register(new BattleState());     // 自定
+// GameLauncher.ConfigureStateMachine
+fsm.Register(new InitState());
+fsm.Register(new MainState());
+fsm.Register(new GameplayState());
+
+// 自动流转：Init → Main
+// 用户触发：Main → Gameplay（点击"开始游戏"）
+// 用户触发：Gameplay → Main（退出战斗）
+```
+
+**扩展流程（网游）**：
+
+```csharp
+// GameLauncher.ConfigureStateMachine（子类 override）
+base.ConfigureStateMachine(fsm);
+fsm.Register(new LoginState());      // Init → Login → Main
+fsm.Register(new ReconnectingState());
 ```
 
 **图形化编辑器预留**：
@@ -527,9 +591,12 @@ fsm.Register(new BattleState());     // 自定
 **TransitionTo vs Push/Pop**：
 
 ```csharp
-fsm.TransitionTo<BattleState>();     // Exit MainMenu → Enter Battle（替换式）
-fsm.Push<SettingsState>();           // Pause Battle → Overlay Settings（覆盖式）
-fsm.Pop();                           // Exit Settings → Resume Battle
+// TransitionTo：替换式切换（Init → Main, Main → Gameplay）
+fsm.TransitionTo<GameplayState>();
+
+// Push/Pop：覆盖式弹窗（暂停 Gameplay 打开设置）
+fsm.Push<SettingsState>();
+fsm.Pop();
 ```
 
 ---
@@ -690,56 +757,88 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 2026-08-01 | 🔨 FrameworkSceneBootstrapper：编译 + 文件变更时自动同步 Build Settings 场景列表 |
 | 2026-08-01 | 🔘 Toolbar 自定义按钮（Unity 6 MainToolbarElement API）+ MenuItem 兜底，一键跳转 FrameworkScene |
 | 2026-08-01 | 🧪 **退出 Play Mode 无报错**：S1-S2 重新验证通过，7 个 Manager 初始化链路全部正常 |
+| 2026-08-03 | 🧪 **S3 验证通过**：Update/LateUpdate/FixedUpdate 循环正常，EmberUpdateDiagnostics 帧计数递增 |
+| 2026-08-03 | 🧪 **S4 验证通过**：EmberEventBus 事件订阅/播报链路正常，GameStateChanged 事件确认可达 |
+| 2026-08-03 | 🐛 **S5 修复日志系统**：`GlobalOpen` 读 SO 实时值，`IsEnabled` 优先查 SO，`Disable/Enable` 双向同步 SO |
+| 2026-08-03 | 🏗️ **核心三状态体系**：Init → Main → Gameplay，密封外层 + 虚内层模式，子类只 override 业务钩子 |
+| 2026-08-03 | 🏗️ **TransitionDescriptor 流转描述符**：声明流转目标 + Label + Condition + Guard，可视化编辑器 + 运行时校验双用途 |
+| 2026-08-03 | 🏗️ **SettingsState 通用覆盖状态**：通过 `SettingsContext` 枚举传入上下文（Main / Gameplay），`IsRequired = false` 可被替换 |
+| 2026-08-03 | 🏗️ **Init 预加载 MainScene**：`fsm.LoadSceneAsync` 委托 + `TransitionTo(skipSceneLoad)`，Init 先加载场景再过渡 |
+| 2026-08-03 | 🏗️ **BootSplash + LoadingView 双遮罩**：BootSplash（Frame 0 黑幕，首次 LoadDone 后销毁）+ LoadingView（后续切换进度条，首跳跳过） |
+| 2026-08-03 | 🏗️ **Init 启动动画预留**：`EmberInitAnimationStarter` 基类 + `InitSceneReady`/`InitAnimationDone` 事件，用户继承 override 即可 |
+| 2026-08-03 | 🏗️ **场景映射 SO + 快速打开场景**：`EmberSceneMapping` 自动扫描状态 + 匹配同名场景，Toolbar 窗口一键打开 Framework + 目标场景 |
+| 2026-08-03 | 🔧 **Play Mode 场景清理 + 退出恢复**：`FrameworkSceneBootstrapper` 点 Play 自动关闭多余场景，退出后恢复 |
+| 2026-08-03 | 🔧 **事件 Key 间隔改为 1000**：SceneLoadDone 从 404 改为 4004，避免 HTTP 404 混淆 |
+| 2026-08-03 | 🔧 **LogShutdown 淡紫色日志**：对应 LogInit 绿色，框架退出专用 |
+| 2026-08-03 | 🔧 **Odin 编码规范补充**：$GROUP 成员引用语法不能拼接字符串，写入 odin-usage-notes.md §2.8 |
 
 
 ---
 
-# ▶ 下一阶段：场景集成 & 框架自检（续）
+# ▶ 场景集成 & 框架自检 — 全部完成 ✅
 
-> 当前进度：多场景架构已就绪，FrameworkScene 为启动入口，Manager 链路正常，退出无报错。
-> 明天继续 S3 ~ S9。
+> 当前进度：S1-S9 全部通过，Init → Main 场景加载链路正常，LoadingPage + BootSplash 防护就绪。
 
 ### 阶段目标
 
-| 序号 | 任务 | 说明 |
+| 序号 | 任务 | 状态 |
 |------|------|------|
-| **S1** | 搭建 GameBoot 场景 | ✅ 已迁移到 FrameworkScene |
-| **S2** | 验证 Manager 初始化链路 | ✅ 7 个 Manager 初始化正常，退出清理正常 |
+| **S1** | 搭建 GameBoot 场景 | ✅ |
+| **S2** | 验证 Manager 初始化链路 | ✅ 8 个 Manager（含 SceneCoordinator） |
+| **S3** | 验证 Update 循环 | ✅ |
+| **S4** | 验证事件总线 | ✅ |
+| **S5** | 验证/修复日志系统 | ✅ GlobalOpen + 实时生效 + LogShutdown |
+| **S6** | 验证相机模块 | ✅ UICamera=OK, MainCamera=OK, Brain=OK |
+| **S7** | 整理遗留问题 | ✅ |
+| **S8** | LoadingPage + BootSplash | ✅ 双遮罩：BootSplash（启屏黑幕）+ LoadingView（场景切换进度） |
+| **S9** | EmberUIManager 完善 | ✅ EnsureLayerRoot 自动挂载 Canvas 三件套 |
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- >>> CURRENT PHASE — 从这里继续 <<< -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 
-| **S3** | 验证 Update 循环 | 确认 EmberUpdateManager.DoUpdate 每帧被调用，无报错 |
-| **S4** | 验证事件总线 | 注册一个自定义状态（TestState），在 InitState 中 TransitionTo，观察 GameStateChanged 事件 |
-| **S5** | 验证日志系统 | 打开 EmberDebugConfig.asset 面板，确认框架标签列表完整，开关生效 |
-| **S6** | 验证相机模块 | 确认 EmberCameraManager 从 GameLauncher 拿到 UICamera/MainCamera，Brain 配置成功 |
-| **S7** | 整理遗留问题 | 根据实测结果更新技术债务清单，标记已验证通过 / 需修复的项 |
-| **S8** | 创建 LoadingPage 预制体 | InitState.OnEnter 中 Push 一个 Loading 页面（显示"框架初始化中..."），初始化完成后自动 Pop |
-| **S9** | EmberUIManager 完善 | 补充 Canvas 自动创建逻辑：Canvas + CanvasScaler + GraphicRaycaster，Canvas.worldCamera 自动绑定 UICamera |
-
-### 架构快照（明日快速恢复上下文）
+### 架构快照（2026-08-03）
 
 ```
-当前架构：
-  FrameworkScene.unity（启动场景，永不卸载）
-    └── GameBoot
-        ├── GameLauncher（EmberMonoSingleton，无 DDOL）
-        ├── UIRoot / AudioHost / InputHost（宿主节点）
-        └── MainCamera / UICamera / EventSystem
+FrameworkScene.unity（启动场景，index 0，永不卸载）
+  └── GameBoot
+      ├── GameLauncher（EmberMonoSingleton）
+      ├── GameBootCoordinator（可选）
+      ├── UIRoot
+      │     ├── BootSplash（EmberBootSplash，Frame 0 黑幕）
+      │     └── LoadingPage（EmberLoadingView，进度条）
+      ├── MainCamera（CinemachineBrain + DefaultCinemachineCamera）
+      ├── UICamera（Overlay）
+      └── EventSystem
 
 启动流程：
-  1. Unity 加载 FrameworkScene
-  2. GameLauncher.Awake → ConfigureStateMachine → OnSingletonAwake
-  3. GameLauncher.Start → Fsm.Start<InitState> → InitializeAll → CoreReady
-  4. 后续场景通过 EmberSceneManager.LoadSceneAsync(Additive) 叠加
+  1. FrameworkScene 加载 → BootSplash Frame 0 黑幕
+  2. GameLauncher.Start → Fsm.Start<InitState>
+  3. InitState → InitializeAll → LoadSceneAsync("MainScene") → InitSceneReady
+  4. EmberInitAnimationStarter（MainScene 上）→ InitAnimationDone
+  5. TransitionTo<MainState>(skipSceneLoad) → BootSplash 销毁
+  6. Main→Gameplay：LoadingView 进度条 → 场景切换
+
+场景加载：
+  Init ──(LoadSceneAsync预加载)──→ Main ──(TransitionTo正常加载)──→ Gameplay
+  FrameworkScene 始终常驻，其余 Additive 叠加/卸载
 
 关键文件：
-  Assets/Ember/Core/Runtime/GameLauncher.cs          — 入口，EmberMonoSingleton<GameLauncher>
-  Assets/Ember/Core/Runtime/Service/EmberSingleton.cs — EmberMonoSingleton + EmberMonoSingletonDontDestroy
-  Assets/Ember/Core/Editor/FrameworkSceneBootstrapper.cs — 自动同步 Build Settings
-  Assets/Ember/Editor/FrameworkSceneToolbarButton.cs  — Toolbar 按钮
-  Assets/Game/Scenes/FrameworkScene.unity             — 框架场景
+  Assets/Ember/Core/Runtime/GameLauncher.cs              — 入口 + 状态机
+  Assets/Ember/Core/Runtime/State/InitState.cs           — 预加载 MainScene + InitSceneReady/AnimationDone
+  Assets/Ember/Core/Runtime/State/MainState.cs            — 大厅状态
+  Assets/Ember/Core/Runtime/State/GameplayState.cs        — 玩法状态
+  Assets/Ember/Core/Runtime/State/SettingsState.cs        — 覆盖式设置
+  Assets/Ember/Core/Runtime/State/EmberStateMachine.cs    — 状态机 + TransitionTo(skipSceneLoad) + LoadSceneAsync
+  Assets/Ember/Core/Runtime/State/TransitionDescriptor.cs — 流转描述符
+  Assets/Ember/Scene/Runtime/SceneCoordinator.cs          — 场景加载桥接
+  Assets/Ember/Scene/Runtime/EmberSceneManager.cs         — 场景异步加载
+  Assets/Game/UI/EmberBootSplash.cs                       — 启屏黑幕
+  Assets/Game/UI/EmberLoadingView.cs                      — 加载进度
+  Assets/Game/UI/EmberInitAnimationStarter.cs             — 启动动画基类
+  Assets/Ember/Editor/EmberSceneMapping.cs                — 状态↔场景映射 SO
+  Assets/Ember/Editor/EmberSceneQuickOpener.cs            — 快速打开场景窗口
+  Assets/Ember/Editor/FrameworkSceneBootstrapper.cs       — 自动同步 Build + Play 清理/恢复
 ```
 
 ---
@@ -748,42 +847,58 @@ Ember.Core.Runtime          (零依赖，叶子)
 
 ## 技术债务 & 待重构
 
-> 临时方案和已知问题，每次改完划掉。
+> 最后更新：2026-08-03（S7 整理）
 
 ### 🔴 待修改（影响架构）
 
 | # | 事项 | 当前 | 目标 |
 |---|------|------|------|
-| 1 | **现有 Manager 实现 IEmberManager** | ✅ 已完成 | 5 个 EmberXxxManager + EmberUpdateManager 全部实现 IEmberManager + [EmberInitOrder]，EmberEventBus/ServiceLocator 保持 static（无需 Init） |
-| 2 | **EmberUpdateManager 去 MonoBehaviour** | ✅ 已完成 | 纯 C# 类（EmberSingleton），由 GameLauncher 驱动 |
-| 3 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
-| 4 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
+| 1 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
+| 2 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
+| 3 | **GameStateChanged 重复 dispatch** | `Start` 和 `TransitionTo` 各 dispatch 一次 | 合并为一次，或明确语义区分 |
 
 ### 🟡 待补完（功能完整度）
 
 | # | 事项 | 说明 |
 |---|------|------|
-| 5 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按阶段初始化，支持 `ResetModuleData()`。接口已定义，Collector 待实现。 |
-
-设计决策见 [§Module 系统设计](#module-系统设计-待实现)。
-| 6 | **GameLauncher 入口** | ✅ 已完成 | `GameLauncher` 集中驱动 Update/Manager/StateMachine |
-| 7 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
-| 8 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
+| 4 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按 Phase 分组，对接状态机生命周期。接口已定义（[IEmberModule.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberModule.cs)），Collector 待实现 |
+| 5 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
+| 6 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
+| 7 | **Timer 定时器** | 放入 `com.ember.extensions`，int-ID API（Delay/Interval/Schedule/Cancel），内部委托 UniTask |
 
 ### 🟢 待扩展（增强项）
 
 | # | 事项 |
 |---|------|
-| 9 | Audio 多 Category + AudioAgent 池 |
-| 10 | GameObject 预制体对象池 |
-| 11 | 本地化 |
-| 12 | Canvas 层自动挂载 CanvasScaler + Raycaster |
-| 13 | UI Pop 动画 |
-| 14 | **basic 包工具类迁移** | 旧项目工具类 + 编辑器脚本 → `com.ember.basic` Runtime/Editor |
+| 8 | Audio 多 Category + AudioAgent 池 |
+| 9 | GameObject 预制体对象池 |
+| 10 | 本地化 |
+| 11 | Canvas 层自动挂载 CanvasScaler + Raycaster（→ S9） |
+| 12 | UI Pop 动画 |
+| 13 | **basic 包工具类迁移** | 旧项目工具类 + 编辑器脚本 → `com.ember.basic` Runtime/Editor |
 
 ### 📋 后续想法（待评估）
 
 | # | 事项 |
 |---|------|
+| — | **状态机流转图可视化** | 读取 `GetTransitions()` / `GetPushTargets()` 构建节点图，条件边以不同颜色显示，在 EditorWindow 中可拖拽查看 |
+| — | **必要状态视觉区分** | `IsRequired = true` 的节点以不同样式渲染（锁图标、加粗边框） |
+| — | **场景选择器集成** | `EmberSceneField` 已创建（✅），可视化编辑器中使用拖拽式场景选择器替代手写字符串 |
+| — | **LoadingPage 预制体化** | 当前 LoadingPage 为 FrameworkScene 中常驻 GameObject，未来改为预制体 + `EmberUIManager.Push/Pop` 动态加载（需要 EmberResourceManager 有 Provider 支持） |
+| — | **Init 启动动画** | `EmberInitAnimationStarter` 基类已创建（✅），子类 override `PlayStartupAnimation` 即可。`InitSceneReady`/`InitAnimationDone` 事件已就绪 |
+| — | **新建状态时自动关联场景** | `EmberSceneMappingCreator` 已自动创建 SO + 匹配同名场景（✅）。未来可视化编辑器创建新状态时，需<b>先创建场景 → 后创建状态</b>，这样 SO 的 `SyncNewStates()` 能自动关联 |
+| — | **Settings UI 集成** | `SettingsState` 状态已创建（✅），待实现 UI 层：根据 `SettingsContext` 展示不同选项面板 |
 | — | Wwise 适配 |
 | — | 图片/纹理管理 |
+
+### ✅ 已解决（S1-S6 验证期间修复）
+
+| # | 事项 | 修复日期 |
+|---|------|----------|
+| 1 | 现有 Manager 实现 IEmberManager（5 个 Manager + EmberUpdateManager） | 2026-07-31 |
+| 2 | EmberUpdateManager 去 MonoBehaviour → 纯 C# 类 | 2026-07-31 |
+| 3 | GameLauncher 集中入口（驱动 Update/Manager/StateMachine） | 2026-07-31 |
+| 4 | EmberDebug GlobalOpen 不抑制 LogInit | 2026-08-03 |
+| 5 | EmberDebug 运行时 SO 修改不实时生效 | 2026-08-03 |
+| 6 | EmberDebug Disable/Enable 只改缓存不同步 SO | 2026-08-03 |
+| 7 | C# 9 `init` 访问器需要 IsExternalInit polyfill | 2026-08-03 |
