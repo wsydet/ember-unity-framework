@@ -162,6 +162,15 @@ namespace Ember.Scene
             });
         }
 
+        // ======== 查询 ========
+
+        /// <summary>检查场景是否已加载。</summary>
+        public bool IsSceneLoaded(string sceneName)
+        {
+            if (string.IsNullOrEmpty(sceneName)) return false;
+            return SceneManager.GetSceneByName(sceneName).isLoaded;
+        }
+
         // ======== IEmberManager ========
 
         /// <summary>
@@ -215,6 +224,8 @@ namespace Ember.Scene
 
         private async UniTask LoadAsync(AsyncOperation op, string sceneName, Action onComplete)
         {
+            EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoadStart);
+
             // Phase 1: 等待加载到 0.9，同时更新展示进度（按比例映射）
             while (op.progress < 0.9f)
             {
@@ -254,6 +265,7 @@ namespace Ember.Scene
 
             IsLoading = false;
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoaded);
+            EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoadDone);
             onComplete?.Invoke();
         }
 

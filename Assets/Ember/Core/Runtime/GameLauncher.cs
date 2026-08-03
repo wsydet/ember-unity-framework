@@ -19,8 +19,8 @@ namespace Ember.Core
     /// </code>
     ///
     /// <b>启动流程：</b>
-    /// 1. Awake:  ConfigureStateMachine() 注册所有游戏状态
-    /// 2. Start:  启动状态机 → <see cref="InitState.OnEnter"/> 中初始化所有 IEmberManager
+    /// 1. Awake:  ConfigureStateMachine() 注册 Init / Main / Gameplay 三个核心状态
+    /// 2. Start:  InitState.OnEnter → InitializeAll → CoreReady → TransitionTo&lt;MainState&gt;
     /// 3. Update / LateUpdate / FixedUpdate: 驱动 EmberUpdateManager + 状态机 Tick
     ///
     /// 使用方式：
@@ -110,8 +110,8 @@ namespace Ember.Core
 
         private void Start()
         {
-            // 启动状态机 → InitState.OnEnter() → InitializeAll() → CoreReady
-            Fsm.Start<InitState>();
+            // InitState.OnEnter → InitializeAll → CoreReady → TransitionTo<MainState>
+            Fsm.Start<InitState>(args: Fsm);
             IsInitialized = true;
             EmberDebug.LogInit(TAG, "GameLauncher: InitState complete, ticking...");
         }
@@ -140,13 +140,13 @@ namespace Ember.Core
 
         protected override void OnSingletonDestroy()
         {
-            EmberDebug.LogCleanup(TAG, "GameLauncher: shutting down framework...");
+            EmberDebug.LogShutdown(TAG, "GameLauncher: shutting down framework...");
 
             // 逆序销毁所有 Manager
             EmberManagerCollector.Instance.DestroyAll();
 
             IsInitialized = false;
-            EmberDebug.LogCleanup(TAG, "GameLauncher: framework shutdown complete.");
+            EmberDebug.LogShutdown(TAG, "GameLauncher: framework shutdown complete.");
         }
 
         #endregion
@@ -171,14 +171,21 @@ namespace Ember.Core
         /// <param name="fsm">已创建的状态机实例</param>
         protected virtual void ConfigureStateMachine(EmberStateMachine fsm)
         {
-            // 系统必需状态 —— 始终先注册，确保在 InitState 中完成框架自检
+            // ============================================================
+            // 框架核心三状态（始终注册，不可删除）
+            // Init → Main → Gameplay，单机/网游通用
+            // ============================================================
             fsm.Register(new InitState());
+            fsm.Register(new MainState());
+            fsm.Register(new GameplayState());
+
+            // 框架通用覆盖状态（可删除，用户可用自定义设置替代）
+            fsm.Register(new SettingsState());
 
             // --- 业务状态注册 ---
             // 在下方注册自定义状态，例如：
-            // fsm.Register(new LoginState());
-            // fsm.Register(new MainMenuState());
-            // fsm.Register(new BattleState());
+            // fsm.Register(new LoginState());    // 网游：Init → Login → Main
+            // fsm.Register(new BattleState());   // 玩法：Main → Battle → Main
             // --- 可视化编辑器生成区域 ---
         }
 

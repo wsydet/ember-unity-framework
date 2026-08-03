@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ember.Core
@@ -59,6 +60,58 @@ namespace Ember.Core
 
         /// <summary>覆盖它的状态退出后，此状态重新可见时调用。</summary>
         public virtual void OnResume() { }
+
+        // ---- 流转声明（可视化编辑器 + 运行时校验） ----
+
+        /// <summary>
+        /// 声明本状态可通过 <see cref="EmberStateMachine.TransitionTo"/> 流转到的目标状态。
+        /// 可视化编辑器从此读取连线图；运行时 TransitionTo 校验 Guard。
+        /// </summary>
+        public virtual TransitionDescriptor[] GetTransitions() => Array.Empty<TransitionDescriptor>();
+
+        /// <summary>
+        /// 声明本状态可通过 <see cref="EmberStateMachine.Push"/> 弹出的覆盖状态。
+        /// 可视化编辑器从此读取连线图；运行时 Push 校验 Guard。
+        /// </summary>
+        public virtual TransitionDescriptor[] GetPushTargets() => Array.Empty<TransitionDescriptor>();
+
+        // ---- 场景关联 ----
+
+        /// <summary>
+        /// 此状态关联的场景路径（Build Settings 中的场景名）。
+        /// 空字符串 = 不加载场景（如 InitState）。
+        /// 状态机流转时自动加载/卸载对应场景。
+        /// </summary>
+        public virtual string ScenePath => "";
+    }
+
+    // ============================================================
+    // 流转类型 & 上下文
+    // ============================================================
+
+    /// <summary>流转操作类型</summary>
+    public enum TransitionType
+    {
+        /// <summary>替换式切换（TransitionTo）</summary>
+        TransitionTo,
+        /// <summary>覆盖式压栈（Push）</summary>
+        Push,
+        /// <summary>弹出栈顶（Pop）</summary>
+        Pop,
+    }
+
+    /// <summary>
+    /// 场景流转上下文 —— 状态机在流转时传递给 <see cref="EmberStateMachine.OnSceneTransition"/> 钩子的信息包。
+    /// 钩子负责处理场景加载/卸载，完成后调用 <see cref="Proceed"/> 继续状态生命周期。
+    /// </summary>
+    public sealed class SceneTransitionContext
+    {
+        public EmberGameState FromState;
+        public EmberGameState ToState;
+        public string FromScene;
+        public string ToScene;
+        public TransitionType Type;
+        public Action Proceed;
     }
 
     // ============================================================
@@ -105,6 +158,14 @@ namespace Ember.Core
         private EmberGameState _current;
         private readonly Stack<EmberGameState> _overlayStack = new();
 
+        // === 场景追踪 ===
+
+        private string _currentScenePath;
+        private readonly Stack<string> _popScenePathStack = new();
+
+        /// <summary>当前加载的场景路径</summary>
+        public string CurrentScenePath => _currentScenePath;
+
         /// <summary>当前活跃状态</summary>
         public EmberGameState Current => _current;
 
@@ -116,6 +177,20 @@ namespace Ember.Core
 
         /// <summary>所有已注册的状态</summary>
         public IReadOnlyCollection<EmberGameState> RegisteredStates => _states.Values;
+
+        // === 场景桥接钩子 ===
+
+        /// <summary>
+        /// 场景流转钩子。由 SceneCoordinator 在 Init 阶段注入。
+        /// 为 null 时状态机保持同步行为（向后兼容）。
+        /// </summary>
+        public Action<SceneTransitionContext> OnSceneTransition;
+
+        /// <summary>
+        /// 直接加载场景的委托。由 SceneCoordinator 在 Init 阶段注入。
+        /// 供状态在 TransitionTo 之前预加载场景（如 InitState 预加载 MainScene）。
+        /// </summary>
+        public Action<string, Action> LoadSceneAsync;
 
         #endregion
 
@@ -189,11 +264,15 @@ namespace Ember.Core
         // ======== 切换 ========
 
         /// <summary>
-        /// 切换到目标状态：Exit 当前状态 → Enter 目标状态。
-        /// 如果目标状态的 <see cref="EmberGameState.AllowReEnter"/> 为 false 且
-        /// 当前已是该状态，则忽略。
+        /// 切换到目标状态：Exit 当前状态 → 加载目标场景 → Enter 目标状态。
+        ///
+        /// <param name="args">传递给 OnEnter 的参数</param>
+        /// <param name="skipSceneLoad">跳过场景加载（目标状态的场景已就绪时使用）</param>
+        ///
+        /// 如果设置了 <see cref="OnSceneTransition"/> 钩子且双方场景不同，
+        /// 则通过钩子异步加载场景，加载完成后执行状态生命周期。
         /// </summary>
-        public void TransitionTo<T>(object args = null) where T : EmberGameState
+        public void TransitionTo<T>(object args = null, bool skipSceneLoad = false) where T : EmberGameState
         {
             var type = typeof(T);
             if (!_states.TryGetValue(type, out var next))
@@ -206,27 +285,56 @@ namespace Ember.Core
             {
                 if (_current.GetType() == type && !_current.AllowReEnter)
                 {
-                    EmberDebug.LogWarning(TAG, 
+                    EmberDebug.LogWarning(TAG,
                         $"StateMachine: already in state '{type.Name}' and AllowReEnter is false.");
                     return;
                 }
 
-                _current.OnExit();
+                if (!ValidateGuard(_current, type, "TransitionTo"))
+                    return;
             }
 
-            Previous = _current;
-            _current = next;
-            _current.OnEnter(args);
+            // 场景信息
+            var fromScene = _current?.ScenePath ?? "";
+            var toScene = next.ScenePath ?? "";
 
-            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            OnStateChanged?.Invoke(Previous, _current);
+            // 生命周期操作（延迟到场景就绪后执行）
+            Action proceed = () =>
+            {
+                _current?.OnExit();
+                Previous = _current;
+                _current = next;
+                _current.OnEnter(args);
+                _currentScenePath = toScene;
+
+                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
+                OnStateChanged?.Invoke(Previous, _current);
+            };
+
+            // 有钩子、场景不同、且未跳过 → 异步加载
+            if (!skipSceneLoad && OnSceneTransition != null && fromScene != toScene)
+            {
+                OnSceneTransition(new SceneTransitionContext
+                {
+                    FromState = _current,
+                    ToState = next,
+                    FromScene = fromScene,
+                    ToScene = toScene,
+                    Type = TransitionType.TransitionTo,
+                    Proceed = proceed,
+                });
+                return;
+            }
+
+            // 无钩子或同场景 → 同步
+            proceed();
         }
 
         // ======== 栈式覆盖（Push / Pop） ========
 
         /// <summary>
         /// 将当前状态暂停（OnPause），在其上方覆盖一个新状态。
-        /// 适用于弹窗式场景：设置面板、背包界面等不改变游戏主循环但需要暂时接管输入的界面。
+        /// 适用于弹窗式场景：设置面板、背包界面等。
         /// </summary>
         public void Push<T>(object args = null) where T : EmberGameState
         {
@@ -237,14 +345,41 @@ namespace Ember.Core
                 return;
             }
 
-            _current?.OnPause();
-            _overlayStack.Push(_current);
+            if (_current != null && !ValidateGuard(_current, type, "Push"))
+                return;
 
-            _current = overlay;
-            _current.OnEnter(args);
+            var fromScene = _currentScenePath;
+            var toScene = overlay.ScenePath ?? "";
 
-            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            OnStateChanged?.Invoke(Previous, _current);
+            Action proceed = () =>
+            {
+                _current?.OnPause();
+                _popScenePathStack.Push(_currentScenePath);
+                _overlayStack.Push(_current);
+                Previous = _current;
+                _current = overlay;
+                _current.OnEnter(args);
+                _currentScenePath = toScene;
+
+                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
+                OnStateChanged?.Invoke(Previous, _current);
+            };
+
+            if (OnSceneTransition != null && fromScene != toScene)
+            {
+                OnSceneTransition(new SceneTransitionContext
+                {
+                    FromState = _current,
+                    ToState = overlay,
+                    FromScene = fromScene,
+                    ToScene = toScene,
+                    Type = TransitionType.Push,
+                    Proceed = proceed,
+                });
+                return;
+            }
+
+            proceed();
         }
 
         /// <summary>
@@ -258,12 +393,35 @@ namespace Ember.Core
                 return;
             }
 
-            _current?.OnExit();
-            _current = _overlayStack.Pop();
-            _current?.OnResume();
+            var fromScene = _currentScenePath;
+            var toScene = _popScenePathStack.Count > 0 ? _popScenePathStack.Peek() : "";
 
-            EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            OnStateChanged?.Invoke(Previous, _current);
+            Action proceed = () =>
+            {
+                _current?.OnExit();
+                _current = _overlayStack.Pop();
+                _currentScenePath = _popScenePathStack.Count > 0 ? _popScenePathStack.Pop() : "";
+                _current?.OnResume();
+
+                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
+                OnStateChanged?.Invoke(Previous, _current);
+            };
+
+            if (OnSceneTransition != null && fromScene != toScene)
+            {
+                OnSceneTransition(new SceneTransitionContext
+                {
+                    FromState = _current,
+                    ToState = _overlayStack.Peek(),
+                    FromScene = fromScene,
+                    ToScene = toScene,
+                    Type = TransitionType.Pop,
+                    Proceed = proceed,
+                });
+                return;
+            }
+
+            proceed();
         }
 
         // ======== 查询 ========
@@ -296,6 +454,47 @@ namespace Ember.Core
 
             EmberDebug.LogError(TAG, "StateMachine: no required state registered. At minimum, register an InitState.");
             return false;
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        /// <summary>
+        /// 校验当前状态的流转描述符是否允许切换到目标类型，以及 Guard 条件是否满足。
+        /// </summary>
+        /// <param name="from">当前状态</param>
+        /// <param name="targetType">目标状态类型</param>
+        /// <param name="method">"TransitionTo" 或 "Push"，用于日志</param>
+        /// <returns>允许流转返回 true，否则 false</returns>
+        private static bool ValidateGuard(EmberGameState from, Type targetType, string method)
+        {
+            // 选择对应的描述符列表
+            var descriptors = method == "Push"
+                ? from.GetPushTargets()
+                : from.GetTransitions();
+
+            var desc = descriptors.FirstOrDefault(d => d.TargetState == targetType);
+            if (desc == null)
+            {
+                // 未声明流转目标 → 警告但仍允许（向后兼容，不阻断未声明的老代码）
+                EmberDebug.LogWarning(TAG,
+                    $"StateMachine: {method}<{targetType.Name}> from '{from.Name}' "
+                    + "is not declared in GetTransitions/GetPushTargets. Allowed but should be declared.");
+                return true;
+            }
+
+            if (desc.Guard != null && !desc.Guard())
+            {
+                EmberDebug.LogWarning(TAG,
+                    $"StateMachine: {method}<{targetType.Name}> from '{from.Name}' "
+                    + $"blocked by Guard: {desc.Condition}");
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
