@@ -74,6 +74,12 @@ Packages/
 
 ## 编码规范
 
+### 🔍 写代码前必查：API 速查手册
+
+**在写任何新工具类、扩展方法、数据结构之前，必须先查阅 [docs/dev/ember-api-reference.md](docs/dev/ember-api-reference.md)**，确认没有现成的轮子。
+
+手册覆盖：集合池、基础数据结构、扩展方法、异步 (STTask)、JSON、事件系统、服务定位、日志、资源管理、UI、场景、音频、输入、状态机、Update 循环、Manager 发现、Attribute 标记 等 20+ 个类别。
+
 ### 命名约定
 
 - **类名**：PascalCase，框架类加 `Ember` 前缀（如 `EmberEventBus`）
@@ -96,6 +102,56 @@ Packages/
   - `LogShutdown`（淡紫色）：框架退出、最终清理（与 Init 呼应）
   - `Log`（白色）：常规信息
   - `LogWarning` / `LogError`：警告和错误
+
+### XML 文档注释规范
+
+**泛型尖括号用 `《》` 替代 `<>`**。XML 不允许 `<` `>` 裸写在文本中，必须转义为 `&lt;` `&gt;`，但这在源码中可读性极差。统一用 `《》`：
+
+```csharp
+/// ListPool《int》 的池子里装的都是 List《int》
+/// var list = ListPool《RaycastHit》.Get();
+/// for (int i = 0; i 《 list.Count; i++)
+```
+
+而不是：
+
+```csharp
+/// ListPool&lt;int&gt; 的池子里装的都是 List&lt;int&gt;
+/// var list = ListPool&lt;RaycastHit&gt;.Get();
+/// for (int i = 0; i &lt; list.Count; i++)
+```
+
+`《` `》` 在 XML 中不是特殊字符，无需转义，人读起来也直观。
+
+### `[HasGC]` / `[NoGC]` 标注规范
+
+**`[HasGC]` 和 `[NoGC]` 标记每个静态方法是否产生 GC 分配**，让调用方在热路径上一眼就知道能不能放心用。
+
+判定规则：方法体里有 `new`（分配新对象）、`string` 拼接/格式化/插值、接口类型枚举器
+（struct 装箱）、闭包/lambda → `[HasGC]`；纯计算、纯遍历、只调 `[NoGC]` 方法 → `[NoGC]`。
+
+**要标的方法**：
+- 所有 `public static` 方法 —— 调用方不知道内部实现，必须在签名处标明
+- 性能敏感类型的 `public` 实例方法 —— 池的 Get/Return、StringView 的比较等
+- 如果调用方会在热路径上调、会纠结"这方法有没有 GC"——就标
+
+**不标的方法**：
+- `private` / `internal` 方法 —— 外部不可见，实现细节
+- 天生就有 GC 的类型 —— `JsonMapper`、`JsonData`、`StringBuilder` 相关，全标没有意义
+- Editor-only 代码 —— 不在运行时热路径上
+- 简单属性/字段 getter —— 不可能有 GC
+
+```csharp
+// ✅ 标注
+[HasGC]
+public static List<T> Get(int capacity = 16) { ... }  // 池空时会 new
+
+[NoGC]
+public static void Return(List<T> list) { ... }        // 只调 Clear + Add
+
+// ❌ 不标
+private static void ValidateInput() { ... }            // private，外面看不到
+```
 
 ### 代码组织
 
