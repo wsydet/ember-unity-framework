@@ -1,0 +1,20 @@
+{
+    "name": "Ember.Basic.Editor",
+    "rootNamespace": "Ember.Basic.Editor",
+    "references": [
+        "Ember.Basic.Runtime",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
