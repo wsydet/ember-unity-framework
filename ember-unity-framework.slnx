@@ -11,6 +11,7 @@
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
   <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
+  <Project Path="Ember.Basic.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
   <Project Path="Ember.UI.Runtime.csproj" />
   <Project Path="Ember.Core.Runtime.csproj" />
