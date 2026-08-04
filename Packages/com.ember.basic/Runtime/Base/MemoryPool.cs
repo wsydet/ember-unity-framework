@@ -1,58 +1,76 @@
-//// Copyright (c) 2026 Burner Games. All rights reserved.
-////
-//// This file is part of Burner Unity Packages.
-//// Package: com.burner.basic
-//// Primary author: qinho
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 //
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//
-//namespace Burner.Basic
-//{ 
-//    public class MemoryPool<T> where T : class
-//    {
-//        public MemoryPool(int maxSize = 10)
-//        {
-//            _maxSize = maxSize;
-//        }
-//        public T Alloc()
-//        {
-//            T t = null;
-//            if (_objs.Count > 0)
-//                t = _objs.Dequeue();
-//            return t;
-//        }
-//
-//        public bool CanFree
-//        {
-//            get
-//            {
-//                return _objs.Count < _maxSize;
-//            }
-//        }
-//        public bool Free(T t)
-//        {
-//            if (_objs.Count < _maxSize)
-//            {
-//                _objs.Enqueue(t);
-//                return true;
-//            }
-//            return false;
-//        }
-//
-//        public bool Contains(T t)
-//        {
-//            return _objs.Contains(t);
-//        }
-//        public void Dispose()
-//        {
-//            _objs.Clear();
-//        }
-//        public int Count { get { return _objs.Count; } }
-//        private Queue<T> _objs = new Queue<T>();
-//        private int _maxSize = 10;
-//    }
-//}
+// This file is part of Ember Unity Packages.
+// Package: com.ember.basic
+
+using System.Collections.Generic;
+
+namespace Ember.Basic
+{
+    /// <summary>
+    /// 泛型对象池，用于复用 class 类型的实例。
+    ///
+    /// 与 <see cref="ListPool{T}"/> 等静态池不同，此池按实例管理，
+    /// 每个 MemoryPool 有独立的最大容量限制。
+    /// </summary>
+    /// <typeparam name="T">池中对象的类型，必须是引用类型</typeparam>
+    public class MemoryPool<T> where T : class
+    {
+        private readonly int _maxCapacity;
+        private readonly Queue<T> _objects;
+
+        public MemoryPool(int maxCapacity = 10)
+        {
+            _maxCapacity = maxCapacity;
+            _objects = new Queue<T>();
+        }
+
+        /// <summary>
+        /// 当前池中缓存的对象数量。
+        /// </summary>
+        public int Count => _objects.Count;
+
+        /// <summary>
+        /// 是否还可以向池中归还对象（未达到最大容量）。
+        /// </summary>
+        public bool CanReturn => _objects.Count < _maxCapacity;
+
+        /// <summary>
+        /// 从池中获取一个对象。如果池为空则返回 null。
+        /// </summary>
+        public T Get()
+        {
+            return _objects.Count > 0 ? _objects.Dequeue() : null;
+        }
+
+        /// <summary>
+        /// 向池中归还一个对象。如果池已满则返回 false，对象不会被缓存。
+        /// </summary>
+        public bool Return(T obj)
+        {
+            if (_objects.Count < _maxCapacity)
+            {
+                _objects.Enqueue(obj);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 检查指定对象是否已在池中。
+        /// </summary>
+        public bool Contains(T obj)
+        {
+            return _objects.Contains(obj);
+        }
+
+        /// <summary>
+        /// 清空池中所有缓存对象。
+        /// </summary>
+        public void Clear()
+        {
+            _objects.Clear();
+        }
+    }
+}

@@ -1,71 +1,57 @@
-//// Copyright (c) 2026 Burner Games. All rights reserved.
-////
-//// This file is part of Burner Unity Packages.
-//// Package: com.burner.basic
-//// Primary author: qinho
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 //
-//using System;
-//using System.Collections.Generic;
-//using System.Text;
-//using System.Runtime.CompilerServices;
-//
-//namespace Burner.Basic.Tasks
-//{
-//    public enum AwaiterStatus
-//    {
-//        /// <summary>The operation has not yet completed.</summary>
-//        Pending = 0,
-//
-//        /// <summary>The operation completed successfully.</summary>
-//        Succeeded = 1,
-//
-//        /// <summary>The operation completed with an error.</summary>
-//        Faulted = 2,
-//
-//        /// <summary>The operation completed due to cancellation.</summary>
-//        Canceled = 3
-//    }
-//
-//    public interface IAwaiter : ICriticalNotifyCompletion
-//    {
-//        AwaiterStatus Status { get; }
-//        bool IsCompleted { get; }
-//        void GetResult();
-//    }
-//
-//    public interface IAwaiter<out T> : IAwaiter
-//    {
-//        new T GetResult();
-//    }
-//
-//    public static class AwaiterStatusExtensions
-//    {
-//        /// <summary>!= Pending.</summary>
-//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//        public static bool IsCompleted(this AwaiterStatus status)
-//        {
-//            return status != AwaiterStatus.Pending;
-//        }
-//
-//        /// <summary>== Succeeded.</summary>
-//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//        public static bool IsCompletedSuccessfully(this AwaiterStatus status)
-//        {
-//            return status == AwaiterStatus.Succeeded;
-//        }
-//
-//        /// <summary>== Canceled.</summary>
-//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//        public static bool IsCanceled(this AwaiterStatus status)
-//        {
-//            return status == AwaiterStatus.Canceled;
-//        }
-//
-//        /// <summary>== Faulted.</summary>
-//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//        public static bool IsFaulted(this AwaiterStatus status)
-//        {
-//            return status == AwaiterStatus.Faulted;
-//        }
-//    }
-//}
+// This file is part of Ember Unity Packages.
+// Package: com.ember.basic
+
+using System;
+using System.Runtime.CompilerServices;
+
+namespace Ember.Basic.Tasks
+{
+    /// <summary>
+    /// 异步操作状态。
+    /// </summary>
+    public enum AwaiterStatus
+    {
+        Pending = 0,
+        Succeeded = 1,
+        Faulted = 2,
+        Canceled = 3
+    }
+
+    /// <summary>
+    /// 无返回值的 Awaiter 接口。
+    /// </summary>
+    public interface IAwaiter : ICriticalNotifyCompletion
+    {
+        AwaiterStatus Status { get; }
+        bool IsCompleted { get; }
+        void GetResult();
+    }
+
+    /// <summary>
+    /// 有返回值的 Awaiter 接口。
+    /// </summary>
+    public interface IAwaiter<out T> : IAwaiter
+    {
+        new T GetResult();
+    }
+
+    /// <summary>
+    /// AwaiterStatus 扩展方法。
+    /// </summary>
+    public static class AwaiterStatusExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsCompleted(this AwaiterStatus status) => status != AwaiterStatus.Pending;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsCompletedSuccessfully(this AwaiterStatus status) => status == AwaiterStatus.Succeeded;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsCanceled(this AwaiterStatus status) => status == AwaiterStatus.Canceled;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsFaulted(this AwaiterStatus status) => status == AwaiterStatus.Faulted;
+    }
+}
