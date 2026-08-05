@@ -781,7 +781,7 @@ EmberServiceLocator.ClearAll();
 
 ## 日志
 
-> 位置: `Ember/Core/Runtime/Debug/`, 命名空间 `Ember.Core`
+> 位置: `Ember/Core/Runtime/Debug/`, 命名空间 `Ember.Basic`
 > **规则**: 禁止直接用 `Debug.Log`，全部走 `EmberDebug`。
 
 ### EmberDebug
@@ -821,6 +821,49 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 string parent = LogTags.GetParent(LogTags.CoreEventBus); // "EmberCore"
 var allTags = LogTags.All;  // 所有标签的 HashSet
 ```
+
+### EmberFileLog
+
+文件日志持久化。后台线程异步将 EmberDebug 日志写入 `.log` 文件。
+
+```csharp
+// 生命周期（在 GameLauncher 中调用）
+EmberFileLog.Start();    // 启动文件日志（Awake）
+EmberFileLog.Stop();     // 停止并刷写（OnDestroy）
+bool running = EmberFileLog.IsRunning;
+
+// 上传（事件 / 接口二选一）
+EmberFileLog.OnLogFileReady += path => { /* 上传到服务端 */ };
+
+public class MyLogUploader : IEmberLogUploader
+{
+    public void Upload(string filePath) { /* 实现上传逻辑 */ }
+}
+```
+
+日志文件输出纯文本格式：`HH:mm:ss.fff [LEVEL] [TAG] message (at path:line)`。
+LEVEL 缩写：`I`/`N`/`V`/`C`/`S`/`W`/`E`（对应 Info/Init/Event/Cleanup/Shutdown/Warning/Error）。
+
+### IEmberLogUploader
+
+```csharp
+public interface IEmberLogUploader
+{
+    void Upload(string filePath);
+}
+```
+
+框架不内置上传实现。业务层实现此接口，配合 `EmberFileLog.OnLogFileReady` 事件使用。
+
+### EmberDebugConfigSO（文件日志字段）
+
+| 字段 | 类型 | 默认 | 说明 |
+|------|------|------|------|
+| `enableFileLog` | `bool` | `true` | 启用文件日志 |
+| `logDirectory` | `string` | `""` | 空则自动：Editor=`{项目}/Logs/ember/`，Build=`persistentDataPath/logs/` |
+| `maxFileSizeMB` | `int` | `10` | 单文件最大 MB |
+| `maxFileCount` | `int` | `5` | 最多保留文件数 |
+| `retentionDays` | `int` | `30` | 保留天数 |
 
 ---
 

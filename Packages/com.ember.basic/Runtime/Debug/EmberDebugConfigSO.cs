@@ -74,6 +74,31 @@ namespace Ember.Basic
             VisibleIf = "@autoCollect && userEntries.Count == 0", InfoMessageType = InfoMessageType.Info)]
         public List<LoggerClassEntry> userEntries = new();
 
+        [BoxGroup("$DEBUG_GROUP/文件日志", ShowLabel = false)]
+        [Title("文件日志", "运行时持久化日志到 .log 文件。用于发布后排查问题。")]
+        [Tooltip("开启后，EmberDebug 的所有日志同时写入文件（纯文本，不含 Rich Text 标签）")]
+        public bool enableFileLog = true;
+
+        [BoxGroup("$DEBUG_GROUP/文件日志")]
+        [Tooltip("日志文件目录。留空则自动选择：Editor 下为 {项目}/Logs/ember，Build 下为 persistentDataPath/logs")]
+        [FolderPath]
+        public string logDirectory = "";
+
+        [BoxGroup("$DEBUG_GROUP/文件日志")]
+        [Tooltip("单个日志文件最大大小（MB）。超过后自动轮转到下一个文件")]
+        [Range(1, 100)]
+        public int maxFileSizeMB = 10;
+
+        [BoxGroup("$DEBUG_GROUP/文件日志")]
+        [Tooltip("最多保留的日志文件数量。超出后覆盖最早的文件")]
+        [Range(1, 20)]
+        public int maxFileCount = 5;
+
+        [BoxGroup("$DEBUG_GROUP/文件日志")]
+        [Tooltip("日志文件保留天数。超过天数的文件自动删除")]
+        [Range(1, 365)]
+        public int retentionDays = 30;
+
         // ============================================================
 
         /// <summary>

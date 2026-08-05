@@ -84,4 +84,12 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.45, g: 0.8, b: 0.8, a: 1}
     className: EmberInput.Manager
-  userEntries: []
+  userEntries:
+  - enabled: 1
+    color: {r: 0.9, g: 0.35999995, b: 0.62243986, a: 1}
+    className: EmberFileLog
+  enableFileLog: 1
+  logDirectory: Logs/ember
+  maxFileSizeMB: 10
+  maxFileCount: 5
+  retentionDays: 30

@@ -90,6 +90,9 @@ namespace Ember.Basic
             }
 
             _loaded = true;
+
+            // 同步文件日志配置
+            EmberFileLog.ApplyConfig(_config);
         }
 
         /// <summary>
@@ -200,6 +203,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Info, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "I", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -209,6 +213,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Info, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "I", filePath, lineNumber));
         }
 
         // ======== Init（绿色） ========
@@ -220,6 +225,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Init, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "N", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -229,6 +235,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Init, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "N", filePath, lineNumber));
         }
 
         // ======== Event（紫色） ========
@@ -240,6 +247,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Event, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "V", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -249,6 +257,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Event, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "V", filePath, lineNumber));
         }
 
         // ======== Cleanup（灰色） ========
@@ -260,6 +269,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Cleanup, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "C", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -269,6 +279,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Cleanup, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "C", filePath, lineNumber));
         }
 
         // ======== Shutdown（淡紫色） ========
@@ -280,6 +291,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Shutdown, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "S", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -289,6 +301,7 @@ namespace Ember.Basic
         {
             if (!CanLog(tag)) return;
             Debug.Log(FormatMsg(tag, message, LogColors.Shutdown, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "S", filePath, lineNumber));
         }
 
         // ======== Warning（橙色） ========
@@ -300,6 +313,7 @@ namespace Ember.Basic
         {
             if (!GlobalOpen || !IsEnabled(tag)) return;
             Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "W", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -309,6 +323,7 @@ namespace Ember.Basic
         {
             if (!GlobalOpen || !IsEnabled(tag)) return;
             Debug.LogWarning(FormatMsg(tag, message, LogColors.Warning, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "W", filePath, lineNumber));
         }
 
         // ======== Error（红色） ========
@@ -319,6 +334,7 @@ namespace Ember.Basic
             [CallerLineNumber] int lineNumber = 0)
         {
             Debug.LogError(FormatMsg(tag, message, LogColors.Error, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "E", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -327,6 +343,7 @@ namespace Ember.Basic
             [CallerLineNumber] int lineNumber = 0)
         {
             Debug.LogError(FormatMsg(tag, message, LogColors.Error, filePath, lineNumber), context);
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, message, "E", filePath, lineNumber));
         }
 
         [HideInCallstack]
@@ -335,6 +352,7 @@ namespace Ember.Basic
             [CallerLineNumber] int lineNumber = 0)
         {
             Debug.LogError(FormatMsg(tag, ex.Message, LogColors.Error, filePath, lineNumber));
+            EmberFileLog.Enqueue(FormatMsgPlain(tag, ex.Message, "E", filePath, lineNumber));
         }
 
         #endregion
@@ -404,6 +422,18 @@ namespace Ember.Basic
 
             float hue = Mathf.Abs(hash) % 1000 / 1000f;
             return Color.HSVToRGB(hue, 0.6f, 0.9f);
+        }
+
+        /// <summary>
+        /// 生成纯文本格式的日志行（不含 Rich Text 标签），供 EmberFileLog 使用。
+        /// 格式：HH:mm:ss.fff [LEVEL] [TAG] message \n   (at path:line)
+        /// </summary>
+        [HasGC]
+        private static string FormatMsgPlain(string tag, string message, string level,
+            string filePath, int lineNumber)
+        {
+            string timestamp = System.DateTime.Now.ToString("HH:mm:ss.fff");
+            return $"{timestamp} [{level}] [{tag}] {message}\n  (at {filePath}:{lineNumber})";
         }
 
         #endregion

@@ -142,7 +142,85 @@ EmberDebug.LogError(LogTags.ResourceProvider, "Load failed.");
 
 ---
 
-## 七、注意事项
+## 七、文件日志持久化
+
+EmberDebug 支持将日志异步写入 `.log` 文件，方便发布后排查问题。
+
+### 配置
+
+在 `EmberDebugConfig.asset` 的 **文件日志** 面板中配置：
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `enableFileLog` | `true` | 是否启用文件日志 |
+| `logDirectory` | 空（自动） | 日志文件目录。Editor 下为 `{项目}/Logs/ember/`，Build 下为 `persistentDataPath/logs/` |
+| `maxFileSizeMB` | `10` | 单个日志文件最大大小（MB）。超过后自动轮转 |
+| `maxFileCount` | `5` | 最多保留的日志文件数量。超出后环形覆盖最早的文件 |
+| `retentionDays` | `30` | 日志文件保留天数。启动时自动删除过期文件 |
+
+### 生命周期
+
+```csharp
+// 在 GameLauncher 中启动 / 停止
+EmberFileLog.Start();   // Awake 时调用
+EmberFileLog.Stop();    // OnDestroy 时调用
+```
+
+`EmberFileLog.Start()` 在 `EmberDebug.LoadConfig()` 之后调用（`LoadConfig` 会自动同步 SO 配置到 `EmberFileLog`）。
+
+### 日志格式
+
+文件日志输出纯文本（**不含 Rich Text 标签**），格式为：
+
+```
+HH:mm:ss.fff [LEVEL] [TAG] message
+  (at path:line)
+```
+
+LEVEL 缩写：
+
+| 缩写 | 对应方法 |
+|------|----------|
+| `I` | `EmberDebug.Log` |
+| `N` | `EmberDebug.LogInit` |
+| `V` | `EmberDebug.LogEvent` |
+| `C` | `EmberDebug.LogCleanup` |
+| `S` | `EmberDebug.LogShutdown` |
+| `W` | `EmberDebug.LogWarning` |
+| `E` | `EmberDebug.LogError` / `LogException` |
+
+### 过滤一致性
+
+文件日志与 Console 日志使用**完全相同的过滤规则**：
+- 标签过滤：`EmberDebug.Disable(TAG)` 会同时静默 Console 和 File
+- 全局开关：`GlobalOpen = false` 后两者同时停止输出非 Error 日志
+- Error 始终写入（Console + File）
+
+### 上传
+
+框架不内置网络上传逻辑。业务层通过 `IEmberLogUploader` 接口或 `EmberFileLog.OnLogFileReady` 事件自行实现：
+
+```csharp
+// 方式一：事件订阅
+EmberFileLog.OnLogFileReady += path => MyUploader.Upload(path);
+
+// 方式二：实现接口
+public class MyLogUploader : IEmberLogUploader
+{
+    public void Upload(string filePath)
+    {
+        // 将文件上传到你的服务端
+    }
+}
+```
+
+`OnLogFileReady` 触发时机：
+- 日志文件轮转（关闭旧文件准备打开新文件时）
+- `EmberFileLog.Stop()` 关闭文件时
+
+---
+
+## 八、注意事项
 
 - `CallerFilePath` 和 `CallerLineNumber` 自动捕获调用位置，不需要手动传
 - 打包后 SO 正常随包（在 `Runtime/Resources/` 下）

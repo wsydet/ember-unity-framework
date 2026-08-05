@@ -689,8 +689,8 @@ LoadSceneAsync("Battle")
 
 ## 5. Audio 模块 `Ember.Audio.Runtime`
 
-> 状态：✅ 已完成
-> burner 参考：`Assets/Game/GameLogic/GameManagers/Audio/`
+> 状态：✅ 已完成（基础版） → 📋 [升级方案](../../docs/dev/audio-upgrade-plan.md) 待实施
+> burner 参考：`Assets/Game/GameLogic/GameManagers/Audio/` + `Assets/Game/GameCore/Runtime/Common/Audio/`
 
 ### 文件清单
 
@@ -707,6 +707,20 @@ EmberAudioManager.Instance.PlayBGM(bgmClip, loop: true);
 EmberAudioManager.Instance.PlaySFX(sfxClip);
 EmberAudioManager.Instance.SetBGMVolume(0.8f);
 ```
+
+### 已知局限 & 升级计划
+
+当前为基础实现（BGM + SFX 双 AudioSource），存在以下待改进点：
+
+| 局限 | 升级方案 |
+|------|---------|
+| SFX 每次 `AddComponent` 产生 GC | AudioAgent 池化，预创建 + SetActive 复用 |
+| 无法按 Sound/Music/Voice 分类控制 | `AudioType` 枚举 + `AudioCategory` 分类管理器 |
+| 无法按 ID 停止单个播放实例 | `AudioAgent.InstanceId` + `StopAgent(id)` |
+| fade 参数未实现 | AudioAgent 内置 fade in/out |
+| 无并发数量上限控制 | `AudioGroupConfig.AgentHelperCount` |
+
+详见 [docs/dev/audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md)。
 
 ---
 
@@ -939,9 +953,11 @@ fsm.Pop();
 
 | 文件 | 职责 |
 |------|------|
-| [EmberDebug.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebug.cs) | 日志核心：消息分色 + 两级标签级联过滤 |
+| [EmberDebug.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebug.cs) | 日志核心：消息分色 + 两级标签级联过滤 + 文件日志双通道 |
 | [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) | 集中定义：LogTags、LogTagColors、LogColors |
-| [EmberDebugConfigSO.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebugConfigSO.cs) | SO 配置容器：全局开关、按类过滤、颜色管理 |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebugConfigSO.cs) | SO 配置容器：全局开关、按类过滤、颜色管理、文件日志参数 |
+| [EmberFileLog.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberFileLog.cs) | 文件日志持久化：异步后台线程 + 批量写入 + 日志轮转 + 过期清理 |
+| [IEmberLogUploader.cs](../../Packages/com.ember.basic/Runtime/Debug/IEmberLogUploader.cs) | 日志上传接口：业务层实现以对接自有服务端 |
 | [EmberDebugConfigEditor.cs](../../Packages/com.ember.basic/Editor/EmberDebugConfigEditor.cs) | SO 自定义 Inspector |
 | [EmberDebugConfigCreator.cs](../../Packages/com.ember.basic/Editor/EmberDebugConfigCreator.cs) | 自动创建 SO |
 
@@ -1254,7 +1270,7 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
 | 🟡 P1 | **Timer 定时器** | 1 | 放入 extensions，int-ID API（Delay/Interval/Schedule/Cancel），内部委托 UniTask |
 | 🟡 P1 | **架构债务清理** | — | SceneManager 走 Resource、ServiceLocator 梳理、GameStateChanged 重复 dispatch |
 | 🟢 P2 | **UI 绑定代码生成恢复** | — | EmberUIBinding + EmberUIBindingGenerator |
-| 🟢 P2 | **Audio 多 Category + AudioAgent 池** | ~2 | |
+| 🟡 P1 | **Audio 多 Category + AudioAgent 池** | ~5 | 详见 [audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
 | 🟢 P2 | **预制体对象池** | 1 | GameObject 预制体池化 |
 | 🟢 P2 | **本地化** | — | |
 
@@ -1348,6 +1364,8 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
 | 2026-08-05 | 🔧 **编辑器工具第二轮修复**：移除 `HasOdinFields()` 反射（每帧调用 + 返回值不可靠，→ 固定 10px 间距，消除布局抖动/错位）+ Ember/Tool 优先级压缩为 10 间隔（仅一条分隔线）+ 快捷键 Ctrl+Shift+F → Ctrl+Shift+G + 3 级右键菜单优先级差增至 50 + 补齐所有 `true` 校验方法缺失的优先级参数（涉及 6 个工具、9 个 validate 方法） |
 | 2026-08-05 | 🛠️ **新增第 4 个维护工具**：批量清理脚本未使用引用（`CleanUnusedScriptReferences`），扫描 Assets/ 下 .cs 文件，安全移除未使用的 using 指令（保守策略：仅当命名空间完全不出现 + 白名单保留 System.Linq）；维护工具从 3 个增至 4 个 |
 | 2026-08-05 | 📝 **模块文档全面更新**：Core 拆分到 7 个子目录（Event/Manager/Service/State/Update/Debug/Editor），全部 API.md→README.md 重命名，更新 Scene/Resource/UI 文档，新增 Audio/Camera/Input/Editor 文档，共 15 个 README.md 覆盖全部 8 个模块 |
+| 2026-08-05 | 🆕 **文件日志持久化**：新增 `EmberFileLog`（异步后台线程 + 批量写入 + 日志轮转 + 过期清理）+ `IEmberLogUploader` 上传接口，`EmberDebug` 所有 Log 方法增加文件输出通道（纯文本无 Rich Text），`EmberDebugConfigSO` 新增文件日志配置面板 |
+| 2026-08-05 | 📋 **Audio 升级方案**：基于 burner `AudioType` / `AudioGroupConfig` / `AudioCategory` / `AudioAgent` 四层架构，制定完整移植方案 → [docs/dev/audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md)。Audio 模块基础版已完成，升级待实施 |
 
 
 ---
@@ -1444,7 +1462,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 
 | # | 事项 |
 |---|------|
-| 8 | Audio 多 Category + AudioAgent 池 |
+| 8 | Audio 多 Category + AudioAgent 池（[方案](../../docs/dev/audio-upgrade-plan.md)） |
 | 9 | GameObject 预制体对象池 |
 | 10 | 本地化 |
 | 11 | Canvas 层自动挂载 CanvasScaler + Raycaster（→ S9） |

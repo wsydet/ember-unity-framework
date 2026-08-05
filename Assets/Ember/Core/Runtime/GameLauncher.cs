@@ -99,6 +99,9 @@ namespace Ember.Core
 
         protected override void OnSingletonAwake()
         {
+            EmberDebug.LoadConfig();  // 自动同步 SO 配置到 EmberFileLog
+            EmberFileLog.Start();     // 启动后台写线程
+
             EmberDebug.LogInit(TAG, "GameLauncher: initializing framework...");
 
             // 创建状态机并注册所有游戏状态
@@ -148,6 +151,8 @@ namespace Ember.Core
 
             IsInitialized = false;
             EmberDebug.LogShutdown(TAG, "GameLauncher: framework shutdown complete.");
+       
+            EmberFileLog.Stop();      // 刷写 + 关闭
         }
 
         #endregion

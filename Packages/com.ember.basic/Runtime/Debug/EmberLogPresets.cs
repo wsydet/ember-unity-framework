@@ -35,6 +35,8 @@ namespace Ember.Basic
         public const string CoreStateMachine   = EmberCore + ".StateMachine";
         public const string CoreGameLauncher   = EmberCore + ".GameLauncher";
         public const string CoreCameraManager  = EmberCore + ".CameraManager";
+        public const string CoreTimeManager    = EmberCore + ".TimeManager";
+        public const string CoreEditor         = EmberCore + ".Editor";
 
         // Resource 子标签
         public const string ResourceManager = EmberResource + ".Manager";
@@ -59,7 +61,7 @@ namespace Ember.Basic
             EmberBasic, EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
-            CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager,
+            CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreEditor,
             // 其他子
             ResourceManager, ResourceProvider, UIManager, SceneManager, AudioManager, InputManager,
         };
