@@ -13,6 +13,7 @@ namespace Ember.Core
     /// 预定义常量供参考：
     /// <code>
     /// [EmberInitOrder(EmberInitOrder.Core)]        // Core 层最先（EventBus、ServiceLocator）
+    /// [EmberInitOrder(EmberInitOrder.Time)]        // 时间管理器
     /// [EmberInitOrder(EmberInitOrder.Resource)]    // 资源系统
     /// [EmberInitOrder(EmberInitOrder.Audio)]       // 音频
     /// [EmberInitOrder(EmberInitOrder.Input)]       // 输入
@@ -30,6 +31,9 @@ namespace Ember.Core
 
         /// <summary>Core 基础设施（EventBus、ServiceLocator），最早初始化</summary>
         public const int Core     = 100;
+
+        /// <summary>时间管理器（紧贴 Core 基础设施之后）</summary>
+        public const int Time     = 105;
 
         /// <summary>资源系统</summary>
         public const int Resource = 200;
