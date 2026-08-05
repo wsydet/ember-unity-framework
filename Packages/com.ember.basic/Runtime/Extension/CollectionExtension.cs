@@ -84,9 +84,6 @@ namespace Ember.Basic
         // ======== 转换 ========
 
         [HasGC]
-        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> e) => new(e);
-
-        [HasGC]
         public static string JoinToString<T>(this IEnumerable<T> e, string separator = ",")
         {
             var sb = new StringBuilder();
