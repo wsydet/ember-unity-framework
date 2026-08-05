@@ -1,7 +1,7 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Ember.Core
+namespace Ember.Basic
 {
     /// <summary>
     /// 框架 SO 基类 —— 提供继承溯源面板。

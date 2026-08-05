@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Ember.Core
+namespace Ember.Basic
 {
     /// <summary>
     /// 日志配置项 —— 单条标签的开关和颜色。

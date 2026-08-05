@@ -1,9 +1,9 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Ember.Core.Editor
+namespace Ember.Basic.Editor
 {
     /// <summary>
     /// EmberDebugConfig 的 Odin 面板。

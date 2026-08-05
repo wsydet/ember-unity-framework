@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ember.Core
+namespace Ember.Basic
 {
     // ============================================================
     // 日志标签常量（两级分层：父标签.子标签）
@@ -16,6 +16,7 @@ namespace Ember.Core
     public static class LogTags
     {
         // 父标签
+        public const string EmberBasic    = nameof(EmberBasic);
         public const string EmberCore     = nameof(EmberCore);
         public const string EmberResource = nameof(EmberResource);
         public const string EmberUI       = nameof(EmberUI);
@@ -55,7 +56,7 @@ namespace Ember.Core
         public static readonly HashSet<string> All = new()
         {
             // 父标签
-            EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
+            EmberBasic, EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
             CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager,
@@ -80,6 +81,7 @@ namespace Ember.Core
     /// </summary>
     public static class LogTagColors
     {
+        public static readonly Color Basic    = new(0.55f, 0.75f, 0.90f); // 天蓝
         public static readonly Color Core     = new(0.25f, 0.85f, 0.40f); // 绿色
         public static readonly Color Resource = new(0.42f, 0.65f, 0.85f); // 蓝色
         public static readonly Color UI       = new(0.90f, 0.55f, 0.30f); // 橙色
@@ -114,6 +116,7 @@ namespace Ember.Core
         {
             color = tag switch
             {
+                nameof(LogTags.EmberBasic)    => Basic,
                 nameof(LogTags.EmberCore)     => Core,
                 nameof(LogTags.EmberResource) => Resource,
                 nameof(LogTags.EmberUI)       => UI,

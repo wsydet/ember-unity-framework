@@ -1,7 +1,7 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace Ember.Core.Editor
+namespace Ember.Basic.Editor
 {
     /// <summary>
     /// Unity 启动时自动检测并创建 EmberDebugConfig.asset（如果不存在）。

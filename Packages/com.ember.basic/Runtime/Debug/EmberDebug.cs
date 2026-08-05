@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Ember.Core
+namespace Ember.Basic
 {
     /// <summary>
     /// 框架日志工具 —— Unity Debug.Log 的增强封装。
