@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using Ember.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Ember.Basic;
 
 namespace Ember.Resource
 {

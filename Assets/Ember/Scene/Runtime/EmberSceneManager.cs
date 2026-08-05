@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using Cysharp.Threading.Tasks;
 using Ember.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Ember.Basic;
 
 namespace Ember.Scene
 {

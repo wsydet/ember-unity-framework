@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -15,7 +16,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class PrefabApplyTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/预制体应用工具";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(PrefabApplyTool);
+        protected override string MenuPath => "Ember/Tool/预制体应用工具";
         protected override string WindowTitle => "Prefab Apply";
         protected override Vector2 WindowSize => new(600, 700);
 
@@ -33,7 +35,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/预制体应用工具")]
+        [MenuItem("Ember/Tool/预制体应用工具", false, 190)]
         private static void OpenWindow()
         {
             var win = GetWindow<PrefabApplyTool>();
@@ -49,10 +51,10 @@ namespace Ember.Basic.Editor
             if (!go || !PrefabUtility.IsAnyPrefabInstanceRoot(go))
             { EditorUtility.DisplayDialog("Ember", "请选中一个预制体实例的根节点。", "OK"); return; }
             ApplyPrefabNode(go);
-            Debug.Log($"[Ember] Applied: {go.name}");
+            EmberDebug.Log(TAG, $"[Ember] Applied: {go.name}");
         }
 
-        [MenuItem("GameObject/Ember/预制体改动/应用选中到预制体", true)]
+        [MenuItem("GameObject/Ember/预制体改动/应用选中到预制体", true, 1700)]
         public static bool QuickApplyValidate() =>
             Selection.activeGameObject && PrefabUtility.IsAnyPrefabInstanceRoot(Selection.activeGameObject);
 
@@ -113,6 +115,8 @@ namespace Ember.Basic.Editor
                 GUILayout.FlexibleSpace();
                 if (GUILayout.Button(L10n("Apply", "应用"), GUILayout.Width(60)))
                 { ApplyPrefabNode(n.Obj); Scan(); }
+                if (GUILayout.Button(L10n("Revert", "还原"), GUILayout.Width(50)))
+                { RevertPrefabNode(n.Obj); Scan(); }
                 EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndScrollView();
@@ -148,7 +152,12 @@ namespace Ember.Basic.Editor
         private static void ApplyPrefabNode(GameObject root)
         {
             try { PrefabUtility.ApplyPrefabInstance(root, InteractionMode.UserAction); }
-            catch (Exception e) { Debug.LogError($"[Ember] Apply failed: {root.name}\n{e.Message}"); }
+            catch (Exception e) { EmberDebug.LogError(TAG, $"[Ember] Apply failed: {root.name}\n{e.Message}"); }
+        }
+
+        private static void RevertPrefabNode(GameObject root)
+        {
+            PrefabUtility.RevertPrefabInstance(root, InteractionMode.UserAction);
         }
     }
 }

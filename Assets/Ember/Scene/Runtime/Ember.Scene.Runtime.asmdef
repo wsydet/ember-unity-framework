@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Scene",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.Resource.Runtime",
         "UniTask"
     ],

@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Core.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Sirenix.OdinInspector"
     ],
     "includePlatforms": [

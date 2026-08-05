@@ -1,3 +1,5 @@
+﻿using Ember.Basic;
+
 namespace Ember.Core
 {
     /// <summary>

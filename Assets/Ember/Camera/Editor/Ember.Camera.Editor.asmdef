@@ -3,7 +3,8 @@
     "rootNamespace": "Ember.Camera.Editor",
     "references": [
         "Ember.Camera.Runtime",
-        "Ember.Core.Runtime"
+        "Ember.Core.Runtime",
+        "Ember.Basic.Runtime"
     ],
     "includePlatforms": [
         "Editor"

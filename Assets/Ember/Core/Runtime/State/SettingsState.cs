@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using Ember.Basic;
 
 namespace Ember.Core
 {

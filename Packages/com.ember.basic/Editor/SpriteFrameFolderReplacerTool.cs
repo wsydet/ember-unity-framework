@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -18,7 +19,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class SpriteFrameFolderReplacerTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/Sprite 帧替换";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(SpriteFrameFolderReplacerTool);
+        protected override string MenuPath => "Ember/Tool/Sprite 帧替换";
         protected override string WindowTitle => "Sprite Frame Replacer";
         protected override Vector2 WindowSize => new(580, 850);
 
@@ -44,7 +46,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/Sprite 帧替换")]
+        [MenuItem("Ember/Tool/Sprite 帧替换", false, 220)]
         public static void ShowWindow()
         {
             var win = GetWindow<SpriteFrameFolderReplacerTool>();
@@ -177,7 +179,7 @@ namespace Ember.Basic.Editor
                     var meta = f + ".meta";
                     if (File.Exists(meta)) File.Copy(meta, dest + ".meta", true);
                 }
-                Debug.Log($"[Ember] Backup created: {backupRoot}");
+                EmberDebug.Log(TAG, $"[Ember] Backup created: {backupRoot}");
             }
 
             // Replace
@@ -267,7 +269,7 @@ namespace Ember.Basic.Editor
                         { changed = true; break; }
                     }
                 }
-                if (changed) { EditorUtility.SetDirty(clip); Debug.Log($"[Ember] Marked for rewrite: {path}"); }
+                if (changed) { EditorUtility.SetDirty(clip); EmberDebug.Log(TAG, $"[Ember] Marked for rewrite: {path}"); }
             }
         }
     }

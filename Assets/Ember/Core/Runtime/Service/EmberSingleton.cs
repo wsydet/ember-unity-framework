@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Core
 {

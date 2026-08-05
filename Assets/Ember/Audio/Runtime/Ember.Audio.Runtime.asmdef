@@ -2,7 +2,8 @@
     "name": "Ember.Audio.Runtime",
     "rootNamespace": "Ember.Audio",
     "references": [
-        "Ember.Core.Runtime"
+        "Ember.Core.Runtime",
+        "Ember.Basic.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

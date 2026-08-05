@@ -58,7 +58,7 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ImageBatchSettingsEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/批量修改图片设置";
+        protected override string MenuPath => "Ember/Tool/批量修改图片设置";
         protected override string WindowTitle => "Image Batch Settings";
         protected override Vector2 WindowSize => new(1000, 800);
 
@@ -68,7 +68,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/批量修改图片设置")]
+        [MenuItem("Ember/Tool/批量修改图片设置", false, 240)]
         public static void ShowWindow()
         {
             var win = GetWindow<ImageBatchSettingsEditor>();

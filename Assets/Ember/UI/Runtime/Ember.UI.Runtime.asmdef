@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.UI",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.Resource.Runtime",
         "UnityEngine.UI"
     ],

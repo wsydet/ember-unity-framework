@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -16,7 +17,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ScriptFinderEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/脚本查找";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(ScriptFinderEditor);
+        protected override string MenuPath => "Ember/Tool/脚本查找";
         protected override string WindowTitle => "Script Finder";
         protected override Vector2 WindowSize => new(500, 600);
 
@@ -27,7 +29,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/脚本查找")]
+        [MenuItem("Ember/Tool/脚本查找", false, 130)]
         public static void ShowWindow()
         {
             var win = GetWindow<ScriptFinderEditor>();
@@ -43,7 +45,7 @@ namespace Ember.Basic.Editor
             var gos = FindByScript(script);
             if (gos.Count == 0) { EditorUtility.DisplayDialog("Ember", $"场景中未找到使用 '{script.name}' 的物体。", "OK"); return; }
             Selection.objects = gos.ToArray();
-            Debug.Log($"[Ember] Found {gos.Count} object(s) with '{script.name}'.");
+            EmberDebug.Log(TAG, $"[Ember] Found {gos.Count} object(s) with '{script.name}'.");
         }
 
         [MenuItem("Assets/Ember/查找场景中使用此脚本的物体", true)]

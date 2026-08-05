@@ -1,6 +1,7 @@
-using Ember.Core;
+﻿using Ember.Core;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Core.Editor
 {

@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Input",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],

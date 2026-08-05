@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ember.Core;
 using Ember.Resource;
 using UnityEngine;
 using UnityEngine.UI;
+using Ember.Basic;
 
 namespace Ember.UI
 {

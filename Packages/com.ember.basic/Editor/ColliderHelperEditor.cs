@@ -5,6 +5,7 @@
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -13,7 +14,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ColliderHelperEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/碰撞体可视化助手";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(ColliderHelperEditor);
+        protected override string MenuPath => "Ember/Tool/碰撞体可视化助手";
         protected override string WindowTitle => "碰撞体可视化";
         protected override Vector2 WindowSize => new(400, 350);
 
@@ -21,7 +23,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单入口 ========
 
-        [MenuItem("Tools/Ember/碰撞体可视化助手")]
+        [MenuItem("Ember/Tool/碰撞体可视化助手", false, 160)]
         public static void ShowWindow()
         {
             var win = GetWindow<ColliderHelperEditor>();
@@ -34,13 +36,16 @@ namespace Ember.Basic.Editor
         [MenuItem("GameObject/Ember/碰撞体显示/打开面板", false, 1000)]
         public static void ShowWindowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/碰撞体显示/切换 2D 碰撞体填充", false, 1020)]
+        [MenuItem("GameObject/Ember/碰撞体显示/切换 2D 碰撞体填充", false, 1050)]
         public static void Toggle2DFromContext() => Toggle2DFill();
 
-        [MenuItem("GameObject/Ember/碰撞体显示/切换 2D 碰撞体填充", true, 1020)]
-        public static bool Toggle2DValidate() => true; // 始终可选
+        [MenuItem("GameObject/Ember/碰撞体显示/切换 2D 碰撞体填充", true, 1050)]
+        public static bool Toggle2DValidate() => Selection.activeGameObject != null && (Selection.activeGameObject.GetComponent<Collider2D>() != null || Selection.activeGameObject.GetComponentInChildren<Collider2D>() != null);
 
-        [MenuItem("GameObject/Ember/碰撞体显示/切换 3D Gizmos 显示", false, 1021)]
+        [MenuItem("GameObject/Ember/碰撞体显示/切换 3D Gizmos 显示", true, 1051)]
+        public static bool Toggle3DValidate() => Selection.activeGameObject != null && (Selection.activeGameObject.GetComponent<Collider>() != null || Selection.activeGameObject.GetComponentInChildren<Collider>() != null);
+
+        [MenuItem("GameObject/Ember/碰撞体显示/切换 3D Gizmos 显示", false, 1051)]
         public static void Toggle3DFromContext() => ToggleGizmos();
 
         protected override void DrawContent()
@@ -118,7 +123,7 @@ namespace Ember.Basic.Editor
         {
             var sv = SceneView.lastActiveSceneView;
             if (sv != null) { sv.drawGizmos = !sv.drawGizmos; sv.Repaint(); }
-            else Debug.LogWarning("No active Scene View found.");
+            else EmberDebug.LogWarning(TAG, "No active Scene View found.");
         }
     }
 }

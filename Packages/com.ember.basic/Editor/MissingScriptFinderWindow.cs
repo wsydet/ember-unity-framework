@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -18,7 +19,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class MissingScriptFinderWindow : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/丢失脚本清理工具";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(MissingScriptFinderWindow);
+        protected override string MenuPath => "Ember/Tool/丢失脚本清理工具";
         protected override string WindowTitle => "Missing Script Finder";
         protected override Vector2 WindowSize => new(600, 700);
 
@@ -49,7 +51,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/丢失脚本清理工具")]
+        [MenuItem("Ember/Tool/丢失脚本清理工具", false, 180)]
         private static void OpenWindow()
         {
             var win = GetWindow<MissingScriptFinderWindow>();
@@ -62,7 +64,14 @@ namespace Ember.Basic.Editor
         {
             var go = Selection.activeGameObject;
             if (!go) return;
-            int count = ScanHierarchy(go);
+            int count = 0;
+            foreach (var t in go.GetComponentsInChildren<Transform>(true))
+            {
+                foreach (var c in t.GetComponents<Component>())
+                {
+                    if (c == null) { count++; break; }
+                }
+            }
             if (count > 0)
             {
                 // 打开窗口并填充
@@ -75,7 +84,7 @@ namespace Ember.Basic.Editor
                 EditorUtility.DisplayDialog("Ember", "未发现丢失脚本。", "OK");
         }
 
-        [MenuItem("GameObject/Ember/查找丢失脚本", true)]
+        [MenuItem("GameObject/Ember/查找丢失脚本", true, 1600)]
         public static bool QuickScanValidate() => Selection.activeGameObject;
 
         // ======== UI ========
@@ -109,21 +118,19 @@ namespace Ember.Basic.Editor
         {
             MissingList.Clear();
             if (!TargetObject) return;
-            int count = ScanHierarchy(TargetObject);
-            Debug.Log($"[Ember] Found {count} missing script(s) in '{TargetObject.name}'.");
+            ScanHierarchy(TargetObject);
+            EmberDebug.Log(TAG, $"[Ember] Found {MissingList.Count} missing script(s) in '{TargetObject.name}'.");
         }
 
-        private static int ScanHierarchy(GameObject root)
+        private void ScanHierarchy(GameObject root)
         {
-            int count = 0;
             foreach (var t in root.GetComponentsInChildren<Transform>(true))
             {
                 foreach (var c in t.GetComponents<Component>())
                 {
-                    if (c == null) { count++; break; }
+                    if (c == null) { MissingList.Add(new ScriptInfo { Obj = t.gameObject, Name = t.gameObject.name }); break; }
                 }
             }
-            return count;
         }
 
         private void RemoveAll()
@@ -146,7 +153,7 @@ namespace Ember.Basic.Editor
                 PrefabUtility.RecordPrefabInstancePropertyModifications(TargetObject);
 
             AssetDatabase.SaveAssets();
-            Debug.Log($"[Ember] Removed {removed} missing script(s).");
+            EmberDebug.Log(TAG, $"[Ember] Removed {removed} missing script(s).");
             Scan(); // 刷新列表
         }
     }

@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Camera",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Sirenix.OdinInspector.Attributes",
         "Unity.Cinemachine"
     ],

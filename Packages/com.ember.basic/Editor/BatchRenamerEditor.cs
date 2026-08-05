@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Sirenix.OdinInspector;
+using Ember.Basic;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +14,9 @@ namespace Ember.Basic.Editor
 {
     public class BatchRenamerEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/批量重命名";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(BatchRenamerEditor);
+
+        protected override string MenuPath => "Ember/Tool/批量重命名";
         protected override string WindowTitle => "批量重命名";
         protected override Vector2 WindowSize => new(500, 650);
         protected override string WindowVersion => "v2.0";
@@ -36,7 +39,7 @@ namespace Ember.Basic.Editor
         public int DigitCount = 2;
 
         // ---- 目标 ----
-        [BoxGroup("目标"), LabelText("目标文件夹 (拖拽或选择)")]
+        [HideInInspector]
         public DefaultAsset FolderAsset;
 
         private string FolderPath
@@ -57,17 +60,29 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单入口 ========
 
-        [MenuItem("Tools/Ember/批量重命名")]
+        [MenuItem("Ember/Tool/批量重命名", false, 100)]
         public static void ShowWindow() => OpenWithTargets(null);
 
-        [MenuItem("Assets/批量重命名", false, 1000)]
+        [MenuItem("Assets/Ember/批量重命名", false, 1000)]
         public static void ShowWindowFromAssets()
         {
+            if (Selection.objects.Length == 1)
+            {
+                string path = AssetDatabase.GetAssetPath(Selection.objects[0]);
+                if (AssetDatabase.IsValidFolder(path))
+                {
+                    var win = GetWindow<BatchRenamerEditor>();
+                    win.minSize = win.WindowSize;
+                    win.FolderAsset = (DefaultAsset)Selection.objects[0];
+                    win.Show();
+                    return;
+                }
+            }
             s_queuedSelection = new List<UnityEngine.Object>(Selection.objects);
             OpenWithTargets(s_queuedSelection);
         }
 
-        [MenuItem("Assets/批量重命名", true)]
+        [MenuItem("Assets/Ember/批量重命名", true)]
         public static bool ShowWindowFromAssetsValidate() => Selection.objects.Length > 0;
 
         [MenuItem("GameObject/Ember/批量重命名", false, 1000)]
@@ -108,16 +123,6 @@ namespace Ember.Basic.Editor
             DrawFolderPicker();
             EditorGUILayout.Space(10);
 
-            // Odin 绑定字段直接渲染
-            BaseName = EditorGUILayout.TextField(L10n("Base Name", "基础名称"), BaseName, GUILayout.Height(25));
-            EditorGUILayout.Space(5);
-            Prefix = EditorGUILayout.TextField(L10n("Prefix", "前缀"), Prefix);
-            Suffix = EditorGUILayout.TextField(L10n("Suffix", "后缀"), Suffix);
-            EditorGUILayout.Space(5);
-            StartNumber = EditorGUILayout.IntField(L10n("Start Number", "起始编号"), StartNumber);
-            DigitCount = Mathf.Clamp(EditorGUILayout.IntField(L10n("Digit Count", "编号位数"), DigitCount), 1, 10);
-
-            EditorGUILayout.Space(10);
             DrawPreview();
             EditorGUILayout.Space(10);
             DrawRenameButton();
@@ -135,7 +140,7 @@ namespace Ember.Basic.Editor
             {
                 _cachedFolderPath = null;
                 if (FolderAsset != null && !AssetDatabase.IsValidFolder(AssetDatabase.GetAssetPath(FolderAsset)))
-                { FolderAsset = null; Debug.LogWarning("Not a folder!"); }
+                { FolderAsset = null; EmberDebug.LogWarning(TAG, "Not a folder!"); }
             }
 
             if (GUILayout.Button(L10n("Select", "选择"), GUILayout.Width(50), GUILayout.Height(20)))
@@ -219,10 +224,20 @@ namespace Ember.Basic.Editor
             targets.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
 
             int need = (StartNumber + targets.Count - 1).ToString().Length;
-            if (need > DigitCount && EditorUtility.DisplayDialog(
-                L10n("Warning", "位数警告"),
-                L10n($"Needs {need} digits. Fix?", $"需要 {need} 位编号。修正？"), "OK", "Keep"))
-            { DigitCount = need; fmt = "D" + DigitCount; }
+            if (need > DigitCount)
+            {
+                int choice = EditorUtility.DisplayDialogComplex(
+                    L10n("Warning", "位数警告"),
+                    L10n(
+                        $"You are renaming {targets.Count} objects but the digit count ({DigitCount}) is too small. Needs {need} digits. Fix automatically?",
+                        $"正在重命名 {targets.Count} 个物体，但编号位数 ({DigitCount}) 不足，需要 {need} 位编号。是否自动修正？"),
+                    L10n("Auto-Fix", "自动修正"),    // OK → 自动补位
+                    L10n("Cancel", "取消"),          // Cancel → 取消整个重命名
+                    L10n("Keep", "保持"));           // Alt → 保持当前位数继续
+                if (choice == 1) return;             // 用户点击"取消"或关闭弹窗 → 取消重命名
+                if (choice == 0) { DigitCount = need; fmt = "D" + DigitCount; }
+                // choice == 2 → "保持" → 继续执行（不管后果）
+            }
 
             AssetDatabase.StartAssetEditing();
             try

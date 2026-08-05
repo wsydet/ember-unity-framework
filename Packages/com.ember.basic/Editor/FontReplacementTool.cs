@@ -19,7 +19,7 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class FontReplacementTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/UI 综合管理工具";
+        protected override string MenuPath => "Ember/Tool/UI 综合管理工具";
         protected override string WindowTitle => "UI Toolkit";
         protected override Vector2 WindowSize => new(400, 550);
         protected override string WindowVersion => "v2.1";
@@ -31,87 +31,82 @@ namespace Ember.Basic.Editor
         public string ExcludeFilter = "";
 
         private static TMP_FontAsset s_lastFont;
+        private static string s_lastExcludeFilter = "";
 
         // ======== 菜单入口 ========
 
-        [MenuItem("Tools/Ember/UI 综合管理工具")]
+        [MenuItem("Ember/Tool/UI 综合管理工具", false, 110)]
         public static void ShowWindow()
         {
             var win = GetWindow<FontReplacementTool>();
             win.minSize = win.WindowSize;
             if (s_lastFont) win.SelectedFont = s_lastFont;
+            win.ExcludeFilter = s_lastExcludeFilter;
             win.Show();
         }
 
         [MenuItem("GameObject/Ember/字体替换/打开面板", false, 1400)]
         public static void ShowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/字体替换/替换所有 TMP 字体 (使用上次字体)", false, 1420)]
+        [MenuItem("GameObject/Ember/字体替换/替换所有 TMP 字体 (使用上次字体)", false, 1470)]
         public static void QuickReplaceFont()
         {
-            if (!s_lastFont) { EditorUtility.DisplayDialog("Ember", "请先打开面板选择一次字体。", "OK"); return; }
-            int count = ReplaceAllTMPFonts(s_lastFont, "");
+            if (!s_lastFont) { EditorUtility.DisplayDialog("Ember", "请先打开面板选择一次字体。", "确定"); return; }
+            int count = ReplaceAllTMPFonts(s_lastFont, s_lastExcludeFilter);
             MarkAllDirty();
-            EditorUtility.DisplayDialog("Ember", $"已替换 {count} 处 TMP 字体。", "OK");
+            EditorUtility.DisplayDialog("Ember", $"已替换 {count} 处 TMP 字体。", "确定");
         }
 
-        [MenuItem("GameObject/Ember/字体替换/替换所有 TMP 字体 (使用上次字体)", true)]
+        [MenuItem("GameObject/Ember/字体替换/替换所有 TMP 字体 (使用上次字体)", true, 1470)]
         public static bool QuickReplaceFontValidate() => s_lastFont;
 
-        [MenuItem("GameObject/Ember/字体替换/转换 Legacy Text → TMP", false, 1421)]
+        [MenuItem("GameObject/Ember/字体替换/转换 Legacy Text → TMP", false, 1471)]
         public static void QuickConvertLegacy()
         {
             int count = ConvertAllLegacyText(s_lastFont);
             MarkAllDirty();
-            EditorUtility.DisplayDialog("Ember", $"已转换 {count} 处 Text → TMP。", "OK");
+            EditorUtility.DisplayDialog("Ember", $"已转换 {count} 处 Text → TMP。", "确定");
         }
 
         // ======== UI ========
 
         protected override void DrawContent()
         {
-            EditorGUILayout.LabelField("1. 配置与过滤", EditorStyles.boldLabel);
-            EditorGUI.BeginChangeCheck();
-            SelectedFont = (TMP_FontAsset)EditorGUILayout.ObjectField("目标 TMP 字体", SelectedFont, typeof(TMP_FontAsset), false);
-            if (EditorGUI.EndChangeCheck() && SelectedFont) s_lastFont = SelectedFont;
-            ExcludeFilter = EditorGUILayout.TextField("排除关键字", ExcludeFilter);
-
-            DrawSeparatorLine();
-
-            EditorGUILayout.LabelField("2. 批量字体替换", EditorStyles.boldLabel);
-            if (GUILayout.Button("替换已加载场景中的 TMP 字体", BigButtonStyle))
+            EditorGUILayout.LabelField(L10n("2. Batch Font Replacement", "2. 批量字体替换"), EditorStyles.boldLabel);
+            if (GUILayout.Button(L10n("Replace TMP Fonts in Scene", "替换已加载场景中的 TMP 字体"), BigButtonStyle))
             {
-                if (!SelectedFont) { EditorUtility.DisplayDialog("错误", "请先选择目标 TMP 字体！", "OK"); return; }
+                if (!SelectedFont) { EditorUtility.DisplayDialog(L10n("Error", "错误"), L10n("Please select a target TMP font first!", "请先选择目标 TMP 字体！"), L10n("OK", "确定")); return; }
                 s_lastFont = SelectedFont;
+                s_lastExcludeFilter = ExcludeFilter;
                 int count = ReplaceAllTMPFonts(SelectedFont, ExcludeFilter);
                 MarkAllDirty();
-                EditorUtility.DisplayDialog("成功", $"已修改 {count} 处字体", "OK");
+                EditorUtility.DisplayDialog(L10n("Success", "成功"), L10n($"Modified {count} fonts", $"已修改 {count} 处字体"), L10n("OK", "确定"));
             }
-            if (GUILayout.Button("替换工程预制体字体", BigButtonStyle))
+            if (GUILayout.Button(L10n("Replace Fonts in Prefabs", "替换工程预制体字体"), BigButtonStyle))
             {
-                if (!SelectedFont) { EditorUtility.DisplayDialog("错误", "请先选择目标 TMP 字体！", "OK"); return; }
+                if (!SelectedFont) { EditorUtility.DisplayDialog(L10n("Error", "错误"), L10n("Please select a target TMP font first!", "请先选择目标 TMP 字体！"), L10n("OK", "确定")); return; }
                 ReplaceInPrefabs();
             }
 
             DrawSeparatorLine();
 
-            EditorGUILayout.LabelField("3. 组件转换 (Legacy → TMP)", EditorStyles.boldLabel);
-            if (GUILayout.Button("将已加载场景中的 Text 转换为 TMP", BigButtonStyle))
+            EditorGUILayout.LabelField(L10n("3. Component Conversion (Legacy → TMP)", "3. 组件转换 (Legacy → TMP)"), EditorStyles.boldLabel);
+            if (GUILayout.Button(L10n("Convert Legacy Text to TMP in Scene", "将已加载场景中的 Text 转换为 TMP"), BigButtonStyle))
             {
                 int count = ConvertAllLegacyText(SelectedFont);
                 MarkAllDirty();
-                EditorUtility.DisplayDialog("完成", $"已转换 {count} 处 Text → TMP", "OK");
+                EditorUtility.DisplayDialog(L10n("Done", "完成"), L10n($"Converted {count} Text → TMP", $"已转换 {count} 处 Text → TMP"), L10n("OK", "确定"));
             }
 
             DrawSeparatorLine();
 
-            EditorGUILayout.LabelField("4. 布局适配 (RectTransform Fit)", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("根据当前文字内容自动调整文本框大小。", MessageType.Info);
-            if (GUILayout.Button("自动调整场景中所有 TMP 尺寸", BigButtonStyle))
+            EditorGUILayout.LabelField(L10n("4. Layout Fit (RectTransform Fit)", "4. 布局适配 (RectTransform Fit)"), EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox(L10n("Auto-adjust text box size based on current text content.", "根据当前文字内容自动调整文本框大小。"), MessageType.Info);
+            if (GUILayout.Button(L10n("Auto-fit All TMP Sizes in Scene", "自动调整场景中所有 TMP 尺寸"), BigButtonStyle))
             {
                 int count = FitAllTMP(ExcludeFilter);
                 MarkAllDirty();
-                EditorUtility.DisplayDialog("完成", $"已调整 {count} 个文本框尺寸", "OK");
+                EditorUtility.DisplayDialog(L10n("Done", "完成"), L10n($"Adjusted {count} text box sizes", $"已调整 {count} 个文本框尺寸"), L10n("OK", "确定"));
             }
         }
 

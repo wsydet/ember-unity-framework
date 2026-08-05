@@ -1,4 +1,5 @@
-using Ember.Core;
+﻿using Ember.Core;
+using Ember.Basic;
 
 namespace Ember.Scene
 {

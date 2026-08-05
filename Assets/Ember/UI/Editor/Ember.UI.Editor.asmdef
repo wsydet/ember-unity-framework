@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.UI.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.UI.Runtime"
     ],
     "includePlatforms": [

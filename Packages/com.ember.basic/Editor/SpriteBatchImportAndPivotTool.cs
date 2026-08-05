@@ -17,7 +17,7 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class SpriteBatchImportAndPivotTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/批量修改 Sprite 锚点";
+        protected override string MenuPath => "Ember/Tool/批量修改 Sprite 锚点";
         protected override string WindowTitle => "Sprite Batch Import & Pivot";
         protected override Vector2 WindowSize => new(580, 750);
 
@@ -51,7 +51,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/批量修改 Sprite 锚点")]
+        [MenuItem("Ember/Tool/批量修改 Sprite 锚点", false, 230)]
         public static void ShowWindow()
         {
             var win = GetWindow<SpriteBatchImportAndPivotTool>();

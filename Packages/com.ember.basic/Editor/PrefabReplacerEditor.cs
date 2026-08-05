@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -13,7 +14,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class PrefabReplacerEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/资产替换工具";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(PrefabReplacerEditor);
+        protected override string MenuPath => "Ember/Tool/资产替换工具";
         protected override string WindowTitle => "Prefab Replacer";
         protected override Vector2 WindowSize => new(500, 600);
 
@@ -27,7 +29,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/资产替换工具")]
+        [MenuItem("Ember/Tool/资产替换工具", false, 140)]
         public static void ShowWindow()
         {
             var win = GetWindow<PrefabReplacerEditor>();
@@ -39,15 +41,15 @@ namespace Ember.Basic.Editor
         [MenuItem("GameObject/Ember/资产替换/打开面板", false, 1800)]
         public static void ShowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/资产替换/替换选中为上次预制体", false, 1820)]
+        [MenuItem("GameObject/Ember/资产替换/替换选中为上次预制体", false, 1870)]
         public static void QuickReplace()
         {
             if (!s_lastPrefab) return;
             int count = ReplaceSelected(s_lastPrefab, true, true, true, false);
-            Debug.Log($"[Ember] Replaced {count} objects with '{s_lastPrefab.name}'.");
+            EmberDebug.Log(TAG, $"[Ember] Replaced {count} objects with '{s_lastPrefab.name}'.");
         }
 
-        [MenuItem("GameObject/Ember/资产替换/替换选中为上次预制体", true)]
+        [MenuItem("GameObject/Ember/资产替换/替换选中为上次预制体", true, 1870)]
         public static bool QuickReplaceValidate() => s_lastPrefab && Selection.gameObjects.Length > 0;
 
         // ======== UI ========

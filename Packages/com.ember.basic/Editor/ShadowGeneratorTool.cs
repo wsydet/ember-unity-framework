@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -15,7 +16,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ShadowGeneratorTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/2D 阴影生成器";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(ShadowGeneratorTool);
+        protected override string MenuPath => "Ember/Tool/2D 阴影生成器";
         protected override string WindowTitle => "Shadow Generator";
         protected override Vector2 WindowSize => new(500, 650);
 
@@ -34,7 +36,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/2D 阴影生成器")]
+        [MenuItem("Ember/Tool/2D 阴影生成器", false, 170)]
         public static void ShowWindow()
         {
             var win = GetWindow<ShadowGeneratorTool>();
@@ -45,24 +47,24 @@ namespace Ember.Basic.Editor
         [MenuItem("GameObject/Ember/2D 阴影/打开面板", false, 1900)]
         public static void ShowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/2D 阴影/生成阴影 (用上次参数)", false, 1920)]
+        [MenuItem("GameObject/Ember/2D 阴影/生成阴影 (用上次参数)", false, 1970)]
         public static void QuickGenerate()
         {
             int count = GenerateShadowsFor(Selection.gameObjects, s_lastColor, s_lastOffset, s_lastOrder);
-            if (count > 0) Debug.Log($"[Ember] Generated {count} shadow(s).");
+            if (count > 0) EmberDebug.Log(TAG, $"[Ember] Generated {count} shadow(s).");
         }
 
-        [MenuItem("GameObject/Ember/2D 阴影/生成阴影 (用上次参数)", true)]
+        [MenuItem("GameObject/Ember/2D 阴影/生成阴影 (用上次参数)", true, 1970)]
         public static bool QuickGenerateValidate() => Selection.gameObjects.Length > 0;
 
-        [MenuItem("GameObject/Ember/2D 阴影/移除选中物体下的阴影子物体", false, 1921)]
+        [MenuItem("GameObject/Ember/2D 阴影/移除选中物体下的阴影子物体", false, 1971)]
         public static void QuickRemove()
         {
             int count = RemoveShadowsFrom(Selection.gameObjects);
-            Debug.Log($"[Ember] Removed {count} shadow(s).");
+            EmberDebug.Log(TAG, $"[Ember] Removed {count} shadow(s).");
         }
 
-        [MenuItem("GameObject/Ember/2D 阴影/移除选中物体下的阴影子物体", true)]
+        [MenuItem("GameObject/Ember/2D 阴影/移除选中物体下的阴影子物体", true, 1971)]
         public static bool QuickRemoveValidate() => Selection.gameObjects.Length > 0;
 
         // ======== Lifecycle ========

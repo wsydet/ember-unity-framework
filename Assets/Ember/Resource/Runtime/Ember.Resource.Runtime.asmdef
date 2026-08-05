@@ -2,7 +2,8 @@
     "name": "Ember.Resource.Runtime",
     "rootNamespace": "Ember.Resource",
     "references": [
-        "Ember.Core.Runtime"
+        "Ember.Core.Runtime",
+        "Ember.Basic.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

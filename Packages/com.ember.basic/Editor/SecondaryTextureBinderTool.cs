@@ -9,6 +9,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -22,7 +23,9 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class SecondaryTextureBinderTool : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/次要纹理批量绑定";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(SecondaryTextureBinderTool);
+
+        protected override string MenuPath => "Ember/Tool/次要纹理批量绑定";
         protected override string WindowTitle => "Secondary Texture Binder";
         protected override Vector2 WindowSize => new(550, 600);
         protected override string WindowVersion => "v2.0";
@@ -55,7 +58,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/次要纹理批量绑定")]
+        [MenuItem("Ember/Tool/次要纹理批量绑定", false, 250)]
         public static void ShowWindow()
         {
             var win = GetWindow<SecondaryTextureBinderTool>();
@@ -117,7 +120,7 @@ namespace Ember.Basic.Editor
                         L10n("Binding...", "正在绑定..."),
                         $"{mainName} ({i + 1}/{mainGuids.Length})",
                         (float)i / mainGuids.Length))
-                    { Debug.LogWarning("[Ember] User cancelled."); break; }
+                    { EmberDebug.LogWarning(TAG, "[Ember] User cancelled."); break; }
 
                     var importer = AssetImporter.GetAtPath(mainPath) as TextureImporter;
                     if (importer == null || importer.textureType != TextureImporterType.Sprite) { skipped++; continue; }
@@ -131,11 +134,11 @@ namespace Ember.Basic.Editor
                         if (Path.GetFileNameWithoutExtension(sp) == expectedName) { secTex = AssetDatabase.LoadAssetAtPath<Texture2D>(sp); break; }
                     }
 
-                    if (!secTex) { Debug.Log($"[Ember] No match: {mainName} → looking for {expectedName}"); continue; }
+                    if (!secTex) { EmberDebug.Log(TAG, $"[Ember] No match: {mainName} → looking for {expectedName}"); continue; }
 
                     if (DryRun)
                     {
-                        Debug.Log($"<color=yellow>[DryRun] Would bind: {mainName} → {expectedName}</color>");
+                        EmberDebug.Log(TAG, $"<color=yellow>[DryRun] Would bind: {mainName} → {expectedName}</color>");
                         success++;
                         continue;
                     }
@@ -149,11 +152,11 @@ namespace Ember.Basic.Editor
 
                     importer.secondarySpriteTextures = list.ToArray();
                     importer.SaveAndReimport();
-                    Debug.Log($"[Ember] Bound: {mainName} → {expectedName}");
+                    EmberDebug.Log(TAG, $"[Ember] Bound: {mainName} → {expectedName}");
                     success++;
                 }
             }
-            catch (Exception ex) { Debug.LogError($"[Ember] Error: {ex.Message}"); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"[Ember] Error: {ex.Message}"); }
             finally { EditorUtility.ClearProgressBar(); AssetDatabase.Refresh(); }
 
             string msg = DryRun

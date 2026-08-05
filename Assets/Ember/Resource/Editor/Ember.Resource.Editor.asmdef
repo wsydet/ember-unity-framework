@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Resource.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.Resource.Runtime"
     ],
     "includePlatforms": [

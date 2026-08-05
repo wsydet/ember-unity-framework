@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ember.Core;
 using UnityEngine;
 using UnityEngine.Audio;
+using Ember.Basic;
 
 namespace Ember.Audio
 {

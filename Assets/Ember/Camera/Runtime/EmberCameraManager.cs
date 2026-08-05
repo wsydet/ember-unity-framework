@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Ember.Core;
 using Unity.Cinemachine;
 using UnityEngine;
+using Ember.Basic;
 
 namespace Ember.Camera
 {

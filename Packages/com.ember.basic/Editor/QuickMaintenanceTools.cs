@@ -13,12 +13,17 @@ namespace Ember.Basic.Editor
     /// </summary>
     public static class QuickMaintenanceTools
     {
-        [MenuItem("Tools/Ember/清空本地缓存 (PlayerPrefs + PersistentData)", false, 9000)]
+        [MenuItem("Ember/Tool/清空本地缓存 (PlayerPrefs + PersistentData)", false, 360)]
         public static void ClearLocalCache()
         {
-            if (!EditorUtility.DisplayDialog("确认清理",
-                "将删除所有 PlayerPrefs 记录和 persistentDataPath 下的文件（存档等）。\n此操作不可撤销！",
-                "确认清理", "取消"))
+            var lang = EmberEditorWindow.GlobalLang;
+            if (!EditorUtility.DisplayDialog(
+                EditorToolUtility.L10n(lang, "Confirm Cleanup", "确认清理"),
+                EditorToolUtility.L10n(lang,
+                    "This will delete all PlayerPrefs records and files under persistentDataPath.\nThis action cannot be undone!",
+                    "将删除所有 PlayerPrefs 记录和 persistentDataPath 下的文件（存档等）。\n此操作不可撤销！"),
+                EditorToolUtility.L10n(lang, "Confirm", "确认清理"),
+                EditorToolUtility.L10n(lang, "Cancel", "取消")))
                 return;
 
             PlayerPrefs.DeleteAll();
@@ -28,15 +33,23 @@ namespace Ember.Basic.Editor
                 Directory.Delete(path, true);
                 Directory.CreateDirectory(path);
             }
-            EditorUtility.DisplayDialog("完成", "本地缓存已清空。", "OK");
+            EditorUtility.DisplayDialog(
+                EditorToolUtility.L10n(lang, "Done", "完成"),
+                EditorToolUtility.L10n(lang, "Local cache cleared.", "本地缓存已清空。"),
+                "OK");
         }
 
-        [MenuItem("Tools/Ember/删除项目空文件夹", false, 9001)]
+        [MenuItem("Ember/Tool/删除项目空文件夹", false, 370)]
         public static void RemoveEmptyFolders()
         {
-            if (!EditorUtility.DisplayDialog("确认操作",
-                "将扫描 Assets 目录，删除所有空的子文件夹（含 .meta）。\n此操作不可撤销！",
-                "确认删除", "取消"))
+            var lang = EmberEditorWindow.GlobalLang;
+            if (!EditorUtility.DisplayDialog(
+                EditorToolUtility.L10n(lang, "Confirm", "确认操作"),
+                EditorToolUtility.L10n(lang,
+                    "Scan the Assets directory and delete all empty sub-folders (including .meta).\nThis action cannot be undone!",
+                    "将扫描 Assets 目录，删除所有空的子文件夹（含 .meta）。\n此操作不可撤销！"),
+                EditorToolUtility.L10n(lang, "Delete", "确认删除"),
+                EditorToolUtility.L10n(lang, "Cancel", "取消")))
                 return;
 
             int count = 0;
@@ -52,7 +65,10 @@ namespace Ember.Basic.Editor
                 }
             }
             AssetDatabase.Refresh();
-            EditorUtility.DisplayDialog("完成", $"已删除 {count} 个空文件夹。", "OK");
+            EditorUtility.DisplayDialog(
+                EditorToolUtility.L10n(lang, "Done", "完成"),
+                EditorToolUtility.L10n(lang, $"Deleted {count} empty folders.", $"已删除 {count} 个空文件夹。"),
+                "OK");
         }
     }
 }

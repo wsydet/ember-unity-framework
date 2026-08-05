@@ -1,6 +1,7 @@
-using Ember.Core;
+﻿using Ember.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Ember.Basic;
 
 namespace Ember.Input
 {

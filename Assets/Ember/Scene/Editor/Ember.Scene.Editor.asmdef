@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Scene.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.Scene.Runtime"
     ],
     "includePlatforms": [

@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Ember.Basic;
 
 namespace Ember.Basic.Editor
 {
@@ -14,7 +15,9 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ColliderSnapperEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/碰撞体贴合工具";
+        private const string TAG = LogTags.EmberBasic + "." + nameof(ColliderSnapperEditor);
+
+        protected override string MenuPath => "Ember/Tool/碰撞体贴合工具";
         protected override string WindowTitle => "碰撞体贴合";
         protected override Vector2 WindowSize => new(400, 500);
 
@@ -30,7 +33,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单入口 ========
 
-        [MenuItem("Tools/Ember/碰撞体贴合工具")]
+        [MenuItem("Ember/Tool/碰撞体贴合工具", false, 150)]
         public static void ShowWindow()
         {
             var win = GetWindow<ColliderSnapperEditor>();
@@ -43,22 +46,22 @@ namespace Ember.Basic.Editor
         [MenuItem("GameObject/Ember/碰撞体贴合/打开面板", false, 1100)]
         public static void ShowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向下贴合 (Snap Down)", false, 1120)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向下贴合 (Snap Down)", false, 1150)]
         public static void SnapDownContext() => QuickSnap(SnapDirection.Down);
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向上贴合 (Snap Up)", false, 1121)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向上贴合 (Snap Up)", false, 1151)]
         public static void SnapUpContext() => QuickSnap(SnapDirection.Up);
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向左贴合 (Snap Left)", false, 1122)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向左贴合 (Snap Left)", false, 1152)]
         public static void SnapLeftContext() => QuickSnap(SnapDirection.Left);
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向右贴合 (Snap Right)", false, 1123)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向右贴合 (Snap Right)", false, 1153)]
         public static void SnapRightContext() => QuickSnap(SnapDirection.Right);
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向前贴合 (Snap Forward)", false, 1124)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向前贴合 (Snap Forward)", false, 1154)]
         public static void SnapForwardContext() => QuickSnap(SnapDirection.Forward);
 
-        [MenuItem("GameObject/Ember/碰撞体贴合/向后贴合 (Snap Back)", false, 1125)]
+        [MenuItem("GameObject/Ember/碰撞体贴合/向后贴合 (Snap Back)", false, 1155)]
         public static void SnapBackContext() => QuickSnap(SnapDirection.Back);
 
         private static void QuickSnap(SnapDirection dir)
@@ -70,10 +73,10 @@ namespace Ember.Basic.Editor
             int count = 0;
             foreach (var go in gos)
             {
-                if (TrySnap(go, d, 10f, -1, out Vector3 pos))
+                if (TrySnap(go, d, 10f, -1, 0f, out Vector3 pos))
                 { go.transform.position = pos; count++; }
             }
-            Debug.Log($"[Ember] Snapped {count}/{gos.Length} objects ({dir}).");
+            EmberDebug.Log(TAG, $"[Ember] Snapped {count}/{gos.Length} objects ({dir}).");
         }
 
         // ======== Lifecycle ========
@@ -111,7 +114,7 @@ namespace Ember.Basic.Editor
             foreach (var go in gos)
             {
                 if (go == null) continue;
-                if (TrySnap(go, d, _maxDist, _layers, out Vector3 pos))
+                if (TrySnap(go, d, _maxDist, _layers, _offset, out Vector3 pos))
                     _preview.Add((go.transform, pos, go.TryGetComponent<Collider>(out var c3) ? c3.bounds
                         : go.TryGetComponent<Collider2D>(out var c2) ? c2.bounds : new Bounds(pos, Vector3.one)));
             }
@@ -134,25 +137,28 @@ namespace Ember.Basic.Editor
         private void PerformSnap()
         {
             UpdatePreview();
-            if (_preview.Count == 0) { Debug.LogWarning("No snap targets found."); return; }
+            var gos = Selection.gameObjects;
+            if (_preview.Count == 0) { EmberDebug.LogWarning(TAG, "No surface found within max distance."); return; }
             Undo.RecordObjects(Selection.transforms, "Snap Colliders");
             foreach (var (t, pos, _) in _preview) { if (t) t.position = pos; }
+            if (_preview.Count < gos.Length)
+                EmberDebug.LogWarning(TAG, $"[Ember] Snapped {_preview.Count}/{gos.Length} objects. {gos.Length - _preview.Count} skipped (no surface found).");
             UpdatePreview();
         }
 
         // ======== 核心算法 ========
 
-        private static bool TrySnap(GameObject go, Vector3 dir, float maxDist, LayerMask layers, out Vector3 pos)
+        private static bool TrySnap(GameObject go, Vector3 dir, float maxDist, LayerMask layers, float offset, out Vector3 pos)
         {
             pos = go.transform.position;
             var c3 = go.GetComponent<Collider>();
-            if (c3) return TrySnap3D(go, c3, dir, maxDist, layers, out pos);
+            if (c3) return TrySnap3D(go, c3, dir, maxDist, layers, offset, out pos);
             var c2 = go.GetComponent<Collider2D>();
-            if (c2 && dir.z == 0) return TrySnap2D(go, c2, dir, maxDist, layers, out pos);
+            if (c2 && dir.z == 0) return TrySnap2D(go, c2, dir, maxDist, layers, offset, out pos);
             return false;
         }
 
-        private static bool TrySnap3D(GameObject go, Collider col, Vector3 dir, float maxDist, LayerMask layers, out Vector3 pos)
+        private static bool TrySnap3D(GameObject go, Collider col, Vector3 dir, float maxDist, LayerMask layers, float offset, out Vector3 pos)
         {
             pos = go.transform.position;
             var b = col.bounds;
@@ -165,11 +171,11 @@ namespace Ember.Basic.Editor
                 if (h.transform == go.transform || h.transform.IsChildOf(go.transform) || h.collider.isTrigger) continue;
                 if (h.distance < best) { best = h.distance; bestHit = h; }
             }
-            if (bestHit.HasValue) { pos = go.transform.position + dir * bestHit.Value.distance; return true; }
+            if (bestHit.HasValue) { pos = go.transform.position + dir * (bestHit.Value.distance + offset); return true; }
             return false;
         }
 
-        private static bool TrySnap2D(GameObject go, Collider2D col, Vector3 dir, float maxDist, LayerMask layers, out Vector3 pos)
+        private static bool TrySnap2D(GameObject go, Collider2D col, Vector3 dir, float maxDist, LayerMask layers, float offset, out Vector3 pos)
         {
             pos = go.transform.position;
             var b = col.bounds;
@@ -183,7 +189,7 @@ namespace Ember.Basic.Editor
                 if (h.collider == null || h.transform == go.transform || h.transform.IsChildOf(go.transform) || h.collider.isTrigger) continue;
                 if (h.distance < best) { best = h.distance; bestHit = h; }
             }
-            if (bestHit.HasValue) { pos = go.transform.position + (Vector3)(d2 * bestHit.Value.distance); return true; }
+            if (bestHit.HasValue) { pos = go.transform.position + (Vector3)(d2 * (bestHit.Value.distance + offset)); return true; }
             return false;
         }
 

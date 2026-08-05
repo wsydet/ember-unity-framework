@@ -4,6 +4,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Ember.Basic.Editor
 {
@@ -13,7 +14,7 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class LayoutHelperEditor : EmberEditorWindow
     {
-        protected override string MenuPath => "Tools/Ember/布局助手";
+        protected override string MenuPath => "Ember/Tool/布局助手";
         protected override string WindowTitle => "布局助手";
         protected override Vector2 WindowSize => new(450, 500);
 
@@ -22,7 +23,7 @@ namespace Ember.Basic.Editor
 
         // ======== 菜单 ========
 
-        [MenuItem("Tools/Ember/布局助手")]
+        [MenuItem("Ember/Tool/布局助手", false, 120)]
         public static void ShowWindow()
         {
             var win = GetWindow<LayoutHelperEditor>();
@@ -34,7 +35,7 @@ namespace Ember.Basic.Editor
         [MenuItem("GameObject/Ember/布局助手/打开面板", false, 1500)]
         public static void ShowFromContext() => ShowWindow();
 
-        [MenuItem("GameObject/Ember/布局助手/复制并偏移 (沿用上次偏移)", false, 1520)]
+        [MenuItem("GameObject/Ember/布局助手/复制并偏移 (沿用上次偏移)", false, 1570)]
         public static void QuickDuplicateAndMove()
         {
             var sel = Selection.activeGameObject;
@@ -42,10 +43,10 @@ namespace Ember.Basic.Editor
             DuplicateAndMove(sel, s_lastOffset);
         }
 
-        [MenuItem("GameObject/Ember/布局助手/复制并偏移 (沿用上次偏移)", true)]
+        [MenuItem("GameObject/Ember/布局助手/复制并偏移 (沿用上次偏移)", true, 1570)]
         public static bool QuickDuplicateAndMoveValidate() => Selection.activeGameObject;
 
-        [MenuItem("GameObject/Ember/布局助手/快速打组 Ctrl+G", false, 1521)]
+        [MenuItem("GameObject/Ember/布局助手/快速打组 Ctrl+G", false, 1571)]
         public static void QuickGroup()
         {
             var gos = Selection.gameObjects;
@@ -53,7 +54,7 @@ namespace Ember.Basic.Editor
             GroupObjects(gos);
         }
 
-        [MenuItem("GameObject/Ember/布局助手/快速打组 Ctrl+G", true)]
+        [MenuItem("GameObject/Ember/布局助手/快速打组 Ctrl+G", true, 1571)]
         public static bool QuickGroupValidate() => Selection.gameObjects.Length > 1;
 
         // ======== UI ========
@@ -110,6 +111,7 @@ namespace Ember.Basic.Editor
         {
             Undo.IncrementCurrentGroup();
             var newObj = Object.Instantiate(target, target.transform.parent);
+            if (target.scene.IsValid()) SceneManager.MoveGameObjectToScene(newObj, target.scene);
             newObj.name = target.name;
             Undo.RegisterCreatedObjectUndo(newObj, "Duplicate & Move");
 
@@ -131,6 +133,8 @@ namespace Ember.Basic.Editor
             if (targets[0].GetComponent<RectTransform>())
                 parent.AddComponent<RectTransform>();
             Undo.RegisterCreatedObjectUndo(parent, "Create Group");
+
+            if (targets[0].scene.IsValid()) SceneManager.MoveGameObjectToScene(parent, targets[0].scene);
 
             parent.transform.SetParent(targets[0].transform.parent);
             parent.transform.localPosition = targets[0].transform.localPosition;

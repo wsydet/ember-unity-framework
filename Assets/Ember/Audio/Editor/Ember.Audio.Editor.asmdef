@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.Audio.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Basic.Runtime",
         "Ember.Audio.Runtime"
     ],
     "includePlatforms": [
