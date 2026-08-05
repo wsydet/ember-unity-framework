@@ -1,6 +1,6 @@
 # Ember Framework 开发进度
 
-> 最后更新：2026-08-04
+> 最后更新：2026-08-05
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -74,7 +74,7 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 11 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
 | 12 | **日志系统** | `Ember.Core.Runtime` | ✅ 已完成 | `Debuger` |
 | 13 | **Basic 包迁移** | `com.ember.basic` | ✅ 已完成 | 36 文件迁移 + 6 用户工具整合 + 21 个编辑器工具 |
-| 14 | **Basic 编辑器工具优化** | `com.ember.basic` | 🧪 测试中 | 统一基类 + Odin 面板 + 右键快捷菜单 + 中英文切换 |
+| 14 | **Basic 编辑器工具优化** | `com.ember.basic` | 🧪 测试中 | 统一基类 + Odin 面板 + 右键快捷菜单 + 全局语言切换 + 菜单重组（Ember/Scene + Ember/Tool） |
 
 ---
 
@@ -1224,9 +1224,10 @@ Ember.Core.Runtime          (零依赖，叶子)
   ✅ com.ember.basic 包迁移（36 Runtime + 7 编辑器基础设施 + 21 编辑器工具 = 64 文件）
   ✅ API 速查手册（docs/dev/ember-api-reference.md）
   ✅ 编辑器工具测试清单（docs/dev/editor-tools-test-checklist.md, ~80 测试点）
+  ✅ 编辑器工具多轮修复（全局语言同步 / 面板布局 / 菜单重组 / 对话框本地化 / validate 优先级补齐）
 
 进行中：
-  🧪 编辑器工具手动测试
+  🧪 编辑器工具手动回归测试（3 级菜单分隔线、布局错位、快捷键冲突重点验证）
 
 待开始：
   ⬜ com.ember.extensions 包迁移（17 文件）
@@ -1298,6 +1299,8 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 2026-08-04 | 📦 **Package 迁移计划制定**：分析 burner uiextension 包结构（80+ 文件），制定 ember 三层 Package（basic / extensions / uiextension）逐文件迁移策略，从 `com.ember.basic` 开始 |
 | 2026-08-04 | ✅ **com.ember.basic 迁移完成**：36 文件全部适配（namespace / 命名 / API 优化 / `[HasGC]` `[NoGC]` 标注）。从用户旧项目整合 6 个工具（MathExtension / FloatCurve2D / NaturalStringComparer / FileEncodingUtility / DisplayFirstElementInHeader / DataSaver）。建立 API 速查手册 `docs/dev/ember-api-reference.md`，覆盖 73 文件、110+ 类型、570+ 成员 |
 | 2026-08-04 | 🛠️ **编辑器工具全面优化**：从用户旧项目迁移 26 个编辑器工具，删除 5 个（重复/Odin 换壳/项目特定/URP 特定），保留 21 个并全部手动优化——统一继承 `EmberEditorWindow : OdinEditorWindow` 基类、提取 `EditorToolUtility` / `SpriteImportUtility` / `QuickMaintenanceTools` 等共享模块、所有工具加右键快捷菜单统一到 `GameObject/Ember/` 和 `Assets/Ember/` 路径、中英文双语支持。测试清单 `docs/dev/editor-tools-test-checklist.md` 已生成（~80 个测试点） |
+| 2026-08-05 | 🔧 **编辑器工具第一轮修复**：全局语言同步（EditorPrefs 持久化 + 所有窗口联动）+ 双语 WindowTitle + Odin/DrawContent 布局分离 + BatchRenamerEditor 位数警告三按钮（取消正确中止）+ 删除 DuplicateFinderEditor + EmberCodeValidator 通过时显示反馈 + 菜单重组（Tools/Ember → Ember/Tool + Ember/Scene） + 右键分隔线优先级差增大 + ConsoleLogExporter/QuickMaintenanceTools 对话框全部本地化 |
+| 2026-08-05 | 🔧 **编辑器工具第二轮修复**：移除 `HasOdinFields()` 反射（每帧调用 + 返回值不可靠，→ 固定 10px 间距，消除布局抖动/错位）+ Ember/Tool 优先级压缩为 10 间隔（仅一条分隔线）+ 快捷键 Ctrl+Shift+F → Ctrl+Shift+G + 3 级右键菜单优先级差增至 50 + 补齐所有 `true` 校验方法缺失的优先级参数（涉及 6 个工具、9 个 validate 方法）
 
 
 ---
@@ -1374,7 +1377,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 
 ## 技术债务 & 待重构
 
-> 最后更新：2026-08-04（S7 整理）
+> 最后更新：2026-08-05（S7 整理）
 
 ### 🔴 待修改（影响架构）
 
