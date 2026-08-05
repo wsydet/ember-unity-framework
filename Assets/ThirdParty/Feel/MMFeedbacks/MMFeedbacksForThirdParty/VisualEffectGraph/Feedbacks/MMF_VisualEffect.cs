@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 #if MM_VISUALEFFECTGRAPH
 using UnityEngine.VFX;

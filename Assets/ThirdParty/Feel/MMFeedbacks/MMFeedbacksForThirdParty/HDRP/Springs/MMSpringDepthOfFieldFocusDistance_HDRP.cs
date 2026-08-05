@@ -1,4 +1,4 @@
-#if MM_HDRP
+﻿#if MM_HDRP
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;

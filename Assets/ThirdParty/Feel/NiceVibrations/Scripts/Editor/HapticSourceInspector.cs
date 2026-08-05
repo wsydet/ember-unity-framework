@@ -1,4 +1,4 @@
-#pragma warning disable UAC1001
+﻿#pragma warning disable UAC1001
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-#pragma warning disable UAC1001
+﻿#pragma warning disable UAC1001
 ﻿using UnityEngine;
 using System.Collections.Generic;
 #if UNITY_EDITOR

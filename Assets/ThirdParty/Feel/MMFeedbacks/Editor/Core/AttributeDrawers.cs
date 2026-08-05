@@ -1,4 +1,4 @@
-#pragma warning disable UAC1001
+﻿#pragma warning disable UAC1001
 ﻿using MoreMountains.Tools;
 using UnityEngine;
 #if UNITY_EDITOR

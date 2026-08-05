@@ -1,4 +1,4 @@
-#if MM_UGUI2
+﻿#if MM_UGUI2
 using TMPro;
 #endif
 using UnityEngine;

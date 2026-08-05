@@ -1,4 +1,4 @@
-#pragma warning disable UAC1001
+﻿#pragma warning disable UAC1001
 using System;
 using System.Collections.Generic;
 using System.Reflection;
