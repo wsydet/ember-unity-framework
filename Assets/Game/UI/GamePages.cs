@@ -1,4 +1,4 @@
-using Ember.UI;
+﻿using Ember.UI;
 
 namespace Game.UI
 {

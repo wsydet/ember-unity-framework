@@ -1,4 +1,4 @@
-using Ember.Core;
+﻿using Ember.Core;
 using Ember.Scene;
 using TMPro;
 using UnityEngine;

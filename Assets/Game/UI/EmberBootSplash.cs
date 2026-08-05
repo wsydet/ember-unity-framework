@@ -1,4 +1,4 @@
-using Ember.Core;
+﻿using Ember.Core;
 using UnityEngine;
 
 namespace Game.UI

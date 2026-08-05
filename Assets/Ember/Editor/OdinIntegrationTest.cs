@@ -1,4 +1,4 @@
-// ------------------------------------------------------------------------------
+﻿// ------------------------------------------------------------------------------
 // Odin Integration Test — 验证 Odin Inspector 集成状态
 //
 // 在 Unity 菜单栏点击：Ember > Test > Run Odin Integration Test
@@ -8,10 +8,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Ember.Core;
+using Ember.Basic;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Serialization;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
