@@ -9,11 +9,12 @@
 
 ```
 Assets/Ember/                     # 框架层（零业务逻辑）
-├── Core/                         #   核心：EventBus、ServiceLocator、Singleton
+├── Core/                         #   核心：EventBus、ServiceLocator、Singleton、StateMachine、UpdateManager、Debug
 ├── Resource/                     #   资源管理：加载/卸载抽象
 ├── UI/                           #   UI 管理：界面栈 + 生命周期
-├── Scene/                        #   场景管理：加载/卸载/过渡
-├── Audio/                        #   音频管理
+├── Scene/                        #   场景管理：加载/卸载/过渡 + 状态机桥接
+├── Audio/                        #   音频管理：BGM/SFX + Mixer
+├── Camera/                       #   相机管理：Cinemachine + 霸占堆栈
 ├── Input/                        #   输入抽象层
 └── Editor/                       #   框架级编辑器工具
 ```
@@ -24,9 +25,10 @@ Assets/Ember/                     # 框架层（零业务逻辑）
 Core ← Resource ← Scene
   ← UI
   ← Audio
+  ← Camera
   ← Input
 
-Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能依赖 Core。
+Core 是叶子层，零依赖（除 Unity 引擎 + Odin + UniTask），所有上层模块只能依赖 Core。
 ```
 
 ---
@@ -66,15 +68,16 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 | 3 | **UI** | `Ember.UI.Runtime` | ✅ 已完成 | `GameUIManager` + `Burner.UIExtension` |
 | 4 | **Scene** | `Ember.Scene.Runtime` | ✅ 已完成 | `GameSceneManager` |
 | 5 | **Audio** | `Ember.Audio.Runtime` | ✅ 已完成 | `AudioMgr` |
-| 6 | **Input** | `Ember.Input.Runtime` | ✅ 已完成 | Unity Input System 封装 |
-| 7 | **Editor** | `Ember.Editor` | ✅ 已完成 | 框架级编辑器工具 |
-| 8 | **Manager 自动发现** | `Ember.Core.Runtime` | ✅ 已完成 | `GameMgrCollector` + `IManager` |
-| 9 | **Update 循环管理器** | `Ember.Core.Runtime` | ✅ 已完成 | `GameUpdateManager` |
-| 10 | **Timer 定时器** | `Ember.Core.Runtime` | ⬜ 待开始 | `TimerManage`（基于 UniTask，放入 com.ember.extensions） |
-| 11 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
-| 12 | **日志系统** | `Ember.Core.Runtime` | ✅ 已完成 | `Debuger` |
-| 13 | **Basic 包迁移** | `com.ember.basic` | ✅ 已完成 | 36 文件迁移 + 6 用户工具整合 + 21 个编辑器工具 |
-| 14 | **Basic 编辑器工具优化** | `com.ember.basic` | 🧪 测试中 | 统一基类 + Odin 面板 + 右键快捷菜单 + 全局语言切换 + 菜单重组（Ember/Scene + Ember/Tool） |
+| 6 | **Camera** | `Ember.Camera.Runtime` | ✅ 已完成 | Cinemachine + 霸占堆栈 |
+| 7 | **Input** | `Ember.Input.Runtime` | ✅ 已完成 | Unity Input System 封装 |
+| 8 | **Editor** | `Ember.Editor` | ✅ 已完成 | 框架级编辑器工具 |
+| 9 | **Manager 自动发现** | `Ember.Core.Runtime` | ✅ 已完成 | `GameMgrCollector` + `IManager` |
+| 10 | **Update 循环管理器** | `Ember.Core.Runtime` | ✅ 已完成 | `GameUpdateManager` |
+| 11 | **Timer 定时器** | `com.ember.extensions` | ⬜ 待开始 | `TimerManage`（基于 UniTask） |
+| 12 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
+| 13 | **日志系统** | `Ember.Core.Runtime` | ✅ 已完成 | `Debuger` |
+| 14 | **Basic 包迁移** | `com.ember.basic` | ✅ 已完成 | 36 文件迁移 + 用户工具整合 + 编辑器工具 |
+| 15 | **模块文档** | `Assets/Ember/*/` | ✅ 已完成 | 15 个 README.md，覆盖全部 8 个模块 |
 
 ---
 
@@ -85,14 +88,18 @@ Core 是叶子层，零依赖（除 Unity 引擎），所有上层模块只能�
 
 ### 文件清单
 
-| 文件 | 职责 | 参考 |
-|------|------|------|
-| [Ember.Core.Runtime.asmdef](../../Assets/Ember/Core/Runtime/Ember.Core.Runtime.asmdef) | 程序集定义，零依赖 | — |
-| [EmberEventBus.cs](../../Assets/Ember/Core/Runtime/EmberEventBus.cs) | 全局事件总线，int-key + 常量表，0～4 泛型参数，遍历安全 | burner `EventDispatcher` |
-| [EmberBroadcastEvent.cs](../../Assets/Ember/Core/Runtime/EmberBroadcastEvent.cs) | 广播事件 int 常量表，模块区间分配避免 Key 冲突 | burner `ModuleType` + `XxxEventDefine` |
-| [EmberServiceLocator.cs](../../Assets/Ember/Core/Runtime/EmberServiceLocator.cs) | 轻量级服务定位器，接口→实现映射，支持延迟工厂 | —（burner 无此模式） |
-| [EmberSingleton.cs](../../Assets/Ember/Core/Runtime/EmberSingleton.cs) | 两种单例基类：`EmberSingleton<T>`（纯 C#）和 `EmberMonoSingleton<T>`（MonoBehaviour） | burner `SafeMonoSingleton`、`Singleton<T>` |
-| [EmberObjectPool.cs](../../Assets/Ember/Core/Runtime/EmberObjectPool.cs) | 通用对象池，支持 IPoolable 回调、统计、容量限制 | burner `BattleCore/ObjectPool` |
+Core 按功能分子目录，详见各子目录的 README.md：
+
+| 子目录 | 文件 | 职责 |
+|--------|------|------|
+| `Event/` | EmberEventBus.cs、EmberBroadcastEvent.cs | 事件总线（Subscribe→IDisposable、OnNext 播报）+ 事件常量表（基址间隔 1000） |
+| `Service/` | EmberServiceLocator.cs、EmberSingleton.cs、EmberObjectPool.cs、EmberBaseSO.cs | 服务定位器 + 两种单例 + 对象池 + SO 基类 |
+| `Manager/` | IEmberManager.cs、IEmberModule.cs、EmberInitOrderAttribute.cs、EmberManagerCollector.cs | 管理器接口 + 业务模块接口 + 初始化优先级 + 反射自动收集 |
+| `State/` | EmberStateMachine.cs、InitState.cs、MainState.cs、GameplayState.cs、SettingsState.cs、TransitionDescriptor.cs | 状态机 + 核心三状态 + 覆盖式设置 + 流转描述符 |
+| `Update/` | EmberUpdateManager.cs、IEmberUpdate.cs | 统一 Update/LateUpdate/FixedUpdate 驱动 |
+| — | GameLauncher.cs | 框架集中入口：状态机 + Update 循环 + Manager 生命周期 |
+| — | EmberSceneField.cs | 场景文件引用（Odin 面板拖拽选择，隐式 string 转换） |
+| `Editor/` | FrameworkSceneBootstrapper.cs | Build Settings 场景同步 + Play Mode 管理 |
 
 ### 与 burner 的设计差异
 
@@ -204,9 +211,9 @@ public static class EmberEventBusExtensions
 
 ### 待设计讨论
 
-- [x] ~~是否需要 Timer/TimerManager？~~ → ✅ 已完成（§10，基于 UniTask）
-- [x] ~~是否需要 Update 循环管理器？~~ → ✅ 已完成（§9）
-- [x] ~~是否需要 Manager 自动发现机制？~~ → ✅ 已完成（§8）
+- [x] ~~是否需要 Timer/TimerManager？~~ → 计划放入 com.ember.extensions
+- [x] ~~是否需要 Update 循环管理器？~~ → ✅ 已完成（EmberUpdateManager）
+- [x] ~~是否需要 Manager 自动发现机制？~~ → ✅ 已完成（EmberManagerCollector）
 
 ---
 
@@ -269,7 +276,7 @@ Initialize(provider)
 
 ### 待扩展
 
-- [ ] 默认 `ResourcesProvider` 实现（零配置开发入门）
+- [x] ~~默认 `ResourcesProvider` 实现（零配置开发入门）~~ → ✅ 已完成
 - [ ] 引用计数与自动卸载策略
 - [ ] 资源加载句柄（Handle）支持取消和追踪
 
@@ -648,8 +655,8 @@ Scene 模块封装 Unity SceneManager，提供异步加载/卸载、激活前回
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [Ember.Scene.Runtime.asmdef](../../Assets/Ember/Scene/Runtime/Ember.Scene.Runtime.asmdef) | 程序集定义，依赖 Core + Resource | — |
-| [EmberSceneManager.cs](../../Assets/Ember/Scene/Runtime/EmberSceneManager.cs) | 场景管理器：异步加载/卸载/过渡，OnBeforeActivate 回调 | burner `GameSceneManager` |
+| [EmberSceneManager.cs](../../Assets/Ember/Scene/Runtime/EmberSceneManager.cs) | 场景管理器：UniTask 异步加载/卸载/过渡，DisplayProgress 平滑进度，OnBeforeActivate 回调 | burner `GameSceneManager` |
+| [SceneCoordinator.cs](../../Assets/Ember/Scene/Runtime/SceneCoordinator.cs) | 状态机↔场景桥接器：注入 OnSceneTransition 钩子，自动加载/卸载状态对应场景 | — |
 
 ### API 速览
 
@@ -703,6 +710,36 @@ EmberAudioManager.Instance.SetBGMVolume(0.8f);
 
 ---
 
+## 5.5. Camera 模块 `Ember.Camera.Runtime`
+
+> 状态：✅ 已完成
+
+### 文件清单
+
+| 文件 | 职责 | 参考 |
+|------|------|------|
+| [EmberCameraManager.cs](../../Assets/Ember/Camera/Runtime/EmberCameraManager.cs) | 相机管理器：Cinemachine 虚拟相机注册/切换、强制霸占堆栈多重嵌套、锁定模式 | — |
+
+### API 速览
+
+```csharp
+// 注册相机
+EmberCameraManager.Instance.Register("main", mainVCam);
+// 普通切换
+EmberCameraManager.Instance.Switch("battle");
+// 强制霸占（对话 → Timeline 嵌套接管）
+EmberCameraManager.Instance.PushOverride("dialogue");
+EmberCameraManager.Instance.PopOverride();
+```
+
+### 设计要点
+
+- **霸占堆栈**：支持多重嵌套（Normal → Dialogue → Cutscene），Push/Pop 配对
+- **锁定模式**：Lock() 后拒绝普通 Switch，霸占不受影响
+- **Cinemachine 集成**：自动配置 Brain + BlenderSettings
+
+---
+
 ## 6. Input 模块 `Ember.Input.Runtime`
 
 > 状态：✅ 已完成
@@ -734,8 +771,11 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 
 | 文件 | 职责 |
 |------|------|
-| [Ember.Editor.asmdef](../../Assets/Ember/Editor/Ember.Editor.asmdef) | 编辑器程序集，依赖 Core.Runtime + Core.Editor |
-| [OdinIntegrationTest.cs](../../Assets/Ember/Editor/OdinIntegrationTest.cs) | Odin Inspector 集成检测工具 |
+| [EmberSceneMapping.cs](../../Assets/Ember/Editor/EmberSceneMapping.cs) | 状态↔场景映射 SO：自动扫描 EmberGameState 子类 + 匹配同名场景 |
+| [EmberSceneMappingCreator.cs](../../Assets/Ember/Editor/EmberSceneMappingCreator.cs) | 映射 SO 自动创建（InitializeOnLoad） |
+| [EmberSceneQuickOpener.cs](../../Assets/Ember/Editor/EmberSceneQuickOpener.cs) | 快速场景打开器：Toolbar 窗口，主场景互斥 + 叠加场景多选 |
+| [FrameworkSceneToolbarButton.cs](../../Assets/Ember/Editor/FrameworkSceneToolbarButton.cs) | Toolbar 按钮：FrameworkScene 跳转 + 快速打开场景 |
+| [OdinIntegrationTest.cs](../../Assets/Ember/Editor/OdinIntegrationTest.cs) | Odin Inspector 集成检测 |
 
 ---
 
@@ -748,10 +788,10 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 框架管道接口：Init() / Destroy()，启动时由 Collector 初始化 | burner `IManager` |
-| [IEmberModule.cs](../../Assets/Ember/Core/Runtime/IEmberModule.cs) | 业务模块接口：OnInit() / OnDestroy() / ResetModuleData()，由状态机按 Phase 驱动 | — |
-| [EmberInitOrderAttribute.cs](../../Assets/Ember/Core/Runtime/EmberInitOrderAttribute.cs) | 初始化顺序特性，预定义 Core=100 → Game=700 | burner `[InitOrder]` |
-| [EmberManagerCollector.cs](../../Assets/Ember/Core/Runtime/EmberManagerCollector.cs) | 反射扫描 → 按 Order 排序 → 依次 Init / 逆序 Destroy | burner `GameMgrCollector` |
+| [IEmberManager.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberManager.cs) | 框架管道接口：Init() / Destroy()，启动时由 Collector 初始化 | burner `IManager` |
+| [IEmberModule.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberModule.cs) | 业务模块接口：OnInit() / OnDestroy() / ResetModuleData()，由状态机按 Phase 驱动 | — |
+| [EmberInitOrderAttribute.cs](../../Assets/Ember/Core/Runtime/Manager/EmberInitOrderAttribute.cs) | 初始化顺序特性，预定义 Core=100 → Game=700 | burner `[InitOrder]` |
+| [EmberManagerCollector.cs](../../Assets/Ember/Core/Runtime/Manager/EmberManagerCollector.cs) | 反射扫描 → 按 Order 排序 → 依次 Init / 逆序 Destroy | burner `GameMgrCollector` |
 
 ---
 
@@ -764,8 +804,8 @@ if (EmberInputManager.Instance.IsPressed("Jump")) { ... }
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [IEmberUpdate.cs](../../Assets/Ember/Core/Runtime/IEmberUpdate.cs) | IEmberUpdate / IEmberLateUpdate / IEmberFixedUpdate 接口 | burner `IGameUpdate` |
-| [EmberUpdateManager.cs](../../Assets/Ember/Core/Runtime/EmberUpdateManager.cs) | 反射扫描 + 每帧统一驱动所有 IEmberUpdate | burner `GameUpdateManager` |
+| [IEmberUpdate.cs](../../Assets/Ember/Core/Runtime/Update/IEmberUpdate.cs) | IEmberUpdate / IEmberLateUpdate / IEmberFixedUpdate 接口 | burner `IGameUpdate` |
+| [EmberUpdateManager.cs](../../Assets/Ember/Core/Runtime/Update/EmberUpdateManager.cs) | 反射扫描 + 每帧统一驱动所有 IEmberUpdate | burner `GameUpdateManager` |
 
 ---
 
@@ -899,12 +939,13 @@ fsm.Pop();
 
 | 文件 | 职责 |
 |------|------|
-| [EmberDebug.cs](../../Assets/Ember/Core/Runtime/EmberDebug.cs) | 日志核心：消息分色（Info/Init/Event/Cleanup/Warning/Error）+ 两级标签级联过滤 |
-| [EmberLogPresets.cs](../../Assets/Ember/Core/Runtime/EmberLogPresets.cs) | 集中定义：LogTags（标签常量）、LogTagColors（预定义颜色）、LogColors（消息颜色） |
-| [EmberDebugConfigSO.cs](../../Assets/Ember/Core/Runtime/EmberDebugConfigSO.cs) | SO 配置容器：全局开关、按类过滤、颜色管理 |
-| [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | SO 自定义 Inspector：锁住预定义颜色、层级缩进、批量操作 |
-| [EmberDebugConfigCreator.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigCreator.cs) | 自动创建 SO（Unity 启动时检测，无则生成） |
-| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | 游戏启动器：集中入口，驱动 Manager 初始化 → 状态机 → Update 循环 | — |
+| [EmberDebug.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebug.cs) | 日志核心：消息分色 + 两级标签级联过滤 |
+| [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) | 集中定义：LogTags、LogTagColors、LogColors |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebugConfigSO.cs) | SO 配置容器：全局开关、按类过滤、颜色管理 |
+| [EmberDebugConfigEditor.cs](../../Packages/com.ember.basic/Editor/EmberDebugConfigEditor.cs) | SO 自定义 Inspector |
+| [EmberDebugConfigCreator.cs](../../Packages/com.ember.basic/Editor/EmberDebugConfigCreator.cs) | 自动创建 SO |
+
+> 以上文件已从 `Assets/Ember/Core/` 迁移到 `Packages/com.ember.basic/`。
 
 ### API 速览
 
@@ -955,8 +996,8 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 
 | 接口 | 文件 | 定位 |
 |------|------|------|
-| `IEmberManager` | [IEmberManager.cs](../../Assets/Ember/Core/Runtime/IEmberManager.cs) | 框架管道，启动时初始化 |
-| `IEmberModule` | [IEmberModule.cs](../../Assets/Ember/Core/Runtime/IEmberModule.cs) | 业务模块，状态机驱动 |
+| `IEmberManager` | [IEmberManager.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberManager.cs) | 框架管道，启动时初始化 |
+| `IEmberModule` | [IEmberModule.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberModule.cs) | 业务模块，状态机驱动 |
 
 两者**不继承**——EmberManagerCollector 只扫 `IEmberManager`，
 EmberModuleCollector（未来实现）只扫 `IEmberModule`，互不干扰。
@@ -1187,13 +1228,16 @@ com.ember.extensions/Runtime/
 ## 程序集依赖图
 
 ```
-Ember.Core.Runtime          (零依赖，叶子)
+Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
     ↑
     ├── Ember.Resource.Runtime
     │       ↑
     │       └── Ember.Scene.Runtime
     ├── Ember.UI.Runtime
+    │       ↑
+    │       └── Ember.Resource.Runtime（预制体加载）
     ├── Ember.Audio.Runtime
+    ├── Ember.Camera.Runtime（额外依赖: Unity.Cinemachine）
     └── Ember.Input.Runtime
 ```
 
@@ -1218,16 +1262,17 @@ Ember.Core.Runtime          (零依赖，叶子)
 
 ```
 已完成：
-  ✅ Core / Resource / UI / Scene / Audio / Input / Editor 模块（7 个）
+  ✅ Core / Resource / UI / Scene / Audio / Camera / Input / Editor 模块（8 个）
   ✅ Manager 自动发现 / Update 循环 / GameState 状态机 / 日志系统
   ✅ S1-S9 场景集成验证
-  ✅ com.ember.basic 包迁移（36 Runtime + 7 编辑器基础设施 + 21 编辑器工具 = 64 文件）
+  ✅ com.ember.basic 包迁移（36 Runtime + 编辑器工具）
   ✅ API 速查手册（docs/dev/ember-api-reference.md）
-  ✅ 编辑器工具测试清单（docs/dev/editor-tools-test-checklist.md, ~80 测试点）
-  ✅ 编辑器工具多轮修复（全局语言同步 / 面板布局 / 菜单重组 / 对话框本地化 / validate 优先级补齐）
+  ✅ 编辑器工具测试清单（docs/dev/editor-tools-test-checklist.md）
+  ✅ 编辑器工具多轮修复（全局语言同步 / 面板布局 / 菜单重组）
+  ✅ 模块 README 文档（15 个，覆盖全部 8 个模块 + Core 子目录）
 
 进行中：
-  🧪 编辑器工具手动回归测试（3 级菜单分隔线、布局错位、快捷键冲突重点验证）
+  🧪 编辑器工具手动回归测试
 
 待开始：
   ⬜ com.ember.extensions 包迁移（17 文件）
@@ -1300,7 +1345,9 @@ Ember.Core.Runtime          (零依赖，叶子)
 | 2026-08-04 | ✅ **com.ember.basic 迁移完成**：36 文件全部适配（namespace / 命名 / API 优化 / `[HasGC]` `[NoGC]` 标注）。从用户旧项目整合 6 个工具（MathExtension / FloatCurve2D / NaturalStringComparer / FileEncodingUtility / DisplayFirstElementInHeader / DataSaver）。建立 API 速查手册 `docs/dev/ember-api-reference.md`，覆盖 73 文件、110+ 类型、570+ 成员 |
 | 2026-08-04 | 🛠️ **编辑器工具全面优化**：从用户旧项目迁移 26 个编辑器工具，删除 5 个（重复/Odin 换壳/项目特定/URP 特定），保留 21 个并全部手动优化——统一继承 `EmberEditorWindow : OdinEditorWindow` 基类、提取 `EditorToolUtility` / `SpriteImportUtility` / `QuickMaintenanceTools` 等共享模块、所有工具加右键快捷菜单统一到 `GameObject/Ember/` 和 `Assets/Ember/` 路径、中英文双语支持。测试清单 `docs/dev/editor-tools-test-checklist.md` 已生成（~80 个测试点） |
 | 2026-08-05 | 🔧 **编辑器工具第一轮修复**：全局语言同步（EditorPrefs 持久化 + 所有窗口联动）+ 双语 WindowTitle + Odin/DrawContent 布局分离 + BatchRenamerEditor 位数警告三按钮（取消正确中止）+ 删除 DuplicateFinderEditor + EmberCodeValidator 通过时显示反馈 + 菜单重组（Tools/Ember → Ember/Tool + Ember/Scene） + 右键分隔线优先级差增大 + ConsoleLogExporter/QuickMaintenanceTools 对话框全部本地化 |
-| 2026-08-05 | 🔧 **编辑器工具第二轮修复**：移除 `HasOdinFields()` 反射（每帧调用 + 返回值不可靠，→ 固定 10px 间距，消除布局抖动/错位）+ Ember/Tool 优先级压缩为 10 间隔（仅一条分隔线）+ 快捷键 Ctrl+Shift+F → Ctrl+Shift+G + 3 级右键菜单优先级差增至 50 + 补齐所有 `true` 校验方法缺失的优先级参数（涉及 6 个工具、9 个 validate 方法）
+| 2026-08-05 | 🔧 **编辑器工具第二轮修复**：移除 `HasOdinFields()` 反射（每帧调用 + 返回值不可靠，→ 固定 10px 间距，消除布局抖动/错位）+ Ember/Tool 优先级压缩为 10 间隔（仅一条分隔线）+ 快捷键 Ctrl+Shift+F → Ctrl+Shift+G + 3 级右键菜单优先级差增至 50 + 补齐所有 `true` 校验方法缺失的优先级参数（涉及 6 个工具、9 个 validate 方法） |
+| 2026-08-05 | 🛠️ **新增第 4 个维护工具**：批量清理脚本未使用引用（`CleanUnusedScriptReferences`），扫描 Assets/ 下 .cs 文件，安全移除未使用的 using 指令（保守策略：仅当命名空间完全不出现 + 白名单保留 System.Linq）；维护工具从 3 个增至 4 个 |
+| 2026-08-05 | 📝 **模块文档全面更新**：Core 拆分到 7 个子目录（Event/Manager/Service/State/Update/Debug/Editor），全部 API.md→README.md 重命名，更新 Scene/Resource/UI 文档，新增 Audio/Camera/Input/Editor 文档，共 15 个 README.md 覆盖全部 8 个模块 |
 
 
 ---
@@ -1361,14 +1408,12 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
   Assets/Ember/Core/Runtime/State/SettingsState.cs        — 覆盖式设置
   Assets/Ember/Core/Runtime/State/EmberStateMachine.cs    — 状态机 + TransitionTo(skipSceneLoad) + LoadSceneAsync
   Assets/Ember/Core/Runtime/State/TransitionDescriptor.cs — 流转描述符
+  Assets/Ember/Core/Runtime/Event/EmberEventBus.cs        — 事件总线
   Assets/Ember/Scene/Runtime/SceneCoordinator.cs          — 场景加载桥接
-  Assets/Ember/Scene/Runtime/EmberSceneManager.cs         — 场景异步加载
+  Assets/Ember/Scene/Runtime/EmberSceneManager.cs         — 场景异步加载（UniTask）
   Assets/Game/UI/EmberBootSplash.cs                       — 启屏黑幕
   Assets/Game/UI/EmberLoadingView.cs                      — 加载进度
   Assets/Game/UI/EmberInitAnimationStarter.cs             — 启动动画基类
-  Assets/Ember/Editor/EmberSceneMapping.cs                — 状态↔场景映射 SO
-  Assets/Ember/Editor/EmberSceneQuickOpener.cs            — 快速打开场景窗口
-  Assets/Ember/Editor/FrameworkSceneBootstrapper.cs       — 自动同步 Build + Play 清理/恢复
 ```
 
 ---
@@ -1385,16 +1430,15 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 |---|------|------|------|
 | 1 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
 | 2 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
-| 3 | **GameStateChanged 重复 dispatch** | `Start` 和 `TransitionTo` 各 dispatch 一次 | 合并为一次，或明确语义区分 |
 
 ### 🟡 待补完（功能完整度）
 
 | # | 事项 | 说明 |
 |---|------|------|
-| 4 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，按 Phase 分组，对接状态机生命周期。接口已定义（[IEmberModule.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberModule.cs)），Collector 待实现 |
-| 5 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
-| 6 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
-| 7 | **Timer 定时器** | 放入 `com.ember.extensions`，int-ID API（Delay/Interval/Schedule/Cancel），内部委托 UniTask |
+| 3 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，接口已定义，Collector 待实现 |
+| 4 | **UI 绑定代码生成** | `EmberUIBinding` + `EmberUIBindingGenerator` 被注释，需恢复适配 |
+| 5 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
+| 6 | **Timer 定时器** | 放入 `com.ember.extensions` |
 
 ### 🟢 待扩展（增强项）
 

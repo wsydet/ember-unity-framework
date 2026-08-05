@@ -30,7 +30,7 @@
 |---|--------|------|---------|------|
 | M1 | 顶级菜单 Ember | 点击顶部菜单栏 Ember | 看到 Scene / Tool 两个子菜单，中间有横线分隔 | ✅ |
 | M2 | Ember/Scene | Ember → Scene | 看到"跳转到 FrameworkScene"和"快速打开场景" | ✅ |
-| M3 | Ember/Tool 分隔线 🆕 | Ember → Tool | 面板工具列表（批量重命名~次要纹理批量绑定）内部**无**分隔线；列表底部与 3 个维护工具（校验代码规范/清空本地缓存/删除项目空文件夹）之间有**一条**横线分隔 | ✅ |
+| M3 | Ember/Tool 分隔线 🆕 | Ember → Tool | 面板工具列表（批量重命名~次要纹理批量绑定）内部**无**分隔线；列表底部与 4 个维护工具（校验代码规范/清空本地缓存/删除项目空文件夹/批量清理脚本未使用引用）之间有**一条**横线分隔 | ✅ |
 | M4 | 旧菜单路径已移除 | 点击 Tools 菜单 | **不再**出现 Tools/Ember 子菜单 | ✅ |
 | M5 | 右键分隔线（碰撞体显示） | Hierarchy 右键 → Ember → 碰撞体显示 | "打开面板"和"切换 2D/3D"之间有横线分隔 | ⬜ |
 | M6 | 右键分隔线（字体替换） | GameObject/右键 → Ember → 字体替换 | "打开面板"和"替换/转换"之间有横线分隔 | ⬜ |
@@ -262,7 +262,11 @@
 |---|--------|------|------|------|
 | Q1 | 清空本地缓存 | Ember → Tool → 清空本地缓存 → 确认 | PlayerPrefs 和 persistentDataPath 已清空，对话框跟随语言 | ✅ |
 | Q2 | 删除空文件夹 | Ember → Tool → 删除项目空文件夹 → 确认 | 空文件夹被删除，.meta 也删了，对话框跟随语言 | ✅ |
-| Q3 | 维护工具名称 | Ember → Tool | 三个维护工具名称：校验代码规范 / 清空本地缓存 / 删除项目空文件夹，与前方面板工具之间有一条横线分隔 | ✅ |
+| Q3 | 维护工具名称 | Ember → Tool | 四个维护工具名称：校验代码规范 / 清空本地缓存 / 删除项目空文件夹 / 批量清理脚本未使用引用，与前方面板工具之间有一条横线分隔 | ✅ |
+| Q4 | 清理未使用引用 — Roslyn 语义扫描 | Ember → Tool → 批量清理脚本未使用引用 → 确认 | 使用 Roslyn CS8019 诊断（与 VS Studio 相同），100% 准确，Console 列出被修改的文件及被移除的 using | ⬜ |
+| Q5 | 清理未使用引用 — 无冗余 | 代码干净时执行清理 | 弹窗报告 "No unused using directives found"，无文件被修改 | ⬜ |
+| Q6 | 清理未使用引用 — 语法错误文件跳过 | 包含有编译错误的 .cs 文件时执行 | 有语法错误的文件被跳过，在 Console 中报告，不影响其他文件的清理 | ⬜ |
+| Q7 | 清理未使用引用 — System.Linq 保留 | 代码中使用 `.Where()` `.Select()` 等扩展方法但未直接引用 `Enumerable` 类型 | `using System.Linq;` 被 Roslyn 正确识别为必需（语义分析），不被移除 | ⬜ |
 
 ---
 
@@ -283,6 +287,22 @@
 | Z3 | 没有 Odin 缺失报错 | 所有 Odin 属性正常解析 | ✅ |
 | Z4 | Console 无异常 | 打开/使用/关闭所有工具，Console 干净 | ✅ |
 | Z5 | Debug.Log 违规扫描通过 | 编译后无 "Code Check" Warning | ✅ |
+
+---
+
+## 本次更新记录 (2026-08-05 第四轮)
+
+### 新增
+- **Q4-Q7**: 新增第 4 个维护工具"批量清理脚本未使用引用"（`CleanUnusedScriptReferences`），菜单优先级 380
+  - **v3（当前）**：基于 Roslyn 语义分析（`Microsoft.CodeAnalysis.CSharp`）—— 与 VS Studio "删除未使用的引用" 使用相同的 CS8019 诊断，100% 准确
+  - 从 Unity 6 安装目录提取的 Roslyn DLL（`DotNetSdk\sdk\8.0.318\DotnetTools\dotnet-format\`），放入 `Editor/Roslyn/`
+  - asmdef 添加 `precompiledReferences` 引用 Roslyn DLL + `allowUnsafeCode: true`
+  - 全局 MetadataReference 缓存（所有文件共享，只构建一次），进度条 + 可取消
+  - 有语法错误的文件跳过不处理（避免误判），在 Console 中报告
+
+### 涉及文件
+- `QuickMaintenanceTools.cs` — 新增 `CleanUnusedScriptReferences` 方法 + 反射缓存 + 类型名匹配
+- `editor-tools-test-checklist.md` — 维护工具从 3 个更新为 4 个，新增 Q4-Q6 测试项
 
 ---
 
@@ -310,3 +330,4 @@
 - ⬜ **B5**: 位数警告取消后不重命名
 - ⬜ **K1**: 快捷键 Ctrl+Shift+G 不冲突
 - ⬜ **CV5/CV7**: 校验通过有反馈 + 跟随语言
+

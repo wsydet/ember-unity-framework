@@ -1,10 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using Ember.Core;
+using Ember.Basic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Ember.Core.Editor
 {

@@ -35,6 +35,7 @@ EmberDebug.GlobalOpen = false;           // 全关（Error 除外）
 |------|----------|-------------|------|--------------|
 | `Log` | 白色 | 无 | 普通信息 | ✅ |
 | `LogInit` | 绿色 | 无 | 初始化/注册/启动 | ✅ |
+| `LogShutdown` | 淡紫色 | 无 | 框架退出/最终清理 | ✅ |
 | `LogEvent` | 紫色 | 无 | EventBus 派发/订阅 | ✅ |
 | `LogCleanup` | 灰色 | 无 | 销毁/卸载/清理 | ✅ |
 | `LogWarning` | 白色 | 黄色 | 异常但可恢复 | ✅ |
@@ -90,7 +91,7 @@ EmberDebug.Enable(LogTags.Core);               // 重新开启父标签
 
 ### 所有预定义标签
 
-在 [EmberLogPresets.cs](../../Assets/Ember/Core/Runtime/EmberLogPresets.cs) 的 `LogTags` 类中定义。
+在 [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) 的 `LogTags` 类中定义。
 
 ---
 
@@ -129,7 +130,7 @@ EmberDebug.LogError(LogTags.ResourceProvider, "Load failed.");
 
 ## 六、颜色定义
 
-所有颜色在 [EmberLogPresets.cs](../../Assets/Ember/Core/Runtime/EmberLogPresets.cs) 中集中定义：
+所有颜色在 [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) 中集中定义：
 
 | 类 | 作用 |
 |----|------|
