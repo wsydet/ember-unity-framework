@@ -15,7 +15,7 @@ namespace Ember.Core.Editor
     [InitializeOnLoad]
     public static class FrameworkSceneBootstrapper
     {
-        private const string TAG = "EmberCore.Editor";
+        private const string TAG = LogTags.CoreEditor;
         private const string ScenesFolder = "Assets/Game/Scenes";
         private const string FrameworkSceneName = "FrameworkScene";
         private const string ScenePath = "Assets/Game/Scenes/FrameworkScene.unity";

@@ -14,6 +14,8 @@ namespace Ember.Core.Editor
     /// </summary>
     public class EmberSceneQuickOpener : EditorWindow
     {
+        private const string TAG = LogTags.CoreEditor;
+
         private EmberSceneMapping _mapping;
         private List<StateSceneEntry> _mainStates = new();     // 互斥主场景（非 Init、非 Settings）
         private List<StateSceneEntry> _overlayStates = new();  // 可叠加场景
@@ -156,7 +158,7 @@ namespace Ember.Core.Editor
                 }
             }
 
-            EmberDebug.Log("EmberCore.Editor", $"场景已打开: {string.Join(" + ", opened.Select(System.IO.Path.GetFileNameWithoutExtension))}");
+            EmberDebug.Log(TAG, $"场景已打开: {string.Join(" + ", opened.Select(System.IO.Path.GetFileNameWithoutExtension))}");
             Close();
         }
 

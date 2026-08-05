@@ -22,7 +22,7 @@ namespace Ember.Editor
     /// </summary>
     public static class OdinIntegrationTest
     {
-        private const string TAG = LogTags.EmberCore;
+        private const string TAG = LogTags.CoreEditor;
 
         private static readonly string[] RequiredAssemblies =
         {
@@ -177,6 +177,8 @@ namespace Ember.Editor
     [System.Serializable]
     public class TestMonoTarget : MonoBehaviour
     {
+        private const string TAG = LogTags.CoreEditor;
+
         [Title("Odin Test Group")]
         [ShowInInspector]
         [FoldoutGroup("Settings")]
@@ -190,7 +192,7 @@ namespace Ember.Editor
         [Button("Test Button")]
         public void TestButtonMethod()
         {
-            EmberDebug.Log(LogTags.EmberCore, "[Odin Test] Button clicked — Odin attribute system is working.");
+            EmberDebug.Log(TAG, "[Odin Test] Button clicked — Odin attribute system is working.");
         }
     }
 }

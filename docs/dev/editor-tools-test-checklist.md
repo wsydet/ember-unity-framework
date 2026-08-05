@@ -262,11 +262,14 @@
 |---|--------|------|------|------|
 | Q1 | 清空本地缓存 | Ember → Tool → 清空本地缓存 → 确认 | PlayerPrefs 和 persistentDataPath 已清空，对话框跟随语言 | ✅ |
 | Q2 | 删除空文件夹 | Ember → Tool → 删除项目空文件夹 → 确认 | 空文件夹被删除，.meta 也删了，对话框跟随语言 | ✅ |
-| Q3 | 维护工具名称 | Ember → Tool | 四个维护工具名称：校验代码规范 / 清空本地缓存 / 删除项目空文件夹 / 批量清理脚本未使用引用，与前方面板工具之间有一条横线分隔 | ✅ |
+| Q3 | 维护工具名称 | Ember → Tool | 五个维护工具名称：校验代码规范 / 清空本地缓存 / 删除项目空文件夹 / 批量清理脚本未使用引用 / 刷新编辑器标题，与前方面板工具之间有一条横线分隔 | ✅ |
 | Q4 | 清理未使用引用 — Roslyn 语义扫描 | Ember → Tool → 批量清理脚本未使用引用 → 确认 | 使用 Roslyn CS8019 诊断（与 VS Studio 相同），100% 准确，Console 列出被修改的文件及被移除的 using | ⬜ |
 | Q5 | 清理未使用引用 — 无冗余 | 代码干净时执行清理 | 弹窗报告 "No unused using directives found"，无文件被修改 | ⬜ |
 | Q6 | 清理未使用引用 — 语法错误文件跳过 | 包含有编译错误的 .cs 文件时执行 | 有语法错误的文件被跳过，在 Console 中报告，不影响其他文件的清理 | ⬜ |
 | Q7 | 清理未使用引用 — System.Linq 保留 | 代码中使用 `.Where()` `.Select()` 等扩展方法但未直接引用 `Enumerable` 类型 | `using System.Linq;` 被 Roslyn 正确识别为必需（语义分析），不被移除 | ⬜ |
+| Q8 | 刷新编辑器标题 | Ember → Tool → 刷新编辑器标题 | 窗口标题变为 "项目名 \| 子路径 \| StandaloneWindows64 \| Git根路径" 格式 | ⬜ |
+| Q9 | 编辑器标题自动刷新 | 等待 5 秒或切换 Play Mode / 修改 Project 设置 | 标题自动更新（playModeStateChanged / projectChanged / 定时 5s 触发） | ⬜ |
+| Q10 | 标题 API 降级 | 反射路径不可用时（模拟或自然触发） | 降级到原生窗口 API（Windows SetWindowText / macOS osascript），Console 仅输出一次 Warning，不影响编辑器正常使用 | ⬜ |
 
 ---
 
@@ -287,6 +290,21 @@
 | Z3 | 没有 Odin 缺失报错 | 所有 Odin 属性正常解析 | ✅ |
 | Z4 | Console 无异常 | 打开/使用/关闭所有工具，Console 干净 | ✅ |
 | Z5 | Debug.Log 违规扫描通过 | 编译后无 "Code Check" Warning | ✅ |
+
+---
+
+## 本次更新记录 (2026-08-05 第五轮)
+
+### 新增
+- **Q8-Q10**: 新增第 5 个维护工具"刷新编辑器标题"（`EditorMainWindowTitle`），菜单优先级 390
+  - 从 burner 项目迁移：`Assets/Game/GameCore/Editor/Common/EditorMainWindowTitle.cs`
+  - 改造内容：命名空间 → `Ember.Basic.Editor`、日志 → `EmberDebug.LogWarning`、菜单 → `Ember/Tool/刷新编辑器标题`
+  - 新增 macOS 降级路径（`osascript`），Windows 保持 `user32.dll SetWindowText`
+  - Linux 无可靠方案，静默跳过
+
+### 涉及文件
+- `EditorMainWindowTitle.cs` — 新增文件，放入 `Packages/com.ember.basic/Editor/`
+- `editor-tools-test-checklist.md` — 维护工具从 4 个更新为 5 个，新增 Q8-Q10 测试项
 
 ---
 

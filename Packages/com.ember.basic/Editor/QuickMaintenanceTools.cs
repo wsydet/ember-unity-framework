@@ -90,7 +90,29 @@ namespace Ember.Basic.Editor
                     _languageVersionEnum = _codeAnalysisCSharp.GetType(
                         "Microsoft.CodeAnalysis.CSharp.LanguageVersion");
 
-                    IsAvailable = true;
+                    IsAvailable = _syntaxTreeType != null
+                        && _compilationType != null
+                        && _compilationOptsType != null
+                        && _parseOptsType != null
+                        && _metaRefType != null
+                        && _outputKindEnum != null
+                        && _diagSeverityEnum != null
+                        && _languageVersionEnum != null;
+
+                    if (!IsAvailable)
+                    {
+                        var missing = new List<string>();
+                        if (_syntaxTreeType == null) missing.Add("CSharpSyntaxTree");
+                        if (_compilationType == null) missing.Add("CSharpCompilation");
+                        if (_compilationOptsType == null) missing.Add("CSharpCompilationOptions");
+                        if (_parseOptsType == null) missing.Add("CSharpParseOptions");
+                        if (_metaRefType == null) missing.Add("MetadataReference");
+                        if (_outputKindEnum == null) missing.Add("OutputKind");
+                        if (_diagSeverityEnum == null) missing.Add("DiagnosticSeverity");
+                        if (_languageVersionEnum == null) missing.Add("LanguageVersion");
+                        EmberDebug.LogError(TAG,
+                            $"Roslyn types not found: {string.Join(", ", missing)}. 'Clean Unused References' will be unavailable.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -129,6 +151,8 @@ namespace Ember.Basic.Editor
             /// </summary>
             public static object CreateParseOptions()
             {
+                if (_parseOptsType == null || _languageVersionEnum == null) return null;
+
                 // LanguageVersion.Latest
                 object latest = Enum.Parse(_languageVersionEnum, "Latest");
 
@@ -142,6 +166,7 @@ namespace Ember.Basic.Editor
 
                 // new CSharpParseOptions(latest, preprocessorSymbols: symbols)
                 var ctor = _parseOptsType.GetConstructor(new[] { _languageVersionEnum, typeof(IEnumerable<string>) });
+                if (ctor == null) return null;
                 return ctor.Invoke(new object[] { latest, symbols });
             }
 
@@ -150,9 +175,12 @@ namespace Ember.Basic.Editor
             /// </summary>
             public static object CreateCompilationOptions()
             {
+                if (_compilationOptsType == null || _outputKindEnum == null) return null;
+
                 // OutputKind.DynamicallyLinkedLibrary
                 object dllKind = Enum.Parse(_outputKindEnum, "DynamicallyLinkedLibrary");
                 var ctor = _compilationOptsType.GetConstructor(new[] { _outputKindEnum });
+                if (ctor == null) return null;
                 return ctor.Invoke(new object[] { dllKind });
             }
 
@@ -287,8 +315,49 @@ namespace Ember.Basic.Editor
                 return;
 
             int count = 0;
-            var dirs = Directory.GetDirectories(Application.dataPath, "*", SearchOption.AllDirectories);
-            for (int i = dirs.Length - 1; i >= 0; i--)
+            var rawDirs = Directory.GetDirectories(Application.dataPath, "*", SearchOption.AllDirectories);
+            int excludedDirCount = 0;
+            var dirs = new List<string>(rawDirs.Length);
+            foreach (string d in rawDirs)
+            {
+                if (EmberExcludedFolders.IsExcluded(d))
+                {
+                    excludedDirCount++;
+                    continue;
+                }
+                dirs.Add(d);
+            }
+
+            // 额外扫描框架自身的包目录
+            int packageDirCount = 0;
+            try
+            {
+                string projectRoot = Path.GetDirectoryName(Application.dataPath);
+                if (!string.IsNullOrEmpty(projectRoot))
+                {
+                    foreach (string pkgRoot in EmberExcludedFolders.FrameworkPackageRoots)
+                    {
+                        string pkgFullPath = Path.GetFullPath(Path.Combine(projectRoot, pkgRoot));
+                        if (!Directory.Exists(pkgFullPath)) continue;
+                        var pkgDirs = Directory.GetDirectories(pkgFullPath, "*", SearchOption.AllDirectories);
+                        dirs.AddRange(pkgDirs);
+                        packageDirCount += pkgDirs.Length;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogWarning(TAG, $"Failed to scan package directories: {ex.Message}");
+            }
+
+            if (excludedDirCount > 0 || packageDirCount > 0)
+            {
+                EmberDebug.Log(TAG, EditorToolUtility.L10n(lang,
+                    $"Skipped {excludedDirCount} folder(s) in excluded directories. Added {packageDirCount} folder(s) from Ember packages.",
+                    $"已跳过排除目录中的 {excludedDirCount} 个文件夹。已添加 Ember 包中的 {packageDirCount} 个文件夹。"));
+            }
+
+            for (int i = dirs.Count - 1; i >= 0; i--)
             {
                 if (Directory.GetFiles(dirs[i]).Length == 0 && Directory.GetDirectories(dirs[i]).Length == 0)
                 {
@@ -304,6 +373,11 @@ namespace Ember.Basic.Editor
                 EditorToolUtility.L10n(lang, $"Deleted {count} empty folders.", $"已删除 {count} 个空文件夹。"),
                 "OK");
         }
+
+        // TODO: Roslyn (.NET 8) 的 CSharpSyntaxTree 在 Unity 6 Mono 运行时上 VTable 无法初始化，
+        // 导致所有文件解析失败。等 Unity 切换到 CoreCLR 后移除此验证方法即可恢复功能。
+        [MenuItem("Ember/Tool/批量清理脚本未使用引用", true, 380)]
+        private static bool ValidateCleanUnusedScriptReferences() => false;
 
         [MenuItem("Ember/Tool/批量清理脚本未使用引用", false, 380)]
         public static void CleanUnusedScriptReferences()
@@ -336,14 +410,14 @@ namespace Ember.Basic.Editor
             if (!EditorUtility.DisplayDialog(
                 EditorToolUtility.L10n(lang, "Clean Unused References", "批量清理未使用引用"),
                 EditorToolUtility.L10n(lang,
-                    "Scan all .cs files under Assets/ and remove unused using directives.\n\n" +
+                    "Scan all .cs files under Assets/ (excluding configured folders) and remove unused using directives.\n\n" +
                     "Powered by Roslyn (same engine as VS Studio):\n" +
                     "  • Full semantic analysis — 100% accurate\n" +
                     "  • Same CS8019 diagnostic that VS Studio uses\n" +
                     "  • Skips files with parse errors (reported in Console)\n\n" +
                     "Modified files are listed in the Console.\n" +
                     "This operation can be undone via version control.",
-                    "将扫描 Assets/ 下所有 .cs 文件，移除非必要的 using 引用。\n\n" +
+                    "将扫描 Assets/ 下所有 .cs 文件（排除已配置的文件夹），移除非必要的 using 引用。\n\n" +
                     "基于 Roslyn 语义分析（与 VS Studio 相同引擎）：\n" +
                     "  • 完整语义分析 —— 100% 准确\n" +
                     "  • 使用与 VS Studio 相同的 CS8019 诊断\n" +
@@ -359,12 +433,52 @@ namespace Ember.Basic.Editor
             int totalUsingsRemoved = 0;
             int skippedFiles = 0;
 
-            var csFiles = Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories);
+            var rawFiles = Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories);
+            int excludedFileCount = 0;
+            var csFiles = new List<string>(rawFiles.Length);
+            foreach (string f in rawFiles)
+            {
+                if (EmberExcludedFolders.IsExcluded(f))
+                {
+                    excludedFileCount++;
+                    continue;
+                }
+                csFiles.Add(f);
+            }
+
+            // 额外扫描框架自身的包目录（Ember 包位于 Packages/ 下，不在 Assets/ 内）
+            int packageFileCount = 0;
+            try
+            {
+                string projectRoot = Path.GetDirectoryName(Application.dataPath);
+                if (!string.IsNullOrEmpty(projectRoot))
+                {
+                    foreach (string pkgRoot in EmberExcludedFolders.FrameworkPackageRoots)
+                    {
+                        string pkgFullPath = Path.GetFullPath(Path.Combine(projectRoot, pkgRoot));
+                        if (!Directory.Exists(pkgFullPath)) continue;
+                        var pkgFiles = Directory.GetFiles(pkgFullPath, "*.cs", SearchOption.AllDirectories);
+                        csFiles.AddRange(pkgFiles);
+                        packageFileCount += pkgFiles.Length;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogWarning(TAG, $"Failed to scan package directories: {ex.Message}");
+            }
+
+            if (excludedFileCount > 0 || packageFileCount > 0)
+            {
+                EmberDebug.Log(TAG, EditorToolUtility.L10n(lang,
+                    $"Skipped {excludedFileCount} file(s) in excluded folders. Added {packageFileCount} file(s) from Ember packages.",
+                    $"已跳过排除文件夹中的 {excludedFileCount} 个文件。已添加 Ember 包中的 {packageFileCount} 个文件。"));
+            }
 
             try
             {
-                int totalCount = csFiles.Length;
-                for (int i = 0; i < csFiles.Length; i++)
+                int totalCount = csFiles.Count;
+                for (int i = 0; i < csFiles.Count; i++)
                 {
                     string filePath = csFiles[i];
                     totalFiles++;
@@ -399,9 +513,11 @@ namespace Ember.Basic.Editor
 
                 string resultMsg = EditorToolUtility.L10n(lang,
                     $"Scanned {totalFiles} files.\nModified {modifiedFiles} files.\nRemoved {totalUsingsRemoved} unused using directive(s)." +
-                    (skippedFiles > 0 ? $"\nSkipped {skippedFiles} file(s) with parse errors (see Console)." : ""),
+                    (skippedFiles > 0 ? $"\nSkipped {skippedFiles} file(s) with parse errors (see Console)." : "") +
+                    (excludedFileCount > 0 ? $"\nExcluded {excludedFileCount} file(s) in configured folders." : ""),
                     $"已扫描 {totalFiles} 个文件。\n修改了 {modifiedFiles} 个文件。\n移除了 {totalUsingsRemoved} 个未使用的 using 引用。" +
-                    (skippedFiles > 0 ? $"\n跳过了 {skippedFiles} 个有语法错误的文件（详见 Console）。" : ""));
+                    (skippedFiles > 0 ? $"\n跳过了 {skippedFiles} 个有语法错误的文件（详见 Console）。" : "") +
+                    (excludedFileCount > 0 ? $"\n排除了 {excludedFileCount} 个已配置文件夹中的文件。" : ""));
 
                 EditorUtility.DisplayDialog(
                     EditorToolUtility.L10n(lang, "Done", "完成"),
@@ -409,8 +525,8 @@ namespace Ember.Basic.Editor
                     "OK");
 
                 EmberDebug.Log(TAG, EditorToolUtility.L10n(lang,
-                    $"Unused reference cleanup done: scanned {totalFiles}, modified {modifiedFiles}, removed {totalUsingsRemoved}, skipped {skippedFiles}.",
-                    $"未使用引用清理完成：扫描 {totalFiles}，修改 {modifiedFiles}，移除 {totalUsingsRemoved}，跳过 {skippedFiles}。"));
+                    $"Unused reference cleanup done: scanned {totalFiles}, modified {modifiedFiles}, removed {totalUsingsRemoved}, skipped {skippedFiles}, excluded {excludedFileCount}.",
+                    $"未使用引用清理完成：扫描 {totalFiles}，修改 {modifiedFiles}，移除 {totalUsingsRemoved}，跳过 {skippedFiles}，排除 {excludedFileCount}。"));
             }
             catch (Exception ex)
             {

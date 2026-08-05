@@ -12,7 +12,7 @@ namespace Ember.Core.Editor
     [InitializeOnLoad]
     public class EmberSceneMappingCreator
     {
-        private const string TAG = "EmberCore.Editor";
+        private const string TAG = LogTags.CoreEditor;
         private const string Path = "Assets/Ember/Editor/Resources/EmberSceneMapping.asset";
 
         static EmberSceneMappingCreator()

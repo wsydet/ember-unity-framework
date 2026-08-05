@@ -1,0 +1,7 @@
+{
+  "excludedFolders": [
+    "Assets/Plugins/",
+    "Assets/ThirdParty/",
+    "Assets/TextMesh Pro/"
+  ]
+}

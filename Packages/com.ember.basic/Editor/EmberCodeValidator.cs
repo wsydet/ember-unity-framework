@@ -23,7 +23,7 @@ namespace Ember.Basic.Editor
     /// 白名单文件：
     /// - EmberDebug.cs（日志类自身）
     /// - EmberCodeValidator.cs（本文件）
-    /// - ThirdParty/ 和 Plugins/ 目录
+    /// 排除目录：见 ExcludedFolders.json（默认排除 Plugins/、ThirdParty/）
     /// </summary>
     [InitializeOnLoad]
     public class EmberCodeValidator
@@ -70,10 +70,25 @@ namespace Ember.Basic.Editor
 
             foreach (var path in csFiles)
             {
-                // 只扫描 ember 框架代码 + basic 包 + 业务层
+                // 排除用户配置的文件夹（默认包含 Plugins/、ThirdParty/）
+                if (EmberExcludedFolders.IsExcluded(path))
+                    continue;
+
+                // 检查是否为框架包路径（从 FrameworkPackageRoots 动态读取）
+                bool isFrameworkPackage = false;
+                foreach (var root in EmberExcludedFolders.FrameworkPackageRoots)
+                {
+                    if (path.StartsWith(root, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        isFrameworkPackage = true;
+                        break;
+                    }
+                }
+
+                // 只扫描 ember 框架代码 + 包目录 + 业务层
                 if (!path.StartsWith("Assets/Ember/")
                     && !path.StartsWith("Assets/Game/")
-                    && !path.StartsWith("Packages/com.ember.basic/"))
+                    && !isFrameworkPackage)
                     continue;
 
                 string fileName = Path.GetFileName(path);

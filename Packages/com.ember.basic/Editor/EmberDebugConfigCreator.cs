@@ -9,6 +9,7 @@ namespace Ember.Basic.Editor
     [InitializeOnLoad]
     public class EmberDebugConfigCreator
     {
+        private const string TAG = LogTags.CoreEditor;
         private const string Path = "Assets/Ember/Core/Runtime/Resources/EmberDebugConfig.asset";
         static EmberDebugConfigCreator()
         {
@@ -36,7 +37,7 @@ namespace Ember.Basic.Editor
             AssetDatabase.CreateAsset(config, Path);
             AssetDatabase.SaveAssets();
 
-            EmberDebug.Log(LogTags.EmberCore, $"EmberDebugConfig.asset auto-created at: {Path} " +
+            EmberDebug.Log(TAG, $"EmberDebugConfig.asset auto-created at: {Path} " +
                 $"({config.frameworkEntries.Count} framework tags pre-populated).");
     
         }
