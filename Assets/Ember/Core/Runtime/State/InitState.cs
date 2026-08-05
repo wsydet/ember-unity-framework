@@ -45,10 +45,12 @@ namespace Ember.Core
             {
                 fsm.LoadSceneAsync?.Invoke("MainScene", () =>
                 {
-                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded. Firing InitSceneReady...");
-                    EmberEventBus.OnNext(EmberBroadcastEvent.InitSceneReady);
+                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded.");
 
+                    // 注意：先订阅再广播 —— 默认动画（EmberDefaultInitAnimation）同步完成，
+                    // 如果先广播再订阅，InitAnimationDone 会丢失，导致永远无法 TransitionTo《MainState》
                     EmberEventBus.Subscribe(EmberBroadcastEvent.InitAnimationDone, OnAnimationDone);
+                    EmberEventBus.OnNext(EmberBroadcastEvent.InitSceneReady);
 
                     void OnAnimationDone()
                     {
