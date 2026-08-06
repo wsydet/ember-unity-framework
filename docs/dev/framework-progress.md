@@ -1498,6 +1498,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | — | **Init 启动动画** | `EmberInitAnimationStarter` 基类已创建（✅），子类 override `PlayStartupAnimation` 即可。`InitSceneReady`/`InitAnimationDone` 事件已就绪 |
 | — | **新建状态时自动关联场景** | `EmberSceneMappingCreator` 已自动创建 SO + 匹配同名场景（✅）。未来可视化编辑器创建新状态时，需<b>先创建场景 → 后创建状态</b>，这样 SO 的 `SyncNewStates()` 能自动关联 |
 | — | **Settings UI 集成** | `SettingsState` 状态已创建（✅），待实现 UI 层：根据 `SettingsContext` 展示不同选项面板 |
+| — | **开源图标资源已入库** | `Assets/Art/Icons/game-icon-pack-v1.4/` — 800+ 圆角图标，CC0 许可证（[GitHub](https://github.com/Nieobie/game-icon-pack)），PNG + SVG 双格式。后续蓝图节点图标 / 彩虹文件夹 / 彩虹视图 / 编辑器工具栏图标优先从这里取 |
 | — | Wwise 适配 |
 | — | 图片/纹理管理 |
 

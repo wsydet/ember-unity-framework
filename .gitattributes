@@ -117,6 +117,8 @@ Packages/packages-lock.json linguist-generated
 *.pict                  lfs
 *.png                   lfs
 *.psd                   lfs
+# 小图标不走 LFS（单文件 < 20KB，400+ 文件会超 GitHub LFS 100-object 批限制）
+Assets/Art/**/*.png     -filter -diff -merge text
 *.tga                   lfs
 *.tif                   lfs
 *.tiff                  lfs
