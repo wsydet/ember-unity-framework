@@ -1,4 +1,5 @@
 ﻿using System;
+using Ember.Basic;
 using UnityEngine;
 
 namespace Ember.Resource
@@ -72,6 +73,31 @@ namespace Ember.Resource
         /// 通常在场景切换后调用以清理旧场景残留。
         /// </summary>
         void UnloadUnusedAssets();
+
+        // ======== Handle API（ember 扩展，burner AssetHandleSlot / ResFileHandle 模式） ========
+
+        /// <summary>
+        /// 异步加载资源并返回可追踪的句柄（支持取消、状态查询和引用释放）。
+        ///
+        /// 与 LoadAssetAsync 的区别：返回 EmberAssetHandle《T》而非纯回调，
+        /// 调用方可以在加载过程中取消（Cancel）或查询状态（IsDone / Succeeded）。
+        /// </summary>
+        EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : UnityEngine.Object;
+
+        /// <summary>
+        /// 异步加载原始文件并返回文件句柄。
+        /// 完成后通过 EmberFileHandle.Completed 事件通知，
+        /// 调用 GetBytes / GetText / GetFilePath 获取内容。
+        /// </summary>
+        EmberFileHandle LoadFileAsync(string path);
+
+        /// <summary>
+        /// 同步加载原始文件（直接返回 byte[]）。
+        /// Editor 下可能直接读磁盘，运行时从 Bundle 读取。
+        /// 仅用于小文件（配置表等），大文件请用 LoadFileAsync。
+        /// </summary>
+        [HasGC]
+        byte[] LoadFileSync(string path);
 
         #endregion
     }

@@ -154,6 +154,64 @@ namespace Ember.Resource
             _provider?.UnloadUnusedAssets();
         }
 
+        // ======== Handle API ========
+
+        /// <summary>
+        /// 异步加载资源并返回可追踪的句柄（支持取消和状态查询）。
+        ///
+        /// 与 LoadAssetAsync 的区别：返回 EmberAssetHandle《T》，
+        /// 调用方可以在加载过程中 Cancel 或查询 IsDone / Succeeded。
+        ///
+        /// 如果 Provider 未就绪，返回已完成但失败的 Handle（IsDone=true, Succeeded=false）。
+        /// </summary>
+        public EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : UnityEngine.Object
+        {
+            if (!_initialized || _provider == null)
+            {
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
+                var failedHandle = new EmberAssetHandle<T>(path);
+                failedHandle.Complete(null, false, "ResourceManager not initialized.");
+                return failedHandle;
+            }
+
+            return _provider.LoadAssetHandle<T>(path);
+        }
+
+        /// <summary>
+        /// 异步加载原始文件并返回文件句柄。
+        ///
+        /// 完成后通过 EmberFileHandle.Completed 事件获取通知，
+        /// 通过 GetBytes / GetText / GetFilePath 获取内容。
+        ///
+        /// 如果 Provider 未就绪，返回已完成但失败的 Handle。
+        /// </summary>
+        public EmberFileHandle LoadFileAsync(string path)
+        {
+            if (!_initialized || _provider == null)
+            {
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
+                return EmberFileHandle.Failed(path, "ResourceManager not initialized.");
+            }
+
+            return _provider.LoadFileAsync(path);
+        }
+
+        /// <summary>
+        /// 同步加载原始文件（直接返回 byte[]）。
+        /// 仅用于小文件（配置表等），大文件请用 LoadFileAsync。
+        /// </summary>
+        [HasGC]
+        public byte[] LoadFileSync(string path)
+        {
+            if (_provider == null)
+            {
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
+                return null;
+            }
+
+            return _provider.LoadFileSync(path);
+        }
+
         // ======== IEmberManager ========
 
         /// <summary>

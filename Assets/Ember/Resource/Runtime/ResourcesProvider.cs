@@ -109,6 +109,65 @@ namespace Ember.Resource
             Resources.UnloadUnusedAssets();
         }
 
+        // ======== Handle API ========
+
+        /// <summary>
+        /// Resources 模式下同步返回已完成句柄（底层 Resources.Load 是同步的）。
+        /// </summary>
+        public EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : Object
+        {
+            var handle = new EmberAssetHandle<T>(path);
+            if (string.IsNullOrEmpty(path))
+            {
+                handle.Complete(null, false, "Asset path is null or empty.");
+                return handle;
+            }
+
+            T asset = Resources.Load<T>(path);
+            if (asset != null)
+                handle.Complete(asset, true, null);
+            else
+                handle.Complete(null, false, $"Resource not found at path: {path}");
+
+            return handle;
+        }
+
+        /// <summary>
+        /// Resources 模式下通过 TextAsset 加载文件内容。
+        /// </summary>
+        public EmberFileHandle LoadFileAsync(string path)
+        {
+            var handle = new EmberFileHandle(path);
+            if (string.IsNullOrEmpty(path))
+            {
+                handle.Complete(null, null, false, "File path is null or empty.");
+                return handle;
+            }
+
+            var asset = Resources.Load<TextAsset>(path);
+            if (asset != null)
+                handle.Complete(asset.bytes, null, true, null);
+            else
+                handle.Complete(null, null, false, $"File not found at path: {path}");
+
+            return handle;
+        }
+
+        /// <summary>
+        /// Resources 模式下同步读取 TextAsset 的 bytes。
+        /// </summary>
+        public byte[] LoadFileSync(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                EmberDebug.LogError(TAG, "LoadFileSync: path is null or empty.");
+                return null;
+            }
+
+            var asset = Resources.Load<TextAsset>(path);
+            return asset?.bytes;
+        }
+
         /// <summary>
         /// Resources 后端没有下载进度，始终返回 1。
         /// </summary>
