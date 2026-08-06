@@ -144,15 +144,28 @@ namespace Ember.Core
 
         protected override void OnSingletonDestroy()
         {
+            ShutdownFramework();
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        /// <summary>
+        /// 框架清理：逆序销毁所有 Manager、停止文件日志、重置初始化标志。
+        /// 编辑器退出 Play Mode 和游戏代码调用 Quit() 共用此方法。
+        /// </summary>
+        private void ShutdownFramework()
+        {
+            if (!IsInitialized) return;
+
             EmberDebug.LogShutdown(TAG, "GameLauncher: shutting down framework...");
-
-            // 逆序销毁所有 Manager
             EmberManagerCollector.Instance.DestroyAll();
-
             IsInitialized = false;
+            EmberFileLog.Stop();
             EmberDebug.LogShutdown(TAG, "GameLauncher: framework shutdown complete.");
-       
-            EmberFileLog.Stop();      // 刷写 + 关闭
         }
 
         #endregion
@@ -160,6 +173,21 @@ namespace Ember.Core
         // ============================================================
 
         #region 外部方法
+
+        /// <summary>
+        /// 退出应用。先执行框架清理（逆序销毁 Manager、刷写文件日志），
+        /// 再调用 <see cref="ApplicationQuitUtil.Quit"/> 终止进程。
+        ///
+        /// 业务层应通过此方法退出，而不是直接调用 Application.Quit()。
+        ///
+        /// 注意：编辑器退出 Play Mode 走 <see cref="OnSingletonDestroy"/>，
+        /// 不会调用此方法（无需手动退出编辑器）。
+        /// </summary>
+        public void Quit()
+        {
+            ShutdownFramework();
+            ApplicationQuitUtil.Quit();
+        }
 
         /// <summary>
         /// 配置状态机 —— 注册所有游戏状态。
