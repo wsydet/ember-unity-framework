@@ -1,7 +1,7 @@
 # Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
-> 最后更新：2026-08-04 | 覆盖 73 个文件、~110 个公开类型、570+ 个公开成员
+> 最后更新：2026-08-06 | 覆盖 78 个文件、~115 个公开类型、590+ 个公开成员
 
 ---
 
@@ -13,6 +13,8 @@
 - [异步 STTask](#异步-sttask)
 - [JSON](#json)
 - [Unsafe / 原生内存](#unsafe--原生内存)
+- [加密与哈希](#加密与哈希)
+- [性能分级](#性能分级)
 - [标记 Attribute](#标记-attribute)
 - [事件系统](#事件系统)
 - [服务定位 & 单例](#服务定位--单例)
@@ -27,6 +29,7 @@
 - [音频管理](#音频管理)
 - [输入管理](#输入管理)
 - [相机管理](#相机管理)
+- [Editor 工具（Editor-only）](#editor-工具editor-only)
 - [其他接口](#其他接口)
 
 ---
@@ -396,6 +399,27 @@ string[] lines = text.Split(SharedConst.LineSeparators, ...);
 
 StringBuilder 是共享可变对象——只在确定不会被并发访问的单线程场景下用。
 
+### PerformanceLevel
+
+| | |
+|---|---|
+| **位置** | `com.ember.basic/Base/PerformanceLevel.cs` |
+| **命名空间** | `Ember.Basic` |
+| **说明** | 框架统一的设备性能五档分级枚举。画质分级、LOD 策略、特效密度、帧率目标等都基于此枚举做判断。 |
+
+```csharp
+var level = GraphicLevelUtils.GetCurrentLevel();
+if (level >= PerformanceLevel.High) { EnableHighQualityEffects(); }
+```
+
+| 枚举值 | 说明 |
+|--------|------|
+| `VeryHigh` | 旗舰设备（如 iPhone 15 Pro、Adreno 750 + 12GB） |
+| `High` | 高端设备（如 iPhone 13、Adreno 660 + 8GB） |
+| `Mid` | 中端设备（如 iPhone 10、Adreno 620 + 6GB） |
+| `Low` | 低端设备（如 iPhone 8、Adreno 512 + 4GB） |
+| `VeryLow` | 入门设备（如 Mali-T、3GB 以下） |
+
 ---
 
 ## 存档
@@ -490,6 +514,23 @@ Turkish I 问题等，代价很大。游戏中 99% 的字符串场景（日志�
 | `str.EndsWith(StringView)` | 与 StringView 比较后缀 |
 | `str.SplitToStringViews('│')` | 零分配分割为 StringView 数组 |
 | `str.SplitToStringViews(char[])` | 多字符分割 |
+
+### GameObject / Component 扩展 (`GameObjectComponentExtensions`)
+
+> 位置: `com.ember.extensions/Extension/GameObjectComponentExtensions.cs`, 命名空间 `Ember.Extensions`
+
+| 方法 | 说明 |
+|------|------|
+| `obj.GetOrAddComponent<T>()` | 获取组件，不存在则自动添加。`[NoGC]` |
+| `component.GetOrAddComponent<T>()` | 在同一 GameObject 上获取或添加组件。`[NoGC]` |
+
+```csharp
+// GameObject 版本
+var rigidbody = obj.GetOrAddComponent<Rigidbody>();
+
+// Component 版本（在已有组件所在 GameObject 上操作）
+var collider = transform.GetOrAddComponent<BoxCollider>();
+```
 
 ---
 
@@ -640,6 +681,105 @@ unsafe {
 ```
 
 > 正常业务代码用 `Encoding.UTF8.GetString()` 就行，不要碰这些。
+
+---
+
+## 加密与哈希
+
+> 位置: `com.ember.basic/Utils/CryptographyUtils.cs`, 命名空间 `Ember.Basic`
+
+### CryptographyUtils
+
+CRC32C、MD5、Base64、XOR 混淆等常用算法的静态工具类。所有方法标注了 `[NoGC]` / `[HasGC]`。
+
+```csharp
+// CRC32C
+int crc = CryptographyUtils.ComputeCrc32("hello");
+int crc2 = CryptographyUtils.ComputeCrc32(bytes);
+
+// MD5
+string md5 = CryptographyUtils.GetMD5("hello");
+string md5File = CryptographyUtils.GetMD5File("path/to/file.bundle");
+
+// Base64
+string b64 = CryptographyUtils.EncodeBase64("hello");
+string decoded = CryptographyUtils.DecodeBase64(b64);
+
+// XOR 混淆（原地修改，非加密）
+int reserve = CryptographyUtils.Obfuscate(ref seed, data, offset: 0);
+
+// 字节数组 → hex 字符串
+string hex = CryptographyUtils.ArrayToHexString(bytes);
+```
+
+| 方法 | 说明 | GC |
+|------|------|-----|
+| `ComputeCrc32(string)` | 字符串 CRC32C（UTF-8 编码） | `[HasGC]` |
+| `ComputeCrc32(byte[])` | 字节数组 CRC32C | `[NoGC]` |
+| `ComputeCrc32(byte[], int offset, int length)` | 指定范围 CRC32C | `[NoGC]` |
+| `GetMD5(string)` | 字符串 MD5，返回小写 hex | `[HasGC]` |
+| `GetMD5(byte[])` | 字节数组 MD5，返回小写 hex | `[HasGC]` |
+| `GetMD5File(string)` | 文件 MD5，用 FileStream 读取 | `[HasGC]` |
+| `EncodeBase64(string)` / `EncodeBase64(byte[])` | Base64 编码 | `[HasGC]` |
+| `DecodeBase64(string)` | Base64 解码为 UTF-8 字符串 | `[HasGC]` |
+| `ArrayToHexString(byte[])` | 字节数组 → 小写 hex 字符串 | `[HasGC]` |
+| `Obfuscate(ref int seed, byte[] data, int offset=0)` | XOR 混淆（原地修改），返回 reserve | `[NoGC]` |
+
+> CRC32C 使用 Castagnoli 多项式（0x82F63B78）查表法，与 Java CRC32C 行为一致。
+> MD5 已从 `MD5CryptoServiceProvider` 迁移为 `MD5.Create()`（兼容 .NET 5+）。
+> **Obfuscate 不是加密算法**，不可用于安全敏感场景。
+
+---
+
+## 性能分级
+
+> 位置: `com.ember.basic/Utils/GraphicLevelUtils.cs` + `com.ember.basic/Base/PerformanceLevel.cs`, 命名空间 `Ember.Basic`
+
+### GraphicLevelUtils
+
+自动检测手机 GPU / CPU / RAM，映射到 `PerformanceLevel` 五档（VeryHigh → VeryLow）。
+检测结果缓存在 PlayerPrefs 中，后续启动直接读取。
+
+```csharp
+// 确保已初始化（首次调用时自动检测并缓存）
+GraphicLevelUtils.EnsurePhoneLevelInitialized();
+
+// 查询
+var level = GraphicLevelUtils.GetCurrentLevel();
+bool isHigh = GraphicLevelUtils.IsHighOrHighestPhone();
+bool isFlagship = GraphicLevelUtils.IsHighestPhone();
+bool isEntry = GraphicLevelUtils.IsLowestPhone();
+
+// 帧率
+GraphicLevelUtils.SetFrameRatePrefs(60);
+int fps = GraphicLevelUtils.GetFrameRatePrefs(60);
+```
+
+检测策略：
+
+| 平台 | 方法 | 依据 |
+|------|------|------|
+| iOS | iPhone/iPad 代数 | iPhone 15+ → VeryHigh, iPhone 10-12 → Mid |
+| Android | GPU 型号数据库 | Adreno 740 / Mali-G715 / Maleoon 910 等 30+ 款 |
+| Fallback | RAM + CPU | 12GB+2.5GHz → VeryHigh, 3GB以下 → VeryLow |
+
+| 方法 | 说明 |
+|------|------|
+| `EnsurePhoneLevelInitialized()` | 检测并缓存手机档位（已缓存则跳过） |
+| `GetCurrentLevel()` | 返回 `PerformanceLevel` 枚举值 |
+| `IsHighOrHighestPhone()` | High 或 VeryHigh |
+| `IsHighestPhone()` | VeryHigh |
+| `IsLowestPhone()` | VeryLow |
+| `SetFrameRatePrefs(int)` / `GetFrameRatePrefs(int)` | 帧率设置 |
+| `GetGraphicLevel(Action<int,int>)` | 协程：综合硬件档位+画质设置，回调返回有效档位和帧率 |
+
+> TODO: GPU 型号阈值（Adreno / Mali / Maleoon / PowerVR 等 30+ 款）计划提取为 `EmberPerformanceConfigSO`
+> ScriptableObject，使规则可在 Inspector 编辑。
+
+### PerformanceLevel
+
+五档枚举：`VeryHigh`(0) → `High`(1) → `Mid`(2) → `Low`(3) → `VeryLow`(4)。
+详见 [基础数据结构](#基础数据结构)。
 
 ---
 
@@ -809,7 +949,8 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 
 | 父标签 | 子标签 |
 |--------|--------|
-| `EmberCore` | `CoreEventBus`, `CoreServiceLocator`, `CoreSingleton`, `CoreObjectPool`, `CoreManagerCollector`, `CoreUpdateManager`, `CoreStateMachine`, `CoreGameLauncher`, `CoreCameraManager` |
+| `EmberBasic` | `BasicCrypto`, `BasicPerformance`, `BasicAppQuit`（Editor 工具用动态标签 `EmberBasic.ToolName`，由 autoCollect 自动收集） |
+| `EmberCore` | `CoreEventBus`, `CoreServiceLocator`, `CoreSingleton`, `CoreObjectPool`, `CoreManagerCollector`, `CoreUpdateManager`, `CoreStateMachine`, `CoreGameLauncher`, `CoreCameraManager`, `CoreEditor` |
 | `EmberResource` | `ResourceManager`, `ResourceProvider` |
 | `EmberUI` | `UIManager` |
 | `EmberScene` | `SceneManager` |
@@ -1247,6 +1388,46 @@ FileEncodingUtility.ConvertToUTF8BOM("path/to/script.cs");
 | **位置** | `com.ember.basic/Editor/DisplayFirstElementInHeaderDrawer.cs` |
 | **说明** | `[DisplayFirstElementInHeader]` 的 PropertyDrawer。 |
 
+### ProjectLocalPrefs
+
+| | |
+|---|---|
+| **位置** | `com.ember.basic/Editor/Utils/ProjectLocalPrefs.cs` |
+| **命名空间** | `Ember.Basic.Editor` |
+| **说明** | Editor-only 的 JSON 文件持久化 key-value 存储。数据保存在 `{ProjectRoot}/Library/EmberLocalPrefs/prefs.json`，不污染 Assets 目录。支持数据迁移回调。 |
+
+```csharp
+// 读写
+ProjectLocalPrefs.SetString("LastExportPath", "Assets/Game/");
+var path = ProjectLocalPrefs.GetString("LastExportPath", "Assets/");
+
+// 从旧 key 迁移数据
+var val = ProjectLocalPrefs.GetString("NewKey", "", () => EditorPrefs.GetString("OldKey"));
+
+// 其他类型
+ProjectLocalPrefs.SetInt("TabIndex", 2);
+int idx = ProjectLocalPrefs.GetInt("TabIndex", 0);
+
+ProjectLocalPrefs.SetFloat("Scale", 1.5f);
+ProjectLocalPrefs.SetBool("ShowAdvanced", true);
+
+// 删除
+ProjectLocalPrefs.DeleteKey("TabIndex");
+ProjectLocalPrefs.DeleteAll();
+```
+
+| 方法 | 说明 |
+|------|------|
+| `GetString(key, default, migrateProvider?)` | 读取字符串，支持迁移回调 |
+| `SetString(key, value)` | 写入字符串 |
+| `GetInt(key, default, migrateProvider?)` / `SetInt(key, value)` | 读写整数 |
+| `GetFloat(key, default, migrateProvider?)` / `SetFloat(key, value)` | 读写浮点数（Round-trip 格式） |
+| `GetBool(key, default, migrateProvider?)` / `SetBool(key, value)` | 读写布尔值 |
+| `DeleteKey(key)` | 删除指定 key |
+| `DeleteAll()` | 清空所有存储 |
+
+> 与 `EditorPrefs` 的区别：EditorPrefs 存 Windows 注册表（换机器丢失），ProjectLocalPrefs 存项目 `Library/` 下（可 Git 管理、手动编辑 JSON）。
+
 ---
 
 ## 其他接口
@@ -1269,6 +1450,45 @@ public interface IDelayDisposable : IDisposable {
     bool NotYet();  // true = 还不能释放，等
 }
 ```
+
+### ApplicationQuitUtil
+
+| | |
+|---|---|
+| **位置** | `com.ember.basic/Utils/ApplicationQuitUtil.cs` |
+| **命名空间** | `Ember.Basic` |
+| **说明** | 应用退出工具。Android 上先通过 `android.os.Process.killProcess` 杀进程，失败时回退到 `Application.Quit()`。 |
+
+```csharp
+ApplicationQuitUtil.Quit(); // 替代 Application.Quit()
+```
+
+### UrlUtils
+
+| | |
+|---|---|
+| **位置** | `com.ember.basic/Utils/UrlUtils.cs` |
+| **命名空间** | `Ember.Basic` |
+| **说明** | URL 编解码、路径提取、URL 拼接工具。编码基于 `Uri.EscapeDataString`，符合 RFC 3986。 |
+
+```csharp
+var encoded = UrlUtils.UrlEncode("hello world");       // "hello%20world"
+var decoded = UrlUtils.UrlDecode("hello%20world");     // "hello world"
+var name    = UrlUtils.GetFileName("path/to/file.png"); // "file"
+var url     = UrlUtils.CombineUrl("http://host", "api"); // "http://host/api"
+url         = UrlUtils.EnsureTrailingSlash("http://h");  // "http://h/"
+url         = UrlUtils.AppendRandomVersion("http://h/api"); // "http://h/api?v=0.314159"
+var rel     = UrlUtils.GetRelativePath("C:/a/b/c.txt", "C:/a/"); // "b/c.txt"
+```
+
+| 方法 | 说明 | GC |
+|------|------|-----|
+| `UrlEncode(string)` / `UrlDecode(string)` | percent-encoding / decoding | `[HasGC]` |
+| `GetFileName(string url)` | 从 URL 提取文件名（不含扩展名） | `[HasGC]` |
+| `GetRelativePath(string file, string folder)` | 计算相对路径 | `[HasGC]` |
+| `EnsureTrailingSlash(string)` | 确保以 "/" 结尾 | `[HasGC]` |
+| `CombineUrl(string base, string relative)` | 安全拼接两个 URL 片段 | `[HasGC]` |
+| `AppendRandomVersion(string)` | 追加随机参数破坏缓存 | `[HasGC]` |
 
 ### EmberSceneField
 
