@@ -22,8 +22,9 @@ namespace Ember.Basic
         public const string EmberUI       = nameof(EmberUI);
         public const string EmberScene    = nameof(EmberScene);
         public const string EmberAudio    = nameof(EmberAudio);
-        public const string EmberInput    = nameof(EmberInput);
-        public const string Game     = nameof(Game);
+        public const string EmberInput     = nameof(EmberInput);
+        public const string EmberExtension = nameof(EmberExtension);
+        public const string Game      = nameof(Game);
 
         // Basic 子标签
         public const string BasicCrypto      = EmberBasic + ".Crypto";
@@ -59,16 +60,22 @@ namespace Ember.Basic
         // Input 子标签
         public const string InputManager = EmberInput + ".Manager";
 
+        // Extension 子标签
+        public const string ExtensionJsonUtils = EmberExtension + ".JsonUtils";
+        public const string ExtensionCacheLRU  = EmberExtension + ".CacheLRU";
+
         /// <summary>所有预定义标签的集合，用于编辑器判断是否锁住</summary>
         public static readonly HashSet<string> All = new()
         {
             // 父标签
-            EmberBasic, EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
+            EmberBasic, EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, EmberExtension, Game,
             // Basic 子
             BasicCrypto, BasicPerformance, BasicAppQuit,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
             CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreEditor,
+            // Extension 子
+            ExtensionJsonUtils, ExtensionCacheLRU,
             // 其他子
             ResourceManager, ResourceProvider, UIManager, SceneManager, AudioManager, InputManager,
         };
@@ -96,8 +103,9 @@ namespace Ember.Basic
         public static readonly Color UI       = new(0.90f, 0.55f, 0.30f); // 橙色
         public static readonly Color Scene    = new(0.65f, 0.50f, 0.85f); // 紫色
         public static readonly Color Audio    = new(0.90f, 0.75f, 0.25f); // 金色
-        public static readonly Color Input    = new(0.45f, 0.80f, 0.80f); // 青色
-        public static readonly Color Game     = new(0.80f, 0.40f, 0.60f); // 粉色
+        public static readonly Color Input     = new(0.45f, 0.80f, 0.80f); // 青色
+        public static readonly Color Extension = new(0.78f, 0.62f, 0.45f); // 铜色
+        public static readonly Color Game      = new(0.80f, 0.40f, 0.60f); // 粉色
 
         /// <summary>
         /// 获取标签的预定义颜色。
@@ -131,8 +139,9 @@ namespace Ember.Basic
                 nameof(LogTags.EmberUI)       => UI,
                 nameof(LogTags.EmberScene)    => Scene,
                 nameof(LogTags.EmberAudio)    => Audio,
-                nameof(LogTags.EmberInput)    => Input,
-                nameof(LogTags.Game)     => Game,
+                nameof(LogTags.EmberInput)     => Input,
+                nameof(LogTags.EmberExtension) => Extension,
+                nameof(LogTags.Game)      => Game,
                 _                         => default
             };
             return color != default;
