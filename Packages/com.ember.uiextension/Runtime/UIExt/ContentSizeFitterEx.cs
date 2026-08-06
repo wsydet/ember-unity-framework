@@ -1,175 +1,205 @@
-//// Copyright (c) 2026 Burner Games. All rights reserved.
-////
-//// This file is part of Burner Unity Packages.
-//// Package: com.burner.uiextension
-//// Primary author: qinho
-//
-//using UnityEngine.EventSystems;
-//
-//namespace UnityEngine.UI
-//{
-//    [ExecuteAlways]
-//    [RequireComponent(typeof(RectTransform))]
-//    /// <summary>
-//    /// Resizes a RectTransform to fit the size of its content.
-//    /// </summary>
-//    /// <remarks>
-//    /// The ContentSizeFitter can be used on GameObjects that have one or more ILayoutElement components, such as Text, Image, HorizontalLayoutGroup, VerticalLayoutGroup, and GridLayoutGroup.
-//    /// </remarks>
-//    public class ContentSizeFitterEx : UIBehaviour, ILayoutSelfController
-//    {
-//        [SerializeField] protected ContentSizeFitter.FitMode m_HorizontalFit = ContentSizeFitter.FitMode.Unconstrained;
-//        [SerializeField] float m_maxWidth;
-//
-//        /// <summary>
-//        /// The fit mode to use to determine the width.
-//        /// </summary>
-//        public ContentSizeFitter.FitMode horizontalFit
-//        {
-//            get { return m_HorizontalFit; }
-//            set
-//            {
-//                if(m_HorizontalFit != value)
-//                {
-//                    m_HorizontalFit = value;
-//                    SetDirty();
-//                }
-//            }
-//        }
-//
-//        [SerializeField] protected ContentSizeFitter.FitMode m_VerticalFit = ContentSizeFitter.FitMode.Unconstrained;
-//        [SerializeField] float m_maxHeight;
-//        /// <summary>
-//        /// The fit mode to use to determine the height.
-//        /// </summary>
-//        public ContentSizeFitter.FitMode verticalFit
-//        {
-//            get { return m_VerticalFit; }
-//            set
-//            {
-//                if(m_VerticalFit != value)
-//                {
-//                    m_VerticalFit = value;
-//                    SetDirty();
-//                }
-//            }
-//        }
-//
-//        [System.NonSerialized] private RectTransform m_Rect;
-//        private RectTransform rectTransform
-//        {
-//            get
-//            {
-//                if (m_Rect == null)
-//                    m_Rect = GetComponent<RectTransform>();
-//                return m_Rect;
-//            }
-//        }
-//
-//        // field is never assigned warning
-//#pragma warning disable 649
-//        private DrivenRectTransformTracker m_Tracker;
-//#pragma warning restore 649
-//
-//        protected ContentSizeFitterEx()
-//        { }
-//
-//        protected override void OnEnable()
-//        {
-//            base.OnEnable();
-//            SetDirty();
-//        }
-//
-//        protected override void OnDisable()
-//        {
-//            m_Tracker.Clear();
-//            LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
-//            base.OnDisable();
-//        }
-//        protected override void Awake()
-//        {
-//            LayoutRebuilder.RegisterLayoutController(rectTransform, this);
-//        }
-//
-//        protected override void OnDestroy()
-//        {
-//            LayoutRebuilder.UnregisterLayoutController(rectTransform, this);
-//        }
-//        protected override void OnRectTransformDimensionsChange()
-//        {
-//            SetDirty();
-//        }
-//
-//        private void HandleSelfFittingAlongAxis(int axis)
-//        {
-//            ContentSizeFitter.FitMode fitting = (axis == 0 ? horizontalFit : verticalFit);
-//            if (fitting == ContentSizeFitter.FitMode.Unconstrained)
-//            {
-//                // Keep a reference to the tracked transform, but don't control its properties:
-//                m_Tracker.Add(this, rectTransform, DrivenTransformProperties.None);
-//                return;
-//            }
-//
-//            m_Tracker.Add(this, rectTransform, (axis == 0 ? DrivenTransformProperties.SizeDeltaX : DrivenTransformProperties.SizeDeltaY));
-//
-//            // Set size to min or preferred size
-//            if (fitting == ContentSizeFitter.FitMode.MinSize)
-//                rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetMinSize(m_Rect, axis));
-//            else
-//            {
-//                rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, GetClampedValueByAxis(LayoutUtility.GetPreferredSize(m_Rect, axis), axis));
-//            }
-//        }
-//
-//        float GetClampedValueByAxis(float value, int axis)
-//        {
-//            if(axis == 0)
-//            {
-//                if (m_maxWidth > 0)
-//                    return Mathf.Min(m_maxWidth, value);
-//                else
-//                    return value;
-//            }
-//            else
-//            {
-//                if (m_maxHeight > 0)
-//                    return Mathf.Min(m_maxHeight, value);
-//                else
-//                    return value;
-//            }
-//        }
-//
-//        /// <summary>
-//        /// Calculate and apply the horizontal component of the size to the RectTransform
-//        /// </summary>
-//        public virtual void SetLayoutHorizontal()
-//        {
-//            m_Tracker.Clear();
-//            HandleSelfFittingAlongAxis(0);
-//        }
-//
-//        /// <summary>
-//        /// Calculate and apply the vertical component of the size to the RectTransform
-//        /// </summary>
-//        public virtual void SetLayoutVertical()
-//        {
-//            HandleSelfFittingAlongAxis(1);
-//        }
-//
-//        protected void SetDirty()
-//        {
-//            if (!IsActive())
-//                return;
-//
-//            LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
-//        }
-//
-//#if UNITY_EDITOR
-//        protected override void OnValidate()
-//        {
-//            SetDirty();
-//        }
-//
-//#endif
-//    }
-//}
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Package: com.ember.uiextension
+
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace Ember.UIExtension
+{
+    /// <summary>
+    /// 增强版 ContentSizeFitter。
+    /// 在 Unity 原生 <see cref="ContentSizeFitter"/> 基础上增加了 maxWidth/maxHeight 约束，
+    /// 允许内容自适应尺寸不超过指定上限。
+    /// </summary>
+    [AddComponentMenu("UI/Ember/Content Size Fitter Ex")]
+    [ExecuteAlways]
+    [RequireComponent(typeof(RectTransform))]
+    public class ContentSizeFitterEx : UIBehaviour, ILayoutSelfController
+    {
+        #region 编辑器面板参数
+
+        [SerializeField]
+        [Tooltip("水平方向自适应模式")]
+        private ContentSizeFitter.FitMode _horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+
+        [SerializeField]
+        [Tooltip("水平方向的最大宽度，小于等于 0 表示不限")]
+        private float _maxWidth;
+
+        [SerializeField]
+        [Tooltip("垂直方向自适应模式")]
+        private ContentSizeFitter.FitMode _verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+
+        [SerializeField]
+        [Tooltip("垂直方向的最大高度，小于等于 0 表示不限")]
+        private float _maxHeight;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部参数
+
+        private RectTransform _rect;
+        private DrivenRectTransformTracker _tracker;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 生命周期
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            SetDirty();
+        }
+
+        protected override void OnDisable()
+        {
+            _tracker.Clear();
+            LayoutRebuilder.MarkLayoutForRebuild(_rect);
+            base.OnDisable();
+        }
+
+        protected override void OnRectTransformDimensionsChange()
+        {
+            SetDirty();
+        }
+
+#if UNITY_EDITOR
+        protected override void OnValidate()
+        {
+            SetDirty();
+        }
+#endif
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        /// <summary>水平方向自适应模式</summary>
+        public ContentSizeFitter.FitMode HorizontalFit
+        {
+            get => _horizontalFit;
+            set
+            {
+                if (_horizontalFit != value)
+                {
+                    _horizontalFit = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>垂直方向自适应模式</summary>
+        public ContentSizeFitter.FitMode VerticalFit
+        {
+            get => _verticalFit;
+            set
+            {
+                if (_verticalFit != value)
+                {
+                    _verticalFit = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>水平方向最大宽度，小于等于 0 表示不限制</summary>
+        public float MaxWidth
+        {
+            get => _maxWidth;
+            set
+            {
+                if (!Mathf.Approximately(_maxWidth, value))
+                {
+                    _maxWidth = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>垂直方向最大高度，小于等于 0 表示不限制</summary>
+        public float MaxHeight
+        {
+            get => _maxHeight;
+            set
+            {
+                if (!Mathf.Approximately(_maxHeight, value))
+                {
+                    _maxHeight = value;
+                    SetDirty();
+                }
+            }
+        }
+
+        /// <summary>RectTransform 引用（缓存）</summary>
+        public RectTransform RectTransform
+        {
+            get
+            {
+                if (_rect == null)
+                    _rect = GetComponent<RectTransform>();
+                return _rect;
+            }
+        }
+
+        public virtual void SetLayoutHorizontal()
+        {
+            _tracker.Clear();
+            HandleSelfFittingAlongAxis(0);
+        }
+
+        public virtual void SetLayoutVertical()
+        {
+            HandleSelfFittingAlongAxis(1);
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部方法
+
+        private void HandleSelfFittingAlongAxis(int axis)
+        {
+            var fitting = axis == 0 ? _horizontalFit : _verticalFit;
+
+            if (fitting == ContentSizeFitter.FitMode.Unconstrained)
+            {
+                _tracker.Add(this, RectTransform, DrivenTransformProperties.None);
+                return;
+            }
+
+            _tracker.Add(this, RectTransform,
+                axis == 0 ? DrivenTransformProperties.SizeDeltaX : DrivenTransformProperties.SizeDeltaY);
+
+            if (fitting == ContentSizeFitter.FitMode.MinSize)
+                RectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetMinSize(_rect, axis));
+            else
+                RectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, GetClampedValue(LayoutUtility.GetPreferredSize(_rect, axis), axis));
+        }
+
+        private float GetClampedValue(float value, int axis)
+        {
+            var limit = axis == 0 ? _maxWidth : _maxHeight;
+            if (limit > 0)
+                return Mathf.Min(limit, value);
+            return value;
+        }
+
+        private void SetDirty()
+        {
+            if (!IsActive())
+                return;
+
+            LayoutRebuilder.MarkLayoutForRebuild(RectTransform);
+        }
+
+        #endregion
+    }
+}

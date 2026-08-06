@@ -1,58 +1,89 @@
-//// Copyright (c) 2026 Burner Games. All rights reserved.
-////
-//// This file is part of Burner Unity Packages.
-//// Package: com.burner.uiextension
-//// Primary author: qinho
-//
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using Burner.Extensions;
-//
-//namespace Burner.UIExtension
-//{
-//    [ExecuteAlways]
-//    public class TransformCopier : MonoBehaviour
-//    {
-//        public  Transform copied;
-//
-//        private Transform selfTransform = null;
-//
-//        void Update()
-//        {
-//            if (copied.IsNull()) return;
-//            if (selfTransform == null) selfTransform = transform;
-//            
-//            if (selfTransform.position != copied.transform.position)
-//            {
-//                selfTransform.position = copied.transform.position;
-//            }
-//
-//            if (selfTransform.rotation != copied.transform.rotation)
-//            {
-//                selfTransform.rotation = copied.transform.rotation;
-//            }
-//
-//            if (selfTransform.parent == null)
-//            {
-//                if (selfTransform.localScale != copied.lossyScale)
-//                {
-//                    selfTransform.localScale = copied.lossyScale;    
-//                }
-//                
-//            }
-//            else
-//            {
-//                var scale = Vector3.zero;
-//                if(selfTransform.parent.lossyScale.x!=0) scale.x =  copied.lossyScale.x / selfTransform.parent.lossyScale.x;
-//                if(selfTransform.parent.lossyScale.y!=0) scale.y =  copied.lossyScale.y / selfTransform.parent.lossyScale.y;
-//                if(selfTransform.parent.lossyScale.z!=0) scale.z =  copied.lossyScale.z / selfTransform.parent.lossyScale.z;
-//                if (scale != selfTransform.localScale)
-//                {
-//                    selfTransform.localScale = scale;
-//                }
-//            }
-//
-//        }
-//    }
-//}
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Package: com.ember.uiextension
+
+using UnityEngine;
+
+namespace Ember.UIExtension
+{
+    /// <summary>
+    /// Transform 属性复制器。
+    /// 在编辑模式和运行模式下将自身 Transform 同步到目标 Transform 的 position/rotation/scale。
+    /// 常用于 UI 调试时将一个 GameObject 对齐到另一个。
+    /// </summary>
+    [ExecuteAlways]
+    public class TransformCopier : MonoBehaviour
+    {
+        #region 编辑器面板参数
+
+        [SerializeField]
+        [Tooltip("要复制 Transform 属性的目标对象")]
+        private Transform _copied;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部参数
+
+        private Transform _selfTransform;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 生命周期
+
+        private void Update()
+        {
+            if (_copied == null)
+                return;
+
+            if (_selfTransform == null)
+                _selfTransform = transform;
+
+            if (_selfTransform.position != _copied.position)
+                _selfTransform.position = _copied.position;
+
+            if (_selfTransform.rotation != _copied.rotation)
+                _selfTransform.rotation = _copied.rotation;
+
+            if (_selfTransform.parent == null)
+            {
+                if (_selfTransform.localScale != _copied.lossyScale)
+                    _selfTransform.localScale = _copied.lossyScale;
+            }
+            else
+            {
+                var parentLossyScale = _selfTransform.parent.lossyScale;
+                var targetScale = Vector3.zero;
+
+                if (parentLossyScale.x != 0)
+                    targetScale.x = _copied.lossyScale.x / parentLossyScale.x;
+                if (parentLossyScale.y != 0)
+                    targetScale.y = _copied.lossyScale.y / parentLossyScale.y;
+                if (parentLossyScale.z != 0)
+                    targetScale.z = _copied.lossyScale.z / parentLossyScale.z;
+
+                if (targetScale != _selfTransform.localScale)
+                    _selfTransform.localScale = targetScale;
+            }
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        /// <summary>
+        /// 要复制 Transform 属性的目标对象。
+        /// </summary>
+        public Transform Copied
+        {
+            get => _copied;
+            set => _copied = value;
+        }
+
+        #endregion
+    }
+}

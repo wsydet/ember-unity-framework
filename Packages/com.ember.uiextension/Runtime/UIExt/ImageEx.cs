@@ -1,234 +1,229 @@
-//// Copyright (c) 2026 Burner Games. All rights reserved.
-////
-//// This file is part of Burner Unity Packages.
-//// Package: com.burner.uiextension
-//// Primary author: qinho
-//
-//using System.Collections;
-//using System.Collections.Generic;
-//using Burner.Basic;
-//using Burner.Extensions;
-//using UnityEngine;
-//
-//using UnityEngine.UI;
-//
-//namespace Burner.UIExtension
-//{
-//    public class ImageEx : Image
-//    {
-//        [SerializeField]
-//        private bool supportMultiLanguage;
-//        [SerializeField]
-//        private string[] spriteNameArray;
-//        [SerializeField]
-//        private Sprite[] spriteArray;
-//        [SerializeField]
-//        private int spriteIndex;
-//        [SerializeField]
-//        private bool irregularClickArea;
-//        [SerializeField]
-//        private float hitMinimalAlpha = 0.5f;
-//        [SerializeField]
-//        bool keepNativeSize;
-//        [SerializeField]
-//        private bool animated = false;
-//        [SerializeField]
-//        int fps = 25;
-//        [SerializeField]
-//        float delay;
-//        [SerializeField]
-//        bool playOnce;
-//        [SerializeField]
-//        float playbackSpeed = 1;
-//
-//        float accumulatedTime;
-//        bool delayStarted;
-//
-//        Burner.Extensions.IResourceHandle imgHandle;
-//
-//        public bool GetSupportMultiLanguage()
-//        {
-//            return supportMultiLanguage;
-//        }
-//
-//        public string[] GetSrpiteNameArray()
-//        {
-//            return spriteNameArray;
-//        }
-//
-//        public Sprite[] GetSpriteArray()
-//        {
-//            return spriteArray;
-//        }
-//
-//        public void SetSupportMultiLanguage(bool _supportMultiLanguage)
-//        {
-//            supportMultiLanguage = _supportMultiLanguage;
-//        }
-//
-//        public void SetSpriteNameArray(string[] _spriteNameArray)
-//        {
-//            spriteNameArray = _spriteNameArray;
-//        }
-//
-//        public void SetSpriteArray(Sprite[] _spriteArray)
-//        {
-//            spriteArray = _spriteArray;
-//        }
-//
-//        public bool KeepNativeSize
-//        {
-//            get => keepNativeSize;
-//            set
-//            {
-//                if (keepNativeSize != value)
-//                {
-//                    keepNativeSize = value;
-//                    if (value)
-//                        SetNativeSize();
-//                }
-//            }
-//        }
-//
-//        public float PlaybackSpeed
-//        {
-//            get => playbackSpeed;
-//            set
-//            {
-//                playbackSpeed = value;
-//            }
-//        }
-//
-//        protected override void Awake()
-//        {
-//            base.Awake();
-//            if (irregularClickArea)
-//                alphaHitTestMinimumThreshold = hitMinimalAlpha;
-//        }
-//        protected override void OnEnable()
-//        {
-//            base.OnEnable();
-//            accumulatedTime = 0;
-//            if (animated)
-//                spriteIndex = 0;
-//            RefreshSpriteState();
-//        }
-//
-//        protected override void OnDisable()
-//        {
-//            base.OnDisable();
-//            if (imgHandle != null)
-//            {
-//                imgHandle.Dispose();
-//                imgHandle = null;
-//            }
-//            overrideSprite = null;
-//        }
-//
-//        protected override void OnDestroy()
-//        {
-//            base.OnDestroy();
-//
-//            if (imgHandle != null)
-//            {
-//                imgHandle.Dispose();
-//                imgHandle = null;
-//            }
-//            overrideSprite = null;
-//        }
-//
-//        public int SpriteIndex
-//        {
-//            get => spriteIndex;
-//            set
-//            {
-//                if (spriteIndex != value)
-//                {
-//                    spriteIndex = value;
-//                    RefreshSpriteState();
-//                }
-//            }
-//        }
-//
-//        public void RefreshSpriteState()
-//        {
-//            if (supportMultiLanguage)
-//            {
-//                if (spriteNameArray != null && spriteIndex < spriteArray.Length && spriteIndex >= 0)
-//                {
-//                    if(imgHandle != null)
-//                    {
-//                        imgHandle.Dispose();
-//                        imgHandle = null;
-//                    }
-//
-//                    imgHandle = ResourceEngine.Proxy.LoadAssetAsync(spriteNameArray[spriteIndex], OnLoadSprite);
-//                }
-//            }
-//            else
-//            {
-//                if (spriteArray != null && spriteIndex < spriteArray.Length && spriteIndex >= 0)
-//                {
-//                    overrideSprite = spriteArray[spriteIndex];
-//                    if (keepNativeSize)
-//                    {
-//                        SetNativeSize();
-//                    }
-//                }
-//            }
-//        }
-//
-//        void OnLoadSprite(IResourceHandle handle)
-//        {
-//            overrideSprite = handle.ResObject as Sprite;
-//            if (keepNativeSize)
-//            {
-//                SetNativeSize();
-//            }
-//        }
-//
-//        void Update()
-//        {
-//            if (animated)
-//            {
-//                float tpf = 1f / (fps * playbackSpeed);
-//
-//                int idx = SpriteIndex;
-//                int cnt = supportMultiLanguage ? spriteNameArray.Length : spriteArray.Length;
-//                accumulatedTime += Time.deltaTime;
-//                while (!delayStarted && accumulatedTime >= tpf)
-//                {
-//                    idx++;
-//                    accumulatedTime -= tpf;
-//
-//                    if (playOnce)
-//                    {
-//                        if (idx >= cnt)
-//                            idx = cnt - 1;
-//                    }
-//                    else
-//                    {
-//                        if (delay > 0 && idx >= cnt)
-//                        {
-//                            idx = 0;
-//                            delayStarted = true;
-//                            accumulatedTime = 0;
-//                        }
-//                    }
-//                }
-//                while (delayStarted && accumulatedTime >= tpf)
-//                {
-//                    if (accumulatedTime < delay)
-//                    {
-//                        return;
-//                    }
-//                    accumulatedTime -= delay;
-//                    delayStarted = false;
-//                }
-//                idx = idx % cnt;
-//
-//                SpriteIndex = idx;
-//            }
-//        }
-//    }
-//}
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Package: com.ember.uiextension
+
+using Sirenix.OdinInspector;
+
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Ember.UIExtension
+{
+    /// <summary>
+    /// 增强版 Image。
+    /// 继承自 <see cref="Image"/>，额外提供：
+    /// <list type="bullet">
+    ///   <item>Sprite 数组 + 索引切换（配合 Animation 做序列帧）</item>
+    ///   <item>内置帧动画支持（fps / loop / delay）</item>
+    ///   <item>不规则点击区域（alphaHitTestMinimumThreshold）</item>
+    ///   <item>自动 SetNativeSize</item>
+    /// </list>
+    /// </summary>
+    [AddComponentMenu("UI/Ember/Image Ex")]
+    public class EmberImageEx : Image
+    {
+        #region 编辑器面板参数
+
+        [FoldoutGroup("精灵数组")]
+        [SerializeField]
+        [LabelText("精灵列表")]
+        [Tooltip("可切换的精灵数组，按索引显示")]
+        private Sprite[] _spriteArray;
+
+        [FoldoutGroup("精灵数组")]
+        [SerializeField]
+        [LabelText("当前索引")]
+        private int _spriteIndex;
+
+        [FoldoutGroup("帧动画")]
+        [SerializeField]
+        [LabelText("启用帧动画")]
+        private bool _animated;
+
+        [FoldoutGroup("帧动画")]
+        [SerializeField]
+        [ShowIf("_animated")]
+        [LabelText("帧率")]
+        private int _fps = 25;
+
+        [FoldoutGroup("帧动画")]
+        [SerializeField]
+        [ShowIf("_animated")]
+        [LabelText("循环间隔")]
+        [Tooltip("每轮动画结束后的等待时间（秒），0 = 无间隔立即循环")]
+        private float _delay;
+
+        [FoldoutGroup("帧动画")]
+        [SerializeField]
+        [ShowIf("_animated")]
+        [LabelText("只播放一次")]
+        private bool _playOnce;
+
+        [FoldoutGroup("帧动画")]
+        [SerializeField]
+        [ShowIf("_animated")]
+        [LabelText("播放速度")]
+        private float _playbackSpeed = 1f;
+
+        [FoldoutGroup("点击区域")]
+        [SerializeField]
+        [LabelText("不规则点击")]
+        [Tooltip("启用后根据像素透明度判定点击")]
+        private bool _irregularClickArea;
+
+        [FoldoutGroup("点击区域")]
+        [SerializeField]
+        [ShowIf("_irregularClickArea")]
+        [LabelText("透明度阈值")]
+        [Range(0f, 1f)]
+        [Tooltip("像素 alpha 低于此值时不响应点击")]
+        private float _hitMinimalAlpha = 0.5f;
+
+        [FoldoutGroup("布局")]
+        [SerializeField]
+        [LabelText("保持原始尺寸")]
+        [Tooltip("切换精灵后自动调用 SetNativeSize")]
+        private bool _keepNativeSize;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部参数
+
+        private float _accumulatedTime;
+        private bool _delayStarted;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 生命周期
+
+        protected override void Awake()
+        {
+            base.Awake();
+            if (_irregularClickArea)
+                alphaHitTestMinimumThreshold = _hitMinimalAlpha;
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _accumulatedTime = 0;
+            if (_animated)
+                _spriteIndex = 0;
+            RefreshSpriteState();
+        }
+
+        private void Update()
+        {
+            if (!_animated)
+                return;
+
+            var tpf = 1f / (_fps * _playbackSpeed);
+            var idx = _spriteIndex;
+            var cnt = _spriteArray != null ? _spriteArray.Length : 0;
+            if (cnt == 0)
+                return;
+
+            _accumulatedTime += Time.deltaTime;
+            while (!_delayStarted && _accumulatedTime >= tpf)
+            {
+                idx++;
+                _accumulatedTime -= tpf;
+
+                if (_playOnce)
+                {
+                    if (idx >= cnt) idx = cnt - 1;
+                }
+                else
+                {
+                    if (_delay > 0 && idx >= cnt)
+                    {
+                        idx = 0;
+                        _delayStarted = true;
+                        _accumulatedTime = 0;
+                    }
+                }
+            }
+            while (_delayStarted && _accumulatedTime >= tpf)
+            {
+                if (_accumulatedTime < _delay)
+                    return;
+                _accumulatedTime -= _delay;
+                _delayStarted = false;
+            }
+            idx = idx % cnt;
+
+            SpriteIndex = idx;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        /// <summary>当前精灵索引</summary>
+        public int SpriteIndex
+        {
+            get => _spriteIndex;
+            set
+            {
+                if (_spriteIndex != value)
+                {
+                    _spriteIndex = value;
+                    RefreshSpriteState();
+                }
+            }
+        }
+
+        /// <summary>精灵数组</summary>
+        public Sprite[] SpriteArray
+        {
+            get => _spriteArray;
+            set { _spriteArray = value; RefreshSpriteState(); }
+        }
+
+        /// <summary>是否保持原始尺寸</summary>
+        public bool KeepNativeSize
+        {
+            get => _keepNativeSize;
+            set
+            {
+                if (_keepNativeSize != value)
+                {
+                    _keepNativeSize = value;
+                    if (value) SetNativeSize();
+                }
+            }
+        }
+
+        /// <summary>播放速度倍率</summary>
+        public float PlaybackSpeed
+        {
+            get => _playbackSpeed;
+            set => _playbackSpeed = value;
+        }
+
+        /// <summary>是否启用帧动画</summary>
+        public bool Animated
+        {
+            get => _animated;
+            set => _animated = value;
+        }
+
+        /// <summary>刷新精灵显示</summary>
+        public void RefreshSpriteState()
+        {
+            if (_spriteArray != null && _spriteIndex < _spriteArray.Length && _spriteIndex >= 0)
+            {
+                overrideSprite = _spriteArray[_spriteIndex];
+                if (_keepNativeSize)
+                    SetNativeSize();
+            }
+        }
+
+        #endregion
+    }
+}

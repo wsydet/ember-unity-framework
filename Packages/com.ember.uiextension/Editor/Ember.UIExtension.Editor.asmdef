@@ -4,7 +4,9 @@
     "references": [
         "Ember.Core.Runtime",
         "Ember.UI.Runtime",
-        "Ember.UIExtension.Runtime"
+        "Ember.UIExtension.Runtime",
+        "Ember.Basic.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

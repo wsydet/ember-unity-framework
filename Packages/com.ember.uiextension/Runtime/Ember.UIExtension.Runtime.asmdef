@@ -3,7 +3,10 @@
     "rootNamespace": "Ember.UIExtension",
     "references": [
         "Ember.Core.Runtime",
-        "Ember.UI.Runtime"
+        "Ember.UI.Runtime",
+        "Sirenix.OdinInspector.Attributes",
+        "Ember.Basic.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
