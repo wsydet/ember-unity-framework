@@ -63,6 +63,11 @@ namespace Ember.Core
         /// </summary>
         private static readonly List<Action> _pendingOps = new List<Action>();
 
+        /// <summary>
+        /// 延迟播报队列（PostNext 使用）。每帧开头由 GameLauncher 调用 FlushPostQueue 消费。
+        /// </summary>
+        private static readonly List<PostEntry> _postQueue = new List<PostEntry>();
+
         #endregion
 
         // ============================================================
@@ -389,6 +394,90 @@ namespace Ember.Core
             _events4.Clear();
             _dispatchDepth.Clear();
             _pendingOps.Clear();
+            _postQueue.Clear();
+        }
+
+        // ======== 延迟播报（PostNext） ========
+
+        /// <summary>
+        /// 将无参事件延迟到下一帧播报。
+        ///
+        /// 与 OnNext（立即同步播报）不同，PostNext 将事件放入队列，
+        /// 在下一帧开头由 FlushPostQueue 统一消费。
+        ///
+        /// 适用场景：初始化阶段 —— 确保所有模块注册完监听后再广播。
+        /// 参考 burner UniEvent 的 PostMessage 机制。
+        /// </summary>
+        public static void PostNext(int eventKey)
+        {
+            _postQueue.Add(new PostEntry { EventKey = eventKey, ArgCount = 0 });
+        }
+
+        /// <summary>
+        /// 将 1 参事件延迟到下一帧播报。
+        /// </summary>
+        public static void PostNext<T>(int eventKey, T arg)
+        {
+            _postQueue.Add(new PostEntry { EventKey = eventKey, Arg1 = arg, ArgCount = 1 });
+        }
+
+        /// <summary>
+        /// 将 2 参事件延迟到下一帧播报。
+        /// </summary>
+        public static void PostNext<T1, T2>(int eventKey, T1 arg1, T2 arg2)
+        {
+            _postQueue.Add(new PostEntry { EventKey = eventKey, Arg1 = arg1, Arg2 = arg2, ArgCount = 2 });
+        }
+
+        /// <summary>
+        /// 将 3 参事件延迟到下一帧播报。
+        /// </summary>
+        public static void PostNext<T1, T2, T3>(int eventKey, T1 arg1, T2 arg2, T3 arg3)
+        {
+            _postQueue.Add(new PostEntry { EventKey = eventKey, Arg1 = arg1, Arg2 = arg2, Arg3 = arg3, ArgCount = 3 });
+        }
+
+        /// <summary>
+        /// 将 4 参事件延迟到下一帧播报。
+        /// </summary>
+        public static void PostNext<T1, T2, T3, T4>(int eventKey, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        {
+            _postQueue.Add(new PostEntry { EventKey = eventKey, Arg1 = arg1, Arg2 = arg2, Arg3 = arg3, Arg4 = arg4, ArgCount = 4 });
+        }
+
+        /// <summary>
+        /// 消费延迟播报队列中的所有事件（立即同步播报）。
+        /// 由 GameLauncher.Update() 每帧开头调用，确保 PostNext 的事件在下一帧最先被处理。
+        /// </summary>
+        public static void FlushPostQueue()
+        {
+            if (_postQueue.Count == 0) return;
+
+            // 取出并清空（避免递归 PostNext 导致无限循环）
+            var entries = new List<PostEntry>(_postQueue);
+            _postQueue.Clear();
+
+            foreach (var entry in entries)
+            {
+                switch (entry.ArgCount)
+                {
+                    case 0:
+                        OnNext(entry.EventKey);
+                        break;
+                    case 1:
+                        OnNext(entry.EventKey, entry.Arg1);
+                        break;
+                    case 2:
+                        OnNext(entry.EventKey, entry.Arg1, entry.Arg2);
+                        break;
+                    case 3:
+                        OnNext(entry.EventKey, entry.Arg1, entry.Arg2, entry.Arg3);
+                        break;
+                    case 4:
+                        OnNext(entry.EventKey, entry.Arg1, entry.Arg2, entry.Arg3, entry.Arg4);
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -495,6 +584,25 @@ namespace Ember.Core
         #endregion
 
         // ============================================================
+
+        /// <summary>
+        /// 延迟播报条目。用 object 存储参数以支持 0~4 个任意类型的参数，
+        /// 避免为每种参数组合创建独立的队列类型。
+        /// </summary>
+        private struct PostEntry
+        {
+            public int EventKey;
+            /// <summary>参数个数（0~4）。</summary>
+            public int ArgCount;
+            /// <summary>第 1 个参数。</summary>
+            public object Arg1;
+            /// <summary>第 2 个参数。</summary>
+            public object Arg2;
+            /// <summary>第 3 个参数。</summary>
+            public object Arg3;
+            /// <summary>第 4 个参数。</summary>
+            public object Arg4;
+        }
 
         /// <summary>
         /// 订阅句柄，调用 <see cref="Dispose"/> 即可取消订阅（对齐 UniRx IDisposable 模式）。
