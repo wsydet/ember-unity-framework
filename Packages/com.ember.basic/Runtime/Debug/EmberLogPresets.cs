@@ -25,6 +25,11 @@ namespace Ember.Basic
         public const string EmberInput    = nameof(EmberInput);
         public const string Game     = nameof(Game);
 
+        // Basic 子标签
+        public const string BasicCrypto      = EmberBasic + ".Crypto";
+        public const string BasicPerformance  = EmberBasic + ".Performance";
+        public const string BasicAppQuit      = EmberBasic + ".AppQuit";
+
         // Core 子标签
         public const string CoreEventBus      = EmberCore + ".EventBus";
         public const string CoreServiceLocator = EmberCore + ".ServiceLocator";
@@ -59,6 +64,8 @@ namespace Ember.Basic
         {
             // 父标签
             EmberBasic, EmberCore, EmberResource, EmberUI, EmberScene, EmberAudio, EmberInput, Game,
+            // Basic 子
+            BasicCrypto, BasicPerformance, BasicAppQuit,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
             CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreEditor,
@@ -145,8 +152,8 @@ namespace Ember.Basic
     {
         public static string Info     = "#FFFFFF";
         public static string Init     = "#a7f57a";
-        public static string Shutdown = "#5e017a";
-        public static string Event    = "#C5A3FF";
+        public static string Shutdown = "#fc3096";
+        public static string Event    = "#ae82f9";
         public static string Cleanup  = "#999999";
         public static string Warning  = "#FFFFFF";
         public static string Error    = "#FFFFFF";
