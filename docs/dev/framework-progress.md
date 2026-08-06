@@ -277,8 +277,12 @@ Initialize(provider)
 ### 待扩展
 
 - [x] ~~默认 `ResourcesProvider` 实现（零配置开发入门）~~ → ✅ 已完成
+- [x] ~~资源加载句柄（Handle）支持取消和追踪~~ → 📋 [方案已定](../../docs/dev/res-migration-plan.md)（从 burner 提取 AssetHandleSlot + ResFileHandle 模式）
+- [ ] **EmberAssetHandle + EmberAssetHandleSlot** — 异步加载句柄 + 加载槽（去重/取消/重入安全）→ [方案 §1](../../docs/dev/res-migration-plan.md#一节步骤-1emberassethandle--emberfilehandle)
+- [ ] **EmberFileHandle** — Raw File/Bytes/Text 统一加载句柄 → [方案 §1](../../docs/dev/res-migration-plan.md#一节步骤-1emberassethandle--emberfilehandle)
+- [ ] **EmberEventBus.PostNext** — 延迟到下一帧播报事件 + EmberEventGroup 辅助类 → [方案 §2](../../docs/dev/res-migration-plan.md#二步骤-2unievent-vs-embereventbus-对比)
 - [ ] 引用计数与自动卸载策略
-- [ ] 资源加载句柄（Handle）支持取消和追踪
+- [ ] **YooAssetProvider** — 基于 YooAsset 的热更新 Provider（未来 Phase 2） → [方案 §3](../../docs/dev/res-migration-plan.md#三步骤-3yooassetprovider未来待办)
 
 ---
 

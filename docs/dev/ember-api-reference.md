@@ -1,7 +1,7 @@
 # Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
-> 最后更新：2026-08-06 | 覆盖 78 个文件、~115 个公开类型、590+ 个公开成员
+> 最后更新：2026-08-06 | 覆盖 82 个文件、~120 个公开类型、610+ 个公开成员
 
 ---
 
@@ -836,7 +836,38 @@ bool has = EmberEventBus.HasSubscribers(key);
 | `OnNext(key)` / `OnNext<T>(key, arg)` | 同步播报 |
 | `Unsubscribe(key, handler)` | 取消订阅 |
 | `HasSubscribers(key)` | 是否有订阅者 |
+| `PostNext(key)` / `PostNext<T>(key, arg)` | 延迟到下一帧播报 |
 | `ClearSubscribers(key)` / `ClearAllSubscribers()` | 清空 |
+| `FlushPostQueue()` | 消费延迟播报队列（由 GameLauncher 调用） |
+
+### EmberEventGroup
+
+| | |
+|---|---|
+| **位置** | `Ember/Core/Runtime/Event/EmberEventGroup.cs` |
+| **说明** | 批量管理事件订阅，一键清理。一个 UI 页面或模块在初始化时订阅多个事件，退出时只需 Dispose 此 Group。 |
+
+```csharp
+private readonly EmberEventGroup _events = new();
+
+void Start()
+{
+    _events.Add(EmberBroadcastEvent.SceneLoaded, OnSceneLoaded);
+    _events.Add(MyEvents.ItemAcquired, (int itemId) => UpdateInventory(itemId));
+}
+
+void OnDestroy()
+{
+    _events.Dispose();  // 一键清理所有订阅
+}
+```
+
+| 方法 | 说明 |
+|------|------|
+| `Add(key, Action)` | 订阅无参事件 |
+| `Add<T>(key, Action<T>)` | 订阅 1~4 参事件 |
+| `Clear()` | 清理所有订阅（可复用） |
+| `Dispose()` | 清理并标记为已释放 |
 
 ### EmberBroadcastEvent
 
@@ -1197,9 +1228,20 @@ protected virtual void ConfigureStateMachine(EmberStateMachine fsm) { ... }
 // 初始化
 EmberResourceManager.Instance.Initialize(new ResourcesProvider(), success => { ... });
 
-// 加载
+// 加载（回调版）
 EmberResourceManager.Instance.LoadAssetAsync<Sprite>("ui/icon", sprite => { ... });
 EmberResourceManager.Instance.LoadSceneAsync("Battle");
+
+// 加载（Handle 版 —— 支持取消和状态追踪）
+var handle = EmberResourceManager.Instance.LoadAssetHandle<Sprite>("ui/icon");
+handle.Completed += sprite => { image.sprite = sprite; };
+handle.Cancel();   // 取消加载
+handle.Dispose();  // 释放引用
+
+// 文件加载
+var fileHandle = EmberResourceManager.Instance.LoadFileAsync("config/data.json");
+fileHandle.Completed += h => { string text = h.GetText(); };
+byte[] bytes = EmberResourceManager.Instance.LoadFileSync("config/data.json");
 
 // 卸载
 EmberResourceManager.Instance.UnloadAsset("ui/icon");
@@ -1219,12 +1261,115 @@ public interface IResourceProvider {
     void LoadSceneAsync(string sceneName, Action onComplete);
     void UnloadAsset(string path);
     void UnloadUnusedAssets();
+    // Handle API（ember 扩展）
+    EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : Object;
+    EmberFileHandle LoadFileAsync(string path);
+    byte[] LoadFileSync(string path);
 }
 ```
 
 ### ResourcesProvider（默认实现）
 
 Unity Resources API 实现。开发/小项目用，正式项目替换为 AddressablesProvider 或 YooAssetProvider。
+
+### EmberAssetHandle《T》
+
+| | |
+|---|---|
+| **位置** | `Ember/Resource/Runtime/EmberAssetHandle.cs` |
+| **说明** | 可追踪的异步加载句柄。支持状态查询（IsDone / Succeeded / Error）、取消（Cancel）和引用释放（Dispose）。Completed 事件在注册前已加载完毕时会立即回调。 |
+
+```csharp
+var handle = EmberResourceManager.Instance.LoadAssetHandle<Sprite>("ui/icon");
+
+// 状态查询
+bool done = handle.IsDone;
+bool ok = handle.Succeeded;
+string err = handle.Error;
+Sprite sprite = handle.Asset;
+
+// 事件
+handle.Completed += sprite => { ... };
+
+// 生命周期
+handle.Cancel();
+handle.Dispose();
+```
+
+| 成员 | 签名 |
+|------|------|
+| AssetPath | `string AssetPath` |
+| IsDone | `bool IsDone` |
+| Succeeded | `bool Succeeded` |
+| Asset | `T Asset` |
+| Error | `string Error` |
+| Completed | `event Action《T》 Completed` |
+| Cancel | `void Cancel()` |
+| Dispose | `void Dispose()` |
+
+### EmberAssetHandleSlot《T》
+
+| | |
+|---|---|
+| **位置** | `Ember/Resource/Runtime/EmberAssetHandleSlot.cs` |
+| **说明** | 异步加载槽 —— 持有"当前已加载"+"正在加载中"两个状态，自动去重、取消和重入安全。适用于 UI 头像/材质等需要动态切换资源的场景。 |
+
+```csharp
+private readonly EmberAssetHandleSlot<Sprite> _slot = new();
+
+// 切换资源：自动取消旧请求、去重、重入安全
+_slot.LoadAsync("hero_01", sprite => { image.sprite = sprite; });
+
+// 查询
+string cur = _slot.CurrentAssetPath;   // 已加载的
+string loading = _slot.LoadingAssetPath; // 正在加载的（null=无）
+
+// 生命周期
+_slot.Dispose(); // 取消加载 + 释放当前资源
+```
+
+| 成员 | 签名 |
+|------|------|
+| LoadAsync | `void LoadAsync(string path, Action《T》 onLoaded, bool reapplyIfCurrent=true)` |
+| CancelLoading | `void CancelLoading()` |
+| Dispose | `void Dispose()` |
+| CurrentAssetPath | `string CurrentAssetPath` |
+| LoadingAssetPath | `string LoadingAssetPath` |
+| TargetAssetPath | `string TargetAssetPath` |
+| IsLoading | `bool IsLoading` |
+
+### EmberFileHandle
+
+| | |
+|---|---|
+| **位置** | `Ember/Resource/Runtime/EmberFileHandle.cs` |
+| **说明** | 文件加载句柄 —— Raw File / Bytes / Text 统一抽象。支持 GetBytes（防御性拷贝）、GetText（UTF-8 懒解析+缓存）、GetFilePath。 |
+
+```csharp
+var handle = EmberResourceManager.Instance.LoadFileAsync("config/data.json");
+handle.Completed += h => {
+    if (h.Succeeded) {
+        string text = h.GetText();
+        byte[] bytes = h.GetBytes();
+        string path = h.GetFilePath();
+    }
+};
+handle.Cancel();
+handle.Dispose();
+```
+
+| 成员 | 签名 |
+|------|------|
+| AssetPath | `string AssetPath` |
+| IsDone | `bool IsDone` |
+| Succeeded | `bool Succeeded` |
+| Error | `string Error` |
+| Completed | `event Action《EmberFileHandle》 Completed` |
+| GetBytes | `byte[] GetBytes()` — 防御性拷贝 |
+| GetText | `string GetText()` — UTF-8 懒解析，首次后缓存 |
+| GetFilePath | `string GetFilePath()` — 磁盘路径（非所有 Provider 支持） |
+| Cancel | `void Cancel()` |
+| Dispose | `void Dispose()` |
 
 ---
 
