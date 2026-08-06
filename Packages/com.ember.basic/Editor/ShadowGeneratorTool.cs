@@ -69,7 +69,7 @@ namespace Ember.Basic.Editor
 
         // ======== Lifecycle ========
 
-        protected override void OnEnable() { LoadSettings(); UpdateTargets(); }
+        protected override void OnEnable() { base.OnEnable(); LoadSettings(); UpdateTargets(); }
         protected override void OnDisable() => SaveSettings();
         private void OnSelectionChange() => UpdateTargets();
 

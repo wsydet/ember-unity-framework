@@ -81,7 +81,7 @@ namespace Ember.Basic.Editor
 
         // ======== Lifecycle ========
 
-        protected override void OnEnable() { SceneView.duringSceneGui += OnSceneGUI; UpdatePreview(); }
+        protected override void OnEnable() { base.OnEnable(); SceneView.duringSceneGui += OnSceneGUI; UpdatePreview(); }
         protected override void OnDisable() { SceneView.duringSceneGui -= OnSceneGUI; }
 
         protected override void DrawContent()

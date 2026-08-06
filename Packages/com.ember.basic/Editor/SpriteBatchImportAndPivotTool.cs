@@ -83,6 +83,7 @@ namespace Ember.Basic.Editor
 
         protected override void OnEnable()
         {
+            base.OnEnable();
             var saved = EditorPrefs.GetString("Ember_SpritePivot_Folder", "");
             if (!string.IsNullOrEmpty(saved)) { _folderPath = saved; _folderAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(saved); RefreshPreview(); }
         }
@@ -91,16 +92,27 @@ namespace Ember.Basic.Editor
 
         protected override void DrawContent()
         {
-            // 1. 文件夹
+            // 1. 文件夹选择
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField(L10n("Sprite Folder", "Sprite 文件夹"), EditorStyles.miniBoldLabel);
+
             EditorGUI.BeginChangeCheck();
-            _folderAsset = (DefaultAsset)EditorGUILayout.ObjectField(L10n("Sprite Folder", "Sprite 文件夹"), _folderAsset, typeof(DefaultAsset), false);
+            _folderAsset = (DefaultAsset)EditorGUILayout.ObjectField(_folderAsset, typeof(DefaultAsset), false);
             if (EditorGUI.EndChangeCheck())
             {
                 _folderPath = _folderAsset ? AssetDatabase.GetAssetPath(_folderAsset) : "";
                 if (!string.IsNullOrEmpty(_folderPath)) { EditorPrefs.SetString("Ember_SpritePivot_Folder", _folderPath); RefreshPreview(); }
             }
 
-            if (string.IsNullOrEmpty(_folderPath)) { EditorGUILayout.HelpBox("选择一个 Assets 内的 Sprite 文件夹。", MessageType.Info); return; }
+            // 拖拽区域
+            var dropRect = GUILayoutUtility.GetRect(GUIContent.none, GUI.skin.box, GUILayout.Height(40));
+            GUI.Box(dropRect, L10n("Drop a folder here", "拖拽文件夹到此处"));
+            HandleDragAndDrop(dropRect);
+
+            EditorGUILayout.EndVertical();
+
+            if (string.IsNullOrEmpty(_folderPath)) { EditorGUILayout.HelpBox(L10n("Select a Sprite folder in Assets.", "选择一个 Assets 内的 Sprite 文件夹。"), MessageType.Info); return; }
+            EditorGUILayout.LabelField($"  {_folderPath}", EditorStyles.miniLabel);
 
             // 2. 参考 Sprite（可选）
             EditorGUILayout.Space(5);
@@ -124,7 +136,7 @@ namespace Ember.Basic.Editor
                     int idx = _sizeGroups.IndexOf(_selectedSize);
                     if (idx < 0) idx = 0;
                     var names = _sizeGroups.Select(s => $"{s.x}x{s.y}").ToArray();
-                    idx = EditorGUILayout.Popup("尺寸组", idx, names);
+                    idx = EditorGUILayout.Popup(L10n("Size Group", "尺寸组"), idx, names);
                     if (idx >= 0 && idx < _sizeGroups.Count) { _selectedSize = _sizeGroups[idx]; RefreshPreview(); }
                 }
             }
@@ -168,6 +180,31 @@ namespace Ember.Basic.Editor
             // 6. 执行
             if (GUILayout.Button(L10n("Apply Settings to All Sprites", "批量应用导入参数和锚点"), BigButtonStyle))
                 Execute();
+        }
+
+        private void HandleDragAndDrop(Rect dropRect)
+        {
+            var evt = Event.current;
+            if (!dropRect.Contains(evt.mousePosition)) return;
+
+            switch (evt.type)
+            {
+                case EventType.DragUpdated:
+                case EventType.DragPerform:
+                    if (DragAndDrop.paths == null || DragAndDrop.paths.Length == 0) break;
+                    if (!AssetDatabase.IsValidFolder(DragAndDrop.paths[0])) break;
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+                    if (evt.type == EventType.DragPerform)
+                    {
+                        DragAndDrop.AcceptDrag();
+                        _folderPath = DragAndDrop.paths[0];
+                        _folderAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(_folderPath);
+                        EditorPrefs.SetString("Ember_SpritePivot_Folder", _folderPath);
+                        RefreshPreview();
+                    }
+                    evt.Use();
+                    break;
+            }
         }
 
         // ======== 核心逻辑 ========
@@ -252,7 +289,6 @@ namespace Ember.Basic.Editor
                     var importer = AssetImporter.GetAtPath(p) as TextureImporter;
                     if (!importer) continue;
 
-                    // 导入参数
                     if (_overrideSize) importer.maxTextureSize = _maxSize;
                     if (_overrideFormat)
                     {
@@ -264,7 +300,6 @@ namespace Ember.Basic.Editor
                     if (_overrideResize) importer.textureCompression = _resizeAlgoIdx == 1 ? TextureImporterCompression.CompressedHQ : TextureImporterCompression.Compressed;
                     if (_overrideMipmaps) importer.mipmapEnabled = _mipmaps;
 
-                    // 锚点
                     if (_applyPivot)
                     {
                         var sizes = SpriteImportUtility.GetSpriteSizes(p).ToList();
@@ -286,7 +321,7 @@ namespace Ember.Basic.Editor
                                     pivot = piv,
                                 };
                             }
-#pragma warning disable CS0618 // spritesheet is obsolete; ISpriteEditorDataProvider migration deferred
+#pragma warning disable CS0618
                             importer.spritesheet = sheet;
 #pragma warning restore CS0618
                             pivotCount += targetSizes.Count;

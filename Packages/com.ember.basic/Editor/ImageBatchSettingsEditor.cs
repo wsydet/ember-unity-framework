@@ -97,7 +97,7 @@ namespace Ember.Basic.Editor
 
         // ======== Lifecycle ========
 
-        protected override void OnEnable() => _data = LoadOrCreateData();
+        protected override void OnEnable() { base.OnEnable(); _data = LoadOrCreateData(); }
 
         // ======== UI ========
 
@@ -272,9 +272,8 @@ namespace Ember.Basic.Editor
         private static void ToggleProp(string label, ref bool toggle, Action draw)
         {
             EditorGUILayout.BeginHorizontal();
-            toggle = EditorGUILayout.Toggle(toggle, GUILayout.Width(14));
+            toggle = EditorGUILayout.ToggleLeft(label, toggle, GUILayout.Width(140));
             EditorGUI.BeginDisabledGroup(!toggle);
-            EditorGUILayout.LabelField(label, GUILayout.Width(130));
             draw?.Invoke();
             EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndHorizontal();

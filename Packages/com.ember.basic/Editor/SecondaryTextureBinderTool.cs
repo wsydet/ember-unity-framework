@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using Ember.Basic;
@@ -15,11 +14,7 @@ namespace Ember.Basic.Editor
 {
     /// <summary>
     /// 次要纹理批量绑定工具 —— 给主图 Sprite 批量绑定发光图/法线图/遮罩等。
-    ///
     /// 例如：Fire_01.png 在主文件夹，Fire_01_Emission.png 在次要文件夹。
-    /// 设置后缀 _Emission 和 Shader 属性名 _EmissionTex，一键全部绑定。
-    ///
-    /// Unity 自带的 SecondaryTexture 只能逐张手动绑定，这个工具批量搞定。
     /// </summary>
     public class SecondaryTextureBinderTool : EmberEditorWindow
     {
@@ -27,34 +22,20 @@ namespace Ember.Basic.Editor
 
         protected override string MenuPath => "Ember/Tool/次要纹理批量绑定";
         protected override string WindowTitle => "Secondary Texture Binder";
-        protected override Vector2 WindowSize => new(550, 600);
+        protected override Vector2 WindowSize => new(550, 650);
         protected override string WindowVersion => "v2.0";
 
-        private const string GroupFolder = "1. 文件夹配置";
-        private const string GroupRules = "2. 绑定规则";
-        private const string GroupExec = "3. 执行";
-
-        [FoldoutGroup(GroupFolder, Expanded = true)]
-        [LabelText("主图文件夹"), FolderPath(RequireExistingPath = true)]
-        [InfoBox("存放普通 Sprite 的文件夹（例如 Fire_01, Fire_02...）")]
+        // ---- 文件夹 ----
         public string MainFolder = "Assets";
-
-        [FoldoutGroup(GroupFolder)]
-        [LabelText("次要纹理文件夹"), FolderPath(RequireExistingPath = true)]
-        [InfoBox("存放发光图/法线图等次要纹理的文件夹")]
         public string SecondaryFolder = "Assets";
 
-        [FoldoutGroup(GroupRules, Expanded = true)]
-        [LabelText("次要纹理名称后缀"), Tooltip("主图 Attack_01 → 找 Attack_01_Emission")]
+        // ---- 绑定规则 ----
         public string NameSuffix = "_Emission";
-
-        [FoldoutGroup(GroupRules)]
-        [LabelText("Shader 属性名"), Tooltip("Shader 中的采样变量名，如 _EmissionTex")]
         public string ShaderProperty = "_EmissionTex";
-
-        [FoldoutGroup(GroupRules)]
-        [LabelText("仅预览不写入 (Dry Run)")]
         public bool DryRun;
+
+        private bool _showFolderConfig = true;
+        private bool _showRules = true;
 
         // ======== 菜单 ========
 
@@ -70,13 +51,51 @@ namespace Ember.Basic.Editor
 
         protected override void DrawContent()
         {
-            // Odin 自动绘制 FoldoutGroup 字段
+            // 1. 文件夹配置
+            _showFolderConfig = EditorGUILayout.BeginFoldoutHeaderGroup(_showFolderConfig,
+                L10n("1. Folder Configuration", "1. 文件夹配置"));
+            if (_showFolderConfig)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.LabelField(L10n("Main Sprite Folder", "主图文件夹"), EditorStyles.miniBoldLabel);
+                MainFolder = DrawFolderPathField(MainFolder);
+                EditorGUILayout.HelpBox(L10n("Folder containing main sprites (e.g. Fire_01, Fire_02...)", "存放普通 Sprite 的文件夹（例如 Fire_01, Fire_02...）"), MessageType.Info);
+
+                EditorGUILayout.Space(4);
+
+                EditorGUILayout.LabelField(L10n("Secondary Texture Folder", "次要纹理文件夹"), EditorStyles.miniBoldLabel);
+                SecondaryFolder = DrawFolderPathField(SecondaryFolder);
+                EditorGUILayout.HelpBox(L10n("Folder containing secondary textures (emission/normal maps etc.)", "存放发光图/法线图等次要纹理的文件夹"), MessageType.Info);
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            EditorGUILayout.Space(5);
+
+            // 2. 绑定规则
+            _showRules = EditorGUILayout.BeginFoldoutHeaderGroup(_showRules,
+                L10n("2. Binding Rules", "2. 绑定规则"));
+            if (_showRules)
+            {
+                EditorGUILayout.BeginVertical("box");
+                NameSuffix = EditorGUILayout.TextField(
+                    new GUIContent(L10n("Secondary Texture Name Suffix", "次要纹理名称后缀"),
+                        L10n("Main image Attack_01 → searches for Attack_01_Emission", "主图 Attack_01 → 找 Attack_01_Emission")),
+                    NameSuffix);
+                ShaderProperty = EditorGUILayout.TextField(
+                    new GUIContent(L10n("Shader Property Name", "Shader 属性名"),
+                        L10n("Shader sampling variable name, e.g. _EmissionTex", "Shader 中的采样变量名，如 _EmissionTex")),
+                    ShaderProperty);
+                DryRun = EditorGUILayout.Toggle(L10n("Dry Run (preview only, no write)", "仅预览不写入 (Dry Run)"), DryRun);
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
             DrawSeparatorLine();
 
+            // 3. 执行
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField(L10n("Actions", "操作"), EditorStyles.boldLabel);
-
-            DryRun = EditorGUILayout.Toggle(L10n("Dry Run (preview only)", "仅预览不写入"), DryRun);
+            EditorGUILayout.LabelField(L10n("3. Execute", "3. 执行"), EditorStyles.boldLabel);
 
             GUI.backgroundColor = DryRun ? new Color(1f, 0.8f, 0.3f) : new Color(0.3f, 0.8f, 0.5f);
             string label = DryRun
@@ -86,6 +105,24 @@ namespace Ember.Basic.Editor
                 ExecuteBinding();
             GUI.backgroundColor = Color.white;
             EditorGUILayout.EndVertical();
+        }
+
+        private string DrawFolderPathField(string currentPath)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.TextField(currentPath);
+            if (GUILayout.Button(L10n("Browse", "浏览"), GUILayout.Width(60)))
+            {
+                string picked = EditorUtility.OpenFolderPanel(L10n("Select Folder", "选择文件夹"), "Assets", "");
+                if (!string.IsNullOrEmpty(picked))
+                {
+                    picked = picked.Replace("\\", "/");
+                    if (picked.Contains("Assets"))
+                        currentPath = picked.Substring(picked.IndexOf("Assets"));
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+            return currentPath;
         }
 
         // ======== 核心逻辑 ========

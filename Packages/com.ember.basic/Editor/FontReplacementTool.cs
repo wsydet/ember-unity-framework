@@ -4,7 +4,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using TMPro;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -21,13 +20,10 @@ namespace Ember.Basic.Editor
     {
         protected override string MenuPath => "Ember/Tool/UI 综合管理工具";
         protected override string WindowTitle => "UI Toolkit";
-        protected override Vector2 WindowSize => new(400, 550);
+        protected override Vector2 WindowSize => new(400, 600);
         protected override string WindowVersion => "v2.1";
 
-        [BoxGroup("配置"), LabelText("目标 TMP 字体")]
         public TMP_FontAsset SelectedFont;
-
-        [BoxGroup("配置"), LabelText("排除关键字")]
         public string ExcludeFilter = "";
 
         private static TMP_FontAsset s_lastFont;
@@ -72,6 +68,16 @@ namespace Ember.Basic.Editor
 
         protected override void DrawContent()
         {
+            // 1. 配置区
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField(L10n("1. Configuration", "1. 配置"), EditorStyles.boldLabel);
+            SelectedFont = (TMP_FontAsset)EditorGUILayout.ObjectField(L10n("Target TMP Font", "目标 TMP 字体"), SelectedFont, typeof(TMP_FontAsset), false);
+            ExcludeFilter = EditorGUILayout.TextField(L10n("Exclude Keyword", "排除关键字"), ExcludeFilter);
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space(5);
+
+            // 2. 批量字体替换
             EditorGUILayout.LabelField(L10n("2. Batch Font Replacement", "2. 批量字体替换"), EditorStyles.boldLabel);
             if (GUILayout.Button(L10n("Replace TMP Fonts in Scene", "替换已加载场景中的 TMP 字体"), BigButtonStyle))
             {
@@ -90,6 +96,7 @@ namespace Ember.Basic.Editor
 
             DrawSeparatorLine();
 
+            // 3. 组件转换
             EditorGUILayout.LabelField(L10n("3. Component Conversion (Legacy → TMP)", "3. 组件转换 (Legacy → TMP)"), EditorStyles.boldLabel);
             if (GUILayout.Button(L10n("Convert Legacy Text to TMP in Scene", "将已加载场景中的 Text 转换为 TMP"), BigButtonStyle))
             {
@@ -100,6 +107,7 @@ namespace Ember.Basic.Editor
 
             DrawSeparatorLine();
 
+            // 4. 布局适配
             EditorGUILayout.LabelField(L10n("4. Layout Fit (RectTransform Fit)", "4. 布局适配 (RectTransform Fit)"), EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(L10n("Auto-adjust text box size based on current text content.", "根据当前文字内容自动调整文本框大小。"), MessageType.Info);
             if (GUILayout.Button(L10n("Auto-fit All TMP Sizes in Scene", "自动调整场景中所有 TMP 尺寸"), BigButtonStyle))
@@ -197,8 +205,7 @@ namespace Ember.Basic.Editor
         }
 
         /// <summary>
-        /// 将所有已加载的场景标脏。FindObjectsByType 会搜索所有已加载场景，
-        /// 修改后需要标脏每一个被触及的场景。
+        /// 将所有已加载的场景标脏。
         /// </summary>
         private static void MarkAllDirty()
         {

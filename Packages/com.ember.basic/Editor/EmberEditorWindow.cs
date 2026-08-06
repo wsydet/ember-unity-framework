@@ -4,20 +4,17 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
-using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
 namespace Ember.Basic.Editor
 {
     /// <summary>
-    /// Ember 编辑器工具窗口基类 —— 基于 Odin Inspector。
+    /// Ember 编辑器工具窗口基类。
     /// 提供全局语言切换、中英文 L10n、统一 Header/Footer 绘制。
-    ///
-    /// 子类在 <c>OnImGUI</c> 中用 Odin 属性驱动 UI，省略手写 Layout 代码。
+    /// 子类覆盖 <c>DrawContent()</c> 实现自定义 UI。
     /// </summary>
-    public abstract class EmberEditorWindow : OdinEditorWindow
+    public abstract class EmberEditorWindow : EditorWindow
     {
         /// <summary>
         /// 全局语言设置（EditorPrefs 持久化，所有面板共享）。
@@ -63,42 +60,30 @@ namespace Ember.Basic.Editor
         protected virtual Vector2 WindowSize => new(500, 600);
 
         /// <summary>
-        /// 绘制窗口内容。子类在此处用 Odin 属性或手写 OnGUI 实现。
-        /// 基类自动处理 Header / 语言切换 / Footer。
+        /// 绘制窗口内容。子类在此处用 IMGUI 实现全部 UI。
         /// </summary>
         protected virtual void DrawContent() { }
 
-        protected override void OnImGUI()
+        private void OnGUI()
         {
             DrawToolbar();
             DrawSeparatorLine();
-            EditorGUILayout.Space(6);
 
-            // Odin 自动渲染 [BoxGroup] / [LabelText] 等带属性的字段
-            base.OnImGUI();
-
-            EditorGUILayout.Space(10);
-
-            // 子类自定义按钮和操作区
+            EditorGUILayout.BeginVertical(EditorStyles.inspectorDefaultMargins);
             DrawContent();
+            EditorGUILayout.EndVertical();
 
             DrawFooter();
         }
 
-        protected override void OnEnable()
+        protected virtual void OnEnable()
         {
-            base.OnEnable();
             _openWindows.Add(this);
-            if (EditorGUIUtility.isProSkin)
-            {
-                UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
-            }
         }
 
-        protected override void OnDisable()
+        protected virtual void OnDisable()
         {
             _openWindows.Remove(this);
-            base.OnDisable();
         }
 
         private static readonly HashSet<EmberEditorWindow> _openWindows = new();
@@ -111,7 +96,9 @@ namespace Ember.Basic.Editor
             }
         }
 
-        private void DrawFooter()
+        #region Header / Footer / Toolbar
+
+        protected void DrawFooter()
         {
             EditorGUILayout.Space(5);
             Rect footerRect = EditorGUILayout.GetControlRect(false, 22);
@@ -127,23 +114,18 @@ namespace Ember.Basic.Editor
             EditorGUI.LabelField(footerRect, $"{WindowVersion} | Ember Tools", style);
         }
 
-        // ---- 工具条（语言切换 + 可选按钮）----
-
         protected void DrawToolbar()
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
-            // 标题：使用双语 Property
             string titleText = Lang == EditorToolLanguage.English ? WindowTitleEN : WindowTitle;
             GUILayout.Label(titleText, EditorStyles.boldLabel);
 
             GUILayout.FlexibleSpace();
 
-            // 语言切换按钮
             string langLabel = Lang == EditorToolLanguage.English ? "EN" : "中文";
             if (GUILayout.Button(langLabel, EditorStyles.toolbarButton, GUILayout.Width(50)))
             {
-                // 切换全局语言，自动 repaint 所有打开的窗口
                 GlobalLang = Lang == EditorToolLanguage.English
                     ? EditorToolLanguage.Chinese
                     : EditorToolLanguage.English;
@@ -158,10 +140,22 @@ namespace Ember.Basic.Editor
             EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 0.3f));
         }
 
-        // ---- 通用 Odin 按钮样式 ----
+        #endregion
 
-        protected static GUIStyle BigButtonStyle =>
-            new(GUIStyle.none) { fixedHeight = 40, alignment = TextAnchor.MiddleCenter };
+        protected static GUIStyle BigButtonStyle
+        {
+            get
+            {
+                var s = new GUIStyle(GUI.skin.button)
+                {
+                    fixedHeight = 40,
+                    alignment = TextAnchor.MiddleCenter,
+                    fontSize = 13,
+                    fontStyle = FontStyle.Bold
+                };
+                return s;
+            }
+        }
     }
 }
 #endif

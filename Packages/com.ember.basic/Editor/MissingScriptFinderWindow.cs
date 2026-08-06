@@ -4,7 +4,6 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using Ember.Basic;
@@ -13,41 +12,26 @@ namespace Ember.Basic.Editor
 {
     /// <summary>
     /// 丢失脚本查找与清理工具 —— 指定一个 Prefab/场景物体，扫出所有 Missing Script 并一键移除。
-    ///
-    /// 与 SystemCleanerEditor 的区别：SystemCleaner 扫描整个场景；本工具针对单个目标层级精准操作。
-    /// 适用场景：预制体保存时报 "有丢失脚本"，拖进来修。
     /// </summary>
     public class MissingScriptFinderWindow : EmberEditorWindow
     {
         private const string TAG = LogTags.EmberBasic + "." + nameof(MissingScriptFinderWindow);
         protected override string MenuPath => "Ember/Tool/丢失脚本清理工具";
         protected override string WindowTitle => "Missing Script Finder";
-        protected override Vector2 WindowSize => new(600, 700);
+        protected override Vector2 WindowSize => new(500, 700);
 
-        [BoxGroup("目标"), LabelText("$TargetLabel")]
         public GameObject TargetObject;
-
-        private string TargetLabel => L10n("Target Object (Prefab/Scene)", "目标物体 (预制体/场景节点)");
 
         [Serializable]
         public class ScriptInfo
         {
-            [HideInInspector] public GameObject Obj;
-            [HideInInspector] public string Name;
-
-            [Button("$PingLabel")]
-            public void Ping()
-            {
-                if (Obj) { EditorGUIUtility.PingObject(Obj); Selection.activeGameObject = Obj; }
-            }
-            private string PingLabel => "定位";
+            public GameObject Obj;
+            public string Name;
         }
 
-        [BoxGroup("结果"), LabelText("$ResultLabel")]
-        [ListDrawerSettings(IsReadOnly = true, ShowPaging = false)]
         public List<ScriptInfo> MissingList = new();
 
-        private string ResultLabel => L10n("Missing Scripts", "丢失脚本列表");
+        private Vector2 _scrollPos;
 
         // ======== 菜单 ========
 
@@ -74,7 +58,6 @@ namespace Ember.Basic.Editor
             }
             if (count > 0)
             {
-                // 打开窗口并填充
                 var win = GetWindow<MissingScriptFinderWindow>();
                 win.TargetObject = go;
                 win.Scan();
@@ -91,9 +74,39 @@ namespace Ember.Basic.Editor
 
         protected override void DrawContent()
         {
-            // Odin 自动绘制 BoxGroup 字段
+            // 目标区
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField(L10n("Target Object (Prefab/Scene)", "目标物体 (预制体/场景节点)"), EditorStyles.miniBoldLabel);
+            TargetObject = (GameObject)EditorGUILayout.ObjectField(TargetObject, typeof(GameObject), true);
+            EditorGUILayout.EndVertical();
+
             DrawSeparatorLine();
+
+            // 操作按钮
             DrawActionButtons();
+
+            // 结果列表
+            if (MissingList.Count > 0)
+            {
+                DrawSeparatorLine();
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.LabelField(L10n("Missing Scripts", "丢失脚本列表") + $" ({MissingList.Count})", EditorStyles.boldLabel);
+
+                _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, GUILayout.Height(300));
+                foreach (var info in MissingList)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(info.Name, EditorStyles.wordWrappedLabel);
+                    if (GUILayout.Button(L10n("Ping", "定位"), GUILayout.Width(50)))
+                    {
+                        if (info.Obj) { EditorGUIUtility.PingObject(info.Obj); Selection.activeGameObject = info.Obj; }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUILayout.EndScrollView();
+
+                EditorGUILayout.EndVertical();
+            }
         }
 
         private void DrawActionButtons()
@@ -154,7 +167,7 @@ namespace Ember.Basic.Editor
 
             AssetDatabase.SaveAssets();
             EmberDebug.Log(TAG, $"[Ember] Removed {removed} missing script(s).");
-            Scan(); // 刷新列表
+            Scan();
         }
     }
 }

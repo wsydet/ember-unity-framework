@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Sirenix.OdinInspector;
 using Ember.Basic;
 using UnityEditor;
 using UnityEngine;
@@ -18,24 +17,14 @@ namespace Ember.Basic.Editor
 
         protected override string MenuPath => "Ember/Tool/批量重命名";
         protected override string WindowTitle => "批量重命名";
-        protected override Vector2 WindowSize => new(500, 650);
+        protected override Vector2 WindowSize => new(500, 700);
         protected override string WindowVersion => "v2.0";
 
         // ---- 重命名参数 ----
-        [BoxGroup("命名规则"), LabelText("基础名称")]
         public string BaseName = "NewName";
-
-        [HorizontalGroup("命名规则/Row1")]
-        [BoxGroup("命名规则/Row1/前缀"), LabelText("前缀"), HideLabel]
         public string Prefix = "";
-
-        [BoxGroup("命名规则/Row1/后缀"), LabelText("后缀"), HideLabel]
         public string Suffix = "";
-
-        [BoxGroup("命名规则"), LabelText("起始编号")]
         public int StartNumber;
-
-        [BoxGroup("命名规则"), LabelText("编号位数"), Range(1, 10)]
         public int DigitCount = 2;
 
         // ---- 目标 ----
@@ -108,7 +97,7 @@ namespace Ember.Basic.Editor
 
         protected override void OnEnable()
         {
-            // 从右键菜单打开时，接收预选对象
+            base.OnEnable();
             if (s_queuedSelection != null && s_queuedSelection.Count > 0)
             {
                 PendingTargets = new List<UnityEngine.Object>(s_queuedSelection);
@@ -120,12 +109,31 @@ namespace Ember.Basic.Editor
 
         protected override void DrawContent()
         {
+            DrawNamingRules();
+            EditorGUILayout.Space(5);
             DrawFolderPicker();
-            EditorGUILayout.Space(10);
-
+            EditorGUILayout.Space(5);
             DrawPreview();
-            EditorGUILayout.Space(10);
+            EditorGUILayout.Space(5);
             DrawRenameButton();
+        }
+
+        private void DrawNamingRules()
+        {
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField(L10n("Naming Rules", "命名规则"), EditorStyles.miniBoldLabel);
+
+            BaseName = EditorGUILayout.TextField(L10n("Base Name", "基础名称"), BaseName);
+
+            EditorGUILayout.BeginHorizontal();
+            Prefix = EditorGUILayout.TextField(L10n("Prefix", "前缀"), Prefix);
+            Suffix = EditorGUILayout.TextField(L10n("Suffix", "后缀"), Suffix);
+            EditorGUILayout.EndHorizontal();
+
+            StartNumber = EditorGUILayout.IntField(L10n("Start Number", "起始编号"), StartNumber);
+            DigitCount = EditorGUILayout.IntSlider(L10n("Digit Count", "编号位数"), DigitCount, 1, 10);
+
+            EditorGUILayout.EndVertical();
         }
 
         private void DrawFolderPicker()
@@ -231,12 +239,11 @@ namespace Ember.Basic.Editor
                     L10n(
                         $"You are renaming {targets.Count} objects but the digit count ({DigitCount}) is too small. Needs {need} digits. Fix automatically?",
                         $"正在重命名 {targets.Count} 个物体，但编号位数 ({DigitCount}) 不足，需要 {need} 位编号。是否自动修正？"),
-                    L10n("Auto-Fix", "自动修正"),    // OK → 自动补位
-                    L10n("Cancel", "取消"),          // Cancel → 取消整个重命名
-                    L10n("Keep", "保持"));           // Alt → 保持当前位数继续
-                if (choice == 1) return;             // 用户点击"取消"或关闭弹窗 → 取消重命名
+                    L10n("Auto-Fix", "自动修正"),
+                    L10n("Cancel", "取消"),
+                    L10n("Keep", "保持"));
+                if (choice == 1) return;
                 if (choice == 0) { DigitCount = need; fmt = "D" + DigitCount; }
-                // choice == 2 → "保持" → 继续执行（不管后果）
             }
 
             AssetDatabase.StartAssetEditing();
