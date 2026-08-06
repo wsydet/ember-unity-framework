@@ -3,6 +3,7 @@
   <Project Path="MoreMountains.Tools.Editor.csproj" />
   <Project Path="Ember.UIExtension.Runtime.csproj" />
   <Project Path="Ember.Basic.Runtime.csproj" />
+  <Project Path="Ember.UI.Tests.csproj" />
   <Project Path="UniTask.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="DOTween.Modules.csproj" />
