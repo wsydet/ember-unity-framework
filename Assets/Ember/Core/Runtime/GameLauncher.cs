@@ -31,7 +31,7 @@ namespace Ember.Core
     ///
     /// 参考 burner 的入口模式。
     /// </summary>
-    public class GameLauncher : EmberMonoSingleton<GameLauncher>
+    public class GameLauncher : EmberBootBase<GameLauncher>
     {
         private const string ODIN_GROUP = "Game Launcher";
 
@@ -97,7 +97,10 @@ namespace Ember.Core
 
         #region 生命周期
 
-        protected override void OnSingletonAwake()
+        // ======== Awake / Start / Destroy ========
+
+        /// <inheritdoc />
+        protected override void OnBootAwake()
         {
             EmberDebug.LoadConfig();  // 自动同步 SO 配置到 EmberFileLog
             EmberFileLog.Start();     // 启动后台写线程
@@ -112,7 +115,8 @@ namespace Ember.Core
             EmberDebug.LogInit(TAG, "GameLauncher: state machine ready. Entering InitState...");
         }
 
-        private void Start()
+        /// <inheritdoc />
+        protected override void OnBootStart()
         {
             // InitState.OnEnter → InitializeAll → CoreReady → TransitionTo<MainState>
             Fsm.Start<InitState>(args: Fsm);
@@ -120,29 +124,50 @@ namespace Ember.Core
             EmberDebug.LogInit(TAG, "GameLauncher: InitState complete, ticking...");
         }
 
-        private void Update()
+        /// <inheritdoc />
+        protected override void OnBootDestroy()
+        {
+            ShutdownFramework();
+        }
+
+        // ======== Update / LateUpdate / FixedUpdate ========
+
+        /// <inheritdoc />
+        protected override void OnBootUpdate()
         {
             if (!IsInitialized) return;
 
+            EmberEventBus.FlushPostQueue();  // 消费上一帧 PostNext 的延迟事件
             EmberUpdateManager.Instance.DoUpdate();
             Fsm.Current?.OnUpdate();
         }
 
-        private void LateUpdate()
+        /// <inheritdoc />
+        protected override void OnBootLateUpdate()
         {
             if (!IsInitialized) return;
 
             EmberUpdateManager.Instance.DoLateUpdate();
         }
 
-        private void FixedUpdate()
+        /// <inheritdoc />
+        protected override void OnBootFixedUpdate()
         {
             if (!IsInitialized) return;
 
             EmberUpdateManager.Instance.DoFixedUpdate();
         }
 
-        protected override void OnSingletonDestroy()
+        // ======== Application 生命周期 ========
+
+        /// <summary>应用获得/失去焦点。当前无需处理。</summary>
+        protected override void OnBootApplicationFocus(bool hasFocus) { }
+
+        /// <summary>应用暂停/恢复。当前无需处理。</summary>
+        protected override void OnBootApplicationPause(bool pauseStatus) { }
+
+        /// <summary>应用退出。与 OnBootDestroy 形成双保险：部分平台 OnDestroy 不保证调用。</summary>
+        protected override void OnBootApplicationQuit()
         {
             ShutdownFramework();
         }
