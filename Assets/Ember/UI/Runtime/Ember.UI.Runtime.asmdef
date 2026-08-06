@@ -5,6 +5,7 @@
         "Ember.Core.Runtime",
         "Ember.Basic.Runtime",
         "Ember.Resource.Runtime",
+        "UniRx",
         "UnityEngine.UI"
     ],
     "includePlatforms": [],

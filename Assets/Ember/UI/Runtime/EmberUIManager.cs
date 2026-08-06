@@ -1,328 +1,393 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+
 using Ember.Core;
-using Ember.Resource;
+using Ember.Basic;
+
 using UnityEngine;
 using UnityEngine.UI;
-using Ember.Basic;
 
 namespace Ember.UI
 {
     /// <summary>
-    /// UI 界面层级预设值。决定界面的渲染顺序和输入优先级。
-    /// 值越大，渲染越靠前。也可使用任意 int 值实现更细粒度的层级。
-    /// </summary>
-    public enum UILayer
-    {
-        Background = 0,
-        Normal     = 100,
-        Popup      = 200,
-        TopMost    = 300,
-    }
-
-    /// <summary>
-    /// UI 管理器 —— 界面栈与层级管理。
+    /// UI 管理器（框架层引擎）。
     ///
-    /// 参考 burner 的 <c>GameUIManager</c> + <c>BurnerUIManager</c>，核心设计：
-    /// - 每个层级独立维护一个界面栈
-    /// - 页面通过 <see cref="PageDef"/> 静态注册（类似 burner PageDef），
-    ///   未来可由图形化编辑器自动生成
-    /// - 通过 EmberResourceManager 加载预制体并实例化
-    /// - 管理 IUIView 生命周期（OnOpen / OnPause / OnResume / OnClose）
+    /// 管理 Canvas 层级、页面生命周期、安全遍历、Update 分发。
+    /// 不关心"打开什么/何时打开"——那是 <see cref="EmberUIPageRouter"/> 的职责。
     ///
-    /// 使用方式：
-    /// <code>
-    /// // 静态注册表（手写或工具生成）
-    /// public static class GamePages
-    /// {
-    ///     public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal);
-    ///     public static readonly PageDef Settings = new("ui/settings",  UILayer.Popup);
-    /// }
-    ///
-    /// // 打开页面
-    /// EmberUIManager.Instance.Push(GamePages.Settings, args: null);
-    ///
-    /// // 返回键
-    /// EmberUIManager.Instance.Pop(UILayer.Popup);
-    /// </code>
+    /// <para>初始化时自动隐藏 UIRoot 下所有子节点（编辑时放的预览节点），
+    /// 后续所有 UI 页面由 Instantiate 动态创建。</para>
     /// </summary>
     [EmberInitOrder(EmberInitOrderAttribute.UI)]
-    public class EmberUIManager : EmberSingleton<EmberUIManager>, IEmberManager
+    public class EmberUIManager : EmberMonoSingleton<EmberUIManager>, IEmberManager
     {
         private const string TAG = LogTags.UIManager;
-        #region 参数
 
-        /// <summary>每个层级的界面栈。栈顶是当前可见的界面。</summary>
-        private readonly Dictionary<int, Stack<IUIView>> _stacks = new();
+        #region 内部参数
 
-        /// <summary>每个层级的 Canvas 根节点。</summary>
-        private readonly Dictionary<int, Transform> _layerRoots = new();
+        // Canvas 层管理
+        private readonly Dictionary<int, Canvas> _layerCanvases = new();
+        private Transform _uiRoot;
+        private Camera _uiCamera;
 
+        // 页面追踪
+        private readonly List<EmberPage> _activePages = new();
+        private readonly Queue<Action> _pendingOperations = new();
+        private readonly Queue<Action> _nextFrameCallbacks = new();
+        private bool _isProcessingOperations;
         private bool _initialized;
+
+        // 上下文
+        private EmberPageContext _pageContext;
+        private EmberBgMaskPool _bgMaskPool;
+
+        // 资源 & 过渡
+        private IUIResourceProvider _resourceProvider;
+        private IUITransitionHandler _transitionHandler;
+
+        // Frame Time Budget
+        private const int TimeBudgetMs = 10;
+        private readonly System.Diagnostics.Stopwatch _loadTimer = new System.Diagnostics.Stopwatch();
 
         #endregion
 
-        // ============================================================
+        // --------------------------------------------------------
+
+        #region 生命周期
+
+        private void Awake()
+        {
+            // EmberMonoSingleton 自动注册，此处仅做日志
+        }
+
+        private void Update()
+        {
+            ProcessPendingOperations();
+            ProcessNextFrameCallbacks();
+        }
+
+        private void LateUpdate()
+        {
+            // 如果活跃页面需要 LateUpdate 驱动
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
 
         #region 外部方法
 
-        // ======== Push ========
+        // ── 属性 ──
 
-        /// <summary>
-        /// 加载并显示一个 UI 界面，压入其所属层级的栈顶。
-        ///
-        /// 流程：
-        /// 1. 暂停当前栈顶界面（OnPause）
-        /// 2. 通过 EmberResourceManager 异步加载预制体
-        /// 3. 实例化到对应 Canvas 层下
-        /// 4. 调用新界面的 OnOpen
-        /// 5. 压入该层栈顶
-        /// </summary>
-        /// <param name="page">页面定义（含预制体路径和层级）</param>
-        /// <param name="args">传给 OnOpen 的参数，无参数时为 null</param>
-        public void Push(PageDef page, object args = null)
+        /// <summary>页面上下文（MainPage + Popup 栈关系）</summary>
+        public EmberPageContext PageContext => _pageContext;
+
+        /// <summary>资源加载提供者</summary>
+        public IUIResourceProvider ResourceProvider
         {
-            if (!_initialized)
-            {
-                EmberDebug.LogError(TAG, "EmberUIManager is not initialized.");
-                return;
-            }
-
-            if (page == null)
-            {
-                EmberDebug.LogError(TAG, "EmberUIManager.Push: page is null.");
-                return;
-            }
-
-            int layer = page.Layer;
-            EnsureLayerRoot(layer);
-
-            PauseTopView(layer);
-
-            EmberResourceManager.Instance.LoadAssetAsync<GameObject>(page.PrefabPath, prefab =>
-            {
-                if (prefab == null)
-                {
-                    EmberDebug.LogError(TAG, $"EmberUIManager.Push: failed to load prefab '{page.PrefabPath}'.");
-                    return;
-                }
-
-                var instance = UnityEngine.Object.Instantiate(prefab, _layerRoots[layer]);
-                instance.name = prefab.name;
-
-                var view = instance.GetComponent<IUIView>();
-                if (view == null)
-                {
-                    EmberDebug.LogError(TAG, 
-                        $"EmberUIManager.Push: prefab '{page.PrefabPath}' " +
-                        $"has no IUIView component. Push requires a MonoBehaviour implementing IUIView.");
-                    UnityEngine.Object.Destroy(instance);
-                    return;
-                }
-
-                GetOrCreateStack(layer).Push(view);
-                view.OnOpen(args);
-            });
+            get => _resourceProvider;
+            set => _resourceProvider = value;
         }
 
-        // ======== Pop ========
-
-        /// <summary>
-        /// 关闭指定层级的栈顶界面。
-        ///
-        /// 流程：OnClose → 弹出栈 → Destroy → 恢复新的栈顶（OnResume）。
-        /// </summary>
-        public void Pop(int layer)
+        /// <summary>过渡动画处理器</summary>
+        public IUITransitionHandler TransitionHandler
         {
-            if (!TryPop(layer, out var view)) return;
-
-            view.OnClose();
-            DestroyView(view);
-            ResumeTopView(layer);
+            get => _transitionHandler;
+            set => _transitionHandler = value;
         }
 
-        /// <summary>
-        /// 使用 <see cref="UILayer"/> 枚举的 Pop 重载。
-        /// </summary>
-        public void Pop(UILayer layer) => Pop((int)layer);
+        /// <summary>UI 根节点</summary>
+        public Transform UIRoot => _uiRoot;
 
-        // ======== CloseAll ========
+        /// <summary>UI 相机</summary>
+        public Camera UICamera => _uiCamera;
 
-        /// <summary>
-        /// 关闭指定层级的所有界面。
-        /// </summary>
-        public void CloseAll(int layer)
-        {
-            if (!_stacks.TryGetValue(layer, out var stack)) return;
+        // ── IEmberManager ──
 
-            while (stack.Count > 0)
-            {
-                var view = stack.Pop();
-                view.OnClose();
-                DestroyView(view);
-            }
-        }
-
-        /// <summary>
-        /// 使用 <see cref="UILayer"/> 枚举的 CloseAll 重载。
-        /// </summary>
-        public void CloseAll(UILayer layer) => CloseAll((int)layer);
-
-        /// <summary>
-        /// 关闭所有层级的所有界面。
-        /// </summary>
-        public void CloseAll()
-        {
-            foreach (var kvp in _stacks)
-            {
-                while (kvp.Value.Count > 0)
-                {
-                    var view = kvp.Value.Pop();
-                    view.OnClose();
-                    DestroyView(view);
-                }
-            }
-        }
-
-        // ======== 查询 ========
-
-        /// <summary>
-        /// 获取指定层级当前栈顶的界面，栈空返回 null。
-        /// </summary>
-        public IUIView GetTopView(int layer)
-        {
-            return TryPeek(layer, out var view) ? view : null;
-        }
-
-        /// <summary>
-        /// 获取指定层级的界面数量。
-        /// </summary>
-        public int GetCount(int layer)
-        {
-            return _stacks.TryGetValue(layer, out var stack) ? stack.Count : 0;
-        }
-
-        /// <summary>
-        /// 指定层级是否有界面在显示中。
-        /// </summary>
-        public bool HasView(int layer)
-        {
-            return GetCount(layer) > 0;
-        }
-
-        // ======== IEmberManager ========
-
-        /// <summary>
-        /// 由 ManagerCollector 自动调用的无参初始化。
-        /// </summary>
         void IEmberManager.Init()
         {
             if (_initialized) return;
 
-            if (GameLauncher.Instance.UIRoot == null)
+            var launcher = GameLauncher.Instance;
+            _uiRoot = launcher.UIRoot?.transform;
+            _uiCamera = launcher.UICamera;
+
+            if (_uiRoot == null)
             {
-                EmberDebug.LogError(TAG, "GameBoot 下缺少 UIRoot 子节点，EmberUIManager 无法初始化。");
+                EmberDebug.LogError(TAG, "UIRoot 为空，EmberUIManager 无法初始化。");
                 return;
             }
 
+            // 初始化时隐藏 UIRoot 下所有子节点（编辑时放的预览节点）
+            foreach (Transform child in _uiRoot)
+            {
+                child.gameObject.SetActive(false);
+            }
+
+            // 默认实现
+            _resourceProvider ??= new DefaultUIResourceProvider();
+            _transitionHandler ??= new DefaultUITransitionHandler();
+
+            _pageContext = new EmberPageContext(this);
+            _bgMaskPool = new EmberBgMaskPool(_uiRoot);
+
             _initialized = true;
-            EmberEventBus.OnNext(EmberBroadcastEvent.UIReady);
-            EmberDebug.LogInit(TAG, "EmberUIManager initialized.");
+            EmberEventBus.OnNext(EmberUIEvents.UIManagerReady);
+            EmberDebug.LogInit(TAG, "EmberUIManager 初始化完成。");
+        }
+
+        void IEmberManager.Destroy()
+        {
+            Shutdown();
+        }
+
+        // ── 页面生命周期（由 PageRouter 调用） ──
+
+        /// <summary>
+        /// 打开一个页面。完整流程：Init → PlayShow → [Opened]。
+        /// </summary>
+        /// <param name="page">已实例化的页面</param>
+        /// <param name="pageDef">页面定义</param>
+        /// <param name="args">传递给 Init 的参数</param>
+        /// <param name="onComplete">完成回调</param>
+        public void OpenPage(EmberPage page, PageDef pageDef, object args, Action onComplete = null)
+        {
+            EnsureLayerCanvas(pageDef.Layer);
+
+            page.PageDef = pageDef;
+            page.transform.SetParent(_uiRoot, false);
+
+            var canvas = page.GetComponent<Canvas>();
+            if (!canvas)
+                canvas = page.gameObject.AddComponent<Canvas>();
+
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            canvas.worldCamera = _uiCamera;
+            canvas.overrideSorting = true;
+
+            // 添加到追踪列表
+            if (!_activePages.Contains(page))
+                _activePages.Add(page);
+
+            // Phase 1: Init
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).Init(args);
+
+                // Phase 2: PlayShow
+                EnqueuePageOperation(() =>
+                {
+                    ((IUIView)page).PlayShow();
+
+                    // 下一帧完成 Show
+                    _nextFrameCallbacks.Enqueue(() =>
+                    {
+                        EmberUIObserver.NotifyOpened(pageDef, args);
+                        EmberDebug.LogEvent(TAG, $"页面已打开: {pageDef}");
+                        onComplete?.Invoke();
+                    });
+                });
+            });
         }
 
         /// <summary>
-        /// 由 ManagerCollector 逆序调用的销毁逻辑。
+        /// 关闭一个页面。流程：PlayHide → Cleanup → Destroy。
         /// </summary>
-        void IEmberManager.Destroy()
+        public void ClosePage(EmberPage page, Action onComplete = null)
         {
-            DestroyInternal();
+            ClosePageInternal(page, onComplete);
         }
 
-        #endregion
-
-        // ============================================================
-
-        #region 内部方法
-
-        private void EnsureLayerRoot(int layer)
+        internal void ClosePageInternal(EmberPage page, Action onComplete = null)
         {
-            if (_layerRoots.ContainsKey(layer)) return;
+            if (page == null) return;
 
-            var go = new GameObject($"UI Layer - {layer}");
-            go.transform.SetParent(GameLauncher.Instance.UIRoot.transform);
+            var pageDef = page.PageDef;
 
-            // 自动挂载 Canvas 渲染组件（S9）
-            var canvas = go.AddComponent<Canvas>();
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).PlayHide();
+
+                // 下一帧完成 Hide
+                _nextFrameCallbacks.Enqueue(() =>
+                {
+                    if (page != null)
+                    {
+                        ((IUIView)page).Cleanup();
+                        _activePages.Remove(page);
+                        EmberUIObserver.NotifyClosed(pageDef, null);
+                        EmberDebug.LogCleanup(TAG, $"页面已关闭: {pageDef}");
+                        if (page.gameObject != null)
+                            Destroy(page.gameObject);
+                        onComplete?.Invoke();
+                    }
+                });
+            });
+        }
+
+        /// <summary>
+        /// 暂停一个页面。
+        /// </summary>
+        public void PausePage(EmberPage page)
+        {
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).OnPause();
+                EmberUIObserver.NotifyPaused(page.PageDef);
+            });
+        }
+
+        /// <summary>
+        /// 恢复一个页面。
+        /// </summary>
+        public void ResumePage(EmberPage page)
+        {
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).OnResume();
+                EmberUIObserver.NotifyResumed(page.PageDef);
+            });
+        }
+
+        /// <summary>
+        /// 重新打开已关闭的页面（OnReopen → PlayShow）。
+        /// </summary>
+        public void ReopenPage(EmberPage page, object args, Action onComplete = null)
+        {
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).OnReopen(args);
+                EmberUIObserver.NotifyReopened(page.PageDef, args);
+
+                ((IUIView)page).PlayShow();
+                _nextFrameCallbacks.Enqueue(() =>
+                {
+                    EmberUIObserver.NotifyOpened(page.PageDef, args);
+                    onComplete?.Invoke();
+                });
+            });
+        }
+
+        // ── Canvas 层管理 ──
+
+        /// <summary>
+        /// 确保指定层级的 Canvas 已创建。
+        /// </summary>
+        public Canvas EnsureLayerCanvas(int layer)
+        {
+            if (_layerCanvases.TryGetValue(layer, out var canvas))
+                return canvas;
+
+            var go = new GameObject($"UI_Layer_{layer}");
+            go.transform.SetParent(_uiRoot);
+
+            canvas = go.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            canvas.worldCamera = GameLauncher.Instance.UICamera;
-            canvas.sortingOrder = layer; // UILayer 的 int 值直接控制渲染顺序
+            canvas.worldCamera = _uiCamera;
+            canvas.sortingOrder = layer;
 
             go.AddComponent<CanvasScaler>();
             go.AddComponent<GraphicRaycaster>();
 
-            _layerRoots[layer] = go.transform;
+            _layerCanvases[layer] = canvas;
+            return canvas;
         }
 
-        private Stack<IUIView> GetOrCreateStack(int layer)
+        // ── BG Mask ──
+
+        /// <summary>显示背景遮罩</summary>
+        public GameObject ShowBgMask(int sortingOrder, Action onClick)
         {
-            if (!_stacks.TryGetValue(layer, out var stack))
+            return _bgMaskPool.Get(sortingOrder, onClick);
+        }
+
+        /// <summary>隐藏背景遮罩</summary>
+        public void HideBgMask(GameObject mask)
+        {
+            _bgMaskPool.Return(mask);
+        }
+
+        // ── 安全操作队列 ──
+
+        /// <summary>
+        /// 将页面操作加入队列，避免在遍历 _activePages 时修改集合。
+        /// </summary>
+        public void EnqueuePageOperation(Action op)
+        {
+            _pendingOperations.Enqueue(op);
+        }
+
+        // ── 查询 ──
+
+        /// <summary>活跃页面列表（运行时）</summary>
+        public IReadOnlyList<EmberPage> ActivePages => _activePages;
+
+        /// <summary>按层级从高到低查找返回键处理者</summary>
+        public bool HandleEscapeKey()
+        {
+            bool handled = false;
+            _pageContext.ForEachVisiblePage(page =>
             {
-                stack = new Stack<IUIView>();
-                _stacks[layer] = stack;
+                handled = ((IUIView)page).TryEscapeKeyClose();
+                return handled; // true = 停止遍历
+            });
+            return handled;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部方法
+
+        private void ProcessPendingOperations()
+        {
+            if (_pendingOperations.Count == 0) return;
+
+            _isProcessingOperations = true;
+            _loadTimer.Restart();
+
+            while (_pendingOperations.Count > 0)
+            {
+                var op = _pendingOperations.Dequeue();
+                op?.Invoke();
+
+                if (_loadTimer.ElapsedMilliseconds > TimeBudgetMs && _pendingOperations.Count > 0)
+                    break;
             }
 
-            return stack;
+            _isProcessingOperations = false;
         }
 
-        private bool TryPeek(int layer, out IUIView view)
+        private void ProcessNextFrameCallbacks()
         {
-            view = null;
-            return _stacks.TryGetValue(layer, out var stack)
-                && stack.TryPeek(out view);
+            if (_nextFrameCallbacks.Count == 0) return;
+
+            var count = _nextFrameCallbacks.Count;
+            for (int i = 0; i < count; i++)
+            {
+                _nextFrameCallbacks.Dequeue()?.Invoke();
+            }
         }
 
-        private bool TryPop(int layer, out IUIView view)
+        private void Shutdown()
         {
-            view = null;
-            return _stacks.TryGetValue(layer, out var stack)
-                && stack.TryPop(out view);
+            _bgMaskPool?.Clear();
+            _pageContext?.CloseAll();
+            _activePages.Clear();
+            _pendingOperations.Clear();
+            _layerCanvases.Clear();
+
+            EmberEventBus.OnNext(EmberUIEvents.UIManagerShutdown);
+            EmberDebug.LogShutdown(TAG, "EmberUIManager 已关闭。");
+            _initialized = false;
         }
 
-        private void PauseTopView(int layer)
-        {
-            if (TryPeek(layer, out var top))
-                top.OnPause();
-        }
-
-        private void ResumeTopView(int layer)
-        {
-            if (TryPeek(layer, out var top))
-                top.OnResume();
-        }
-
-        private void DestroyView(IUIView view)
-        {
-            if (view is MonoBehaviour mb && mb != null)
-                UnityEngine.Object.Destroy(mb.gameObject);
-        }
-
-        /// <summary>
-        /// EmberSingleton 销毁钩子。
-        /// </summary>
         protected override void OnDestroy()
         {
-            DestroyInternal();
-        }
-
-        /// <summary>
-        /// 共享清理逻辑：关闭所有界面、广播 UIShutdown、重置状态。
-        /// UIRoot 由 GameBoot 预置，不在此销毁。
-        /// </summary>
-        private void DestroyInternal()
-        {
-            CloseAll();
-            EmberEventBus.OnNext(EmberBroadcastEvent.UIShutdown);
-            _layerRoots.Clear();
-            _initialized = false;
+            Shutdown();
         }
 
         #endregion
