@@ -1048,10 +1048,9 @@ GameLauncher.Awake()
 
 ---
 
-## Package 迁移：从 burner 包汲取到 ember 包 ⬅ 当前
+## Package 迁移：从 burner 包汲取到 ember 包
 
-> 启动：2026-08-04
-> 策略：从 `com.ember.basic` 开始，逐个脚本取消注释 → 适配 ember 规范 → 优化
+> 启动：2026-08-04 | basic ✅ 完成 | extensions ✅ 完成 | uiextension ⬜ 待开始
 
 ### 背景
 
@@ -1059,8 +1058,8 @@ GameLauncher.Awake()
 
 | 包 | 文件数 | 来源 | 状态 |
 |---|--------|------|------|
-| `com.ember.basic` | 36 cs | `com.burner.basic` | ⬜ 全部注释，待适配 |
-| `com.ember.extensions` | 17 cs | `com.burner.extensions` | ⬜ 全部注释，待适配 |
+| `com.ember.basic` | 36 cs | `com.burner.basic` | ✅ 已完成（2026-08-04） |
+| `com.ember.extensions` | 17 cs → **5 cs** | `com.burner.extensions` | ✅ 已完成（2026-08-06），删除 12 无用文件 |
 | `com.ember.uiextension` | 80+ cs | `com.burner.uiextension` | ⬜ 全部注释，待适配 |
 
 ### 迁移策略
@@ -1206,36 +1205,53 @@ com.ember.basic/Runtime/
 | `Unsafe/` | 2 | 命名空间, 字段 PascalCase, 方法 PascalCase, UnsafeString 放入 Ember.Basic |
 | `Utils/` | 1 | 重命名 Const→SharedConst, 字段语义化命名 |
 
-### 2. com.ember.extensions（17 个文件）
+### 2. com.ember.extensions（5 个文件）✅ 已完成
 
-> 状态：⬜ 待开始（basic 包完成后启动）
+> 状态：✅ 已完成（2026-08-06）
+> 原 17 个注释文件 → 逐文件审计 → 删除 12 个 → 迁移 5 个 + 已有 1 个 = **6 个活跃源文件**
 
-#### 2.1 目录结构
+#### 2.1 迁移结果
+
+**删除（12 个）：**
+
+| 文件 | 删除理由 |
+|------|---------|
+| Async/STTaskFactory.cs | STTask WhenAll/WhenAny，Ember 用 UniTask |
+| Async/SingleThreadSynchronizationContext.cs | STTask 同步上下文，Ember 用 UniTask |
+| Base/Singleton.cs | 与 `EmberSingleton<T>` 重复，且 ember 版更优 |
+| Base/ThreadPool.cs | 自定义线程池，Unity 中不推荐 |
+| Resource/CacheManager.cs | 深度耦合 Burner 资源系统（IResourceProxy + MemoryPool） |
+| Resource/ILoaderHandle.cs | 2 方法接口，无独立价值 |
+| Resource/IResourceLoader.cs | 依赖 IUpdater + 仅被一个类实现 |
+| Resource/IResourceProxy.cs | Burner 资源系统核心，ember 已有 `IResourceProvider` |
+| Resource/ResourceLoader.cs | 依赖不存在的 ResourceManager |
+| Utils/CachedIntPtrStrings.cs | 极专用（原生内存字符串驻留），需要时可从 burner 恢复 |
+| Utils/FieldsInitializer.cs | 被 Burner 团队标记 `[Obsolete]` |
+| Utils/GameObjectUtils.cs | 寥寥数行（SetLayer/GetGameObjectByName），按需新写 |
+| Utils/Utility.cs | 853 行大杂烩（MD5/URL/随机/文件/Shell），需要时拆分 |
+
+**迁移（5 个）：**
+
+| 文件 | 说明 | 适配变更 |
+|------|------|---------|
+| Base/CacheLRUList.cs | 零 GC LRU 数据结构（O(1) push/pop + 内部节点头池） | namespace, [Burner]→[Ember], 去 wiki 链接, `[ForDebug/ForTest]` 移除, 英文文档注释 |
+| Extension/UnityExtension.cs | Transform/GameObject/RectTransform 扩展方法（14 个） | namespace, 移除 legacy 方法（StringReplaceEx/IsCJK/GetStringRealLength）, 移除 WX 游戏 UniUnload, 加 `[NoGC]`/`[HasGC]` 标注, XML 文档注释 |
+| Extension/GameObjectComponentExtensions.cs | GetOrAddComponent 扩展（2 个重载） | 已激活（basic 迁移时创建），无需变更 |
+| Utils/JsonUtils.cs | LitJson 反射序列化（`[JsonProp]` + 序列化回调） | namespace, Burner.Basic→Ember.Basic, [Burner]→[Ember], 扩展方法独立为 JsonDataExtensions 类, 去 wiki 链接 |
+| Utils/StreamHelper.cs | 二进制 I/O 框架（3 种后端: Memory/IntPtr/Bytes + 7-bit 编码） | namespace, [Burner]→[Ember], `str.IsNullOrEmpty()`→`string.IsNullOrEmpty()`, `Mathf.Min`→`Math.Min` |
+
+**最终目录结构：**
 
 ```
 com.ember.extensions/Runtime/
-├── Async/
-│   ├── STTaskFactory.cs                        # STTask 的 Unity 扩展工厂
-│   └── SingleThreadSynchronizationContext.cs   # 单线程同步上下文
 ├── Base/
-│   ├── CacheLRUList.cs                         # LRU 缓存列表
-│   ├── Singleton.cs                            # 纯 C# 单例（与 EmberSingleton 重复？）
-│   └── ThreadPool.cs                           # 线程池
+│   └── CacheLRUList.cs                   # 零 GC LRU 缓存列表
 ├── Extension/
-│   └── UnityExtension.cs                       # Unity 类型扩展方法
-├── Resource/
-│   ├── CacheManager.cs                         # 资源缓存管理器
-│   ├── ILoaderHandle.cs                        # 加载器句柄接口
-│   ├── IResourceLoader.cs                      # 资源加载器接口
-│   ├── IResourceProxy.cs                       # 资源代理接口
-│   └── ResourceLoader.cs                       # 资源加载器实现
+│   ├── GameObjectComponentExtensions.cs  # GetOrAddComponent 扩展
+│   └── UnityExtension.cs                 # Transform/GameObject 扩展方法
 └── Utils/
-    ├── CachedIntPtrStrings.cs                  # IntPtr 字符串缓存
-    ├── FieldsInitializer.cs                    # 字段初始化器
-    ├── GameObjectUtils.cs                      # GameObject 工具方法
-    ├── JsonUtils.cs                            # JSON 工具
-    ├── StreamHelper.cs                         # 流处理工具
-    └── Utility.cs                              # 通用工具
+    ├── JsonUtils.cs                      # LitJson 反射序列化
+    └── StreamHelper.cs                   # 二进制 I/O 框架
 ```
 
 ### 3. com.ember.uiextension（80+ 个文件）
@@ -1267,7 +1283,6 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
 
 | 优先级 | 事项 | 文件数 | 说明 |
 |--------|------|--------|------|
-| 🔴 P0 | **com.ember.extensions 包迁移** | 17 | Resource/Cache/ThreadPool/UnityExtension/GameObjectUtils 等。依赖 basic 包（已完成），迁移后 Timer 等新功能有处放 |
 | 🔴 P0 | **UIManager 结构性重写 — Phase A** | ~10 | 框架层核心：EmberPage + EmberPageContext + EmberUIManager + EmberUIPageRouter 两层架构。参照 burner uiextension 包 |
 | 🟡 P1 | **com.ember.uiextension 包迁移** | 80+ | UI 组件（GameButton/Text/Image 等）+ UIExt（Tweener 等）+ Editor。量大，分批做 |
 | 🟡 P1 | **Module 系统** | 3 | `EmberModuleCollector` + `ModulePhase`，接口已定义 |
@@ -1286,16 +1301,13 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
   ✅ Manager 自动发现 / Update 循环 / GameState 状态机 / 日志系统
   ✅ S1-S9 场景集成验证
   ✅ com.ember.basic 包迁移（36 Runtime + 编辑器工具）
+  ✅ com.ember.extensions 包迁移（17→5 文件，逐文件审计删除 12，迁移 5）
   ✅ API 速查手册（docs/dev/ember-api-reference.md）
   ✅ 编辑器工具测试清单（docs/dev/editor-tools-test-checklist.md）
   ✅ 编辑器工具多轮修复（全局语言同步 / 面板布局 / 菜单重组）
   ✅ 模块 README 文档（15 个，覆盖全部 8 个模块 + Core 子目录）
 
-进行中：
-  🧪 编辑器工具手动回归测试
-
 待开始：
-  ⬜ com.ember.extensions 包迁移（17 文件）
   ⬜ UIManager 结构性重写 Phase A
   ⬜ com.ember.uiextension 包迁移（80+ 文件）
   ⬜ Module 系统 / Timer / 架构债务
@@ -1370,6 +1382,7 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
 | 2026-08-05 | 📝 **模块文档全面更新**：Core 拆分到 7 个子目录（Event/Manager/Service/State/Update/Debug/Editor），全部 API.md→README.md 重命名，更新 Scene/Resource/UI 文档，新增 Audio/Camera/Input/Editor 文档，共 15 个 README.md 覆盖全部 8 个模块 |
 | 2026-08-05 | 🆕 **文件日志持久化**：新增 `EmberFileLog`（异步后台线程 + 批量写入 + 日志轮转 + 过期清理）+ `IEmberLogUploader` 上传接口，`EmberDebug` 所有 Log 方法增加文件输出通道（纯文本无 Rich Text），`EmberDebugConfigSO` 新增文件日志配置面板 |
 | 2026-08-05 | 📋 **Audio 升级方案**：基于 burner `AudioType` / `AudioGroupConfig` / `AudioCategory` / `AudioAgent` 四层架构，制定完整移植方案 → [docs/dev/audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md)。Audio 模块基础版已完成，升级待实施 |
+| 2026-08-06 | ✅ **com.ember.extensions 迁移完成**：逐文件审计 17 个注释文件 → 删除 12（Singleton 重复/ThreadPool 不推荐/Resource 体系已废弃/STTask 异步用 UniTask 替代/Utility 大杂烩/已 Obsolete 代码）→ 迁移 5（CacheLRUList/UnityExtension/JsonUtils/StreamHelper）+ 保留已激活的 GameObjectComponentExtensions = 6 个活跃源文件。空目录 Async/Resource 已清理。
 
 
 ---

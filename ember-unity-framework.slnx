@@ -1,5 +1,4 @@
 ﻿<Solution>
-  <Project Path="Ember.Extensions.csproj" />
   <Project Path="MoreMountains.Tools.csproj" />
   <Project Path="MoreMountains.Tools.Editor.csproj" />
   <Project Path="Ember.UIExtension.Runtime.csproj" />
@@ -10,6 +9,7 @@
   <Project Path="Ember.UIExtension.Editor.csproj" />
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Ember.Resource.Runtime.csproj" />
+  <Project Path="Ember.Extensions.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
   <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
   <Project Path="Ember.Basic.Editor.csproj" />
