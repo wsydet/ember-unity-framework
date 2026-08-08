@@ -5,23 +5,23 @@ using UnityEngine;
 namespace Game.UI
 {
     /// <summary>
-    /// 默认启动动画 —— 立即完成，无动画效果。
+    /// 默认开屏动画 —— 立即完成，无动画效果。
     ///
-    /// 挂在 MainScene 的 GameObject 上，替代抽象基类 <see cref="EmberInitAnimationStarter"/>。
-    /// <see cref="PlayStartupAnimation"/> 中立即调用 <c>onComplete()</c>，
-    /// InitState 直接过渡到 MainState，无等待。
+    /// 挂在 MainScene 的 GameObject 上，替代抽象基类 <see cref="EmberMainAnimationStarter"/>。
+    /// <see cref="PlayOpeningAnimation"/> 中立即调用 <c>onComplete()</c>，
+    /// MainState 直接收到 OpeningAnimationEnd。
     ///
     /// <b>自定义动画：</b>
-    /// 继承 <see cref="EmberInitAnimationStarter"/>，override <see cref="PlayStartupAnimation"/>，
+    /// 继承 <see cref="EmberMainAnimationStarter"/>，override <see cref="PlayOpeningAnimation"/>，
     /// 在动画结束时调用 <c>onComplete()</c>。然后替换场景中的本组件。
     ///
     /// 使用方式：
     /// <code>
-    /// public class MyLogoAnimation : EmberInitAnimationStarter
+    /// public class MyLogoAnimation : EmberMainAnimationStarter
     /// {
     ///     [SerializeField] private CanvasGroup _logoGroup;
     ///
-    ///     protected override async void PlayStartupAnimation(Action onComplete)
+    ///     protected override async void PlayOpeningAnimation(Action onComplete)
     ///     {
     ///         // 淡入 logo（1 秒）
     ///         await FadeIn(_logoGroup, 1f);
@@ -34,9 +34,9 @@ namespace Game.UI
     /// }
     /// </code>
     /// </summary>
-    public sealed class EmberDefaultInitAnimation : EmberInitAnimationStarter
+    public sealed class EmberDefaultMainAnimation : EmberMainAnimationStarter
     {
-        protected override void PlayStartupAnimation(Action onComplete)
+        protected override void PlayOpeningAnimation(Action onComplete)
         {
             // 默认：无开场动画，立即完成
             onComplete();

@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 1208447272}
   - component: {fileID: 1208447274}
   m_Layer: 0
-  m_Name: EmberDefaultInitAnimation
+  m_Name: EmberDefaultMainAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0470846eb1054fe683f8a06209a204f1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.UI.EmberDefaultInitAnimation
+  m_EditorClassIdentifier: Assembly-CSharp::Game.UI.EmberDefaultMainAnimation
 --- !u!1 &1263496034
 GameObject:
   m_ObjectHideFlags: 0

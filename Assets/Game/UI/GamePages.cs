@@ -6,7 +6,7 @@ namespace Game.UI
     /// 游戏页面注册表 —— 所有 UI 页面的统一定义处。
     ///
     /// 每个页面在此声明一个 public static readonly PageDef，
-    /// 运行时通过 EmberUIManager.Instance.Push(GamePages.XXX) 打开。
+    /// 运行时通过 EmberUIPageRouter.Instance.ShowMainPage(GamePages.XXX) 打开。
     ///
     /// 后期可由图形化编辑器自动生成此类，无需手写。
     /// </summary>
@@ -17,14 +17,14 @@ namespace Game.UI
         // ============================================================
 
         /// <summary>主菜单页面</summary>
-        public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal);
+        public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal, PageType.MainPage);
 
         // ============================================================
         // Popup 层 —— 弹窗
         // ============================================================
 
         /// <summary>设置面板</summary>
-        public static readonly PageDef Settings = new("ui/settings", UILayer.Popup);
+        public static readonly PageDef Settings = new("ui/settings",  UILayer.Popup,  PageType.Popup);
 
         // ============================================================
         // TopMost 层 —— 顶层（引导、加载遮罩等）
