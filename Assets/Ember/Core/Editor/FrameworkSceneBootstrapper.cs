@@ -25,7 +25,13 @@ namespace Ember.Core.Editor
         static FrameworkSceneBootstrapper()
         {
             EditorApplication.delayCall += SyncBuildScenes;
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            // 延迟订阅 playModeStateChanged，确保 PlayModePageDefGuard 等
+            // 其他 [InitializeOnLoad] 的 Guard 先订阅、先执行。
+            // 如果 Guard 阻止了 Play，SaveAndCleanScenes 就不会执行。
+            EditorApplication.delayCall += () =>
+            {
+                EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            };
         }
 
         /// <summary>
@@ -47,6 +53,9 @@ namespace Ember.Core.Editor
 
         private static void SaveAndCleanScenes()
         {
+            // 如果其他 Guard（如 PlayModePageDefGuard）已阻止进入 Play，跳过清理
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) return;
+
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
             var frameworkPath = FindFrameworkScenePath();

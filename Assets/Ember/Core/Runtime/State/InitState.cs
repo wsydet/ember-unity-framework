@@ -8,14 +8,15 @@ namespace Ember.Core
     /// 启动流程：
     /// 1. 初始化所有 Manager
     /// 2. 广播 CoreReady
-    /// 3. 预加载 MainScene
-    /// 4. MainScene 就绪 → 广播 <see cref="EmberBroadcastEvent.InitSceneReady"/>
-    ///    → MainScene 上的动画脚本接管（默认立即完成）
-    /// 5. 收到 <see cref="EmberBroadcastEvent.InitAnimationDone"/>
-    ///    → TransitionTo&lt;MainState&gt;
+    /// 3. 加载 MainScene → TransitionTo&lt;MainState&gt;
     ///
-    /// <b>自定义启动动画：</b>
-    /// 继承 EmberInitAnimationStarter，override PlayStartupAnimation，完成后调用 onComplete。
+    /// <b>InitState 持有 BootSplash（黑幕）</b>：
+    /// BootSplash 在 FrameworkScene 启动时自动激活，
+    /// Init 退出时（SceneLoadDone 后）自动关闭销毁。
+    ///
+    /// <b>开屏动画归 MainState 持有</b>：
+    /// 进入 MainState.OnEnter 后播报 MainSceneReady，
+    /// EmberMainAnimationStarter 响应并播放动画。
     ///
     /// 此状态为系统必需（IsRequired = true），不可从状态机中注销。
     /// </summary>
@@ -23,7 +24,7 @@ namespace Ember.Core
     {
         public override string Name => "Init";
         public override string Description
-            => "系统初始化：Manager 启动、资源就绪、预加载 MainScene。";
+            => "系统初始化：Manager 启动、资源就绪、加载 MainScene。";
         public override bool IsRequired => true;
         public override string ScenePath => "";
 
@@ -39,25 +40,14 @@ namespace Ember.Core
             EmberManagerCollector.Instance.InitializeAll();
             EmberEventBus.OnNext(EmberBroadcastEvent.CoreReady);
 
-            EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: framework ready. Preloading MainScene...");
+            EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: framework ready. Loading MainScene...");
 
             if (args is EmberStateMachine fsm)
             {
                 fsm.LoadSceneAsync?.Invoke("MainScene", () =>
                 {
-                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded.");
-
-                    // 注意：先订阅再广播 —— 默认动画（EmberDefaultInitAnimation）同步完成，
-                    // 如果先广播再订阅，InitAnimationDone 会丢失，导致永远无法 TransitionTo《MainState》
-                    EmberEventBus.Subscribe(EmberBroadcastEvent.InitAnimationDone, OnAnimationDone);
-                    EmberEventBus.OnNext(EmberBroadcastEvent.InitSceneReady);
-
-                    void OnAnimationDone()
-                    {
-                        EmberEventBus.Unsubscribe(EmberBroadcastEvent.InitAnimationDone, OnAnimationDone);
-                        EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: animation done. Transitioning to Main...");
-                        fsm.TransitionTo<MainState>(skipSceneLoad: true);
-                    }
+                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded, transitioning to Main...");
+                    fsm.TransitionTo<MainState>(skipSceneLoad: true);
                 });
             }
         }

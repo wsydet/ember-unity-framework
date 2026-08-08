@@ -50,7 +50,7 @@ sub.Dispose();
 
 | 模块 | 基址 | 事件 |
 |------|------|------|
-| Core | 1000 | CoreReady(1001), CoreShutdown(1002), GameStateChanged(1003), InitSceneReady(1004), InitAnimationDone(1005) |
+| Core | 1000 | CoreReady(1001), CoreShutdown(1002), GameStateChanged(1003), MainSceneReady(1006), OpeningAnimationEnd(1007) |
 | Resource | 2000 | ResourceReady(2001), ResourceShutdown(2002) |
 | UI | 3000 | UIReady(3001), UIShutdown(3002) |
 | Scene | 4000 | SceneLoaded(4001), SceneUnloading(4002), SceneLoadStart(4003), SceneLoadDone(4004) |

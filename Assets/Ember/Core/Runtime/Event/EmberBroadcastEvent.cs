@@ -1,4 +1,4 @@
-namespace Ember.Core
+﻿namespace Ember.Core
 {
     /// <summary>
     /// 框架广播事件的 int-key 常量表。
@@ -54,11 +54,19 @@ namespace Ember.Core
         /// <summary>游戏状态发生切换（oldState → newState）</summary>
         public const int GameStateChanged = Core + 3;
 
-        /// <summary>MainScene 预加载完成，启动动画脚本可以开始</summary>
+        /// <summary>[Obsolete] MainScene 预加载完成。已废弃，请使用 MainSceneReady</summary>
+        [System.Obsolete("Use MainSceneReady instead.")]
         public const int InitSceneReady    = Core + 4;
 
-        /// <summary>启动动画完成，InitState 可过渡到 MainState</summary>
+        /// <summary>[Obsolete] 启动动画完成。已废弃，请使用 OpeningAnimationEnd</summary>
+        [System.Obsolete("Use OpeningAnimationEnd instead.")]
         public const int InitAnimationDone = Core + 5;
+
+        /// <summary>MainState 就绪，开屏动画可以开始（由 MainState.OnEnter 播报）</summary>
+        public const int MainSceneReady     = Core + 6;
+
+        /// <summary>开屏动画完成，MainState 收到后调用 OnOpeningAnimationEnd</summary>
+        public const int OpeningAnimationEnd = Core + 7;
 
         // ============================================================
         // Resource 模块事件（Resource + 1 ~ Resource + 999）

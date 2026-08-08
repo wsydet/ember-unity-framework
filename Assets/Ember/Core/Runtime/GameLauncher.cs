@@ -228,6 +228,25 @@ namespace Ember.Core
         /// </list>
         /// </summary>
         /// <param name="fsm">已创建的状态机实例</param>
+        /// <summary>
+        /// 创建 MainState 实例。自动发现游戏层的 GameMainState 子类；
+        /// 如果不存在则返回框架默认 MainState。用户只需在游戏层创建
+        /// <c>GameMainState : MainState</c>，无需修改任何框架代码。
+        /// </summary>
+        protected virtual MainState CreateMainState()
+        {
+            // 反射扫描所有程序集，查找 MainState 的非抽象子类
+            foreach (var asm in System.AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (var t in asm.GetTypes())
+                {
+                    if (t.IsSubclassOf(typeof(MainState)) && !t.IsAbstract)
+                        return (MainState)System.Activator.CreateInstance(t);
+                }
+            }
+            return new MainState();
+        }
+
         protected virtual void ConfigureStateMachine(EmberStateMachine fsm)
         {
             // ============================================================
@@ -235,7 +254,7 @@ namespace Ember.Core
             // Init → Main → Gameplay，单机/网游通用
             // ============================================================
             fsm.Register(new InitState());
-            fsm.Register(new MainState());
+            fsm.Register(CreateMainState());
             fsm.Register(new GameplayState());
 
             // 框架通用覆盖状态（可删除，用户可用自定义设置替代）
