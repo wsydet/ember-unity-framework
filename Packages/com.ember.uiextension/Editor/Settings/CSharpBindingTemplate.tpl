@@ -1,48 +1,25 @@
 /*=============================================================
- * author       : {author_name} 
- * prefab name  : {prefab_name} 
-
- {if isPage = 1:
-{" * page name    : "}{page_name}
- }
-
- * update time  : {create_date} 
+ * author       : {author_name}
+ * prefab name  : {prefab_name}
+ * page name    : {page_name}
+ * update time  : {create_date}
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Burner.UIExtension;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace {namespace_name}
+{{
+    public partial class {class_name} : {base_class_name}
+    {{
+{fields_decl}
 
-\{
-    public partial class {class_name} : {base_class_name}{"
-    "}
-    \{{"
-"}
-{for f in fields:
-{"        /// <summary>
-        /// "}{f.comment}{"
-        /// </summary>
-        "}{f.type} {f.name};{"
-"}
-}
-
-        public override void OnBind()
-        \{
-            base.OnBind();{"
-"}
-{for f in fields:
-
-{"            "}{f.name} = controlMap["{f.name}"] as {f.type};{"
-"}
-}
-
-        \}
-    \}
-\}
+    public override void OnBind()
+    {{
+        base.OnBind();
+{fields_bind}
+    }}
+}}
+}}
