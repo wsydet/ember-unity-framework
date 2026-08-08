@@ -5,6 +5,7 @@
   <Project Path="Ember.Basic.Runtime.csproj" />
   <Project Path="Ember.UI.Tests.csproj" />
   <Project Path="UniTask.csproj" />
+  <Project Path="Ember.UI.Runtime.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="DOTween.Modules.csproj" />
   <Project Path="Ember.UIExtension.Editor.csproj" />
@@ -15,7 +16,6 @@
   <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
   <Project Path="Ember.Basic.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
-  <Project Path="Ember.UI.Runtime.csproj" />
   <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="Ember.Scene.Runtime.csproj" />
   <Project Path="Borodar.RainbowFolders.csproj" />

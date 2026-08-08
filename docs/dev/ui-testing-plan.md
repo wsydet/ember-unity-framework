@@ -37,10 +37,10 @@ Assets/Game/UI/
 
 ### 1. 创建预制体
 
-**MainMenu.prefab** 结构：
+**MainMenu.prefab** 结构（预制体上只有视觉组件 + EmberUIBinding）：
 
 ```
-MainMenu (Canvas + CanvasGroup + EmberPage + EmberUIBinding)
+MainMenu (Canvas + CanvasScaler + CanvasGroup + EmberUIBinding)  ← 无 EmberPage!
 ├── BgImage (Image)
 ├── TitleText (TextMeshProUGUI)
 ├── BtnSettings (Button + Image)
@@ -50,10 +50,10 @@ MainMenu (Canvas + CanvasGroup + EmberPage + EmberUIBinding)
 └── VersionText (TextMeshProUGUI)
 ```
 
-**Settings.prefab** 结构：
+**Settings.prefab** 结构（同上）：
 
 ```
-Settings (Canvas + CanvasGroup + EmberPage + EmberUIBinding)
+Settings (Canvas + CanvasScaler + CanvasGroup + EmberUIBinding)  ← 无 EmberPage!
 ├── BgMask (Image, 半透明黑)
 ├── Panel (Image, 居中面板)
 │   ├── TitleText (TextMeshProUGUI) "设置"
@@ -66,83 +66,87 @@ Settings (Canvas + CanvasGroup + EmberPage + EmberUIBinding)
 └──
 ```
 
+> **架构关键**：预制体上**没有 MonoBehaviour 页面类**。`EmberPage` 是运行时创建的纯 C# 包装类，`EmberUILogic` 是生成的纯 C# 逻辑类（对标 Burner `GamePage` + `GameUILogic`）。预制体上只有 `EmberUIBinding` 一个自定义脚本。
+
 ### 2. 配置 EmberUIBinding
 
 在 MainMenu 预制体的 Inspector 中：
-- NamespaceName: `Game.UI`
-- ClassName: `UIMainMenu`
-- OutputDirectory: `Game/UI/Generated`
-- 点"自动收集所有子节点" → 自动填充 BtnSettings / BtnStart / TitleText
+- 是否为 Page: ✅
+- 页面名: `MainMenu`
+- 页面类型 PageFlags: `MainPage`
+- 逻辑类: `Game/UI/UIMainMenu`（类名自动填 `UIMainMenu`）
+- 点"自动收集绑定" → 自动填充 BtnSettings / BtnStart / TitleText 等
 
 在 Settings 预制体的 Inspector 中：
-- NamespaceName: `Game.UI`
-- ClassName: `UISettings`
-- OutputDirectory: `Game/UI/Generated`
+- 页面名: `Settings`
+- 页面类型: `Popup`
+- 逻辑类: `Game/UI/UISettings`
 
 ### 3. 生成代码
 
-每个预制体点"生成代码"。产出：
-- `UIMainMenu.bindings.cs` — 字段 + OnBind
-- `UIMainMenu.cs` — 生命周期骨架（首次）
-- `UISettings.bindings.cs` — 字段 + OnBind
-- `UISettings.cs` — 生命周期骨架（首次）
+每个预制体点"生成"。产出：
+- `UIMainMenu.bindings.cs` — 字段 + OnBind（`ControlMap["name"] as Type` 模式）
+- `UIMainMenu.cs` — 生命周期骨架（OnInit/OnShow/OnHide/OnClose/OnDispose，仅首次生成）
+- 自动更新 `GamePages.cs` 中的 PageDef
+
+> 生成的代码继承 `EmberUILogic`（纯 C#），非 MonoBehaviour。
 
 ### 4. 手写页面逻辑
 
-**UIMainMenu.cs**（在生成的骨架上补充）：
+**UIMainMenu.cs**（自动生成的骨架 + 手写业务逻辑，继承 EmberUILogic 纯 C# 类）：
 
 ```csharp
-public partial class UIMainMenu
+public partial class UIMainMenu  // 注意：继承 EmberUILogic，非 MonoBehaviour！
 {
-    protected override void OnInitialize(object args)
+    public override void OnInit()
     {
-        _btnSettings.OnClick.AddListener(() =>
+        // ControlMap 已填充，字段已绑定
+        _BtnSettings.onClick.AddListener(() =>
             EmberUIPageRouter.Instance.ShowPopup(GamePages.Settings));
 
-        _btnStart.OnClick.AddListener(() =>
+        _BtnStart.onClick.AddListener(() =>
             EmberDebug.Log(LogTags.EmberUI, "开始游戏"));
     }
 
-    protected override void OnPaused()
+    public override void OnPause()
     {
         EmberDebug.Log(LogTags.EmberUI, "MainMenu 被遮挡");
     }
 
-    protected override void OnResumed()
+    public override void OnResume()
     {
         EmberDebug.Log(LogTags.EmberUI, "MainMenu 恢复可见");
     }
 
-    protected override void OnCleanup()
+    public override void OnDispose()
     {
-        // 清理事件
+        // 清理事件监听
     }
 }
 ```
 
-**UISettings.cs**（在生成的骨架上补充）：
+**UISettings.cs**（生成的骨架 + 手写逻辑）：
 
 ```csharp
-public partial class UISettings
+public partial class UISettings  // EmberUILogic 子类
 {
-    protected override void OnInitialize(object args)
+    public override void OnInit()
     {
-        _btnClose.onClick.AddListener(() =>
-            EmberUIPageRouter.Instance.ClosePage(this));
+        _BtnClose.onClick.AddListener(() =>
+            EmberUIPageRouter.Instance.ClosePage(Page));
+
+        _BtnLogout.onClick.AddListener(() =>
+            EmberDebug.Log(LogTags.EmberUI, "退出登录"));
     }
 
-    protected override bool OnEscapeKey()
-    {
-        EmberUIPageRouter.Instance.ClosePage(this);  // 按返回键关闭
-        return true;  // 已处理，阻止冒泡
-    }
-
-    protected override void OnCleanup()
+    public override void OnDispose()
     {
         EmberDebug.Log(LogTags.EmberUI, "Settings 清理");
     }
 }
 ```
+
+> **注意**：`Page` 属性来自 `EmberUILogic`，是当前页面的 `EmberPage` 包装引用。关闭页面用 `EmberUIPageRouter.Instance.ClosePage(Page)`。
 
 ### 5. 注册页面
 
