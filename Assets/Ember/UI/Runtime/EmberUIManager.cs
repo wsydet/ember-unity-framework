@@ -43,6 +43,9 @@ namespace Ember.UI
         private EmberPageContext _pageContext;
         private EmberBgMaskPool _bgMaskPool;
 
+        // 延迟销毁中的页面（key = PrefabPath，对标 Burner GamePage.isClosing）
+        private readonly Dictionary<string, EmberPage> _closingPages = new();
+
         // 资源 & 过渡
         private IUIResourceProvider _resourceProvider;
         private IUITransitionHandler _transitionHandler;
@@ -66,6 +69,7 @@ namespace Ember.UI
         {
             ProcessPendingOperations();
             ProcessNextFrameCallbacks();
+            ProcessClosingPages();
         }
 
         private void LateUpdate()
@@ -121,9 +125,11 @@ namespace Ember.UI
             }
 
             // 初始化时隐藏 UIRoot 下所有子节点（编辑时放的预览节点）
+            // 但跳过标记了 IEmberPersistentUI 的持久元素（如 BootSplash）
             foreach (Transform child in _uiRoot)
             {
-                child.gameObject.SetActive(false);
+                if (!child.TryGetComponent(out IEmberPersistentUI _))
+                    child.gameObject.SetActive(false);
             }
 
             // 默认实现
@@ -157,11 +163,11 @@ namespace Ember.UI
             EnsureLayerCanvas(pageDef.Layer);
 
             page.PageDef = pageDef;
-            page.transform.SetParent(_uiRoot, false);
+            page.Transform.SetParent(_uiRoot, false);
 
-            var canvas = page.GetComponent<Canvas>();
+            var canvas = page.Canvas;
             if (!canvas)
-                canvas = page.gameObject.AddComponent<Canvas>();
+                canvas = page.GameObject.AddComponent<Canvas>();
 
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
             canvas.worldCamera = _uiCamera;
@@ -176,18 +182,19 @@ namespace Ember.UI
             {
                 ((IUIView)page).Init(args);
 
+                // 注入完成回调：动画真正结束时由 CompleteShow() 触发
+                page.SetShowCallback(() =>
+                {
+                    EmberDebug.LogEvent(TAG, $"页面已打开: {pageDef}");
+                    onComplete?.Invoke();
+                }, args);
+
                 // Phase 2: PlayShow
                 EnqueuePageOperation(() =>
                 {
                     ((IUIView)page).PlayShow();
-
-                    // 下一帧完成 Show
-                    _nextFrameCallbacks.Enqueue(() =>
-                    {
-                        EmberUIObserver.NotifyOpened(pageDef, args);
-                        EmberDebug.LogEvent(TAG, $"页面已打开: {pageDef}");
-                        onComplete?.Invoke();
-                    });
+                    // NotifyOpened + 日志 + onComplete 现在在 EmberPage.CompleteShow() 中触发
+                    // 不再使用 _nextFrameCallbacks（之前这里动画未完成就播报，是个 bug）
                 });
             });
         }
@@ -206,25 +213,52 @@ namespace Ember.UI
 
             var pageDef = page.PageDef;
 
-            EnqueuePageOperation(() =>
+            // 注入完成回调：动画真正结束时由 CompleteHide() 触发
+            page.SetHideCallback(() =>
             {
-                ((IUIView)page).PlayHide();
+                EmberDebug.LogCleanup(TAG, $"页面已关闭: {pageDef}");
 
-                // 下一帧完成 Hide
+                // Cleanup + 销毁调度
                 _nextFrameCallbacks.Enqueue(() =>
                 {
                     if (page != null)
                     {
                         ((IUIView)page).Cleanup();
                         _activePages.Remove(page);
-                        EmberUIObserver.NotifyClosed(pageDef, null);
-                        EmberDebug.LogCleanup(TAG, $"页面已关闭: {pageDef}");
-                        if (page.gameObject != null)
-                            Destroy(page.gameObject);
+
+                        if (page.AutoDestroy && page.DestroyDelay > 0)
+                        {
+                            // 延迟销毁：隐藏 + 加入 _closingPages 等待复用或到期销毁
+                            page.EnterClosingState();
+                            var prefabPath = page.PrefabPath;
+                            if (!string.IsNullOrEmpty(prefabPath))
+                                _closingPages[prefabPath] = page;
+                        }
+                        else
+                        {
+                            // 立即销毁
+                            if (page.GameObject != null)
+                                Destroy(page.GameObject);
+                        }
                         onComplete?.Invoke();
                     }
                 });
             });
+
+            EnqueuePageOperation(() =>
+            {
+                ((IUIView)page).PlayHide();
+                // NotifyClosed + 日志现在在 EmberPage.CompleteHide() 中触发
+                // Cleanup + Destroy 由上面的 SetHideCallback → _nextFrameCallbacks 调度
+            });
+        }
+
+        /// <summary>
+        /// 启动页面协程（EmberPage 为非 MonoBehaviour，无法自己 StartCoroutine）。
+        /// </summary>
+        public UnityEngine.Coroutine StartPageCoroutine(System.Collections.IEnumerator routine)
+        {
+            return StartCoroutine(routine);
         }
 
         /// <summary>
@@ -256,17 +290,19 @@ namespace Ember.UI
         /// </summary>
         public void ReopenPage(EmberPage page, object args, Action onComplete = null)
         {
+            // 注入完成回调：动画真正结束时由 CompleteShow() 触发
+            page.SetShowCallback(() =>
+            {
+                EmberDebug.LogEvent(TAG, $"页面已重新打开: {page.PageDef}");
+                onComplete?.Invoke();
+            }, args);
+
             EnqueuePageOperation(() =>
             {
                 ((IUIView)page).OnReopen(args);
                 EmberUIObserver.NotifyReopened(page.PageDef, args);
-
-                ((IUIView)page).PlayShow();
-                _nextFrameCallbacks.Enqueue(() =>
-                {
-                    EmberUIObserver.NotifyOpened(page.PageDef, args);
-                    onComplete?.Invoke();
-                });
+                // OnReopen 内部会调用 PlayShow → CompleteShow → NotifyOpened + 日志 + onComplete
+                // 不再使用 _nextFrameCallbacks（之前这里动画未完成就播报，且与 CompleteShow 重复播报）
             });
         }
 
@@ -372,6 +408,41 @@ namespace Ember.UI
             }
         }
 
+        private void ProcessClosingPages()
+        {
+            if (_closingPages.Count == 0) return;
+
+            var expired = new List<string>();
+            foreach (var kv in _closingPages)
+            {
+                if (kv.Value.ShouldDisposeNow())
+                {
+                    kv.Value.ForceDispose();
+                    expired.Add(kv.Key);
+                }
+            }
+
+            foreach (var key in expired)
+                _closingPages.Remove(key);
+        }
+
+        /// <summary>
+        /// 查找可复用的延迟销毁页面。命中后自动退出 closing 状态。
+        /// </summary>
+        internal EmberPage FindReusablePage(string prefabPath)
+        {
+            if (string.IsNullOrEmpty(prefabPath)) return null;
+
+            if (_closingPages.TryGetValue(prefabPath, out var page) && page.IsClosing)
+            {
+                _closingPages.Remove(prefabPath);
+                page.CancelClosing();
+                EmberDebug.Log(TAG, $"复用延迟销毁页面: {prefabPath}");
+                return page;
+            }
+            return null;
+        }
+
         private void Shutdown()
         {
             _bgMaskPool?.Clear();
@@ -379,6 +450,11 @@ namespace Ember.UI
             _activePages.Clear();
             _pendingOperations.Clear();
             _layerCanvases.Clear();
+
+            // 强制清理所有延迟销毁的页面
+            foreach (var page in _closingPages.Values)
+                page.ForceDispose();
+            _closingPages.Clear();
 
             EmberEventBus.OnNext(EmberUIEvents.UIManagerShutdown);
             EmberDebug.LogShutdown(TAG, "EmberUIManager 已关闭。");

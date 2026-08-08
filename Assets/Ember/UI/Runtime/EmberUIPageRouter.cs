@@ -239,6 +239,14 @@ namespace Ember.UI
         {
             var pageDef = req.PageDef;
 
+            // 先尝试复用延迟销毁中的页面（对标 Burner GamePage 复用逻辑）
+            var reusablePage = _uiManager.FindReusablePage(pageDef.PrefabPath);
+            if (reusablePage != null)
+            {
+                RouteAndOpenPage(reusablePage, pageDef, req);
+                return;
+            }
+
             _uiManager.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
             {
                 if (prefab == null)
@@ -250,51 +258,53 @@ namespace Ember.UI
                 var instance = UnityEngine.Object.Instantiate(prefab);
                 instance.name = prefab.name;
 
-                var page = instance.GetComponent<EmberPage>();
-                if (page == null)
-                {
-                    EmberDebug.LogError(TAG, $"预制体 '{pageDef.PrefabPath}' 没有 EmberPage 组件。");
-                    UnityEngine.Object.Destroy(instance);
-                    return;
-                }
+                var page = new EmberPage(instance);
+                RouteAndOpenPage(page, pageDef, req);
+            });
+        }
 
-                // 根据 PageType 执行路由
-                switch (pageDef.PageType)
-                {
-                    case PageType.MainPage:
-                        _context.PushMainPage(page);
-                        break;
+        /// <summary>
+        /// 执行路由分发 + 打开页面（新建和复用共用）。
+        /// </summary>
+        private void RouteAndOpenPage(EmberPage page, PageDef pageDef, ShowRequest req)
+        {
+            // 扩展点：允许 uiextension 等外部包配置 Logic
+            OnPageCreated?.Invoke(page);
 
-                    case PageType.Popup:
-                        _context.AddPopup(page);
-                        // 创建 BG Mask
-                        ShowBgMaskForPopup(page);
-                        break;
+            switch (pageDef.PageType)
+            {
+                case PageType.MainPage:
+                    _context.PushMainPage(page);
+                    break;
 
-                    case PageType.TopMost:
-                        _context.AddTopMost(page);
-                        break;
+                case PageType.Popup:
+                    _context.AddPopup(page);
+                    ShowBgMaskForPopup(page);
+                    break;
 
-                    case PageType.SubPage:
+                case PageType.TopMost:
+                    _context.AddTopMost(page);
+                    break;
+
+                case PageType.SubPage:
+                    {
+                        var parent = req.ParentPage;
+                        if (parent != null)
                         {
-                            var parent = req.ParentPage;
-                            if (parent != null)
-                            {
-                                parent.RegisterSubPage(page);
-                                _parentPageMap[page] = parent;
-                            }
-                            break;
+                            parent.RegisterSubPage(page);
+                            _parentPageMap[page] = parent;
                         }
-
-                    case PageType.Overlay:
-                        _context.AddOverlay(page);
                         break;
-                }
+                    }
 
-                _uiManager.OpenPage(page, pageDef, req.Args, () =>
-                {
-                    req.OnComplete?.Invoke(page);
-                });
+                case PageType.Overlay:
+                    _context.AddOverlay(page);
+                    break;
+            }
+
+            _uiManager.OpenPage(page, pageDef, req.Args, () =>
+            {
+                req.OnComplete?.Invoke(page);
             });
         }
 
@@ -302,9 +312,12 @@ namespace Ember.UI
 
         private readonly Dictionary<EmberPage, GameObject> _activeMasks = new();
 
+        /// <summary>页面创建扩展点。uiextension 包在此 Hook 中配置 Logic 层。</summary>
+        public static Action<EmberPage> OnPageCreated;
+
         private void ShowBgMaskForPopup(EmberPage popup)
         {
-            var canvas = popup.GetComponent<Canvas>();
+            var canvas = popup.Canvas;
             var sortingOrder = canvas ? canvas.sortingOrder : (int)popup.PageDef.Layer;
 
             var mask = _uiManager.ShowBgMask(sortingOrder - 1, () =>

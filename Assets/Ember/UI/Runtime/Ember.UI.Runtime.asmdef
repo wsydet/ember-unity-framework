@@ -5,8 +5,11 @@
         "Ember.Core.Runtime",
         "Ember.Basic.Runtime",
         "Ember.Resource.Runtime",
+        "Ember.Scene.Runtime",
         "UniRx",
-        "UnityEngine.UI"
+        "UniTask",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

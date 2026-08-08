@@ -104,7 +104,7 @@ namespace Ember.UI
             _mainPageStack.Add(entry);
 
             // 设置 Canvas sortingOrder
-            var canvas = page.GetComponent<Canvas>();
+            var canvas = page.Canvas;
             if (canvas)
             {
                 canvas.overrideSorting = true;
@@ -180,7 +180,7 @@ namespace Ember.UI
             current.Popups.Add(popup);
 
             // 设置 Popup 的 SortingOrder
-            var canvas = popup.GetComponent<Canvas>();
+            var canvas = popup.Canvas;
             if (canvas)
             {
                 canvas.overrideSorting = true;
@@ -252,7 +252,7 @@ namespace Ember.UI
         {
             _topMostList.Add(page);
             var order = TopMostBaseOrder + _topMostList.Count * PageGrowStep;
-            var canvas = page.GetComponent<Canvas>();
+            var canvas = page.Canvas;
             if (canvas) { canvas.overrideSorting = true; canvas.sortingOrder = order; }
         }
 
