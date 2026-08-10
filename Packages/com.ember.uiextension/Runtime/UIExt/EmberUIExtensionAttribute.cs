@@ -13,7 +13,7 @@ namespace Ember.UIExtension
     /// <example>
     /// <code>
     /// [EmberUIExtension(typeof(Button))]
-    /// public class EmberButtonEx : GameUIComponent { ... }
+    /// public class EUIButton : GameUIComponent { ... }
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]

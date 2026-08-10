@@ -16,8 +16,8 @@ namespace Ember.UIExtension
     ///   <item>多个附加 Graphic 同步 CrossFadeColor</item>
     /// </list>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Button Ex")]
-    public class EmberButtonEx : Button
+    [AddComponentMenu("UI/Ember/EUI Button")]
+    public class EUIButton : Button
     {
         #region 编辑器面板参数
 

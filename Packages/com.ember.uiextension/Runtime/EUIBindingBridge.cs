@@ -14,13 +14,13 @@ using Ember.UI;
 namespace Ember.UIExtension
 {
     /// <summary>
-    /// 桥接 EmberUIBinding 到 EmberPage 的 Logic 层。
+    /// 桥接 EUIBinding 到 EmberPage 的 Logic 层。
     /// 在 EmberUIPageRouter.OnPageCreated 钩子中自动配置 Logic。
     ///
     /// <para>通过 <c>[RuntimeInitializeOnLoadMethod]</c> 自动注册，
     /// 无需手动调用。引入了 com.ember.uiextension 包即自动生效。</para>
     /// </summary>
-    public static class EmberUIBindingBridge
+    public static class EUIBindingBridge
     {
         private static bool _registered;
 
@@ -46,9 +46,9 @@ namespace Ember.UIExtension
         }
 
         /// <summary>
-        /// 从 EmberUIBinding 读取配置并初始化 EmberPage 的 Logic 层。
+        /// 从 EUIBinding 读取配置并初始化 EmberPage 的 Logic 层。
         /// </summary>
-        public static void Attach(EmberPage page, EmberUIBinding binding)
+        public static void Attach(EmberPage page, EUIBinding binding)
         {
             if (page == null || binding == null) return;
             if (string.IsNullOrEmpty(binding.ClassName)) return;
@@ -77,10 +77,10 @@ namespace Ember.UIExtension
         }
 
         /// <summary>
-        /// 从 EmberUIBinding 的 BindingEntry 列表填充 ControlMap。
+        /// 从 EUIBinding 的 BindingEntry 列表填充 ControlMap。
         /// 遇到 UILogic 类型时自动创建子 Logic 实例并注册到父 Logic。
         /// </summary>
-        public static void PopulateControlMap(EmberUIBinding binding, Dictionary<string, Component> map, EmberUILogic parentLogic = null)
+        public static void PopulateControlMap(EUIBinding binding, Dictionary<string, Component> map, EmberUILogic parentLogic = null)
         {
             if (binding == null || map == null) return;
             if (binding.Bindings == null) return;
@@ -90,10 +90,10 @@ namespace Ember.UIExtension
                 if (string.IsNullOrEmpty(entry.Name) || entry.GameObject == null)
                     continue;
 
-                if (entry.Type == EmberUIBinding.WidgetTypes.UILogic)
+                if (entry.Type == EUIBinding.WidgetTypes.UILogic)
                 {
                     // 嵌套 UIBinding：创建独立的子 Logic（对标 Burner CreateNewLogicFromBinding）
-                    var childBinding = entry.GameObject.GetComponent<EmberUIBinding>();
+                    var childBinding = entry.GameObject.GetComponent<EUIBinding>();
                     if (childBinding != null && parentLogic != null && !string.IsNullOrEmpty(childBinding.ClassName))
                     {
                         Type childLogicType = null;
@@ -134,7 +134,7 @@ namespace Ember.UIExtension
         private static void OnPageCreated(EmberPage page)
         {
             if (page == null) return;
-            var binding = page.GameObject.GetComponent<EmberUIBinding>();
+            var binding = page.GameObject.GetComponent<EUIBinding>();
             if (binding != null)
             {
                 // 注入预设渐入渐出配置（独立于 Logic 绑定，即使没有 Logic 类也生效）
@@ -145,32 +145,32 @@ namespace Ember.UIExtension
             }
         }
 
-        private static Component GetComponentForType(GameObject go, EmberUIBinding.WidgetTypes type, string className)
+        private static Component GetComponentForType(GameObject go, EUIBinding.WidgetTypes type, string className)
         {
             switch (type)
             {
-                case EmberUIBinding.WidgetTypes.Text:
+                case EUIBinding.WidgetTypes.Text:
                     return go.GetComponent<TMP_Text>() ?? (Component)go.GetComponent<Text>();
-                case EmberUIBinding.WidgetTypes.Image:
+                case EUIBinding.WidgetTypes.Image:
                     return go.GetComponent<Image>();
-                case EmberUIBinding.WidgetTypes.RawImage:
+                case EUIBinding.WidgetTypes.RawImage:
                     return go.GetComponent<RawImage>();
-                case EmberUIBinding.WidgetTypes.Button:
+                case EUIBinding.WidgetTypes.Button:
                     return go.GetComponent<Button>();
-                case EmberUIBinding.WidgetTypes.Toggle:
+                case EUIBinding.WidgetTypes.Toggle:
                     return go.GetComponent<Toggle>();
-                case EmberUIBinding.WidgetTypes.ToggleGroup:
+                case EUIBinding.WidgetTypes.ToggleGroup:
                     return go.GetComponent<ToggleGroup>();
-                case EmberUIBinding.WidgetTypes.InputField:
+                case EUIBinding.WidgetTypes.InputField:
                     return go.GetComponent<TMP_InputField>() ?? (Component)go.GetComponent<InputField>();
-                case EmberUIBinding.WidgetTypes.ScrollRect:
+                case EUIBinding.WidgetTypes.ScrollRect:
                     return go.GetComponent<ScrollRect>();
-                case EmberUIBinding.WidgetTypes.ProgressBar:
+                case EUIBinding.WidgetTypes.ProgressBar:
                     return go.GetComponent<Slider>();
-                case EmberUIBinding.WidgetTypes.Canvas:
+                case EUIBinding.WidgetTypes.Canvas:
                     return go.GetComponent<Canvas>();
-                case EmberUIBinding.WidgetTypes.UILogic:
-                case EmberUIBinding.WidgetTypes.Extension:
+                case EUIBinding.WidgetTypes.UILogic:
+                case EUIBinding.WidgetTypes.Extension:
                     if (!string.IsNullOrEmpty(className))
                     {
                         foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())

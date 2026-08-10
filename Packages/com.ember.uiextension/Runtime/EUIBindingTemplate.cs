@@ -10,9 +10,9 @@ namespace Ember.UIExtension
 {
     /// <summary>
     /// UI 绑定配置模板 ScriptableObject。
-    /// 保存一份 EmberUIBinding 的完整快照，用于 Inspector 中的复制/粘贴/加载/保存。
+    /// 保存一份 EUIBinding 的完整快照，用于 Inspector 中的复制/粘贴/加载/保存。
     /// </summary>
-    public class EmberUIBindingTemplate : ScriptableObject
+    public class EUIBindingTemplate : ScriptableObject
     {
         #region 嵌套类型
 
@@ -24,7 +24,7 @@ namespace Ember.UIExtension
         {
             public string Name;
             public string GameObjectPath;
-            public EmberUIBinding.WidgetTypes Type;
+            public EUIBinding.WidgetTypes Type;
             public string ClassName;
         }
 
@@ -38,7 +38,7 @@ namespace Ember.UIExtension
         [SerializeField] private string classPath;
         [SerializeField] private string className;
         [SerializeField] private bool isPage;
-        [SerializeField] private EmberUIBinding.WidgetTypes selfWidgetType;
+        [SerializeField] private EUIBinding.WidgetTypes selfWidgetType;
         [SerializeField] private string selfWidgetClassName;
         [SerializeField] private bool noCodeGen;
         [SerializeField] private BindingEntry[] bindings;
@@ -50,7 +50,7 @@ namespace Ember.UIExtension
         #region 外部方法
 
         public BindingEntry[] Bindings => bindings;
-        public EmberUIBinding.WidgetTypes SelfWidgetType => selfWidgetType;
+        public EUIBinding.WidgetTypes SelfWidgetType => selfWidgetType;
         public string SelfWidgetClassName => selfWidgetClassName;
         public bool IsPage => isPage;
         public string PageName => pageName;
@@ -58,8 +58,8 @@ namespace Ember.UIExtension
         public string ClassPath => classPath;
         public bool NoCodeGeneration => noCodeGen;
 
-        /// <summary>从 EmberUIBinding 组件复制所有配置</summary>
-        public void CopyFromUIBinding(EmberUIBinding binding)
+        /// <summary>从 EUIBinding 组件复制所有配置</summary>
+        public void CopyFromUIBinding(EUIBinding binding)
         {
             noCodeGen = binding.NoCodeGeneration;
             pageName = binding.PageName;
@@ -78,7 +78,7 @@ namespace Ember.UIExtension
         }
 
         /// <summary>将 BindingEntry 转为模板条目</summary>
-        public static BindingEntry BindingEntryToTemplate(EmberUIBinding.BindingEntry bd, GameObject baseObj)
+        public static BindingEntry BindingEntryToTemplate(EUIBinding.BindingEntry bd, GameObject baseObj)
         {
             BindingEntry entry = new BindingEntry();
             entry.ClassName = bd.ClassName;
