@@ -56,38 +56,38 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>是否需要重新生成</summary>
-        public virtual bool IsNeedRegenerate(EmberUIBinding binding)
+        public virtual bool IsNeedRegenerate(EUIBinding binding)
         {
             return true;
         }
 
         /// <summary>是否可以正常生成代码</summary>
-        public virtual bool CanGenerate(EmberUIBinding binding)
+        public virtual bool CanGenerate(EUIBinding binding)
         {
             return !string.IsNullOrEmpty(binding.ClassName)
                 && (!binding.IsPage || !string.IsNullOrEmpty(binding.PageName));
         }
 
         /// <summary>是否可以生成到剪贴板</summary>
-        public virtual bool CanGenerateForNoGen(EmberUIBinding binding)
+        public virtual bool CanGenerateForNoGen(EUIBinding binding)
         {
             return true;
         }
 
         /// <summary>执行代码生成</summary>
-        public abstract void GenerateCode(EmberUIBinding binding, string baseClsName, EmberUIBinding.BindingEntry[] declaredFields);
+        public abstract void GenerateCode(EUIBinding binding, string baseClsName, EUIBinding.BindingEntry[] declaredFields);
 
         /// <summary>执行剪贴板代码生成（noCodeGen 模式）</summary>
-        public abstract void GenerateCodeForNoGen(EmberUIBinding binding, string className);
+        public abstract void GenerateCodeForNoGen(EUIBinding binding, string className);
 
         /// <summary>绘制 noCodeGen 模式的设置 UI</summary>
-        public virtual void DrawNoCodeGenerationSettings(EmberUIBinding binding)
+        public virtual void DrawNoCodeGenerationSettings(EUIBinding binding)
         {
             DrawAutoCollect(binding);
         }
 
         /// <summary>绘制代码生成设置 UI</summary>
-        public virtual void DrawGenerateSettings(EmberUIBinding binding)
+        public virtual void DrawGenerateSettings(EUIBinding binding)
         {
             DrawAutoCollect(binding);
 
@@ -137,7 +137,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>绘制自动收集按钮</summary>
-        protected virtual void DrawAutoCollect(EmberUIBinding binding)
+        protected virtual void DrawAutoCollect(EUIBinding binding)
         {
             EditorGUILayout.Separator();
             GUILayout.BeginHorizontal();
@@ -159,11 +159,11 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>自动收集子节点绑定</summary>
-        protected void AutoCollect(EmberUIBinding binding)
+        protected void AutoCollect(EUIBinding binding)
         {
             Dictionary<GameObject, GameObject> defined = new Dictionary<GameObject, GameObject>();
             HashSet<string> definedNames = new HashSet<string>();
-            EmberUIBindingEditorUtility.GatherBindingDefinitions(binding, defined);
+            EUIBindingEditorUtility.GatherBindingDefinitions(binding, defined);
             SerializedObject so = new SerializedObject(binding);
             SerializedProperty sp = so.FindProperty("bindings");
             var curTrans = binding.transform;
@@ -174,7 +174,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>清除所有绑定</summary>
-        protected void ClearAll(EmberUIBinding binding)
+        protected void ClearAll(EUIBinding binding)
         {
             SerializedObject so = new SerializedObject(binding);
             SerializedProperty sp = so.FindProperty("bindings");
@@ -186,7 +186,7 @@ namespace Ember.UIExtension.Editor
 
         /// <summary>递归收集子节点</summary>
         protected void GatherBindings(
-            EmberUIBinding binding,
+            EUIBinding binding,
             SerializedProperty sp,
             Dictionary<GameObject, GameObject> defined,
             HashSet<string> definedNames,
@@ -197,7 +197,7 @@ namespace Ember.UIExtension.Editor
             {
                 var child = trans.GetChild(i);
                 var childGO = child.gameObject;
-                bool hasChildBinding = childGO.GetComponent<EmberUIBinding>() != null;
+                bool hasChildBinding = childGO.GetComponent<EUIBinding>() != null;
                 var childName = child.name;
 
                 if (!defined.ContainsKey(childGO) && IsNameSuitable(childName))
@@ -212,7 +212,7 @@ namespace Ember.UIExtension.Editor
 
                     nameSP.stringValue = GetNameForCode(childName, definedNames);
                     goSP.objectReferenceValue = childGO;
-                    EmberUIBindingEditorUtility.AutoSelectByObject(childGO, typeSP, cnSP);
+                    EUIBindingEditorUtility.AutoSelectByObject(childGO, typeSP, cnSP);
                 }
                 if (!hasChildBinding)
                 {
@@ -222,7 +222,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>获取 binding 所在的 prefab 名称</summary>
-        public static bool TryGetPrefabName(EmberUIBinding binding, out string prefabName)
+        public static bool TryGetPrefabName(EUIBinding binding, out string prefabName)
         {
             prefabName = System.IO.Path.GetFileName(
                 PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(binding));

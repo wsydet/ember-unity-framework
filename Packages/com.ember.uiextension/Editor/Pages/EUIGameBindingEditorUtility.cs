@@ -1,4 +1,4 @@
-////// Copyright (c) 2026 Burner Games. All rights reserved.
+﻿////// Copyright (c) 2026 Burner Games. All rights reserved.
 //////
 ////// This file is part of Burner Unity Packages.
 ////// Package: com.burner.uiextension
@@ -349,7 +349,7 @@
 ////
 ////        private static CSharpLogicImplementationData FindCSharpLogicImplementationData()
 ////        {
-////            var settings = UIBindingSettingData.GetOrCreateSettings();
+////            var settings = EUIBindingSettingData.GetOrCreateSettings();
 ////            if (settings.LogicImplementations == null)
 ////            {
 ////                return null;

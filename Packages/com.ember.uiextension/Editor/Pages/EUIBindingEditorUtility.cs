@@ -19,8 +19,8 @@ namespace Ember.UIExtension.Editor
 {
     #region 数据结构
 
-    /// <summary>EmberUIBinding 完整快照</summary>
-    public sealed class EmberUIBindingSnapshot
+    /// <summary>EUIBinding 完整快照</summary>
+    public sealed class EUIBindingSnapshot
     {
         public string PrefabAssetPath;
         public string PrefabName;
@@ -29,54 +29,54 @@ namespace Ember.UIExtension.Editor
         public string ClassName;
         public bool IsPage;
         public PageFlags PageFlags;
-        public EmberUIBinding.WidgetTypes SelfWidgetType;
+        public EUIBinding.WidgetTypes SelfWidgetType;
         public string SelfWidgetClassName;
         public bool NoCodeGen;
         public string BaseBindingPrefabPath;
         public string BaseBindingGuid;
-        public List<EmberUIBindingEntrySnapshot> Entries = new List<EmberUIBindingEntrySnapshot>();
+        public List<EUIBindingEntrySnapshot> Entries = new List<EUIBindingEntrySnapshot>();
     }
 
     /// <summary>单个绑定条目的快照</summary>
-    public sealed class EmberUIBindingEntrySnapshot
+    public sealed class EUIBindingEntrySnapshot
     {
         public string Name;
         public string GameObjectPath;
-        public EmberUIBinding.WidgetTypes WidgetType;
+        public EUIBinding.WidgetTypes WidgetType;
         public string ClassName;
     }
 
     /// <summary>验证问题严重度</summary>
-    public enum EmberUIBindingIssueSeverity { Info, Warning, Error }
+    public enum EUIBindingIssueSeverity { Info, Warning, Error }
 
     /// <summary>单个验证问题</summary>
-    public sealed class EmberUIBindingValidationIssue
+    public sealed class EUIBindingValidationIssue
     {
-        public EmberUIBindingIssueSeverity Severity;
+        public EUIBindingIssueSeverity Severity;
         public string BindingPath;
         public string Message;
         public string Suggestion;
     }
 
     /// <summary>验证结果集</summary>
-    public sealed class EmberUIBindingValidationResult
+    public sealed class EUIBindingValidationResult
     {
         public string AssetPath;
-        public List<EmberUIBindingValidationIssue> Issues = new List<EmberUIBindingValidationIssue>();
+        public List<EUIBindingValidationIssue> Issues = new List<EUIBindingValidationIssue>();
 
         public bool HasError
         {
             get
             {
                 foreach (var issue in Issues)
-                    if (issue.Severity == EmberUIBindingIssueSeverity.Error) return true;
+                    if (issue.Severity == EUIBindingIssueSeverity.Error) return true;
                 return false;
             }
         }
 
-        public void AddIssue(EmberUIBindingIssueSeverity severity, string bindingPath, string message, string suggestion = null)
+        public void AddIssue(EUIBindingIssueSeverity severity, string bindingPath, string message, string suggestion = null)
         {
-            Issues.Add(new EmberUIBindingValidationIssue
+            Issues.Add(new EUIBindingValidationIssue
             {
                 Severity = severity,
                 BindingPath = bindingPath,
@@ -96,12 +96,12 @@ namespace Ember.UIExtension.Editor
 
     public struct ComponentTypeRule
     {
-        public EmberUIBinding.WidgetTypes WidgetType;
+        public EUIBinding.WidgetTypes WidgetType;
         public Type[] ComponentTypes;
         public int Index => (int)WidgetType;
         public string ComponentTypeNames => string.Join(" 或 ", ComponentTypes.Select(i => i.Name));
 
-        public ComponentTypeRule(EmberUIBinding.WidgetTypes widgetType, params Type[] componentTypes)
+        public ComponentTypeRule(EUIBinding.WidgetTypes widgetType, params Type[] componentTypes)
         {
             WidgetType = widgetType;
             ComponentTypes = componentTypes;
@@ -134,10 +134,10 @@ namespace Ember.UIExtension.Editor
     // --------------------------------------------------------
 
     /// <summary>
-    /// EmberUIBinding 编辑器工具类。
+    /// EUIBinding 编辑器工具类。
     /// 提供快照、验证、批量收集、PageDef 更新、组件类型检测等功能。
     /// </summary>
-    public static class EmberUIBindingEditorUtility
+    public static class EUIBindingEditorUtility
     {
         private const string PageNameProperty = "pageName";
         private const string ClassPathProperty = "classPath";
@@ -153,11 +153,11 @@ namespace Ember.UIExtension.Editor
         #region 快照
 
         /// <summary>获取 binding 的完整快照</summary>
-        public static EmberUIBindingSnapshot GetBindingSnapshot(EmberUIBinding binding)
+        public static EUIBindingSnapshot GetBindingSnapshot(EUIBinding binding)
         {
             if (!binding) throw new ArgumentNullException(nameof(binding));
             var assetPath = GetPrefabAssetPath(binding);
-            var snapshot = new EmberUIBindingSnapshot
+            var snapshot = new EUIBindingSnapshot
             {
                 PrefabAssetPath = assetPath,
                 PrefabName = string.IsNullOrEmpty(assetPath)
@@ -180,7 +180,7 @@ namespace Ember.UIExtension.Editor
             {
                 foreach (var entry in binding.Bindings)
                 {
-                    snapshot.Entries.Add(new EmberUIBindingEntrySnapshot
+                    snapshot.Entries.Add(new EUIBindingEntrySnapshot
                     {
                         Name = entry.Name,
                         GameObjectPath = GetTransformPath(binding.transform,
@@ -194,7 +194,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>将快照应用到 binding</summary>
-        public static void ApplyBindingSnapshot(EmberUIBinding binding, EmberUIBindingSnapshot snapshot)
+        public static void ApplyBindingSnapshot(EUIBinding binding, EUIBindingSnapshot snapshot)
         {
             if (!binding) throw new ArgumentNullException(nameof(binding));
             if (snapshot == null) throw new ArgumentNullException(nameof(snapshot));
@@ -206,7 +206,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>设置页面信息</summary>
-        public static void SetPageInfo(EmberUIBinding binding, string pageName, string classPath,
+        public static void SetPageInfo(EUIBinding binding, string pageName, string classPath,
             string className, bool isPage, PageFlags pageFlags, bool noCodeGen = false)
         {
             using (var so = new SerializedObject(binding))
@@ -222,20 +222,20 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>设置自身控件类型</summary>
-        public static void SetSelfWidget(EmberUIBinding binding, EmberUIBinding.WidgetTypes widgetType,
+        public static void SetSelfWidget(EUIBinding binding, EUIBinding.WidgetTypes widgetType,
             string widgetClassName = null)
         {
             using (var so = new SerializedObject(binding))
             {
-                so.FindProperty(SelfWidgetTypeProperty).enumValueIndex = widgetType > EmberUIBinding.WidgetTypes.End
-                    ? (int)EmberUIBinding.WidgetTypes.End + 1 : (int)widgetType;
+                so.FindProperty(SelfWidgetTypeProperty).enumValueIndex = widgetType > EUIBinding.WidgetTypes.End
+                    ? (int)EUIBinding.WidgetTypes.End + 1 : (int)widgetType;
                 so.FindProperty(SelfWidgetClassNameProperty).stringValue = widgetClassName;
                 so.ApplyModifiedProperties();
             }
         }
 
         /// <summary>设置绑定列表</summary>
-        public static void SetBindings(EmberUIBinding binding, IList<EmberUIBindingEntrySnapshot> entries)
+        public static void SetBindings(EUIBinding binding, IList<EUIBindingEntrySnapshot> entries)
         {
             using (var so = new SerializedObject(binding))
             {
@@ -251,8 +251,8 @@ namespace Ember.UIExtension.Editor
                         sp.FindPropertyRelative("Name").stringValue = entry?.Name;
                         sp.FindPropertyRelative("GameObject").objectReferenceValue =
                             ResolveGameObject(binding, entry?.GameObjectPath);
-                        sp.FindPropertyRelative("Type").enumValueIndex = entry?.WidgetType > EmberUIBinding.WidgetTypes.End
-                            ? (int)EmberUIBinding.WidgetTypes.End + 1 : (int)(entry?.WidgetType ?? 0);
+                        sp.FindPropertyRelative("Type").enumValueIndex = entry?.WidgetType > EUIBinding.WidgetTypes.End
+                            ? (int)EUIBinding.WidgetTypes.End + 1 : (int)(entry?.WidgetType ?? 0);
                         sp.FindPropertyRelative("ClassName").stringValue = entry?.ClassName;
                     }
                 }
@@ -261,7 +261,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>设置基类绑定（通过 GUID）</summary>
-        public static void SetBaseBinding(EmberUIBinding binding, string baseBindingGuid)
+        public static void SetBaseBinding(EUIBinding binding, string baseBindingGuid)
         {
             using (var so = new SerializedObject(binding))
             {
@@ -271,7 +271,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>设置基类绑定（通过 Prefab）</summary>
-        public static void SetBaseBinding(EmberUIBinding binding, GameObject basePrefab)
+        public static void SetBaseBinding(EUIBinding binding, GameObject basePrefab)
         {
             var guid = string.Empty;
             if (basePrefab)
@@ -283,7 +283,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>获取基类 GUID</summary>
-        public static string GetBaseBindingGuid(EmberUIBinding binding)
+        public static string GetBaseBindingGuid(EUIBinding binding)
         {
             using (var so = new SerializedObject(binding))
                 return so.FindProperty(BaseBindingGuidProperty).stringValue;
@@ -296,7 +296,7 @@ namespace Ember.UIExtension.Editor
         #region 收集与验证
 
         /// <summary>收集子节点绑定</summary>
-        public static List<EmberUIBindingEntrySnapshot> CollectBindings(EmberUIBinding binding, bool clearExisting = false)
+        public static List<EUIBindingEntrySnapshot> CollectBindings(EUIBinding binding, bool clearExisting = false)
         {
             if (!binding) throw new ArgumentNullException(nameof(binding));
             using (var so = new SerializedObject(binding))
@@ -329,12 +329,12 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>验证 binding 的合法性</summary>
-        public static EmberUIBindingValidationResult ValidateBinding(EmberUIBinding binding)
+        public static EUIBindingValidationResult ValidateBinding(EUIBinding binding)
         {
-            var result = new EmberUIBindingValidationResult();
+            var result = new EUIBindingValidationResult();
             if (!binding)
             {
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null, "EmberUIBinding 为空。");
+                result.AddIssue(EUIBindingIssueSeverity.Error, null, "EUIBinding 为空。");
                 return result;
             }
             result.AssetPath = GetPrefabAssetPath(binding);
@@ -345,7 +345,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>生成或更新 PageDef</summary>
-        public static bool GenerateOrUpdatePageDef(EmberUIBinding binding,
+        public static bool GenerateOrUpdatePageDef(EUIBinding binding,
             CSharpLogicImplementationData implementationData = null)
         {
             if (!binding) throw new ArgumentNullException(nameof(binding));
@@ -353,7 +353,7 @@ namespace Ember.UIExtension.Editor
             implementationData = implementationData ?? FindCSharpLogicImplementationData();
             if (!implementationData)
             {
-                EmberDebug.LogError("EmberUI", "未找到 CSharpLogicImplementationData。请检查 Project Settings/Ember UI Binding 中的逻辑实现数据。");
+                EmberDebug.LogError("EmberUI", "未找到 CSharpLogicImplementationData。请检查 Project Settings/EUI Binding 中的逻辑实现数据。");
                 return false;
             }
             return implementationData.GenerateOrUpdatePageDefinition(binding);
@@ -369,7 +369,7 @@ namespace Ember.UIExtension.Editor
         /// 根据 PageFlags 设置 Canvas.sortingOrder，方便非 Play 模式下查看层级效果。
         /// 生成代码时自动调用。
         /// </summary>
-        public static void ApplyCanvasSortingOrder(EmberUIBinding binding)
+        public static void ApplyCanvasSortingOrder(EUIBinding binding)
         {
             if (binding == null || !binding.IsPage) return;
 
@@ -401,7 +401,7 @@ namespace Ember.UIExtension.Editor
 
         private static CSharpLogicImplementationData FindCSharpLogicImplementationData()
         {
-            var settings = UIBindingSettingData.GetOrCreateSettings();
+            var settings = EUIBindingSettingData.GetOrCreateSettings();
             if (settings.LogicImplementations == null) return null;
             foreach (var implementation in settings.LogicImplementations)
             {
@@ -411,14 +411,19 @@ namespace Ember.UIExtension.Editor
             return null;
         }
 
-        private static void CollectBindingsRecursive(EmberUIBinding binding, SerializedProperty bp,
+        private static void CollectBindingsRecursive(EUIBinding binding, SerializedProperty bp,
             Dictionary<GameObject, GameObject> definedObjects, HashSet<string> definedNames, Transform transform)
         {
             for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
                 var childGo = child.gameObject;
-                bool isSubBindingRoot = childGo.GetComponent<EmberUIBinding>() != null;
+
+                // 跳过被 EUIBindingExclude 标记的节点及其子树
+                if (childGo.GetComponent<EUIBindingExclude>())
+                    continue;
+
+                bool isSubBindingRoot = childGo.GetComponent<EUIBinding>() != null;
 
                 if (!definedObjects.ContainsKey(childGo) && IsBindingNameCandidate(child.name))
                 {
@@ -440,28 +445,28 @@ namespace Ember.UIExtension.Editor
             }
         }
 
-        private static void ValidatePageInfo(EmberUIBinding binding, EmberUIBindingValidationResult result)
+        private static void ValidatePageInfo(EUIBinding binding, EUIBindingValidationResult result)
         {
             if (string.IsNullOrEmpty(binding.ClassPath))
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null,
+                result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "classPath 为空。", "填写逻辑路径。");
 
             if (string.IsNullOrEmpty(binding.ClassName))
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null,
+                result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "className 为空。", "填写页面或组件逻辑类名。");
 
             if (!binding.IsPage) return;
 
             if (string.IsNullOrEmpty(binding.PageName))
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null,
+                result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "页面级 binding 的 pageName 为空。", "pageName 应作为 PageDef 常量名。");
 
             if (binding.PageFlags == PageFlags.None)
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null,
+                result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "页面级 binding 的 pageFlags 为 None。", "选择 MainPage、Popup、TopMost、SubPage 或 FreePage。");
         }
 
-        private static void ValidateEntries(EmberUIBinding binding, EmberUIBindingValidationResult result)
+        private static void ValidateEntries(EUIBinding binding, EUIBindingValidationResult result)
         {
             if (binding.Bindings == null) return;
             var names = new HashSet<string>();
@@ -471,21 +476,21 @@ namespace Ember.UIExtension.Editor
                     ? GetTransformPath(binding.transform, entry.GameObject.transform) : null;
 
                 if (string.IsNullOrEmpty(entry.Name))
-                    result.AddIssue(EmberUIBindingIssueSeverity.Error, bindingPath,
+                    result.AddIssue(EUIBindingIssueSeverity.Error, bindingPath,
                         "绑定字段名为空。", "重新收集绑定或手动补齐字段名。");
                 else if (!names.Add(entry.Name))
-                    result.AddIssue(EmberUIBindingIssueSeverity.Error, bindingPath,
+                    result.AddIssue(EUIBindingIssueSeverity.Error, bindingPath,
                         $"绑定字段名重复：{entry.Name}。", "重命名其中一个绑定字段。");
 
                 if (!entry.GameObject)
                 {
-                    result.AddIssue(EmberUIBindingIssueSeverity.Error, bindingPath,
+                    result.AddIssue(EUIBindingIssueSeverity.Error, bindingPath,
                         $"绑定 {entry.Name} 的 GameObject 丢失。", "重新指定节点或删除该绑定。");
                 }
             }
         }
 
-        private static void ValidateBaseBinding(EmberUIBinding binding, EmberUIBindingValidationResult result)
+        private static void ValidateBaseBinding(EUIBinding binding, EUIBindingValidationResult result)
         {
             var guid = GetBaseBindingGuid(binding);
             if (string.IsNullOrEmpty(guid)) return;
@@ -493,12 +498,12 @@ namespace Ember.UIExtension.Editor
             var path = AssetDatabase.GUIDToAssetPath(guid);
             if (string.IsNullOrEmpty(path))
             {
-                result.AddIssue(EmberUIBindingIssueSeverity.Error, null,
+                result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "baseBindingUUID 指向的 prefab 不存在。", "清空继承配置或重新选择基础 prefab。");
             }
         }
 
-        private static GameObject ResolveGameObject(EmberUIBinding binding, string relativePath)
+        private static GameObject ResolveGameObject(EUIBinding binding, string relativePath)
         {
             if (!binding) return null;
             if (string.IsNullOrEmpty(relativePath)) return binding.gameObject;
@@ -506,7 +511,7 @@ namespace Ember.UIExtension.Editor
             return transform ? transform.gameObject : null;
         }
 
-        private static string GetPrefabAssetPath(EmberUIBinding binding)
+        private static string GetPrefabAssetPath(EUIBinding binding)
         {
             var path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(binding);
             if (string.IsNullOrEmpty(path))
@@ -562,28 +567,28 @@ namespace Ember.UIExtension.Editor
 
         public static readonly ComponentTypeRule[] BuiltInComponentTypeRules =
         {
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.UILogic, typeof(EmberUIBinding)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Button, typeof(Button)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Text, typeof(Text), typeof(TextMeshProUGUI)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.InputField, typeof(InputField), typeof(TMP_InputField)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Toggle, typeof(Toggle)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ProgressBar, typeof(Slider)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ToggleGroup, typeof(ToggleGroup)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ScrollRect, typeof(ScrollRect)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Image, typeof(Image)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.RawImage, typeof(RawImage)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Canvas, typeof(Canvas)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.UILogic, typeof(EUIBinding)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Button, typeof(Button)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Text, typeof(Text), typeof(TextMeshProUGUI)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.InputField, typeof(InputField), typeof(TMP_InputField)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Toggle, typeof(Toggle)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ProgressBar, typeof(Slider)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ToggleGroup, typeof(ToggleGroup)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ScrollRect, typeof(ScrollRect)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Image, typeof(Image)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.RawImage, typeof(RawImage)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Canvas, typeof(Canvas)),
         };
 
         public static readonly ComponentTypeRule[] AutoSelectExactBuiltInComponentTypeRules =
         {
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Button, typeof(Button)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Text, typeof(Text), typeof(TextMeshProUGUI)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.InputField, typeof(InputField), typeof(TMP_InputField)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.Toggle, typeof(Toggle)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ProgressBar, typeof(Slider)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ToggleGroup, typeof(ToggleGroup)),
-            new ComponentTypeRule(EmberUIBinding.WidgetTypes.ScrollRect, typeof(ScrollRect)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Button, typeof(Button)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Text, typeof(Text), typeof(TextMeshProUGUI)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.InputField, typeof(InputField), typeof(TMP_InputField)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.Toggle, typeof(Toggle)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ProgressBar, typeof(Slider)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ToggleGroup, typeof(ToggleGroup)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.ScrollRect, typeof(ScrollRect)),
         };
 
         /// <summary>获取所有组件类型名（内置 + 扩展）</summary>
@@ -593,7 +598,7 @@ namespace Ember.UIExtension.Editor
             {
                 _extensionTypeMapping = new Dictionary<string, KeyValuePair<int, KeyValuePair<Type, Type>>>();
                 List<string> nameList = new List<string>();
-                var names = System.Enum.GetNames(typeof(EmberUIBinding.WidgetTypes));
+                var names = System.Enum.GetNames(typeof(EUIBinding.WidgetTypes));
                 for (int i = 0; i < names.Length - 2; i++)
                     nameList.Add(names[i]);
 
@@ -626,15 +631,15 @@ namespace Ember.UIExtension.Editor
             return _extensionTypeMapping;
         }
 
-        /// <summary>收集所有已定义的绑定（递归，含子 EmberUIBinding）</summary>
-        public static void GatherBindingDefinitions(EmberUIBinding binding, Dictionary<GameObject, GameObject> defined, bool recursive = true)
+        /// <summary>收集所有已定义的绑定（递归，含子 EUIBinding）</summary>
+        public static void GatherBindingDefinitions(EUIBinding binding, Dictionary<GameObject, GameObject> defined, bool recursive = true)
         {
             if (binding.Bindings == null) return;
             foreach (var i in binding.Bindings)
             {
                 if (recursive && i.GameObject)
                 {
-                    EmberUIBinding child = i.GameObject.GetComponent<EmberUIBinding>();
+                    EUIBinding child = i.GameObject.GetComponent<EUIBinding>();
                     if (child == binding) continue;
                     if (child)
                         GatherBindingDefinitions(child, defined);
@@ -647,10 +652,10 @@ namespace Ember.UIExtension.Editor
         /// <summary>根据 GameObject 上的组件自动选择 WidgetType</summary>
         public static void AutoSelectByObject(GameObject go, SerializedProperty type, SerializedProperty cn)
         {
-            var binding = go.GetComponent<EmberUIBinding>();
+            var binding = go.GetComponent<EUIBinding>();
             if (binding)
             {
-                SetBuiltInWidgetType(type, cn, EmberUIBinding.WidgetTypes.UILogic);
+                SetBuiltInWidgetType(type, cn, EUIBinding.WidgetTypes.UILogic);
                 SetUILogicClassName(binding, cn);
                 return;
             }
@@ -666,7 +671,7 @@ namespace Ember.UIExtension.Editor
 
             if (TryGetFirstMatchingExtension(go, out var extensionName))
             {
-                type.enumValueIndex = (int)EmberUIBinding.WidgetTypes.End + 1;
+                type.enumValueIndex = (int)EUIBinding.WidgetTypes.End + 1;
                 if (cn != null)
                     cn.stringValue = extensionName;
                 return;
@@ -674,7 +679,7 @@ namespace Ember.UIExtension.Editor
 
             foreach (var rule in BuiltInComponentTypeRules)
             {
-                if (rule.WidgetType == EmberUIBinding.WidgetTypes.UILogic) continue;
+                if (rule.WidgetType == EUIBinding.WidgetTypes.UILogic) continue;
                 if (rule.Matches(go))
                 {
                     SetBuiltInWidgetType(type, cn, rule.WidgetType);
@@ -682,7 +687,7 @@ namespace Ember.UIExtension.Editor
                 }
             }
 
-            SetBuiltInWidgetType(type, cn, EmberUIBinding.WidgetTypes.Component);
+            SetBuiltInWidgetType(type, cn, EUIBinding.WidgetTypes.Component);
         }
 
         /// <summary>验证绑定类型是否匹配</summary>
@@ -695,15 +700,15 @@ namespace Ember.UIExtension.Editor
                 return true;
             }
             int index = type.enumValueIndex;
-            if (index == (int)EmberUIBinding.WidgetTypes.End + 1)
-                index = (int)EmberUIBinding.WidgetTypes.Extension;
-            switch ((EmberUIBinding.WidgetTypes)index)
+            if (index == (int)EUIBinding.WidgetTypes.End + 1)
+                index = (int)EUIBinding.WidgetTypes.Extension;
+            switch ((EUIBinding.WidgetTypes)index)
             {
-                case EmberUIBinding.WidgetTypes.UILogic:
-                    var childBinding = go.GetComponent<EmberUIBinding>();
+                case EUIBinding.WidgetTypes.UILogic:
+                    var childBinding = go.GetComponent<EUIBinding>();
                     if (!childBinding)
                     {
-                        EditorGUILayout.HelpBox($"{go} 并不包含 EmberUIBinding 组件", MessageType.Error);
+                        EditorGUILayout.HelpBox($"{go} 并不包含 EUIBinding 组件", MessageType.Error);
                         invalid = true;
                     }
                     else
@@ -711,7 +716,7 @@ namespace Ember.UIExtension.Editor
                         SetUILogicClassName(childBinding, cn);
                     }
                     break;
-                case EmberUIBinding.WidgetTypes.Extension:
+                case EUIBinding.WidgetTypes.Extension:
                     var mapping = GetExtensionTypeMapping();
                     if (mapping.TryGetValue(cn.stringValue, out var ct))
                     {
@@ -728,7 +733,7 @@ namespace Ember.UIExtension.Editor
                     }
                     break;
                 default:
-                    var widgetType = (EmberUIBinding.WidgetTypes)index;
+                    var widgetType = (EUIBinding.WidgetTypes)index;
                     if (TryGetBuiltInComponentTypeRule(widgetType, out var rule) && !rule.Matches(go))
                     {
                         EditorGUILayout.HelpBox($"{go} 并不包含 {rule.ComponentTypeNames} 组件", MessageType.Error);
@@ -760,7 +765,7 @@ namespace Ember.UIExtension.Editor
                 if (oldOptionIdx != optionIdx)
                     needValidation = true;
 
-                if (index == (int)EmberUIBinding.WidgetTypes.UILogic)
+                if (index == (int)EUIBinding.WidgetTypes.UILogic)
                 {
                     if (!string.IsNullOrEmpty(cn.stringValue))
                     {
@@ -771,15 +776,15 @@ namespace Ember.UIExtension.Editor
                 }
                 if (index < 0) return;
 
-                if (index >= (int)EmberUIBinding.WidgetTypes.End)
+                if (index >= (int)EUIBinding.WidgetTypes.End)
                 {
                     var newName = GetComponentTypeNames()[index];
-                    type.enumValueIndex = (int)EmberUIBinding.WidgetTypes.End + 1;
+                    type.enumValueIndex = (int)EUIBinding.WidgetTypes.End + 1;
                     cn.stringValue = newName;
                 }
                 else
                 {
-                    SetBuiltInWidgetType(type, cn, (EmberUIBinding.WidgetTypes)index);
+                    SetBuiltInWidgetType(type, cn, (EUIBinding.WidgetTypes)index);
                 }
             }
         }
@@ -796,7 +801,7 @@ namespace Ember.UIExtension.Editor
             }
 
             var res = new List<ComponentTypeOption>();
-            res.Add(new ComponentTypeOption { Index = (int)EmberUIBinding.WidgetTypes.Component, Name = allNames[(int)EmberUIBinding.WidgetTypes.Component] });
+            res.Add(new ComponentTypeOption { Index = (int)EUIBinding.WidgetTypes.Component, Name = allNames[(int)EUIBinding.WidgetTypes.Component] });
 
             foreach (var rule in BuiltInComponentTypeRules)
             {
@@ -822,13 +827,13 @@ namespace Ember.UIExtension.Editor
         private static int GetWidgetIndexAndName(SerializedProperty type, SerializedProperty cn)
         {
             int index = type.enumValueIndex;
-            if (index == (int)EmberUIBinding.WidgetTypes.End + 1)
-                index = (int)EmberUIBinding.WidgetTypes.Extension;
-            switch ((EmberUIBinding.WidgetTypes)index)
+            if (index == (int)EUIBinding.WidgetTypes.End + 1)
+                index = (int)EUIBinding.WidgetTypes.Extension;
+            switch ((EUIBinding.WidgetTypes)index)
             {
-                case EmberUIBinding.WidgetTypes.UILogic:
+                case EUIBinding.WidgetTypes.UILogic:
                     return index;
-                case EmberUIBinding.WidgetTypes.Extension:
+                case EUIBinding.WidgetTypes.Extension:
                     var mapping = GetExtensionTypeMapping();
                     if (mapping.TryGetValue(cn.stringValue, out var pair))
                         return pair.Key;
@@ -838,7 +843,7 @@ namespace Ember.UIExtension.Editor
             }
         }
 
-        private static bool TryGetBuiltInComponentTypeRule(EmberUIBinding.WidgetTypes widgetType, out ComponentTypeRule result)
+        private static bool TryGetBuiltInComponentTypeRule(EUIBinding.WidgetTypes widgetType, out ComponentTypeRule result)
         {
             foreach (var rule in BuiltInComponentTypeRules)
             {
@@ -859,15 +864,15 @@ namespace Ember.UIExtension.Editor
             return false;
         }
 
-        private static void SetBuiltInWidgetType(SerializedProperty type, SerializedProperty cn, EmberUIBinding.WidgetTypes widgetType)
+        private static void SetBuiltInWidgetType(SerializedProperty type, SerializedProperty cn, EUIBinding.WidgetTypes widgetType)
         {
             int previousType = type.enumValueIndex;
             type.enumValueIndex = (int)widgetType;
-            if (cn != null && previousType != (int)widgetType && widgetType != EmberUIBinding.WidgetTypes.UILogic)
+            if (cn != null && previousType != (int)widgetType && widgetType != EUIBinding.WidgetTypes.UILogic)
                 cn.stringValue = null;
         }
 
-        private static void SetUILogicClassName(EmberUIBinding childBinding, SerializedProperty cn)
+        private static void SetUILogicClassName(EUIBinding childBinding, SerializedProperty cn)
         {
             if (cn == null) return;
             cn.stringValue = childBinding && !childBinding.NoCodeGeneration ? childBinding.ClassName : null;

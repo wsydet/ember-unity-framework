@@ -1,4 +1,4 @@
-////// Copyright (c) 2026 Burner Games. All rights reserved.
+﻿////// Copyright (c) 2026 Burner Games. All rights reserved.
 //////
 ////// This file is part of Burner Unity Packages.
 ////// Package: com.burner.uiextension
@@ -20,7 +20,7 @@
 ////    public class GameUIBindingEditor : UnityEditor.Editor
 ////    {
 ////        SerializedProperty pageName, bindings, className, classPath, isPage, pageFlags, selfWidgetType, selfWidgetClassName, noCodeGen, baseBindingUUID;
-////        UIBindingSettingData settings;
+////        EUIBindingSettingData settings;
 ////        string[] logicTypeNames;
 ////        static string[] typeNames;
 ////        static Dictionary<string, KeyValuePair<int, KeyValuePair<System.Type, System.Type>>> extensionTypeMapping;
@@ -48,7 +48,7 @@
 ////            bindings = serializedObject.FindProperty("bindings");
 ////            baseBindingUUID = serializedObject.FindProperty("baseBindingUUID");
 ////
-////            settings = UIBindingSettingData.GetOrCreateSettings();
+////            settings = EUIBindingSettingData.GetOrCreateSettings();
 ////            logicTypeNames = new string[settings.LogicImplementations.Length];
 ////            for(int i = 0; i < settings.LogicImplementations.Length; i++)
 ////            {

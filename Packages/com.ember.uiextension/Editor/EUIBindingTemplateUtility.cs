@@ -8,23 +8,17 @@ using UnityEngine;
 namespace Ember.UIExtension.Editor
 {
     /// <summary>
-    /// EmberUIBinding 模板操作工具（保存 / 加载 / 复制 / 粘贴）。
-    /// 在静态构造函数中注册到 EmberUIBinding 的静态委托上，
+    /// EUIBinding 模板操作工具（保存 / 加载 / 复制 / 粘贴）。
+    /// 在静态构造函数中注册到 EUIBinding 的静态委托上，
     /// 使得 Runtime 程序集中的 [Button] 方法可以委托到 Editor 程序集执行。
     /// </summary>
     [InitializeOnLoad]
-    public static class EmberUIBindingTemplateUtility
+    public static class EUIBindingTemplateUtility
     {
         #region 内部参数
 
         /// <summary>内存剪贴板 —— 复制的模板快照（不保存到磁盘）</summary>
-        private static EmberUIBindingTemplate _savedTemplate;
-
-        /// <summary>ObjectPicker 控制 ID，用于检测选择器关闭</summary>
-        private static int _templateSelectorControlID;
-
-        /// <summary>当前正在等待模板加载的 binding</summary>
-        private static EmberUIBinding _currentBindingForLoad;
+        private static EUIBindingTemplate _savedTemplate;
 
         #endregion
 
@@ -32,12 +26,12 @@ namespace Ember.UIExtension.Editor
 
         #region 生命周期（初始化）
 
-        static EmberUIBindingTemplateUtility()
+        static EUIBindingTemplateUtility()
         {
-            EmberUIBinding.OnSaveAsTemplate = HandleSaveAsTemplate;
-            EmberUIBinding.OnLoadTemplate = HandleLoadTemplate;
-            EmberUIBinding.OnCopyTemplate = HandleCopyTemplate;
-            EmberUIBinding.OnPasteTemplate = HandlePasteTemplate;
+            EUIBinding.OnSaveAsTemplate = HandleSaveAsTemplate;
+            EUIBinding.OnLoadTemplate = HandleLoadTemplate;
+            EUIBinding.OnCopyTemplate = HandleCopyTemplate;
+            EUIBinding.OnPasteTemplate = HandlePasteTemplate;
         }
 
         #endregion
@@ -47,12 +41,12 @@ namespace Ember.UIExtension.Editor
         #region 内部方法 —— 模板操作
 
         /// <summary>保存当前 binding 配置为 ScriptableObject 模板</summary>
-        private static void HandleSaveAsTemplate(EmberUIBinding binding)
+        private static void HandleSaveAsTemplate(EUIBinding binding)
         {
             if (!binding) return;
 
             var defaultDir = "Assets";
-            var settings = UIBindingSettingData.GetOrCreateSettings();
+            var settings = EUIBindingSettingData.GetOrCreateSettings();
             if (settings.DefaultBindingTemplatePath != null)
                 defaultDir = AssetDatabase.GetAssetPath(settings.DefaultBindingTemplatePath);
 
@@ -65,7 +59,7 @@ namespace Ember.UIExtension.Editor
             // 转为 Assets-relative 路径
             path = "Assets" + path.Replace(Application.dataPath, "");
 
-            var template = ScriptableObject.CreateInstance<EmberUIBindingTemplate>();
+            var template = ScriptableObject.CreateInstance<EUIBindingTemplate>();
             template.CopyFromUIBinding(binding);
 
             AssetDatabase.CreateAsset(template, path);
@@ -75,59 +69,51 @@ namespace Ember.UIExtension.Editor
             Ember.Basic.EmberDebug.Log("EmberUI", $"模板已保存至：{path}");
         }
 
-        /// <summary>打开 ObjectPicker 选择模板并加载</summary>
-        private static void HandleLoadTemplate(EmberUIBinding binding)
+        /// <summary>通过文件对话框选择模板并加载</summary>
+        private static void HandleLoadTemplate(EUIBinding binding)
         {
             if (!binding) return;
 
-            _currentBindingForLoad = binding;
-            _templateSelectorControlID = EditorGUIUtility.GetControlID(FocusType.Passive);
-            EditorGUIUtility.ShowObjectPicker<EmberUIBindingTemplate>(
-                null, allowSceneObjects: false, searchFilter: string.Empty,
-                controlID: _templateSelectorControlID);
-            EditorApplication.update += CheckTemplatePicker;
-        }
+            var path = EditorUtility.OpenFilePanel("加载模板", "Assets", "asset");
+            if (string.IsNullOrEmpty(path)) return;
 
-        /// <summary>轮询 ObjectPicker 是否关闭，关闭后处理选中结果</summary>
-        private static void CheckTemplatePicker()
-        {
-            // 选择器关闭后 GetObjectPickerControlID 返回不同的值
-            if (EditorGUIUtility.GetObjectPickerControlID() == _templateSelectorControlID) return;
+            // 转为 Assets-relative 路径
+            path = "Assets" + path.Replace(Application.dataPath, "");
 
-            EditorApplication.update -= CheckTemplatePicker;
-
-            if (!_currentBindingForLoad) return;
-
-            var template = EditorGUIUtility.GetObjectPickerObject() as EmberUIBindingTemplate;
-            if (template != null
-                && EditorUtility.DisplayDialog("加载模板",
-                    $"确认加载模板 \"{template.name}\"？\n当前配置将被覆盖。", "确认", "取消"))
+            var template = AssetDatabase.LoadAssetAtPath<EUIBindingTemplate>(path);
+            if (template == null)
             {
-                ApplyTemplate(_currentBindingForLoad, template);
-                Ember.Basic.EmberDebug.Log("EmberUI", $"已从模板 \"{template.name}\" 加载配置");
+                Ember.Basic.EmberDebug.LogWarning("EmberUI", $"未找到有效的模板文件：{path}");
+                return;
             }
 
-            _currentBindingForLoad = null;
+            if (!EditorUtility.DisplayDialog("加载模板",
+                $"确认加载模板 \"{template.name}\"（{template.Bindings?.Length ?? 0} 个绑定）？\n当前配置将被覆盖。",
+                "确认加载", "取消"))
+                return;
+
+            ApplyTemplate(binding, template);
+            Ember.Basic.EmberDebug.Log("EmberUI", $"已从模板 \"{template.name}\" 加载配置");
         }
 
         /// <summary>复制当前 binding 配置到内存剪贴板</summary>
-        private static void HandleCopyTemplate(EmberUIBinding binding)
+        private static void HandleCopyTemplate(EUIBinding binding)
         {
             if (!binding) return;
 
             if (_savedTemplate != null)
                 Object.DestroyImmediate(_savedTemplate);
 
-            _savedTemplate = ScriptableObject.CreateInstance<EmberUIBindingTemplate>();
+            _savedTemplate = ScriptableObject.CreateInstance<EUIBindingTemplate>();
             _savedTemplate.CopyFromUIBinding(binding);
-            EmberUIBinding.HasCopiedTemplate = true;
+            EUIBinding.HasCopiedTemplate = true;
 
             Ember.Basic.EmberDebug.Log("EmberUI",
                 $"已复制模板（{_savedTemplate.Bindings?.Length ?? 0} 个绑定）");
         }
 
         /// <summary>粘贴内存剪贴板中的模板配置到当前 binding</summary>
-        private static void HandlePasteTemplate(EmberUIBinding binding)
+        private static void HandlePasteTemplate(EUIBinding binding)
         {
             if (!binding) return;
 
@@ -137,8 +123,18 @@ namespace Ember.UIExtension.Editor
                 return;
             }
 
+            var count = _savedTemplate.Bindings?.Length ?? 0;
+            var className = string.IsNullOrEmpty(_savedTemplate.ClassName)
+                ? "(未命名)" : _savedTemplate.ClassName;
+
+            if (!EditorUtility.DisplayDialog("粘贴模板",
+                $"确认将模板 \"{className}\"（{count} 个绑定）粘贴到当前配置？\n当前配置将被覆盖。",
+                "确认粘贴", "取消"))
+                return;
+
             ApplyTemplate(binding, _savedTemplate);
-            Ember.Basic.EmberDebug.Log("EmberUI", "已粘贴模板");
+            Ember.Basic.EmberDebug.Log("EmberUI",
+                $"已粘贴模板 \"{className}\"（{count} 个绑定）");
         }
 
         #endregion
@@ -151,7 +147,7 @@ namespace Ember.UIExtension.Editor
         /// 将模板数据应用到目标 binding。
         /// 使用 SerializedObject 直接设置序列化字段，支持 Undo。
         /// </summary>
-        private static void ApplyTemplate(EmberUIBinding binding, EmberUIBindingTemplate template)
+        private static void ApplyTemplate(EUIBinding binding, EUIBindingTemplate template)
         {
             if (!binding || !template) return;
 
@@ -170,8 +166,8 @@ namespace Ember.UIExtension.Editor
 
                 // ── 自身控件 ──
                 so.FindProperty("selfWidgetType").enumValueIndex =
-                    template.SelfWidgetType > EmberUIBinding.WidgetTypes.End
-                        ? (int)EmberUIBinding.WidgetTypes.End + 1
+                    template.SelfWidgetType > EUIBinding.WidgetTypes.End
+                        ? (int)EUIBinding.WidgetTypes.End + 1
                         : (int)template.SelfWidgetType;
                 so.FindProperty("selfWidgetClassName").stringValue =
                     template.SelfWidgetClassName ?? string.Empty;
@@ -191,8 +187,8 @@ namespace Ember.UIExtension.Editor
 
                         elem.FindPropertyRelative("Name").stringValue = tpl.Name ?? string.Empty;
                         elem.FindPropertyRelative("Type").enumValueIndex =
-                            tpl.Type > EmberUIBinding.WidgetTypes.End
-                                ? (int)EmberUIBinding.WidgetTypes.End + 1
+                            tpl.Type > EUIBinding.WidgetTypes.End
+                                ? (int)EUIBinding.WidgetTypes.End + 1
                                 : (int)tpl.Type;
                         elem.FindPropertyRelative("ClassName").stringValue = tpl.ClassName ?? string.Empty;
 

@@ -10,12 +10,12 @@ using UnityEngine;
 namespace Ember.UIExtension.Editor
 {
     /// <summary>
-    /// Ember UI Binding 的项目级设置（ScriptableObject 单例）。
-    /// 存储逻辑实现数据、默认模板路径等。
+    /// EUI Binding 的项目级全局设置（ScriptableObject 单例）。
+    /// 预设好框架/业务两条生成路径，一次配置，所有 EUIBinding 共用。
     /// </summary>
-    public class UIBindingSettingData : ScriptableObject
+    public class EUIBindingSettingData : ScriptableObject
     {
-        public const string k_SettingsPath = "Assets/Ember/UI/Editor/EmberUIBindingSettings.asset";
+        public const string k_SettingsPath = "Assets/Ember/UI/Editor/EUIBindingSettings.asset";
 
         [SerializeField]
         private LogicImplementationData[] logicImplementations;
@@ -23,19 +23,33 @@ namespace Ember.UIExtension.Editor
         [SerializeField]
         private DefaultAsset defaultBindingTemplatePath;
 
+        [SerializeField]
+        [Tooltip("框架代码生成根目录")]
+        private string frameworkCodeRoot = "Assets/Ember/UI/Runtime";
+
+        [SerializeField]
+        [Tooltip("业务代码生成根目录")]
+        private string businessCodeRoot = "Assets/Game/UI/Runtime";
+
         /// <summary>已注册的逻辑实现列表</summary>
         public LogicImplementationData[] LogicImplementations => logicImplementations;
 
         /// <summary>默认模板保存路径</summary>
         public DefaultAsset DefaultBindingTemplatePath => defaultBindingTemplatePath;
 
+        /// <summary>框架代码根目录</summary>
+        public string FrameworkCodeRoot => frameworkCodeRoot;
+
+        /// <summary>业务代码根目录</summary>
+        public string BusinessCodeRoot => businessCodeRoot;
+
         /// <summary>获取或创建设置实例</summary>
-        public static UIBindingSettingData GetOrCreateSettings()
+        public static EUIBindingSettingData GetOrCreateSettings()
         {
-            var settings = AssetDatabase.LoadAssetAtPath<UIBindingSettingData>(k_SettingsPath);
+            var settings = AssetDatabase.LoadAssetAtPath<EUIBindingSettingData>(k_SettingsPath);
             if (settings == null)
             {
-                settings = ScriptableObject.CreateInstance<UIBindingSettingData>();
+                settings = ScriptableObject.CreateInstance<EUIBindingSettingData>();
                 AssetDatabase.CreateAsset(settings, k_SettingsPath);
                 AssetDatabase.SaveAssets();
             }
@@ -54,14 +68,14 @@ namespace Ember.UIExtension.Editor
     /// <summary>
     /// Project Settings 窗口注册。
     /// </summary>
-    static class UIBindingSettingDataIMGUIRegister
+    static class EUIBindingSettingDataIMGUIRegister
     {
         [SettingsProvider]
-        public static SettingsProvider CreateUIBindingSettingDataProvider()
+        public static SettingsProvider CreateEUIBindingSettingDataProvider()
         {
-            var provider = new SettingsProvider("Project/Ember UI Binding", SettingsScope.Project)
+            var provider = new SettingsProvider("Project/EUI Binding", SettingsScope.Project)
             {
-                label = "Ember UI Binding",
+                label = "EUI Binding",
                 guiHandler = (searchContext) =>
                 {
                     var authorName = LogicImplementationData.GenerateAuthorName;
@@ -69,11 +83,18 @@ namespace Ember.UIExtension.Editor
                     if (newName != authorName)
                         LogicImplementationData.GenerateAuthorName = newName;
 
-                    var settings = UIBindingSettingData.GetSerializedSettings();
+                    var settings = EUIBindingSettingData.GetSerializedSettings();
+                    var frameworkCodeRoot = settings.FindProperty("frameworkCodeRoot");
+                    var businessCodeRoot = settings.FindProperty("businessCodeRoot");
                     var logicImplementations = settings.FindProperty("logicImplementations");
                     var templatePath = settings.FindProperty("defaultBindingTemplatePath");
 
                     EditorGUILayout.PropertyField(templatePath, new GUIContent("默认模板保存路径"));
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("代码生成路径", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(frameworkCodeRoot, new GUIContent("框架根目录"));
+                    EditorGUILayout.PropertyField(businessCodeRoot, new GUIContent("业务根目录"));
+                    EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(logicImplementations, new GUIContent("逻辑实现数据"), true);
 
                     if (logicImplementations.arraySize <= 0)

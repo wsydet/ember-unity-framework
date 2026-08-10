@@ -76,7 +76,7 @@ namespace Ember.UIExtension.Editor
 
         public override string CodeFileExtension => ".cs";
 
-        public override bool CanGenerate(EmberUIBinding binding)
+        public override bool CanGenerate(EUIBinding binding)
         {
             return base.CanGenerate(binding)
                 && !string.IsNullOrEmpty(namespaceName)
@@ -84,7 +84,7 @@ namespace Ember.UIExtension.Editor
                 && bindingCodeTemplate != null;
         }
 
-        public override bool CanGenerateForNoGen(EmberUIBinding binding)
+        public override bool CanGenerateForNoGen(EUIBinding binding)
         {
             return codeTemplateForNoGen != null;
         }
@@ -95,7 +95,7 @@ namespace Ember.UIExtension.Editor
             return name.StartsWith("m_") ? $"_{name.Substring(2)}" : $"_{name}";
         }
 
-        public override void GenerateCodeForNoGen(EmberUIBinding binding, string className)
+        public override void GenerateCodeForNoGen(EUIBinding binding, string className)
         {
             string templateContent = ReadTemplate(codeTemplateForNoGen);
             if (string.IsNullOrEmpty(templateContent))
@@ -109,7 +109,7 @@ namespace Ember.UIExtension.Editor
             EditorUtility.DisplayDialog("OK", "代码已复制至剪贴板", "确认");
         }
 
-        public override void GenerateCode(EmberUIBinding binding, string baseClsName, EmberUIBinding.BindingEntry[] declaredFields)
+        public override void GenerateCode(EUIBinding binding, string baseClsName, EUIBinding.BindingEntry[] declaredFields)
         {
             if (!GenerateOrUpdatePageDefinition(binding))
                 return;
@@ -156,7 +156,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>在 GamePages.cs 中追加新的 PageDef 条目（不覆盖已有内容）</summary>
-        public bool GenerateOrUpdatePageDefinition(EmberUIBinding binding)
+        public bool GenerateOrUpdatePageDefinition(EUIBinding binding)
         {
             if (!binding.IsPage) return true;
 
@@ -310,7 +310,7 @@ namespace Ember.UIExtension.Editor
             var result = new List<StalePageDef>();
             if (!File.Exists(fullPath)) return result;
 
-            // 收集 Prefabs 目录下所有预制体的 EmberUIBinding.PageName
+            // 收集 Prefabs 目录下所有预制体的 EUIBinding.PageName
             var validPageNames = new HashSet<string>();
             var prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Game/UI/Prefabs" });
             foreach (var guid in prefabGuids)
@@ -318,7 +318,7 @@ namespace Ember.UIExtension.Editor
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
                 if (prefab == null) continue;
-                var binding = prefab.GetComponent<EmberUIBinding>();
+                var binding = prefab.GetComponent<EUIBinding>();
                 if (binding != null && binding.IsPage && !string.IsNullOrEmpty(binding.PageName))
                     validPageNames.Add(binding.PageName);
             }
@@ -341,7 +341,7 @@ namespace Ember.UIExtension.Editor
 
                 if (string.IsNullOrEmpty(prefabPath)) continue;
 
-                // 用变量名匹配 EmberUIBinding.PageName，而不是拼文件路径
+                // 用变量名匹配 EUIBinding.PageName，而不是拼文件路径
                 if (!validPageNames.Contains(name))
                 {
                     result.Add(new StalePageDef { Name = name, PrefabPath = prefabPath, LineIndex = i });
@@ -396,8 +396,8 @@ namespace Ember.UIExtension.Editor
         #region 模板引擎
 
         /// <summary>构建模板上下文变量（fields_decl 和 fields_bind 已预渲染为字符串）</summary>
-        private Dictionary<string, object> BuildTemplateContext(EmberUIBinding binding, string prefabName,
-            EmberUIBinding.BindingEntry[] entries, string baseClsName = null)
+        private Dictionary<string, object> BuildTemplateContext(EUIBinding binding, string prefabName,
+            EUIBinding.BindingEntry[] entries, string baseClsName = null)
         {
             var decl = new StringBuilder();
             var bind = new StringBuilder();
@@ -486,26 +486,26 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>将 WidgetType 映射为 C# 类型名</summary>
-        private static string GetCSharpTypeName(EmberUIBinding.BindingEntry entry)
+        private static string GetCSharpTypeName(EUIBinding.BindingEntry entry)
         {
-            if (entry.Type == EmberUIBinding.WidgetTypes.Extension && !string.IsNullOrEmpty(entry.ClassName))
+            if (entry.Type == EUIBinding.WidgetTypes.Extension && !string.IsNullOrEmpty(entry.ClassName))
                 return entry.ClassName;
-            if (entry.Type == EmberUIBinding.WidgetTypes.UILogic && !string.IsNullOrEmpty(entry.ClassName))
+            if (entry.Type == EUIBinding.WidgetTypes.UILogic && !string.IsNullOrEmpty(entry.ClassName))
                 return entry.ClassName;
 
             return entry.Type switch
             {
-                EmberUIBinding.WidgetTypes.Component   => "Component",
-                EmberUIBinding.WidgetTypes.Text        => "TMP_Text",
-                EmberUIBinding.WidgetTypes.Image       => "Image",
-                EmberUIBinding.WidgetTypes.RawImage    => "RawImage",
-                EmberUIBinding.WidgetTypes.Button      => "Button",
-                EmberUIBinding.WidgetTypes.Toggle      => "Toggle",
-                EmberUIBinding.WidgetTypes.ToggleGroup => "ToggleGroup",
-                EmberUIBinding.WidgetTypes.InputField  => "TMP_InputField",
-                EmberUIBinding.WidgetTypes.ScrollRect  => "ScrollRect",
-                EmberUIBinding.WidgetTypes.ProgressBar => "Slider",
-                EmberUIBinding.WidgetTypes.Canvas      => "Canvas",
+                EUIBinding.WidgetTypes.Component   => "Component",
+                EUIBinding.WidgetTypes.Text        => "TMP_Text",
+                EUIBinding.WidgetTypes.Image       => "Image",
+                EUIBinding.WidgetTypes.RawImage    => "RawImage",
+                EUIBinding.WidgetTypes.Button      => "Button",
+                EUIBinding.WidgetTypes.Toggle      => "Toggle",
+                EUIBinding.WidgetTypes.ToggleGroup => "ToggleGroup",
+                EUIBinding.WidgetTypes.InputField  => "TMP_InputField",
+                EUIBinding.WidgetTypes.ScrollRect  => "ScrollRect",
+                EUIBinding.WidgetTypes.ProgressBar => "Slider",
+                EUIBinding.WidgetTypes.Canvas      => "Canvas",
                 _ => "Component",
             };
         }
@@ -580,10 +580,10 @@ namespace Ember.UIExtension.Editor
         [MenuItem("Ember/UI/Clean Stale PageDefs")]
         public static void CleanStalePageDefsMenu()
         {
-            var settings = UIBindingSettingData.GetOrCreateSettings();
+            var settings = EUIBindingSettingData.GetOrCreateSettings();
             if (settings.LogicImplementations == null || settings.LogicImplementations.Length == 0)
             {
-                EditorUtility.DisplayDialog("提示", "未配置 CSharpLogicImplementationData，请在 Project Settings → Ember UI Binding 中添加。", "确认");
+                EditorUtility.DisplayDialog("提示", "未配置 CSharpLogicImplementationData，请在 Project Settings → EUI Binding 中添加。", "确认");
                 return;
             }
 
@@ -644,7 +644,7 @@ namespace Ember.UIExtension.Editor
             if (state != PlayModeStateChange.ExitingEditMode) return;
             if (!_dirty) return; // 无变动，跳过检查
 
-            var settings = UIBindingSettingData.GetOrCreateSettings();
+            var settings = EUIBindingSettingData.GetOrCreateSettings();
             if (settings.LogicImplementations == null || settings.LogicImplementations.Length == 0)
                 return;
 
