@@ -300,7 +300,47 @@ public bool IsInitialized { get; private set; }
 private string CurrentState => Fsm?.Current?.Name ?? "—";
 ```
 
-### 2.11 统一 Title 规范
+### 2.11 Title + 空行占位 —— 防止分割线与按钮渲染冲突
+
+**适用场景**：`[Title]` 带有 `horizontalLine: true` 或使用分割线时，下方紧邻的
+`[Button]` 或 `[HorizontalGroup]` 按钮可能与分割线产生渲染冲突（重叠、闪烁、空白行消失）。
+
+**原因**：Odin 的 `[Title]` 分割线和下一个 GUI 元素之间需要至少一个属性行作为缓冲。
+如果第一个元素直接是 `[Button]`（高度较小），分割线可能覆盖按钮区域。
+
+**解决方案**：在 `[Title]` 和按钮之间插入一个空的 `[ShowInInspector, DisplayAsString, HideLabel]` 占位行：
+
+```csharp
+// ✅ 正确 —— Title + 空行 + 按钮
+[BoxGroup("$GROUP/模板", ShowLabel = false)]
+[Title("模板")]
+[ShowInInspector, DisplayAsString, HideLabel]
+private string _templateTitleDummy => "";    // 空行占位，防止分割线与按钮冲突
+
+[BoxGroup("$GROUP/模板")]
+[HorizontalGroup("$GROUP/模板/Buttons")]
+[Button("加载", ButtonSizes.Medium)]
+private void LoadTemplate() { }
+
+// ❌ 错误 —— Title 直接连按钮，可能渲染冲突
+[BoxGroup("$GROUP/模板", ShowLabel = false)]
+[Title("模板")]
+[HorizontalGroup("$GROUP/模板/Buttons")]    // 缺少空行占位
+[Button("加载", ButtonSizes.Medium)]
+private void LoadTemplate() { }
+```
+
+**关键点**：
+- 占位字段返回空字符串 `""`（不是 `null`，null 会显示 "Null"）
+- `[HideLabel]` 隐藏字段标签，`DisplayAsString` 渲染为空行
+- 占位字段和按钮必须在同一个 `BoxGroup` 内
+- **不要因为"空白行不好看"而删除它** —— 它是有功能目的的缓冲区
+
+**实际案例**：
+- `EUIBinding.cs` 的"模板"和"代码生成"两个 section 都使用了此模式
+- 曾因尝试删除空白行导致按钮与 Title 分割线渲染异常
+
+### 2.12 统一 Title 规范
 
 **适用场景**：所有 `[Title]` 使用方式。
 

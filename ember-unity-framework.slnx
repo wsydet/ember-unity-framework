@@ -7,8 +7,8 @@
   <Project Path="UniTask.csproj" />
   <Project Path="Ember.UI.Runtime.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="DOTween.Modules.csproj" />
   <Project Path="Ember.UIExtension.Editor.csproj" />
+  <Project Path="DOTween.Modules.csproj" />
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Ember.Resource.Runtime.csproj" />
   <Project Path="Ember.Extensions.csproj" />

@@ -9,32 +9,32 @@
 
 | # | 分类 | 功能 | 程度 | 原因 |
 |---|------|------|------|------|
-| 1 | 模板 | 加载模板（ObjectPicker 选 `EmberUIBindingTemplate`） | 🔴 全丢 | 需要 `EditorGUIUtility.ShowObjectPicker` |
-| 2 | 模板 | 保存为模板（`SaveFilePanel`） | 🔴 全丢 | 需要 `AssetDatabase.CreateAsset` |
-| 3 | 模板 | 复制/粘贴模板（内存剪贴板） | 🔴 全丢 | 需要 Editor 端静态状态 |
-| 4 | 继承 | 基类 Prefab 选择器（ObjectField → GUID 自动转换） | 🔴 全丢 | 改为纯字符串字段，手动粘贴 GUID |
-| 5 | 继承 | 基类信息只读展示（isPage / pageName / classPath） | 🔴 全丢 | 需要 `AssetDatabase` 查 Prefab |
-| 6 | 继承 | 缺失字段自动检测 + "自动修复"按钮 | 🔴 全丢 | 需要比对基类的 Bindings |
-| 7 | 继承 | Page/非 Page 继承冲突校验 | 🔴 全丢 | 跨对象校验 |
-| 8 | 代码生成 | 逻辑实现下拉框（选择 `LogicImplementationData`） | 🔴 全丢 | 需要 `UIBindingSettingData` |
-| 9 | 代码生成 | 代码生成路径预览 + 可点击跳转 | 🔴 全丢 | 需要 `AssetDatabase` |
-| 10 | 代码生成 | "生成代码" / "重新生成"按钮 | 🔴 全丢 | 需要 `logic.GenerateCode()` |
-| 11 | 代码生成 | NoCodeGen 模式（"生成到剪贴板"） | 🔴 全丢 | 同上 |
-| 12 | 代码生成 | 自动收集子控件按钮 | 🔴 全丢 | 需要遍历 Transform + 类型检测 |
-| 13 | 代码生成 | 设置齿轮按钮（跳转 Project Settings） | 🔴 全丢 | 需要 `SettingsService` |
-| 14 | 自身控件 | 上下文类型下拉（仅显示 GO 上存在的组件类型） | 🟡 减配 | Odin 渲染为标准 enum 下拉（全部选项） |
-| 15 | 自身控件 | 控件类型实时验证 + "自动识别类型"按钮 | 🟡 减配 | `[ValidateInput]` 仅显示错误，无自动修复 |
-| 16 | 搜索 | 按名称搜索绑定条目 | 🔴 全丢 | 纯 UI 层过滤，Odin 不支持 |
-| 17 | 搜索 | 按节点搜索绑定条目 | 🔴 全丢 | 同上 |
-| 18 | 绑定列表 | 拖入 GameObject 自动检测组件类型 | 🔴 全丢 | 需要 `AutoSelectByObject` |
-| 19 | 绑定列表 | 拖入 GameObject 自动生成变量名 | 🔴 全丢 | 需要 `logic.GetNameForCode()` |
-| 20 | 绑定列表 | GameObject 层级验证（必须为子节点） | 🔴 全丢 | 无自定义回调 |
-| 21 | 绑定列表 | 重复绑定检测（跨递归子 UIBinding） | 🔴 全丢 | 需要 `GatherBindingDefinitions` |
-| 22 | 绑定列表 | 继承条目锁定（只读不可编辑） | 🔴 全丢 | 需要 `baseTypeFields` 状态 |
-| 23 | 绑定列表 | 逐条目删除/刷新按钮 | 🔴 全丢 | Odin 用默认 +/- 按钮 |
-| 24 | 绑定列表 | "添加绑定"按钮（独立于计数） | 🔴 全丢 | Odin 用默认 +/- 按钮 |
+| 1 | 模板 | 加载模板（ObjectPicker 选 `EmberUIBindingTemplate`） | ✅ 已恢复 | 委托注入模式，见 [一、模板操作](#一模板操作-4-项) |
+| 2 | 模板 | 保存为模板（`SaveFilePanel`） | ✅ 已恢复 | 委托注入模式，见 [一、模板操作](#一模板操作-4-项) |
+| 3 | 模板 | 复制/粘贴模板（内存剪贴板） | ✅ 已恢复 | 委托注入模式，粘贴有确认弹窗防误操作 |
+| 4 | 继承 | 基类 Prefab 选择器（ObjectField → GUID 自动转换） | ✅ 已恢复 | `OpenFilePanel` + `AssetDatabase.AssetPathToGUID` |
+| 5 | 继承 | 基类信息只读展示（isPage / pageName / classPath） | ✅ 已恢复 | `[ShowInInspector, ReadOnly]` 计算属性 |
+| 6 | 继承 | 缺失字段自动检测 + "自动修复"按钮 | ✅ 已恢复 | 比对基类 Bindings，`[Button]` + `[ShowIf("HasMissingFields")]` |
+| 7 | 继承 | Page/非 Page 继承冲突校验 | ✅ 已恢复 | `[InfoBox]` on `baseBindingUUID`，`[ShowIf("HasInheritanceConflict")]` |
+| 8 | 代码生成 | 逻辑实现下拉框（选择 `LogicImplementationData`） | ✅ 已恢复 | `◀ Name ▶` 按钮切换（避免 Runtime 引用 Odin Core） |
+| 9 | 代码生成 | 代码生成路径预览 | ✅ 已恢复 | `[ShowInInspector, ReadOnly]` 计算属性 |
+| 10 | 代码生成 | "生成代码" / "重新生成"按钮 | ✅ 已恢复 | `[Button]` + `[ShowIf("HasGeneratedFile")]` 切换显示 |
+| 11 | 代码生成 | NoCodeGen 模式（"生成到剪贴板"） | ✅ 已恢复 | `[Button]` + `[ShowIf("@noCodeGen")]` |
+| 12 | 代码生成 | 自动收集子控件按钮 | ✅ 已恢复 | 递归遍历 Transform + AutoSelectByObject |
+| 13 | 代码生成 | 设置齿轮按钮（跳转 Project Settings） | ✅ 已恢复 | `[Button("⚙")]` → `SettingsService.OpenProjectSettings` |
+| 14 | 自身控件 | 上下文类型下拉（仅显示 GO 上存在的组件类型） | ✅ 已恢复 | 只读提示行显示 GO 上实际存在的类型 |
+| 15 | 自身控件 | 控件类型实时验证 + "自动识别类型"按钮 | ✅ 已恢复 | `[Button]` + `AutoSelectByObject` |
+| 16 | 搜索 | 按名称搜索绑定条目 | ✅ 已恢复 | 绑定列表顶部搜索栏 + 实时过滤 |
+| 17 | 搜索 | 按节点搜索绑定条目 | ✅ 已恢复 | 绑定列表顶部 ObjectField + 实时过滤 |
+| 18 | 绑定列表 | 拖入 GameObject 自动检测组件类型 | ✅ 已恢复 | `EmberBindingListDrawer` 内联处理 |
+| 19 | 绑定列表 | 拖入 GameObject 自动生成变量名 | ✅ 已恢复 | `EmberBindingListDrawer` 内联处理 |
+| 20 | 绑定列表 | GameObject 层级验证（必须为子节点） | ✅ 已恢复 | `IsValidChild()` 检查 + 弹窗拒绝 |
+| 21 | 绑定列表 | 重复绑定检测（跨递归子 UIBinding） | ✅ 已恢复 | `GatherBindingDefinitions` + HashSet 检测 |
+| 22 | 绑定列表 | 继承条目锁定（只读不可编辑） | ✅ 已恢复 | `EditorGUI.BeginDisabledGroup(isInherited)` |
+| 23 | 绑定列表 | 逐条目删除/刷新按钮 | ✅ 已恢复 | `×` 按钮（继承条目不显示） |
+| 24 | 绑定列表 | "添加绑定"按钮（独立于计数） | ✅ 已恢复 | 列表底部独立 `GUILayout.Button` |
 
-> 🔴 全丢 20 项，🟡 减配 2 项，✅ 保留 2 项（页面设置条件显示、字段验证）
+> ✅ 24 项功能全部恢复完成 🎉
 
 ---
 
@@ -140,6 +140,39 @@ private void PasteTemplate()
 ```
 
 **复杂度**：低。`[Button]` + `[EnableIf]`。
+
+---
+
+### ✅ 模板操作 —— 已实施（2026-08-10）
+
+**实施方式**：委托注入模式 —— Runtime 程序集不可引用 `UnityEditor`，故在 `EmberUIBinding` 中用 `#if UNITY_EDITOR` 声明 `public static Action<EmberUIBinding>` 委托 + `[Button]` 桩方法，真正的 Editor 逻辑放在新文件 `EmberUIBindingTemplateUtility.cs` 中，由 `[InitializeOnLoad]` 静态构造函数注册。
+
+**文件变更**：
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `Runtime/EmberUIBinding.cs` | 修改 | `#if UNITY_EDITOR` 添加 4 个模板按钮 + 4 个静态委托 + `HasCopiedTemplate` 状态 |
+| `Editor/EmberUIBindingTemplateUtility.cs` | 新建 | 保存/加载/复制/粘贴的 Editor 端实现（`[InitializeOnLoad]` 注册） |
+| `Editor/EmberUIBindingEditor.cs` → `EmberUIBindingEditorUtility.cs` | 合并 | 原内容合并入 `EmberUIBindingEditorUtility.cs`，消除 Odin 误报，旧文件删除 |
+
+**实现细节**：
+
+| 功能 | 交互方式 | 防误操作 |
+|------|---------|---------|
+| 保存为模板 | `EditorUtility.SaveFilePanel` 系统文件对话框 | — |
+| 加载模板 | `EditorUtility.OpenFilePanel` 系统文件对话框（同步，过滤 `.asset`） | 确认弹窗：模板名 + 绑定数 |
+| 复制 | 创建内存 `EmberUIBindingTemplate` 快照 | — |
+| 粘贴 | 从内存快照恢复 | 确认弹窗：模板名 + 绑定数 |
+
+> **注意**：加载模板放弃了原方案中的 `ObjectPicker` + `EditorApplication.update` 轮询（Odin 环境下不稳定），改用同步 `OpenFilePanel`，与保存保持一致的交互体验。
+
+**架构示意**：
+
+```
+Inspector [Button] 点击
+  → EmberUIBinding.cs (Runtime) — 委托调用，无 Editor API
+    → EmberUIBindingTemplateUtility.cs (Editor) — SerializedObject 操作
+```
 
 ---
 
@@ -252,6 +285,47 @@ private bool HasMissingFields()
 ```
 
 **复杂度**：低。`[InfoBox]` + 表达式。
+
+---
+
+### ✅ 继承管理 —— 已实施（2026-08-10）
+
+**实施方式**：与模板操作相同的委托注入模式。5 个静态委托 + 实例桥接方法供 Odin 特性使用。
+
+**文件变更**：
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `Runtime/EmberUIBinding.cs` | 修改 | `#if UNITY_EDITOR` 添加 5 个继承委托 + 选择按钮 + 信息展示 + 自动修复按钮 |
+| `Runtime/EmberUIBinding.cs` (baseBindingUUID) | 修改 | 添加 `[InfoBox]` 条件冲突提示 |
+| `Editor/EmberUIBindingInheritanceUtility.cs` | 新建 | 所有继承 Editor 逻辑（`[InitializeOnLoad]` 注册） |
+
+**实现细节**：
+
+| 功能 | 实现 |
+|------|------|
+| 选择基类 Prefab | `[Button]` → `OpenFilePanel("*.prefab")` → `AssetPathToGUID` → 写入 `baseBindingUUID` |
+| 基类信息展示 | `[ShowInInspector, ReadOnly]` 计算属性，调用 `OnGetBaseInfoSummary(GUID)` 返回多行摘要 |
+| 缺失字段检测 | `HandleGetMissingFieldCount()` 比对基类/当前 Bindings，返回差异数 |
+| 自动修复按钮 | `[Button]` + `[ShowIf("HasMissingFields")]` → 添加基类有而当前无的绑定条目 |
+| 冲突校验 | `[InfoBox]` on `baseBindingUUID` + `[ShowIf("HasInheritanceConflict")]` → isPage 不匹配时显示红色警告 |
+
+**Odin 表达式桥接**：
+
+```
+[ShowIf("HasInheritanceConflict")]   →  private bool HasInheritanceConflict => OnHasInheritanceConflict?.Invoke(this) ?? false;
+[ShowIf("HasMissingFields")]         →  private bool HasMissingFields => (OnGetMissingFieldCount?.Invoke(this) ?? 0) > 0;
+```
+
+**架构示意**：
+
+```
+Inspector
+  ├─ [选择基类 Prefab] 按钮 → OpenFilePanel → GUID 写入 baseBindingUUID
+  ├─ 基类信息 只读展示 → OnGetBaseInfoSummary(GUID)
+  ├─ [InfoBox] 冲突警告 → OnHasInheritanceConflict(binding)
+  └─ [自动添加缺失的绑定] 按钮 → OnAutoFixMissingBindings(binding)
+```
 
 ---
 
@@ -425,6 +499,56 @@ private void GatherBindings(Transform parent, List<BindingEntry> result, HashSet
 
 ---
 
+### ✅ 代码生成 —— 已实施（2026-08-10）
+
+**实施方式**：委托注入模式，所有 Editor 逻辑集中在 `EmberUIBindingCodeGenUtility.cs`。
+
+**文件变更**：
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `Runtime/EmberUIBinding.cs` | 修改 | `#if UNITY_EDITOR` 添加 8 个委托 + 逻辑实现选择器 + 路径预览 + 生成按钮 |
+| `Editor/EmberUIBindingCodeGenUtility.cs` | 新建 | 所有代码生成 Editor 逻辑（`[InitializeOnLoad]` 注册） |
+
+**Inspector 中的"代码生成"区域**：
+
+```
+noCodeGen = false 时:
+
+┌ 代码生成 ─────────────────────────────────┐
+│  ▎代码生成                                  │
+│                                            │
+│  [◀]  逻辑实现  C# 实现  [▶]               │  ← #8 按钮切换
+│  生成路径  Assets/.../UIMainMenu.cs         │  ← #9 路径预览
+│                                            │
+│  [ 自动收集子控件 ]                         │  ← #12 蓝色按钮
+│  [       生成代码       ]                   │  ← #10 绿色大按钮（首次）
+│  [       重新生成       ]                   │  ← #10 橙色大按钮（已有文件）
+│                                       [⚙]  │  ← #13 齿轮按钮
+└────────────────────────────────────────────┘
+
+noCodeGen = true 时:
+
+┌ 代码生成 ─────────────────────────────────┐
+│  [     生成到剪贴板     ]                   │  ← #11 紫色大按钮
+└────────────────────────────────────────────┘
+```
+
+**功能细节**：
+
+| # | 功能 | 实现 |
+|---|------|------|
+| 8 | 逻辑实现选择 | `◀ ▶` 按钮 + 只读名称，循环切换 `CodeGenLogicIndex`（静态项目级索引） |
+| 9 | 路径预览 | `HandleGetGeneratedPath()` 根据 codePath/classPath/className 拼接完整路径 |
+| 10 | 生成/重新生成 | 根据 `HasGeneratedFile` 切换按钮文本，调用 `logic.GenerateCode(binding, baseCls, declaredFields)` |
+| 11 | NoCodeGen 剪贴板 | `[ShowIf("@noCodeGen")]` 条件显示，调用 `logic.GenerateCodeForNoGen(binding, className)` |
+| 12 | 自动收集 | 递归子节点，过滤 `m_`/`mXxx` 前缀节点，调用 `AutoSelectByObject` + `GetNameForCode` |
+| 13 | 设置齿轮 | `[Button("⚙")]` → `SettingsService.OpenProjectSettings("Project/Ember UI Binding")` |
+
+**基类继承处理**：生成代码时自动检测 `baseBindingUUID` → 加载基类 EmberUIBinding → 计算 `declaredFields`（排除基类已有字段）→ 传入 `GenerateCode`。
+
+---
+
 ## 四、自身控件增强（2 项）
 
 ### 4.1 上下文类型下拉
@@ -516,17 +640,81 @@ private void DrawBindingSearch()
 
 ---
 
-## 七、恢复优先级建议
+### ✅ 绑定列表增强 —— 已实施（2026-08-10）
 
-| 阶段 | 功能 | 预估工作量 | 依赖 |
-|------|------|-----------|------|
-| **P0（核心）** | 代码生成按钮 + 逻辑实现下拉 | 小 | 无 |
-| **P0（核心）** | 自动收集子控件 | 中 | 类型检测工具方法 |
-| **P1（重要）** | 模板保存/加载/复制/粘贴 | 小 | 无 |
-| **P1（重要）** | NoCodeGen 剪贴板生成 | 小 | P0 完成后 |
-| **P2（增强）** | 基类 Prefab 选择器 + 只读展示 | 中 | 无 |
-| **P2（增强）** | 缺失字段检测 + 自动修复 | 中 | P2 完成后 |
-| **P3（优化）** | 绑定列表自定义 drawer | 高 | 需要整体设计 |
-| **P3（优化）** | 上下文类型下拉 | 中 | 无 |
-| **P4（锦上添花）** | 搜索过滤 | 中 | P3 完成后 |
-| **P4（锦上添花）** | 继承冲突校验 | 低 | 无 |
+**实施方式**：自定义 `EmberBindingListDrawer : OdinAttributeDrawer<EmberBindingListAttribute, EmberUIBinding.BindingEntry[]>`，通过 Unity `SerializedProperty` API 逐条目绘制，替代 Odin 默认的 ListDrawer。
+
+**文件变更**：
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `Runtime/EmberBindingListAttribute.cs` | 新建 | 标记属性（Runtime 端，无 Editor 依赖） |
+| `Runtime/EmberUIBinding.cs` (bindings) | 修改 | `[ListDrawerSettings]` → `[EmberBindingList]` |
+| `Editor/EmberBindingListDrawer.cs` | 新建 | 全量自定义列表渲染（~320 行） |
+
+**每条绑定条目的渲染结构**：
+
+```
+┌─────────────────────────────────────────────┐
+│ 变量名 [_______] 节点 [_______]        [×]  │  ← #23 删除按钮
+│ 控件类型 [Dropdown_________________]        │  ← #18 拖入自动检测 / #22 继承禁用
+│                                             │
+│ ⚠ 此节点已被 "XXX" 上的 Binding 绑定...      │  ← #21 重复检测
+│ 继承自 [BasePrefab]                         │  ← #22 继承来源
+└─────────────────────────────────────────────┘
+
+[ 添加绑定 ]                                    ← #24 底部独立按钮
+```
+
+**各功能对应实现**：
+
+| # | 功能 | 实现 |
+|---|------|------|
+| 18 | 拖入 GO 自动检测类型 | `AutoSelectByObject(go, typeSp, cnSp)` |
+| 19 | 拖入 GO 自动生成变量名 | `GenerateName(go, definedNames)`，去除 `m_` 前缀 |
+| 20 | 层级验证 | `IsValidChild(binding, go)` 逐级向上检查，非法则弹窗恢复旧值 |
+| 21 | 重复绑定检测 | `GatherBindingDefinitions` 全量收集 + 同列表 `HashSet` 去重 |
+| 22 | 继承条目锁定 | `EditorGUI.BeginDisabledGroup(isInherited)` 禁用 Name/GO/Type，隐藏 × 按钮 |
+| 23 | 逐条目删除 | 每行右侧 `×` 按钮，标记 `toRemove`，循环结束后 `DeleteArrayElementAtIndex` |
+| 24 | 添加绑定按钮 | 列表底部独立 `GUILayout.Button("添加绑定")`，调用 `AddEntry(sp)` |
+
+---
+
+## 七、完成总结
+
+**24 项功能全部恢复**（2026-08-10）。
+
+### 架构模式
+
+全部采用 **委托注入模式**：Runtime 程序集通过 `public static Action/Func` 委托 + `[Button]` / `[ShowInInspector]` Odin 特性暴露 UI，Editor 程序集通过 `[InitializeOnLoad]` 静态构造函数注册处理器。
+
+```
+Inspector UI (Runtime)
+  → 静态委托 (Runtime)
+    → [InitializeOnLoad] 处理器 (Editor)
+      → SerializedObject / AssetDatabase / EditorUtility
+```
+
+### 文件清单
+
+| 文件 | 角色 |
+|------|------|
+| `Runtime/EmberUIBinding.cs` | 主组件 + 全部 `#if UNITY_EDITOR` 委托和 Odin UI |
+| `Runtime/EmberBindingListAttribute.cs` | 绑定列表标记属性 |
+| `Editor/EmberUIBindingTemplateUtility.cs` | 模板：保存/加载/复制/粘贴 |
+| `Editor/EmberUIBindingInheritanceUtility.cs` | 继承：Prefab 选择/信息/缺失修复/冲突校验 |
+| `Editor/EmberUIBindingCodeGenUtility.cs` | 代码生成：逻辑选择/路径/生成/剪贴板/自动收集 |
+| `Editor/EmberUIBindingSelfWidgetUtility.cs` | 自身控件：可用类型提示/自动识别 |
+| `Editor/EmberBindingListDrawer.cs` | 绑定列表：自定义 Odin drawer + 搜索 |
+| `Editor/EmberUIBindingEditorUtility.cs` | 已有工具类（合并了原 EmberUIBindingEditor 全部代码） |
+
+### 各分类实现方式
+
+| 分类 | 项数 | 核心机制 |
+|------|------|---------|
+| 模板 #1-3 | 3 | `OpenFilePanel`/`SaveFilePanel` + `EmberUIBindingTemplate` SO |
+| 继承 #4-7 | 4 | `AssetDatabase.GUIDToAssetPath` + `SerializedObject` 操作 |
+| 代码生成 #8-13 | 6 | `LogicImplementationData` API + `SettingsService` |
+| 自身控件 #14-15 | 2 | `AutoSelectByObject` + 组件类型枚举 |
+| 搜索 #16-17 | 2 | 绑定列表顶部搜索栏 + 实时文本/节点过滤 |
+| 绑定列表 #18-24 | 7 | `EmberBindingListDrawer` 自定义 Odin drawer |
