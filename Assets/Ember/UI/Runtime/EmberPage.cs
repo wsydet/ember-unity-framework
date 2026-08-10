@@ -19,7 +19,7 @@ namespace Ember.UI
     ///
     /// <para>架构（对标 Burner GamePage）：</para>
     /// <code>
-    /// 预制体上只有: Canvas + 子控件 + EmberUIBinding
+    /// 预制体上只有: Canvas + 子控件 + EUIBinding
     /// 运行时创建:   EmberPage (此类) → EmberUILogic (生成的数据类)
     /// </code>
     ///
@@ -98,7 +98,7 @@ namespace Ember.UI
         private EmberUILogic _logic;
         private string _logicTypeName;
 
-        // 预设渐入渐出（由 EmberUIBindingBridge 在页面创建时注入）
+        // 预设渐入渐出（由 EUIBindingBridge 在页面创建时注入）
         private bool _usePresetFade;
         private float _presetFadeInTime;
         private float _presetFadeOutTime;
@@ -646,7 +646,7 @@ namespace Ember.UI
         }
 
         /// <summary>
-        /// 注入预设渐入渐出配置。由 <see cref="EmberUIBindingBridge"/> 在页面创建时调用。
+        /// 注入预设渐入渐出配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
         /// 启用后 <see cref="PlayShow"/> / <see cref="PlayHide"/> 使用 UniTask alpha 渐变，跳过子类 override 的 OnShow/OnHide。
         /// </summary>
         /// <param name="enabled">是否启用预设渐入渐出</param>

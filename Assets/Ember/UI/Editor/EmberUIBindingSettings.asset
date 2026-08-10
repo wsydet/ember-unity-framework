@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 873cdaf48686a12489d14ceac53c21f1, type: 3}
+  m_Script: {fileID: 0}
   m_Name: EmberUIBindingSettings
-  m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.UIBindingSettingData
-  logicImplementations:
-  - {fileID: 11400000, guid: dab9ba0aa58acbf4d94a2a186be6bc16, type: 2}
+  m_EditorClassIdentifier: Ember.UIExtension.Editor:Ember.UIExtension.Editor:UIBindingSettingData
+  logicImplementations: []
   defaultBindingTemplatePath: {fileID: 0}

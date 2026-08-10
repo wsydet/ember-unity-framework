@@ -60,7 +60,7 @@ namespace Ember.UI
 
         #region 子 Logic 管理（嵌套 UIBinding）
 
-        /// <summary>注册子 Logic（由 EmberUIBindingBridge 在发现嵌套 UIBinding 时调用）</summary>
+        /// <summary>注册子 Logic（由 EUIBindingBridge 在发现嵌套 UIBinding 时调用）</summary>
         public void RegisterChildLogic(EmberUILogic child)
         {
             if (child != null && !_childLogics.Contains(child))
