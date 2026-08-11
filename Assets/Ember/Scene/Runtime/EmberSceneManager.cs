@@ -43,26 +43,6 @@ namespace Ember.Scene
         public float Progress { get; private set; }
 
         /// <summary>
-        /// 展示用进度（0.0 ~ 1.0），经过平滑处理，适合 UI 绑定。
-        /// 真实加载完成时约为 <see cref="_displayMaxRatio"/>，
-        /// 随后在 <see cref="_smoothDuration"/> 秒内平滑过渡到 1.0。
-        /// </summary>
-        public float DisplayProgress { get; private set; }
-
-        /// <summary>
-        /// 真实加载完成时，展示进度映射到的比例（0.0 ~ 1.0），默认 0.6。
-        /// 值越大，玩家看到的进度条"填充感"越强，但平滑收尾的余地越小。
-        /// 调参建议：小场景 0.5 / 中型场景 0.6 / 大型场景 0.7。
-        /// </summary>
-        [SerializeField] private float _displayMaxRatio = 0.6f;
-
-        /// <summary>
-        /// 加载完成后，展示进度平滑过渡到 1.0 的时长（秒），默认 1.0。
-        /// 调参建议：小场景 0.5s / 中型场景 1.0s / 大型场景 1.5s。
-        /// </summary>
-        [SerializeField] private float _smoothDuration = 1f;
-
-        /// <summary>
         /// 场景加载完成、尚未激活时的回调。
         /// 在此阶段可以进行初始化操作（注册服务、加载资源等），
         /// 完成后调用 <c>activate</c> 激活场景。
@@ -163,6 +143,7 @@ namespace Ember.Scene
             });
         }
 
+
         // ======== 查询 ========
 
         /// <summary>检查场景是否已加载。</summary>
@@ -201,7 +182,6 @@ namespace Ember.Scene
         {
             IsLoading = true;
             Progress = 0f;
-            DisplayProgress = 0f;
             CurrentScene = sceneName;
 
             var op = SceneManager.LoadSceneAsync(sceneName, mode);
@@ -210,7 +190,6 @@ namespace Ember.Scene
                 EmberDebug.LogError(TAG, $"EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
                 IsLoading = false;
                 Progress = 1f;
-                DisplayProgress = 1f;
                 onComplete?.Invoke();
                 return;
             }
@@ -227,16 +206,14 @@ namespace Ember.Scene
         {
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoadStart);
 
-            // Phase 1: 等待加载到 0.9，同时更新展示进度（按比例映射）
+            // Phase 1: 等待加载到 0.9，更新真实进度
             while (op.progress < 0.9f)
             {
                 Progress = op.progress;
-                DisplayProgress = Progress * _displayMaxRatio;
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
             Progress = 0.9f;
-            DisplayProgress = Progress * _displayMaxRatio;
 
             // Phase 2: OnBeforeActivate 回调（使用 TCS 桥接回调到 async/await）
             UnityEngine.SceneManagement.Scene scene = SceneManager.GetSceneByName(sceneName);
@@ -261,32 +238,10 @@ namespace Ember.Scene
 
             Progress = 1f;
 
-            // Phase 4: 展示进度平滑过渡（60% → 100%），作为场景切换的视觉缓冲
-            await SmoothProgressAsync();
-
             IsLoading = false;
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoaded);
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoadDone);
             onComplete?.Invoke();
-        }
-
-        /// <summary>
-        /// 将 <see cref="DisplayProgress"/> 从当前值平滑过渡到 1.0，
-        /// 持续 <see cref="_smoothDuration"/> 秒，消除真实进度的跳跃感。
-        /// </summary>
-        private async UniTask SmoothProgressAsync()
-        {
-            float elapsed = 0f;
-            float start = DisplayProgress;
-
-            while (elapsed < _smoothDuration)
-            {
-                elapsed += Time.deltaTime;
-                DisplayProgress = Mathf.Lerp(start, 1f, elapsed / _smoothDuration);
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-
-            DisplayProgress = 1f;
         }
 
         /// <summary>

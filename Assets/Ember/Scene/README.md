@@ -39,8 +39,7 @@ SceneCoordinator 桥接状态机与场景管理器，实现状态切换自动加
 |------|------|
 | `CurrentScene` | 当前活跃场景名 |
 | `IsLoading` | 是否正在加载 |
-| `Progress` | 真实加载进度（0.0～1.0） |
-| `DisplayProgress` | 展示用进度（0.0～1.0），经平滑处理，适合 UI 绑定 |
+| `Progress` | 真实加载进度（0.0～1.0），供 UI 层（如 EUILoading）读取并自行做假进度平滑 |
 | `OnBeforeActivate` (事件) | 加载到 90% 时触发 `(Scene scene, Action activate)`，必须调用 activate |
 
 ### SceneCoordinator — 状态机桥接器
@@ -54,7 +53,7 @@ SceneCoordinator 桥接状态机与场景管理器，实现状态切换自动加
 
 ## 主流程
 
-**场景加载：** `LoadSceneAsync(name, onComplete)` → [IsLoading 防重入] → `StartLoad` → `SceneManager.LoadSceneAsync` → UniTask 异步驱动 → 等待 progress 达 0.9 → OnBeforeActivate 触发 → 等待 activate → 等待 isDone → DisplayProgress 平滑过渡 → Dispatch(SceneLoaded + SceneLoadDone) → onComplete
+**场景加载：** `LoadSceneAsync(name, onComplete)` → [IsLoading 防重入] → `StartLoad` → `SceneManager.LoadSceneAsync` → UniTask 异步驱动 → 等待 progress 达 0.9 → OnBeforeActivate 触发 → 等待 activate → 等待 isDone → Dispatch(SceneLoaded + SceneLoadDone) → onComplete
 
 **状态切换联动：** TransitionTo → SceneCoordinator.HandleTransitionTo → LoadSceneAsync → ctx.Proceed() → UnloadIfDifferent
 
@@ -65,5 +64,5 @@ SceneCoordinator 桥接状态机与场景管理器，实现状态切换自动加
 | 初始化 | 继承 EmberSingleton（非 MonoSingleton），由 ManagerCollector 自动初始化 |
 | 单加载锁 | IsLoading=true 时拒绝新的加载请求（LogWarning + 直接回调） |
 | OnBeforeActivate | 必须调用 activate 参数，否则场景永远停留在 0.9 |
-| DisplayProgress | 真实进度映射到 `_displayMaxRatio`（默认 0.6），加载完成后在 `_smoothDuration` 内平滑到 1.0 |
+| 假进度 | EmberSceneManager 只提供真实 Progress，假进度平滑逻辑已移至 EUILoading（displayMaxRatio + smoothDuration） |
 | UniTask | 使用 UniTask 替代协程驱动异步流程 |

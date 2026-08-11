@@ -16,10 +16,10 @@ MonoBehaviour:
   entries:
   - stateName: GameplayState
     sceneField:
-      _sceneAsset: {fileID: 0}
+      _sceneAsset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
   - stateName: MainState
     sceneField:
       _sceneAsset: {fileID: 102900000, guid: 52c77c0328797324cad897b4a2cf3c7d, type: 3}
   - stateName: SettingsState
     sceneField:
-      _sceneAsset: {fileID: 0}
+      _sceneAsset: {fileID: 102900000, guid: cd975f68b13a20749a05e30ee953aa6e, type: 3}

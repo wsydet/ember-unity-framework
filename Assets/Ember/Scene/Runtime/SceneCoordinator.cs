@@ -1,4 +1,5 @@
-﻿using Ember.Core;
+﻿using System;
+using Ember.Core;
 using Ember.Basic;
 
 namespace Ember.Scene
@@ -60,19 +61,35 @@ namespace Ember.Scene
         }
 
         /// <summary>
+        /// <summary>
+        /// TransitionTo 场景加载的拦截器。
+        /// 参数：(sceneName, fromScene, onLoaded)。返回 true 表示已拦截，不再走默认加载。
+        /// UI 层在此注入 Loading 页面逻辑。
+        /// </summary>
+        public static Func<string, string, Action, bool> InterceptSceneLoad;
+
         /// TransitionTo：加载新场景 → Proceed → 卸载旧场景。
         /// </summary>
         private void HandleTransitionTo(SceneTransitionContext ctx)
         {
             if (string.IsNullOrEmpty(ctx.ToScene))
             {
-                // 目标无场景 → 直接执行生命周期，然后卸载旧场景
                 ctx.Proceed();
                 UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
                 return;
             }
 
-            // 加载新场景 → Proceed → 卸载旧场景
+            // 检查 UI 层是否拦截（带 Loading 页面）
+            if (InterceptSceneLoad != null && InterceptSceneLoad(ctx.ToScene, ctx.FromScene, () =>
+            {
+                ctx.Proceed();
+                UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
+            }))
+            {
+                return;
+            }
+
+            // 默认：直接加载
             EmberSceneManager.Instance.LoadSceneAsync(ctx.ToScene, () =>
             {
                 ctx.Proceed();
