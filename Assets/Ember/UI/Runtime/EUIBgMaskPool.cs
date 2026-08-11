@@ -12,7 +12,7 @@ namespace Ember.UI
     /// 当 Popup 打开时自动创建半透明背景遮罩（阻止点击穿透到下层页面），
     /// Popup 关闭时回池复用，避免频繁创建/销毁。
     /// </summary>
-    public class EmberBgMaskPool
+    public class EUIBgMaskPool
     {
         #region 内部参数
 
@@ -35,7 +35,7 @@ namespace Ember.UI
         /// </summary>
         /// <param name="parent">Mask 的父 Transform</param>
         /// <param name="sortingOrderOffset">相对于 Canvas sortingOrder 的偏移</param>
-        public EmberBgMaskPool(Transform parent, int sortingOrderOffset = -1)
+        public EUIBgMaskPool(Transform parent, int sortingOrderOffset = -1)
         {
             _parent = parent;
             _sortingOrderOffset = sortingOrderOffset;

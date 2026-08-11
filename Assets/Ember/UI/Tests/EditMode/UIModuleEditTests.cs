@@ -13,33 +13,33 @@ namespace Ember.UI.Tests
     /// </summary>
     public class UIModuleEditTests
     {
-        #region PageDef
+        #region EUIPageDef
 
         [Test]
         public void PageDef_ShouldStorePrefabPath()
         {
-            var def = new PageDef("ui/test_page", 100);
+            var def = new EUIPageDef("ui/test_page", 100);
             Assert.AreEqual("ui/test_page", def.PrefabPath);
         }
 
         [Test]
         public void PageDef_ShouldStoreLayer()
         {
-            var def = new PageDef("ui/test_page", UILayer.Popup);
+            var def = new EUIPageDef("ui/test_page", UILayer.Popup);
             Assert.AreEqual((int)UILayer.Popup, def.Layer);
         }
 
         [Test]
         public void PageDef_ShouldStorePageType()
         {
-            var def = new PageDef("ui/test_page", UILayer.Normal, PageType.MainPage);
+            var def = new EUIPageDef("ui/test_page", UILayer.Normal, PageType.MainPage);
             Assert.AreEqual(PageType.MainPage, def.PageType);
         }
 
         [Test]
         public void PageDef_DefaultPageType_ShouldBeMainPage()
         {
-            var def = new PageDef("ui/test_page", 100);
+            var def = new EUIPageDef("ui/test_page", 100);
             Assert.AreEqual(PageType.MainPage, def.PageType);
         }
 
@@ -61,17 +61,17 @@ namespace Ember.UI.Tests
 
         // --------------------------------------------------------
 
-        #region EmberUIObserver
+        #region EUIObserver
 
         [Test]
         public void Observer_OnPageOpened_ShouldNotify()
         {
-            var pageDef = new PageDef("ui/test", UILayer.Normal);
+            var pageDef = new EUIPageDef("ui/test", UILayer.Normal);
             PageLifecycleEvent? received = null;
 
-            var sub = EmberUIObserver.OnPageOpened.Subscribe(e => received = e);
+            var sub = EUIObserver.OnPageOpened.Subscribe(e => received = e);
 
-            EmberUIObserver.NotifyOpened(pageDef, "hello");
+            EUIObserver.NotifyOpened(pageDef, "hello");
 
             Assert.IsTrue(received.HasValue);
             Assert.AreEqual(pageDef, received.Value.Page);
@@ -83,12 +83,12 @@ namespace Ember.UI.Tests
         [Test]
         public void Observer_OnPageClosed_ShouldNotify()
         {
-            var pageDef = new PageDef("ui/test", UILayer.Popup);
+            var pageDef = new EUIPageDef("ui/test", UILayer.Popup);
             PageLifecycleEvent? received = null;
 
-            var sub = EmberUIObserver.OnPageClosed.Subscribe(e => received = e);
+            var sub = EUIObserver.OnPageClosed.Subscribe(e => received = e);
 
-            EmberUIObserver.NotifyClosed(pageDef, null);
+            EUIObserver.NotifyClosed(pageDef, null);
 
             Assert.IsTrue(received.HasValue);
             Assert.AreEqual(pageDef, received.Value.Page);
@@ -99,12 +99,12 @@ namespace Ember.UI.Tests
         [Test]
         public void Observer_OnPagePaused_ShouldNotify()
         {
-            var pageDef = new PageDef("ui/test", UILayer.Popup);
+            var pageDef = new EUIPageDef("ui/test", UILayer.Popup);
             PageLifecycleEvent? received = null;
 
-            var sub = EmberUIObserver.OnPagePaused.Subscribe(e => received = e);
+            var sub = EUIObserver.OnPagePaused.Subscribe(e => received = e);
 
-            EmberUIObserver.NotifyPaused(pageDef);
+            EUIObserver.NotifyPaused(pageDef);
 
             Assert.IsTrue(received.HasValue);
             Assert.AreEqual(pageDef, received.Value.Page);
@@ -116,12 +116,12 @@ namespace Ember.UI.Tests
         [Test]
         public void Observer_OnPageResumed_ShouldNotify()
         {
-            var pageDef = new PageDef("ui/test", UILayer.Popup);
+            var pageDef = new EUIPageDef("ui/test", UILayer.Popup);
             PageLifecycleEvent? received = null;
 
-            var sub = EmberUIObserver.OnPageResumed.Subscribe(e => received = e);
+            var sub = EUIObserver.OnPageResumed.Subscribe(e => received = e);
 
-            EmberUIObserver.NotifyResumed(pageDef);
+            EUIObserver.NotifyResumed(pageDef);
 
             Assert.IsTrue(received.HasValue);
             Assert.AreEqual(pageDef, received.Value.Page);
@@ -133,9 +133,9 @@ namespace Ember.UI.Tests
         public void Observer_OnAllClosed_ShouldNotify()
         {
             bool received = false;
-            var sub = EmberUIObserver.OnAllClosed.Subscribe(_ => received = true);
+            var sub = EUIObserver.OnAllClosed.Subscribe(_ => received = true);
 
-            EmberUIObserver.NotifyAllClosed();
+            EUIObserver.NotifyAllClosed();
 
             Assert.IsTrue(received);
             sub.Dispose();
@@ -145,35 +145,35 @@ namespace Ember.UI.Tests
         public void Observer_Unsubscribed_ShouldNotReceive()
         {
             int count = 0;
-            var sub = EmberUIObserver.OnPageOpened.Subscribe(_ => count++);
+            var sub = EUIObserver.OnPageOpened.Subscribe(_ => count++);
 
-            EmberUIObserver.NotifyOpened(new PageDef("a", 1), null);
+            EUIObserver.NotifyOpened(new EUIPageDef("a", 1), null);
             Assert.AreEqual(1, count);
 
             sub.Dispose();
 
-            EmberUIObserver.NotifyOpened(new PageDef("b", 2), null);
+            EUIObserver.NotifyOpened(new EUIPageDef("b", 2), null);
             Assert.AreEqual(1, count); // 不再增长
         }
 
         [Test]
         public void Observer_WhereFilter_ShouldWork()
         {
-            var settingsDef = new PageDef("ui/settings", UILayer.Popup);
-            var bagDef = new PageDef("ui/bag", UILayer.Popup);
+            var settingsDef = new EUIPageDef("ui/settings", UILayer.Popup);
+            var bagDef = new EUIPageDef("ui/bag", UILayer.Popup);
 
             PageLifecycleEvent? received = null;
 
-            var sub = EmberUIObserver.OnPageOpened
+            var sub = EUIObserver.OnPageOpened
                 .Where(e => e.Page.PrefabPath == "ui/settings")
                 .Subscribe(e => received = e);
 
             // bag 不应触发
-            EmberUIObserver.NotifyOpened(bagDef, null);
+            EUIObserver.NotifyOpened(bagDef, null);
             Assert.IsFalse(received.HasValue);
 
             // settings 应触发
-            EmberUIObserver.NotifyOpened(settingsDef, null);
+            EUIObserver.NotifyOpened(settingsDef, null);
             Assert.IsTrue(received.HasValue);
 
             sub.Dispose();
@@ -183,14 +183,14 @@ namespace Ember.UI.Tests
 
         // --------------------------------------------------------
 
-        #region EmberUIEvents
+        #region EUIEvents
 
         [Test]
         public void UIEvents_Keys_InCorrectRange()
         {
-            Assert.AreEqual(5000, EmberUIEvents.UIManagerReady);
-            Assert.AreEqual(5001, EmberUIEvents.UIManagerShutdown);
-            Assert.AreEqual(5002, EmberUIEvents.UIPageRouterReady);
+            Assert.AreEqual(5000, EUIEvents.UIViewEngineReady);
+            Assert.AreEqual(5001, EUIEvents.UIViewEngineShutdown);
+            Assert.AreEqual(5002, EUIEvents.UIManagerReady);
         }
 
         #endregion

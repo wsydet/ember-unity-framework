@@ -18,7 +18,7 @@ namespace Ember.UI
     ///   <item><b>HideLowerPage</b>：Popup 打开时隐藏下方页面（不销毁），关闭时恢复</item>
     /// </list>
     /// </summary>
-    public class EmberPageContext
+    public class EUIPageContext
     {
         #region 内部参数
 
@@ -27,10 +27,11 @@ namespace Ember.UI
         private const int TopMostBaseOrder   = 25000;
 
         private readonly List<StackEntry> _mainPageStack = new List<StackEntry>();
-        private readonly List<EmberPage> _topMostList   = new List<EmberPage>();
-        private readonly List<EmberPage> _overlayList   = new List<EmberPage>();
+        private readonly List<EUIPage> _topMostList   = new List<EUIPage>();
+        private readonly List<EUIPage> _overlayList   = new List<EUIPage>();
+        private EUIPage _backgroundPage;
 
-        private readonly EmberUIManager _uiManager;
+        private readonly EUIViewEngine _uiManager;
 
         #endregion
 
@@ -40,9 +41,9 @@ namespace Ember.UI
 
         internal class StackEntry
         {
-            public EmberPage Page;
+            public EUIPage Page;
             public int SortingOrder;
-            public readonly List<EmberPage> Popups = new List<EmberPage>();
+            public readonly List<EUIPage> Popups = new List<EUIPage>();
         }
 
         #endregion
@@ -51,7 +52,7 @@ namespace Ember.UI
 
         #region 生命周期
 
-        public EmberPageContext(EmberUIManager uiManager)
+        public EUIPageContext(EUIViewEngine uiManager)
         {
             _uiManager = uiManager;
         }
@@ -68,12 +69,12 @@ namespace Ember.UI
         public int MainPageCount => _mainPageStack.Count;
 
         /// <summary>当前活动的 MainPage（栈顶）</summary>
-        public EmberPage CurrentMainPage => _mainPageStack.Count > 0 ? _mainPageStack[_mainPageStack.Count - 1].Page : null;
+        public EUIPage CurrentMainPage => _mainPageStack.Count > 0 ? _mainPageStack[_mainPageStack.Count - 1].Page : null;
 
         /// <summary>
         /// 将 MainPage 压入栈。暂停旧 MainPage，新页面显示。
         /// </summary>
-        public void PushMainPage(EmberPage page)
+        public void PushMainPage(EUIPage page)
         {
             // 暂停当前 MainPage
             if (_mainPageStack.Count > 0)
@@ -81,14 +82,14 @@ namespace Ember.UI
                 var current = _mainPageStack[_mainPageStack.Count - 1];
                 _uiManager.EnqueuePageOperation(() =>
                 {
-                    ((IUIView)current.Page).OnPause();
-                    EmberUIObserver.NotifyPaused(current.Page.PageDef);
+                    ((IEUIView)current.Page).OnPause();
+                    EUIObserver.NotifyPaused(current.Page.EUIPageDef);
                 });
 
                 // 隐藏当前 MainPage 的 Popup
                 foreach (var popup in current.Popups)
                 {
-                    _uiManager.EnqueuePageOperation(() => ((IUIView)popup).OnPause());
+                    _uiManager.EnqueuePageOperation(() => ((IEUIView)popup).OnPause());
                 }
             }
 
@@ -115,7 +116,7 @@ namespace Ember.UI
         /// <summary>
         /// 关闭 MainPage。如果存在上一个 MainPage，恢复它。
         /// </summary>
-        public void PopMainPage(EmberPage page)
+        public void PopMainPage(EUIPage page)
         {
             var index = FindMainPageIndex(page);
             if (index < 0) return;
@@ -138,8 +139,8 @@ namespace Ember.UI
                 var previous = _mainPageStack[index - 1];
                 _uiManager.EnqueuePageOperation(() =>
                 {
-                    ((IUIView)previous.Page).OnResume();
-                    EmberUIObserver.NotifyResumed(previous.Page.PageDef);
+                    ((IEUIView)previous.Page).OnResume();
+                    EUIObserver.NotifyResumed(previous.Page.EUIPageDef);
                 });
 
                 // 恢复 Popup
@@ -147,8 +148,8 @@ namespace Ember.UI
                 {
                     _uiManager.EnqueuePageOperation(() =>
                     {
-                        ((IUIView)popup).OnResume();
-                        EmberUIObserver.NotifyResumed(popup.PageDef);
+                        ((IEUIView)popup).OnResume();
+                        EUIObserver.NotifyResumed(popup.EUIPageDef);
                     });
                 }
             }
@@ -157,7 +158,7 @@ namespace Ember.UI
         // ── Popup ──
 
         /// <summary>在当前 MainPage 上添加一个 Popup</summary>
-        public void AddPopup(EmberPage popup)
+        public void AddPopup(EUIPage popup)
         {
             if (_mainPageStack.Count == 0) return;
 
@@ -173,7 +174,7 @@ namespace Ember.UI
             if (current.Popups.Count > 0)
             {
                 var prevPopup = current.Popups[current.Popups.Count - 1];
-                _uiManager.EnqueuePageOperation(() => ((IUIView)prevPopup).OnPause());
+                _uiManager.EnqueuePageOperation(() => ((IEUIView)prevPopup).OnPause());
                 SetPageVisible(prevPopup, false);
             }
 
@@ -189,7 +190,7 @@ namespace Ember.UI
         }
 
         /// <summary>移除 Popup，恢复前一个 Popup 或 MainPage</summary>
-        public void RemovePopup(EmberPage popup)
+        public void RemovePopup(EUIPage popup)
         {
             foreach (var entry in _mainPageStack)
             {
@@ -202,8 +203,8 @@ namespace Ember.UI
                         _uiManager.EnqueuePageOperation(() =>
                         {
                             SetPageVisible(prev, true);
-                            ((IUIView)prev).OnResume();
-                            EmberUIObserver.NotifyResumed(prev.PageDef);
+                            ((IEUIView)prev).OnResume();
+                            EUIObserver.NotifyResumed(prev.EUIPageDef);
                         });
                     }
                     else
@@ -212,8 +213,8 @@ namespace Ember.UI
                         SetPageVisible(entry.Page, true);
                         _uiManager.EnqueuePageOperation(() =>
                         {
-                            ((IUIView)entry.Page).OnResume();
-                            EmberUIObserver.NotifyResumed(entry.Page.PageDef);
+                            ((IEUIView)entry.Page).OnResume();
+                            EUIObserver.NotifyResumed(entry.Page.EUIPageDef);
                         });
                     }
                     return;
@@ -222,7 +223,7 @@ namespace Ember.UI
         }
 
         /// <summary>获取指定 MainPage 上的 Popup 数量</summary>
-        public int GetPopupCount(EmberPage mainPage = null)
+        public int GetPopupCount(EUIPage mainPage = null)
         {
             var entry = mainPage != null
                 ? _mainPageStack.Find(e => e.Page == mainPage)
@@ -238,7 +239,7 @@ namespace Ember.UI
         }
 
         /// <summary>获取最顶层 Popup</summary>
-        public EmberPage GetTopPopup()
+        public EUIPage GetTopPopup()
         {
             if (_mainPageStack.Count == 0) return null;
             var popups = _mainPageStack[_mainPageStack.Count - 1].Popups;
@@ -248,7 +249,7 @@ namespace Ember.UI
         // ── TopMost ──
 
         /// <summary>添加置顶层页面</summary>
-        public void AddTopMost(EmberPage page)
+        public void AddTopMost(EUIPage page)
         {
             _topMostList.Add(page);
             var order = TopMostBaseOrder + _topMostList.Count * PageGrowStep;
@@ -257,31 +258,114 @@ namespace Ember.UI
         }
 
         /// <summary>移除置顶层页面</summary>
-        public void RemoveTopMost(EmberPage page)
+        public void RemoveTopMost(EUIPage page)
         {
             _topMostList.Remove(page);
         }
 
         /// <summary>最顶层 TopMost 页面</summary>
-        public EmberPage GetTopTopMost()
+        public EUIPage GetTopTopMost()
         {
             return _topMostList.Count > 0 ? _topMostList[_topMostList.Count - 1] : null;
         }
 
+        /// <summary>按 prefab 路径查找 TopMost 页面</summary>
+        public EUIPage FindTopMostByPath(string prefabPath)
+        {
+            foreach (var p in _topMostList)
+                if (p.EUIPageDef?.PrefabPath == prefabPath) return p;
+            return null;
+        }
+
+        /// <summary>按 prefab 路径查找 MainPage</summary>
+        public EUIPage FindMainPageByPath(string prefabPath)
+        {
+            foreach (var entry in _mainPageStack)
+                if (entry.Page.EUIPageDef?.PrefabPath == prefabPath) return entry.Page;
+            return null;
+        }
+
         // ── Overlay ──
 
-        public void AddOverlay(EmberPage page) => _overlayList.Add(page);
-        public void RemoveOverlay(EmberPage page) => _overlayList.Remove(page);
+        public void AddOverlay(EUIPage page)
+        {
+            _overlayList.Add(page);
+            // 设置 Overlay 排序：优先使用 EUIPageDef.OverlaySortingOrder，否则用 Layer 值
+            var canvas = page.Canvas;
+            if (canvas)
+            {
+                canvas.overrideSorting = true;
+                canvas.sortingOrder = page.EUIPageDef?.OverlaySortingOrder ?? page.EUIPageDef?.Layer ?? 0;
+            }
+        }
+
+        public void RemoveOverlay(EUIPage page) => _overlayList.Remove(page);
+
+        // ── FreePage ──
+
+        private const int FreePageBaseOrder = 30000;
+        private readonly List<EUIPage> _freePageList = new();
+
+        /// <summary>添加独立页面（高于 TopMost，不参与栈管理）</summary>
+        public void AddFreePage(EUIPage page)
+        {
+            _freePageList.Add(page);
+            var order = FreePageBaseOrder + _freePageList.Count * PageGrowStep;
+            var canvas = page.Canvas;
+            if (canvas) { canvas.overrideSorting = true; canvas.sortingOrder = order; }
+        }
+
+        /// <summary>移除独立页面</summary>
+        public void RemoveFreePage(EUIPage page) => _freePageList.Remove(page);
+
+        // ── Background ──
+
+        /// <summary>当前背景页（单例）</summary>
+        public EUIPage BackgroundPage => _backgroundPage;
+
+        /// <summary>
+        /// 设置背景页。单槽位：新的替换旧的，sortingOrder 固定为 0。
+        /// </summary>
+        public void SetBackground(EUIPage page)
+        {
+            if (_backgroundPage != null)
+                _uiManager.ClosePageInternal(_backgroundPage);
+
+            _backgroundPage = page;
+            var canvas = page.Canvas;
+            if (canvas)
+            {
+                canvas.overrideSorting = true;
+                canvas.sortingOrder = 0;
+            }
+        }
+
+        /// <summary>移除背景页。</summary>
+        public void ClearBackground()
+        {
+            if (_backgroundPage != null)
+            {
+                _uiManager.ClosePageInternal(_backgroundPage);
+                _backgroundPage = null;
+            }
+        }
 
         // ── 查询 ──
 
         /// <summary>按层级从高到低遍历所有可见页面，调用 action，返回 true 停止遍历</summary>
-        public void ForEachVisiblePage(Func<EmberPage, bool> action)
+        public void ForEachVisiblePage(Func<EUIPage, bool> action)
         {
+            // FreePage（后进先处理，最高优先级）
+            for (int i = _freePageList.Count - 1; i >= 0; i--)
+            {
+                if (((IEUIView)_freePageList[i]).IsOpened && action(_freePageList[i]))
+                    return;
+            }
+
             // TopMost（后进先处理）
             for (int i = _topMostList.Count - 1; i >= 0; i--)
             {
-                if (((IUIView)_topMostList[i]).IsOpened && action(_topMostList[i]))
+                if (((IEUIView)_topMostList[i]).IsOpened && action(_topMostList[i]))
                     return;
             }
 
@@ -291,7 +375,7 @@ namespace Ember.UI
                 var popups = _mainPageStack[_mainPageStack.Count - 1].Popups;
                 for (int i = popups.Count - 1; i >= 0; i--)
                 {
-                    if (((IUIView)popups[i]).IsOpened && action(popups[i]))
+                    if (((IEUIView)popups[i]).IsOpened && action(popups[i]))
                         return;
                 }
             }
@@ -299,14 +383,25 @@ namespace Ember.UI
             // MainPage
             for (int i = _mainPageStack.Count - 1; i >= 0; i--)
             {
-                if (((IUIView)_mainPageStack[i].Page).IsOpened && action(_mainPageStack[i].Page))
+                if (((IEUIView)_mainPageStack[i].Page).IsOpened && action(_mainPageStack[i].Page))
                     return;
             }
+
+            // Background（最低优先级，最后遍历）
+            if (_backgroundPage != null && ((IEUIView)_backgroundPage).IsOpened)
+                action(_backgroundPage);
         }
 
         /// <summary>关闭所有页面</summary>
         public void CloseAll()
         {
+            // 关闭 FreePage
+            for (int i = _freePageList.Count - 1; i >= 0; i--)
+            {
+                _uiManager.ClosePageInternal(_freePageList[i]);
+            }
+            _freePageList.Clear();
+
             // 关闭 TopMost
             for (int i = _topMostList.Count - 1; i >= 0; i--)
             {
@@ -321,6 +416,9 @@ namespace Ember.UI
             }
             _overlayList.Clear();
 
+            // 关闭 Background
+            ClearBackground();
+
             // 关闭所有 MainPage（含 Popup）
             for (int i = _mainPageStack.Count - 1; i >= 0; i--)
             {
@@ -334,7 +432,7 @@ namespace Ember.UI
             }
             _mainPageStack.Clear();
 
-            EmberUIObserver.NotifyAllClosed();
+            EUIObserver.NotifyAllClosed();
         }
 
         #endregion
@@ -343,7 +441,7 @@ namespace Ember.UI
 
         #region 内部方法
 
-        private int FindMainPageIndex(EmberPage page)
+        private int FindMainPageIndex(EUIPage page)
         {
             for (int i = 0; i < _mainPageStack.Count; i++)
             {
@@ -352,14 +450,36 @@ namespace Ember.UI
             return -1;
         }
 
-        private static void SetPageVisible(EmberPage page, bool visible)
+        /// <summary>
+        /// 切换页面可见性。
+        /// 隐藏时用 planeDistance=100000 推到相机远裁面之外，避免 Canvas 仍参与 Rebuild。
+        /// 对标 Burner GamePage.SetActive 中的 planeDistance 裁剪逻辑。
+        /// </summary>
+        private static void SetPageVisible(EUIPage page, bool visible)
         {
+            // CanvasGroup alpha 控制（兼容无 Canvas 的页面）
             var cg = page.CanvasGroup;
             if (cg)
             {
                 cg.alpha = visible ? 1f : 0f;
                 cg.blocksRaycasts = visible;
                 cg.interactable = visible;
+            }
+
+            // planeDistance 裁剪（对标 Burner）
+            var canvas = page.Canvas;
+            if (canvas && canvas.renderMode == RenderMode.ScreenSpaceCamera)
+            {
+                if (visible)
+                {
+                    canvas.planeDistance = page.EUIPageDef != null
+                        ? page.EUIPageDef.Layer
+                        : 100f;
+                }
+                else
+                {
+                    canvas.planeDistance = 100000f; // 推到远裁面
+                }
             }
         }
 

@@ -26,6 +26,9 @@ namespace Ember.UI
     /// </summary>
     public enum PageType
     {
+        /// <summary>背景层。单例，始终在最底层（sortingOrder=0），由 MainState 生命周期管理。</summary>
+        Background,
+
         /// <summary>全屏主页面。替换当前 MainPage，压入主栈。</summary>
         MainPage,
 
@@ -40,6 +43,9 @@ namespace Ember.UI
 
         /// <summary>覆盖层。不受 MainPage/Popup 栈管理（如 Guide Mask、点击特效层）。</summary>
         Overlay,
+
+        /// <summary>独立页面。高于 TopMost，不参与栈管理（如全局设置、帮助界面）。</summary>
+        FreePage,
     }
 
     /// <summary>

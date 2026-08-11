@@ -3,7 +3,7 @@
 namespace Ember.UI
 {
     /// <summary>
-    /// 标记 UI 元素为持久节点 —— EmberUIManager 初始化时不会隐藏此节点。
+    /// 标记 UI 元素为持久节点 —— EUIViewEngine 初始化时不会隐藏此节点。
     ///
     /// <para>使用场景：</para>
     /// <list type="bullet">
@@ -13,7 +13,7 @@ namespace Ember.UI
     ///
     /// <para>实现此接口的 MonoBehaviour 会自动豁免 UIManager.Init 中的全量隐藏。</para>
     /// </summary>
-    public interface IEmberPersistentUI
+    public interface IEUIPersistentUI
     {
     }
 }

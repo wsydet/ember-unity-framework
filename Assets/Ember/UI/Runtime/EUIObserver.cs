@@ -8,24 +8,24 @@ namespace Ember.UI
     /// <summary>
     /// UI 生命周期事件的可观测门面。
     ///
-    /// 底层为 UniRx Subject《T》，EmberUIManager 在页面生命周期各节点推事件，
+    /// 底层为 UniRx Subject《T》，EUIViewEngine 在页面生命周期各节点推事件，
     /// 业务模块通过静态属性订阅感兴趣的数据流。
     ///
     /// <para>与 EmberEventBus 的分工：</para>
     /// <list type="bullet">
     ///   <item><b>EmberEventBus</b>：框架级广播（UIReady / UIShutdown），消费方不确定</item>
-    ///   <item><b>EmberUIObserver</b>：页面生命周期事件，类型安全 + 操作符（Where / Throttle）</item>
+    ///   <item><b>EUIObserver</b>：页面生命周期事件，类型安全 + 操作符（Where / Throttle）</item>
     /// </list>
     ///
     /// <para>使用示例：</para>
     /// <code>
-    /// EmberUIObserver.OnPageOpened
+    /// EUIObserver.OnPageOpened
     ///     .Where(e =&gt; e.Page.PageType == PageType.Popup)
     ///     .Subscribe(e =&gt; audioMgr.PlaySFX("popup_open"))
     ///     .AddTo(this);
     /// </code>
     /// </summary>
-    public static class EmberUIObserver
+    public static class EUIObserver
     {
         #region 内部参数
 
@@ -64,29 +64,29 @@ namespace Ember.UI
 
         // --------------------------------------------------------
 
-        #region 内部方法（由 EmberUIManager 调用）
+        #region 内部方法（由 EUIViewEngine 调用）
 
-        internal static void NotifyOpened(PageDef pageDef, object args)
+        internal static void NotifyOpened(EUIPageDef pageDef, object args)
         {
             _onPageOpened.OnNext(new PageLifecycleEvent(pageDef, args));
         }
 
-        internal static void NotifyClosed(PageDef pageDef, object args)
+        internal static void NotifyClosed(EUIPageDef pageDef, object args)
         {
             _onPageClosed.OnNext(new PageLifecycleEvent(pageDef, args));
         }
 
-        internal static void NotifyPaused(PageDef pageDef)
+        internal static void NotifyPaused(EUIPageDef pageDef)
         {
             _onPagePaused.OnNext(new PageLifecycleEvent(pageDef, null));
         }
 
-        internal static void NotifyResumed(PageDef pageDef)
+        internal static void NotifyResumed(EUIPageDef pageDef)
         {
             _onPageResumed.OnNext(new PageLifecycleEvent(pageDef, null));
         }
 
-        internal static void NotifyReopened(PageDef pageDef, object args)
+        internal static void NotifyReopened(EUIPageDef pageDef, object args)
         {
             _onPageReopened.OnNext(new PageLifecycleEvent(pageDef, args));
         }
@@ -105,12 +105,12 @@ namespace Ember.UI
     public struct PageLifecycleEvent
     {
         /// <summary>触发事件的页面定义</summary>
-        public PageDef Page;
+        public EUIPageDef Page;
 
         /// <summary>携带的参数（OnPause/OnResume 时为 null）</summary>
         public object Args;
 
-        public PageLifecycleEvent(PageDef page, object args)
+        public PageLifecycleEvent(EUIPageDef page, object args)
         {
             Page = page;
             Args = args;

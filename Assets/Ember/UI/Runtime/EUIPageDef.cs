@@ -11,20 +11,21 @@ namespace Ember.UI
     /// <code>
     /// public static class GamePages
     /// {
-    ///     public static readonly PageDef MainMenu  = new("ui/main_menu", UILayer.Normal,   PageType.MainPage);
-    ///     public static readonly PageDef Settings  = new("ui/settings",  UILayer.Popup,    PageType.Popup);
-    ///     public static readonly PageDef Loading   = new("ui/loading",   UILayer.TopMost,  PageType.TopMost);
-    ///     public static readonly PageDef HeroTab   = new("ui/hero_tab",  UILayer.Normal,   PageType.SubPage);
+    ///     public static readonly EUIPageDef MainMenu  = new("ui/main_menu", UILayer.Normal,   PageType.MainPage);
+    ///     public static readonly EUIPageDef Settings  = new("ui/settings",  UILayer.Popup,    PageType.Popup);
+    ///     public static readonly EUIPageDef Loading   = new("ui/loading",   UILayer.TopMost,  PageType.TopMost);
+    ///     public static readonly EUIPageDef HeroTab   = new("ui/hero_tab",  UILayer.Normal,   PageType.SubPage);
     /// }
     /// </code>
     /// </summary>
-    public class PageDef
+    public class EUIPageDef
     {
         #region 内部参数
 
         private readonly string _prefabPath;
         private readonly int _layer;
         private readonly PageType _pageType;
+        private readonly int? _overlaySortingOrder;
 
         #endregion
 
@@ -41,23 +42,27 @@ namespace Ember.UI
         /// <summary>页面行为模式</summary>
         public PageType PageType => _pageType;
 
+        /// <summary>Overlay 页面固定排序值（仅 PageType.Overlay 时有效）。null 则使用 Layer 值。</summary>
+        public int? OverlaySortingOrder => _overlaySortingOrder;
+
         /// <summary>完整定义页面</summary>
-        public PageDef(string prefabPath, int layer, PageType pageType = PageType.MainPage)
+        public EUIPageDef(string prefabPath, int layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null)
         {
             _prefabPath = prefabPath ?? throw new ArgumentNullException(nameof(prefabPath));
             _layer = layer;
             _pageType = pageType;
+            _overlaySortingOrder = overlaySortingOrder;
         }
 
         /// <summary>使用 UILayer 枚举的便捷构造</summary>
-        public PageDef(string prefabPath, UILayer layer, PageType pageType = PageType.MainPage)
-            : this(prefabPath, (int)layer, pageType)
+        public EUIPageDef(string prefabPath, UILayer layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null)
+            : this(prefabPath, (int)layer, pageType, overlaySortingOrder)
         {
         }
 
         public override string ToString()
         {
-            return $"PageDef({_prefabPath}, layer={_layer}, type={_pageType})";
+            return $"EUIPageDef({_prefabPath}, layer={_layer}, type={_pageType})";
         }
 
         #endregion

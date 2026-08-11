@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.CSharpLogicImplementationData
   codePath: Assets/Game/UI/Generated
   namespaceName: Game.UI
-  baseClassName: Ember.UI.EmberUILogic
+  baseClassName: Ember.UI.EUILogic
   pageDefFile: Assets/Game/UI/GamePages.cs
   bindingCodeTemplate: {fileID: 102900000, guid: 011028a568ec5624997f0800e8ced76e, type: 3}
   codeTemplate: {fileID: 102900000, guid: 82bcc2488119c9647a05dc7da1161fca, type: 3}

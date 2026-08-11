@@ -7,10 +7,10 @@ namespace Ember.UI
 {
     /// <summary>
     /// UI 资源加载注入接口。
-    /// 解耦 EmberUIManager 与具体的资源加载实现。
+    /// 解耦 EUIViewEngine 与具体的资源加载实现。
     /// 默认实现走 <c>EmberResourceManager</c>，业务层可注入 Mock 实现用于测试。
     /// </summary>
-    public interface IUIResourceProvider
+    public interface IEUIResourceProvider
     {
         /// <summary>
         /// 异步加载 UI 预制体。
@@ -26,9 +26,9 @@ namespace Ember.UI
     }
 
     /// <summary>
-    /// IUIResourceProvider 的默认实现 —— 委托给 EmberResourceManager。
+    /// IEUIResourceProvider 的默认实现 —— 委托给 EmberResourceManager。
     /// </summary>
-    public class DefaultUIResourceProvider : IUIResourceProvider
+    public class DefaultUIResourceProvider : IEUIResourceProvider
     {
         public void LoadPrefabAsync(string prefabPath, Action<GameObject> onLoaded)
         {

@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 using Ember.Basic;
 
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 namespace Ember.UI
@@ -20,13 +21,13 @@ namespace Ember.UI
     /// <para>架构（对标 Burner GamePage）：</para>
     /// <code>
     /// 预制体上只有: Canvas + 子控件 + EUIBinding
-    /// 运行时创建:   EmberPage (此类) → EmberUILogic (生成的数据类)
+    /// 运行时创建:   EUIPage (此类) → EUILogic (生成的数据类)
     /// </code>
     ///
     /// <para><b>自研生命周期（完整流程）：</b></para>
     /// <code>
     /// // ── 构造阶段 ──
-    /// new EmberPage(go)                     // 包装已实例化的预制体
+    /// new EUIPage(go)                     // 包装已实例化的预制体
     ///   → CreateLogic(populateControlMap)    // 反射创建 Logic + OnBind
     ///
     /// // ── 打开流程 ──
@@ -73,14 +74,14 @@ namespace Ember.UI
     ///
     /// <para><b>三层分工：</b></para>
     /// <list type="bullet">
-    ///   <item><b>IUIView</b> — 契约：定义生命周期方法签名，<see cref="EmberUIManager"/> 只认这个接口</item>
-    ///   <item><b>EmberPage</b> — 框架实现：管理 GameObject/Canvas/CanvasGroup，驱动 Logic 钩子，
+    ///   <item><b>IEUIView</b> — 契约：定义生命周期方法签名，<see cref="EUIViewEngine"/> 只认这个接口</item>
+    ///   <item><b>EUIPage</b> — 框架实现：管理 GameObject/Canvas/CanvasGroup，驱动 Logic 钩子，
     ///        提供 protected virtual 动画钩子（<see cref="OnShow"/> / <see cref="OnHide"/> 等）供子类 override</item>
-    ///   <item><b>EmberUILogic</b> — 业务基类：用户继承后 override 钩子方法，写具体业务逻辑，
+    ///   <item><b>EUILogic</b> — 业务基类：用户继承后 override 钩子方法，写具体业务逻辑，
     ///        不需要知道框架流程怎么走的</item>
     /// </list>
     /// </summary>
-    public class EmberPage : IUIView
+    public class EUIPage : IEUIView
     {
         private const string TAG = LogTags.UIManager;
 
@@ -92,18 +93,19 @@ namespace Ember.UI
         private readonly RectTransform _rectTransform;
 
         private PageState _state = PageState.Unloaded;
-        private PageDef _pageDef;
-        private EmberPage _parentPage;
-        private readonly List<EmberPage> _subPages = new List<EmberPage>();
-        private EmberUILogic _logic;
+        private EUIPageDef _pageDef;
+        private EUIPage _parentPage;
+        private readonly List<EUIPage> _subPages = new List<EUIPage>();
+        private EUILogic _logic;
         private string _logicTypeName;
 
-        // 预设渐入渐出（由 EUIBindingBridge 在页面创建时注入）
+        // 过渡动画配置（由 EUIBindingBridge 在页面创建时注入）
         private bool _usePresetFade;
-        private float _presetFadeInTime;
-        private float _presetFadeOutTime;
+        private bool _useCustomTransition;
+        private float _transitionInTime;
+        private float _transitionOutTime;
 
-        // 动画完成回调（由 EmberUIManager 在调用 PlayShow/PlayHide 前注入）
+        // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
         private Action _onShowComplete;
         private object _showArgs;
         private Action _onHideComplete;
@@ -114,8 +116,51 @@ namespace Ember.UI
         private bool _isClosing;
         private float _closeTime;
 
-        // 子页面的子页面（递归追踪）
-        private readonly List<EmberPage> _subPagesLinear = new List<EmberPage>();
+        // 加载计时（对标 Burner PageLoadTiming）
+        private LoadTiming _loadTiming;
+        private float _initStartTime;
+        private float _showStartTime;
+
+        // SubPage 排序（对标 Burner SubPageOrderGrowStep）
+        private const int SubPageOrderGrowStep = 50;
+
+        // 挂起操作（对标 Burner PageTargetState）
+        private PagePendingOp _pendingOp;
+        private object _pendingOpArgs;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 嵌套类型
+
+        /// <summary>
+        /// 页面处于过渡状态时（Showing/Hiding），收到的操作挂起到此枚举。
+        /// </summary>
+        internal enum PagePendingOp
+        {
+            None,
+            Close,
+            Reopen,
+        }
+
+        /// <summary>
+        /// 页面加载耗时数据（对标 Burner PageLoadTiming）。
+        /// 仅首次打开时记录，后续 Reopen 不更新。
+        /// </summary>
+        public struct LoadTiming
+        {
+            /// <summary>Prefab 加载耗时（ms）。Ember 中 Prefab 在 Router 层同步 Instantiate，此项为 0。</summary>
+            public float AssetLoadMs;
+            /// <summary>Init 阶段耗时（ms）：OnInitialize + Logic.OnInit + OnOpen + OnReset</summary>
+            public float InitMs;
+            /// <summary>PlayShow 阶段耗时（ms）：Logic.OnShow + OnShow 动画</summary>
+            public float ShowMs;
+            /// <summary>总耗时（ms）</summary>
+            public float TotalMs;
+            /// <summary>是否首次打开（false = 本次是 Reopen）</summary>
+            public bool IsFirstOpen;
+        }
 
         #endregion
 
@@ -127,7 +172,7 @@ namespace Ember.UI
         /// 创建一个页面包装实例。
         /// </summary>
         /// <param name="gameObject">已实例化的预制体根节点</param>
-        public EmberPage(GameObject gameObject)
+        public EUIPage(GameObject gameObject)
         {
             _gameObject = gameObject ?? throw new ArgumentNullException(nameof(gameObject));
             _canvasGroup = _gameObject.GetComponent<CanvasGroup>();
@@ -144,7 +189,7 @@ namespace Ember.UI
         /// 创建逻辑层实例。Caller 负责填充 ControlMap。
         /// </summary>
         /// <param name="populateControlMap">填充 ControlMap 的回调（接收 ControlMap 和当前 Logic 实例，供子 UIBinding 注册）</param>
-        public void CreateLogic(Action<Dictionary<string, Component>, EmberUILogic> populateControlMap)
+        public void CreateLogic(Action<Dictionary<string, Component>, EUILogic> populateControlMap)
         {
             if (string.IsNullOrEmpty(_logicTypeName)) return;
 
@@ -157,9 +202,9 @@ namespace Ember.UI
                     if (type != null) break;
                 }
 
-                if (type != null && typeof(EmberUILogic).IsAssignableFrom(type) && !type.IsAbstract)
+                if (type != null && typeof(EUILogic).IsAssignableFrom(type) && !type.IsAbstract)
                 {
-                    _logic = (EmberUILogic)Activator.CreateInstance(type);
+                    _logic = (EUILogic)Activator.CreateInstance(type);
                     _logic.Page = this;
                     _logic.ControlMap = new Dictionary<string, Component>();
                     populateControlMap?.Invoke(_logic.ControlMap, _logic);
@@ -180,17 +225,20 @@ namespace Ember.UI
 
         // --------------------------------------------------------
 
-        #region IUIView 实现
+        #region IEUIView 实现
 
         /// <inheritdoc />
         public void Init(object args)
         {
             if (_state != PageState.Unloaded && _state != PageState.Closed)
             {
-                EmberDebug.LogWarning(TAG, $"EmberPage.Init: '{Name}' state={_state}, expected Unloaded/Closed.");
+                EmberDebug.LogWarning(TAG, $"EUIPage.Init: '{Name}' state={_state}, expected Unloaded/Closed.");
                 return;
             }
 
+            Profiler.BeginSample("EUIPage.Init");
+            _initStartTime = Time.realtimeSinceStartup;
+            _loadTiming.IsFirstOpen = true;
             _state = PageState.Loaded;
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
@@ -203,7 +251,7 @@ namespace Ember.UI
             }
             catch (Exception ex)
             {
-                EmberDebug.LogError(TAG, $"EmberPage.Init '{Name}' error: {ex}");
+                EmberDebug.LogError(TAG, $"EUIPage.Init '{Name}' error: {ex}");
             }
 
             // 通知逻辑层
@@ -218,6 +266,9 @@ namespace Ember.UI
                 try { _logic.BroadcastReset(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReset '{Name}': {ex}"); }
             }
+
+            _loadTiming.InitMs = (Time.realtimeSinceStartup - _initStartTime) * 1000f;
+            Profiler.EndSample();
         }
 
         /// <inheritdoc />
@@ -225,34 +276,26 @@ namespace Ember.UI
         {
             if (_state != PageState.Loaded)
             {
-                EmberDebug.LogWarning(TAG, $"EmberPage.PlayShow: '{Name}' state={_state}, expected Loaded.");
+                EmberDebug.LogWarning(TAG, $"EUIPage.PlayShow: '{Name}' state={_state}, expected Loaded.");
                 return;
             }
 
+            Profiler.BeginSample("EUIPage.PlayShow");
+            _showStartTime = Time.realtimeSinceStartup;
             _state = PageState.Showing;
 
             try { _logic?.BroadcastShow(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
 
-            if (_usePresetFade)
+            if (!_usePresetFade && !_useCustomTransition)
             {
-                // 预设渐入动画（UniTask），跳过子类 OnShow() virtual
-                EmberUIManager.Instance.StartPageCoroutine(
-                    PresetFadeInAsync().ToCoroutine());
+                CompleteShow();
             }
             else
             {
-                var routine = OnShow();
-                if (routine == null)
-                {
-                    CompleteShow();
-                }
-                else
-                {
-                    // 协程需要通过外部驱动（EmberUIManager 持有 MonoBehaviour 启动协程）
-                    EmberUIManager.Instance.StartPageCoroutine(PlayShowRoutine(routine));
-                }
+                RunShowAnimationSequence().Forget();
             }
+            Profiler.EndSample();
         }
 
         /// <inheritdoc />
@@ -300,38 +343,31 @@ namespace Ember.UI
             if (_state == PageState.Unloaded || _state == PageState.Closed)
                 return;
 
+            Profiler.BeginSample("EUIPage.PlayHide");
             _state = PageState.Hiding;
             try { _logic?.BroadcastHide(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
 
-            if (_usePresetFade)
+            if (!_usePresetFade && !_useCustomTransition)
             {
-                // 预设渐出动画（UniTask），跳过子类 OnHide() virtual
-                EmberUIManager.Instance.StartPageCoroutine(
-                    PresetFadeOutAsync().ToCoroutine());
+                CompleteHide();
             }
             else
             {
-                var routine = OnHide();
-                if (routine == null)
-                {
-                    CompleteHide();
-                }
-                else
-                {
-                    EmberUIManager.Instance.StartPageCoroutine(PlayHideRoutine(routine));
-                }
+                RunHideAnimationSequence().Forget();
             }
+            Profiler.EndSample();
         }
 
         /// <inheritdoc />
         public void Cleanup()
         {
             if (_state == PageState.Unloaded) return;
+            Profiler.BeginSample("EUIPage.Cleanup");
             _state = PageState.Unloaded;
 
             try { OnCleanup(); }
-            catch (Exception ex) { EmberDebug.LogError(TAG, $"EmberPage.Cleanup '{Name}' error: {ex}"); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"EUIPage.Cleanup '{Name}' error: {ex}"); }
 
             // 清理逻辑层
             if (_logic != null)
@@ -352,9 +388,9 @@ namespace Ember.UI
                     sub.Dispose();
             }
             _subPages.Clear();
-            _subPagesLinear.Clear();
 
             _gameObject.SetActive(false);
+            Profiler.EndSample();
         }
 
         /// <inheritdoc />
@@ -384,96 +420,85 @@ namespace Ember.UI
         #region 子类可 override 的钩子
 
         /// <summary>
-        /// 初始化数据 —— 在 <see cref="Init"/> 的数据阶段调用，<b>早于 <see cref="EmberUILogic.OnInit"/> 和 <see cref="EmberUILogic.OnOpen"/> 和 <see cref="EmberUILogic.OnReset"/></b>。
+        /// 初始化数据 —— 在 <see cref="Init"/> 的数据阶段调用，<b>早于 <see cref="EUILogic.OnInit"/> 和 <see cref="EUILogic.OnOpen"/> 和 <see cref="EUILogic.OnReset"/></b>。
         /// </summary>
         /// <para><b>触发时机：</b>页面首次打开（State=Unloaded）或重新打开已关闭页面（State=Closed）时，
         /// 由 <see cref="Init"/> 调用。此时 CanvasGroup α=0，页面不可交互。</para>
         /// <para><b>职责：</b>框架层自定义初始化数据。只做数据操作，不要做动画。
         /// 动画逻辑请 override <see cref="OnShow"/>。</para>
-        /// <para><b>业务层对应：</b><see cref="EmberUILogic.OnInit"/> + <see cref="EmberUILogic.OnOpen"/> + <see cref="EmberUILogic.OnReset"/>，
-        /// 业务初始化应写在 EmberUILogic 子类中，不要写在这里。</para>
-        /// <param name="args">打开时传入的参数（来自 EmberUIPageRouter.ShowMainPage/ShowPopup 的 args）</param>
+        /// <para><b>业务层对应：</b><see cref="EUILogic.OnInit"/> + <see cref="EUILogic.OnOpen"/> + <see cref="EUILogic.OnReset"/>，
+        /// 业务初始化应写在 EUILogic 子类中，不要写在这里。</para>
+        /// <param name="args">打开时传入的参数（来自 EUIManager.ShowMainPage/ShowPopup 的 args）</param>
         protected virtual void OnInitialize(object args) { }
 
         /// <summary>
-        /// 打开动画协程 —— 在 <see cref="PlayShow"/> 中、<b><see cref="EmberUILogic.OnShow"/> 之后</b>调用。
+        /// 打开动画 —— 在 <see cref="PlayShow"/> 中、<b><see cref="EUILogic.OnShow"/> 之后</b>调用。
         /// </summary>
         /// <para><b>触发时机：</b>在 Init 完成（State=Loaded）之后，由 <see cref="PlayShow"/> 调用。
         /// 此时数据已就绪（Logic.OnInit/OnOpen 已执行完），CanvasGroup α=0。</para>
-        /// <para><b>职责：</b>播放打开动画（fade in、slide in 等）。框架通过 <see cref="EmberUIManager.StartPageCoroutine"/> 驱动此协程，
+        /// <para><b>职责：</b>播放打开动画（fade in、slide in 等）。框架 await 此 UniTask，
         /// 动画结束后自动调用 <see cref="CompleteShow"/>（α=1, 可交互, State→Opened）。</para>
-        /// <para><b>返回值：</b></para>
-        /// <list type="bullet">
-        ///   <item>返回 <c>null</c> — 无动画，框架立即调用 <see cref="CompleteShow"/> 完成打开</item>
-        ///   <item>返回 <c>IEnumerator</c> — 框架启动协程等待动画完成后再完成打开</item>
-        /// </list>
-        /// <para><b>注意：</b>这是 EmberPage 子类的 override 点，不是 EmberUILogic 的。
-        /// <b>业务逻辑</b>（如刷新数据）应写在 <see cref="EmberUILogic.OnShow"/> 中，不要写在这里。</para>
+        /// <para><b>注意：</b>这是 EUIPage 子类的 override 点，不是 EUILogic 的。
+        /// <b>业务逻辑</b>（如刷新数据）应写在 <see cref="EUILogic.OnShow"/> 中，不要写在这里。</para>
         /// <para><b>示例：</b></para>
         /// <code>
-        /// public class MyFancyPage : EmberPage
+        /// public class MyFancyPage : EUIPage
         /// {
-        ///     protected override IEnumerator OnShow()
+        ///     protected override async UniTask OnShow()
         ///     {
-        ///         // 播放 DOTween / Animator 动画
-        ///         yield return CanvasGroup.DOFade(1f, 0.3f).WaitForCompletion();
+        ///         await CanvasGroup.DOFade(1f, 0.3f).ToUniTask();
         ///     }
         /// }
         /// </code>
-        protected virtual System.Collections.IEnumerator OnShow() { return null; }
+        protected virtual UniTask OnShow() => UniTask.CompletedTask;
 
         /// <summary>
-        /// 关闭动画协程 —— 在 <see cref="PlayHide"/> 中、<b><see cref="EmberUILogic.OnHide"/> 之后</b>调用。
+        /// 关闭动画 —— 在 <see cref="PlayHide"/> 中、<b><see cref="EUILogic.OnHide"/> 之后</b>调用。
         /// </summary>
         /// <para><b>触发时机：</b>页面被关闭时，在 <see cref="PlayHide"/> 中调用。此时 State=Hiding，Logic.OnHide 已执行完。</para>
-        /// <para><b>职责：</b>播放关闭动画（fade out、slide out 等）。动画结束后自动调用 <see cref="CompleteHide"/>
-        /// （α=0, 不可交互, State→Closed），随后框架调用 <see cref="Cleanup"/> 执行数据清理。</para>
-        /// <para><b>返回值：</b></para>
-        /// <list type="bullet">
-        ///   <item>返回 <c>null</c> — 无动画，框架立即调用 <see cref="CompleteHide"/> 然后进入 <see cref="Cleanup"/></item>
-        ///   <item>返回 <c>IEnumerator</c> — 框架启动协程等待动画完成后再进入 Cleanup</item>
-        /// </list>
+        /// <para><b>职责：</b>播放关闭动画（fade out、slide out 等）。框架 await 动画完成后再调 <see cref="CompleteHide"/>
+        /// （α=0, 不可交互, State→Closed），随后进入 <see cref="Cleanup"/>。</para>
         /// <para><b>示例：</b></para>
         /// <code>
-        /// public class MyFancyPage : EmberPage
+        /// public class MyFancyPage : EUIPage
         /// {
-        ///     protected override IEnumerator OnHide()
+        ///     protected override async UniTask OnHide()
         ///     {
-        ///         yield return CanvasGroup.DOFade(0f, 0.2f).WaitForCompletion();
+        ///         await CanvasGroup.DOFade(0f, 0.2f).ToUniTask();
         ///     }
         /// }
         /// </code>
-        protected virtual System.Collections.IEnumerator OnHide() { return null; }
+        protected virtual UniTask OnHide() => UniTask.CompletedTask;
 
         /// <summary>
-        /// 清理 —— 在 <see cref="Cleanup"/> 中、<b>最早调用</b>（早于 <see cref="EmberUILogic.OnClose"/>、<see cref="EmberUILogic.OnReset"/>、<see cref="EmberUILogic.OnDispose"/>）。
+        /// 清理 —— 在 <see cref="Cleanup"/> 中、<b>最早调用</b>（早于 <see cref="EUILogic.OnClose"/>、<see cref="EUILogic.OnReset"/>、<see cref="EUILogic.OnDispose"/>）。
         /// </summary>
         /// <para><b>触发时机：</b>PlayHide 动画完成后（或无需动画时立即），在 Cleanup 中<b>第一顺位</b>调用。
         /// 此时页面 State 刚从 Hiding/Closed 切换，GameObject 仍然存在。</para>
         /// <para><b>职责：</b>框架层自定义清理。注销页面级事件、释放框架层引用。
-        /// 业务层的清理应写在 <see cref="EmberUILogic.OnDispose"/> 中，不要写在这里。</para>
+        /// 业务层的清理应写在 <see cref="EUILogic.OnDispose"/> 中，不要写在这里。</para>
         /// <para><b>注意：</b>在此方法之后，Logic.OnClose → Logic.OnReset → Logic.OnDispose 依次执行，然后子页面递归清理，最后 SetActive(false)。</para>
         protected virtual void OnCleanup() { }
 
         /// <summary>
-        /// 被遮挡时回调 —— 在 <see cref="IUIView.OnPause"/> 中、<b>早于 <see cref="EmberUILogic.OnPause"/></b>。
+        /// 被遮挡时回调 —— 在 <see cref="IEUIView.OnPause"/> 中、<b>早于 <see cref="EUILogic.OnPause"/></b>。
         /// </summary>
         /// <para><b>触发时机：</b>另一个页面 Push 到上方时（如 MainPage 上弹出 Popup、新 MainPage 替换当前）。
         /// 被遮挡的页面不会被销毁，State 从 Opened 切换为 Paused。</para>
-        /// <para><b>职责：</b>框架层在页面被遮挡时的处理。业务层处理请用 <see cref="EmberUILogic.OnPause"/>。</para>
+        /// <para><b>职责：</b>框架层在页面被遮挡时的处理。业务层处理请用 <see cref="EUILogic.OnPause"/>。</para>
         protected virtual void OnPaused() { }
 
         /// <summary>
-        /// 重新可见时回调 —— 在 <see cref="IUIView.OnResume"/> 中、<b>早于 <see cref="EmberUILogic.OnResume"/></b>。
+        /// 重新可见时回调 —— 在 <see cref="IEUIView.OnResume"/> 中、<b>早于 <see cref="EUILogic.OnResume"/></b>。
         /// </summary>
         /// <para><b>触发时机：</b>上方遮挡的页面关闭后，当前页面重新回到栈顶。State 从 Paused 恢复为 Opened。</para>
-        /// <para><b>职责：</b>框架层在页面恢复时的处理。业务层处理请用 <see cref="EmberUILogic.OnResume"/>。</para>
+        /// <para><b>职责：</b>框架层在页面恢复时的处理。业务层处理请用 <see cref="EUILogic.OnResume"/>。</para>
         protected virtual void OnResumed() { }
 
         /// <summary>
-        /// 已加载页面被重新打开 —— 在 <see cref="IUIView.OnReopen"/> 中调用。
+        /// 已加载页面被重新打开 —— 在 <see cref="IEUIView.OnReopen"/> 中调用。
         /// </summary>
-        /// <para><b>触发时机：</b>State=Closed 的页面被 <see cref="EmberUIManager.ReopenPage"/> 重新打开时。
+        /// <para><b>触发时机：</b>State=Closed 的页面被 <see cref="EUIViewEngine.ReopenPage"/> 重新打开时。
         /// 与 <see cref="OnInitialize"/> 互斥：已加载的页面走 OnReopen，不重新走 Init 流程。</para>
         /// <para><b>职责：</b>恢复页面状态。框架随后自动调用 Logic.OnOpen + PlayShow。</para>
         /// <param name="args">重新打开时传入的参数</param>
@@ -483,7 +508,7 @@ namespace Ember.UI
         /// 返回键处理 —— 在 <see cref="TryEscapeKeyClose"/> 中、<b>子页面均未处理时</b>最后调用。
         /// </summary>
         /// <para><b>触发时机：</b>用户按 ESC / Android 返回键时，
-        /// <see cref="EmberUIManager.HandleEscapeKey"/> 从 TopMost → Popup → MainPage 逐层调用每个页面的 TryEscapeKeyClose。
+        /// <see cref="EUIViewEngine.HandleEscapeKey"/> 从 TopMost → Popup → MainPage 逐层调用每个页面的 TryEscapeKeyClose。
         /// 每个页面先递归询问自己的 SubPage，若子页面均未处理，才调用此方法。</para>
         /// <para><b>返回值：</b>return true 表示已处理（阻止事件继续向更低层冒泡），return false 表示未处理。</para>
         /// <para><b>典型用法：</b>Popup 页面 override 此方法 return true 关闭自己，实现"按返回键关闭弹窗"。</para>
@@ -495,9 +520,12 @@ namespace Ember.UI
 
         #region 内部方法
 
-        private System.Collections.IEnumerator PlayShowRoutine(System.Collections.IEnumerator routine)
+        private async UniTask RunShowAnimationSequence()
         {
-            yield return routine;
+            if (_usePresetFade)
+                await EUIViewEngine.Instance.TransitionHandler.PlayShowAsync(_gameObject, _transitionInTime);
+            if (_useCustomTransition)
+                await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
             CompleteShow();
         }
 
@@ -508,18 +536,32 @@ namespace Ember.UI
             _canvasGroup.interactable = true;
             _state = PageState.Opened;
 
+            // 加载计时（对标 Burner PageLoadTiming）
+            if (_loadTiming.IsFirstOpen)
+            {
+                _loadTiming.ShowMs = (Time.realtimeSinceStartup - _showStartTime) * 1000f;
+                _loadTiming.TotalMs = _loadTiming.InitMs + _loadTiming.ShowMs;
+                EmberDebug.LogInit(TAG, $"页面加载完成: {Name} init={_loadTiming.InitMs:F1}ms show={_loadTiming.ShowMs:F1}ms total={_loadTiming.TotalMs:F1}ms");
+            }
+
             // 动画真正结束 → 播报事件 + 日志 + 回调
             if (_pageDef != null)
-                EmberUIObserver.NotifyOpened(_pageDef, _showArgs);
+                EUIObserver.NotifyOpened(_pageDef, _showArgs);
             EmberDebug.LogEvent(TAG, $"页面已打开: {_pageDef}");
             _onShowComplete?.Invoke();
             _onShowComplete = null;
             _showArgs = null;
+
+            // 过渡完成 → 执行挂起操作（对标 Burner ExecutePendingOperationIfAny）
+            FlushPendingOp();
         }
 
-        private System.Collections.IEnumerator PlayHideRoutine(System.Collections.IEnumerator routine)
+        private async UniTask RunHideAnimationSequence()
         {
-            yield return routine;
+            if (_usePresetFade)
+                await EUIViewEngine.Instance.TransitionHandler.PlayHideAsync(_gameObject, _transitionOutTime);
+            if (_useCustomTransition)
+                await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
             CompleteHide();
         }
 
@@ -532,44 +574,13 @@ namespace Ember.UI
 
             // 动画真正结束 → 播报事件 + 日志 + 回调（回调中包含 Cleanup + Destroy 调度）
             if (_pageDef != null)
-                EmberUIObserver.NotifyClosed(_pageDef, null);
+                EUIObserver.NotifyClosed(_pageDef, null);
             EmberDebug.LogCleanup(TAG, $"页面已关闭: {_pageDef}");
             _onHideComplete?.Invoke();
             _onHideComplete = null;
-        }
 
-        /// <summary>
-        /// 预设渐入动画（UniTask）—— CanvasGroup alpha 从 0 线性过渡到 1。
-        /// 仅当 <see cref="_usePresetFade"/> 为 true 时由 <see cref="PlayShow"/> 调用。
-        /// </summary>
-        private async UniTask PresetFadeInAsync()
-        {
-            float elapsed = 0f;
-            while (elapsed < _presetFadeInTime)
-            {
-                elapsed += Time.deltaTime;
-                if (_canvasGroup != null)
-                    _canvasGroup.alpha = Mathf.Clamp01(elapsed / _presetFadeInTime);
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-            CompleteShow();
-        }
-
-        /// <summary>
-        /// 预设渐出动画（UniTask）—— CanvasGroup alpha 从 1 线性过渡到 0。
-        /// 仅当 <see cref="_usePresetFade"/> 为 true 时由 <see cref="PlayHide"/> 调用。
-        /// </summary>
-        private async UniTask PresetFadeOutAsync()
-        {
-            float elapsed = 0f;
-            while (elapsed < _presetFadeOutTime)
-            {
-                elapsed += Time.deltaTime;
-                if (_canvasGroup != null)
-                    _canvasGroup.alpha = Mathf.Clamp01(1f - (elapsed / _presetFadeOutTime));
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-            CompleteHide();
+            // 过渡完成 → 执行挂起操作（对标 Burner ExecutePendingOperationIfAny）
+            FlushPendingOp();
         }
 
         internal void Dispose()
@@ -603,24 +614,27 @@ namespace Ember.UI
         public RectTransform RectTransform => _rectTransform;
 
         /// <summary>页面定义元数据</summary>
-        public PageDef PageDef
+        public EUIPageDef EUIPageDef
         {
             get => _pageDef;
             internal set => _pageDef = value;
         }
 
         /// <summary>父页面（SubPage 时非空）</summary>
-        public EmberPage ParentPage
+        public EUIPage ParentPage
         {
             get => _parentPage;
             internal set => _parentPage = value;
         }
 
         /// <summary>子页面列表</summary>
-        public IReadOnlyList<EmberPage> SubPages => _subPages;
+        public IReadOnlyList<EUIPage> SubPages => _subPages;
+
+        /// <summary>页面加载耗时数据（仅首次打开时有效）</summary>
+        public LoadTiming LoadTimingData => _loadTiming;
 
         /// <summary>逻辑层实例</summary>
-        public EmberUILogic Logic => _logic;
+        public EUILogic Logic => _logic;
 
         /// <summary>逻辑层类型全名</summary>
         public string LogicTypeName
@@ -630,7 +644,7 @@ namespace Ember.UI
         }
 
         /// <summary>注册子页面</summary>
-        internal void RegisterSubPage(EmberPage subPage)
+        internal void RegisterSubPage(EUIPage subPage)
         {
             if (!_subPages.Contains(subPage))
                 _subPages.Add(subPage);
@@ -638,29 +652,102 @@ namespace Ember.UI
         }
 
         /// <summary>注销子页面</summary>
-        internal void UnregisterSubPage(EmberPage subPage)
+        internal void UnregisterSubPage(EUIPage subPage)
         {
             _subPages.Remove(subPage);
-            _subPagesLinear.Remove(subPage);
             subPage._parentPage = null;
         }
 
         /// <summary>
-        /// 注入预设渐入渐出配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
-        /// 启用后 <see cref="PlayShow"/> / <see cref="PlayHide"/> 使用 UniTask alpha 渐变，跳过子类 override 的 OnShow/OnHide。
+        /// 计算新 SubPage 的 Canvas.sortingOrder。
+        /// 规则：找到顶层非 SubPage 祖先，在已有子页面最大 sortingOrder 基础上递增 <see cref="SubPageOrderGrowStep"/>。
         /// </summary>
-        /// <param name="enabled">是否启用预设渐入渐出</param>
-        /// <param name="fadeInTime">渐入持续时间（秒）</param>
-        /// <param name="fadeOutTime">渐出持续时间（秒）</param>
-        public void SetPresetFade(bool enabled, float fadeInTime, float fadeOutTime)
+        /// <returns>新 SubPage 应使用的 sortingOrder</returns>
+        internal int GetNextSubPageSortingOrder()
         {
-            _usePresetFade = enabled;
-            _presetFadeInTime = fadeInTime;
-            _presetFadeOutTime = fadeOutTime;
+            // 找到顶层非 SubPage 页面
+            var root = this;
+            while (root._parentPage != null && root._parentPage.EUIPageDef?.PageType == PageType.SubPage)
+                root = root._parentPage;
+
+            int baseOrder = root._canvas ? root._canvas.sortingOrder : 0;
+
+            // 遍历 root 的所有已有子页面，找到最大 sortingOrder
+            int maxSubOrder = baseOrder;
+            if (root._subPages.Count > 0)
+            {
+                foreach (var sub in root._subPages)
+                {
+                    if (sub != this && sub._canvas)
+                        maxSubOrder = Math.Max(maxSubOrder, sub._canvas.sortingOrder);
+                }
+            }
+
+            return maxSubOrder + SubPageOrderGrowStep;
         }
 
         /// <summary>
-        /// 注入打开动画完成回调。由 <see cref="EmberUIManager"/> 在调用 PlayShow 前设置，
+        /// 页面处于过渡状态（Showing/Hiding）时，将操作挂起。
+        /// 过渡完成后由 <see cref="CompleteShow"/> 或 <see cref="CompleteHide"/> 重放。
+        /// </summary>
+        internal bool TryQueuePendingOp(PagePendingOp op, object args)
+        {
+            if (_state != PageState.Showing && _state != PageState.Hiding)
+                return false;
+
+            _pendingOp = op;
+            _pendingOpArgs = args;
+            EmberDebug.LogWarning(TAG, $"页面 '{Name}' 处于 {_state}，操作 '{op}' 已挂起。");
+            return true;
+        }
+
+        /// <summary>当前挂起的操作类型</summary>
+        internal PagePendingOp PendingOp => _pendingOp;
+
+        /// <summary>清除挂起操作</summary>
+        internal void ClearPendingOp()
+        {
+            _pendingOp = PagePendingOp.None;
+            _pendingOpArgs = null;
+        }
+
+        /// <summary>
+        /// 过渡状态结束后，重放挂起的操作。
+        /// 只做日志记录，实际操作由 <see cref="EUIViewEngine"/> 通过
+        /// <see cref="PendingOp"/> 属性检查后调度执行。
+        /// </summary>
+        private void FlushPendingOp()
+        {
+            if (_pendingOp == PagePendingOp.None) return;
+
+            EmberDebug.Log(TAG, $"页面 '{Name}' 完成过渡，挂起操作 '{_pendingOp}' 等待调度。");
+            // _pendingOp 保留，由 EUIViewEngine 的 CompleteShow/CompleteHide 回调检查并调度
+        }
+
+        /// <summary>
+        /// 注入过渡动画配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
+        /// <see cref="PlayShow"/> / <see cref="PlayHide"/> 根据两个独立开关决定动画链：
+        /// <list type="bullet">
+        ///   <item>仅 <b>Preset</b>：全局 Handler 的 CanvasGroup alpha 渐变</item>
+        ///   <item>仅 <b>Custom</b>：<see cref="EUILogic.OnCustomEnter"/> / <see cref="EUILogic.OnCustomExit"/></item>
+        ///   <item><b>Preset + Custom</b>：先播全局预设，再播自定义（叠加）</item>
+        ///   <item>都不勾：无动画，立即完成</item>
+        /// </list>
+        /// </summary>
+        /// <param name="usePreset">是否启用全局预设过渡动画</param>
+        /// <param name="useCustom">是否启用自定义过渡动画</param>
+        /// <param name="inTime">进入动画时长（秒），预设使用</param>
+        /// <param name="outTime">退出动画时长（秒），预设使用</param>
+        public void SetTransition(bool usePreset, bool useCustom, float inTime, float outTime)
+        {
+            _usePresetFade = usePreset;
+            _useCustomTransition = useCustom;
+            _transitionInTime = inTime;
+            _transitionOutTime = outTime;
+        }
+
+        /// <summary>
+        /// 注入打开动画完成回调。由 <see cref="EUIViewEngine"/> 在调用 PlayShow 前设置，
         /// 在 <see cref="CompleteShow"/> 中（动画真正结束时）执行。
         /// </summary>
         internal void SetShowCallback(Action onComplete, object args)
@@ -670,7 +757,7 @@ namespace Ember.UI
         }
 
         /// <summary>
-        /// 注入关闭动画完成回调。由 <see cref="EmberUIManager"/> 在调用 PlayHide 前设置，
+        /// 注入关闭动画完成回调。由 <see cref="EUIViewEngine"/> 在调用 PlayHide 前设置，
         /// 在 <see cref="CompleteHide"/> 中（动画真正结束时）执行，回调内负责调度 Cleanup + Destroy。
         /// </summary>
         internal void SetHideCallback(Action onComplete)

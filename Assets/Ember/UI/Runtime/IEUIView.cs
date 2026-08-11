@@ -6,7 +6,7 @@ namespace Ember.UI
 {
     /// <summary>
     /// UI 页面生命周期接口。
-    /// 所有被 EmberUIManager 管理的页面必须实现此接口。
+    /// 所有被 EUIViewEngine 管理的页面必须实现此接口。
     ///
     /// <para>两阶段生命周期设计：</para>
     /// <list type="bullet">
@@ -23,7 +23,7 @@ namespace Ember.UI
     ///     → PlayHide() → Cleanup()      ← 关闭
     /// </code>
     /// </summary>
-    public interface IUIView
+    public interface IEUIView
     {
         // ── 数据阶段 ──
 
@@ -43,15 +43,13 @@ namespace Ember.UI
         // ── 表现阶段 ──
 
         /// <summary>
-        /// 播放打开动画。由 EmberUIManager 通过协程驱动，
-        /// 动画结束后 EmberUIManager 将页面标记为 Opened。
-        /// 如果不需要动画，yield break 即可。
+        /// 播放打开动画。动画结束后框架将页面标记为 Opened。
+        /// 如果不需要动画，实现为空方法即可。
         /// </summary>
         void PlayShow();
 
         /// <summary>
-        /// 播放关闭动画。由 EmberUIManager 通过协程驱动，
-        /// 动画结束后 EmberUIManager 调 Cleanup() 并销毁。
+        /// 播放关闭动画。动画结束后框架调 Cleanup() 并销毁。
         /// </summary>
         void PlayHide();
 
@@ -77,7 +75,7 @@ namespace Ember.UI
 
         /// <summary>
         /// 返回键处理。返回 true 表示已处理（阻止冒泡）。
-        /// 由 EmberUIPageRouter 从 TopMost → Popup → MainPage 逐层询问。
+        /// 由 EUIViewEngine 从 TopMost → Popup → MainPage 逐层询问。
         /// </summary>
         bool TryEscapeKeyClose();
 
