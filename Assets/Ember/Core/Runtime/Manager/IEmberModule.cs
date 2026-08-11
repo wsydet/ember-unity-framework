@@ -1,4 +1,4 @@
-namespace Ember.Core
+﻿namespace Ember.Core
 {
     /// <summary>
     /// 业务模块接口 —— 生命周期由状态机驱动，与 <see cref="IEmberManager"/> 平行。

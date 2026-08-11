@@ -3,7 +3,8 @@
     "rootNamespace": "Ember.Core",
     "references": [
         "Sirenix.OdinInspector.Attributes",
-        "Ember.Basic.Runtime"
+        "Ember.Basic.Runtime",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

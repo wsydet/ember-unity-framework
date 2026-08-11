@@ -1,4 +1,6 @@
-﻿using Ember.Basic;
+﻿using Cysharp.Threading.Tasks;
+
+using Ember.Basic;
 
 namespace Ember.Core
 {
@@ -44,9 +46,13 @@ namespace Ember.Core
 
             if (args is EmberStateMachine fsm)
             {
-                fsm.LoadSceneAsync?.Invoke("MainScene", () =>
+                fsm.LoadSceneAsync?.Invoke("MainScene", async () =>
                 {
                     EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded, transitioning to Main...");
+
+                    // BootSplash 与 UI 并行：
+                    // TransitionTo 后 UI 开始加载（~1 帧），splash 同步淡出（0.5s）。
+                    // splash 渲染层级在 UI 之上，淡出过程中 UI 逐步显现，避免穿帮。
                     fsm.TransitionTo<MainState>(skipSceneLoad: true);
                 });
             }

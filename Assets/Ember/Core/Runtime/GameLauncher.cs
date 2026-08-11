@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Ember.Basic;
 
@@ -235,16 +236,53 @@ namespace Ember.Core
         /// </summary>
         protected virtual MainState CreateMainState()
         {
-            // 反射扫描所有程序集，查找 MainState 的非抽象子类
-            foreach (var asm in System.AppDomain.CurrentDomain.GetAssemblies())
+            var found = FindSubclass<MainState>();
+            return found != null ? (MainState)Activator.CreateInstance(found) : new MainState();
+        }
+
+        /// <summary>
+        /// 创建 GameplayState 实例。自动发现游戏层的 GameGameplayState 子类；
+        /// 如果不存在则返回框架默认 GameplayState。用户只需在游戏层创建
+        /// <c>GameGameplayState : GameplayState</c>，无需修改任何框架代码。
+        /// </summary>
+        protected virtual GameplayState CreateGameplayState()
+        {
+            var found = FindSubclass<GameplayState>();
+            return found != null ? (GameplayState)Activator.CreateInstance(found) : new GameplayState();
+        }
+
+        /// <summary>
+        /// 创建 SettingsState 实例。自动发现游戏层的 GameSettingsState 子类；
+        /// 如果不存在则返回框架默认 SettingsState。
+        /// </summary>
+        protected virtual SettingsState CreateSettingsState()
+        {
+            var found = FindSubclass<SettingsState>();
+            return found != null ? (SettingsState)Activator.CreateInstance(found) : new SettingsState();
+        }
+
+        /// <summary>
+        /// 在所有已加载的程序集中查找指定基类的非抽象子类。
+        /// 安全处理 ReflectionTypeLoadException（缺失引用导致 GetTypes 抛出异常）。
+        /// </summary>
+        /// <typeparam name="T">基类类型</typeparam>
+        /// <returns>找到的 Type，未找到返回 null</returns>
+        private static Type FindSubclass<T>() where T : EmberGameState
+        {
+            var baseType = typeof(T);
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
-                foreach (var t in asm.GetTypes())
+                Type[] types;
+                try { types = asm.GetTypes(); }
+                catch { continue; }  // 跳过因缺失引用导致 GetTypes() 失败的程序集
+
+                foreach (var t in types)
                 {
-                    if (t.IsSubclassOf(typeof(MainState)) && !t.IsAbstract)
-                        return (MainState)System.Activator.CreateInstance(t);
+                    if (t != null && t.IsSubclassOf(baseType) && !t.IsAbstract)
+                        return t;
                 }
             }
-            return new MainState();
+            return null;
         }
 
         protected virtual void ConfigureStateMachine(EmberStateMachine fsm)
@@ -255,10 +293,8 @@ namespace Ember.Core
             // ============================================================
             fsm.Register(new InitState());
             fsm.Register(CreateMainState());
-            fsm.Register(new GameplayState());
-
-            // 框架通用覆盖状态（可删除，用户可用自定义设置替代）
-            fsm.Register(new SettingsState());
+            fsm.Register(CreateGameplayState());
+            fsm.Register(CreateSettingsState());
 
             // --- 业务状态注册 ---
             // 在下方注册自定义状态，例如：

@@ -219,6 +219,34 @@ namespace Ember.Core
         }
 
         /// <summary>
+        /// 查找已注册的状态 —— 先精确匹配，再回退到子类匹配。
+        ///
+        /// 当业务层定义了《c>GameMainState : MainState</c>》并通过反射自动发现时，
+        /// 字典里的 key 是 <c>typeof(GameMainState)</c>，
+        /// 但调用方用 <c>TransitionTo《MainState》()</c> 查找基类类型。
+        /// 此方法在精确匹配失败时自动搜索已注册的子类。
+        /// </summary>
+        private bool TryGetState<T>(out EmberGameState state) where T : EmberGameState
+        {
+            var type = typeof(T);
+            if (_states.TryGetValue(type, out state))
+                return true;
+
+            // 回退：搜索已注册的子类
+            foreach (var kvp in _states)
+            {
+                if (type.IsAssignableFrom(kvp.Key))
+                {
+                    state = kvp.Value;
+                    return true;
+                }
+            }
+
+            state = null;
+            return false;
+        }
+
+        /// <summary>
         /// 注销一个状态。如果状态是必需状态（IsRequired = true）则拒绝。
         /// </summary>
         /// <returns>是否成功注销</returns>
@@ -249,10 +277,9 @@ namespace Ember.Core
         /// </summary>
         public void Start<T>(object args = null) where T : EmberGameState
         {
-            var type = typeof(T);
-            if (!_states.TryGetValue(type, out var state))
+            if (!TryGetState<T>(out var state))
             {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
                 return;
             }
 
@@ -275,23 +302,22 @@ namespace Ember.Core
         /// </summary>
         public void TransitionTo<T>(object args = null, bool skipSceneLoad = false) where T : EmberGameState
         {
-            var type = typeof(T);
-            if (!_states.TryGetValue(type, out var next))
+            if (!TryGetState<T>(out var next))
             {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
                 return;
             }
 
             if (_current != null)
             {
-                if (_current.GetType() == type && !_current.AllowReEnter)
+                if (_current.GetType() == next.GetType() && !_current.AllowReEnter)
                 {
                     EmberDebug.LogWarning(TAG,
-                        $"StateMachine: already in state '{type.Name}' and AllowReEnter is false.");
+                        $"StateMachine: already in state '{typeof(T).Name}' and AllowReEnter is false.");
                     return;
                 }
 
-                if (!ValidateGuard(_current, type, "TransitionTo"))
+                if (!ValidateGuard(_current, typeof(T), "TransitionTo"))
                     return;
             }
 
@@ -339,14 +365,13 @@ namespace Ember.Core
         /// </summary>
         public void Push<T>(object args = null) where T : EmberGameState
         {
-            var type = typeof(T);
-            if (!_states.TryGetValue(type, out var overlay))
+            if (!TryGetState<T>(out var overlay))
             {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{type.Name}' is not registered.");
+                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
                 return;
             }
 
-            if (_current != null && !ValidateGuard(_current, type, "Push"))
+            if (_current != null && !ValidateGuard(_current, typeof(T), "Push"))
                 return;
 
             var fromScene = _currentScenePath;
@@ -432,15 +457,16 @@ namespace Ember.Core
         /// </summary>
         public bool Is<T>() where T : EmberGameState
         {
-            return _current != null && _current.GetType() == typeof(T);
+            return _current != null && _current is T;
         }
 
         /// <summary>
         /// 获取已注册的状态实例。
+        /// 先精确匹配，再回退到子类匹配（与 TransitionTo/Push/Start 一致）。
         /// </summary>
         public T GetState<T>() where T : EmberGameState
         {
-            return _states.TryGetValue(typeof(T), out var state) ? state as T : null;
+            return TryGetState<T>(out var state) ? state as T : null;
         }
 
         /// <summary>

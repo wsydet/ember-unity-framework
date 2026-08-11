@@ -1,4 +1,4 @@
-namespace Ember.Core
+﻿namespace Ember.Core
 {
     /// <summary>
     /// 实现此接口的类将自动接收 Update 帧回调。

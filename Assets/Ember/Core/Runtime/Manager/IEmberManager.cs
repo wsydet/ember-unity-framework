@@ -1,4 +1,4 @@
-namespace Ember.Core
+﻿namespace Ember.Core
 {
     /// <summary>
     /// 框架基础设施管理器接口 —— 应用启动即初始化的"管道"。
