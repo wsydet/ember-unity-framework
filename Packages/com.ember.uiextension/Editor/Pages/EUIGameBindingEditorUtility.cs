@@ -340,7 +340,7 @@
 ////            implementationData = implementationData ? implementationData : FindCSharpLogicImplementationData();
 ////            if (!implementationData)
 ////            {
-////                Debug.LogError("未找到 CSharpLogicImplementationData，无法更新 PageDef。请检查 Project Settings/Burner UI 中的逻辑实现数据。", binding);
+////                Debug.LogError("未找到 CSharpLogicImplementationData，无法更新 EUIPageDef。请检查 Project Settings/Burner UI 中的逻辑实现数据。", binding);
 ////                return false;
 ////            }
 ////
@@ -458,7 +458,7 @@
 ////                    "The page binding pageName is empty.",
 ////                    null,
 ////                    "页面级 binding 的 pageName 为空。",
-////                    "pageName 应作为 PageDef 常量名。");
+////                    "pageName 应作为 EUIPageDef 常量名。");
 ////            }
 ////
 ////            if (binding.PageFlags == PageFlags.None)
@@ -480,7 +480,7 @@
 ////                    "The page binding is not part of a Prefab asset.",
 ////                    null,
 ////                    "页面级 binding 不在 prefab 资产中。",
-////                    "只有 prefab 根或 prefab stage 中的对象可以生成 PageDef。");
+////                    "只有 prefab 根或 prefab stage 中的对象可以生成 EUIPageDef。");
 ////                return;
 ////            }
 ////
@@ -497,7 +497,7 @@
 ////                    "Prefab file name {0} does not match root node name {1}.",
 ////                    new object[] { prefabName, binding.gameObject.name },
 ////                    $"prefab 文件名 {prefabName} 与根节点名 {binding.gameObject.name} 不一致。",
-////                    "确认 PageDef 值应来自 prefab 文件名的小写形式。");
+////                    "确认 EUIPageDef 值应来自 prefab 文件名的小写形式。");
 ////            }
 ////        }
 ////

@@ -6,7 +6,8 @@
         "Ember.UI.Runtime",
         "Sirenix.OdinInspector.Attributes",
         "Ember.Basic.Runtime",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

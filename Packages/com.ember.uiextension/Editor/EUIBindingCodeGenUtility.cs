@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.uiextension
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -96,10 +97,10 @@ namespace Ember.UIExtension.Editor
                 return "（请先在 Project Settings 中配置代码生成路径）";
 
             var subDir = string.IsNullOrEmpty(binding.ClassPath)
-                ? binding.ClassName
-                : binding.ClassPath + "/" + binding.ClassName;
+                ? ""
+                : binding.ClassPath + "/";
 
-            return $"{root}/{subDir}/{binding.ClassName}{logic.CodeFileExtension}";
+            return $"{root}/{subDir}{binding.ClassName}{logic.CodeFileExtension}";
         }
 
         private static string GetLogicCodePath(LogicImplementationData logic)
@@ -142,13 +143,22 @@ namespace Ember.UIExtension.Editor
                 return;
             }
 
-            // 如果不在预制体上，先生成预制体
+            // 二次确认
+            var hasExistingFile = HandleHasGeneratedFile(binding);
+            var confirmMsg = hasExistingFile
+                ? $"重新生成将刷新 .Binding.cs 文件（.cs 骨架不受影响），是否继续？"
+                : $"确认生成 {binding.ClassName}.cs 和 {binding.ClassName}.Binding.cs？";
+            var confirmBtn = hasExistingFile ? "重新生成" : "生成";
+            if (!EditorUtility.DisplayDialog("确认生成代码", confirmMsg, confirmBtn, "取消"))
+                return;
+
+            // 1. 先生成/更新预制体（如果不在预制体上）—— 后续步骤依赖 prefab 路径
             if (!HandleIsOnPrefab(binding))
             {
                 GeneratePrefab(binding);
             }
 
-            // 生成 PageDef（如果是 Page）
+            // 2. 生成脚本代码
             if (binding.IsPage)
             {
                 var csharp = logic as CSharpLogicImplementationData;
@@ -156,7 +166,6 @@ namespace Ember.UIExtension.Editor
                     csharp.GenerateOrUpdatePageDefinition(binding);
             }
 
-            // 计算基类信息
             string baseClsName = null;
             EUIBinding.BindingEntry[] declaredFields = null;
             var baseBinding = GetBaseBinding(binding);
@@ -168,28 +177,52 @@ namespace Ember.UIExtension.Editor
 
             logic.GenerateCode(binding, baseClsName, declaredFields);
 
+            // 3. 生成自定义参数模板（如果勾选了"生成自定义参数"且文件不存在）
+            if (binding.GenerateCustomSettings)
+            {
+                GenerateCustomSettingsTemplate(binding);
+            }
+
             EmberDebug.Log("EmberUI", $"代码生成完成：{binding.ClassName}");
+
+            // 4. 自动创建自定义页面参数实例（如果生成的代码定义了 Settings 类型）
+            AssetDatabase.Refresh();
+            CreateCustomSettingsIfExists(binding);
+            AssetDatabase.Refresh();
+
+            // 5. 同步 Custom 过渡方法（Custom 模式注入/非 Custom 模式移除）
+            SyncCustomTransitionMethods(binding);
         }
 
         /// <summary>
-        /// 生成预制体到 {根目录}/Prefabs/{类名}.prefab
+        /// 生成预制体到 {根目录}/Prefabs/{预制体名}.prefab
         /// </summary>
         private static void GeneratePrefab(EUIBinding binding)
         {
             var root = binding.CodePath;
-            if (string.IsNullOrEmpty(root))
-            {
-                EditorUtility.DisplayDialog("生成预制体失败",
-                    "未配置代码生成路径。请先在 Project Settings 中配置。", "确定");
-                return;
-            }
+            if (string.IsNullOrEmpty(root)) return;
 
             var prefabDir = $"{root}/Prefabs";
             if (!Directory.Exists(prefabDir))
                 Directory.CreateDirectory(prefabDir);
 
-            var prefabPath = $"{prefabDir}/{binding.ClassName}.prefab";
+            var prefabName = binding.PrefabName;
+            var prefabPath = $"{prefabDir}/{prefabName}.prefab";
             var go = binding.gameObject;
+
+            // 同步场景 GameObject 名与预制体名
+            if (go.name != prefabName)
+                go.name = prefabName;
+
+            // 清理所有子节点上的 MissingScript 残留
+            var allGOs = go.GetComponentsInChildren<Transform>(true);
+            var removedCount = 0;
+            foreach (var t in allGOs)
+            {
+                removedCount += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(t.gameObject);
+            }
+            if (removedCount > 0)
+                EmberDebug.LogWarning("EmberUI", $"已移除 {removedCount} 个缺失脚本残留");
 
             // 如果已存在同路径预制体，询问是否覆盖
             if (File.Exists(prefabPath))
@@ -199,8 +232,330 @@ namespace Ember.UIExtension.Editor
                 if (!overwrite) return;
             }
 
-            PrefabUtility.SaveAsPrefabAssetAndConnect(go, prefabPath, InteractionMode.UserAction);
-            EmberDebug.Log("EmberUI", $"预制体已生成：{prefabPath}");
+            try
+            {
+                PrefabUtility.SaveAsPrefabAssetAndConnect(go, prefabPath, InteractionMode.UserAction);
+                EmberDebug.Log("EmberUI", $"预制体已生成：{prefabPath}");
+            }
+            catch (System.Exception e)
+            {
+                EmberDebug.LogWarning("EmberUI", $"预制体生成失败（代码已生成）：{e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 生成 {className}Settings.cs 模板文件（仅首次）。
+        /// 文件放在与 .cs 同级的目录下。
+        /// </summary>
+        private static void GenerateCustomSettingsTemplate(EUIBinding binding)
+        {
+            var root = binding.CodePath;
+            if (string.IsNullOrEmpty(root)) return;
+
+            var subDir = string.IsNullOrEmpty(binding.ClassPath) ? "" : binding.ClassPath + "/";
+            var folder = $"{root}/{subDir}";
+            var filePath = $"{folder}{binding.ClassName}Settings.cs";
+
+            if (File.Exists(filePath)) return; // 已存在，不覆盖
+
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
+            var namespaceName = "Game.UI";
+            var logic = GetCurrentLogic(binding);
+            if (logic is CSharpLogicImplementationData csharp)
+            {
+                // 从 CSharpLogicImplementationData 读取命名空间
+                var nsField = typeof(CSharpLogicImplementationData).GetField("namespaceName",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (nsField != null)
+                    namespaceName = nsField.GetValue(csharp) as string ?? "Game.UI";
+            }
+
+            var template = $@"using System;
+
+using UnityEngine;
+
+namespace {namespaceName}
+{{
+    [Serializable]
+    public class {binding.ClassName}Settings
+    {{
+        // 在此处添加自定义参数，Inspector 中将显示在""{binding.ClassName}""折叠框中
+    }}
+}}
+";
+            File.WriteAllText(filePath, template, System.Text.Encoding.UTF8);
+            EmberDebug.Log("EmberUI", $"已生成自定义参数模板：{binding.ClassName}Settings.cs");
+        }
+
+        /// <summary>
+        /// 根据"使用自定义动画"开关同步 OnCustomEnter/OnCustomExit 方法：
+        /// <list type="bullet">
+        ///   <item><b>勾选自定义</b>：如果缺少则注入方法骨架</item>
+        ///   <item><b>取消勾选</b>：如果存在且为默认骨架则删除（含用户代码则弹窗确认）</item>
+        /// </list>
+        /// </summary>
+        private static void SyncCustomTransitionMethods(EUIBinding binding)
+        {
+            var path = HandleGetGeneratedPath(binding);
+            if (string.IsNullOrEmpty(path) || path == "—") return;
+            var fullPath = GetFullPath(path);
+            if (!File.Exists(fullPath)) return;
+
+            var content = File.ReadAllText(fullPath);
+            bool hasEnter = content.Contains("OnCustomEnter");
+            bool hasExit = content.Contains("OnCustomExit");
+
+            if (binding.UseCustomTransition)
+            {
+                // ── 勾选自定义：注入缺失的方法 ──
+                if (hasEnter && hasExit) return;
+                InjectCustomTransitionMethods(fullPath, hasEnter, hasExit);
+                AssetDatabase.Refresh();
+                binding.RefreshCustomTransitionCheck();
+            }
+            else
+            {
+                // ── 取消勾选：清理已存在的方法 ──
+                if (!hasEnter && !hasExit) return;
+
+                // 检测方法体是否有用户代码（超过骨架行数即认为有自定义代码）
+                bool hasCustomCode = HasCustomCodeInTransitionMethods(content, hasEnter, hasExit);
+                if (hasCustomCode)
+                {
+                    var confirmed = EditorUtility.DisplayDialog(
+                        "删除自定义过渡方法",
+                        $"已取消勾选'使用自定义动画'，但 {binding.ClassName}.cs 中存在 OnCustomEnter/OnCustomExit 方法。\n\n"
+                        + "检测到方法体包含自定义代码，是否确认删除？\n（可在删除前手动备份代码）",
+                        "确认删除", "保留");
+                    if (!confirmed) return;
+                }
+
+                RemoveCustomTransitionMethods(fullPath, content);
+                AssetDatabase.Refresh();
+                binding.RefreshCustomTransitionCheck();
+            }
+        }
+
+        /// <summary>向 .cs 文件注入缺失的 OnCustomEnter/OnCustomExit 方法骨架。</summary>
+        private static void InjectCustomTransitionMethods(string fullPath, bool hasEnter, bool hasExit)
+        {
+            var content = File.ReadAllText(fullPath);
+            var lines = new List<string>(content.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None));
+
+            // 找到类末尾闭合括号（4 空格缩进），在其前插入
+            int classCloseIndex = -1;
+            for (int i = lines.Count - 1; i >= 0; i--)
+            {
+                if (lines[i].TrimEnd() == "    }")
+                {
+                    classCloseIndex = i;
+                    break;
+                }
+            }
+            if (classCloseIndex < 0) return;
+
+            var stubs = new List<string>();
+            if (!hasEnter)
+            {
+                stubs.Add("");
+                stubs.Add("        public override async Cysharp.Threading.Tasks.UniTask OnCustomEnter()");
+                stubs.Add("        {");
+                stubs.Add("            // TODO: 在此处编写自定义进入动画");
+                stubs.Add("            await Cysharp.Threading.Tasks.UniTask.Yield();");
+                stubs.Add("        }");
+            }
+            if (!hasExit)
+            {
+                stubs.Add("");
+                stubs.Add("        public override async Cysharp.Threading.Tasks.UniTask OnCustomExit()");
+                stubs.Add("        {");
+                stubs.Add("            // TODO: 在此处编写自定义退出动画");
+                stubs.Add("            await Cysharp.Threading.Tasks.UniTask.Yield();");
+                stubs.Add("        }");
+            }
+
+            lines.InsertRange(classCloseIndex, stubs);
+            File.WriteAllText(fullPath, string.Join("\n", lines), System.Text.Encoding.UTF8);
+            EmberDebug.Log("EmberUI", $"已注入 OnCustomEnter/OnCustomExit 到 {Path.GetFileName(fullPath)}");
+        }
+
+        /// <summary>从 .cs 文件中移除 OnCustomEnter 和 OnCustomExit 方法（含签名和整个方法体）。</summary>
+        private static void RemoveCustomTransitionMethods(string fullPath, string content)
+        {
+            var lines = new List<string>(content.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None));
+
+            // 分别查找并移除两个方法
+            lines = RemoveMethodBlock(lines, "OnCustomEnter");
+            lines = RemoveMethodBlock(lines, "OnCustomExit");
+
+            File.WriteAllText(fullPath, string.Join("\n", lines), System.Text.Encoding.UTF8);
+            EmberDebug.Log("EmberUI", $"已移除 OnCustomEnter/OnCustomExit 从 {Path.GetFileName(fullPath)}");
+        }
+
+        /// <summary>从行列表中移除指定方法名的完整方法块（签名行→闭合括号）。</summary>
+        private static List<string> RemoveMethodBlock(List<string> lines, string methodName)
+        {
+            // 找到方法签名行
+            int sigIndex = -1;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].Contains(methodName) && lines[i].TrimStart().StartsWith("public override"))
+                {
+                    sigIndex = i;
+                    break;
+                }
+            }
+            if (sigIndex < 0) return lines;
+
+            // 从签名行向后找到 { 行
+            int openBrace = -1;
+            for (int i = sigIndex; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("{"))
+                {
+                    openBrace = i;
+                    break;
+                }
+            }
+            if (openBrace < 0) return lines;
+
+            // 从 { 行开始计数括号，找到匹配的 }
+            int depth = 0;
+            int closeBrace = -1;
+            for (int i = openBrace; i < lines.Count; i++)
+            {
+                foreach (char c in lines[i])
+                {
+                    if (c == '{') depth++;
+                    else if (c == '}') depth--;
+                }
+                if (depth == 0)
+                {
+                    closeBrace = i;
+                    break;
+                }
+            }
+            if (closeBrace < 0) return lines;
+
+            // 删除 sigIndex..closeBrace（含首尾），并清理前导空行
+            int removeStart = sigIndex;
+            while (removeStart > 0 && string.IsNullOrWhiteSpace(lines[removeStart - 1]))
+                removeStart--;
+
+            lines.RemoveRange(removeStart, closeBrace - removeStart + 1);
+            return lines;
+        }
+
+        /// <summary>检测方法体是否包含用户自定义代码（超过骨架行数即为有自定义代码）。</summary>
+        private static bool HasCustomCodeInTransitionMethods(string content, bool hasEnter, bool hasExit)
+        {
+            // 骨架 OnCustomEnter 共 6 行（含签名和括号），OnCustomExit 共 6 行
+            const int stubLinesPerMethod = 6;
+
+            if (hasEnter)
+            {
+                int enterLines = CountMethodLines(content, "OnCustomEnter");
+                if (enterLines > stubLinesPerMethod) return true;
+            }
+            if (hasExit)
+            {
+                int exitLines = CountMethodLines(content, "OnCustomExit");
+                if (exitLines > stubLinesPerMethod) return true;
+            }
+            return false;
+        }
+
+        /// <summary>计算方法体的行数（签名行到闭合括号）。</summary>
+        private static int CountMethodLines(string content, string methodName)
+        {
+            var lines = content.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None);
+            int sigIndex = -1;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains(methodName) && lines[i].TrimStart().StartsWith("public override"))
+                {
+                    sigIndex = i;
+                    break;
+                }
+            }
+            if (sigIndex < 0) return 0;
+
+            int openBrace = -1;
+            for (int i = sigIndex; i < lines.Length; i++)
+            {
+                if (lines[i].Contains("{")) { openBrace = i; break; }
+            }
+            if (openBrace < 0) return 0;
+
+            int depth = 0, closeBrace = -1;
+            for (int i = openBrace; i < lines.Length; i++)
+            {
+                foreach (char c in lines[i])
+                {
+                    if (c == '{') depth++;
+                    else if (c == '}') depth--;
+                }
+                if (depth == 0) { closeBrace = i; break; }
+            }
+            if (closeBrace < 0) return 0;
+
+            return closeBrace - sigIndex + 1;
+        }
+
+        /// <summary>
+        /// 代码生成后自动查找 {className}Settings 类型并创建实例，
+        /// 赋值给 binding 的 _pageSettings，使 Inspector 显示自定义参数折叠框。
+        /// </summary>
+        private static void CreateCustomSettingsIfExists(EUIBinding binding)
+        {
+            if (string.IsNullOrEmpty(binding.ClassName)) return;
+
+            // 查找 {className}Settings 类型
+            var settingsTypeName = $"{binding.ClassName}Settings";
+            System.Type settingsType = null;
+            foreach (var asm in System.AppDomain.CurrentDomain.GetAssemblies())
+            {
+                settingsType = asm.GetType(settingsTypeName);
+                if (settingsType != null) break;
+                // 也尝试带命名空间查找
+                foreach (var ns in new[] { "Ember.UI", "Game.UI", "" })
+                {
+                    var fullName = string.IsNullOrEmpty(ns) ? settingsTypeName : $"{ns}.{settingsTypeName}";
+                    settingsType = asm.GetType(fullName);
+                    if (settingsType != null) break;
+                }
+                if (settingsType != null) break;
+            }
+
+            // 先检查现有 _pageSettings 是否匹配当前类名，不匹配则清除
+            var settingsField = typeof(EUIBinding).GetField("_pageSettings",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var existingSettings = settingsField?.GetValue(binding);
+            if (existingSettings != null && existingSettings.GetType().Name != settingsTypeName)
+            {
+                settingsField.SetValue(binding, null);
+                EmberDebug.Log("EmberUI", $"已清除不匹配的自定义参数: {existingSettings.GetType().Name} → 期望 {settingsTypeName}");
+            }
+
+            if (settingsType == null || !settingsType.IsSerializable)
+            {
+                // 类型不存在，确保 _pageSettings 为 null（让 HasCustomSettings 返回 false）
+                if (existingSettings != null)
+                    settingsField?.SetValue(binding, null);
+                return;
+            }
+
+            // 已有匹配类型则跳过
+            if (existingSettings != null && existingSettings.GetType() == settingsType)
+                return;
+
+            // 创建实例并写入 binding
+            var instance = System.Activator.CreateInstance(settingsType);
+            settingsField?.SetValue(binding, instance);
+            EditorUtility.SetDirty(binding);
+            EmberDebug.Log("EmberUI", $"已创建自定义参数：{settingsTypeName}");
         }
 
         private static void HandleGenerateToClipboard(EUIBinding binding)
@@ -340,11 +695,17 @@ namespace Ember.UIExtension.Editor
             return EUIBinding.WidgetTypes.Component;
         }
 
-        /// <summary>判断节点名是否适合作为绑定（收集所有非子 Binding 节点的子节点）</summary>
+        /// <summary>
+        /// 判断节点名是否适合作为绑定。
+        /// 与 Burner 对齐：以 m_ 或 mXxx（m 后跟大写字母）开头。
+        /// </summary>
         private static bool IsNameSuitable(string name)
         {
-            // 收集所有子节点，过滤掉纯数字/特殊名称
-            return !string.IsNullOrEmpty(name) && !name.StartsWith("_");
+            if (string.IsNullOrEmpty(name)) return false;
+            return name.StartsWith("m_", System.StringComparison.Ordinal)
+                || (name.StartsWith("m", System.StringComparison.Ordinal)
+                    && name.Length > 1
+                    && char.IsUpper(name[1]));
         }
 
         #endregion

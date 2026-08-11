@@ -16,7 +16,7 @@ namespace Ember.UIExtension
     ///
     /// <para>与 burner 的区别：</para>
     /// <list type="bullet">
-    ///   <item>不包含 Tweener 动画方法（改用 IUITransitionHandler）</item>
+    ///   <item>不包含 Tweener 动画方法（改用 IEUITransitionHandler）</item>
     ///   <item>不包含 Attachment 动态挂载</item>
     ///   <item>不包含异步资源加载</item>
     ///   <item>精简到核心：事件管道 + Transform 便捷属性 + 显隐控制</item>

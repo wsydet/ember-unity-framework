@@ -109,7 +109,9 @@ namespace Ember.UIExtension.Editor
         {
             name = name.Replace(" ", "_");
             if (name.StartsWith("m_"))
-                return $"m{name.Substring(2)}";
+                return name.Substring(2);
+            if (name.StartsWith("m") && name.Length > 1 && char.IsUpper(name[1]))
+                return name.Substring(1);
             return name;
         }
 
@@ -133,7 +135,11 @@ namespace Ember.UIExtension.Editor
         /// <summary>判断节点名是否适合作为绑定变量名（以 m_ 或 mXxx 开头）</summary>
         protected virtual bool IsNameSuitable(string name)
         {
-            return true;
+            if (string.IsNullOrEmpty(name)) return false;
+            return name.StartsWith("m_", System.StringComparison.Ordinal)
+                || (name.StartsWith("m", System.StringComparison.Ordinal)
+                    && name.Length > 1
+                    && char.IsUpper(name[1]));
         }
 
         /// <summary>绘制自动收集按钮</summary>
@@ -197,6 +203,11 @@ namespace Ember.UIExtension.Editor
             {
                 var child = trans.GetChild(i);
                 var childGO = child.gameObject;
+
+                // 跳过 EUIBindingExclude 标记的节点及其子树
+                if (childGO.GetComponent<EUIBindingExclude>())
+                    continue;
+
                 bool hasChildBinding = childGO.GetComponent<EUIBinding>() != null;
                 var childName = child.name;
 

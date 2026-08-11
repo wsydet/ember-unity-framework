@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using Ember.Basic;
 
@@ -26,9 +27,9 @@ namespace Ember.UIExtension.Editor
     ///
     /// <para>工作流：</para>
     /// <list type="bullet">
-    ///   <item>1. 绑定代码模板 → 生成 .bindings.cs（每次覆盖）</item>
+    ///   <item>1. 绑定代码模板 → 生成 .Binding.cs（每次覆盖）</item>
     ///   <item>2. 逻辑代码模板 → 生成 .cs 骨架（仅首次）</item>
-    ///   <item>3. PageDef 模板 → 更新页面常量定义文件</item>
+    ///   <item>3. EUIPageDef 模板 → 更新页面常量定义文件</item>
     ///   <item>4. 剪贴板模板 → noCodeGen 模式使用</item>
     /// </list>
     /// </summary>
@@ -41,19 +42,19 @@ namespace Ember.UIExtension.Editor
         private string namespaceName = "Game.UI";
 
         [SerializeField]
-        [Tooltip("页面逻辑基类（含命名空间），如 Ember.UI.EmberPage")]
-        private string baseClassName = "Ember.UI.EmberPage";
+        [Tooltip("页面逻辑基类（含命名空间），如 Ember.UI.EUIPage")]
+        private string baseClassName = "Ember.UI.EUIPage";
 
         [SerializeField]
-        [Tooltip("PageDef 源码文件路径（如 Assets/Game/UI/GamePages.cs）")]
+        [Tooltip("EUIPageDef 源码文件路径（如 Assets/Game/UI/GamePages.cs）")]
         private string pageDefFile;
 
-        /// <summary>PageDef 文件路径（公开给菜单项使用）</summary>
+        /// <summary>EUIPageDef 文件路径（公开给菜单项使用）</summary>
         public string PageDefFile => pageDefFile;
 
         [Header("代码生成模板")]
         [SerializeField]
-        [Tooltip("绑定代码模板 → 生成 .bindings.cs")]
+        [Tooltip("绑定代码模板 → 生成 .Binding.cs")]
         private DefaultAsset bindingCodeTemplate;
 
         [SerializeField]
@@ -61,7 +62,7 @@ namespace Ember.UIExtension.Editor
         private DefaultAsset codeTemplate;
 
         [SerializeField]
-        [Tooltip("PageDef 生成模板")]
+        [Tooltip("EUIPageDef 生成模板")]
         private DefaultAsset pageDefTemplate;
 
         [SerializeField]
@@ -92,7 +93,11 @@ namespace Ember.UIExtension.Editor
         public override string GetNameForCode(string name)
         {
             name = name.Replace(" ", "_");
-            return name.StartsWith("m_") ? $"_{name.Substring(2)}" : $"_{name}";
+            if (name.StartsWith("m_"))
+                return name.Substring(2);
+            if (name.StartsWith("m") && name.Length > 1 && char.IsUpper(name[1]))
+                return name.Substring(1);
+            return name;
         }
 
         public override void GenerateCodeForNoGen(EUIBinding binding, string className)
@@ -106,7 +111,7 @@ namespace Ember.UIExtension.Editor
 
             string result = RenderTemplate(templateContent, BuildTemplateContext(binding, className, binding.Bindings));
             GUIUtility.systemCopyBuffer = result;
-            EditorUtility.DisplayDialog("OK", "代码已复制至剪贴板", "确认");
+            EmberDebug.Log("EmberUI", "代码已复制至剪贴板");
         }
 
         public override void GenerateCode(EUIBinding binding, string baseClsName, EUIBinding.BindingEntry[] declaredFields)
@@ -140,31 +145,25 @@ namespace Ember.UIExtension.Editor
                 }
             }
 
-            // 2. 生成 .bindings.cs（每次覆盖）
+            // 2. 生成 .Binding.cs（每次覆盖）
             if (bindingCodeTemplate != null)
             {
                 string bindingTpl = ReadTemplate(bindingCodeTemplate);
                 if (!string.IsNullOrEmpty(bindingTpl))
                 {
-                    string bindingsPath = path.Replace(".cs", ".bindings.cs");
+                    string bindingsPath = path.Replace(".cs", ".Binding.cs");
                     File.WriteAllText(bindingsPath, RenderTemplate(bindingTpl, ctx), new UTF8Encoding(false));
                 }
             }
 
             AssetDatabase.Refresh();
-            EditorUtility.DisplayDialog("OK", "代码生成成功", "确认");
+            EmberDebug.Log("EmberUI", "代码生成成功");
         }
 
-        /// <summary>在 GamePages.cs 中追加新的 PageDef 条目（不覆盖已有内容）</summary>
+        /// <summary>在 GamePages.cs 中追加新的 EUIPageDef 条目（不覆盖已有内容）</summary>
         public bool GenerateOrUpdatePageDefinition(EUIBinding binding)
         {
             if (!binding.IsPage) return true;
-
-            if (!TryGetPrefabName(binding, out var prefabName))
-            {
-                EditorUtility.DisplayDialog("生成代码失败", "只有 Prefab 才可以被定义为 Page", "确定");
-                return false;
-            }
 
             if (binding.PageFlags == PageFlags.None)
             {
@@ -172,7 +171,11 @@ namespace Ember.UIExtension.Editor
                 return false;
             }
 
-            prefabName = Path.GetFileNameWithoutExtension(prefabName).ToLowerInvariant();
+            if (string.IsNullOrEmpty(binding.ClassName))
+            {
+                EditorUtility.DisplayDialog("生成代码失败", "类名为空，无法生成路径。", "确定");
+                return false;
+            }
 
             if (string.IsNullOrEmpty(pageDefFile)) return true;
 
@@ -181,37 +184,91 @@ namespace Ember.UIExtension.Editor
 
             var lines = File.ReadAllLines(fullPath, Encoding.UTF8).ToList();
 
-            // 检查是否已存在
-            string defPattern = $"PageDef {binding.PageName} =";
-            for (int i = 0; i < lines.Count; i++)
-            {
-                if (lines[i].Contains(defPattern))
-                {
-                    // 已存在，不重复添加
-                    return true;
-                }
-            }
-
             // 确定目标 UILayer
             string targetLayer;
-            if ((binding.PageFlags & PageFlags.TopMost) != 0)
+            if ((binding.PageFlags & PageFlags.Background) != 0)
+                targetLayer = "Background";
+            else if ((binding.PageFlags & PageFlags.FreePage) != 0)
+                targetLayer = "FreePage";
+            else if ((binding.PageFlags & PageFlags.TopMost) != 0)
                 targetLayer = "TopMost";
             else if ((binding.PageFlags & PageFlags.Popup) != 0)
                 targetLayer = "Popup";
             else
                 targetLayer = "Normal";
 
-            // 找插入位置：该层 section 中最后一行 PageDef 之后
-            string sectionHeader = targetLayer == "TopMost" ? "TopMost 层" :
-                                   targetLayer == "Popup" ? "Popup 层" : "Normal 层";
+            // 完整 Asset 路径: {CodePath}/Prefabs/{PrefabName}.prefab
+            var codeRoot = binding.CodePath;
+            string newPrefabPath = string.IsNullOrEmpty(codeRoot)
+                ? $"Assets/Game/UI/Runtime/Prefabs/{binding.PrefabName}.prefab"
+                : $"{codeRoot}/Prefabs/{binding.PrefabName}.prefab";
+
+            // 检查是否已存在 —— 存在则更新路径，不存在则追加
+            // 兼容单行 (Xxx = new(...)) 和多行 (Xxx \n = new(...)) 两种写法
+            string defPattern = $"EUIPageDef {binding.PageName}";
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].Contains(defPattern))
+                {
+                    // 找到 EUIPageDef 声明行，在后续几行中找 new("..." 并替换
+                    for (int j = i; j < System.Math.Min(i + 3, lines.Count); j++)
+                    {
+                        if (lines[j].Contains("new(\""))
+                        {
+                            var oldLine = lines[j];
+                            var updatedLine = Regex.Replace(oldLine,
+                                @"new\(""[^""]+""",
+                                $"new(\"{newPrefabPath}\"");
+                            if (updatedLine != oldLine)
+                            {
+                                lines[j] = updatedLine;
+                                File.WriteAllText(fullPath, string.Join("\n", lines.ToArray()), new UTF8Encoding(false));
+                                EmberDebug.Log("EmberUI", $"EUIPageDef {binding.PageName} 路径已更新: {newPrefabPath}");
+                            }
+                            return true;
+                        }
+                    }
+                    // 声明行存在但没找到 new("，视为已有（手动维护的复杂格式，跳过）
+                    return true;
+                }
+            }
+
+            // 不存在：追加新行
+            string sectionHeader = targetLayer switch
+            {
+                "Background" => "Background 层",
+                "FreePage" => "FreePage 层",
+                "TopMost" => "TopMost 层",
+                "Popup" => "Popup 层",
+                _ => "Normal 层"
+            };
+
+            string targetPageType = targetLayer switch
+            {
+                "Background" => "PageType.Background",
+                "FreePage" => "PageType.FreePage",
+                "TopMost" => "PageType.TopMost",
+                "Popup" => "PageType.Popup",
+                _ => "PageType.MainPage"
+            };
             int insertAfter = -1;
+            int sectionContentStart = -1; // section header 块结束后的第一行（空 section 时用作插入点）
             bool inTargetSection = false;
+            bool skippedHeaderSeparator = false;
 
             for (int i = 0; i < lines.Count; i++)
             {
                 if (lines[i].Contains(sectionHeader))
                 {
                     inTargetSection = true;
+                    skippedHeaderSeparator = false;
+                    continue;
+                }
+                // 跳过 section header 块的装饰分隔线（// ====）
+                if (inTargetSection && !skippedHeaderSeparator)
+                {
+                    skippedHeaderSeparator = true;
+                    sectionContentStart = i + 1; // 分隔线之后的第一行 = section 内容起点
                     continue;
                 }
                 // 下一个 section 开始 = 离开当前 section
@@ -219,15 +276,19 @@ namespace Ember.UIExtension.Editor
                 {
                     break;
                 }
-                if (inTargetSection && lines[i].Contains("new(\"ui/"))
+                if (inTargetSection && lines[i].Contains("new(\""))
                 {
                     insertAfter = i;
                 }
             }
 
-            // 在找到的最后一行 PageDef 之后插入
-            string newLine = $"        public static readonly PageDef {binding.PageName} = new(\"ui/{prefabName}\", UILayer.{targetLayer});";
+            // 在找到的最后一行 EUIPageDef 之后插入
+            string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType});";
             string docLine = $"        /// <summary>{binding.PageName} 页面</summary>";
+
+            // 空 section：在 section header 之后插入
+            if (insertAfter < 0 && sectionContentStart >= 0)
+                insertAfter = sectionContentStart - 1;
 
             if (insertAfter >= 0)
             {
@@ -238,11 +299,13 @@ namespace Ember.UIExtension.Editor
             }
             else
             {
-                // 回退：找不到位置时，追加到类末尾
+                // 回退：找不到位置时，追加到类末尾（类最后一行 "    }" 之前）
                 int classEnd = -1;
                 for (int i = lines.Count - 1; i >= 0; i--)
                 {
-                    if (lines[i].Trim() == "}" || lines[i].Contains("TODO: 在此处继续添加"))
+                    // 只匹配含缩进的 "}"（类的），跳过无缩进的 "}"（命名空间的）
+                    if ((lines[i].Trim() == "}" && lines[i].StartsWith(" ") || lines[i].StartsWith("\t"))
+                        || lines[i].Contains("TODO: 在此处继续添加"))
                     {
                         classEnd = lines[i].Contains("TODO") ? i : i - 1;
                         break;
@@ -257,38 +320,27 @@ namespace Ember.UIExtension.Editor
 
             File.WriteAllText(fullPath, string.Join("\n", lines.ToArray()), new UTF8Encoding(false));
 
-            // 校验失效 PageDef
+            // 校验失效 EUIPageDef
             ValidateAndPromptStalePageDefs(fullPath);
 
             return true;
         }
 
-        /// <summary>扫描并校验 PageDef 条目，提示清理失效项</summary>
+        /// <summary>扫描 EUIPageDef 条目，若有失效项仅 Console 警告，不弹窗。</summary>
         private static void ValidateAndPromptStalePageDefs(string fullPath)
         {
             var stale = FindStalePageDefs(fullPath);
             if (stale.Count == 0) return;
 
             var sb = new StringBuilder();
-            sb.AppendLine("以下 PageDef 对应的预制体已不存在：");
-            sb.AppendLine();
-            foreach (var s in stale)
+            sb.Append("发现 ").Append(stale.Count).Append(" 条 EUIPageDef 预制体尚未创建（");
+            for (int i = 0; i < stale.Count; i++)
             {
-                sb.Append("  · ");
-                sb.Append(s.Name);
-                sb.Append(" → ");
-                sb.Append(s.PrefabPath);
-                sb.AppendLine();
+                if (i > 0) sb.Append(", ");
+                sb.Append(stale[i].Name);
             }
-            sb.AppendLine();
-            sb.Append("是否自动清理这些失效条目？");
-
-            if (EditorUtility.DisplayDialog("失效 PageDef 检测", sb.ToString(), "清理", "跳过"))
-            {
-                int removed = CleanStalePageDefsInternal(fullPath, stale);
-                AssetDatabase.Refresh();
-                EditorUtility.DisplayDialog("完成", "已清理 " + removed + " 条失效 PageDef。", "确认");
-            }
+            sb.Append("）。如需清理请使用菜单 Ember/UI/Clean Stale PageDefs。");
+            EmberDebug.LogWarning("EmberUI", sb.ToString());
         }
 
         public struct StalePageDef
@@ -298,38 +350,25 @@ namespace Ember.UIExtension.Editor
             public int LineIndex;
         }
 
-        /// <summary>查找所有预制体已不存在的 PageDef 条目（公开给 Play Mode Guard 使用）</summary>
+        /// <summary>查找所有预制体已不存在的 EUIPageDef 条目（公开给 Play Mode Guard 使用）</summary>
         public static List<StalePageDef> FindStalePageDefsPublic(string fullPath)
         {
             return FindStalePageDefs(fullPath);
         }
 
-        /// <summary>查找所有预制体已不存在的 PageDef 条目</summary>
+        /// <summary>查找所有预制体已不存在的 EUIPageDef 条目</summary>
         private static List<StalePageDef> FindStalePageDefs(string fullPath)
         {
             var result = new List<StalePageDef>();
             if (!File.Exists(fullPath)) return result;
 
-            // 收集 Prefabs 目录下所有预制体的 EUIBinding.PageName
-            var validPageNames = new HashSet<string>();
-            var prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Game/UI/Prefabs" });
-            foreach (var guid in prefabGuids)
-            {
-                var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
-                if (prefab == null) continue;
-                var binding = prefab.GetComponent<EUIBinding>();
-                if (binding != null && binding.IsPage && !string.IsNullOrEmpty(binding.PageName))
-                    validPageNames.Add(binding.PageName);
-            }
-
             var lines = File.ReadAllLines(fullPath, Encoding.UTF8);
             for (int i = 0; i < lines.Length; i++)
             {
                 var line = lines[i].Trim();
-                if (!line.StartsWith("public static readonly PageDef ")) continue;
+                if (!line.StartsWith("public static readonly EUIPageDef ")) continue;
 
-                int nameStart = line.IndexOf("PageDef ") + 8;
+                int nameStart = line.IndexOf("EUIPageDef ") + 8;
                 int nameEnd = line.IndexOf(" =");
                 if (nameStart < 8 || nameEnd < 0) continue;
                 string name = line.Substring(nameStart, nameEnd - nameStart).Trim();
@@ -341,8 +380,8 @@ namespace Ember.UIExtension.Editor
 
                 if (string.IsNullOrEmpty(prefabPath)) continue;
 
-                // 用变量名匹配 EUIBinding.PageName，而不是拼文件路径
-                if (!validPageNames.Contains(name))
+                // 直接检查预制体文件是否存在
+                if (!File.Exists(prefabPath))
                 {
                     result.Add(new StalePageDef { Name = name, PrefabPath = prefabPath, LineIndex = i });
                 }
@@ -350,7 +389,7 @@ namespace Ember.UIExtension.Editor
             return result;
         }
 
-        /// <summary>清理指定的失效 PageDef 条目</summary>
+        /// <summary>清理指定的失效 EUIPageDef 条目</summary>
         public static int CleanStalePageDefs(string pageDefFilePath)
         {
             string fullPath = pageDefFilePath.StartsWith("Assets/")
@@ -506,11 +545,12 @@ namespace Ember.UIExtension.Editor
                 EUIBinding.WidgetTypes.ScrollRect  => "ScrollRect",
                 EUIBinding.WidgetTypes.ProgressBar => "Slider",
                 EUIBinding.WidgetTypes.Canvas      => "Canvas",
+                EUIBinding.WidgetTypes.CanvasGroup => "CanvasGroup",
                 _ => "Component",
             };
         }
 
-        /// <summary>解析已有 PageDef 文件中的常量定义</summary>
+        /// <summary>解析已有 EUIPageDef 文件中的常量定义</summary>
         private static void ParseExistingPageDefs(string filePath, List<Dictionary<string, object>> pages)
         {
             string fullPath = GetFullPath(filePath);
@@ -599,14 +639,14 @@ namespace Ember.UIExtension.Editor
 
             if (string.IsNullOrEmpty(pageDefFile))
             {
-                EditorUtility.DisplayDialog("提示", "CSharpLogicImplementationData 中未配置 PageDef 文件路径。", "确认");
+                EditorUtility.DisplayDialog("提示", "CSharpLogicImplementationData 中未配置 EUIPageDef 文件路径。", "确认");
                 return;
             }
 
             int removed = CleanStalePageDefs(pageDefFile);
             AssetDatabase.Refresh();
             EditorUtility.DisplayDialog(removed > 0 ? "完成" : "提示",
-                removed > 0 ? $"已清理 {removed} 条失效 PageDef。" : "未发现失效的 PageDef 条目。", "确认");
+                removed > 0 ? $"已清理 {removed} 条失效 EUIPageDef。" : "未发现失效的 EUIPageDef 条目。", "确认");
         }
 
         #endregion
@@ -615,9 +655,9 @@ namespace Ember.UIExtension.Editor
     // --------------------------------------------------------
 
     /// <summary>
-    /// Play Mode 前置校验：扫描失效 PageDef，阻止进入 Play。
+    /// Play Mode 前置校验：扫描失效 EUIPageDef，阻止进入 Play。
     ///
-    /// <para>性能优化：引入脏标记机制，仅在 PageDef 文件或 Prefabs 目录变动时才检查。
+    /// <para>性能优化：引入脏标记机制，仅在 EUIPageDef 文件或 Prefabs 目录变动时才检查。
     /// 避免每次进入 Play Mode 都做不必要的扫描。</para>
     /// </summary>
     [UnityEditor.InitializeOnLoad]
@@ -674,7 +714,7 @@ namespace Ember.UIExtension.Editor
             }
 
             var sb = new System.Text.StringBuilder();
-            sb.AppendLine("以下 PageDef 对应的预制体已不存在：");
+            sb.AppendLine("以下 EUIPageDef 对应的预制体已不存在：");
             sb.AppendLine();
             foreach (var s in stale)
             {
@@ -691,7 +731,7 @@ namespace Ember.UIExtension.Editor
             {
                 int removed = CSharpLogicImplementationData.CleanStalePageDefs(pageDefFile);
                 AssetDatabase.Refresh();
-                EditorUtility.DisplayDialog("完成", $"已清理 {removed} 条失效 PageDef。", "确认");
+                EditorUtility.DisplayDialog("完成", $"已清理 {removed} 条失效 EUIPageDef。", "确认");
                 _dirty = false;
             }
             else
@@ -701,7 +741,7 @@ namespace Ember.UIExtension.Editor
         }
 
         /// <summary>
-        /// 监控 PageDef 文件和 Prefabs 目录的变动，变动时标记脏。
+        /// 监控 EUIPageDef 文件和 Prefabs 目录的变动，变动时标记脏。
         /// </summary>
         private class GuardAssetPostprocessor : AssetPostprocessor
         {
@@ -765,17 +805,17 @@ namespace Ember.UIExtension.Editor
 
             EditorGUILayout.PropertyField(baseClassName, new GUIContent("页面逻辑基类"));
             if (string.IsNullOrEmpty(baseClassName.stringValue))
-                EditorGUILayout.HelpBox("请输入正确的基类名（如 Ember.UI.EmberPage）", MessageType.Error);
+                EditorGUILayout.HelpBox("请输入正确的基类名（如 Ember.UI.EUIPage）", MessageType.Error);
 
-            EditorGUILayout.PropertyField(pageDefFile, new GUIContent("PageDef 文件路径"));
+            EditorGUILayout.PropertyField(pageDefFile, new GUIContent("EUIPageDef 文件路径"));
             if (string.IsNullOrEmpty(pageDefFile.stringValue))
-                EditorGUILayout.HelpBox("请输入 PageDef 源码文件路径（如 Assets/Game/UI/GamePages.cs）", MessageType.Error);
+                EditorGUILayout.HelpBox("请输入 EUIPageDef 源码文件路径（如 Assets/Game/UI/GamePages.cs）", MessageType.Error);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("代码生成模板", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(codeTemplate, new GUIContent("逻辑代码模板 (.cs 骨架)"));
-            EditorGUILayout.PropertyField(bindingCodeTemplate, new GUIContent("绑定代码模板 (.bindings.cs)"));
-            EditorGUILayout.PropertyField(pageDefTemplate, new GUIContent("PageDef 模板"));
+            EditorGUILayout.PropertyField(bindingCodeTemplate, new GUIContent("绑定代码模板 (.Binding.cs)"));
+            EditorGUILayout.PropertyField(pageDefTemplate, new GUIContent("EUIPageDef 模板"));
             EditorGUILayout.PropertyField(codeTemplateForNoGen, new GUIContent("剪贴板代码模板"));
 
             serializedObject.ApplyModifiedProperties();

@@ -2,7 +2,8 @@
 // Package: com.ember.uiextension
 
 using System;
-using System.Collections;
+
+using Cysharp.Threading.Tasks;
 
 using Sirenix.OdinInspector;
 
@@ -63,7 +64,6 @@ namespace Ember.UIExtension
 
         #region 内部参数
 
-        private readonly WaitForEndOfFrame _endOfFrame = new WaitForEndOfFrame();
         private RectTransform _rectTransform;
         private DrivenRectTransformTracker _tracker;
         private Vector4 _lastPadding;
@@ -150,15 +150,10 @@ namespace Ember.UIExtension
             }
         }
 
-        private void DelayedRefresh()
+        private async void DelayedRefresh()
         {
-            if (isActiveAndEnabled)
-                StartCoroutine(DelayedRefreshRoutine());
-        }
-
-        private IEnumerator DelayedRefreshRoutine()
-        {
-            yield return _endOfFrame;
+            if (!isActiveAndEnabled) return;
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             Refresh();
         }
 

@@ -244,6 +244,19 @@ namespace Ember.UIExtension.Editor
                     modified = true;
                 }
                 EditorGUI.EndDisabledGroup();
+
+                // 重命名按钮：根据控件类型自动修正节点名和变量名
+                if (!isInherited && entry.GameObject)
+                {
+                    if (GUILayout.Button("✎", GUILayout.Width(22), GUILayout.Height(18)))
+                    {
+                        RenameNodeToMatchType(entry.GameObject, entry.Type);
+                        // 变量名保留类型前缀（如 Cg_），只去掉 m_
+                        var goName = entry.GameObject.name;
+                        entry.Name = goName.StartsWith("m_") ? goName.Substring(2) : goName;
+                        modified = true;
+                    }
+                }
             }
 
             // ── 验证 ──
@@ -386,6 +399,79 @@ namespace Ember.UIExtension.Editor
             var finalName = $"{baseName}_{idx}";
             defined.Add(finalName);
             return finalName;
+        }
+
+        /// <summary>
+        /// 根据控件类型将节点重命名为匹配的前缀格式。
+        /// 例如 m_Close + Button → m_Btn_Close。
+        /// 如果节点名已有正确的类型前缀，则不重复添加。
+        /// </summary>
+        private static void RenameNodeToMatchType(GameObject go, EUIBinding.WidgetTypes type)
+        {
+            if (!go) return;
+
+            var oldName = go.name;
+            var coreName = StripBindingPrefix(oldName);
+
+            // 如果核心名已经以目标前缀开头，说明已经正确，跳过
+            var targetPrefix = GetWidgetPrefix(go, type);
+            if (oldName == $"m_{targetPrefix}{coreName}" || oldName == $"{targetPrefix}{coreName}")
+                return;
+
+            var newName = $"m_{targetPrefix}{coreName}";
+            Undo.RecordObject(go, "重命名节点");
+            go.name = newName;
+            EditorUtility.SetDirty(go);
+        }
+
+        /// <summary>去掉节点的 m_ / mXxx 前缀和已知类型前缀，得到核心名</summary>
+        private static string StripBindingPrefix(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+
+            // 去掉 m_ 前缀
+            if (name.StartsWith("m_"))
+                name = name.Substring(2);
+            // 去掉 mXxx 前缀（m 后跟大写字母）
+            else if (name.StartsWith("m") && name.Length > 1 && char.IsUpper(name[1]))
+                name = name.Substring(1);
+
+            // 去掉已知类型前缀（如 Btn_, Txt_, Img_ 等）
+            string[] knownPrefixes = { "EUIBtn_", "EUI_", "Btn_", "Txt_", "Tgl_", "EUITgl_", "Img_", "EUIImg_",
+                "Inp_", "Pgb_", "Scr_", "Tgp_", "Ctn_", "Raw_", "Cvs_", "Tab_", "Cg_" };
+            foreach (var p in knownPrefixes)
+            {
+                if (name.StartsWith(p))
+                    return name.Substring(p.Length);
+            }
+            return name;
+        }
+
+        /// <summary>获取控件类型对应的命名前缀</summary>
+        private static string GetWidgetPrefix(GameObject go, EUIBinding.WidgetTypes type)
+        {
+            // EUI 增强组件有独立前缀
+            if (go.GetComponent<EUIButton>()) return "EUIBtn_";
+            if (go.GetComponent<EmberToggleEx>()) return "EUITgl_";
+            if (go.GetComponent<EmberImageEx>()) return "EUIImg_";
+
+            switch (type)
+            {
+                case EUIBinding.WidgetTypes.Button:      return "Btn_";
+                case EUIBinding.WidgetTypes.Text:        return "Txt_";
+                case EUIBinding.WidgetTypes.Toggle:      return "Tgl_";
+                case EUIBinding.WidgetTypes.Image:       return "Img_";
+                case EUIBinding.WidgetTypes.InputField:  return "Inp_";
+                case EUIBinding.WidgetTypes.ProgressBar: return "Pgb_";
+                case EUIBinding.WidgetTypes.ScrollRect:  return "Scr_";
+                case EUIBinding.WidgetTypes.ToggleGroup: return "Tgp_";
+                case EUIBinding.WidgetTypes.UIContainer: return "Ctn_";
+                case EUIBinding.WidgetTypes.RawImage:    return "Raw_";
+                case EUIBinding.WidgetTypes.Canvas:      return "Cvs_";
+                case EUIBinding.WidgetTypes.TabLoader:   return "Tab_";
+                case EUIBinding.WidgetTypes.CanvasGroup: return "Cg_";
+                default:                                 return "";
+            }
         }
 
         #endregion

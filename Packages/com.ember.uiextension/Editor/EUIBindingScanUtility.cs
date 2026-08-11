@@ -85,16 +85,26 @@ namespace Ember.UIExtension.Editor
                 if (subBinding && subBinding != root.GetComponent<EUIBinding>())
                     continue;
 
-                // 检查是否已绑定
-                if (!boundObjects.Contains(childGO))
+                // 仅对符合 m_ 命名规则的节点检查是否已绑定
+                if (!boundObjects.Contains(childGO) && IsBindableName(childGO.name))
                 {
                     var path = GetRelativePath(root, child);
                     unbound.Add(path ?? childGO.name);
                 }
 
-                // 递归子节点
+                // 递归子节点（继续搜索，因为子节点可能有 m_ 前缀）
                 ScanRecursive(root, child, boundObjects, unbound);
             }
+        }
+
+        /// <summary>判断节点名是否可绑定：以 m_ 或 mXxx 开头</summary>
+        private static bool IsBindableName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            return name.StartsWith("m_", System.StringComparison.Ordinal)
+                || (name.StartsWith("m", System.StringComparison.Ordinal)
+                    && name.Length > 1
+                    && char.IsUpper(name[1]));
         }
 
         private static string GetRelativePath(Transform root, Transform target)

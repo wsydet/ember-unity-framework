@@ -198,13 +198,13 @@
 //            var implementation = FindCSharpLogicImplementationData();
 //            if (!implementation || string.IsNullOrEmpty(implementation.PageDefFile))
 //            {
-//                report.AddIssue(GameUIBindingIssueSeverity.Warning, null, "未配置 CSharpLogicImplementationData.pageDefFile，无法校验 PageDef。");
+//                report.AddIssue(GameUIBindingIssueSeverity.Warning, null, "未配置 CSharpLogicImplementationData.pageDefFile，无法校验 EUIPageDef。");
 //                return;
 //            }
 //
 //            if (!File.Exists(implementation.PageDefFile))
 //            {
-//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"PageDef 文件不存在：{implementation.PageDefFile}");
+//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"EUIPageDef 文件不存在：{implementation.PageDefFile}");
 //                return;
 //            }
 //
@@ -217,12 +217,12 @@
 //            var content = File.ReadAllText(implementation.PageDefFile, new System.Text.UTF8Encoding(false));
 //            if (!content.Contains($"public const string {binding.PageName}"))
 //            {
-//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"PageDef 缺少常量：{binding.PageName}。", "通过 GameUIBindingEditorUtility.GenerateOrUpdatePageDef 或代码生成工具重新生成。");
+//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"EUIPageDef 缺少常量：{binding.PageName}。", "通过 GameUIBindingEditorUtility.GenerateOrUpdatePageDef 或代码生成工具重新生成。");
 //            }
 //
 //            if (!content.Contains($"\"{prefabName}\""))
 //            {
-//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"PageDef 缺少 prefab 地址：{prefabName}。", "确认 prefab 文件名、pageName 和 PageDef 生成结果一致。");
+//                report.AddIssue(GameUIBindingIssueSeverity.Error, null, $"EUIPageDef 缺少 prefab 地址：{prefabName}。", "确认 prefab 文件名、pageName 和 EUIPageDef 生成结果一致。");
 //            }
 //        }
 //

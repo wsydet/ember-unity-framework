@@ -21,6 +21,7 @@ namespace Ember.UIExtension
         TopMost = 1 << 2,
         SubPage = 1 << 3,
         FreePage = 1 << 4,
+        Background = 1 << 5,
     }
 
     /// <summary>
@@ -58,6 +59,7 @@ namespace Ember.UIExtension
             RawImage    = 11,
             Canvas      = 12,
             TabLoader   = 13,
+            CanvasGroup = 14,
             // 新加类型一定要写在这行上面
             End,
             Extension = 65535,
@@ -146,9 +148,25 @@ namespace Ember.UIExtension
         [PropertyOrder(-77)]
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/输出设置")]
+        [SerializeField, LabelText("预制体名")]
+        [Tooltip("生成的 .prefab 文件名。留空则使用类名。")]
+        [ShowIf("@!noCodeGen")]
+        private string prefabName;
+
+        [PropertyOrder(-77)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/输出设置")]
         [SerializeField, LabelText("不生成代码到文件")]
         [Tooltip("勾选后代码只复制到剪贴板，不写入文件")]
         private bool noCodeGen;
+
+        [PropertyOrder(-76)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/输出设置")]
+        [SerializeField, LabelText("生成自定义参数")]
+        [Tooltip("勾选后生成 {类名}Settings.cs 模板文件，用于定义页面专属的可视化参数")]
+        [ShowIf("@!noCodeGen")]
+        private bool generateCustomSettings;
 
         // ═══════════════════════════════════════
         // P4: 页面配置（含自身控件）
@@ -159,7 +177,7 @@ namespace Ember.UIExtension
         [BoxGroup("$GROUP/页面配置", ShowLabel = false)]
         [Title("页面配置")]
         [SerializeField, LabelText("是否为 Page")]
-        [Tooltip("勾选后此 binding 为页面级，会生成 PageDef")]
+        [Tooltip("勾选后此 binding 为页面级，会生成 EUIPageDef")]
         [ShowIf("@!noCodeGen")]
         private bool isPage;
 
@@ -167,7 +185,7 @@ namespace Ember.UIExtension
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/页面配置")]
         [SerializeField, LabelText("页面名称")]
-        [Tooltip("PageDef 常量名，如 MainMenu、Settings")]
+        [Tooltip("EUIPageDef 常量名，如 MainMenu、Settings")]
         [ShowIf("@isPage && !noCodeGen"), Required("请输入页面名称")]
         private string pageName;
 
@@ -175,31 +193,38 @@ namespace Ember.UIExtension
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/页面配置")]
         [SerializeField, LabelText("页面类型")]
-        [Tooltip("MainPage / Popup / TopMost / SubPage / FreePage")]
+        [Tooltip("MainPage / Popup / TopMost / SubPage / FreePage / Background")]
         [ShowIf("@isPage && !noCodeGen")]
+        [InfoBox("Background 不能与其他页面类型组合。", InfoMessageType.Error, "HasConflictingPageFlags")]
         private PageFlags pageFlags;
 
-        [PropertyOrder(-67)]
-        [FoldoutGroup("$GROUP")]
-        [BoxGroup("$GROUP/页面配置")]
-        [SerializeField, LabelText("启用预设渐入渐出")]
-        [Tooltip("开启后使用 CanvasGroup alpha 做渐入渐出动画")]
+        [PropertyOrder(0)]
+        [FoldoutGroup("过渡动画")]
+        [SerializeField, LabelText("使用预设渐入渐出")]
+        [Tooltip("勾选后使用 CanvasGroup alpha 渐入渐出，时长由下方滑条控制。可通过 EUIViewEngine.TransitionHandler 全局替换实现。")]
         [ShowIf("@isPage && !noCodeGen")]
-        private bool usePresetFade;
+        private bool usePresetFade = true;
 
-        [PropertyOrder(-66)]
-        [FoldoutGroup("$GROUP")]
-        [BoxGroup("$GROUP/页面配置")]
-        [SerializeField, LabelText("渐入时间 (秒)")]
+        [PropertyOrder(1)]
+        [FoldoutGroup("过渡动画")]
+        [SerializeField, LabelText("进入时长 (秒)")]
         [ShowIf("@isPage && usePresetFade && !noCodeGen")]
         private float fadeInTime = 0.3f;
 
-        [PropertyOrder(-65)]
-        [FoldoutGroup("$GROUP")]
-        [BoxGroup("$GROUP/页面配置")]
-        [SerializeField, LabelText("渐出时间 (秒)")]
+        [PropertyOrder(2)]
+        [FoldoutGroup("过渡动画")]
+        [SerializeField, LabelText("退出时长 (秒)")]
         [ShowIf("@isPage && usePresetFade && !noCodeGen")]
         private float fadeOutTime = 0.2f;
+
+        [PropertyOrder(3)]
+        [FoldoutGroup("过渡动画")]
+        [SerializeField, LabelText("使用自定义动画")]
+        [Tooltip("勾选后调用业务脚本中的 OnCustomEnter / OnCustomExit 方法。可与预设叠加：先播预设再播自定义。")]
+        [ShowIf("@isPage && !noCodeGen")]
+        [OnValueChanged("CheckCustomTransitionMethods")]
+        [InfoBox("已勾选自定义动画，但业务脚本中缺少 OnCustomEnter / OnCustomExit 方法。\n请点击下方的\"重新生成\"按钮添加。", InfoMessageType.Warning, "_needCustomTransitionMethods")]
+        private bool useCustomTransition;
 
         // -- 自身控件（归入页面配置） --
 
@@ -216,6 +241,17 @@ namespace Ember.UIExtension
         [SerializeField, LabelText("自身控件类名")]
         [ShowIf("@selfWidgetType == WidgetTypes.Extension")]
         private string selfWidgetClassName;
+
+        /// <summary>
+        /// 自定义页面参数。由生成的代码定义具体类型（如 EUILoadingSettings），
+        /// 通过 SerializeReference 序列化到预制体上，Odin InlineProperty 内联显示。
+        /// 为 null 时不显示自定义折叠框。
+        /// </summary>
+        [PropertyOrder(10)]
+        [FoldoutGroup("$className")]
+        [ShowIf("HasCustomSettings")]
+        [SerializeField, SerializeReference, InlineProperty, HideLabel]
+        private object _pageSettings;
 
 #if UNITY_EDITOR
         [PropertyOrder(-62)]
@@ -273,20 +309,29 @@ namespace Ember.UIExtension
 
         #region 外部方法
 
+        /// <summary>自定义页面参数（生成的代码中通过此属性读取）</summary>
+        public object PageSettings => _pageSettings;
+
         public BindingEntry[] Bindings => bindings;
         public WidgetTypes SelfWidgetType => selfWidgetType;
         public string SelfWidgetClassName => selfWidgetClassName;
         public bool IsPage => isPage;
         public string PageName => pageName;
         public string ClassName => className;
+        public string PrefabName => !string.IsNullOrEmpty(prefabName) ? prefabName : ClassName;
         public CodePathMode PathMode => codePathMode;
         public string CodePath => OnGetCodeRootPath?.Invoke(codePathMode);
         public string ClassPath => classPath;
         public bool NoCodeGeneration => noCodeGen;
+        public bool GenerateCustomSettings => generateCustomSettings;
         public PageFlags PageFlags => pageFlags;
         public bool UsePresetFade => usePresetFade;
+        public bool UseCustomTransition => useCustomTransition;
         public float FadeInTime => fadeInTime;
         public float FadeOutTime => fadeOutTime;
+
+        // Custom 过渡方法缺失警告缓存（非序列化，由 OnValueChanged 和代码生成工具设置）
+        private bool _needCustomTransitionMethods;
 
         #endregion
 
@@ -294,9 +339,69 @@ namespace Ember.UIExtension
 
         #region 内部方法
 
+        /// <summary>
+        /// 过渡模式切换时校验业务脚本是否包含 OnCustomEnter/OnCustomExit。
+        /// 作为 [OnValueChanged] 回调，仅在 Inspector 中修改 transitionMode 时触发。
+        /// </summary>
+        private void CheckCustomTransitionMethods()
+        {
+            _needCustomTransitionMethods = false;
+            if (!useCustomTransition) return;
+
+            var path = OnGetGeneratedPath?.Invoke(this);
+            if (string.IsNullOrEmpty(path) || path == "—") return;
+
+            var fullPath = System.IO.Path.GetFullPath(
+                System.IO.Path.Combine(Application.dataPath, "..", path));
+            if (!System.IO.File.Exists(fullPath)) return;
+
+            var content = System.IO.File.ReadAllText(fullPath);
+            _needCustomTransitionMethods = !content.Contains("OnCustomEnter") || !content.Contains("OnCustomExit");
+        }
+
+        /// <summary>
+        /// 刷新 Custom 过渡方法状态（由代码生成工具在注入/移除方法后调用）。
+        /// </summary>
+        public void RefreshCustomTransitionCheck()
+        {
+            CheckCustomTransitionMethods();
+        }
+
         private bool ValidateSelfWidgetType(WidgetTypes type)
         {
             return type != WidgetTypes.UILogic;
+        }
+
+        private bool HasConflictingPageFlags =>
+            pageFlags.HasFlag(PageFlags.Background) && (pageFlags & ~PageFlags.Background) != 0;
+
+        /// <summary>
+        /// 组件添加时自动从 GameObject 名称推断脚本名和页面名。
+        /// 移除常见 UI 尾缀（Panel/Page/PopUp 等）作为脚本名，保留原名作为页面名。
+        /// </summary>
+        private void Reset()
+        {
+            // 只在首次添加时自动填充（className 为空）
+            if (!string.IsNullOrEmpty(className)) return;
+
+            var goName = gameObject.name;
+
+            // 去除常见的 UI 尾缀
+            var scriptName = goName;
+            string[] suffixes = { "Panel", "Page", "PopUp", "Popup", "Window", "Dialog", "View", "Tab", "Menu", "Screen" };
+            foreach (var suffix in suffixes)
+            {
+                if (scriptName.EndsWith(suffix, System.StringComparison.OrdinalIgnoreCase)
+                    && scriptName.Length > suffix.Length)
+                {
+                    scriptName = scriptName.Substring(0, scriptName.Length - suffix.Length);
+                    break;
+                }
+            }
+
+            className = scriptName;
+            pageName = goName;
+            isPage = true;
         }
 
         #endregion
@@ -612,7 +717,7 @@ namespace Ember.UIExtension
         [PropertyOrder(-36)]
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/代码生成")]
-        [ShowIf("@!noCodeGen && HasGeneratedFile")]
+        [ShowIf("@!noCodeGen")]
         [ShowInInspector, LabelText("逻辑脚本")]
         [InlineButton("SelectScript", "定位")]
         private UnityEngine.Object GeneratedScript
@@ -620,7 +725,7 @@ namespace Ember.UIExtension
             get => OnGetGeneratedScript?.Invoke(this);
             set
             {
-                // 自动修正：忽略赋值，选中真正的生成脚本以快速定位
+                // 自动修正：点击选择框时定位到真正的生成脚本
                 var script = OnGetGeneratedScript?.Invoke(this);
                 if (script) { UnityEditor.Selection.activeObject = script; }
             }
@@ -675,6 +780,18 @@ namespace Ember.UIExtension
         [Button("重新生成", ButtonSizes.Large), GUIColor(0.9f, 0.6f, 0.2f)]
         [EnableIf("CanGenerate")]
         private void RegenerateCode() => OnGenerateCode?.Invoke(this);
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 编辑器：自定义参数
+
+        /// <summary>根据 className 创建自定义 settings 实例的回调</summary>
+        public static System.Func<string, object> OnCreateCustomSettings;
+
+        private bool HasCustomSettings =>
+            _pageSettings != null && _pageSettings.GetType().Name == $"{ClassName}Settings";
 
         #endregion
 #endif

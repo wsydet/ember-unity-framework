@@ -14,8 +14,8 @@ using Ember.UI;
 namespace Ember.UIExtension
 {
     /// <summary>
-    /// 桥接 EUIBinding 到 EmberPage 的 Logic 层。
-    /// 在 EmberUIPageRouter.OnPageCreated 钩子中自动配置 Logic。
+    /// 桥接 EUIBinding 到 EUIPage 的 Logic 层。
+    /// 在 EUIManager.OnPageCreated 钩子中自动配置 Logic。
     ///
     /// <para>通过 <c>[RuntimeInitializeOnLoadMethod]</c> 自动注册，
     /// 无需手动调用。引入了 com.ember.uiextension 包即自动生效。</para>
@@ -25,7 +25,7 @@ namespace Ember.UIExtension
         private static bool _registered;
 
         /// <summary>
-        /// 自动注册到 EmberUIPageRouter.OnPageCreated 钩子。
+        /// 自动注册到 EUIManager.OnPageCreated 钩子。
         /// 由 <c>[RuntimeInitializeOnLoadMethod]</c> 驱动，应用启动时自动调用。
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -35,20 +35,20 @@ namespace Ember.UIExtension
         }
 
         /// <summary>
-        /// 注册到 EmberUIPageRouter.OnPageCreated 钩子。
+        /// 注册到 EUIManager.OnPageCreated 钩子。
         /// 幂等操作，多次调用安全。
         /// </summary>
         public static void Register()
         {
             if (_registered) return;
             _registered = true;
-            EmberUIPageRouter.OnPageCreated += OnPageCreated;
+            EUIManager.OnPageCreated += OnPageCreated;
         }
 
         /// <summary>
-        /// 从 EUIBinding 读取配置并初始化 EmberPage 的 Logic 层。
+        /// 从 EUIBinding 读取配置并初始化 EUIPage 的 Logic 层。
         /// </summary>
-        public static void Attach(EmberPage page, EUIBinding binding)
+        public static void Attach(EUIPage page, EUIBinding binding)
         {
             if (page == null || binding == null) return;
             if (string.IsNullOrEmpty(binding.ClassName)) return;
@@ -59,7 +59,7 @@ namespace Ember.UIExtension
             {
                 foreach (var t in asm.GetTypes())
                 {
-                    if (t.Name == binding.ClassName && typeof(EmberUILogic).IsAssignableFrom(t) && !t.IsAbstract)
+                    if (t.Name == binding.ClassName && typeof(EUILogic).IsAssignableFrom(t) && !t.IsAbstract)
                     {
                         logicType = t;
                         break;
@@ -72,7 +72,10 @@ namespace Ember.UIExtension
             {
                 page.LogicTypeName = logicType.FullName;
                 // 传入逻辑实例引用，供子 UIBinding 注册
-                page.CreateLogic((map, logic) => PopulateControlMap(binding, map, logic));
+                page.CreateLogic((map, logic) => {
+                    logic.CustomSettings = binding.PageSettings;
+                    PopulateControlMap(binding, map, logic);
+                });
             }
         }
 
@@ -80,7 +83,7 @@ namespace Ember.UIExtension
         /// 从 EUIBinding 的 BindingEntry 列表填充 ControlMap。
         /// 遇到 UILogic 类型时自动创建子 Logic 实例并注册到父 Logic。
         /// </summary>
-        public static void PopulateControlMap(EUIBinding binding, Dictionary<string, Component> map, EmberUILogic parentLogic = null)
+        public static void PopulateControlMap(EUIBinding binding, Dictionary<string, Component> map, EUILogic parentLogic = null)
         {
             if (binding == null || map == null) return;
             if (binding.Bindings == null) return;
@@ -102,7 +105,7 @@ namespace Ember.UIExtension
                             foreach (var t in asm.GetTypes())
                             {
                                 if (t.Name == childBinding.ClassName
-                                    && typeof(EmberUILogic).IsAssignableFrom(t) && !t.IsAbstract)
+                                    && typeof(EUILogic).IsAssignableFrom(t) && !t.IsAbstract)
                                 {
                                     childLogicType = t;
                                     break;
@@ -113,7 +116,7 @@ namespace Ember.UIExtension
 
                         if (childLogicType != null)
                         {
-                            var childLogic = (EmberUILogic)Activator.CreateInstance(childLogicType);
+                            var childLogic = (EUILogic)Activator.CreateInstance(childLogicType);
                             childLogic.Page = parentLogic.Page;
                             childLogic.ControlMap = new Dictionary<string, Component>();
                             // 递归填充子 UIBinding 的控件（可能还有更深层嵌套）
@@ -131,15 +134,14 @@ namespace Ember.UIExtension
             }
         }
 
-        private static void OnPageCreated(EmberPage page)
+        private static void OnPageCreated(EUIPage page)
         {
             if (page == null) return;
             var binding = page.GameObject.GetComponent<EUIBinding>();
             if (binding != null)
             {
-                // 注入预设渐入渐出配置（独立于 Logic 绑定，即使没有 Logic 类也生效）
-                if (binding.UsePresetFade)
-                    page.SetPresetFade(true, binding.FadeInTime, binding.FadeOutTime);
+                // 注入过渡动画配置（独立于 Logic 绑定，即使没有 Logic 类也生效）
+                page.SetTransition(binding.UsePresetFade, binding.UseCustomTransition, binding.FadeInTime, binding.FadeOutTime);
 
                 Attach(page, binding);
             }
@@ -169,6 +171,8 @@ namespace Ember.UIExtension
                     return go.GetComponent<Slider>();
                 case EUIBinding.WidgetTypes.Canvas:
                     return go.GetComponent<Canvas>();
+                case EUIBinding.WidgetTypes.CanvasGroup:
+                    return go.GetComponent<CanvasGroup>();
                 case EUIBinding.WidgetTypes.UILogic:
                 case EUIBinding.WidgetTypes.Extension:
                     if (!string.IsNullOrEmpty(className))

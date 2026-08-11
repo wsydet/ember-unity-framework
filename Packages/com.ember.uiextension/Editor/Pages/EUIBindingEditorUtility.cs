@@ -135,7 +135,7 @@ namespace Ember.UIExtension.Editor
 
     /// <summary>
     /// EUIBinding 编辑器工具类。
-    /// 提供快照、验证、批量收集、PageDef 更新、组件类型检测等功能。
+    /// 提供快照、验证、批量收集、EUIPageDef 更新、组件类型检测等功能。
     /// </summary>
     public static class EUIBindingEditorUtility
     {
@@ -344,7 +344,7 @@ namespace Ember.UIExtension.Editor
             return result;
         }
 
-        /// <summary>生成或更新 PageDef</summary>
+        /// <summary>生成或更新 EUIPageDef</summary>
         public static bool GenerateOrUpdatePageDef(EUIBinding binding,
             CSharpLogicImplementationData implementationData = null)
         {
@@ -459,7 +459,7 @@ namespace Ember.UIExtension.Editor
 
             if (string.IsNullOrEmpty(binding.PageName))
                 result.AddIssue(EUIBindingIssueSeverity.Error, null,
-                    "页面级 binding 的 pageName 为空。", "pageName 应作为 PageDef 常量名。");
+                    "页面级 binding 的 pageName 为空。", "pageName 应作为 EUIPageDef 常量名。");
 
             if (binding.PageFlags == PageFlags.None)
                 result.AddIssue(EUIBindingIssueSeverity.Error, null,
@@ -578,6 +578,7 @@ namespace Ember.UIExtension.Editor
             new ComponentTypeRule(EUIBinding.WidgetTypes.Image, typeof(Image)),
             new ComponentTypeRule(EUIBinding.WidgetTypes.RawImage, typeof(RawImage)),
             new ComponentTypeRule(EUIBinding.WidgetTypes.Canvas, typeof(Canvas)),
+            new ComponentTypeRule(EUIBinding.WidgetTypes.CanvasGroup, typeof(CanvasGroup)),
         };
 
         public static readonly ComponentTypeRule[] AutoSelectExactBuiltInComponentTypeRules =
