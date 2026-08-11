@@ -1,4 +1,4 @@
-namespace Borodar.RainbowHierarchy
+﻿namespace Borodar.RainbowHierarchy
 {
     public enum HierarchyIconCategory
     {

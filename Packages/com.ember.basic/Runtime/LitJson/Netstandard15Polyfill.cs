@@ -1,4 +1,4 @@
-// Netstandard15Polyfill.cs — Polyfills for .NET Standard 1.5 compatibility.
+﻿// Netstandard15Polyfill.cs — Polyfills for .NET Standard 1.5 compatibility.
 // Part of LitJSON library. The authors disclaim copyright to this source code.
 
 #if NETSTANDARD1_5

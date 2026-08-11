@@ -1,4 +1,4 @@
-#if UNITY_2023_1_OR_NEWER
+﻿#if UNITY_2023_1_OR_NEWER
 namespace Cysharp.Threading.Tasks
 {
     public static class UnityAwaitableExtensions

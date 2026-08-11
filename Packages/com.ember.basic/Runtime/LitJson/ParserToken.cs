@@ -1,4 +1,4 @@
-// ParserToken.cs — Internal token representation for the lexer and parser.
+﻿// ParserToken.cs — Internal token representation for the lexer and parser.
 // Part of LitJSON library. The authors disclaim copyright to this source code.
 
 namespace Ember.Basic.LitJson

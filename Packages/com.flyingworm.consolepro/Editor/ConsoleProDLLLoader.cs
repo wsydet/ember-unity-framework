@@ -1,4 +1,4 @@
-
+﻿
 // -------------------------------------------------------------
 // Console Pro DLL Loader Helper Class (Package-aware)
 // This class ensures that the correct ConsolePro.Editor.dll is enabled
