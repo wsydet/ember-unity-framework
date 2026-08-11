@@ -1,0 +1,31 @@
+﻿using Ember.Core;
+using Ember.UI;
+using Game.UI;
+
+namespace Game.State
+{
+    /// <summary>
+    /// 游戏层 SettingsState 子类 —— 把状态机的 Push/Pop 与 UI 层桥接起来。
+    ///
+    /// <b>上下文差异：</b>
+    /// - <see cref="SettingsContext.Main"/>：从主界面打开，关闭后回到主界面
+    /// - <see cref="SettingsContext.Gameplay"/>：从玩法中打开，关闭后回到玩法
+    ///
+    /// 当前实现中两者的 UI 行为相同（弹出 Settings 弹窗），
+    /// 后续可根据 args 展示不同的设置选项。
+    /// </summary>
+    public class GameSettingsState : SettingsState
+    {
+
+        protected override void OnSettingsEnter(object args)
+        {
+            EUIManager.Instance.ShowPopup(GamePages.Settings, args);
+        }
+
+        protected override void OnSettingsExit()
+        {
+            // Pop 时 EUIManager 会自动关闭当前 MainPage 上方的所有 Popup
+            EUIManager.Instance.CloseAllPopups();
+        }
+    }
+}

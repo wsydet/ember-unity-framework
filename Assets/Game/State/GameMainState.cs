@@ -13,9 +13,23 @@ namespace Game.State
     /// </summary>
     public class GameMainState : MainState
     {
+        protected override void OnMainEnter(object args)
+        {
+            base.OnMainEnter(args);
+            // 全局注册 Loading 页面：之后所有跨场景 TransitionTo 自动使用
+            EUIManager.DefaultLoadingPageDef = GamePages.EUILoadingPage;
+            // 背景页：兜底 UI，层级最底（sortingOrder=0）
+            EUIManager.Instance.SetBackground(GamePages.EUIBackgroundPage);
+        }
+
+        protected override void OnMainExit()
+        {
+            EUIManager.Instance.ClearBackground();
+        }
+
         protected override void OnOpeningAnimationEnd()
         {
-            EmberUIPageRouter.Instance.ShowMainPage(GamePages.MainMenu);
+            EUIManager.Instance.ShowMainPage(GamePages.MainMenu);
         }
     }
 }

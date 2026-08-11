@@ -1,0 +1,20 @@
+{
+    "name": "Game.UI.Editor",
+    "rootNamespace": "Game.UI.Editor",
+    "references": [
+        "Ember.UI.Runtime",
+        "Ember.Core.Runtime",
+        "Ember.Basic.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

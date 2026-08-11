@@ -1,24 +1,80 @@
-﻿using Ember.Core;
+﻿using Cysharp.Threading.Tasks;
+
+using Ember.Core;
 using Ember.UI;
+
+using Sirenix.OdinInspector;
+
 using UnityEngine;
 
 namespace Game.UI
 {
     /// <summary>
-    /// 启动遮罩 —— Frame 0 遮挡画面，Init 退出时自动隐藏。
+    /// BootSplash 淡出模式。
+    /// </summary>
+    public enum BootSplashFadeMode
+    {
+        /// <summary>无动画，瞬间消失。</summary>
+        None,
+        /// <summary>预设渐变：CanvasGroup alpha 1→0，时长由 fadeDuration 控制。</summary>
+        Preset,
+        /// <summary>自定义动画：override <see cref="OnCustomFadeOut"/> 编写任意退出效果。</summary>
+        Custom,
+    }
+
+    /// <summary>
+    /// 启动遮罩 —— Frame 0 遮挡画面，Init 退出时按配置的淡出模式隐藏。
     /// 挂在 UIRoot 下的 BootSplash 上，默认显示，运行时自管理。
     ///
-    /// <para>实现 <see cref="IEmberPersistentUI"/>，确保 EmberUIManager 初始化时
+    /// <para>实现 <see cref="IEUIPersistentUI"/>，确保 EUIViewEngine 初始化时
     /// 不会隐藏此节点（BootSplash 需要在 Init 期间持续显示）。</para>
     /// </summary>
-    public class EmberBootSplash : MonoBehaviour, IEmberPersistentUI
+    public class EmberBootSplash : MonoBehaviour, IEUIPersistentUI
     {
-        [SerializeField] private CanvasGroup _canvasGroup;
+        #region 编辑器面板参数
+
+        private const string BOOT_GROUP = "启动遮罩";
+
+        [FoldoutGroup(BOOT_GROUP, Expanded = true)]
+        [BoxGroup(BOOT_GROUP + "/配置", ShowLabel = false)]
+        [Title("淡出设置")]
+        [SerializeField]
+        private BootSplashFadeMode _fadeMode;
+
+        [BoxGroup(BOOT_GROUP + "/配置")]
+        [SerializeField]
+        [ShowIf("@_fadeMode == BootSplashFadeMode.Preset")]
+        [UnityEngine.Range(0f, 3f)]
+        private float _fadeDuration = 0.5f;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部参数
+
+        private CanvasGroup _canvasGroup;
+        private UniTaskCompletionSource _fadeOutCompletion;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 生命周期
 
         private void Awake()
         {
+            _canvasGroup = GetComponent<CanvasGroup>();
+            if (_canvasGroup == null)
+                _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
             // Frame 0 确保遮挡
-            if (_canvasGroup != null) _canvasGroup.alpha = 1f;
+            _canvasGroup.alpha = 1f;
+
+            // 注册桥接：InitState 在 TransitionTo 前 await 此 UniTask
+            var tcs = new UniTaskCompletionSource();
+            EmberBootSplashBridge.WaitForFadeOut = () => tcs.Task;
+            _fadeOutCompletion = tcs;
 
             // 监听 MainScene 加载完成 → Init 退出时关闭黑幕
             EmberEventBus.Subscribe(EmberBroadcastEvent.SceneLoadDone, OnFirstLoadDone);
@@ -27,17 +83,103 @@ namespace Game.UI
         private void OnDestroy()
         {
             EmberEventBus.Unsubscribe(EmberBroadcastEvent.SceneLoadDone, OnFirstLoadDone);
+            EmberBootSplashBridge.WaitForFadeOut = null;
         }
 
-        private void OnFirstLoadDone()
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部方法
+
+        private async void OnFirstLoadDone()
         {
-            // 只触发一次，Init→Main 的黑幕
+            // 只触发一次
             EmberEventBus.Unsubscribe(EmberBroadcastEvent.SceneLoadDone, OnFirstLoadDone);
 
-            if (_canvasGroup != null) _canvasGroup.alpha = 0f;
+            try
+            {
+                switch (_fadeMode)
+                {
+                    case BootSplashFadeMode.None:
+                        _canvasGroup.alpha = 0f;
+                        break;
 
-            // 销毁自己，不再需要
-            Destroy(gameObject);
+                    case BootSplashFadeMode.Preset:
+                        // 等 2 帧让 MainMenu 完成加载 + PlayShow，避免闪烁
+                        await UniTask.Yield(PlayerLoopTiming.Update);
+                        await UniTask.Yield(PlayerLoopTiming.Update);
+                        await FadeOutAsync(_fadeDuration);
+                        break;
+
+                    case BootSplashFadeMode.Custom:
+                        await OnCustomFadeOut();
+                        break;
+                }
+            }
+            finally
+            {
+                // 通知 InitState：淡出完成，可以 TransitionTo 了
+                _fadeOutCompletion?.TrySetResult();
+
+                if (this != null && gameObject != null)
+                    Destroy(gameObject);
+            }
         }
+
+        /// <summary>
+        /// 预设渐变：CanvasGroup alpha 从 1 线性过渡到 0。
+        /// </summary>
+        private async UniTask FadeOutAsync(float duration)
+        {
+            if (duration <= 0f || _canvasGroup == null) return;
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                if (_canvasGroup != null)
+                    _canvasGroup.alpha = Mathf.Clamp01(1f - (elapsed / duration));
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
+            if (_canvasGroup != null)
+                _canvasGroup.alpha = 0f;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法（子类可 override）
+
+        /// <summary>
+        /// 自定义淡出动画 —— 仅当 <see cref="_fadeMode"/> 为 Custom 时调用。
+        /// 子类 override 此方法编写任意退出效果。框架 await 完成后销毁 GameObject。
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// public class MyBootSplash : EmberBootSplash
+        /// {
+        ///     protected override async UniTask OnCustomFadeOut()
+        ///     {
+        ///         // 自定义缩放 + 渐变退出
+        ///         var t = 0f;
+        ///         while (t &lt; 0.8f)
+        ///         {
+        ///             t += Time.deltaTime;
+        ///             transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t / 0.8f);
+        ///             await UniTask.Yield();
+        ///         }
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+        protected virtual UniTask OnCustomFadeOut()
+        {
+            return UniTask.CompletedTask;
+        }
+
+        #endregion
     }
 }

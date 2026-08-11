@@ -1,0 +1,35 @@
+﻿using Cysharp.Threading.Tasks;
+
+using UnityEngine;
+
+namespace Game.UI
+{
+    /// <summary>
+    /// 自定义启动遮罩 —— 继承 <see cref="EmberBootSplash"/>，
+    /// 覆盖 <see cref="OnCustomFadeOut"/> 编写任意退出动画。
+    ///
+    /// <para>使用方式：</para>
+    /// <list type="bullet">
+    ///   <item>将 FrameworkScene 中 BootSplash 节点的 EmberBootSplash 替换为此脚本</item>
+    ///   <item>Inspector 中 Fade Mode 选择 Custom</item>
+    ///   <item>在此文件中编写 OnCustomFadeOut 的动画逻辑</item>
+    /// </list>
+    /// </summary>
+    public class CustomBootSplash : EmberBootSplash
+    {
+        protected override async UniTask OnCustomFadeOut()
+        {
+            // TODO: 在此处编写自定义 BootSplash 淡出动画
+            // 示例：
+            //   var t = 0f;
+            //   while (t < 0.8f)
+            //   {
+            //       t += Time.deltaTime;
+            //       transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t / 0.8f);
+            //       await UniTask.Yield();
+            //   }
+
+            await UniTask.CompletedTask;
+        }
+    }
+}

@@ -5,35 +5,45 @@ namespace Game.UI
     /// <summary>
     /// 游戏页面注册表 —— 所有 UI 页面的统一定义处。
     ///
-    /// 每个页面在此声明一个 public static readonly PageDef，
-    /// 运行时通过 EmberUIPageRouter.Instance.ShowMainPage(GamePages.XXX) 打开。
+    /// 每个页面在此声明一个 public static readonly EUIPageDef，
+    /// 运行时通过 EUIManager.Instance.ShowMainPage(GamePages.XXX) 打开。
+    ///
+    /// <para>路径为预制体在项目中的完整 Asset 路径（Assets/ 开头），
+    /// Editor 下直接走 AssetDatabase.LoadAssetAtPath，无需 Resources 目录。</para>
     ///
     /// 后期可由图形化编辑器自动生成此类，无需手写。
     /// </summary>
     public static class GamePages
     {
         // ============================================================
+        // Background 层 —— 兜底背景（sortingOrder=0，单例）
+        // ============================================================
+        /// <summary>EUIBackgroundPage 页面</summary>
+        public static readonly EUIPageDef EUIBackgroundPage = new("Assets/Ember/UI/Runtime/Prefabs/EUIBackgroundPage.prefab", UILayer.Background, PageType.Background);
+
+
+
+        // ============================================================
         // Normal 层 —— 全屏主页面
         // ============================================================
 
-        /// <summary>主菜单页面</summary>
-        public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal, PageType.MainPage);
+        public static readonly EUIPageDef MainMenu = new("Assets/Game/UI/Runtime/Prefabs/MainMenu.prefab", UILayer.Normal, PageType.MainPage);
+
+        public static readonly EUIPageDef InGameUI = new("Assets/Game/UI/Runtime/Prefabs/InGameUI.prefab", UILayer.Normal, PageType.MainPage);
 
         // ============================================================
         // Popup 层 —— 弹窗
         // ============================================================
 
-        /// <summary>设置面板</summary>
-        public static readonly PageDef Settings = new("ui/settings",  UILayer.Popup,  PageType.Popup);
+        public static readonly EUIPageDef Settings = new("Assets/Game/UI/Runtime/Prefabs/Settings.prefab", UILayer.Popup, PageType.Popup);
 
         // ============================================================
         // TopMost 层 —— 顶层（引导、加载遮罩等）
         // ============================================================
 
-        /// <summary>Loading 遮罩</summary>
-        public static readonly PageDef Loading = new("ui/loading", UILayer.TopMost);
+        public static readonly EUIPageDef EUILoadingPage = new("Assets/Ember/UI/Runtime/Prefabs/EUILoadingPage.prefab", UILayer.TopMost, PageType.TopMost);
 
-        // TODO: 在此处继续添加页面定义
-        // public static readonly PageDef NewPage = new("ui/new_page", UILayer.Popup);
+
+
     }
 }
