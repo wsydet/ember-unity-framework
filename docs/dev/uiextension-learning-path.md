@@ -1,4 +1,4 @@
-# com.ember.uiextension 学习路径
+﻿# com.ember.uiextension 学习路径
 
 > 按依赖深度排序，从零依赖工具开始，逐层深入。每学完一个文件来问 Claude 分析可否迁移。
 
@@ -16,7 +16,7 @@
 
 这些文件只依赖 Unity 引擎，不依赖包内任何其他文件。
 
-> ~~Tweener 动画系统（15 文件）已删除 —— 改用 DOTween，框架只保留 `IUITransitionHandler` 动画钩子。~~
+> ~~Tweener 动画系统（15 文件）已删除 —— 改用 DOTween，框架只保留 `IEUITransitionHandler` 动画钩子。~~
 
 ### 独立 UI 控件（11）
 
@@ -104,7 +104,7 @@
 | 43 | `Runtime/Manager/ILogicResolver.cs` | ~15 | 类型发现接口（可跳过） |
 | 44 | `Runtime/Manager/CacheManager.cs` | ~200 | 资源缓存策略 |
 | 45 | `Runtime/Manager/PageContext.cs` | ~1200 | MainPage + Popup 栈关系 / SortingOrder 计算 / HideLowerPage 级联 |
-| 46 | `Runtime/Pages/GameUILogic.cs` | ~700 | 页面逻辑基类（对应我们的 IUIView 扩展） |
+| 46 | `Runtime/Pages/GameUILogic.cs` | ~700 | 页面逻辑基类（对应我们的 IEUIView 扩展） |
 | 47 | `Runtime/Pages/GamePage.cs` | ~2000 | 页面生命周期核心：分阶段加载 / 安全遍历 / 挂起操作队列 |
 | 48 | `Runtime/Manager/BurnerUIManager.cs` | ~600 | UI 管理器入口：Canvas 管理 / Update 分发 / FrameTimeBudget |
 

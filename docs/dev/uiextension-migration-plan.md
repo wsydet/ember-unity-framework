@@ -1,4 +1,4 @@
-# com.ember.uiextension 包迁移分析方案
+﻿# com.ember.uiextension 包迁移分析方案
 
 > 分析日期：2026-08-06
 > 来源：`com.burner.uiextension@1.0.2`，已复制到 `Packages/com.ember.uiextension/`，全部 148 个 .cs 文件已注释（`////`）
@@ -14,14 +14,14 @@ uiextension 包中的 `Manager/` 和 `Pages/` 目录（共 10 个文件）对应
 
 | 文件 | 行数 | 参考价值 | 目标位置 |
 |------|------|---------|---------|
-| `Manager/BurnerUIManager.cs` | ~600 | 🔴 核心参考 | → `EmberUIManager.cs` (Ember.UI.Runtime) |
-| `Manager/PageContext.cs` | ~1200 | 🔴 核心参考 | → `EmberPageContext.cs` (Ember.UI.Runtime) |
-| `Manager/GlobalEvents.cs` | ~80 | 🟡 参考 | → `EmberUIEvents.cs` (Ember.UI.Runtime) |
-| `Manager/CacheManager.cs` | ~200 | 🟢 部分参考 | → `IUIResourceProvider` 默认实现 |
+| `Manager/BurnerUIManager.cs` | ~600 | 🔴 核心参考 | → `EUIManager.cs` (Ember.UI.Runtime) |
+| `Manager/PageContext.cs` | ~1200 | 🔴 核心参考 | → `EUIPageContext.cs` (Ember.UI.Runtime) |
+| `Manager/GlobalEvents.cs` | ~80 | 🟡 参考 | → `EUIEvents.cs` (Ember.UI.Runtime) |
+| `Manager/CacheManager.cs` | ~200 | 🟢 部分参考 | → `IEUIResourceProvider` 默认实现 |
 | `Manager/ILogicResolver.cs` | ~15 | ⬜ 暂不做 | Phase C 绑定代码生成时再考虑 |
-| `Pages/GamePage.cs` | ~2000 | 🔴 核心参考 | → `EmberPage.cs` (Ember.UI.Runtime) |
-| `Pages/GameUILogic.cs` | ~700 | 🔴 核心参考 | → 合并到扩展后的 `IUIView` |
-| `Pages/IUIBehaviour.cs` | ~30 | 🟡 参考 | → 合并到扩展后的 `IUIView` |
+| `Pages/GamePage.cs` | ~2000 | 🔴 核心参考 | → `EUIPage.cs` (Ember.UI.Runtime) |
+| `Pages/GameUILogic.cs` | ~700 | 🔴 核心参考 | → 合并到扩展后的 `IEUIView` |
+| `Pages/IUIBehaviour.cs` | ~30 | 🟡 参考 | → 合并到扩展后的 `IEUIView` |
 | `Pages/GameUIBinding.cs` | ~120 | 🟢 P2 | → Phase C 绑定代码生成 |
 | `Pages/GameUIBindingTemplate.cs` | ~50 | 🟢 P2 | → Phase C 绑定代码生成 |
 
@@ -103,7 +103,7 @@ GamePagePreloader → 依赖 STTask + IResourceHandle（burner 资源系统）
 
 ### 关键风险
 
-1. **IUIBehaviour 接口层**：所有 Components 依赖此接口。burner 原版定义了 `OnInit/OnOpen/OnClose/OnDestroy/OnBind` 等生命周期。ember 已有 `IUIView`（在 `Ember.UI.Runtime`），需要评估是扩展 IUIView 还是新建接口
+1. **IUIBehaviour 接口层**：所有 Components 依赖此接口。burner 原版定义了 `OnInit/OnOpen/OnClose/OnDestroy/OnBind` 等生命周期。ember 已有 `IEUIView`（在 `Ember.UI.Runtime`），需要评估是扩展 IEUIView 还是新建接口
 2. **GameUIComponent 与 burner 资源系统的耦合**：预加载（`GamePagePreloader`）、动态挂件（`GameUIAttachment`）深度依赖 burner 的资源句柄系统（`IResourceHandle` + `STTask`），ember 用的是 `EmberResourceManager` + `UniTask`
 3. **Utils 重复**：`ObjectPool`、`ListPool`、`BetterList` 等与 `com.ember.basic` 已有实现重复
 
@@ -113,7 +113,7 @@ GamePagePreloader → 依赖 STTask + IResourceHandle（burner 资源系统）
 
 ### 2.1 ~~Tweener 动画系统（15 文件）~~ → ❌ 已删除
 
-> **删除原因（2026-08-06）**：自研 Tween 引擎与业界标准 DOTween 功能重叠。DOTween 已内置 `DOTweenAnimation` 组件（Inspector 可视化配置 + 编辑模式预览），框架无需自研。框架只保留 `IUITransitionHandler` 动画钩子接口，业务层自行选择 Tween 引擎。
+> **删除原因（2026-08-06）**：自研 Tween 引擎与业界标准 DOTween 功能重叠。DOTween 已内置 `DOTweenAnimation` 组件（Inspector 可视化配置 + 编辑模式预览），框架无需自研。框架只保留 `IEUITransitionHandler` 动画钩子接口，业务层自行选择 Tween 引擎。
 >
 > 已删除文件：Runtime/UIExt/Tweener/ (15 .cs) + Editor/UIExt/Tweener/ (11 .cs) = 26 个文件。
 
@@ -324,7 +324,7 @@ Phase 5: 暂缓项（后续 Phase B/C）
 
 | 风险等级 | 文件/模块 | 具体风险 | 缓解措施 |
 |----------|-----------|---------|---------|
-| 🔴 高 | `GameUIComponent` | 组件体系根节点，改写 IUIBehaviour→IUIView 适配时影响所有子类 | 先定义接口再迁移实现，保持 burner 原版行为不变 |
+| 🔴 高 | `GameUIComponent` | 组件体系根节点，改写 IUIBehaviour→IEUIView 适配时影响所有子类 | 先定义接口再迁移实现，保持 burner 原版行为不变 |
 | 🔴 高 | `GamePagePreloader` / `PagePreloader` | 深度耦合 burner 资源系统 (STTask + IResourceHandle) | Phase 5 暂缓，等 Resource 模块 Handle 系统完善后再做 |
 | 🔴 高 | `NodePostProcessManager` | 渲染管线操作，跨平台兼容性未知 | 直接删除，推荐使用成熟第三方方案 |
 | 🟡 中 | `UITweener` | `[ExecuteAlways]` + 协程驱动，性能敏感 | 保持原始实现，不做架构改动 |
@@ -349,7 +349,7 @@ Phase 5: 暂缓项（后续 Phase B/C）
    → 此时 Tweener 系统已就绪，UIManager 可以直接使用
 
 3. 然后迁移 uiextension Phase 3-4（Components 封装层）
-   → Components 依赖 UIManager 的生命周期接口（IUIView 扩展版）
+   → Components 依赖 UIManager 的生命周期接口（IEUIView 扩展版）
 
 4. 最后 Phase 5 暂缓项
    → 等整体稳定后再逐步激活

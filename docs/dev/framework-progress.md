@@ -1,4 +1,4 @@
-# Ember Framework 开发进度
+﻿# Ember Framework 开发进度
 
 > 最后更新：2026-08-06
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
@@ -106,7 +106,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 - ✅ 编辑器工具测试清单（docs/dev/editor-tools-test-checklist.md）
 - ✅ 编辑器工具多轮修复（全局语言同步 / 面板布局 / 菜单重组）
 - ✅ 模块 README 文档（15 个，覆盖全部 8 个模块 + Core 子目录）
-- ✅ UIManager 结构性重写 Phase A（12 文件：EmberPage / PageContext / UIManager / UIPageRouter / UIObserver）
+- ✅ UIManager 结构性重写 Phase A（12 文件：EUIPage / PageContext / UIManager / UIPageRouter / UIObserver）
 - ✅ com.ember.uiextension 包 L1-L2 迁移（25 文件：Tweener 已删除，独立控件 + Behaviour + SafeArea）
 - ✅ UIBinding 系统（完整 Burner 对齐：EmberUIBinding / Editor / EmberUIBindingTemplate / LogicImplementationData / CSharpLogicImplementationData / UIBindingSettingData / EmberUIBindingEditorUtility）
 - ✅ L3 组件封装层（8 文件：EmberUIComponent + Button/Text/Image/Toggle/InputField/ProgressBar）
@@ -114,7 +114,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 - ✅ 启动流程重构：BootSplash 归 Init / 开屏动画归 Main / MainSceneReady + OpeningAnimationEnd 事件链
 - ✅ GameMainState 子类化扩展点（反射自动发现，零配置）+ OnOpeningAnimationEnd 钩子 → ShowMainPage
 - ✅ EmberInitAnimationStarter → EmberMainAnimationStarter 重命名
-- ✅ IEmberPersistentUI marker 接口（UIManager 跳过 BootSplash）
+- ✅ IEUIPersistentUI marker 接口（UIManager 跳过 BootSplash）
 - ✅ PlayModePageDefGuard 失效检测修复（PageName 匹配替代文件路径拼接）+ 自动清理弹窗
 - ✅ FrameworkSceneBootstrapper 场景清理守卫（isPlayingOrWillChangePlaymode 检测）
 - ✅ Canvas sortingOrder 编辑器预览（生成时自动写入预制体）
@@ -151,7 +151,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 | 8 | Play Mode 验证完整链路 | ⬜ |
 | 9 | Loading 预制体绑定（TopMost 层） | ⬜ |
 
-**验证矩阵：** EmberUIManager Push/Pop、EmberUIPageRouter 路由、EmberPage（纯 C# 包装）+ EmberUILogic（生成逻辑类）生命周期分离、EmberPageContext 栈管理、EmberBgMaskPool 遮罩、EmberUIObserver 事件、EmberUIBinding 代码生成。**生成的代码继承 `EmberUILogic`（非 MonoBehaviour），使用 `ControlMap["name"] as Type` 模式。**
+**验证矩阵：** EUIManager Push/Pop、EUIPageRouter 路由、EUIPage（纯 C# 包装）+ EUILogic（生成逻辑类）生命周期分离、EUIPageContext 栈管理、EUIBgMaskPool 遮罩、EUIObserver 事件、EmberUIBinding 代码生成。**生成的代码继承 `EUILogic`（非 MonoBehaviour），使用 `ControlMap["name"] as Type` 模式。**
 
 ---
 
@@ -331,7 +331,7 @@ Initialize(provider)
 #### 3.1 设计思路
 
 UI 模块管理所有界面的**层级关系**和**显示/隐藏切换**。
-核心是四个 Canvas 层（每层一个界面栈）+ IUIView 生命周期的四个阶段。
+核心是四个 Canvas 层（每层一个界面栈）+ IEUIView 生命周期的四个阶段。
 
 ```
 层级：Background(0) → Normal(100) → Popup(200) → TopMost(300)
@@ -346,9 +346,9 @@ UI 模块管理所有界面的**层级关系**和**显示/隐藏切换**。
 | 文件 | 职责 | 参考 |
 |------|------|------|
 | [Ember.UI.Runtime.asmdef](../../Assets/Ember/UI/Runtime/Ember.UI.Runtime.asmdef) | 程序集定义，依赖 Ember.Core.Runtime | — |
-| [IUIView.cs](../../Assets/Ember/UI/Runtime/IUIView.cs) | 界面生命周期接口：OnOpen / OnClose / OnPause / OnResume | burner `GameUIBase` |
-| [PageDef.cs](../../Assets/Ember/UI/Runtime/PageDef.cs) | 页面元数据定义：预制体路径 + 层级，支持静态注册表 | burner `PageDef` |
-| [EmberUIManager.cs](../../Assets/Ember/UI/Runtime/EmberUIManager.cs) | UI 管理器：层级 Canvas 按需创建、界面栈推送/Pop、生命周期分发 | burner `GameUIManager` |
+| [IEUIView.cs](../../Assets/Ember/UI/Runtime/IEUIView.cs) | 界面生命周期接口：OnOpen / OnClose / OnPause / OnResume | burner `GameUIBase` |
+| [EUIPageDef.cs](../../Assets/Ember/UI/Runtime/EUIPageDef.cs) | 页面元数据定义：预制体路径 + 层级，支持静态注册表 | burner `EUIPageDef` |
+| [EUIManager.cs](../../Assets/Ember/UI/Runtime/EUIManager.cs) | UI 管理器：层级 Canvas 按需创建、界面栈推送/Pop、生命周期分发 | burner `GameUIManager` |
 
 #### API 速览
 
@@ -356,19 +356,19 @@ UI 模块管理所有界面的**层级关系**和**显示/隐藏切换**。
 // 静态注册表（手写或工具生成）
 public static class GamePages
 {
-    public static readonly PageDef MainMenu = new("ui/main_menu", UILayer.Normal);
-    public static readonly PageDef Settings = new("ui/settings",  UILayer.Popup);
-    public static readonly PageDef Loading  = new("ui/loading",   UILayer.TopMost);
+    public static readonly EUIPageDef MainMenu = new("ui/main_menu", UILayer.Normal);
+    public static readonly EUIPageDef Settings = new("ui/settings",  UILayer.Popup);
+    public static readonly EUIPageDef Loading  = new("ui/loading",   UILayer.TopMost);
 }
 
 // 打开页面
-EmberUIManager.Instance.Push(GamePages.Settings, args: null);
+EUIManager.Instance.Push(GamePages.Settings, args: null);
 
 // 返回键
-EmberUIManager.Instance.Pop(UILayer.Popup);
+EUIManager.Instance.Pop(UILayer.Popup);
 
 // 检查有无弹窗
-if (EmberUIManager.Instance.HasView((int)UILayer.Popup)) { ... }
+if (EUIManager.Instance.HasView((int)UILayer.Popup)) { ... }
 ```
 
 #### 生命周期
@@ -395,7 +395,7 @@ Push(GamePages.Settings, args)
 
 ```
 ┌─────────────────────────────────────────────┐
-│  EmberUIPageRouter (应用层)                   │
+│  EUIPageRouter (应用层)                   │
 │  ─────────────────────────────               │
 │  · PageType 路由分发                          │
 │  · Show Queue 顺序打开                        │
@@ -405,7 +405,7 @@ Push(GamePages.Settings, args)
 │  · 返回键自动处理                              │
 │  · Return Value 页面回传值                    │
 ├─────────────────────────────────────────────┤
-│  EmberUIManager (框架层)                      │
+│  EUIManager (框架层)                      │
 │  ─────────────────────                       │
 │  · Page 生命周期（加载/实例化/销毁）             │
 │  · PageContext（MainPage ↔ Popups 关系）      │
@@ -413,10 +413,10 @@ Push(GamePages.Settings, args)
 │  · Update / LateUpdate 统一分发               │
 │  · 安全遍历（pendingAdd / pendingDelete）      │
 │  · Hide / Restore 机制                       │
-│  · 过渡动画管道 (IUITransitionHandler)        │
+│  · 过渡动画管道 (IEUITransitionHandler)        │
 │  · Frame Time Budget                         │
 ├─────────────────────────────────────────────┤
-│  IUIResourceProvider (资源注入层)              │
+│  IEUIResourceProvider (资源注入层)              │
 │  ─────────────────────────                   │
 │  · 解耦预制体加载，默认走 EmberResourceManager  │
 │  · 支持注入 Mock 实现（测试用）                 │
@@ -427,17 +427,17 @@ Push(GamePages.Settings, args)
 
 | burner | ember | 定位 |
 |--------|-------|------|
-| `BurnerUIManager` (com.burner.uiextension) | `EmberUIManager` (Ember.UI.Runtime) | 框架层：页面生命周期 + 资源加载 |
-| `GameUIManager` (Assets/Game/...) | `EmberUIPageRouter` (Ember.UI.Runtime) | 应用层：路由分发 + 业务集成 |
-| `GameUILogic` | `IUIView`（扩展） | 页面基类 / 接口 |
+| `BurnerUIManager` (com.burner.uiextension) | `EUIManager` (Ember.UI.Runtime) | 框架层：页面生命周期 + 资源加载 |
+| `GameUIManager` (Assets/Game/...) | `EUIPageRouter` (Ember.UI.Runtime) | 应用层：路由分发 + 业务集成 |
+| `GameUILogic` | `IEUIView`（扩展） | 页面基类 / 接口 |
 | `GameUIBase` | 业务层自行实现 | 游戏特有的 UI 基类（不在框架中） |
-| `PageDef` (游戏常量) | `PageDef` + 业务层 `GamePages` | 页面元数据 |
+| `EUIPageDef` (游戏常量) | `EUIPageDef` + 业务层 `GamePages` | 页面元数据 |
 
 ##### 职责边界
 
-**EmberUIManager（框架层）—— 管"怎么打开/关闭"：** 页面生命周期、PageContext 关系维护、Canvas 管理、安全遍历、Hide/Restore、Update 分发、Frame Time Budget、过渡动画管道、资源加载。
+**EUIManager（框架层）—— 管"怎么打开/关闭"：** 页面生命周期、PageContext 关系维护、Canvas 管理、安全遍历、Hide/Restore、Update 分发、Frame Time Budget、过渡动画管道、资源加载。
 
-**EmberUIPageRouter（应用层）—— 管"打开什么/何时打开"：** PageType 路由、Show Queue、父子追踪、BG Mask、两阶段事件、返回键处理、Return Value。
+**EUIPageRouter（应用层）—— 管"打开什么/何时打开"：** PageType 路由、Show Queue、父子追踪、BG Mask、两阶段事件、返回键处理、Return Value。
 
 **不做的事（留给实际 Game 项目）：** 相机可见性切换、Volume/PostProcess 控制、页面与音频绑定、引导系统集成、具体页面常量。这些通过事件钩子让业务层自行处理。
 
@@ -446,18 +446,18 @@ Push(GamePages.Settings, args)
 ```
 Assets/Ember/UI/Runtime/
 ├── Ember.UI.Runtime.asmdef              ← 保持
-├── IUIView.cs                           ← 扩展：两阶段生命周期（Init→PlayShow→PlayHide→Cleanup）
-├── PageDef.cs                           ← 扩展：+PageType 字段
-├── EmberUIEnums.cs                      ← 新增：PageType / PageState / UILayer 枚举
-├── EmberUIManager.cs                    ← 重写：框架层核心引擎
-├── EmberUIPageRouter.cs                 ← 新增：应用层路由
-├── EmberPageContext.cs                  ← 新增：MainPage + Popups 关系管理
-├── EmberPage.cs                         ← 新增：页面包装类（纯 C#，对标 Burner GamePage，非 MonoBehaviour）
-├── EmberBgMaskPool.cs                   ← 新增：模态背景遮罩对象池
-├── EmberUIObserver.cs                   ← 新增：UniRx 门面
-├── IUITransitionHandler.cs              ← 新增：过渡动画接口
-├── IUIResourceProvider.cs               ← 新增：资源加载解耦接口
-└── EmberUIEvents.cs                     ← 新增：UI 事件常量表（Key 5xxx）
+├── IEUIView.cs                           ← 扩展：两阶段生命周期（Init→PlayShow→PlayHide→Cleanup）
+├── EUIPageDef.cs                           ← 扩展：+PageType 字段
+├── EUIEnums.cs                      ← 新增：PageType / PageState / UILayer 枚举
+├── EUIManager.cs                    ← 重写：框架层核心引擎
+├── EUIPageRouter.cs                 ← 新增：应用层路由
+├── EUIPageContext.cs                  ← 新增：MainPage + Popups 关系管理
+├── EUIPage.cs                         ← 新增：页面包装类（纯 C#，对标 Burner GamePage，非 MonoBehaviour）
+├── EUIBgMaskPool.cs                   ← 新增：模态背景遮罩对象池
+├── EUIObserver.cs                   ← 新增：UniRx 门面
+├── IEUITransitionHandler.cs              ← 新增：过渡动画接口
+├── IEUIResourceProvider.cs               ← 新增：资源加载解耦接口
+└── EUIEvents.cs                     ← 新增：UI 事件常量表（Key 5xxx）
 ```
 
 ##### PageType 设计
@@ -486,7 +486,7 @@ public enum PageType
 | **SortingOrder 自动计算** | MainPageOrder=1000, PageGrowStep=500, InitialTopMostOrder=25000 |
 | **PlaneDistance** | 控制 Canvas 深度，配合 SortingOrder 保证渲染顺序 |
 
-##### GamePage 核心机制（ember 对应：EmberPage）
+##### GamePage 核心机制（ember 对应：EUIPage）
 
 | 机制 | 说明 |
 |------|------|
@@ -504,8 +504,8 @@ public enum PageType
 
 | 决策 | burner | ember | 理由 |
 |------|--------|-------|------|
-| Logic/View 分离 | `GamePage`（纯 C# 包装）+ `GameUILogic`（纯 C# 逻辑），预制体只有 `GameUIBinding` | `EmberPage`（纯 C# 包装）+ `EmberUILogic`（纯 C# 逻辑），预制体只有 `EmberUIBinding` | 对齐 Burner 架构，支持热更新 |
-| 资源加载 | `CacheManager` + `IResourceHandle`（burner 自己的资源系统） | `IUIResourceProvider` 注入，默认走 `EmberResourceManager` | ember 已有 Resource 模块，不重复造轮子 |
+| Logic/View 分离 | `GamePage`（纯 C# 包装）+ `GameUILogic`（纯 C# 逻辑），预制体只有 `GameUIBinding` | `EUIPage`（纯 C# 包装）+ `EUILogic`（纯 C# 逻辑），预制体只有 `EmberUIBinding` | 对齐 Burner 架构，支持热更新 |
+| 资源加载 | `CacheManager` + `IResourceHandle`（burner 自己的资源系统） | `IEUIResourceProvider` 注入，默认走 `EmberResourceManager` | ember 已有 Resource 模块，不重复造轮子 |
 | 类名解析 | `ILogicResolver` 从 Assembly 扫描类名→类型 | `EmberUIBindingBridge.Attach()` 自动跨程序集查找 Logic 类型并通过 `OnPageCreated` 钩子注入 | 无需手动配置，自动发现 |
 | 安全区域 | `BurnerSafeArea` 组件 | Phase C | 不是核心功能 |
 | 节点截图/模糊 | `NodePostProcessManager` | 不做 | 属于渲染效果，超出框架范围 |
@@ -518,11 +518,11 @@ public enum PageType
 
 **Runtime：** EmberUIBinding（14 种 WidgetTypes + PageFlags + isPage/pageName/classPath + 继承支持 + Odin 面板）、EmberUIBindingTemplate（绑定配置模板 SO）、EmberUIBindingBridge（自动注册 `OnPageCreated` 钩子，跨程序集查找 Logic 类型并填充 ControlMap）
 
-**Editor：** EmberUIBindingEditor（完整面板：模板加载/保存/复制/粘贴、基类继承、搜索过滤、类型自动检测 + 验证、代码生成入口）、EmberUIBindingEditorUtility（快照/验证/批量收集/PageDef 更新）、LogicImplementationData（代码生成基类 + 自动收集/清除绑定）、CSharpLogicImplementationData（C# 代码生成 + 简易模板引擎支持 `{var}`/`{for}`/`{if}`）、UIBindingSettingData（Project Settings 集成）
+**Editor：** EmberUIBindingEditor（完整面板：模板加载/保存/复制/粘贴、基类继承、搜索过滤、类型自动检测 + 验证、代码生成入口）、EmberUIBindingEditorUtility（快照/验证/批量收集/EUIPageDef 更新）、LogicImplementationData（代码生成基类 + 自动收集/清除绑定）、CSharpLogicImplementationData（C# 代码生成 + 简易模板引擎支持 `{var}`/`{for}`/`{if}`）、UIBindingSettingData（Project Settings 集成）
 
-**模板：** 4 个 `.tpl` 文件（绑定代码 / 逻辑骨架 / PageDef / 剪贴板），生成 `EmberUILogic` 子类，使用 `ControlMap["name"] as Type` 模式。
+**模板：** 4 个 `.tpl` 文件（绑定代码 / 逻辑骨架 / EUIPageDef / 剪贴板），生成 `EUILogic` 子类，使用 `ControlMap["name"] as Type` 模式。
 
-**架构：** 预制体上只有 `EmberUIBinding`（对标 Burner `GameUIBinding`），无 MonoBehaviour 页面类，运行时 `EmberPage`（纯 C# 包装）+ `EmberUILogic`（生成的逻辑类）全部可热更。
+**架构：** 预制体上只有 `EmberUIBinding`（对标 Burner `GameUIBinding`），无 MonoBehaviour 页面类，运行时 `EUIPage`（纯 C# 包装）+ `EUILogic`（生成的逻辑类）全部可热更。
 
 ---
 
@@ -586,8 +586,8 @@ com.burner.uiextension/
 ```
 Phase A: 框架层核心 ✅ 已完成
   对应 burner Manager + Pages 目录
-  EmberPage / PageContext / UIManager / UIPageRouter / UIEvents /
-  IUIView（扩展）/ PageDef（扩展）/ BgMaskPool / UITransitionHandler / UIResourceProvider
+  EUIPage / PageContext / UIManager / UIPageRouter / UIEvents /
+  IEUIView（扩展）/ EUIPageDef（扩展）/ BgMaskPool / UITransitionHandler / UIResourceProvider
 
 Phase B: 组件封装层 ✅ 已完成
   对应 burner Components/ 目录（精简版）
@@ -615,7 +615,7 @@ Scene 模块封装 Unity SceneManager，提供异步加载/卸载、激活前回
 
 | 文件 | 职责 | 参考 |
 |------|------|------|
-| [EmberSceneManager.cs](../../Assets/Ember/Scene/Runtime/EmberSceneManager.cs) | 场景管理器：UniTask 异步加载/卸载/过渡，DisplayProgress 平滑进度，OnBeforeActivate 回调 | burner `GameSceneManager` |
+| [EmberSceneManager.cs](../../Assets/Ember/Scene/Runtime/EmberSceneManager.cs) | 场景管理器：UniTask 异步加载/卸载/过渡，Progress 真实进度，OnBeforeActivate 回调 | burner `GameSceneManager` |
 | [SceneCoordinator.cs](../../Assets/Ember/Scene/Runtime/SceneCoordinator.cs) | 状态机↔场景桥接器：注入 OnSceneTransition 钩子，自动加载/卸载状态对应场景 | — |
 
 #### API 速览
@@ -1145,7 +1145,7 @@ Ember.Core.Runtime          (叶子，依赖: UnityEngine + Odin + UniTask)
 | **S6** | 验证相机模块 | ✅ UICamera=OK, MainCamera=OK, Brain=OK |
 | **S7** | 整理遗留问题 | ✅ |
 | **S8** | LoadingPage + BootSplash | ✅ 双遮罩：BootSplash（启屏黑幕）+ LoadingView（场景切换进度） |
-| **S9** | EmberUIManager 完善 | ✅ EnsureLayerRoot 自动挂载 Canvas 三件套 |
+| **S9** | EUIManager 完善 | ✅ EnsureLayerRoot 自动挂载 Canvas 三件套 |
 
 ### 架构快照（2026-08-03）
 
@@ -1226,12 +1226,12 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 |---|------|
 | — | **状态机流转图可视化** — 读取 `GetTransitions()` / `GetPushTargets()` 构建节点图，在 EditorWindow 中可拖拽查看 |
 | — | **必要状态视觉区分** — `IsRequired = true` 的节点以不同样式渲染（锁图标、加粗边框） |
-| — | **LoadingPage 预制体化** — 当前为 FrameworkScene 中常驻 GameObject，未来改为预制体 + `EmberUIManager.Push/Pop` 动态加载 |
+| — | **LoadingPage 预制体化** — 当前为 FrameworkScene 中常驻 GameObject，未来改为预制体 + `EUIManager.Push/Pop` 动态加载 |
 | — | **Init 启动动画** — `EmberInitAnimationStarter` 基类已创建，子类 override `PlayStartupAnimation` 即可 |
 | — | **新建状态时自动关联场景** — `EmberSceneMappingCreator` 已自动创建 SO + 匹配同名场景。未来可视化编辑器创建新状态时需先创建场景后创建状态 |
 | — | **Settings UI 集成** — `SettingsState` 状态已创建，待实现 UI 层：根据 `SettingsContext` 展示不同选项面板 |
 | — | **开源图标资源已入库** — `Assets/Art/Icons/game-icon-pack-v1.4/` — 800+ 圆角图标，CC0 许可证。后续蓝图节点图标 / 编辑器工具栏图标优先从这里取 |
-| — | **PageDef 按模块拆分注册** — 当前所有页面注册在单一 `GamePages.cs`，多人协作易冲突、模块边界模糊。未来改为按模块拆分 `*Pages.cs`，生成器根据 `classPath` 自动定位。等 UI 预制体目录结构稳定后实施 |
+| — | **EUIPageDef 按模块拆分注册** — 当前所有页面注册在单一 `GamePages.cs`，多人协作易冲突、模块边界模糊。未来改为按模块拆分 `*Pages.cs`，生成器根据 `classPath` 自动定位。等 UI 预制体目录结构稳定后实施 |
 | — | Wwise 适配 |
 | — | 图片/纹理管理 |
 
@@ -1254,7 +1254,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 规则 | 示例 |
 |------|------|
 | 框架类前缀 | `EmberEventBus`、`EmberServiceLocator` |
-| 接口 I 开头 | `IEmberService`、`IUIView` |
+| 接口 I 开头 | `IEmberService`、`IEUIView` |
 | 命名空间 | `Ember.Core`、`Ember.UI`、`Ember.Resource` |
 | 私有字段 `_camelCase` | `_eventDict`、`_isInitialized` |
 | 优先 `internal` | 只暴露必要的 `public` API |
@@ -1269,7 +1269,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-07-25 | 创建框架目录结构，13 个目录 + 13 个 .asmdef |
 | 2026-07-25 | 完成 burner 项目框架层全面分析 |
 | 2026-07-29 | Core 模块完成（EventBus / ServiceLocator / Singleton / ObjectPool / BroadcastEvent） |
-| 2026-07-29 | UI 模块完成（IUIView / PageDef / EmberUIManager） |
+| 2026-07-29 | UI 模块完成（IEUIView / EUIPageDef / EUIManager） |
 | 2026-07-29 | Resource 模块完成（IResourceProvider / EmberResourceManager / ResourcesProvider） |
 | 2026-07-30 | Scene / Audio / Input / Editor 模块完成 |
 | 2026-07-30 | Manager 自动发现系统完成（IEmberManager + EmberManagerCollector） |
@@ -1306,7 +1306,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-03 | 🔧 **事件 Key 间隔改为 1000**：SceneLoadDone 从 404 改为 4004，避免 HTTP 404 混淆 |
 | 2026-08-03 | 🔧 **LogShutdown 淡紫色日志**：对应 LogInit 绿色，框架退出专用 |
 | 2026-08-03 | 🔧 **Odin 编码规范补充**：$GROUP 成员引用语法不能拼接字符串，写入 odin-usage-notes.md §2.8 |
-| 2026-08-04 | 📐 **UIManager 结构性重写启动**：对 `EmberUIManager` 进行架构重构 |
+| 2026-08-04 | 📐 **UIManager 结构性重写启动**：对 `EUIManager` 进行架构重构 |
 | 2026-08-04 | 📦 **Package 迁移计划制定**：分析 burner uiextension 包结构（80+ 文件），制定 ember 三层 Package 逐文件迁移策略 |
 | 2026-08-04 | ✅ **com.ember.basic 迁移完成**：36 文件全部适配。从用户旧项目整合 6 个工具。建立 API 速查手册 |
 | 2026-08-04 | 🛠️ **编辑器工具全面优化**：从用户旧项目迁移 26 个编辑器工具，删除 5 个，保留 21 个并全部手动优化——统一继承 `EmberEditorWindow : OdinEditorWindow` 基类、提取共享模块、右键快捷菜单统一到 `GameObject/Ember/` 和 `Assets/Ember/` 路径、中英文双语支持 |
@@ -1317,19 +1317,19 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-05 | 🆕 **文件日志持久化**：新增 `EmberFileLog`（异步后台线程 + 批量写入 + 日志轮转 + 过期清理）+ `IEmberLogUploader` 上传接口，`EmberDebug` 所有 Log 方法增加文件输出通道 |
 | 2026-08-05 | 📋 **Audio 升级方案**：基于 burner 四层架构，制定完整移植方案 → [docs/dev/audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
 | 2026-08-06 | ✅ **com.ember.extensions 迁移完成**：逐文件审计 17 个注释文件 → 删除 12 → 迁移 5 + 保留 1 = 6 个活跃源文件。空目录 Async/Resource 已清理 |
-| 2026-08-06 | ❌ **Tweener 系统删除**：Runtime 15 + Editor 11 = 26 文件。决策：DOTween 是业界标准，框架不绑定自研 Tween 引擎，改用 `IUITransitionHandler` 动画钩子接口 |
+| 2026-08-06 | ❌ **Tweener 系统删除**：Runtime 15 + Editor 11 = 26 文件。决策：DOTween 是业界标准，框架不绑定自研 Tween 引擎，改用 `IEUITransitionHandler` 动画钩子接口 |
 | 2026-08-06 | 📋 **uiextension 迁移方案文档**：[docs/dev/uiextension-migration-plan.md](../../docs/dev/uiextension-migration-plan.md)，逐文件审计 148 .cs → 确定迁移 58、暂缓 32、删除 10、参考 10 |
 | 2026-08-06 | 📋 **uiextension 学习路径文档**：[docs/dev/uiextension-learning-path.md](../../docs/dev/uiextension-learning-path.md)，按依赖深度四层排列 48 个文件的学习顺序 |
 | 2026-08-06 | ✅ **uiextension L1-L2 迁移（25 文件）**：L1（18 独立控件/行为/安全区/工具）+ L2（7 内部依赖控件）。asmdef 更新（+Odin +Basic 引用） |
-| 2026-08-06 | ✅ **UIManager 结构性重写 Phase A（12 文件）**：EmberUIEnums / 扩展 IUIView / PageDef 扩展 / IUIResourceProvider / IUITransitionHandler / EmberUIEvents / EmberUIObserver / EmberPage / EmberPageContext / EmberBgMaskPool / EmberUIManager / EmberUIPageRouter。asmdef 更新（+UniRx 引用） |
-| 2026-08-07 | 🏗️ **UIBinding 系统完整还原**：从简化 3 文件 → 完整 Burner 对齐（7 文件 + 4 模板）。EmberPage 纯 C# 化（对标 GamePage），EmberUILogic 逻辑层分离（对标 GameUILogic），EmberUIBindingBridge 自动注册钩子。预制体只保留 EmberUIBinding |
+| 2026-08-06 | ✅ **UIManager 结构性重写 Phase A（12 文件）**：EUIEnums / 扩展 IEUIView / EUIPageDef 扩展 / IEUIResourceProvider / IEUITransitionHandler / EUIEvents / EUIObserver / EUIPage / EUIPageContext / EUIBgMaskPool / EUIManager / EUIPageRouter。asmdef 更新（+UniRx 引用） |
+| 2026-08-07 | 🏗️ **UIBinding 系统完整还原**：从简化 3 文件 → 完整 Burner 对齐（7 文件 + 4 模板）。EUIPage 纯 C# 化（对标 GamePage），EUILogic 逻辑层分离（对标 GameUILogic），EmberUIBindingBridge 自动注册钩子。预制体只保留 EmberUIBinding |
 | 2026-08-06 | ✅ **UIBinding 系统初版（3 文件）**：EmberUIBinding / EmberUIBindingEditor / EmberUIBindingGenerator |
 | 2026-08-06 | ✅ **L3 组件封装层（8 文件）**：IEmberUIComponent / EmberUIComponent（精简 1447→230 行）/ EmberUIButton / EmberUIText / EmberUIImage / EmberUIToggle / EmberUIInputField / EmberUIProgressBar |
 | 2026-08-06 | 🧹 **uiextension 清理**：删除重复/废弃文件 15（ObjectPool/ListPool/BetterList/Logger/StringUtils/BurnerButton/Mirror×2/NodeScreenShot×4/BurnerSafeArea/BurnerBasicUIExtensions 旧版） |
-| 2026-08-06 | 🧪 **UI 模块 Edit Mode 测试（12 项）**：创建测试程序集。覆盖 PageDef 构造（4）、UILayer 顺序（1）、EmberUIObserver 事件通知/取消订阅/Where 过滤（6）、EmberUIEvents 常量（1）。全部通过 ✅ |
-| 2026-08-06 | 🔧 **编译错误批量修复**：UILayer 枚举恢复（移入 EmberUIEnums.cs）；EmberPage Debug 命名空间修正；TMPro 引用补全；ContentSizeFitterEx 移除 internal Unity API；RectTransformExtensions Vector3+Vector2 歧义修正；Gradient Color32 乘法运算符修正；5 文件补 `using Ember.Basic;`；EmberUIBindingGenerator Debug.Log→EmberDebug + 过时 API 替换 |
+| 2026-08-06 | 🧪 **UI 模块 Edit Mode 测试（12 项）**：创建测试程序集。覆盖 EUIPageDef 构造（4）、UILayer 顺序（1）、EUIObserver 事件通知/取消订阅/Where 过滤（6）、EUIEvents 常量（1）。全部通过 ✅ |
+| 2026-08-06 | 🔧 **编译错误批量修复**：UILayer 枚举恢复（移入 EUIEnums.cs）；EUIPage Debug 命名空间修正；TMPro 引用补全；ContentSizeFitterEx 移除 internal Unity API；RectTransformExtensions Vector3+Vector2 歧义修正；Gradient Color32 乘法运算符修正；5 文件补 `using Ember.Basic;`；EmberUIBindingGenerator Debug.Log→EmberDebug + 过时 API 替换 |
 | 2026-08-06 | 📝 **进度文档更新**：framework-progress.md 整理重组，合并重复内容，修正编号，统一结构 |
-| 2026-08-07 | 📐 **UI 架构对齐 Burner**：EmberPage 非 MonoBehaviour 化（纯 C# 包装类）、EmberUILogic 逻辑层分离（对标 GameUILogic）、预制体只保留 EmberUIBinding、EmberUIBindingBridge 自动注册钩子。完整 Burner 面板还原（模板/继承/搜索/自动收集/代码生成） |
+| 2026-08-07 | 📐 **UI 架构对齐 Burner**：EUIPage 非 MonoBehaviour 化（纯 C# 包装类）、EUILogic 逻辑层分离（对标 GameUILogic）、预制体只保留 EmberUIBinding、EmberUIBindingBridge 自动注册钩子。完整 Burner 面板还原（模板/继承/搜索/自动收集/代码生成） |
 | 2026-08-07 | 🏗️ **MainMenu + Settings 预制体创建**：通过 Unity MCP 自动搭建完整 UI 层级（Canvas + 子控件 + EmberUIBinding），配置 pageName/classPath/pageFlags，创建 CSharpLogicImplementationData SO + Project Settings 集成 |
 | 2026-08-07 | 📝 **文档更新**：framework-progress.md + ui-testing-plan.md 更新架构描述、测试步骤、代码示例 |
 | 2026-08-07 | 🔄 **启动流程重构**：事件链重设计 —— `EmberBroadcastEvent.MainSceneReady`(1006) + `OpeningAnimationEnd`(1007)；`InitState` 简化（仅管理 BootSplash + 加载 MainScene + TransitionTo）；`MainState.OnEnter` 加 Subscribe/Broadcast 事件链 + `protected virtual OnOpeningAnimationEnd()`；`EmberInitAnimationStarter` → `EmberMainAnimationStarter`（监听 MainSceneReady 替代 InitSceneReady）；`GameLauncher.CreateMainState()` 工厂方法反射自动发现 `GameMainState` |
@@ -1337,13 +1337,13 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-07 | 🎨 **Canvas sortingOrder 编辑器预览**：`EmberUIBindingEditorUtility.ApplyCanvasSortingOrder`，生成时根据 PageFlags 自动写入预制体 Canvas.sortingOrder（MainPage=100, Popup=200, TopMost=300） |
 | 2026-08-07 | 🔌 **EmberUIBindingBridge 自动注册**：加 `[RuntimeInitializeOnLoadMethod]`，引入包即生效，无需手动调用 Register() |
 | 2026-08-07 | ✏️ **MainMenu + Settings 业务逻辑**：UIMainMenu（OnInit → BtnSettings ShowPopup / BtnStart Log / OnPause / OnResume / OnDispose）；Settings（OnInit → BtnClose ClosePage / BtnLogout Log / OnDispose） |
-| 2026-08-07 | 🏷️ **IEmberPersistentUI marker 接口**：UIManager.Init 隐藏子节点时跳过 BootSplash |
+| 2026-08-07 | 🏷️ **IEUIPersistentUI marker 接口**：UIManager.Init 隐藏子节点时跳过 BootSplash |
 | 2026-08-06 | 📋 **UI 集成测试计划**：[docs/dev/ui-testing-plan.md](../../docs/dev/ui-testing-plan.md)，MainMenu + Settings 两页面测试方案，6 个步骤，8 项验证点，覆盖 UIManager/PageRouter/Page/PageContext/BgMaskPool/UIObserver/UIBinding 全链路 |
-| 2026-08-08 | 🎬 **EmberPage 全面文档化**：类级注释写入自研完整生命周期流程（6 大阶段，每步标注 override 层），8 个 virtual hook 全部补充触发时机 + 职责 + 业务层对应 + 示例代码 |
-| 2026-08-08 | 🎬 **EmberUILogic 全面文档化**：12 个钩子全部补充"触发时机 / 在这里做 / 不要在这里做 / 去哪儿做"四段式注释；OnShow/OnHide 加 ⚠️ 警告：动画写在 EmberPage 子类不是这里 |
-| 2026-08-08 | 🎬 **预设渐入渐出**：EmberUIBinding 新增 `usePresetFade` / `fadeInTime` / `fadeOutTime` 参数；EmberPage.PlayShow/PlayHide 分支判断；UniTask 线性 alpha 渐变；开启后跳过子类 OnShow/OnHide virtual |
+| 2026-08-08 | 🎬 **EUIPage 全面文档化**：类级注释写入自研完整生命周期流程（6 大阶段，每步标注 override 层），8 个 virtual hook 全部补充触发时机 + 职责 + 业务层对应 + 示例代码 |
+| 2026-08-08 | 🎬 **EUILogic 全面文档化**：12 个钩子全部补充"触发时机 / 在这里做 / 不要在这里做 / 去哪儿做"四段式注释；OnShow/OnHide 加 ⚠️ 警告：动画写在 EUIPage 子类不是这里 |
+| 2026-08-08 | 🎬 **预设渐入渐出**：EmberUIBinding 新增 `usePresetFade` / `fadeInTime` / `fadeOutTime` 参数；EUIPage.PlayShow/PlayHide 分支判断；UniTask 线性 alpha 渐变；开启后跳过子类 OnShow/OnHide virtual |
 | 2026-08-08 | 🎬 **NotifyOpened/NotifyClosed 时序修正**：从 `_nextFrameCallbacks`（动画未完成就播报） → `CompleteShow/CompleteHide`（动画真正结束时播报）；修复 ReopenPage 重复播报 bug |
-| 2026-08-08 | 🗑️ **延迟销毁（对标 Burner）**：EmberPage 新增 closing 状态 + 30s 定时器；EmberUIManager 新增 `_closingPages` 字典 + 每帧到期检查 + 复用查询；EmberUIPageRouter 新增 FindReusablePage 复用路径 |
+| 2026-08-08 | 🗑️ **延迟销毁（对标 Burner）**：EUIPage 新增 closing 状态 + 30s 定时器；EUIManager 新增 `_closingPages` 字典 + 每帧到期检查 + 复用查询；EUIPageRouter 新增 FindReusablePage 复用路径 |
 
 ---
 
@@ -1375,4 +1375,4 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 
 | 组件 | 理由 |
 |------|------|
-| **GameUIComponent 三层组件模型** | Burner 每个控件都包一层，太重。Ember 用 `ControlMap` + `EmberUILogic` 已足够 |
+| **GameUIComponent 三层组件模型** | Burner 每个控件都包一层，太重。Ember 用 `ControlMap` + `EUILogic` 已足够 |

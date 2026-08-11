@@ -1,4 +1,4 @@
-# Burner 项目架构分析
+﻿# Burner 项目架构分析
 
 > 来源：`c:\Users\wuyu\Project\burner\client\game`
 > 日期：2026-07-20
@@ -170,7 +170,7 @@ GameUIBase : GameUILogic                ← 项目级 UI 基类（继承 DLL 中
   ├── 子页面：ShowSubPage, CloseSubPage
   └── 点击遮罩：CreateClickMask, ClearClickMask
 
-PageDef                                 ← 所有 UI Prefab 名称 + PageFlags 注册表
+EUIPageDef                                 ← 所有 UI Prefab 名称 + PageFlags 注册表
 GameUIConst                             ← 标准分辨率、层级顺序、UI 根节点路径
 GameUIEventDefine                       ← UI 事件 ID 定义
 ```

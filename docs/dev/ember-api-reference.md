@@ -1,4 +1,4 @@
-# Ember API 速查手册
+﻿# Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
 > 最后更新：2026-08-06 | 覆盖 82 个文件、~120 个公开类型、610+ 个公开成员
@@ -1378,25 +1378,25 @@ handle.Dispose();
 > 位置: `Ember/UI/Runtime/`, 命名空间 `Ember.UI`
 > ⚠️ **此模块处于结构性重写中（2026-08-04 启动），API 即将变化。**
 
-### EmberUIManager（当前版本）
+### EUIManager（当前版本）
 
 ```csharp
 // 打开页面
-EmberUIManager.Instance.Push(GamePages.Settings, args: null);
+EUIManager.Instance.Push(GamePages.Settings, args: null);
 
 // 关闭
-EmberUIManager.Instance.Pop(UILayer.Popup);
-EmberUIManager.Instance.CloseAll();
+EUIManager.Instance.Pop(UILayer.Popup);
+EUIManager.Instance.CloseAll();
 
 // 查询
-var view = EmberUIManager.Instance.GetTopView((int)UILayer.Normal);
-bool has = EmberUIManager.Instance.HasView((int)UILayer.Popup);
+var view = EUIManager.Instance.GetTopView((int)UILayer.Normal);
+bool has = EUIManager.Instance.HasView((int)UILayer.Popup);
 ```
 
-### IUIView
+### IEUIView
 
 ```csharp
-public interface IUIView {
+public interface IEUIView {
     void OnOpen(object args);   // 首次展示
     void OnClose();             // 被关闭
     void OnPause();             // 被覆盖
@@ -1404,13 +1404,13 @@ public interface IUIView {
 }
 ```
 
-### PageDef / UILayer
+### EUIPageDef / UILayer
 
 ```csharp
-public class PageDef {
+public class EUIPageDef {
     public string PrefabPath { get; }
     public int Layer { get; }
-    public PageDef(string prefabPath, int layer);
+    public EUIPageDef(string prefabPath, int layer);
 }
 
 public enum UILayer { Background=0, Normal=100, Popup=200, TopMost=300 }
