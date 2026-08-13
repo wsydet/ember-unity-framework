@@ -5,17 +5,17 @@ using UnityEngine;
 namespace Game.UI
 {
     /// <summary>
-    /// 自定义启动遮罩 —— 继承 <see cref="EmberBootSplash"/>，
+    /// 自定义启动遮罩 —— 继承 <see cref="EUIBootSplash"/>，
     /// 覆盖 <see cref="OnCustomFadeOut"/> 编写任意退出动画。
     ///
     /// <para>使用方式：</para>
     /// <list type="bullet">
-    ///   <item>将 FrameworkScene 中 BootSplash 节点的 EmberBootSplash 替换为此脚本</item>
+    ///   <item>将 FrameworkScene 中 BootSplash 节点的 EUIBootSplash 替换为此脚本</item>
     ///   <item>Inspector 中 Fade Mode 选择 Custom</item>
     ///   <item>在此文件中编写 OnCustomFadeOut 的动画逻辑</item>
     /// </list>
     /// </summary>
-    public class CustomBootSplash : EmberBootSplash
+    public class CustomBootSplash : EUIBootSplash
     {
         protected override async UniTask OnCustomFadeOut()
         {

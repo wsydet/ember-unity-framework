@@ -11,7 +11,7 @@ namespace Ember.UIExtension
     /// <summary>
     /// UI 相关的 C# 扩展方法集合。
     /// </summary>
-    public static class EmberBasicUIExtensions
+    public static class EUIBasicUIExtensions
     {
         /// <summary>
         /// 按名称查找子节点并获取其 Image 组件。

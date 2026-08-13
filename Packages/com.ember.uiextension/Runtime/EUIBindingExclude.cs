@@ -10,7 +10,7 @@ namespace Ember.UIExtension
     /// 适用于背景图片、纯装饰节点等不需要绑定的 UI 元素。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Ember/EUI Binding Exclude")]
+    [AddComponentMenu("EUI/EUI Binding Exclude")]
     public sealed class EUIBindingExclude : MonoBehaviour
     {
     }

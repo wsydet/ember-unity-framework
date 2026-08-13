@@ -451,9 +451,9 @@ namespace Ember.UIExtension.Editor
         private static string GetWidgetPrefix(GameObject go, EUIBinding.WidgetTypes type)
         {
             // EUI 增强组件有独立前缀
-            if (go.GetComponent<EUIButton>()) return "EUIBtn_";
-            if (go.GetComponent<EmberToggleEx>()) return "EUITgl_";
-            if (go.GetComponent<EmberImageEx>()) return "EUIImg_";
+            if (go.GetComponent<EUIButtonEx>()) return "EUIBtn_";
+            if (go.GetComponent<EUIToggleEx>()) return "EUITgl_";
+            if (go.GetComponent<EUIImageEx>()) return "EUIImg_";
 
             switch (type)
             {

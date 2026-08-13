@@ -17,9 +17,9 @@ namespace Ember.UIExtension
     /// 基于 <see cref="BaseMeshEffect"/>，将 Image（Simple 模式）的四个角裁剪为圆角。
     /// 不适用于 Sliced / Tiled 模式的图片。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Rounded Image Modifier")]
+    [AddComponentMenu("UI/EUI/Rounded Image Modifier")]
     [RequireComponent(typeof(Image))]
-    public class EmberRoundedImageModifier : BaseMeshEffect
+    public class EUIRoundedImageModifier : BaseMeshEffect
     {
         #region 编辑器面板参数
 

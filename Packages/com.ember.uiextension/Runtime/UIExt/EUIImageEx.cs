@@ -18,8 +18,8 @@ namespace Ember.UIExtension
     ///   <item>自动 SetNativeSize</item>
     /// </list>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Image Ex")]
-    public class EmberImageEx : Image
+    [AddComponentMenu("UI/EUI/Image Ex")]
+    public class EUIImageEx : Image
     {
         #region 编辑器面板参数
 

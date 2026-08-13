@@ -17,9 +17,9 @@ namespace Ember.UIExtension
     ///   <item><b>拖拽到 Drop</b>（DragToDrop）：按住拖拽到目标位置松开，触发 Drop 回调</item>
     ///   <item><b>代理拖拽</b>：覆盖父级 ScrollRect 或父级 DragEventListener 的拖拽行为</item>
     /// </list>
-    /// 与 <see cref="EmberEventTriggerListener"/> 配合使用。
+    /// 与 <see cref="EUIEventTriggerListener"/> 配合使用。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Drag Event Trigger Listener")]
+    [AddComponentMenu("UI/EUI/Drag Event Trigger Listener")]
     public class DragEventTriggerListener : MonoBehaviour,
         IDragHandler,
         IBeginDragHandler,
@@ -48,7 +48,7 @@ namespace Ember.UIExtension
         private Vector2 _currentPos;
         private ScrollRect _parentScrollRect;
         private DragEventTriggerListener _parentDragEventListener;
-        private EmberEventTriggerListener _eventTriggerListener;
+        private EUIEventTriggerListener _eventTriggerListener;
 
         #endregion
 
@@ -100,17 +100,17 @@ namespace Ember.UIExtension
         // ── 公开委托 ──
 
         /// <summary>拖拽中回调</summary>
-        public EmberEventTriggerListener.PointerEventDelegate OnDragCallback;
+        public EUIEventTriggerListener.PointerEventDelegate OnDragCallback;
         /// <summary>拖拽开始回调</summary>
-        public EmberEventTriggerListener.PointerEventDelegate OnDragStartCallback;
+        public EUIEventTriggerListener.PointerEventDelegate OnDragStartCallback;
         /// <summary>拖拽结束回调</summary>
-        public EmberEventTriggerListener.PointerEventDelegate OnDragEndCallback;
+        public EUIEventTriggerListener.PointerEventDelegate OnDragEndCallback;
         /// <summary>拖拽到 Drop 开始回调</summary>
-        public EmberEventTriggerListener.ObjectGameObjectDelegate OnDragToDropStart;
+        public EUIEventTriggerListener.ObjectGameObjectDelegate OnDragToDropStart;
         /// <summary>拖拽到 Drop 结束回调（第三个参数为是否成功）</summary>
-        public EmberEventTriggerListener.ObjectGameObjectBoolDelegate OnDragToDropEnd;
+        public EUIEventTriggerListener.ObjectGameObjectBoolDelegate OnDragToDropEnd;
         /// <summary>拖拽长按回调</summary>
-        public EmberEventTriggerListener.ObjectVoidDelegate OnDragToDropLongPress;
+        public EUIEventTriggerListener.ObjectVoidDelegate OnDragToDropLongPress;
 
         /// <summary>自定义参数，由调用方自由赋值</summary>
         public object Parameter;
@@ -165,7 +165,7 @@ namespace Ember.UIExtension
         }
 
         /// <summary>关联的 EventTriggerListener</summary>
-        public EmberEventTriggerListener EventTriggerListener
+        public EUIEventTriggerListener EventTriggerListener
         {
             get => _eventTriggerListener;
             set => _eventTriggerListener = value;
@@ -226,7 +226,7 @@ namespace Ember.UIExtension
             listener._coverParentScrollRect = coverParentScrollRect;
             listener._coverDragEventListener = coverDragEventListener;
 
-            var eventListener = EmberEventTriggerListener.Get(go);
+            var eventListener = EUIEventTriggerListener.Get(go);
             listener._eventTriggerListener = eventListener;
             eventListener.DragEventListener = listener;
 
@@ -290,11 +290,11 @@ namespace Ember.UIExtension
 
             if (hitObj != null && hitObj != _go)
             {
-                EmberEventTriggerListener hitListener;
+                EUIEventTriggerListener hitListener;
                 var current = hitObj;
                 do
                 {
-                    hitListener = current.GetComponent<EmberEventTriggerListener>();
+                    hitListener = current.GetComponent<EUIEventTriggerListener>();
                     if (!hitListener)
                     {
                         var parent = current.transform.parent;

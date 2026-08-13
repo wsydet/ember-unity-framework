@@ -15,8 +15,8 @@ namespace Ember.UIExtension
     /// 基于 <see cref="BaseMeshEffect"/>，为 Graphic（Text / Image / RawImage）的顶点着色，
     /// 支持上下渐变、左右渐变、四角独立颜色。兼容九宫格（Sliced）图片。
     /// </summary>
-    [AddComponentMenu("UI/Effects/Ember Gradient")]
-    public class EmberGradient : BaseMeshEffect
+    [AddComponentMenu("UI/Effects/EUI Gradient")]
+    public class EUIGradient : BaseMeshEffect
     {
         #region 编辑器面板参数
 

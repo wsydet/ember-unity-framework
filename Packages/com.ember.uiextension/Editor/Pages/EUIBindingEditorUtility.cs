@@ -608,10 +608,10 @@ namespace Ember.UIExtension.Editor
                     foreach (var t in a.GetTypes())
                     {
                         if (t.IsGenericTypeDefinition || t.IsAbstract) continue;
-                        var arr = t.GetCustomAttributes(typeof(EmberUIExtensionAttribute), false);
+                        var arr = t.GetCustomAttributes(typeof(EUIExtensionAttribute), false);
                         if (arr != null && arr.Length > 0)
                         {
-                            EmberUIExtensionAttribute attr = (EmberUIExtensionAttribute)arr[0];
+                            EUIExtensionAttribute attr = (EUIExtensionAttribute)arr[0];
                             string name = string.IsNullOrEmpty(attr.Name) ? attr.ComponentType.Name : attr.Name;
                             _extensionTypeMapping[name] = new KeyValuePair<int, KeyValuePair<Type, Type>>(
                                 nameList.Count, new KeyValuePair<Type, Type>(attr.ComponentType, t));

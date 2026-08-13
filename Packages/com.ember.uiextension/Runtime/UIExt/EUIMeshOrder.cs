@@ -12,9 +12,9 @@ namespace Ember.UIExtension
     /// 将子节点中所有 Renderer 的 sortingOrder 同步为父 Canvas sortingOrder + 偏移量，
     /// 确保 3D Mesh 在 UI 中的渲染顺序正确。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Mesh Order")]
+    [AddComponentMenu("UI/EUI/Mesh Order")]
     [ExecuteAlways]
-    public class EmberMeshOrder : MonoBehaviour, ICanvasSortingOrderHandler
+    public class EUIMeshOrder : MonoBehaviour, ICanvasSortingOrderHandler
     {
         #region 编辑器面板参数
 

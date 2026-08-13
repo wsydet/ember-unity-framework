@@ -109,11 +109,11 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 - ✅ UIManager 结构性重写 Phase A（12 文件：EUIPage / PageContext / UIManager / UIPageRouter / UIObserver）
 - ✅ com.ember.uiextension 包 L1-L2 迁移（25 文件：Tweener 已删除，独立控件 + Behaviour + SafeArea）
 - ✅ UIBinding 系统（完整 Burner 对齐：EmberUIBinding / Editor / EmberUIBindingTemplate / LogicImplementationData / CSharpLogicImplementationData / UIBindingSettingData / EmberUIBindingEditorUtility）
-- ✅ L3 组件封装层（8 文件：EmberUIComponent + Button/Text/Image/Toggle/InputField/ProgressBar）
+- ✅ L3 组件封装层（8 文件：EUIComponent + Button/Text/Image/Toggle/InputField/ProgressBar）
 - ✅ UI 模块 Edit Mode 测试（12 项全部通过）
 - ✅ 启动流程重构：BootSplash 归 Init / 开屏动画归 Main / MainSceneReady + OpeningAnimationEnd 事件链
 - ✅ GameMainState 子类化扩展点（反射自动发现，零配置）+ OnOpeningAnimationEnd 钩子 → ShowMainPage
-- ✅ EmberInitAnimationStarter → EmberMainAnimationStarter 重命名
+- ✅ 启动动画基类重命名为 EUIMainAnimationStarter
 - ✅ IEUIPersistentUI marker 接口（UIManager 跳过 BootSplash）
 - ✅ PlayModePageDefGuard 失效检测修复（PageName 匹配替代文件路径拼接）+ 自动清理弹窗
 - ✅ FrameworkSceneBootstrapper 场景清理守卫（isPlayingOrWillChangePlaymode 检测）
@@ -528,7 +528,7 @@ public enum PageType
 
 #### 3.4 L3 组件封装层 ✅ 已完成
 
-8 个文件：IEmberUIComponent（接口）、EmberUIComponent（基类，精简 1447→230 行，去掉 Tween/Attachment/Animator/资源加载）、EmberUIButton / EmberUIText / EmberUIImage / EmberUIToggle / EmberUIInputField / EmberUIProgressBar。
+8 个文件：IEUIComponent（接口）、EUIComponent（基类，精简 1447→230 行，去掉 Tween/Attachment/Animator/资源加载）、EUIButton / EUIText / EUIImage / EUIToggle / EUIInputField / EUIProgressBar。
 
 跳过：GameUIContainer（2018 行虚拟列表暂缓）、GameTabLoader/GameUIAttachment/GamePagePreloader（深度耦合资源系统暂缓）。
 
@@ -591,11 +591,11 @@ Phase A: 框架层核心 ✅ 已完成
 
 Phase B: 组件封装层 ✅ 已完成
   对应 burner Components/ 目录（精简版）
-  EmberUIComponent / EmberButton / EmberText / EmberImage / EmberScrollRect 等
+  EUIComponent / EmberButton / EmberText / EmberImage / EmberScrollRect 等
 
 Phase C: 扩展 + 编辑器 ⬜ 待开始
   对应 burner UIExt/ + Editor/ 目录
-  EmberTweener（改用 DOTween）/ EmberSafeArea / UIBinding 代码生成 / 各组件 Inspector
+  EmberTweener（改用 DOTween）/ EUISafeArea / UIBinding 代码生成 / 各组件 Inspector
 ```
 
 ---
@@ -1155,8 +1155,8 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
       ├── GameLauncher（EmberMonoSingleton）
       ├── GameBootCoordinator（可选）
       ├── UIRoot
-      │     ├── BootSplash（EmberBootSplash，Frame 0 黑幕）
-      │     └── LoadingPage（EmberLoadingView，进度条）
+      │     ├── BootSplash（EUIBootSplash，Frame 0 黑幕）
+      │     └── LoadingPage（EUILoading，进度条）
       ├── MainCamera（CinemachineBrain + DefaultCinemachineCamera）
       ├── UICamera（Overlay）
       └── EventSystem
@@ -1165,7 +1165,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
   1. FrameworkScene 加载 → BootSplash Frame 0 黑幕
   2. GameLauncher.Start → Fsm.Start<InitState>
   3. InitState → InitializeAll → LoadSceneAsync("MainScene") → InitSceneReady
-  4. EmberInitAnimationStarter（MainScene 上）→ InitAnimationDone
+  4. EUIMainAnimationStarter（MainScene 上）→ InitAnimationDone
   5. TransitionTo<MainState>(skipSceneLoad) → BootSplash 销毁
   6. Main→Gameplay：LoadingView 进度条 → 场景切换
 
@@ -1184,9 +1184,9 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
   Assets/Ember/Core/Runtime/Event/EmberEventBus.cs        — 事件总线
   Assets/Ember/Scene/Runtime/SceneCoordinator.cs          — 场景加载桥接
   Assets/Ember/Scene/Runtime/EmberSceneManager.cs         — 场景异步加载（UniTask）
-  Assets/Game/UI/EmberBootSplash.cs                       — 启屏黑幕
-  Assets/Game/UI/EmberLoadingView.cs                      — 加载进度
-  Assets/Game/UI/EmberInitAnimationStarter.cs             — 启动动画基类
+  Assets/Game/UI/EUIBootSplash.cs                       — 启屏黑幕
+  Assets/Ember/UI/Runtime/Pages/EUILoading.cs               — 加载进度
+  Assets/Game/UI/EUIMainAnimationStarter.cs                — 启动动画基类
 ```
 
 ---
@@ -1227,7 +1227,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | — | **状态机流转图可视化** — 读取 `GetTransitions()` / `GetPushTargets()` 构建节点图，在 EditorWindow 中可拖拽查看 |
 | — | **必要状态视觉区分** — `IsRequired = true` 的节点以不同样式渲染（锁图标、加粗边框） |
 | — | **LoadingPage 预制体化** — 当前为 FrameworkScene 中常驻 GameObject，未来改为预制体 + `EUIManager.Push/Pop` 动态加载 |
-| — | **Init 启动动画** — `EmberInitAnimationStarter` 基类已创建，子类 override `PlayStartupAnimation` 即可 |
+| — | **Init 启动动画** — `EUIMainAnimationStarter` 基类已创建，子类 override `PlayStartupAnimation` 即可 |
 | — | **新建状态时自动关联场景** — `EmberSceneMappingCreator` 已自动创建 SO + 匹配同名场景。未来可视化编辑器创建新状态时需先创建场景后创建状态 |
 | — | **Settings UI 集成** — `SettingsState` 状态已创建，待实现 UI 层：根据 `SettingsContext` 展示不同选项面板 |
 | — | **开源图标资源已入库** — `Assets/Art/Icons/game-icon-pack-v1.4/` — 800+ 圆角图标，CC0 许可证。后续蓝图节点图标 / 编辑器工具栏图标优先从这里取 |
@@ -1300,7 +1300,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-03 | 🏗️ **SettingsState 通用覆盖状态**：通过 `SettingsContext` 枚举传入上下文（Main / Gameplay），`IsRequired = false` 可被替换 |
 | 2026-08-03 | 🏗️ **Init 预加载 MainScene**：`fsm.LoadSceneAsync` 委托 + `TransitionTo(skipSceneLoad)`，Init 先加载场景再过渡 |
 | 2026-08-03 | 🏗️ **BootSplash + LoadingView 双遮罩**：BootSplash（Frame 0 黑幕，首次 LoadDone 后销毁）+ LoadingView（后续切换进度条，首跳跳过） |
-| 2026-08-03 | 🏗️ **Init 启动动画预留**：`EmberInitAnimationStarter` 基类 + `InitSceneReady`/`InitAnimationDone` 事件，用户继承 override 即可 |
+| 2026-08-03 | 🏗️ **Init 启动动画预留**：`EUIMainAnimationStarter` 基类 + `InitSceneReady`/`InitAnimationDone` 事件，用户继承 override 即可 |
 | 2026-08-03 | 🏗️ **场景映射 SO + 快速打开场景**：`EmberSceneMapping` 自动扫描状态 + 匹配同名场景，Toolbar 窗口一键打开 Framework + 目标场景 |
 | 2026-08-03 | 🔧 **Play Mode 场景清理 + 退出恢复**：`FrameworkSceneBootstrapper` 点 Play 自动关闭多余场景，退出后恢复 |
 | 2026-08-03 | 🔧 **事件 Key 间隔改为 1000**：SceneLoadDone 从 404 改为 4004，避免 HTTP 404 混淆 |
@@ -1324,7 +1324,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-06 | ✅ **UIManager 结构性重写 Phase A（12 文件）**：EUIEnums / 扩展 IEUIView / EUIPageDef 扩展 / IEUIResourceProvider / IEUITransitionHandler / EUIEvents / EUIObserver / EUIPage / EUIPageContext / EUIBgMaskPool / EUIManager / EUIPageRouter。asmdef 更新（+UniRx 引用） |
 | 2026-08-07 | 🏗️ **UIBinding 系统完整还原**：从简化 3 文件 → 完整 Burner 对齐（7 文件 + 4 模板）。EUIPage 纯 C# 化（对标 GamePage），EUILogic 逻辑层分离（对标 GameUILogic），EmberUIBindingBridge 自动注册钩子。预制体只保留 EmberUIBinding |
 | 2026-08-06 | ✅ **UIBinding 系统初版（3 文件）**：EmberUIBinding / EmberUIBindingEditor / EmberUIBindingGenerator |
-| 2026-08-06 | ✅ **L3 组件封装层（8 文件）**：IEmberUIComponent / EmberUIComponent（精简 1447→230 行）/ EmberUIButton / EmberUIText / EmberUIImage / EmberUIToggle / EmberUIInputField / EmberUIProgressBar |
+| 2026-08-06 | ✅ **L3 组件封装层（8 文件）**：IEUIComponent / EUIComponent（精简 1447→230 行）/ EUIButton / EUIText / EUIImage / EUIToggle / EUIInputField / EUIProgressBar |
 | 2026-08-06 | 🧹 **uiextension 清理**：删除重复/废弃文件 15（ObjectPool/ListPool/BetterList/Logger/StringUtils/BurnerButton/Mirror×2/NodeScreenShot×4/BurnerSafeArea/BurnerBasicUIExtensions 旧版） |
 | 2026-08-06 | 🧪 **UI 模块 Edit Mode 测试（12 项）**：创建测试程序集。覆盖 EUIPageDef 构造（4）、UILayer 顺序（1）、EUIObserver 事件通知/取消订阅/Where 过滤（6）、EUIEvents 常量（1）。全部通过 ✅ |
 | 2026-08-06 | 🔧 **编译错误批量修复**：UILayer 枚举恢复（移入 EUIEnums.cs）；EUIPage Debug 命名空间修正；TMPro 引用补全；ContentSizeFitterEx 移除 internal Unity API；RectTransformExtensions Vector3+Vector2 歧义修正；Gradient Color32 乘法运算符修正；5 文件补 `using Ember.Basic;`；EmberUIBindingGenerator Debug.Log→EmberDebug + 过时 API 替换 |
@@ -1332,7 +1332,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-07 | 📐 **UI 架构对齐 Burner**：EUIPage 非 MonoBehaviour 化（纯 C# 包装类）、EUILogic 逻辑层分离（对标 GameUILogic）、预制体只保留 EmberUIBinding、EmberUIBindingBridge 自动注册钩子。完整 Burner 面板还原（模板/继承/搜索/自动收集/代码生成） |
 | 2026-08-07 | 🏗️ **MainMenu + Settings 预制体创建**：通过 Unity MCP 自动搭建完整 UI 层级（Canvas + 子控件 + EmberUIBinding），配置 pageName/classPath/pageFlags，创建 CSharpLogicImplementationData SO + Project Settings 集成 |
 | 2026-08-07 | 📝 **文档更新**：framework-progress.md + ui-testing-plan.md 更新架构描述、测试步骤、代码示例 |
-| 2026-08-07 | 🔄 **启动流程重构**：事件链重设计 —— `EmberBroadcastEvent.MainSceneReady`(1006) + `OpeningAnimationEnd`(1007)；`InitState` 简化（仅管理 BootSplash + 加载 MainScene + TransitionTo）；`MainState.OnEnter` 加 Subscribe/Broadcast 事件链 + `protected virtual OnOpeningAnimationEnd()`；`EmberInitAnimationStarter` → `EmberMainAnimationStarter`（监听 MainSceneReady 替代 InitSceneReady）；`GameLauncher.CreateMainState()` 工厂方法反射自动发现 `GameMainState` |
+| 2026-08-07 | 🔄 **启动流程重构**：事件链重设计 —— `EmberBroadcastEvent.MainSceneReady`(1006) + `OpeningAnimationEnd`(1007)；`InitState` 简化（仅管理 BootSplash + 加载 MainScene + TransitionTo）；`MainState.OnEnter` 加 Subscribe/Broadcast 事件链 + `protected virtual OnOpeningAnimationEnd()`；`EUIMainAnimationStarter`（监听 MainSceneReady 替代 InitSceneReady）；`GameLauncher.CreateMainState()` 工厂方法反射自动发现 `GameMainState` |
 | 2026-08-07 | 🛡️ **PlayMode 守卫修复**：`PlayModePageDefGuard` 失效检测从文件路径拼接改为 `EmberUIBinding.PageName` 匹配；弹窗提供"清理并进入"按钮；`FrameworkSceneBootstrapper` 延迟订阅 + `isPlayingOrWillChangePlaymode` 守卫，防止 Guard 阻止 Play 时场景丢失 |
 | 2026-08-07 | 🎨 **Canvas sortingOrder 编辑器预览**：`EmberUIBindingEditorUtility.ApplyCanvasSortingOrder`，生成时根据 PageFlags 自动写入预制体 Canvas.sortingOrder（MainPage=100, Popup=200, TopMost=300） |
 | 2026-08-07 | 🔌 **EmberUIBindingBridge 自动注册**：加 `[RuntimeInitializeOnLoadMethod]`，引入包即生效，无需手动调用 Register() |

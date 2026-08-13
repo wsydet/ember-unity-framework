@@ -12,12 +12,12 @@ namespace Ember.UIExtension
     /// </summary>
     /// <example>
     /// <code>
-    /// [EmberUIExtension(typeof(Button))]
-    /// public class EUIButton : GameUIComponent { ... }
+    /// [EUIExtension(typeof(Button))]
+    /// public class EUIButtonEx : GameUIComponent { ... }
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class EmberUIExtensionAttribute : Attribute
+    public class EUIExtensionAttribute : Attribute
     {
         #region 内部参数
 
@@ -47,7 +47,7 @@ namespace Ember.UIExtension
         /// 标记目标类为 UI 扩展组件。
         /// </summary>
         /// <param name="componentType">关联的原生 Unity 组件类型</param>
-        public EmberUIExtensionAttribute(Type componentType)
+        public EUIExtensionAttribute(Type componentType)
         {
             _componentType = componentType;
         }

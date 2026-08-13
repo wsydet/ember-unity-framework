@@ -13,8 +13,8 @@ namespace Ember.UIExtension
     /// 继承自 <see cref="Toggle"/>，额外支持三个状态节点的自动切换：
     /// on 节点 / off 节点 / disable 节点。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Toggle Ex")]
-    public class EmberToggleEx : Toggle
+    [AddComponentMenu("UI/EUI/Toggle Ex")]
+    public class EUIToggleEx : Toggle
     {
         #region 编辑器面板参数
 

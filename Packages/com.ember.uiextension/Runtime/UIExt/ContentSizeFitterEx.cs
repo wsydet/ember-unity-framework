@@ -12,7 +12,7 @@ namespace Ember.UIExtension
     /// 在 Unity 原生 <see cref="ContentSizeFitter"/> 基础上增加了 maxWidth/maxHeight 约束，
     /// 允许内容自适应尺寸不超过指定上限。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Content Size Fitter Ex")]
+    [AddComponentMenu("UI/EUI/Content Size Fitter Ex")]
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
     public class ContentSizeFitterEx : UIBehaviour, ILayoutSelfController

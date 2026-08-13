@@ -20,13 +20,13 @@ namespace Ember.UIExtension
     ///
     /// <para>使用方式：</para>
     /// <code>
-    /// var listener = EmberEventTriggerListener.Get(gameObject);
+    /// var listener = EUIEventTriggerListener.Get(gameObject);
     /// listener.onClick += (go) => Debug.Log("点击了");
     /// listener.onLongPressTime += (go, active) => { if (active) StartCharge(); else CancelCharge(); };
     /// </code>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Event Trigger Listener")]
-    public class EmberEventTriggerListener : MonoBehaviour,
+    [AddComponentMenu("UI/EUI/Event Trigger Listener")]
+    public class EUIEventTriggerListener : MonoBehaviour,
         IPointerClickHandler,
         IPointerDownHandler,
         IPointerEnterHandler,
@@ -219,7 +219,7 @@ namespace Ember.UIExtension
         /// <summary>最近一次事件携带的 PointerEventData</summary>
         public PointerEventData PointerEventData { get; private set; }
 
-        /// <summary>全局点击回调，所有 EmberEventTriggerListener 共享</summary>
+        /// <summary>全局点击回调，所有 EUIEventTriggerListener 共享</summary>
         public static VoidDelegate GlobalClickCallback { get; set; }
 
         /// <summary>关联的拖拽事件监听器</summary>
@@ -235,28 +235,28 @@ namespace Ember.UIExtension
         // ── 静态工厂 ──
 
         /// <summary>
-        /// 获取或自动添加 EmberEventTriggerListener 到指定 GameObject。
+        /// 获取或自动添加 EUIEventTriggerListener 到指定 GameObject。
         /// 推荐使用此方法而非直接 AddComponent，避免重复添加。
         /// </summary>
         [NoGC]
-        public static EmberEventTriggerListener Get(GameObject go)
+        public static EUIEventTriggerListener Get(GameObject go)
         {
-            var listener = go.GetComponent<EmberEventTriggerListener>();
+            var listener = go.GetComponent<EUIEventTriggerListener>();
             if (listener == null)
-                listener = go.AddComponent<EmberEventTriggerListener>();
+                listener = go.AddComponent<EUIEventTriggerListener>();
             listener._go = go;
             return listener;
         }
 
         /// <summary>
-        /// 获取或自动添加 EmberEventTriggerListener 到指定 Transform 的 GameObject。
+        /// 获取或自动添加 EUIEventTriggerListener 到指定 Transform 的 GameObject。
         /// </summary>
         [NoGC]
-        public static EmberEventTriggerListener Get(Transform transform)
+        public static EUIEventTriggerListener Get(Transform transform)
         {
-            var listener = transform.GetComponent<EmberEventTriggerListener>();
+            var listener = transform.GetComponent<EUIEventTriggerListener>();
             if (listener == null)
-                listener = transform.gameObject.AddComponent<EmberEventTriggerListener>();
+                listener = transform.gameObject.AddComponent<EUIEventTriggerListener>();
             return listener;
         }
 

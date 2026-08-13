@@ -11,7 +11,7 @@ namespace Ember.UIExtension
     /// UI 组件生命周期接口。
     /// 简化的 IUIBehaviour，定义组件初始化、显示/隐藏、销毁的回调。
     /// </summary>
-    public interface IEmberUIComponent
+    public interface IEUIComponent
     {
         /// <summary>组件是否可见</summary>
         bool Visible { get; set; }

@@ -7,7 +7,7 @@ namespace Ember.UI
     ///
     /// <para>使用场景：</para>
     /// <list type="bullet">
-    ///   <item>EmberBootSplash：开局黑幕，Init 退出时才关闭</item>
+    ///   <item>EUIBootSplash：开局黑幕，Init 退出时才关闭</item>
     ///   <item>其他需要在框架初始化期间保持可见的 UI 元素</item>
     /// </list>
     ///

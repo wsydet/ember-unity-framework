@@ -11,14 +11,14 @@ namespace Ember.UIExtension
     /// <summary>
     /// Button UI 控件封装。
     /// 包装 Unity Button，提供 Enable 状态控制和统一的点击事件管道。
-    /// 兼容 <see cref="EUIButton"/>（enhanced Button）。
+    /// 兼容 <see cref="EUIButtonEx"/>（enhanced Button）。
     /// </summary>
-    public class EmberUIButton : EmberUIComponent
+    public class EUIButton : EUIComponent
     {
         #region 内部参数
 
         private Button _button;
-        private EUIButton _buttonEx;
+        private EUIButtonEx _buttonEx;
         private bool _canClickWhenDisable;
 
         #endregion
@@ -30,7 +30,7 @@ namespace Ember.UIExtension
         public override void OnInit()
         {
             _button = GetComponent<Button>();
-            _buttonEx = _button as EUIButton;
+            _buttonEx = _button as EUIButtonEx;
         }
 
         #endregion
@@ -47,7 +47,7 @@ namespace Ember.UIExtension
             {
                 _canClickWhenDisable = value;
                 if (value && !_buttonEx)
-                    EmberDebug.LogWarning(LogTags.EmberUI, "只有 EUIButton 支持 CanClickWhenDisable");
+                    EmberDebug.LogWarning(LogTags.EmberUI, "只有 EUIButtonEx 支持 CanClickWhenDisable");
             }
         }
 

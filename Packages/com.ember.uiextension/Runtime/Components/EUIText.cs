@@ -12,7 +12,7 @@ namespace Ember.UIExtension
     /// Text/TMP UI 控件封装。
     /// 自动识别 Text 或 TextMeshProUGUI，统一提供 Text / Color / FontSize 属性。
     /// </summary>
-    public class EmberUIText : EmberUIComponent
+    public class EUIText : EUIComponent
     {
         #region 内部参数
 

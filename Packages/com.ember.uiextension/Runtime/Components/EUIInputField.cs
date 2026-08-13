@@ -14,15 +14,15 @@ namespace Ember.UIExtension
     /// InputField UI 控件封装。
     /// 自动识别 InputField 或 TMP_InputField，统一 Text / 事件接口。
     /// </summary>
-    public class EmberUIInputField : EmberUIComponent
+    public class EUIInputField : EUIComponent
     {
         #region 内部参数
 
         private InputField _input;
         private TMP_InputField _tmpInput;
         private bool _isLegacy;
-        private Action<EmberUIInputField, string> _onValueChanged;
-        private Action<EmberUIInputField, string> _onEndEdit;
+        private Action<EUIInputField, string> _onValueChanged;
+        private Action<EUIInputField, string> _onEndEdit;
 
         #endregion
 
@@ -78,14 +78,14 @@ namespace Ember.UIExtension
         }
 
         /// <summary>值变化回调</summary>
-        public event Action<EmberUIInputField, string> OnValueChanged
+        public event Action<EUIInputField, string> OnValueChanged
         {
             add => _onValueChanged += value;
             remove => _onValueChanged -= value;
         }
 
         /// <summary>编辑结束回调</summary>
-        public event Action<EmberUIInputField, string> OnEndEdit
+        public event Action<EUIInputField, string> OnEndEdit
         {
             add => _onEndEdit += value;
             remove => _onEndEdit -= value;

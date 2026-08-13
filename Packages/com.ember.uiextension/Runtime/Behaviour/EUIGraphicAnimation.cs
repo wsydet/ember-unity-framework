@@ -17,11 +17,11 @@ namespace Ember.UIExtension
     /// <para>使用场景：UI 元素的 Shader 特效动画（溶解、扫光、扰动等），
     /// 在 Animation Clip 中 K 帧驱动 MaterialPropertyBlock → 本组件每帧同步到 Graphic.materialForRendering。</para>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Graphic Animation")]
+    [AddComponentMenu("UI/EUI/Graphic Animation")]
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Graphic), typeof(Renderer))]
-    public class EmberGraphicAnimation : MonoBehaviour
+    public class EUIGraphicAnimation : MonoBehaviour
     {
         #region 编辑器面板参数
 

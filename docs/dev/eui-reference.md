@@ -10,10 +10,10 @@
 |------|--------|----------|------|
 | `Component` | 0 | 任意 | 兜底类型，无特殊逻辑 |
 | `Text` | 1 | `Text` / `TextMeshProUGUI` | 文本显示 |
-| `Toggle` | 2 | `Toggle` / `EmberToggleEx` | 开关 |
-| `Button` | 3 | `Button` / `EUIButton` | 按钮 |
+| `Toggle` | 2 | `Toggle` / `EUIToggleEx` | 开关 |
+| `Button` | 3 | `Button` / `EUIButtonEx` | 按钮 |
 | `ProgressBar` | 4 | `Slider` | 进度条 |
-| `Image` | 5 | `Image` / `EmberImageEx` | 图片 |
+| `Image` | 5 | `Image` / `EUIImageEx` | 图片 |
 | `UIContainer` | 6 | `UIContainer` | UI 列表容器 |
 | `UILogic` | 7 | `EUIBinding` | 子页面绑定 |
 | `InputField` | 8 | `InputField` / `TMP_InputField` | 输入框 |
@@ -22,7 +22,7 @@
 | `RawImage` | 11 | `RawImage` | 原始图片 |
 | `Canvas` | 12 | `Canvas` | 画布 |
 | `TabLoader` | 13 | `TabLoader` | 标签页加载器 |
-| `Extension` | 65535 | 自定义 | 通过 `[EmberUIExtension]` 注册的扩展类型 |
+| `Extension` | 65535 | 自定义 | 通过 `[EUIExtension]` 注册的扩展类型 |
 
 ---
 
@@ -40,21 +40,21 @@
 | `button.colors` | ColorTint 颜色配置 |
 | `button.navigation` | 导航配置 |
 
-#### 框架 `EmberUIButton`（C# 包装类，ControlMap 中获取）
+#### 框架 `EUIButton`（C# 包装类，ControlMap 中获取）
 | API | 说明 |
 |-----|------|
 | `Enable` | 启用/禁用按钮（get/set），支持 CanClickWhenDisable |
-| `CanClickWhenDisable` | 禁用状态下仍可触发点击（仅 EUIButton 支持） |
+| `CanClickWhenDisable` | 禁用状态下仍可触发点击（仅 EUIButtonEx 支持） |
 | `UnityButton` | 获取底层 Unity Button 引用 |
 
-#### EUI 增强 `EUIButton`（继承自 Button，挂载到 GameObject 上）
+#### EUI 增强 `EUIButtonEx`（继承自 Button，挂载到 GameObject 上）
 | API | 说明 |
 |-----|------|
 | `EnableState` | 自定义启用状态（get/set），自动切换 enableNode/disableNode |
 | `RefreshEnableState()` | 手动刷新启用/禁用节点的可见性 |
 | `AdditionalGraphics` | 附加的 Graphic 数组（get/set），状态切换时同步 CrossFadeColor |
 
-**EUIButton 额外功能：**
+**EUIButtonEx 额外功能：**
 - **状态节点** — 配置 `启用节点`/`禁用节点`，根据 EnableState 自动显示/隐藏
 - **附加图形** — ColorTint 过渡时同步变色，用于按钮+图标+文字颜色联动
 
@@ -63,7 +63,7 @@
 | 组件 | 命名 |
 |------|------|
 | 原生 Button | `m_Btn_Xxx` 如 `m_Btn_Close`, `m_Btn_StartGame` |
-| EUIButton | `m_EUIBtn_Xxx` 如 `m_EUIBtn_Confirm`, `m_EUIBtn_Skip` |
+| EUIButtonEx | `m_EUIBtn_Xxx` 如 `m_EUIBtn_Confirm`, `m_EUIBtn_Skip` |
 
 ---
 
@@ -77,18 +77,18 @@
 | `toggle.group` | 所属 ToggleGroup |
 | `toggle.interactable` | 是否可交互 |
 
-#### 框架 `EmberUIToggle`
+#### 框架 `EUIToggle`
 | API | 说明 |
 |-----|------|
 | `Enable` | 启用/禁用 |
 | `UnityToggle` | 底层 Unity Toggle 引用 |
 
-#### EUI 增强 `EmberToggleEx`（继承自 Toggle）
+#### EUI 增强 `EUIToggleEx`（继承自 Toggle）
 | API | 说明 |
 |-----|------|
 | — | 无额外公开 API，通过状态节点自动管理 |
 
-**EmberToggleEx 额外功能：**
+**EUIToggleEx 额外功能：**
 - `On 节点` — isOn = true 时显示
 - `Off 节点` — isOn = false 时显示
 - `Disable 节点` — 不可交互时显示
@@ -98,7 +98,7 @@
 | 组件 | 命名 |
 |------|------|
 | 原生 Toggle | `m_Tgl_Xxx` 如 `m_Tgl_AutoLogin` |
-| EmberToggleEx | `m_EUITgl_Xxx` 如 `m_EUITgl_Remember` |
+| EUIToggleEx | `m_EUITgl_Xxx` 如 `m_EUITgl_Remember` |
 
 ---
 
@@ -112,7 +112,7 @@
 | `text.fontSize` | 字号 |
 | `text.font` | 字体 |
 
-#### 框架 `EmberUIText`
+#### 框架 `EUIText`
 | API | 说明 |
 |-----|------|
 | `Text` | 文本内容（get/set） |
@@ -138,14 +138,14 @@ m_Txt_Xxx    如 m_Txt_Title, m_Txt_PlayerName, m_Txt_Gold
 | `image.raycastTarget` | 是否参与射线检测 |
 | `image.fillAmount` | 填充量（Filled 模式） |
 
-#### 框架 `EmberUIImage`
+#### 框架 `EUIImage`
 | API | 说明 |
 |-----|------|
 | `Sprite` | 精灵（get/set） |
 | `SetNativeSize()` | 设为原始尺寸 |
 | `RaycastTarget` | 射线检测开关 |
 
-#### EUI 增强 `EmberImageEx`（继承自 Image）
+#### EUI 增强 `EUIImageEx`（继承自 Image）
 | API | 说明 |
 |-----|------|
 | `Sprites[]` | 精灵数组（序列帧） |
@@ -159,7 +159,7 @@ m_Txt_Xxx    如 m_Txt_Title, m_Txt_PlayerName, m_Txt_Gold
 | 组件 | 命名 |
 |------|------|
 | 原生 Image | `m_Img_Xxx` 如 `m_Img_Icon, m_Img_Background` |
-| EmberImageEx | `m_EUIImg_Xxx` 如 `m_EUIImg_Avatar` |
+| EUIImageEx | `m_EUIImg_Xxx` 如 `m_EUIImg_Avatar` |
 
 ---
 
@@ -173,7 +173,7 @@ m_Txt_Xxx    如 m_Txt_Title, m_Txt_PlayerName, m_Txt_Gold
 | `input.onEndEdit.AddListener(v => {})` | 编辑结束事件 |
 | `input.contentType` | 内容类型（数字/密码等） |
 
-#### 框架 `EmberUIInputField`
+#### 框架 `EUIInputField`
 | API | 说明 |
 |-----|------|
 | `Text` | 输入文本（get/set） |
@@ -195,8 +195,8 @@ m_Inp_Xxx    如 m_Inp_PlayerName, m_Inp_Password, m_Inp_Search
 | `slider.value` | 当前值 |
 | `slider.minValue` / `slider.maxValue` | 范围 |
 | `slider.onValueChanged.AddListener(v => {})` | 值变更事件 |
-| `EmberUIProgressBar.Value` | 框架包装的 value（get/set） |
-| `EmberUIProgressBar.SetValue(float, bool animate)` | 带动画/不带动画设置 |
+| `EUIProgressBar.Value` | 框架包装的 value（get/set） |
+| `EUIProgressBar.SetValue(float, bool animate)` | 带动画/不带动画设置 |
 
 #### 建议命名
 
@@ -267,7 +267,7 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 适用场景：背景图、纯装饰元素、不参与绑定的布局容器
 ```
 
-### 2.11 EmberUIComponent（框架 UI 控件基类）
+### 2.11 EUIComponent（框架 UI 控件基类）
 
 所有 Ember UI 控件的基类，封装了 GameObject、RectTransform 操作、可见性和事件管道。
 
@@ -283,8 +283,8 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 | `X` / `Y` / `Width` / `Height` | 位置/尺寸（get/set） |
 | `AnchoredPosition` | 锚点位置 |
 | `WorldPosition` | 世界坐标位置 |
-| `OnClick` | 点击回调 `Action<EmberUIComponent>` |
-| `OnLongPress` | 长按回调 `Action<EmberUIComponent, bool>` |
+| `OnClick` | 点击回调 `Action<EUIComponent>` |
+| `OnLongPress` | 长按回调 `Action<EUIComponent, bool>` |
 | `SetLongPressTime(delay, repeat)` | 设置长按时间 |
 | `CancelLongPress()` | 取消长按 |
 | `Enable` | 启用/禁用（虚方法） |
@@ -295,7 +295,7 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 
 ### 2.12 输入事件组件
 
-#### EmberEventTriggerListener（指针事件监听）
+#### EUIEventTriggerListener（指针事件监听）
 
 | API | 说明 |
 |------|------|
@@ -330,13 +330,13 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 
 | 组件 | 继承自 | 说明 |
 |------|--------|------|
-| `EmberCircleImage` | `Image` | 圆形/环形图，`Segments`（三角数）、`FillPercent`（0-1） |
-| `EmberRoundedImageModifier` | `BaseMeshEffect` | 圆角，`Radius`（像素）、`TriangleNum`（4-16） |
-| `EmberGradient` | `BaseMeshEffect` | 渐变，支持双色/四色、左到右/上到下 |
-| `EmberPolygonRaycast` | `Graphic` | 多边形精确射线检测，需 `PolygonCollider2D` |
-| `EmberGraphicAnimation` | `MonoBehaviour` | Shader 属性动画，`AnimatedProperties[]` |
+| `EUICircleImage` | `Image` | 圆形/环形图，`Segments`（三角数）、`FillPercent`（0-1） |
+| `EUIRoundedImageModifier` | `BaseMeshEffect` | 圆角，`Radius`（像素）、`TriangleNum`（4-16） |
+| `EUIGradient` | `BaseMeshEffect` | 渐变，支持双色/四色、左到右/上到下 |
+| `EUIPolygonRaycast` | `Graphic` | 多边形精确射线检测，需 `PolygonCollider2D` |
+| `EUIGraphicAnimation` | `MonoBehaviour` | Shader 属性动画，`AnimatedProperties[]` |
 
-#### EmberImageEx 补充（2.4 节）
+#### EUIImageEx 补充（2.4 节）
 
 | 额外 API | 说明 |
 |------|------|
@@ -360,7 +360,7 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 
 | 组件 | 说明 |
 |------|------|
-| `EmberMeshOrder` | 子节点 Renderer 排序，`OrderOffset` + `UpdateSortingOrder()` |
+| `EUIMeshOrder` | 子节点 Renderer 排序，`OrderOffset` + `UpdateSortingOrder()` |
 | `RelativeCanvasOrder` | 相对父 Canvas 排序，`OrderOffset` + `UpdateSortingOrder()` |
 | `ICanvasSortingOrderHandler` | 排序接口，`void UpdateSortingOrder()` |
 
@@ -372,8 +372,8 @@ m_Ctn_Xxx    如 m_Ctn_ShopItemList, m_Ctn_BattleCards
 |------|------|
 | `AnimationEventReceiver` | 接收 Animation Clip Event，`AnimationEventCallback(string)` |
 | `TransformCopier` | 每帧同步 Transform，`Copied`（目标 Transform） |
-| `EmberBasicUIExtensions` | 静态扩展：`GetChildImage(root, name)` / `GetChildText(root, name)` / `SetTextColor(graphic, r, g, b, a)` |
-| `EmberToggleGroupEx` | 增强 ToggleGroup，`ToggleGroupValueChange` 事件（含新旧索引）、`GetCurrentOnToggle()`、`SetToggleOn(index)` |
+| `EUIBasicUIExtensions` | 静态扩展：`GetChildImage(root, name)` / `GetChildText(root, name)` / `SetTextColor(graphic, r, g, b, a)` |
+| `EUIToggleGroupEx` | 增强 ToggleGroup，`ToggleGroupValueChange` 事件（含新旧索引）、`GetCurrentOnToggle()`、`SetToggleOn(index)` |
 
 ---
 
@@ -840,12 +840,12 @@ EUIObserver.OnPageOpened.Subscribe(evt =>
 | 组件类型 | 前缀 | 示例 |
 |----------|------|------|
 | Button（原生） | `m_Btn_` | `m_Btn_Close`, `m_Btn_StartGame` |
-| EUIButton | `m_EUIBtn_` | `m_EUIBtn_Confirm`, `m_EUIBtn_Skip` |
+| EUIButtonEx | `m_EUIBtn_` | `m_EUIBtn_Confirm`, `m_EUIBtn_Skip` |
 | Toggle（原生） | `m_Tgl_` | `m_Tgl_AutoLogin`, `m_Tgl_Sound` |
-| EmberToggleEx | `m_EUITgl_` | `m_EUITgl_Remember` |
+| EUIToggleEx | `m_EUITgl_` | `m_EUITgl_Remember` |
 | Text | `m_Txt_` | `m_Txt_Title`, `m_Txt_Gold` |
 | Image（原生） | `m_Img_` | `m_Img_Icon`, `m_Img_Bg` |
-| EmberImageEx | `m_EUIImg_` | `m_EUIImg_Avatar` |
+| EUIImageEx | `m_EUIImg_` | `m_EUIImg_Avatar` |
 | InputField | `m_Inp_` | `m_Inp_Name`, `m_Inp_Password` |
 | Slider/ProgressBar | `m_Pgb_` | `m_Pgb_HP`, `m_Pgb_Volume` |
 | ToggleGroup | `m_Tgp_` | `m_Tgp_TabGroup` |
@@ -915,9 +915,9 @@ EUIObserver.OnPageOpened.Subscribe(evt =>
 
 | 控件 | ControlMap 中获取的类型 | 建议新建脚本类型 |
 |------|------------------------|-----------------|
-| Button | `Button` 或 `EmberUIButton` | `EUIButton`（需状态节点） |
-| Toggle | `Toggle` 或 `EmberUIToggle` | `EmberToggleEx`（需状态节点） |
-| Text | `TextMeshProUGUI` 或 `EmberUIText` | — |
-| Image | `Image` 或 `EmberUIImage` | `EmberImageEx`（需序列帧/不规则点击） |
-| InputField | `TMP_InputField` 或 `EmberUIInputField` | — |
-| Slider | `Slider` 或 `EmberUIProgressBar` | — |
+| Button | `Button` 或 `EUIButton` | `EUIButtonEx`（需状态节点） |
+| Toggle | `Toggle` 或 `EUIToggle` | `EUIToggleEx`（需状态节点） |
+| Text | `TextMeshProUGUI` 或 `EUIText` | — |
+| Image | `Image` 或 `EUIImage` | `EUIImageEx`（需序列帧/不规则点击） |
+| InputField | `TMP_InputField` 或 `EUIInputField` | — |
+| Slider | `Slider` 或 `EUIProgressBar` | — |

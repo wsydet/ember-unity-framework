@@ -18,7 +18,7 @@ namespace Ember.Core
     ///
     /// <b>开屏动画归 MainState 持有</b>：
     /// 进入 MainState.OnEnter 后播报 MainSceneReady，
-    /// EmberMainAnimationStarter 响应并播放动画。
+    /// EUIMainAnimationStarter 响应并播放动画。
     ///
     /// 此状态为系统必需（IsRequired = true），不可从状态机中注销。
     /// </summary>

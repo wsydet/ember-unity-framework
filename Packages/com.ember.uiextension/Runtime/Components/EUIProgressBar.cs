@@ -10,7 +10,7 @@ namespace Ember.UIExtension
     /// ProgressBar UI 控件封装。
     /// 包装 Slider 或 Image（fill 模式），统一进度值设置。
     /// </summary>
-    public class EmberUIProgressBar : EmberUIComponent
+    public class EUIProgressBar : EUIComponent
     {
         #region 内部参数
 

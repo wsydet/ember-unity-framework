@@ -12,7 +12,7 @@ namespace Ember.UIExtension
     /// 自动将自身 Canvas 的 sortingOrder 设置为父 Canvas sortingOrder + 偏移量，
     /// 确保多层嵌套 Canvas 的渲染顺序始终相对父级保持一致。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Relative Canvas Order")]
+    [AddComponentMenu("UI/EUI/Relative Canvas Order")]
     [ExecuteAlways]
     public class RelativeCanvasOrder : MonoBehaviour, ICanvasSortingOrderHandler
     {

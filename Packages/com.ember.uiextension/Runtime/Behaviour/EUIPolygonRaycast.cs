@@ -13,9 +13,9 @@ namespace Ember.UIExtension
     ///
     /// <para>使用方式：在 Button GameObject 上添加此组件和 PolygonCollider2D，编辑碰撞体形状即可。</para>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Polygon Raycast")]
+    [AddComponentMenu("UI/EUI/Polygon Raycast")]
     [RequireComponent(typeof(PolygonCollider2D), typeof(CanvasRenderer))]
-    public class EmberPolygonRaycast : Graphic, ICanvasRaycastFilter
+    public class EUIPolygonRaycast : Graphic, ICanvasRaycastFilter
     {
         #region 编辑器面板参数
 

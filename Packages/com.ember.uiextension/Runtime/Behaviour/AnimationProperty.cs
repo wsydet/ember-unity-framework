@@ -12,7 +12,7 @@ namespace Ember.UIExtension
 {
     /// <summary>
     /// 可动画化 Shader 属性描述。
-    /// 指定一个 Shader 属性的名称和类型，配合 <see cref="EmberGraphicAnimation"/> 在运行时同步材质属性。
+    /// 指定一个 Shader 属性的名称和类型，配合 <see cref="EUIGraphicAnimation"/> 在运行时同步材质属性。
     /// </summary>
     [Serializable]
     public class AnimatableProperty

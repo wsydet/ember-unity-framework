@@ -22,7 +22,7 @@ namespace Ember.UIExtension
     ///   <item>精简到核心：事件管道 + Transform 便捷属性 + 显隐控制</item>
     /// </list>
     /// </summary>
-    public class EmberUIComponent : IEmberUIComponent
+    public class EUIComponent : IEUIComponent
     {
         #region 内部参数
 
@@ -32,12 +32,12 @@ namespace Ember.UIExtension
         private bool _visible;
         private bool _disposed;
 
-        private EmberEventTriggerListener _eventListener;
+        private EUIEventTriggerListener _eventListener;
         private DragEventTriggerListener _dragListener;
 
         // 事件
-        private Action<EmberUIComponent> _onClick;
-        private Action<EmberUIComponent, bool> _onLongPress;
+        private Action<EUIComponent> _onClick;
+        private Action<EUIComponent, bool> _onLongPress;
 
         private bool _clickAdded;
         private bool _longPressAdded;
@@ -199,7 +199,7 @@ namespace Ember.UIExtension
         #region 外部方法 —— 事件
 
         /// <summary>点击事件</summary>
-        public Action<EmberUIComponent> OnClick
+        public Action<EUIComponent> OnClick
         {
             get => _onClick;
             set
@@ -207,7 +207,7 @@ namespace Ember.UIExtension
                 if (!_clickAdded)
                 {
                     _clickAdded = true;
-                    var lis = EmberEventTriggerListener.Get(_gameObject);
+                    var lis = EUIEventTriggerListener.Get(_gameObject);
                     lis.onClick += HandleClick;
                 }
                 _onClick = value;
@@ -215,7 +215,7 @@ namespace Ember.UIExtension
         }
 
         /// <summary>长按事件（active=true 触发，active=false 取消）</summary>
-        public Action<EmberUIComponent, bool> OnLongPress
+        public Action<EUIComponent, bool> OnLongPress
         {
             get => _onLongPress;
             set
@@ -223,7 +223,7 @@ namespace Ember.UIExtension
                 if (!_longPressAdded)
                 {
                     _longPressAdded = true;
-                    var lis = EmberEventTriggerListener.Get(_gameObject);
+                    var lis = EUIEventTriggerListener.Get(_gameObject);
                     lis.onLongPressTime += HandleLongPress;
                 }
                 _onLongPress = value;
@@ -233,13 +233,13 @@ namespace Ember.UIExtension
         /// <summary>设置长按参数</summary>
         public void SetLongPressTime(float delayTime, float repeatTime)
         {
-            EmberEventTriggerListener.Get(_gameObject).SetLongPressTime(delayTime, repeatTime);
+            EUIEventTriggerListener.Get(_gameObject).SetLongPressTime(delayTime, repeatTime);
         }
 
         /// <summary>取消长按</summary>
         public void CancelLongPress()
         {
-            EmberEventTriggerListener.Get(_gameObject).OnLongPressTimeFuc(false, true);
+            EUIEventTriggerListener.Get(_gameObject).OnLongPressTimeFuc(false, true);
         }
 
         #endregion
@@ -288,12 +288,12 @@ namespace Ember.UIExtension
             {
                 if (_clickAdded)
                 {
-                    var lis = _gameObject.GetComponent<EmberEventTriggerListener>();
+                    var lis = _gameObject.GetComponent<EUIEventTriggerListener>();
                     if (lis) lis.onClick = null;
                 }
                 if (_longPressAdded)
                 {
-                    var lis = _gameObject.GetComponent<EmberEventTriggerListener>();
+                    var lis = _gameObject.GetComponent<EUIEventTriggerListener>();
                     if (lis) lis.onLongPressTime = null;
                 }
             }

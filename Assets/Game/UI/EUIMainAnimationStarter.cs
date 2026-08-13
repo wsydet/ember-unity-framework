@@ -12,10 +12,10 @@ namespace Game.UI
     /// 框架自动广播 <see cref="EmberBroadcastEvent.OpeningAnimationEnd"/>，
     /// MainState 收到后调用 <see cref="Ember.Core.MainState.OnOpeningAnimationEnd()"/>。
     ///
-    /// <b>不要直接使用本类</b>，使用子类 <see cref="EmberDefaultMainAnimation"/>（无动画，立即完成）
+    /// <b>不要直接使用本类</b>，使用子类 <see cref="EUIDefaultMainAnimation"/>（无动画，立即完成）
     /// 或自定义子类 override <see cref="PlayOpeningAnimation"/>。
     /// </summary>
-    public abstract class EmberMainAnimationStarter : MonoBehaviour
+    public abstract class EUIMainAnimationStarter : MonoBehaviour
     {
         private void Awake()
         {

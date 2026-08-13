@@ -19,12 +19,12 @@ namespace Ember.UIExtension
     /// 自动根据设备的安全区域（刘海屏、底部横条等）调整 RectTransform 的 padding，
     /// 确保 UI 内容不被遮挡。支持横竖屏独立配置、四边独立控制。
     /// </summary>
-    [AddComponentMenu("UI/Ember/Safe Area")]
+    [AddComponentMenu("UI/EUI/Safe Area")]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
     [ExecuteAlways]
     [Preserve]
-    public class EmberSafeArea : UIBehaviour, ILayoutSelfController
+    public class EUISafeArea : UIBehaviour, ILayoutSelfController
     {
         #region 编辑器面板参数
 

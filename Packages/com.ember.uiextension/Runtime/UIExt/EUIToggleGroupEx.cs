@@ -18,8 +18,8 @@ namespace Ember.UIExtension
     ///   <item>SetToggleOn(index) 按索引切换选中</item>
     /// </list>
     /// </summary>
-    [AddComponentMenu("UI/Ember/Toggle Group Ex")]
-    public class EmberToggleGroupEx : ToggleGroup
+    [AddComponentMenu("UI/EUI/Toggle Group Ex")]
+    public class EUIToggleGroupEx : ToggleGroup
     {
         #region 编辑器面板参数
 

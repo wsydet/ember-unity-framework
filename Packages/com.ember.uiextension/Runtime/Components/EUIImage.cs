@@ -11,12 +11,12 @@ namespace Ember.UIExtension
     /// 包装 Unity Image，提供 Sprite / Color / Fill / Gray / KeepNativeSize 属性。
     /// 兼容 ImageEx（sprite 数组 + 帧动画）。
     /// </summary>
-    public class EmberUIImage : EmberUIComponent
+    public class EUIImage : EUIComponent
     {
         #region 内部参数
 
         private Image _image;
-        private EmberImageEx _imageEx;
+        private EUIImageEx _imageEx;
         private bool _keepNativeSize;
         private Color _cacheColor;
 
@@ -43,7 +43,7 @@ namespace Ember.UIExtension
         public override void OnInit()
         {
             _image = GetComponent<Image>();
-            _imageEx = _image as EmberImageEx;
+            _imageEx = _image as EUIImageEx;
 
             if (_imageEx)
                 _keepNativeSize = _imageEx.KeepNativeSize;

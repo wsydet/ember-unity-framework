@@ -17,7 +17,7 @@ namespace Ember.Core
     ///
     /// <b>开屏动画（MainState 持有）：</b>
     /// OnEnter → Subscribe(OpeningAnimationEnd) → OnNext(MainSceneReady)
-    ///   → EmberMainAnimationStarter 播放动画
+    ///   → EUIMainAnimationStarter 播放动画
     ///   → 动画结束 → OpeningAnimationEnd → OnOpeningAnimationEnd()
     ///
     /// <b>子类化指南：</b>

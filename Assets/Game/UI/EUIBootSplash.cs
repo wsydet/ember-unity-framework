@@ -29,7 +29,7 @@ namespace Game.UI
     /// <para>实现 <see cref="IEUIPersistentUI"/>，确保 EUIViewEngine 初始化时
     /// 不会隐藏此节点（BootSplash 需要在 Init 期间持续显示）。</para>
     /// </summary>
-    public class EmberBootSplash : MonoBehaviour, IEUIPersistentUI
+    public class EUIBootSplash : MonoBehaviour, IEUIPersistentUI
     {
         #region 编辑器面板参数
 
@@ -159,7 +159,7 @@ namespace Game.UI
         /// </summary>
         /// <example>
         /// <code>
-        /// public class MyBootSplash : EmberBootSplash
+        /// public class MyBootSplash : EUIBootSplash
         /// {
         ///     protected override async UniTask OnCustomFadeOut()
         ///     {

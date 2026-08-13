@@ -12,13 +12,13 @@ namespace Ember.UIExtension
     /// Toggle UI 控件封装。
     /// 包装 Unity Toggle，提供状态查询和值变化事件。
     /// </summary>
-    public class EmberUIToggle : EmberUIComponent
+    public class EUIToggle : EUIComponent
     {
         #region 内部参数
 
         private Toggle _toggle;
-        private EmberToggleEx _toggleEx;
-        private Action<EmberUIToggle, bool> _onValueChanged;
+        private EUIToggleEx _toggleEx;
+        private Action<EUIToggle, bool> _onValueChanged;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace Ember.UIExtension
         public override void OnInit()
         {
             _toggle = GetComponent<Toggle>();
-            _toggleEx = _toggle as EmberToggleEx;
+            _toggleEx = _toggle as EUIToggleEx;
 
             if (_toggle)
                 _toggle.onValueChanged.AddListener(HandleValueChanged);
@@ -56,7 +56,7 @@ namespace Ember.UIExtension
         }
 
         /// <summary>值变化回调</summary>
-        public event Action<EmberUIToggle, bool> OnValueChanged
+        public event Action<EUIToggle, bool> OnValueChanged
         {
             add => _onValueChanged += value;
             remove => _onValueChanged -= value;
