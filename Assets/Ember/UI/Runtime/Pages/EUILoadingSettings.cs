@@ -9,6 +9,9 @@ namespace Ember.UI
     /// <summary>
     /// EUILoading 的自定义页面参数。
     /// 在 EUIBinding Inspector 的"EUILoading"折叠框中显示。
+    ///
+    /// 方块过渡动画的参数在 TransitionBlockContainer 子物体上配置：
+    /// 选中该子物体即可编辑颜色、排布模式、时长等，并通过预览按钮直接预览。
     /// </summary>
     [Serializable]
     public class EUILoadingSettings

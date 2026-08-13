@@ -272,12 +272,13 @@ MonoBehaviour:
   codePathMode: 1
   classPath: GamePlay
   className: InGameUI
+  prefabName: 
   noCodeGen: 0
   generateCustomSettings: 0
   isPage: 1
   pageName: InGameUI
   pageFlags: 1
-  usePresetFade: 0
+  usePresetFade: 1
   fadeInTime: 0.3
   fadeOutTime: 0.2
   useCustomTransition: 0

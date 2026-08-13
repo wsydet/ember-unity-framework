@@ -1210,93 +1210,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1146627423}
     m_Modifications:
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: prefabName
-      value: EUILoadingPage
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: _pageSettings
-      value: 959158127316959355
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: 'managedReferences[959158127316959351]'
-      value: Ember.UI.Runtime Ember.UI.EUILoadingSettings
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: 'managedReferences[959158127316959355]'
-      value: Ember.UI.Runtime Ember.UI.EUILoadingSettings
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].tailDuration
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].smoothDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].useProgressBar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].smoothDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].useProgressBar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].displayMaxRatio
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].displayMaxRatio
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].fastFillDuration
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].useProgressNumber
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].fastFillThreshold
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].useProgressNumber
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].customExitDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].customExitDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959351].customEnterDuration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 933061691487475856, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: managedReferences[959158127316959355].customEnterDuration
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 1035794879503369891, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
       propertyPath: m_Name
       value: EUILoadingPage
-      objectReference: {fileID: 0}
-    - target: {fileID: 1035794879503369891, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3147880074388902068, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259123813698725036, guid: f3715f877d42cf54cbfe5dbe015fcdc0, type: 3}
       propertyPath: m_Pivot.x
@@ -1396,22 +1312,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1146627423}
     m_Modifications:
-    - target: {fileID: 1028496752629900450, guid: 77e1c216baf55b047930f23796196078, type: 3}
-      propertyPath: _pageSettings
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028496752629900450, guid: 77e1c216baf55b047930f23796196078, type: 3}
-      propertyPath: usePresetFade
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028496752629900450, guid: 77e1c216baf55b047930f23796196078, type: 3}
-      propertyPath: useCustomTransition
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028496752629900450, guid: 77e1c216baf55b047930f23796196078, type: 3}
-      propertyPath: 'managedReferences[-2]'
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2062434741951779065, guid: 77e1c216baf55b047930f23796196078, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1528,10 +1428,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1146627423}
     m_Modifications:
-    - target: {fileID: 3974019904219742900, guid: 661ce37c97f2c6c448dfe6ded9c4d2e2, type: 3}
-      propertyPath: usePresetFade
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4107741130583101536, guid: 661ce37c97f2c6c448dfe6ded9c4d2e2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1633,10 +1529,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1146627423}
     m_Modifications:
-    - target: {fileID: 2717158872503818647, guid: b4f50174aa878d14788fa2d0d12e3828, type: 3}
-      propertyPath: usePresetFade
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3920227220257545325, guid: b4f50174aa878d14788fa2d0d12e3828, type: 3}
       propertyPath: m_Pivot.x
       value: 0

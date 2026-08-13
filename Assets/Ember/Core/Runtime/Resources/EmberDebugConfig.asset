@@ -88,6 +88,9 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.9, g: 0.35999995, b: 0.62243986, a: 1}
     className: EmberFileLog
+  - enabled: 1
+    color: {r: 0.9, g: 0.67428, b: 0.35999995, a: 1}
+    className: EUITransitionBlock
   enableFileLog: 1
   logDirectory: Logs/ember
   maxFileSizeMB: 10

@@ -29,8 +29,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9026521588816253258}
-  - {fileID: 2683436337996622839}
+  - {fileID: 7005755684266524665}
   m_Father: {fileID: 5259123813698725036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -84,6 +83,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5055143278880836619}
+  - {fileID: 3233608249854726698}
   - {fileID: 4998982134614906978}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,6 +184,7 @@ MonoBehaviour:
   codePathMode: 0
   classPath: Pages
   className: EUILoading
+  prefabName: EUILoadingPage
   noCodeGen: 0
   generateCustomSettings: 0
   isPage: 1
@@ -196,7 +197,7 @@ MonoBehaviour:
   selfWidgetType: 0
   selfWidgetClassName: 
   _pageSettings:
-    rid: 959158127316959329
+    rid: 959158127316959355
   bindings:
   - Name: Cg_Progress
     GameObject: {fileID: 334991342235934432}
@@ -210,16 +211,21 @@ MonoBehaviour:
     GameObject: {fileID: 8675406671848493185}
     Type: 1
     ClassName: 
+  - Name: TransitionBlock
+    GameObject: {fileID: 3694742028683457727}
+    Type: 0
+    ClassName: 
   references:
     version: 2
     RefIds:
-    - rid: 959158127316959329
+    - rid: 959158127316959355
       type: {class: EUILoadingSettings, ns: Ember.UI, asm: Ember.UI.Runtime}
       data:
         useProgressBar: 1
         useProgressNumber: 1
-        displayMaxRatio: 0.6
-        smoothDuration: 1
+        fastFillDuration: 3.5
+        fastFillThreshold: 0.496
+        tailDuration: 1.16
         customEnterDuration: 0.3
         customExitDuration: 0.2
 --- !u!1 &3147880074388902068
@@ -239,7 +245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5055143278880836619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -297,6 +303,99 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3694742028683457727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3233608249854726698}
+  - component: {fileID: 2483891536119632141}
+  - component: {fileID: 7349831062095915250}
+  m_Layer: 5
+  m_Name: m_TransitionBlock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3233608249854726698
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694742028683457727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5259123813698725036}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2483891536119632141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694742028683457727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd7af7e557f3c0478709e1cb93fed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ember.UI.Runtime::Ember.UI.EmberTransitionBlock
+  _preset: 12
+  _blockColor: {r: 0.27450982, g: 0.27450982, b: 0.27450982, a: 1}
+  _useBlockTexture: 0
+  _blockTexture: {fileID: 0}
+  _blockAnimation: 0
+  _autoGridSize: 1
+  _fixedColumns: 8
+  _targetBlockSize: 128
+  _enterPattern: 7
+  _enterDirection: 4
+  _diamondOutward: 1
+  _spiralClockwise: 1
+  _spiralCenterOut: 0
+  _linesHorizontal: 1
+  _teethHorizontal: 0
+  _exitPattern: 7
+  _exitForward: 0
+  _transitionDuration: 0.8
+  _staggerInterval: 0.03
+  _blockEase: 6
+--- !u!223 &7349831062095915250
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694742028683457727}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: -1
+  m_TargetDisplay: 0
 --- !u!1 &6195949758656361904
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,12 +421,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6195949758656361904}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4998982134614906978}
+  m_Father: {fileID: 7005755684266524665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -372,6 +471,43 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7867337026857277756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7005755684266524665}
+  m_Layer: 5
+  m_Name: Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7005755684266524665
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7867337026857277756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9026521588816253258}
+  - {fileID: 2683436337996622839}
+  m_Father: {fileID: 4998982134614906978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -400}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8675406671848493185
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,12 +533,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8675406671848493185}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4998982134614906978}
+  m_Father: {fileID: 7005755684266524665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

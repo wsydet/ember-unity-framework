@@ -9,7 +9,8 @@
         "UniRx",
         "UniTask",
         "UnityEngine.UI",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "DOTWEEN"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -18,6 +19,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.demigiant.dotween",
+            "expression": "",
+            "define": "UNITASK_DOTWEEN_SUPPORT"
+        }
+    ],
     "noEngineReferences": false
 }

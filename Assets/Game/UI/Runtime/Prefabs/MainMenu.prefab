@@ -750,7 +750,7 @@ MonoBehaviour:
   isPage: 1
   pageName: MainMenu
   pageFlags: 1
-  usePresetFade: 0
+  usePresetFade: 1
   fadeInTime: 0.3
   fadeOutTime: 0.2
   useCustomTransition: 0

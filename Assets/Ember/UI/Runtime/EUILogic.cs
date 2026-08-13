@@ -59,6 +59,12 @@ namespace Ember.UI
         public bool NeedUpdate { get; set; }
 
         /// <summary>
+        /// Loading 过渡就绪标志。Loading 页面 override 为 true 表示假进度已完成。
+        /// <see cref="EUIManager.TransitionSceneWithLoading"/> 轮询此属性。
+        /// </summary>
+        public virtual bool IsTransitionReady => true;
+
+        /// <summary>
         /// 注册可销毁对象（IDisposable），在 <see cref="OnDispose"/> 时自动清理。
         /// 适用于 EmberEventBus.Subscribe 返回值、UniRx 订阅等。
         /// 对标 Burner GameUIBase.AddEvent + RemoveAllEvents。

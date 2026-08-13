@@ -30,6 +30,7 @@ namespace Game.UI
         private float _displayProgress;
         private bool _inTailPhase;
         private bool _fakeComplete;
+        private bool _fadeInDone; // 渐入完成前不开始计时
 
         #endregion
 
@@ -53,13 +54,15 @@ namespace Game.UI
             _displayProgress = 0f;
             _inTailPhase = false;
             _fakeComplete = false;
+            _fadeInDone = false;
             ApplySettings();
             EmberEventBus.OnNext(EUIEvents.LoadingFadeInStart);
         }
 
         public override void OnUpdate()
         {
-            if (_settings == null || _fakeComplete) return;
+            // 渐入完成前不开始计时（进度条在此期间不可见）
+            if (_settings == null || _fakeComplete || !_fadeInDone) return;
 
             var sceneMgr = EmberSceneManager.Instance;
             bool realDone = sceneMgr != null && !sceneMgr.IsLoading;
@@ -98,7 +101,6 @@ namespace Game.UI
                 {
                     _displayProgress = 1f;
                     _fakeComplete = true;
-                    EmberEventBus.OnNext(EUIEvents.LoadingFadeOutStart);
                 }
             }
 
@@ -120,6 +122,7 @@ namespace Game.UI
             _inTailPhase = false;
             _fakeComplete = false;
             SetProgress(0f);
+            TransitionEffect?.HideAllImmediate();
         }
 
         #endregion
@@ -170,6 +173,15 @@ namespace Game.UI
         /// <summary>假进度是否已完成</summary>
         public bool IsFakeComplete => _fakeComplete;
 
+        /// <inheritdoc/>
+        public override bool IsTransitionReady => _fakeComplete;
+
+        /// <summary>
+        /// 方块过渡效果（将绑定字段 Component 转换为 IEUITransitionEffect）。
+        /// 绑定代码生成器只能产出 Component 类型，这里做接口转换。
+        /// </summary>
+        private IEUITransitionEffect TransitionEffect => TransitionBlock as IEUITransitionEffect;
+
         #endregion
 
         // --------------------------------------------------------
@@ -193,14 +205,22 @@ namespace Game.UI
         #region 自定义过渡动画
 
         /// <summary>
-        /// 进度条组渐显：CanvasGroup alpha 0 → 1。
-        /// 在 <see cref="EUIPage.PlayShow"/> 阶段被框架调用，
-        /// 如果同时勾选了预设渐入渐出，则在预设动画之后执行。
+        /// 过渡动画进入阶段。
+        /// 如果绑定了 TransitionBlock → 方块扫入覆盖 → 进度条组渐显。
+        /// 否则仅进度条组渐显（SimpleFade）。
         /// </summary>
         public override async UniTask OnCustomEnter()
         {
-            if (_settings == null || Cg_Progress == null) return;
+            if (_settings == null) return;
 
+            // Phase 0: 方块扫入覆盖屏幕（如果绑定了 TransitionBlock）
+            if (TransitionEffect != null)
+            {
+                await TransitionEffect.PlayEnterAsync();
+            }
+
+            // Phase 1: 进度条组渐显
+            if (Cg_Progress == null) return;
             var duration = _settings.customEnterDuration;
             if (duration <= 0f) { Cg_Progress.alpha = 1f; return; }
 
@@ -212,30 +232,41 @@ namespace Game.UI
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
             Cg_Progress.alpha = 1f;
+            _fadeInDone = true;
             EmberEventBus.OnNext(EUIEvents.LoadingFadeInComplete);
         }
 
         /// <summary>
-        /// 进度条组渐隐：CanvasGroup alpha 1 → 0。
-        /// 在 <see cref="EUIPage.PlayHide"/> 阶段被框架调用，
-        /// 如果同时勾选了预设渐入渐出，则在预设动画之前执行。
+        /// 过渡动画退出阶段。
+        /// 进度条组先渐隐 → 如果绑定了 TransitionBlock → 方块扫出揭示新场景。
         /// </summary>
         public override async UniTask OnCustomExit()
         {
-            if (_settings == null || Cg_Progress == null) return;
+            if (_settings == null) return;
 
-            var duration = _settings.customExitDuration;
-            if (duration <= 0f) { Cg_Progress.alpha = 0f; return; }
+            var exitDuration = _settings.customExitDuration;
+            EmberEventBus.OnNext(EUIEvents.LoadingFadeOutStart, exitDuration);
 
-            float elapsed = 0f;
-            var startAlpha = Cg_Progress.alpha;
-            while (elapsed < duration)
+            // Phase 0: 进度条组渐隐
+            if (Cg_Progress != null && exitDuration > 0f)
             {
-                elapsed += Time.deltaTime;
-                Cg_Progress.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                float elapsed = 0f;
+                var startAlpha = Cg_Progress.alpha;
+                while (elapsed < exitDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    Cg_Progress.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / exitDuration);
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+                }
             }
-            Cg_Progress.alpha = 0f;
+
+            // Phase 1: 方块扫出揭示新场景（如果绑定了 TransitionBlock）
+            if (TransitionEffect != null)
+            {
+                await TransitionEffect.PlayExitAsync();
+            }
+
+            if (Cg_Progress != null) Cg_Progress.alpha = 0f;
             EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete);
         }
 

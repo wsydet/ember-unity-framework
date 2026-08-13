@@ -78,10 +78,69 @@ namespace Ember.UI
             _initialized = true;
 
             // 注册场景加载拦截器：有 Loading 页面时自动使用
+            // 流程：Show loading → 5011 事件 → 状态机 LoadScene → 轮询完成 → Proceed → 关 loading
             Ember.Scene.SceneCoordinator.InterceptSceneLoad = (sceneName, fromScene, onLoaded) =>
             {
-                if (DefaultLoadingPageDef == null) return false; // 未配置，不走 Loading
-                TransitionSceneWithLoading(sceneName, DefaultLoadingPageDef, fromScene, onLoaded);
+                if (DefaultLoadingPageDef == null) return false;
+
+                var sceneMgr = Ember.Scene.EmberSceneManager.Instance;
+                if (sceneMgr == null || sceneMgr.IsLoading) return false;
+
+                EUIPage loadingPage = null;
+                var loadDone = false;
+                var closed = false;
+
+                // ── 5011: 渐入完成 → 状态机开始加载场景 ──
+                Action onFadeInComplete = null;
+                onFadeInComplete = () =>
+                {
+                    EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
+                    sceneMgr.LoadSceneAsync(sceneName, () =>
+                    {
+                        if (!string.IsNullOrEmpty(fromScene) && sceneMgr.IsSceneLoaded(fromScene))
+                            sceneMgr.UnloadSceneAsync(fromScene);
+                        loadDone = true;
+                    });
+                };
+                EmberEventBus.Subscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
+
+                // ── 5013: 渐出完成 → 整个过程结束 ──
+                Action onFadeOutComplete = null;
+                onFadeOutComplete = () =>
+                {
+                    EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
+                    closed = true;
+                };
+                EmberEventBus.Subscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
+
+                // 显示 loading 页面
+                ShowTopMost(DefaultLoadingPageDef, onComplete: page => loadingPage = page);
+
+                // 轮询：等 loading 页创建、假进度完成、场景加载完成
+                WrapAsync();
+                async void WrapAsync()
+                {
+                    while (loadingPage == null)
+                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+
+                    var logic = loadingPage.Logic;
+                    while (!loadDone || logic == null || !logic.IsTransitionReady)
+                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+
+                    // 三者就绪 → 状态机推进（新场景 Enter，新 UI 在 loading 底下加载）
+                    onLoaded?.Invoke();
+
+                    // 等 2 帧让新 UI 完成 ProcessShowQueue + PlayShow
+                    await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+                    await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+
+                    // 关闭 loading → PlayHide → OnCustomExit 播 5012(float) + 5013
+                    ClosePage(loadingPage);
+
+                    while (!closed)
+                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+                }
+
                 return true;
             };
 
@@ -357,72 +416,36 @@ namespace Ember.UI
         }
 
         /// <summary>
-        /// 带 Loading 页面的场景过渡（事件驱动）。
-        ///
-        /// 流程：
-        /// 1. 显示 loading → 渐入 → LoadingFadeInComplete
-        /// 2. 开始加载场景 + 假进度 0→1（并行）
-        /// 3. 场景加载完成 AND 假进度到 100% → 先切换状态（新 UI 在 loading 底下加载）
-        /// 4. 等新 UI 就绪 → 关闭 loading → 渐出 → LoadingFadeOutComplete
+        /// Loading 页面生命周期管理。显示 loading → 等待 IsTransitionReady → 关闭。
+        /// 不负责场景加载和状态机切换，仅管理 loading 页面的打开和关闭。
+        /// 返回的 UniTask 在 loading 完全关闭（LoadingFadeOutComplete）后完成。
         /// </summary>
-        public async void TransitionSceneWithLoading(string sceneName, EUIPageDef loadingPageDef, string oldScene = null, Action onComplete = null)
+        public async Cysharp.Threading.Tasks.UniTask RunLoadingPage(EUIPageDef loadingPageDef)
         {
-            var sceneMgr = Ember.Scene.EmberSceneManager.Instance;
-            if (sceneMgr == null || sceneMgr.IsLoading) { onComplete?.Invoke(); return; }
-
             EUIPage loadingPage = null;
-            var loadDone = false;
-            var fadeOutReady = false;
             var closed = false;
 
-            Action onFadeInComplete = null;
-            Action onFadeOutStart = null;
             Action onFadeOutComplete = null;
-
-            onFadeInComplete = () =>
-            {
-                EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
-                // 渐入完成，开始加载场景（与假进度并行）
-                sceneMgr.LoadSceneAsync(sceneName, () =>
-                {
-                    if (!string.IsNullOrEmpty(oldScene) && sceneMgr.IsSceneLoaded(oldScene))
-                        sceneMgr.UnloadSceneAsync(oldScene);
-                    loadDone = true;
-                });
-            };
-
-            onFadeOutStart = () =>
-            {
-                EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeOutStart, onFadeOutStart);
-                fadeOutReady = true;
-            };
-
             onFadeOutComplete = () =>
             {
                 EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
                 closed = true;
             };
-
-            EmberEventBus.Subscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
-            EmberEventBus.Subscribe(EUIEvents.LoadingFadeOutStart, onFadeOutStart);
             EmberEventBus.Subscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
 
             ShowTopMost(loadingPageDef, onComplete: page => loadingPage = page);
 
-            // 等待假进度到 100% AND 场景加载完成
-            while (!fadeOutReady || !loadDone)
+            // 等待 loading 页面创建完成
+            while (loadingPage == null)
                 await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
-            // 先切换状态：新场景 Enter → 新 UI 在 loading 底下加载
-            onComplete?.Invoke();
+            // 轮询假进度完成
+            var logic = loadingPage.Logic;
+            while (logic == null || !logic.IsTransitionReady)
+                await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
-            // 等 2 帧让新 UI 完成 ProcessShowQueue + PlayShow
-            await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-            await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-            // 关闭 loading（渐出）
-            if (loadingPage != null)
-                ClosePage(loadingPage);
+            // 关闭 loading → PlayHide → OnCustomExit 播 LoadingFadeOutStart(float) + LoadingFadeOutComplete
+            ClosePage(loadingPage);
 
             // 等待渐出完成
             while (!closed)

@@ -214,24 +214,17 @@ MonoBehaviour:
   isPage: 1
   pageName: EUIBackgroundPage
   pageFlags: 32
-  usePresetFade: 1
+  usePresetFade: 0
   fadeInTime: 0.3
   fadeOutTime: 0.2
-  useCustomTransition: 1
+  useCustomTransition: 0
   selfWidgetType: 0
   selfWidgetClassName: 
   _pageSettings:
-    rid: 959158127316959355
+    rid: -2
   bindings: []
   references:
     version: 2
     RefIds:
-    - rid: 959158127316959355
-      type: {class: EUILoadingSettings, ns: Ember.UI, asm: Ember.UI.Runtime}
-      data:
-        useProgressBar: 1
-        useProgressNumber: 1
-        displayMaxRatio: 0.6
-        smoothDuration: 1
-        customEnterDuration: 0.3
-        customExitDuration: 0.2
+    - rid: -2
+      type: {class: , ns: , asm: }
