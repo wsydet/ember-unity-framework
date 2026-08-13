@@ -21,7 +21,7 @@ namespace Ember.UI
     /// <para>开发者入口为 <see cref="EUIManager"/>（Show / Close / Preload 等 API）。</para>
     /// </summary>
     [EmberInitOrder(EmberInitOrderAttribute.UI)]
-    public class EUIViewEngine : EmberMonoSingleton<EUIViewEngine>, IEmberManager
+    public class EUIViewEngine : EmberSingleton<EUIViewEngine>, IEmberManager, IEmberUpdate, IEmberLateUpdate
     {
         private const string TAG = LogTags.UIManager;
 
@@ -62,14 +62,9 @@ namespace Ember.UI
 
         // --------------------------------------------------------
 
-        #region 生命周期
+        #region 帧驱动
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
-        private void Update()
+        void IEmberUpdate.Update()
         {
             Profiler.BeginSample("EUIViewEngine.Update");
             ProcessPendingOperations();
@@ -79,7 +74,7 @@ namespace Ember.UI
             Profiler.EndSample();
         }
 
-        private void LateUpdate()
+        void IEmberLateUpdate.LateUpdate()
         {
             // 如果活跃页面需要 LateUpdate 驱动
         }
@@ -283,7 +278,7 @@ namespace Ember.UI
                         {
                             // 立即销毁
                             if (page.GameObject != null)
-                                Destroy(page.GameObject);
+                                UnityEngine.Object.Destroy(page.GameObject);
                         }
                         onComplete?.Invoke();
                     }
