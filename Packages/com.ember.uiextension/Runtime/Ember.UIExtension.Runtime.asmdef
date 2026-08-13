@@ -7,7 +7,9 @@
         "Sirenix.OdinInspector.Attributes",
         "Ember.Basic.Runtime",
         "Unity.TextMeshPro",
-        "UniTask"
+        "UniTask",
+        "DOTWEEN",
+        "DOTween.Modules"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

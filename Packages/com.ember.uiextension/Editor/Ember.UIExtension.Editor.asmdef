@@ -6,7 +6,8 @@
         "Ember.UI.Runtime",
         "Ember.UIExtension.Runtime",
         "Ember.Basic.Runtime",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "DOTWEEN"
     ],
     "includePlatforms": [
         "Editor"
