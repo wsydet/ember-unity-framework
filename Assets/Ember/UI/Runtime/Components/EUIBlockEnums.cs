@@ -25,13 +25,6 @@ namespace Ember.UI
         Random = 8,
     }
 
-    public enum EUIBlockAnimationType
-    {
-        ScaleUp = 0,
-        SlideFromDirection = 1,
-        ScaleAndFade = 2,
-    }
-
     /// <summary>
     /// 自动网格下每个方块的目标像素大小。限定为 2 的次方，覆盖常见分辨率。
     /// </summary>

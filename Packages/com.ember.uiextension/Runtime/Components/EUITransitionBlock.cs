@@ -23,7 +23,7 @@ namespace Ember.UIExtension
     /// 方块过渡动画组件，实现 <see cref="IEUITransitionEffect"/> 接口。
     /// 选中该子物体可在 Inspector 中配置所有参数并预览动画。
     /// </summary>
-    public class EUITransitionBlock : MonoBehaviour, IEUITransitionEffect
+    public class EUITransitionBlock : MonoBehaviour, IEUITransitionEffect, IEUITransitionHandler
     {
         private const string GROUP = "L1: 方块过渡";
 
@@ -53,9 +53,16 @@ namespace Ember.UIExtension
         [SerializeField] private Texture2D _blockTexture;
 
         [BoxGroup("$GROUP/方块外观")]
-        [Tooltip("方块动画类型")]
-        [DisableIf("IsPresetLocked")]
-        [SerializeField] private EUIBlockAnimationType _blockAnimation = EUIBlockAnimationType.ScaleUp;
+        [Tooltip("方块动画曲线预设。选一个自动填充下方 6 条曲线；选「自定义」后手动微调。")]
+        [OnValueChanged("ApplyCurvePreset")]
+        [ValueDropdown("GetCurvePresetItems")]
+        [SerializeField] private EUIBlockCurvePreset _curvePreset = EUIBlockCurvePreset.GrowSmooth;
+
+        [BoxGroup("$GROUP/方块外观")]
+        [InlineProperty]
+        [HideLabel]
+        [Tooltip("6 条动画曲线：缩放 x/y、位移 x/y、旋转、透明度。横轴=进度 0→1，纵轴=属性目标值。")]
+        [SerializeField] private EUIBlockCurves _curveAnimation = new();
 
         [BoxGroup("$GROUP/网格", ShowLabel = false)]
         [Title("网格")]
@@ -146,10 +153,6 @@ namespace Ember.UIExtension
         [Range(0f, 0.1f)]
         [SerializeField] private float _staggerInterval = 0.03f;
 
-        [BoxGroup("$GROUP/动画参数")]
-        [Tooltip("方块缓动曲线")]
-        [SerializeField] private Ease _blockEase = Ease.OutQuad;
-
         #endregion
 
         // --------------------------------------------------------
@@ -189,13 +192,9 @@ namespace Ember.UIExtension
             _containerRect.offsetMin = Vector2.zero;
             _containerRect.offsetMax = Vector2.zero;
 
-            var blockCanvas = GetComponent<Canvas>();
-            if (blockCanvas == null)
-            {
-                blockCanvas = gameObject.AddComponent<Canvas>();
-                blockCanvas.overrideSorting = true;
-                blockCanvas.sortingOrder = -1;
-            }
+            // 不挂独立 Canvas：方块（RawImage）直接渲染在父页面 Canvas 上，
+            // 按兄弟顺序位于 Background 之后、进度条之前，从而盖住下层页面且被进度条覆盖。
+            // （曾用 overrideSorting=-1 独立 Canvas，会落到所有页面之后导致方块不可见）
         }
 
         private void OnDestroy()
@@ -237,9 +236,36 @@ namespace Ember.UIExtension
                 if (entry.Rect == null || entry.Raw == null) continue;
                 entry.Raw.gameObject.SetActive(false);
                 entry.Rect.localScale = Vector3.one;
+                entry.Rect.localEulerAngles = Vector3.zero;
                 var c = entry.Raw.color; c.a = 1f; entry.Raw.color = c;
             }
             _activeCount = 0;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region IEUITransitionHandler 实现
+
+        /// <summary>作为预设过渡（替代 DefaultUITransitionHandler）的打开动画：面板立即可见 → 方块扫入覆盖。</summary>
+        [HasGC]
+        public async UniTask PlayShowAsync(GameObject page, float duration)
+        {
+            // 根 CanvasGroup alpha=0 会连同方块一起隐藏，故先把面板置为可见，由方块自身负责覆盖/揭示
+            if (page != null)
+            {
+                var cg = page.GetComponent<CanvasGroup>();
+                if (cg != null) cg.alpha = 1f;
+            }
+            await PlayEnterAsync(); // 用方块自身 _transitionDuration，忽略传入的 duration
+        }
+
+        /// <summary>作为预设过渡的关闭动画：方块扫出揭示新场景。</summary>
+        [HasGC]
+        public async UniTask PlayHideAsync(GameObject page, float duration)
+        {
+            await PlayExitAsync();
         }
 
         #endregion
@@ -346,25 +372,39 @@ namespace Ember.UIExtension
 
         private void AnimateBlock(BlockEntry entry, Vector2 position, float delay, float duration, bool manualUpdate, bool isEnter)
         {
-            var anim = EUIBlockAnimationRegistry.Get(_blockAnimation);
-            if (anim == null) return;
+            RectTransform rect = entry.Rect;
+            RawImage raw = entry.Raw;
+            UpdateType update = manualUpdate ? UpdateType.Manual : UpdateType.Normal;
 
-            var ctx = new EUIBlockAnimationContext
-            {
-                Rect = entry.Rect,
-                Raw = entry.Raw,
-                Position = position,
-                Delay = delay,
-                Duration = duration,
-                Ease = _blockEase,
-                ManualUpdate = manualUpdate,
-                SlideOffset = GetSlideOffset(_enterDirection),
-            };
+            // 进度 0=隐藏初始态，1=完全显现；进入 0→1、退出 1→0。缓动由曲线本身编码，故 tween 用 Linear。
+            float progress = isEnter ? 0f : 1f;
+            ApplyCurves(rect, raw, position, progress);
 
-            if (isEnter)
-                anim.PlayEnter(ctx);
-            else
-                anim.PlayExit(ctx);
+            DOTween.To(
+                () => progress,
+                x =>
+                {
+                    progress = x;
+                    ApplyCurves(rect, raw, position, progress);
+                },
+                isEnter ? 1f : 0f,
+                duration
+            ).SetEase(Ease.Linear).SetDelay(delay).SetUpdate(update);
+        }
+
+        /// <summary>按进度求值 6 条曲线并应用到方块（每帧调用，无 GC）。</summary>
+        [NoGC]
+        private void ApplyCurves(RectTransform rect, RawImage raw, Vector2 position, float progress)
+        {
+            var c = _curveAnimation;
+            if (c == null) return;
+
+            rect.localScale = new Vector3(c.XScale.Evaluate(progress), c.YScale.Evaluate(progress), 1f);
+            rect.anchoredPosition = position + new Vector2(c.XPosition.Evaluate(progress), c.YPosition.Evaluate(progress)) * _blockSize;
+            rect.localEulerAngles = new Vector3(0f, 0f, c.Rotation.Evaluate(progress) * 360f);
+            var color = raw.color;
+            color.a = Mathf.Clamp01(c.Alpha.Evaluate(progress));
+            raw.color = color;
         }
 
         [NoGC]
@@ -381,24 +421,6 @@ namespace Ember.UIExtension
                 EUIBlockDirection.BottomLeft => EUIBlockDirection.TopRight,
                 EUIBlockDirection.BottomRight => EUIBlockDirection.TopLeft,
                 _ => direction, // Random 等无确定反向，原样返回
-            };
-        }
-
-        [NoGC]
-        private Vector2 GetSlideOffset(EUIBlockDirection direction)
-        {
-            float w = _containerRect.rect.width, h = _containerRect.rect.height, pad = _blockSize * 1.5f;
-            return direction switch
-            {
-                EUIBlockDirection.Top => new Vector2(0f, h + pad),
-                EUIBlockDirection.Bottom => new Vector2(0f, -(h + pad)),
-                EUIBlockDirection.Left => new Vector2(-(w + pad), 0f),
-                EUIBlockDirection.Right => new Vector2(w + pad, 0f),
-                EUIBlockDirection.TopLeft => new Vector2(-(w + pad), h + pad),
-                EUIBlockDirection.TopRight => new Vector2(w + pad, h + pad),
-                EUIBlockDirection.BottomLeft => new Vector2(-(w + pad), -(h + pad)),
-                EUIBlockDirection.BottomRight => new Vector2(w + pad, -(h + pad)),
-                _ => new Vector2(0f, h + pad),
             };
         }
 
@@ -584,14 +606,6 @@ namespace Ember.UIExtension
                 _containerRect.offsetMax = Vector2.zero;
             }
 
-            var blockCanvas = GetComponent<Canvas>();
-            if (blockCanvas == null)
-            {
-                blockCanvas = gameObject.AddComponent<Canvas>();
-                blockCanvas.overrideSorting = true;
-                blockCanvas.sortingOrder = -1;
-            }
-
             EnsureGrid();
             EmberDebug.Log(LogTags.EmberUI, $"初始化完成：{_gridSize.x}×{_gridSize.y} 网格（方块按需创建）");
         }
@@ -700,7 +714,7 @@ namespace Ember.UIExtension
             { "⫶ 锯齿交错", EUIBlockPreset.Teeth },
         };
 
-        /// <summary>非「自定义」预设时锁定排布模式与动画类型字段，方向/基准角与子参数仍可手动调整。</summary>
+        /// <summary>非「自定义」预设时锁定排布模式字段；方向/基准角、子参数与动画曲线仍可手动调整。</summary>
         private bool IsPresetLocked() => _preset != EUIBlockPreset.Custom;
 
         /// <summary>进入方向/基准角是否展示：侧扫、螺旋、对角擦除、逐行需要方向/基准角。</summary>
@@ -735,6 +749,15 @@ namespace Ember.UIExtension
 
         private ValueDropdownList<EUIBlockPreset> GetPresetItems() => PresetItems;
 
+        private ValueDropdownList<EUIBlockCurvePreset> GetCurvePresetItems() => EUIBlockCurves.PresetItems;
+
+        /// <summary>把所选曲线预设的 6 条曲线填充进 <see cref="_curveAnimation"/>；「自定义」不动现有曲线。</summary>
+        private void ApplyCurvePreset()
+        {
+            if (_curvePreset == EUIBlockCurvePreset.Custom) return;
+            _curveAnimation = EUIBlockCurves.Create(_curvePreset);
+        }
+
         /// <summary>
         /// 应用当前预设的默认动画参数。螺旋等「每块一组」的排布会因错开间隔累加导致总时长过长，
         /// 因此这类预设用更小的默认错开间隔。
@@ -742,7 +765,6 @@ namespace Ember.UIExtension
         private void ApplyDefaultAnimationParameters()
         {
             _transitionDuration = 0.8f;
-            _blockEase = Ease.OutQuad;
             _staggerInterval = EUIBlockPresetDefaults.GetStagger(_preset);
         }
 
@@ -755,36 +777,36 @@ namespace Ember.UIExtension
                 case EUIBlockPreset.SideWipe:
                     _enterPattern = EUIBlockOrderPattern.SideWipe; _enterDirection = EUIBlockDirection.Top;
                     _exitPattern = EUIBlockOrderPattern.SideWipe;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Diamond:
                     _enterPattern = EUIBlockOrderPattern.Diamond; _diamondOutward = true;
                     _exitPattern = EUIBlockOrderPattern.Diamond;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Spiral:
                     _enterPattern = EUIBlockOrderPattern.Spiral; _enterDirection = EUIBlockDirection.TopLeft;
                     _spiralClockwise = true; _spiralCenterOut = false;
                     _exitPattern = EUIBlockOrderPattern.Spiral;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Checkerboard:
                     _enterPattern = EUIBlockOrderPattern.Checkerboard;
                     _exitPattern = EUIBlockOrderPattern.Checkerboard;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.CornerWipe:
                     _enterPattern = EUIBlockOrderPattern.CornerWipe; _enterDirection = EUIBlockDirection.TopLeft;
                     _exitPattern = EUIBlockOrderPattern.CornerWipe;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Random:
                     _enterPattern = EUIBlockOrderPattern.Random;
                     _exitPattern = EUIBlockOrderPattern.Random;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Lines:
                     _enterPattern = EUIBlockOrderPattern.Lines; _enterDirection = EUIBlockDirection.TopLeft; _linesHorizontal = true;
                     _exitPattern = EUIBlockOrderPattern.Lines;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
                 case EUIBlockPreset.Teeth:
                     _enterPattern = EUIBlockOrderPattern.Teeth; _teethHorizontal = true;
                     _exitPattern = EUIBlockOrderPattern.Teeth;
-                    _blockAnimation = EUIBlockAnimationType.ScaleUp; break;
+                    break;
             }
 
             ApplyDefaultAnimationParameters();
