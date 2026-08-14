@@ -2,7 +2,7 @@
  * author       : DESKTOP-5SRUU55
  * prefab name  : EUILoadingPage
  * page name    : EUILoadingPage
- * update time  : 2026/8/13 10:13:42
+ * update time  : 2026/8/14 14:58:55
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -20,12 +20,12 @@ namespace Game.UI
         private CanvasGroup Cg_Progress;
 
         /// <summary>
-        /// m_Cg_Progress/m_Img_ProgressBar
+        /// m_Cg_Progress/Pos/m_Img_ProgressBar
         /// </summary>
         private Image Img_ProgressBar;
 
         /// <summary>
-        /// m_Cg_Progress/m_Txt_ProgressNum
+        /// m_Cg_Progress/Pos/m_Txt_ProgressNum
         /// </summary>
         private TMP_Text Txt_ProgressNum;
 

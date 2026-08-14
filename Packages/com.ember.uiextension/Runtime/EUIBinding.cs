@@ -201,9 +201,18 @@ namespace Ember.UIExtension
         [PropertyOrder(0)]
         [FoldoutGroup("过渡动画")]
         [SerializeField, LabelText("使用预设渐入渐出")]
-        [Tooltip("勾选后使用 CanvasGroup alpha 渐入渐出，时长由下方滑条控制。可通过 EUIViewEngine.TransitionHandler 全局替换实现。")]
+        [Tooltip("勾选后使用 CanvasGroup alpha 渐入渐出，时长由下方滑条控制。与「使用方块过渡」互斥二选一。")]
         [ShowIf("@isPage && !noCodeGen")]
+        [OnValueChanged("OnPresetFadeChanged")]
         private bool usePresetFade = true;
+
+        [PropertyOrder(0.5f)]
+        [FoldoutGroup("过渡动画")]
+        [SerializeField, LabelText("使用方块过渡")]
+        [Tooltip("勾选后预设过渡改用方块扫入/扫出（EUITransitionBlock），与「使用预设渐入渐出」互斥二选一。需在页面下挂 m_TransitionBlock 子物体。")]
+        [ShowIf("@isPage && !noCodeGen && HasTransitionBlock")]
+        [OnValueChanged("OnTransitionBlockChanged")]
+        private bool useTransitionBlock;
 
         [PropertyOrder(1)]
         [FoldoutGroup("过渡动画")]
@@ -326,6 +335,7 @@ namespace Ember.UIExtension
         public bool GenerateCustomSettings => generateCustomSettings;
         public PageFlags PageFlags => pageFlags;
         public bool UsePresetFade => usePresetFade;
+        public bool UseTransitionBlock => useTransitionBlock;
         public bool UseCustomTransition => useCustomTransition;
         public float FadeInTime => fadeInTime;
         public float FadeOutTime => fadeOutTime;
@@ -366,6 +376,21 @@ namespace Ember.UIExtension
         {
             CheckCustomTransitionMethods();
         }
+
+        /// <summary>勾选「使用预设渐入渐出」时，取消「使用方块过渡」（互斥二选一）。</summary>
+        private void OnPresetFadeChanged()
+        {
+            if (usePresetFade) useTransitionBlock = false;
+        }
+
+        /// <summary>勾选「使用方块过渡」时，取消「使用预设渐入渐出」（互斥二选一）。</summary>
+        private void OnTransitionBlockChanged()
+        {
+            if (useTransitionBlock) usePresetFade = false;
+        }
+
+        /// <summary>页面下是否挂了方块过渡组件（EUITransitionBlock），决定「使用方块过渡」选项是否显示。</summary>
+        private bool HasTransitionBlock => GetComponentInChildren<EUITransitionBlock>(true) != null;
 
         private bool ValidateSelfWidgetType(WidgetTypes type)
         {

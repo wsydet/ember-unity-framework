@@ -101,9 +101,13 @@ namespace Ember.UI
 
         // 过渡动画配置（由 EUIBindingBridge 在页面创建时注入）
         private bool _usePresetFade;
+        private bool _useTransitionBlock;
         private bool _useCustomTransition;
         private float _transitionInTime;
         private float _transitionOutTime;
+
+        /// <summary>是否启用预设过渡（「默认渐入渐出」或「方块过渡」二选一）。</summary>
+        private bool UsePreset => _usePresetFade || _useTransitionBlock;
 
         // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
         private Action _onShowComplete;
@@ -287,7 +291,7 @@ namespace Ember.UI
             try { _logic?.BroadcastShow(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
 
-            if (!_usePresetFade && !_useCustomTransition)
+            if (!UsePreset && !_useCustomTransition)
             {
                 CompleteShow();
             }
@@ -348,7 +352,7 @@ namespace Ember.UI
             try { _logic?.BroadcastHide(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
 
-            if (!_usePresetFade && !_useCustomTransition)
+            if (!UsePreset && !_useCustomTransition)
             {
                 CompleteHide();
             }
@@ -520,10 +524,25 @@ namespace Ember.UI
 
         #region 内部方法
 
+        /// <summary>
+        /// 解析预设过渡处理器：勾选了「方块过渡」则用页面上的 IEUITransitionHandler 组件（如 EUITransitionBlock），
+        /// 否则用全局 DefaultUITransitionHandler（整面板 alpha 渐变）。两者互斥二选一。
+        /// </summary>
+        private IEUITransitionHandler ResolvePresetHandler()
+        {
+            if (_useTransitionBlock)
+            {
+                var block = _gameObject.GetComponentInChildren<IEUITransitionHandler>();
+                if (block != null) return block;
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 勾选了方块过渡但未找到 IEUITransitionHandler 组件，退回默认渐入渐出。");
+            }
+            return EUIViewEngine.Instance.TransitionHandler;
+        }
+
         private async UniTask RunShowAnimationSequence()
         {
-            if (_usePresetFade)
-                await EUIViewEngine.Instance.TransitionHandler.PlayShowAsync(_gameObject, _transitionInTime);
+            if (UsePreset)
+                await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
             if (_useCustomTransition)
                 await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
             CompleteShow();
@@ -558,10 +577,10 @@ namespace Ember.UI
 
         private async UniTask RunHideAnimationSequence()
         {
-            if (_usePresetFade)
-                await EUIViewEngine.Instance.TransitionHandler.PlayHideAsync(_gameObject, _transitionOutTime);
             if (_useCustomTransition)
                 await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+            if (UsePreset)
+                await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
             CompleteHide();
         }
 
@@ -728,19 +747,21 @@ namespace Ember.UI
         /// 注入过渡动画配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
         /// <see cref="PlayShow"/> / <see cref="PlayHide"/> 根据两个独立开关决定动画链：
         /// <list type="bullet">
-        ///   <item>仅 <b>Preset</b>：全局 Handler 的 CanvasGroup alpha 渐变</item>
+        ///   <item>仅 <b>Preset</b>：预设过渡（「默认渐入渐出」或「方块过渡」二选一）</item>
         ///   <item>仅 <b>Custom</b>：<see cref="EUILogic.OnCustomEnter"/> / <see cref="EUILogic.OnCustomExit"/></item>
-        ///   <item><b>Preset + Custom</b>：先播全局预设，再播自定义（叠加）</item>
+        ///   <item><b>Preset + Custom</b>：进入先播预设再播自定义；退出先播自定义再播预设（镜像）</item>
         ///   <item>都不勾：无动画，立即完成</item>
         /// </list>
         /// </summary>
-        /// <param name="usePreset">是否启用全局预设过渡动画</param>
+        /// <param name="usePreset">是否启用「默认渐入渐出」预设过渡</param>
+        /// <param name="useBlock">是否启用「方块过渡」预设过渡（与 usePreset 互斥）</param>
         /// <param name="useCustom">是否启用自定义过渡动画</param>
         /// <param name="inTime">进入动画时长（秒），预设使用</param>
         /// <param name="outTime">退出动画时长（秒），预设使用</param>
-        public void SetTransition(bool usePreset, bool useCustom, float inTime, float outTime)
+        public void SetTransition(bool usePreset, bool useBlock, bool useCustom, float inTime, float outTime)
         {
             _usePresetFade = usePreset;
+            _useTransitionBlock = useBlock;
             _useCustomTransition = useCustom;
             _transitionInTime = inTime;
             _transitionOutTime = outTime;

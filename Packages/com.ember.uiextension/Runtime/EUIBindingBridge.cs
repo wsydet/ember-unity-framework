@@ -141,7 +141,7 @@ namespace Ember.UIExtension
             if (binding != null)
             {
                 // 注入过渡动画配置（独立于 Logic 绑定，即使没有 Logic 类也生效）
-                page.SetTransition(binding.UsePresetFade, binding.UseCustomTransition, binding.FadeInTime, binding.FadeOutTime);
+                page.SetTransition(binding.UsePresetFade, binding.UseTransitionBlock, binding.UseCustomTransition, binding.FadeInTime, binding.FadeOutTime);
 
                 Attach(page, binding);
             }
@@ -173,6 +173,8 @@ namespace Ember.UIExtension
                     return go.GetComponent<Canvas>();
                 case EUIBinding.WidgetTypes.CanvasGroup:
                     return go.GetComponent<CanvasGroup>();
+                case EUIBinding.WidgetTypes.Component:
+                    return GetCustomComponent(go);
                 case EUIBinding.WidgetTypes.UILogic:
                 case EUIBinding.WidgetTypes.Extension:
                     if (!string.IsNullOrEmpty(className))
@@ -188,6 +190,23 @@ namespace Ember.UIExtension
                 default:
                     return go.GetComponent<Transform>();
             }
+        }
+
+        /// <summary>
+        /// 「Component」绑定类型解析：返回节点上非 UI 基础设施组件（Transform/RectTransform/Canvas/CanvasGroup/CanvasRenderer）的自定义组件。
+        /// 自动收集会把无法归类为内置 UI 类型的自定义组件标记为 Component，运行时需还原出该组件（如 EUITransitionBlock），
+        /// 否则退回 Transform 会让业务层的接口强转（as IEUITransitionEffect）恒为空。
+        /// </summary>
+        private static Component GetCustomComponent(GameObject go)
+        {
+            foreach (var comp in go.GetComponents<Component>())
+            {
+                // Transform 已覆盖 RectTransform（RectTransform 继承自 Transform）；跳过基础设施，返回真正的自定义组件
+                if (comp is Transform || comp is Canvas || comp is CanvasGroup || comp is CanvasRenderer)
+                    continue;
+                return comp;
+            }
+            return go.GetComponent<Transform>();
         }
     }
 }

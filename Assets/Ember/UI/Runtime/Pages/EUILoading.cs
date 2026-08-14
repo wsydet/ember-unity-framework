@@ -205,21 +205,14 @@ namespace Game.UI
         #region 自定义过渡动画
 
         /// <summary>
-        /// 过渡动画进入阶段。
-        /// 如果绑定了 TransitionBlock → 方块扫入覆盖 → 进度条组渐显。
-        /// 否则仅进度条组渐显（SimpleFade）。
+        /// 过渡动画进入阶段（Custom 槽）。方块扫入已由预设槽（EUITransitionBlock）完成，
+        /// 这里仅负责进度条组渐显。
         /// </summary>
         public override async UniTask OnCustomEnter()
         {
             if (_settings == null) return;
 
-            // Phase 0: 方块扫入覆盖屏幕（如果绑定了 TransitionBlock）
-            if (TransitionEffect != null)
-            {
-                await TransitionEffect.PlayEnterAsync();
-            }
-
-            // Phase 1: 进度条组渐显
+            // 进度条组渐显
             if (Cg_Progress == null) return;
             var duration = _settings.customEnterDuration;
             if (duration <= 0f) { Cg_Progress.alpha = 1f; return; }
@@ -237,8 +230,8 @@ namespace Game.UI
         }
 
         /// <summary>
-        /// 过渡动画退出阶段。
-        /// 进度条组先渐隐 → 如果绑定了 TransitionBlock → 方块扫出揭示新场景。
+        /// 过渡动画退出阶段（Custom 槽）。这里仅负责进度条组渐隐；
+        /// 方块扫出由预设槽（EUITransitionBlock）在自定义之后播放。
         /// </summary>
         public override async UniTask OnCustomExit()
         {
@@ -247,7 +240,7 @@ namespace Game.UI
             var exitDuration = _settings.customExitDuration;
             EmberEventBus.OnNext(EUIEvents.LoadingFadeOutStart, exitDuration);
 
-            // Phase 0: 进度条组渐隐
+            // 进度条组渐隐
             if (Cg_Progress != null && exitDuration > 0f)
             {
                 float elapsed = 0f;
@@ -258,12 +251,6 @@ namespace Game.UI
                     Cg_Progress.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / exitDuration);
                     await UniTask.Yield(PlayerLoopTiming.Update);
                 }
-            }
-
-            // Phase 1: 方块扫出揭示新场景（如果绑定了 TransitionBlock）
-            if (TransitionEffect != null)
-            {
-                await TransitionEffect.PlayExitAsync();
             }
 
             if (Cg_Progress != null) Cg_Progress.alpha = 0f;
