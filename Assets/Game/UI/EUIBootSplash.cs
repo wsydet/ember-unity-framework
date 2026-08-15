@@ -23,8 +23,11 @@ namespace Game.UI
     }
 
     /// <summary>
-    /// 启动遮罩 —— Frame 0 遮挡画面，Init 退出时按配置的淡出模式隐藏。
-    /// 挂在 UIRoot 下的 BootSplash 上，默认显示，运行时自管理。
+    /// 启动遮罩 —— Frame 0 遮挡画面，挂在 UIRoot 下的 BootSplash 上，默认显示，运行时自管理。
+    ///
+    /// MainScene 加载完成后按配置的淡出模式隐藏（None/Preset/Custom），
+    /// 淡出完成后通过 <see cref="EmberBootSplashBridge"/> 通知 InitState，
+    /// 后者才 TransitionTo《MainState》——保证黑幕完全消失后开屏动画 / MainUI 才开始。
     ///
     /// <para>实现 <see cref="IEUIPersistentUI"/>，确保 EUIViewEngine 初始化时
     /// 不会隐藏此节点（BootSplash 需要在 Init 期间持续显示）。</para>
@@ -106,9 +109,8 @@ namespace Game.UI
                         break;
 
                     case BootSplashFadeMode.Preset:
-                        // 等 2 帧让 MainMenu 完成加载 + PlayShow，避免闪烁
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-                        await UniTask.Yield(PlayerLoopTiming.Update);
+                        // 串行时序下 InitState 会 await 本淡出完成后才 TransitionTo，
+                        // MainMenu 在淡出之后才进入，无需在此等待其加载。
                         await FadeOutAsync(_fadeDuration);
                         break;
 

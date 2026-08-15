@@ -18,8 +18,8 @@ namespace Game.State
             base.OnMainEnter(args);
             // 全局注册 Loading 页面：之后所有跨场景 TransitionTo 自动使用
             EUIManager.DefaultLoadingPageDef = GamePages.EUILoadingPage;
-            // 背景页：兜底 UI，层级最底（sortingOrder=0）
-            EUIManager.Instance.SetBackground(GamePages.EUIBackgroundPage);
+            // 背景页已迁移到开屏动画（EUIMainAnimationStarter）中加载：
+            // 开屏动画会 await 背景页加载完成才结束，避免背景与 MainUI 抢跑穿帮。
         }
 
         protected override void OnMainExit()

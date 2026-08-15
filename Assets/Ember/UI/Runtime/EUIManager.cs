@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 
+using Cysharp.Threading.Tasks;
+
 using Ember.Core;
 using Ember.Basic;
 
@@ -199,9 +201,19 @@ namespace Ember.UI
         /// <summary>
         /// 设置背景页（单槽位）。仅 <see cref="PageType.Background"/> 类型有效。
         /// 不走 ShowQueue，直接加载并打开，sortingOrder 固定为 0。
-        /// 由 MainState 生命周期驱动：OnMainEnter 打开，OnMainExit 关闭。
+        /// 不等待加载完成；需要等背景就绪再继续的场景用 <see cref="SetBackgroundAsync"/>。
         /// </summary>
         public void SetBackground(EUIPageDef pageDef)
+        {
+            SetBackgroundAsync(pageDef).Forget();
+        }
+
+        /// <summary>
+        /// 设置背景页并等待其加载+显示完成（异步版本）。
+        /// 背景页现由开屏动画（EUIMainAnimationStarter）在 MainSceneReady 后加载，
+        /// 开屏动画会 await 本方法，确保背景兜底 UI 就绪后才结束动画、进入 MainUI。
+        /// </summary>
+        public async UniTask SetBackgroundAsync(EUIPageDef pageDef)
         {
             if (pageDef == null) return;
             if (pageDef.PageType != PageType.Background)
@@ -210,11 +222,13 @@ namespace Ember.UI
                 return;
             }
 
+            var tcs = new UniTaskCompletionSource();
             _uiManager.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
             {
                 if (prefab == null)
                 {
                     EmberDebug.LogError(TAG, $"无法加载背景预制体: {pageDef.PrefabPath}");
+                    tcs.TrySetResult();
                     return;
                 }
 
@@ -227,8 +241,11 @@ namespace Ember.UI
                 _uiManager.OpenPage(page, pageDef, null, () =>
                 {
                     EmberDebug.Log(TAG, $"背景已设置: {pageDef.PrefabPath}");
+                    tcs.TrySetResult();
                 });
             });
+
+            await tcs.Task;
         }
 
         /// <summary>

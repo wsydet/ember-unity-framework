@@ -13,8 +13,9 @@ namespace Ember.Core
     /// 3. 加载 MainScene → TransitionTo&lt;MainState&gt;
     ///
     /// <b>InitState 持有 BootSplash（黑幕）</b>：
-    /// BootSplash 在 FrameworkScene 启动时自动激活，
-    /// Init 退出时（SceneLoadDone 后）自动关闭销毁。
+    /// BootSplash 在 FrameworkScene 启动时自动激活。
+    /// MainScene 加载完成后先 await 黑幕淡出（见 EmberBootSplashBridge），
+    /// 黑幕完全消失后才 TransitionTo《MainState》。
     ///
     /// <b>开屏动画归 MainState 持有</b>：
     /// 进入 MainState.OnEnter 后播报 MainSceneReady，
@@ -48,11 +49,15 @@ namespace Ember.Core
             {
                 fsm.LoadSceneAsync?.Invoke("MainScene", async () =>
                 {
-                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded, transitioning to Main...");
+                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: MainScene loaded. Waiting for BootSplash to fade out...");
 
-                    // BootSplash 与 UI 并行：
-                    // TransitionTo 后 UI 开始加载（~1 帧），splash 同步淡出（0.5s）。
-                    // splash 渲染层级在 UI 之上，淡出过程中 UI 逐步显现，避免穿帮。
+                    // 串行时序：等 BootSplash 完全淡出（黑幕消失）后才 TransitionTo，
+                    // 保证开屏动画 / MainUI 进入动画在 BootSplash 消失之后才开始。
+                    // 若业务层未挂 BootSplash（桥接为 null），则跳过等待立即 TransitionTo。
+                    if (EmberBootSplashBridge.WaitForFadeOut != null)
+                        await EmberBootSplashBridge.WaitForFadeOut();
+
+                    EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: transitioning to Main...");
                     fsm.TransitionTo<MainState>(skipSceneLoad: true);
                 });
             }

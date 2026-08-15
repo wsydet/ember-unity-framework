@@ -108,6 +108,8 @@ namespace Ember.Core
 
             EmberDebug.LogInit(TAG, "GameLauncher: initializing framework...");
 
+            Time.timeScale = 0.25f;
+
             // 创建状态机并注册所有游戏状态
             Fsm = new EmberStateMachine();
             ConfigureStateMachine(Fsm);
