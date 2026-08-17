@@ -29,6 +29,7 @@
 | 文档 | 内容 |
 |------|------|
 | [contributing.md](dev/contributing.md) | Git 分支规范、提交信息格式 |
+| [ember-boot-sequence.md](dev/ember-boot-sequence.md) | 进入游戏后的启动时序：五阶段 + 两道串行门槛 |
 | [odin-usage-notes.md](dev/odin-usage-notes.md) | Odin Inspector 在 Unity 6 下的已知问题和推荐写法 |
 | [skills-reference.md](dev/skills-reference.md) | 所有 Skill 的速查表 |
 | [skill-writing-guide.md](dev/skill-writing-guide.md) | 编写新 Skill 的规范 |
