@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.UI
 {
     /// <summary>
-    /// 默认开屏动画 —— 无动画，立即完成。基类会先加载背景页再播 OpeningAnimationEnd。
+    /// 默认开屏动画 —— 无动画，立即完成。
     ///
     /// 挂在 MainScene 的 GameObject 上，替代抽象基类 <see cref="EUIMainAnimationStarter"/>。
     /// <see cref="PlayOpeningAnimation"/> 直接返回 <see cref="UniTask.CompletedTask"/>。
@@ -28,7 +28,7 @@ namespace Game.UI
     ///         await UniTask.Delay(500);
     ///         // 淡出
     ///         await FadeOut(_logoGroup, 1f);
-    ///         // 无需调用 onComplete，框架会自动等待背景页并广播 OpeningAnimationEnd
+    ///         // 无需手动触发完成，框架 await 后自动广播 OpeningAnimationEnd
     ///     }
     /// }
     /// </code>

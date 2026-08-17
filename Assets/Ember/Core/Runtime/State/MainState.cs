@@ -1,4 +1,7 @@
 ﻿using System;
+
+using Cysharp.Threading.Tasks;
+
 using Ember.Basic;
 
 namespace Ember.Core
@@ -78,11 +81,35 @@ namespace Ember.Core
             EmberDebug.LogCleanup(TAG, "MainState: leaving lobby.");
         }
 
+        public sealed override UniTask PrepareEnterAsync()
+        {
+            // 简单模式：进入 Main 前先加载兜底背景页。
+            // 由 SceneCoordinator 在场景加载完成后、OnEnter 前 await，
+            // 保证 Loading 页渐出时背景已在底层（启动路径由 InitState 提前调用 LoadBackgroundAsync）。
+            return UseUIBg ? LoadBackgroundAsync() : UniTask.CompletedTask;
+        }
+
         #endregion
 
         // ============================================================
 
         #region 外部方法（子类可 override）
+
+        /// <summary>
+        /// 是否使用兜底背景页（UIBg）。默认 true —— 简单模式：主界面 = MainUI + UIBg。
+        /// 复杂模式（如奥日式带场景的开屏效果）在子类 override 为 false，
+        /// 由场景 / 开屏动画本身提供视觉，不额外加载 UIBg。
+        /// 纯代码级开关，不暴露在 Inspector，仅供子类 override。
+        /// </summary>
+        protected internal virtual bool UseUIBg => true;
+
+        /// <summary>
+        /// 加载兜底背景页。仅当 <see cref="UseUIBg"/> 为 true 时被调用：
+        /// - 启动路径：由 InitState 在 BootSplash 渐出前调用
+        /// - 转场路径：由 <see cref="PrepareEnterAsync"/>（SceneCoordinator）在 Loading 页渐出前调用
+        /// 框架默认不加载（返回 CompletedTask）；业务层 override 此方法加载自己的背景页。
+        /// </summary>
+        protected internal virtual UniTask LoadBackgroundAsync() => UniTask.CompletedTask;
 
         /// <summary>
         /// 进入主界面。子类 override 此方法来显示 UI、播放 BGM 等。

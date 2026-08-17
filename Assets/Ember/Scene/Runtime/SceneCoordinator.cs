@@ -1,4 +1,7 @@
 ﻿using System;
+
+using Cysharp.Threading.Tasks;
+
 using Ember.Core;
 using Ember.Basic;
 
@@ -61,12 +64,13 @@ namespace Ember.Scene
         }
 
         /// <summary>
-        /// <summary>
         /// TransitionTo 场景加载的拦截器。
         /// 参数：(sceneName, fromScene, onLoaded)。返回 true 表示已拦截，不再走默认加载。
+        /// onLoaded 为「进入目标状态前的准备 + Proceed」的异步委托（Func《UniTask》），UI 层应 await 它，
+        /// 保证 Loading 页渐出前目标状态的底层内容（如背景页）已就绪。
         /// UI 层在此注入 Loading 页面逻辑。
         /// </summary>
-        public static Func<string, string, Action, bool> InterceptSceneLoad;
+        public static Func<string, string, Func<UniTask>, bool> InterceptSceneLoad;
 
         /// TransitionTo：加载新场景 → Proceed → 卸载旧场景。
         /// </summary>
@@ -74,27 +78,31 @@ namespace Ember.Scene
         {
             if (string.IsNullOrEmpty(ctx.ToScene))
             {
-                ctx.Proceed();
-                UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
+                ProceedWithPrepareAsync(ctx).Forget();
                 return;
             }
 
             // 检查 UI 层是否拦截（带 Loading 页面）
-            if (InterceptSceneLoad != null && InterceptSceneLoad(ctx.ToScene, ctx.FromScene, () =>
-            {
-                ctx.Proceed();
-                UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
-            }))
+            if (InterceptSceneLoad != null && InterceptSceneLoad(ctx.ToScene, ctx.FromScene,
+                () => ProceedWithPrepareAsync(ctx)))
             {
                 return;
             }
 
             // 默认：直接加载
-            EmberSceneManager.Instance.LoadSceneAsync(ctx.ToScene, () =>
-            {
-                ctx.Proceed();
-                UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
-            });
+            EmberSceneManager.Instance.LoadSceneAsync(ctx.ToScene,
+                () => ProceedWithPrepareAsync(ctx).Forget());
+        }
+
+        /// <summary>
+        /// 进入目标状态前先 await 其 <see cref="EmberGameState.PrepareEnterAsync"/>（如 MainState 加载背景页），
+        /// 再 Proceed（OnEnter）并卸载旧场景。
+        /// </summary>
+        private async UniTask ProceedWithPrepareAsync(SceneTransitionContext ctx)
+        {
+            await ctx.ToState.PrepareEnterAsync();
+            ctx.Proceed();
+            UnloadIfDifferent(ctx.FromScene, ctx.ToScene);
         }
 
         /// <summary>

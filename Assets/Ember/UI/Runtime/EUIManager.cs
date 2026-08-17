@@ -129,8 +129,9 @@ namespace Ember.UI
                     while (!loadDone || logic == null || !logic.IsTransitionReady)
                         await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
-                    // 三者就绪 → 状态机推进（新场景 Enter，新 UI 在 loading 底下加载）
-                    onLoaded?.Invoke();
+                    // 三者就绪 → 进入目标状态（await PrepareEnterAsync + Proceed），新 UI 在 loading 底下加载
+                    if (onLoaded != null)
+                        await onLoaded();
 
                     // 等 2 帧让新 UI 完成 ProcessShowQueue + PlayShow
                     await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);

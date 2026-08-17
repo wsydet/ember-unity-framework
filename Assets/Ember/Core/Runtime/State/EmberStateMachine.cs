@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 using Ember.Basic;
 
@@ -46,6 +49,13 @@ namespace Ember.Core
         public virtual bool AllowReEnter => false;
 
         // ---- 生命周期 ----
+
+        /// <summary>
+        /// 进入本状态前的异步准备。由场景协调器在场景加载完成后、<see cref="OnEnter"/> 之前 await。
+        /// 用于确保遮挡层（BootSplash / Loading 页）渐出时，本状态的底层内容（如背景页）已就绪。
+        /// 默认无操作；需要预加载资源的子类（如 MainState 加载背景页）override 此方法。
+        /// </summary>
+        public virtual UniTask PrepareEnterAsync() => UniTask.CompletedTask;
 
         /// <summary>进入状态。args 为 TransitionTo 传入的参数。</summary>
         public virtual void OnEnter(object args) { }
