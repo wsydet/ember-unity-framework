@@ -6,7 +6,7 @@
 ==============================================================*/
 using System.Collections;
 
-namespace Game.UI
+namespace Ember.UI
 {
     public partial class EUIBackground
     {

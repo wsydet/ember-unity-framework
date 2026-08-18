@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace Game.UI
+namespace Ember.UI
 {
     public partial class EUILoading : Ember.UI.EUILogic
     {

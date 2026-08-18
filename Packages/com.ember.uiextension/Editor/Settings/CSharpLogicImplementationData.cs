@@ -38,10 +38,6 @@ namespace Ember.UIExtension.Editor
         #region 编辑器面板参数
 
         [SerializeField]
-        [Tooltip("生成的代码所在的命名空间")]
-        private string namespaceName = "Game.UI";
-
-        [SerializeField]
         [Tooltip("页面逻辑基类（含命名空间），如 Ember.UI.EUIPage")]
         private string baseClassName = "Ember.UI.EUIPage";
 
@@ -80,7 +76,6 @@ namespace Ember.UIExtension.Editor
         public override bool CanGenerate(EUIBinding binding)
         {
             return base.CanGenerate(binding)
-                && !string.IsNullOrEmpty(namespaceName)
                 && codeTemplate != null
                 && bindingCodeTemplate != null;
         }
@@ -98,6 +93,14 @@ namespace Ember.UIExtension.Editor
             if (name.StartsWith("m") && name.Length > 1 && char.IsUpper(name[1]))
                 return name.Substring(1);
             return name;
+        }
+
+        /// <summary>
+        /// 根据路径模式推导生成的代码命名空间：Framework → Ember.UI，Business → Game.UI。
+        /// </summary>
+        public static string GetDefaultNamespace(EUIBinding.CodePathMode pathMode)
+        {
+            return pathMode == EUIBinding.CodePathMode.Framework ? "Ember.UI" : "Game.UI";
         }
 
         public override void GenerateCodeForNoGen(EUIBinding binding, string className)
@@ -468,7 +471,7 @@ namespace Ember.UIExtension.Editor
                 ["page_name"] = binding.PageName ?? "",
                 ["class_name"] = binding.ClassName ?? "",
                 ["base_class_name"] = !string.IsNullOrEmpty(baseClsName) ? baseClsName : this.baseClassName,
-                ["namespace_name"] = namespaceName ?? "Game.UI",
+                ["namespace_name"] = GetDefaultNamespace(binding.PathMode),
                 ["create_date"] = System.DateTime.Now.ToString(),
                 ["fields_decl"] = decl.ToString(),
                 ["fields_bind"] = bind.ToString(),
@@ -777,7 +780,6 @@ namespace Ember.UIExtension.Editor
     {
         private SerializedProperty pageDefFile;
         private SerializedProperty baseClassName;
-        private SerializedProperty namespaceName;
         private SerializedProperty bindingCodeTemplate;
         private SerializedProperty codeTemplate;
         private SerializedProperty pageDefTemplate;
@@ -788,7 +790,6 @@ namespace Ember.UIExtension.Editor
             base.OnEnable();
             pageDefFile = serializedObject.FindProperty("pageDefFile");
             baseClassName = serializedObject.FindProperty("baseClassName");
-            namespaceName = serializedObject.FindProperty("namespaceName");
             bindingCodeTemplate = serializedObject.FindProperty("bindingCodeTemplate");
             codeTemplate = serializedObject.FindProperty("codeTemplate");
             pageDefTemplate = serializedObject.FindProperty("pageDefTemplate");
@@ -798,10 +799,6 @@ namespace Ember.UIExtension.Editor
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
-            EditorGUILayout.PropertyField(namespaceName, new GUIContent("代码生成命名空间"));
-            if (string.IsNullOrEmpty(namespaceName.stringValue))
-                EditorGUILayout.HelpBox("请输入正确的命名空间", MessageType.Error);
 
             EditorGUILayout.PropertyField(baseClassName, new GUIContent("页面逻辑基类"));
             if (string.IsNullOrEmpty(baseClassName.stringValue))

@@ -9,14 +9,13 @@ using Cysharp.Threading.Tasks;
 
 using Ember.Core;
 using Ember.Scene;
-using Ember.UI;
 
 using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
 
-namespace Game.UI
+namespace Ember.UI
 {
     public partial class EUILoading
     {

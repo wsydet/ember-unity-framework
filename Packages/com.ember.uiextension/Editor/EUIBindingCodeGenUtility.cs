@@ -261,16 +261,7 @@ namespace Ember.UIExtension.Editor
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
 
-            var namespaceName = "Game.UI";
-            var logic = GetCurrentLogic(binding);
-            if (logic is CSharpLogicImplementationData csharp)
-            {
-                // 从 CSharpLogicImplementationData 读取命名空间
-                var nsField = typeof(CSharpLogicImplementationData).GetField("namespaceName",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (nsField != null)
-                    namespaceName = nsField.GetValue(csharp) as string ?? "Game.UI";
-            }
+            var namespaceName = CSharpLogicImplementationData.GetDefaultNamespace(binding.PathMode);
 
             var template = $@"using System;
 
