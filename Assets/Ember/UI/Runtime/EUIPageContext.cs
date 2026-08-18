@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 
+using Ember.Basic;
+
 using UnityEngine;
 
 namespace Ember.UI
@@ -14,13 +16,15 @@ namespace Ember.UI
     /// <list type="bullet">
     ///   <item><b>MainPage 栈</b>：全屏页面按打开顺序堆叠，新的替换旧的显示</item>
     ///   <item><b>Popup 列表</b>：每个 MainPage 维护自己的 Popup 列表</item>
-    ///   <item><b>SortingOrder 自动计算</b>：MainPageOrder=1000, PageGrowStep=500, TopMostOrder=25000</item>
+    ///   <item><b>SortingOrder 自动计算</b>：MainPageOrder=1000, PageGrowStep=500, TopMostOrder=25000, FreePageOrder=30000（FreePage 需显式指定）</item>
     ///   <item><b>HideLowerPage</b>：Popup 打开时隐藏下方页面（不销毁），关闭时恢复</item>
     /// </list>
     /// </summary>
     public class EUIPageContext
     {
         #region 内部参数
+
+        private const string TAG = LogTags.UIManager;
 
         private const int MainPageBaseOrder  = 1000;
         private const int PageGrowStep       = 500;
@@ -306,11 +310,17 @@ namespace Ember.UI
         private const int FreePageBaseOrder = 30000;
         private readonly List<EUIPage> _freePageList = new();
 
-        /// <summary>添加独立页面（高于 TopMost，不参与栈管理）</summary>
+        /// <summary>添加独立页面（高于 TopMost，不参与栈管理）。排序取页面显式指定的 FreePageSortingOrder，未指定则回退到 FreePageBaseOrder 并警告。</summary>
         public void AddFreePage(EUIPage page)
         {
             _freePageList.Add(page);
-            var order = FreePageBaseOrder + _freePageList.Count * PageGrowStep;
+
+            // FreePage 数量少，排序由页面显式指定（对标 Burner ShowFreePage(prefabName, sortingOrder)）
+            var explicitOrder = page.EUIPageDef?.FreePageSortingOrder;
+            var order = explicitOrder ?? FreePageBaseOrder;
+            if (!explicitOrder.HasValue)
+                EmberDebug.LogWarning(TAG, $"FreePage 未指定固定 sortingOrder，回退到 {FreePageBaseOrder}: {page.EUIPageDef}");
+
             var canvas = page.Canvas;
             if (canvas) { canvas.overrideSorting = true; canvas.sortingOrder = order; }
         }
