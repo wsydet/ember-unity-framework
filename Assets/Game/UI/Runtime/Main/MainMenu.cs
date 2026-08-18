@@ -12,6 +12,8 @@ namespace Game.UI
 {
     public partial class MainMenu
     {
+        private const string TAG = LogTags.Game + "." + nameof(MainMenu);
+
         // ── 生命周期钩子（在此文件中填充业务逻辑） ──
 
         public override void OnInit()
@@ -28,13 +30,13 @@ namespace Game.UI
         public override void OnPause()
         {
             base.OnPause();
-            EmberDebug.Log(LogTags.EmberUI, "MainMenu 被遮挡");
+            EmberDebug.Log(TAG, "MainMenu 被遮挡");
         }
 
         public override void OnResume()
         {
             base.OnResume();
-            EmberDebug.Log(LogTags.EmberUI, "MainMenu 恢复可见");
+            EmberDebug.Log(TAG, "MainMenu 恢复可见");
         }
 
         public override void OnDispose()

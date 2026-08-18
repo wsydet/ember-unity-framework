@@ -12,6 +12,8 @@ namespace Game.UI
 {
     public partial class Settings
     {
+        private const string TAG = LogTags.Game + "." + nameof(Settings);
+
         // ── 生命周期钩子（在此文件中填充业务逻辑） ──
 
         public override void OnInit()
@@ -37,7 +39,7 @@ namespace Game.UI
 
         public override void OnDispose()
         {
-            EmberDebug.Log(LogTags.EmberUI, "Settings 清理");
+            EmberDebug.Log(TAG, "Settings 清理");
             Btn_Close.onClick.RemoveAllListeners();
             base.OnDispose();
         }

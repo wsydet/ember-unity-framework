@@ -12,6 +12,8 @@ namespace Game.UI
 {
     public partial class InGameUI
     {
+        private const string TAG = LogTags.Game + "." + nameof(InGameUI);
+
         // ── 生命周期钩子（在此文件中填充业务逻辑） ──
 
         public override void OnInit()
@@ -24,7 +26,7 @@ namespace Game.UI
 
         public override void OnDispose()
         {
-            EmberDebug.Log(LogTags.EmberUI, "InGameUI 清理");
+            EmberDebug.Log(TAG, "InGameUI 清理");
             Btn_Back.onClick.RemoveAllListeners();
             base.OnDispose();
         }
