@@ -17,6 +17,8 @@ namespace Game.UI.Editor
     /// </summary>
     public class EditorUIResourceProvider : IEUIResourceProvider
     {
+        private const string TAG = LogTags.Game + "." + nameof(EditorUIResourceProvider);
+
         public void LoadPrefabAsync(string prefabPath, Action<GameObject> onLoaded)
         {
             if (string.IsNullOrEmpty(prefabPath))
@@ -32,7 +34,7 @@ namespace Game.UI.Editor
             }
             else
             {
-                EmberDebug.LogError(LogTags.EmberUI,
+                EmberDebug.LogError(TAG,
                     $"预制体加载失败: {prefabPath}，请确认文件存在且路径正确。");
                 onLoaded?.Invoke(null);
             }
@@ -46,6 +48,8 @@ namespace Game.UI.Editor
     /// </summary>
     public static class EditorUIResourceProviderSetup
     {
+        private const string TAG = LogTags.Game + "." + nameof(EditorUIResourceProviderSetup);
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Inject()
         {
@@ -55,7 +59,7 @@ namespace Game.UI.Editor
             }
             catch (Exception ex)
             {
-                EmberDebug.LogError(LogTags.EmberUI, $"注入失败: {ex.Message}");
+                EmberDebug.LogError(TAG, $"注入失败: {ex.Message}");
             }
         }
     }

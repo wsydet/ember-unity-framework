@@ -183,9 +183,6 @@ namespace Ember.Core
         /// <summary>上一个状态</summary>
         public EmberGameState Previous { get; private set; }
 
-        /// <summary>状态变更事件（oldState, newState）</summary>
-        public event Action<EmberGameState, EmberGameState> OnStateChanged;
-
         /// <summary>所有已注册的状态</summary>
         public IReadOnlyCollection<EmberGameState> RegisteredStates => _states.Values;
 
@@ -296,7 +293,6 @@ namespace Ember.Core
             _current = state;
             _current.OnEnter(args);
             EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            OnStateChanged?.Invoke(null, _current);
         }
 
         // ======== 切换 ========
@@ -345,7 +341,6 @@ namespace Ember.Core
                 _currentScenePath = toScene;
 
                 EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-                OnStateChanged?.Invoke(Previous, _current);
             };
 
             // 有钩子、场景不同、且未跳过 → 异步加载
@@ -398,7 +393,6 @@ namespace Ember.Core
                 _currentScenePath = toScene;
 
                 EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-                OnStateChanged?.Invoke(Previous, _current);
             };
 
             if (OnSceneTransition != null && fromScene != toScene)
@@ -440,7 +434,6 @@ namespace Ember.Core
                 _current?.OnResume();
 
                 EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-                OnStateChanged?.Invoke(Previous, _current);
             };
 
             if (OnSceneTransition != null && fromScene != toScene)

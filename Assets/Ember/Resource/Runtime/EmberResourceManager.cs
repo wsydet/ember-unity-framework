@@ -1,6 +1,7 @@
 ﻿using System;
 using Ember.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Ember.Basic;
 
 namespace Ember.Resource
@@ -85,6 +86,7 @@ namespace Ember.Resource
             }
 
             _provider = provider;
+            EmberServiceLocator.TryRegister<IResourceProvider>(provider);
 
             _provider.Initialize(success =>
             {
@@ -120,19 +122,20 @@ namespace Ember.Resource
         }
 
         /// <summary>
-        /// 异步加载场景。
+        /// 异步加载场景，返回 AsyncOperation（供上层控制 allowSceneActivation / 进度）。
+        /// 未初始化或 Provider 为空时返回 null。
         /// </summary>
         /// <param name="sceneName">场景名</param>
-        /// <param name="onComplete">场景加载完成回调</param>
-        public void LoadSceneAsync(string sceneName, Action onComplete = null)
+        /// <param name="mode">加载模式（默认 Additive）</param>
+        public AsyncOperation LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive)
         {
-            if (!IsProviderReady())
+            if (!_initialized || _provider == null)
             {
-                onComplete?.Invoke();
-                return;
+                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
+                return null;
             }
 
-            _provider.LoadSceneAsync(sceneName, onComplete);
+            return _provider.LoadSceneAsync(sceneName, mode);
         }
 
         // ======== 资源卸载 ========
@@ -259,6 +262,7 @@ namespace Ember.Resource
             EmberEventBus.OnNext(EmberBroadcastEvent.ResourceShutdown);
 
             _provider?.UnloadUnusedAssets();
+            EmberServiceLocator.Unregister<IResourceProvider>();
             _provider = null;
 
             _initialized = false;
@@ -274,20 +278,6 @@ namespace Ember.Resource
             {
                 EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
                 onComplete?.Invoke(null);
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 无回调版本的 Provider 就绪检查（用于 LoadScene 等不泛型的场景）。
-        /// </summary>
-        private bool IsProviderReady()
-        {
-            if (!_initialized || _provider == null)
-            {
-                EmberDebug.LogWarning(TAG, "EmberResourceManager is not initialized. Call Initialize() first.");
                 return false;
             }
 

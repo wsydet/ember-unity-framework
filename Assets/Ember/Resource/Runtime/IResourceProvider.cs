@@ -1,6 +1,7 @@
 ﻿using System;
 using Ember.Basic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Ember.Resource
 {
@@ -57,11 +58,12 @@ namespace Ember.Resource
         void LoadAssetAsync<T>(string path, Action<T> onComplete) where T : UnityEngine.Object;
 
         /// <summary>
-        /// 异步加载场景。完成后调用 onComplete 回调。
+        /// 异步加载场景，返回 AsyncOperation（供调用方控制 allowSceneActivation / 进度）。
         /// </summary>
         /// <param name="sceneName">场景名（Build Settings 中的名称或路径）</param>
-        /// <param name="onComplete">场景加载完成回调</param>
-        void LoadSceneAsync(string sceneName, Action onComplete);
+        /// <param name="mode">加载模式（默认 Additive）</param>
+        /// <returns>场景加载操作句柄；场景不存在时返回 null</returns>
+        AsyncOperation LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive);
 
         /// <summary>
         /// 释放指定路径的资源引用。实际释放时机由后端决定（引用计数归零、GC 等）。

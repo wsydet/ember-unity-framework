@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using Ember.Core;
+using Ember.Resource;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Ember.Basic;
@@ -61,7 +62,7 @@ namespace Ember.Scene
         /// 异步加载场景（Additive 模式，不会自动卸载当前场景）。
         ///
         /// 流程：
-        /// 1. 调用 Unity SceneManager.LoadSceneAsync
+        /// 1. 调用 EmberResourceManager.LoadSceneAsync（走 Resource 后端）
         /// 2. 加载到 90% 时触发 OnBeforeActivate
         /// 3. 激活场景
         /// 4. 派发 SceneLoaded 事件
@@ -118,6 +119,58 @@ namespace Ember.Scene
             {
                 onComplete?.Invoke();
             }
+        }
+
+        // ======== 静默加载 / 卸载（流送系统用） ========
+
+        /// <summary>
+        /// 静默异步加载场景（Additive）—— 供无缝流送系统分块后台加载。
+        ///
+        /// 与 <see cref="LoadSceneAsync"/> 的区别：
+        /// - 不广播 SceneLoadStart / SceneLoaded 事件（不触发 Loading 页）
+        /// - 不受 <see cref="IsLoading"/> 单加载锁限制（可多块并发）
+        /// - 不触发 <see cref="OnBeforeActivate"/>
+        /// </summary>
+        /// <param name="sceneName">场景名（Build Settings 中的名称）</param>
+        public async UniTask LoadSceneSilentlyAsync(string sceneName)
+        {
+            var op = EmberResourceManager.Instance.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            if (op == null)
+            {
+                EmberDebug.LogError(TAG, $"EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
+                return;
+            }
+
+            op.allowSceneActivation = false;
+            while (op.progress < 0.9f)
+                await UniTask.Yield(PlayerLoopTiming.Update);
+
+            op.allowSceneActivation = true;
+            while (!op.isDone)
+                await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+
+        /// <summary>
+        /// 静默异步卸载场景 —— 供无缝流送系统后台卸载。不广播 SceneUnloading 事件。
+        /// </summary>
+        public async UniTask UnloadSceneSilentlyAsync(string sceneName)
+        {
+            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+                return;
+
+            var op = SceneManager.UnloadSceneAsync(sceneName);
+            if (op == null) return;
+            while (!op.isDone)
+                await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+
+        /// <summary>
+        /// 获取已加载场景的根物体（供流送系统做分帧激活）。未加载返回空数组。
+        /// </summary>
+        public GameObject[] GetSceneRoots(string sceneName)
+        {
+            var scene = SceneManager.GetSceneByName(sceneName);
+            return scene.isLoaded ? scene.GetRootGameObjects() : Array.Empty<GameObject>();
         }
 
         // ======== 过渡 ========
@@ -184,7 +237,7 @@ namespace Ember.Scene
             Progress = 0f;
             CurrentScene = sceneName;
 
-            var op = SceneManager.LoadSceneAsync(sceneName, mode);
+            var op = EmberResourceManager.Instance.LoadSceneAsync(sceneName, mode);
             if (op == null)
             {
                 EmberDebug.LogError(TAG, $"EmberSceneManager: scene '{sceneName}' not found in Build Settings.");
