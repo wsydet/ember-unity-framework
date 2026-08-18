@@ -2,6 +2,7 @@
 using System.Collections;
 using Ember.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Ember.Basic;
 
@@ -71,25 +72,17 @@ namespace Ember.Resource
         }
 
         /// <summary>
-        /// 异步加载场景。走的 Unity SceneManager.LoadSceneAsync。
+        /// 异步加载场景。底层走 Unity SceneManager.LoadSceneAsync，返回句柄供上层控制激活/进度。
         /// </summary>
-        public void LoadSceneAsync(string sceneName, Action onComplete)
+        public AsyncOperation LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive)
         {
             if (string.IsNullOrEmpty(sceneName))
-            {
-                onComplete?.Invoke();
-                return;
-            }
+                return null;
 
-            var op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
+            var op = SceneManager.LoadSceneAsync(sceneName, mode);
             if (op == null)
-            {
                 EmberDebug.LogError(TAG, $"LoadSceneAsync failed: scene '{sceneName}' not found.");
-                onComplete?.Invoke();
-                return;
-            }
-
-            op.completed += _ => onComplete?.Invoke();
+            return op;
         }
 
         /// <summary>
