@@ -141,6 +141,7 @@ MonoBehaviour:
   pageName: Settings
   pageFlags: 16
   usePresetFade: 1
+  useTransitionBlock: 0
   fadeInTime: 0.3
   fadeOutTime: 0.2
   useCustomTransition: 0
@@ -229,8 +230,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8BBE\u7F6E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
-  m_sharedMaterial: {fileID: 8107448708166007713, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
+  m_sharedMaterial: {fileID: 5312024000564916581, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -525,8 +526,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 111
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
-  m_sharedMaterial: {fileID: 8107448708166007713, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
+  m_sharedMaterial: {fileID: 5312024000564916581, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -662,8 +663,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5173\u95ED"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
-  m_sharedMaterial: {fileID: 8107448708166007713, guid: 8623446b3ad6ae74cb5075bed5016500, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
+  m_sharedMaterial: {fileID: 5312024000564916581, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
