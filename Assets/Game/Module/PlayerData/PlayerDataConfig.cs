@@ -1,0 +1,28 @@
+﻿using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 玩家存档配置资产 —— 在编辑器中配置存档模式、Debug/Release 模式与默认存档数据。
+    ///
+    /// 开发期价值：直接在 Inspector 里改默认存档数值（初始等级、金币、背包等），
+    /// 无需改代码重编译；Debug 模式下模块直接引用这里的 defaultData（实时修改生效）。
+    ///
+    /// 通过 Create Asset Menu 创建，传入 <see cref="PlayerDataModule.Initialize"/> 使用。
+    /// </summary>
+    [CreateAssetMenu(fileName = "PlayerDataConfig", menuName = "Save/Player Data Config")]
+    public class PlayerDataConfig : ScriptableObject
+    {
+        [Header("存档模式")]
+        [Tooltip("false = 单存档（player_data.json）；true = 多存档（player_data_{slotId}.json）")]
+        public bool multiSave = false;
+
+        [Header("调试模式")]
+        [Tooltip("true = Debug 模式：只存不读，直接用下面的 defaultData（可实时修改）；false = Release 模式：读取本地存档")]
+        public bool debugMode = false;
+
+        [Header("默认存档数据")]
+        [Tooltip("Debug 模式直接引用此数据（实时修改生效）；Release 模式作为无存档时的初始数据（深拷贝）")]
+        public PlayerData defaultData = new PlayerData();
+    }
+}

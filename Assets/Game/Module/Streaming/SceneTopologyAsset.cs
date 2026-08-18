@@ -1,0 +1,33 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 流送拓扑资产 —— 在编辑器中配置场景区块节点与连接边。
+    ///
+    /// 通过 Create Asset Menu 创建，拖入 StreamingManager 配置使用。
+    /// 运行时由 <see cref="StreamingManager.Initialize"/> 构建成 <see cref="SceneTopology"/> 邻接表。
+    /// </summary>
+    [CreateAssetMenu(fileName = "SceneTopologyAsset", menuName = "Streaming/Scene Topology")]
+    public class SceneTopologyAsset : ScriptableObject
+    {
+        [Header("拓扑数据")]
+        [Tooltip("场景区块节点列表")]
+        public List<SceneNode> nodes = new();
+
+        [Tooltip("场景区块连接边列表")]
+        public List<SceneEdge> edges = new();
+
+        /// <summary>构建运行时拓扑图（邻接表）。</summary>
+        public SceneTopology CreateRuntimeTopology()
+        {
+            var topology = new SceneTopology();
+            foreach (var node in nodes)
+                topology.AddNode(node);
+            foreach (var edge in edges)
+                topology.AddEdge(edge);
+            return topology;
+        }
+    }
+}

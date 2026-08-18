@@ -1,0 +1,20 @@
+﻿using System;
+using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 拓扑节点 —— 描述一个流送场景区块。
+    /// 在 SceneTopologyAsset 中配置，运行时由 SceneTopology 持有。
+    /// </summary>
+    [Serializable]
+    public class SceneNode
+    {
+        public string sceneId;          // 唯一 ID
+        public Bounds bounds;           // 场景世界空间包围盒（用于距离计算）
+        public string sceneAssetPath;   // 场景资源路径（Build Settings 中的场景名）
+        public int loadPriority = 0;    // 静态优先级（可选）
+
+        public Vector3 Center => bounds.center;
+    }
+}

@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>单个灯光组件的目标状态（强度 + 颜色）。</summary>
+    [Serializable]
+    public class LightStateData
+    {
+        public float intensity = 1f;
+        public Color color = Color.white;
+    }
+
+    /// <summary>场景灯光配置档案 —— 场景名 + 灯光状态列表（与 light2DComponents 顺序一一对应）。</summary>
+    [Serializable]
+    public class SceneLightProfile
+    {
+        public string sceneName;
+        public List<LightStateData> lightStates = new();
+    }
+
+    /// <summary>首次加载灯光的表现模式。</summary>
+    public enum FirstTransitionMode
+    {
+        /// <summary>瞬间点亮</summary>
+        Instant,
+        /// <summary>渐变出现（睁眼效果）</summary>
+        FadeIn,
+    }
+
+    /// <summary>
+    /// 全局灯光配置资产 —— 在编辑器中配置各场景的灯光档案与过渡参数。
+    /// 通过 Create Asset Menu 创建，拖入 GlobalLightManager 的 Initialize 使用。
+    /// </summary>
+    [CreateAssetMenu(fileName = "GlobalLightConfig", menuName = "Lighting/Global Light Config")]
+    public class GlobalLightConfig : ScriptableObject
+    {
+        [Header("过渡配置")]
+        public float defaultTransitionDuration = 2f;
+        public FirstTransitionMode firstTransitionMode = FirstTransitionMode.Instant;
+
+        [Header("场景灯光档案")]
+        public List<SceneLightProfile> sceneLightProfiles = new();
+
+        /// <summary>按场景名查找档案，未找到返回 null。</summary>
+        public SceneLightProfile GetProfile(string sceneName)
+        {
+            foreach (var profile in sceneLightProfiles)
+            {
+                if (profile.sceneName == sceneName)
+                    return profile;
+            }
+            return null;
+        }
+    }
+}

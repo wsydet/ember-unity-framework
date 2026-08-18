@@ -12,11 +12,11 @@
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Ember.Resource.Runtime.csproj" />
   <Project Path="Ember.Extensions.csproj" />
+  <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
   <Project Path="Borodar.RainbowHierarchy.Editor.csproj" />
   <Project Path="Ember.Basic.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
-  <Project Path="Ember.Core.Runtime.csproj" />
   <Project Path="Ember.Scene.Runtime.csproj" />
   <Project Path="Borodar.RainbowFolders.csproj" />
   <Project Path="Game.UI.Editor.csproj" />
@@ -24,6 +24,7 @@
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
   <Project Path="Ember.Core.Editor.csproj" />
   <Project Path="UniTask.Editor.csproj" />
+  <Project Path="Game.Module.Editor.csproj" />
   <Project Path="Borodar.RainbowHierarchy.csproj" />
   <Project Path="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" />
   <Project Path="Ember.Editor.csproj" />

@@ -1,0 +1,24 @@
+﻿using System;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 玩家存档数据 —— 游戏的存档数据模型。
+    /// 由 <see cref="PlayerDataModule"/> 负责序列化到本地（JSON 文件，persistentDataPath）。
+    ///
+    /// <b>在此类中添加你的存档字段。</b> 注意 JsonUtility（DataSaver 底层）的限制：
+    /// - 字段需 public 或 [SerializeField]
+    /// - 不支持 Dictionary、多态类型（如需请改用 LitJson）
+    /// </summary>
+    [Serializable]
+    public class PlayerData
+    {
+        /// <summary>存档版本号，用于存档结构变更时的迁移/兼容判断。</summary>
+        public int version = 1;
+
+        // ===== 游戏存档字段（示例，按需增删） =====
+
+        public int level = 1;
+        public int coins = 0;
+    }
+}

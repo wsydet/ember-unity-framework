@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 中心激活触发器 —— 仅在大场景模式使用，放置在场景中央区域。
+    /// 玩家进入时通知 <see cref="StreamingModule"/> 激活当前场景的主体部分。
+    /// </summary>
+    [RequireComponent(typeof(Collider))]
+    public class StreamingCenterTrigger : MonoBehaviour
+    {
+        public string sceneId;
+
+        private void Awake()
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                StreamingModule.Instance.OnCenterTriggerEntered(sceneId);
+        }
+    }
+}

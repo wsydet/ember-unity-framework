@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 拓扑图 —— 邻接表存储场景连接关系，提供高效查询。
+    /// 同时维护正向邻接表（from → to）与反向邻接表（to → from）。
+    /// 双向边自动镜像出反向边，方向取反。
+    /// </summary>
+    public class SceneTopology
+    {
+        private readonly Dictionary<string, SceneNode> _nodes = new();
+        private readonly Dictionary<string, List<SceneEdge>> _adjacency = new();
+        private readonly Dictionary<string, List<SceneEdge>> _reverseAdjacency = new();
+
+        /// <summary>添加（或覆盖）一个节点。</summary>
+        public void AddNode(SceneNode node)
+        {
+            if (node == null || string.IsNullOrEmpty(node.sceneId)) return;
+            _nodes[node.sceneId] = node;
+        }
+
+        /// <summary>添加一条边；双向边自动镜像出反向边。</summary>
+        public void AddEdge(SceneEdge edge)
+        {
+            if (edge == null) return;
+
+            AddDirected(edge.fromNodeId, edge.toNodeId, edge, _adjacency);
+            AddDirected(edge.toNodeId, edge.fromNodeId, edge, _reverseAdjacency);
+
+            if (edge.isBidirectional)
+            {
+                var reverse = new SceneEdge
+                {
+                    fromNodeId = edge.toNodeId,
+                    toNodeId = edge.fromNodeId,
+                    direction = -edge.direction,
+                    weight = edge.weight,
+                    connectionId = edge.connectionId + "_rev",
+                    isBidirectional = true,
+                };
+                AddDirected(reverse.fromNodeId, reverse.toNodeId, reverse, _adjacency);
+                AddDirected(reverse.toNodeId, reverse.fromNodeId, reverse, _reverseAdjacency);
+            }
+        }
+
+        /// <summary>查询某节点的所有出边。</summary>
+        public IEnumerable<SceneEdge> GetOutgoingEdges(string sceneId)
+            => _adjacency.TryGetValue(sceneId, out var list) ? list : Array.Empty<SceneEdge>();
+
+        /// <summary>查询某节点的所有邻居 ID。</summary>
+        public IEnumerable<string> GetNeighborIds(string sceneId)
+        {
+            if (!_adjacency.TryGetValue(sceneId, out var list))
+                yield break;
+            foreach (var edge in list)
+                yield return edge.toNodeId;
+        }
+
+        /// <summary>按 ID 查询节点。</summary>
+        public bool TryGetNode(string sceneId, out SceneNode node)
+            => _nodes.TryGetValue(sceneId, out node);
+
+        /// <summary>枚举所有节点。</summary>
+        public IEnumerable<SceneNode> GetAllNodes() => _nodes.Values;
+
+        private static void AddDirected(string from, string to, SceneEdge edge,
+            Dictionary<string, List<SceneEdge>> map)
+        {
+            if (!map.TryGetValue(from, out var list))
+            {
+                list = new List<SceneEdge>();
+                map[from] = list;
+            }
+            list.Add(edge);
+        }
+    }
+}

@@ -1,0 +1,20 @@
+﻿using System;
+using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 拓扑边 —— 描述两个场景区块之间的连接关系与方向。
+    /// 在 SceneTopologyAsset 中配置，运行时由 SceneTopology 持有。
+    /// </summary>
+    [Serializable]
+    public class SceneEdge
+    {
+        public string fromNodeId;
+        public string toNodeId;
+        public Vector3 direction;        // 从 from 到 to 的单位方向（世界空间）
+        public float weight = 1f;        // 路径权重（距离等）
+        public string connectionId;      // 唯一标识，用于动态修改
+        public bool isBidirectional = true;
+    }
+}

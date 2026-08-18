@@ -1,0 +1,200 @@
+﻿using Ember.Basic;
+using Ember.Core;
+using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 玩家存档模块 —— 管理玩家存档数据的加载 / 保存与生命周期，支持单存档 / 多存档 + Debug / Release 模式。
+    ///
+    /// <b>定位：</b>
+    /// 作为 <see cref="IEmberModule"/>（Phase = <see cref="ModulePhase.Global"/>），
+    /// Init 状态启动时自动加载存档，游戏退出时自动保存落盘。
+    /// 底层走 <see cref="DataSaver"/>（JsonUtility 序列化到 persistentDataPath）。
+    ///
+    /// <b>Debug / Release 模式：</b>
+    /// 由 <see cref="PlayerDataConfig.debugMode"/> 控制 —— Debug 模式只存不读，
+    /// <see cref="Data"/> 直接引用 SO 的 defaultData（可实时修改方便测试）；
+    /// Release 模式读取本地存档（无存档时用 SO 默认数据深拷贝）。
+    ///
+    /// <b>启用：</b>
+    /// 本模块 <see cref="Enabled"/> 默认 false（关闭）。启用时改为返回 true。
+    /// </summary>
+    public class PlayerDataModule : EmberSingleton<PlayerDataModule>, IEmberModule
+    {
+        private const string TAG = LogTags.Game + "." + nameof(PlayerDataModule);
+        private const string SAVE_BASE = "player_data";
+
+        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
+        public bool Enabled => false;
+
+        public int Phase => ModulePhase.Global;
+
+        #region 内部参数
+
+        private PlayerDataConfig _config;
+        private PlayerData _data;
+        private bool _hasLoaded;
+        private int _currentSlot;
+
+        /// <summary>是否多存档模式。从配置资产读取（未初始化时默认 false）。</summary>
+        public bool MultiSave => _config != null && _config.multiSave;
+
+        /// <summary>是否 Debug 模式（只存不读，直接使用 SO 数据）。</summary>
+        public bool DebugMode => _config != null && _config.debugMode;
+
+        #endregion
+
+        // ============================================================
+
+        #region 生命周期
+
+        void IEmberModule.OnInit()
+        {
+            Load();   // 启动时自动加载当前槽位（多存档默认 slot 0）
+        }
+
+        void IEmberModule.OnDestroy()
+        {
+            Save();   // 游戏退出前自动落盘到当前槽位
+        }
+
+        void IEmberModule.ResetModuleData()
+        {
+            _data = null;
+            _hasLoaded = false;
+            _currentSlot = 0;
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        /// <summary>
+        /// 用配置资产初始化（存档模式 + Debug/Release 模式 + 默认数据）。
+        /// 建议在模块初始化前调用一次；若已加载则重新加载以应用新配置。
+        /// </summary>
+        public void Initialize(PlayerDataConfig config)
+        {
+            _config = config;
+            if (_data != null)
+                Load(_currentSlot);
+        }
+
+        /// <summary>
+        /// 当前存档数据。
+        /// Debug 模式：直接返回 SO 的 defaultData（实时修改生效）；
+        /// Release 模式：返回加载 / 默认数据（深拷贝，不污染 SO）。
+        /// </summary>
+        public PlayerData Data
+        {
+            get
+            {
+                if (DebugMode && _config.defaultData != null)
+                    return _config.defaultData;
+                return _data ??= CreateDefaultData();
+            }
+        }
+
+        /// <summary>是否成功加载过存档（false = 首次启动或无存档，或 Debug 模式）。</summary>
+        public bool HasLoaded => _hasLoaded;
+
+        /// <summary>当前槽位（多存档模式用；单存档恒为 0）。</summary>
+        public int CurrentSlot => _currentSlot;
+
+        // ---- 当前槽位 ----
+
+        /// <summary>保存到当前槽位（同步，小数据可直接用）。</summary>
+        public void Save() => Save(_currentSlot);
+
+        /// <summary>从当前槽位加载。无存档或加载失败返回 false。</summary>
+        public bool Load() => Load(_currentSlot);
+
+        /// <summary>重置当前槽位为默认数据并立即保存。</summary>
+        public void ResetData()
+        {
+            _data = CreateDefaultData();
+            _hasLoaded = false;
+            Save();
+            EmberDebug.Log(TAG, "PlayerData reset to defaults.");
+        }
+
+        // ---- 指定槽位（多存档） ----
+
+        /// <summary>保存到指定槽位。单存档模式忽略 slotId。</summary>
+        public void Save(int slotId)
+        {
+            DataSaver.Save(GetSaveFile(slotId), Data);
+            EmberDebug.Log(TAG, $"PlayerData saved [{GetSaveFile(slotId)}].");
+        }
+
+        /// <summary>
+        /// 从指定槽位加载并切到该槽位。单存档模式忽略 slotId。
+        /// Debug 模式下只存不读：跳过文件读取，直接使用 SO 的 defaultData。
+        /// </summary>
+        public bool Load(int slotId)
+        {
+            // Debug 模式：只存不读，直接使用 SO 数据（实时修改）
+            if (DebugMode)
+            {
+                _data = _config.defaultData ?? new PlayerData();
+                _hasLoaded = false;
+                _currentSlot = slotId;
+                EmberDebug.LogInit(TAG, "PlayerData [Debug] using SO default data (skip load).");
+                return true;
+            }
+
+            // Release 模式：读取本地存档
+            string file = GetSaveFile(slotId);
+            if (DataSaver.TryLoad(file, out PlayerData data))
+            {
+                _data = data;
+                _hasLoaded = true;
+                _currentSlot = slotId;
+                EmberDebug.LogInit(TAG, $"PlayerData loaded [{file}].");
+                return true;
+            }
+
+            _data = CreateDefaultData();
+            _hasLoaded = false;
+            _currentSlot = slotId;
+            EmberDebug.LogInit(TAG, $"PlayerData [{file}] not found, using defaults.");
+            return false;
+        }
+
+        /// <summary>切换当前槽位并加载该槽位的存档（多存档模式用）。</summary>
+        public bool SwitchSlot(int slotId) => Load(slotId);
+
+        /// <summary>删除指定槽位的存档。单存档模式忽略 slotId。</summary>
+        public void DeleteSave(int slotId)
+        {
+            DataSaver.Delete(GetSaveFile(slotId));
+            EmberDebug.Log(TAG, $"PlayerData deleted [{GetSaveFile(slotId)}].");
+        }
+
+        /// <summary>指定槽位是否有存档。单存档模式忽略 slotId。</summary>
+        public bool HasSave(int slotId) => DataSaver.Exists(GetSaveFile(slotId));
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        /// <summary>根据单/多存档模式生成存档文件名。</summary>
+        private string GetSaveFile(int slotId)
+            => MultiSave ? $"{SAVE_BASE}_{slotId}.json" : $"{SAVE_BASE}.json";
+
+        /// <summary>创建默认存档数据：Release 模式用 SO 默认数据深拷贝，未配置时退回代码默认。</summary>
+        private PlayerData CreateDefaultData()
+        {
+            if (_config != null && _config.defaultData != null)
+                return JsonUtility.FromJson<PlayerData>(JsonUtility.ToJson(_config.defaultData));
+            return new PlayerData();
+        }
+
+        #endregion
+    }
+}

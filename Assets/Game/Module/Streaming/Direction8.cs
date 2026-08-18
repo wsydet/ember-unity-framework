@@ -1,0 +1,36 @@
+﻿using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 8 方向枚举 —— 用于流送触发器的方向感知（只加载玩家前进方向上的邻居场景）。
+    /// </summary>
+    public enum Direction8
+    {
+        North, NorthEast, East, SouthEast,
+        South, SouthWest, West, NorthWest,
+    }
+
+    /// <summary>
+    /// Direction8 扩展方法。
+    /// </summary>
+    public static class Direction8Extensions
+    {
+        /// <summary>把方向枚举转成世界空间单位向量。</summary>
+        public static Vector3 ToVector3(this Direction8 dir)
+        {
+            switch (dir)
+            {
+                case Direction8.North:     return Vector3.forward;
+                case Direction8.NorthEast: return (Vector3.forward + Vector3.right).normalized;
+                case Direction8.East:      return Vector3.right;
+                case Direction8.SouthEast: return (Vector3.back + Vector3.right).normalized;
+                case Direction8.South:     return Vector3.back;
+                case Direction8.SouthWest: return (Vector3.back + Vector3.left).normalized;
+                case Direction8.West:      return Vector3.left;
+                case Direction8.NorthWest: return (Vector3.forward + Vector3.left).normalized;
+                default:                   return Vector3.forward;
+            }
+        }
+    }
+}

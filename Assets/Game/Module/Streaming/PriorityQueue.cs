@@ -1,0 +1,37 @@
+﻿using System.Collections.Generic;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 简单优先队列 —— 基于列表 + 线性扫描取最大值。
+    ///
+    /// 流送加载队列规模小（通常个位数区块），线性扫描足够，无需引入复杂堆实现。
+    /// 数值越大优先级越高（优先出队）。
+    /// </summary>
+    public class PriorityQueue<T>
+    {
+        private readonly List<KeyValuePair<T, float>> _elements = new();
+
+        public int Count => _elements.Count;
+
+        public void Enqueue(T item, float priority)
+            => _elements.Add(new KeyValuePair<T, float>(item, priority));
+
+        /// <summary>取出优先级最高的元素。</summary>
+        public T Dequeue()
+        {
+            int best = 0;
+            for (int i = 1; i < _elements.Count; i++)
+            {
+                if (_elements[i].Value > _elements[best].Value)
+                    best = i;
+            }
+
+            T item = _elements[best].Key;
+            _elements.RemoveAt(best);
+            return item;
+        }
+
+        public void Clear() => _elements.Clear();
+    }
+}

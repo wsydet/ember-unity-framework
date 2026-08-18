@@ -1,0 +1,27 @@
+﻿using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 边缘启动触发器 —— 放置在场景边界处，携带方向。
+    /// 玩家进入时通知 <see cref="StreamingModule"/> 激活目标场景。
+    /// </summary>
+    [RequireComponent(typeof(Collider))]
+    public class StreamingStartTrigger : MonoBehaviour
+    {
+        public string ownerSceneId;
+        public string targetSceneId;
+        public Direction8 direction;
+
+        private void Awake()
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                StreamingModule.Instance.OnStartTriggerEntered(this);
+        }
+    }
+}

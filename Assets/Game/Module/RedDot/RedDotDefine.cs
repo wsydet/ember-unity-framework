@@ -1,0 +1,36 @@
+﻿namespace Game.Module
+{
+    /// <summary>
+    /// 红点功能类型 —— 标记「谁触发了红点」（如邮件未读、任务可领奖）。
+    ///
+    /// 这是业务自定义的枚举：每个需要红点的功能占一个成员，作为
+    /// <see cref="RedDotModule.SetRedNode"/> / <see cref="RedDotModule.GetRedNodeNum"/>
+    /// 的 key。下方示例值仅作脚手架，替换为你项目的真实红点功能即可。
+    ///
+    /// ⚠ 勿往中间插入新值：已有值会被序列化进配置资产与存档，插队会错位。
+    /// </summary>
+    public enum RedDotType
+    {
+        /// <summary>示例：邮件未读</summary>
+        Mail_Unread = 1,
+
+        /// <summary>示例：每日任务可领奖</summary>
+        Task_Daily_Reward,
+    }
+
+    /// <summary>
+    /// 红点 UI 节点类型 —— 标记「红点挂在哪个 UI 节点上」（如主界面邮件按钮、邮件页签）。
+    ///
+    /// 每个成员对应界面上一个可显示红点的位置，在 <see cref="RedDotConfig"/> 里
+    /// 与 <see cref="RedDotData.uis"/> 一起描述红点的层级传播路径（外 → 内）。
+    /// 下方示例值仅作脚手架，替换为你项目的真实 UI 节点即可。
+    /// </summary>
+    public enum RedDotUIItemType
+    {
+        /// <summary>示例：主界面邮件按钮</summary>
+        Main_Mail = 1,
+
+        /// <summary>示例：邮件列表页签</summary>
+        Mail_Tab,
+    }
+}

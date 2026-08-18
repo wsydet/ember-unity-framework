@@ -1,0 +1,27 @@
+﻿using UnityEngine;
+
+namespace Game.Module
+{
+    /// <summary>
+    /// 边缘预加载触发器 —— 放置在场景边缘稍外侧，携带方向。
+    /// 玩家进入时通知 <see cref="StreamingModule"/> 加载该方向上的邻居场景资源。
+    /// </summary>
+    [RequireComponent(typeof(Collider))]
+    public class StreamingPreloadTrigger : MonoBehaviour
+    {
+        public string ownerSceneId;
+        public string targetSceneId;
+        public Direction8 direction;       // 玩家通过该触发器时的移动方向
+
+        private void Awake()
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                StreamingModule.Instance.OnPreloadTriggerEntered(this);
+        }
+    }
+}

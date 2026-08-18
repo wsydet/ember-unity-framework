@@ -1,0 +1,36 @@
+﻿using System.IO;
+using Ember.Basic;
+using UnityEditor;
+using UnityEngine;
+
+namespace Game.Module.Editor
+{
+    /// <summary>
+    /// 玩家存档编辑器工具 —— 清除本地玩家存档文件。
+    /// </summary>
+    public static class PlayerDataSaveTools
+    {
+        private const string TAG = LogTags.Game + "." + nameof(PlayerDataSaveTools);
+        private const string FILE_PATTERN = "player_data*.json";
+
+        [MenuItem("Ember/存档/清除本地玩家存档")]
+        public static void ClearLocalPlayerData()
+        {
+            if (!EditorUtility.DisplayDialog(
+                "清除本地玩家存档",
+                "确定要删除所有本地玩家存档文件吗？此操作不可撤销。",
+                "清除",
+                "取消"))
+            {
+                return;
+            }
+
+            string dir = Application.persistentDataPath;
+            string[] files = Directory.GetFiles(dir, FILE_PATTERN);
+            foreach (string file in files)
+                File.Delete(file);
+
+            EmberDebug.Log(TAG, $"PlayerData 已清除 {files.Length} 个本地存档文件。\n目录：{dir}");
+        }
+    }
+}
