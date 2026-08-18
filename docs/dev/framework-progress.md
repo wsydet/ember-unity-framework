@@ -1,6 +1,6 @@
 ﻿# Ember Framework 开发进度
 
-> 最后更新：2026-08-06
+> 最后更新：2026-08-17
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -84,10 +84,11 @@ Phase 4: 启动流程重构 ──────── ✅
   GameMainState + OnOpeningAnimationEnd 扩展点
   PlayModePageDefGuard 修复 + Canvas sortingOrder
 
-Phase 5: UI 集成测试 ──────── 📍 当前
-  MainMenu + Settings 页面，待 Play Mode 验证
+Phase 5: UI 集成测试 ──────── ✅
+  MainMenu / Settings / InGameUI 全链路 Play Mode 验证通过
+  方块过渡动画 + 开屏串行时序 + 背景页下沉转场
 
-Phase 6: 剩余 P1/P2 ───────── ⬜ 待排期
+Phase 6: 剩余 P1/P2 ───────── 📍 当前
   Module 系统 / Timer / Audio 升级
   架构债务 / 预制体对象池 / 本地化
 
@@ -120,20 +121,47 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 - ✅ Canvas sortingOrder 编辑器预览（生成时自动写入预制体）
 - ✅ EmberUIBindingBridge 自动注册（RuntimeInitializeOnLoadMethod）
 - ✅ MainMenu + Settings 页面生成 + 业务逻辑填充
+- ✅ GameMainState / GameGameplayState / GameSettingsState 三个业务状态子类
+- ✅ GameplayScene / SettingsScene / MainScene / FrameworkScene 四场景 + 场景映射
+- ✅ UI 框架类型统一 EUI\* 前缀（uiextension Runtime + UI 框架层 + UI 组件）
+- ✅ EUIPageRouter 合并进 EUIViewEngine（视图引擎），EUIManager 转应用层入口
+- ✅ 状态机子类自动发现（GameLauncher 反射）+ BootSplash 淡出与状态切换解耦
+- ✅ 场景加载拦截器接口 InterceptSceneLoad（跨场景 Loading 拦截）
+- ✅ 方块过渡动画 TransitionBlock（曲线驱动）+ Loading 接入 + 页面预设过渡槽
+- ✅ 开屏动画串行时序 + 背景页加载下沉状态机转场（遮挡层渐出前就绪）
+- ✅ 启动时序文档（docs/dev/ember-boot-sequence.md）
+- ✅ Core 新增 EmberTimeManager / EmberEventGroup / EmberBootBase / EmberBootSplashBridge
+- ✅ P0 UI 集成测试 Play Mode 全链路验证通过（Init→Main→Settings→Gameplay→Main）
 
 ### 接下来要做的事
 
 | 优先级 | 事项 | 文件数 | 说明 |
 |--------|------|--------|------|
-| 🔴 P0 | **UI 模块集成测试** | — | MainMenu + Settings 页面验证全链路 → [测试计划](../../docs/dev/ui-testing-plan.md) |
-| 🟡 P1 | **Module 系统** | 3 | `EmberModuleCollector` + `ModulePhase`，接口已定义 |
-| 🟡 P1 | **Timer 定时器** | 1 | 放入 extensions，int-ID API（Delay/Interval/Schedule/Cancel），内部委托 UniTask |
-| 🟡 P1 | **架构债务清理** | — | SceneManager 走 Resource、ServiceLocator 梳理、GameStateChanged 重复 dispatch |
 | 🟡 P1 | **Audio 多 Category + AudioAgent 池** | ~5 | 详见 [audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
 | 🟢 P2 | **预制体对象池** | 1 | GameObject 预制体池化 |
 | 🟢 P2 | **本地化** | — | |
 | 🟢 P2 | **uiextension Editor 工具** | 35 | Previews / Settings / Validation / Bake 编辑器工具 |
 | 🟢 P2 | **L3 虚拟列表/预加载** | 4 | GameUIContainer / GameTabLoader / GameUIAttachment / GamePagePreloader（依赖资源系统升级） |
+
+
+/*通用条件模块 CommonConditionModule
+功能解锁进度 FunctionUnlockModule 
+任务系统
+
+输入系统
+输入重绑定
+
+GM系统+帧率显示+UI
+
+包管理，不报错
+
+修改为upm框架
+
+2d/3d快速切换
+单机/网游快速切换模板
+平台快速切换
+
+测试编辑器脚本*/
 
 ### UI 集成测试步骤
 
@@ -148,8 +176,8 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 | 5 | 手写页面逻辑（OnInit / OnPause / OnResume / OnDispose） | ✅ |
 | 6 | EmberUIBindingBridge.Register() 自动注册（RuntimeInitializeOnLoadMethod） | ✅ |
 | 7 | 启动流程：BootSplash→Init 退出关闭 / 开屏动画→Main.OnEnter / OnOpeningAnimationEnd→打开 MainMenu | ✅ |
-| 8 | Play Mode 验证完整链路 | ⬜ |
-| 9 | Loading 预制体绑定（TopMost 层） | ⬜ |
+| 8 | Play Mode 验证完整链路 | ✅ |
+| 9 | Loading 预制体绑定（TopMost 层） | ✅ |
 
 **验证矩阵：** EUIManager Push/Pop、EUIPageRouter 路由、EUIPage（纯 C# 包装）+ EUILogic（生成逻辑类）生命周期分离、EUIPageContext 栈管理、EUIBgMaskPool 遮罩、EUIObserver 事件、EmberUIBinding 代码生成。**生成的代码继承 `EUILogic`（非 MonoBehaviour），使用 `ControlMap["name"] as Type` 模式。**
 
@@ -171,7 +199,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 | 8 | **Editor** | `Ember.Editor` | ✅ 已完成 | 框架级编辑器工具 |
 | 9 | **Manager 自动发现** | `Ember.Core.Runtime` | ✅ 已完成 | `GameMgrCollector` + `IManager` |
 | 10 | **Update 循环管理器** | `Ember.Core.Runtime` | ✅ 已完成 | `GameUpdateManager` |
-| 11 | **Timer 定时器** | `com.ember.extensions` | ⬜ 待开始 | `TimerManage`（基于 UniTask） |
+| 11 | **Timer 定时器** | `Ember.Core.Runtime` | ✅ 已完成 | `TimerManage`（delta 累加，不依赖 UniTask） |
 | 12 | **GameState 状态机** | `Ember.Core.Runtime` | ✅ 已完成 | `GameStateManager` |
 | 13 | **日志系统** | `Ember.Core.Runtime` | ✅ 已完成 | `Debuger` |
 | 14 | **Basic 包迁移** | `com.ember.basic` | ✅ 已完成 | 36 文件迁移 + 用户工具整合 + 编辑器工具 |
@@ -391,6 +419,10 @@ Push(GamePages.Settings, args)
 
 #### 3.2 两层架构重写 Phase A（2026-08-04 启动，已完成 ✅）
 
+> 📌 **架构演进（2026-08-11）**：本节最初的「EUIManager 框架层 + EUIPageRouter 应用层」两层架构已演进为
+> 「**EUIViewEngine（视图引擎/底层） + EUIManager（应用层入口）**」——`EUIPageRouter` 的路由职责已合并进
+> `EUIViewEngine`。下方对应关系表中两行的 ember 侧类名已按当前状态更新，完整现状见 [ember-boot-sequence.md](../../docs/dev/ember-boot-sequence.md)。
+
 对 UI 模块进行架构级重构，**采用与 burner 相同的两层架构**：
 
 ```
@@ -427,8 +459,8 @@ Push(GamePages.Settings, args)
 
 | burner | ember | 定位 |
 |--------|-------|------|
-| `BurnerUIManager` (com.burner.uiextension) | `EUIManager` (Ember.UI.Runtime) | 框架层：页面生命周期 + 资源加载 |
-| `GameUIManager` (Assets/Game/...) | `EUIPageRouter` (Ember.UI.Runtime) | 应用层：路由分发 + 业务集成 |
+| `BurnerUIManager` (com.burner.uiextension) | `EUIViewEngine` (Ember.UI.Runtime) | 框架层/视图引擎：页面生命周期 + 路由 + 资源加载 |
+| `GameUIManager` (Assets/Game/...) | `EUIManager` (Ember.UI.Runtime) | 应用层入口：ShowMainPage / SetBackgroundAsync |
 | `GameUILogic` | `IEUIView`（扩展） | 页面基类 / 接口 |
 | `GameUIBase` | 业务层自行实现 | 游戏特有的 UI 基类（不在框架中） |
 | `EUIPageDef` (游戏常量) | `EUIPageDef` + 业务层 `GamePages` | 页面元数据 |
@@ -901,17 +933,24 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 
 ---
 
-### 13. Timer 定时器 `com.ember.extensions`
+### 13. Timer 定时器 `Ember.Core.Runtime`
 
-> 状态：⬜ 待开始（暂定放入 com.ember.extensions，避免 Core 依赖 UniTask）
+> 状态：✅ 已完成（2026-08-17）
 > burner 参考：`TimerManage`
+> 实现位置：[EmberTimerManager.cs](../../Assets/Ember/Core/Runtime/Time/EmberTimerManager.cs)
 
-- int-ID API（Delay / Interval / Schedule / Cancel），内部委托 UniTask
-- 保持 Core 零外部依赖，Timer 作为可选扩展
+- int-ID API（Delay / Interval / Schedule / Cancel），0 视为无效 ID，Cancel 统一取消
+- 时间源来自 EmberTimeManager：逻辑时间（受 TimeScale/Pause 影响）或真实时间，由 useLogicTime 选择
+- 由 EmberUpdateManager 每帧自动驱动（IEmberUpdate），无需挂 MonoBehaviour、无需手动 Tick
+- delta 累加驱动，不依赖 UniTask —— 能正确响应 EmberTimeManager 独立于 Unity timeScale 的 TimeScale/Pause
+
+> 📌 **位置调整说明**：原计划放 com.ember.extensions（理由「避免 Core 依赖 UniTask」）。实现时发现定时器
+> 依赖 EmberTimeManager / IEmberUpdate / EmberSingleton，均属 Core，且 delta 累加根本不需要 UniTask。
+> 故下沉到 Core/Time/，与 EmberTimeManager 并列。原「避免 Core 依赖 UniTask」的理由已过时（Core 早已用 UniTask）。
 
 ---
 
-## Module 系统设计（待实现）
+## Module 系统（已完成基础版 ✅）
 
 ### 问题
 
@@ -942,31 +981,40 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 | `IEmberManager` | [IEmberManager.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberManager.cs) | 框架管道，启动时初始化 |
 | `IEmberModule` | [IEmberModule.cs](../../Assets/Ember/Core/Runtime/Manager/IEmberModule.cs) | 业务模块，状态机驱动 |
 
-两者**不继承**——EmberManagerCollector 只扫 `IEmberManager`，EmberModuleCollector（未来实现）只扫 `IEmberModule`，互不干扰。
+两者**不继承**——EmberManagerCollector 只扫 `IEmberManager`，EmberModuleCollector 只扫 `IEmberModule`，互不干扰。
 
 ### 初始化流程
 
 ```
 GameLauncher.Awake()
 │
-├─ EmberManagerCollector.InitializeAll()   ← 扫 IEmberManager（7 个管道）
-│
 └─ Fsm.Start<InitState>()
       │
-      └─ Fsm.TransitionTo<LoginState>()
-           │
-           ├─ LoginState.OnEnter()
-           │     EmberModuleCollector.InitPhase(1)   ← 扫 IEmberModule.Phase == 1
-           │
-           └─ LoginState.OnExit()
-                 EmberModuleCollector.DestroyPhase(1)
+      └─ InitState.OnEnter()
+           ├─ EmberManagerCollector.InitializeAll()               ← 框架管道
+           ├─ EmberModuleCollector.InitPhase(ModulePhase.Global)   ← 全局业务模块
+           └─ TransitionTo<MainState>()                            ← 加载 MainScene
+
+游戏退出（GameLauncher.ShutdownFramework）
+      └─ EmberModuleCollector.DestroyAll()                         ← 销毁全部模块
 ```
 
-### 待实现
+### 已完成（2026-08-17）
 
-- [ ] `EmberModuleCollector`：按 Phase 分组，对接状态机生命周期
-- [ ] `Phase` 预定义常量（如 `ModulePhase.Login = 1, Gameplay = 2`）
-- [ ] 热重启：`ResetModuleData()` 在一次游戏会话中复用模块对象
+- [x] `ModulePhase` 常量：Framework(0) / Global(1) / Main(2) / Gameplay(3)
+- [x] `EmberModuleCollector`：反射扫描 IEmberModule，按 Phase 分组，InitPhase / DestroyPhase / DestroyAll
+- [x] 热重启：再次 InitPhase 时先 ResetModuleData 再 OnInit（对象复用）
+- [x] 首个业务模块 `PlayerPrefsModule`（Global 阶段，Init 启动 / 退出销毁）
+
+### 文件清单
+
+| 文件 | 职责 |
+|------|------|
+| [ModulePhase.cs](../../Assets/Ember/Core/Runtime/Manager/ModulePhase.cs) | 阶段常量 |
+| [EmberModuleCollector.cs](../../Assets/Ember/Core/Runtime/Manager/EmberModuleCollector.cs) | 反射扫描 + 按 Phase 驱动生命周期 |
+| [PlayerPrefsModule.cs](../../Assets/Game/Module/PlayerPrefsModule.cs) | 首个业务模块：封装 UnityEngine.PlayerPrefs |
+
+> Main / Gameplay 阶段的接线（`InitPhase(ModulePhase.Main)` 等）待对应业务模块出现时接入。
 
 ---
 
@@ -1193,22 +1241,22 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 
 ## 技术债务 & 后续规划
 
-> 最后更新：2026-08-06
+> 最后更新：2026-08-17
 
 ### 🔴 待修改（影响架构）
 
-| # | 事项 | 当前 | 目标 |
-|---|------|------|------|
-| 1 | **EmberSceneManager 走 Resource** | 直接调 `SceneManager.LoadSceneAsync` | 通过 `EmberResourceManager.LoadSceneAsync` |
-| 2 | **ServiceLocator 定位梳理** | Resource 注册又移除，UI/Scene 强依赖 Instance | 框架内部用 Instance，外部后端用 ServiceLocator |
+> ✅ 已全部解决（2026-08-18）：
+> 1. EmberSceneManager 场景加载走 EmberResourceManager.LoadSceneAsync（IResourceProvider.LoadSceneAsync 改为返回 AsyncOperation + 支持 LoadSceneMode）
+> 2. IResourceProvider 注册进 EmberServiceLocator（框架内部用 Instance、外部后端用 ServiceLocator）
+> 3. 移除 EmberStateMachine 冗余的 OnStateChanged C# 事件（与 GameStateChanged 广播重复）
 
 ### 🟡 待补完（功能完整度）
 
 | # | 事项 | 说明 |
 |---|------|------|
-| 3 | **Module 系统** | `IEmberModule` + `EmberModuleCollector`，接口已定义，Collector 待实现 |
+| 3 | **Module 系统** | ✅ 已实现：ModulePhase + EmberModuleCollector + PlayerPrefsModule |
 | 4 | **ResourcesProvider 异步化** | `LoadAssetAsync` 实际同步，应加真正异步 |
-| 5 | **Timer 定时器** | 放入 `com.ember.extensions` |
+| 5 | **Timer 定时器** | ✅ 已实现：EmberTimerManager（Core/Time） |
 | 6 | **UI Pop 动画** | 淡入淡出、滑动过渡 |
 
 ### 🟢 待扩展（增强项）
@@ -1344,6 +1392,24 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | 2026-08-08 | 🎬 **预设渐入渐出**：EmberUIBinding 新增 `usePresetFade` / `fadeInTime` / `fadeOutTime` 参数；EUIPage.PlayShow/PlayHide 分支判断；UniTask 线性 alpha 渐变；开启后跳过子类 OnShow/OnHide virtual |
 | 2026-08-08 | 🎬 **NotifyOpened/NotifyClosed 时序修正**：从 `_nextFrameCallbacks`（动画未完成就播报） → `CompleteShow/CompleteHide`（动画真正结束时播报）；修复 ReopenPage 重复播报 bug |
 | 2026-08-08 | 🗑️ **延迟销毁（对标 Burner）**：EUIPage 新增 closing 状态 + 30s 定时器；EUIManager 新增 `_closingPages` 字典 + 每帧到期检查 + 复用查询；EUIPageRouter 新增 FindReusablePage 复用路径 |
+| 2026-08-08 | 🏗️ **GameMainState + 开屏动画**：新增 GameMainState 子类 + MainAnimation 开屏动画，适配新启动流程；Loading / MainMenu / Settings 页面预制体落地 |
+| 2026-08-10 | 🏷️ **EUI\* 前缀重命名（uiextension）**：Runtime 核心类型 Ember\* → EUI\*；Editor 工具重构为委托注入模式 |
+| 2026-08-11 | 🏷️ **UI 框架类型重命名 + 架构合并**：UI 框架类型统一 EUI\*；`EUIPageRouter` 合并进 `EUIViewEngine`（视图引擎），`EUIManager` 转应用层入口 |
+| 2026-08-11 | 🏗️ **状态机子类自动发现**：BootSplash 淡出与状态切换解耦，GameLauncher 反射自动发现业务状态子类 |
+| 2026-08-11 | 🛡️ **场景加载拦截器接口**：移除展示进度平滑，新增 `InterceptSceneLoad` 跨场景 Loading 拦截 |
+| 2026-08-11 | 🏗️ **Gameplay/Settings 场景与状态**：新增 GameplayScene / SettingsScene + GameGameplayState / GameSettingsState，BootSplash 支持可配置淡出 |
+| 2026-08-13 | 🎬 **方块过渡动画 TransitionBlock**：新增方块过渡组件，Loading 页面接入；UI 组件 Ember 前缀统一重命名为 EUI |
+| 2026-08-13 | 🔧 **EUIViewEngine 生命周期改造**：改用 EmberSingleton + IEmberUpdate，去 MonoBehaviour |
+| 2026-08-14 | 🎬 **方块过渡曲线驱动重构**：多态动画类 → 曲线驱动；接入页面预设过渡槽；第三方 TransitionBlocks 插件导入又移除（最终自研） |
+| 2026-08-15 | 🔄 **开屏动画串行时序**：背景页加载迁移进状态机转场，遮挡层渐出前就绪 |
+| 2026-08-17 | 📝 **启动时序文档**：ember-boot-sequence.md，五阶段启动链 + 两道串行门槛 |
+| 2026-08-17 | ✅ **P0 UI 集成测试完成**：Init → Main(MainMenu) → Settings → Gameplay(InGameUI) → Main 全链路 Play Mode 验证通过 |
+| 2026-08-17 | ⏱️ **Timer 定时器完成**：EmberTimerManager（Core/Time），int-ID API（Delay/Interval/Schedule/Cancel），时间源 EmberTimeManager，IEmberUpdate 自动驱动，delta 累加不依赖 UniTask |
+| 2026-08-17 | 🧩 **Module 系统完成**：ModulePhase 常量 + EmberModuleCollector（按 Phase 驱动生命周期）+ 首个业务模块 PlayerPrefsModule（Global 阶段，Init 启动/退出销毁） |
+| 2026-08-17 | 🌊 **无缝流送模块**：Game.Module 业务模块（Streaming/ 子目录，Phase=Gameplay），拓扑分块 + 方向感知触发器 + 分帧加载卸载；纯 C# 核心（StreamingModule）+ 3 个 Mono 触发器；走 EmberSceneManager 静默加载方法，不改动状态机切换链路 |
+| 2026-08-17 | 💡 **全局灯光模块**：Game.Module 的 GlobalLightModule（Phase=Global，默认关闭），全局一套 Light2D 按场景名切换 + DOTween 平滑过渡，监听 SceneLoaded + EmberSceneManager.CurrentScene；配套 GlobalLightConfig 资产 |
+| 2026-08-17 | 💾 **玩家存档模块**：Game.Module 的 PlayerDataModule（Phase=Global，默认关闭），管理 PlayerData 存档的自动加载/保存（init 加载、退出落盘），基于 DataSaver（JsonUtility） |
+| 2026-08-18 | 🧹 **架构债务清理**：EmberSceneManager 场景加载走 EmberResourceManager（IResourceProvider.LoadSceneAsync 改为返回 AsyncOperation + LoadSceneMode）；IResourceProvider 注册进 ServiceLocator；移除冗余 OnStateChanged C# 事件 |
 
 ---
 
