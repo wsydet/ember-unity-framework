@@ -19,6 +19,7 @@ namespace Ember.Core
     /// </code>
     ///
     /// <b>子类化指南：</b>
+    /// - 进入玩法时自动 <c>InitPhase(ModulePhase.Gameplay)</c> 初始化玩法阶段业务模块
     /// - override <see cref="OnGameplayEnter"/>：加载战斗场景、初始化战斗模块
     /// - override <see cref="OnGameplayExit"/>：卸载战斗场景、清理战斗模块
     /// - override <see cref="OnGameplayUpdate"/>：驱动玩法主循环（如不需要可留空）
@@ -58,12 +59,14 @@ namespace Ember.Core
         public sealed override void OnEnter(object args)
         {
             EmberDebug.LogEvent(TAG, "GameplayState: entering gameplay...");
+            EmberModuleCollector.Instance.InitPhase(ModulePhase.Gameplay);
             OnGameplayEnter(args);
         }
 
         public sealed override void OnExit()
         {
             OnGameplayExit();
+            EmberModuleCollector.Instance.DestroyPhase(ModulePhase.Gameplay);
             EmberDebug.LogCleanup(TAG, "GameplayState: leaving gameplay.");
         }
 

@@ -9,9 +9,10 @@ namespace Ember.Core
     ///
     /// 启动流程：
     /// 1. 初始化所有 Manager
-    /// 2. 广播 CoreReady
-    /// 3. 若 MainState.UseUIBg：加载兜底背景页（BootSplash 渐出前就绪）
-    /// 4. 加载 MainScene → await 黑幕淡出 → TransitionTo《MainState》
+    /// 2. 初始化 Global 阶段业务模块
+    /// 3. 广播 CoreReady
+    /// 4. 若 MainState.UseUIBg：加载兜底背景页（BootSplash 渐出前就绪）
+    /// 5. 加载 MainScene → await 黑幕淡出 → TransitionTo《MainState》
     ///
     /// <b>InitState 持有 BootSplash（黑幕）</b>：
     /// BootSplash 在 FrameworkScene 启动时自动激活。
@@ -42,6 +43,7 @@ namespace Ember.Core
             EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: bootstrapping framework...");
 
             EmberManagerCollector.Instance.InitializeAll();
+            EmberModuleCollector.Instance.InitPhase(ModulePhase.Global);
             EmberEventBus.OnNext(EmberBroadcastEvent.CoreReady);
 
             EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: framework ready. Loading MainScene...");

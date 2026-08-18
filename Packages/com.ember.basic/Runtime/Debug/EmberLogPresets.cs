@@ -37,11 +37,13 @@ namespace Ember.Basic
         public const string CoreSingleton      = EmberCore + ".Singleton";
         public const string CoreObjectPool     = EmberCore + ".ObjectPool";
         public const string CoreManagerCollector = EmberCore + ".ManagerCollector";
+        public const string CoreModuleCollector = EmberCore + ".ModuleCollector";
         public const string CoreUpdateManager  = EmberCore + ".UpdateManager";
         public const string CoreStateMachine   = EmberCore + ".StateMachine";
         public const string CoreGameLauncher   = EmberCore + ".GameLauncher";
         public const string CoreCameraManager  = EmberCore + ".CameraManager";
         public const string CoreTimeManager    = EmberCore + ".TimeManager";
+        public const string CoreTimer          = EmberCore + ".Timer";
         public const string CoreEditor         = EmberCore + ".Editor";
 
         // Resource 子标签
@@ -73,7 +75,7 @@ namespace Ember.Basic
             BasicCrypto, BasicPerformance, BasicAppQuit,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
-            CoreManagerCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreEditor,
+            CoreManagerCollector, CoreModuleCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreTimer, CoreEditor,
             // Extension 子
             ExtensionJsonUtils, ExtensionCacheLRU,
             // 其他子

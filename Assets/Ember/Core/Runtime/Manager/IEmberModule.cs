@@ -8,7 +8,7 @@
     /// IEmberModule 代表"只在某些游戏状态下才需要"的业务模块
     /// （战斗系统、网络连接、背包逻辑等）。
     ///
-    /// <b>初始化由 <c>EmberModuleCollector</c>（未来实现）按阶段驱动：</b>
+    /// <b>初始化由 <c>EmberModuleCollector</c> 按阶段驱动：</b>
     /// - Phase 0：框架管道（保留，IEmberManager 覆盖）
     /// - Phase 1：全局业务（Login 后常驻，如网络、账号）
     /// - Phase 2+：场景内业务（进入具体玩法时初始化）
@@ -17,16 +17,16 @@
     /// - 进入新状态 → Phase 匹配的模块调用 <see cref="OnInit"/>
     /// - 退出旧状态 → Phase 匹配的模块调用 <see cref="OnDestroy"/>
     ///
-    /// 用法：
+    /// 用法（模块以单例形式存在，继承 EmberSingleton《T》，生命周期方法显式实现接口）：
     /// <code>
-    /// public class BattleModule : IEmberModule
+    /// public class BattleModule : EmberSingleton《BattleModule》, IEmberModule
     /// {
-    ///     public int Phase => 2;
+    ///     public int Phase => ModulePhase.Gameplay;
     ///
-    ///     public void OnInit()   { /* 加载战斗资源、注册事件 */ }
-    ///     public void OnDestroy() { /* 卸载战斗资源、注销事件 */ }
+    ///     void IEmberModule.OnInit()   { /* 加载战斗资源、注册事件 */ }
+    ///     void IEmberModule.OnDestroy() { /* 卸载战斗资源、注销事件 */ }
     ///
-    ///     public void ResetModuleData()
+    ///     void IEmberModule.ResetModuleData()
     ///     {
     ///         // 清空运行时数据（不重建对象），用于"返回主菜单 → 重新进入"场景
     ///     }
@@ -40,6 +40,13 @@
         /// Phase 0 保留给框架管道（由 IEmberManager 覆盖），业务模块从 Phase 1 开始。
         /// </summary>
         int Phase { get; }
+
+        /// <summary>
+        /// 模块是否启用。默认 true。
+        /// 返回 false 的模块会被 <see cref="EmberModuleCollector"/> 跳过 —— 不收集、不初始化。
+        /// 用于「默认关闭、需要时再启用」的可选模块（如无缝流送）。
+        /// </summary>
+        bool Enabled => true;
 
         /// <summary>
         /// 模块初始化。由 EmberModuleCollector 在状态机进入对应 Phase 时调用。
