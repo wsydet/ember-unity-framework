@@ -18,6 +18,7 @@ namespace Ember.UIExtension
     ///   <item>自动 SetNativeSize</item>
     /// </list>
     /// </summary>
+    [EUIExtension(typeof(Image))]
     [AddComponentMenu("UI/EUI/Image Ex")]
     public class EUIImageEx : Image
     {

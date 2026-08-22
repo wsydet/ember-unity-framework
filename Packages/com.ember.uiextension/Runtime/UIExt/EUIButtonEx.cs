@@ -1,7 +1,11 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.uiextension
 
+using System.Collections.Generic;
+
 using Sirenix.OdinInspector;
+
+using TMPro;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +20,9 @@ namespace Ember.UIExtension
     ///   <item>多个附加 Graphic 同步 CrossFadeColor</item>
     /// </list>
     /// </summary>
+    [EUIExtension(typeof(Button))]
     [AddComponentMenu("UI/EUI/EUI ButtonEx")]
-    public class EUIButtonEx : Button
+    public class EUIButtonEx : Button, IEUIExposedChildProvider
     {
         #region 编辑器面板参数
 
@@ -43,6 +48,12 @@ namespace Ember.UIExtension
         [SerializeField]
         [LabelText("启用状态")]
         private bool _enableState;
+
+        [FoldoutGroup("引用")]
+        [SerializeField]
+        [LabelText("文本")]
+        [Tooltip("按钮的 label 文本槽位，Inspector 拖入子文本后可直接通过 Label 属性访问。")]
+        private TMP_Text _label;
 
         #endregion
 
@@ -99,6 +110,23 @@ namespace Ember.UIExtension
         {
             get => _additionalGraphics;
             set => _additionalGraphics = value;
+        }
+
+        /// <summary>
+        /// 按钮的 label 文本槽位。Inspector 拖入后可直接访问，
+        /// 无需在顶层 EUIBinding 里额外为文本建绑定。
+        /// </summary>
+        public TMP_Text Label
+        {
+            get => _label;
+            set => _label = value;
+        }
+
+        /// <summary>返回槽位持有的子组件（自动收集时会跳过这些节点）。</summary>
+        public IEnumerable<Component> GetOwnedChildren()
+        {
+            if (_label != null)
+                yield return _label;
         }
 
         #endregion

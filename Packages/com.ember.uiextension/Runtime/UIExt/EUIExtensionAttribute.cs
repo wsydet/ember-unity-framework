@@ -13,7 +13,7 @@ namespace Ember.UIExtension
     /// <example>
     /// <code>
     /// [EUIExtension(typeof(Button))]
-    /// public class EUIButtonEx : GameUIComponent { ... }
+    /// public class EUIButtonEx : Button { ... }
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
@@ -40,6 +40,7 @@ namespace Ember.UIExtension
 
         /// <summary>
         /// 组件在 Inspector 中的显示名称。
+        /// 默认取扩展类名（如 EUIButtonEx）。
         /// </summary>
         public string Name { get; set; }
 

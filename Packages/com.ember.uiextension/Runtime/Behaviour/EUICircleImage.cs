@@ -14,6 +14,7 @@ namespace Ember.UIExtension
     /// 继承自 <see cref="Image"/>，重写 OnPopulateMesh 用三角形拼接圆形。
     /// 支持 FillPercent 显示百分比（环形进度条效果）和圆形精确 Raycast。
     /// </summary>
+    [EUIExtension(typeof(Image))]
     [AddComponentMenu("UI/EUI/Circle Image")]
     public class EUICircleImage : Image
     {
