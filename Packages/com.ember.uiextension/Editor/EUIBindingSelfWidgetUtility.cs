@@ -60,7 +60,7 @@ namespace Ember.UIExtension.Editor
             {
                 foreach (var kv in mapping)
                 {
-                    if (go.GetComponent(kv.Value.Value.Key))
+                    if (go.GetComponent(kv.Value.Value.Value))
                         result.Add(kv.Key);
                 }
             }

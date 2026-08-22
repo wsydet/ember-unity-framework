@@ -181,9 +181,11 @@ namespace Ember.UIExtension
                     {
                         foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
                         {
-                            var extType = asm.GetType(className);
-                            if (extType != null)
-                                return go.GetComponent(extType) as Component;
+                            foreach (var t in asm.GetTypes())
+                            {
+                                if (t.Name == className && typeof(Component).IsAssignableFrom(t))
+                                    return go.GetComponent(t) as Component;
+                            }
                         }
                     }
                     return null;

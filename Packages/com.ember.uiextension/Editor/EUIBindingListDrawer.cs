@@ -23,6 +23,9 @@ namespace Ember.UIExtension.Editor
 
         private const int PAGE_SIZE = 10;
 
+        /// <summary>变量名与控件类型前缀不匹配时的警告底色</summary>
+        private static readonly Color NameMismatchColor = new Color(1f, 0.78f, 0.3f);
+
         private Dictionary<string, string> _baseFieldNames;
         private string _basePrefabName;
         private int _currentPage;
@@ -183,7 +186,18 @@ namespace Ember.UIExtension.Editor
                 EditorGUI.BeginDisabledGroup(isInherited);
 
                 EditorGUILayout.LabelField("变量名", GUILayout.Width(42));
-                var newName = EditorGUILayout.TextField(entry.Name, GUILayout.MinWidth(60));
+
+                // 命名校验：节点名/变量名与控件类型前缀不匹配时高亮提醒（可点 ✎ 一键重命名）
+                bool nameMismatch = !isInherited && entry.GameObject
+                    && IsBindingNameMismatched(entry.GameObject, entry.Type, entry.Name);
+                var nameTooltip = nameMismatch
+                    ? "节点名与控件类型前缀不匹配，点击 ✎ 一键重命名（如 m_Btn_ 前缀）"
+                    : null;
+                var prevBg = GUI.backgroundColor;
+                if (nameMismatch) GUI.backgroundColor = NameMismatchColor;
+                var newName = EditorGUILayout.TextField(
+                    new GUIContent("", nameTooltip), entry.Name, GUILayout.MinWidth(60));
+                GUI.backgroundColor = prevBg;
                 if (newName != entry.Name) { entry.Name = newName; modified = true; }
 
                 EditorGUILayout.LabelField("节点", GUILayout.Width(28));
@@ -305,20 +319,10 @@ namespace Ember.UIExtension.Editor
         private static EUIBinding.BindingEntry AutoDetectEntryType(EUIBinding.BindingEntry entry)
         {
             if (!entry.GameObject) return entry;
-            entry.Type = DetectWidgetType(entry.GameObject);
+            var detected = EUIBindingEditorUtility.DetectWidgetType(entry.GameObject);
+            entry.Type = detected.Type;
+            entry.ClassName = detected.ClassName;
             return entry;
-        }
-
-        private static EUIBinding.WidgetTypes DetectWidgetType(GameObject go)
-        {
-            if (!go) return EUIBinding.WidgetTypes.Component;
-            var b = go.GetComponent<EUIBinding>();
-            if (b) return EUIBinding.WidgetTypes.UILogic;
-            foreach (var r in EUIBindingEditorUtility.AutoSelectExactBuiltInComponentTypeRules)
-                if (r.ExactMatches(go)) return r.WidgetType;
-            foreach (var r in EUIBindingEditorUtility.BuiltInComponentTypeRules)
-            { if (r.WidgetType == EUIBinding.WidgetTypes.UILogic) continue; if (r.Matches(go)) return r.WidgetType; }
-            return EUIBinding.WidgetTypes.Component;
         }
 
         #endregion
@@ -399,6 +403,30 @@ namespace Ember.UIExtension.Editor
             var finalName = $"{baseName}_{idx}";
             defined.Add(finalName);
             return finalName;
+        }
+
+        /// <summary>
+        /// 校验绑定条目的命名是否符合控件类型的命名规范。
+        /// 规则（与 <see cref="RenameNodeToMatchType"/> 一致）：
+        /// 节点名应为 <c>m_{prefix}Core</c>（如 m_Btn_Close），变量名应为 <c>{prefix}Core</c>（如 Btn_Close）。
+        /// 不匹配时绑定列表会高亮「变量名」输入框，提示点击 ✎ 一键重命名。
+        /// </summary>
+        private static bool IsBindingNameMismatched(GameObject go, EUIBinding.WidgetTypes type, string entryName)
+        {
+            if (!go) return false;
+
+            var prefix = GetWidgetPrefix(go, type);
+            if (string.IsNullOrEmpty(prefix)) return false; // 无固定前缀的类型（如 Component）不校验
+
+            // 节点名校验：m_{prefix}Core 或 {prefix}Core 均视为合法
+            var goName = go.name ?? "";
+            var core = StripBindingPrefix(goName);
+            bool nodeOk = goName == $"m_{prefix}{core}" || goName == $"{prefix}{core}";
+
+            // 变量名校验：应为 {prefix}Core（去掉 m_ 前缀）
+            bool nameOk = string.IsNullOrEmpty(entryName) || entryName.StartsWith(prefix, System.StringComparison.Ordinal);
+
+            return !nodeOk || !nameOk;
         }
 
         /// <summary>

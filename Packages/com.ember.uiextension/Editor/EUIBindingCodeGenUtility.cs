@@ -608,7 +608,7 @@ namespace {namespaceName}
             // 直接修改 C# 对象，不通过 SerializedObject（避免 Odin 属性树缓存失效）
             var list = new List<EUIBinding.BindingEntry>(
                 binding.Bindings ?? System.Array.Empty<EUIBinding.BindingEntry>());
-            CollectBindingsToList(binding, defined, definedNames, binding.transform, logic, list);
+            CollectBindingsToList(binding, defined, definedNames, binding.transform, logic, list, new HashSet<GameObject>());
 
             // 写入 private 字段 + Undo 强制 Unity 序列化系统感知变更
             Undo.RecordObject(binding, "自动收集子控件");
@@ -633,12 +633,20 @@ namespace {namespaceName}
             HashSet<string> definedNames,
             Transform parent,
             LogicImplementationData logic,
-            List<EUIBinding.BindingEntry> list)
+            List<EUIBinding.BindingEntry> list,
+            HashSet<GameObject> ownedChildren)
         {
             for (int i = 0; i < parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
                 var childGO = child.gameObject;
+
+                // 收集当前节点增强组件通过槽位持有的子节点（这些子节点不再单独绑定）
+                EUIBindingEditorUtility.CollectOwnedChildren(childGO, ownedChildren);
+
+                // 跳过被增强组件槽位持有的子节点
+                if (ownedChildren.Contains(childGO))
+                    continue;
 
                 // 跳过被 EUIBindingExclude 标记的节点及其子树
                 if (childGO.GetComponent<EUIBindingExclude>())
@@ -648,42 +656,19 @@ namespace {namespaceName}
 
                 if (!defined.ContainsKey(childGO) && IsNameSuitable(child.name))
                 {
+                    var detected = EUIBindingEditorUtility.DetectWidgetType(childGO);
                     list.Add(new EUIBinding.BindingEntry
                     {
                         Name = logic.GetNameForCode(child.name, definedNames),
                         GameObject = childGO,
-                        Type = DetectWidgetType(childGO),
-                        ClassName = null,
+                        Type = detected.Type,
+                        ClassName = detected.ClassName,
                     });
                 }
 
                 if (!hasChildBinding)
-                    CollectBindingsToList(binding, defined, definedNames, child, logic, list);
+                    CollectBindingsToList(binding, defined, definedNames, child, logic, list, ownedChildren);
             }
-        }
-
-        /// <summary>检测 GameObject 上的组件类型</summary>
-        private static EUIBinding.WidgetTypes DetectWidgetType(GameObject go)
-        {
-            if (!go) return EUIBinding.WidgetTypes.Component;
-
-            var binding = go.GetComponent<EUIBinding>();
-            if (binding) return EUIBinding.WidgetTypes.UILogic;
-
-            foreach (var rule in EUIBindingEditorUtility.AutoSelectExactBuiltInComponentTypeRules)
-            {
-                if (rule.ExactMatches(go))
-                    return rule.WidgetType;
-            }
-
-            foreach (var rule in EUIBindingEditorUtility.BuiltInComponentTypeRules)
-            {
-                if (rule.WidgetType == EUIBinding.WidgetTypes.UILogic) continue;
-                if (rule.Matches(go))
-                    return rule.WidgetType;
-            }
-
-            return EUIBinding.WidgetTypes.Component;
         }
 
         /// <summary>

@@ -531,7 +531,7 @@ namespace Ember.UIExtension.Editor
         private static string GetCSharpTypeName(EUIBinding.BindingEntry entry)
         {
             if (entry.Type == EUIBinding.WidgetTypes.Extension && !string.IsNullOrEmpty(entry.ClassName))
-                return entry.ClassName;
+                return EUIBindingEditorUtility.GetExtensionFullTypeName(entry.ClassName);
             if (entry.Type == EUIBinding.WidgetTypes.UILogic && !string.IsNullOrEmpty(entry.ClassName))
                 return entry.ClassName;
 

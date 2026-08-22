@@ -322,10 +322,31 @@ namespace Ember.UIExtension.Editor
                     }
                 }
 
-                CollectBindingsRecursive(binding, bp, definedObjects, definedNames, binding.transform);
+                CollectBindingsRecursive(binding, bp, definedObjects, definedNames, binding.transform, new HashSet<GameObject>());
                 so.ApplyModifiedProperties();
             }
             return GetBindingSnapshot(binding).Entries;
+        }
+
+        /// <summary>
+        /// 收集节点上增强组件（IEUIExposedChildProvider）通过槽位持有的子节点，
+        /// 加入 ownedChildren。自动收集时会跳过这些节点，避免与槽位引用重复绑定。
+        /// </summary>
+        public static void CollectOwnedChildren(GameObject go, HashSet<GameObject> ownedChildren)
+        {
+            var providers = go.GetComponents<IEUIExposedChildProvider>();
+            if (providers == null || providers.Length == 0) return;
+
+            foreach (var provider in providers)
+            {
+                var owned = provider.GetOwnedChildren();
+                if (owned == null) continue;
+                foreach (var comp in owned)
+                {
+                    if (comp != null)
+                        ownedChildren.Add(comp.gameObject);
+                }
+            }
         }
 
         /// <summary>验证 binding 的合法性</summary>
@@ -412,12 +433,20 @@ namespace Ember.UIExtension.Editor
         }
 
         private static void CollectBindingsRecursive(EUIBinding binding, SerializedProperty bp,
-            Dictionary<GameObject, GameObject> definedObjects, HashSet<string> definedNames, Transform transform)
+            Dictionary<GameObject, GameObject> definedObjects, HashSet<string> definedNames, Transform transform,
+            HashSet<GameObject> ownedChildren)
         {
             for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
                 var childGo = child.gameObject;
+
+                // 收集当前节点增强组件通过槽位持有的子节点（这些子节点不再单独绑定）
+                CollectOwnedChildren(childGo, ownedChildren);
+
+                // 跳过被增强组件槽位持有的子节点
+                if (ownedChildren.Contains(childGo))
+                    continue;
 
                 // 跳过被 EUIBindingExclude 标记的节点及其子树
                 if (childGo.GetComponent<EUIBindingExclude>())
@@ -441,7 +470,7 @@ namespace Ember.UIExtension.Editor
                 }
 
                 if (!isSubBindingRoot)
-                    CollectBindingsRecursive(binding, bp, definedObjects, definedNames, child);
+                    CollectBindingsRecursive(binding, bp, definedObjects, definedNames, child, ownedChildren);
             }
         }
 
@@ -612,7 +641,7 @@ namespace Ember.UIExtension.Editor
                         if (arr != null && arr.Length > 0)
                         {
                             EUIExtensionAttribute attr = (EUIExtensionAttribute)arr[0];
-                            string name = string.IsNullOrEmpty(attr.Name) ? attr.ComponentType.Name : attr.Name;
+                            string name = string.IsNullOrEmpty(attr.Name) ? t.Name : attr.Name;
                             _extensionTypeMapping[name] = new KeyValuePair<int, KeyValuePair<Type, Type>>(
                                 nameList.Count, new KeyValuePair<Type, Type>(attr.ComponentType, t));
                             nameList.Add(name);
@@ -630,6 +659,42 @@ namespace Ember.UIExtension.Editor
             if (_extensionTypeMapping == null)
                 GetComponentTypeNames();
             return _extensionTypeMapping;
+        }
+
+        /// <summary>获取扩展类型的完整类型名（含命名空间，代码生成用）。</summary>
+        public static string GetExtensionFullTypeName(string className)
+        {
+            var mapping = GetExtensionTypeMapping();
+            if (string.IsNullOrEmpty(className) || !mapping.TryGetValue(className, out var kv))
+                return className;
+            return kv.Value.Value.FullName;
+        }
+
+        /// <summary>
+        /// 检测 GameObject 上的组件类型，返回 (类型, 类名)。
+        /// 与 AutoSelectByObject 逻辑一致，扩展类型会同时返回扩展显示名作为类名。
+        /// </summary>
+        public static (EUIBinding.WidgetTypes Type, string ClassName) DetectWidgetType(GameObject go)
+        {
+            var binding = go.GetComponent<EUIBinding>();
+            if (binding)
+                return (EUIBinding.WidgetTypes.UILogic, binding.NoCodeGeneration ? null : binding.ClassName);
+
+            foreach (var rule in AutoSelectExactBuiltInComponentTypeRules)
+                if (rule.ExactMatches(go))
+                    return (rule.WidgetType, null);
+
+            if (TryGetFirstMatchingExtension(go, out var extensionName))
+                return (EUIBinding.WidgetTypes.Extension, extensionName);
+
+            foreach (var rule in BuiltInComponentTypeRules)
+            {
+                if (rule.WidgetType == EUIBinding.WidgetTypes.UILogic) continue;
+                if (rule.Matches(go))
+                    return (rule.WidgetType, null);
+            }
+
+            return (EUIBinding.WidgetTypes.Component, null);
         }
 
         /// <summary>收集所有已定义的绑定（递归，含子 EUIBinding）</summary>
@@ -721,9 +786,9 @@ namespace Ember.UIExtension.Editor
                     var mapping = GetExtensionTypeMapping();
                     if (mapping.TryGetValue(cn.stringValue, out var ct))
                     {
-                        if (!go.GetComponent(ct.Value.Key))
+                        if (!go.GetComponent(ct.Value.Value))
                         {
-                            EditorGUILayout.HelpBox($"{go} 并不包含 {ct.Value.Key.Name} 组件", MessageType.Error);
+                            EditorGUILayout.HelpBox($"{go} 并不包含 {ct.Value.Value.Name} 组件", MessageType.Error);
                             invalid = true;
                         }
                     }
@@ -813,7 +878,7 @@ namespace Ember.UIExtension.Editor
             var mapping = GetExtensionTypeMapping();
             foreach (var i in mapping)
             {
-                if (go.GetComponent(i.Value.Value.Key))
+                if (go.GetComponent(i.Value.Value.Value))
                     res.Add(new ComponentTypeOption { Index = i.Value.Key, Name = allNames[i.Value.Key] });
             }
 
@@ -859,7 +924,8 @@ namespace Ember.UIExtension.Editor
             var mapping = GetExtensionTypeMapping();
             foreach (var i in mapping)
             {
-                if (go.GetComponent(i.Value.Value.Key)) { extensionName = i.Key; return true; }
+                // 用扩展类型本身精确匹配，避免同一原生类型（如 Image）下的多个扩展互相误判
+                if (go.GetComponent(i.Value.Value.Value)) { extensionName = i.Key; return true; }
             }
             extensionName = null;
             return false;
