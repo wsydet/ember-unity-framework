@@ -1,0 +1,353 @@
+﻿using System;
+using System.Collections.Generic;
+using Ember.Core;
+using Ember.UI;
+using UniRx;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 事件处理器基类 —— 把底层事件源（EUIObserver / EmberEventBus）桥接到引导状态机。
+    ///
+    /// 一个处理器实例对应一种 <see cref="GuideEventType"/>，可同时承载多条 <see cref="GuideEvent"/>
+    /// （同一事件类型、不同参数），共享一次底层订阅。
+    ///
+    /// 反注册采用「延迟」语义：<see cref="IsUnRegistered"/> 置位后，由
+    /// <see cref="GuideGroup"/> 在下一帧真正 <see cref="UnRegister"/>，
+    /// 避免相邻步骤共享同一事件类型时的注册 / 反注册抖动。
+    /// </summary>
+    internal abstract class GuideEventHandle
+    {
+        #region 内部参数
+
+        /// <summary>事件类型。</summary>
+        public GuideEventType GuideEventType { get; set; }
+
+        /// <summary>所属引导组。</summary>
+        public GuideGroup GuideGroup { get; set; }
+
+        /// <summary>承载的事件配置列表（同一类型、不同参数）。</summary>
+        public List<GuideEvent> GuideEvents = new();
+
+        /// <summary>是否已标记为待反注册。</summary>
+        public bool IsUnRegistered;
+
+        /// <summary>重入保护：executor 执行中收到事件时记录当前步骤，延迟一帧重派发。</summary>
+        private int _recordStepIndex = -1;
+
+        private GuideStepState _recordStepState = GuideStepState.NotStart;
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        /// <summary>订阅底层事件源。首次创建时调用一次。</summary>
+        public abstract void Register();
+
+        /// <summary>反订阅底层事件源。由 TickEvents 延迟调用。</summary>
+        public abstract void UnRegister();
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        /// <summary>触发引导状态机推进。带重入保护，避免 executor 中发事件导致流程错乱。</summary>
+        protected void Trigger()
+        {
+            if (GuideGroup == null || IsUnRegistered) return;
+
+            if (!GuideGroup.IsProcessing)
+            {
+                GuideGroup.TryNext(GuideEventType);
+                return;
+            }
+
+            _recordStepIndex = GuideGroup.CurStepIndex;
+            _recordStepState = GuideGroup.CurStepState;
+            EmberTimerManager.Instance.Delay(TryNextDelayed, 0f);
+        }
+
+        /// <summary>延迟重派发：仅当步骤未推进时才真正 TryNext，避免陈旧事件干扰后续步骤。</summary>
+        private void TryNextDelayed()
+        {
+            if (_recordStepIndex == -1 || GuideGroup == null) return;
+            if (_recordStepIndex != GuideGroup.CurStepIndex || _recordStepState != GuideGroup.CurStepState) return;
+
+            _recordStepIndex = -1;
+            _recordStepState = GuideStepState.NotStart;
+            GuideGroup.TryNext(GuideEventType);
+        }
+
+        /// <summary>路径通配匹配：null / 空 / "*" 表示任意。</summary>
+        protected static bool MatchPath(string expected, string actual)
+            => string.IsNullOrEmpty(expected) || expected == "*" || expected == actual;
+
+        #endregion
+    }
+
+    // ============================================================
+    // 页面事件处理器
+    // ============================================================
+
+    /// <summary>「UI 页面打开」事件处理器 —— 订阅 <see cref="EUIObserver.OnPageOpened"/>。</summary>
+    internal class GuideEventHandleOnPageShown : GuideEventHandle
+    {
+        #region 内部参数
+
+        private IDisposable _sub;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_sub != null) return;
+            _sub = EUIObserver.OnPageOpened.Subscribe(OnPageOpened);
+        }
+
+        public override void UnRegister()
+        {
+            _sub?.Dispose();
+            _sub = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnPageOpened(PageLifecycleEvent e)
+        {
+            if (IsUnRegistered) return;
+            foreach (var ge in GuideEvents)
+            {
+                if (ge.eventParam is GuideEventParamPage p
+                    && MatchPath(p.pagePath, e.Page?.PrefabPath))
+                {
+                    Trigger();
+                    return;
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>「UI 页面关闭」事件处理器 —— 订阅 <see cref="EUIObserver.OnPageClosed"/>。</summary>
+    internal class GuideEventHandleOnPageHidden : GuideEventHandle
+    {
+        #region 内部参数
+
+        private IDisposable _sub;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_sub != null) return;
+            _sub = EUIObserver.OnPageClosed.Subscribe(OnPageClosed);
+        }
+
+        public override void UnRegister()
+        {
+            _sub?.Dispose();
+            _sub = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnPageClosed(PageLifecycleEvent e)
+        {
+            if (IsUnRegistered) return;
+            foreach (var ge in GuideEvents)
+            {
+                if (ge.eventParam is GuideEventParamPage p
+                    && MatchPath(p.pagePath, e.Page?.PrefabPath))
+                {
+                    Trigger();
+                    return;
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    // ============================================================
+    // 按钮 / 延时 / 遮罩 / 自定义事件处理器
+    // ============================================================
+
+    /// <summary>「UI 按钮点击」事件处理器 —— 订阅 <see cref="GuideEventKey.ClickUIButton"/>。</summary>
+    internal class GuideEventHandleOnClickUIButton : GuideEventHandle
+    {
+        #region 内部参数
+
+        private Action<string, string> _handler;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_handler != null) return;
+            _handler = OnClick;
+            EmberEventBus.Subscribe(GuideEventKey.ClickUIButton, _handler);
+        }
+
+        public override void UnRegister()
+        {
+            if (_handler == null) return;
+            EmberEventBus.Unsubscribe(GuideEventKey.ClickUIButton, _handler);
+            _handler = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnClick(string pagePath, string ctrlName)
+        {
+            if (IsUnRegistered) return;
+            foreach (var ge in GuideEvents)
+            {
+                if (ge.eventParam is GuideEventParamClickUI p
+                    && MatchPath(p.pagePath, pagePath)
+                    && MatchPath(p.ctrlName, ctrlName))
+                {
+                    Trigger();
+                    return;
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>「延时结束」事件处理器 —— 订阅 <see cref="GuideEventKey.DelayFinish"/>。</summary>
+    internal class GuideEventHandleOnDelayFinish : GuideEventHandle
+    {
+        #region 内部参数
+
+        private Action _handler;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_handler != null) return;
+            _handler = OnDelayFinish;
+            EmberEventBus.Subscribe(GuideEventKey.DelayFinish, _handler);
+        }
+
+        public override void UnRegister()
+        {
+            if (_handler == null) return;
+            EmberEventBus.Unsubscribe(GuideEventKey.DelayFinish, _handler);
+            _handler = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnDelayFinish()
+        {
+            if (!IsUnRegistered) Trigger();
+        }
+
+        #endregion
+    }
+
+    /// <summary>「引导遮罩点击」事件处理器 —— 订阅 <see cref="GuideEventKey.MaskClick"/>。</summary>
+    internal class GuideEventHandleOnGuideMaskClick : GuideEventHandle
+    {
+        #region 内部参数
+
+        private Action _handler;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_handler != null) return;
+            _handler = OnMaskClick;
+            EmberEventBus.Subscribe(GuideEventKey.MaskClick, _handler);
+        }
+
+        public override void UnRegister()
+        {
+            if (_handler == null) return;
+            EmberEventBus.Unsubscribe(GuideEventKey.MaskClick, _handler);
+            _handler = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnMaskClick()
+        {
+            if (!IsUnRegistered) Trigger();
+        }
+
+        #endregion
+    }
+
+    /// <summary>「自定义」事件处理器 —— 订阅 <see cref="GuideEventKey.Custom"/>，按 key 匹配。</summary>
+    internal class GuideEventHandleOnCustom : GuideEventHandle
+    {
+        #region 内部参数
+
+        private Action<int> _handler;
+
+        #endregion
+
+        #region 外部方法
+
+        public override void Register()
+        {
+            if (_handler != null) return;
+            _handler = OnCustom;
+            EmberEventBus.Subscribe(GuideEventKey.Custom, _handler);
+        }
+
+        public override void UnRegister()
+        {
+            if (_handler == null) return;
+            EmberEventBus.Unsubscribe(GuideEventKey.Custom, _handler);
+            _handler = null;
+        }
+
+        #endregion
+
+        #region 内部方法
+
+        private void OnCustom(int key)
+        {
+            if (IsUnRegistered) return;
+            foreach (var ge in GuideEvents)
+            {
+                if (ge.eventParam is GuideEventParamCustom p && p.key == key)
+                {
+                    Trigger();
+                    return;
+                }
+            }
+        }
+
+        #endregion
+    }
+}

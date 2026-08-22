@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using Ember.UI;
+using UnityEngine;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 引导执行器类型 —— 具体执行动作的枚举（对应 <see cref="GuideExecutor"/> 的静态实现）。
+    /// 枚举值写死，避免调整顺序导致已配置资产失效。
+    /// </summary>
+    public enum GuideExecuteType
+    {
+        /// <summary>打开全屏遮罩（param: <see cref="GuideExeParamMask"/>）。</summary>
+        OpenMask = 1,
+
+        /// <summary>关闭遮罩。</summary>
+        CloseMask = 2,
+
+        /// <summary>打开小手指引到 UI 控件（param: <see cref="GuideExeParamOpenHand"/>）。</summary>
+        OpenHand = 3,
+
+        /// <summary>关闭小手。</summary>
+        CloseHand = 4,
+
+        /// <summary>打开 UI 页面（param: <see cref="GuideExeParamOpenUI"/>）。</summary>
+        OpenUI = 5,
+
+        /// <summary>关闭 UI 页面（param: <see cref="GuideExeParamCloseUI"/>）。</summary>
+        CloseUI = 6,
+
+        /// <summary>延时（param: <see cref="GuideExeParamDelay"/>）。</summary>
+        Delay = 7,
+
+        /// <summary>弹提示（param: <see cref="GuideExeParamShowTips"/>）。</summary>
+        ShowTips = 8,
+
+        /// <summary>输出调试日志（param: <see cref="GuideExeParamLog"/>）。</summary>
+        Log = 9,
+    }
+
+    /// <summary>
+    /// 引导执行器 —— 一个 <see cref="GuideExecuteType"/> + 对应的参数对象，
+    /// 由 <see cref="Execute"/> 分发到 <see cref="GuideExecutorExtension"/> 的静态实现。
+    /// </summary>
+    [Serializable]
+    public partial class GuideExecutor
+    {
+        #region 编辑器面板参数
+
+        /// <summary>执行类型。</summary>
+        public GuideExecuteType executeType;
+
+        /// <summary>执行参数（具体类型见 <see cref="GuideExecuteType"/> 各枚举说明）。</summary>
+        [SerializeReference]
+        public object executeParam;
+
+        #endregion
+
+        /// <summary>执行类型 → 实现的映射。</summary>
+        private static readonly Dictionary<GuideExecuteType, Action<object, GuideGroupBlackboard>> Executors = new()
+        {
+            [GuideExecuteType.OpenMask]  = OpenMaskByStep,
+            [GuideExecuteType.CloseMask] = CloseMaskByStep,
+            [GuideExecuteType.OpenHand]  = OpenHandByStep,
+            [GuideExecuteType.CloseHand] = CloseHandByStep,
+            [GuideExecuteType.OpenUI]    = OpenUI,
+            [GuideExecuteType.CloseUI]   = CloseUI,
+            [GuideExecuteType.Delay]     = Delay,
+            [GuideExecuteType.ShowTips]  = ShowTips,
+            [GuideExecuteType.Log]       = Log,
+        };
+
+        /// <summary>执行引导动作。</summary>
+        public void Execute(GuideGroupBlackboard blackboard)
+        {
+            if (Executors.TryGetValue(executeType, out var f))
+                f(executeParam, blackboard);
+        }
+    }
+
+    // ============================================================
+    // 执行器参数类
+    // ============================================================
+
+    /// <summary>遮罩参数：duration &gt;= 0 时定时自动关闭，&lt; 0 表示常驻（直到显式 CloseMask）。</summary>
+    [Serializable]
+    public class GuideExeParamMask
+    {
+        public float duration = -1f;
+    }
+
+    /// <summary>
+    /// 小手指引参数：指引到指定页面的指定控件。
+    /// </summary>
+    [Serializable]
+    public class GuideExeParamOpenHand
+    {
+        /// <summary>目标页面 prefab 路径（"*" 或空 = 不校验页面）。</summary>
+        public string pagePath;
+
+        /// <summary>目标控件名（支持 "父.子" 层级；"*" 或空 = 指向整页中心）。</summary>
+        public string ctrlName;
+
+        /// <summary>气泡提示文字（空 = 不显示气泡）。</summary>
+        public string tips;
+
+        /// <summary>小手显示延迟（秒），用于等界面打开动画。</summary>
+        public float handDelay = 0.3f;
+
+        /// <summary>遮罩颜色。</summary>
+        public Color maskColor = new Color(0f, 0f, 0f, 0.6f);
+
+        /// <summary>点击遮罩是否取消当前引导（false = 触发 OnGuideMaskClick 事件）。</summary>
+        public bool clickMaskToCancel;
+    }
+
+    /// <summary>打开页面参数。</summary>
+    [Serializable]
+    public class GuideExeParamOpenUI
+    {
+        public string prefabPath;
+        public UILayer layer = UILayer.Normal;
+        public PageType pageType = PageType.MainPage;
+    }
+
+    /// <summary>关闭页面参数。</summary>
+    [Serializable]
+    public class GuideExeParamCloseUI
+    {
+        public string prefabPath;
+    }
+
+    /// <summary>延时参数。</summary>
+    [Serializable]
+    public class GuideExeParamDelay
+    {
+        public float seconds;
+    }
+
+    /// <summary>提示参数。</summary>
+    [Serializable]
+    public class GuideExeParamShowTips
+    {
+        public string message;
+    }
+
+    /// <summary>日志参数。</summary>
+    [Serializable]
+    public class GuideExeParamLog
+    {
+        public string message;
+    }
+}

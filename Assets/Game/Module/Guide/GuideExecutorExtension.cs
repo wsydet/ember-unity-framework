@@ -1,0 +1,144 @@
+﻿using Ember.Core;
+using Ember.UI;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 引导执行器的静态实现 —— 供 <see cref="GuideExecutor.Execute"/> 按类型分发调用。
+    /// 遮罩 / 小手走 <see cref="GuideOverlay"/>，页面走 <see cref="EUIManager"/>，延时走 <see cref="EmberTimerManager"/>。
+    /// </summary>
+    public partial class GuideExecutor
+    {
+        #region 内部参数
+
+        /// <summary>遮罩引用计数（静态，全局共享）。</summary>
+        private static int _maskCount;
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        /// <summary>打开遮罩（步骤执行器入口）。</summary>
+        public static void OpenMaskByStep(object p, GuideGroupBlackboard blackboard)
+        {
+            var param = p as GuideExeParamMask;
+            OpenMask(param?.duration ?? -1f, blackboard);
+        }
+
+        /// <summary>关闭遮罩（步骤执行器入口）。</summary>
+        public static void CloseMaskByStep(object p, GuideGroupBlackboard blackboard)
+        {
+            CloseMask(blackboard);
+        }
+
+        /// <summary>打开遮罩。duration &gt;= 0 定时关闭；&lt; 0 常驻。</summary>
+        public static void OpenMask(float duration, GuideGroupBlackboard blackboard = null)
+        {
+            _maskCount++;
+            if (blackboard != null) blackboard.MaskCount++;
+            GuideOverlay.Instance.ShowMask(duration);
+            GuideUtils.Log($"[mask] open mask, count={_maskCount}", blackboard);
+        }
+
+        /// <summary>关闭遮罩。引用计数归零才真正关闭。</summary>
+        public static void CloseMask(GuideGroupBlackboard blackboard = null, bool force = false)
+        {
+            int sub = 1;
+            if (blackboard != null)
+            {
+                if (blackboard.MaskCount <= 0) return;
+                sub = force ? blackboard.MaskCount : 1;
+                blackboard.MaskCount -= sub;
+            }
+
+            _maskCount -= sub;
+            if (_maskCount <= 0)
+            {
+                _maskCount = 0;
+                GuideOverlay.Instance.HideMask();
+            }
+            GuideUtils.Log($"[mask] close mask, count={_maskCount}", blackboard);
+        }
+
+        /// <summary>打开小手（步骤执行器入口）。</summary>
+        public static void OpenHandByStep(object p, GuideGroupBlackboard blackboard)
+        {
+            var param = p as GuideExeParamOpenHand;
+            if (param == null) return;
+            GuideOverlay.Instance.ShowHand(param, blackboard);
+            if (blackboard != null) blackboard.ShowedHand = true;
+        }
+
+        /// <summary>关闭小手（步骤执行器入口）。</summary>
+        public static void CloseHandByStep(object p, GuideGroupBlackboard blackboard)
+        {
+            GuideOverlay.Instance.HideHand();
+            if (blackboard != null) blackboard.ShowedHand = false;
+        }
+
+        /// <summary>打开 UI 页面。</summary>
+        public static void OpenUI(object p, GuideGroupBlackboard blackboard)
+        {
+            if (p is not GuideExeParamOpenUI param || string.IsNullOrEmpty(param.prefabPath)) return;
+
+            var def = new EUIPageDef(param.prefabPath, param.layer, param.pageType);
+            switch (param.pageType)
+            {
+                case PageType.Popup:
+                    EUIManager.Instance.ShowPopup(def);
+                    break;
+                case PageType.TopMost:
+                    EUIManager.Instance.ShowTopMost(def);
+                    break;
+                default:
+                    EUIManager.Instance.ShowMainPage(def);
+                    break;
+            }
+        }
+
+        /// <summary>关闭 UI 页面。</summary>
+        public static void CloseUI(object p, GuideGroupBlackboard blackboard)
+        {
+            if (p is not GuideExeParamCloseUI param || string.IsNullOrEmpty(param.prefabPath)) return;
+            GuideUtils.ClosePageByPath(param.prefabPath);
+        }
+
+        /// <summary>延时：结束后广播 <see cref="GuideEventKey.DelayFinish"/>。</summary>
+        public static void Delay(object p, GuideGroupBlackboard blackboard)
+        {
+            if (p is not GuideExeParamDelay param) return;
+            EmberTimerManager.Instance.Delay(() => GuideModule.Instance.NotifyDelayFinish(), param.seconds);
+        }
+
+        /// <summary>弹出临时提示。</summary>
+        public static void ShowTips(object p, GuideGroupBlackboard blackboard)
+        {
+            if (p is not GuideExeParamShowTips param) return;
+            GuideOverlay.Instance.ShowTips(param.message);
+        }
+
+        /// <summary>输出调试日志。</summary>
+        public static void Log(object p, GuideGroupBlackboard blackboard)
+        {
+            if (p is not GuideExeParamLog param) return;
+            GuideUtils.Log($"[log] {param.message}", blackboard);
+        }
+
+        /// <summary>清理当前步骤产生的 UI（小手等），步骤结束时调用。</summary>
+        public static void ClearStep(GuideGroupBlackboard blackboard)
+        {
+            CloseHandByStep(null, blackboard);
+        }
+
+        /// <summary>清理整条引导产生的 UI（遮罩 + 小手等），引导退出时调用。</summary>
+        public static void ClearGroup(GuideGroupBlackboard blackboard)
+        {
+            CloseMask(blackboard, true);
+            CloseHandByStep(null, blackboard);
+        }
+
+        #endregion
+    }
+}

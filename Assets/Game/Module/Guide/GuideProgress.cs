@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 引导进度 —— 本地持久化的引导完成状态。
+    ///
+    /// 通过 <see cref="Ember.Basic.DataSaver"/> 序列化为 JSON 落盘（guide_progress.json）。
+    /// 与 burner 的 GuideServerData 对应，但去掉了服务器同步，改为本地存储，
+    /// 未来接入服务器时只需在 <see cref="GuideModule"/> 的保存 / 加载处替换实现。
+    /// </summary>
+    [Serializable]
+    public class GuideProgress
+    {
+        /// <summary>顺序引导：当前完成到的引导 id（0 = 尚未完成任何顺序引导）。</summary>
+        public int finishedSequentialId;
+
+        /// <summary>非顺序引导：已完成的引导 id 列表。</summary>
+        public List<int> finishedOtherId = new();
+    }
+}

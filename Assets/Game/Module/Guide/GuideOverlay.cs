@@ -1,0 +1,409 @@
+﻿using Ember.Basic;
+using Ember.UI;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 引导覆盖层 —— 运行时用代码构建的遮罩 + 小手 UI（占位美术）。
+    ///
+    /// 用 4 块遮罩矩形包围目标控件形成「镂空」，镂空处叠加脉冲手指 + 气泡文字。
+    /// 无需任何 prefab / 美术资源即可运行，后续可替换为正式 prefab。
+    ///
+    /// 结构：
+    /// <code>
+    /// GuideOverlay (Canvas, ScreenSpaceOverlay, sortingOrder=29000)
+    /// ├── Top / Bottom / Left / Right  (Image，4 块遮罩矩形 + Button 点击)
+    /// ├── Finger                       (Image，圆形手指，脉冲缩放)
+    /// ├── Bubble                       (Image 底 + Text 提示)
+    /// └── Toast                        (Image 底 + Text 临时提示)
+    /// </code>
+    ///
+    /// 由 <see cref="GuideModule"/> 的 Update 驱动每帧刷新（<see cref="Update"/>）。
+    /// </summary>
+    public class GuideOverlay
+    {
+        private const string TAG = LogTags.Game + "." + nameof(GuideOverlay);
+        private const int SORTING_ORDER = 29000;
+        private const float FINGER_SIZE = 80f;
+        private const float TOAST_DURATION = 2f;
+
+        /// <summary>全局单例。</summary>
+        public static GuideOverlay Instance { get; } = new GuideOverlay();
+
+        #region 内部参数
+
+        private GameObject _root;
+        private RectTransform _canvasRt;
+        private Image _top, _bottom, _left, _right;
+        private Image _finger;
+        private RectTransform _fingerRt;
+        private Image _bubbleBg;
+        private RectTransform _bubbleRt;
+        private Text _bubbleText;
+        private Image _toastBg;
+        private RectTransform _toastRt;
+        private Text _toastText;
+        private Sprite _circleSprite;
+
+        private bool _built;
+
+        private bool _maskVisible;
+        private Color _maskColor = new Color(0f, 0f, 0f, 0.6f);
+        private float _maskEndTime = -1f;   // >=0 表示定时关闭
+
+        private bool _handVisible;
+        private GuideExeParamOpenHand _handParam;
+        private float _handDelayRemaining;
+        private Rect _targetRect;
+        private float _fingerPulse;
+
+        private float _toastEndTime = -1f;
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        /// <summary>打开全屏遮罩（无镂空）。duration &gt;= 0 时定时关闭。</summary>
+        public void ShowMask(float duration = -1f)
+        {
+            EnsureBuilt();
+            _maskVisible = true;
+            _maskColor = new Color(0f, 0f, 0f, 0.6f);
+            _maskEndTime = duration >= 0f ? Time.realtimeSinceStartup + duration : -1f;
+        }
+
+        /// <summary>关闭遮罩。</summary>
+        public void HideMask()
+        {
+            _maskVisible = false;
+            _maskEndTime = -1f;
+            if (_built) HideMaskRects();
+        }
+
+        /// <summary>打开小手指引到指定控件。</summary>
+        public void ShowHand(GuideExeParamOpenHand param, GuideGroupBlackboard blackboard)
+        {
+            EnsureBuilt();
+            _handVisible = true;
+            _handParam = param;
+            _handDelayRemaining = param != null ? param.handDelay : 0f;
+            _maskColor = param != null ? param.maskColor : new Color(0f, 0f, 0f, 0.6f);
+            _targetRect = Rect.zero;
+        }
+
+        /// <summary>关闭小手。</summary>
+        public void HideHand()
+        {
+            _handVisible = false;
+            _handParam = null;
+            if (_built)
+            {
+                if (_finger) _finger.gameObject.SetActive(false);
+                if (_bubbleBg) _bubbleBg.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>弹出临时提示（居中，自动消失）。</summary>
+        public void ShowTips(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return;
+            EnsureBuilt();
+            _toastText.text = message;
+            _toastBg.gameObject.SetActive(true);
+            _toastText.gameObject.SetActive(true);
+            _toastEndTime = Time.realtimeSinceStartup + TOAST_DURATION;
+        }
+
+        /// <summary>隐藏所有引导 UI（模块退出时调用）。</summary>
+        public void HideAll()
+        {
+            HideMask();
+            HideHand();
+            if (_built && _toastBg) _toastBg.gameObject.SetActive(false);
+            _toastEndTime = -1f;
+        }
+
+        /// <summary>每帧刷新：更新镂空位置、脉冲手指、定时关闭遮罩 / 提示。</summary>
+        public void Update()
+        {
+            if (!_built) return;
+
+            float now = Time.realtimeSinceStartup;
+
+            // 定时关闭遮罩
+            if (_maskVisible && _maskEndTime >= 0f && now >= _maskEndTime)
+                HideMask();
+
+            // 定时关闭 toast
+            if (_toastEndTime >= 0f && now >= _toastEndTime)
+            {
+                _toastBg.gameObject.SetActive(false);
+                _toastText.gameObject.SetActive(false);
+                _toastEndTime = -1f;
+            }
+
+            // 小手 / 遮罩绘制
+            if (_handVisible)
+            {
+                if (_handDelayRemaining > 0f)
+                    _handDelayRemaining -= Time.unscaledDeltaTime;
+
+                ResolveTargetRect();
+                ApplyMask(_targetRect);
+
+                bool showIndicator = _handDelayRemaining <= 0f && _targetRect.width > 0f && _targetRect.height > 0f;
+                UpdateFinger(showIndicator);
+                UpdateBubble(showIndicator);
+            }
+            else if (_maskVisible)
+            {
+                ApplyMask(Rect.zero);   // 仅显式遮罩：全屏无镂空
+            }
+            else
+            {
+                HideMaskRects();
+            }
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        private void EnsureBuilt()
+        {
+            if (_built) return;
+            _built = true;
+            Build();
+        }
+
+        private void Build()
+        {
+            _circleSprite = CreateCircleSprite(64);
+
+            _root = new GameObject("GuideOverlay");
+            Object.DontDestroyOnLoad(_root);
+
+            var canvas = _root.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = SORTING_ORDER;
+            _root.AddComponent<GraphicRaycaster>();
+            _canvasRt = _root.GetComponent<RectTransform>();
+
+            // 4 块遮罩矩形（center anchor 便于定位）
+            _top    = CreateMaskRect("Top");
+            _bottom = CreateMaskRect("Bottom");
+            _left   = CreateMaskRect("Left");
+            _right  = CreateMaskRect("Right");
+
+            // 手指
+            _finger = CreateImage("Finger", _circleSprite, Color.white);
+            _fingerRt = _finger.rectTransform;
+            _fingerRt.sizeDelta = new Vector2(FINGER_SIZE, FINGER_SIZE);
+            _finger.raycastTarget = false;
+            _finger.gameObject.SetActive(false);
+
+            // 气泡
+            _bubbleBg = CreateImage("Bubble", null, new Color(0f, 0f, 0f, 0.8f));
+            _bubbleRt = _bubbleBg.rectTransform;
+            _bubbleBg.raycastTarget = false;
+            var bubbleTextGo = new GameObject("Text");
+            bubbleTextGo.transform.SetParent(_bubbleBg.transform, false);
+            _bubbleText = bubbleTextGo.AddComponent<Text>();
+            _bubbleText.font = GetDefaultFont();
+            _bubbleText.fontSize = 28;
+            _bubbleText.color = Color.white;
+            _bubbleText.alignment = TextAnchor.MiddleCenter;
+            _bubbleText.raycastTarget = false;
+            var bubbleTextRt = _bubbleText.rectTransform;
+            bubbleTextRt.anchorMin = Vector2.zero;
+            bubbleTextRt.anchorMax = Vector2.one;
+            bubbleTextRt.offsetMin = new Vector2(12, 6);
+            bubbleTextRt.offsetMax = new Vector2(-12, -6);
+            _bubbleBg.gameObject.SetActive(false);
+
+            // 提示 toast
+            _toastBg = CreateImage("Toast", null, new Color(0f, 0f, 0f, 0.75f));
+            _toastRt = _toastBg.rectTransform;
+            _toastRt.sizeDelta = new Vector2(600, 80);
+            _toastRt.anchoredPosition = Vector2.zero;
+            _toastBg.raycastTarget = false;
+            var toastTextGo = new GameObject("Text");
+            toastTextGo.transform.SetParent(_toastBg.transform, false);
+            _toastText = toastTextGo.AddComponent<Text>();
+            _toastText.font = GetDefaultFont();
+            _toastText.fontSize = 30;
+            _toastText.color = Color.white;
+            _toastText.alignment = TextAnchor.MiddleCenter;
+            _toastText.raycastTarget = false;
+            var toastTextRt = _toastText.rectTransform;
+            toastTextRt.anchorMin = Vector2.zero;
+            toastTextRt.anchorMax = Vector2.one;
+            toastTextRt.offsetMin = new Vector2(12, 6);
+            toastTextRt.offsetMax = new Vector2(-12, -6);
+            _toastBg.gameObject.SetActive(false);
+
+            EmberDebug.LogInit(TAG, "GuideOverlay 已构建。");
+        }
+
+        private Image CreateMaskRect(string name)
+        {
+            var image = CreateImage(name, null, new Color(0f, 0f, 0f, 0.6f));
+            image.raycastTarget = true;
+            var button = image.gameObject.AddComponent<Button>();
+            button.transition = Selectable.Transition.None;
+            button.targetGraphic = image;
+            button.onClick.AddListener(OnMaskClicked);
+            image.gameObject.SetActive(false);
+            return image;
+        }
+
+        private Image CreateImage(string name, Sprite sprite, Color color)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            go.transform.SetParent(_canvasRt, false);
+            var image = go.AddComponent<Image>();
+            image.sprite = sprite;
+            image.color = color;
+            return image;
+        }
+
+        private void ResolveTargetRect()
+        {
+            if (_handParam == null) return;
+            var camera = EUIViewEngine.Instance != null ? EUIViewEngine.Instance.UICamera : null;
+            var rt = GuideUtils.GetUIRectTransform(_handParam.pagePath, _handParam.ctrlName);
+            _targetRect = rt != null ? GuideUtils.GetScreenRectFromUITransform(rt, camera) : Rect.zero;
+        }
+
+        /// <summary>把屏幕矩形映射到 canvas 局部坐标，并设置 4 块遮罩。</summary>
+        private void ApplyMask(Rect screenRect)
+        {
+            _top.color = _bottom.color = _left.color = _right.color = _maskColor;
+
+            // 用屏幕尺寸而非 canvas sizeDelta（新建的 overlay Canvas 尚未更新 RectTransform 尺寸）
+            var screen = new Vector2(Screen.width, Screen.height);
+            var half = screen * 0.5f;
+
+            bool hasHole = screenRect.width > 0f && screenRect.height > 0f;
+            if (!hasHole)
+            {
+                // 无镂空：一块全屏遮罩即可
+                _top.gameObject.SetActive(true);
+                _top.rectTransform.sizeDelta = screen;
+                _top.rectTransform.anchoredPosition = Vector2.zero;
+                _bottom.gameObject.SetActive(false);
+                _left.gameObject.SetActive(false);
+                _right.gameObject.SetActive(false);
+                return;
+            }
+
+            float xMin = screenRect.xMin - half.x;
+            float xMax = screenRect.xMax - half.x;
+            float yMin = screenRect.yMin - half.y;
+            float yMax = screenRect.yMax - half.y;
+
+            SetMaskRect(_top, new Vector2(0f, (yMax + half.y) / 2f), new Vector2(screen.x, half.y - yMax));
+            SetMaskRect(_bottom, new Vector2(0f, (yMin - half.y) / 2f), new Vector2(screen.x, yMin + half.y));
+            SetMaskRect(_left, new Vector2((xMin - half.x) / 2f, (yMin + yMax) / 2f), new Vector2(xMin + half.x, yMax - yMin));
+            SetMaskRect(_right, new Vector2((xMax + half.x) / 2f, (yMin + yMax) / 2f), new Vector2(half.x - xMax, yMax - yMin));
+
+            _top.gameObject.SetActive(true);
+            _bottom.gameObject.SetActive(true);
+            _left.gameObject.SetActive(true);
+            _right.gameObject.SetActive(true);
+        }
+
+        private static void SetMaskRect(Image rect, Vector2 anchoredPos, Vector2 size)
+        {
+            rect.rectTransform.anchoredPosition = anchoredPos;
+            rect.rectTransform.sizeDelta = size;
+        }
+
+        private void HideMaskRects()
+        {
+            _top.gameObject.SetActive(false);
+            _bottom.gameObject.SetActive(false);
+            _left.gameObject.SetActive(false);
+            _right.gameObject.SetActive(false);
+        }
+
+        private void UpdateFinger(bool show)
+        {
+            _finger.gameObject.SetActive(show);
+            if (!show) return;
+
+            _fingerPulse += Time.unscaledDeltaTime;
+            float scale = 1f + 0.15f * Mathf.Sin(_fingerPulse * 5f);
+            _fingerRt.localScale = Vector3.one * scale;
+            _fingerRt.anchoredPosition = ScreenToLocal(_targetRect.center);
+        }
+
+        private void UpdateBubble(bool show)
+        {
+            bool hasTips = !string.IsNullOrEmpty(_handParam?.tips);
+            _bubbleBg.gameObject.SetActive(show && hasTips);
+            if (!show || !hasTips) return;
+
+            _bubbleText.text = _handParam.tips;
+
+            var size = new Vector2(_bubbleText.preferredWidth + 60f, _bubbleText.preferredHeight + 24f);
+            _bubbleRt.sizeDelta = size;
+
+            var pos = ScreenToLocal(_targetRect.center);
+            pos.y += _targetRect.height / 2f + size.y / 2f + 16f;
+            _bubbleRt.anchoredPosition = pos;
+        }
+
+        private Vector2 ScreenToLocal(Vector2 screenPoint)
+        {
+            var half = new Vector2(Screen.width, Screen.height) * 0.5f;
+            return new Vector2(screenPoint.x - half.x, screenPoint.y - half.y);
+        }
+
+        private void OnMaskClicked()
+        {
+            if (_handVisible && _handParam != null && _handParam.clickMaskToCancel)
+            {
+                GuideModule.Instance.StopCurrentGuide();
+                return;
+            }
+            GuideModule.Instance.NotifyMaskClick();
+        }
+
+        /// <summary>运行时生成一张软边圆形贴图（手指指示器用）。</summary>
+        private static Sprite CreateCircleSprite(int size)
+        {
+            var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+            var center = new Vector2(size / 2f, size / 2f);
+            float radius = size / 2f;
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    float d = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), center);
+                    float t = Mathf.Clamp01(1f - d / radius);
+                    float a = t * t * (3f - 2f * t); // smoothstep
+                    tex.SetPixel(x, y, new Color(1f, 1f, 1f, a));
+                }
+            }
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f));
+        }
+
+        private static Font GetDefaultFont()
+        {
+            var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (font == null) font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            return font;
+        }
+
+        #endregion
+    }
+}

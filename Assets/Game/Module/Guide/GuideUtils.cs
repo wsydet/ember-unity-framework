@@ -1,0 +1,125 @@
+﻿using Ember.Basic;
+using Ember.UI;
+using UnityEngine;
+
+namespace Game.Module.Guide
+{
+    /// <summary>
+    /// 引导工具 —— UI 控件定位、屏幕矩形换算、页面查询、统一日志。
+    /// </summary>
+    public static class GuideUtils
+    {
+        private const string TAG = LogTags.Game + "." + nameof(GuideUtils);
+
+        #region UI 查找
+
+        /// <summary>深度递归查找子节点（可要求 activeInHierarchy）。</summary>
+        public static Transform FindDeepChild(this Transform parent, string name, bool needActive = false)
+        {
+            if (parent == null) return null;
+            foreach (Transform child in parent)
+            {
+                if (child == null) continue;
+                if (needActive && !child.gameObject.activeInHierarchy) continue;
+                if (child.name == name) return child;
+
+                var result = child.FindDeepChild(name, needActive);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        /// <summary>按 prefab 路径查找当前展示（Opened）的页面。找不到返回 null。</summary>
+        public static EUIPage FindPage(string prefabPath)
+        {
+            if (string.IsNullOrEmpty(prefabPath)) return null;
+            var engine = EUIViewEngine.Instance;
+            if (engine == null) return null;
+
+            foreach (var page in engine.ActivePages)
+            {
+                if (page != null && page.IsOpened && page.EUIPageDef != null
+                    && page.EUIPageDef.PrefabPath == prefabPath)
+                    return page;
+            }
+            return null;
+        }
+
+        /// <summary>指定页面是否展示在顶层。</summary>
+        public static bool IsPageShowing(string prefabPath) => FindPage(prefabPath) != null;
+
+        /// <summary>关闭指定 prefab 路径的页面。</summary>
+        public static void ClosePageByPath(string prefabPath)
+        {
+            var page = FindPage(prefabPath);
+            if (page != null)
+                EUIManager.Instance.ClosePage(page);
+        }
+
+        /// <summary>
+        /// 定位 UI 控件：按「页面 prefab 路径 + 控件名」查找 RectTransform。
+        /// ctrlName 支持 "父.子" 层级；为空时返回页面根节点。
+        /// </summary>
+        public static RectTransform GetUIRectTransform(string pagePath, string ctrlName)
+        {
+            var page = FindPage(pagePath);
+            if (page == null || page.GameObject == null) return null;
+
+            if (string.IsNullOrEmpty(ctrlName) || ctrlName == "*")
+                return page.RectTransform;
+
+            var node = page.Transform.FindDeepChild(ctrlName, true);
+            return node as RectTransform;
+        }
+
+        #endregion
+
+        #region 坐标换算
+
+        /// <summary>UI 控件 → 屏幕坐标矩形（给镂空遮罩挖孔用）。</summary>
+        public static Rect GetScreenRectFromUITransform(RectTransform rt, Camera uiCamera)
+        {
+            if (rt == null) return Rect.zero;
+
+            var corners = new Vector3[4];
+            rt.GetWorldCorners(corners);
+
+            for (int i = 0; i < 4; i++)
+                corners[i] = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[i]);
+
+            return new Rect(
+                corners[0].x,
+                corners[0].y,
+                corners[3].x - corners[0].x,
+                corners[1].y - corners[0].y);
+        }
+
+        /// <summary>3D 世界坐标 → 屏幕矩形（默认 300×300 大小，给指向 3D 物体的手指用）。</summary>
+        public static Rect GetWorldPosScreenRect(Vector3 worldPos, float size = 300f)
+        {
+            var screenCenter = RectTransformUtility.WorldToScreenPoint(Camera.main, worldPos);
+            return new Rect(screenCenter.x - size / 2f, screenCenter.y - size / 2f, size, size);
+        }
+
+        #endregion
+
+        #region 日志
+
+        /// <summary>统一日志输出，带上引导定义名、步骤名、帧号。</summary>
+        public static void Log(string message, GuideGroupBlackboard blackboard = null)
+        {
+            if (blackboard != null)
+            {
+                var group = blackboard.GuideGroup;
+                EmberDebug.Log(TAG,
+                    $"define={group?.DefineName}, step={group?.CurStepDefine?.name}, frame={Time.frameCount}, {message}");
+            }
+            else
+            {
+                EmberDebug.Log(TAG, $"{message}");
+            }
+        }
+
+        #endregion
+    }
+}

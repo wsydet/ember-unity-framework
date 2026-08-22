@@ -1,0 +1,521 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Ember.Basic;
+
+namespace Game.Module.Guide
+{
+    // ============================================================
+    // 状态枚举
+    // ============================================================
+
+    /// <summary>步骤状态。</summary>
+    public enum GuideStepState
+    {
+        NotStart,
+        Doing,
+        Finished,
+    }
+
+    /// <summary>开始阶段检查结果。</summary>
+    public enum GuideStartCheckResult
+    {
+        Fail,
+        Success,
+        Skip,
+        SkipAll,
+    }
+
+    /// <summary>结束阶段检查结果。</summary>
+    public enum GuideEndCheckResult
+    {
+        Fail,
+        Success,
+        Cancel,
+        CancelAll,
+        FinishAll,
+    }
+
+    // ============================================================
+    // 引导组管理接口（内部）
+    // ============================================================
+
+    /// <summary>
+    /// 引导组管理器接口 —— <see cref="GuideGroup"/> 通过它回调 <see cref="GuideModule"/>。
+    /// </summary>
+    internal interface IGuideGroupManager
+    {
+        /// <summary>当前正在执行的引导 id（0 = 无）。</summary>
+        int CurGuideId { get; }
+
+        /// <summary>引导步骤通过条件、准备执行时回调。</summary>
+        void OnGuideExecute(GuideGroup guideGroup, GuideStartCheckResult checkResult);
+
+        /// <summary>引导完全终止（完成 / 取消）时回调。</summary>
+        void OnGuideFinish(GuideGroup guideGroup, bool isFinish, bool isForceStop);
+    }
+
+    // ============================================================
+    // 黑板
+    // ============================================================
+
+    /// <summary>
+    /// 引导组黑板 —— 步骤间共享数据 + 引导配置参数。
+    /// </summary>
+    public class GuideGroupBlackboard
+    {
+        /// <summary>所属引导组。</summary>
+        public GuideGroup GuideGroup;
+
+        /// <summary>遮罩引用计数。</summary>
+        public int MaskCount;
+
+        /// <summary>是否已显示小手。</summary>
+        public bool ShowedHand;
+
+        /// <summary>字符串参数（来自 <see cref="GuideEntry.stringParams"/>）。</summary>
+        public string[] StringParams;
+
+        /// <summary>整型参数（来自 <see cref="GuideEntry.intParams"/>）。</summary>
+        public int[] IntParams;
+
+        /// <summary>所属引导 id。</summary>
+        public int ConfId => GuideGroup?.ConfId ?? 0;
+
+        /// <summary>按索引读字符串参数。越界返回 null。</summary>
+        public string GetString(int index)
+        {
+            if (StringParams == null || index < 0 || index >= StringParams.Length) return null;
+            return StringParams[index];
+        }
+
+        /// <summary>按索引读整型参数。越界返回 0。</summary>
+        public int GetInt(int index)
+        {
+            if (IntParams == null || index < 0 || index >= IntParams.Length) return 0;
+            return IntParams[index];
+        }
+
+        /// <summary>按索引读布尔参数（&gt;0 为 true）。越界返回 false。</summary>
+        public bool GetBool(int index) => GetInt(index) > 0;
+    }
+
+    // ============================================================
+    // 引导组（运行时状态机）
+    // ============================================================
+
+    /// <summary>
+    /// 引导组 —— 一条引导流程的运行时状态机，驱动步骤 NotStart → Doing → Finished。
+    ///
+    /// 核心循环 <see cref="TryNext"/> 由事件（<see cref="GuideEventHandle"/>）或每帧轮询
+    /// （<see cref="GuideStepDefine.needUpdate"/>）触发，按条件推进步骤并执行执行器。
+    /// </summary>
+    public class GuideGroup : IDisposable
+    {
+        private const string TAG = LogTags.Game + "." + nameof(GuideGroup);
+
+        #region 内部参数
+
+        private GuideDefine _guideDefine;
+        private int _curStepIndex;
+        private GuideStepState _curStepState;
+        private GuideGroupBlackboard _blackboard;
+        private IGuideGroupManager _guideGroupManager;
+        private readonly StringBuilder _reason = new();
+
+        // 事件注册
+        private List<GuideEvent> _curGuideEvents;
+        private readonly Dictionary<GuideEventType, GuideEventHandle> _registeredEvents = new();
+        private bool _eventDirty;
+        private readonly List<GuideEventType> _eventsToClear = new();
+
+        /// <summary>全局重入保护：executor 执行中收到事件时延迟一帧，避免流程错乱。</summary>
+        private static bool _isProcessing;
+
+        /// <summary>单次 TryNext 最大迭代次数，防止配置错误导致死循环冻结主线程。</summary>
+        private const int MAX_ITERATIONS = 1000;
+
+        /// <summary>引导唯一标识。</summary>
+        public readonly int ConfId;
+
+        /// <summary>当前步骤索引。</summary>
+        public int CurStepIndex => _curStepIndex;
+
+        /// <summary>当前步骤状态。</summary>
+        public GuideStepState CurStepState => _curStepState;
+
+        /// <summary>当前步骤定义（越界 / 无定义返回 null）。</summary>
+        public GuideStepDefine CurStepDefine
+        {
+            get
+            {
+                if (_guideDefine == null || _guideDefine.guideSteps == null) return null;
+                if (_curStepIndex < 0 || _curStepIndex >= _guideDefine.guideSteps.Count) return null;
+                return _guideDefine.guideSteps[_curStepIndex];
+            }
+        }
+
+        /// <summary>黑板。</summary>
+        public GuideGroupBlackboard Blackboard => _blackboard;
+
+        /// <summary>引导定义资产名（日志用）。</summary>
+        public string DefineName => _guideDefine != null ? _guideDefine.name : "null";
+
+        /// <summary>是否测试引导（完成时不落盘进度）。</summary>
+        public bool IsTest { get; set; }
+
+        /// <summary>是否已完成整条引导。</summary>
+        public bool IsFinish
+            => _curStepState == GuideStepState.Finished
+               && _guideDefine != null
+               && _curStepIndex >= _guideDefine.guideSteps.Count - 1;
+
+        /// <summary>是否正在处理 TryNext（重入保护）。</summary>
+        public bool IsProcessing => _isProcessing;
+
+        /// <summary>跳过原因（最近一次 Skip / SkipAll / FinishAll）。</summary>
+        public string SkipReason { get; private set; }
+
+        /// <summary>上次开始失败原因（诊断用）。</summary>
+        public string LastStartFailReason { get; private set; }
+
+        /// <summary>上次结束失败原因（诊断用）。</summary>
+        public string LastEndFailReason { get; private set; }
+
+        #endregion
+
+        // ============================================================
+
+        #region 外部方法
+
+        internal GuideGroup(int confId, GuideDefine define, string[] stringParams, int[] intParams, IGuideGroupManager manager)
+        {
+            ConfId = confId;
+            _guideDefine = define;
+            _guideGroupManager = manager;
+            _curStepIndex = 0;
+            _curStepState = GuideStepState.NotStart;
+            _blackboard = new GuideGroupBlackboard
+            {
+                GuideGroup = this,
+                StringParams = stringParams,
+                IntParams = intParams,
+            };
+        }
+
+        /// <summary>释放引导组（强制反注册所有事件，避免非当前组订阅泄漏）。</summary>
+        public void Dispose()
+        {
+            _UnRegisterEvents();
+            TickEvents();
+
+            _guideDefine = null;
+            _guideGroupManager = null;
+            _blackboard = null;
+            _curStepState = GuideStepState.NotStart;
+            _curGuideEvents = null;
+            _registeredEvents.Clear();
+        }
+
+        /// <summary>进入引导（初始装载后调用）。</summary>
+        public void OnEnter() => TryNext();
+
+        /// <summary>退出引导（强制清理 UI 与事件）。</summary>
+        public void OnExit()
+        {
+            TryEndCurStep(true);
+            _UnRegisterEvents();
+            TickEvents();
+            GuideExecutor.ClearGroup(_blackboard);
+        }
+
+        /// <summary>每帧驱动：延迟反注册事件 + 轮询 needUpdate 步骤。</summary>
+        public void OnTick()
+        {
+            TickEvents();
+            var step = CurStepDefine;
+            if (step != null && step.needUpdate)
+                TryNext();
+        }
+
+        /// <summary>
+        /// 状态机主循环：按当前状态推进步骤，直到进入等待（条件失败）或完成。
+        /// </summary>
+        /// <param name="eventReceive">触发本次推进的事件（无事件为 None）。</param>
+        public void TryNext(GuideEventType eventReceive = GuideEventType.None)
+        {
+            if (_blackboard == null || _guideDefine == null) return;
+
+            _isProcessing = true;
+            try
+            {
+                bool triggeredByEvent = eventReceive != GuideEventType.None;
+                int iterations = 0;
+                while (true)
+                {
+                    if (++iterations > MAX_ITERATIONS)
+                    {
+                        EmberDebug.LogError(TAG, $"TryNext 迭代超过 {MAX_ITERATIONS} 次，疑似条件死循环（define={DefineName} step={_curStepIndex}），已强制中断");
+                        break;
+                    }
+
+                    if (_curStepState == GuideStepState.NotStart)
+                    {
+                        var result = triggeredByEvent ? TryStartCurStep(eventReceive) : TryStartCurStep();
+                        triggeredByEvent = false;
+                        if (result == GuideStartCheckResult.Fail || result == GuideStartCheckResult.SkipAll)
+                            break;
+                    }
+                    else if (_curStepState == GuideStepState.Doing)
+                    {
+                        var result = triggeredByEvent ? TryEndCurStep(false, eventReceive) : TryEndCurStep(false);
+                        triggeredByEvent = false;
+                        if (result == GuideEndCheckResult.Fail || result == GuideEndCheckResult.FinishAll)
+                            break;
+                    }
+                    else if (_curStepState == GuideStepState.Finished)
+                    {
+                        break;
+                    }
+                }
+
+                // 完成或取消 → 通知管理器
+                if (_guideGroupManager != null
+                    && _guideGroupManager.CurGuideId == ConfId
+                    && _curStepState != GuideStepState.Doing)
+                {
+                    if (IsFinish)
+                        _guideGroupManager.OnGuideFinish(this, true, false);
+                    else if (_curStepState == GuideStepState.NotStart && _curStepIndex == 0)
+                        _guideGroupManager.OnGuideFinish(this, false, false);
+                }
+            }
+            finally
+            {
+                _isProcessing = false;
+            }
+        }
+
+        #endregion
+
+        // ============================================================
+
+        #region 内部方法
+
+        private GuideStartCheckResult TryStartCurStep(GuideEventType triggerEvent = GuideEventType.None)
+        {
+            if (_curStepState != GuideStepState.NotStart) return GuideStartCheckResult.Fail;
+
+            // 全局互斥：有其它引导在执行
+            if (_guideGroupManager != null
+                && _guideGroupManager.CurGuideId != 0
+                && _guideGroupManager.CurGuideId != ConfId)
+                return GuideStartCheckResult.Fail;
+
+            var curStep = CurStepDefine;
+            if (curStep == null)
+            {
+                EmberDebug.LogError(TAG, $"引导定义错误！no step! define={DefineName} step={_curStepIndex}");
+                return GuideStartCheckResult.Fail;
+            }
+
+            GuideStartCheckResult result;
+            _reason.Clear();
+
+            if (_guideDefine.baseSkipAll != null && _guideDefine.baseSkipAll.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideStartCheckResult.SkipAll;
+            else if (curStep.startConditionsToSkipAll != null && curStep.startConditionsToSkipAll.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideStartCheckResult.SkipAll;
+            else if (curStep.startConditionsToSkip != null && curStep.startConditionsToSkip.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideStartCheckResult.Skip;
+            else if (curStep.startConditionsToSuccess == null || curStep.startConditionsToSuccess.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideStartCheckResult.Success;
+            else
+                result = GuideStartCheckResult.Fail;
+
+            if (result == GuideStartCheckResult.Fail)
+            {
+                LastStartFailReason = _reason.ToString();
+                _RegisterEvents(curStep.startEvents);
+                GuideUtils.Log($"开始失败，等待事件触发... 过程:\n{_reason}", _blackboard);
+            }
+            else if (result == GuideStartCheckResult.Skip)
+            {
+                SkipReason = _reason.ToString();
+                _guideGroupManager?.OnGuideExecute(this, result);
+                _UnRegisterEvents();
+                _curStepIndex++;
+                _curStepState = GuideStepState.NotStart;
+                if (_curStepIndex >= _guideDefine.guideSteps.Count)
+                {
+                    _curStepIndex = _guideDefine.guideSteps.Count - 1;
+                    _curStepState = GuideStepState.Finished;
+                }
+                GuideUtils.Log($"跳过当前步! 过程:\n{_reason}", _blackboard);
+            }
+            else if (result == GuideStartCheckResult.SkipAll)
+            {
+                SkipReason = _reason.ToString();
+                _guideGroupManager?.OnGuideExecute(this, result);
+                _UnRegisterEvents();
+                _curStepIndex = _guideDefine.guideSteps.Count - 1;
+                _curStepState = GuideStepState.Finished;
+                GuideUtils.Log($"跳过所有步骤! 过程:\n{_reason}", _blackboard);
+            }
+            else
+            {
+                _guideGroupManager?.OnGuideExecute(this, result);
+                _UnRegisterEvents();
+                _RegisterEvents(curStep.endEvents);
+                _curStepState = GuideStepState.Doing;
+                foreach (var ex in curStep.startExecutors)
+                    ex?.Execute(_blackboard);
+                GuideUtils.Log($"引导执行! 过程:\n{_reason}", _blackboard);
+            }
+
+            return result;
+        }
+
+        private GuideEndCheckResult TryEndCurStep(bool force = false, GuideEventType triggerEvent = GuideEventType.None)
+        {
+            if (_curStepState != GuideStepState.Doing) return GuideEndCheckResult.Fail;
+
+            var curStep = CurStepDefine;
+            if (curStep == null) return GuideEndCheckResult.Fail;
+
+            GuideEndCheckResult result;
+            _reason.Clear();
+
+            if (force)
+                result = GuideEndCheckResult.CancelAll;
+            else if (_guideDefine.baseSkipAll != null && _guideDefine.baseSkipAll.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideEndCheckResult.FinishAll;
+            else if (curStep.endConditionsToCancelAll != null && curStep.endConditionsToCancelAll.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideEndCheckResult.CancelAll;
+            else if (curStep.endConditionsToFinishAll != null && curStep.endConditionsToFinishAll.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideEndCheckResult.FinishAll;
+            else if (curStep.endConditionsToCancel != null && curStep.endConditionsToCancel.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideEndCheckResult.Cancel;
+            else if (curStep.endConditionsToSuccess == null || curStep.endConditionsToSuccess.IsMet(_blackboard, triggerEvent, _reason))
+                result = GuideEndCheckResult.Success;
+            else
+                result = GuideEndCheckResult.Fail;
+
+            if (result == GuideEndCheckResult.CancelAll)
+            {
+                _UnRegisterEvents();
+                GuideExecutor.ClearStep(_blackboard);
+                _curStepIndex = 0;
+                _curStepState = GuideStepState.NotStart;
+                GuideUtils.Log($"取消所有! 过程:\n{_reason}", _blackboard);
+            }
+            else if (result == GuideEndCheckResult.FinishAll)
+            {
+                SkipReason = _reason.ToString();
+                _UnRegisterEvents();
+                GuideExecutor.ClearStep(_blackboard);
+                _curStepIndex = _guideDefine.guideSteps.Count - 1;
+                _curStepState = GuideStepState.Finished;
+                GuideUtils.Log($"完成所有! 过程:\n{_reason}", _blackboard);
+            }
+            else if (result == GuideEndCheckResult.Cancel)
+            {
+                _UnRegisterEvents();
+                GuideExecutor.ClearStep(_blackboard);
+                _curStepState = GuideStepState.NotStart;
+                GuideUtils.Log($"取消当前步! 过程:\n{_reason}", _blackboard);
+            }
+            else if (result == GuideEndCheckResult.Success)
+            {
+                _UnRegisterEvents();
+                GuideExecutor.ClearStep(_blackboard);
+                foreach (var ex in curStep.endExecutors)
+                    ex?.Execute(_blackboard);
+
+                if (_curStepIndex >= _guideDefine.guideSteps.Count - 1)
+                    _curStepState = GuideStepState.Finished;
+                else
+                {
+                    _curStepIndex++;
+                    _curStepState = GuideStepState.NotStart;
+                }
+                GuideUtils.Log($"完成当前步! 过程:\n{_reason}", _blackboard);
+            }
+            else
+            {
+                LastEndFailReason = _reason.ToString();
+                GuideUtils.Log($"完成失败，等待事件触发... 过程:\n{_reason}", _blackboard);
+            }
+
+            return result;
+        }
+
+        private void _RegisterEvents(List<GuideEvent> events)
+        {
+            if (events == _curGuideEvents) return;
+            _curGuideEvents = events;
+            if (events == null) return;
+
+            foreach (var ge in events)
+            {
+                if (_registeredEvents.TryGetValue(ge.eventType, out var handle))
+                {
+                    // 复用已有处理器（相邻步骤共享同一事件类型时，底层订阅不抖动）
+                    handle.IsUnRegistered = false;
+                    handle.GuideEvents.Add(ge);
+                    continue;
+                }
+
+                var handleType = GuideEvent.GetEventHandleType(ge.eventType);
+                if (handleType == null)
+                {
+                    EmberDebug.LogError(TAG, $"事件类型 {ge.eventType} 未注册处理器");
+                    continue;
+                }
+
+                handle = Activator.CreateInstance(handleType) as GuideEventHandle;
+                if (handle == null) continue;
+
+                handle.GuideEventType = ge.eventType;
+                handle.GuideGroup = this;
+                handle.GuideEvents.Add(ge);
+                handle.Register();
+                _registeredEvents.Add(ge.eventType, handle);
+            }
+        }
+
+        private void _UnRegisterEvents()
+        {
+            _curGuideEvents = null;
+            foreach (var handle in _registeredEvents.Values)
+            {
+                handle.IsUnRegistered = true;
+                handle.GuideEvents.Clear();
+            }
+            _eventDirty = true;
+        }
+
+        /// <summary>真正反注册被标记的处理器（延迟一帧，避免相邻步骤注册抖动）。</summary>
+        private void TickEvents()
+        {
+            if (!_eventDirty) return;
+            _eventDirty = false;
+            _eventsToClear.Clear();
+
+            foreach (var pair in _registeredEvents)
+            {
+                if (pair.Value.IsUnRegistered)
+                {
+                    pair.Value.UnRegister();
+                    _eventsToClear.Add(pair.Key);
+                }
+            }
+
+            foreach (var t in _eventsToClear)
+                _registeredEvents.Remove(t);
+            _eventsToClear.Clear();
+        }
+
+        #endregion
+    }
+}
