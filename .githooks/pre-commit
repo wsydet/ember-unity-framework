@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+# pre-commit —— 阻止「新增 Unity 资源，但没有一并提交对应 .meta」的提交。
+#
+# 判定范围：本次新增（git diff --cached --diff-filter=A）且位于
+#   Assets/ 或 Packages/ 下的文件。
+#   - 文件自身：必须同时提交 <file>.meta
+#   - Assets/ 下的新增目录：每一级上级目录都必须提交 <dir>.meta
+# 任一缺失即退出 1，阻止提交。
+#
+# 排除项：
+#   - *.meta 自身不需要 .meta
+#   - Packages 顶层文件（manifest.json / packages-lock.json）没有 .meta
+#   - Packages 包根目录没有 .meta，故目录检查只作用于 Assets/
+#
+# 安装位置：.git/hooks/pre-commit（本地，未随仓库共享）。
+# 如需团队共享，可移到 .githooks/ 并执行 `git config core.hooksPath .githooks`。
+
+is_in_index() {
+    # 文件是否已在索引中（已提交或已暂存）。在索引中 = 会随本次提交一起入库。
+    git ls-files --cached --error-unmatch -- "$1" >/dev/null 2>&1
+}
+
+added="$(git diff --cached --name-only --diff-filter=A)"
+missing=0
+
+while IFS= read -r file; do
+    [ -n "$file" ] || continue
+
+    # 只关心 Unity 管理的两个目录
+    case "$file" in
+        Assets/*)   root=Assets ;;
+        Packages/*) root=Packages ;;
+        *)          continue ;;
+    esac
+
+    # .meta 自身不需要 .meta
+    case "$file" in *.meta) continue ;; esac
+
+    # Packages 顶层文件没有 .meta，跳过；包内文件继续检查
+    case "$file" in
+        Packages/*/*) ;;
+        Packages/*)   continue ;;
+    esac
+
+    # 1) 文件自身的 .meta
+    if ! is_in_index "$file.meta"; then
+        echo "缺少 .meta：$file.meta" >&2
+        echo "  ↳ 新增了 $file，但没有一并提交它的 .meta" >&2
+        missing=1
+    fi
+
+    # 2) Assets 下逐级上级目录的 .meta
+    if [ "$root" = Assets ]; then
+        dir=$(dirname "$file")
+        while [ "$dir" != Assets ] && [ "$dir" != . ]; do
+            if ! is_in_index "$dir.meta"; then
+                echo "缺少 .meta：$dir.meta" >&2
+                echo "  ↳ 新增了目录 $dir，但没有一并提交它的 .meta" >&2
+                missing=1
+            fi
+            dir=$(dirname "$dir")
+        done
+    fi
+done <<EOF
+$added
+EOF
+
+if [ "$missing" -ne 0 ]; then
+    echo >&2
+    echo "提交被阻止：请把上述 .meta 文件一并 git add 后重试。" >&2
+    exit 1
+fi
+
+exit 0
