@@ -108,8 +108,6 @@ namespace Ember.Core
 
             EmberDebug.LogInit(TAG, "GameLauncher: initializing framework...");
 
-            Time.timeScale = 0.25f;
-
             // 创建状态机并注册所有游戏状态
             Fsm = new EmberStateMachine();
             ConfigureStateMachine(Fsm);
@@ -233,6 +231,17 @@ namespace Ember.Core
         /// </summary>
         /// <param name="fsm">已创建的状态机实例</param>
         /// <summary>
+        /// 创建 InitState 实例。自动发现游戏层的 GameInitState 子类；
+        /// 如果不存在则返回框架默认 InitState。用户只需在游戏层创建
+        /// <c>GameInitState : InitState</c>，无需修改任何框架代码。
+        /// </summary>
+        protected virtual InitState CreateInitState()
+        {
+            var found = FindSubclass<InitState>();
+            return found != null ? (InitState)Activator.CreateInstance(found) : new InitState();
+        }
+
+        /// <summary>
         /// 创建 MainState 实例。自动发现游戏层的 GameMainState 子类；
         /// 如果不存在则返回框架默认 MainState。用户只需在游戏层创建
         /// <c>GameMainState : MainState</c>，无需修改任何框架代码。
@@ -294,7 +303,7 @@ namespace Ember.Core
             // 框架核心三状态（始终注册，不可删除）
             // Init → Main → Gameplay，单机/网游通用
             // ============================================================
-            fsm.Register(new InitState());
+            fsm.Register(CreateInitState());
             fsm.Register(CreateMainState());
             fsm.Register(CreateGameplayState());
             fsm.Register(CreateSettingsState());

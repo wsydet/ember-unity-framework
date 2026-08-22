@@ -1,0 +1,25 @@
+﻿using Ember.Core;
+using Ember.UI;
+using Game.UI;
+
+namespace Game.State
+{
+    /// <summary>
+    /// 游戏层 InitState 子类 —— override 框架钩子，注入业务逻辑。
+    ///
+    /// <b>GM 调试页创建：</b>
+    /// <see cref="OnInitComplete"/> 在框架初始化完成（Manager + 全局模块就绪）后调用。
+    /// GMPage 是 FreePage 常驻调试页，整个运行期只需创建一次，
+    /// 放在 Init 阶段（只执行一次）比放在 Main 阶段（每次进入 Main 都触发）更合理。
+    /// </summary>
+    public class GameInitState : InitState
+    {
+        public override void OnEnter(object args)
+        {
+            base.OnEnter(args);
+
+            // 框架就绪后立即创建 GM 调试页（FreePage 常驻，不随 MainPage 切换关闭）
+            EUIManager.Instance.ShowTopMost(GamePages.GMPage);
+        }
+    }
+}
