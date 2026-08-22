@@ -91,6 +91,12 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.9, g: 0.67428, b: 0.35999995, a: 1}
     className: EUITransitionBlock
+  - enabled: 1
+    color: {r: 0.89892, g: 0.35999995, b: 0.9, a: 1}
+    className: EUI
+  - enabled: 1
+    color: {r: 0.35999995, g: 0.55656, b: 0.9, a: 1}
+    className: GM
   enableFileLog: 1
   logDirectory: Logs/ember
   maxFileSizeMB: 10
