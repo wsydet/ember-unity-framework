@@ -24,6 +24,55 @@
 | `TabLoader` | 13 | `TabLoader` | 标签页加载器 |
 | `Extension` | 65535 | 自定义 | 通过 `[EUIExtension]` 注册的扩展类型 |
 
+### 1.1 扩展类型（Extension）与 `[EUIExtension]`
+
+`WidgetTypes.Extension`（65535）用于自定义/增强控件。给组件类挂 `[EUIExtension]` 特性注册后，
+该类型会出现在绑定列表「类型」下拉框里，与原生类型并列。特性定义见 `EUIExtensionAttribute`。
+
+```csharp
+[EUIExtension(typeof(Button))]
+public class EUIButtonEx : Button { ... }
+```
+
+**子组件槽位（少绑一个）：** 增强组件上直接开序列化「槽位」字段，Inspector 把子组件拖入槽位后，
+绑定增强组件即可通过属性直接调用，无需在顶层 EUIBinding 里额外为子组件建绑定。例如 `EUIButtonEx`
+带一个 `Label` 槽位（`TMP_Text`）：
+
+```csharp
+// 增强组件内部
+[SerializeField] private TMP_Text _label;
+public TMP_Text Label { get => _label; set => _label = value; }
+
+// 业务代码：绑定 m_EUIBtn_Confirm 后直接调用子文本，无需额外绑 m_Txt_
+EUIBtn_Confirm.Label.text = "确定";
+```
+
+> 增强组件实现 `IEUIExposedChildProvider` 接口（返回槽位持有的子组件），
+> 自动收集时会跳过这些子节点——即使它们命名为 `m_` 前缀，也不会被重复收集。
+
+**已注册的扩展类型：**
+
+| 扩展类型 | 替换原生 | 子组件槽位 |
+|---------|---------|-----------|
+| `EUIButtonEx` | `Button` | `Label`（`TMP_Text`） |
+| `EUIToggleEx` | `Toggle` | `Label`（`TMP_Text`） |
+| `EUIImageEx` | `Image` | — |
+| `EUICircleImage` | `Image` | — |
+
+> 说明：`EUIGradient` / `EUIRoundedImageModifier` / `EUIPolygonRaycast` / `EUIGraphicAnimation` 属于
+> 附加效果/修饰组件（叠加在 Image/Text 上使用），不是「替换型控件」，不注册为可选的绑定类型。
+
+**组件替换（Inspector 三点菜单）：** 原生组件 Inspector 右上角的三点菜单（⋮）里可直接替换为增强组件，
+保留 `targetGraphic` / `colors` / `transition` / `sprite` 等同名序列化字段，支持 Undo 撤销：
+
+| 原生组件 | 可替换为 |
+|---------|---------|
+| `Button` | `EUIButtonEx` |
+| `Toggle` | `EUIToggleEx` |
+| `Image` | `EUIImageEx` / `EUICircleImage` |
+
+实现见 `EUIComponentReplaceMenu`（通过 `[MenuItem("CONTEXT/...")]` 注册到组件 context menu）。
+
 ---
 
 ## 二、原生组件 vs EUI 增强组件

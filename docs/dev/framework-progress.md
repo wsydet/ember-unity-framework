@@ -1,6 +1,6 @@
-﻿# Ember Framework 开发进度
+# Ember Framework 开发进度
 
-> 最后更新：2026-08-17
+> 最后更新：2026-08-22
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -58,13 +58,13 @@ Core 是叶子层，零依赖（除 Unity 引擎 + Odin + UniTask），所有上
 ---
 
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- >>> 📍 CURRENT PHASE — UI 集成测试：MainMenu + Settings 页面验证 UIManager 全链路 <<< -->
+<!-- >>> 📍 CURRENT PHASE — UI 增强组件集成测试：GMPage + EUIEx 绑定验证完成，进入 P1/P2 待办 <<< -->
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
 ## 当前进度与路线
 
 ```
-已完成（2026-07-25 → 2026-08-07）
+已完成（2026-07-25 → 2026-08-22）
 ═══════════════════════════════
 Phase 1: 单机框架核心 ──────── ✅
   8 个模块 + Manager/Update/StateMachine/Debug
@@ -87,6 +87,12 @@ Phase 4: 启动流程重构 ──────── ✅
 Phase 5: UI 集成测试 ──────── ✅
   MainMenu / Settings / InGameUI 全链路 Play Mode 验证通过
   方块过渡动画 + 开屏串行时序 + 背景页下沉转场
+
+Phase 5.5: UI 增强组件集成测试 ── ✅
+  GMPage 迁移业务层（破除循环依赖）
+  4 个增强组件（EUIButtonEx/ToggleEx/ImageEx/CircleImage）
+  绑定类型识别 + Label 槽位 + 组件替换 + 运行时逻辑
+  详见 uiextension-test-plan.md §五/§六
 
 Phase 6: 剩余 P1/P2 ───────── 📍 当前
   Module 系统 / Timer / Audio 升级
@@ -133,15 +139,28 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 - ✅ Core 新增 EmberTimeManager / EmberEventGroup / EmberBootBase / EmberBootSplashBridge
 - ✅ P0 UI 集成测试 Play Mode 全链路验证通过（Init→Main→Settings→Gameplay→Main）
 
+### 2026-08-22 UI 增强组件集成测试完成
+
+- ✅ 4 个增强组件自定义 Editor（EUIButtonEx/ToggleEx/ImageEx/CircleImageEditor）—— 解决内置 Editor 接管子类导致增强字段不显示
+- ✅ 组件替换三点菜单闪退修复（EditorApplication.delayCall 延迟执行）
+- ✅ GMPage 迁至业务层（Assets/Game/UI/Runtime）—— 破除框架层循环依赖
+- ✅ GMPage 实例化移至 Init 阶段（GameInitState，FreePage 常驻只创建一次）+ GameLauncher.CreateInitState 工厂
+- ✅ GMPage 业务逻辑：时间缩放（Time.timeScale + EmberTimeManager 双设置）/ 顶层状态名显示 / 增强组件测试
+- ✅ 绑定列表命名校验高亮（EUIBindingListDrawer，前缀不匹配橙色提醒 + ✎ 一键重命名）
+- ✅ uiextension 测试计划更新（uiextension-test-plan.md §五结果表 + §六问题记录 7 条）
+
 ### 接下来要做的事
 
 | 优先级 | 事项 | 文件数 | 说明 |
 |--------|------|--------|------|
+| 🔴 P0 | **框架转为 UPM 包** | — | 将 Assets/Ember/* 各模块转为 UPM 包（Packages/com.ember.*），支持框架独立升级；转包后拿到具体项目中验证、暴露缺陷 |
 | 🟡 P1 | **Audio 多 Category + AudioAgent 池** | ~5 | 详见 [audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
+| 🟡 P1 | **ScrollRect 配置异常导致 Prefab 永远 dirty** | — | GMPage `m_Scr_Test` Viewport 尺寸 0（`[ExecuteAlways]` 布局实时重算产生浮点残渣）。已隐藏跳过；后续修正 Viewport 为标准布局（anchor `(0,0)-(1,1)`）即可根治，详见 uiextension-test-plan.md §6.4 |
 | 🟢 P2 | **预制体对象池** | 1 | GameObject 预制体池化 |
 | 🟢 P2 | **本地化** | — | |
 | 🟢 P2 | **uiextension Editor 工具** | 35 | Previews / Settings / Validation / Bake 编辑器工具 |
 | 🟢 P2 | **L3 虚拟列表/预加载** | 4 | GameUIContainer / GameTabLoader / GameUIAttachment / GamePagePreloader（依赖资源系统升级） |
+| 🟢 P2 | **GM 系统增强** | — | GMPage 基础版已完成（时间缩放/状态名显示/增强组件测试 + FPSDisplay 帧率显示挂载）；待加：快捷键、常用调试操作 |
 
 
 /*通用条件模块 CommonConditionModule
@@ -151,11 +170,11 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 输入系统
 输入重绑定
 
-GM系统+帧率显示+UI
+GM系统+帧率显示+UI    ← GMPage 基础版已完成（2026-08-22）：时间缩放/状态名/增强组件测试 + FPSDisplay 帧率显示
 
 包管理，不报错
 
-修改为upm框架
+修改为upm框架    ← 已列入待办 P0：框架转 UPM 包（支持独立升级，转包后到具体项目验证缺陷）
 
 2d/3d快速切换
 单机/网游快速切换模板
