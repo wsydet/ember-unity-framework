@@ -215,6 +215,7 @@ MonoBehaviour:
   pageName: EUIBackgroundPage
   pageFlags: 32
   usePresetFade: 0
+  useTransitionBlock: 0
   fadeInTime: 0.3
   fadeOutTime: 0.2
   useCustomTransition: 0
