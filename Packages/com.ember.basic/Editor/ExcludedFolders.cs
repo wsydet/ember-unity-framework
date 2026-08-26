@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.basic
 
 #if UNITY_EDITOR
@@ -53,7 +53,15 @@ namespace Ember.Basic.Editor
         {
             "Packages/com.ember.basic/",
             "Packages/com.ember.extensions/",
-            "Packages/com.ember.uiextension/"
+            "Packages/com.ember.uiextension/",
+            "Packages/com.ember.core/",
+            "Packages/com.ember.resource/",
+            "Packages/com.ember.scene/",
+            "Packages/com.ember.audio/",
+            "Packages/com.ember.camera/",
+            "Packages/com.ember.input/",
+            "Packages/com.ember.ui/",
+            "Packages/com.ember.editor/"
         };
 
         #endregion

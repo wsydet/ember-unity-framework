@@ -1,0 +1,12 @@
+{
+  "name": "com.neuecc.unirx",
+  "displayName": "UniRx",
+  "version": "7.1.0",
+  "unity": "6000.0",
+  "description": "Reactive Extensions for Unity",
+  "dependencies": {},
+  "publishConfig": {
+    "registry": "https://package.openupm.com"
+  },
+  "_fingerprint": "c143e533d3e44c45a0b5931463d0d552cfa12a67"
+}

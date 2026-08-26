@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -42,7 +42,7 @@ namespace Ember.Basic
     /// <summary>
     /// EmberDebug 的配置 SO —— 在 Inspector 中可视化操作日志开关和颜色。
     ///
-    /// 存放路径：Assets/Ember/Core/Runtime/Resources/EmberDebugConfig.asset
+    /// 存放路径：Assets/Resources/EmberDebugConfig.asset（项目级，缺失时由 EmberDebugConfigCreator 自动创建）
     /// 启动时由 EmberDebug 自动从 Resources 加载。
     ///
     /// <b>双列表设计：</b>

@@ -1,0 +1,10 @@
+{
+    "name":  "com.ember.audio",
+    "displayName":  "Ember Audio",
+    "version":  "0.2.0",
+    "description":  "Ember 框架音频管理：BGM/SFX 分离播放与 Mixer 音量控制。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
+                     }
+}

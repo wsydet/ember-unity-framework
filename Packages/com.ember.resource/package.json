@@ -1,0 +1,10 @@
+{
+    "name":  "com.ember.resource",
+    "displayName":  "Ember Resource",
+    "version":  "0.2.0",
+    "description":  "Ember 框架资源管理：IResourceProvider 接口 + EmberResourceManager 门面，可挂 Resources/Addressables/YooAsset 后端。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
+                     }
+}

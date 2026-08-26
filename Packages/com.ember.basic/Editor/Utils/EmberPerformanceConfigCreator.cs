@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 //
 // This file is part of Ember Unity Packages.
 // Package: com.ember.basic
@@ -25,7 +25,7 @@ namespace Ember.Basic.Editor
     public class EmberPerformanceConfigCreator
     {
         private const string TAG = LogTags.EmberBasic + "." + nameof(EmberPerformanceConfigCreator);
-        private const string AssetPath = "Assets/Ember/Core/Runtime/Resources/EmberPerformanceConfig.asset";
+        private const string AssetPath = "Assets/Resources/EmberPerformanceConfig.asset";
 
         static EmberPerformanceConfigCreator()
         {

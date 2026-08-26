@@ -1,0 +1,11 @@
+{
+    "name":  "com.ember.editor",
+    "displayName":  "Ember Editor",
+    "version":  "0.2.0",
+    "description":  "Ember 框架编辑器工具：状态↔场景映射、快速场景打开、Toolbar 按钮等框架级工具。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.basic":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
+                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
+                     }
+}

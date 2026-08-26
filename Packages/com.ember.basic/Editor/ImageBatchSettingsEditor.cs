@@ -11,50 +11,8 @@ using UnityEngine;
 namespace Ember.Basic.Editor
 {
     /// <summary>
-    /// 纹理导入配置单元 —— 一个文件夹 + 一组导入参数。
-    /// </summary>
-    [Serializable]
-    public class ImageSettingUnit
-    {
-        public string unitName = "New Unit";
-        public string folderPath = "";
-        public bool isEnabled = true;
-
-        // 导入参数开关 + 值
-        public bool enableTextureType; public TextureImporterType textureType = TextureImporterType.Sprite;
-        public bool enableTextureShape; public TextureImporterShape textureShape;
-        public bool enableSpriteImportMode; public SpriteImportMode spriteImportMode;
-        public bool enableSpritePixelsPerUnit; public float spritePixelsPerUnit = 100f;
-        public bool enableGeneratePhysicsShape; public bool generatePhysicsShape;
-        public bool enableIsReadable; public bool isReadable;
-        public bool enableAlphaSource; public TextureImporterAlphaSource alphaSource;
-        public bool enableAlphaIsTransparency; public bool alphaIsTransparency = true;
-        public bool enableMipmapEnabled; public bool mipmapEnabled;
-        public bool enableWrapMode; public TextureWrapMode wrapMode;
-        public bool enableFilterMode; public FilterMode filterMode;
-        public bool enableAnisoLevel; public int anisoLevel = 1;
-        public bool enableMaxTextureSize; public int maxTextureSize = 2048;
-        public bool enableCompression; public TextureImporterCompression textureCompression;
-
-        // 平台覆写
-        public bool enableStandaloneSettings; public int standaloneMaxSize = 4096; public TextureImporterFormat standaloneFormat; public int standaloneCompressionQuality = 100;
-        public bool enableAndroidSettings; public int androidMaxSize = 2048; public TextureImporterFormat androidFormat; public int androidCompressionQuality = 100;
-        public bool enableiOSSettings; public int iOsMaxSize = 2048; public TextureImporterFormat iOsFormat; public int iOsCompressionQuality = 100;
-    }
-
-    /// <summary>
-    /// 纹理导入配置数据 —— ScriptableObject，存储多个 ImageSettingUnit。
-    /// </summary>
-    public class ImageSettingData : ScriptableObject
-    {
-        public List<ImageSettingUnit> units = new();
-
-        public string ToJson() => JsonUtility.ToJson(this, true);
-        public void FromJson(string json) => JsonUtility.FromJsonOverwrite(json, this);
-    }
-
-    /// <summary>
     /// 纹理批量设置工具 —— 创建多个配置单元，每个指定一个文件夹 + 一组导入参数，一键应用到文件夹内所有纹理。
+    /// 数据类 <see cref="ImageSettingData"/> / <see cref="ImageSettingUnit"/> 位于 ImageSettingData.cs（Unity 要求与类同名文件）。
     /// </summary>
     public class ImageBatchSettingsEditor : EmberEditorWindow
     {
@@ -343,6 +301,15 @@ namespace Ember.Basic.Editor
         {
             var data = AssetDatabase.LoadAssetAtPath<ImageSettingData>(DataPath);
             if (data) return data;
+
+            // 历史遗留：asset 存在但脚本引用丢失（m_Script: fileID 0）时 LoadAssetAtPath 返回 null，
+            // 直接 CreateAsset 会因路径已存在而报错——先删除坏资产再重建
+            if (File.Exists(DataPath))
+            {
+                EmberDebug.LogWarning("EmberBasic", $"EmberImageBatchSettings.asset 脚本引用丢失，删除并重建: {DataPath}");
+                AssetDatabase.DeleteAsset(DataPath);
+            }
+
             data = CreateInstance<ImageSettingData>();
             var dir = Path.GetDirectoryName(DataPath);
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);

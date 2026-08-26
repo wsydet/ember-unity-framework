@@ -1,0 +1,12 @@
+{
+    "name":  "com.ember.core",
+    "displayName":  "Ember Core",
+    "version":  "0.2.0",
+    "description":  "Ember 框架核心：事件总线、服务定位、单例/对象池、GameState 状态机、Update 循环、Manager 自动发现、定时器。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.basic":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
+                         "com.cysharp.unitask":  "2.5.10",
+                         "com.sirenix.odin-inspector":  "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
+                     }
+}

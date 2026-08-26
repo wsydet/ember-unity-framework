@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Ember.Basic.Editor
@@ -10,7 +10,7 @@ namespace Ember.Basic.Editor
     public class EmberDebugConfigCreator
     {
         private const string TAG = LogTags.CoreEditor;
-        private const string Path = "Assets/Ember/Core/Runtime/Resources/EmberDebugConfig.asset";
+        private const string Path = "Assets/Resources/EmberDebugConfig.asset";
         static EmberDebugConfigCreator()
         {
             EditorApplication.delayCall += EnsureConfigExists;

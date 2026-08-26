@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.uiextension
 
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Ember.UIExtension.Editor
     /// </summary>
     public class EUIBindingSettingData : ScriptableObject
     {
-        public const string k_SettingsPath = "Assets/Ember/UI/Editor/EUIBindingSettings.asset";
+        public const string k_SettingsPath = "Assets/Editor/Ember/EUIBindingSettings.asset";
 
         [SerializeField]
         private LogicImplementationData[] logicImplementations;
@@ -24,8 +24,8 @@ namespace Ember.UIExtension.Editor
         private DefaultAsset defaultBindingTemplatePath;
 
         [SerializeField]
-        [Tooltip("框架代码生成根目录")]
-        private string frameworkCodeRoot = "Assets/Ember/UI/Runtime";
+        [Tooltip("框架代码根目录（只读展示，框架代码已随包发布，不可生成）")]
+        private string frameworkCodeRoot = "Packages/com.ember.ui/Runtime";
 
         [SerializeField]
         [Tooltip("业务代码生成根目录")]

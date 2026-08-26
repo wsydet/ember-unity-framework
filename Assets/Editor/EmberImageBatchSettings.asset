@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d1bdd8a3b7c32df4eb11d38e7744c710, type: 3}
   m_Name: EmberImageBatchSettings
-  m_EditorClassIdentifier: Ember.Basic.Editor:Ember.Basic.Editor:ImageSettingData
+  m_EditorClassIdentifier: Ember.Basic.Editor::Ember.Basic.Editor.ImageSettingData
   units: []

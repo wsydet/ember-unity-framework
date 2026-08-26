@@ -1,0 +1,12 @@
+{
+    "name":  "com.ember.scene",
+    "displayName":  "Ember Scene",
+    "version":  "0.2.0",
+    "description":  "Ember 框架场景管理：异步加载/卸载、过渡切换、激活前回调、状态机桥接。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
+                         "com.ember.resource":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
+                         "com.cysharp.unitask":  "2.5.10"
+                     }
+}

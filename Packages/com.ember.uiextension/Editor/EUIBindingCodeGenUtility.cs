@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.uiextension
 
 using System;
@@ -151,6 +151,15 @@ namespace Ember.UIExtension.Editor
             var confirmBtn = hasExistingFile ? "重新生成" : "生成";
             if (!EditorUtility.DisplayDialog("确认生成代码", confirmMsg, confirmBtn, "取消"))
                 return;
+
+            // 框架页面守卫：生成根在包内（Packages/ 开头）时禁止生成——框架代码已随包发布，只读
+            var generatedPath = HandleGetGeneratedPath(binding);
+            if (generatedPath.StartsWith("Packages/", System.StringComparison.OrdinalIgnoreCase))
+            {
+                EditorUtility.DisplayDialog("无法生成代码",
+                    "该绑定属于框架页面，代码已随 com.ember.ui 包发布（包内只读）。\n业务页面的代码生成请使用 Business 路径模式。", "确定");
+                return;
+            }
 
             // 1. 先生成/更新预制体（如果不在预制体上）—— 后续步骤依赖 prefab 路径
             if (!HandleIsOnPrefab(binding))

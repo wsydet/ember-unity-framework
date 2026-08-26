@@ -2,7 +2,7 @@
  * author       : DESKTOP-5SRUU55
  * prefab name  : GMPage
  * page name    : GMPage
- * update time  : 2026/8/22 16:40:31
+ * update time  : 2026/8/26 14:50:13
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -65,17 +65,17 @@ namespace Game.UI
         private Ember.UIExtension.EUIButtonEx EUIBtn_Exit;
 
         /// <summary>
-        /// m_EUITgl_Test
+        /// m_Panel_GM/m_EUITgl_Test
         /// </summary>
         private Ember.UIExtension.EUIToggleEx EUITgl_Test;
 
         /// <summary>
-        /// m_EUIImg_Test
+        /// m_Panel_GM/m_EUIImg_Test
         /// </summary>
         private Ember.UIExtension.EUIImageEx EUIImg_Test;
 
         /// <summary>
-        /// m_Img_Circle
+        /// m_Panel_GM/m_Img_Circle
         /// </summary>
         private Ember.UIExtension.EUICircleImage Img_Circle;
 

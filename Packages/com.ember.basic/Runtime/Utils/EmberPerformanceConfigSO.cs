@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 //
 // This file is part of Ember Unity Packages.
 // Package: com.ember.basic
@@ -14,7 +14,7 @@ namespace Ember.Basic
     /// 存储 GPU 型号阈值、iOS 设备代数阈值、Fallback RAM/CPU 阈值。
     /// 在 Inspector 中可编辑，无需改代码即可调整分级规则。
     ///
-    /// 资源路径：Assets/Ember/Core/Runtime/Resources/EmberPerformanceConfig.asset
+    /// 资源路径：Assets/Resources/EmberPerformanceConfig.asset
     /// 加载方式：Resources.Load《EmberPerformanceConfigSO》("EmberPerformanceConfig")
     /// </summary>
     [CreateAssetMenu(menuName = "Ember/Performance Config", fileName = "EmberPerformanceConfig", order = 100)]

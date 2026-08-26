@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember.basic
 
 #if UNITY_EDITOR
@@ -85,9 +85,8 @@ namespace Ember.Basic.Editor
                     }
                 }
 
-                // 只扫描 ember 框架代码 + 包目录 + 业务层
-                if (!path.StartsWith("Assets/Ember/")
-                    && !path.StartsWith("Assets/Game/")
+                // 只扫描 ember 框架包目录 + 业务层
+                if (!path.StartsWith("Assets/Game/")
                     && !isFrameworkPackage)
                     continue;
 

@@ -24,6 +24,9 @@
 *.blend1
 *.blend1.meta
 
+# Ember: 第三方私有依赖包暂存区（Odin 付费授权，禁止提交到公开仓库）
+/upm-stage/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/

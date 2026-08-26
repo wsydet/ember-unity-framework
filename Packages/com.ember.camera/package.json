@@ -1,0 +1,11 @@
+{
+    "name":  "com.ember.camera",
+    "displayName":  "Ember Camera",
+    "version":  "0.2.0",
+    "description":  "Ember 框架相机管理：Cinemachine 虚拟相机注册/切换与强制霸占堆栈。",
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
+                         "com.unity.cinemachine":  "3.1.7"
+                     }
+}

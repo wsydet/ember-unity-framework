@@ -10,6 +10,7 @@
 #
 # 排除项：
 #   - *.meta 自身不需要 .meta
+#   - ~ 结尾的目录（Templates~/Documentation~/Samples~）Unity 不导入，其内文件无需 .meta
 #   - Packages 顶层文件（manifest.json / packages-lock.json）没有 .meta
 #   - Packages 包根目录没有 .meta，故目录检查只作用于 Assets/
 #
@@ -36,6 +37,11 @@ while IFS= read -r file; do
 
     # .meta 自身不需要 .meta
     case "$file" in *.meta) continue ;; esac
+
+    # Unity 忽略 ~ 结尾的目录（Templates~/Documentation~/Samples~），其内文件不参与导入，无需 .meta
+    case "$file" in
+        *~/*) continue ;;
+    esac
 
     # Packages 顶层文件没有 .meta，跳过；包内文件继续检查
     case "$file" in
