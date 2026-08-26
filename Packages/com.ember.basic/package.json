@@ -3,5 +3,9 @@
     "displayName":  "Ember Basic",
     "version":  "0.2.0",
     "description":  "Ember 框架基础库：数学工具、集合扩展、Debug 工具等底层通用能力。",
-    "unity":  "6000.0"
+    "unity":  "6000.0",
+    "dependencies":  {
+                         "com.sirenix.odin-inspector":  "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
+                         "com.unity.ugui":  "2.5.0"
+                     }
 }

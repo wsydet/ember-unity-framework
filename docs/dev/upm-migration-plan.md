@@ -395,3 +395,4 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-24 | 🚚 **P2 主体迁移完成**：8 模块 16 组带 meta 迁入 8 包；8 包 file: 激活；uiextension 补依赖；删除 Assets/Ember 与 Plugins/Sirenix；三类路径全部改造（EUIBinding 路径守卫/CodeValidator 8 包范围/6 个 SO 迁移 + Creator 路径同步）；全局无 Assets/Ember 残留。待用户开 Unity 验证编译 |
 | 2026-08-24 | 🧙 **P2 脚手架向导完成**：EmberProjectSetup（初始化项目 + 一致性校验两菜单，两阶段生成，场景程序化创建而非复制 dev 场景）；新增 2 个 UI 模板（开屏动画基类/默认实现）；7 个 dev 生成区文件加版本标记。P2 全部动作完成，编译验证交 P3 |
 | 2026-08-24 | 🐛 **修复 UPM 依赖形态问题**：Unity 打开报 414 个 Sirenix 缺失错误——embedded 包依赖不能用 git URL（被 UPM 跳过），Odin 未安装。修复：Odin 直接声明进 dev manifest.json。规则已记入风险表 |
+| 2026-08-24 | 🔍 **P4 依赖审计**（逐包 asmdef vs package.json）：basic 缺 Odin+ugui 依赖声明（Runtime 用 Sirenix、Editor 引用 TMPro/UI）、extensions 缺 basic 依赖声明；已补齐并挪 v0.2.0 tag（首次发布未消费前修正）。其余 9 包核对通过 |
