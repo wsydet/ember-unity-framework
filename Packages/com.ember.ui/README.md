@@ -4,18 +4,23 @@ Ember 框架 UI 管理：四层 Canvas 界面栈、EUIViewEngine 视图引擎、
 
 ## 依赖
 
-| 包 | 版本/来源 |
-|----|----------|
-| com.ember.basic | https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0 |
-| com.ember.core | https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0 |
-| com.ember.resource | https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0 |
-| com.ember.scene | https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.scene#v0.2.0 |
-| com.neuecc.unirx | 7.1.0 |
-| com.cysharp.unitask | 2.5.10 |
-| com.unity.ugui | 2.5.0 |
-| com.demigiant.dotween | https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815 |
+**registry 依赖（随本包自动解析，无需手动安装）：**
 
-> 第三方依赖说明：com.cysharp.unitask / com.neuecc.unirx 需在项目 manifest.json 配置 OpenUPM scoped registry；com.sirenix.odin-inspector / com.demigiant.dotween 来自私有仓库，需 git 访问凭据（见框架文档 §3.4）。
+| 包 | 说明 |
+|----|------|
+| com.neuecc.unirx 7.1.0 | 自动（OpenUPM/官方源） |
+| com.cysharp.unitask 2.5.10 | 自动（OpenUPM/官方源） |
+| com.unity.ugui 2.5.0 | 自动（OpenUPM/官方源） |
+
+**前置包（UPM 规则：git 来源的包必须由项目 manifest 直接声明，见框架文档 §3.2）：**
+
+| 包 | 说明 |
+|----|------|
+| com.ember.basic | 项目 manifest 直接声明（git URL） |
+| com.ember.core | 项目 manifest 直接声明（git URL） |
+| com.ember.resource | 项目 manifest 直接声明（git URL） |
+| com.ember.scene | 项目 manifest 直接声明（git URL） |
+| com.demigiant.dotween | 项目 manifest 直接声明（git URL） |
 
 ## 安装
 
@@ -27,4 +32,4 @@ Ember 框架 UI 管理：四层 Canvas 界面栈、EUIViewEngine 视图引擎、
 }
 `
 
-本包与 Ember 框架其他包 lockstep 统一版本。详见 [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md)。
+本包与 Ember 框架其他包 lockstep 统一版本。安装前置包与 OpenUPM 配置详见 [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md)。

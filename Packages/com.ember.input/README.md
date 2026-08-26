@@ -4,12 +4,17 @@ Ember 框架输入抽象：基于 Unity Input System 的 Action Map 切换与轴
 
 ## 依赖
 
-| 包 | 版本/来源 |
-|----|----------|
-| com.ember.core | https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0 |
-| com.unity.inputsystem | 1.19.0 |
+**registry 依赖（随本包自动解析，无需手动安装）：**
 
-> 第三方依赖说明：com.cysharp.unitask / com.neuecc.unirx 需在项目 manifest.json 配置 OpenUPM scoped registry；com.sirenix.odin-inspector / com.demigiant.dotween 来自私有仓库，需 git 访问凭据（见框架文档 §3.4）。
+| 包 | 说明 |
+|----|------|
+| com.unity.inputsystem 1.19.0 | 自动（OpenUPM/官方源） |
+
+**前置包（UPM 规则：git 来源的包必须由项目 manifest 直接声明，见框架文档 §3.2）：**
+
+| 包 | 说明 |
+|----|------|
+| com.ember.core | 项目 manifest 直接声明（git URL） |
 
 ## 安装
 
@@ -21,4 +26,4 @@ Ember 框架输入抽象：基于 Unity Input System 的 Action Map 切换与轴
 }
 `
 
-本包与 Ember 框架其他包 lockstep 统一版本。详见 [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md)。
+本包与 Ember 框架其他包 lockstep 统一版本。安装前置包与 OpenUPM 配置详见 [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md)。

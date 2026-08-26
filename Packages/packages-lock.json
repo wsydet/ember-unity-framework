@@ -53,7 +53,10 @@
       "version": "file:com.ember.basic",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
+        "com.unity.ugui": "2.5.0"
+      }
     },
     "com.ember.camera": {
       "version": "file:com.ember.camera",
@@ -87,7 +90,9 @@
       "version": "file:com.ember.extensions",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0"
+      }
     },
     "com.ember.input": {
       "version": "file:com.ember.input",

@@ -5,13 +5,8 @@
     "description":  "Ember 框架 UI 管理：四层 Canvas 界面栈、EUIViewEngine 视图引擎、页面生命周期与过渡管道。",
     "unity":  "6000.0",
     "dependencies":  {
-                         "com.ember.basic":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-                         "com.ember.resource":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
-                         "com.ember.scene":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.scene#v0.2.0",
                          "com.neuecc.unirx":  "7.1.0",
                          "com.cysharp.unitask":  "2.5.10",
-                         "com.unity.ugui":  "2.5.0",
-                         "com.demigiant.dotween":  "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
+                         "com.unity.ugui":  "2.5.0"
                      }
 }

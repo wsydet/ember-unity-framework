@@ -5,12 +5,7 @@
     "description":  "EUI 框架 UI 扩展包：控件绑定与代码生成工具。挂载 EUIBinding 到预制体上，配置控件映射，由编辑器工具自动生成 C# 绑定代码。",
     "unity":  "6000.0",
     "dependencies":  {
-                         "com.ember.basic":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-                         "com.ember.core":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-                         "com.ember.ui":  "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.ui#v0.2.0",
                          "com.cysharp.unitask":  "2.5.10",
-                         "com.unity.ugui":  "2.5.0",
-                         "com.demigiant.dotween":  "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815",
-                         "com.sirenix.odin-inspector":  "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
+                         "com.unity.ugui":  "2.5.0"
                      }
 }

@@ -49,20 +49,36 @@ com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui 
 
 ### 3.2 消费端安装方式
 
+> ⚠️ **UPM 铁律**：git URL 依赖只能出现在项目 manifest.json 直接声明处。
+> 所有 git 来源的包（11 个 ember + Odin + DOTween）必须全部列在项目 manifest；
+> 包内 package.json 只声明 registry 版本依赖（会随包自动解析）。
+
 ```json
-// 其他项目的 Packages/manifest.json
+// 其他项目的 Packages/manifest.json（节选，官方 com.unity.* 依赖照常保留）
 {
   "scopedRegistries": [
     { "name": "OpenUPM", "url": "https://package.openupm.com",
       "scopes": ["com.neuecc", "com.cysharp"] }
   ],
   "dependencies": {
+    "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
+    "com.ember.extensions": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.extensions#v0.2.0",
+    "com.ember.uiextension": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.uiextension#v0.2.0",
     "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-    "com.ember.ui":   "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.ui#v0.2.0"
-    // ... 其余 9 个 ember 包同格式
+    "com.ember.resource": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
+    "com.ember.scene": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.scene#v0.2.0",
+    "com.ember.audio": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.audio#v0.2.0",
+    "com.ember.camera": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.camera#v0.2.0",
+    "com.ember.input": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.input#v0.2.0",
+    "com.ember.ui": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.ui#v0.2.0",
+    "com.ember.editor": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.editor#v0.2.0",
+    "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
+    "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
   }
 }
 ```
+
+> 前置条件：机器需能访问两个仓库（私有仓库需 git 凭据）；UniRx/UniTask 来自 OpenUPM（scoped registry 已配）。
 
 **升级框架版本** = 把所有 `#v0.2.0` 改为新 tag（lockstep，可用脚本批量替换），删 `packages-lock.json` 后 Unity 重新 resolve。
 
@@ -212,7 +228,7 @@ Packages/com.ember.core/
 | **Console Pro 合规**（付费，`Packages/com.flyingworm.consolepro` 被 git 跟踪） | 与 Odin 同处理：✅ **已入私有仓库**（`ember-thirdparty-upm`，tag `consolepro-v3.9.81`，2026-08-24）。编辑器开发工具，不进框架依赖；dev 项目 vendored 保留至仓库公开前移除 |
 | **生成区漂移**（dev Assets 与模板不同步） | 纪律：生成区不手写、改模板重跑向导；菜单级 + CI 一致性校验兜底 |
 | **模板场景双份同步**（模板 vs Assets 副本） | 模板为唯一真源，副本由向导刷新；场景引用 GUID 同源不破 |
-| **UPM 依赖形态规则**（实战踩坑 2026-08-24）：embedded（file:）包的 package.json **不能用 git URL 作依赖**——UPM 按语义版本解析并跳过（`Skipping invalid dependency`）；git URL 依赖仅合法于项目 manifest 或 git 安装的包 | dev 项目把 Odin 直接声明在项目 manifest.json（`#odin-v4.0.2`）；包内声明保留给消费者（git 安装时合法）。dev 的 ember 互指依赖被跳过无害（manifest 已直接声明全部 11 包） |
+| **UPM 依赖形态规则**（实战踩坑 2026-08-24/26）：**git URL 依赖只能写在项目 manifest.json 直接声明**——写在任何 package.json（embedded 或 git 安装的包都一样）都会被 UPM 跳过（`Skipping invalid dependency`），传递 git 依赖不会生效 | 包内 package.json 只声明 registry 版本依赖（ugui/unitask/unirx/cinemachine/inputsystem）；所有 git 来源包（11 个 ember + Odin + DOTween）由消费端项目 manifest 直接声明（见 §3.2 完整模板） |
 
 ---
 
@@ -396,3 +412,4 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-24 | 🧙 **P2 脚手架向导完成**：EmberProjectSetup（初始化项目 + 一致性校验两菜单，两阶段生成，场景程序化创建而非复制 dev 场景）；新增 2 个 UI 模板（开屏动画基类/默认实现）；7 个 dev 生成区文件加版本标记。P2 全部动作完成，编译验证交 P3 |
 | 2026-08-24 | 🐛 **修复 UPM 依赖形态问题**：Unity 打开报 414 个 Sirenix 缺失错误——embedded 包依赖不能用 git URL（被 UPM 跳过），Odin 未安装。修复：Odin 直接声明进 dev manifest.json。规则已记入风险表 |
 | 2026-08-24 | 🔍 **P4 依赖审计**（逐包 asmdef vs package.json）：basic 缺 Odin+ugui 依赖声明（Runtime 用 Sirenix、Editor 引用 TMPro/UI）、extensions 缺 basic 依赖声明；已补齐并挪 v0.2.0 tag（首次发布未消费前修正）。其余 9 包核对通过 |
+| 2026-08-26 | 🔧 **UPM 规则再修正（消费端实测）**：git URL 依赖在任何 package.json 里都会被跳过（含 git 安装的包）→ 全部 11 包 package.json 清空 git 依赖，只留 registry 版本；Odin/DOTween/ember 互指改为项目 manifest 直接声明（§3.2 模板已更新为 13 项完整清单）；8 个包 README 依赖说明重写；风险表规则同步更正。待用户重推 tag 后重测 |
