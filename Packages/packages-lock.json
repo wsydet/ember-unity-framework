@@ -45,16 +45,13 @@
       "version": "file:com.ember.audio",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
-      }
+      "dependencies": {}
     },
     "com.ember.basic": {
       "version": "file:com.ember.basic",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
         "com.unity.ugui": "2.5.0"
       }
     },
@@ -63,7 +60,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
         "com.unity.cinemachine": "3.1.7"
       }
     },
@@ -72,34 +68,26 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-        "com.cysharp.unitask": "2.5.10",
-        "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
+        "com.cysharp.unitask": "2.5.10"
       }
     },
     "com.ember.editor": {
       "version": "file:com.ember.editor",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
-      }
+      "dependencies": {}
     },
     "com.ember.extensions": {
       "version": "file:com.ember.extensions",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0"
-      }
+      "dependencies": {}
     },
     "com.ember.input": {
       "version": "file:com.ember.input",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
         "com.unity.inputsystem": "1.19.0"
       }
     },
@@ -107,17 +95,13 @@
       "version": "file:com.ember.resource",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0"
-      }
+      "dependencies": {}
     },
     "com.ember.scene": {
       "version": "file:com.ember.scene",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-        "com.ember.resource": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
         "com.cysharp.unitask": "2.5.10"
       }
     },
@@ -126,14 +110,9 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-        "com.ember.resource": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
-        "com.ember.scene": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.scene#v0.2.0",
         "com.neuecc.unirx": "7.1.0",
         "com.cysharp.unitask": "2.5.10",
-        "com.unity.ugui": "2.5.0",
-        "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
+        "com.unity.ugui": "2.5.0"
       }
     },
     "com.ember.uiextension": {
@@ -141,13 +120,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-        "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-        "com.ember.ui": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.ui#v0.2.0",
         "com.cysharp.unitask": "2.5.10",
-        "com.unity.ugui": "2.5.0",
-        "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815",
-        "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
+        "com.unity.ugui": "2.5.0"
       }
     },
     "com.flyingworm.consolepro": {
