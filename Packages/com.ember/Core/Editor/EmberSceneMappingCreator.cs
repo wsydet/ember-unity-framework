@@ -15,7 +15,7 @@ namespace Ember.Core.Editor
     public class EmberSceneMappingCreator
     {
         private const string TAG = LogTags.CoreEditor;
-        private const string Path = "Assets/Editor/Ember/EmberSceneMapping.asset";
+        private const string MappingAssetPath = "Assets/Editor/Ember/EmberSceneMapping.asset";
 
         static EmberSceneMappingCreator()
         {
@@ -25,21 +25,21 @@ namespace Ember.Core.Editor
         /// <summary>确保映射 SO 存在（多层建目录，兼容全新项目无 Assets/Editor 的情况）。</summary>
         public static void EnsureExists()
         {
-            var existing = AssetDatabase.LoadAssetAtPath<EmberSceneMapping>(Path);
+            var existing = AssetDatabase.LoadAssetAtPath<EmberSceneMapping>(MappingAssetPath);
             if (existing != null)
             {
                 existing.SyncNewStates();
                 return;
             }
 
-            EnsureFolderMultiLevel(Path);
+            EnsureFolderMultiLevel(MappingAssetPath);
 
             var mapping = ScriptableObject.CreateInstance<EmberSceneMapping>();
             mapping.PopulateFromStates();
-            AssetDatabase.CreateAsset(mapping, Path);
+            AssetDatabase.CreateAsset(mapping, MappingAssetPath);
             AssetDatabase.SaveAssets();
 
-            EmberDebug.LogInit(TAG, $"EmberSceneMapping.asset auto-created at: {Path} " +
+            EmberDebug.LogInit(TAG, $"EmberSceneMapping.asset auto-created at: {MappingAssetPath} " +
                 $"({mapping.entries.Count} state entries populated).");
         }
 
@@ -48,7 +48,7 @@ namespace Ember.Core.Editor
         {
             EnsureExists();
 
-            var mapping = AssetDatabase.LoadAssetAtPath<EmberSceneMapping>(Path);
+            var mapping = AssetDatabase.LoadAssetAtPath<EmberSceneMapping>(MappingAssetPath);
             if (mapping == null) return;
 
             mapping.PopulateFromStates();
