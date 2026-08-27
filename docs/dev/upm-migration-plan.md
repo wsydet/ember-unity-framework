@@ -20,7 +20,7 @@
 | 决策点 | 结论 |
 |--------|------|
 | 包粒度 | ~~方案 A 细粒度 11 包~~ → **2026-08-26 决策：合并为单一 `com.ember` 包**（v0.3.0）。模块边界由包内 asmdef 保证；「按需引用」改为 EmberUPMManager 面板面向未来扩展包预留 |
-| 版本策略 | **lockstep 统一版本**：所有包同一版本号一起发 tag（起步 `v0.2.0`），消费端升级一次全改 |
+| 版本策略 | **lockstep 单包 + 定制 SemVer**（2026-08-26 定稿）：开发期 major 恒 0；**第二位 = 框架变化（强制更新，强烈建议跟随）**；**第三位 = 小修补（可选更新）**。EmberUPMManager 按此语义标注「强制/可选」 |
 | 分发方式 | **① Git URL + tag**：monorepo `?path=` 引用，零基础设施；稳定后视需要演进到私有 registry（②）/ OpenUPM（③） |
 | Odin 依赖 | **框架带 Odin**：Odin 做成私有 git 包（`com.sirenix.odin-inspector`），框架 package.json 声明依赖自动安装 |
 | 脚手架 | **包内模板 + 一键 Setup 向导**：导包后一次点击复制模板到 Assets/，生成可运行的最小框架（详见 §六） |
@@ -440,3 +440,6 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-26 | 🐛 **UniTask TreeView 修复版**（消费端实测报 CS0619）：OpenUPM 2.5.10 的编辑器追踪器用旧版非泛型 TreeView，Unity 6000.5 编译失败；dev vendored 副本已被 API Updater 升级为 `TreeView<int>` 泛型版。方案：修复版推私有仓库（tag `unitask-v2.5.10-ember1`），消费端 manifest 直接声明；§3.2 模板与 OpenUPM scope 同步更新 |
 | 2026-08-26 | 📦 **UniTask 内置化（v0.3.1）**（用户指正：UniRx/UniTask 应随 ember 自动安装，不应每项目重复配置）：UniTask MIT 许可允许分发 → 修复版 vendor 进 `com.ember/UniTask/`（334 文件，6 个 asmdef 含 versionDefines 外部集成自动排除）；com.ember 依赖移除 unitask；dev manifest 与旧 vendored 包清理；消费端清单减至 3 行，UniTask 零操作 |
 | 2026-08-26 | 🧩 **脚手架补全（v0.3.2）**（消费端实测反馈）：① Setup 向导从 2 场景扩为 **4 场景**（Framework/Main/Gameplay/Settings，与四状态一一对应，全部注册 Build Settings）；② 场景映射 SO 修复——`EmberSceneMappingCreator` 单层建目录在全新项目失败（Assets/Editor 不存在）→ 多层建目录 + 新增 `EnsureAndRescan`；EmberSceneMapping + Creator 移入 Core/Editor（依赖方向允许，向导同程序集直接调用，映射 SO 在场景创建后立即刷新）；③ 校验清单扩至 4 场景 + SO |
+| 2026-08-26 | 🔧 **v0.3.3**：修复 EmberSceneMappingCreator 的 `Path` 常量与 `System.IO.Path` 同名遮蔽编译错误（CS1061），常量改名 MappingAssetPath |
+| 2026-08-26 | 🆙 **一键升级（方案 B）**：EmberUPMManager 新增框架版本区——显示当前版本 + [检查更新]（`git ls-remote --tags` 远程比对 SemVer）+ [升级到 vX.Y.Z]（正则改写 manifest 的 #tag + `Client.Resolve` 触发重解析）+ 失败降级提示。git 包从此拥有类 registry 的一键升级体验，零服务器 |
+| 2026-08-26 | 📐 **版本语义定稿（v0.4.0）**（用户提出）：开发期 major 恒 0；第二位=框架变化→强制更新；第三位=小修补→可选。0.3.x 系列（UniTask 内置/4 场景/一键升级）均属框架变化 → 合并发布为 **v0.4.0**；面板按语义自动标注「强制更新/可选更新」；决策表与 CHANGELOG 同步 |

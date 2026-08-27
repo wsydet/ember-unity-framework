@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2026-08-26
+
+- EmberUPMManager 一键升级（检查更新 + 改 manifest tag + Client.Resolve），并按版本语义标注强制/可选更新
+- 版本语义定稿：开发期 major=0；第二位=框架变化（强制更新）；第三位=小修补（可选）
+- 累计 0.3.x 变更：UniTask 内置、Setup 向导 4 场景、场景映射 SO 修复
+
 Ember 框架单一包，lockstep 版本。
 
 ## [0.3.0] - 2026-08-26

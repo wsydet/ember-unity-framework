@@ -2,27 +2,36 @@
 // Package: com.ember
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
 namespace Ember.UPMManager.Editor
 {
     /// <summary>
-    /// Ember UPM 管理器 —— 前置依赖体检 + 一键安装 + 未来扩展包预留。
+    /// Ember UPM 管理器 —— 框架版本升级 + 前置依赖体检 + 未来扩展包预留。
     ///
     /// 命名说明：与框架的 Manager/Module 体系（EmberManagerCollector、EmberModuleCollector）无关，
-    /// 本窗口只负责「Unity 包（UPM）」层面的依赖管理。
+    /// 本窗口只负责「Unity 包（UPM）」层面的管理。
     ///
     /// 设计约束：本程序集 <b>零框架/零 Sirenix 引用</b>（独立 asmdef）——
     /// 未安装 Odin 时框架主体编译会报错，本面板必须仍能编译并弹出，
     /// 否则用户将陷入「没面板 → 不知道装 Odin → 编译不过」的死锁。
     ///
-    /// 检测用反射（程序集名），安装用 UnityEditor.PackageManager.Client.Add。
+    /// 版本升级原理：git 安装的包无 registry「Update」按钮，本面板通过
+    /// `git ls-remote --tags` 对比远程与当前版本，一键改写 manifest 的 #tag
+    /// 并触发 Client.Resolve 重新解析——体验等同点击升级，零服务器。
     /// </summary>
     public class EmberUPMManager : EditorWindow
     {
         #region 内部参数
+
+        private const string FrameworkRepoUrl = "https://github.com/wsydet/ember-unity-framework.git";
+        private const string PackageName = "com.ember";
 
         private const string OdinUrl =
             "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2";
@@ -38,6 +47,12 @@ namespace Ember.UPMManager.Editor
         };
 
         private bool _installing;
+        private bool _checking;
+        private bool _upgrading;
+        private string _checkMessage;
+        private bool _checkFailed;
+        private Version _currentVersion;
+        private readonly List<Version> _newerTags = new();
 
         #endregion
 
@@ -49,7 +64,7 @@ namespace Ember.UPMManager.Editor
         public static void ShowWindow()
         {
             var win = GetWindow<EmberUPMManager>("Ember UPM 管理器");
-            win.minSize = new Vector2(460, 360);
+            win.minSize = new Vector2(480, 460);
         }
 
         #endregion
@@ -63,16 +78,7 @@ namespace Ember.UPMManager.Editor
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember UPM 管理器", EditorStyles.boldLabel);
 
-            // ---- 基础包状态 ----
-            var emberVersion = GetPackageVersion("com.ember");
-            if (string.IsNullOrEmpty(emberVersion))
-            {
-                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0", MessageType.Error);
-            }
-            else
-            {
-                DrawStatusRow("com.ember（基础包）", emberVersion, true);
-            }
+            DrawFrameworkVersionSection();
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("前置依赖体检", EditorStyles.boldLabel);
@@ -106,6 +112,208 @@ namespace Ember.UPMManager.Editor
                 MessageType.Info);
         }
 
+        /// <summary>框架版本区：当前版本 + 检查更新 + 一键升级（按版本语义标注强制/可选）。</summary>
+        private void DrawFrameworkVersionSection()
+        {
+            var currentVersionText = GetPackageVersion(PackageName);
+            if (string.IsNullOrEmpty(currentVersionText))
+            {
+                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.4.0", MessageType.Error);
+                return;
+            }
+
+            Version.TryParse(currentVersionText, out _currentVersion);
+            DrawStatusRow("com.ember（框架）", currentVersionText, true);
+
+            EditorGUILayout.BeginHorizontal();
+            GUI.enabled = !_checking && !_upgrading;
+            if (GUILayout.Button("检查更新", GUILayout.Width(100)))
+                CheckForUpdates(currentVersionText);
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
+
+            if (_checking)
+                EditorGUILayout.LabelField("    ⏳ 正在查询远程 tag（git ls-remote）...", EditorStyles.miniLabel);
+
+            if (!string.IsNullOrEmpty(_checkMessage))
+            {
+                if (_checkFailed)
+                    EditorGUILayout.HelpBox(_checkMessage, MessageType.Warning);
+                else
+                    EditorGUILayout.LabelField($"    {_checkMessage}", EditorStyles.miniLabel);
+            }
+
+            // 强制更新：major/minor 比当前高（框架已变化，强烈建议）
+            foreach (var tag in _newerTags.Where(IsForcedUpgrade))
+            {
+                EditorGUILayout.BeginHorizontal();
+                var style = new GUIStyle(EditorStyles.boldLabel) { normal = { textColor = new Color(1f, 0.55f, 0.2f) } };
+                EditorGUILayout.LabelField($"    ⬆ 强制更新：v{tag}（框架已变化）", style, GUILayout.Width(260));
+                GUI.enabled = !_upgrading;
+                if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
+                    UpgradeTo(tag);
+                GUI.enabled = true;
+                EditorGUILayout.EndHorizontal();
+            }
+
+            // 可选更新：仅 patch 高于当前（小修补，框架不变）
+            foreach (var tag in _newerTags.Where(t => !IsForcedUpgrade(t)))
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField($"    可选更新：v{tag}（小修补，可不升）", EditorStyles.miniLabel, GUILayout.Width(260));
+                GUI.enabled = !_upgrading;
+                if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
+                    UpgradeTo(tag);
+                GUI.enabled = true;
+                EditorGUILayout.EndHorizontal();
+            }
+
+            if (_upgrading)
+                EditorGUILayout.LabelField("    ⏳ 正在改写 manifest 并触发 Unity 重新解析...", EditorStyles.miniLabel);
+        }
+
+        /// <summary>版本语义：major/minor 高于当前 = 框架变化 = 强制更新；仅 patch 高 = 可选。</summary>
+        private bool IsForcedUpgrade(Version tag)
+        {
+            if (_currentVersion == null) return true;
+            return tag.Major > _currentVersion.Major || tag.Minor > _currentVersion.Minor;
+        }
+
+        private void CheckForUpdates(string currentVersion)
+        {
+            if (!Version.TryParse(currentVersion, out var current))
+            {
+                _checkMessage = "当前版本号无法解析：" + currentVersion;
+                _checkFailed = true;
+                return;
+            }
+
+            _checking = true;
+            _checkMessage = null;
+            _checkFailed = false;
+            _newerTags.Clear();
+            Repaint();
+
+            try
+            {
+                var tags = ListRemoteTags();
+                _newerTags.AddRange(tags.Where(v => v > current).OrderByDescending(v => v));
+                if (_newerTags.Count == 0)
+                {
+                    _checkMessage = $"已是最新版本（v{current}），远程没有更新的 tag。";
+                    _checkFailed = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _checkMessage = "检查更新失败：" + ex.Message +
+                    "\n（需要本机安装 git，且能访问 " + FrameworkRepoUrl + "）";
+                _checkFailed = true;
+            }
+            finally
+            {
+                _checking = false;
+                Repaint();
+            }
+        }
+
+        private static List<Version> ListRemoteTags()
+        {
+            var psi = new ProcessStartInfo("git", $"ls-remote --tags {FrameworkRepoUrl}")
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(psi);
+            if (process == null)
+                throw new InvalidOperationException("无法启动 git 进程。请确认本机已安装 git 并加入 PATH。");
+
+            var stdout = process.StandardOutput.ReadToEnd();
+            var stderr = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+
+            if (process.ExitCode != 0)
+                throw new InvalidOperationException(string.IsNullOrWhiteSpace(stderr)
+                    ? $"git ls-remote 失败（exit {process.ExitCode}）"
+                    : stderr.Trim());
+
+            var versions = new List<Version>();
+            foreach (var line in stdout.Split('\n'))
+            {
+                var idx = line.IndexOf("refs/tags/v", StringComparison.Ordinal);
+                if (idx < 0) continue;
+
+                var tag = line.Substring(idx + "refs/tags/".Length).Trim()
+                    .TrimEnd('^').TrimEnd('{', '}');
+                if (Version.TryParse(tag, out var v))
+                    versions.Add(v);
+            }
+            return versions;
+        }
+
+        private void UpgradeTo(Version target)
+        {
+            if (_upgrading) return;
+            _upgrading = true;
+            Repaint();
+
+            try
+            {
+                // 1. 改写项目 manifest 中 com.ember 的 #tag
+                var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
+                if (projectRoot == null) throw new InvalidOperationException("无法定位项目根目录。");
+
+                var manifestPath = Path.Combine(projectRoot, "Packages", "manifest.json");
+                if (!File.Exists(manifestPath)) throw new InvalidOperationException("未找到 Packages/manifest.json。");
+
+                var json = File.ReadAllText(manifestPath);
+                var pattern = "(\"com\\.ember\"\\s*:\\s*\"[^\"]*?#)v[\\d.]+(\")";
+                var match = Regex.Match(json, pattern);
+                if (!match.Success)
+                    throw new InvalidOperationException("manifest.json 中未找到 com.ember 的 git URL（#vX.Y.Z 形式）。请检查该条目是否仍是 git URL。");
+
+                json = json.Substring(0, match.Index)
+                    + match.Groups[1].Value + "v" + target + match.Groups[2].Value
+                    + json.Substring(match.Index + match.Length);
+                File.WriteAllText(manifestPath, json, new System.Text.UTF8Encoding(false));
+
+                // 2. 触发 Unity 重新解析
+                var request = UnityEditor.PackageManager.Client.Resolve();
+                EditorApplication.update += PollResolve;
+
+                void PollResolve()
+                {
+                    if (!request.IsCompleted) return;
+                    EditorApplication.update -= PollResolve;
+                    _upgrading = false;
+                    _newerTags.Clear();
+                    _checkMessage = null;
+
+                    if (request.Status == UnityEditor.PackageManager.StatusCode.Success)
+                    {
+                        EditorUtility.DisplayDialog("升级完成",
+                            $"com.ember 已升级到 v{target}。\n若当前有编译报错属解析中间态，稍候即恢复。", "确定");
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("升级失败",
+                            "解析失败：" + (request.Error?.message ?? "未知错误") +
+                            "\n\n可手动修改 manifest 的 #tag 后重试。", "确定");
+                    }
+                    Repaint();
+                }
+            }
+            catch (Exception ex)
+            {
+                _upgrading = false;
+                EditorUtility.DisplayDialog("升级失败", ex.Message, "确定");
+                Repaint();
+            }
+        }
+
         /// <summary>绘制单个依赖体检行：状态 + 一键安装 + 手动指引。</summary>
         private void DrawDependencyRow(string label, bool installed, string installUrl, string manualUrl, string desc)
         {
@@ -132,7 +340,7 @@ namespace Ember.UPMManager.Editor
         private void DrawStatusRow(string label, string value, bool ok)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField((ok ? "✅ " : "🔴 ") + label, GUILayout.Width(240));
+            EditorGUILayout.LabelField((ok ? "✅ " : "🔴 ") + label, GUILayout.Width(260));
             EditorGUILayout.LabelField(value, EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
         }
