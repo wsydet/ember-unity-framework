@@ -160,7 +160,7 @@ public int mp;
 |------|------|
 | [OdinInspectorDemo.cs](../../Assets/Tem/Examples/OdinInspectorDemo.cs) | 完整特性演示（MonoBehaviour） |
 | [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Required]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
-| [EmberDebugConfigSO.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebugConfigSO.cs) | SO 继承层级 `L0/L1` + `[BoxGroup]` 无名分隔 + `[GUIColor]` + `[VisibleIf]` 实战（ScriptableObject） |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember/Runtime/Debug/EmberDebugConfigSO.cs) | SO 继承层级 `L0/L1` + `[BoxGroup]` 无名分隔 + `[GUIColor]` + `[VisibleIf]` 实战（ScriptableObject） |
 | [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | `[FoldoutGroup]` + `[BoxGroup(ShowLabel=false)]` + `[Title]` 基类面板（ScriptableObject） |
 | [EmberCameraManager.cs](../../Assets/Ember/Camera/Runtime/EmberCameraManager.cs) | `[GUIColor]` 动态状态着色 + `[LabelText]` 实战 |
 | [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |

@@ -16,7 +16,7 @@
 |------|------|-----------|----------|
 | [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | MonoBehaviour | `FoldoutGroup` + `BoxGroup(ShowLabel=false)` + `Required` + `ShowInInspector/ReadOnly` + `LabelText` | 2026-08-01 |
 | [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | ScriptableObject | `FoldoutGroup($const)` + `BoxGroup(ShowLabel=false)` + `Title` + `ShowInInspector/ReadOnly` | 2026-08-01 |
-| [EmberDebugConfigSO.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberDebugConfigSO.cs) | ScriptableObject | `FoldoutGroup($const)` + `BoxGroup(ShowLabel=false)` + `GUIColor($prop)` + `InfoBox(VisibleIf)` + `ListDrawerSettings` + `HorizontalGroup/HideLabel` | 2026-08-01 |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember/Runtime/Debug/EmberDebugConfigSO.cs) | ScriptableObject | `FoldoutGroup($const)` + `BoxGroup(ShowLabel=false)` + `GUIColor($prop)` + `InfoBox(VisibleIf)` + `ListDrawerSettings` + `HorizontalGroup/HideLabel` | 2026-08-01 |
 
 ### Ember/Scene
 
@@ -56,7 +56,7 @@
 
 | 脚本 | 类型 | Odin 模式 | 最后更新 |
 |------|------|-----------|----------|
-| [EmberDebugConfigEditor.cs](../../Packages/com.ember.basic/Editor/EmberDebugConfigEditor.cs) | OdinEditor | `PropertyOrder` + `HorizontalGroup` + `Button` | — |
+| [EmberDebugConfigEditor.cs](../../Packages/com.ember/Editor/EmberDebugConfigEditor.cs) | OdinEditor | `PropertyOrder` + `HorizontalGroup` + `Button` | — |
 
 ---
 

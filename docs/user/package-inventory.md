@@ -16,11 +16,10 @@
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 | com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 | com.ryanindiedev.inputdevicedetector | 1.0.0 | 输入设备检测：自动识别鼠标/键盘/手柄切换并触发事件 | [YouTube](https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ) → 手动移入 |
-| com.ember.basic | 0.1.0 | Ember 框架基础库：数学工具、集合扩展、Debug 工具等底层通用能力 | 框架自带 → embedded |
-| com.ember.extensions | 0.1.0 | Ember 框架扩展方法库：Unity 类型扩展、集合操作、字符串处理等便利方法 | 框架自带 → embedded |
-| com.ember.uiextension | 0.1.0 | Ember 框架 UI 扩展包：控件绑定与代码生成工具 | 框架自带 → embedded |
+| com.ember | 0.3.0 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成 | 框架自带 → embedded |
 
 > 以上包均放在 `Packages/` 下作为 embedded package，随 git 提交，无需额外下载。
+> 📌 2026-08-26 起 11 个 `com.ember.*` 包合并为单一 `com.ember`（模块边界由包内 asmdef 保证），详见 [upm-migration-plan.md](../dev/upm-migration-plan.md) §3.1。
 
 ### 1.2 UPM 第三方（通过 OpenUPM Registry）
 

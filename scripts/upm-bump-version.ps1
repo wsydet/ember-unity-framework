@@ -50,9 +50,9 @@ if (-not (Test-Path $packagesDir)) {
     exit 1
 }
 
-$packages = Get-ChildItem -Path $packagesDir -Directory -Filter "com.ember.*" | Sort-Object Name
+$packages = Get-ChildItem -Path $packagesDir -Directory -Filter "com.ember*" | Where-Object { $_.Name -notlike "com.ember-*" } | Sort-Object Name
 if ($packages.Count -eq 0) {
-    Write-Error "Packages 下没有 com.ember.* 包"
+    Write-Error "Packages 下没有 com.ember 包"
     exit 1
 }
 
@@ -99,7 +99,7 @@ if ($Check) {
 Write-Host ""
 Write-Host "完成：$($changed.Count) 个包已更新。"
 Write-Host "下一步（lockstep 发布）："
-Write-Host "  git add Packages/com.ember.*/package.json"
+Write-Host "  git add Packages/com.ember*/package.json"
 Write-Host "  git commit -m ""chore: bump version to $Version"""
 Write-Host "  git tag v$Version"
 Write-Host "  git push origin main --tags"

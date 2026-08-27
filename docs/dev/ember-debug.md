@@ -91,7 +91,7 @@ EmberDebug.Enable(LogTags.Core);               // 重新开启父标签
 
 ### 所有预定义标签
 
-在 [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) 的 `LogTags` 类中定义。
+在 [EmberLogPresets.cs](../../Packages/com.ember/Runtime/Debug/EmberLogPresets.cs) 的 `LogTags` 类中定义。
 
 ---
 
@@ -130,7 +130,7 @@ EmberDebug.LogError(LogTags.ResourceProvider, "Load failed.");
 
 ## 六、颜色定义
 
-所有颜色在 [EmberLogPresets.cs](../../Packages/com.ember.basic/Runtime/Debug/EmberLogPresets.cs) 中集中定义：
+所有颜色在 [EmberLogPresets.cs](../../Packages/com.ember/Runtime/Debug/EmberLogPresets.cs) 中集中定义：
 
 | 类 | 作用 |
 |----|------|

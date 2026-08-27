@@ -19,7 +19,7 @@
 
 | 决策点 | 结论 |
 |--------|------|
-| 包粒度 | **方案 A 细粒度**：8 个新包 + 现有 3 个 = 11 个 `com.ember.*` 包，遵循「每模块独立 Package、按需引用」原则 |
+| 包粒度 | ~~方案 A 细粒度 11 包~~ → **2026-08-26 决策：合并为单一 `com.ember` 包**（v0.3.0）。模块边界由包内 asmdef 保证；「按需引用」改为 EmberUPMManager 面板面向未来扩展包预留 |
 | 版本策略 | **lockstep 统一版本**：所有包同一版本号一起发 tag（起步 `v0.2.0`），消费端升级一次全改 |
 | 分发方式 | **① Git URL + tag**：monorepo `?path=` 引用，零基础设施；稳定后视需要演进到私有 registry（②）/ OpenUPM（③） |
 | Odin 依赖 | **框架带 Odin**：Odin 做成私有 git 包（`com.sirenix.odin-inspector`），框架 package.json 声明依赖自动安装 |
@@ -31,27 +31,30 @@
 
 ## 三、转包后形态
 
-### 3.1 包清单与依赖图
+### 3.1 包清单与依赖图（v0.3.0 起：单一包）
+
+> 2026-08-26 决策：11 包合并为单一 `com.ember`。模块边界由包内 21 个 asmdef 保证（程序集名不变）。
 
 ```
-com.ember.basic         (已有, v0.2.0)  零依赖
-com.ember.extensions    (已有, v0.2.0)  → basic
-com.ember.core          (新)  ← Assets/Ember/Core       → basic + Odin + UniTask
-com.ember.resource      (新)  ← Resource                → core
-com.ember.scene         (新)  ← Scene                   → core + resource + UniTask
-com.ember.audio         (新)  ← Audio                   → core
-com.ember.camera        (新)  ← Camera                  → core + Cinemachine
-com.ember.input         (新)  ← Input                   → core + InputSystem
-com.ember.ui            (新)  ← UI                      → core + resource + scene + UniRx + UniTask + ugui + TMP + DOTween
-com.ember.editor        (新)  ← Assets/Ember/Editor     → core
-com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui + TMP + UniTask + DOTween
+Packages/com.ember/                    ← 单一框架包（v0.3.0）
+├── Runtime/                           22 个模块程序集 + 框架预制体
+├── Editor/                            编辑器工具 + UPMManager + Templates~/Roslyn~/Resources
+├── Tests/                             UI Edit Mode 测试
+└── Documentation~/                    模块 README（按模块分子目录）
+
+依赖（package.json，全部 registry 版本，随包自动解析）：
+  com.unity.ugui 2.5.0 / com.cysharp.unitask 2.5.10 / com.neuecc.unirx 7.1.0
+  / com.unity.cinemachine 3.1.7 / com.unity.inputsystem 1.19.0
+
+前置（git 来源，项目 manifest 直接声明，或由 EmberUPMManager 面板引导安装）：
+  com.sirenix.odin-inspector（付费，私有仓库 #odin-v4.0.2）
+  com.demigiant.dotween（免费但许可禁止再分发，私有仓库 #dotween-v1.2.815）
 ```
 
 ### 3.2 消费端安装方式
 
 > ⚠️ **UPM 铁律**：git URL 依赖只能出现在项目 manifest.json 直接声明处。
-> 所有 git 来源的包（11 个 ember + Odin + DOTween）必须全部列在项目 manifest；
-> 包内 package.json 只声明 registry 版本依赖（会随包自动解析）。
+> 框架本体一行安装；Odin/DOTween 由 `Ember/UPM Manager` 面板检测后引导安装（或老手直接写 manifest）。
 
 ```json
 // 其他项目的 Packages/manifest.json（节选，官方 com.unity.* 依赖照常保留）
@@ -61,17 +64,7 @@ com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui 
       "scopes": ["com.neuecc", "com.cysharp"] }
   ],
   "dependencies": {
-    "com.ember.basic": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.basic#v0.2.0",
-    "com.ember.extensions": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.extensions#v0.2.0",
-    "com.ember.uiextension": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.uiextension#v0.2.0",
-    "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
-    "com.ember.resource": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.resource#v0.2.0",
-    "com.ember.scene": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.scene#v0.2.0",
-    "com.ember.audio": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.audio#v0.2.0",
-    "com.ember.camera": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.camera#v0.2.0",
-    "com.ember.input": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.input#v0.2.0",
-    "com.ember.ui": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.ui#v0.2.0",
-    "com.ember.editor": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.editor#v0.2.0",
+    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
     "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
   }
@@ -79,8 +72,9 @@ com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui 
 ```
 
 > 前置条件：机器需能访问两个仓库（私有仓库需 git 凭据）；UniRx/UniTask 来自 OpenUPM（scoped registry 已配）。
+> 网络受限地区可改用 Gitee 镜像（两个仓库各推一份，URL 换 gitee.com）。
 
-**升级框架版本** = 把所有 `#v0.2.0` 改为新 tag（lockstep，可用脚本批量替换），删 `packages-lock.json` 后 Unity 重新 resolve。
+**升级框架版本** = 改 `#v0.3.0` 为新 tag（单包单 tag），删 `packages-lock.json` 后 Unity 重新 resolve。
 
 ### 3.4 仓库拓扑（双仓库）
 
@@ -112,7 +106,7 @@ com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui 
 ```json
 {
   "dependencies": {
-    "com.ember.core": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember.core#v0.2.0",
+    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
   }
 }
@@ -126,18 +120,28 @@ com.ember.uiextension   (已有, v0.2.0)                  → basic + core + ui 
 - **当前阶段（团队内部）**：Odin 硬依赖可接受，双仓库照常运行
 - **真正开源前**：需把 Odin 从硬依赖降级为软依赖——`ODIN_INSPECTOR` defineConstraints 条件编译解耦（无 Odin 也能编译，有 Odin 自动增强），或提供无 Odin 变体包。此为 P5「付费依赖不能发布」问题的具体化，工作量较大，暂缓
 
-### 3.3 各包目录布局
+### 3.3 包目录布局（v0.3.0 单一包，模块中心布局）
 
 ```
-Packages/com.ember.core/
-├── package.json            # name / version / unity / dependencies
-├── CHANGELOG.md
-├── README.md               # 含 Odin 私仓凭据配置说明
-├── LICENSE.md
-├── Runtime/                # Ember.Core.Runtime.asmdef（保持程序集名不变）
-├── Editor/                 # Ember.Core.Editor.asmdef
-└── Tests/                  # 如后续有 Core 测试
+Packages/com.ember/
+├── package.json / CHANGELOG.md / README.md / LICENSE.md
+├── Basic/          Runtime/ + Editor/    ← 基础库 + 编辑器工具
+├── Extensions/     Runtime/              ← 扩展方法
+├── Core/           Runtime/ + Editor/    ← 核心：事件/状态机/Update/Manager + Setup 向导
+├── Resource/       Runtime/ + Editor/
+├── Scene/          Runtime/ + Editor/
+├── Audio/          Runtime/ + Editor/
+├── Camera/         Runtime/ + Editor/
+├── Input/          Runtime/ + Editor/
+├── UI/             Runtime/ + Editor/    ← UI 框架 + 框架预制体
+├── UIExtension/    Runtime/ + Editor/    ← UI 绑定与增强组件
+├── FrameworkTools/ Editor/               ← 场景映射等框架级工具
+├── UPMManager/     Editor/               ← UPM 依赖管理器（独立 asmdef）
+├── Tests/                                ← UI Edit Mode 测试
+└── Documentation~/                       ← 模块 README（按模块分子目录）
 ```
+
+> 模块中心布局：新增模块 = 新建一个文件夹（内含 Runtime/Editor），不再需要同时改两处。每个 Runtime/Editor 目录各 1 个 asmdef（Unity 规则）。
 
 ---
 
@@ -205,6 +209,19 @@ Packages/com.ember.core/
 3. **空项目冒烟**：运行 `Ember/Setup/初始化项目` 向导 → 复制模板场景 + 生成业务状态 → 点 Play 跑通 Init→Main 启动链（验证 §6.1 目标体验）；同时验证 `Samples~` Import 通道；**输出与 dev 仓库生成区 diff 必须为 0**（黄金基准校验）
 4. **升级演练**：bump 0.3.0 + tag → 消费端改 tag → 确认升级生效（验证核心目标）；并演练 §七 的升级向导 diff 流程
 
+### P4-b 单包合并与 v0.3.0（2026-08-26 决策）🔄 进行中
+
+背景：消费端实测 13 个 git 包同时解析 + 国内网络导致反复失败；11 包 lockstep 无实际按需引用场景。决策合并为单一包。
+
+1. ✅ 11 包内容合入 `Packages/com.ember/`（780 文件：Runtime/Editor/Tests/Templates~/Documentation~ 全量，.meta 随行，21 个 asmdef 程序集名不变）
+2. ✅ 删除 11 个旧包目录；dev manifest 改 `"com.ember": "file:com.ember"`
+3. ✅ 硬编码引用全面修正：124 个版权头 + ExcludedFolders（CONFIG_PATH/FrameworkPackageRoots）+ EUIBindingSettingData.frameworkCodeRoot + EmberProjectSetup 包名常量 + QuickMaintenanceTools Roslyn 路径 + GamePages(.tpl/.cs) 预制体路径 + EUIBindingSettings.asset + 注释文案；全局 grep 零残留
+4. ✅ EmberUPMManager 面板（独立 asmdef `Ember.UPMManager.Editor`，零 Sirenix 引用，反射检测 Odin/DOTween，Client.Add 一键安装 + 手动指引 + 未来模块预留区）
+5. ✅ com.ember package.json v0.3.0（registry 依赖 5 个：ugui/unitask/unirx/cinemachine/inputsystem）
+6. ✅ bump 脚本适配单包（`com.ember*` 匹配，实测 0.3.0→0.4.0 预览通过）
+7. ✅ DOTween 决策：**不 vendored**（许可禁止再分发，2026-08-26 查证修正），保持私有仓库 + 面板引导安装
+8. ⏳ 待用户：开 Unity 验证编译 + 回归 → 提交 + tag v0.3.0 + 推送 → Unity Farm 用 1 行 manifest 冒烟
+
 ### P5 可选远期
 
 - CI（GitHub Actions）：自动 bump / 打 tag / 校验包结构
@@ -266,9 +283,9 @@ Packages/com.ember.core/
 
 | 生成物 | 目标位置 | 模板来源 |
 |--------|---------|---------|
-| GameInitState / GameMainState / GameGameplayState / GameSettingsState | `Assets/Game/State/` | `com.ember.core/Editor/Templates~/State/*.tpl` |
+| GameInitState / GameMainState / GameGameplayState / GameSettingsState | `Assets/Game/State/` | `com.ember/Editor/Templates~/State/*.tpl` |
 | GameLauncher 子类（可选） | `Assets/Game/` | 同上 |
-| GamePages.cs 注册表骨架 | `Assets/Game/UI/` | `com.ember.ui/Editor/Templates~/` |
+| GamePages.cs 注册表骨架 | `Assets/Game/UI/` | `com.ember/Editor/Templates~/` |
 | EUIBindingSettings.asset | `Assets/Editor/Ember/` | `k_SettingsPath` 改指向此处 |
 | 启动场景 FrameworkScene + MainScene | `Assets/Game/Scenes/` | 包内模板场景**复制** + Build Settings 注册 |
 | 目录结构 | `Assets/Game/{State,UI/Runtime,Module}/` | — |
@@ -280,13 +297,13 @@ Packages/com.ember.core/
 ### 6.4 必须配套的路径改造
 
 1. `EUIBindingSettingData.k_SettingsPath` → `Assets/Editor/Ember/`，`GetOrCreateSettings` 自动创建/迁移
-2. 删除/重定义 `frameworkCodeRoot`：生成只落 businessCodeRoot；框架页面（EUILoading/EUIBackground）的 `.Binding.cs` 作为源码随包进 `com.ember.ui/Runtime/Pages/`
+2. 删除/重定义 `frameworkCodeRoot`：生成只落 businessCodeRoot；框架页面（EUILoading/EUIBackground）的 `.Binding.cs` 作为源码随包进 `com.ember/Runtime/Pages/`
 3. `Assets/Ember/UI/Editor/` 下 3 个配置 asset（EUIBindingSettings / EmberUIBindingSettings / EmberCSharpImplementation）→ `Assets/Editor/Ember/`
 4. 生成文件头打版本标记（`// Generated by Ember Setup v0.2.0`）——供 §七 升级检测使用
 
 ### 6.5 关键技术细节
 
-1. **定位包内文件**：消费端（git 包）实际路径是 `Library/PackageCache/com.ember.core@v0.2.0/...`，**不能写死 `Packages/...`**。用 `PackageInfo.FindForAssembly(typeof(EmberProjectSetup).Assembly).resolvedPath` 动态解析，dev（embedded）与消费端（cache）都能正确拿到模板路径
+1. **定位包内文件**：消费端（git 包）实际路径是 `Library/PackageCache/com.ember@v0.3.0/...`，**不能写死 `Packages/...`**。用 `PackageInfo.FindForAssembly(typeof(EmberProjectSetup).Assembly).resolvedPath` 动态解析，dev（embedded）与消费端（cache）都能正确拿到模板路径
 2. **模板禁用 `.cs` 扩展名**：包内 `.cs` 会被 Unity 编译，复制进 Assets 后产生重复类编译错误。模板一律 `.tpl`/`.txt`，放 `Editor/Templates~/`（`~` 后缀目录不参与构建），生成时才落 `.cs`
 3. **模板参数替换**：复用现有 `{var}`/`{for}`/`{if}` 模板引擎（CSharpLogicImplementationData），替换命名空间、项目名等
 
@@ -338,7 +355,7 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 
 #### 模板场景的双份同步
 
-- 模板场景放 `com.ember.core/Editor/Templates~/Scenes/`——dev 仓库是 embedded 包，**模板在 Unity 里可直接编辑**；改完重跑向导刷新 Assets 副本
+- 模板场景放 `com.ember/Editor/Templates~/Scenes/`——dev 仓库是 embedded 包，**模板在 Unity 里可直接编辑**；改完重跑向导刷新 Assets 副本
 - `~` 目录不进资源数据库：模板只当只读源（不在 Build Settings），副本才是运行对象
 - 场景复制走 `File.Copy` + `AssetDatabase.ImportAsset`
 
@@ -413,3 +430,9 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-24 | 🐛 **修复 UPM 依赖形态问题**：Unity 打开报 414 个 Sirenix 缺失错误——embedded 包依赖不能用 git URL（被 UPM 跳过），Odin 未安装。修复：Odin 直接声明进 dev manifest.json。规则已记入风险表 |
 | 2026-08-24 | 🔍 **P4 依赖审计**（逐包 asmdef vs package.json）：basic 缺 Odin+ugui 依赖声明（Runtime 用 Sirenix、Editor 引用 TMPro/UI）、extensions 缺 basic 依赖声明；已补齐并挪 v0.2.0 tag（首次发布未消费前修正）。其余 9 包核对通过 |
 | 2026-08-26 | 🔧 **UPM 规则再修正（消费端实测）**：git URL 依赖在任何 package.json 里都会被跳过（含 git 安装的包）→ 全部 11 包 package.json 清空 git 依赖，只留 registry 版本；Odin/DOTween/ember 互指改为项目 manifest 直接声明（§3.2 模板已更新为 13 项完整清单）；8 个包 README 依赖说明重写；风险表规则同步更正。待用户重推 tag 后重测 |
+| 2026-08-26 | 🎯 **单包合并决策**：消费端 13 包同时解析 + 国内网络反复失败 → 11 包合并为单一 `com.ember`（v0.3.0）；DOTween 许可查证后决定不 vendored（禁止再分发）；EmberUPMManager 面板承担 Odin/DOTween 检测与安装引导 |
+| 2026-08-26 | 🚚 **P4-b 单包合并执行**：11 包 780 文件合入 com.ember（.meta 随行、21 asmdef 程序集名不变）；硬编码引用全量修正（版权头 124 + 7 类路径/常量）；EmberUPMManager 面板落地；dev manifest 改单包；bump 脚本适配；全局 grep 零残留。待用户验证 + tag v0.3.0 |
+| 2026-08-26 | ✏️ **命名澄清 + 文档清扫**：面板更名 EmberUPMManager（避免与框架 Manager/Module 体系混淆，菜单 `Ember/UPM Manager`）；5 个功能文档路径引用更新（api-reference/debug/odin×2/transition-block）；package-inventory 更新为单包；§3.3/§6.3-6.6 存活引用更新；删除过时脚本 p1-create-package-skeletons.ps1 |
+| 2026-08-26 | 🔎 **合并冲突审计**：系统扫描 11 包同名文件——发现 1 处内容覆盖（core 的 Editor/README.md 被 editor 模块覆盖，已从 git 历史恢复至 `Documentation~/core/README-Editor.md`）+ 9 处文件夹 meta 冲突（已验证无资产按 GUID 引用，Unity 重建无影响） |
+| 2026-08-26 | 🐛 **修复 asmdef 同目录冲突**（用户编译报错）：Unity 规则一个文件夹仅允许一个 asmdef——11 个 asmdef 平铺合并导致报错。按程序集分目录重组（Runtime 10 子目录 + Editor 11 子目录，各 1 asmdef，程序集名不变）；8 处路径常量随新布局同步（Roslyn/ExcludedFolders/Templates~/frameworkCodeRoot/预制体路径）；新增可重跑脚本 scripts/reorg-package-assemblies.ps1 |
+| 2026-08-26 | 🧱 **模块中心布局重构**（用户提议）：由「Runtime/Editor 顶层 + 模块子目录」改为「模块顶层 + 内部 Runtime/Editor」——新增模块只需建一个文件夹。12 个模块目录 + 8 处路径常量再同步；验证通过（0 多 asmdef 目录 / 0 缺 meta / 0 旧路径残留）；⚠️ 澄清：此前"412 缺 meta"系检查脚本自身 bug，修正后实测 0 缺失 |

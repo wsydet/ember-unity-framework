@@ -20,7 +20,7 @@ namespace Game.UI
         // Background 层 —— 兜底背景（sortingOrder=0，单例）
         // ============================================================
         /// <summary>EUIBackgroundPage 页面（框架包内置预制体）</summary>
-        public static readonly EUIPageDef EUIBackgroundPage = new("Packages/com.ember.ui/Runtime/Prefabs/EUIBackgroundPage.prefab", UILayer.Background, PageType.Background);
+        public static readonly EUIPageDef EUIBackgroundPage = new("Packages/com.ember/UI/Runtime/Prefabs/EUIBackgroundPage.prefab", UILayer.Background, PageType.Background);
 
 
 
@@ -42,7 +42,7 @@ namespace Game.UI
         // TopMost 层 —— 顶层（引导、加载遮罩等）
         // ============================================================
 
-        public static readonly EUIPageDef EUILoadingPage = new("Packages/com.ember.ui/Runtime/Prefabs/EUILoadingPage.prefab", UILayer.TopMost, PageType.TopMost);
+        public static readonly EUIPageDef EUILoadingPage = new("Packages/com.ember/UI/Runtime/Prefabs/EUILoadingPage.prefab", UILayer.TopMost, PageType.TopMost);
 
 
 

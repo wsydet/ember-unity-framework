@@ -15,5 +15,5 @@ MonoBehaviour:
   logicImplementations:
   - {fileID: 11400000, guid: dab9ba0aa58acbf4d94a2a186be6bc16, type: 2}
   defaultBindingTemplatePath: {fileID: 0}
-  frameworkCodeRoot: Packages/com.ember.ui/Runtime
+  frameworkCodeRoot: Packages/com.ember/UI/Runtime
   businessCodeRoot: Assets/Game/UI/Runtime

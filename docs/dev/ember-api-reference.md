@@ -1,4 +1,4 @@
-﻿# Ember API 速查手册
+# Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
 > 最后更新：2026-08-06 | 覆盖 82 个文件、~120 个公开类型、610+ 个公开成员
@@ -42,7 +42,7 @@
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/ListPool.cs` |
+| **位置** | `com.ember/Runtime/Base/ListPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | List 对象池。从池中取出的 List 保证容量 >= 指定值。归还时自动 Clear。 |
 
@@ -65,7 +65,7 @@ ListPool<int>.Clear();                   // 清空所有缓存
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/DictionaryPool.cs` |
+| **位置** | `com.ember/Runtime/Base/DictionaryPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | Dictionary 对象池。归还时自动 Clear。 |
 
@@ -85,7 +85,7 @@ DictionaryPool<string, object>.Return(dict);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/HashSetPool.cs` |
+| **位置** | `com.ember/Runtime/Base/HashSetPool.cs` |
 | **命名空间** | `Ember.Basic` |
 
 ```csharp
@@ -104,7 +104,7 @@ HashSetPool<int>.Return(set);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/MemoryPool.cs` |
+| **位置** | `com.ember/Runtime/Base/MemoryPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 按实例管理的泛型对象池，每个池有独立的最大容量。池空返回 null，池满丢弃。适用纯 C# class（POCO、StringBuilder 等）。 |
 
@@ -174,7 +174,7 @@ void OnReturnToPool();   // 归还到池中时
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/IPool.cs` |
+| **位置** | `com.ember/Runtime/Base/IPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 简单的可池化对象接口：`Dispose()` + `Revive()`。 |
 
@@ -182,7 +182,7 @@ void OnReturnToPool();   // 归还到池中时
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/PoolRefCount.cs` |
+| **位置** | `com.ember/Runtime/Base/PoolRefCount.cs` |
 | **说明** | Editor 下追踪对象池泄漏。`EnableCheck = true` 后记录每次 Get/Return 的堆栈。 |
 
 ```csharp
@@ -201,7 +201,7 @@ poolRefCount.ClearAllStacks();
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/FloatCurve2D.cs` |
+| **位置** | `com.ember/Runtime/Base/FloatCurve2D.cs` |
 | **说明** | 二维 AnimationCurve 组合 `{ AnimationCurve x, y; }`。Evaluate(t) 一次采样两条曲线返回 Vector2。 |
 
 ```csharp
@@ -213,7 +213,7 @@ Vector2 pos = path.Evaluate(0.5f);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/NaturalStringComparer.cs` |
+| **位置** | `com.ember/Runtime/Base/NaturalStringComparer.cs` |
 | **说明** | 自然排序：把数字当数值比而不是字符比。"Frame_2" 排在 "Frame_10" 前面。单例 `Instance`。 |
 
 ```csharp
@@ -226,7 +226,7 @@ Array.Sort(files, NaturalStringComparer.Instance);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/QuickQueue.cs` |
+| **位置** | `com.ember/Runtime/Base/QuickQueue.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | Dictionary + LinkedList 实现的快速双端队列。头尾 Push/Pop O(1)，任意位置 Remove O(1)，通过内部节点池实现 Push/Pop 零 GC。支持排序模式。 |
 
@@ -258,7 +258,7 @@ sorted.Push(3); sorted.Push(1); sorted.Push(2);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/CacheSortedList.cs` |
+| **位置** | `com.ember/Runtime/Base/CacheSortedList.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 红黑树有序列表，优于 `SortedList<K,V>`：节点缓存无 GC、同 Key 可多值、O(1) ContainsKey、lower_bound / upper_bound。<br>⚠️ **Key 必须能比大小**——推荐 int 或 enum。Key 之间只有 Equals 关系的用 Dictionary。 |
 
@@ -303,7 +303,7 @@ list.FreeCache();         // 释放节点缓存
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/ValueTypeList.cs` |
+| **位置** | `com.ember/Runtime/Base/ValueTypeList.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 值类型专用 List（`T : struct`）。与 `List<T>` 类似但提供 `GetRef(index)` 返回 ref 引用，支持零拷贝读写。 |
 
@@ -327,7 +327,7 @@ list.Sort((a, b) => ...);
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/StringView.cs` |
+| **位置** | `com.ember/Runtime/Base/StringView.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 零分配子串视图。不复制字符，只记录起始位置和长度。支持 == 比较 string 和 StringView、忽略大小写比较、Substring 链式截取、零分配 Split。 |
 
@@ -359,7 +359,7 @@ var sub = view.Substring(6, 5);  // "world"
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Unsafe/NativeDataTypes.cs` |
+| **位置** | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` |
 | **命名空间** | `Ember.Basic` |
 
 `IntPtr` 是一个整数大小的指针，指着 C# 托管堆之外的某块原生内存。GC 完全不知道这块内存的存在，
@@ -374,7 +374,7 @@ var sub = view.Substring(6, 5);  // "world"
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Utils/Const.cs` |
+| **位置** | `com.ember/Runtime/Utils/Const.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 程序里有些值被反复 new 几万次但永远不变。与其每次都 new，不如 new 一次全局共用。 |
 
@@ -403,7 +403,7 @@ StringBuilder 是共享可变对象——只在确定不会被并发访问的单
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Base/PerformanceLevel.cs` |
+| **位置** | `com.ember/Runtime/Base/PerformanceLevel.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 框架统一的设备性能五档分级枚举。画质分级、LOD 策略、特效密度、帧率目标等都基于此枚举做判断。 |
 
@@ -428,7 +428,7 @@ if (level >= PerformanceLevel.High) { EnableHighQualityEffects(); }
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Runtime/DataSaver.cs` |
+| **位置** | `com.ember/Runtime/DataSaver.cs` |
 | **说明** | 基于 JsonUtility 的 JSON 存档工具，读写 `Application.persistentDataPath`。 |
 
 ```csharp
@@ -439,7 +439,7 @@ DataSaver.Delete("settings.json");
 bool exists = DataSaver.Exists("settings.json");
 ```
 
-> 异步版本（UniTask）待迁移到 com.ember.extensions。
+> 异步版本（UniTask）待迁移到 com.ember。
 
 ---
 
@@ -447,7 +447,7 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 集合扩展 (`CollectionExtension`)
 
-> 位置: `com.ember.basic/Extension/CollectionExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `com.ember/Runtime/Extension/CollectionExtension.cs`, 命名空间 `Ember.Basic`
 
 | 方法 | 说明 |
 |------|------|
@@ -467,7 +467,7 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 数学扩展 (`MathExtension`)
 
-> 位置: `com.ember.basic/Extension/MathExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `com.ember/Runtime/Extension/MathExtension.cs`, 命名空间 `Ember.Basic`
 
 补上 Unity 自带 Mathf/AnimationCurve 没给的工具。
 
@@ -486,7 +486,7 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 字符串扩展 (`StringExtension`)
 
-> 位置: `com.ember.basic/Extension/StringExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `com.ember/Runtime/Extension/StringExtension.cs`, 命名空间 `Ember.Basic`
 
 **全部走 ASCII-only 路径，跳过 Unicode 全表映射。**
 
@@ -517,7 +517,7 @@ Turkish I 问题等，代价很大。游戏中 99% 的字符串场景（日志�
 
 ### GameObject / Component 扩展 (`GameObjectComponentExtensions`)
 
-> 位置: `com.ember.extensions/Extension/GameObjectComponentExtensions.cs`, 命名空间 `Ember.Extensions`
+> 位置: `com.ember/Runtime/Extension/GameObjectComponentExtensions.cs`, 命名空间 `Ember.Extensions`
 
 | 方法 | 说明 |
 |------|------|
@@ -536,7 +536,7 @@ var collider = transform.GetOrAddComponent<BoxCollider>();
 
 ## 异步 STTask
 
-> 位置: `com.ember.basic/Async/`, 命名空间 `Ember.Basic.Tasks`
+> 位置: `com.ember/Runtime/Async/`, 命名空间 `Ember.Basic.Tasks`
 
 **核心类型**：值类型 Task，零 GC 的 async/await 原语。
 
@@ -609,7 +609,7 @@ tcs.TrySetCanceled();
 
 ## JSON
 
-> 位置: `com.ember.basic/LitJson/`, 命名空间 `Ember.Basic.LitJson`
+> 位置: `com.ember/Runtime/LitJson/`, 命名空间 `Ember.Basic.LitJson`
 > LitJSON 库 (public domain)，完整 JSON 库，8 个文件。
 
 <h3>与 Unity JsonUtility 的区别</h3>
@@ -663,9 +663,9 @@ while (reader.Read()) {
 
 | 类型 | 位置 | 说明 |
 |------|------|------|
-| `UnsafeStringExtensions` | `com.ember.basic/Unsafe/UnsafeString.cs` | UTF-8 字节流直接写入 string 内部缓冲区，绕过 `Encoding.UTF8.GetString` 的中间分配 |
-| `NativeDataView` | `com.ember.basic/Unsafe/NativeDataTypes.cs` | IntPtr + Length + Managed，给原生内存指针套一层语义壳 |
-| `NativeUDTView` | `com.ember.basic/Unsafe/NativeDataTypes.cs` | 纯 IntPtr 视图，指向某个 C++ 对象 |
+| `UnsafeStringExtensions` | `com.ember/Runtime/Unsafe/UnsafeString.cs` | UTF-8 字节流直接写入 string 内部缓冲区，绕过 `Encoding.UTF8.GetString` 的中间分配 |
+| `NativeDataView` | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` | IntPtr + Length + Managed，给原生内存指针套一层语义壳 |
+| `NativeUDTView` | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` | 纯 IntPtr 视图，指向某个 C++ 对象 |
 
 UnsafeStringExtensions 最危险的一行：`*((int*)dest - 1) = destIdx` —— 直接覆盖了 .NET 运行时 string 对象的内部长度字段。
 正常 C# 里 string 是不可变的，永远不能改。搞错了会把运行时搞崩。
@@ -686,7 +686,7 @@ unsafe {
 
 ## 加密与哈希
 
-> 位置: `com.ember.basic/Utils/CryptographyUtils.cs`, 命名空间 `Ember.Basic`
+> 位置: `com.ember/Runtime/Utils/CryptographyUtils.cs`, 命名空间 `Ember.Basic`
 
 ### CryptographyUtils
 
@@ -733,7 +733,7 @@ string hex = CryptographyUtils.ArrayToHexString(bytes);
 
 ## 性能分级
 
-> 位置: `com.ember.basic/Utils/GraphicLevelUtils.cs` + `com.ember.basic/Base/PerformanceLevel.cs`, 命名空间 `Ember.Basic`
+> 位置: `com.ember/Runtime/Utils/GraphicLevelUtils.cs` + `com.ember/Runtime/Base/PerformanceLevel.cs`, 命名空间 `Ember.Basic`
 
 ### GraphicLevelUtils
 
@@ -1518,7 +1518,7 @@ var active = cam.ActiveCamera;
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Editor/FileEncodingUtility.cs` |
+| **位置** | `com.ember/Editor/FileEncodingUtility.cs` |
 | **说明** | UTF-8 BOM 检测和转换。外部导入的脚本可能是 ANSI/GBK 编码导致中文乱码，用这个工具检测和批量转换。 |
 
 ```csharp
@@ -1530,14 +1530,14 @@ FileEncodingUtility.ConvertToUTF8BOM("path/to/script.cs");
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Editor/DisplayFirstElementInHeaderDrawer.cs` |
+| **位置** | `com.ember/Editor/DisplayFirstElementInHeaderDrawer.cs` |
 | **说明** | `[DisplayFirstElementInHeader]` 的 PropertyDrawer。 |
 
 ### ProjectLocalPrefs
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Editor/Utils/ProjectLocalPrefs.cs` |
+| **位置** | `com.ember/Editor/Utils/ProjectLocalPrefs.cs` |
 | **命名空间** | `Ember.Basic.Editor` |
 | **说明** | Editor-only 的 JSON 文件持久化 key-value 存储。数据保存在 `{ProjectRoot}/Library/EmberLocalPrefs/prefs.json`，不污染 Assets 目录。支持数据迁移回调。 |
 
@@ -1581,7 +1581,7 @@ ProjectLocalPrefs.DeleteAll();
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Resource/IUpdater.cs` |
+| **位置** | `com.ember/Runtime/Resource/IUpdater.cs` |
 | **命名空间** | `Ember.Basic` |
 
 ```csharp
@@ -1600,7 +1600,7 @@ public interface IDelayDisposable : IDisposable {
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Utils/ApplicationQuitUtil.cs` |
+| **位置** | `com.ember/Runtime/Utils/ApplicationQuitUtil.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 应用退出工具。Android 上先通过 `android.os.Process.killProcess` 杀进程，失败时回退到 `Application.Quit()`。 |
 
@@ -1612,7 +1612,7 @@ ApplicationQuitUtil.Quit(); // 替代 Application.Quit()
 
 | | |
 |---|---|
-| **位置** | `com.ember.basic/Utils/UrlUtils.cs` |
+| **位置** | `com.ember/Runtime/Utils/UrlUtils.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | URL 编解码、路径提取、URL 拼接工具。编码基于 `Uri.EscapeDataString`，符合 RFC 3986。 |
 

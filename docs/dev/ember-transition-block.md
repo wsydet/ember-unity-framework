@@ -31,9 +31,9 @@
 | `Assets/Ember/UI/Runtime/Components/EUIBlockOrderCalculator.cs` | `Ember.UI` | 排布顺序计算器（9 种模式 + `EUIBlockOrderConfig`） |
 | `Assets/Ember/UI/Runtime/IEUITransitionEffect.cs` | `Ember.UI` | 组件级接口（`PlayEnterAsync`/`PlayExitAsync`/`HideAllImmediate`） |
 | `Assets/Ember/UI/Runtime/IEUITransitionHandler.cs` | `Ember.UI` | 预设过渡槽接口（`PlayShowAsync`/`PlayHideAsync`），默认实现为整面板 alpha 渐变 |
-| `Packages/com.ember.uiextension/Runtime/Components/EUITransitionBlock.cs` | `Ember.UIExtension` | 主组件：编排、对象池、网格、曲线驱动动画、编辑器预览；同时实现上述两个接口 |
-| `Packages/com.ember.uiextension/Runtime/Components/EUIBlockCurves.cs` | `Ember.UIExtension` | 6 条动画曲线 + `EUIBlockCurvePreset`（曲线预设工厂） |
-| `Packages/com.ember.uiextension/Editor/EUITransitionBlockPreviewDriver.cs` | `Ember.UIExtension.Editor` | 编辑器实时预览驱动（`EditorApplication.update`） |
+| `Packages/com.ember/Runtime/Components/EUITransitionBlock.cs` | `Ember.UIExtension` | 主组件：编排、对象池、网格、曲线驱动动画、编辑器预览；同时实现上述两个接口 |
+| `Packages/com.ember/Runtime/Components/EUIBlockCurves.cs` | `Ember.UIExtension` | 6 条动画曲线 + `EUIBlockCurvePreset`（曲线预设工厂） |
+| `Packages/com.ember/Editor/EUITransitionBlockPreviewDriver.cs` | `Ember.UIExtension.Editor` | 编辑器实时预览驱动（`EditorApplication.update`） |
 
 ---
 
