@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -37,6 +37,9 @@ namespace Ember.Core.Editor
         private const string ScenesDir = "Assets/Game/Scenes";
         private const string FrameworkScenePath = ScenesDir + "/FrameworkScene.unity";
         private const string MainScenePath = ScenesDir + "/MainScene.unity";
+        private const string GameplayScenePath = ScenesDir + "/GameplayScene.unity";
+        private const string SettingsScenePath = ScenesDir + "/SettingsScene.unity";
+        private const string SceneMappingPath = "Assets/Editor/Ember/EmberSceneMapping.asset";
 
         /// <summary>生成清单：(包内模板相对路径, 目标路径, 命名空间)</summary>
         private static readonly (string tpl, string dest, string ns)[] CoreTemplates =
@@ -87,10 +90,15 @@ namespace Ember.Core.Editor
             if (RenderTemplate(gamePagesTpl, UIDir + "/GamePages.cs", "Game.UI", version))
                 created.Add(UIDir + "/GamePages.cs");
 
-            // 4. 最小可运行场景（FrameworkScene 立即创建；MainScene 动画组件待编译完成后挂载）
+            // 4. 最小可运行场景（4 个：启动 + 大厅 + 玩法 + 设置，与状态机四状态一一对应）
             CreateFrameworkScene();
             CreateMainSceneShell();
+            CreateSceneShell(GameplayScenePath, "GameplayScene");
+            CreateSceneShell(SettingsScenePath, "SettingsScene");
             RegisterBuildSettings();
+
+            // 4.5 场景映射 SO：确保存在并按新场景重新匹配（兼容全新项目无 Assets/Editor 的情况）
+            EmberSceneMappingCreator.EnsureAndRescan();
 
             // 5. 编译完成后给 MainScene 挂 EUIDefaultMainAnimation（刚生成的脚本需先编译，挂载幂等）
             CompilationPipeline.compilationFinished -= OnCompilationFinished;
@@ -129,6 +137,9 @@ namespace Ember.Core.Editor
             }
             report.Add($"{FrameworkScenePath}\n    {(File.Exists(FrameworkScenePath) ? "✅ 存在" : "⚠️ 缺失")}");
             report.Add($"{MainScenePath}\n    {(File.Exists(MainScenePath) ? "✅ 存在" : "⚠️ 缺失")}");
+            report.Add($"{GameplayScenePath}\n    {(File.Exists(GameplayScenePath) ? "✅ 存在" : "⚠️ 缺失")}");
+            report.Add($"{SettingsScenePath}\n    {(File.Exists(SettingsScenePath) ? "✅ 存在" : "⚠️ 缺失")}");
+            report.Add($"{SceneMappingPath}\n    {(File.Exists(SceneMappingPath) ? "✅ 存在" : "⚠️ 缺失（重跑初始化补全）")}");
 
             EditorUtility.DisplayDialog("生成物一致性校验", string.Join("\n", report), "确定");
         }
@@ -231,19 +242,27 @@ namespace Ember.Core.Editor
 
         private static void CreateMainSceneShell()
         {
-            if (File.Exists(MainScenePath)) return;
+            CreateSceneShell(MainScenePath, "MainScene（动画组件编译后自动挂载）");
+        }
+
+        /// <summary>创建空壳场景（幂等）。</summary>
+        private static void CreateSceneShell(string scenePath, string logName)
+        {
+            if (File.Exists(scenePath)) return;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            EditorSceneManager.SaveScene(scene, MainScenePath);
-            EmberDebug.LogInit(TAG, $"创建场景：{MainScenePath}（动画组件编译后自动挂载）");
+            EditorSceneManager.SaveScene(scene, scenePath);
+            EmberDebug.LogInit(TAG, $"创建场景：{scenePath}（{logName}）");
         }
 
         private static void RegisterBuildSettings()
         {
             var scenes = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
-            if (!scenes.Any(s => s.path == FrameworkScenePath))
-                scenes.Insert(0, new EditorBuildSettingsScene(FrameworkScenePath, true));
-            if (!scenes.Any(s => s.path == MainScenePath))
-                scenes.Insert(1, new EditorBuildSettingsScene(MainScenePath, true));
+            var scenePaths = new[] { FrameworkScenePath, MainScenePath, GameplayScenePath, SettingsScenePath };
+            for (int i = 0; i < scenePaths.Length; i++)
+            {
+                if (!scenes.Any(s => s.path == scenePaths[i]))
+                    scenes.Insert(i, new EditorBuildSettingsScene(scenePaths[i], true));
+            }
             EditorBuildSettings.scenes = scenes.ToArray();
         }
 
