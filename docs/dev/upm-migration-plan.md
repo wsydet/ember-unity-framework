@@ -54,24 +54,25 @@ Packages/com.ember/                    ← 单一框架包（v0.3.0）
 ### 3.2 消费端安装方式
 
 > ⚠️ **UPM 铁律**：git URL 依赖只能出现在项目 manifest.json 直接声明处。
-> 框架本体一行安装；Odin/DOTween 由 `Ember/UPM Manager` 面板检测后引导安装（或老手直接写 manifest）。
+> 框架本体一行安装；Odin/DOTween/UniTask 由 `Ember/UPM Manager` 面板检测后引导安装（或老手直接写 manifest）。
 
 ```json
 // 其他项目的 Packages/manifest.json（节选，官方 com.unity.* 依赖照常保留）
 {
   "scopedRegistries": [
     { "name": "OpenUPM", "url": "https://package.openupm.com",
-      "scopes": ["com.neuecc", "com.cysharp"] }
+      "scopes": ["com.neuecc"] }
   ],
   "dependencies": {
-    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0",
+    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.1",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
     "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
   }
 }
 ```
 
-> 前置条件：机器需能访问两个仓库（私有仓库需 git 凭据）；UniRx/UniTask 来自 OpenUPM（scoped registry 已配）。
+> **UniTask 已内置**（v0.3.1 起）：OpenUPM 的 2.5.10 在 Unity 6000.5 编译失败（旧版 TreeView API），MIT 许可允许随包分发，故将修复版 vendor 进 `com.ember/UniTask/`，消费端零操作。UniRx 仍从 OpenUPM 自动解析（scope 仅 com.neuecc）。
+> 前置条件：机器需能访问两个仓库（私有仓库需 git 凭据）。
 > 网络受限地区可改用 Gitee 镜像（两个仓库各推一份，URL 换 gitee.com）。
 
 **升级框架版本** = 改 `#v0.3.0` 为新 tag（单包单 tag），删 `packages-lock.json` 后 Unity 重新 resolve。
@@ -436,3 +437,5 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-26 | 🔎 **合并冲突审计**：系统扫描 11 包同名文件——发现 1 处内容覆盖（core 的 Editor/README.md 被 editor 模块覆盖，已从 git 历史恢复至 `Documentation~/core/README-Editor.md`）+ 9 处文件夹 meta 冲突（已验证无资产按 GUID 引用，Unity 重建无影响） |
 | 2026-08-26 | 🐛 **修复 asmdef 同目录冲突**（用户编译报错）：Unity 规则一个文件夹仅允许一个 asmdef——11 个 asmdef 平铺合并导致报错。按程序集分目录重组（Runtime 10 子目录 + Editor 11 子目录，各 1 asmdef，程序集名不变）；8 处路径常量随新布局同步（Roslyn/ExcludedFolders/Templates~/frameworkCodeRoot/预制体路径）；新增可重跑脚本 scripts/reorg-package-assemblies.ps1 |
 | 2026-08-26 | 🧱 **模块中心布局重构**（用户提议）：由「Runtime/Editor 顶层 + 模块子目录」改为「模块顶层 + 内部 Runtime/Editor」——新增模块只需建一个文件夹。12 个模块目录 + 8 处路径常量再同步；验证通过（0 多 asmdef 目录 / 0 缺 meta / 0 旧路径残留）；⚠️ 澄清：此前"412 缺 meta"系检查脚本自身 bug，修正后实测 0 缺失 |
+| 2026-08-26 | 🐛 **UniTask TreeView 修复版**（消费端实测报 CS0619）：OpenUPM 2.5.10 的编辑器追踪器用旧版非泛型 TreeView，Unity 6000.5 编译失败；dev vendored 副本已被 API Updater 升级为 `TreeView<int>` 泛型版。方案：修复版推私有仓库（tag `unitask-v2.5.10-ember1`），消费端 manifest 直接声明；§3.2 模板与 OpenUPM scope 同步更新 |
+| 2026-08-26 | 📦 **UniTask 内置化（v0.3.1）**（用户指正：UniRx/UniTask 应随 ember 自动安装，不应每项目重复配置）：UniTask MIT 许可允许分发 → 修复版 vendor 进 `com.ember/UniTask/`（334 文件，6 个 asmdef 含 versionDefines 外部集成自动排除）；com.ember 依赖移除 unitask；dev manifest 与旧 vendored 包清理；消费端清单减至 3 行，UniTask 零操作 |

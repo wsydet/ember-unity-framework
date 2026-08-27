@@ -6,7 +6,7 @@ Ember 通用游戏开发框架——事件系统、资源管理、UI 管理、�
 
 ```json
 // Packages/manifest.json 的 dependencies
-"com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0"
+"com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.1"
 ```
 
 ## 前置依赖（付费/受限，需单独安装）
@@ -22,7 +22,7 @@ Ember 通用游戏开发框架——事件系统、资源管理、UI 管理、�
 
 | 程序集 | 模块 |
 |--------|------|
-| Ember.Basic.Runtime / Editor | 基础库 + 编辑器工具 |
+| Ember.Basic.Runtime / Editor | 基础库 + 编辑器工具 |`n| UniTask / UniTask.Editor（内置） | 异步框架（Unity 6000.5 修复版，MIT 许可随包分发） |
 | Ember.Core.Runtime / Editor | 核心：事件/服务/状态机/Update/Manager |
 | Ember.Extensions | 扩展方法 |
 | Ember.Resource.Runtime | 资源管理 |
