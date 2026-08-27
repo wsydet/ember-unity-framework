@@ -23,8 +23,8 @@ namespace Ember.UPMManager.Editor
     /// 否则用户将陷入「没面板 → 不知道装 Odin → 编译不过」的死锁。
     ///
     /// 版本升级原理：git 安装的包无 registry「Update」按钮，本面板通过
-    /// `git ls-remote --tags` 对比远程与当前版本，一键改写 manifest 的 #tag
-    /// 并触发 Client.Resolve 重新解析——体验等同点击升级，零服务器。
+    /// `git ls-remote --tags` 对比远程与当前版本，提取 manifest 中 com.ember 的
+    /// git URL 并替换 #tag 后调用 Client.Add 重装——体验等同点击升级，零服务器。
     /// </summary>
     public class EmberUPMManager : EditorWindow
     {
@@ -169,7 +169,7 @@ namespace Ember.UPMManager.Editor
             }
 
             if (_upgrading)
-                EditorGUILayout.LabelField("    ⏳ 正在改写 manifest 并触发 Unity 重新解析...", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField("    ⏳ 正在重装新版本并等待 Unity 解析...", EditorStyles.miniLabel);
         }
 
         /// <summary>版本语义：major/minor 高于当前 = 框架变化 = 强制更新；仅 patch 高 = 可选。</summary>
@@ -262,7 +262,7 @@ namespace Ember.UPMManager.Editor
 
             try
             {
-                // 1. 改写项目 manifest 中 com.ember 的 #tag
+                // 1. 从 manifest 提取 com.ember 当前 git URL，替换 #tag
                 var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
                 if (projectRoot == null) throw new InvalidOperationException("无法定位项目根目录。");
 
@@ -270,18 +270,17 @@ namespace Ember.UPMManager.Editor
                 if (!File.Exists(manifestPath)) throw new InvalidOperationException("未找到 Packages/manifest.json。");
 
                 var json = File.ReadAllText(manifestPath);
-                var pattern = "(\"com\\.ember\"\\s*:\\s*\"[^\"]*?#)v[\\d.]+(\")";
-                var match = Regex.Match(json, pattern);
-                if (!match.Success)
-                    throw new InvalidOperationException("manifest.json 中未找到 com.ember 的 git URL（#vX.Y.Z 形式）。请检查该条目是否仍是 git URL。");
+                var urlMatch = Regex.Match(json, "\"com\\.ember\"\\s*:\\s*\"([^\"]+)\"");
+                if (!urlMatch.Success)
+                    throw new InvalidOperationException("manifest.json 中未找到 com.ember 条目。");
 
-                json = json.Substring(0, match.Index)
-                    + match.Groups[1].Value + "v" + target + match.Groups[2].Value
-                    + json.Substring(match.Index + match.Length);
-                File.WriteAllText(manifestPath, json, new System.Text.UTF8Encoding(false));
+                var currentUrl = urlMatch.Groups[1].Value;
+                var newUrl = Regex.Replace(currentUrl, "#v[\\d.]+$", "#v" + target);
+                if (newUrl == currentUrl)
+                    throw new InvalidOperationException("URL 中未找到 #vX.Y.Z tag，无法替换：" + currentUrl);
 
-                // 2. 触发 Unity 重新解析
-                var request = UnityEditor.PackageManager.Client.Resolve();
+                // 2. Client.Add 同 URL 新 tag = 重新安装新版本（返回请求句柄可用于轮询）
+                var request = UnityEditor.PackageManager.Client.Add(newUrl);
                 EditorApplication.update += PollResolve;
 
                 void PollResolve()

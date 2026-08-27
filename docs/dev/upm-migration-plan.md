@@ -443,3 +443,4 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-26 | 🔧 **v0.3.3**：修复 EmberSceneMappingCreator 的 `Path` 常量与 `System.IO.Path` 同名遮蔽编译错误（CS1061），常量改名 MappingAssetPath |
 | 2026-08-26 | 🆙 **一键升级（方案 B）**：EmberUPMManager 新增框架版本区——显示当前版本 + [检查更新]（`git ls-remote --tags` 远程比对 SemVer）+ [升级到 vX.Y.Z]（正则改写 manifest 的 #tag + `Client.Resolve` 触发重解析）+ 失败降级提示。git 包从此拥有类 registry 的一键升级体验，零服务器 |
 | 2026-08-26 | 📐 **版本语义定稿（v0.4.0）**（用户提出）：开发期 major 恒 0；第二位=框架变化→强制更新；第三位=小修补→可选。0.3.x 系列（UniTask 内置/4 场景/一键升级）均属框架变化 → 合并发布为 **v0.4.0**；面板按语义自动标注「强制更新/可选更新」；决策表与 CHANGELOG 同步 |
+| 2026-08-26 | 🔧 **v0.4.1（patch，小修补）**：修复升级面板 CS0815——`Client.Resolve()` 在该 Unity 版本返回 void，改用「提取 manifest URL → 替换 #tag → `Client.Add` 重装」（与安装流程同 API，返回请求句柄可轮询） |
