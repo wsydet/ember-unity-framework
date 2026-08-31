@@ -243,15 +243,20 @@ namespace Ember.UPMManager.Editor
             var versions = new List<Version>();
             foreach (var line in stdout.Split('\n'))
             {
-                var idx = line.IndexOf("refs/tags/v", StringComparison.Ordinal);
+                var idx = line.IndexOf("refs/tags/", StringComparison.Ordinal);
                 if (idx < 0) continue;
 
-                var tag = line.Substring(idx + "refs/tags/".Length).Trim()
-                    .TrimEnd('^').TrimEnd('{', '}');
+                // 归一化 tag：去 annotated tag 的 "^{}"（或 "^{"）后缀、去 "v" 前缀，再交给 Version.TryParse
+                // （Version.TryParse 不认 "v" 前缀，历史 bug：v 前缀 tag 全部解析失败 → 永远显示「已是最新」）
+                var tag = line.Substring(idx + "refs/tags/".Length).Trim();
+                tag = tag.Replace("^{}", "").TrimEnd('^', '{', '}');
+                if (tag.StartsWith("v", StringComparison.Ordinal))
+                    tag = tag.Substring(1);
                 if (Version.TryParse(tag, out var v))
                     versions.Add(v);
             }
-            return versions;
+            // annotated tag 会同时列出 tag 行与解引用行，去重
+            return versions.Distinct().ToList();
         }
 
         private void UpgradeTo(Version target)

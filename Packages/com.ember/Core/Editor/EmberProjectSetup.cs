@@ -273,26 +273,36 @@ namespace Ember.Core.Editor
             if (!Directory.Exists(tplAssets)) return -1;
 
             int n = 0;
-            foreach (var rel in TemplateDirNames)
+
+            // 拷贝期间挂起自动导入，防止文件监视器在真实 .meta 落地前生成随机 GUID（同 DeployTemplate 的竞态修复）
+            AssetDatabase.DisallowAutoRefresh();
+            try
             {
-                var dst = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
-                if (Directory.Exists(dst)) Directory.Delete(dst, true);
-
-                var src = Path.Combine(tplAssets, rel.Replace('/', Path.DirectorySeparatorChar));
-                if (!Directory.Exists(src)) continue;
-
-                foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
+                foreach (var rel in TemplateDirNames)
                 {
-                    var relFile = file.Substring(src.Length + 1);
-                    var dest = Path.Combine(dst, relFile);
-                    var dir = Path.GetDirectoryName(dest);
-                    if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
-                    File.Copy(file, dest, true);
-                    n++;
+                    var dst = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
+                    if (Directory.Exists(dst)) Directory.Delete(dst, true);
+
+                    var src = Path.Combine(tplAssets, rel.Replace('/', Path.DirectorySeparatorChar));
+                    if (!Directory.Exists(src)) continue;
+
+                    foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
+                    {
+                        var relFile = file.Substring(src.Length + 1);
+                        var dest = Path.Combine(dst, relFile);
+                        var dir = Path.GetDirectoryName(dest);
+                        if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+                        File.Copy(file, dest, true);
+                        n++;
+                    }
                 }
             }
+            finally
+            {
+                AssetDatabase.AllowAutoRefresh();
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            }
 
-            AssetDatabase.Refresh();
             RecordEditingTemplate(templateId);
             EmberDebug.LogInit(TAG, $"模板 [{templateId}] 已加载到项目业务层（{n} 文件）。");
             return n;
@@ -616,32 +626,41 @@ namespace Ember.Core.Editor
 
             int deployed = 0;
             int refreshed = 0;
-            foreach (var file in Directory.GetFiles(srcRoot, "*", SearchOption.AllDirectories))
+
+            // 拷贝期间挂起自动导入：Unity 运行中 File.Copy 落盘瞬间，文件监视器会先为新文件生成随机 GUID 的 .meta，
+            // 真实 .meta 随后到达时已造成 GUID 错位（场景预制体实例/脚本引用全断）。全部文件（含 .meta）落盘后一次性导入。
+            AssetDatabase.DisallowAutoRefresh();
+            try
             {
-                var rel = file.Substring(srcRoot.Length + 1);
-                var dest = Path.Combine(projectRoot, "Assets", rel);
-                if (File.Exists(dest))
+                foreach (var file in Directory.GetFiles(srcRoot, "*", SearchOption.AllDirectories))
                 {
-                    // 已有文件不覆盖内容：仅刷新头标记版本（标记刷新；无头标记的用户文件不受影响）
-                    if (tplInfo != null
-                        && RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion))
+                    var rel = file.Substring(srcRoot.Length + 1);
+                    var dest = Path.Combine(projectRoot, "Assets", rel);
+                    if (File.Exists(dest))
                     {
-                        refreshed++;
-                        AssetDatabase.ImportAsset("Assets/" + rel.Replace('\\', '/'));
+                        // 已有文件不覆盖内容：仅刷新头标记版本（标记刷新；无头标记的用户文件不受影响）
+                        if (tplInfo != null
+                            && RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion))
+                        {
+                            refreshed++;
+                        }
+                        continue;
                     }
-                    continue;
+
+                    var dir = Path.GetDirectoryName(dest);
+                    if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+
+                    File.Copy(file, dest, false);
+                    if (tplInfo != null)
+                        RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion);
+                    deployed++;
                 }
-
-                var dir = Path.GetDirectoryName(dest);
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
-
-                File.Copy(file, dest, false);
-                if (tplInfo != null)
-                    RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion);
-                var assetPath = "Assets/" + rel.Replace('\\', '/');
-                AssetDatabase.ImportAsset(assetPath);
-                deployed++;
+            }
+            finally
+            {
+                AssetDatabase.AllowAutoRefresh();
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             }
 
             EmberDebug.LogInit(TAG,
