@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7651362c0f4fbd441a2e4b506eebde7a, type: 3}
+  m_Name: EmberSceneMapping
+  m_EditorClassIdentifier: Ember.Core.Editor::Ember.Core.Editor.EmberSceneMapping
+  frameworkScene: {fileID: 102900000, guid: 30fc7ce87c922d343a7920d067a6930e, type: 3}
+  entries:
+  - stateName: GameplayState
+    sceneField:
+      _sceneAsset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  - stateName: MainState
+    sceneField:
+      _sceneAsset: {fileID: 102900000, guid: 52c77c0328797324cad897b4a2cf3c7d, type: 3}
+  - stateName: SettingsState
+    sceneField:
+      _sceneAsset: {fileID: 102900000, guid: cd975f68b13a20749a05e30ee953aa6e, type: 3}

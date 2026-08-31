@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.2] - 2026-08-31
+
+- **UPM Manager 面板增强**：检查更新成功后显示「远程最新：vX.Y.Z」总览行（含与当前版本对比）；未检测到包时的帮助文本 tag 示例更新为 v0.9.2
+
 ## [0.9.1] - 2026-08-31
 
 - **修复（高）：部署/加载模板时 .meta GUID 错位**——Unity 运行中 File.Copy 落盘瞬间文件监视器抢先生成随机 GUID 的 .meta，消费端全新部署后场景预制体实例/脚本引用全部断链（Missing Prefab Asset）；DeployTemplate 与 LoadTemplate 改为拷贝期间 `DisallowAutoRefresh` + 落盘后一次性同步导入，GUID 原样保留

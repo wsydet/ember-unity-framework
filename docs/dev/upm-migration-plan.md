@@ -39,11 +39,10 @@
 
 ### 待办（下一会话继续）
 
-1. 用户按 [v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md) 在 dev 项目完成功能测试（UI 生成 / 模板编辑器 / 初始化窗口 / 标记体系 / 字体 / 演示链路）
-2. 测试通过：提交 + git tag v0.9.0（2026-08-28 定稿：框架 0.9.0 + 基础模板 0.3.0）+ git push origin main --tags
-3. Unity Farm 冒烟：com.ember 改 #v0.9.0 → 删 packages-lock.json → 重启 → Ember/Setup/初始化项目（窗口）→ 一键部署 → Play 验证完整演示链路（字体走包内引用）
-4. 全部通过后：framework-progress.md 的 P0 行标记完成；最终文档终检；P5（CI/registry）另起规划
-5. 第三方包托管（2026-08-28 定稿，git 由用户执行）：UniRx dev 已改 OpenUPM registry（manifest "7.1.0"）；rainbow-folders-v2.4.5 / rainbow-hierarchy-v2.6.5 / inputdevicedetector-v1.0.0 推入 ember-thirdparty-upm 仓并打 tag
+1. Unity Farm 冒烟收尾（v0.9.1）：Farm manifest 已 #v0.9.1（tag 已重指）→ 删 packages-lock.json → 删除旧部署目录（Assets/Game、Assets/Ember、Assets/Settings、Assets/Resources）→ 重启 → 面板确认当前 v0.9.1 → 初始化窗口一键部署 → MainScene 验证预制体实例（meta GUID 竞态修复生效）→ Play 完整演示链路
+2. 全部通过后：framework-progress.md 的 P0 行标记完成；最终文档终检；P5（CI/registry）另起规划
+3. 第三方包托管（2026-08-28 定稿，git 由用户执行）：UniRx dev 已改 OpenUPM registry（manifest "7.1.0"）；rainbow-folders-v2.4.5 / rainbow-hierarchy-v2.6.5 / inputdevicedetector-v1.0.0 推入 ember-thirdparty-upm 仓并打 tag
+4. v0.9.2 预备：UI 预制体管理器等新特性按版本语义积累；发布时严格执行「发布纪律」（见关键经验：先 bump package.json 再打 tag）
 
 ### 关键经验（新会话必读）
 
@@ -52,6 +51,7 @@
 - **消费端清单**（核心 3 行）：com.ember（GitHub #tag）+ com.sirenix.odin-inspector + com.demigiant.dotween（私有仓库，需 git 凭据）；UniRx 走 OpenUPM scope com.neuecc（2026-08-28 起 dev 也走 registry，与消费端同源）；可选编辑器工具（ConsolePro/rainbow-folders/rainbow-hierarchy/inputdevicedetector）同私有仓
 - **版本语义**：major 开发期恒 0；minor=框架变化（强制）；patch=小修（可选）
 - **私有仓库** github.com/wsydet/ember-thirdparty-upm：Odin(odin-v4.0.2)/DOTween(dotween-v1.2.815)/ConsolePro(consolepro-v3.9.81)/RainbowFolders(rainbow-folders-v2.4.5)/RainbowHierarchy(rainbow-hierarchy-v2.6.5)/InputDeviceDetector(inputdevicedetector-v1.0.0，后三者 tag 待推送)
+- **⚠️ 发布纪律（v0.9.1 事故教训，2026-08-31）**：打 tag 前**必须先把 `Packages/com.ember/package.json` 的 version bump 到目标版本并随 tag 提交**——tag 名与包版本必须一致。v0.9.1 曾漏 bump：Farm 拉到的 v0.9.1 tag 内包版本仍为 0.9.0，面板误报「可升级到 0.9.1」且一键升级报「URL 未找到 tag」。发布序列固定为：① bump package.json → ② 更新 CHANGELOG → ③ 提交 → ④ 打 tag → ⑤ push --tags；若 tag 刚发且无人消费，可 `git tag -f` + 删除远端旧 tag 重推修正
 - **发布习惯**：git push origin main --tags（tag 不会随 main 自动推）
 - **沙箱限制**：本仓库用 git-lfs，AI 沙箱无法 git add/commit（管道受限）；git 操作由用户执行
 - **LFS × UPM**：包内资产不走 LFS（UPM git 安装对 LFS 支持不可靠）；`.gitattributes` 已对 `Packages/com.ember/SharedAssets/**` 豁免，Assets 的 `*.png/*.ttf` LFS 规则不适用于包

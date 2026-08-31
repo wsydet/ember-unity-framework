@@ -53,6 +53,7 @@ namespace Ember.UPMManager.Editor
         private bool _checkFailed;
         private Version _currentVersion;
         private readonly List<Version> _newerTags = new();
+        private Version _latestRemote;
 
         #endregion
 
@@ -118,7 +119,7 @@ namespace Ember.UPMManager.Editor
             var currentVersionText = GetPackageVersion(PackageName);
             if (string.IsNullOrEmpty(currentVersionText))
             {
-                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.8.0", MessageType.Error);
+                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.9.2", MessageType.Error);
                 return;
             }
 
@@ -141,6 +142,15 @@ namespace Ember.UPMManager.Editor
                     EditorGUILayout.HelpBox(_checkMessage, MessageType.Warning);
                 else
                     EditorGUILayout.LabelField($"    {_checkMessage}", EditorStyles.miniLabel);
+            }
+
+            // 远程最新版本总览（检查成功后显示，含当前对比）
+            if (!_checking && !_checkFailed && _latestRemote != null)
+            {
+                var latestText = _currentVersion != null && _latestRemote > _currentVersion
+                    ? $"远程最新：v{_latestRemote}（当前 v{_currentVersion}，可升级）"
+                    : $"远程最新：v{_latestRemote}（与当前一致）";
+                EditorGUILayout.LabelField($"    {latestText}", EditorStyles.miniLabel);
             }
 
             // 强制更新：major/minor 比当前高（框架已变化，强烈建议）
@@ -197,6 +207,7 @@ namespace Ember.UPMManager.Editor
             try
             {
                 var tags = ListRemoteTags();
+                _latestRemote = tags.Count > 0 ? tags.Max() : null;
                 _newerTags.AddRange(tags.Where(v => v > current).OrderByDescending(v => v));
                 if (_newerTags.Count == 0)
                 {
