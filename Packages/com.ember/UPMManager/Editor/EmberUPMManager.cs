@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -282,7 +282,16 @@ namespace Ember.UPMManager.Editor
                 var currentUrl = urlMatch.Groups[1].Value;
                 var newUrl = Regex.Replace(currentUrl, "#v[\\d.]+$", "#v" + target);
                 if (newUrl == currentUrl)
+                {
+                    if (Regex.IsMatch(currentUrl, "#v[\\d.]+$"))
+                    {
+                        // 已是目标 tag：无需替换（此前误报「URL 未找到 tag」）
+                        EditorUtility.DisplayDialog("已是最新",
+                            $"manifest 的 com.ember tag 已经是 v{target}，无需替换。", "确定");
+                        return;
+                    }
                     throw new InvalidOperationException("URL 中未找到 #vX.Y.Z tag，无法替换：" + currentUrl);
+                }
 
                 // 2. Client.Add 同 URL 新 tag = 重新安装新版本（返回请求句柄可用于轮询）
                 var request = UnityEditor.PackageManager.Client.Add(newUrl);
