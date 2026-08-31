@@ -7,13 +7,18 @@ namespace Ember.UI
     /// <summary>
     /// 页面定义 —— 描述一个 UI 页面的完整元数据。
     ///
-    /// 静态注册表示例：
+    /// 静态注册表示例（框架页面与用户页面分文件、partial 拼接）：
     /// <code>
-    /// public static class GamePages
+    /// // GamePages.cs —— 框架预写页面（全文件框架所有，升级可刷新）
+    /// public static partial class GamePages
     /// {
     ///     public static readonly EUIPageDef MainMenu  = new("ui/main_menu", UILayer.Normal,   PageType.MainPage);
+    /// }
+    ///
+    /// // GamePages.User.cs —— 用户页面注册区（用户所有，框架永不覆盖）
+    /// public static partial class GamePages
+    /// {
     ///     public static readonly EUIPageDef Settings  = new("ui/settings",  UILayer.Popup,    PageType.Popup);
-    ///     public static readonly EUIPageDef Loading   = new("ui/loading",   UILayer.TopMost,  PageType.TopMost);
     ///     public static readonly EUIPageDef HeroTab   = new("ui/hero_tab",  UILayer.Normal,   PageType.SubPage);
     ///     public static readonly EUIPageDef GM        = new("ui/gm",        UILayer.TopMost,  PageType.FreePage, freePageSortingOrder: 30000);
     /// }

@@ -65,6 +65,12 @@ namespace Ember.UI
         public virtual bool IsTransitionReady => true;
 
         /// <summary>
+        /// 跳过假进度（快速转场用）。框架/业务在显示 Loading 后置 true：
+        /// Loading 逻辑应据此跳过假进度与进度显示，<see cref="IsTransitionReady"/> 直接以真实加载进度为准。
+        /// </summary>
+        public bool SkipFakeProgress { get; set; }
+
+        /// <summary>
         /// 注册可销毁对象（IDisposable），在 <see cref="OnDispose"/> 时自动清理。
         /// 适用于 EmberEventBus.Subscribe 返回值、UniRx 订阅等。
         /// 对标 Burner GameUIBase.AddEvent + RemoveAllEvents。
@@ -118,6 +124,13 @@ namespace Ember.UI
         // ═══════════════════════════════════════════════════════════
 
         /// <summary>
+        /// 开始加载 —— 在整个生命周期中<b>最早调用且仅调用一次</b>（对标 Burner OnBeginLoad）。
+        /// </summary>
+        /// <para><b>触发时机：</b><see cref="EUIPage.CreateLogic"/> 中，Logic 实例刚创建、<see cref="OnBind"/> 之前。</para>
+        /// <para><b>在这里做：</b>加载开始前的轻量准备（如记录时间、设置加载态）。</para>
+        public virtual void OnBeginLoad() { }
+
+        /// <summary>
         /// 绑定 UI 控件引用 —— 在整个生命周期中<b>最早调用且仅调用一次</b>。
         /// </summary>
         /// <para><b>触发时机：</b><see cref="EUIPage.CreateLogic"/> 中，ControlMap 填充完毕后立即调用。</para>
@@ -126,9 +139,33 @@ namespace Ember.UI
         public virtual void OnBind() { }
 
         /// <summary>
+        /// 预加载 —— <b>预加载时调用，先于 OnInit</b>（对标 Burner OnPreload）。
+        /// </summary>
+        /// <para><b>触发时机：</b><see cref="EUIPage.Preload"/>（EUIManager.PreloadPage）时。
+        /// OnInit/OnOpen 不会在预加载时执行，而是延后到页面真正打开时。</para>
+        /// <para><b>在这里做：</b>预加载阶段的准备工作（预热数据、提前订阅等）。</para>
+        /// <param name="param">预加载时传入的参数</param>
+        /// <param name="isOpen">是否在打开请求中触发（Ember 当前 PreloadPage 为纯预加载，恒为 false）</param>
+        public virtual void OnPreload(object param, bool isOpen) { }
+
+        /// <summary>
+        /// 重置为默认状态 —— <b>打开（初始化之前）与关闭（OnClose 之后）各调用一次</b>。
+        /// </summary>
+        /// <para><b>触发时机：</b>
+        /// <list type="number">
+        ///   <item><b>打开时</b>：<see cref="EUIPage.Init"/> 中、<see cref="OnInit"/> 之前——保证初始化从干净默认状态开始（绝不依赖上一次运行残留）；</item>
+        ///   <item><b>关闭时</b>：<see cref="EUIPage.Cleanup"/> 中、<see cref="OnClose"/> 之后——清理显示状态，为下次复用/干净关闭做准备。</item>
+        /// </list>
+        /// </para>
+        /// <para><b>约定：</b>所有由面板参数驱动的显示开关（进度条、功能开关等）都遵循
+        /// 「先恢复默认（OnResetDefault），再按参数打开（OnInit/OnShow）」两步。</para>
+        /// <para><b>在这里做：</b>关闭所有按参数显示的 UI 元素、复位内部状态字段到默认值。</para>
+        public virtual void OnResetDefault() { }
+
+        /// <summary>
         /// 初始化业务数据 —— 在 <b>OnBind 之后、OnOpen 之前</b>调用，整个生命周期只调用一次。
         /// </summary>
-        /// <para><b>触发时机：</b><see cref="EUIPage.Init"/> 中，在 OnBind 之后、OnOpen 之前。
+        /// <para><b>触发时机：</b><see cref="EUIPage.Init"/> 中，在 <see cref="OnResetDefault"/> 之后、OnOpen 之前。
         /// 此时 ControlMap 已就绪、控件引用可用，页面尚未可见（α=0）。</para>
         /// <para><b>在这里做：</b>注册按钮事件（onClick.AddListener）、设置初始默认值。</para>
         /// <para><b>不要在这里做：</b>播放动画（那是 <see cref="EUIPage.OnShow()"/> 的事）、
@@ -145,6 +182,14 @@ namespace Ember.UI
         /// 播放动画（那是 <see cref="EUIPage.OnShow()"/> 的事）。</para>
         /// <param name="param">打开时传入的参数（来自 EUIManager.ShowMainPage/ShowPopup 的 args）</param>
         public virtual void OnOpen(object param) { }
+
+        /// <summary>
+        /// 已显示页面再次 Show 的数据刷新 —— 页面处于 Opened/Paused/ViewHidden 时再次 Show 触发（对标 Burner OnReopen）。
+        /// </summary>
+        /// <para><b>触发时机：</b><see cref="EUIPage.OnReopen"/> 的可见分支：不重放 OnOpen/OnShow，仅刷新数据。</para>
+        /// <para><b>在这里做：</b>根据新参数刷新页面内容。</para>
+        /// <param name="param">再次 Show 时传入的参数</param>
+        public virtual void OnReopen(object param) { }
 
         /// <summary>
         /// 页面即将可见（业务逻辑） —— 在 <b>PlayShow 阶段、打开动画之前</b>调用。
@@ -270,6 +315,20 @@ namespace Ember.UI
 
         #region 广播方法（由 EUIPage 调用，内部先调 virtual hook 再递归子 Logic）
 
+        internal void BroadcastPreload(object args, bool isOpen)
+        {
+            OnPreload(args, isOpen);
+            foreach (var child in _childLogics)
+                child.BroadcastPreload(args, isOpen);
+        }
+
+        internal void BroadcastResetDefault()
+        {
+            OnResetDefault();
+            foreach (var child in _childLogics)
+                child.BroadcastResetDefault();
+        }
+
         internal void BroadcastInit()
         {
             OnInit();
@@ -282,6 +341,13 @@ namespace Ember.UI
             OnOpen(args);
             foreach (var child in _childLogics)
                 child.BroadcastOpen(args);
+        }
+
+        internal void BroadcastReopen(object args)
+        {
+            OnReopen(args);
+            foreach (var child in _childLogics)
+                child.BroadcastReopen(args);
         }
 
         internal void BroadcastShow()

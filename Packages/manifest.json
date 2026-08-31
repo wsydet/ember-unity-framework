@@ -17,7 +17,7 @@
     "com.ember": "file:com.ember",
     "com.flyingworm.consolepro": "file:com.flyingworm.consolepro",
     "com.github-glitchenzo.nugetforunity": "4.5.0",
-    "com.neuecc.unirx": "file:com.neuecc.unirx",
+    "com.neuecc.unirx": "7.1.0",
     "com.ryanindiedev.inputdevicedetector": "file:com.ryanindiedev.inputdevicedetector",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
     "com.unity.ai.navigation": "2.0.13",

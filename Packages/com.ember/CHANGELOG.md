@@ -1,12 +1,36 @@
 # Changelog
 
+## [0.9.0] - 2026-08-28
+
+- **编辑器 SO 布局统一**：5 个编辑器 SO 迁移至 `Assets/Ember/Editor/SOs/`（为未来 Ember/Runtime 预留）；孤儿 EmberUIBindingSettings 删除；defaultBindingTemplatePath 指向 SOs 文件夹；代码路径常量/模板镜像同步
+- **EUIBinding 代码生成改造**：双路径合并为单路径（统一生成到业务层）；框架/用户模式差异改为生成文件块标记——框架模式 .cs 带 `[EmberManaged:begin/end Lifecycle]` 单块 + 块外 6 个 `XxxUser` 用户钩子；页面注册条目框架→GamePages.cs、用户→GamePages.User.cs（跨文件防重、幂等就地更新）；绑定条目 IsFramework 标记（清除/重收集受保护、列表 🔒 只读）；包内预制体生成拦截；FreePage 生成修复（TopMost + sortingOrder 30000）；框架模板缺失硬报错
+- **框架 UI 迁出包至业务层**：EUIBackgroundPage/EUILoadingPage/EUIMainPage/EUIGamePlayPage/EUISettingPage/GMPage 重命名（预制体尾缀 Panel，文件夹 Framework/MainScene/GamePlayScene/SettingScene），全部 Lifecycle 块格式 + 头标记；EUILoadingPageSettings SerializeReference 修复
+- **UI 生命周期补充**：OnBeginLoad/OnPreload(param,isOpen)/OnReopen/OnResetDefault；EUIObserver.OnPageLoadStarted；HidePageViewOnly/ShowPageViewOnly + PageState.ViewHidden；预加载不再提前跑 Init；EUIPage 构造 alpha 归零防首帧闪现
+- **Loading 双模式**：SkipFakeProgress + UseFakeProgress 判定（快速转场/未勾选进度显示/无配置 → 真实加载完成即就绪）；进度显示遵循 OnResetDefault→OnShow 约定
+- **状态机连接线模型**：GetEdges() 统一边数据包 + Edges 实例列表；TransitionTo 统一入口（切换/叠加按场景路径自动判定）；框架 5 条边 ReadOnly（仅 QuickSceneLoad 可改）；Main→Gameplay 假进度、Gameplay→Main 快速
+- **模板体系**：base 模板 v0.3.0（结构变更 minor bump），frameworkVersion 对齐 0.9.0
+- **依赖管理**：UniRx dev 改走 OpenUPM registry（与消费端同源）；rainbow-folders/rainbow-hierarchy/inputdevicedetector 托管至 ember-thirdparty-upm 私有仓
+
+## [0.8.0] - 2026-08-26
+
+首个包含「演示形态」模板体系的发布版。内部里程碑 0.5.0/0.6.0/0.7.0 从未发布，变更合并于此：
+
+- **模板体系**：框架交付的就是演示形态——包内 `Templates~/base/Assets` 全量镜像 dev 演示业务层（状态类全继承、演示 UI 四页、演示模块、4 完整场景、配置资产，`.meta` 随行 GUID 全链有效）；Setup 从代码生成改为整树一键部署；多模板支持（自动扫描 `Templates~/*/template.json`，未来 2D 平台等模板同机制接入）
+- **初始化窗口**：`Ember/Setup/初始化项目` 弹出 EmberSetupWindow（框架/模板状态总览 + 模板列表 + 一键部署/补齐缺失/重新部署）；EmberProjectSetup 重构为公共引擎 API（Initialize/GetTemplates/IsTemplateDeployed）
+- **模板编辑器**：`Ember/Setup/模板编辑器`（保存/加载/新建模板，新建可选 fromBase 复制基础模板）；目标模板下拉选择（不再手输 id），保存/删除/元数据编辑作用于选中模板；**模板版本号独立于框架版本**（新建从 0.1.0 起，保存内容不覆盖版本，编辑器内主/次/补丁一键 bump，版本可编辑回退）；面板显示「当前正在编辑的模板」状态与目标一致性警告；引擎新增 CreateTemplate/SaveTemplate/LoadTemplate/IsEmbeddedPackage/StripSceneObjects/BumpTemplateVersion/SetTemplateVersion/UpdateTemplateMetadata/DeleteTemplate
+- **共享字体入包**：演示字体（钉钉进步体 / 阿里妈妈东方大楷，许可证随包）从模板移入包内 `SharedAssets/Fonts/`，多模板共享零重复；场景/预制体按 GUID 引用不受影响
+- **模板升级协同 P-A**：template.json 增 frameworkVersion/channel；消费端兼容闸门（major.minor 一致才显示、preview 徽标、deprecated 隐藏）；部署记录 EmberDeployedTemplates.json + 部署时重写头标记版本；升级提示矩阵（patch/minor/major 分级提示，只提示不合并）；**两级标记铺入模板**（49 个 .cs 全文件头标记 + 5 个混合文件钩子块标记）；**GamePages 框架/用户拆分**（GamePages.cs + GamePages.User.cs partial 拼接，codegen 写用户文件）；设计文档 docs/dev/template-upgrade-system.md
+- 同步工具：`scripts/sync-scaffold.ps1`（dev 改动一键同步模板）+ `scripts/strip-template-scene-objects.ps1`（剥离 dev 测试对象）
+
+## [0.4.1] - 2026-08-26
+
+- 修复升级面板 CS0815：`Client.Resolve()` 在该 Unity 版本返回 void，改用「提取 manifest URL → 替换 #tag → `Client.Add` 重装」
+
 ## [0.4.0] - 2026-08-26
 
-- EmberUPMManager 一键升级（检查更新 + 改 manifest tag + Client.Resolve），并按版本语义标注强制/可选更新
+- EmberUPMManager 一键升级（检查更新 + 改 manifest tag + 重装），并按版本语义标注强制/可选更新
 - 版本语义定稿：开发期 major=0；第二位=框架变化（强制更新）；第三位=小修补（可选）
 - 累计 0.3.x 变更：UniTask 内置、Setup 向导 4 场景、场景映射 SO 修复
-
-Ember 框架单一包，lockstep 版本。
 
 ## [0.3.0] - 2026-08-26
 
@@ -18,3 +42,5 @@ Ember 框架单一包，lockstep 版本。
 ## [0.2.0] - 2026-08-24
 
 - 框架转 UPM 包首个发布版（11 包结构，已被 0.3.0 取代）
+
+Ember 框架单一包，lockstep 版本。

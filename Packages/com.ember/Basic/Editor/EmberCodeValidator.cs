@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 #if UNITY_EDITOR
@@ -23,7 +23,7 @@ namespace Ember.Basic.Editor
     /// 白名单文件：
     /// - EmberDebug.cs（日志类自身）
     /// - EmberCodeValidator.cs（本文件）
-    /// 排除目录：见 ExcludedFolders.json（默认排除 Plugins/、ThirdParty/）
+    /// 排除目录：见 ExcludedFolders.json（默认排除 Plugins/、ThirdParty/ 及包内 vendor 的 UniTask/）
     /// </summary>
     [InitializeOnLoad]
     public class EmberCodeValidator

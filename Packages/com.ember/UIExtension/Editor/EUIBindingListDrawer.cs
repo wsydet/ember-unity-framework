@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System.Collections.Generic;
@@ -179,16 +179,21 @@ namespace Ember.UIExtension.Editor
             out bool modified)
         {
             modified = false;
+            bool isFramework = entry.IsFramework;
+            bool locked = isInherited || isFramework;
 
             // ── 第一行：变量名 + 节点 ──
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUI.BeginDisabledGroup(isInherited);
+                EditorGUI.BeginDisabledGroup(locked);
+
+                if (isFramework)
+                    EditorGUILayout.LabelField("🔒框架", EditorStyles.miniLabel, GUILayout.Width(44));
 
                 EditorGUILayout.LabelField("变量名", GUILayout.Width(42));
 
                 // 命名校验：节点名/变量名与控件类型前缀不匹配时高亮提醒（可点 ✎ 一键重命名）
-                bool nameMismatch = !isInherited && entry.GameObject
+                bool nameMismatch = !locked && entry.GameObject
                     && IsBindingNameMismatched(entry.GameObject, entry.Type, entry.Name);
                 var nameTooltip = nameMismatch
                     ? "节点名与控件类型前缀不匹配，点击 ✎ 一键重命名（如 m_Btn_ 前缀）"
@@ -228,7 +233,11 @@ namespace Ember.UIExtension.Editor
 
                 EditorGUI.EndDisabledGroup();
 
-                if (!isInherited)
+                if (isFramework)
+                {
+                    EditorGUILayout.LabelField("受保护", EditorStyles.miniLabel, GUILayout.Width(44));
+                }
+                else if (!isInherited)
                 {
                     if (GUILayout.Button("↻", GUILayout.Width(22), GUILayout.Height(18)))
                     {
@@ -245,7 +254,7 @@ namespace Ember.UIExtension.Editor
             // ── 第二行：控件类型 ──
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUI.BeginDisabledGroup(isInherited);
+                EditorGUI.BeginDisabledGroup(locked);
                 EditorGUILayout.LabelField("控件类型", GUILayout.Width(55));
                 var typeNames = EUIBindingEditorUtility.GetComponentTypeNames();
                 int typeIdx = (int)entry.Type;
@@ -259,8 +268,8 @@ namespace Ember.UIExtension.Editor
                 }
                 EditorGUI.EndDisabledGroup();
 
-                // 重命名按钮：根据控件类型自动修正节点名和变量名
-                if (!isInherited && entry.GameObject)
+                // 重命名按钮：根据控件类型自动修正节点名和变量名（框架/继承条目锁定，不显示）
+                if (!locked && entry.GameObject)
                 {
                     if (GUILayout.Button("✎", GUILayout.Width(22), GUILayout.Height(18)))
                     {

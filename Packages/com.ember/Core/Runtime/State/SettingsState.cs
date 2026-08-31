@@ -11,11 +11,11 @@ namespace Ember.Core
     ///
     /// <b>使用方式：</b>
     /// <code>
-    /// // 主界面打开设置
-    /// Fsm.Push&lt;SettingsState&gt;(args: SettingsContext.Main);
+    /// // 主界面打开设置（目标无场景，TransitionTo 自动判定为叠加）
+    /// Fsm.TransitionTo&lt;SettingsState&gt;(args: SettingsContext.Main);
     ///
     /// // 战斗中打开设置
-    /// Fsm.Push&lt;SettingsState&gt;(args: SettingsContext.Gameplay);
+    /// Fsm.TransitionTo&lt;SettingsState&gt;(args: SettingsContext.Gameplay);
     /// </code>
     ///
     /// <b>子类化指南：</b>

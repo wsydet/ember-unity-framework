@@ -2,6 +2,7 @@
   "excludedFolders": [
     "Assets/Plugins/",
     "Assets/ThirdParty/",
-    "Assets/TextMesh Pro/"
+    "Assets/TextMesh Pro/",
+    "Packages/com.ember/UniTask/"
   ]
 }

@@ -3,26 +3,34 @@
 namespace Ember.Core
 {
     /// <summary>
-    /// 流转描述符 —— 声明一个状态可以流转到哪个目标状态，以及进入条件。
+    /// 流转描述符 —— 状态间连接线（可视化数据包）。
+    ///
+    /// 一条边包含：目标状态、加载模式（<see cref="QuickSceneLoad"/>）、标签、条件与准入 Guard。
+    /// 起点状态 = 声明此边的状态（From 由声明者隐含，遍历时可知）。
+    ///
+    /// <b>「切换 / 叠加」不由边声明，由状态机运行时判定：</b>
+    /// 目标状态无场景（<c>ScenePath</c> 为空）或与当前同场景 → 叠加（Push 语义）；
+    /// 场景不同 → 切换（替换 + 场景加载）。可视化编辑器按两端场景推断并在连线上标注。
     ///
     /// 双重用途：
-    /// <b>1. 可视化编辑器</b> —— 扫描 <see cref="EmberGameState.GetTransitions"/> 构建连线图。
-    ///     <c>TargetState</c> 是箭头指向的节点，<c>Label</c> 是箭头上的文字，
-    ///     <c>Condition</c> 不为空时边显示为不同颜色（受限边）。
+    /// <b>1. 可视化编辑器</b> —— 遍历各状态的 <c>GetEdges()</c> 生成完整连线图：
+    ///     <c>TargetState</c> 是箭头指向的节点，<c>QuickSceneLoad</c> 在线上标注加载模式（快速/假进度），
+    ///     <c>Label</c> 是箭头上的文字，<c>Condition</c> 不为空时边显示为不同颜色（受限边），
+    ///     <c>ReadOnly</c> 边显示锁图标（框架内置边不可编辑结构）。
     ///
-    /// <b>2. 运行时校验</b> —— <see cref="EmberStateMachine.TransitionTo"/> 在切换前
-    ///     查找对应描述符，如果有 <c>Guard</c> 且返回 false，则拒绝切换。
+    /// <b>2. 运行时校验与流转</b> —— <see cref="EmberStateMachine.TransitionTo"/> 查找对应边，
+    ///     如果有 <c>Guard</c> 且返回 false，则拒绝切换；随后按场景路径判定切换/叠加。
     ///
     /// <b>用法：</b>
     /// <code>
-    /// public override TransitionDescriptor[] GetTransitions() => new[]
+    /// public override TransitionDescriptor[] GetEdges() => new[]
     /// {
-    ///     new TransitionDescriptor(typeof(MainState), "返回大厅"),
-    ///     new TransitionDescriptor(typeof(RaidState), "突袭副本")
+    ///     new TransitionDescriptor(typeof(MainState), "返回大厅")
     ///     {
-    ///         Condition = "需要登录",
-    ///         Guard = () => IsLoggedIn,
+    ///         QuickSceneLoad = true,   // 快速加载（切回 Main 时场景不同才生效）
+    ///         ReadOnly = true,         // 框架内置边：仅可切换 QuickSceneLoad
     ///     },
+    ///     new TransitionDescriptor(typeof(SettingsState), "设置") { ReadOnly = true }, // 无场景 → 自动叠加
     /// };
     /// </code>
     /// </summary>
@@ -46,6 +54,22 @@ namespace Ember.Core
         /// 返回 false 时 <see cref="EmberStateMachine.TransitionTo"/> 会拒绝切换并打印 Warning。
         /// </summary>
         public Func<bool> Guard { get; init; }
+
+        /// <summary>
+        /// 该连接线的场景转场模式：true = 快速加载（Loading 跳过假进度，真实加载完成即就绪）。
+        /// 由 <see cref="EmberStateMachine.TransitionTo"/> 在走此边且发生场景切换时读取生效；
+        /// 可视化编辑器同步读取此字段，在连接线上标注模式（如「快速」/「进度」）。
+        /// 叠加路径（目标无场景/同场景）不加载场景，此字段不生效。
+        /// 可修改：即使用户不可编辑边本身（见 <see cref="ReadOnly"/>），也可以切换此开关。
+        /// </summary>
+        public bool QuickSceneLoad { get; set; }
+
+        /// <summary>
+        /// 只读标记：true = 框架内置边，用户不可增删此边、不可改 TargetState/Label/Condition，
+        /// 仅可切换 <see cref="QuickSceneLoad"/>（快速/假进度）。
+        /// 可视化编辑器对只读边显示锁图标并禁用结构编辑；运行时状态机不受影响。
+        /// </summary>
+        public bool ReadOnly { get; init; }
 
         public TransitionDescriptor() { }
 

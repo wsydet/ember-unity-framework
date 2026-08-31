@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System.Collections.Generic;
@@ -156,7 +156,7 @@ namespace Ember.UIExtension.Editor
                 ClearAll(binding);
                 AutoCollect(binding);
             }
-            if (GUILayout.Button("清除所有绑定", GUILayout.Width(100)))
+            if (GUILayout.Button("清除用户绑定", GUILayout.Width(100)))
             {
                 ClearAll(binding);
             }
@@ -179,12 +179,18 @@ namespace Ember.UIExtension.Editor
             so.Dispose();
         }
 
-        /// <summary>清除所有绑定</summary>
+        /// <summary>清除全部用户绑定（框架子组件条目 IsFramework=true 保留）。</summary>
         protected void ClearAll(EUIBinding binding)
         {
             SerializedObject so = new SerializedObject(binding);
             SerializedProperty sp = so.FindProperty("bindings");
-            sp.ClearArray();
+            for (int i = sp.arraySize - 1; i >= 0; i--)
+            {
+                var isFramework = sp.GetArrayElementAtIndex(i).FindPropertyRelative("IsFramework");
+                if (isFramework != null && isFramework.boolValue)
+                    continue; // 框架子组件保护：跳过
+                sp.DeleteArrayElementAtIndex(i);
+            }
             if (so.hasModifiedProperties)
                 so.ApplyModifiedProperties();
             so.Dispose();

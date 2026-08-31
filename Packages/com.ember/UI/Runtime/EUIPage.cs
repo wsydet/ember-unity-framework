@@ -33,6 +33,7 @@ namespace Ember.UI
     /// // ── 打开流程 ──
     /// Init(args)                             // 数据阶段：填文字、设图片、注册事件
     ///   → OnInitialize(args)                 //   [子类 override] 框架层自定义初始化
+    ///   → Logic.OnResetDefault()             //   [用户 override] 恢复默认状态（OnInit 之前，不依赖上次残留）
     ///   → Logic.OnInit()                     //   [用户 override] 注册事件、设初始值
     ///   → Logic.OnOpen(args)                 //   [用户 override] 携带打开参数
     ///   → Logic.OnReset()                    //   [用户 override] 重置 UI 到默认状态
@@ -57,6 +58,7 @@ namespace Ember.UI
     ///   → Cleanup()                          // 数据阶段：注销事件、释放引用
     ///       → OnCleanup()                    //   [子类 override] 框架层清理
     ///       → Logic.OnClose()                //   [用户 override] 关闭时持久化（此时 UI 状态还在）
+    ///       → Logic.OnResetDefault()         //   [用户 override] 恢复默认状态（为复用留下干净状态）
     ///       → Logic.OnReset()                //   [用户 override] 重置到默认状态
     ///       → Logic.OnDispose()              //   [用户 override] 注销事件、释放引用
     ///       → Destroy(gameObject)            // 框架销毁 GameObject
@@ -187,6 +189,13 @@ namespace Ember.UI
                 _canvasGroup = _gameObject.AddComponent<CanvasGroup>();
             if (_canvas == null)
                 _canvas = _gameObject.AddComponent<Canvas>();
+
+            // 构造即隐藏：Instantiate 后到 Init 之间可能有渲染帧（分帧操作），
+            // 预制体默认 active + alpha=1 会闪现一帧内容（如 Loading 的进度条）。
+            // 这里立即归零，避免任何页面首帧闪现。
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
         }
 
         /// <summary>
@@ -196,6 +205,9 @@ namespace Ember.UI
         public void CreateLogic(Action<Dictionary<string, Component>, EUILogic> populateControlMap)
         {
             if (string.IsNullOrEmpty(_logicTypeName)) return;
+
+            // 已有 Logic 时跳过（预加载/复用路径可能重复触发 OnPageCreated）
+            if (_logic != null) return;
 
             try
             {
@@ -212,6 +224,7 @@ namespace Ember.UI
                     _logic.Page = this;
                     _logic.ControlMap = new Dictionary<string, Component>();
                     populateControlMap?.Invoke(_logic.ControlMap, _logic);
+                    _logic.OnBeginLoad();
                     _logic.OnBind();
                 }
                 else
@@ -234,9 +247,10 @@ namespace Ember.UI
         /// <inheritdoc />
         public void Init(object args)
         {
-            if (_state != PageState.Unloaded && _state != PageState.Closed)
+            // Loaded = 预加载过的页面：真正打开时补跑完整 Init（OnInit/OnOpen/OnReset 延后到这里）
+            if (_state != PageState.Unloaded && _state != PageState.Closed && _state != PageState.Loaded)
             {
-                EmberDebug.LogWarning(TAG, $"EUIPage.Init: '{Name}' state={_state}, expected Unloaded/Closed.");
+                EmberDebug.LogWarning(TAG, $"EUIPage.Init: '{Name}' state={_state}, expected Unloaded/Closed/Loaded.");
                 return;
             }
 
@@ -258,9 +272,12 @@ namespace Ember.UI
                 EmberDebug.LogError(TAG, $"EUIPage.Init '{Name}' error: {ex}");
             }
 
-            // 通知逻辑层
+            // 通知逻辑层（先恢复默认，再初始化 —— 保证从干净状态开始，不依赖上次残留）
             if (_logic != null)
             {
+                try { _logic.BroadcastResetDefault(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResetDefault '{Name}': {ex}"); }
+
                 try { _logic.BroadcastInit(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnInit '{Name}': {ex}"); }
 
@@ -272,6 +289,40 @@ namespace Ember.UI
             }
 
             _loadTiming.InitMs = (Time.realtimeSinceStartup - _initStartTime) * 1000f;
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public void Preload(object args)
+        {
+            if (_state != PageState.Unloaded)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.Preload: '{Name}' state={_state}, expected Unloaded.");
+                return;
+            }
+
+            Profiler.BeginSample("EUIPage.Preload");
+            _state = PageState.Loaded;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+            _gameObject.SetActive(true);
+
+            try
+            {
+                OnPreloaded(args);
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"EUIPage.Preload '{Name}' error: {ex}");
+            }
+
+            // 预加载钩子：OnInit/OnOpen/OnReset 不在此执行，延后到真正打开的 Init
+            if (_logic != null)
+            {
+                try { _logic.BroadcastPreload(args, false); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnPreload '{Name}': {ex}"); }
+            }
             Profiler.EndSample();
         }
 
@@ -329,6 +380,23 @@ namespace Ember.UI
         /// <inheritdoc />
         public void OnReopen(object args)
         {
+            // 已显示（或视图隐藏）页面再次 Show：纯数据刷新，不重放 Init/Open/Show 动画（对标 Burner 可见分支 OnReopen）
+            if (_state == PageState.Opened || _state == PageState.Paused || _state == PageState.ViewHidden)
+            {
+                if (_state == PageState.ViewHidden)
+                {
+                    _state = PageState.Opened;
+                    _canvasGroup.alpha = 1f;
+                    _canvasGroup.blocksRaycasts = true;
+                    _canvasGroup.interactable = true;
+                }
+
+                OnReopened(args);
+                try { _logic?.BroadcastReopen(args); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReopen '{Name}': {ex}"); }
+                return;
+            }
+
             if (_state != PageState.Closed) return;
             _state = PageState.Loaded;
             _canvasGroup.alpha = 0f;
@@ -339,6 +407,42 @@ namespace Ember.UI
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnOpen '{Name}': {ex}"); }
 
             PlayShow();
+        }
+
+        /// <inheritdoc />
+        public void HideViewOnly()
+        {
+            if (_state != PageState.Opened && _state != PageState.Paused)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.HideViewOnly: '{Name}' state={_state}, expected Opened/Paused.");
+                return;
+            }
+
+            _state = PageState.ViewHidden;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+
+            try { _logic?.BroadcastHide(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
+        }
+
+        /// <inheritdoc />
+        public void RestoreViewOnly()
+        {
+            if (_state != PageState.ViewHidden)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.RestoreViewOnly: '{Name}' state={_state}, expected ViewHidden.");
+                return;
+            }
+
+            _state = PageState.Opened;
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = true;
+            _canvasGroup.interactable = true;
+
+            try { _logic?.BroadcastShow(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
         }
 
         /// <inheritdoc />
@@ -373,11 +477,13 @@ namespace Ember.UI
             try { OnCleanup(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"EUIPage.Cleanup '{Name}' error: {ex}"); }
 
-            // 清理逻辑层
+            // 清理逻辑层（关闭后恢复默认状态，再重置/释放 —— 为下次复用留下干净状态）
             if (_logic != null)
             {
                 try { _logic.BroadcastClose(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnClose '{Name}': {ex}"); }
+                try { _logic.BroadcastResetDefault(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResetDefault '{Name}': {ex}"); }
                 try { _logic.BroadcastReset(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReset '{Name}': {ex}"); }
                 try { _logic.BroadcastDispose(); }
@@ -507,6 +613,15 @@ namespace Ember.UI
         /// <para><b>职责：</b>恢复页面状态。框架随后自动调用 Logic.OnOpen + PlayShow。</para>
         /// <param name="args">重新打开时传入的参数</param>
         protected virtual void OnReopened(object args) { }
+
+        /// <summary>
+        /// 页面被预加载 —— 在 <see cref="IEUIView.Preload"/> 中调用。
+        /// </summary>
+        /// <para><b>触发时机：</b>EUIManager.PreloadPage 时（State=Unloaded → Loaded）。此时 α=0、不可交互。</para>
+        /// <para><b>职责：</b>框架层预加载准备。业务层处理请用 <see cref="EUILogic.OnPreload"/>。
+        /// OnInit/OnOpen 延后到页面真正打开时的 Init 执行。</para>
+        /// <param name="args">预加载时传入的参数</param>
+        protected virtual void OnPreloaded(object args) { }
 
         /// <summary>
         /// 返回键处理 —— 在 <see cref="TryEscapeKeyClose"/> 中、<b>子页面均未处理时</b>最后调用。

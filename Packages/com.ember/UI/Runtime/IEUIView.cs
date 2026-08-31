@@ -68,8 +68,25 @@ namespace Ember.UI
         /// <summary>
         /// 已加载但之前被关闭的页面被重新打开时调用。
         /// 与 Init 互斥 —— 如果页面已加载，调 OnReopen 而非 Init。
+        /// 页面已处于 Opened/Paused/ViewHidden 时再次 Show 也走此方法（纯数据刷新，不重放 Show 动画）。
         /// </summary>
         void OnReopen(object args);
+
+        // ── 预加载 ──
+
+        /// <summary>
+        /// 预加载页面：准备 GameObject 与 Logic，但不执行 Init（OnInit/OnOpen 延后到真正打开时执行）。
+        /// 触发 Logic.OnPreload(param, isOpen) 钩子。预加载后页面处于 Loaded 状态。
+        /// </summary>
+        void Preload(object args);
+
+        // ── 视图级隐藏 ──
+
+        /// <summary>仅隐藏视图（α=0、不可交互；不销毁、不清逻辑），触发 Logic.OnHide。与 RestoreViewOnly 配对。</summary>
+        void HideViewOnly();
+
+        /// <summary>恢复视图可见（α=1、可交互），触发 Logic.OnShow。HideViewOnly 的逆操作。</summary>
+        void RestoreViewOnly();
 
         // ── 输入 ──
 

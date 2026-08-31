@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 #if UNITY_EDITOR
@@ -22,7 +22,7 @@ namespace Ember.Basic.Editor
 
         private ImageSettingData _data;
         private Vector2 _scrollPos;
-        private const string DataPath = "Assets/Editor/EmberImageBatchSettings.asset";
+        private const string DataPath = "Assets/Ember/Editor/SOs/EmberImageBatchSettings.asset";
 
         // ======== 菜单 ========
 

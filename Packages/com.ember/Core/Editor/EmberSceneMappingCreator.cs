@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Ember.Core;
 using UnityEditor;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Ember.Core.Editor
     public class EmberSceneMappingCreator
     {
         private const string TAG = LogTags.CoreEditor;
-        private const string MappingAssetPath = "Assets/Editor/Ember/EmberSceneMapping.asset";
+        private const string MappingAssetPath = "Assets/Ember/Editor/SOs/EmberSceneMapping.asset";
 
         static EmberSceneMappingCreator()
         {

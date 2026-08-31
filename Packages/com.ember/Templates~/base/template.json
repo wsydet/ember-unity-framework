@@ -1,0 +1,9 @@
+{
+    "id": "base",
+    "displayName": "基础模板",
+    "description": "Ember 框架基础演示：完整状态继承 + 演示 UI（GM 页/主菜单/设置/游戏内）+ 演示模块（流送/全局灯光/存档/红点）+ 4 个完整场景。用户只需在状态钩子函数中填写业务代码。",
+    "version": "0.3.0",
+    "frameworkVersion": "0.9.0",
+    "channel": "stable",
+    "order": 1
+}

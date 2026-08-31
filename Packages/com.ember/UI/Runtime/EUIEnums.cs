@@ -69,5 +69,7 @@ namespace Ember.UI
         Hiding,
         /// <summary>已关闭（等待销毁/回池）</summary>
         Closed,
+        /// <summary>视图级隐藏（仅隐藏不销毁，逻辑存活；与 Opened 之间通过 HideViewOnly/RestoreViewOnly 切换）</summary>
+        ViewHidden,
     }
 }

@@ -34,6 +34,7 @@ namespace Ember.UI
         private static readonly Subject<PageLifecycleEvent> _onPagePaused   = new Subject<PageLifecycleEvent>();
         private static readonly Subject<PageLifecycleEvent> _onPageResumed  = new Subject<PageLifecycleEvent>();
         private static readonly Subject<PageLifecycleEvent> _onPageReopened = new Subject<PageLifecycleEvent>();
+        private static readonly Subject<PageLifecycleEvent> _onPageLoadStarted = new Subject<PageLifecycleEvent>();
         private static readonly Subject<Unit>              _onAllClosed     = new Subject<Unit>();
 
         #endregion
@@ -56,6 +57,9 @@ namespace Ember.UI
 
         /// <summary>已加载页面被重新打开（OnReopen）</summary>
         public static IObservable<PageLifecycleEvent> OnPageReopened => _onPageReopened;
+
+        /// <summary>页面开始加载（Prefab 异步加载发起时，先于 OnBeginLoad）</summary>
+        public static IObservable<PageLifecycleEvent> OnPageLoadStarted => _onPageLoadStarted;
 
         /// <summary>所有页面被关闭</summary>
         public static IObservable<Unit>              OnAllClosed     => _onAllClosed;
@@ -89,6 +93,11 @@ namespace Ember.UI
         internal static void NotifyReopened(EUIPageDef pageDef, object args)
         {
             _onPageReopened.OnNext(new PageLifecycleEvent(pageDef, args));
+        }
+
+        internal static void NotifyLoadStarted(EUIPageDef pageDef)
+        {
+            _onPageLoadStarted.OnNext(new PageLifecycleEvent(pageDef, null));
         }
 
         internal static void NotifyAllClosed()

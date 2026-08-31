@@ -1,9 +1,10 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
 
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 
 using UnityEngine;
 
@@ -79,6 +80,10 @@ namespace Ember.UIExtension
 
             [LabelText("类名")]
             public string ClassName;
+
+            /// <summary>框架子组件标记：框架模式生成时自动置位；清除/重收集操作跳过该条目（用户无法清除框架子组件）。</summary>
+            [HideInInspector]
+            public bool IsFramework;
         }
 
         #endregion
@@ -119,15 +124,16 @@ namespace Ember.UIExtension
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/输出设置", ShowLabel = false)]
         [Title("输出设置")]
-        [SerializeField, LabelText("路径模式")]
-        [Tooltip("框架路径或业务路径，决定输出的根目录")]
+        [SerializeField, LabelText("生成模式")]
+        [Tooltip("用户（默认）：生成到业务层，文件无标记，可自由修改。框架：同样生成到业务层，但 .cs 打上 [EmberManaged] 块标记（前块/尾块框架所有，块间用户区）；仅框架开发仓库（embedded）可见。")]
+        [ValueDropdown("GetCodePathModeOptions")]
         private CodePathMode codePathMode;
 
         [PropertyOrder(-79)]
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/输出设置")]
         [ShowInInspector, ReadOnly, LabelText("输出根目录")]
-        [Tooltip("由路径模式决定（在 Project Settings 中配置）")]
+        [Tooltip("统一生成到业务层根目录（在 Project Settings 中配置）")]
         private string CodeRootPath => OnGetCodeRootPath?.Invoke(codePathMode) ?? "（未配置）";
 
         [PropertyOrder(-78)]
@@ -427,6 +433,7 @@ namespace Ember.UIExtension
             className = scriptName;
             pageName = goName;
             isPage = true;
+            codePathMode = CodePathMode.Business; // 默认用户模式（「框架」选项仅 embedded dev 可见）
         }
 
         #endregion
@@ -443,6 +450,36 @@ namespace Ember.UIExtension
         [PropertyOrder(-110)]
         [FoldoutGroup("$GROUP")]
         [InfoBox("当前 UI 不在预制体上，生成代码时会自动创建预制体到 Prefabs 目录下。", InfoMessageType.Warning, "NotOnPrefab")]
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 编辑器：生成模式（框架/用户）
+
+        /// <summary>是否为框架开发仓库（embedded 安装）——消费端隐藏「框架」生成模式。由 Editor 程序集注册。</summary>
+        public static System.Func<bool> OnIsEmbeddedPackage;
+
+        private bool IsEmbeddedPackage => OnIsEmbeddedPackage?.Invoke() ?? false;
+
+        private bool IsFrameworkMode => codePathMode == CodePathMode.Framework;
+
+        private ValueDropdownList<CodePathMode> GetCodePathModeOptions()
+        {
+            var list = new ValueDropdownList<CodePathMode>();
+            if (IsEmbeddedPackage)
+                list.Add("框架（Framework，生成 [EmberManaged] 块标记）", CodePathMode.Framework);
+            list.Add("用户（User，默认）", CodePathMode.Business);
+            return list;
+        }
+
+        [PropertyOrder(-79.5f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/输出设置")]
+        [ShowIf("IsFrameworkMode")]
+        [ShowInInspector, DisplayAsString, HideLabel]
+        private string FrameworkModeHint =>
+            "框架模式：生成的 .cs 为混合文件——每个函数的前块/尾块（[EmberManaged]）框架所有，两块之间为用户自定义区。";
 
         #endregion
 
@@ -785,8 +822,8 @@ namespace Ember.UIExtension
         [BoxGroup("$GROUP/代码生成")]
         [ShowIf("@!noCodeGen")]
         [HorizontalGroup("$GROUP/代码生成/ActionRow")]
-        [Button("清除所有绑定", ButtonSizes.Medium), GUIColor(0.8f, 0.3f, 0.3f)]
-        private void ClearAllBindings() => OnClearAllBindings?.Invoke(this);
+        [Button("清除用户绑定", ButtonSizes.Medium), GUIColor(0.8f, 0.3f, 0.3f)]
+        private void ClearUserBindings() => OnClearAllBindings?.Invoke(this);
 
         // ── 生成代码按钮 ──
 

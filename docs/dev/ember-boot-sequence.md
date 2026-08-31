@@ -197,7 +197,7 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 | `Assets/Game/UI/EUIBootSplash.cs` | `Game.UI` | 黑幕（实现 `IEUIPersistentUI`） |
 | `Assets/Game/UI/EUIMainAnimationStarter.cs` | `Game.UI` | 开屏动画基类 |
 | `Assets/Game/UI/EUIDefaultMainAnimation.cs` | `Game.UI` | 默认开屏动画（立即完成） |
-| `Assets/Game/UI/GamePages.cs` | `Game.UI` | 页面注册表 |
+| `Assets/Game/UI/GamePages.cs` + `GamePages.User.cs` | `Game.UI` | 页面注册表（框架区/用户区，partial 拼接） |
 
 ---
 

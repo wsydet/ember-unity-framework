@@ -402,6 +402,35 @@ namespace Ember.UI
                 action(_backgroundPage);
         }
 
+        /// <summary>
+        /// 按 PrefabPath 查找当前已显示（Opened/Paused/ViewHidden）的页面。
+        /// 用于「已显示页面再次 Show → 数据刷新」（G1）与视图级隐藏/恢复（G4）。
+        /// 覆盖 FreePage / TopMost / Overlay / Popup / MainPage / Background（SubPage 归属父页面，不在此扫描）。
+        /// </summary>
+        public EUIPage FindOpenedPage(EUIPageDef pageDef)
+        {
+            if (pageDef == null || string.IsNullOrEmpty(pageDef.PrefabPath)) return null;
+
+            EUIPage Match(EUIPage p)
+            {
+                if (p == null || p.EUIPageDef == null) return null;
+                if (p.EUIPageDef.PrefabPath != pageDef.PrefabPath) return null;
+                var s = p.State;
+                return s == PageState.Opened || s == PageState.Paused || s == PageState.ViewHidden ? p : null;
+            }
+
+            for (int i = _freePageList.Count - 1; i >= 0; i--) { var r = Match(_freePageList[i]); if (r != null) return r; }
+            for (int i = _topMostList.Count - 1; i >= 0; i--) { var r = Match(_topMostList[i]); if (r != null) return r; }
+            for (int i = _overlayList.Count - 1; i >= 0; i--) { var r = Match(_overlayList[i]); if (r != null) return r; }
+            if (_mainPageStack.Count > 0)
+            {
+                var popups = _mainPageStack[_mainPageStack.Count - 1].Popups;
+                for (int i = popups.Count - 1; i >= 0; i--) { var r = Match(popups[i]); if (r != null) return r; }
+            }
+            for (int i = _mainPageStack.Count - 1; i >= 0; i--) { var r = Match(_mainPageStack[i].Page); if (r != null) return r; }
+            return Match(_backgroundPage);
+        }
+
         /// <summary>关闭所有页面</summary>
         public void CloseAll()
         {

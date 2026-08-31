@@ -42,7 +42,9 @@ namespace Ember.Basic.Editor
         {
             "Assets/Plugins/",
             "Assets/ThirdParty/",
-            "Assets/TextMesh Pro/"
+            "Assets/TextMesh Pro/",
+            // 包内 vendor 的第三方源码（随包分发，上游代码不改动，不参与框架代码规范校验）
+            "Packages/com.ember/UniTask/"
         };
 
         /// <summary>
@@ -159,9 +161,14 @@ namespace Ember.Basic.Editor
             {
                 relative = normalized;
             }
+            else if (normalized.StartsWith("Packages/", StringComparison.OrdinalIgnoreCase))
+            {
+                // UPM 包路径（如包内 vendor 的第三方源码），同样支持目录排除
+                relative = normalized;
+            }
             else
             {
-                // 既不是绝对路径也不是 Assets 相对路径，不做排除
+                // 既不是绝对路径，也不是 Assets/Packages 相对路径，不做排除
                 return false;
             }
 

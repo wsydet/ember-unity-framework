@@ -31,7 +31,7 @@ namespace Ember.Core
     /// <b>注意：</b>
     /// - 本状态的 OnEnter/OnExit 已包含日志和事件广播，子类不要 override 它们，
     ///   而是 override OnMainEnter/OnMainExit/OnOpeningAnimationEnd
-    /// - 主界面上的弹出层（设置、商城等）请使用 <c>Fsm.Push</c>，不要 TransitionTo
+    /// - 主界面上的弹出层（设置、商城等）直接使用 <c>Fsm.TransitionTo</c>（目标无场景，自动判定为叠加）
     /// </summary>
     public class MainState : EmberGameState
     {
@@ -43,16 +43,11 @@ namespace Ember.Core
         public override bool IsRequired => true;
         public override string ScenePath => "MainScene";
 
-        // Main ──→ Gameplay（双向，无条件）
-        public override TransitionDescriptor[] GetTransitions() => new TransitionDescriptor[]
+        // 统一边声明（数据包，框架内置边只读）：→ Gameplay（场景切换，Loading 带假进度）；→ Settings（无场景，自动叠加）
+        public override TransitionDescriptor[] GetEdges() => new TransitionDescriptor[]
         {
-            new(typeof(GameplayState), "进入玩法"),
-        };
-
-        // Main - - → Settings（覆盖式，无条件）
-        public override TransitionDescriptor[] GetPushTargets() => new TransitionDescriptor[]
-        {
-            new(typeof(SettingsState), "设置"),
+            new(typeof(GameplayState), "进入玩法") { QuickSceneLoad = false, ReadOnly = true },
+            new(typeof(SettingsState), "设置") { ReadOnly = true },
         };
 
         #region 生命周期（密封 —— 子类 override OnMainEnter / OnOpeningAnimationEnd）

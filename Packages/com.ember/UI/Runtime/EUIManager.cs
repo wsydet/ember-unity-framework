@@ -126,6 +126,12 @@ namespace Ember.UI
                         await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
                     var logic = loadingPage.Logic;
+
+                    // 快速转场（真实加载即就绪，跳过假进度）：由顶层状态机置 EmberStateMachine.QuickSceneLoad = true
+                    if (logic != null && Ember.Core.EmberStateMachine.QuickSceneLoad)
+                        logic.SkipFakeProgress = true;
+                    Ember.Core.EmberStateMachine.QuickSceneLoad = false;
+
                     while (!loadDone || logic == null || !logic.IsTransitionReady)
                         await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
@@ -200,6 +206,35 @@ namespace Ember.UI
         }
 
         /// <summary>
+        /// 仅隐藏页面视图（α=0、不可交互；不销毁、不清逻辑，数据保留）。
+        /// 触发 Logic.OnHide。与 <see cref="ShowPageViewOnly"/> 配对，对标 Burner HidePage(renderOnly=true)。
+        /// </summary>
+        public void HidePageViewOnly(EUIPageDef pageDef)
+        {
+            var page = _context.FindOpenedPage(pageDef);
+            if (page == null)
+            {
+                EmberDebug.LogWarning(TAG, $"HidePageViewOnly: 未找到已显示的页面 {pageDef?.PrefabPath}");
+                return;
+            }
+            _uiManager.EnqueuePageOperation(() => ((IEUIView)page).HideViewOnly());
+        }
+
+        /// <summary>
+        /// 恢复视图可见（HidePageViewOnly 的逆操作；触发 Logic.OnShow 刷新显示）。
+        /// </summary>
+        public void ShowPageViewOnly(EUIPageDef pageDef)
+        {
+            var page = _context.FindOpenedPage(pageDef);
+            if (page == null)
+            {
+                EmberDebug.LogWarning(TAG, $"ShowPageViewOnly: 未找到视图隐藏的页面 {pageDef?.PrefabPath}");
+                return;
+            }
+            _uiManager.EnqueuePageOperation(() => ((IEUIView)page).RestoreViewOnly());
+        }
+
+        /// <summary>
         /// 设置背景页（单槽位）。仅 <see cref="PageType.Background"/> 类型有效。
         /// 不走 ShowQueue，直接加载并打开，sortingOrder 固定为 0。
         /// 不等待加载完成；需要等背景就绪再继续的场景用 <see cref="SetBackgroundAsync"/>。
@@ -258,13 +293,13 @@ namespace Ember.UI
         }
 
         /// <summary>
-        /// 预加载页面：加载 Prefab + Init，但不 PlayShow。
+        /// 预加载页面：加载 Prefab + 准备 Logic（触发 OnPreload），但不执行 Init、不 PlayShow。
         /// 页面处于 Loaded 状态并缓存。后续 <see cref="ShowMainPage"/> 等调用同一 EUIPageDef 时
-        /// 直接跳过加载进入 PlayShow，实现零延迟打开。
+        /// 补跑 Init（OnInit/OnOpen/OnReset 使用真实打开参数）再 PlayShow，实现零延迟打开。
         /// 对标 Burner GamePage 预加载机制。
         /// </summary>
         /// <param name="pageDef">页面定义</param>
-        /// <param name="args">传递给 Init 的参数</param>
+        /// <param name="args">传递给 OnPreload 的参数（Init 的参数在真正打开时另行传入）</param>
         /// <param name="onComplete">预加载完成回调</param>
         public void PreloadPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null)
         {
@@ -277,6 +312,7 @@ namespace Ember.UI
                 return;
             }
 
+            EUIObserver.NotifyLoadStarted(pageDef);
             _uiManager.ResourceProvider.LoadPrefabAsync(prefabPath, prefab =>
             {
                 if (prefab == null)
@@ -507,12 +543,23 @@ namespace Ember.UI
             Profiler.BeginSample("EUIManager.ProcessShowRequest");
             var pageDef = req.EUIPageDef;
 
+            // 已显示（含视图隐藏）页面再次 Show：走数据刷新路径（对标 Burner 可见分支 OnReopen），不再开新实例
+            var openedPage = _context.FindOpenedPage(pageDef);
+            if (openedPage != null)
+            {
+                EmberDebug.Log(TAG, $"页面已显示，刷新数据: {pageDef.PrefabPath}");
+                _uiManager.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
+                Profiler.EndSample();
+                return;
+            }
+
             // 优先使用预加载页面（对标 Burner GamePage Preload 机制）
             if (_preloadedPages.TryGetValue(pageDef.PrefabPath, out var preloadedPage))
             {
                 _preloadedPages.Remove(pageDef.PrefabPath);
                 EmberDebug.Log(TAG, $"复用预加载页面: {pageDef.PrefabPath}");
-                RouteAndOpenPage(preloadedPage, pageDef, req);
+                RouteAndOpenPage(preloadedPage, pageDef, req, true);
+                Profiler.EndSample();
                 return;
             }
 
@@ -521,9 +568,11 @@ namespace Ember.UI
             if (reusablePage != null)
             {
                 RouteAndOpenPage(reusablePage, pageDef, req);
+                Profiler.EndSample();
                 return;
             }
 
+            EUIObserver.NotifyLoadStarted(pageDef);
             _uiManager.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
             {
                 if (prefab == null)
@@ -544,16 +593,20 @@ namespace Ember.UI
         /// <summary>
         /// 执行路由分发 + 打开页面（新建和复用共用）。
         /// </summary>
-        private void RouteAndOpenPage(EUIPage page, EUIPageDef pageDef, ShowRequest req)
+        /// <param name="alreadyRouted">预加载页已在 PreloadPage 中注册过路由，跳过二次注册（否则会重复压栈）</param>
+        private void RouteAndOpenPage(EUIPage page, EUIPageDef pageDef, ShowRequest req, bool alreadyRouted = false)
         {
             Profiler.BeginSample("EUIManager.RouteAndOpenPage");
-            // 扩展点：允许 uiextension 等外部包配置 Logic
+            // 扩展点：允许 uiextension 等外部包配置 Logic（CreateLogic 内部防重，重复调用安全）
             OnPageCreated?.Invoke(page);
-            // 提前绑定定义：路由分发的 switch（如 FreePage 的 AddFreePage）需要在 OpenPage 之前读取 EUIPageDef
-            page.EUIPageDef = pageDef;
 
-            switch (pageDef.PageType)
+            if (!alreadyRouted)
             {
+                // 提前绑定定义：路由分发的 switch（如 FreePage 的 AddFreePage）需要在 OpenPage 之前读取 EUIPageDef
+                page.EUIPageDef = pageDef;
+
+                switch (pageDef.PageType)
+                {
                 case PageType.MainPage:
                     _context.PushMainPage(page);
                     break;
@@ -597,6 +650,7 @@ namespace Ember.UI
                 case PageType.Background:
                     _context.SetBackground(page);
                     break;
+                }
             }
 
             _uiManager.OpenPage(page, pageDef, req.Args, () =>

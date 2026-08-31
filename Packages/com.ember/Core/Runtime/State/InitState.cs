@@ -33,9 +33,9 @@ namespace Ember.Core
         public override bool IsRequired => true;
         public override string ScenePath => "";
 
-        public override TransitionDescriptor[] GetTransitions() => new TransitionDescriptor[]
+        public override TransitionDescriptor[] GetEdges() => new TransitionDescriptor[]
         {
-            new(typeof(MainState), "初始化完成"),
+            new(typeof(MainState), "初始化完成") { ReadOnly = true },
         };
 
         public override void OnEnter(object args)

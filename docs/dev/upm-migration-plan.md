@@ -1,8 +1,62 @@
 # 框架转 UPM 包迁移方案
 
-> 状态：🔄 实施中（P0 预备进行中）
+> 状态：🧪 功能测试阶段（v0.8.0 变更全部完成待测试；测试计划见 [v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md)，测试通过后再提交发版 + 消费端冒烟）
 > 创建：2026-08-22
 > 对应待办：[framework-progress.md](framework-progress.md) P0「框架转为 UPM 包」
+
+---
+
+## 〇、当前状态快照（2026-08-26，交接用）
+
+### 已完成（P0 → P4-b → 模板体系）
+
+| 里程碑 | 状态 |
+|--------|------|
+| P0 预备：GUID 引用修复 / 私有仓库（Odin/DOTween/ConsolePro 入仓带 tag） | ✅ |
+| P1-P2：Assets/Ember 8 模块带 meta 迁入包；三类硬编码路径改造；EmberUPMManager 面板 | ✅ |
+| P3：编译 + S1-S9 + Edit Mode 12 项 + 编辑器工具回归 | ✅（用户实测通过） |
+| P4-a：v0.2.0 发布 + 消费端实测（暴露 UPM 依赖形态规则：git URL 只能在项目 manifest 直接声明） | ✅ |
+| P4-b：11 包合并为单一 com.ember（模块中心布局：每模块一个文件夹，内含 Runtime/Editor，22 个 asmdef 程序集名不变） | ✅ |
+| 版本语义定稿：开发期 major=0；第二位=框架变化（强制更新）；第三位=小修补（可选）；EmberUPMManager 一键升级（检查更新 + 强制/可选标注） | ✅ |
+| UniTask 内置（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）；UniRx 走 OpenUPM 自动解析 | ✅ |
+| 共享字体入包（v0.8.0）：钉钉进步体/阿里妈妈东方大楷（许可证随包）→ `SharedAssets/Fonts/`，多模板共享、模板不再重复携带；包内共享资产 LFS 豁免；思印宋无授权已删 | ✅ |
+| 模板升级协同 P-A（v0.8.0）：frameworkVersion/channel 元数据 + 兼容闸门 + 部署记录 + 升级提示矩阵；设计文档 template-upgrade-system.md（P-B/P-C 定稿待实施） | ✅ |
+| 模板体系（用户哲学：框架交付的就是演示形态）：Templates~/base/Assets 全量镜像 dev 业务层；Setup 整树部署（.meta 随行 GUID 全链有效）；4 完整演示场景；自动剥离 dev 测试对象 | ✅ |
+| 初始化窗口（EmberSetupWindow：状态总览 + 模板自动扫描 + 一键部署/补齐/重部署）；模板编辑器（EmberTemplateEditorWindow：保存/加载/新建模板，新建可选 fromBase bool；目标模板下拉选择 + 模板独立版本号主/次/补丁 bump） | ✅ |
+| 同步工具：scripts/sync-scaffold.ps1 + scripts/strip-template-scene-objects.ps1 | ✅ |
+
+### 当前未提交内容（40+ 项变更，需用户提交）
+
+- Packages/com.ember/ v0.8.0（模板体系 + 两个新窗口 + CreateTemplate/SaveTemplate/LoadTemplate/IsEmbeddedPackage + StripSceneObjects + ReadPackageVersion 修复 + **共享字体入包 SharedAssets/Fonts** + CHANGELOG 合并 [0.8.0] 条目 + UPMManager 帮助文本 tag 更新）
+- 模板编辑器交互升级：目标模板下拉选择 + 模板独立版本号（主/次/补丁 bump + **可编辑回退 SetTemplateVersion**）+ 框架版本声明 + channel + 「当前正在编辑的模板」状态行（EmberEditingTemplate.json）+ 防串模板警告
+- 模板升级协同 P-A（设计见 template-upgrade-system.md）：template.json 增 frameworkVersion/channel；兼容闸门（major.minor）；部署记录 EmberDeployedTemplates.json + 部署时重写头标记版本；升级提示矩阵（patch/minor/major 只提示不合并）
+- **两级标记铺入**：模板 54 个 .cs = 49 全文件头标记 + 5 块标记（4 状态类钩子 + EUIDefaultMainAnimation.PlayOpeningAnimation）+ 4 .Binding（codegen 管理）+ GamePages.User.cs（用户文件）
+- **GamePages 拆分**：GamePages.cs（框架区，partial）+ GamePages.User.cs（用户区，TODO 锚点）；EmberCSharpImplementation pageDefFile 指改 User 文件 + Guard/提示/校验清单/EUIPageDef 文档同步
+- EmberCodeValidator：排除包内 vendor 的 UniTask/（ExcludedFolders 支持 Packages/ 路径）
+- .gitattributes（包内 SharedAssets LFS 豁免，替换已失效的 Assets/Game/Fonts 规则）
+- docs/dev/upm-migration-plan.md（§6.7 模板体系 + 变更日志）+ template-upgrade-system.md（设计定稿）+ v0.8.0-framework-test-plan.md（测试计划）
+- dev 场景清理（用户操作）：Assets/Tem 已删、EmberTimeDebugger 挪至 FrameworkScene、MainScene 测试对象已删；**思印宋（无授权）已删**；模板镜像已重新同步（sync-scaffold 执行过）
+
+### 待办（下一会话继续）
+
+1. 用户按 [v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md) 在 dev 项目完成功能测试（UI 生成 / 模板编辑器 / 初始化窗口 / 标记体系 / 字体 / 演示链路）
+2. 测试通过：提交 + git tag v0.9.0（2026-08-28 定稿：框架 0.9.0 + 基础模板 0.3.0）+ git push origin main --tags
+3. Unity Farm 冒烟：com.ember 改 #v0.9.0 → 删 packages-lock.json → 重启 → Ember/Setup/初始化项目（窗口）→ 一键部署 → Play 验证完整演示链路（字体走包内引用）
+4. 全部通过后：framework-progress.md 的 P0 行标记完成；最终文档终检；P5（CI/registry）另起规划
+5. 第三方包托管（2026-08-28 定稿，git 由用户执行）：UniRx dev 已改 OpenUPM registry（manifest "7.1.0"）；rainbow-folders-v2.4.5 / rainbow-hierarchy-v2.6.5 / inputdevicedetector-v1.0.0 推入 ember-thirdparty-upm 仓并打 tag
+
+### 关键经验（新会话必读）
+
+- **UPM 铁律**：git URL 依赖只能写在项目 manifest.json 直接声明；包内 package.json 只放 registry 版本
+- **一个文件夹一个 asmdef**（Unity 规则，合并时踩过坑）
+- **消费端清单**（核心 3 行）：com.ember（GitHub #tag）+ com.sirenix.odin-inspector + com.demigiant.dotween（私有仓库，需 git 凭据）；UniRx 走 OpenUPM scope com.neuecc（2026-08-28 起 dev 也走 registry，与消费端同源）；可选编辑器工具（ConsolePro/rainbow-folders/rainbow-hierarchy/inputdevicedetector）同私有仓
+- **版本语义**：major 开发期恒 0；minor=框架变化（强制）；patch=小修（可选）
+- **私有仓库** github.com/wsydet/ember-thirdparty-upm：Odin(odin-v4.0.2)/DOTween(dotween-v1.2.815)/ConsolePro(consolepro-v3.9.81)/RainbowFolders(rainbow-folders-v2.4.5)/RainbowHierarchy(rainbow-hierarchy-v2.6.5)/InputDeviceDetector(inputdevicedetector-v1.0.0，后三者 tag 待推送)
+- **发布习惯**：git push origin main --tags（tag 不会随 main 自动推）
+- **沙箱限制**：本仓库用 git-lfs，AI 沙箱无法 git add/commit（管道受限）；git 操作由用户执行
+- **LFS × UPM**：包内资产不走 LFS（UPM git 安装对 LFS 支持不可靠）；`.gitattributes` 已对 `Packages/com.ember/SharedAssets/**` 豁免，Assets 的 `*.png/*.ttf` LFS 规则不适用于包
+- **PowerShell 5.1**：无 BOM 的 UTF-8 脚本中文会乱码；脚本写完需补 BOM
+- **dev 项目与消费端的区别**：dev = embedded（file: 安装，可编辑包）；消费端 = git 安装（Library/PackageCache 只读）
 
 ---
 
@@ -64,7 +118,7 @@ Packages/com.ember/                    ← 单一框架包（v0.3.0）
       "scopes": ["com.neuecc"] }
   ],
   "dependencies": {
-    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.1",
+    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.8.0",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
     "com.demigiant.dotween": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815"
   }
@@ -75,7 +129,7 @@ Packages/com.ember/                    ← 单一框架包（v0.3.0）
 > 前置条件：机器需能访问两个仓库（私有仓库需 git 凭据）。
 > 网络受限地区可改用 Gitee 镜像（两个仓库各推一份，URL 换 gitee.com）。
 
-**升级框架版本** = 改 `#v0.3.0` 为新 tag（单包单 tag），删 `packages-lock.json` 后 Unity 重新 resolve。
+**升级框架版本** = 改 `#v0.8.0` 为新 tag（单包单 tag），删 `packages-lock.json` 后 Unity 重新 resolve。
 
 ### 3.4 仓库拓扑（双仓库）
 
@@ -107,7 +161,7 @@ Packages/com.ember/                    ← 单一框架包（v0.3.0）
 ```json
 {
   "dependencies": {
-    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.3.0",
+    "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.8.0",
     "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2"
   }
 }
@@ -265,7 +319,7 @@ Packages/com.ember/
    ├─ 生成业务状态：GameInitState/MainState/GameplayState/SettingsState → Assets/Game/State/
    ├─ 生成 GamePages.cs 骨架 + EUIBindingSettings.asset → Assets/Editor/Ember/
    └─ 创建目录结构
-3. 打开 FrameworkScene → 点 Play → BootSplash → Init → 自动切 Main → 可运行 ✅
+3. 打开 FrameworkScene → 点 Play → 完整演示链路（BootSplash → Init → Main → GM 页/设置/玩法）→ 可运行 ✅
 ```
 
 此刻已经是一个能跑的最小框架，业务逻辑从 `GameMainState.OnMainEnter` 开始写。
@@ -319,7 +373,7 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 ├── 生成区（1:1 对应用户导包 + Setup 输出）   ← 不手写，由向导从包内模板渲染
 │   ├── Game/State/GameInitState.cs 等 4 个状态
 │   ├── Game/Scenes/FrameworkScene + MainScene（模板副本）
-│   ├── Game/UI/GamePages.cs
+│   ├── Game/UI/GamePages.cs + GamePages.User.cs（partial 拆分：框架区/用户区）
 │   └── Editor/Ember/*.asset（3 个配置）
 └── 示例区（= 用户写业务后的样子）           ← 演示框架能力：GM 页、流送模块、示例 UI
 ```
@@ -337,10 +391,11 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | `Assets/Game/State/`（4 个状态子类） | ✅ 生成区（向导从模板渲染） |
 | `Assets/Game/Scenes/FrameworkScene + MainScene` | ✅ 生成区（模板副本，最小可运行） |
 | `Assets/Game/Scenes/GameplayScene + SettingsScene` | 示例区（示例业务场景） |
-| `Assets/Game/UI/GamePages.cs` | ✅ 生成区（注册表骨架） |
+| `Assets/Game/UI/GamePages.cs`（框架区）+ `GamePages.User.cs`（用户区） | ✅ 生成区（partial 拆分：框架页面/用户页面，codegen 写 User 文件） |
 | `Assets/Game/UI/Runtime/`（MainMenu/Settings/InGameUI/GMPage） | 示例区 |
 | `Assets/Game/Module/`（PlayerPrefs/Streaming/GlobalLight/PlayerData/RedDot/Guide） | 示例区 |
-| `Assets/Game/Fonts` | 示例区 |
+| ~~`Assets/Game/Fonts`~~ → `Packages/com.ember/SharedAssets/Fonts/` | ✅ 随包走（v0.8.0）：多模板共享、许可证随包、不再随模板部署；思印宋无授权已删 |
+| `Assets/Art/Icons`（23k 素材库） | dev 专属：全量图库不进包/模板；模板/编辑器实际用到的图标按需挑精选子集入 `SharedAssets/Icons/` |
 | `Assets/Ember/UI/Editor/` 下 3 个配置 asset | → 迁到 `Assets/Editor/Ember/`，✅ 生成区（项目级配置） |
 
 **用户视角**：导包 + 跑 Setup 后，Assets 里只有生成区；示例区是用户将来自己写业务的结果。dev 仓库 = 「生成区 + 已写好示例业务的样子」。
@@ -363,6 +418,36 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 #### 一致性口径说明
 
 当前 dev 的 `GameMainState` 等已含业务逻辑（开屏动画等）。按纪律：生成区文件 = 向导骨架 + 业务增量共存——**骨架类生成一次后归用户**（与 §七 策略一致）。因此「1:1 一致」指**骨架层**（初始生成状态）：校验对比骨架层与标记版本，不涉及用户业务增量。
+
+### 6.7 模板体系（多模板框架，2026-08-26 定稿）
+
+> **核心原则（用户拍板）**：框架交付的就是“演示形态”——用户拿到框架生成的场景/代码 = 框架仓库里的演示样子；继承、绑定、场景对象全部替用户做好，用户只在约定的钩子函数里填自己的代码（类 Unity Mono 生命周期）。「干净与否」由框架自己决定，不由消费者配置。
+
+#### 模板架构
+
+`
+Packages/com.ember/Templates~/
+├── base/                          ← 基础模板（当前唯一）
+│   ├── template.json              # { id, displayName, description, version（模板独立版本）, frameworkVersion（目标框架，major.minor 闸门）, channel（stable/preview/deprecated）, order }
+│   └── Assets/                    # 全量演示镜像：Game/ + Resources/ + Ember/Editor/ + Settings/Profile
+│       ├── Game/State/*.cs        #   完整演示状态类（继承已写好，用户只改钩子）
+│       ├── Game/UI/**             #   演示 UI：GM 页/主菜单/设置/游戏内 + 预制体 + 绑定代码
+│       ├── Game/Module/**         #   演示模块：流送/全局灯光/存档/红点
+│       ├── Game/Scenes/*.unity    #   4 个完整演示场景（对象树/引用全量）
+│       ├── Resources/*.asset      #   日志/性能配置
+│       └── Ember/Editor/SOs/*.asset   #   UI 绑定/场景映射/图片批设置配置
+└── <未来模板>/                    ← 同一机制扩展：如 platformer2d（2D 平台游戏一键部署）
+    ├── template.json
+    └── Assets/...
+`
+
+#### 工作机制
+
+1. **部署 = 整树复制**：Setup 从 Templates~/<模板>/Assets/ 复制到消费端 Assets/（.meta 随行 → 场景/预制体/脚本引用 GUID 全链有效），幂等跳过已存在文件（用户改动不覆盖）
+2. **多模板**：扫描 Templates~/*/template.json → 模板管理窗口列出 → 一键部署/切换；未来 2D 平台模板、网络模板同机制接入
+3. **模板源头 = dev 仓库业务层**（黄金基准）：改 dev 的演示代码 → 跑 scripts/sync-scaffold.ps1 同步进包模板 → 发版。消费者拿到的永远是 dev 里演示的样子
+4. **未来蓝图可视化**：在此基础之上生成实例场景，文档教会用户在哪里加代码即可
+5. 第三方受限内容（Feel 等不可再分发）不进模板——模板场景中仅剥离此类对象，其余演示内容全量保留
 
 ---
 
@@ -401,7 +486,7 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 业务状态子类（GameMainState 等） | 向导生成 → **用户编辑** | 反射兜底保编译；升级向导 diff 展示新钩子，用户决定合并 |
 | UI 逻辑骨架（MainMenu.cs 等） | 代码生成器 → **用户编辑** | 永不覆盖 |
 | 绑定文件（MainMenu.Binding.cs） | 代码生成器，纯生成 | 可安全重新生成刷新 |
-| GamePages.cs | 代码生成器，纯生成 | 可安全刷新 |
+| GamePages.cs（框架区） | 框架预写，全文件框架标记 | 可安全刷新（用户页面注册在 GamePages.User.cs，永不覆盖） |
 | 配置 SO（EUIBindingSettings 等） | 向导创建 → **用户数据** | 永不覆盖；新字段给默认值 |
 | 场景 | 向导复制模板 → **用户修改** | 补全模式只增缺节点 |
 | 用户自己的业务代码 | 用户 | 完全无关 |
@@ -443,4 +528,12 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | 2026-08-26 | 🔧 **v0.3.3**：修复 EmberSceneMappingCreator 的 `Path` 常量与 `System.IO.Path` 同名遮蔽编译错误（CS1061），常量改名 MappingAssetPath |
 | 2026-08-26 | 🆙 **一键升级（方案 B）**：EmberUPMManager 新增框架版本区——显示当前版本 + [检查更新]（`git ls-remote --tags` 远程比对 SemVer）+ [升级到 vX.Y.Z]（正则改写 manifest 的 #tag + `Client.Resolve` 触发重解析）+ 失败降级提示。git 包从此拥有类 registry 的一键升级体验，零服务器 |
 | 2026-08-26 | 📐 **版本语义定稿（v0.4.0）**（用户提出）：开发期 major 恒 0；第二位=框架变化→强制更新；第三位=小修补→可选。0.3.x 系列（UniTask 内置/4 场景/一键升级）均属框架变化 → 合并发布为 **v0.4.0**；面板按语义自动标注「强制更新/可选更新」；决策表与 CHANGELOG 同步 |
+| 2026-08-26 | ✂️ **模板编辑器（v0.7.0）**：Ember/Setup/模板编辑器 窗口（框架开发仓库专用，消费者只读提示）——保存当前业务层为模板 / 加载模板到业务层编辑 / 新建模板（**bool 选择：从头开始 or 复制基础模板作为起点**）；引擎新增 CreateTemplate/SaveTemplate/LoadTemplate/IsEmbeddedPackage + C# 版场景对象剥离（StripSceneObjects，与 pwsh 脚本同算法） |
+| 2026-08-26 | 🪟 **初始化窗口（v0.6.0）**：Ember/Setup/初始化项目 改为弹出 EmberSetupWindow——框架/模板状态总览 + 模板列表（自动扫描 Templates~/*/template.json，未来模板自动出现）+ 一键部署/补齐缺失/重新部署 + Build Settings/场景映射 SO 状态；EmberProjectSetup 重构为公共引擎 API（Initialize/GetTemplates/IsTemplateDeployed） |
+| 2026-08-26 | 🏛️ **模板体系（v0.5.0，用户哲学定稿）**：框架交付的就是演示形态——Setup 从代码生成改为**整树部署**：包内 Templates~/base/Assets 全量镜像 dev 业务层（状态类全继承/演示 UI 四页/演示模块/4 完整场景/配置资产，.meta 随行 GUID 全链有效，场景 GUID 与 dev 实测一致）；剥离 4 个 dev 测试对象（Feel/Odin/UniTask 测试器 + Rainbow 规则集）；删除过时 .tpl 模板；新增 scripts/sync-scaffold.ps1（dev 改动一键同步模板）+ scripts/strip-template-scene-objects.ps1；§6.7 多模板框架留档（未来 2D 平台等模板同机制接入，用户一键部署/切换）。按新语义第二位+1 |
 | 2026-08-26 | 🔧 **v0.4.1（patch，小修补）**：修复升级面板 CS0815——`Client.Resolve()` 在该 Unity 版本返回 void，改用「提取 manifest URL → 替换 #tag → `Client.Add` 重装」（与安装流程同 API，返回请求句柄可轮询） |
+| 2026-08-26 | 🔤 **共享字体入包（v0.8.0）**（用户决策）：演示字体从模板移入包内 `SharedAssets/Fonts/`（钉钉进步体/阿里妈妈东方大楷，许可证随包；思印宋因无授权删除），多模板共享零重复；`.gitattributes` 增加 `Packages/com.ember/SharedAssets/**` LFS 豁免（UPM git 安装对 LFS 支持不可靠）；23k 图标全量库留 dev `Assets/Art/` 不进包，模板需要时按精选子集入包；0.5.0-0.7.0 为未发布内部里程碑，首次发布合并为 **v0.8.0**（CHANGELOG 单条目，含 0.4.1 patch） |
+| 2026-08-26 | 🎛 **模板编辑器交互升级（v0.8.0）**（用户反馈：手输 id 易失误）：目标模板改为下拉选择（列出 displayName(id)+版本，保存/删除/元数据/版本操作全部作用于选中模板，不再手输）；**模板版本号独立于框架版本**——新建模板从 0.1.0 起、保存内容不再覆盖版本（仅在显式 bump 时变）、编辑器内主/次/补丁 +1 一键 bump；引擎新增 BumpTemplateVersion/UpdateTemplateMetadata/DeleteTemplate，废弃 ReadPackageVersion 写模板版本的做法；EmberCodeValidator 排除包内 vendor 的 UniTask/（ExcludedFolders 支持 Packages/ 路径） |
+| 2026-08-26 | 🚦 **模板升级协同 P-A（v0.8.0）**（设计定稿见 docs/dev/template-upgrade-system.md）：template.json 增 frameworkVersion/channel；兼容闸门（major.minor 一致才显示、deprecated 隐藏、preview 徽标）；部署记录 EmberDeployedTemplates.json + 部署时重写头标记版本；升级提示矩阵（patch 绿/minor 橙/major 红，只提示不合并）；引擎新增 GetFrameworkVersion/IsFrameworkCompatible/GetCompatibleTemplates/GetTemplateUpgradeLevel/DeclareFrameworkVersion/SetTemplateChannel/GetDeployedTemplate；P-B 升级向导与 [EmberManaged] 两级标记待实施 |
+| 2026-08-26 | ↩️ **模板编辑器防误操作（v0.8.0）**（用户误点主版本+1 无法回退）：版本行改为可编辑文本框 + [应用版本]（SetTemplateVersion 校验 x.y.z，支持回退/对齐），bump 按钮保留为快捷；面板新增「当前正在编辑的模板」状态行（LoadTemplate 写 EmberEditingTemplate.json，目标与编辑不一致橙色警告，保存确认框二次提示）；DeleteTemplate 清理编辑记录；base 版本已回退 0.5.0 |
+| 2026-08-26 | 🏷️ **两级标记铺入模板（v0.8.0）**（所有权模型定稿：框架项目出现的代码=框架所有，用户只补充）：① 全文件头标记铺满 42 个演示 .cs（模板共 49 个带 `Generated by Ember Setup` 头标记，部署时重写为真实版本）；② 块标记 `[EmberManaged:begin/end]` 铺 5 个混合文件（4 状态类钩子签名 + EUIDefaultMainAnimation.PlayOpeningAnimation，签名框架管/函数体用户填）；③ **GamePages 拆分**：框架区 `GamePages.cs`（partial，全文件框架）与用户区 `GamePages.User.cs`（无标记用户文件，TODO 锚点），EmberCSharpImplementation 的 pageDefFile 指改 User 文件、Guard 监控/提示文案/校验清单/EUIPageDef 文档同步；④ .Binding.cs 归 codegen 管理（每次整文件重生成），不进两级标记；同步 sync-scaffold 后模板 54 .cs = 49 头标记 + 4 Binding + 1 用户文件 |

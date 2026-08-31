@@ -151,4 +151,5 @@ Assets/Art/**/*.png     -filter -diff -merge text
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
 Assets/Game/UI/Fonts/** filter=lfs diff=lfs merge=lfs -text
-Assets/Game/Fonts/** filter=lfs diff=lfs merge=lfs -text
+# 框架包内共享资产（字体/精选图标）不走 LFS：UPM git 安装对 LFS 支持不可靠，总量 ~7MB 纯 git 可接受
+Packages/com.ember/SharedAssets/** -filter -diff -merge text

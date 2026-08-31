@@ -29,12 +29,6 @@
       },
       "hash": "4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
     },
-    "com.cysharp.unitask": {
-      "version": "file:com.cysharp.unitask",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.demigiant.dotween": {
       "version": "file:com.demigiant.dotween",
       "depth": 0,
@@ -46,7 +40,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.cysharp.unitask": "2.5.10",
         "com.neuecc.unirx": "7.1.0",
         "com.unity.cinemachine": "3.1.7",
         "com.unity.inputsystem": "1.19.0",

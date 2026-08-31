@@ -29,7 +29,7 @@ namespace Ember.Core
     /// <b>注意：</b>
     /// - 本状态的 OnEnter/OnExit/OnUpdate/OnPause/OnResume 已包含日志，
     ///   子类应 override OnGameplayXxx 系列方法
-    /// - 游戏内弹出层（暂停菜单、背包等）请使用 <c>Fsm.Push</c>
+    /// - 游戏内弹出层（暂停菜单、背包等）直接使用 <c>Fsm.TransitionTo</c>（自动判定叠加）
     /// - 退出玩法请 <c>GameLauncher.Instance.Fsm.TransitionTo&lt;MainState&gt;()</c>
     /// </summary>
     public class GameplayState : EmberGameState
@@ -42,16 +42,11 @@ namespace Ember.Core
         public override bool IsRequired => true;
         public override string ScenePath => "GameplayScene";
 
-        // Gameplay ──→ Main（单向，无条件）
-        public override TransitionDescriptor[] GetTransitions() => new TransitionDescriptor[]
+        // 统一边声明（数据包，框架内置边只读）：→ Main（场景切换，快速加载）；→ Settings（无场景，自动叠加）
+        public override TransitionDescriptor[] GetEdges() => new TransitionDescriptor[]
         {
-            new(typeof(MainState), "返回大厅"),
-        };
-
-        // Gameplay - - → Settings（覆盖式，无条件）
-        public override TransitionDescriptor[] GetPushTargets() => new TransitionDescriptor[]
-        {
-            new(typeof(SettingsState), "设置"),
+            new(typeof(MainState), "返回大厅") { QuickSceneLoad = true, ReadOnly = true },
+            new(typeof(SettingsState), "设置") { ReadOnly = true },
         };
 
         #region 生命周期（密封 —— 子类 override OnGameplayXxx）

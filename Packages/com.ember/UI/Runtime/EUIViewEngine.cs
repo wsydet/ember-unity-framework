@@ -331,30 +331,44 @@ namespace Ember.UI
             if (page.TryQueuePendingOp(EUIPage.PagePendingOp.Reopen, args))
                 return;
 
-            // 注入完成回调：动画真正结束时由 CompleteShow() 触发
-            page.SetShowCallback(() =>
-            {
-                EmberDebug.LogEvent(TAG, $"页面已重新打开: {page.EUIPageDef}");
-                onComplete?.Invoke();
-
-                // 过渡完成 → 调度挂起操作
-                FlushPendingPageOp(page);
-            }, args);
-
             EnqueuePageOperation(() =>
             {
+                // 已显示（Opened/Paused/ViewHidden）页面：纯数据刷新，无 Show 流程，直接回调
+                bool refreshOnly = page.State == PageState.Opened
+                    || page.State == PageState.Paused
+                    || page.State == PageState.ViewHidden;
+
+                if (refreshOnly)
+                {
+                    ((IEUIView)page).OnReopen(args);
+                    EUIObserver.NotifyReopened(page.EUIPageDef, args);
+                    EmberDebug.LogEvent(TAG, $"页面数据已刷新: {page.EUIPageDef}");
+                    onComplete?.Invoke();
+                    return;
+                }
+
+                // 已关闭页面重开：注入完成回调，动画真正结束时由 CompleteShow() 触发
+                page.SetShowCallback(() =>
+                {
+                    EmberDebug.LogEvent(TAG, $"页面已重新打开: {page.EUIPageDef}");
+                    onComplete?.Invoke();
+
+                    // 过渡完成 → 调度挂起操作
+                    FlushPendingPageOp(page);
+                }, args);
+
                 ((IEUIView)page).OnReopen(args);
                 EUIObserver.NotifyReopened(page.EUIPageDef, args);
                 // OnReopen 内部会调用 PlayShow → CompleteShow → NotifyOpened + 日志 + onComplete
-                // 不再使用 _nextFrameCallbacks（之前这里动画未完成就播报，且与 CompleteShow 重复播报）
             });
         }
 
         // ── 预加载 ──
 
         /// <summary>
-        /// 预加载页面：执行 Init 但不执行 PlayShow。页面处于 Loaded 状态，
-        /// 后续 <see cref="EUIPageRouter.ShowMainPage"/> 等调用时直接进入 PlayShow，跳过加载。
+        /// 预加载页面：准备 GameObject + Logic（触发 OnPreload），但不执行 Init。
+        /// 页面处于 Loaded 状态，后续 <see cref="EUIPageRouter.ShowMainPage"/> 等调用时
+        /// 补跑 Init（OnInit/OnOpen/OnReset 用真实打开参数）再 PlayShow。
         /// 对标 Burner GamePage 预加载机制。
         /// </summary>
         internal void InitPageOnly(EUIPage page, EUIPageDef pageDef, object args, Action onComplete = null)
@@ -378,7 +392,7 @@ namespace Ember.UI
 
             EnqueuePageOperation(() =>
             {
-                ((IEUIView)page).Init(args);
+                ((IEUIView)page).Preload(args);
                 onComplete?.Invoke();
             });
             Profiler.EndSample();

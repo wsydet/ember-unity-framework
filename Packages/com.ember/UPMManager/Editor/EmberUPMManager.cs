@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -118,7 +118,7 @@ namespace Ember.UPMManager.Editor
             var currentVersionText = GetPackageVersion(PackageName);
             if (string.IsNullOrEmpty(currentVersionText))
             {
-                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.4.0", MessageType.Error);
+                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.8.0", MessageType.Error);
                 return;
             }
 

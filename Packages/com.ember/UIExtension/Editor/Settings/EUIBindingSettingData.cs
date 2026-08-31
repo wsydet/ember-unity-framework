@@ -15,7 +15,7 @@ namespace Ember.UIExtension.Editor
     /// </summary>
     public class EUIBindingSettingData : ScriptableObject
     {
-        public const string k_SettingsPath = "Assets/Editor/Ember/EUIBindingSettings.asset";
+        public const string k_SettingsPath = "Assets/Ember/Editor/SOs/EUIBindingSettings.asset";
 
         [SerializeField]
         private LogicImplementationData[] logicImplementations;

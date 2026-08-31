@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -24,6 +24,7 @@ namespace Ember.UIExtension.Editor
         static EUIBindingCodeGenUtility()
         {
             EUIBinding.OnIsOnPrefab = HandleIsOnPrefab;
+            EUIBinding.OnIsEmbeddedPackage = IsEmbeddedPackage;
             EUIBinding.OnGetCodeRootPath = HandleGetCodeRootPath;
             EUIBinding.OnGetLogicNames = HandleGetLogicNames;
             EUIBinding.OnGetGeneratedPath = HandleGetGeneratedPath;
@@ -55,12 +56,30 @@ namespace Ember.UIExtension.Editor
             return stage != null && stage.IsPartOfPrefabContents(binding.gameObject);
         }
 
+        /// <summary>获取 binding 所在预制体的 Asset 路径（实例或 Prefab Stage；场景对象返回 null）。</summary>
+        private static string GetBindingPrefabPath(EUIBinding binding)
+        {
+            if (!binding) return null;
+            var path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(binding);
+            if (!string.IsNullOrEmpty(path)) return path;
+            var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+            if (stage != null && stage.IsPartOfPrefabContents(binding.gameObject))
+                return stage.assetPath;
+            return null;
+        }
+
+        /// <summary>是否为框架开发仓库（com.ember 为 embedded 安装）——消费端隐藏「框架」生成模式。</summary>
+        internal static bool IsEmbeddedPackage()
+        {
+            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName("com.ember");
+            return info != null && info.source == UnityEditor.PackageManager.PackageSource.Embedded;
+        }
+
         private static string HandleGetCodeRootPath(EUIBinding.CodePathMode mode)
         {
+            // 双路径已合并：框架/用户统一生成到业务层（Assets/Game/UI/Runtime），模式只决定生成文件的块标记
             var settings = EUIBindingSettingData.GetOrCreateSettings();
-            return mode == EUIBinding.CodePathMode.Framework
-                ? settings.FrameworkCodeRoot
-                : settings.BusinessCodeRoot;
+            return settings.BusinessCodeRoot;
         }
 
         private static string[] HandleGetLogicNames()
@@ -128,6 +147,10 @@ namespace Ember.UIExtension.Editor
         {
             if (!binding) return;
 
+            bool frameworkMode = binding.PathMode == EUIBinding.CodePathMode.Framework
+                && IsEmbeddedPackage();
+            EmberDebug.Log("EmberUI", $"代码生成模式: {(frameworkMode ? "框架（块标记 + 框架注册区）" : "用户")}（PathMode={binding.PathMode}，embedded={IsEmbeddedPackage()}）");
+
             var logic = GetCurrentLogic(binding);
             if (!logic)
             {
@@ -152,12 +175,13 @@ namespace Ember.UIExtension.Editor
             if (!EditorUtility.DisplayDialog("确认生成代码", confirmMsg, confirmBtn, "取消"))
                 return;
 
-            // 框架页面守卫：生成根在包内（Packages/ 开头）时禁止生成——框架代码已随包发布，只读
-            var generatedPath = HandleGetGeneratedPath(binding);
-            if (generatedPath.StartsWith("Packages/", System.StringComparison.OrdinalIgnoreCase))
+            // 框架页面守卫：预制体位于包内（Packages/ 开头）时禁止生成——框架代码已随包发布，只读
+            var prefabPath = GetBindingPrefabPath(binding);
+            if (!string.IsNullOrEmpty(prefabPath)
+                && prefabPath.StartsWith("Packages/", StringComparison.OrdinalIgnoreCase))
             {
                 EditorUtility.DisplayDialog("无法生成代码",
-                    "该绑定属于框架页面，代码已随 com.ember 包发布（包内只读）。\n业务页面的代码生成请使用 Business 路径模式。", "确定");
+                    "该绑定属于框架页面（预制体位于 com.ember 包内），代码已随包发布，不可生成。", "确定");
                 return;
             }
 
@@ -194,6 +218,10 @@ namespace Ember.UIExtension.Editor
 
             EmberDebug.Log("EmberUI", $"代码生成完成：{binding.ClassName}");
 
+            // 框架模式：把当前全部绑定条目标记为框架子组件（清除/重收集操作将保护它们）
+            if (frameworkMode)
+                MarkFrameworkBindings(binding);
+
             // 4. 自动创建自定义页面参数实例（如果生成的代码定义了 Settings 类型）
             AssetDatabase.Refresh();
             CreateCustomSettingsIfExists(binding);
@@ -201,6 +229,29 @@ namespace Ember.UIExtension.Editor
 
             // 5. 同步 Custom 过渡方法（Custom 模式注入/非 Custom 模式移除）
             SyncCustomTransitionMethods(binding);
+        }
+
+        /// <summary>
+        /// 框架模式：把当前全部绑定条目标记为框架子组件（IsFramework=true）。
+        /// 此后「清除用户绑定」「清除并重新收集」会保留这些条目，用户无法清除框架子组件。
+        /// </summary>
+        private static void MarkFrameworkBindings(EUIBinding binding)
+        {
+            var list = new List<EUIBinding.BindingEntry>(
+                binding.Bindings ?? System.Array.Empty<EUIBinding.BindingEntry>());
+            for (int i = 0; i < list.Count; i++)
+            {
+                var e = list[i];
+                e.IsFramework = true;
+                list[i] = e;
+            }
+
+            typeof(EUIBinding)
+                .GetField("bindings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(binding, list.ToArray());
+            Undo.RecordObject(binding, "标记框架子组件");
+            EditorUtility.SetDirty(binding);
+            EmberDebug.Log("EmberUI", $"已标记 {list.Count} 个框架子组件条目（受保护：清除操作会保留）");
         }
 
         /// <summary>
@@ -741,15 +792,22 @@ namespace {namespaceName}
         {
             if (!binding) return;
             if (!EditorUtility.DisplayDialog("清除并重新收集",
-                "将清除所有现有绑定并重新扫描子节点进行收集，是否继续？",
+                "将清除所有用户绑定条目（框架子组件条目保留）并重新扫描子节点进行收集，是否继续？",
                 "确认清除并收集", "取消"))
                 return;
 
-            // 清除：直接写 C# 对象
+            // 清除：保留框架子组件条目
+            var kept = new List<EUIBinding.BindingEntry>();
+            if (binding.Bindings != null)
+                foreach (var e in binding.Bindings)
+                    if (e.IsFramework) kept.Add(e);
+
             typeof(EUIBinding)
                 .GetField("bindings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                ?.SetValue(binding, System.Array.Empty<EUIBinding.BindingEntry>());
-            EmberDebug.Log("EmberUI", "清除完成：→ 0");
+                ?.SetValue(binding, kept.ToArray());
+            Undo.RecordObject(binding, "清除并重新收集");
+            EditorUtility.SetDirty(binding);
+            EmberDebug.Log("EmberUI", $"清除完成：保留 {kept.Count} 个框架子组件条目");
 
             // 重新收集
             HandleAutoCollectBindings(binding);
@@ -758,17 +816,23 @@ namespace {namespaceName}
         private static void HandleClearAllBindings(EUIBinding binding)
         {
             if (!binding) return;
-            if (!EditorUtility.DisplayDialog("清除所有绑定",
-                "确认清除当前所有的控件绑定条目？此操作不可撤销。",
+            if (!EditorUtility.DisplayDialog("清除用户绑定",
+                "将清除所有用户绑定的控件条目（框架子组件条目保留）。此操作不可撤销。",
                 "确认清除", "取消"))
                 return;
 
-            // 直接写 C# 对象
+            // 清除：保留框架子组件条目
+            var kept = new List<EUIBinding.BindingEntry>();
+            if (binding.Bindings != null)
+                foreach (var e in binding.Bindings)
+                    if (e.IsFramework) kept.Add(e);
+
             typeof(EUIBinding)
                 .GetField("bindings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                ?.SetValue(binding, System.Array.Empty<EUIBinding.BindingEntry>());
+                ?.SetValue(binding, kept.ToArray());
+            Undo.RecordObject(binding, "清除用户绑定");
             EditorUtility.SetDirty(binding);
-            EmberDebug.Log("EmberUI", "已清除所有绑定");
+            EmberDebug.Log("EmberUI", $"清除完成：保留 {kept.Count} 个框架子组件条目");
         }
 
         private static void HandleCopyGeneratedPath(EUIBinding binding)

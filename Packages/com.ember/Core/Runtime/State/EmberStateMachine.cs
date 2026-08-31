@@ -72,17 +72,59 @@ namespace Ember.Core
         /// <summary>覆盖它的状态退出后，此状态重新可见时调用。</summary>
         public virtual void OnResume() { }
 
+        // ---- 出边列表（实例级数据；可视化编辑器读写对象） ----
+
+        /// <summary>
+        /// 本状态的出边列表（实例级）。<see cref="EmberStateMachine.Register"/> 时由
+        /// <see cref="GetEdges"/> 声明填充；运行时状态机按目标状态匹配边，切换/叠加由场景路径判定；
+        /// 未来可视化编辑器在此列表上增删改边（持久化由 P-C 图资产承接）。
+        /// 框架内置边带 <see cref="TransitionDescriptor.ReadOnly"/> 标记：
+        /// 不可增删/改结构，仅可切换 <see cref="TransitionDescriptor.QuickSceneLoad"/>。
+        /// </summary>
+        public IReadOnlyList<TransitionDescriptor> Edges => _edges;
+
+        /// <summary>出边内部存储（Register 填充；编辑器可增删改）。</summary>
+        private readonly List<TransitionDescriptor> _edges = new();
+
+        /// <summary>添加一条出边（按 TargetState 防重）。</summary>
+        internal void AddEdge(TransitionDescriptor edge)
+        {
+            if (edge == null || edge.TargetState == null) return;
+            if (_edges.Any(e => e.TargetState == edge.TargetState)) return;
+            _edges.Add(edge);
+        }
+
+        /// <summary>清空出边（Register 重建时用）。</summary>
+        internal void ClearEdges() => _edges.Clear();
+
         // ---- 流转声明（可视化编辑器 + 运行时校验） ----
 
         /// <summary>
-        /// 声明本状态可通过 <see cref="EmberStateMachine.TransitionTo"/> 流转到的目标状态。
-        /// 可视化编辑器从此读取连线图；运行时 TransitionTo 校验 Guard。
+        /// 统一边声明（数据包）：本状态的全部出边。每条边自带目标状态、加载模式（QuickSceneLoad）
+        /// 与标签/条件/Guard；「切换/叠加」不由边声明，运行时按场景路径判定
+        /// （目标无场景或同场景 → 叠加；场景不同 → 切换）。
+        /// <para>起点状态 = 声明本边的状态（From 由声明者隐含，可视化遍历时可知）。</para>
+        /// <para>可视化编辑器遍历各状态的 <c>GetEdges()</c> 即可生成完整连线图
+        /// （快速加载标注 / 锁图标 / 场景推断的切换-叠加标注）。</para>
+        /// <para>默认实现合并旧式 <see cref="GetTransitions"/> 与 <see cref="GetPushTargets"/>，
+        /// 保持兼容；新状态请直接 override 本方法。</para>
+        /// </summary>
+        public virtual TransitionDescriptor[] GetEdges()
+        {
+            var result = new List<TransitionDescriptor>(GetTransitions());
+            result.AddRange(GetPushTargets());
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// 旧式声明（兼容保留）：声明本状态可通过 <see cref="EmberStateMachine.TransitionTo"/> 流转到的目标状态。
+        /// 新状态请直接 override <see cref="GetEdges"/> 并在边上标注 Kind。
         /// </summary>
         public virtual TransitionDescriptor[] GetTransitions() => Array.Empty<TransitionDescriptor>();
 
         /// <summary>
-        /// 声明本状态可通过 <see cref="EmberStateMachine.Push"/> 弹出的覆盖状态。
-        /// 可视化编辑器从此读取连线图；运行时 Push 校验 Guard。
+        /// 旧式声明（兼容保留）：声明本状态可通过 <see cref="EmberStateMachine.Push"/> 弹出的覆盖状态。
+        /// 新状态请直接 override <see cref="GetEdges"/> 并在边上标注 Kind。
         /// </summary>
         public virtual TransitionDescriptor[] GetPushTargets() => Array.Empty<TransitionDescriptor>();
 
@@ -200,6 +242,14 @@ namespace Ember.Core
         /// </summary>
         public Action<string, Action> LoadSceneAsync;
 
+        /// <summary>
+        /// 快速场景转场开关（一次性）：下一次 TransitionTo 触发的场景加载将跳过 Loading 假进度，
+        /// 真实加载完成即就绪。由 <see cref="TransitionTo"/> 根据状态连接线
+        /// （<see cref="TransitionDescriptor.QuickSceneLoad"/>）自动置位，
+        /// 由 UI 层场景拦截器消费后复位。
+        /// </summary>
+        public static bool QuickSceneLoad { get; set; }
+
         #endregion
 
         // ============================================================
@@ -223,6 +273,11 @@ namespace Ember.Core
             }
 
             _states[type] = state;
+
+            // 从声明初始化出边列表（可视化编辑器后续在此列表上增删改边）
+            state.ClearEdges();
+            foreach (var edge in state.GetEdges())
+                state.AddEdge(edge);
         }
 
         /// <summary>
@@ -298,13 +353,14 @@ namespace Ember.Core
         // ======== 切换 ========
 
         /// <summary>
-        /// 切换到目标状态：Exit 当前状态 → 加载目标场景 → Enter 目标状态。
-        ///
+        /// 统一转场入口：切换到目标状态。
+        /// <para><b>「切换 / 叠加」运行时按场景路径自动判定：</b>
+        /// 目标状态无场景（ScenePath 为空）或与当前同场景 → 叠加（Push 语义：暂停当前、压栈、Pop 返回）；
+        /// 场景不同 → 切换（Exit 当前 → 加载目标场景 → Enter）。</para>
+        /// <para>发生场景切换时，从连接线（<see cref="TransitionDescriptor.QuickSceneLoad"/>）
+        /// 读取 Loading 模式：true = 快速加载（跳过假进度）。</para>
         /// <param name="args">传递给 OnEnter 的参数</param>
         /// <param name="skipSceneLoad">跳过场景加载（目标状态的场景已就绪时使用）</param>
-        ///
-        /// 如果设置了 <see cref="OnSceneTransition"/> 钩子且双方场景不同，
-        /// 则通过钩子异步加载场景，加载完成后执行状态生命周期。
         /// </summary>
         public void TransitionTo<T>(object args = null, bool skipSceneLoad = false) where T : EmberGameState
         {
@@ -331,6 +387,14 @@ namespace Ember.Core
             var fromScene = _current?.ScenePath ?? "";
             var toScene = next.ScenePath ?? "";
 
+            // 统一判定：目标无场景或与当前同场景 → 叠加（Push 语义）；场景不同 → 切换（替换 + 场景加载）
+            if (_current != null && (string.IsNullOrEmpty(toScene) || toScene == fromScene))
+            {
+                QuickSceneLoad = false; // 叠加不加载场景，清掉可能残留的快速标记
+                PushInternal(next, args);
+                return;
+            }
+
             // 生命周期操作（延迟到场景就绪后执行）
             Action proceed = () =>
             {
@@ -346,6 +410,9 @@ namespace Ember.Core
             // 有钩子、场景不同、且未跳过 → 异步加载
             if (!skipSceneLoad && OnSceneTransition != null && fromScene != toScene)
             {
+                // 从状态连接线读取本次转场的 Loading 模式（可视化编辑器同步读取该字段标注连接线）
+                QuickSceneLoad = FindTransitionDescriptor(_current, typeof(T))?.QuickSceneLoad ?? false;
+
                 OnSceneTransition(new SceneTransitionContext
                 {
                     FromState = _current,
@@ -365,8 +432,9 @@ namespace Ember.Core
         // ======== 栈式覆盖（Push / Pop） ========
 
         /// <summary>
-        /// 将当前状态暂停（OnPause），在其上方覆盖一个新状态。
-        /// 适用于弹窗式场景：设置面板、背包界面等。
+        /// 显式强制覆盖（兼容别名）：将当前状态暂停（OnPause），在其上方覆盖一个新状态。
+        /// 与 <see cref="TransitionTo"/> 的叠加判定路径等价；推荐统一使用 TransitionTo，
+        /// 由状态机按场景路径自动判定切换/叠加。
         /// </summary>
         public void Push<T>(object args = null) where T : EmberGameState
         {
@@ -379,6 +447,12 @@ namespace Ember.Core
             if (_current != null && !ValidateGuard(_current, typeof(T), "Push"))
                 return;
 
+            PushInternal(overlay, args);
+        }
+
+        /// <summary>叠加路径：暂停当前状态、压栈、进入覆盖状态。</summary>
+        private void PushInternal(EmberGameState overlay, object args)
+        {
             var fromScene = _currentScenePath;
             var toScene = overlay.ScenePath ?? "";
 
@@ -495,24 +569,30 @@ namespace Ember.Core
         /// <summary>
         /// 校验当前状态的流转描述符是否允许切换到目标类型，以及 Guard 条件是否满足。
         /// </summary>
+        /// <summary>查找 from → targetType 的连接线描述符（精确匹配；未声明返回 null）。</summary>
+        private static TransitionDescriptor FindTransitionDescriptor(EmberGameState from, Type targetType)
+        {
+            if (from == null) return null;
+            return from.Edges.FirstOrDefault(d => d.TargetState == targetType);
+        }
+
+        /// <summary>
+        /// 校验流转 Guard（未声明的流转仅警告不阻断，向后兼容）。
+        /// </summary>
         /// <param name="from">当前状态</param>
         /// <param name="targetType">目标状态类型</param>
         /// <param name="method">"TransitionTo" 或 "Push"，用于日志</param>
         /// <returns>允许流转返回 true，否则 false</returns>
         private static bool ValidateGuard(EmberGameState from, Type targetType, string method)
         {
-            // 选择对应的描述符列表
-            var descriptors = method == "Push"
-                ? from.GetPushTargets()
-                : from.GetTransitions();
-
-            var desc = descriptors.FirstOrDefault(d => d.TargetState == targetType);
+            // 从统一边声明中匹配目标状态（切换/叠加由场景路径判定，不在此区分）
+            var desc = from.Edges.FirstOrDefault(d => d.TargetState == targetType);
             if (desc == null)
             {
                 // 未声明流转目标 → 警告但仍允许（向后兼容，不阻断未声明的老代码）
                 EmberDebug.LogWarning(TAG,
                     $"StateMachine: {method}<{targetType.Name}> from '{from.Name}' "
-                    + "is not declared in GetTransitions/GetPushTargets. Allowed but should be declared.");
+                    + "is not declared in GetEdges/GetTransitions/GetPushTargets. Allowed but should be declared.");
                 return true;
             }
 

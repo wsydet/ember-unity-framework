@@ -153,7 +153,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 
 | 优先级 | 事项 | 文件数 | 说明 |
 |--------|------|--------|------|
-| 🔴 P0 | **框架转为 UPM 包** | — | 将 Assets/Ember/* 各模块转为 UPM 包（Packages/com.ember.*），支持框架独立升级；转包后拿到具体项目中验证、暴露缺陷 |
+| ✅ P0 | **框架转为 UPM 包** | — | 已完成（2026-08-26）：11 包合并为单一 `com.ember`（模块中心布局，22 asmdef 程序集名不变）；模板体系（Templates~/base 全量演示镜像 + 初始化窗口 + 模板编辑器）；EmberUPMManager 一键升级（强制/可选标注）；UniTask 内置；共享字体入包（SharedAssets/Fonts，许可证随包）；模板升级协同 P-A + 两级标记 + GamePages 拆分。v0.8.0 变更完成，**功能测试中**（[v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md)）→ 测试通过后提交发版 + Unity Farm 消费端冒烟。详见 [upm-migration-plan.md](upm-migration-plan.md) §〇 当前状态快照 |
 | 🟡 P1 | **Audio 多 Category + AudioAgent 池** | ~5 | 详见 [audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
 | 🟡 P1 | **ScrollRect 配置异常导致 Prefab 永远 dirty** | — | GMPage `m_Scr_Test` Viewport 尺寸 0（`[ExecuteAlways]` 布局实时重算产生浮点残渣）。已隐藏跳过；后续修正 Viewport 为标准布局（anchor `(0,0)-(1,1)`）即可根治，详见 uiextension-test-plan.md §6.4 |
 | 🟢 P2 | **预制体对象池** | 1 | GameObject 预制体池化 |
@@ -1298,7 +1298,7 @@ FrameworkScene.unity（启动场景，index 0，永不卸载）
 | — | **新建状态时自动关联场景** — `EmberSceneMappingCreator` 已自动创建 SO + 匹配同名场景。未来可视化编辑器创建新状态时需先创建场景后创建状态 |
 | — | **Settings UI 集成** — `SettingsState` 状态已创建，待实现 UI 层：根据 `SettingsContext` 展示不同选项面板 |
 | — | **开源图标资源已入库** — `Assets/Art/Icons/game-icon-pack-v1.4/` — 800+ 圆角图标，CC0 许可证。后续蓝图节点图标 / 编辑器工具栏图标优先从这里取 |
-| — | **EUIPageDef 按模块拆分注册** — 当前所有页面注册在单一 `GamePages.cs`，多人协作易冲突、模块边界模糊。未来改为按模块拆分 `*Pages.cs`，生成器根据 `classPath` 自动定位。等 UI 预制体目录结构稳定后实施 |
+| — | **EUIPageDef 按模块拆分注册** — 已部分落地（2026-08-26）：框架页面/用户页面拆分为 `GamePages.cs` + `GamePages.User.cs`（partial 拼接，codegen 写 User 文件）；彻底按模块拆分 `*Pages.cs`（生成器按 `classPath` 自动定位）仍待 UI 预制体目录结构稳定后实施 |
 | — | Wwise 适配 |
 | — | 图片/纹理管理 |
 
