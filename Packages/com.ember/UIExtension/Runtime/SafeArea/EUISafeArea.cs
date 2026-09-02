@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -6,6 +6,8 @@ using System;
 using Cysharp.Threading.Tasks;
 
 using Sirenix.OdinInspector;
+
+using Ember.UI;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,37 +26,46 @@ namespace Ember.UIExtension
     [RequireComponent(typeof(RectTransform))]
     [ExecuteAlways]
     [Preserve]
-    public class EUISafeArea : UIBehaviour, ILayoutSelfController
+    public class EUISafeArea : UIBehaviour, ILayoutSelfController, IEmberSafeAreaProvider
     {
         #region 编辑器面板参数
 
-        [FoldoutGroup("方向")]
-        [SerializeField]
-        [LabelText("方向模式")]
+        [PropertyOrder(-30)]
+        [FoldoutGroup("$GROUP", Expanded = true)]
+        [BoxGroup("$GROUP/方向配置", ShowLabel = false)]
+        [Title("方向配置")]
+        [SerializeField, LabelText("方向模式")]
         [Tooltip("Single = 只使用默认配置；Dual = 横竖屏各自独立配置")]
         private SupportedOrientations _orientationType;
 
-        [FoldoutGroup("默认/竖屏")]
-        [SerializeField]
-        [LabelText("四边模式")]
+        [PropertyOrder(-29)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/方向配置")]
+        [Title("默认 / 竖屏", "Single 模式与竖屏使用此配置。")]
+        [SerializeField, InlineProperty, HideLabel]
         private PerEdgeEvaluationModes _portraitOrDefaultPaddings = new PerEdgeEvaluationModes();
 
-        [FoldoutGroup("横屏")]
-        [SerializeField]
+        [PropertyOrder(-28)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/方向配置")]
+        [Title("横屏", "仅 Dual 模式使用此配置。")]
+        [SerializeField, InlineProperty, HideLabel]
         [ShowIf("@_orientationType == SupportedOrientations.Dual")]
-        [LabelText("四边模式")]
         private PerEdgeEvaluationModes _landscapePaddings = new PerEdgeEvaluationModes();
 
-        [FoldoutGroup("设置")]
-        [SerializeField]
+        [PropertyOrder(-20)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/应用设置", ShowLabel = false)]
+        [Title("应用设置")]
+        [SerializeField, LabelText("影响系数")]
         [Range(0f, 1f)]
-        [LabelText("影响系数")]
         [Tooltip("安全区域实际应用的百分比，0 = 不应用，1 = 完全应用")]
         private float _influence = 1f;
 
-        [FoldoutGroup("设置")]
-        [SerializeField]
-        [LabelText("翻转 Padding")]
+        [PropertyOrder(-19)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/应用设置")]
+        [SerializeField, LabelText("翻转 Padding")]
         [Tooltip("启用后将左右/上下 padding 互换")]
         private bool _flipPadding;
 
@@ -63,6 +74,8 @@ namespace Ember.UIExtension
         // --------------------------------------------------------
 
         #region 内部参数
+
+        private const string GROUP = "EUI Safe Area";
 
         private RectTransform _rectTransform;
         private DrivenRectTransformTracker _tracker;
@@ -108,18 +121,33 @@ namespace Ember.UIExtension
         #region 外部方法
 
         /// <summary>是否存在有效的安全区域</summary>
+        [PropertyOrder(-10)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/运行时状态", ShowLabel = false)]
+        [Title("运行时状态")]
+        [ShowInInspector, ReadOnly, LabelText("检测到安全区域")]
+        [GUIColor("@_hasSafeArea ? Color.green : Color.gray")]
         public bool HasSafeArea => _hasSafeArea;
 
         /// <summary>安全区域作用的 RectTransform</summary>
         public RectTransform SafeAreaRoot => RectTransform;
 
         /// <summary>上次计算的 Padding（left, bottom, right, top）</summary>
+        [PropertyOrder(-9)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/运行时状态")]
+        [ShowInInspector, ReadOnly, LabelText("当前 Padding")]
         public Vector4 LastPadding => _lastPadding;
 
         /// <summary>安全区域变化事件</summary>
         public event Action SafeAreaChanged;
 
         /// <summary>手动刷新安全区域</summary>
+        [PropertyOrder(-8)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/运行时状态")]
+        [Button("刷新安全区域", ButtonSizes.Medium)]
+        [GUIColor(0.4f, 0.7f, 0.9f)]
         public void Refresh()
         {
             UpdateRect();
@@ -152,14 +180,15 @@ namespace Ember.UIExtension
 
         private async void DelayedRefresh()
         {
-            if (!isActiveAndEnabled) return;
+            if (!this || !isActiveAndEnabled) return;
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            if (!this || !isActiveAndEnabled) return;
             Refresh();
         }
 
         private void UpdateRect()
         {
-            if (!(enabled && gameObject.activeInHierarchy))
+            if (!this || !(enabled && gameObject.activeInHierarchy))
                 return;
 
             var selectedOrientation = _orientationType == SupportedOrientations.Dual && IsLandscape()
@@ -330,14 +359,22 @@ namespace Ember.UIExtension
 
         private enum SupportedOrientations
         {
+            [LabelText("单配置")]
             Single,
+
+            [LabelText("横竖屏独立")]
             Dual,
         }
 
         private enum EdgeEvaluationMode
         {
+            [LabelText("应用")]
             On,
+
+            [LabelText("平衡")]
             Balanced,
+
+            [LabelText("忽略")]
             Off,
         }
 
@@ -345,12 +382,23 @@ namespace Ember.UIExtension
         [Preserve]
         private class PerEdgeEvaluationModes
         {
+            [HorizontalGroup("四边")]
+            [LabelWidth(25)]
             [LabelText("左")]
             public EdgeEvaluationMode left;
+
+            [HorizontalGroup("四边")]
+            [LabelWidth(25)]
             [LabelText("下")]
             public EdgeEvaluationMode bottom;
+
+            [HorizontalGroup("四边")]
+            [LabelWidth(25)]
             [LabelText("上")]
             public EdgeEvaluationMode top;
+
+            [HorizontalGroup("四边")]
+            [LabelWidth(25)]
             [LabelText("右")]
             public EdgeEvaluationMode right;
         }

@@ -118,44 +118,49 @@ namespace Ember.UI
         }
 
         /// <summary>
-        /// 关闭 MainPage。如果存在上一个 MainPage，恢复它。
+        /// 将 MainPage 从路由栈移除，返回退出过渡完成后需恢复的上一个 MainPage。
+        /// 恢复动作必须由 <see cref="ResumeMainPageAfterClose"/> 在关闭过渡结束后执行。
         /// </summary>
-        public void PopMainPage(EUIPage page)
+        public EUIPage PopMainPage(EUIPage page)
         {
             var index = FindMainPageIndex(page);
-            if (index < 0) return;
+            if (index < 0) return null;
 
-            // 关闭此 MainPage 上的所有 Popup
-            var entry = _mainPageStack[index];
-            for (int i = entry.Popups.Count - 1; i >= 0; i--)
-            {
-                var popup = entry.Popups[i];
-                _uiManager.ClosePageInternal(popup);
-            }
-            entry.Popups.Clear();
-
-            // 移除
             _mainPageStack.RemoveAt(index);
 
-            // 如果存在前一个 MainPage，恢复它
-            if (index > 0 && index - 1 < _mainPageStack.Count)
+            return index > 0 && index - 1 < _mainPageStack.Count
+                ? _mainPageStack[index - 1].Page
+                : null;
+        }
+
+        /// <summary>获取指定 MainPage 当前持有的 Popup 快照源。调用方在遍历关闭前应自行复制。</summary>
+        public IReadOnlyList<EUIPage> GetPopups(EUIPage mainPage)
+        {
+            int index = FindMainPageIndex(mainPage);
+            return index >= 0 ? _mainPageStack[index].Popups : Array.Empty<EUIPage>();
+        }
+
+        /// <summary>关闭过渡完成后恢复上一个 MainPage 及其 Popup。</summary>
+        public void ResumeMainPageAfterClose(EUIPage mainPage)
+        {
+            int index = FindMainPageIndex(mainPage);
+            if (index < 0) return;
+
+            var entry = _mainPageStack[index];
+            _uiManager.EnqueuePageOperation(() =>
             {
-                var previous = _mainPageStack[index - 1];
+                ((IEUIView)entry.Page).OnResume();
+                EUIObserver.NotifyResumed(entry.Page.EUIPageDef);
+            });
+
+            foreach (var popup in entry.Popups)
+            {
+                var capturedPopup = popup;
                 _uiManager.EnqueuePageOperation(() =>
                 {
-                    ((IEUIView)previous.Page).OnResume();
-                    EUIObserver.NotifyResumed(previous.Page.EUIPageDef);
+                    ((IEUIView)capturedPopup).OnResume();
+                    EUIObserver.NotifyResumed(capturedPopup.EUIPageDef);
                 });
-
-                // 恢复 Popup
-                foreach (var popup in previous.Popups)
-                {
-                    _uiManager.EnqueuePageOperation(() =>
-                    {
-                        ((IEUIView)popup).OnResume();
-                        EUIObserver.NotifyResumed(popup.EUIPageDef);
-                    });
-                }
             }
         }
 
@@ -168,18 +173,23 @@ namespace Ember.UI
 
             var current = _mainPageStack[_mainPageStack.Count - 1];
 
-            // HideLowerPage：如果之前没有 Popup，隐藏 MainPage
+            // 全屏弹窗标记：完全遮盖下层时才隐藏下方页面（推裁剪面远端）；
+            // 普通弹窗不隐藏下层——下层保持渲染，弹窗四周露出的内容可见，靠遮罩拦截交互。
+            bool fullScreen = popup.EUIPageDef != null && popup.EUIPageDef.IsFullScreen;
+
+            // 如果之前没有 Popup：全屏弹窗隐藏 MainPage
             if (current.Popups.Count == 0)
             {
-                SetPageVisible(current.Page, false);
+                if (fullScreen)
+                    SetPageVisible(current.Page, false);
             }
-
-            // 隐藏前一个 Popup（如果有）
-            if (current.Popups.Count > 0)
+            // 已有 Popup：全屏弹窗隐藏前一个 Popup（OnPause 语义保持——非全屏弹窗叠加也通知遮挡）
+            else
             {
                 var prevPopup = current.Popups[current.Popups.Count - 1];
                 _uiManager.EnqueuePageOperation(() => ((IEUIView)prevPopup).OnPause());
-                SetPageVisible(prevPopup, false);
+                if (fullScreen)
+                    SetPageVisible(prevPopup, false);
             }
 
             current.Popups.Add(popup);
@@ -193,37 +203,48 @@ namespace Ember.UI
             }
         }
 
-        /// <summary>移除 Popup，恢复前一个 Popup 或 MainPage</summary>
-        public void RemovePopup(EUIPage popup)
+        /// <summary>
+        /// 将 Popup 从路由列表移除，返回退出过渡完成后需恢复的下层页面。
+        /// 本方法不立即改变下层可见性或触发 OnResume。
+        /// </summary>
+        public EUIPage RemovePopup(EUIPage popup)
         {
             foreach (var entry in _mainPageStack)
             {
                 if (entry.Popups.Remove(popup))
                 {
-                    // 如果还有 Popup，恢复上一个
-                    if (entry.Popups.Count > 0)
-                    {
-                        var prev = entry.Popups[entry.Popups.Count - 1];
-                        _uiManager.EnqueuePageOperation(() =>
-                        {
-                            SetPageVisible(prev, true);
-                            ((IEUIView)prev).OnResume();
-                            EUIObserver.NotifyResumed(prev.EUIPageDef);
-                        });
-                    }
-                    else
-                    {
-                        // 恢复 MainPage
-                        SetPageVisible(entry.Page, true);
-                        _uiManager.EnqueuePageOperation(() =>
-                        {
-                            ((IEUIView)entry.Page).OnResume();
-                            EUIObserver.NotifyResumed(entry.Page.EUIPageDef);
-                        });
-                    }
-                    return;
+                    return entry.Popups.Count > 0
+                        ? entry.Popups[entry.Popups.Count - 1]
+                        : entry.Page;
                 }
             }
+
+            return null;
+        }
+
+        /// <summary>Popup 关闭过渡完成后，恢复下层页面可见性与生命周期。</summary>
+        public void ResumePageAfterPopupClose(EUIPage page)
+        {
+            if (page == null || !ContainsRoutedPage(page)) return;
+
+            SetPageVisible(page, true);
+            _uiManager.EnqueuePageOperation(() =>
+            {
+                ((IEUIView)page).OnResume();
+                EUIObserver.NotifyResumed(page.EUIPageDef);
+            });
+        }
+
+        /// <summary>页面是否仍在 MainPage / Popup 路由中，防止批量关闭时恢复已移除的下层页面。</summary>
+        private bool ContainsRoutedPage(EUIPage page)
+        {
+            foreach (var entry in _mainPageStack)
+            {
+                if (entry.Page == page || entry.Popups.Contains(page))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>获取指定 MainPage 上的 Popup 数量</summary>

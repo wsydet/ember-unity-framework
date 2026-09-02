@@ -16,6 +16,8 @@ namespace Game.UI
     {
         // ── 框架生命周期（块内框架所有；每个 override 末尾调用对应的用户级钩子）──
         // [EmberManaged:begin Lifecycle]
+
+
         public override void OnInit()
         {
             base.OnInit();

@@ -30,6 +30,11 @@ namespace Game.UI
     {
         // ── 框架代码（块内框架所有；生命周期 override 末尾调用对应的用户级钩子）──
         // [EmberManaged:begin Lifecycle]
+        // [EmberOptional:begin UIUpdate]
+        /// <summary>是否需要每帧 Update；由 EUIBinding「使用 UIUpdate」生成。</summary>
+        public override bool NeedUpdate => true;
+        // [EmberOptional:end UIUpdate]
+
         #region 内部参数
 
         private EUILoadingPageSettings _settings;
@@ -52,7 +57,7 @@ namespace Game.UI
         {
             base.OnInit();
             _settings = CustomSettings as EUILoadingPageSettings;
-            NeedUpdate = true;
+            // 每帧更新由 EUIBinding「使用 UIUpdate」在框架块中开启
             // 顶层状态机的快速转场判定必须在 OnShow 之前生效：
             // 拦截器在页面打开完成后才送达 SkipFakeProgress，若等那时，OnShow 已按开关把进度条显示出来了
             if (EmberStateMachine.QuickSceneLoad)
@@ -98,7 +103,6 @@ namespace Game.UI
         public override void OnHide()
         {
             base.OnHide();
-            NeedUpdate = false;
             OnHideUser();
         }
 
@@ -116,58 +120,9 @@ namespace Game.UI
 
         public override void OnUpdate()
         {
-            // 无假进度模式（显式快速转场 / 未勾选任何进度显示 / 无配置）：只隐藏进度显示，
-            // 就绪由 IsTransitionReady 的真实加载判定
-            if (!UseFakeProgress)
-            {
-                HideProgressVisuals();
-                return;
-            }
-
-            // 渐入完成前不开始计时（进度条在此期间不可见）
-            if (_fakeComplete || !_fadeInDone) return;
-
-            var sceneMgr = EmberSceneManager.Instance;
-            bool realDone = sceneMgr != null && !sceneMgr.IsLoading;
-
-            if (!_inTailPhase)
-            {
-                // Phase 1: 快充阶段 → 阈值
-                _fastElapsed += Time.deltaTime;
-                float fastT = Mathf.Clamp01(_fastElapsed / _settings.fastFillDuration);
-                _displayProgress = fastT * _settings.fastFillThreshold;
-
-                if (fastT >= 1f)
-                {
-                    if (realDone)
-                    {
-                        // 真实加载已完成 → 进入收尾
-                        _inTailPhase = true;
-                        _tailElapsed = 0f;
-                    }
-                    else
-                    {
-                        // 真实加载未完成 → 卡在阈值等待
-                        _displayProgress = _settings.fastFillThreshold;
-                    }
-                }
-            }
-
-            if (_inTailPhase)
-            {
-                // Phase 2: 收尾阶段 → 当前进度平滑到 100%
-                _tailElapsed += Time.deltaTime;
-                float tailT = Mathf.Clamp01(_tailElapsed / _settings.tailDuration);
-                _displayProgress = Mathf.Lerp(_settings.fastFillThreshold, 1f, tailT);
-
-                if (tailT >= 1f)
-                {
-                    _displayProgress = 1f;
-                    _fakeComplete = true;
-                }
-            }
-
-            SetProgress(_displayProgress);
+            base.OnUpdate();
+            UpdateFakeProgress();
+            OnUpdateUser();
         }
 
         public override void OnResetDefault()
@@ -279,6 +234,62 @@ namespace Game.UI
 
         #region 内部方法
 
+        private void UpdateFakeProgress()
+        {
+            // 无假进度模式（显式快速转场 / 未勾选任何进度显示 / 无配置）：只隐藏进度显示，
+            // 就绪由 IsTransitionReady 的真实加载判定
+            if (!UseFakeProgress)
+            {
+                HideProgressVisuals();
+                return;
+            }
+
+            // 渐入完成前不开始计时（进度条在此期间不可见）
+            if (_fakeComplete || !_fadeInDone) return;
+
+            var sceneMgr = EmberSceneManager.Instance;
+            bool realDone = sceneMgr != null && !sceneMgr.IsLoading;
+
+            if (!_inTailPhase)
+            {
+                // Phase 1: 快充阶段 → 阈值
+                _fastElapsed += Time.deltaTime;
+                float fastT = Mathf.Clamp01(_fastElapsed / _settings.fastFillDuration);
+                _displayProgress = fastT * _settings.fastFillThreshold;
+
+                if (fastT >= 1f)
+                {
+                    if (realDone)
+                    {
+                        // 真实加载已完成 → 进入收尾
+                        _inTailPhase = true;
+                        _tailElapsed = 0f;
+                    }
+                    else
+                    {
+                        // 真实加载未完成 → 卡在阈值等待
+                        _displayProgress = _settings.fastFillThreshold;
+                    }
+                }
+            }
+
+            if (_inTailPhase)
+            {
+                // Phase 2: 收尾阶段 → 当前进度平滑到 100%
+                _tailElapsed += Time.deltaTime;
+                float tailT = Mathf.Clamp01(_tailElapsed / _settings.tailDuration);
+                _displayProgress = Mathf.Lerp(_settings.fastFillThreshold, 1f, tailT);
+
+                if (tailT >= 1f)
+                {
+                    _displayProgress = 1f;
+                    _fakeComplete = true;
+                }
+            }
+
+            SetProgress(_displayProgress);
+        }
+
         private void ApplySettings()
         {
             if (_settings == null) return;
@@ -381,6 +392,12 @@ namespace Game.UI
         private void OnCloseUser()
         {
             // 页面被关闭
+        }
+
+        /// <summary>用户逐帧更新钩子：框架 OnUpdate 结束时调用。</summary>
+        private void OnUpdateUser()
+        {
+            // 在此编写逐帧业务逻辑
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>

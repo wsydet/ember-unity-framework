@@ -21,6 +21,7 @@ namespace Ember.UI
 
         private readonly Stack<GameObject> _pool = new Stack<GameObject>();
         private readonly Transform _parent;
+        private readonly Camera _uiCamera;
         private readonly int _sortingOrderOffset;
         private readonly Color _maskColor = new Color(0f, 0f, 0f, 0.5f);
 
@@ -34,10 +35,12 @@ namespace Ember.UI
         /// 创建 BG Mask 对象池。
         /// </summary>
         /// <param name="parent">Mask 的父 Transform</param>
+        /// <param name="uiCamera">UI 相机（与页面 Canvas 一致，保证遮罩与页面同空间排序）</param>
         /// <param name="sortingOrderOffset">相对于 Canvas sortingOrder 的偏移</param>
-        public EUIBgMaskPool(Transform parent, int sortingOrderOffset = -1)
+        public EUIBgMaskPool(Transform parent, Camera uiCamera, int sortingOrderOffset = -1)
         {
             _parent = parent;
+            _uiCamera = uiCamera;
             _sortingOrderOffset = sortingOrderOffset;
         }
 
@@ -52,7 +55,10 @@ namespace Ember.UI
         /// </summary>
         /// <param name="sortingOrder">遮罩的 sortingOrder</param>
         /// <param name="onClick">点击遮罩的回调（通常为关闭 Popup）</param>
-        public GameObject Get(int sortingOrder, System.Action onClick = null)
+        /// <param name="maskColor">遮罩颜色（可配置，如 EUIManager.PopupMaskColor）；null 则保持默认/池内原色</param>
+        /// <param name="layer">所属弹窗的 Layer；传入有效值时同步到遮罩，保证 UI Camera 能渲染</param>
+        public GameObject Get(int sortingOrder, System.Action onClick = null, Color? maskColor = null,
+            int layer = -1)
         {
             GameObject mask;
             if (_pool.Count > 0)
@@ -65,7 +71,17 @@ namespace Ember.UI
                 mask = CreateMask();
             }
 
+            if (layer >= 0)
+                mask.layer = layer;
+
             mask.transform.SetAsLastSibling();
+
+            // 设置遮罩颜色（创建与复用都刷新，支持运行时改配置）
+            if (maskColor.HasValue)
+            {
+                var img = mask.GetComponent<Image>();
+                if (img) img.color = maskColor.Value;
+            }
 
             // 设置 sortingOrder
             var canvas = mask.GetComponent<Canvas>();
@@ -121,22 +137,27 @@ namespace Ember.UI
 
         private GameObject CreateMask()
         {
-            var go = new GameObject(MaskName, typeof(RectTransform), typeof(Canvas), typeof(CanvasRenderer), typeof(Image), typeof(Button));
-            go.transform.SetParent(_parent);
+            var go = new GameObject(MaskName, typeof(RectTransform), typeof(Canvas),
+                typeof(CanvasRenderer), typeof(Image), typeof(Button), typeof(GraphicRaycaster));
+            go.transform.SetParent(_parent, false);
 
             // RectTransform 填满父级
             var rt = go.GetComponent<RectTransform>();
             rt.anchorMin = Vector2.zero;
             rt.anchorMax = Vector2.one;
-            rt.sizeDelta = Vector2.zero;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
 
             // Image
             var img = go.GetComponent<Image>();
             img.color = _maskColor;
             img.raycastTarget = true;
 
-            // Canvas
+            // Canvas：与页面一致走 ScreenSpaceCamera + UI 相机。
+            // 若保持默认 ScreenSpaceOverlay，遮罩会永远渲染在所有 Camera 模式 Canvas（页面）之上，盖住弹窗。
             var canvas = go.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            canvas.worldCamera = _uiCamera;
             canvas.overrideSorting = true;
 
             return go;

@@ -27,6 +27,7 @@
 |----------|---------------------|------------------|------|
 | 全屏主页面 | `MainPage = 1` | `MainPage` | ✅ |
 | 模态弹窗 | `Popup = 2` | `Popup` | ✅ |
+| 全屏弹窗 | `Popup` 与附加逻辑组合 | `FullScreenPopup` | ✅ 互斥类型 |
 | 顶级弹窗 | `TopMost = 4` | `TopMost` | ✅ |
 | 子页面 | `SubPage = 8` | `SubPage` | ✅ |
 | 独立页面 | `FreePage = 16`（硬编码固定排序） | `Overlay` | ✅ 概念对齐 |
@@ -34,7 +35,7 @@
 
 **差异说明：**
 - Burner 用 `[Flags]` 枚举，支持 `Popup | TopMost` 组合，灵活但容易出错
-- Ember 用独立枚举值，`PageType.TopMost` 和 `PageType.Popup` 互斥，类型更安全但少了组合灵活性
+- Ember 用独立枚举值，`PageType.TopMost`、`PageType.Popup` 和 `PageType.FullScreenPopup` 互斥；EUIBinding 与运行时共用 PageType，避免配置层 Flags 产生非法组合
 - Burner 的 `FreePage` 有硬编码的 per-page 排序字典；Ember 的 `Overlay` 没有 per-page 排序，所有 Overlay 共享一个列表
 
 ---

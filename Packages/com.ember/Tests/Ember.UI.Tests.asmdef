@@ -3,6 +3,8 @@
     "rootNamespace": "Ember.UI.Tests",
     "references": [
         "Ember.UI.Runtime",
+        "Ember.UIExtension.Runtime",
+        "Ember.UIExtension.Editor",
         "Ember.Core.Runtime",
         "Ember.Basic.Runtime",
         "UniRx"

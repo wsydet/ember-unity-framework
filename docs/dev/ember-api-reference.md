@@ -1375,46 +1375,91 @@ handle.Dispose();
 
 ## UI 管理
 
-> 位置: `Ember/UI/Runtime/`, 命名空间 `Ember.UI`
-> ⚠️ **此模块处于结构性重写中（2026-08-04 启动），API 即将变化。**
+> 位置: `Packages/com.ember/UI/Runtime/`，命名空间 `Ember.UI`
+> v0.10.0 已完成页面类型、层级、遮罩、过渡、SafeArea 与代码生成收口。完整开发约定见 [UI开发参考.md](../user/UI开发参考.md)。
 
-### EUIManager（当前版本）
+### EUIManager
+
+业务代码统一引用 `GamePages` 中的 `EUIPageDef`，不要手写预制体路径。
 
 ```csharp
-// 打开页面
-EUIManager.Instance.Push(GamePages.Settings, args: null);
+// 页面路由
+EUIManager.Instance.ShowMainPage(GamePages.EUIMainPage);
+EUIManager.Instance.ShowPopup(GamePages.EUISettingPage, args);
+EUIManager.Instance.ShowTopMost(GamePages.EUILoadingPage);
+EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
+
+// FreePage / Overlay 同样按定义中的 PageType 路由，没有单独的 ShowFreePage API
+EUIManager.Instance.ShowTopMost(GamePages.GMPage);
+
+// 背景与预加载
+EUIManager.Instance.SetBackground(GamePages.EUIBackgroundPage);
+await EUIManager.Instance.SetBackgroundAsync(GamePages.EUIBackgroundPage);
+EUIManager.Instance.ClearBackground();
+EUIManager.Instance.PreloadPage(GamePages.EUISettingPage);
 
 // 关闭
-EUIManager.Instance.Pop(UILayer.Popup);
-EUIManager.Instance.CloseAll();
+EUIManager.Instance.ClosePage(page, returnValue);
+EUIManager.Instance.CloseTopPopup();
+EUIManager.Instance.CloseAllPopups();
+EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage); // 当前按定义查找 MainPage / TopMost
 
-// 查询
-var view = EUIManager.Instance.GetTopView((int)UILayer.Normal);
-bool has = EUIManager.Instance.HasView((int)UILayer.Popup);
+// 仅隐藏/恢复视图，页面实例与逻辑仍保留
+EUIManager.Instance.HidePageViewOnly(GamePages.EUIMainPage);
+EUIManager.Instance.ShowPageViewOnly(GamePages.EUIMainPage);
+
+object result = EUIManager.Instance.GetReturnValue(page);
 ```
 
-### IEUIView
+主要签名：
 
 ```csharp
-public interface IEUIView {
-    void OnOpen(object args);   // 首次展示
-    void OnClose();             // 被关闭
-    void OnPause();             // 被覆盖
-    void OnResume();            // 恢复可见
+void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowPopup(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowTopMost(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowSubPage(EUIPageDef pageDef, EUIPage parentPage, object args = null, Action<EUIPage> onComplete = null);
+void PreloadPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ClosePage(EUIPage page, object returnValue = null);
+```
+
+- `ShowMainPage` 压入 MainPage 栈并暂停旧页。跨状态的替换式切换应由旧状态在退出钩子中 `ClosePageByDef`，不要依赖新页自动销毁旧页。
+- Popup 遮罩默认点击后执行 `EUIManager.ClosePage`。如果弹窗本身由状态机 `Push/Pop` 管理，应关闭 `clickMaskToClose`，再由按钮执行状态机 `Pop`，避免只关页面而未退出状态。
+- `FullScreenPopup` 沿用 Popup 栈和遮罩，并在打开时隐藏下层；普通 Popup 保留下层渲染，由遮罩拦截交互。
+- 全局遮罩兜底色可通过 `EUIManager.PopupMaskColor` 设置；默认 Loading 定义可通过 `EUIManager.DefaultLoadingPageDef` 设置。
+
+### EUIPageDef / PageType / UILayer
+
+```csharp
+public EUIPageDef(
+    string prefabPath,
+    UILayer layer,
+    PageType pageType = PageType.MainPage,
+    int? overlaySortingOrder = null,
+    int? freePageSortingOrder = null,
+    bool isFullScreen = false); // 仅兼容旧注册；新代码使用 FullScreenPopup
+
+public enum UILayer
+{
+    Background = 0,
+    Normal = 1000,
+    Popup = 2000,
+    TopMost = 25000,
+}
+
+public enum PageType
+{
+    Background = 0,
+    MainPage = 1,
+    Popup = 2,
+    TopMost = 3,
+    SubPage = 4,
+    Overlay = 5,
+    FreePage = 6,
+    FullScreenPopup = 7,
 }
 ```
 
-### EUIPageDef / UILayer
-
-```csharp
-public class EUIPageDef {
-    public string PrefabPath { get; }
-    public int Layer { get; }
-    public EUIPageDef(string prefabPath, int layer);
-}
-
-public enum UILayer { Background=0, Normal=100, Popup=200, TopMost=300 }
-```
+`PageType` 决定入栈和生命周期行为，`UILayer` 决定渲染层级；两者彼此独立。`SubPage` 必须使用带父页面的 `ShowSubPage`。`Overlay` 应指定 `overlaySortingOrder`，`FreePage` 应指定 `freePageSortingOrder`（GM 示例为 30000）。
 
 ---
 

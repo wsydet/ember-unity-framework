@@ -39,7 +39,7 @@ namespace Ember.UI
     ///   → Logic.OnReset()                    //   [用户 override] 重置 UI 到默认状态
     ///   → PlayShow()                         // 表现阶段：播放打开动画
     ///       → Logic.OnShow()                 //   [用户 override] 页面即将可见
-    ///       → OnShow()                       //   [子类 override] 打开动画协程（返回 null = 无动画）
+    ///       → 当前单一过渡驱动             //   Preset / Animator / Custom
     ///           → CompleteShow()             // 动画结束：α=1, 可交互, State→Opened
     ///
     /// // ── 运行时 ──
@@ -53,7 +53,7 @@ namespace Ember.UI
     /// // ── 关闭流程 ──
     /// PlayHide()                             // 表现阶段：播放关闭动画
     ///   → Logic.OnHide()                     //   [用户 override] 页面即将隐藏
-    ///   → OnHide()                           //   [子类 override] 关闭动画协程（返回 null = 无动画）
+    ///   → 当前单一过渡驱动                 //   Preset / Animator / Custom
     ///       → CompleteHide()                 // 动画结束：α=0, 不可交互, State→Closed
     ///   → Cleanup()                          // 数据阶段：注销事件、释放引用
     ///       → OnCleanup()                    //   [子类 override] 框架层清理
@@ -77,8 +77,7 @@ namespace Ember.UI
     /// <para><b>三层分工：</b></para>
     /// <list type="bullet">
     ///   <item><b>IEUIView</b> — 契约：定义生命周期方法签名，<see cref="EUIViewEngine"/> 只认这个接口</item>
-    ///   <item><b>EUIPage</b> — 框架实现：管理 GameObject/Canvas/CanvasGroup，驱动 Logic 钩子，
-    ///        提供 protected virtual 动画钩子（<see cref="OnShow"/> / <see cref="OnHide"/> 等）供子类 override</item>
+    ///   <item><b>EUIPage</b> — 框架实现：管理 GameObject/Canvas/CanvasGroup，驱动 Logic 钩子与单一过渡流程</item>
     ///   <item><b>EUILogic</b> — 业务基类：用户继承后 override 钩子方法，写具体业务逻辑，
     ///        不需要知道框架流程怎么走的</item>
     /// </list>
@@ -93,6 +92,7 @@ namespace Ember.UI
         private readonly CanvasGroup _canvasGroup;
         private readonly Canvas _canvas;
         private readonly RectTransform _rectTransform;
+        private Animator _animator;
 
         private PageState _state = PageState.Unloaded;
         private EUIPageDef _pageDef;
@@ -104,12 +104,14 @@ namespace Ember.UI
         // 过渡动画配置（由 EUIBindingBridge 在页面创建时注入）
         private bool _usePresetFade;
         private bool _useTransitionBlock;
+        private bool _useAnimator;
         private bool _useCustomTransition;
         private float _transitionInTime;
         private float _transitionOutTime;
 
-        /// <summary>是否启用预设过渡（「默认渐入渐出」或「方块过渡」二选一）。</summary>
-        private bool UsePreset => _usePresetFade || _useTransitionBlock;
+        /// <summary>是否存在需要 await 的过渡阶段。</summary>
+        private bool HasTransition => _usePresetFade || _useTransitionBlock || _useAnimator || _useCustomTransition;
+        private bool ShouldBlockRaycasts => _pageDef?.PageType != PageType.Background;
 
         // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
         private Action _onShowComplete;
@@ -196,6 +198,52 @@ namespace Ember.UI
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.interactable = false;
+        }
+
+        /// <summary>
+        /// 统一 Animator 获取：优先根节点，再查找子节点，结果可复用。
+        /// </summary>
+        private Animator ResolveAnimator()
+        {
+            if (_animator != null) return _animator;
+
+            _animator = _gameObject.GetComponent<Animator>();
+            if (_animator == null)
+                _animator = _gameObject.GetComponentInChildren<Animator>(true);
+
+            return _animator;
+        }
+
+        /// <summary>
+        /// 非方块过渡时，若 Animator 节点携带 CanvasGroup，优先用它控制过渡显隐；
+        /// 否则回退到页面根 CanvasGroup。
+        /// </summary>
+        private CanvasGroup GetTransitionCanvasGroup()
+        {
+            if (_usePresetFade || _useAnimator)
+            {
+                var animator = ResolveAnimator();
+                if (animator != null)
+                {
+                    var animatorGroup = animator.GetComponent<CanvasGroup>();
+                    if (animatorGroup != null)
+                        return animatorGroup;
+                }
+            }
+
+            return _canvasGroup;
+        }
+
+        /// <summary>
+        /// 供默认过渡处理器使用的过渡目标节点：有动画器视觉层时返回其 GameObject，否则返回页面根节点。
+        /// </summary>
+        private GameObject GetTransitionTarget()
+        {
+            var transitionCanvasGroup = GetTransitionCanvasGroup();
+            if (transitionCanvasGroup != null)
+                return transitionCanvasGroup.gameObject;
+
+            return _gameObject;
         }
 
         /// <summary>
@@ -342,7 +390,8 @@ namespace Ember.UI
             try { _logic?.BroadcastShow(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
 
-            if (!UsePreset && !_useCustomTransition)
+            PrepareShowTransition();
+            if (!HasTransition)
             {
                 CompleteShow();
             }
@@ -371,7 +420,7 @@ namespace Ember.UI
             if (_state != PageState.Paused) return;
             _state = PageState.Opened;
             _canvasGroup.interactable = true;
-            _canvasGroup.blocksRaycasts = true;
+            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
             OnResumed();
             try { _logic?.BroadcastResume(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResume '{Name}': {ex}"); }
@@ -387,7 +436,7 @@ namespace Ember.UI
                 {
                     _state = PageState.Opened;
                     _canvasGroup.alpha = 1f;
-                    _canvasGroup.blocksRaycasts = true;
+                    _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
                     _canvasGroup.interactable = true;
                 }
 
@@ -438,7 +487,7 @@ namespace Ember.UI
 
             _state = PageState.Opened;
             _canvasGroup.alpha = 1f;
-            _canvasGroup.blocksRaycasts = true;
+            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
             _canvasGroup.interactable = true;
 
             try { _logic?.BroadcastShow(); }
@@ -453,10 +502,13 @@ namespace Ember.UI
 
             Profiler.BeginSample("EUIPage.PlayHide");
             _state = PageState.Hiding;
+            // 退出阶段立即禁止重复交互，但保留 blocksRaycasts 拦截下层点击，
+            // 直到 CompleteHide 再完全放行。
+            _canvasGroup.interactable = false;
             try { _logic?.BroadcastHide(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
 
-            if (!UsePreset && !_useCustomTransition)
+            if (!HasTransition)
             {
                 CompleteHide();
             }
@@ -542,45 +594,6 @@ namespace Ember.UI
         protected virtual void OnInitialize(object args) { }
 
         /// <summary>
-        /// 打开动画 —— 在 <see cref="PlayShow"/> 中、<b><see cref="EUILogic.OnShow"/> 之后</b>调用。
-        /// </summary>
-        /// <para><b>触发时机：</b>在 Init 完成（State=Loaded）之后，由 <see cref="PlayShow"/> 调用。
-        /// 此时数据已就绪（Logic.OnInit/OnOpen 已执行完），CanvasGroup α=0。</para>
-        /// <para><b>职责：</b>播放打开动画（fade in、slide in 等）。框架 await 此 UniTask，
-        /// 动画结束后自动调用 <see cref="CompleteShow"/>（α=1, 可交互, State→Opened）。</para>
-        /// <para><b>注意：</b>这是 EUIPage 子类的 override 点，不是 EUILogic 的。
-        /// <b>业务逻辑</b>（如刷新数据）应写在 <see cref="EUILogic.OnShow"/> 中，不要写在这里。</para>
-        /// <para><b>示例：</b></para>
-        /// <code>
-        /// public class MyFancyPage : EUIPage
-        /// {
-        ///     protected override async UniTask OnShow()
-        ///     {
-        ///         await CanvasGroup.DOFade(1f, 0.3f).ToUniTask();
-        ///     }
-        /// }
-        /// </code>
-        protected virtual UniTask OnShow() => UniTask.CompletedTask;
-
-        /// <summary>
-        /// 关闭动画 —— 在 <see cref="PlayHide"/> 中、<b><see cref="EUILogic.OnHide"/> 之后</b>调用。
-        /// </summary>
-        /// <para><b>触发时机：</b>页面被关闭时，在 <see cref="PlayHide"/> 中调用。此时 State=Hiding，Logic.OnHide 已执行完。</para>
-        /// <para><b>职责：</b>播放关闭动画（fade out、slide out 等）。框架 await 动画完成后再调 <see cref="CompleteHide"/>
-        /// （α=0, 不可交互, State→Closed），随后进入 <see cref="Cleanup"/>。</para>
-        /// <para><b>示例：</b></para>
-        /// <code>
-        /// public class MyFancyPage : EUIPage
-        /// {
-        ///     protected override async UniTask OnHide()
-        ///     {
-        ///         await CanvasGroup.DOFade(0f, 0.2f).ToUniTask();
-        ///     }
-        /// }
-        /// </code>
-        protected virtual UniTask OnHide() => UniTask.CompletedTask;
-
-        /// <summary>
         /// 清理 —— 在 <see cref="Cleanup"/> 中、<b>最早调用</b>（早于 <see cref="EUILogic.OnClose"/>、<see cref="EUILogic.OnReset"/>、<see cref="EUILogic.OnDispose"/>）。
         /// </summary>
         /// <para><b>触发时机：</b>PlayHide 动画完成后（或无需动画时立即），在 Cleanup 中<b>第一顺位</b>调用。
@@ -654,19 +667,95 @@ namespace Ember.UI
             return EUIViewEngine.Instance.TransitionHandler;
         }
 
+        /// <summary>
+        /// 为过渡准备显示层 Alpha。预设渐入从 0 开始；Animator 视觉控制优先使用 Animator 所在节点的 CanvasGroup；
+        /// 自定义路径直接按根节点可见性驱动。方块过渡保持原逻辑，由 EUITransitionBlock.PlayShowAsync 自行置为可见。
+        /// </summary>
+        private void PrepareShowTransition()
+        {
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup == null)
+                transitionGroup = _canvasGroup;
+
+            transitionGroup.alpha = _usePresetFade ? 0f : 1f;
+
+            // 根节点可能承载“统一可见性”控制，不应被 0 alpha 锁死内容。
+            if (transitionGroup != _canvasGroup)
+                _canvasGroup.alpha = 1f;
+
+            // Showing 全阶段先拦住下层点击，但本页 Selectable 必须等动画完成后才开放。
+            // Loading 的透明全屏 Background 位于 Animator 子树，因此父根和承载组都要同步。
+            var shouldBlockRaycasts = ShouldBlockRaycasts;
+            _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
+            _canvasGroup.interactable = false;
+            var animatorGroup = ResolveAnimator()?.GetComponent<CanvasGroup>();
+            if (animatorGroup != null)
+            {
+                animatorGroup.blocksRaycasts = shouldBlockRaycasts;
+                animatorGroup.interactable = false;
+            }
+        }
+
         private async UniTask RunShowAnimationSequence()
         {
-            if (UsePreset)
-                await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
-            if (_useCustomTransition)
-                await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
-            CompleteShow();
+            try
+            {
+                if (_useTransitionBlock)
+                {
+                    // Loading 专用特殊链路：保持原时序（方块扫入 → Custom Enter）。
+                    await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
+                    if (_useCustomTransition)
+                        await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
+                }
+                else if (_usePresetFade)
+                {
+                    await ResolvePresetHandler().PlayShowAsync(GetTransitionTarget(), _transitionInTime);
+                }
+                else if (_useAnimator)
+                {
+                    await PlayAnimatorTransitionAsync(true);
+                }
+                else if (_useCustomTransition)
+                {
+                    await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
+                }
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"页面 '{Name}' 打开过渡异常，已强制完成: {ex}");
+            }
+            finally
+            {
+                CompleteShow();
+            }
         }
 
         private void CompleteShow()
         {
+            var shouldBlockRaycasts = ShouldBlockRaycasts;
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup == null)
+                transitionGroup = _canvasGroup;
+
+            transitionGroup.alpha = 1f;
+            // Animator 视觉层也可能自带 CanvasGroup。父级根 CanvasGroup 只能做页面总闸，
+            // 不会覆盖子组的 blocksRaycasts=false；打开完成时必须同步恢复过渡层，
+            // 否则子控件（包括 Loading 背景）会始终无法接收射线。
+            transitionGroup.blocksRaycasts = shouldBlockRaycasts;
+            transitionGroup.interactable = true;
+
+            // Animator 容器承载页面全部视觉内容，但方块、Custom 与 None 模式不会把它
+            // 选为 transitionGroup。无论当前由哪种通道负责表现，打开完成后都必须恢复
+            // 该子组的交互；根 CanvasGroup 仍负责暂停、关闭和退出阶段的页面总闸。
+            var animatorGroup = ResolveAnimator()?.GetComponent<CanvasGroup>();
+            if (animatorGroup != null)
+            {
+                animatorGroup.blocksRaycasts = shouldBlockRaycasts;
+                animatorGroup.interactable = true;
+            }
+
             _canvasGroup.alpha = 1f;
-            _canvasGroup.blocksRaycasts = true;
+            _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
             _canvasGroup.interactable = true;
             _state = PageState.Opened;
 
@@ -692,15 +781,113 @@ namespace Ember.UI
 
         private async UniTask RunHideAnimationSequence()
         {
-            if (_useCustomTransition)
-                await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
-            if (UsePreset)
-                await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
-            CompleteHide();
+            try
+            {
+                if (_useTransitionBlock)
+                {
+                    // Loading 专用特殊链路：保持原时序（Custom Exit → 方块扫出）。
+                    if (_useCustomTransition)
+                        await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+                    await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
+                }
+                else if (_usePresetFade)
+                {
+                    await ResolvePresetHandler().PlayHideAsync(GetTransitionTarget(), _transitionOutTime);
+                }
+                else if (_useAnimator)
+                {
+                    await PlayAnimatorTransitionAsync(false);
+                }
+                else if (_useCustomTransition)
+                {
+                    await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+                }
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"页面 '{Name}' 关闭过渡异常，已强制完成: {ex}");
+            }
+            finally
+            {
+                CompleteHide();
+            }
+        }
+
+        // ── Animator 过渡 ──
+
+        /// <summary>Animator 打开动画状态名约定。</summary>
+        private const string AnimatorOpenState = "EmberOpen";
+
+        /// <summary>Animator 关闭动画状态名约定。</summary>
+        private const string AnimatorCloseState = "EmberClose";
+
+        /// <summary>Animator 过渡超时兜底（毫秒）。帧事件拼错/漏加时强制完成并警告。</summary>
+        private const int AnimatorTransitionTimeoutMs = 5000;
+
+        /// <summary>
+        /// 播放 Animator 过渡（EmberOpen / EmberClose 状态）。
+        /// 完成通知 = 动画尾帧事件（经 EmberPageAnimatorBridge 转发）+ 超时兜底。
+        /// </summary>
+        private async UniTask PlayAnimatorTransitionAsync(bool open)
+        {
+            var animator = ResolveAnimator();
+
+            var stateName = open ? AnimatorOpenState : AnimatorCloseState;
+            if (animator == null || !animator.HasState(0, Animator.StringToHash(stateName)))
+            {
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 勾选了 Animator 过渡，但未找到 Animator 或状态 '{stateName}'，跳过动画。");
+                return;
+            }
+
+            if (!animator.gameObject.activeInHierarchy)
+            {
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 的 Animator 节点未激活，已跳过状态 '{stateName}'。");
+                return;
+            }
+
+            // 选择 Animator 过渡即表示由框架驱动该组件；兼容 prefab 中预先关闭 Animator 避免空转的做法。
+            animator.enabled = true;
+
+            // Animation Event 只会发送给 Animator 所在 GameObject 上的组件，
+            // 桥先复用该节点已预挂的组件，若没有则在该节点运行时创建，避免误配到页面根节点。
+            var bridge = GetOrCreateAnimatorBridge(animator);
+
+            UniTask wait;
+            if (open)
+            {
+                wait = bridge.WaitOpenAsync();
+                animator.Play(AnimatorOpenState, 0, 0f);
+            }
+            else
+            {
+                wait = bridge.WaitCloseAsync();
+                animator.Play(AnimatorCloseState, 0, 0f);
+            }
+
+            // 帧事件通知完成 + 超时兜底（事件拼错/漏加也不会卡死页面）
+            int winIndex = await UniTask.WhenAny(wait, UniTask.Delay(AnimatorTransitionTimeoutMs));
+            if (winIndex == 1)
+                EmberDebug.LogWarning(TAG,
+                    $"页面 '{Name}' Animator 过渡超时（{AnimatorTransitionTimeoutMs}ms），已强制完成——" +
+                    $"请检查动画尾帧事件 {(open ? "OnEmberOpenAnimationEnd" : "OnEmberCloseAnimationEnd")}。");
+            bridge.Reset();
+        }
+
+        private static EmberPageAnimatorBridge GetOrCreateAnimatorBridge(Animator animator)
+        {
+            var bridge = animator.GetComponent<EmberPageAnimatorBridge>();
+            if (bridge != null)
+                return bridge;
+
+            return animator.gameObject.AddComponent<EmberPageAnimatorBridge>();
         }
 
         private void CompleteHide()
         {
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup != null)
+                transitionGroup.alpha = 0f;
+
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.interactable = false;
@@ -753,6 +940,17 @@ namespace Ember.UI
             get => _pageDef;
             internal set => _pageDef = value;
         }
+
+        // ── 弹窗遮罩配置（由 EUIBindingBridge 从 prefab 上的 EUIBinding 注入；无 binding 时保持默认） ──
+
+        /// <summary>是否创建遮罩（false = 本弹窗打开时不创建遮罩，点击穿透由业务自行处理）。</summary>
+        public bool UseMask { get; set; } = true;
+
+        /// <summary>本弹窗专属遮罩颜色；null 表示未配置，回退 <see cref="EUIManager.PopupMaskColor"/> 全局色。</summary>
+        public Color? MaskColorOverride { get; set; }
+
+        /// <summary>点击遮罩是否关闭本弹窗（页面逻辑 override OnClickMask 时优先于此开关）。</summary>
+        public bool ClickMaskToClose { get; set; } = true;
 
         /// <summary>父页面（SubPage 时非空）</summary>
         public EUIPage ParentPage
@@ -838,6 +1036,9 @@ namespace Ember.UI
         /// <summary>当前挂起的操作类型</summary>
         internal PagePendingOp PendingOp => _pendingOp;
 
+        /// <summary>当前挂起操作的参数（Close 时为完成回调）。</summary>
+        internal object PendingOpArgs => _pendingOpArgs;
+
         /// <summary>清除挂起操作</summary>
         internal void ClearPendingOp()
         {
@@ -860,26 +1061,47 @@ namespace Ember.UI
 
         /// <summary>
         /// 注入过渡动画配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
-        /// <see cref="PlayShow"/> / <see cref="PlayHide"/> 根据两个独立开关决定动画链：
+        /// <see cref="PlayShow"/> / <see cref="PlayHide"/> 按下列规则选择过渡：
         /// <list type="bullet">
-        ///   <item>仅 <b>Preset</b>：预设过渡（「默认渐入渐出」或「方块过渡」二选一）</item>
-        ///   <item>仅 <b>Custom</b>：<see cref="EUILogic.OnCustomEnter"/> / <see cref="EUILogic.OnCustomExit"/></item>
-        ///   <item><b>Preset + Custom</b>：进入先播预设再播自定义；退出先播自定义再播预设（镜像）</item>
-        ///   <item>都不勾：无动画，立即完成</item>
+        ///   <item><b>普通 UI</b>：None / Preset / Animator / Custom 单选，不隐式串联；</item>
+        ///   <item><b>方块过渡</b>：Loading 专用特殊链路，允许保留 Custom 阶段；</item>
+        ///   <item>无过渡：立即完成。</item>
         /// </list>
         /// </summary>
         /// <param name="usePreset">是否启用「默认渐入渐出」预设过渡</param>
         /// <param name="useBlock">是否启用「方块过渡」预设过渡（与 usePreset 互斥）</param>
+        /// <param name="useAnimator">是否启用 Animator 过渡（与 usePreset/useBlock 互斥）</param>
         /// <param name="useCustom">是否启用自定义过渡动画</param>
         /// <param name="inTime">进入动画时长（秒），预设使用</param>
         /// <param name="outTime">退出动画时长（秒），预设使用</param>
-        public void SetTransition(bool usePreset, bool useBlock, bool useCustom, float inTime, float outTime)
+        public void SetTransition(bool usePreset, bool useBlock, bool useAnimator, bool useCustom, float inTime, float outTime)
         {
-            _usePresetFade = usePreset;
             _useTransitionBlock = useBlock;
-            _useCustomTransition = useCustom;
+
+            if (useBlock)
+            {
+                // 方块过渡是独立特殊通道：排除普通表现驱动，但保留 Loading Custom 阶段。
+                _usePresetFade = false;
+                _useAnimator = false;
+                _useCustomTransition = useCustom;
+            }
+            else
+            {
+                // 兼容旧 prefab 可能遗留多个 true：Custom > Animator > Preset，归一为单一过渡负责人。
+                _useCustomTransition = useCustom;
+                _useAnimator = !useCustom && useAnimator;
+                _usePresetFade = !useCustom && !useAnimator && usePreset;
+            }
+
             _transitionInTime = inTime;
             _transitionOutTime = outTime;
+
+            var animator = ResolveAnimator();
+            if (animator != null)
+            {
+                // 非 Animator 过渡页面，默认关闭 Animator 组件，避免空转；播放时由框架再按需开启。
+                animator.enabled = _useAnimator;
+            }
         }
 
         /// <summary>

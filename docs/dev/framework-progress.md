@@ -1,6 +1,6 @@
 # Ember Framework 开发进度
 
-> 最后更新：2026-08-22
+> 最后更新：2026-08-31
 > 参考项目：[burner](../../c:/Users/wuyu/Project/burner/client/game/) — 成熟的 SLG 游戏框架
 
 ---
@@ -58,7 +58,7 @@ Core 是叶子层，零依赖（除 Unity 引擎 + Odin + UniTask），所有上
 ---
 
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- >>> 📍 CURRENT PHASE — UI 增强组件集成测试：GMPage + EUIEx 绑定验证完成，进入 P1/P2 待办 <<< -->
+<!-- >>> 📍 CURRENT PHASE — v0.10.0 UI 框架与基础模板 v0.5.0 已完成编译、Play 验证、手动保存及静态复检；待用户提交/tag/push，随后进入多模板 P-C 与消费端/Farm 联调 <<< -->
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
 ## 当前进度与路线
@@ -153,7 +153,7 @@ Phase 8: 可视化编辑器 ─────── ⬜ 远期
 
 | 优先级 | 事项 | 文件数 | 说明 |
 |--------|------|--------|------|
-| ✅ P0 | **框架转为 UPM 包** | — | 已完成（2026-08-26）：11 包合并为单一 `com.ember`（模块中心布局，22 asmdef 程序集名不变）；模板体系（Templates~/base 全量演示镜像 + 初始化窗口 + 模板编辑器）；EmberUPMManager 一键升级（强制/可选标注）；UniTask 内置；共享字体入包（SharedAssets/Fonts，许可证随包）；模板升级协同 P-A + 两级标记 + GamePages 拆分。v0.8.0 变更完成，**功能测试中**（[v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md)）→ 测试通过后提交发版 + Unity Farm 消费端冒烟。详见 [upm-migration-plan.md](upm-migration-plan.md) §〇 当前状态快照 |
+| ✅ P0 | **框架转为 UPM 包** | — | ✅ **完成（2026-08-31）**：单一 `com.ember` 包（模块中心布局，22 asmdef）；模板体系（Templates~/base 全量演示镜像 + 初始化窗口 + 模板编辑器）；EmberUPMManager 一键升级；UniTask 内置；共享字体入包；模板升级协同 P-A + 两级标记 + GamePages 拆分；EUIBinding 框架/用户块标记；框架 UI 业务层化；状态机边模型。**已发布 v0.9.0（框架 0.9.0 + 模板 0.3.0）/ v0.9.1 / v0.9.2**；v0.10.0 UI 框架与基础模板 v0.5.0 已完成编译、Play 验证、手动保存及静态复检，待用户发布。详见 [upm-migration-plan.md](upm-migration-plan.md) §〇 当前状态快照 |
 | 🟡 P1 | **Audio 多 Category + AudioAgent 池** | ~5 | 详见 [audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) |
 | 🟡 P1 | **ScrollRect 配置异常导致 Prefab 永远 dirty** | — | GMPage `m_Scr_Test` Viewport 尺寸 0（`[ExecuteAlways]` 布局实时重算产生浮点残渣）。已隐藏跳过；后续修正 Viewport 为标准布局（anchor `(0,0)-(1,1)`）即可根治，详见 uiextension-test-plan.md §6.4 |
 | 🟢 P2 | **预制体对象池** | 1 | GameObject 预制体池化 |

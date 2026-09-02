@@ -46,6 +46,8 @@ namespace Ember.UI
     {
         #region 内部参数
 
+        private const string TAG = LogTags.UIManager;
+
         /// <summary>控件引用字典（由框架在 OnBind 前填充）</summary>
         public Dictionary<string, Component> ControlMap { get; set; }
 
@@ -55,8 +57,25 @@ namespace Ember.UI
         /// <summary>自定义页面参数（由 EUIBindingBridge 从 EUIBinding._pageSettings 注入）</summary>
         public object CustomSettings { get; set; }
 
-        /// <summary>是否需要每帧 Update（默认 false）</summary>
-        public bool NeedUpdate { get; set; }
+        /// <summary>
+        /// 是否需要每帧 Update（默认 false）。
+        /// </summary>
+        /// <para><b>两种开启方式：</b>
+        /// <list type="bullet">
+        ///   <item><b>静态开启</b>：<c>public override bool NeedUpdate =&gt; true;</c>（页面始终逐帧更新，对标 Burner 风格）；</item>
+        ///   <item><b>动态开关</b>：子类内 <c>NeedUpdate = true / false;</c>（protected setter，如 Loading 只在假进度期间开启）。</item>
+        /// </list>
+        /// </para>
+        /// <para><b>注意：</b>override 成 get-only 的页面不能再动态 set；
+        /// 既要动态开关又要 override 的页面可 override 到私有字段：
+        /// <c>private bool _x; public override bool NeedUpdate =&gt; _x;</c></para>
+        public virtual bool NeedUpdate
+        {
+            get => _needUpdate;
+            protected set => _needUpdate = value;
+        }
+
+        private bool _needUpdate;
 
         /// <summary>
         /// Loading 过渡就绪标志。Loading 页面 override 为 true 表示假进度已完成。
@@ -69,6 +88,42 @@ namespace Ember.UI
         /// Loading 逻辑应据此跳过假进度与进度显示，<see cref="IsTransitionReady"/> 直接以真实加载进度为准。
         /// </summary>
         public bool SkipFakeProgress { get; set; }
+
+        // ── 安全区便捷访问（对标 Burner HasSafeArea / SafeAreaRoot） ──
+
+        /// <summary>
+        /// 页面是否挂有安全区组件且存在有效安全区。
+        /// 懒加载发现（<c>GetComponentInChildren《IEmberSafeAreaProvider》</c> 仅执行一次并缓存）。
+        /// </summary>
+        public bool HasSafeArea => SafeAreaProvider?.HasSafeArea ?? false;
+
+        /// <summary>
+        /// 安全区内容容器（页面内 EUISafeArea 组件所在的 RectTransform）。
+        /// 页面未挂安全区组件时返回 null。
+        /// </summary>
+        public RectTransform SafeAreaRoot => SafeAreaProvider?.SafeAreaRoot;
+
+        private IEmberSafeAreaProvider _safeAreaProvider;
+        private bool _safeAreaSearched;
+
+        private IEmberSafeAreaProvider SafeAreaProvider
+        {
+            get
+            {
+                if (!_safeAreaSearched)
+                {
+                    _safeAreaSearched = true;
+                    if (Page != null)
+                    {
+                        _safeAreaProvider = Page.GameObject.GetComponentInChildren<IEmberSafeAreaProvider>(true);
+                        // 框架自动订阅安全区变化（对标 Burner：基类注册 SafeAreaChanged，子类覆写 OnSafeAreaChanged）
+                        if (_safeAreaProvider != null)
+                            _safeAreaProvider.SafeAreaChanged += OnSafeAreaChanged;
+                    }
+                }
+                return _safeAreaProvider;
+            }
+        }
 
         /// <summary>
         /// 注册可销毁对象（IDisposable），在 <see cref="OnDispose"/> 时自动清理。
@@ -118,9 +173,8 @@ namespace Ember.UI
         #region 生命周期钩子（子类 override）
 
         // ═══════════════════════════════════════════════════════════
-        // 注意：EUILogic 的所有钩子都是纯业务逻辑，不要在这里写动画。
-        // 动画写在 EUIPage 子类的 OnShow() / OnHide() virtual 方法中，
-        // 或者在 Inspector 中勾选 UIBinding 的"启用预设渐入渐出"。
+        // 注意：EUILogic 的基础生命周期钩子只处理业务逻辑，不要在这里写动画。
+        // 普通 UI 在 EUIBinding 中选择唯一过渡模式；Custom 模式才使用 OnCustomEnter/OnCustomExit。
         // ═══════════════════════════════════════════════════════════
 
         /// <summary>
@@ -168,7 +222,7 @@ namespace Ember.UI
         /// <para><b>触发时机：</b><see cref="EUIPage.Init"/> 中，在 <see cref="OnResetDefault"/> 之后、OnOpen 之前。
         /// 此时 ControlMap 已就绪、控件引用可用，页面尚未可见（α=0）。</para>
         /// <para><b>在这里做：</b>注册按钮事件（onClick.AddListener）、设置初始默认值。</para>
-        /// <para><b>不要在这里做：</b>播放动画（那是 <see cref="EUIPage.OnShow()"/> 的事）、
+        /// <para><b>不要在这里做：</b>播放过渡动画（由 EUIBinding 选定的过渡模式负责）、
         /// 处理打开参数（那是 <see cref="OnOpen"/> 的事）。</para>
         public virtual void OnInit() { }
 
@@ -179,7 +233,7 @@ namespace Ember.UI
         /// 以及 <see cref="EUIPage.OnReopen"/> 时。</para>
         /// <para><b>在这里做：</b>根据传入参数切换页面状态（如从哪个入口进来的、携带的初始数据）。</para>
         /// <para><b>不要在这里做：</b>注册事件（那是 <see cref="OnInit"/> 的事）、
-        /// 播放动画（那是 <see cref="EUIPage.OnShow()"/> 的事）。</para>
+        /// 播放过渡动画（由 EUIBinding 选定的过渡模式负责）。</para>
         /// <param name="param">打开时传入的参数（来自 EUIManager.ShowMainPage/ShowPopup 的 args）</param>
         public virtual void OnOpen(object param) { }
 
@@ -194,16 +248,11 @@ namespace Ember.UI
         /// <summary>
         /// 页面即将可见（业务逻辑） —— 在 <b>PlayShow 阶段、打开动画之前</b>调用。
         /// </summary>
-        /// <para><b>触发时机：</b><see cref="EUIPage.PlayShow"/> 中，在调用 <see cref="EUIPage.OnShow()"/>
-        /// （打开动画）<b>之前</b>。每次页面从不可见变为可见时都会触发。</para>
+        /// <para><b>触发时机：</b><see cref="EUIPage.PlayShow"/> 中，在打开过渡<b>之前</b>。
+        /// 每次页面从不可见变为可见时都会触发。</para>
         /// <para><b>在这里做：</b>刷新数据（可能已被其他页面修改）、更新 UI 显示。</para>
-        /// <para><b>⚠️ 不要在这里写动画！</b>打开动画写在：
-        /// <list type="bullet">
-        ///   <item><b>预设方式</b>：Inspector 中 UIBinding 勾选"启用预设渐入渐出"，设时间即可</item>
-        ///   <item><b>自定义方式</b>：创建 <see cref="EUIPage"/> 子类，override <see cref="EUIPage.OnShow()"/>，
-        ///       返回 <c>IEnumerator</c> 协程（非 EUILogic 子类）。参见 <see cref="EUIPage.OnShow()"/> 的文档和示例</item>
-        /// </list>
-        /// </para>
+        /// <para><b>⚠️ 不要在这里写动画！</b>预设/Animator 由框架驱动；
+        /// 自定义过渡写在 <see cref="OnCustomEnter"/> 中。</para>
         public virtual void OnShow() { }
 
         /// <summary>
@@ -223,16 +272,10 @@ namespace Ember.UI
         /// <summary>
         /// 页面即将隐藏（业务逻辑） —— 在 <b>PlayHide 阶段、关闭动画之前</b>调用。
         /// </summary>
-        /// <para><b>触发时机：</b><see cref="EUIPage.PlayHide"/> 中，在调用 <see cref="EUIPage.OnHide()"/>
-        /// （关闭动画）<b>之前</b>。</para>
+        /// <para><b>触发时机：</b><see cref="EUIPage.PlayHide"/> 中，在关闭过渡<b>之前</b>。</para>
         /// <para><b>在这里做：</b>停止实时刷新、停止音频、准备关闭。</para>
-        /// <para><b>⚠️ 不要在这里写动画！</b>关闭动画写在：
-        /// <list type="bullet">
-        ///   <item><b>预设方式</b>：Inspector 中 UIBinding 勾选"启用预设渐入渐出"，设时间即可</item>
-        ///   <item><b>自定义方式</b>：创建 <see cref="EUIPage"/> 子类，override <see cref="EUIPage.OnHide()"/>，
-        ///       返回 <c>IEnumerator</c> 协程（非 EUILogic 子类）。参见 <see cref="EUIPage.OnHide()"/> 的文档和示例</item>
-        /// </list>
-        /// </para>
+        /// <para><b>⚠️ 不要在这里写动画！</b>预设/Animator 由框架驱动；
+        /// 自定义过渡写在 <see cref="OnCustomExit"/> 中。</para>
         public virtual void OnHide() { }
 
         /// <summary>
@@ -273,10 +316,12 @@ namespace Ember.UI
         public virtual void OnLateUpdate() { }
 
         /// <summary>
-        /// 自定义进入动画 —— 仅当 EUIBinding 的过渡模式设为 Custom 时调用。
+        /// 自定义进入过渡 —— 普通 UI 选择 CustomCode 时调用；
+        /// Loading 方块特殊链路勾选自定义阶段时也会调用。
         /// </summary>
         /// <para><b>触发时机：</b><see cref="EUIPage.PlayShow"/> 中，<see cref="OnShow"/> 之后。
-        /// 此时 CanvasGroup α=0，编写自定义动画（位移、缩放、旋转等）。</para>
+        /// 普通 UI 此时页面根 CanvasGroup α=1，可安全编写位移、缩放、旋转等动画；
+        /// 需要渐入时由本方法自行在首次 await 前将 Alpha 设为 0。</para>
         /// <para><b>返回值：</b>返回 UniTask，框架 await 动画完成后再调 CompleteShow。
         /// 返回 <see cref="UniTask.CompletedTask"/> 则跳过动画直接完成。</para>
         /// <example>
@@ -296,7 +341,7 @@ namespace Ember.UI
         public virtual UniTask OnCustomEnter() => UniTask.CompletedTask;
 
         /// <summary>
-        /// 自定义退出动画 —— 仅当 EUIBinding 的过渡模式设为 Custom 时调用。
+        /// 自定义退出过渡 —— 调用条件与 <see cref="OnCustomEnter"/> 相同。
         /// </summary>
         /// <para><b>触发时机：</b><see cref="EUIPage.PlayHide"/> 中，<see cref="OnHide"/> 之后。</para>
         /// <para><b>返回值：</b>返回 UniTask，返回 <see cref="UniTask.CompletedTask"/> 则跳过动画直接完成。</para>
@@ -308,6 +353,36 @@ namespace Ember.UI
         /// 默认 0，表示无需额外等待。
         /// </summary>
         public virtual float SmoothTailDuration => 0f;
+
+        /// <summary>
+        /// 是否自动创建可点击遮罩（仅 Popup 生效，对标 Burner AutoCreateClickableMask）。
+        /// </summary>
+        /// <para><b>默认：</b>true —— Popup 打开时框架自动创建半透明遮罩并拦截点击，点击默认关闭本弹窗。</para>
+        /// <para><b>override 为 false：</b>不创建遮罩（点击可穿透到下层页面，慎用于非模态场景）。</para>
+        protected virtual bool AutoCreateClickableMask => true;
+
+        /// <summary>
+        /// 点击遮罩时的回调（仅 Popup 生效，对标 Burner OnClickMask）。
+        /// </summary>
+        /// <para><b>默认实现：</b>关闭本页面（<see cref="EUIManager.ClosePage(EUIPage, object)"/>）。</para>
+        /// <para><b>override 为空方法：</b>保留遮罩拦截，但不允许点击遮罩关闭。</para>
+        /// <para><b>override 自定义：</b>替换点击行为；需要关闭时调用 <c>base.OnClickMask()</c>。</para>
+        protected virtual void OnClickMask()
+        {
+            // 数据层开关（EUIBinding.clickMaskToClose=false，注入到 Page.ClickMaskToClose）时默认不关闭；
+            // override 本方法自定义行为时优先于此开关（用户代码优先）。
+            if (Page == null || !Page.ClickMaskToClose) return;
+            if (EUIManager.Instance != null)
+                EUIManager.Instance.ClosePage(Page);
+        }
+
+        /// <summary>
+        /// 安全区变化回调 —— 页面内挂有安全区组件（<see cref="IEmberSafeAreaProvider"/>）时，
+        /// 设备旋转/安全区变化后自动调用（框架自动订阅，对标 Burner OnSafeAreaChanged）。
+        /// </summary>
+        /// <para><b>在这里做：</b>刷新受安全区影响的布局。
+        /// 可交互内容是否进安全区是 prefab 责任，逻辑只处理安全区更新后的布局刷新。</para>
+        protected virtual void OnSafeAreaChanged() { }
 
         #endregion
 
@@ -404,11 +479,19 @@ namespace Ember.UI
                 foreach (var d in _trackedDisposables)
                 {
                     try { d.Dispose(); }
-                    catch (System.Exception ex) { EmberDebug.LogError("EUILogic", $"TrackDisposable 清理异常: {ex}"); }
+                    catch (System.Exception ex) { EmberDebug.LogError(TAG, $"TrackDisposable 清理异常: {ex}"); }
                 }
                 _trackedDisposables.Clear();
                 _trackedDisposables = null;
             }
+
+            // 注销安全区事件订阅（与 SafeAreaProvider 发现时的订阅对称；字段复位支持实例复用）
+            if (_safeAreaProvider != null)
+            {
+                _safeAreaProvider.SafeAreaChanged -= OnSafeAreaChanged;
+                _safeAreaProvider = null;
+            }
+            _safeAreaSearched = false;
 
             OnDispose();
         }
@@ -420,6 +503,12 @@ namespace Ember.UI
             foreach (var child in _childLogics)
                 child.BroadcastUpdate();
         }
+
+        /// <summary>遮罩创建开关（internal 桥，供 EUIManager 读取 protected virtual 配置）</summary>
+        internal bool ShouldCreateClickableMask => AutoCreateClickableMask;
+
+        /// <summary>遮罩点击入口（internal 桥，供 EUIManager 转发点击事件到 protected virtual 钩子）</summary>
+        internal void NotifyClickMask() => OnClickMask();
 
         #endregion
     }

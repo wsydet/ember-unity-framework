@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace Ember.UIExtension.Editor
     [InitializeOnLoad]
     public static class EUIBindingSelfWidgetUtility
     {
+        private const string TAG = LogTags.EmberUI;
+
         static EUIBindingSelfWidgetUtility()
         {
             EUIBinding.OnAutoDetectSelfWidgetType = HandleAutoDetect;
@@ -37,7 +39,7 @@ namespace Ember.UIExtension.Editor
             }
 
             EditorUtility.SetDirty(binding);
-            EmberDebug.Log("EmberUI", "自身控件类型已自动识别");
+            EmberDebug.Log(TAG, "自身控件类型已自动识别");
         }
 
         private static string[] HandleGetAvailableTypes(EUIBinding binding)

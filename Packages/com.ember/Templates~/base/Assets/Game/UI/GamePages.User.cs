@@ -5,7 +5,7 @@
 //
 // 添加方式（二选一）：
 // ① 手写注册：
-//      public static readonly EUIPageDef MyPage = new("Assets/Game/UI/Runtime/Prefabs/MyPage.prefab", UILayer.Popup, PageType.Popup);
+//      public static readonly EUIPageDef InventoryPage = new("Assets/GameResource/Resources/UI/Module/Inventory/Prefabs/InventoryPanel.prefab", UILayer.Popup, PageType.Popup);
 // ② 通过 Ember 代码生成器（EmberCSharpImplementation 已配置指向本文件）自动写入。
 using Ember.UI;
 

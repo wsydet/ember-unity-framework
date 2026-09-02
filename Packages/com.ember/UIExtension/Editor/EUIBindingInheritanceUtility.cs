@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System.Collections.Generic;
@@ -20,6 +20,8 @@ namespace Ember.UIExtension.Editor
     [InitializeOnLoad]
     public static class EUIBindingInheritanceUtility
     {
+        private const string TAG = LogTags.EmberUI;
+
         #region 生命周期（初始化）
 
         static EUIBindingInheritanceUtility()
@@ -218,7 +220,7 @@ namespace Ember.UIExtension.Editor
                 if (added > 0)
                 {
                     EditorUtility.SetDirty(binding);
-                    EmberDebug.Log("EmberUI", $"已自动添加 {added} 个缺失绑定");
+                    EmberDebug.Log(TAG, $"已自动添加 {added} 个缺失绑定");
                 }
             }
         }

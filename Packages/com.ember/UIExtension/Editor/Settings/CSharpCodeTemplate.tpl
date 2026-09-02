@@ -10,6 +10,10 @@ namespace {namespace_name}
 {{
     public partial class {class_name}
     {{
+        // ── 页面配置 ──
+
+{page_feature_members}
+
         // ── 生命周期钩子（在此文件中填充业务逻辑） ──
 
         public override void OnInit()

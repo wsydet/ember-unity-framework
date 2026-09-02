@@ -33,7 +33,6 @@ namespace Ember.UI
         private readonly PageType _pageType;
         private readonly int? _overlaySortingOrder;
         private readonly int? _freePageSortingOrder;
-
         #endregion
 
         // --------------------------------------------------------
@@ -55,19 +54,31 @@ namespace Ember.UI
         /// <summary>FreePage 页面固定排序值（仅 PageType.FreePage 时有效）。null 则回退到 FreePageBaseOrder 并警告。</summary>
         public int? FreePageSortingOrder => _freePageSortingOrder;
 
-        /// <summary>完整定义页面</summary>
-        public EUIPageDef(string prefabPath, int layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null, int? freePageSortingOrder = null)
+        /// <summary>
+        /// 是否为全屏弹窗。由 <see cref="PageType.FullScreenPopup"/> 唯一决定，
+        /// 打开时下层被推裁剪面远端；普通 Popup 不隐藏下层，下层保持渲染、靠遮罩拦截交互。
+        /// </summary>
+        public bool IsFullScreen => _pageType == PageType.FullScreenPopup;
+
+        /// <summary>
+        /// 完整定义页面。<paramref name="isFullScreen"/> 仅用于兼容旧注册代码；
+        /// 新代码直接使用 <see cref="PageType.FullScreenPopup"/>。
+        /// </summary>
+        public EUIPageDef(string prefabPath, int layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null, int? freePageSortingOrder = null, bool isFullScreen = false)
         {
             _prefabPath = prefabPath ?? throw new ArgumentNullException(nameof(prefabPath));
             _layer = layer;
-            _pageType = pageType;
+            if (isFullScreen && pageType != PageType.Popup && pageType != PageType.FullScreenPopup)
+                throw new ArgumentException("isFullScreen 仅可与 Popup 页面类型组合使用。", nameof(isFullScreen));
+
+            _pageType = isFullScreen ? PageType.FullScreenPopup : pageType;
             _overlaySortingOrder = overlaySortingOrder;
             _freePageSortingOrder = freePageSortingOrder;
         }
 
         /// <summary>使用 UILayer 枚举的便捷构造</summary>
-        public EUIPageDef(string prefabPath, UILayer layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null, int? freePageSortingOrder = null)
-            : this(prefabPath, (int)layer, pageType, overlaySortingOrder, freePageSortingOrder)
+        public EUIPageDef(string prefabPath, UILayer layer, PageType pageType = PageType.MainPage, int? overlaySortingOrder = null, int? freePageSortingOrder = null, bool isFullScreen = false)
+            : this(prefabPath, (int)layer, pageType, overlaySortingOrder, freePageSortingOrder, isFullScreen)
         {
         }
 

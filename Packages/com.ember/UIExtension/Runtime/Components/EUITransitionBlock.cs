@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -607,7 +607,7 @@ namespace Ember.UIExtension
             }
 
             EnsureGrid();
-            EmberDebug.Log(LogTags.EmberUI, $"初始化完成：{_gridSize.x}×{_gridSize.y} 网格（方块按需创建）");
+            EmberDebug.Log(TAG, $"初始化完成：{_gridSize.x}×{_gridSize.y} 网格（方块按需创建）");
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Ember.UIExtension
             }
 
             if (removed > 0)
-                EmberDebug.Log(LogTags.EmberUI, $"清理孤儿方块 {removed} 个");
+                EmberDebug.Log(TAG, $"清理孤儿方块 {removed} 个");
         }
 
         [PropertyOrder(91)]

@@ -1,12 +1,14 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
 using Ember.Basic;
+using Ember.UI;
 
 using UnityEditor;
 
@@ -15,698 +17,657 @@ using UnityEngine;
 namespace Ember.UIExtension.Editor
 {
     /// <summary>
-    /// UI 预制体管理器 —— 总览所有含 EUIBinding 的 UI 预制体：
-    /// 预制体位置 / 页面定义 / 生成脚本位置 / GamePages 定义内容 / 状态标记。
-    ///
-    /// <para>一键清理（安全项直接执行、dry-run 项先列清单逐项确认）：</para>
-    /// <list type="bullet">
-    ///   <item>清理失效 EUIPageDef（GamePages.cs + GamePages.User.cs）</item>
-    ///   <item>移除预制体 Missing Script</item>
-    ///   <item>清理空引用绑定条目（GameObject 为 null）</item>
-    ///   <item>孤儿脚本排查（.cs/.Binding.cs 无对应预制体，dry-run 后删除）</item>
-    ///   <item>空叶子节点（仅 Transform 的叶子，dry-run 后删除）</item>
-    /// </list>
+    /// UI 开发中心：标准页面创建、UI 资产总览，以及带影响预览的清理与删除。
     /// </summary>
     public class EUIPrefabManagerWindow : EditorWindow
     {
-        private const string TAG = "EmberUI";
+        private const string TAG = LogTags.EmberUI;
 
-        #region 内部参数
-
-        private sealed class PrefabEntry
+        private enum DevelopmentTab
         {
-            public string PrefabPath;
-            public bool IsPage;
-            public string PageName;
-            public string PageDesc;
-            public int BindingCount;
-            public int FrameworkBindingCount;
-            public bool GenerateCustomSettings;
-            public string LogicScriptPath;
-            public bool LogicScriptExists;
-            public string BindingScriptPath;
-            public bool BindingScriptExists;
-            public string SettingsScriptPath;
-            public bool SettingsScriptExists;
-            public string PageDefFile;   // 定义所在文件（GamePages.cs / GamePages.User.cs），无则 null
-            public string PageDefLine;   // 定义行预览（截断）
-            public bool PageDefOk;       // 定义存在且路径匹配
-            public int MissingScriptCount;
-            public int NullBindingCount;
-            public int EmptyLeafCount;
+            Create,
+            Overview,
+            Maintenance,
         }
 
-        private Vector2 _listScroll;
-        private Vector2 _cleanupScroll;
-        private List<PrefabEntry> _entries = new List<PrefabEntry>();
-        private List<string> _orphanScripts = new List<string>();
-        private List<KeyValuePair<string, string>> _emptyLeaves = new List<KeyValuePair<string, string>>();
+        private static readonly string[] TabLabels = { "创建 UI", "UI 总览", "清理与删除" };
+
+        private static readonly PageType[] SupportedPageTypes =
+        {
+            PageType.Background,
+            PageType.MainPage,
+            PageType.Popup,
+            PageType.FullScreenPopup,
+            PageType.TopMost,
+            PageType.SubPage,
+            PageType.FreePage,
+        };
+
+        private static readonly string[] SupportedPageTypeLabels =
+        {
+            "背景页 (Background)",
+            "主页面 (MainPage)",
+            "弹窗 (Popup)",
+            "全屏弹窗 (FullScreenPopup)",
+            "置顶页 (TopMost)",
+            "子页面 (SubPage)",
+            "独立页 (FreePage)",
+        };
+
+        [SerializeField] private DevelopmentTab _tab;
+        [SerializeField] private EUICreationRequest _creationRequest = new EUICreationRequest();
+        [SerializeField] private bool _showAdvancedCreation;
+        [SerializeField] private string _overviewFilter = string.Empty;
+
+        private Vector2 _createScroll;
+        private Vector2 _overviewScroll;
+        private Vector2 _maintenanceScroll;
+        private EUICreationPlan _creationPlan;
+        private EUICreationResult _creationResult;
+        private EUIPrefabCatalogSnapshot _catalog;
+        private readonly List<EUIOrphanScriptGroup> _orphanGroups = new List<EUIOrphanScriptGroup>();
+        private readonly List<KeyValuePair<string, string>> _emptyLeaves =
+            new List<KeyValuePair<string, string>>();
         private string _lastResult;
 
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 外部方法
-
-        [MenuItem("Ember/UI/UI 预制体管理器", false, 20)]
+        [MenuItem("Ember/UI/UI 开发中心", false, 20)]
         public static void Open()
         {
-            var win = GetWindow<EUIPrefabManagerWindow>("UI 预制体管理器");
-            win.minSize = new Vector2(820, 520);
-            win.Show();
+            var window = GetWindow<EUIPrefabManagerWindow>("UI 开发中心");
+            window.minSize = new Vector2(900f, 580f);
+            window.Show();
         }
-
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 生命周期
 
         private void OnEnable()
         {
+            _creationRequest ??= new EUICreationRequest();
             Rescan();
         }
 
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法 —— 绘制
-
         private void OnGUI()
         {
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("刷新扫描", GUILayout.Width(100)))
+            DrawHeader();
+            EditorGUILayout.Space(6f);
+
+            switch (_tab)
             {
-                Rescan();
-                _lastResult = $"扫描完成：{_entries.Count} 个 UI 预制体。";
+                case DevelopmentTab.Create:
+                    DrawCreationTab();
+                    break;
+                case DevelopmentTab.Overview:
+                    DrawOverviewTab();
+                    break;
+                case DevelopmentTab.Maintenance:
+                    DrawMaintenanceTab();
+                    break;
             }
-
-            int pageCount = _entries.Count(e => e.IsPage);
-            int problemCount = _entries.Count(e => !IsHealthy(e));
-            EditorGUILayout.LabelField(
-                $"共 {_entries.Count} 个（页面 {pageCount} 个 · 框架绑定 {_entries.Sum(e => e.FrameworkBindingCount)} 条 · 有问题 {problemCount} 个）",
-                EditorStyles.miniLabel);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.Space(4);
-
-            _listScroll = EditorGUILayout.BeginScrollView(_listScroll);
-            foreach (var e in _entries)
-                DrawEntryRow(e);
-            EditorGUILayout.EndScrollView();
-
-            EditorGUILayout.Space(8);
-            DrawCleanupSection();
 
             if (!string.IsNullOrEmpty(_lastResult))
                 EditorGUILayout.HelpBox(_lastResult, MessageType.Info);
         }
 
-        private static bool IsHealthy(PrefabEntry e)
+        private void DrawHeader()
         {
-            return e.MissingScriptCount == 0
-                && e.NullBindingCount == 0
-                && e.LogicScriptExists
-                && e.BindingScriptExists
-                && (!e.GenerateCustomSettings || e.SettingsScriptExists)
-                && (!e.IsPage || e.PageDefOk);
-        }
-
-        private void DrawEntryRow(PrefabEntry e)
-        {
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(
-                IsHealthy(e) ? "✅" : (e.MissingScriptCount > 0 || e.NullBindingCount > 0 ? "❌" : "⚠"),
-                GUILayout.Width(20));
-            EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(e.PrefabPath),
-                EditorStyles.boldLabel, GUILayout.Width(180));
-            EditorGUILayout.LabelField(e.PrefabPath, EditorStyles.miniLabel);
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("定位", GUILayout.Width(50)))
-            {
-                var obj = AssetDatabase.LoadAssetAtPath<GameObject>(e.PrefabPath);
-                if (obj) { Selection.activeObject = obj; EditorGUIUtility.PingObject(obj); }
-            }
-            var prevColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.85f, 0.35f, 0.3f);
-            if (GUILayout.Button("删除 UI", GUILayout.Width(70)))
-                DeleteUI(e);
-            GUI.backgroundColor = prevColor;
+            EditorGUILayout.LabelField("UI 开发中心", EditorStyles.boldLabel, GUILayout.Width(120f));
+            _tab = (DevelopmentTab)GUILayout.Toolbar((int)_tab, TabLabels, GUILayout.Height(25f));
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.LabelField(
-                (e.IsPage
-                    ? $"页面 {e.PageName} · {e.PageDesc}"
-                    : "非页面（无 EUIPageDef）")
-                + $"　|　绑定 {e.BindingCount} 条（🔒框架 {e.FrameworkBindingCount}）"
-                + $"　|　脚本 {(e.LogicScriptExists ? "✅" : "❌")}{Path.GetFileName(e.LogicScriptPath)}"
-                + $" / {(e.BindingScriptExists ? "✅" : "❌")}{Path.GetFileName(e.BindingScriptPath)}"
-                + (e.GenerateCustomSettings
-                    ? $" / {(e.SettingsScriptExists ? "✅" : "❌")}{Path.GetFileName(e.SettingsScriptPath)}"
-                    : "")
-                + (e.IsPage
-                    ? $"　|　定义 {(e.PageDefOk ? "✅" : "❌")}{(string.IsNullOrEmpty(e.PageDefFile) ? "缺失" : Path.GetFileName(e.PageDefFile))}"
-                    : "")
-                + (e.MissingScriptCount > 0 ? $"　|　Missing Script × {e.MissingScriptCount}" : "")
-                + (e.NullBindingCount > 0 ? $"　|　空引用绑定 × {e.NullBindingCount}" : "")
-                + (e.EmptyLeafCount > 0 ? $"　|　空叶子 × {e.EmptyLeafCount}" : ""),
-                EditorStyles.miniLabel);
-
-            if (e.IsPage && !string.IsNullOrEmpty(e.PageDefLine))
-                EditorGUILayout.LabelField("      " + e.PageDefLine, EditorStyles.miniLabel);
-
-            EditorGUILayout.EndVertical();
+            if (EUICreationCompilationContinuation.IsPending)
+            {
+                EditorGUILayout.HelpBox(
+                    $"正在等待 Unity 编译/资源更新完成：{EUICreationCompilationContinuation.PendingPrefabPath}",
+                    MessageType.Info);
+            }
+            else if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            {
+                EditorGUILayout.HelpBox("Unity 正在编译或更新资源，创建和维护操作暂时禁用。", MessageType.Warning);
+            }
         }
 
-        private void DrawCleanupSection()
+        #region 创建 UI
+
+        private void DrawCreationTab()
         {
-            EditorGUILayout.LabelField("一键清理", EditorStyles.boldLabel);
+            _createScroll = EditorGUILayout.BeginScrollView(_createScroll);
+            EditorGUILayout.LabelField("标准页面", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox(
+                "创建根 Canvas → Animator 视觉层 → nested EUISafeArea，并生成逻辑脚本、Binding 和 GamePages 条目。"
+                + " Animator 默认复用 EUICommon_Ani，资产中保持禁用，由运行时按过渡模式启用。",
+                MessageType.Info);
 
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("清理失效 EUIPageDef", GUILayout.Width(180)))
-                CleanStalePageDefsAll();
-            if (GUILayout.Button("移除 Missing Script", GUILayout.Width(180)))
-                RemoveMissingScriptsAll();
-            if (GUILayout.Button("清理空引用绑定条目", GUILayout.Width(180)))
-                RemoveNullBindingsAll();
-            if (GUILayout.Button("孤儿脚本排查（dry-run）", GUILayout.Width(200)))
-                BuildOrphanScriptList();
-            if (GUILayout.Button("空叶子节点（dry-run）", GUILayout.Width(180)))
-                BuildEmptyLeafList();
-            EditorGUILayout.EndHorizontal();
-
-            _cleanupScroll = EditorGUILayout.BeginScrollView(_cleanupScroll, GUILayout.Height(120));
-
-            if (_orphanScripts.Count > 0)
+            EditorGUI.BeginChangeCheck();
+            DrawCreationBasicFields();
+            DrawCreationBehaviourFields();
+            DrawCreationAdvancedFields();
+            if (EditorGUI.EndChangeCheck())
             {
-                EditorGUILayout.LabelField($"孤儿脚本 {_orphanScripts.Count} 个（无对应预制体；确认后删除）：", EditorStyles.miniLabel);
-                for (int i = 0; i < _orphanScripts.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(_orphanScripts[i], EditorStyles.miniLabel);
-                    if (GUILayout.Button("删除", GUILayout.Width(50)))
-                    {
-                        AssetDatabase.DeleteAsset(_orphanScripts[i]);
-                        _orphanScripts.RemoveAt(i);
-                        AssetDatabase.Refresh();
-                        Rescan();
-                        break;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-                if (GUILayout.Button("删除全部孤儿脚本", GUILayout.Width(160)))
-                {
-                    if (EditorUtility.DisplayDialog("删除全部孤儿脚本",
-                            $"确认删除 {_orphanScripts.Count} 个孤儿脚本（文件 + .meta，不可恢复）？",
-                            "删除全部", "取消"))
-                    {
-                        foreach (var p in _orphanScripts) AssetDatabase.DeleteAsset(p);
-                        _orphanScripts.Clear();
-                        AssetDatabase.Refresh();
-                        Rescan();
-                        _lastResult = "孤儿脚本已全部删除。";
-                    }
-                }
+                _creationPlan = null;
+                _creationResult = null;
             }
 
-            if (_emptyLeaves.Count > 0)
-            {
-                EditorGUILayout.LabelField($"空叶子节点 {_emptyLeaves.Count} 个（仅 Transform 的叶子；确认后删除）：", EditorStyles.miniLabel);
-                for (int i = 0; i < _emptyLeaves.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField($"{_emptyLeaves[i].Key} → {_emptyLeaves[i].Value}", EditorStyles.miniLabel);
-                    if (GUILayout.Button("删除", GUILayout.Width(50)))
-                    {
-                        DeleteLeafNode(_emptyLeaves[i].Key, _emptyLeaves[i].Value);
-                        _emptyLeaves.RemoveAt(i);
-                        AssetDatabase.Refresh();
-                        Rescan();
-                        break;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-            }
-
+            EditorGUILayout.Space(8f);
+            DrawCreationPreflight();
             EditorGUILayout.EndScrollView();
         }
 
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法 —— 扫描
-
-        private void Rescan()
+        private void DrawCreationBasicFields()
         {
-            _entries.Clear();
-            var pageDefInfo = GetPageDefFiles(); // (userFile, frameworkFile)
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField("输出与命名", EditorStyles.boldLabel);
 
-            var guids = AssetDatabase.FindAssets("t:Prefab");
-            foreach (var guid in guids)
+            if (EUIBindingCodeGenUtility.IsEmbeddedPackage())
             {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                if (string.IsNullOrEmpty(path) || !path.EndsWith(".prefab")) continue;
-
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                if (!prefab) continue;
-
-                var binding = prefab.GetComponent<EUIBinding>();
-                if (!binding) continue;
-
-                _entries.Add(BuildEntry(path, prefab, binding, pageDefInfo));
+                _creationRequest.CodePathMode = (EUIBinding.CodePathMode)EditorGUILayout.EnumPopup(
+                    "生成模式", _creationRequest.CodePathMode);
+            }
+            else
+            {
+                _creationRequest.CodePathMode = EUIBinding.CodePathMode.Business;
+                using (new EditorGUI.DisabledScope(true))
+                    EditorGUILayout.EnumPopup("生成模式", EUIBinding.CodePathMode.Business);
+                EditorGUILayout.LabelField("消费端只允许 Business 模式。", EditorStyles.miniLabel);
             }
 
-            _entries.Sort((a, b) => string.Compare(a.PrefabPath, b.PrefabPath, System.StringComparison.Ordinal));
-            _orphanScripts.Clear();
-            _emptyLeaves.Clear();
+            _creationRequest.ClassPath = EditorGUILayout.TextField(
+                new GUIContent("输出子目录", "Business 模式首段也是资源模块名，如 Inventory/Page。"),
+                _creationRequest.ClassPath);
+            _creationRequest.ClassName = EditorGUILayout.TextField("类名", _creationRequest.ClassName);
+            _creationRequest.PageName = EditorGUILayout.TextField("PageDef 名", _creationRequest.PageName);
+            _creationRequest.PrefabName = EditorGUILayout.TextField("Prefab 名", _creationRequest.PrefabName);
+
+            var currentIndex = Array.IndexOf(SupportedPageTypes, _creationRequest.PageType);
+            if (currentIndex < 0) currentIndex = 1;
+            currentIndex = EditorGUILayout.Popup("页面类型", currentIndex, SupportedPageTypeLabels);
+            _creationRequest.PageType = SupportedPageTypes[currentIndex];
+            EditorGUILayout.EndVertical();
         }
 
-        private static PrefabEntry BuildEntry(string path, GameObject prefab, EUIBinding binding,
-            (string userFile, string frameworkFile) pageDefInfo)
+        private void DrawCreationBehaviourFields()
         {
-            var entry = new PrefabEntry { PrefabPath = path };
-
-            entry.IsPage = binding.IsPage;
-            entry.PageName = binding.IsPage ? (binding.PageName ?? "") : "";
-            entry.PageDesc = GetPageDesc(binding);
-            entry.BindingCount = binding.Bindings?.Length ?? 0;
-            entry.FrameworkBindingCount = binding.Bindings?.Count(b => b.IsFramework) ?? 0;
-
-            var root = !string.IsNullOrEmpty(binding.CodePath)
-                ? binding.CodePath
-                : EUIBindingSettingData.GetOrCreateSettings().BusinessCodeRoot;
-            var sub = string.IsNullOrEmpty(binding.ClassPath) ? "" : binding.ClassPath + "/";
-            entry.LogicScriptPath = $"{root}/{sub}{binding.ClassName}.cs";
-            entry.BindingScriptPath = $"{root}/{sub}{binding.ClassName}.Binding.cs";
-            entry.LogicScriptExists = File.Exists(ToFullPath(entry.LogicScriptPath));
-            entry.BindingScriptExists = File.Exists(ToFullPath(entry.BindingScriptPath));
-
-            entry.GenerateCustomSettings = binding.GenerateCustomSettings;
-            entry.SettingsScriptPath = $"{root}/{sub}{binding.ClassName}Settings.cs";
-            entry.SettingsScriptExists = File.Exists(ToFullPath(entry.SettingsScriptPath));
-
-            if (entry.IsPage && !string.IsNullOrEmpty(entry.PageName))
-                FillPageDefInfo(entry, path, pageDefInfo);
-
-            entry.MissingScriptCount = CountMissingScripts(prefab);
-            entry.NullBindingCount = binding.Bindings?.Count(b => b.GameObject == null) ?? 0;
-            entry.EmptyLeafCount = CountEmptyLeaves(prefab);
-            return entry;
-        }
-
-        private static void FillPageDefInfo(PrefabEntry entry, string prefabPath,
-            (string userFile, string frameworkFile) pageDefInfo)
-        {
-            foreach (var file in new[] { pageDefInfo.userFile, pageDefInfo.frameworkFile })
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField("页面行为", EditorStyles.boldLabel);
+            _creationRequest.UseUIUpdate = EditorGUILayout.Toggle("使用 UIUpdate",
+                _creationRequest.UseUIUpdate);
+            _creationRequest.TransitionMode =
+                (EUIBinding.RegularTransitionMode)EditorGUILayout.EnumPopup(
+                    "普通过渡", _creationRequest.TransitionMode);
+            if (_creationRequest.TransitionMode == EUIBinding.RegularTransitionMode.PresetFade)
             {
-                if (string.IsNullOrEmpty(file)) continue;
-                var full = ToFullPath(file);
-                if (!File.Exists(full)) continue;
+                _creationRequest.FadeInTime = EditorGUILayout.FloatField("进入时长", _creationRequest.FadeInTime);
+                _creationRequest.FadeOutTime = EditorGUILayout.FloatField("退出时长", _creationRequest.FadeOutTime);
+            }
 
-                string line = null;
-                foreach (var l in File.ReadAllLines(full, Encoding.UTF8))
+            if (IsPopup(_creationRequest.PageType))
+            {
+                EditorGUILayout.Space(3f);
+                EditorGUILayout.LabelField("弹窗遮罩", EditorStyles.miniBoldLabel);
+                _creationRequest.UseMask = EditorGUILayout.Toggle("创建遮罩", _creationRequest.UseMask);
+                using (new EditorGUI.DisabledScope(!_creationRequest.UseMask))
                 {
-                    if (l.Contains($"EUIPageDef {entry.PageName} ="))
-                    {
-                        line = l;
-                        break;
-                    }
+                    _creationRequest.MaskColor = EditorGUILayout.ColorField("遮罩颜色",
+                        _creationRequest.MaskColor);
+                    _creationRequest.ClickMaskToClose = EditorGUILayout.Toggle("点击遮罩关闭",
+                        _creationRequest.ClickMaskToClose);
                 }
+            }
+            EditorGUILayout.EndVertical();
+        }
 
-                if (line == null) continue;
+        private void DrawCreationAdvancedFields()
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            _showAdvancedCreation = EditorGUILayout.Foldout(_showAdvancedCreation,
+                "高级代码选项", true);
+            if (_showAdvancedCreation)
+            {
+                _creationRequest.GenerateCustomSettings = EditorGUILayout.Toggle(
+                    "生成自定义 Settings", _creationRequest.GenerateCustomSettings);
+                if (IsPopup(_creationRequest.PageType))
+                {
+                    _creationRequest.GenerateAutoCreateClickableMaskOverride = EditorGUILayout.Toggle(
+                        "生成遮罩创建覆写", _creationRequest.GenerateAutoCreateClickableMaskOverride);
+                    _creationRequest.GenerateOnClickMaskOverride = EditorGUILayout.Toggle(
+                        "生成遮罩点击钩子", _creationRequest.GenerateOnClickMaskOverride);
+                }
+            }
+            EditorGUILayout.EndVertical();
+        }
 
-                entry.PageDefFile = file;
-                entry.PageDefLine = line.Trim();
-                if (entry.PageDefLine.Length > 110)
-                    entry.PageDefLine = entry.PageDefLine.Substring(0, 110) + "…";
+        private void DrawCreationPreflight()
+        {
+            if (_creationPlan == null)
+                RefreshCreationPlan();
 
-                var m = System.Text.RegularExpressions.Regex.Match(line, @"new\(""([^""]+)""");
-                entry.PageDefOk = m.Success && m.Groups[1].Value == prefabPath;
+            EditorGUILayout.BeginHorizontal();
+            var refreshRequested = GUILayout.Button("预检", GUILayout.Width(100f));
+            EditorGUILayout.LabelField(_creationPlan != null && _creationPlan.IsValid
+                ? "✅ 所有依赖与目标路径可用"
+                : "⚠ 预检未通过", EditorStyles.miniLabel);
+            EditorGUILayout.EndHorizontal();
+
+            if (refreshRequested)
+            {
+                RefreshCreationPlan();
+                Repaint();
+                GUIUtility.ExitGUI();
+            }
+
+            if (_creationPlan != null && _creationPlan.IsValid)
+            {
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                DrawPath("Prefab", _creationPlan.PrefabPath);
+                DrawPath("逻辑脚本", _creationPlan.LogicScriptPath);
+                DrawPath("Binding", _creationPlan.BindingScriptPath);
+                if (!string.IsNullOrEmpty(_creationPlan.SettingsScriptPath))
+                    DrawPath("Settings", _creationPlan.SettingsScriptPath);
+                DrawPath("PageDef", _creationPlan.PageDefFile);
+                DrawPath("Animator", _creationPlan.AnimatorControllerPath);
+                DrawPath("SafeArea", _creationPlan.SafeAreaPrefabPath);
+                EditorGUILayout.EndVertical();
+            }
+            else if (_creationPlan != null)
+            {
+                EditorGUILayout.HelpBox(_creationPlan.Error ?? "预检失败。", MessageType.Error);
+            }
+
+            if (_creationResult != null && !_creationResult.Success)
+            {
+                EditorGUILayout.HelpBox(
+                    $"创建未完成：{_creationResult.Error}\n\n"
+                    + _creationResult.BuildAffectedAssetsSummary(), MessageType.Error);
+            }
+
+            using (new EditorGUI.DisabledScope(_creationPlan == null || !_creationPlan.IsValid
+                       || EditorApplication.isCompiling || EditorApplication.isUpdating
+                       || EUICreationCompilationContinuation.IsPending))
+            {
+                var oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.25f, 0.75f, 0.35f);
+                if (GUILayout.Button("创建并在编译后打开 Prefab", GUILayout.Height(34f)))
+                    CreateUI();
+                GUI.backgroundColor = oldColor;
+            }
+        }
+
+        private void RefreshCreationPlan()
+        {
+            EUICreationService.TryBuildPlan(_creationRequest, out _creationPlan, out _creationResult);
+        }
+
+        private void CreateUI()
+        {
+            if (_creationPlan == null || !_creationPlan.IsValid) return;
+            var summary = new StringBuilder()
+                .AppendLine($"Prefab：{_creationPlan.PrefabPath}")
+                .AppendLine($"逻辑：{_creationPlan.LogicScriptPath}")
+                .AppendLine($"Binding：{_creationPlan.BindingScriptPath}")
+                .AppendLine($"PageDef：{_creationPlan.PageDefFile}")
+                .ToString();
+            if (!EditorUtility.DisplayDialog("创建标准 UI", summary + "\n继续？", "创建", "取消"))
+                return;
+
+            _creationResult = EUICreationService.Create(_creationRequest);
+            if (_creationResult.Success)
+            {
+                EUICreationCompilationContinuation.Schedule(_creationResult.PrefabPath);
+                _lastResult = $"UI 已生成，正在等待 Unity 编译：{_creationResult.PrefabPath}";
+            }
+            else
+            {
+                var failureSummary = $"UI 创建未完成：{_creationResult.Error}\n\n"
+                    + _creationResult.BuildAffectedAssetsSummary();
+                _lastResult = failureSummary;
+                EmberDebug.LogError(TAG, failureSummary);
+                // 必须在 Refresh 可能触发域重载之前把部分产物明确告知用户。
+                EditorUtility.DisplayDialog("UI 创建未完成", failureSummary, "确定");
+            }
+
+            if (_creationResult.RequiresRefresh)
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
+            // Refresh 可能触发编译/域重载；此处不再进行 Unity 资产操作。
+            GUIUtility.ExitGUI();
+        }
+
+        #endregion
+
+        #region UI 总览
+
+        private void DrawOverviewTab()
+        {
+            DrawCatalogToolbar();
+            if (!EnsureCatalog()) return;
+
+            _overviewScroll = EditorGUILayout.BeginScrollView(_overviewScroll);
+            foreach (var entry in FilteredEntries()) DrawCatalogEntry(entry);
+            EditorGUILayout.EndScrollView();
+        }
+
+        private void DrawCatalogToolbar()
+        {
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("刷新扫描", GUILayout.Width(100f)))
+            {
+                Rescan();
+                _lastResult = _catalog?.IsConfigured == true
+                    ? $"扫描完成：{_catalog.Entries.Count} 个 UI 预制体。"
+                    : _catalog?.Error;
+            }
+            _overviewFilter = EditorGUILayout.TextField("筛选", _overviewFilter);
+            if (_catalog?.IsConfigured == true)
+            {
+                var pageCount = _catalog.Entries.Count(entry => entry.IsPage);
+                var issueCount = _catalog.Entries.Count(entry => !entry.IsHealthy);
+                EditorGUILayout.LabelField(
+                    $"共 {_catalog.Entries.Count} · 页面 {pageCount} · 有问题 {issueCount}",
+                    EditorStyles.miniLabel, GUILayout.Width(220f));
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void DrawCatalogEntry(EUIPrefabCatalogEntry entry)
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(entry.IsHealthy ? "✅" : "⚠", GUILayout.Width(22f));
+            EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(entry.PrefabPath),
+                EditorStyles.boldLabel, GUILayout.Width(190f));
+            EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.miniLabel);
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("定位", GUILayout.Width(52f))) PingAsset(entry.PrefabPath);
+            if (GUILayout.Button("打开", GUILayout.Width(52f))) OpenAsset(entry.PrefabPath);
+            EditorGUILayout.EndHorizontal();
+
+            var scriptState = entry.NoCodeGeneration
+                ? "不生成代码"
+                : $"脚本 {(entry.LogicScriptExists ? "✅" : "❌")}{Path.GetFileName(entry.LogicScriptPath)}"
+                  + $" / {(entry.BindingScriptExists ? "✅" : "❌")}{Path.GetFileName(entry.BindingScriptPath)}";
+            var description = (entry.IsPage
+                    ? $"页面 {entry.PageName} · {entry.PageDesc}"
+                    : "非页面")
+                + $"　|　绑定 {entry.BindingCount}（框架 {entry.FrameworkBindingCount}）"
+                + $"　|　{scriptState}"
+                + (entry.IsPage && !entry.NoCodeGeneration
+                    ? $"　|　定义 {(entry.PageDefOk ? "✅" : "❌")}{Path.GetFileName(entry.PageDefFile)}"
+                    : string.Empty)
+                + (entry.MissingScriptCount > 0 ? $"　|　Missing × {entry.MissingScriptCount}" : string.Empty)
+                + (entry.NullBindingCount > 0 ? $"　|　空绑定 × {entry.NullBindingCount}" : string.Empty)
+                + (entry.EmptyLeafCount > 0 ? $"　|　空叶子候选 × {entry.EmptyLeafCount}" : string.Empty);
+            EditorGUILayout.LabelField(description, EditorStyles.miniLabel);
+            if (!string.IsNullOrEmpty(entry.PageDefLine))
+                EditorGUILayout.LabelField("      " + entry.PageDefLine, EditorStyles.miniLabel);
+            EditorGUILayout.EndVertical();
+        }
+
+        #endregion
+
+        #region 清理与删除
+
+        private void DrawMaintenanceTab()
+        {
+            if (!EnsureCatalog()) return;
+            EditorGUILayout.HelpBox(
+                "本页包含会删除或重写 Assets 的操作。所有操作先展示影响范围并二次确认；"
+                + "模板镜像与 Packages 内容不在作用范围。", MessageType.Warning);
+
+            using (new EditorGUI.DisabledScope(EditorApplication.isCompiling
+                       || EditorApplication.isUpdating
+                       || EUICreationCompilationContinuation.IsPending))
+            {
+                DrawMaintenanceButtons();
+                _maintenanceScroll = EditorGUILayout.BeginScrollView(_maintenanceScroll);
+                DrawDeleteUISection();
+                DrawOrphanSection();
+                DrawEmptyLeafSection();
+                EditorGUILayout.EndScrollView();
+            }
+        }
+
+        private void DrawMaintenanceButtons()
+        {
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("清理失效 PageDef", GUILayout.Width(155f))) CleanStalePageDefsAll();
+            if (GUILayout.Button("移除 Missing Script", GUILayout.Width(170f))) RemoveMissingScriptsAll();
+            if (GUILayout.Button("清理空引用绑定", GUILayout.Width(160f))) RemoveNullBindingsAll();
+            if (GUILayout.Button("孤儿生成脚本 dry-run", GUILayout.Width(180f))) BuildOrphanList();
+            if (GUILayout.Button("空叶子 dry-run", GUILayout.Width(145f))) BuildEmptyLeafList();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void DrawDeleteUISection()
+        {
+            EditorGUILayout.Space(6f);
+            EditorGUILayout.LabelField("删除单个 UI", EditorStyles.boldLabel);
+            foreach (var entry in FilteredEntries())
+            {
+                EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+                EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(entry.PrefabPath),
+                    GUILayout.Width(210f));
+                EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.miniLabel);
+                var oldColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.85f, 0.35f, 0.3f);
+                if (GUILayout.Button("预览并删除", GUILayout.Width(105f))) DeleteUI(entry);
+                GUI.backgroundColor = oldColor;
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawOrphanSection()
+        {
+            if (_orphanGroups.Count == 0) return;
+            EditorGUILayout.Space(6f);
+            EditorGUILayout.LabelField($"孤儿生成脚本组 {_orphanGroups.Count} 个", EditorStyles.boldLabel);
+            foreach (var group in _orphanGroups.ToArray())
+            {
+                EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+                EditorGUILayout.LabelField(string.Join(" · ", group.AssetPaths), EditorStyles.miniLabel);
+                if (GUILayout.Button("删除", GUILayout.Width(55f))) DeleteOrphanGroup(group);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawEmptyLeafSection()
+        {
+            if (_emptyLeaves.Count == 0) return;
+            EditorGUILayout.Space(6f);
+            EditorGUILayout.LabelField($"普通空叶子候选 {_emptyLeaves.Count} 个", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("nested prefab 与 EUISafeArea 九个定位节点已排除。", EditorStyles.miniLabel);
+            foreach (var candidate in _emptyLeaves.ToArray())
+            {
+                EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+                EditorGUILayout.LabelField($"{candidate.Key} → {candidate.Value}", EditorStyles.miniLabel);
+                if (GUILayout.Button("删除", GUILayout.Width(55f))) DeleteEmptyLeaf(candidate);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DeleteUI(EUIPrefabCatalogEntry entry)
+        {
+            var plan = EUIPrefabMaintenanceService.BuildDeletePlan(_catalog, entry);
+            if (!plan.CanExecute)
+            {
+                EditorUtility.DisplayDialog("无法删除 UI", plan.BuildSummary(), "确定");
                 return;
             }
-
-            entry.PageDefFile = null;
-            entry.PageDefOk = false;
-        }
-
-        private static string GetPageDesc(EUIBinding binding)
-        {
-            var f = binding.PageFlags;
-            string layer = (f & PageFlags.Background) != 0 ? "Background"
-                : (f & PageFlags.FreePage) != 0 ? "FreePage"
-                : (f & PageFlags.TopMost) != 0 ? "TopMost"
-                : (f & PageFlags.Popup) != 0 ? "Popup"
-                : "Normal";
-            string type = (f & PageFlags.Background) != 0 ? "Background"
-                : (f & PageFlags.FreePage) != 0 ? "FreePage"
-                : (f & PageFlags.TopMost) != 0 ? "TopMost"
-                : (f & PageFlags.Popup) != 0 ? "Popup"
-                : (f & PageFlags.MainPage) != 0 ? "MainPage"
-                : "SubPage";
-            return $"{layer} · {type}";
-        }
-
-        private static int CountMissingScripts(GameObject prefab)
-        {
-            int count = 0;
-            foreach (var t in prefab.GetComponentsInChildren<Transform>(true))
-                count += GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject);
-            return count;
-        }
-
-        private static int CountEmptyLeaves(GameObject prefab)
-        {
-            int count = 0;
-            foreach (var t in prefab.GetComponentsInChildren<Transform>(true))
-            {
-                if (t == prefab.transform || t.childCount > 0) continue;
-                var comps = t.GetComponents<Component>();
-                if (comps.Length == 1 && comps[0] is Transform) count++;
-            }
-            return count;
-        }
-
-        /// <summary>取 EUIPageDef 两个目标文件（用户文件 + 框架文件，均为 Assets-relative 路径）。</summary>
-        private static (string userFile, string frameworkFile) GetPageDefFiles()
-        {
-            var settings = EUIBindingSettingData.GetOrCreateSettings();
-            CSharpLogicImplementationData csharp = null;
-            if (settings.LogicImplementations != null)
-            {
-                foreach (var impl in settings.LogicImplementations)
-                {
-                    if (impl is CSharpLogicImplementationData c) { csharp = c; break; }
-                }
-            }
-
-            if (csharp == null || string.IsNullOrEmpty(csharp.PageDefFile))
-                return (null, null);
-
-            string userFile = csharp.PageDefFile;
-            string frameworkFile = userFile.EndsWith("GamePages.User.cs")
-                ? userFile.Substring(0, userFile.Length - "GamePages.User.cs".Length) + "GamePages.cs"
-                : null;
-            return (userFile, frameworkFile);
-        }
-
-        private static string ToFullPath(string assetPath)
-        {
-            if (string.IsNullOrEmpty(assetPath)) return null;
-            return assetPath.StartsWith("Assets/")
-                ? Path.Combine(Application.dataPath, assetPath.Substring("Assets/".Length))
-                : assetPath;
-        }
-
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法 —— 删除 UI（预制体 + 脚本 + 定义整体删除）
-
-        /// <summary>一键删除一个 UI 的全部关联资产：预制体、.cs / .Binding.cs / Settings.cs、EUIPageDef 条目。不可恢复。</summary>
-        private void DeleteUI(PrefabEntry e)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"预制体：{e.PrefabPath}");
-            if (e.LogicScriptExists) sb.AppendLine($"逻辑脚本：{e.LogicScriptPath}");
-            if (e.BindingScriptExists) sb.AppendLine($"绑定脚本：{e.BindingScriptPath}");
-            if (e.SettingsScriptExists) sb.AppendLine($"自定义参数脚本：{e.SettingsScriptPath}");
-            if (e.IsPage)
-            {
-                sb.AppendLine(string.IsNullOrEmpty(e.PageDefFile)
-                    ? "EUIPageDef：未找到条目（无需处理）"
-                    : $"EUIPageDef：{Path.GetFileName(e.PageDefFile)} 中 {e.PageName}（随失效清理移除）");
-            }
-
-            string warn = (e.IsPage && e.PageDefFile != null && Path.GetFileName(e.PageDefFile) == "GamePages.cs")
-                ? "\n⚠ 这是框架页面（定义位于 GamePages.cs），删除后框架注册表将缺失该页面！\n"
-                : "";
-
             if (!EditorUtility.DisplayDialog("删除 UI",
-                    $"将整体删除该 UI 及其全部关联资产（不可恢复）：\n\n{sb}{warn}\n继续？",
-                    "删除", "取消"))
+                    "将删除以下精确目标（不可恢复）：\n\n" + plan.BuildSummary(), "删除", "取消"))
                 return;
 
-            if (e.LogicScriptExists) AssetDatabase.DeleteAsset(e.LogicScriptPath);
-            if (e.BindingScriptExists) AssetDatabase.DeleteAsset(e.BindingScriptPath);
-            if (e.SettingsScriptExists) AssetDatabase.DeleteAsset(e.SettingsScriptPath);
-            AssetDatabase.DeleteAsset(e.PrefabPath);
-
-            // 预制体删除后，其 EUIPageDef 条目自动失效 → 复用失效清理（含其注释行）
-            int removedDefs = 0;
-            if (e.IsPage)
-            {
-                var files = GetPageDefFiles();
-                foreach (var file in new[] { files.userFile, files.frameworkFile })
-                {
-                    if (string.IsNullOrEmpty(file)) continue;
-                    removedDefs += CSharpLogicImplementationData.CleanStalePageDefs(file);
-                }
-            }
-
-            AssetDatabase.Refresh();
-            Rescan();
-            _lastResult = $"已删除 UI「{Path.GetFileNameWithoutExtension(e.PrefabPath)}」：预制体 + 脚本 + EUIPageDef 条目 {removedDefs} 条。";
+            var result = EUIPrefabMaintenanceService.ExecuteDelete(plan, _catalog);
+            _lastResult = result.Message;
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            GUIUtility.ExitGUI();
         }
-
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法 —— 清理（安全项）
 
         private void CleanStalePageDefsAll()
         {
-            var files = GetPageDefFiles();
-            int total = 0;
-            var sb = new StringBuilder();
-            foreach (var file in new[] { files.userFile, files.frameworkFile })
+            var files = PageDefFiles().Where(path => !string.IsNullOrEmpty(path)).ToArray();
+            var details = new List<string>();
+            var total = 0;
+            foreach (var file in files)
             {
-                if (string.IsNullOrEmpty(file)) continue;
-                var full = ToFullPath(file);
-                if (!File.Exists(full)) continue;
-                var stale = CSharpLogicImplementationData.FindStalePageDefsPublic(full);
+                var fullPath = EUIPrefabCatalogService.ToFullPath(file);
+                if (!File.Exists(fullPath)) continue;
+                var stale = CSharpLogicImplementationData.FindStalePageDefsPublic(fullPath);
                 if (stale.Count == 0) continue;
-                sb.AppendLine($"{file}: {stale.Count} 条失效（{string.Join("、", stale.Select(s => s.Name))}）");
                 total += stale.Count;
+                details.Add($"{file}：{string.Join("、", stale.Select(item => item.Name))}");
             }
-
             if (total == 0)
             {
                 _lastResult = "未发现失效 EUIPageDef。";
                 return;
             }
-
             if (!EditorUtility.DisplayDialog("清理失效 EUIPageDef",
-                    $"将清理 {total} 条失效 EUIPageDef：\n{sb}", "清理", "取消"))
+                    $"将清理 {total} 条失效定义：\n\n{string.Join("\n", details)}", "清理", "取消"))
                 return;
-
-            int removed = 0;
-            foreach (var file in new[] { files.userFile, files.frameworkFile })
-            {
-                if (string.IsNullOrEmpty(file)) continue;
-                removed += CSharpLogicImplementationData.CleanStalePageDefs(file);
-            }
-
-            AssetDatabase.Refresh();
-            Rescan();
+            var removed = files.Sum(CSharpLogicImplementationData.CleanStalePageDefs);
             _lastResult = $"已清理 {removed} 条失效 EUIPageDef。";
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            GUIUtility.ExitGUI();
         }
 
         private void RemoveMissingScriptsAll()
         {
-            var targets = _entries.Where(e => e.MissingScriptCount > 0).ToList();
-            int total = targets.Sum(e => e.MissingScriptCount);
-            if (total == 0)
-            {
-                _lastResult = "未发现 Missing Script。";
-                return;
-            }
-
+            var targets = _catalog.Entries.Where(entry => entry.MissingScriptCount > 0).ToList();
+            var total = targets.Sum(entry => entry.MissingScriptCount);
+            if (total == 0) { _lastResult = "未发现 Missing Script。"; return; }
             if (!EditorUtility.DisplayDialog("移除 Missing Script",
-                    $"将从 {targets.Count} 个预制体中移除 {total} 个 Missing Script。", "移除", "取消"))
+                    $"将从 {targets.Count} 个预制体移除 {total} 个 Missing Script。", "移除", "取消"))
                 return;
-
-            int removed = 0;
-            foreach (var e in targets)
-                removed += RemoveMissingScriptsInPrefab(e.PrefabPath);
-
-            AssetDatabase.Refresh();
+            var removed = targets.Sum(entry =>
+                EUIPrefabMaintenanceService.RemoveMissingScriptsInPrefab(entry.PrefabPath));
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             Rescan();
             _lastResult = $"已移除 {removed} 个 Missing Script。";
         }
 
         private void RemoveNullBindingsAll()
         {
-            var targets = _entries.Where(e => e.NullBindingCount > 0).ToList();
-            int total = targets.Sum(e => e.NullBindingCount);
-            if (total == 0)
-            {
-                _lastResult = "未发现空引用绑定条目。";
+            var targets = _catalog.Entries.Where(entry => entry.NullBindingCount > 0).ToList();
+            var total = targets.Sum(entry => entry.NullBindingCount);
+            if (total == 0) { _lastResult = "未发现空引用绑定。"; return; }
+            if (!EditorUtility.DisplayDialog("清理空引用绑定",
+                    $"将从 {targets.Count} 个预制体删除 {total} 条空引用绑定。", "清理", "取消"))
                 return;
-            }
-
-            if (!EditorUtility.DisplayDialog("清理空引用绑定条目",
-                    $"将从 {targets.Count} 个预制体中删除 {total} 条 GameObject 为 null 的绑定条目（框架条目同样处理，属损坏数据）。",
-                    "清理", "取消"))
-                return;
-
-            int removed = 0;
-            foreach (var e in targets)
-                removed += RemoveNullBindingsInPrefab(e.PrefabPath);
-
-            AssetDatabase.Refresh();
+            var removed = targets.Sum(entry =>
+                EUIPrefabMaintenanceService.RemoveNullBindingsInPrefab(entry.PrefabPath));
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             Rescan();
             _lastResult = $"已删除 {removed} 条空引用绑定。";
         }
 
-        private static int RemoveMissingScriptsInPrefab(string prefabPath)
+        private void BuildOrphanList()
         {
-            var contents = PrefabUtility.LoadPrefabContents(prefabPath);
-            int removed = 0;
-            try
-            {
-                foreach (var t in contents.GetComponentsInChildren<Transform>(true))
-                    removed += GameObjectUtility.RemoveMonoBehavioursWithMissingScript(t.gameObject);
-                if (removed > 0)
-                    PrefabUtility.SaveAsPrefabAsset(contents, prefabPath);
-            }
-            finally
-            {
-                PrefabUtility.UnloadPrefabContents(contents);
-            }
-            return removed;
+            _orphanGroups.Clear();
+            _orphanGroups.AddRange(EUIPrefabMaintenanceService.FindOrphanScriptGroups(_catalog));
+            _lastResult = _orphanGroups.Count == 0
+                ? "未发现有自动生成 Binding 锚点的孤儿脚本。"
+                : $"发现 {_orphanGroups.Count} 个孤儿生成脚本组，请逐项确认。";
         }
 
-        private static int RemoveNullBindingsInPrefab(string prefabPath)
+        private void DeleteOrphanGroup(EUIOrphanScriptGroup group)
         {
-            var contents = PrefabUtility.LoadPrefabContents(prefabPath);
-            int removed = 0;
-            try
-            {
-                var binding = contents.GetComponent<EUIBinding>();
-                if (!binding) return 0;
-
-                var so = new SerializedObject(binding);
-                var sp = so.FindProperty("bindings");
-                for (int i = sp.arraySize - 1; i >= 0; i--)
-                {
-                    var go = sp.GetArrayElementAtIndex(i).FindPropertyRelative("GameObject");
-                    if (go.objectReferenceValue == null)
-                    {
-                        sp.DeleteArrayElementAtIndex(i);
-                        removed++;
-                    }
-                }
-                if (removed > 0)
-                {
-                    so.ApplyModifiedProperties();
-                    PrefabUtility.SaveAsPrefabAsset(contents, prefabPath);
-                }
-                so.Dispose();
-            }
-            finally
-            {
-                PrefabUtility.UnloadPrefabContents(contents);
-            }
-            return removed;
-        }
-
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法 —— 清理（dry-run 项）
-
-        private void BuildOrphanScriptList()
-        {
-            _orphanScripts.Clear();
-
-            var root = EUIBindingSettingData.GetOrCreateSettings().BusinessCodeRoot;
-            if (string.IsNullOrEmpty(root)) { _lastResult = "未配置业务代码根目录。"; return; }
-            var rootFull = ToFullPath(root);
-            if (string.IsNullOrEmpty(rootFull) || !Directory.Exists(rootFull)) { _lastResult = $"根目录不存在：{root}"; return; }
-
-            var referenced = new HashSet<string>();
-            foreach (var e in _entries)
-            {
-                referenced.Add(e.LogicScriptPath);
-                referenced.Add(e.BindingScriptPath);
-                if (!string.IsNullOrEmpty(e.LogicScriptPath))
-                    referenced.Add(e.LogicScriptPath.Replace(".cs", "Settings.cs"));
-            }
-
-            foreach (var file in Directory.GetFiles(rootFull, "*.cs", SearchOption.AllDirectories))
-            {
-                var rel = root.TrimEnd('/') + "/" + file.Substring(rootFull.Length + 1).Replace('\\', '/');
-                if (referenced.Contains(rel)) continue;
-                _orphanScripts.Add(rel);
-            }
-
-            _orphanScripts.Sort(System.StringComparer.Ordinal);
-            _lastResult = _orphanScripts.Count > 0
-                ? $"发现 {_orphanScripts.Count} 个孤儿脚本（见下方清单，逐项确认删除）。"
-                : "未发现孤儿脚本。";
+            if (!EditorUtility.DisplayDialog("删除孤儿生成脚本",
+                    string.Join("\n", group.AssetPaths), "删除", "取消")) return;
+            var result = EUIPrefabMaintenanceService.DeleteOrphanScriptGroup(
+                group, _catalog.BusinessCodeRoot);
+            _lastResult = result.Message;
+            _orphanGroups.Remove(group);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            GUIUtility.ExitGUI();
         }
 
         private void BuildEmptyLeafList()
         {
             _emptyLeaves.Clear();
-            foreach (var e in _entries)
-            {
-                if (e.EmptyLeafCount <= 0) continue;
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(e.PrefabPath);
-                if (!prefab) continue;
-
-                foreach (var t in prefab.GetComponentsInChildren<Transform>(true))
-                {
-                    if (t == prefab.transform || t.childCount > 0) continue;
-                    var comps = t.GetComponents<Component>();
-                    if (comps.Length == 1 && comps[0] is Transform)
-                        _emptyLeaves.Add(new KeyValuePair<string, string>(e.PrefabPath, GetNodePath(prefab.transform, t)));
-                }
-            }
-
-            _lastResult = _emptyLeaves.Count > 0
-                ? $"发现 {_emptyLeaves.Count} 个空叶子节点（见下方清单，逐项确认删除）。"
-                : "未发现空叶子节点。";
+            foreach (var entry in _catalog.Entries)
+            foreach (var nodePath in EUIPrefabCatalogService.FindEmptyLeafPaths(entry.PrefabPath))
+                _emptyLeaves.Add(new KeyValuePair<string, string>(entry.PrefabPath, nodePath));
+            _lastResult = _emptyLeaves.Count == 0
+                ? "未发现普通空叶子节点。"
+                : $"发现 {_emptyLeaves.Count} 个候选；nested prefab 与 SafeArea 节点已排除。";
         }
 
-        private static string GetNodePath(Transform root, Transform target)
+        private void DeleteEmptyLeaf(KeyValuePair<string, string> candidate)
         {
-            if (root == target) return "";
-            var names = new List<string>();
-            var cur = target;
-            while (cur && cur != root)
+            if (!EditorUtility.DisplayDialog("删除空叶子",
+                    $"{candidate.Key}\n{candidate.Value}", "删除", "取消")) return;
+            if (EUIPrefabMaintenanceService.DeleteEmptyLeaf(candidate.Key, candidate.Value,
+                    out var error))
             {
-                names.Add(cur.name);
-                cur = cur.parent;
+                _emptyLeaves.Remove(candidate);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                Rescan();
+                _lastResult = $"已删除空叶子：{candidate.Value}";
             }
-            names.Reverse();
-            return string.Join("/", names);
+            else
+            {
+                _lastResult = error;
+            }
         }
 
-        private static void DeleteLeafNode(string prefabPath, string nodePath)
+        #endregion
+
+        #region 通用
+
+        private void Rescan()
         {
-            var contents = PrefabUtility.LoadPrefabContents(prefabPath);
-            try
-            {
-                var t = contents.transform.Find(nodePath);
-                if (t && t.childCount == 0)
-                {
-                    Object.DestroyImmediate(t.gameObject);
-                    PrefabUtility.SaveAsPrefabAsset(contents, prefabPath);
-                }
-            }
-            finally
-            {
-                PrefabUtility.UnloadPrefabContents(contents);
-            }
+            _catalog = EUIPrefabCatalogService.Scan();
+            _orphanGroups.Clear();
+            _emptyLeaves.Clear();
+        }
+
+        private bool EnsureCatalog()
+        {
+            if (_catalog == null) Rescan();
+            if (_catalog?.IsConfigured == true) return true;
+            EditorGUILayout.HelpBox(_catalog?.Error ?? "UI 目录尚未扫描。", MessageType.Error);
+            return false;
+        }
+
+        private IEnumerable<EUIPrefabCatalogEntry> FilteredEntries()
+        {
+            if (_catalog == null) return Enumerable.Empty<EUIPrefabCatalogEntry>();
+            if (string.IsNullOrWhiteSpace(_overviewFilter)) return _catalog.Entries;
+            var filter = _overviewFilter.Trim();
+            return _catalog.Entries.Where(entry =>
+                entry.PrefabPath.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
+                || (entry.PageName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) ?? -1) >= 0);
+        }
+
+        private IEnumerable<string> PageDefFiles()
+        {
+            yield return _catalog.UserPageDefFile;
+            yield return _catalog.FrameworkPageDefFile;
+        }
+
+        private static bool IsPopup(PageType pageType)
+        {
+            return pageType == PageType.Popup || pageType == PageType.FullScreenPopup;
+        }
+
+        private static void DrawPath(string label, string path)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(label, GUILayout.Width(75f));
+            EditorGUILayout.SelectableLabel(path ?? "—", EditorStyles.miniLabel, GUILayout.Height(18f));
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private static void PingAsset(string path)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+            if (!asset) return;
+            Selection.activeObject = asset;
+            EditorGUIUtility.PingObject(asset);
+        }
+
+        private static void OpenAsset(string path)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+            if (asset) AssetDatabase.OpenAsset(asset);
         }
 
         #endregion

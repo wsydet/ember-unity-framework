@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using Ember.Basic;
+using Ember.UI;
 
 using UnityEditor;
 
@@ -36,6 +37,8 @@ namespace Ember.UIExtension.Editor
     /// </summary>
     public class CSharpLogicImplementationData : LogicImplementationData
     {
+        private const string TAG = LogTags.EmberUI;
+
         #region 编辑器面板参数
 
         [SerializeField]
@@ -67,8 +70,12 @@ namespace Ember.UIExtension.Editor
         private DefaultAsset codeTemplateForNoGen;
 
         [SerializeField]
-        [Tooltip("框架模式代码骨架模板 → 生成带 [EmberManaged] 块标记的 .cs（每个函数前块/尾块框架所有，块间用户区）")]
+        [Tooltip("框架模式代码骨架模板 → 生成带 [EmberManaged] Lifecycle 管理块与块外 XxxUser 钩子的 .cs")]
         private DefaultAsset frameworkCodeTemplate;
+
+        [SerializeField]
+        [Tooltip("UI 资源根目录（完整 Assets 路径）。框架模式生成到 Common/Prefabs；用户模式按输出子目录首段生成到 Module/<模块>/Prefabs。")]
+        private string uiResourceRoot = "Assets/GameResource/Resources/UI";
 
         #endregion
 
@@ -78,10 +85,301 @@ namespace Ember.UIExtension.Editor
 
         public override string CodeFileExtension => ".cs";
 
+        /// <summary>UI 资源根目录（完整 Assets 路径，与逻辑代码目录分离）</summary>
+        public string UIResourceRoot => uiResourceRoot;
+
+        private static readonly HashSet<string> CSharpKeywords = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char",
+            "checked", "class", "const", "continue", "decimal", "default", "delegate", "do",
+            "double", "else", "enum", "event", "explicit", "extern", "false", "finally",
+            "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int",
+            "interface", "internal", "is", "lock", "long", "namespace", "new", "null",
+            "object", "operator", "out", "override", "params", "private", "protected", "public",
+            "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc",
+            "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof",
+            "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void",
+            "volatile", "while",
+        };
+
+        private static readonly HashSet<string> ReservedWindowsNames = new HashSet<string>(
+            new[]
+            {
+                "CON", "PRN", "AUX", "NUL",
+                "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+                "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
+            }, StringComparer.OrdinalIgnoreCase);
+
+        internal static bool TryValidateIdentifier(string value, string displayName, out string error)
+        {
+            error = null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                error = $"{displayName}为空。";
+                return false;
+            }
+
+            if (value != value.Trim() || !IsIdentifierStart(value[0]))
+            {
+                error = $"{displayName}“{value}”不是合法的 C# 标识符。";
+                return false;
+            }
+
+            for (int i = 1; i < value.Length; i++)
+            {
+                if (!IsIdentifierPart(value[i]))
+                {
+                    error = $"{displayName}“{value}”不是合法的 C# 标识符。";
+                    return false;
+                }
+            }
+
+            if (CSharpKeywords.Contains(value))
+            {
+                error = $"{displayName}“{value}”不能使用 C# 关键字。";
+                return false;
+            }
+            return true;
+        }
+
+        internal static bool TryResolveAssetsPath(string value, string displayName,
+            out string assetPath, out string fullPath, out string error)
+        {
+            assetPath = null;
+            fullPath = null;
+            error = null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                error = $"{displayName}为空。";
+                return false;
+            }
+
+            string normalized = value.Trim().Replace('\\', '/').TrimEnd('/');
+            if (Path.IsPathRooted(normalized)
+                || (!normalized.Equals("Assets", StringComparison.OrdinalIgnoreCase)
+                    && !normalized.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase)))
+            {
+                error = $"{displayName}必须是 Assets/ 下的项目相对路径，不能使用绝对路径或 Packages 路径：{value}";
+                return false;
+            }
+
+            string[] segments = normalized.Split('/');
+            foreach (string segment in segments)
+            {
+                if (string.IsNullOrWhiteSpace(segment) || segment != segment.Trim()
+                    || segment == "." || segment == ".."
+                    || segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
+                    || IsReservedWindowsName(segment))
+                {
+                    error = $"{displayName}包含非法或穿越路径段：{value}";
+                    return false;
+                }
+            }
+
+            try
+            {
+                string assetsRoot = Path.GetFullPath(Application.dataPath)
+                    .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                string projectRoot = Directory.GetParent(assetsRoot)?.FullName;
+                if (string.IsNullOrEmpty(projectRoot))
+                {
+                    error = "无法解析 Unity 项目根目录。";
+                    return false;
+                }
+
+                string candidate = Path.GetFullPath(Path.Combine(projectRoot,
+                    normalized.Replace('/', Path.DirectorySeparatorChar)));
+                if (!candidate.Equals(assetsRoot, StringComparison.OrdinalIgnoreCase)
+                    && !candidate.StartsWith(assetsRoot + Path.DirectorySeparatorChar,
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    error = $"{displayName}越出了项目 Assets 根目录：{value}";
+                    return false;
+                }
+
+                string relative = candidate.Length == assetsRoot.Length
+                    ? string.Empty
+                    : candidate.Substring(assetsRoot.Length + 1).Replace('\\', '/');
+                assetPath = string.IsNullOrEmpty(relative) ? "Assets" : $"Assets/{relative}";
+                fullPath = candidate;
+                return true;
+            }
+            catch (Exception exception)
+            {
+                error = $"{displayName}无效：{exception.Message}";
+                return false;
+            }
+        }
+
+        internal static bool TryResolveGeneratedFilePath(string codeRoot, string classPath,
+            string fileName, out string assetPath, out string fullPath, out string error)
+        {
+            assetPath = null;
+            fullPath = null;
+            error = null;
+            if (!TryResolveAssetsPath(codeRoot, "代码生成根目录",
+                    out var normalizedRoot, out _, out error))
+                return false;
+
+            if (!TryNormalizeRelativeDirectory(classPath, "输出子目录",
+                    out var normalizedClassPath, out error))
+                return false;
+
+            if (!TryValidateSingleFileName(fileName, "生成文件名", out error))
+                return false;
+
+            string candidate = string.IsNullOrEmpty(normalizedClassPath)
+                ? $"{normalizedRoot}/{fileName}"
+                : $"{normalizedRoot}/{normalizedClassPath}/{fileName}";
+            return TryResolveAssetsPath(candidate, "生成文件路径", out assetPath, out fullPath, out error);
+        }
+
+        private static bool TryNormalizeRelativeDirectory(string value, string displayName,
+            out string normalized, out string error)
+        {
+            normalized = string.Empty;
+            error = null;
+            if (string.IsNullOrWhiteSpace(value)) return true;
+
+            string candidate = value.Trim().Replace('\\', '/');
+            if (Path.IsPathRooted(candidate) || candidate.StartsWith("/", StringComparison.Ordinal))
+            {
+                error = $"{displayName}必须是相对目录：{value}";
+                return false;
+            }
+
+            candidate = candidate.Trim('/');
+
+            string[] segments = candidate.Split('/');
+            foreach (string segment in segments)
+            {
+                if (string.IsNullOrWhiteSpace(segment) || segment != segment.Trim()
+                    || segment == "." || segment == ".."
+                    || segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
+                    || IsReservedWindowsName(segment))
+                {
+                    error = $"{displayName}包含非法或穿越路径段：{value}";
+                    return false;
+                }
+            }
+
+            normalized = string.Join("/", segments);
+            return true;
+        }
+
+        private static bool TryValidateSingleFileName(string value, string displayName, out string error)
+        {
+            error = null;
+            if (string.IsNullOrWhiteSpace(value) || value != value.Trim()
+                || value == "." || value == ".."
+                || value.IndexOf('/') >= 0 || value.IndexOf('\\') >= 0
+                || value.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
+                || IsReservedWindowsName(value))
+            {
+                error = $"{displayName}“{value}”不是合法的单一文件名。";
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsReservedWindowsName(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return false;
+            var dot = value.IndexOf('.');
+            var stem = dot >= 0 ? value.Substring(0, dot) : value;
+            return ReservedWindowsNames.Contains(stem);
+        }
+
+        private static bool IsIdentifierStart(char value)
+        {
+            return value == '_' || char.IsLetter(value);
+        }
+
+        private static bool IsIdentifierPart(char value)
+        {
+            return value == '_' || char.IsLetterOrDigit(value);
+        }
+
+        /// <summary>从全局 EUI Binding 设置中取 C# 实现数据（未配置或无 C# 实现返回 null）。</summary>
+        public static CSharpLogicImplementationData FindDefault()
+        {
+            var settings = EUIBindingSettingData.GetOrCreateSettings();
+            if (settings.LogicImplementations == null) return null;
+            foreach (var impl in settings.LogicImplementations)
+            {
+                if (impl is CSharpLogicImplementationData c)
+                    return c;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 解析 binding 的最终预制体路径。
+        /// 框架模式固定进入 Common；用户模式从输出子目录第一段提取模块名。
+        /// </summary>
+        public bool TryResolvePrefabPath(EUIBinding binding, out string prefabPath, out string error)
+        {
+            prefabPath = null;
+            error = null;
+
+            if (binding == null)
+            {
+                error = "EUIBinding 为空。";
+                return false;
+            }
+
+            var root = string.IsNullOrWhiteSpace(uiResourceRoot)
+                ? "Assets/GameResource/Resources/UI"
+                : uiResourceRoot.Trim().Replace('\\', '/').TrimEnd('/');
+            if (!TryResolveAssetsPath(root, "UI 资源根目录", out root, out _, out error))
+                return false;
+
+            var rawPrefabName = binding.PrefabName?.Trim();
+            if (string.IsNullOrEmpty(rawPrefabName))
+            {
+                error = "预制体名和类名不能同时为空。";
+                return false;
+            }
+
+            if (rawPrefabName.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+                rawPrefabName = rawPrefabName.Substring(0, rawPrefabName.Length - ".prefab".Length);
+            if (!TryValidateSingleFileName(rawPrefabName, "预制体名", out error))
+                return false;
+            var prefabName = rawPrefabName;
+
+            if (!TryNormalizeRelativeDirectory(binding.ClassPath, "输出子目录",
+                    out var classPath, out error))
+                return false;
+
+            string categoryPath;
+            if (binding.PathMode == EUIBinding.CodePathMode.Framework)
+            {
+                categoryPath = "Common";
+            }
+            else
+            {
+                var separatorIndex = classPath?.IndexOf('/') ?? -1;
+                var moduleName = separatorIndex >= 0 ? classPath.Substring(0, separatorIndex) : classPath;
+                if (string.IsNullOrWhiteSpace(moduleName) || moduleName == "." || moduleName == "..")
+                {
+                    error = "用户模式的输出子目录必须以模块名开头，例如 Inventory/Page。";
+                    return false;
+                }
+
+                categoryPath = $"Module/{moduleName.Trim()}";
+            }
+
+            return TryResolveAssetsPath($"{root}/{categoryPath}/Prefabs/{prefabName}.prefab",
+                "预制体输出路径", out prefabPath, out _, out error);
+        }
+
         public override bool CanGenerate(EUIBinding binding)
         {
             return base.CanGenerate(binding)
-                && codeTemplate != null
+                && (binding.PathMode == EUIBinding.CodePathMode.Framework
+                    ? frameworkCodeTemplate != null
+                    : codeTemplate != null)
                 && bindingCodeTemplate != null;
         }
 
@@ -115,188 +413,297 @@ namespace Ember.UIExtension.Editor
             string templateContent = ReadTemplate(codeTemplateForNoGen);
             if (string.IsNullOrEmpty(templateContent))
             {
-                EmberDebug.LogWarning("EmberUI", "剪贴板模板为空，无法生成。");
+                EmberDebug.LogWarning(TAG, "剪贴板模板为空，无法生成。");
                 return;
             }
 
             string result = RenderTemplate(templateContent, BuildTemplateContext(binding, className, binding.Bindings));
             GUIUtility.systemCopyBuffer = result;
-            EmberDebug.Log("EmberUI", "代码已复制至剪贴板");
+            EmberDebug.Log(TAG, "代码已复制至剪贴板");
         }
 
         public override void GenerateCode(EUIBinding binding, string baseClsName, EUIBinding.BindingEntry[] declaredFields)
         {
-            bool frameworkMode = binding.PathMode == EUIBinding.CodePathMode.Framework
-                && EUIBindingCodeGenUtility.IsEmbeddedPackage();
-            if (!GenerateOrUpdatePageDefinition(binding, frameworkMode))
-                return;
-
-            TryGetPrefabName(binding, out var prefabName);
-            prefabName = Path.GetFileNameWithoutExtension(prefabName);
-            baseClsName = !string.IsNullOrEmpty(baseClsName) ? baseClsName : this.baseClassName;
-            declaredFields = declaredFields ?? binding.Bindings;
-
-            string effectiveCodePath = !string.IsNullOrEmpty(binding.CodePath) ? binding.CodePath : codePath;
-            string relativePath = string.IsNullOrEmpty(binding.ClassPath)
-                ? binding.ClassName
-                : binding.ClassPath + "/" + binding.ClassName;
-            string path = effectiveCodePath + "/" + relativePath + CodeFileExtension;
-            string folder = Path.GetDirectoryName(path);
-            if (!Directory.Exists(folder))
-                Directory.CreateDirectory(folder);
-
-            var ctx = BuildTemplateContext(binding, prefabName, declaredFields, baseClsName);
-
-            // 1. 生成 .cs 骨架（仅首次，不覆盖已存在文件——用户区永不触碰；框架模式使用带块标记的模板）
-            if (!File.Exists(path))
+            if (!TryGenerateCode(binding, baseClsName, declaredFields, refreshAssets: true, out var error)
+                && !string.IsNullOrEmpty(error))
             {
-                var skeletonAsset = frameworkMode ? frameworkCodeTemplate : codeTemplate;
-                if (frameworkMode && skeletonAsset == null)
-                {
-                    // 框架模式绝不静默回退用户模板：模板引用缺失时直接报错，避免生成无块标记的文件
-                    EditorUtility.DisplayDialog("生成代码失败",
-                        "框架模式未配置「框架模式代码模板」（EmberCSharpImplementation 资产的 frameworkCodeTemplate 引用为空）。\n请在资产 Inspector 中重新指定 CSharpCodeTemplate.Framework.tpl 后重试。", "确定");
-                    return;
-                }
-
-                if (skeletonAsset != null)
-                {
-                    string skeletonTpl = ReadTemplate(skeletonAsset);
-                    if (!string.IsNullOrEmpty(skeletonTpl))
-                    {
-                        File.WriteAllText(path, RenderTemplate(skeletonTpl, ctx), new UTF8Encoding(false));
-                    }
-                }
+                EditorUtility.DisplayDialog("生成代码失败", error, "确定");
             }
-
-            // 2. 生成 .Binding.cs（每次覆盖）
-            if (bindingCodeTemplate != null)
-            {
-                string bindingTpl = ReadTemplate(bindingCodeTemplate);
-                if (!string.IsNullOrEmpty(bindingTpl))
-                {
-                    string bindingsPath = path.Replace(".cs", ".Binding.cs");
-                    File.WriteAllText(bindingsPath, RenderTemplate(bindingTpl, ctx), new UTF8Encoding(false));
-                }
-            }
-
-            AssetDatabase.Refresh();
-            EmberDebug.Log("EmberUI", "代码生成成功");
         }
 
-        /// <summary>在 EUIPageDef 文件中追加新的 EUIPageDef 条目（不覆盖已有内容）。框架模式写入 GamePages.cs（框架区），用户模式写入 GamePages.User.cs。</summary>
+        /// <summary>
+        /// 无弹窗地生成 C# 页面代码。供统一生成流程调用；当 <paramref name="refreshAssets"/> 为 false 时，
+        /// 本方法不会触发 AssetDatabase.Refresh，由外层在全部文件写入完成后统一刷新。
+        /// </summary>
+        internal bool TryGenerateCode(EUIBinding binding, string baseClsName,
+            EUIBinding.BindingEntry[] declaredFields, bool refreshAssets, out string error)
+        {
+            error = null;
+            bool skeletonWritten = false;
+            bool bindingWritten = false;
+            bool pageDefinitionUpdated = false;
+            if (!binding)
+            {
+                error = "EUIBinding 为空。";
+                return false;
+            }
+
+            if (!TryValidateIdentifier(binding.ClassName, "类名", out error))
+                return false;
+
+            if (binding.IsPage && !TryValidateIdentifier(binding.PageName, "页面名称", out error))
+                return false;
+
+            try
+            {
+                bool embedded = EUIBindingCodeGenUtility.IsEmbeddedPackage();
+                if (binding.PathMode == EUIBinding.CodePathMode.Framework && !embedded)
+                {
+                    error = "消费端项目不允许使用 Framework 生成模式，请改为 User。";
+                    return false;
+                }
+
+                bool frameworkMode = binding.PathMode == EUIBinding.CodePathMode.Framework;
+
+                if (!TryGetPrefabName(binding, out var prefabName)
+                    || string.IsNullOrEmpty(prefabName))
+                {
+                    error = "EUIBinding 尚未保存为可识别的 prefab。";
+                    return false;
+                }
+
+                prefabName = Path.GetFileNameWithoutExtension(prefabName);
+                baseClsName = !string.IsNullOrEmpty(baseClsName) ? baseClsName : this.baseClassName;
+                declaredFields = declaredFields ?? binding.Bindings;
+
+                string effectiveCodePath = !string.IsNullOrEmpty(binding.CodePath) ? binding.CodePath : codePath;
+                if (string.IsNullOrWhiteSpace(effectiveCodePath))
+                {
+                    error = "未配置代码生成根目录。";
+                    return false;
+                }
+
+                if (!TryResolveGeneratedFilePath(effectiveCodePath, binding.ClassPath,
+                        binding.ClassName + CodeFileExtension,
+                        out var assetPath, out var path, out error))
+                    return false;
+
+                if (!TryResolveGeneratedFilePath(effectiveCodePath, binding.ClassPath,
+                        binding.ClassName + ".Binding" + CodeFileExtension,
+                        out var bindingAssetPath, out var bindingsPath, out error))
+                    return false;
+
+                string folder = Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(folder))
+                {
+                    error = $"无法解析代码生成目录：{assetPath}";
+                    return false;
+                }
+
+                // 所有模板先完成预检，避免 PageDef 已写入后才发现代码模板缺失。
+                bool needsSkeleton = !File.Exists(path);
+                var skeletonAsset = frameworkMode ? frameworkCodeTemplate : codeTemplate;
+                if (needsSkeleton && skeletonAsset == null)
+                {
+                    error = frameworkMode
+                        ? "框架模式未配置「框架模式代码模板」（frameworkCodeTemplate）。\n"
+                            + "请在 EmberCSharpImplementation Inspector 中重新指定后重试。"
+                        : "未配置逻辑代码模板（codeTemplate）。";
+                    return false;
+                }
+
+                string skeletonTpl = needsSkeleton ? ReadTemplate(skeletonAsset) : null;
+                if (needsSkeleton && string.IsNullOrEmpty(skeletonTpl))
+                {
+                    error = "逻辑代码模板为空或无法读取。";
+                    return false;
+                }
+
+                if (bindingCodeTemplate == null)
+                {
+                    error = "未配置绑定代码模板（bindingCodeTemplate）。";
+                    return false;
+                }
+
+                string bindingTpl = ReadTemplate(bindingCodeTemplate);
+                if (string.IsNullOrEmpty(bindingTpl))
+                {
+                    error = "绑定代码模板为空或无法读取。";
+                    return false;
+                }
+
+                var ctx = BuildTemplateContext(binding, prefabName, declaredFields, baseClsName, frameworkMode);
+                var renderedSkeleton = needsSkeleton ? RenderTemplate(skeletonTpl, ctx) : null;
+                var renderedBinding = RenderTemplate(bindingTpl, ctx);
+
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+
+                // 1. 生成 .cs 骨架（仅首次，不覆盖已存在文件）
+                if (needsSkeleton)
+                {
+                    skeletonWritten = true;
+                    File.WriteAllText(path, renderedSkeleton, new UTF8Encoding(false));
+                }
+
+                // 2. 生成 .Binding.cs（每次覆盖）
+                bindingWritten = true;
+                File.WriteAllText(bindingsPath, renderedBinding, new UTF8Encoding(false));
+
+                // 3. 脚本全部写入成功后才提交 PageDef，避免后续模板/目录/脚本 IO 失败
+                // 留下指向不存在页面代码的注册项。
+                pageDefinitionUpdated = true;
+                if (!TryGenerateOrUpdatePageDefinition(binding, frameworkMode, out error))
+                {
+                    error += $"\n脚本已写入但 PageDef 未完成，请检查后重试：\n{assetPath}\n"
+                        + bindingAssetPath;
+                    return false;
+                }
+
+                if (refreshAssets)
+                    AssetDatabase.Refresh();
+                EmberDebug.Log(TAG, "代码生成成功");
+                return true;
+            }
+            catch (Exception exception)
+            {
+                error = $"C# 代码生成失败：{exception.Message}";
+                if (skeletonWritten || bindingWritten || pageDefinitionUpdated)
+                {
+                    error += "\n本次操作已产生部分写入："
+                        + (skeletonWritten ? " 逻辑骨架" : string.Empty)
+                        + (bindingWritten ? " Binding" : string.Empty)
+                        + (pageDefinitionUpdated ? " PageDef" : string.Empty)
+                        + "。现有产物已保留，请按错误信息检查。";
+                }
+                EmberDebug.LogWarning(TAG, error);
+                return false;
+            }
+        }
+
+        /// <summary>在 EUIPageDef 文件中追加或同步 EUIPageDef 条目。框架模式写入 GamePages.cs（框架区），用户模式写入 GamePages.User.cs。</summary>
         public bool GenerateOrUpdatePageDefinition(EUIBinding binding, bool frameworkMode = false)
         {
+            if (TryGenerateOrUpdatePageDefinition(binding, frameworkMode, out var error))
+                return true;
+
+            if (!string.IsNullOrEmpty(error))
+                EditorUtility.DisplayDialog("生成代码失败", error, "确定");
+            return false;
+        }
+
+        /// <summary>无弹窗地追加或同步 EUIPageDef 条目。</summary>
+        internal bool TryGenerateOrUpdatePageDefinition(EUIBinding binding, bool frameworkMode,
+            out string error)
+        {
+            error = null;
+            if (!binding)
+            {
+                error = "EUIBinding 为空。";
+                return false;
+            }
+
             if (!binding.IsPage) return true;
 
-            if (binding.PageFlags == PageFlags.None)
+            if (!IsSupportedBindingPageType(binding.PageType))
             {
-                EditorUtility.DisplayDialog("生成代码失败", "界面类型 PageFlags 定义错误!", "确定");
+                error = $"页面类型 {binding.PageType} 暂不受 EUIBinding 代码生成支持。";
                 return false;
             }
 
-            if (string.IsNullOrEmpty(binding.ClassName))
-            {
-                EditorUtility.DisplayDialog("生成代码失败", "类名为空，无法生成路径。", "确定");
+            if (!TryValidateIdentifier(binding.ClassName, "类名", out error))
                 return false;
-            }
+
+            if (!TryValidateIdentifier(binding.PageName, "页面名称", out error))
+                return false;
 
             string targetFile = frameworkMode ? GetFrameworkPageDefFile() : pageDefFile;
-            if (string.IsNullOrEmpty(targetFile)) return true;
+            if (string.IsNullOrEmpty(targetFile))
+            {
+                error = frameworkMode
+                    ? "未配置 Framework 页面注册文件。"
+                    : "未配置 User 页面注册文件。";
+                return false;
+            }
 
-            string fullPath = GetFullPath(targetFile);
-            if (!File.Exists(fullPath)) return true;
+            if (!TryResolveAssetsPath(targetFile, "页面注册文件",
+                    out targetFile, out var fullPath, out error))
+                return false;
+
+            if (!targetFile.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
+            {
+                error = $"页面注册文件必须是 Assets/ 下的 C# 文件：{targetFile}";
+                return false;
+            }
+
+            if (!File.Exists(fullPath))
+            {
+                error = $"页面注册文件不存在：{targetFile}";
+                return false;
+            }
 
             var lines = File.ReadAllLines(fullPath, Encoding.UTF8).ToList();
 
-            // 确定目标 UILayer
-            string targetLayer;
-            if ((binding.PageFlags & PageFlags.Background) != 0)
-                targetLayer = "Background";
-            else if ((binding.PageFlags & PageFlags.FreePage) != 0)
-                targetLayer = "FreePage";
-            else if ((binding.PageFlags & PageFlags.TopMost) != 0)
-                targetLayer = "TopMost";
-            else if ((binding.PageFlags & PageFlags.Popup) != 0)
-                targetLayer = "Popup";
-            else
-                targetLayer = "Normal";
+            string targetLayer = PageTypeToLayerName(binding.PageType);
+            bool isFreePage = binding.PageType == PageType.FreePage;
+            string targetPageType = $"PageType.{binding.PageType}";
 
-            // 完整 Asset 路径: {CodePath}/Prefabs/{PrefabName}.prefab
-            var codeRoot = binding.CodePath;
-            string newPrefabPath = string.IsNullOrEmpty(codeRoot)
-                ? $"Assets/Game/UI/Runtime/Prefabs/{binding.PrefabName}.prefab"
-                : $"{codeRoot}/Prefabs/{binding.PrefabName}.prefab";
-
-            // 检查是否已存在 —— 存在则更新路径，不存在则追加
-            // 兼容单行 (Xxx = new(...)) 和多行 (Xxx \n = new(...)) 两种写法
-            string defPattern = $"EUIPageDef {binding.PageName}";
-            for (int i = 0; i < lines.Count; i++)
+            if (!TryResolvePrefabPath(binding, out var newPrefabPath, out var pathError))
             {
-                if (lines[i].Contains(defPattern))
-                {
-                    // 找到 EUIPageDef 声明行，在后续几行中找 new("..." 并替换
-                    for (int j = i; j < System.Math.Min(i + 3, lines.Count); j++)
-                    {
-                        if (lines[j].Contains("new(\""))
-                        {
-                            var oldLine = lines[j];
-                            var updatedLine = Regex.Replace(oldLine,
-                                @"new\(""[^""]+""",
-                                $"new(\"{newPrefabPath}\"");
-                            if (updatedLine != oldLine)
-                            {
-                                lines[j] = updatedLine;
-                                File.WriteAllText(fullPath, string.Join("\n", lines.ToArray()), new UTF8Encoding(false));
-                                EmberDebug.Log("EmberUI", $"EUIPageDef {binding.PageName} 路径已更新: {newPrefabPath}");
-                            }
-                            return true;
-                        }
-                    }
-                    // 声明行存在但没找到 new("，视为已有（手动维护的复杂格式，跳过）
-                    return true;
-                }
+                error = pathError;
+                return false;
             }
 
-            // 目标文件无此定义：若对侧 partial 注册文件（GamePages.cs ↔ GamePages.User.cs）已有该定义，
-            // 则在对侧就地更新路径（模式无关的幂等行为，绝不产生跨文件重复定义）
+            string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType}{(isFreePage ? ", freePageSortingOrder: 30000" : "")});";
+
+            // 写入前同时统计目标与对侧 partial；任一文件内或跨文件重复都 fail-closed，
+            // 不能先改目标文件再遗漏 sibling 中的同名定义。
             string siblingFile = GetSiblingPageDefFile(targetFile);
+            string siblingFull = null;
+            List<string> siblingLines = null;
             if (!string.IsNullOrEmpty(siblingFile))
             {
-                string siblingFull = GetFullPath(siblingFile);
+                if (!TryResolveAssetsPath(siblingFile, "对侧页面注册文件",
+                        out siblingFile, out siblingFull, out error))
+                    return false;
+
                 if (File.Exists(siblingFull))
-                {
-                    var siblingLines = File.ReadAllLines(siblingFull, Encoding.UTF8).ToList();
-                    int sibIdx = FindPageDefLine(siblingLines, binding.PageName);
-                    if (sibIdx >= 0)
-                    {
-                        for (int j = sibIdx; j < System.Math.Min(sibIdx + 3, siblingLines.Count); j++)
-                        {
-                            if (siblingLines[j].Contains("new(\""))
-                            {
-                                var oldLine = siblingLines[j];
-                                var updatedLine = Regex.Replace(oldLine,
-                                    @"new\(""[^""]+""",
-                                    $"new(\"{newPrefabPath}\"");
-                                if (updatedLine != oldLine)
-                                {
-                                    siblingLines[j] = updatedLine;
-                                    File.WriteAllText(siblingFull, string.Join("\n", siblingLines.ToArray()), new UTF8Encoding(false));
-                                    EmberDebug.Log("EmberUI", $"EUIPageDef {binding.PageName} 已在 {siblingFile} 就地更新路径: {newPrefabPath}");
-                                }
-                                return true;
-                            }
-                        }
-                        return true; // 对侧已存在（手动维护的复杂格式），跳过
-                    }
-                }
+                    siblingLines = File.ReadAllLines(siblingFull, Encoding.UTF8).ToList();
             }
 
-            // FreePage 没有独立 UILayer：层固定 TopMost（section 归 TopMost 层），
-            // 并带固定 sortingOrder（与 EUIPageContext.FreePageBaseOrder 一致）
-            bool isFreePage = targetLayer == "FreePage";
-            if (isFreePage)
-                targetLayer = "TopMost";
+            var targetMatches = FindPageDefLines(lines, binding.PageName);
+            var siblingMatches = siblingLines != null
+                ? FindPageDefLines(siblingLines, binding.PageName)
+                : new List<int>();
+            var totalMatches = targetMatches.Count + siblingMatches.Count;
+            if (totalMatches > 1)
+            {
+                error = $"GamePages.cs 与 GamePages.User.cs 共有 {totalMatches} 个同名 EUIPageDef "
+                    + $"{binding.PageName}，已拒绝自动更新。请先消除重复定义。";
+                return false;
+            }
+
+            if (targetMatches.Count == 1)
+            {
+                if (TrySyncExistingPageDefinition(lines, targetMatches[0], binding.PageName,
+                        newPrefabPath, newLine, fullPath, targetFile))
+                    return true;
+
+                error = $"EUIPageDef {binding.PageName} 不是可安全更新的标准 "
+                    + "public static readonly 格式，已拒绝自动修改。";
+                return false;
+            }
+
+            if (siblingMatches.Count == 1)
+            {
+                if (TrySyncExistingPageDefinition(siblingLines, siblingMatches[0], binding.PageName,
+                        newPrefabPath, newLine, siblingFull, siblingFile))
+                    return true;
+
+                error = $"EUIPageDef {binding.PageName} 在 {siblingFile} 不是可安全更新的标准 "
+                    + "public static readonly 格式，已拒绝自动修改。";
+                return false;
+            }
 
             // 不存在：追加新行
             string sectionHeader = targetLayer switch
@@ -307,13 +714,6 @@ namespace Ember.UIExtension.Editor
                 _ => "Normal 层"
             };
 
-            string targetPageType = targetLayer switch
-            {
-                "Background" => "PageType.Background",
-                "TopMost" => isFreePage ? "PageType.FreePage" : "PageType.TopMost",
-                "Popup" => "PageType.Popup",
-                _ => "PageType.MainPage"
-            };
             int insertAfter = -1;
             int sectionContentStart = -1; // section header 块结束后的第一行（空 section 时用作插入点）
             bool inTargetSection = false;
@@ -346,7 +746,6 @@ namespace Ember.UIExtension.Editor
             }
 
             // 在找到的最后一行 EUIPageDef 之后插入
-            string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType}{(isFreePage ? ", freePageSortingOrder: 30000" : "")});";
             string docLine = $"        /// <summary>{binding.PageName} 页面</summary>";
 
             // 空 section：在 section header 之后插入
@@ -409,14 +808,176 @@ namespace Ember.UIExtension.Editor
             return null;
         }
 
-        /// <summary>在文件行列表中查找同名 EUIPageDef 声明行；-1 表示不存在。</summary>
-        private static int FindPageDefLine(List<string> lines, string pageName)
+        /// <summary>查找真实代码中的同名 EUIPageDef 声明行；注释和所有字面量中的示例均忽略。</summary>
+        private static List<int> FindPageDefLines(List<string> lines, string pageName)
         {
-            string defPattern = $"EUIPageDef {pageName}";
-            for (int i = 0; i < lines.Count; i++)
-                if (lines[i].Contains(defPattern))
-                    return i;
-            return -1;
+            return EUIPrefabCatalogService.FindPageDefinitions(string.Join("\n", lines))
+                .Where(match => string.Equals(match.Name, pageName, StringComparison.Ordinal))
+                .Select(match => match.DeclarationLine)
+                .ToList();
+        }
+
+        private static string StripCommentsAndLiterals(string line, ref bool inBlockComment,
+            bool maskLiterals = true)
+        {
+            if (string.IsNullOrEmpty(line)) return string.Empty;
+
+            var result = new StringBuilder(line.Length);
+            bool inString = false;
+            bool inVerbatimString = false;
+            bool inChar = false;
+            for (int i = 0; i < line.Length; i++)
+            {
+                char current = line[i];
+                char next = i + 1 < line.Length ? line[i + 1] : '\0';
+
+                if (inBlockComment)
+                {
+                    result.Append(' ');
+                    if (current == '*' && next == '/')
+                    {
+                        result.Append(' ');
+                        i++;
+                        inBlockComment = false;
+                    }
+                    continue;
+                }
+
+                if (inString || inVerbatimString || inChar)
+                {
+                    result.Append(maskLiterals ? ' ' : current);
+                    if (inVerbatimString && current == '"' && next == '"')
+                    {
+                        result.Append(maskLiterals ? ' ' : next);
+                        i++;
+                    }
+                    else if (inVerbatimString && current == '"')
+                    {
+                        inVerbatimString = false;
+                    }
+                    else if ((inString || inChar) && current == '\\' && next != '\0')
+                    {
+                        result.Append(maskLiterals ? ' ' : next);
+                        i++;
+                    }
+                    else if (inString && current == '"')
+                    {
+                        inString = false;
+                    }
+                    else if (inChar && current == '\'')
+                    {
+                        inChar = false;
+                    }
+                    continue;
+                }
+
+                if (current == '/' && next == '/')
+                {
+                    result.Append(' ', line.Length - i);
+                    break;
+                }
+                if (current == '/' && next == '*')
+                {
+                    result.Append("  ");
+                    i++;
+                    inBlockComment = true;
+                    continue;
+                }
+                if (current == '@' && next == '"')
+                {
+                    result.Append(maskLiterals ? "  " : "@\"");
+                    i++;
+                    inVerbatimString = true;
+                    continue;
+                }
+                if (current == '"')
+                {
+                    result.Append(maskLiterals ? ' ' : current);
+                    inString = true;
+                    continue;
+                }
+                if (current == '\'')
+                {
+                    result.Append(maskLiterals ? ' ' : current);
+                    inChar = true;
+                    continue;
+                }
+
+                result.Append(current);
+            }
+
+            return result.ToString();
+        }
+
+        private static bool TrySyncExistingPageDefinition(List<string> lines, int definitionIndex,
+            string pageName, string prefabPath, string generatedLine, string fullPath, string displayFile)
+        {
+            if (definitionIndex < 0 || definitionIndex >= lines.Count
+                || !Regex.IsMatch(lines[definitionIndex],
+                    @"^\s*public\s+static\s+readonly\s+EUIPageDef\s+"
+                    + Regex.Escape(pageName) + @"\b", RegexOptions.CultureInvariant))
+                return false;
+
+            bool inBlockComment = false;
+            for (int i = definitionIndex; i < System.Math.Min(definitionIndex + 3, lines.Count); i++)
+            {
+                string code = StripCommentsAndLiterals(lines[i], ref inBlockComment);
+                if (!Regex.IsMatch(code, @"(?<![\p{L}\p{Nd}_])new\s*\(")) continue;
+
+                string oldLine = lines[i];
+                bool isSimpleGeneratedLine = i == definitionIndex && Regex.IsMatch(oldLine,
+                    $@"^\s*public static readonly EUIPageDef\s+{Regex.Escape(pageName)}\s*=\s*new\(.*\);\s*$");
+                string updatedLine = isSimpleGeneratedLine
+                    ? generatedLine
+                    : Regex.Replace(oldLine, @"new\(""[^""]+""", $"new(\"{prefabPath}\"");
+
+                if (updatedLine != oldLine)
+                {
+                    lines[i] = updatedLine;
+                    File.WriteAllText(fullPath, string.Join("\n", lines.ToArray()), new UTF8Encoding(false));
+                    EmberDebug.Log(TAG, isSimpleGeneratedLine
+                        ? $"EUIPageDef {pageName} 已在 {displayFile} 同步路径、层级和页面类型。"
+                        : $"EUIPageDef {pageName} 已在 {displayFile} 更新路径。复杂手写格式的页面类型请人工检查。");
+                }
+                else if (!isSimpleGeneratedLine)
+                {
+                    EmberDebug.LogWarning(TAG,
+                        $"EUIPageDef {pageName} 在 {displayFile} 使用复杂手写格式，页面类型未自动同步，请人工检查。");
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsSupportedBindingPageType(PageType pageType)
+        {
+            return pageType == PageType.Background
+                || pageType == PageType.MainPage
+                || pageType == PageType.Popup
+                || pageType == PageType.FullScreenPopup
+                || pageType == PageType.TopMost
+                || pageType == PageType.SubPage
+                || pageType == PageType.FreePage;
+        }
+
+        private static bool IsPopupPageType(PageType pageType)
+        {
+            return pageType == PageType.Popup || pageType == PageType.FullScreenPopup;
+        }
+
+        private static string PageTypeToLayerName(PageType pageType)
+        {
+            return pageType switch
+            {
+                PageType.Background => "Background",
+                PageType.Popup => "Popup",
+                PageType.FullScreenPopup => "Popup",
+                PageType.TopMost => "TopMost",
+                PageType.FreePage => "TopMost",
+                _ => "Normal",
+            };
         }
 
         /// <summary>扫描 EUIPageDef 条目，若有失效项仅 Console 警告，不弹窗。</summary>
@@ -433,7 +994,7 @@ namespace Ember.UIExtension.Editor
                 sb.Append(stale[i].Name);
             }
             sb.Append("）。如需清理请使用菜单 Ember/UI/Clean Stale PageDefs。");
-            EmberDebug.LogWarning("EmberUI", sb.ToString());
+            EmberDebug.LogWarning(TAG, sb.ToString());
         }
 
         public struct StalePageDef
@@ -455,28 +1016,23 @@ namespace Ember.UIExtension.Editor
             var result = new List<StalePageDef>();
             if (!File.Exists(fullPath)) return result;
 
-            var lines = File.ReadAllLines(fullPath, Encoding.UTF8);
-            for (int i = 0; i < lines.Length; i++)
+            var content = File.ReadAllText(fullPath, Encoding.UTF8);
+            foreach (var match in EUIPrefabCatalogService.FindPageDefinitions(content))
             {
-                var line = lines[i].Trim();
-                if (!line.StartsWith("public static readonly EUIPageDef ")) continue;
-
-                int nameStart = line.IndexOf("EUIPageDef ") + 8;
-                int nameEnd = line.IndexOf(" =");
-                if (nameStart < 8 || nameEnd < 0) continue;
-                string name = line.Substring(nameStart, nameEnd - nameStart).Trim();
-
-                int pathStart = line.IndexOf("new(\"") + 5;
-                int pathEnd = line.IndexOf("\"", pathStart);
-                if (pathStart < 5 || pathEnd < 0) continue;
-                string prefabPath = line.Substring(pathStart, pathEnd - pathStart);
-
-                if (string.IsNullOrEmpty(prefabPath)) continue;
+                // 旧清理器仅自动处理标准单行生成格式；复杂多行声明保持人工确认。
+                if (!match.IsStandardField
+                    || match.DeclarationLine != match.DeclarationEndLine
+                    || string.IsNullOrEmpty(match.PrefabPath)) continue;
 
                 // 直接检查预制体文件是否存在
-                if (!File.Exists(prefabPath))
+                if (!File.Exists(match.PrefabPath))
                 {
-                    result.Add(new StalePageDef { Name = name, PrefabPath = prefabPath, LineIndex = i });
+                    result.Add(new StalePageDef
+                    {
+                        Name = match.Name,
+                        PrefabPath = match.PrefabPath,
+                        LineIndex = match.DeclarationLine,
+                    });
                 }
             }
             return result;
@@ -485,9 +1041,19 @@ namespace Ember.UIExtension.Editor
         /// <summary>清理指定的失效 EUIPageDef 条目</summary>
         public static int CleanStalePageDefs(string pageDefFilePath)
         {
-            string fullPath = pageDefFilePath.StartsWith("Assets/")
-                ? Path.Combine(Application.dataPath, pageDefFilePath.Substring("Assets/".Length))
-                : pageDefFilePath;
+            if (!TryResolveAssetsPath(pageDefFilePath, "页面注册文件",
+                    out var assetPath, out var fullPath, out var error))
+            {
+                EmberDebug.LogWarning(TAG, $"拒绝清理 EUIPageDef：{error}");
+                return 0;
+            }
+
+            if (!assetPath.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
+            {
+                EmberDebug.LogWarning(TAG, $"拒绝清理非 C# 页面注册文件：{assetPath}");
+                return 0;
+            }
+
             if (!File.Exists(fullPath)) return 0;
 
             var stale = FindStalePageDefs(fullPath);
@@ -504,10 +1070,8 @@ namespace Ember.UIExtension.Editor
             foreach (var s in stale)
             {
                 toRemove.Add(s.LineIndex);
-                if (s.LineIndex > 0 && lines[s.LineIndex - 1].Trim().StartsWith("///"))
-                    toRemove.Add(s.LineIndex - 1);
-                if (s.LineIndex > 1 && lines[s.LineIndex - 2].Trim().StartsWith("///"))
-                    toRemove.Add(s.LineIndex - 2);
+                for (int i = s.LineIndex - 1; i >= 0 && lines[i].TrimStart().StartsWith("///"); i--)
+                    toRemove.Add(i);
             }
 
             var cleaned = new List<string>();
@@ -527,9 +1091,137 @@ namespace Ember.UIExtension.Editor
 
         #region 模板引擎
 
+        internal const string OptionalUIUpdateMember =
+            "        // [EmberOptional:begin UIUpdate]\n" +
+            "        /// <summary>是否需要每帧 Update；由 EUIBinding「使用 UIUpdate」生成。</summary>\n" +
+            "        public override bool NeedUpdate => true;\n" +
+            "        // [EmberOptional:end UIUpdate]\n";
+
+        internal const string OptionalOnUpdateMember =
+            "        // [EmberOptional:begin OnUpdate]\n" +
+            "        public override void OnUpdate()\n" +
+            "        {\n" +
+            "            base.OnUpdate();\n" +
+            "        }\n" +
+            "        // [EmberOptional:end OnUpdate]\n";
+
+        internal const string FrameworkOptionalOnUpdateMember =
+            "        // [EmberOptional:begin OnUpdate]\n" +
+            "        public override void OnUpdate()\n" +
+            "        {\n" +
+            "            base.OnUpdate();\n" +
+            "            OnUpdateUser();\n" +
+            "        }\n" +
+            "        // [EmberOptional:end OnUpdate]\n";
+
+        internal const string FrameworkOnUpdateUserHook =
+            "        /// <summary>用户逐帧更新钩子：框架 OnUpdate 结束时调用。</summary>\n" +
+            "        private void OnUpdateUser()\n" +
+            "        {\n" +
+            "            // 在此编写逐帧业务逻辑\n" +
+            "        }\n";
+
+        internal const string OptionalAutoCreateClickableMaskMember =
+            "        // [EmberOptional:begin AutoCreateClickableMask]\n" +
+            "        /// <summary>\n" +
+            "        /// 是否自动创建可点击遮罩（仅 Popup 生效，默认 true）。\n" +
+            "        /// 普通开关请使用 EUIBinding「创建遮罩」；此覆写用于条件式代码控制。\n" +
+            "        /// </summary>\n" +
+            "        protected override bool AutoCreateClickableMask => true;\n" +
+            "        // [EmberOptional:end AutoCreateClickableMask]\n";
+
+        internal const string OptionalOnClickMaskMember =
+            "        // [EmberOptional:begin OnClickMask]\n" +
+            "        /// <summary>\n" +
+            "        /// 点击遮罩回调（默认关闭本弹窗）。\n" +
+            "        /// 不允许点遮罩关闭：清空方法体；\n" +
+            "        /// 自定义点击行为：替换方法体，需要关闭时调用 base.OnClickMask()。\n" +
+            "        /// </summary>\n" +
+            "        protected override void OnClickMask()\n" +
+            "        {\n" +
+            "            base.OnClickMask();\n" +
+            "        }\n" +
+            "        // [EmberOptional:end OnClickMask]\n";
+
+        internal const string FrameworkOptionalOnClickMaskMember =
+            "        // [EmberOptional:begin OnClickMask]\n" +
+            "        /// <summary>点击遮罩时先调用用户钩子，再执行面板配置的默认关闭行为。</summary>\n" +
+            "        protected override void OnClickMask()\n" +
+            "        {\n" +
+            "            OnClickMaskUser();\n" +
+            "            base.OnClickMask();\n" +
+            "        }\n" +
+            "        // [EmberOptional:end OnClickMask]\n";
+
+        internal const string FrameworkOnClickMaskUserHook =
+            "        /// <summary>用户遮罩点击钩子：默认关闭行为之前调用。</summary>\n" +
+            "        private void OnClickMaskUser()\n" +
+            "        {\n" +
+            "            // 在此编写遮罩点击后的自定义逻辑\n" +
+            "        }\n";
+
+        /// <summary>按 EUIBinding 可视化选项构建首次生成的页面可选成员。</summary>
+        internal static string BuildOptionalPageFeatureMembers(EUIBinding binding)
+        {
+            if (binding == null || !binding.IsPage) return string.Empty;
+
+            var members = new StringBuilder();
+            if (binding.UseUIUpdate)
+            {
+                members.Append(OptionalUIUpdateMember).AppendLine();
+                members.Append(OptionalOnUpdateMember).AppendLine();
+            }
+
+            bool isPopup = IsPopupPageType(binding.PageType);
+            if (isPopup && binding.GenerateAutoCreateClickableMaskOverride)
+                members.Append(OptionalAutoCreateClickableMaskMember).AppendLine();
+            if (isPopup && binding.GenerateOnClickMaskOverride)
+                members.Append(OptionalOnClickMaskMember).AppendLine();
+
+            return members.ToString();
+        }
+
+        /// <summary>构建 Framework 模式放入 [EmberManaged] 块的页面可选成员。</summary>
+        internal static string BuildFrameworkOptionalPageFeatureMembers(EUIBinding binding)
+        {
+            if (binding == null || !binding.IsPage) return string.Empty;
+
+            var members = new StringBuilder();
+            if (binding.UseUIUpdate)
+            {
+                members.Append(OptionalUIUpdateMember).AppendLine();
+                members.Append(FrameworkOptionalOnUpdateMember).AppendLine();
+            }
+
+            bool isPopup = IsPopupPageType(binding.PageType);
+            if (isPopup && binding.GenerateAutoCreateClickableMaskOverride)
+                members.Append(OptionalAutoCreateClickableMaskMember).AppendLine();
+            if (isPopup && binding.GenerateOnClickMaskOverride)
+                members.Append(FrameworkOptionalOnClickMaskMember).AppendLine();
+
+            return members.ToString().TrimEnd();
+        }
+
+        /// <summary>构建 Framework 模式块外的可选用户钩子。</summary>
+        internal static string BuildFrameworkOptionalUserHooks(EUIBinding binding)
+        {
+            if (binding == null || !binding.IsPage) return string.Empty;
+
+            var hooks = new StringBuilder();
+            if (binding.UseUIUpdate)
+                hooks.Append(FrameworkOnUpdateUserHook).AppendLine();
+
+            bool needsMaskHook = IsPopupPageType(binding.PageType)
+                && binding.GenerateOnClickMaskOverride;
+            if (needsMaskHook)
+                hooks.Append(FrameworkOnClickMaskUserHook).AppendLine();
+
+            return hooks.ToString().TrimEnd();
+        }
+
         /// <summary>构建模板上下文变量（fields_decl 和 fields_bind 已预渲染为字符串）</summary>
         private Dictionary<string, object> BuildTemplateContext(EUIBinding binding, string prefabName,
-            EUIBinding.BindingEntry[] entries, string baseClsName = null)
+            EUIBinding.BindingEntry[] entries, string baseClsName = null, bool frameworkMode = false)
         {
             var decl = new StringBuilder();
             var bind = new StringBuilder();
@@ -565,6 +1257,13 @@ namespace Ember.UIExtension.Editor
                 ["create_date"] = System.DateTime.Now.ToString(),
                 ["fields_decl"] = decl.ToString(),
                 ["fields_bind"] = bind.ToString(),
+                ["page_feature_members"] = BuildOptionalPageFeatureMembers(binding),
+                ["framework_page_feature_members"] = frameworkMode
+                    ? BuildFrameworkOptionalPageFeatureMembers(binding)
+                    : string.Empty,
+                ["framework_optional_user_hooks"] = frameworkMode
+                    ? BuildFrameworkOptionalUserHooks(binding)
+                    : string.Empty,
             };
         }
 
@@ -756,6 +1455,8 @@ namespace Ember.UIExtension.Editor
     [UnityEditor.InitializeOnLoad]
     public static class PlayModePageDefGuard
     {
+        private const string TAG = LogTags.EmberUI;
+
         /// <summary>脏标记：有变动时为 true，检查后重置为 false</summary>
         private static bool _dirty = true; // 首次启动默认检查一次
 
@@ -793,9 +1494,18 @@ namespace Ember.UIExtension.Editor
 
             if (string.IsNullOrEmpty(pageDefFile)) return;
 
-            string fullPath = pageDefFile.StartsWith("Assets/")
-                ? System.IO.Path.Combine(Application.dataPath, pageDefFile.Substring("Assets/".Length))
-                : pageDefFile;
+            if (!CSharpLogicImplementationData.TryResolveAssetsPath(
+                    pageDefFile, "页面注册文件", out var assetPath, out var fullPath, out var pathError))
+            {
+                EmberDebug.LogWarning(TAG, $"Play Mode EUIPageDef 校验已拒绝非法路径：{pathError}");
+                return;
+            }
+
+            if (!assetPath.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
+            {
+                EmberDebug.LogWarning(TAG, $"Play Mode EUIPageDef 校验已拒绝非 C# 文件：{assetPath}");
+                return;
+            }
 
             if (!System.IO.File.Exists(fullPath)) return;
 
@@ -875,6 +1585,7 @@ namespace Ember.UIExtension.Editor
         private SerializedProperty pageDefTemplate;
         private SerializedProperty codeTemplateForNoGen;
         private SerializedProperty frameworkCodeTemplate;
+        private SerializedProperty uiResourceRoot;
 
         protected override void OnEnable()
         {
@@ -886,6 +1597,7 @@ namespace Ember.UIExtension.Editor
             pageDefTemplate = serializedObject.FindProperty("pageDefTemplate");
             codeTemplateForNoGen = serializedObject.FindProperty("codeTemplateForNoGen");
             frameworkCodeTemplate = serializedObject.FindProperty("frameworkCodeTemplate");
+            uiResourceRoot = serializedObject.FindProperty("uiResourceRoot");
         }
 
         public override void OnInspectorGUI()
@@ -899,6 +1611,12 @@ namespace Ember.UIExtension.Editor
             EditorGUILayout.PropertyField(pageDefFile, new GUIContent("EUIPageDef 文件路径"));
             if (string.IsNullOrEmpty(pageDefFile.stringValue))
                 EditorGUILayout.HelpBox("请输入 EUIPageDef 源码文件路径（如 Assets/Game/UI/GamePages.User.cs，用户页面注册区）", MessageType.Error);
+
+            EditorGUILayout.PropertyField(uiResourceRoot, new GUIContent("UI 资源根目录"));
+            EditorGUILayout.HelpBox(
+                "框架模式 → Common/Prefabs；用户模式 → Module/<输出子目录首段>/Prefabs。\n" +
+                "示例：输出子目录 Inventory/Page → Module/Inventory/Prefabs。",
+                MessageType.Info);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("代码生成模板", EditorStyles.boldLabel);

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7651362c0f4fbd441a2e4b506eebde7a, type: 3}
   m_Name: EmberSceneMapping
-  m_EditorClassIdentifier: Ember.Editor::Ember.Core.Editor.EmberSceneMapping
+  m_EditorClassIdentifier: Ember.Core.Editor::Ember.Core.Editor.EmberSceneMapping
   frameworkScene: {fileID: 102900000, guid: 30fc7ce87c922d343a7920d067a6930e, type: 3}
   entries:
   - stateName: GameplayState

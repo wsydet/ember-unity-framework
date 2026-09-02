@@ -13,6 +13,7 @@ $dst = Join-Path $repoRoot "Packages\com.ember\Templates~\base\Assets"
 Write-Host "== 同步 dev 业务层 → 模板 =="
 $pairs = @(
     @{ src = "Assets\Game";            sub = "Game" },
+    @{ src = "Assets\GameResource";    sub = "GameResource" },
     @{ src = "Assets\Resources";       sub = "Resources" },
     @{ src = "Assets\Ember\Editor";    sub = "Ember\Editor" },
     @{ src = "Assets\Settings";        sub = "Settings" }

@@ -20,7 +20,7 @@ namespace Game.UI
         // Background 层 —— 兜底背景（sortingOrder=0，单例）
         // ============================================================
         /// <summary>EUIBackgroundPage 页面（框架页面，业务层演示形态）</summary>
-        public static readonly EUIPageDef EUIBackgroundPage = new("Assets/Game/UI/Runtime/Prefabs/EUIBackgroundPanel.prefab", UILayer.Background, PageType.Background);
+        public static readonly EUIPageDef EUIBackgroundPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPanel.prefab", UILayer.Background, PageType.Background);
 
 
 
@@ -28,26 +28,26 @@ namespace Game.UI
         // Normal 层 —— 全屏主页面
         // ============================================================
 
-        public static readonly EUIPageDef EUIMainPage = new("Assets/Game/UI/Runtime/Prefabs/EUIMainPanel.prefab", UILayer.Normal, PageType.MainPage);
+        public static readonly EUIPageDef EUIMainPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab", UILayer.Normal, PageType.MainPage);
 
-        public static readonly EUIPageDef EUIGamePlayPage = new("Assets/Game/UI/Runtime/Prefabs/EUIGamePlayPanel.prefab", UILayer.Normal, PageType.MainPage);
+        public static readonly EUIPageDef EUIGamePlayPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPanel.prefab", UILayer.Normal, PageType.MainPage);
 
         // ============================================================
         // Popup 层 —— 弹窗
         // ============================================================
 
-        public static readonly EUIPageDef EUISettingPage = new("Assets/Game/UI/Runtime/Prefabs/EUISettingPanel.prefab", UILayer.Popup, PageType.Popup);
+        public static readonly EUIPageDef EUISettingPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab", UILayer.Popup, PageType.FullScreenPopup);
 
         // ============================================================
         // TopMost 层 —— 顶层（引导、加载遮罩等）
         // ============================================================
 
-        public static readonly EUIPageDef EUILoadingPage = new("Assets/Game/UI/Runtime/Prefabs/EUILoadingPanel.prefab", UILayer.TopMost, PageType.TopMost);
+        public static readonly EUIPageDef EUILoadingPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPanel.prefab", UILayer.TopMost, PageType.TopMost);
 
 
 
         /// <summary>GMPage 页面（FreePage 需显式指定固定 sortingOrder）</summary>
-        public static readonly EUIPageDef GMPage = new("Assets/Game/UI/Runtime/Prefabs/GMPanel.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
+        public static readonly EUIPageDef GMPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
 
     }
 }

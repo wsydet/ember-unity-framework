@@ -22,6 +22,13 @@ namespace Game.UI
     {
         // ── 框架代码（块内框架所有；生命周期 override 末尾调用对应的用户级钩子）──
         // [EmberManaged:begin Lifecycle]
+        private const string TAG = LogTags.Game + "." + nameof(GMPage);
+
+        // [EmberOptional:begin UIUpdate]
+        /// <summary>是否需要每帧 Update；由 EUIBinding「使用 UIUpdate」生成。</summary>
+        public override bool NeedUpdate => true;
+        // [EmberOptional:end UIUpdate]
+
         public override void OnInit()
         {
             base.OnInit();
@@ -32,9 +39,9 @@ namespace Game.UI
             // 按钮点击切换面板显示
             Btn_GM.onClick.AddListener(TogglePanel);
 
-            // 退出按钮（增强组件 EUIButtonEx）：关闭 GM 面板
+            // 退出按钮（增强组件 EUIButtonEx）：通过 GameLauncher 完整关闭框架并退出游戏
             if (EUIBtn_Exit != null)
-                EUIBtn_Exit.onClick.AddListener(ClosePanel);
+                EUIBtn_Exit.onClick.AddListener(GameLauncher.Instance.Quit);
 
             // ── 时间缩放：Toggle 开关时间条显示，Slider 控制缩放倍率 ──
 
@@ -72,9 +79,7 @@ namespace Game.UI
             if (EUIImg_Test != null)
                 EUIImg_Test.color = new Color(0.3f, 0.8f, 0.5f, 1f);
 
-            // 每帧刷新状态机名称
-            NeedUpdate = true;
-
+            // 每帧刷新由 EUIBinding「使用 UIUpdate」在框架块中开启
             OnInitUser();
         }
 
@@ -124,7 +129,9 @@ namespace Game.UI
         /// <summary>每帧：刷新顶层状态机状态名</summary>
         public override void OnUpdate()
         {
+            base.OnUpdate();
             RefreshGameStateText();
+            OnUpdateUser();
         }
 
         // ── 内部参数 ──
@@ -157,7 +164,7 @@ namespace Game.UI
                 RefreshTimeScaleText(1f);
             }
 
-            EmberDebug.LogEvent("GM", $"时间条显示: {isOn}");
+            EmberDebug.LogEvent(TAG, $"时间条显示: {isOn}");
         }
 
         /// <summary>Slider 变化：设置全局时间缩放倍率</summary>
@@ -208,7 +215,7 @@ namespace Game.UI
         {
             if (EUITgl_Test != null && EUITgl_Test.Label != null)
                 EUITgl_Test.Label.text = isOn ? "已开启" : "已关闭";
-            EmberDebug.LogEvent("GM", $"增强开关状态: {isOn}");
+            EmberDebug.LogEvent(TAG, $"增强开关状态: {isOn}");
         }
         // [EmberManaged:end]
 
@@ -242,6 +249,12 @@ namespace Game.UI
         private void OnCloseUser()
         {
             // 页面被关闭
+        }
+
+        /// <summary>用户逐帧更新钩子：框架 OnUpdate 结束时调用。</summary>
+        private void OnUpdateUser()
+        {
+            // 在此编写逐帧业务逻辑
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>

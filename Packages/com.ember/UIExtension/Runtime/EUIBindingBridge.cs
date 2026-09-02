@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -51,6 +51,12 @@ namespace Ember.UIExtension
         public static void Attach(EUIPage page, EUIBinding binding)
         {
             if (page == null || binding == null) return;
+
+            // 遮罩配置注入（与 Logic/ClassName 无关，无 Logic 的页面同样生效）
+            page.UseMask = binding.UseMask;
+            page.MaskColorOverride = binding.MaskColor;
+            page.ClickMaskToClose = binding.ClickMaskToClose;
+
             if (string.IsNullOrEmpty(binding.ClassName)) return;
 
             // 查找 Logic 类型
@@ -141,7 +147,7 @@ namespace Ember.UIExtension
             if (binding != null)
             {
                 // 注入过渡动画配置（独立于 Logic 绑定，即使没有 Logic 类也生效）
-                page.SetTransition(binding.UsePresetFade, binding.UseTransitionBlock, binding.UseCustomTransition, binding.FadeInTime, binding.FadeOutTime);
+                page.SetTransition(binding.UsePresetFade, binding.UseTransitionBlock, binding.UseAnimator, binding.UseCustomTransition, binding.FadeInTime, binding.FadeOutTime);
 
                 Attach(page, binding);
             }

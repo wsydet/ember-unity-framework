@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using Ember.Basic;
@@ -16,6 +16,8 @@ namespace Ember.UIExtension
     public class EUIButton : EUIComponent
     {
         #region 内部参数
+
+        private const string TAG = LogTags.EmberUI;
 
         private Button _button;
         private EUIButtonEx _buttonEx;
@@ -47,7 +49,7 @@ namespace Ember.UIExtension
             {
                 _canClickWhenDisable = value;
                 if (value && !_buttonEx)
-                    EmberDebug.LogWarning(LogTags.EmberUI, "只有 EUIButtonEx 支持 CanClickWhenDisable");
+                    EmberDebug.LogWarning(TAG, "只有 EUIButtonEx 支持 CanClickWhenDisable");
             }
         }
 

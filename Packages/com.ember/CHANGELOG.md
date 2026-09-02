@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased]
+
+## [0.10.0] - 2026-09-02
+
+- **UI 资源与代码路由重构**：逻辑代码统一位于 `Assets/Game/UI/Runtime`，UI 资源根独立为 `Assets/GameResource/Resources/UI`；框架页面进入 `Common/Prefabs`，业务页面按 `classPath` 首段进入 `Module/<模块>/Prefabs`，Prefab、GamePages 与默认 Resources 加载器共用同一套路径规则。
+- **新增 UI 开发中心**（`Ember/UI/UI 开发中心`）：整合「创建 UI / UI 总览 / 清理与删除」；创建前完整预检目标，生成标准 Canvas/EUIBinding、逻辑与 Binding/Settings、GamePages 条目，并在 Unity 编译成功后打开 Prefab。清理与删除增加影响预览、路径守卫、跨 Framework/User 注册查重、共享脚本保护、全 Assets 引用复核和安全 dry-run。
+- **标准 UI 骨架与 SafeArea**：CanvasScaler 统一为 Scale With Screen Size / 2560×1440 / Match 0.5；页面使用公共 `EUICommon_Ani.controller` 与嵌套 `EUISafeArea.prefab`，安全区提供中心及周围八个定位节点，并在设备旋转或安全区变化时通知页面逻辑。
+- **页面类型和层级收口**：EUIBinding 页面类型改为互斥 `PageType`，新增独立 `FullScreenPopup`；统一 Background 0 / Normal 1000 / Popup 2000 / TopMost 25000 / FreePage 30000，SubPage 步长保持 50，UIRoot Hierarchy 按实际 sortingOrder 稳定排序。
+- **弹窗遮罩完善**：支持逐页面 `useMask`、`maskColor`、`clickMaskToClose`；独立遮罩 Canvas 使用 UI Camera、继承所属弹窗 Layer、自带 GraphicRaycaster，sortingOrder 精确位于弹窗下一层。状态机驱动的弹窗可关闭遮罩点击退出，改由业务按钮统一执行状态退出。
+- **UIUpdate 与生成代码所有权收口**：Framework 页面仅在勾选「使用 UIUpdate」时生成 `NeedUpdate`、`OnUpdate` 和 `OnUpdateUser`；取消时自动删除默认空钩子，已有用户代码则要求确认。可选 Popup 覆写保留在 Lifecycle 管理块，业务增量继续位于块外用户钩子。
+- **过渡动画时序统一**：普通 UI 在 None / PresetFade / Animator / CustomCode 中选择唯一负责人；修复 Animator-only 跳过、事件桥位置、根 Alpha、退出阶段重复交互和点击穿透。Loading 方块过渡继续使用「方块扫入 → Custom Enter / Custom Exit → 方块扫出」专用链路。
+- **页面与场景生命周期修复**：FullScreenPopup 仅在完全遮盖时隐藏下层；Popup 遮罩和下层恢复延迟到退出动画完成；Main → Gameplay 替换式状态切换会关闭旧 `EUIMainPage`，不再把旧场景 UI 保留为活动 MainPage。
+- **模板与配置操作安全化**：模板保存/加载改为暂存区完整复制、成功后换入、失败自动回滚，避免中断导致资产丢失；EUIBinding Settings 可在引用丢失时从现有配置资产自愈恢复。
+- **演示页收尾**：GM 退出按钮改为调用 `GameLauncher.Quit`，确保先逆序关闭业务模块与框架 Manager、刷写文件日志，再退出应用；UPM Manager 安装示例更新为 `v0.10.0`。
+- **验证与模板状态**：dev 六个通用 UI 已完成静态检查、Unity 编译和 Play 回归；基础模板已由模板编辑器手动保存为 `v0.5.0 / frameworkVersion 0.10.0 / stable`，并完成路径、GUID、GamePages、SafeArea、Binding 与关键状态逻辑复检。
+
 ## [0.9.2] - 2026-08-31
 
 - **UPM Manager 面板增强**：检查更新成功后显示「远程最新：vX.Y.Z」总览行（含与当前版本对比）；未检测到包时的帮助文本 tag 示例更新为 v0.9.2

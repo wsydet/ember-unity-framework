@@ -1,14 +1,14 @@
 # 框架转 UPM 包迁移方案
 
-> 状态：🧪 功能测试阶段（v0.8.0 变更全部完成待测试；测试计划见 [v0.8.0-framework-test-plan.md](v0.8.0-framework-test-plan.md)，测试通过后再提交发版 + 消费端冒烟）
+> 状态：✅ 已发布 v0.9.0 / v0.9.1 / v0.9.2；v0.10.0 UI 框架收口已完成 Unity 编译与 Play 验证，package.json / CHANGELOG 已进入发布版本；基础模板 v0.5.0 已由用户通过模板编辑器手动保存并通过静态复检，当前待用户提交、tag、推送
 > 创建：2026-08-22
 > 对应待办：[framework-progress.md](framework-progress.md) P0「框架转为 UPM 包」
 
 ---
 
-## 〇、当前状态快照（2026-08-26，交接用）
+## 〇、当前状态快照（2026-09-02，v0.10.0 发布交接用）
 
-### 已完成（P0 → P4-b → 模板体系）
+### 已完成（P0 → P4-b → 模板体系 → 发布 v0.9.x → v0.10.0 UI 收口）
 
 | 里程碑 | 状态 |
 |--------|------|
@@ -24,25 +24,31 @@
 | 模板体系（用户哲学：框架交付的就是演示形态）：Templates~/base/Assets 全量镜像 dev 业务层；Setup 整树部署（.meta 随行 GUID 全链有效）；4 完整演示场景；自动剥离 dev 测试对象 | ✅ |
 | 初始化窗口（EmberSetupWindow：状态总览 + 模板自动扫描 + 一键部署/补齐/重部署）；模板编辑器（EmberTemplateEditorWindow：保存/加载/新建模板，新建可选 fromBase bool；目标模板下拉选择 + 模板独立版本号主/次/补丁 bump） | ✅ |
 | 同步工具：scripts/sync-scaffold.ps1 + scripts/strip-template-scene-objects.ps1 | ✅ |
+| v0.8.0 后架构改动（2026-08-27/28）：编辑器 SO 布局统一（Assets/Ember/Editor/SOs/）；EUIBinding 双路径合并 + 框架/用户块标记（Lifecycle 单块 + XxxUser 钩子）+ IsFramework 绑定保护；框架 UI 迁出包至业务层并重命名（Panel 尾缀）；UI 生命周期补充；Loading 双模式；状态机连接线模型（GetEdges/TransitionTo）；头标记双版本格式 + 补齐标记刷新；初始化窗口场景/配置归入模板线框；GUIStyle 静态初始化 NRE 修复 | ✅ |
+| 发布前功能测试：dev 按测试计划 51 项全部通过（编译/代码生成/模板编辑器/初始化窗口部署与闸门/两级标记/字体/演示链路），问题 1-7 全部已决或已修复，报告写入测试计划「结果记录」区 | ✅ |
+| 🚀 **v0.9.0 发布**（框架 0.9.0 + 基础模板 0.3.0）：tag v0.9.0 + push --tags | ✅ |
+| 🔧 **v0.9.1 发布**：修复消费端部署 meta GUID 竞态（DeployTemplate/LoadTemplate DisallowAutoRefresh，Farm 首版部署全链 Missing Prefab Asset 的根因）+ UPM Manager tag 解析修复（v 前缀）+ UI 预制体管理器（总览/一键清理/一键删除 UI）+ package.json bump（发布纪律入档） | ✅ |
+| 🔍 **v0.9.2 发布**（patch）：UPM Manager「远程最新」展示 + 帮助文本 tag 更新；同时完成 **Farm 升级能力实测**（检查更新 → 可选升级分级 → 一键升级写回 → 同-tag 幂等全链路通过）；Farm 冒烟通过（一键部署 → 场景预制体实例正常 → Play 全链路） | ✅ |
+| 🧩 **v0.10.0 UI 框架收口**：资源/代码模块路由、UI 开发中心、PageType/层级、Popup 遮罩、UIUpdate 可选钩子、统一过渡、SafeArea、Main→Gameplay 状态 UI 清理、GM 退出入口与 UPM 默认安装 tag | ✅（Unity 编译成功，用户 Play 验证通过） |
+| 📦 **v0.10.0 发布文件准备**：先 bump `package.json` 至 0.10.0，再建立 CHANGELOG 0.10.0 条目，符合固定发布纪律 | ✅ |
 
-### 当前未提交内容（40+ 项变更，需用户提交）
+### 已发布（v0.9.0 / v0.9.1 / v0.9.2，2026-08-31 全部随 tag 提交，详见 CHANGELOG 与上方里程碑表）
 
-- Packages/com.ember/ v0.8.0（模板体系 + 两个新窗口 + CreateTemplate/SaveTemplate/LoadTemplate/IsEmbeddedPackage + StripSceneObjects + ReadPackageVersion 修复 + **共享字体入包 SharedAssets/Fonts** + CHANGELOG 合并 [0.8.0] 条目 + UPMManager 帮助文本 tag 更新）
-- 模板编辑器交互升级：目标模板下拉选择 + 模板独立版本号（主/次/补丁 bump + **可编辑回退 SetTemplateVersion**）+ 框架版本声明 + channel + 「当前正在编辑的模板」状态行（EmberEditingTemplate.json）+ 防串模板警告
-- 模板升级协同 P-A（设计见 template-upgrade-system.md）：template.json 增 frameworkVersion/channel；兼容闸门（major.minor）；部署记录 EmberDeployedTemplates.json + 部署时重写头标记版本；升级提示矩阵（patch/minor/major 只提示不合并）
-- **两级标记铺入**：模板 54 个 .cs = 49 全文件头标记 + 5 块标记（4 状态类钩子 + EUIDefaultMainAnimation.PlayOpeningAnimation）+ 4 .Binding（codegen 管理）+ GamePages.User.cs（用户文件）
-- **GamePages 拆分**：GamePages.cs（框架区，partial）+ GamePages.User.cs（用户区，TODO 锚点）；EmberCSharpImplementation pageDefFile 指改 User 文件 + Guard/提示/校验清单/EUIPageDef 文档同步
-- EmberCodeValidator：排除包内 vendor 的 UniTask/（ExcludedFolders 支持 Packages/ 路径）
-- .gitattributes（包内 SharedAssets LFS 豁免，替换已失效的 Assets/Game/Fonts 规则）
-- docs/dev/upm-migration-plan.md（§6.7 模板体系 + 变更日志）+ template-upgrade-system.md（设计定稿）+ v0.8.0-framework-test-plan.md（测试计划）
-- dev 场景清理（用户操作）：Assets/Tem 已删、EmberTimeDebugger 挪至 FrameworkScene、MainScene 测试对象已删；**思印宋（无授权）已删**；模板镜像已重新同步（sync-scaffold 执行过）
+- v0.9.0：模板体系 + 两窗口 + 字体入包 + P-A 升级协同 + 两级标记 + GamePages 拆分 + 08-27/28 全部架构改动（SO 布局/EUIBinding 块标记/框架 UI 迁移/生命周期/Loading 双模式/状态机边模型/头标记双版本/面板调整/GUIStyle 修复）；基础模板 v0.3.0
+- v0.9.1：部署/加载 meta GUID 竞态修复 + UPM Manager tag 解析修复 + UI 预制体管理器
+- v0.9.2：UPM Manager「远程最新」展示；docs/dev/ui-logic-backup.md 已删（Farm 冒烟通过后）
 
-### 待办（下一会话继续）
+### v0.10.0 发布候选（2026-09-02）
 
-1. Unity Farm 冒烟收尾（v0.9.1）：Farm manifest 已 #v0.9.1（tag 已重指）→ 删 packages-lock.json → 删除旧部署目录（Assets/Game、Assets/Ember、Assets/Settings、Assets/Resources）→ 重启 → 面板确认当前 v0.9.1 → 初始化窗口一键部署 → MainScene 验证预制体实例（meta GUID 竞态修复生效）→ Play 完整演示链路
-2. 全部通过后：framework-progress.md 的 P0 行标记完成；最终文档终检；P5（CI/registry）另起规划
-3. 第三方包托管（2026-08-28 定稿，git 由用户执行）：UniRx dev 已改 OpenUPM registry（manifest "7.1.0"）；rainbow-folders-v2.4.5 / rainbow-hierarchy-v2.6.5 / inputdevicedetector-v1.0.0 推入 ember-thirdparty-upm 仓并打 tag
-4. v0.9.2 预备：UI 预制体管理器等新特性按版本语义积累；发布时严格执行「发布纪律」（见关键经验：先 bump package.json 再打 tag）
+- 框架代码、dev 六个通用 UI、公共 SafeArea 与配套生成代码已完成编译及 Play 回归；本轮补齐 `EmberBgMask` 渲染/点击、UIUpdate 可选用户钩子、Main→Gameplay 旧页清理，以及 GM 退出按钮调用 `GameLauncher.Instance.Quit`。
+- `Packages/com.ember/package.json` 已先 bump 为 0.10.0，`Packages/com.ember/CHANGELOG.md` 已新增 0.10.0 条目；UPM Manager 无 manifest 时的默认安装 tag 已对准 v0.10.0。
+- 基础模板已由用户在 Unity「模板编辑器」中手动保存为 v0.5.0 / frameworkVersion 0.10.0 / stable；五个镜像根目录与 dev 内容一致，路径、GUID、GamePages、SafeArea、Binding 和关键状态逻辑复检通过，可以进入提交与 tag 阶段。
+
+### 待办（按发布顺序）
+
+1. 用户执行发布 git 操作：检查改动 → commit → tag v0.10.0 → `push --tags`。
+2. 发布后进入第二模板 P-C 全流程与消费端/Farm v0.10.0 安装、升级、Play 联调。
+3. 第三方包托管与 P5（CI/registry）另起规划。
 
 ### 关键经验（新会话必读）
 
@@ -57,6 +63,58 @@
 - **LFS × UPM**：包内资产不走 LFS（UPM git 安装对 LFS 支持不可靠）；`.gitattributes` 已对 `Packages/com.ember/SharedAssets/**` 豁免，Assets 的 `*.png/*.ttf` LFS 规则不适用于包
 - **PowerShell 5.1**：无 BOM 的 UTF-8 脚本中文会乱码；脚本写完需补 BOM
 - **dev 项目与消费端的区别**：dev = embedded（file: 安装，可编辑包）；消费端 = git 安装（Library/PackageCache 只读）
+
+### 上一阶段新对话提示词（2026-08-31 历史交接记录；当前状态以上方 2026-09-02 快照为准）
+
+```text
+你是 ember-unity-framework（Unity 6 通用游戏框架，UPM 单包 Packages/com.ember，已发布 v0.9.2，v0.10.0 开发收尾中）的下一阶段开发助手。
+
+必读文档（按顺序）：
+1. CLAUDE.md —— 项目编码规范（写码前必查 API 速查手册）
+2. docs/dev/upm-migration-plan.md §〇 当前状态快照 + 变更日志尾部（2026-08-31 v0.10.0 批次）—— 上一阶段全部成果与经验（含发布纪律）
+3. docs/dev/template-upgrade-system.md —— 模板升级协同体系（P-B/P-C 设计定稿）
+4. docs/user/UI开发参考.md —— UI 框架用户文档（本阶段新增）
+
+本阶段目标（用户主导，具体需求在对话中逐步给出）：
+1. UI 框架调整收尾验证（v0.10.0 批次已落码待验证，见「待验证清单」）
+2. 多模板体系（创建第二个模板并走通 P-C 全流程：新模板 version 0.1.0、channel=preview 起步 → 成熟转 stable → 弃用转 deprecated；模板编辑器「新建模板」支持 fromBase 复制起点；初始化窗口多模板列表/升级矩阵已就绪待实测）
+3. 框架与项目的联调（框架改动在 dev 验证后，同步到实际业务项目/消费端形态验证，包含 Farm 冒烟与升级链路）
+
+工作规则：
+- 先方案后写码：设计讨论用 ember-solution-design skill，方案经用户确认后才动手
+- 模板保存一律由用户在「模板编辑器」窗口手动完成（助手只提醒）；不执行 scripts/sync-scaffold.ps1
+- 用户改动代码期间 Unity 频繁增量重编译，操作指引提醒「等编译完全结束后再点」
+- 版本纪律：框架改动第二位 +1（v0.10.0 由用户定稿）；发布前必须先 bump package.json version 再打 tag（v0.9.1 漏 bump 事故）；序列 = bump → CHANGELOG → 提交 → tag → push --tags
+- 发现偏差先记录、修复方案征得用户同意再动手
+- 编辑包内 .cs 若报文件锁错误（Unity 编译导入期 EIO 1175）：重新 read 文件后重试即可，勿换其他方式绕过
+
+环境事实：
+- dev 项目 com.ember 为 embedded（Packages/com.ember 可编辑）；消费端 git 安装（Library/PackageCache 只读）
+- AI 沙箱不能执行 git（git 由用户执行）；本仓库 git-lfs
+- 编辑器 SO 位于 Assets/Ember/Editor/SOs/；字体在 Packages/com.ember/SharedAssets/Fonts/
+- 部署记录/编辑记录为运行时生成的项目级状态（Assets/Editor/*.json）
+- UI 资源布局（v0.10.0 起）：`Assets/GameResource/Resources/UI/Common/` 放模板通用 UI；用户页面按模块进入 `UI/Module/<模块>/`。预制体位于各自的 `Prefabs/`，配套资源使用同级 `Animator/Atlas/`；`uiResourceRoot` 配置在 EmberCSharpImplementation.asset
+- 模板 base 当前：version 0.3.0 / frameworkVersion 0.9.0 / channel stable（v0.10.0 发布时由用户定稿 bump）；头标记双版本格式 vX.Y.Z (framework vX.Y.Z)
+- 包清单见 docs/user/package-inventory.md（UniTask 已内置 com.ember；Odin/DOTween 等私有仓 git URL）
+
+v0.10.0 已落码改动要点（改造前先读相关代码）：
+- 页面骨架：Framework .cs 单 Lifecycle 管理块 + 块外 6 个基础 XxxUser 钩子；OnUpdateUser 仅随 UIUpdate 生成，取消时默认空钩子自动删除、含用户代码则确认；面板可选的 NeedUpdate/OnUpdate/Popup 高级覆写生成在管理块内，OnUpdate/OnClickMask 转发至块外用户钩子；注册框架→GamePages.cs、用户→GamePages.User.cs；绑定条目 IsFramework 保护；包内预制体生成拦截；EUIBinding 页面类型统一使用互斥 PageType
+- EUILogic：NeedUpdate 虚拟化（public virtual + protected setter：静态 override 或动态赋值并存）；OnClickMask 默认按 Page.ClickMaskToClose 关闭、AutoCreateClickableMask 代码开关；HasSafeArea/SafeAreaRoot 懒加载 + OnSafeAreaChanged 覆写点；生命周期 OnBeginLoad/OnPreload/OnReopen/OnResetDefault + HidePageViewOnly/ShowPageViewOnly
+- 遮罩体系：EUIBinding「遮罩设置」区（useMask/maskColor/clickMaskToClose，仅 Popup / FullScreenPopup 显示）→ EUIBindingBridge 注入 EUIPage（UseMask/MaskColorOverride/ClickMaskToClose）→ ShowBgMaskForPopup 按页读取；全局兜底 EUIManager.PopupMaskColor；遮罩 Canvas 必须 ScreenSpaceCamera + UI 相机（默认 Overlay 会盖住一切）；多弹窗防黑叠加 = 上层弹窗透明遮罩或 useMask=false
+- 过渡动画：普通 UI 在 None / PresetFade（默认）/ Animator / CustomCode 中四选一，不再隐式串联；Animator 约定状态名 EmberOpen/EmberClose，尾帧事件 OnEmberOpenAnimationEnd/OnEmberCloseAnimationEnd 经运行时挂载的 EmberPageAnimatorBridge 转发，并有 5 秒超时兜底；方块过渡仅 EUITransitionBlock/Loading 使用，保持「方块扫入→Custom Enter / Custom Exit→方块扫出」特殊链路
+- 全屏弹窗：`PageType.FullScreenPopup` 为独立互斥类型，沿用 Popup 栈与遮罩；`EUIPageDef.IsFullScreen` 由类型内部推导，仅全屏弹窗把下层推裁剪面远端（planeDistance 100000），普通 Popup 下层保持渲染、靠遮罩拦截交互；旧 `Popup + isFullScreen:true` 注册可兼容归一化
+- 层级体系（1000 对齐）：UILayer Background 0 / Normal 1000 / Popup 2000 / TopMost 25000；EUIPageContext 常量 MainPageBaseOrder 1000 / PageGrowStep 500 / TopMostBaseOrder 25000 / FreePage 30000；SubPage 步长 50；UIRoot 子节点脏标记自动按 sortingOrder 稳定排序（仅 Hierarchy 可视序，渲染由 sortingOrder 决定；root canvas 的 sortingOrder 直接生效，Override Sorting 选项只在 nested canvas 出现；开屏 BootSplash sortingOrder 30000）
+- 模板文件操作安全化：LoadTemplate/SaveTemplate 先整树复制到暂存区 → 全部成功后才备份落位（备份目录 ~ 后缀不参与导入），失败自动回滚；EUIBindingSettingData.GetOrCreateSettings 自愈空引用
+- 状态机：GetEdges() 边包 + TransitionTo 统一入口；模板编辑器/初始化窗口多模板就绪（GetTemplates/GetTemplateScenes 扫描、兼容闸门 major.minor、升级矩阵 patch/minor/major、部署/加载 DisallowAutoRefresh 防 meta GUID 竞态）；UI 开发中心（Ember/UI/UI 开发中心：创建 / 总览 / 清理与删除）
+
+待验证/待办（v0.10.0 收尾，优先问用户现状再动手）：
+1. Unity 编译 0 error 确认（Animator 过渡批次改动后）
+2. 用户 Unity 操作：验证 EUIBinding「使用 UIUpdate / 生成遮罩创建覆写 / 生成遮罩点击钩子」勾选与重新生成同步；EUISettingPanel 选择 FullScreenPopup，配 EmberOpen/EmberClose 动画 + 尾帧事件实测 Animator 过渡
+3. Play 回归：开屏 30000 置顶 → 背景垫底 → 页面/弹窗/遮罩层级、UIRoot 排序、遮罩点击开关、全屏弹窗隐藏下层、Animator 过渡
+4. 模板编辑器保存 base（同步全部预制体/场景/GamePages 改动）；docs/dev/ui-logic-backup.md 已使用完成、用户确认后可删
+5. 版本定稿 v0.10.0 → 发布纪律序列
+6. 下一阶段：多模板 P-C 全流程 + 消费端/Farm 联调
+```
 
 ---
 
@@ -392,7 +450,8 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 | `Assets/Game/Scenes/FrameworkScene + MainScene` | ✅ 生成区（模板副本，最小可运行） |
 | `Assets/Game/Scenes/GameplayScene + SettingsScene` | 示例区（示例业务场景） |
 | `Assets/Game/UI/GamePages.cs`（框架区）+ `GamePages.User.cs`（用户区） | ✅ 生成区（partial 拆分：框架页面/用户页面，codegen 写 User 文件） |
-| `Assets/Game/UI/Runtime/`（MainMenu/Settings/InGameUI/GMPage） | 示例区 |
+| `Assets/Game/UI/Runtime/`（页面逻辑脚本 + Binding，MainMenu/Settings/InGameUI/GMPage 等） | 示例区 |
+| `Assets/GameResource/Resources/UI/Common/` + `UI/Module/<模块>/`（通用 UI 与业务模块 UI，含 Prefabs/Animator/Atlas） | 示例区 |
 | `Assets/Game/Module/`（PlayerPrefs/Streaming/GlobalLight/PlayerData/RedDot/Guide） | 示例区 |
 | ~~`Assets/Game/Fonts`~~ → `Packages/com.ember/SharedAssets/Fonts/` | ✅ 随包走（v0.8.0）：多模板共享、许可证随包、不再随模板部署；思印宋无授权已删 |
 | `Assets/Art/Icons`（23k 素材库） | dev 专属：全量图库不进包/模板；模板/编辑器实际用到的图标按需挑精选子集入 `SharedAssets/Icons/` |
@@ -429,11 +488,13 @@ dev 仓库 Assets/（= 一个真实的"用户项目"）
 Packages/com.ember/Templates~/
 ├── base/                          ← 基础模板（当前唯一）
 │   ├── template.json              # { id, displayName, description, version（模板独立版本）, frameworkVersion（目标框架，major.minor 闸门）, channel（stable/preview/deprecated）, order }
-│   └── Assets/                    # 全量演示镜像：Game/ + Resources/ + Ember/Editor/ + Settings/Profile
+│   └── Assets/                    # 全量演示镜像：Game/ + GameResource/ + Resources/ + Ember/Editor/ + Settings/Profile
 │       ├── Game/State/*.cs        #   完整演示状态类（继承已写好，用户只改钩子）
-│       ├── Game/UI/**             #   演示 UI：GM 页/主菜单/设置/游戏内 + 预制体 + 绑定代码
+│       ├── Game/UI/**             #   演示 UI 逻辑脚本 + 绑定代码（.cs / .Binding.cs）
 │       ├── Game/Module/**         #   演示模块：流送/全局灯光/存档/红点
 │       ├── Game/Scenes/*.unity    #   4 个完整演示场景（对象树/引用全量）
+│       ├── GameResource/Resources/UI/Common/**          #   模板通用 UI（Prefabs/Animator/Atlas）
+│       ├── GameResource/Resources/UI/Module/<模块>/**   #   业务模块 UI（Prefabs/Animator/Atlas）
 │       ├── Resources/*.asset      #   日志/性能配置
 │       └── Ember/Editor/SOs/*.asset   #   UI 绑定/场景映射/图片批设置配置
 └── <未来模板>/                    ← 同一机制扩展：如 platformer2d（2D 平台游戏一键部署）
@@ -537,3 +598,19 @@ Packages/com.ember/Templates~/
 | 2026-08-26 | 🚦 **模板升级协同 P-A（v0.8.0）**（设计定稿见 docs/dev/template-upgrade-system.md）：template.json 增 frameworkVersion/channel；兼容闸门（major.minor 一致才显示、deprecated 隐藏、preview 徽标）；部署记录 EmberDeployedTemplates.json + 部署时重写头标记版本；升级提示矩阵（patch 绿/minor 橙/major 红，只提示不合并）；引擎新增 GetFrameworkVersion/IsFrameworkCompatible/GetCompatibleTemplates/GetTemplateUpgradeLevel/DeclareFrameworkVersion/SetTemplateChannel/GetDeployedTemplate；P-B 升级向导与 [EmberManaged] 两级标记待实施 |
 | 2026-08-26 | ↩️ **模板编辑器防误操作（v0.8.0）**（用户误点主版本+1 无法回退）：版本行改为可编辑文本框 + [应用版本]（SetTemplateVersion 校验 x.y.z，支持回退/对齐），bump 按钮保留为快捷；面板新增「当前正在编辑的模板」状态行（LoadTemplate 写 EmberEditingTemplate.json，目标与编辑不一致橙色警告，保存确认框二次提示）；DeleteTemplate 清理编辑记录；base 版本已回退 0.5.0 |
 | 2026-08-26 | 🏷️ **两级标记铺入模板（v0.8.0）**（所有权模型定稿：框架项目出现的代码=框架所有，用户只补充）：① 全文件头标记铺满 42 个演示 .cs（模板共 49 个带 `Generated by Ember Setup` 头标记，部署时重写为真实版本）；② 块标记 `[EmberManaged:begin/end]` 铺 5 个混合文件（4 状态类钩子签名 + EUIDefaultMainAnimation.PlayOpeningAnimation，签名框架管/函数体用户填）；③ **GamePages 拆分**：框架区 `GamePages.cs`（partial，全文件框架）与用户区 `GamePages.User.cs`（无标记用户文件，TODO 锚点），EmberCSharpImplementation 的 pageDefFile 指改 User 文件、Guard 监控/提示文案/校验清单/EUIPageDef 文档同步；④ .Binding.cs 归 codegen 管理（每次整文件重生成），不进两级标记；同步 sync-scaffold 后模板 54 .cs = 49 头标记 + 4 Binding + 1 用户文件 |
+| 2026-08-28 | 🛠 **v0.8.0 后架构改动批**（dev 测试期随测随改，用户主导）：编辑器 SO 布局统一（5 个 SO → Assets/Ember/Editor/SOs/，孤儿删除）；EUIBinding 双路径合并 + 框架/用户块标记（框架 .cs 单 Lifecycle 块 + 6 个 XxxUser 钩子；绑定条目 IsFramework 保护）；框架 UI 迁出包至业务层并重命名（Panel 尾缀 + 四目录）；UI 生命周期补充（OnBeginLoad/OnPreload/OnReopen/OnResetDefault/ViewHidden）；Loading 双模式；状态机连接线模型（GetEdges/TransitionTo/ReadOnly 边）；模板 base → v0.2.0 |
+| 2026-08-31 | 🧪 **发布前功能测试完成**：dev 按测试计划 51 项全部通过（问题 1-4 全部已决/已修复）；头标记双版本格式 + 补齐标记刷新（问题-3 附带修复）；初始化窗口场景/配置归入模板线框 + 扫描泛化 |
+| 2026-08-31 | 🚀 **v0.9.0 发布**（框架 0.9.0 + 基础模板 0.3.0）；随后 **v0.9.1**（修复部署 meta GUID 竞态 DisallowAutoRefresh + UPM tag 解析 v 前缀 + UI 预制体管理器）与 **v0.9.2**（UPM 远程最新展示）。Farm 冒烟通过：一键部署 → 场景预制体实例正常 → Play 全链路；Farm 一键升级链路实测通过（检查更新 → 可选升级分级 → 升级写回 → 幂等）。⚠️ 发布纪律入档：打 tag 前必须 bump package.json（v0.9.1 漏 bump 事故） |
+| 2026-08-31 | 🔬 **dev 配置资产丢失排查 + 模板文件操作安全化**（v0.10.0 预算内）：① 现场：dev `Assets/Ember/Editor/SOs/` 缺 EmberCSharpImplementation/EmberImageBatchSettings 两个资产（含 .meta），EUIBindingSettings.asset 的 logicImplementations 被序列化清空（GUID 与模板一致 → 系引用目标消失后写盘清空，非自动重建）→ codegen 静默失效；② 根因：LoadTemplate「先删后拷、复制中断即丢文件无回滚」+ EUIBindingSettings 无自愈；③ 修复：LoadTemplate/SaveTemplate 改为「先整树复制到暂存区 → 全部成功后才旧目录改名备份（~ 后缀不参与导入）→ 落位，任一步失败自动回滚」（CleanDirectory 辅助）；EUIBindingSettingData.GetOrCreateSettings 增加自愈——引用为空且 EmberCSharpImplementation.asset 存在时自动补回 + 警告。待 Unity 编译验证；dev 数据恢复由用户走「加载 base」/删除损坏 SO 后「补齐缺失」 |
+| 2026-08-31 | 🗂️ **UI 资源布局 + burner 规范对齐（v0.10.0 预算内，方案经用户确认，2026-09-01 完成模块路由收口）**：① 预制体与代码分离——CSharpLogicImplementationData 使用 `uiResourceRoot=Assets/GameResource/Resources/UI`，统一解析规则：框架模式 → `Common/Prefabs`，用户模式按 `classPath` 首段 → `Module/<模块>/Prefabs`；EUIPageDef 与 GeneratePrefab 共用同一解析器，Inspector 展示最终路径；DefaultUIResourceProvider 支持 Assets 路径自动剥离到 Resources 相对路径。② 逻辑分模块约定（业务新页面 `<模块>/Page|Component`，资源同模块归档）；③ 小改包：SubPage 经全局入口（无父页面）打开被拒绝并警告；Popup 遮罩颜色配置化；IEmberSafeAreaProvider 加 SafeAreaChanged 事件 + EUILogic 自动订阅；④ 模板快照目录 TemplateDirNames 增 GameResource；⑤ 产出 `docs/user/UI开发参考.md`。配套：模板由用户在模板编辑器手动保存同步，待 Unity 编译与 Play 回归验证。 |
+| 2026-08-31 | 🎨 **渲染层级修复（v0.10.0 预算内，用户提 3 问）**：① BG Mask Canvas 未注入 UI 相机（默认 ScreenSpaceOverlay 永远盖在 Camera 模式页面之上）→ EUIBgMaskPool 构造注入 UICamera + CreateMask 设 ScreenSpaceCamera/worldCamera；② EnsureLayerCanvas 层 Canvas 补 overrideSorting=true（语义自洽）；③ Background 排序问题根因 = FrameworkScene 的 BootSplash Canvas 未开 Override Sorting（sortingOrder 字段 999 无效）→ 由用户在 Unity 勾选，BootSplash 真置顶、背景 0 垫底；④ 澄清：运行时动态修改全部作用于 Instantiate 克隆，不写回预制体资产（写资产仅 codegen 生成 / UI 预制体管理器清理等显式工具）；⑤ GamePages 拆分重建（框架条目回 GamePages.cs + User 文件回 TODO）+ sync-scaffold.ps1 补 GameResource |
+| 2026-08-31 | 📏 **层级数值对齐（用户主导）**：UILayer 枚举对齐内部排序常量（Background 0 / Normal 1000=MainPageBaseOrder / Popup 2000 / TopMost 25000=TopMostBaseOrder，消除两套数字脱节）；EUIBindingEditorUtility.PageFlagsToSortingOrder 改引用 UILayer（补 using Ember.UI）；SubPage 步长**保持 50**（用户定稿：1000 层距下小步长余量更足）；UI 预制体管理器/排序功能（EUIViewEngine 脏标记 + UIRoot 子节点按 sortingOrder 稳定排序）同批 |
+| 2026-08-31 | 🪟 **全屏弹窗标记（用户主导）**：区分「完全遮盖下层的全屏弹窗」与「普通弹窗」——PageFlags 加 `FullScreen` 位（仅与 Popup 组合，Inspector InfoBox 约束）；EUIPageDef 加 `IsFullScreen`（构造可选参）；EUIPageContext.AddPopup 仅全屏弹窗才把下层推裁剪面远端（SetPageVisible(false)），普通弹窗下层保持渲染、靠遮罩拦截交互；codegen GamePages 条目输出 `isFullScreen: true`；dev EUISettingPage 条目已标记全屏（预制体带全屏底，完全遮盖主界面） |
+| 2026-08-31 | 🎭 **弹窗遮罩配置化（用户主导，解决多弹窗遮罩叠加变黑）**：EUIBinding 新增「遮罩设置」区（仅 Popup 显示）——`useMask`（是否创建遮罩，默认 true）/ `maskColor`（本弹窗专属遮罩颜色，默认黑 α0.5，可设透明避免叠加变黑）/ `clickMaskToClose`（点遮罩是否关闭，默认 true）；注入链：EUIBinding → EUIBindingBridge.Attach → EUIPage（UseMask/MaskColorOverride/ClickMaskToClose，与 Logic 无关同样生效）；ShowBgMaskForPopup 按页读取（useMask 与代码层 AutoCreateClickableMask 并存，任一 false 不建遮罩；颜色页级优先、缺省回退全局 PopupMaskColor）；EUILogic.OnClickMask 默认实现检查 ClickMaskToClose（override 自定义优先） |
+| 2026-08-31 | 🎬 **Animator 过渡模式（用户主导，对标 Burner）**：EUIBinding 过渡动画区新增「使用 Animator 动画」（表现动画三选一：预设渐入渐出 ↔ 方块过渡（Loading 专属，HasTransitionBlock 显隐）↔ Animator，OnXxxChanged 互斥；自定义代码仍可叠加）；约定状态名 EmberOpen/EmberClose；完成通知 = 动画尾帧事件（运行时挂 EmberPageAnimatorBridge 承接，方法名 OnEmberOpenAnimationEnd/OnEmberCloseAnimationEnd）+ 5 秒超时兜底（事件拼错/漏加不卡死页面）；无 Animator/状态时警告跳过 |
+| 2026-09-01 | 🧩 **页面可选代码能力（用户主导）**：EUIBinding 页面配置新增「使用 UIUpdate」，Popup 遮罩区新增「生成遮罩创建覆写 / 生成遮罩点击钩子」；Framework 模式的 NeedUpdate/OnUpdate/Popup 覆写仅按面板勾选生成在 Lifecycle 管理块内，OnUpdate/OnClickMask 只负责转发至块外 OnUpdateUser/OnClickMaskUser，用户不手改 bool 或框架覆写；当时取消勾选仍保留用户钩子内容（已由 2026-09-02 批次收口为可选钩子）。Business 模式保持整文件用户所有与自定义删除确认；标准遮罩行为仍由 useMask/maskColor/clickMaskToClose 数据配置控制。 |
+| 2026-09-01 | 🎬 **UI 过渡时序收口（方案 A，用户确认）**：普通 UI 改为 None/PresetFade/Animator/CustomCode 单一过渡负责人，不再隐式串联；修复 Animator-only 不进入动画序列、Animator/Custom 根 Alpha 不可见、子节点 Animator 帧事件桥错位、退出阶段重复交互；Popup 遮罩和下层 OnResume 延后到退出完成。EUITransitionBlock 保持 Loading 专用特殊链路：进入仍为方块扫入→Custom Enter，退出仍为 Custom Exit→方块扫出。 |
+| 2026-09-01 | 🧭 **EUIBinding 页面类型互斥化（方案 A，用户确认）**：配置层由可组合 PageFlags 统一为运行时 PageType 单选；新增 FullScreenPopup 独立类型（Popup 栈/遮罩 + 隐藏下层，IsFullScreen 内部推导），旧 `pageFlags=66` 与 `Popup + isFullScreen:true` 兼容归一化；修复 SubPage codegen 误生成 MainPage，并让简单格式的已有 GamePages 条目同步路径/层级/类型。模板镜像仍待用户通过模板编辑器手动保存。 |
+| 2026-09-02 | 🧰 **UI 开发中心（v0.10.0 预算内，方案经用户确认）**：原 UI 预制体管理器整合升级为 `Ember/UI/UI 开发中心`，包含「创建 UI / UI 总览 / 清理与删除」。创建页先预检 prefab、脚本、Settings 与 GamePages 目标，再生成标准 Canvas/EUIBinding、复用公共 `EUICommon_Ani.controller` 的 Animator 容器和嵌套 `EUISafeArea.prefab`，脚本触发编译后仅在成功时自动打开 Prefab；标准 CanvasScaler 固定为 Scale With Screen Size / 2560×1440 / Match 0.5，dev 六个通用 UI 同步对齐。总览保持只读；生成与维护入口统一限制为规范 `Assets/` 路径，清理/删除增加影响预览、跨 Framework/User 的注释感知 PageDef 精确查重、全 Assets 引用复核、共享脚本保护及孤儿脚本/安全空叶子 dry-run；运行时打开完成统一恢复 Animator 容器交互，覆盖 Loading 方块、Custom 与 None。模板镜像仍未同步，验证完成后必须由用户在「模板编辑器」中手动保存 base，助手不运行 `scripts/sync-scaffold.ps1`。 |
+| 2026-09-02 | 🐛 **弹窗遮罩 + UIUpdate 可选钩子收口（方案经用户确认）**：① `EmberBgMask` 独立 Canvas 原为 Default Layer，而 UI Camera 仅渲染 UI Layer，导致 Scene 可见但 Game 不显示；同时缺少 GraphicRaycaster，Button 无法接收点击。修复为每次获取/复用均继承所属弹窗 Layer、补 GraphicRaycaster、排序精确为弹窗 -1。② Framework `OnUpdateUser` 从固定骨架改为仅随「使用 UIUpdate」生成；取消时默认空钩子自动删除，含用户代码则交互确认/非交互取消同步并警告；dev 未启用 UIUpdate 的 Background/Main/GamePlay/Setting 四页已清理默认空钩子，Loading/GM 保留。待 Unity 编译、Edit Mode 与 Play 回归。 |
+| 2026-09-02 | ✅ **v0.10.0 测试与发布准备收口**：用户完成 Play 验证并确认本轮测试结束；Main→Gameplay 替换式状态切换在 `GameMainState.OnMainExit` 主动关闭 EUIMainPage，避免旧 MainPage 留在栈中；状态机驱动的 Setting Popup 禁用遮罩点击关闭，统一由按钮执行状态机 Pop；GM 退出按钮改为注册 `GameLauncher.Instance.Quit` 方法组。Unity 手动编译成功。严格按发布顺序先 bump `Packages/com.ember/package.json` 至 0.10.0，再新增 CHANGELOG 0.10.0，并将 UPM 默认安装 tag 对准 v0.10.0。基础模板已由用户通过模板编辑器保存为 v0.5.0 / frameworkVersion 0.10.0 / stable，五个镜像根目录逐文件一致，路径、GUID、GamePages、SafeArea、Binding 与关键状态逻辑静态复检通过。 |

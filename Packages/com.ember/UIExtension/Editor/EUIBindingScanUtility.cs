@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System.Collections.Generic;
@@ -19,6 +19,8 @@ namespace Ember.UIExtension.Editor
     [InitializeOnLoad]
     public static class EUIBindingScanUtility
     {
+        private const string TAG = LogTags.EmberUI;
+
         static EUIBindingScanUtility()
         {
             EUIBinding.OnScanUnboundChildren = HandleScanUnboundChildren;
@@ -50,7 +52,7 @@ namespace Ember.UIExtension.Editor
             if (unbound.Count == 0)
             {
                 EUIBinding.ScanUnboundResult = null;
-                EmberDebug.Log("EmberUI", "扫描完成：所有子组件已绑定 ✓");
+                EmberDebug.Log(TAG, "扫描完成：所有子组件已绑定 ✓");
                 EditorUtility.DisplayDialog("扫描子组件",
                     "所有子组件都已绑定，未发现遗漏。", "确定");
                 return;
@@ -62,7 +64,7 @@ namespace Ember.UIExtension.Editor
                 sb.AppendLine($"  · {path}");
 
             EUIBinding.ScanUnboundResult = sb.ToString();
-            EmberDebug.LogWarning("EmberUI", sb.ToString());
+            EmberDebug.LogWarning(TAG, sb.ToString());
         }
 
         private static void ScanRecursive(

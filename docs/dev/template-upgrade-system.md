@@ -1,6 +1,6 @@
 # 模板升级协同体系（设计定稿 + 实施状态）
 
-> 状态：🔄 P-A 实施中（元数据/闸门/部署记录/提示）；P-B（升级向导）与 P-C（preview 流程）设计已定稿待实施
+> 状态：✅ P-A 已实施并随 v0.9.0 发布；v0.10.0 UI 收口已完成编译与 Play 验证，基础模板 v0.5.0 已由用户通过模板编辑器手动保存并通过静态复检；P-B（升级向导）与 P-C（preview 流程）设计已定稿待实施——发布后「创建第二模板」即 P-C 全流程演练的起点
 > 创建：2026-08-26
 > 相关：[upm-migration-plan.md](upm-migration-plan.md) §6.7 模板体系、§七 升级协同策略
 
@@ -26,7 +26,7 @@
     "displayName": "基础模板",
     "description": "...",
     "version": "0.5.0",           // 模板自身版本（独立于框架，编辑器内主/次/补丁 bump）
-    "frameworkVersion": "0.8.0", // 目标框架版本：保存/新建时自动记录当前框架版本；兼容闸门判定依据
+    "frameworkVersion": "0.10.0", // 目标框架版本：保存/新建时自动记录当前框架版本；兼容闸门判定依据
     "channel": "stable",         // stable / preview / deprecated
     "order": 1
 }
@@ -91,7 +91,7 @@ public static partial class GamePages
 ### 落地布局清单（2026-08-26 定稿并铺入模板）
 
 - **块标记（11 个混合文件）**：① 5 个状态/动画文件——GameInitState / GameMainState / GameGameplayState / GameSettingsState 的 override 钩子签名 + EUIDefaultMainAnimation.PlayOpeningAnimation（签名框架管、函数体用户填）；② 6 个框架页面（EUIBackgroundPage/EUILoadingPage/EUIMainPage/EUIGamePlayPage/EUISettingPage/GMPage）——单个 Lifecycle 块包裹框架逻辑，块外为用户级 XxxUser 钩子（2026-08-28）
-- **框架模式 codegen 页面（2026-08-27 定稿）**：EUIBinding「框架」生成模式输出的页面 .cs 为混合文件——单个 `[EmberManaged:begin/end Lifecycle]` 块包裹全部生命周期 override（块内框架所有，每个 override 末尾调用对应 `XxxUser` 钩子），块外为 6 个用户级钩子（OnInitUser/OnOpenUser/OnShowUser/OnHideUser/OnCloseUser/OnDisposeUser，用户区永不触碰）；绑定条目带 IsFramework 标记（清除/重收集受保护）；页面注册条目写入 GamePages.cs（框架区）
+- **框架模式 codegen 页面（2026-08-27 定稿，2026-09-02 可选钩子收口）**：EUIBinding「框架」生成模式输出的页面 .cs 为混合文件——单个 `[EmberManaged:begin/end Lifecycle]` 块包裹全部生命周期 override（块内框架所有，每个 override 末尾调用对应 `XxxUser` 钩子），块外固定保留 6 个用户级钩子（OnInitUser/OnOpenUser/OnShowUser/OnHideUser/OnCloseUser/OnDisposeUser）；`OnUpdateUser` 仅随「使用 UIUpdate」生成，关闭时默认空钩子自动删除、含用户代码则确认后处理；绑定条目带 IsFramework 标记（清除/重收集受保护）；页面注册条目写入 GamePages.cs（框架区）
 - **全文件框架（头标记）**：模板内其余全部框架 .cs（演示模块/UI 逻辑/BootSplash/编辑器工具等，共 52 个带标记；2026-08-27 起框架页面 EUIBackground/EUILoading 及其 Settings 也从包内迁入业务层并带头标记）
 - **用户文件（无标记）**：GamePages.User.cs（用户页面注册区）+ 用户新建的状态类/模块文件（新状态=新文件，框架 FindSubclass 自动发现）
 - **codegen 管理**：6 个 .Binding.cs 由 EmberCSharpImplementation 每次整文件重生成，不进两级标记体系
@@ -174,9 +174,10 @@ public static partial class GamePages
 
 ## 八、实施状态
 
-- **P-A（v0.8.0）**：元数据模型 + 兼容闸门 + 部署记录 + 版本真实化 + 升级提示矩阵（只提示不合并） ✅ 本次实施；含**标记铺入**（全文件头标记 49 文件、块标记 5 文件、GamePages 框架/用户拆分 + codegen 指改 GamePages.User.cs）
+- **P-A（v0.8.0 → 随 v0.9.0 发布）**：元数据模型 + 兼容闸门 + 部署记录 + 版本真实化 + 升级提示矩阵（只提示不合并） ✅ 已实施并发布；含**标记铺入**（全文件头标记、块标记、GamePages 框架/用户拆分 + codegen 指改 GamePages.User.cs）；发布前又扩展：头标记双版本格式（模板版本 + framework 版本）、补齐时标记刷新、框架模式 codegen 页面（Lifecycle 单块 + XxxUser 钩子）、IsFramework 绑定保护
+- **基础模板 v0.5.0（随框架 v0.10.0）**：dev 侧 UI 资源布局、页面类型/层级、遮罩、过渡、SafeArea、状态 UI 所有权与 GM 退出入口已收口；模板已由用户在模板编辑器中手动保存，元数据为 `v0.5.0 / frameworkVersion 0.10.0 / stable`，路径、GUID、GamePages、SafeArea、Binding 与关键状态逻辑静态复检通过
 - **P-B**：升级向导（ComputeUpgradePlan / 合并执行器）+ 弃用迁移提示 ⏳ 待实施（标记已就位，只差合并引擎）
-- **P-C**：preview 模板全流程演练（新模板以 channel=preview 入包 → 成熟转 stable → 弃用转 deprecated 一个周期后移除）+ 文档 ⏳ 待实施
+- **P-C**：preview 模板全流程演练（新模板以 channel=preview 入包 → 成熟转 stable → 弃用转 deprecated 一个周期后移除）+ 文档 ⏳ 待实施——**下一阶段「创建第二模板」即本项起点**（新建模板 version 0.1.0 / channel=preview / frameworkVersion 自动对准）
 
 ---
 

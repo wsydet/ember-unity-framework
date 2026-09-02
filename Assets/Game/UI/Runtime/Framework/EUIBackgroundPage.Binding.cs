@@ -1,8 +1,8 @@
 ﻿/*=============================================================
- * author       : DESKTOP-5SRUU55
+ * author       : Bingo
  * prefab name  : EUIBackgroundPanel
  * page name    : EUIBackgroundPage
- * update time  : 2026/8/28 12:20:48
+ * update time  : 2026/9/1 20:35:29
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

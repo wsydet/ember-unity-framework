@@ -20,7 +20,8 @@ namespace Ember.UI
     /// <para>使用示例：</para>
     /// <code>
     /// EUIObserver.OnPageOpened
-    ///     .Where(e =&gt; e.Page.PageType == PageType.Popup)
+    ///     .Where(e =&gt; e.Page.PageType == PageType.Popup
+    ///         || e.Page.PageType == PageType.FullScreenPopup)
     ///     .Subscribe(e =&gt; audioMgr.PlaySFX("popup_open"))
     ///     .AddTo(this);
     /// </code>

@@ -41,6 +41,7 @@ namespace Game.State
         protected override void OnMainExit()
         // [EmberManaged:end]
         {
+            EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage);
             EUIManager.Instance.ClearBackground();
         }
 

@@ -20,7 +20,7 @@ GameLauncher（框架入口）
 InitState ── 初始化 Manager → 加载 MainScene → 等黑幕淡出 → TransitionTo<MainState>
    │
    ▼
-MainState ── 广播 MainSceneReady → 开屏动画(背景页∥动画) → 广播 OpeningAnimationEnd
+MainState ── 广播 MainSceneReady → 开屏动画 → 广播 OpeningAnimationEnd
    │
    ▼
 GameMainState.OnOpeningAnimationEnd ── ShowMainPage(MainMenu)
@@ -171,7 +171,7 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 |--------|------|
 | 黑幕 | 继承 `EUIBootSplash`，`override OnCustomFadeOut`（Custom 模式）或切换 `BootSplashFadeMode` |
 | 开屏动画 | 继承 `EUIMainAnimationStarter`，`override PlayOpeningAnimation` 返回动画 `UniTask` |
-| MainState | 继承 `MainState` 为 `GameMainState`，override `OnMainEnter` / `OnMainExit` / `OnOpeningAnimationEnd` |
+| MainState | 继承 `MainState` 为 `GameMainState`，override `LoadBackgroundAsync` / `OnMainEnter` / `OnMainExit` / `OnOpeningAnimationEnd` |
 | 页面注册 | 在 `GamePages` 静态类里声明 `EUIPageDef` |
 | 状态注册 | 继承 `GameLauncher` 的 `ConfigureStateMachine` 追加业务状态 |
 

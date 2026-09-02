@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 
+using Ember.Basic;
+
 using UnityEditor;
 
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace Ember.UIExtension.Editor
     /// </summary>
     public class EUIBindingSettingData : ScriptableObject
     {
+        private const string TAG = LogTags.EmberUI;
         public const string k_SettingsPath = "Assets/Ember/Editor/SOs/EUIBindingSettings.asset";
 
         [SerializeField]
@@ -43,7 +46,16 @@ namespace Ember.UIExtension.Editor
         /// <summary>业务代码根目录</summary>
         public string BusinessCodeRoot => businessCodeRoot;
 
-        /// <summary>获取或创建设置实例</summary>
+        /// <summary>
+        /// 只读加载现有设置。与 <see cref="GetOrCreateSettings"/> 不同，本方法不会创建资产、
+        /// 不会修复引用，也不会触发 SaveAssets，适合总览/扫描等只读工具。
+        /// </summary>
+        public static EUIBindingSettingData LoadExistingSettings()
+        {
+            return AssetDatabase.LoadAssetAtPath<EUIBindingSettingData>(k_SettingsPath);
+        }
+
+        /// <summary>获取或创建设置实例（若 Logic Implementations 引用丢失则自动自愈补回，见 <see cref="RestoreMissingImplementationReference"/>）。</summary>
         public static EUIBindingSettingData GetOrCreateSettings()
         {
             var settings = AssetDatabase.LoadAssetAtPath<EUIBindingSettingData>(k_SettingsPath);
@@ -53,7 +65,29 @@ namespace Ember.UIExtension.Editor
                 AssetDatabase.CreateAsset(settings, k_SettingsPath);
                 AssetDatabase.SaveAssets();
             }
+
+            settings.RestoreMissingImplementationReference();
             return settings;
+        }
+
+        /// <summary>
+        /// 自愈：logicImplementations 为空但 SOs 目录存在 EmberCSharpImplementation.asset 时自动补回引用。
+        /// 场景：模板加载中断/资产误删导致该引用失效（引用目标的 GUID 消失后，序列化写盘会把失效引用清成空数组），
+        /// 之后 codegen 会静默失效——此处兜底恢复并打警告，防止「配置在但生成不了」的无提示状态。
+        /// </summary>
+        private void RestoreMissingImplementationReference()
+        {
+            if (logicImplementations != null && logicImplementations.Length > 0) return;
+
+            const string implementationAssetPath = "Assets/Ember/Editor/SOs/EmberCSharpImplementation.asset";
+            var impl = AssetDatabase.LoadAssetAtPath<CSharpLogicImplementationData>(implementationAssetPath);
+            if (impl == null) return;
+
+            logicImplementations = new LogicImplementationData[] { impl };
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            EmberDebug.LogWarning(TAG,
+                $"检测到 Logic Implementations 为空但 {implementationAssetPath} 存在，已自动补回引用（可能由模板加载中断或资产误删造成，请留意）。");
         }
 
         /// <summary>获取 SerializedObject 形式的设置</summary>

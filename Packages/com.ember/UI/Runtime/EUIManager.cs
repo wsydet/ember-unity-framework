@@ -38,14 +38,25 @@ namespace Ember.UI
         private EUIViewEngine _uiManager;
         private EUIPageContext _context => _uiManager.PageContext;
 
+        /// <summary>
+        /// Popup 遮罩颜色（全局静态配置，默认半透明黑 α=0.5，对标 Burner GameUIConst.UIBGMaskColor）。
+        /// 建议在首次打开 Popup 前设置；修改后对之后创建/复用的遮罩立即生效。
+        /// </summary>
+        public static Color PopupMaskColor { get; set; } = new Color(0f, 0f, 0f, 0.5f);
+
         private readonly Queue<ShowRequest> _showQueue = new();
         private bool _isProcessingQueue;
 
         private readonly Dictionary<EUIPage, EUIPage> _parentPageMap = new(); // SubPage → ParentPage
         private readonly Dictionary<EUIPage, object> _returnValueMap = new();    // Page → ReturnValue
+        private readonly HashSet<EUIPage> _closeRequestedPages = new(); // 防止退出过渡期间重复关闭
 
         // 预加载页面（对标 Burner Preload 机制）
         private readonly Dictionary<string, EUIPage> _preloadedPages = new(); // PrefabPath → Page
+
+        // Background 使用独立的幂等加载通道：同路径共享完成源，不同路径由最后一次请求获得写入权。
+        private BackgroundRequest _backgroundRequest;
+        private int _backgroundRequestVersion;
 
         private bool _initialized;
 
@@ -61,6 +72,13 @@ namespace Ember.UI
             public object Args;
             public Action<EUIPage> OnComplete;
             public EUIPage ParentPage; // SubPage 时非空
+        }
+
+        private sealed class BackgroundRequest
+        {
+            public int Version;
+            public string PrefabPath;
+            public UniTaskCompletionSource Completion;
         }
 
         #endregion
@@ -160,9 +178,11 @@ namespace Ember.UI
         void IEmberManager.Destroy()
         {
             Ember.Scene.SceneCoordinator.InterceptSceneLoad = null;
+            InvalidateBackgroundRequest();
             _showQueue.Clear();
             _parentPageMap.Clear();
             _returnValueMap.Clear();
+            _closeRequestedPages.Clear();
             _preloadedPages.Clear();
             _initialized = false;
         }
@@ -246,8 +266,8 @@ namespace Ember.UI
 
         /// <summary>
         /// 设置背景页并等待其加载+显示完成（异步版本）。
-        /// 背景页现由开屏动画（EUIMainAnimationStarter）在 MainSceneReady 后加载，
-        /// 开屏动画会 await 本方法，确保背景兜底 UI 就绪后才结束动画、进入 MainUI。
+        /// 同路径已显示时直接复用，加载中时共享同一完成源；
+        /// 不同路径并发请求以最后一次为准，过期回调不会覆盖当前背景。
         /// </summary>
         public async UniTask SetBackgroundAsync(EUIPageDef pageDef)
         {
@@ -258,30 +278,41 @@ namespace Ember.UI
                 return;
             }
 
-            var tcs = new UniTaskCompletionSource();
-            _uiManager.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
+            var prefabPath = pageDef.PrefabPath;
+            if (string.IsNullOrEmpty(prefabPath))
             {
-                if (prefab == null)
-                {
-                    EmberDebug.LogError(TAG, $"无法加载背景预制体: {pageDef.PrefabPath}");
-                    tcs.TrySetResult();
-                    return;
-                }
+                EmberDebug.LogError(TAG, "SetBackground 的 PrefabPath 不能为空。");
+                return;
+            }
 
-                var instance = UnityEngine.Object.Instantiate(prefab);
-                instance.name = prefab.name;
+            // 同路径正在加载/显示：所有调用者共享同一个显示完成时点。
+            var pendingRequest = _backgroundRequest;
+            if (pendingRequest != null
+                && string.Equals(pendingRequest.PrefabPath, prefabPath, StringComparison.Ordinal))
+            {
+                await pendingRequest.Completion.Task;
+                return;
+            }
 
-                var page = new EUIPage(instance);
-                OnPageCreated?.Invoke(page);
-                _context.SetBackground(page);
-                _uiManager.OpenPage(page, pageDef, null, () =>
-                {
-                    EmberDebug.Log(TAG, $"背景已设置: {pageDef.PrefabPath}");
-                    tcs.TrySetResult();
-                });
-            });
+            // 当前已是目标背景：取消可能存在的其他路径请求，不再重复 Instantiate。
+            var currentBackground = _context.BackgroundPage;
+            if (IsSameBackground(currentBackground, prefabPath))
+            {
+                InvalidateBackgroundRequest();
+                return;
+            }
 
-            await tcs.Task;
+            InvalidateBackgroundRequest();
+            var request = new BackgroundRequest
+            {
+                Version = ++_backgroundRequestVersion,
+                PrefabPath = prefabPath,
+                Completion = new UniTaskCompletionSource(),
+            };
+            _backgroundRequest = request;
+
+            StartBackgroundRequest(request, pageDef);
+            await request.Completion.Task;
         }
 
         /// <summary>
@@ -289,6 +320,7 @@ namespace Ember.UI
         /// </summary>
         public void ClearBackground()
         {
+            InvalidateBackgroundRequest();
             _context.ClearBackground();
         }
 
@@ -337,6 +369,7 @@ namespace Ember.UI
                         _context.PushMainPage(page);
                         break;
                     case PageType.Popup:
+                    case PageType.FullScreenPopup:
                         _context.AddPopup(page);
                         break;
                     case PageType.TopMost:
@@ -362,7 +395,17 @@ namespace Ember.UI
         /// </summary>
         public void ClosePage(EUIPage page, object returnValue = null)
         {
+            ClosePageCore(page, returnValue, true);
+        }
+
+        /// <summary>
+        /// 关闭页面核心流程。restoreUnderlying=false 用于主页面整组关闭 Popup，
+        /// 避免每个 Popup 退出时又恢复同样正在关闭的下层页面。
+        /// </summary>
+        private void ClosePageCore(EUIPage page, object returnValue, bool restoreUnderlying)
+        {
             if (page == null) return;
+            if (!_closeRequestedPages.Add(page)) return;
 
             if (returnValue != null)
                 _returnValueMap[page] = returnValue;
@@ -373,15 +416,26 @@ namespace Ember.UI
                 ClosePage(subPage);
             }
 
-            // 从上下文中移除
+            EUIPage pageToResume = null;
+            bool resumeMainPage = false;
+            bool hidePopupMask = false;
+
+            // 立即从路由上下文移除，但遮罩清理与下层恢复延后到退出过渡真正完成。
             switch (page.EUIPageDef.PageType)
             {
                 case PageType.MainPage:
-                    _context.PopMainPage(page);
+                    // 先快照并关闭该 MainPage 持有的 Popup。主页面整组关闭时不逐层恢复下方 Popup。
+                    var popups = new List<EUIPage>(_context.GetPopups(page));
+                    for (int i = popups.Count - 1; i >= 0; i--)
+                        ClosePageCore(popups[i], null, false);
+
+                    pageToResume = _context.PopMainPage(page);
+                    resumeMainPage = true;
                     break;
                 case PageType.Popup:
-                    _context.RemovePopup(page);
-                    HideBgMaskForPopup(page);
+                case PageType.FullScreenPopup:
+                    pageToResume = _context.RemovePopup(page);
+                    hidePopupMask = true;
                     break;
                 case PageType.TopMost:
                     _context.RemoveTopMost(page);
@@ -407,7 +461,22 @@ namespace Ember.UI
                     break;
             }
 
-            _uiManager.ClosePage(page);
+            _uiManager.ClosePageInternal(
+                page,
+                onComplete: () => _closeRequestedPages.Remove(page),
+                onTransitionComplete: () =>
+                {
+                    if (hidePopupMask)
+                        HideBgMaskForPopup(page);
+
+                    if (!restoreUnderlying || pageToResume == null)
+                        return;
+
+                    if (resumeMainPage)
+                        _context.ResumeMainPageAfterClose(pageToResume);
+                    else
+                        _context.ResumePageAfterPopupClose(pageToResume);
+                });
         }
 
         /// <summary>
@@ -516,6 +585,13 @@ namespace Ember.UI
 
         private void EnqueueShow(EUIPageDef pageDef, object args, Action<EUIPage> onComplete, EUIPage parentPage = null)
         {
+            // SubPage 必须经 ShowSubPage 带父页面打开（对标 Burner：禁止全局入口打开 SubPage），否则会成为无归属的孤儿页
+            if (pageDef != null && pageDef.PageType == PageType.SubPage && parentPage == null)
+            {
+                EmberDebug.LogWarning(TAG, $"SubPage [{pageDef.PrefabPath}] 必须通过 ShowSubPage(def, parentPage, ...) 打开，本次请求已拒绝。");
+                return;
+            }
+
             _showQueue.Enqueue(new ShowRequest
             {
                 EUIPageDef = pageDef,
@@ -612,6 +688,7 @@ namespace Ember.UI
                     break;
 
                 case PageType.Popup:
+                case PageType.FullScreenPopup:
                     _context.AddPopup(page);
                     ShowBgMaskForPopup(page);
                     break;
@@ -660,6 +737,145 @@ namespace Ember.UI
             Profiler.EndSample();
         }
 
+        /// <summary>
+        /// 启动当前 Background 请求。优先消费已完成的预加载页和延迟销毁页，
+        /// 仅在无可复用实例时加载并实例化 Prefab。
+        /// </summary>
+        private void StartBackgroundRequest(BackgroundRequest request, EUIPageDef pageDef)
+        {
+            if (!IsCurrentBackgroundRequest(request)) return;
+
+            if (_preloadedPages.TryGetValue(request.PrefabPath, out var preloadedPage))
+            {
+                _preloadedPages.Remove(request.PrefabPath);
+                if (preloadedPage != null && preloadedPage.GameObject != null)
+                {
+                    EmberDebug.Log(TAG, $"复用预加载背景页: {request.PrefabPath}");
+                    OpenBackgroundPage(request, pageDef, preloadedPage);
+                    return;
+                }
+            }
+
+            var reusablePage = _uiManager.FindReusablePage(request.PrefabPath);
+            if (reusablePage != null && reusablePage.GameObject != null)
+            {
+                OpenBackgroundPage(request, pageDef, reusablePage);
+                return;
+            }
+
+            try
+            {
+                _uiManager.ResourceProvider.LoadPrefabAsync(request.PrefabPath, prefab =>
+                {
+                    // ClearBackground 或后来的不同路径请求已使本请求过期：
+                    // 在 Instantiate 前终止，不允许旧回调重新写入 Background 槽位。
+                    if (!IsCurrentBackgroundRequest(request)) return;
+
+                    if (prefab == null)
+                    {
+                        FailBackgroundRequest(request, $"无法加载背景预制体: {request.PrefabPath}");
+                        return;
+                    }
+
+                    GameObject instance = null;
+                    try
+                    {
+                        instance = UnityEngine.Object.Instantiate(prefab);
+                        instance.name = prefab.name;
+
+                        // Instantiate 不会跨帧，但保留二次代次校验，避免自定义扩展在创建链中重入。
+                        if (!IsCurrentBackgroundRequest(request))
+                        {
+                            UnityEngine.Object.Destroy(instance);
+                            return;
+                        }
+
+                        OpenBackgroundPage(request, pageDef, new EUIPage(instance));
+                    }
+                    catch (Exception ex)
+                    {
+                        if (instance != null)
+                            UnityEngine.Object.Destroy(instance);
+                        FailBackgroundRequest(request, $"创建背景页失败: {request.PrefabPath}\n{ex}");
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                FailBackgroundRequest(request, $"加载背景页失败: {request.PrefabPath}\n{ex}");
+            }
+        }
+
+        /// <summary>将已创建或复用的页面接入 Background 槽位，并在显示过渡真正完成后解锁所有等待者。</summary>
+        private void OpenBackgroundPage(BackgroundRequest request, EUIPageDef pageDef, EUIPage page)
+        {
+            if (!IsCurrentBackgroundRequest(request)) return;
+
+            try
+            {
+                OnPageCreated?.Invoke(page);
+                if (!IsCurrentBackgroundRequest(request)) return;
+
+                // PreloadPage 不会为 Background 注册路由，因此消费预加载页时也必须在此显式设置槽位。
+                _context.SetBackground(page);
+                _uiManager.OpenPage(page, pageDef, null, () =>
+                {
+                    if (!IsCurrentBackgroundRequest(request)) return;
+
+                    EmberDebug.Log(TAG, $"背景已设置: {request.PrefabPath}");
+                    CompleteBackgroundRequest(request);
+                });
+            }
+            catch (Exception ex)
+            {
+                FailBackgroundRequest(request, $"打开背景页失败: {request.PrefabPath}\n{ex}");
+            }
+        }
+
+        private bool IsCurrentBackgroundRequest(BackgroundRequest request)
+        {
+            return request != null
+                && ReferenceEquals(_backgroundRequest, request)
+                && request.Version == _backgroundRequestVersion;
+        }
+
+        private static bool IsSameBackground(EUIPage page, string prefabPath)
+        {
+            return page != null
+                && page.GameObject != null
+                && page.EUIPageDef != null
+                && string.Equals(page.EUIPageDef.PrefabPath, prefabPath, StringComparison.Ordinal);
+        }
+
+        private void CompleteBackgroundRequest(BackgroundRequest request)
+        {
+            if (!IsCurrentBackgroundRequest(request)) return;
+
+            _backgroundRequest = null;
+            request.Completion.TrySetResult();
+        }
+
+        private void FailBackgroundRequest(BackgroundRequest request, string message)
+        {
+            if (!IsCurrentBackgroundRequest(request)) return;
+
+            EmberDebug.LogError(TAG, message);
+            _backgroundRequest = null;
+            request.Completion.TrySetResult();
+        }
+
+        /// <summary>
+        /// 使当前 Background 请求失效并释放等待者。已发出的资源请求可继续回调，
+        /// 但回调的代次校验会在 Instantiate 之前拒绝其结果。
+        /// </summary>
+        private void InvalidateBackgroundRequest()
+        {
+            var request = _backgroundRequest;
+            _backgroundRequest = null;
+            _backgroundRequestVersion++;
+            request?.Completion.TrySetResult();
+        }
+
         // ── BG Mask 管理 ──
 
         private readonly Dictionary<EUIPage, GameObject> _activeMasks = new();
@@ -669,14 +885,25 @@ namespace Ember.UI
 
         private void ShowBgMaskForPopup(EUIPage popup)
         {
+            var logic = popup.Logic;
+
+            // 数据层开关（EUIBinding.useMask，注入到 EUIPage.UseMask）或代码层开关
+            // （页面 override AutoCreateClickableMask=false）任一为 false → 不创建遮罩
+            if (!popup.UseMask || (logic != null && !logic.ShouldCreateClickableMask))
+                return;
+
             var canvas = popup.Canvas;
             var sortingOrder = canvas ? canvas.sortingOrder : (int)popup.EUIPageDef.Layer;
 
-            var mask = _uiManager.ShowBgMask(sortingOrder - 1, () =>
+            var mask = _uiManager.ShowBgMask(sortingOrder, () =>
             {
-                // 点击遮罩关闭 Popup
-                ClosePage(popup);
-            });
+                // 点击遮罩：优先转发给页面 Logic（默认实现按 ClickMaskToClose 开关关闭 Popup，可 override 定制），
+                // 无 Logic 时按数据层开关兜底
+                if (popup.Logic != null)
+                    popup.Logic.NotifyClickMask();
+                else if (popup.ClickMaskToClose)
+                    ClosePage(popup);
+            }, popup.MaskColorOverride ?? PopupMaskColor, popup.GameObject.layer);
 
             if (mask != null)
                 _activeMasks[popup] = mask;

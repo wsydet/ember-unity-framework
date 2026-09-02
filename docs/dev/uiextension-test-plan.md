@@ -14,8 +14,8 @@
 
 | 项 | 值 |
 |----|----|
-| 路径 | `Assets/Game/UI/Runtime/Prefabs/GMPage.prefab`（已从框架层迁至业务层） |
-| 逻辑类 | `Assets/Game/UI/Runtime/Pages/GMPage.cs`（手写 partial，命名空间 `Game.UI`）+ `GMPage.Binding.cs`（自动生成） |
+| 预制体路径 | `Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab`（模板通用 UI 资源） |
+| 逻辑类 | `Assets/Game/UI/Runtime/Framework/GMPage.cs`（手写 partial，命名空间 `Game.UI`）+ `GMPage.Binding.cs`（自动生成） |
 | 实例化 | `GameInitState.OnEnter`（业务层 InitState 子类）—— 进主界面即创建，FreePage 常驻 |
 | 当前绑定 | 13 个：`Btn_GM`(Button)、`Panel_GM`(Component)、`Pgb_TimeScale`(Slider)、`Txt_TimeScale`(TMP_Text)、`Txt_GameState`(TMP_Text)、`Tgl_Test`(Toggle)、`Scr_Test`(ScrollRect)、`Img_Test`(Image)、`Raw_Test`(RawImage)、`EUIBtn_Exit`(**EUIButtonEx**)、`EUITgl_Test`(**EUIToggleEx**)、`EUIImg_Test`(**EUIImageEx**)、`Img_Circle`(**EUICircleImage**) |
 

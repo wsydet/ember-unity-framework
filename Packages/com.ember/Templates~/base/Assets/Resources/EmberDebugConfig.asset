@@ -37,8 +37,20 @@ MonoBehaviour:
     color: {r: 0.45, g: 0.8, b: 0.8, a: 1}
     className: EmberInput
   - enabled: 1
+    color: {r: 0.78, g: 0.62, b: 0.45, a: 1}
+    className: EmberExtension
+  - enabled: 1
     color: {r: 0.8, g: 0.4, b: 0.6, a: 1}
     className: Game
+  - enabled: 1
+    color: {r: 0.55, g: 0.75, b: 0.9, a: 1}
+    className: EmberBasic.Crypto
+  - enabled: 1
+    color: {r: 0.55, g: 0.75, b: 0.9, a: 1}
+    className: EmberBasic.Performance
+  - enabled: 1
+    color: {r: 0.55, g: 0.75, b: 0.9, a: 1}
+    className: EmberBasic.AppQuit
   - enabled: 1
     color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
     className: EmberCore.EventBus
@@ -56,6 +68,9 @@ MonoBehaviour:
     className: EmberCore.ManagerCollector
   - enabled: 1
     color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.ModuleCollector
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
     className: EmberCore.UpdateManager
   - enabled: 1
     color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
@@ -66,6 +81,21 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
     className: EmberCore.CameraManager
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.TimeManager
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.Timer
+  - enabled: 1
+    color: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+    className: EmberCore.Editor
+  - enabled: 1
+    color: {r: 0.78, g: 0.62, b: 0.45, a: 1}
+    className: EmberExtension.JsonUtils
+  - enabled: 1
+    color: {r: 0.78, g: 0.62, b: 0.45, a: 1}
+    className: EmberExtension.CacheLRU
   - enabled: 1
     color: {r: 0.42, g: 0.65, b: 0.85, a: 1}
     className: EmberResource.Manager
@@ -89,16 +119,10 @@ MonoBehaviour:
     color: {r: 0.9, g: 0.35999995, b: 0.62243986, a: 1}
     className: EmberFileLog
   - enabled: 1
-    color: {r: 0.9, g: 0.67428, b: 0.35999995, a: 1}
-    className: EUITransitionBlock
-  - enabled: 1
-    color: {r: 0.89892, g: 0.35999995, b: 0.9, a: 1}
-    className: EUI
-  - enabled: 1
-    color: {r: 0.35999995, g: 0.55656, b: 0.9, a: 1}
-    className: GM
+    color: {r: 0.35999995, g: 0.5727599, b: 0.9, a: 1}
+    className: EUIBindingSettings
   enableFileLog: 1
-  logDirectory: Logs/ember
+  logDirectory: 
   maxFileSizeMB: 10
   maxFileCount: 5
   retentionDays: 30

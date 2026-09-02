@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 
 using Ember.Basic;
+using Ember.UI;
 
 using UnityEditor;
 
@@ -28,7 +29,10 @@ namespace Ember.UIExtension.Editor
         public string ClassPath;
         public string ClassName;
         public bool IsPage;
-        public PageFlags PageFlags;
+        public PageType PageType;
+        public bool UseUIUpdate;
+        public bool GenerateAutoCreateClickableMaskOverride;
+        public bool GenerateOnClickMaskOverride;
         public EUIBinding.WidgetTypes SelfWidgetType;
         public string SelfWidgetClassName;
         public bool NoCodeGen;
@@ -139,16 +143,33 @@ namespace Ember.UIExtension.Editor
     /// </summary>
     public static class EUIBindingEditorUtility
     {
+        private const string TAG = LogTags.EmberUI;
         private const string PageNameProperty = "pageName";
         private const string ClassPathProperty = "classPath";
         private const string ClassNameProperty = "className";
+        private const string CodePathModeProperty = "codePathMode";
+        private const string PrefabNameProperty = "prefabName";
+        private const string GenerateCustomSettingsProperty = "generateCustomSettings";
         private const string IsPageProperty = "isPage";
         private const string SelfWidgetTypeProperty = "selfWidgetType";
         private const string SelfWidgetClassNameProperty = "selfWidgetClassName";
         private const string BindingsProperty = "bindings";
         private const string NoCodeGenProperty = "noCodeGen";
         private const string BaseBindingGuidProperty = "baseBindingUUID";
-        private const string PageFlagsProperty = "pageFlags";
+        private const string PageTypeProperty = "pageType";
+        private const string LegacyPageFlagsProperty = "pageFlags";
+        private const string UseUIUpdateProperty = "useUIUpdate";
+        private const string UseMaskProperty = "useMask";
+        private const string MaskColorProperty = "maskColor";
+        private const string ClickMaskToCloseProperty = "clickMaskToClose";
+        private const string GenerateAutoCreateClickableMaskOverrideProperty = "generateAutoCreateClickableMaskOverride";
+        private const string GenerateOnClickMaskOverrideProperty = "generateOnClickMaskOverride";
+        private const string UsePresetFadeProperty = "usePresetFade";
+        private const string UseTransitionBlockProperty = "useTransitionBlock";
+        private const string UseAnimatorProperty = "useAnimator";
+        private const string UseCustomTransitionProperty = "useCustomTransition";
+        private const string FadeInTimeProperty = "fadeInTime";
+        private const string FadeOutTimeProperty = "fadeOutTime";
 
         #region 快照
 
@@ -166,7 +187,10 @@ namespace Ember.UIExtension.Editor
                 ClassPath = binding.ClassPath,
                 ClassName = binding.ClassName,
                 IsPage = binding.IsPage,
-                PageFlags = binding.PageFlags,
+                PageType = binding.PageType,
+                UseUIUpdate = binding.UseUIUpdate,
+                GenerateAutoCreateClickableMaskOverride = binding.GenerateAutoCreateClickableMaskOverride,
+                GenerateOnClickMaskOverride = binding.GenerateOnClickMaskOverride,
                 SelfWidgetType = binding.SelfWidgetType,
                 SelfWidgetClassName = binding.SelfWidgetClassName,
                 NoCodeGen = binding.NoCodeGeneration,
@@ -199,7 +223,10 @@ namespace Ember.UIExtension.Editor
             if (!binding) throw new ArgumentNullException(nameof(binding));
             if (snapshot == null) throw new ArgumentNullException(nameof(snapshot));
             SetPageInfo(binding, snapshot.PageName, snapshot.ClassPath, snapshot.ClassName,
-                snapshot.IsPage, snapshot.PageFlags, snapshot.NoCodeGen);
+                snapshot.IsPage, snapshot.PageType, snapshot.NoCodeGen);
+            SetOptionalCodeFeatures(binding, snapshot.UseUIUpdate,
+                snapshot.GenerateAutoCreateClickableMaskOverride,
+                snapshot.GenerateOnClickMaskOverride);
             SetSelfWidget(binding, snapshot.SelfWidgetType, snapshot.SelfWidgetClassName);
             SetBaseBinding(binding, snapshot.BaseBindingGuid);
             SetBindings(binding, snapshot.Entries);
@@ -207,7 +234,7 @@ namespace Ember.UIExtension.Editor
 
         /// <summary>设置页面信息</summary>
         public static void SetPageInfo(EUIBinding binding, string pageName, string classPath,
-            string className, bool isPage, PageFlags pageFlags, bool noCodeGen = false)
+            string className, bool isPage, PageType pageType, bool noCodeGen = false)
         {
             using (var so = new SerializedObject(binding))
             {
@@ -216,7 +243,8 @@ namespace Ember.UIExtension.Editor
                 so.FindProperty(ClassNameProperty).stringValue = className;
                 so.FindProperty(IsPageProperty).boolValue = isPage;
                 so.FindProperty(NoCodeGenProperty).boolValue = noCodeGen;
-                so.FindProperty(PageFlagsProperty).enumValueFlag = (int)pageFlags;
+                so.FindProperty(PageTypeProperty).intValue = (int)pageType;
+                so.FindProperty(LegacyPageFlagsProperty).intValue = 0;
                 so.ApplyModifiedProperties();
             }
         }
@@ -232,6 +260,73 @@ namespace Ember.UIExtension.Editor
                 so.FindProperty(SelfWidgetClassNameProperty).stringValue = widgetClassName;
                 so.ApplyModifiedProperties();
             }
+        }
+
+        /// <summary>设置页面可选代码能力。</summary>
+        public static void SetOptionalCodeFeatures(EUIBinding binding, bool useUIUpdate,
+            bool generateAutoCreateClickableMaskOverride, bool generateOnClickMaskOverride)
+        {
+            using (var so = new SerializedObject(binding))
+            {
+                so.FindProperty(UseUIUpdateProperty).boolValue = useUIUpdate;
+                so.FindProperty(GenerateAutoCreateClickableMaskOverrideProperty).boolValue =
+                    generateAutoCreateClickableMaskOverride;
+                so.FindProperty(GenerateOnClickMaskOverrideProperty).boolValue = generateOnClickMaskOverride;
+                so.ApplyModifiedProperties();
+            }
+        }
+
+        /// <summary>
+        /// 将标准页面创建请求完整应用到新建的 EUIBinding。
+        /// 非 Popup 页面会清空仅弹窗有效的遮罩与高级钩子配置；方块过渡不属于标准页面骨架。
+        /// </summary>
+        public static void ApplyCreationConfig(EUIBinding binding, EUICreationRequest request)
+        {
+            if (!binding) throw new ArgumentNullException(nameof(binding));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            bool isPopup = request.PageType == PageType.Popup
+                || request.PageType == PageType.FullScreenPopup;
+            using (var so = new SerializedObject(binding))
+            {
+                so.FindProperty(CodePathModeProperty).intValue = (int)request.CodePathMode;
+                so.FindProperty(ClassPathProperty).stringValue = request.ClassPath;
+                so.FindProperty(ClassNameProperty).stringValue = request.ClassName;
+                so.FindProperty(PrefabNameProperty).stringValue = request.PrefabName;
+                so.FindProperty(NoCodeGenProperty).boolValue = false;
+                so.FindProperty(GenerateCustomSettingsProperty).boolValue = request.GenerateCustomSettings;
+
+                so.FindProperty(IsPageProperty).boolValue = true;
+                so.FindProperty(PageNameProperty).stringValue = request.PageName;
+                so.FindProperty(PageTypeProperty).intValue = (int)request.PageType;
+                so.FindProperty(LegacyPageFlagsProperty).intValue = 0;
+                so.FindProperty(UseUIUpdateProperty).boolValue = request.UseUIUpdate;
+
+                so.FindProperty(UseMaskProperty).boolValue = isPopup && request.UseMask;
+                so.FindProperty(MaskColorProperty).colorValue = request.MaskColor;
+                so.FindProperty(ClickMaskToCloseProperty).boolValue = isPopup && request.ClickMaskToClose;
+                so.FindProperty(GenerateAutoCreateClickableMaskOverrideProperty).boolValue = isPopup
+                    && request.GenerateAutoCreateClickableMaskOverride;
+                so.FindProperty(GenerateOnClickMaskOverrideProperty).boolValue = isPopup
+                    && request.GenerateOnClickMaskOverride;
+
+                so.FindProperty(UsePresetFadeProperty).boolValue =
+                    request.TransitionMode == EUIBinding.RegularTransitionMode.PresetFade;
+                so.FindProperty(UseTransitionBlockProperty).boolValue = false;
+                so.FindProperty(UseAnimatorProperty).boolValue =
+                    request.TransitionMode == EUIBinding.RegularTransitionMode.Animator;
+                so.FindProperty(UseCustomTransitionProperty).boolValue =
+                    request.TransitionMode == EUIBinding.RegularTransitionMode.CustomCode;
+                so.FindProperty(FadeInTimeProperty).floatValue = request.FadeInTime;
+                so.FindProperty(FadeOutTimeProperty).floatValue = request.FadeOutTime;
+
+                so.FindProperty(BaseBindingGuidProperty).stringValue = string.Empty;
+                so.FindProperty(SelfWidgetTypeProperty).intValue = (int)EUIBinding.WidgetTypes.Component;
+                so.FindProperty(SelfWidgetClassNameProperty).stringValue = string.Empty;
+                so.FindProperty(BindingsProperty).ClearArray();
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+            EditorUtility.SetDirty(binding);
         }
 
         /// <summary>设置绑定列表</summary>
@@ -374,10 +469,17 @@ namespace Ember.UIExtension.Editor
             implementationData = implementationData ?? FindCSharpLogicImplementationData();
             if (!implementationData)
             {
-                EmberDebug.LogError("EmberUI", "未找到 CSharpLogicImplementationData。请检查 Project Settings/EUI Binding 中的逻辑实现数据。");
+                EmberDebug.LogError(TAG, "未找到 CSharpLogicImplementationData。请检查 Project Settings/EUI Binding 中的逻辑实现数据。");
                 return false;
             }
-            return implementationData.GenerateOrUpdatePageDefinition(binding);
+            bool embedded = EUIBindingCodeGenUtility.IsEmbeddedPackage();
+            if (binding.PathMode == EUIBinding.CodePathMode.Framework && !embedded)
+            {
+                EmberDebug.LogError(TAG, "消费端项目不允许为 Framework 页面生成 EUIPageDef，请改用用户模式。");
+                return false;
+            }
+            bool frameworkMode = binding.PathMode == EUIBinding.CodePathMode.Framework && embedded;
+            return implementationData.GenerateOrUpdatePageDefinition(binding, frameworkMode);
         }
 
         #endregion
@@ -387,8 +489,8 @@ namespace Ember.UIExtension.Editor
         #region 外部方法（编辑器辅助）
 
         /// <summary>
-        /// 根据 PageFlags 设置 Canvas.sortingOrder，方便非 Play 模式下查看层级效果。
-        /// 生成代码时自动调用。
+        /// 根据 PageType 设置 Canvas.sortingOrder，方便非 Play 模式下查看层级效果。
+        /// 标准页面创建器与本方法共用 <see cref="GetDefaultSortingOrder"/> 映射。
         /// </summary>
         public static void ApplyCanvasSortingOrder(EUIBinding binding)
         {
@@ -397,7 +499,7 @@ namespace Ember.UIExtension.Editor
             var canvas = binding.GetComponent<Canvas>();
             if (canvas == null) return;
 
-            int order = PageFlagsToSortingOrder(binding.PageFlags);
+            int order = GetDefaultSortingOrder(binding.PageType);
             if (order < 0) return;
 
             canvas.sortingOrder = order;
@@ -405,13 +507,20 @@ namespace Ember.UIExtension.Editor
             PrefabUtility.SavePrefabAsset(binding.gameObject);
         }
 
-        private static int PageFlagsToSortingOrder(PageFlags flags)
+        /// <summary>获取页面类型在编辑态预览使用的默认 sortingOrder。</summary>
+        public static int GetDefaultSortingOrder(PageType pageType)
         {
-            if ((flags & PageFlags.TopMost) != 0) return 300;
-            if ((flags & PageFlags.Popup) != 0) return 200;
-            if ((flags & PageFlags.MainPage) != 0) return 100;
-            if ((flags & PageFlags.SubPage) != 0) return 100;
-            return -1; // None，不设置
+            return pageType switch
+            {
+                PageType.Background => (int)UILayer.Background,
+                PageType.MainPage => (int)UILayer.Normal,
+                PageType.Popup => (int)UILayer.Popup,
+                PageType.FullScreenPopup => (int)UILayer.Popup,
+                PageType.TopMost => (int)UILayer.TopMost,
+                PageType.SubPage => (int)UILayer.Normal,
+                PageType.FreePage => 30000,
+                _ => -1,
+            };
         }
 
         #endregion
@@ -490,9 +599,10 @@ namespace Ember.UIExtension.Editor
                 result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "页面级 binding 的 pageName 为空。", "pageName 应作为 EUIPageDef 常量名。");
 
-            if (binding.PageFlags == PageFlags.None)
+            if (!Enum.IsDefined(typeof(PageType), binding.PageType) || binding.PageType == PageType.Overlay)
                 result.AddIssue(EUIBindingIssueSeverity.Error, null,
-                    "页面级 binding 的 pageFlags 为 None。", "选择 MainPage、Popup、TopMost、SubPage 或 FreePage。");
+                    "页面级 binding 的 PageType 无效或暂不受代码生成支持。",
+                    "选择 Background、MainPage、Popup、FullScreenPopup、TopMost、SubPage 或 FreePage。");
         }
 
         private static void ValidateEntries(EUIBinding binding, EUIBindingValidationResult result)

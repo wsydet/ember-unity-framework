@@ -88,6 +88,7 @@ namespace Game.Module.Guide
             switch (param.pageType)
             {
                 case PageType.Popup:
+                case PageType.FullScreenPopup:
                     EUIManager.Instance.ShowPopup(def);
                     break;
                 case PageType.TopMost:

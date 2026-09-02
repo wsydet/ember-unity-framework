@@ -28,16 +28,40 @@ namespace Ember.UI
     /// <summary>
     /// IEUIResourceProvider 的默认实现 —— 委托给 EmberResourceManager。
     /// </summary>
+    /// <para><b>路径形态：</b>支持两种输入——
+    /// <list type="bullet">
+    ///   <item>完整 Assets 路径（如 Assets/GameResource/Resources/UI/Common/Prefabs/X.prefab）：自动剥离到最近一个 "Resources/" 之后并去掉扩展名；</item>
+    ///   <item>已是 Resources 相对路径：统一斜杠并去掉扩展名后透传。</item>
+    /// </list>
+    /// Editor 下业务层通常注入 EditorUIResourceProvider 走 AssetDatabase 直载，本类服务于打包运行时。</para>
     public class DefaultUIResourceProvider : IEUIResourceProvider
     {
         public void LoadPrefabAsync(string prefabPath, Action<GameObject> onLoaded)
         {
-            Ember.Resource.EmberResourceManager.Instance.LoadAssetAsync<GameObject>(prefabPath, onLoaded);
+            Ember.Resource.EmberResourceManager.Instance.LoadAssetAsync<GameObject>(ToResourcesPath(prefabPath), onLoaded);
         }
 
         public void Release(string prefabPath)
         {
             // EmberResourceManager 目前由 Provider 自行管理生命周期
+        }
+
+        /// <summary>完整 Assets 路径 → Resources.Load 可用的无扩展名相对路径。</summary>
+        internal static string ToResourcesPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return path;
+
+            var normalized = path.Replace('\\', '/');
+            int resourcesIndex = normalized.LastIndexOf("/Resources/", System.StringComparison.Ordinal);
+            if (resourcesIndex >= 0)
+                normalized = normalized.Substring(resourcesIndex + "/Resources/".Length);
+
+            int slashIndex = normalized.LastIndexOf('/');
+            int extensionIndex = normalized.LastIndexOf('.');
+            if (extensionIndex > slashIndex)
+                normalized = normalized.Substring(0, extensionIndex);
+
+            return normalized;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿/*=============================================================
- * author       : DESKTOP-5SRUU55
+ * author       : Bingo
  * prefab name  : EUILoadingPanel
  * page name    : EUILoadingPage
- * update time  : 2026/8/28 12:20:50
+ * update time  : 2026/8/31 20:50:45
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

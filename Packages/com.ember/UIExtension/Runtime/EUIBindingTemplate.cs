@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
@@ -38,6 +38,9 @@ namespace Ember.UIExtension
         [SerializeField] private string classPath;
         [SerializeField] private string className;
         [SerializeField] private bool isPage;
+        [SerializeField] private bool useUIUpdate;
+        [SerializeField] private bool generateAutoCreateClickableMaskOverride;
+        [SerializeField] private bool generateOnClickMaskOverride;
         [SerializeField] private EUIBinding.WidgetTypes selfWidgetType;
         [SerializeField] private string selfWidgetClassName;
         [SerializeField] private bool noCodeGen;
@@ -53,6 +56,9 @@ namespace Ember.UIExtension
         public EUIBinding.WidgetTypes SelfWidgetType => selfWidgetType;
         public string SelfWidgetClassName => selfWidgetClassName;
         public bool IsPage => isPage;
+        public bool UseUIUpdate => useUIUpdate;
+        public bool GenerateAutoCreateClickableMaskOverride => generateAutoCreateClickableMaskOverride;
+        public bool GenerateOnClickMaskOverride => generateOnClickMaskOverride;
         public string PageName => pageName;
         public string ClassName => className;
         public string ClassPath => classPath;
@@ -64,6 +70,9 @@ namespace Ember.UIExtension
             noCodeGen = binding.NoCodeGeneration;
             pageName = binding.PageName;
             isPage = binding.IsPage;
+            useUIUpdate = binding.UseUIUpdate;
+            generateAutoCreateClickableMaskOverride = binding.GenerateAutoCreateClickableMaskOverride;
+            generateOnClickMaskOverride = binding.GenerateOnClickMaskOverride;
             classPath = binding.ClassPath;
             className = binding.ClassName;
             selfWidgetType = binding.SelfWidgetType;

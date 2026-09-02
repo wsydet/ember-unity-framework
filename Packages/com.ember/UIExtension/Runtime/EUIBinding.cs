@@ -3,6 +3,8 @@
 
 using System;
 
+using Ember.UI;
+
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 
@@ -11,7 +13,8 @@ using UnityEngine;
 namespace Ember.UIExtension
 {
     /// <summary>
-    /// UI 页面标记。
+    /// UI 页面旧版标记。仅用于读取 v0.9.x 及更早版本的 EUIBinding 序列化数据。
+    /// 新配置统一使用互斥的 <see cref="PageType"/>。
     /// </summary>
     [Flags]
     public enum PageFlags
@@ -23,6 +26,12 @@ namespace Ember.UIExtension
         SubPage = 1 << 3,
         FreePage = 1 << 4,
         Background = 1 << 5,
+
+        /// <summary>
+        /// 全屏弹窗（仅与 Popup 组合有意义）：完全遮盖下层页面，
+        /// 打开时下层推裁剪面远端；普通弹窗不隐藏下层（下层保持渲染，靠遮罩拦截交互）。
+        /// </summary>
+        FullScreen = 1 << 6,
     }
 
     /// <summary>
@@ -31,7 +40,7 @@ namespace Ember.UIExtension
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CanvasGroup))]
     [AddComponentMenu("EUI/EUIBinding")]
-    public class EUIBinding : MonoBehaviour
+    public class EUIBinding : MonoBehaviour, ISerializationCallbackReceiver
     {
         #region 嵌套类型
 
@@ -42,6 +51,22 @@ namespace Ember.UIExtension
         {
             Framework = 0,
             Business = 1,
+        }
+
+        /// <summary>普通 UI 的单一过渡驱动方式。方块过渡使用独立开关，不属于本枚举。</summary>
+        public enum RegularTransitionMode
+        {
+            [LabelText("无")]
+            None = 0,
+
+            [LabelText("预设渐入渐出")]
+            PresetFade = 1,
+
+            [LabelText("Animator 动画")]
+            Animator = 2,
+
+            [LabelText("自定义代码")]
+            CustomCode = 3,
         }
 
         public enum WidgetTypes
@@ -125,7 +150,7 @@ namespace Ember.UIExtension
         [BoxGroup("$GROUP/输出设置", ShowLabel = false)]
         [Title("输出设置")]
         [SerializeField, LabelText("生成模式")]
-        [Tooltip("用户（默认）：生成到业务层，文件无标记，可自由修改。框架：同样生成到业务层，但 .cs 打上 [EmberManaged] 块标记（前块/尾块框架所有，块间用户区）；仅框架开发仓库（embedded）可见。")]
+        [Tooltip("用户（默认）：生成到业务层，整文件可自由修改。框架：同样生成到业务层，但 .cs 含 [EmberManaged] 管理块与块外 XxxUser 用户钩子；仅框架开发仓库（embedded）可见。")]
         [ValueDropdown("GetCodePathModeOptions")]
         private CodePathMode codePathMode;
 
@@ -199,47 +224,137 @@ namespace Ember.UIExtension
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/页面配置")]
         [SerializeField, LabelText("页面类型")]
-        [Tooltip("MainPage / Popup / TopMost / SubPage / FreePage / Background")]
+        [Tooltip("页面行为类型，所有选项互斥。全屏弹窗会沿用 Popup 栈并隐藏下层页面。")]
         [ShowIf("@isPage && !noCodeGen")]
-        [InfoBox("Background 不能与其他页面类型组合。", InfoMessageType.Error, "HasConflictingPageFlags")]
+        [ValueDropdown("GetPageTypeOptions")]
+        [OnValueChanged("OnPageTypeChanged")]
+        [InfoBox("检测到旧 PageFlags 的非法组合，请重新选择唯一的页面类型。", InfoMessageType.Error, "HasInvalidLegacyPageFlags")]
+        private PageType pageType = PageType.MainPage;
+
+        [SerializeField, HideInInspector]
         private PageFlags pageFlags;
 
-        [PropertyOrder(0)]
-        [FoldoutGroup("过渡动画")]
-        [SerializeField, LabelText("使用预设渐入渐出")]
-        [Tooltip("勾选后使用 CanvasGroup alpha 渐入渐出，时长由下方滑条控制。与「使用方块过渡」互斥二选一。")]
+        [PropertyOrder(-67.9f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/页面配置")]
+        [SerializeField, LabelText("使用 UIUpdate")]
+        [Tooltip("勾选后生成 NeedUpdate、OnUpdate 和 OnUpdateUser。取消勾选并重新生成时同步移除默认空钩子；若钩子含用户代码则先确认。")]
         [ShowIf("@isPage && !noCodeGen")]
-        [OnValueChanged("OnPresetFadeChanged")]
+        private bool useUIUpdate;
+
+        // -- 遮罩设置（仅弹窗显示，每弹窗独立配置，解决多弹窗遮罩叠加变黑） --
+
+        [PropertyOrder(-67.5f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/遮罩设置")]
+        [SerializeField, LabelText("创建遮罩")]
+        [Tooltip("打开本弹窗时是否创建半透明遮罩（拦截下层点击）。关闭则本弹窗无遮罩。")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private bool useMask = true;
+
+        [PropertyOrder(-67.5f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/遮罩设置")]
+        [SerializeField, LabelText("遮罩颜色")]
+        [Tooltip("本弹窗专属遮罩颜色（上层弹窗可设透明，避免与次级弹窗遮罩叠加变黑）。")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private Color maskColor = new Color(0f, 0f, 0f, 0.5f);
+
+        [PropertyOrder(-67.5f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/遮罩设置")]
+        [SerializeField, LabelText("点击遮罩关闭")]
+        [Tooltip("点击遮罩是否关闭本弹窗。Framework 模式的附加行为写在 OnClickMaskUser；Business 模式仍可直接 override OnClickMask。")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private bool clickMaskToClose = true;
+
+        [PropertyOrder(-67.4f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/遮罩设置")]
+        [SerializeField, LabelText("生成遮罩创建覆写")]
+        [Tooltip("勾选后生成 AutoCreateClickableMask 覆写，供代码编写条件式遮罩逻辑。普通开关遮罩请直接使用上方「创建遮罩」。")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private bool generateAutoCreateClickableMaskOverride;
+
+        [PropertyOrder(-67.3f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/遮罩设置")]
+        [SerializeField, LabelText("生成遮罩点击钩子")]
+        [Tooltip("勾选后生成 OnClickMask 覆写。Framework 模式下覆写位于框架块，自定义逻辑写在块外 OnClickMaskUser 钩子。")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private bool generateOnClickMaskOverride;
+
+        // 保留原有 bool 序列化字段，确保旧 prefab 无需数据迁移。
+        // Inspector 通过 RegularTransition 统一编辑，普通 UI 始终只有一个过渡负责人。
+        [SerializeField, HideInInspector]
         private bool usePresetFade = true;
 
-        [PropertyOrder(0.5f)]
+        [PropertyOrder(-1f)]
         [FoldoutGroup("过渡动画")]
         [SerializeField, LabelText("使用方块过渡")]
-        [Tooltip("勾选后预设过渡改用方块扫入/扫出（EUITransitionBlock），与「使用预设渐入渐出」互斥二选一。需在页面下挂 m_TransitionBlock 子物体。")]
+        [Tooltip("方块过渡是 Loading 专用特殊通道，不参与普通 UI 过渡四选一。可按需保留方块前后的自定义阶段。")]
         [ShowIf("@isPage && !noCodeGen && HasTransitionBlock")]
         [OnValueChanged("OnTransitionBlockChanged")]
         private bool useTransitionBlock;
 
+        [SerializeField, HideInInspector]
+        private bool useAnimator;
+
+        [SerializeField, HideInInspector]
+        private bool useCustomTransition;
+
+        [PropertyOrder(0)]
+        [FoldoutGroup("过渡动画")]
+        [ShowInInspector, LabelText("普通过渡模式")]
+        [Tooltip("普通 UI 四选一：无 / 预设渐入渐出 / Animator / 自定义代码。不再隐式串联多种动画。")]
+        [ShowIf("@isPage && !noCodeGen && !useTransitionBlock")]
+        private RegularTransitionMode RegularTransition
+        {
+            get
+            {
+                if (useCustomTransition) return RegularTransitionMode.CustomCode;
+                if (useAnimator) return RegularTransitionMode.Animator;
+                if (usePresetFade) return RegularTransitionMode.PresetFade;
+                return RegularTransitionMode.None;
+            }
+            set
+            {
+                useTransitionBlock = false;
+                usePresetFade = value == RegularTransitionMode.PresetFade;
+                useAnimator = value == RegularTransitionMode.Animator;
+                useCustomTransition = value == RegularTransitionMode.CustomCode;
+                CheckCustomTransitionMethods();
+            }
+        }
+
         [PropertyOrder(1)]
         [FoldoutGroup("过渡动画")]
         [SerializeField, LabelText("进入时长 (秒)")]
-        [ShowIf("@isPage && usePresetFade && !noCodeGen")]
+        [ShowIf("@isPage && usePresetFade && !useTransitionBlock && !noCodeGen")]
         private float fadeInTime = 0.3f;
 
         [PropertyOrder(2)]
         [FoldoutGroup("过渡动画")]
         [SerializeField, LabelText("退出时长 (秒)")]
-        [ShowIf("@isPage && usePresetFade && !noCodeGen")]
+        [ShowIf("@isPage && usePresetFade && !useTransitionBlock && !noCodeGen")]
         private float fadeOutTime = 0.2f;
 
         [PropertyOrder(3)]
         [FoldoutGroup("过渡动画")]
-        [SerializeField, LabelText("使用自定义动画")]
-        [Tooltip("勾选后调用业务脚本中的 OnCustomEnter / OnCustomExit 方法。可与预设叠加：先播预设再播自定义。")]
-        [ShowIf("@isPage && !noCodeGen")]
+        [ShowInInspector, LabelText("使用自定义阶段")]
+        [Tooltip("仅方块过渡使用：保留 Loading 现有的 OnCustomEnter / OnCustomExit 阶段，不改变方块扫入/扫出时序。")]
+        [ShowIf("@isPage && !noCodeGen && useTransitionBlock")]
         [OnValueChanged("CheckCustomTransitionMethods")]
         [InfoBox("已勾选自定义动画，但业务脚本中缺少 OnCustomEnter / OnCustomExit 方法。\n请点击下方的\"重新生成\"按钮添加。", InfoMessageType.Warning, "_needCustomTransitionMethods")]
-        private bool useCustomTransition;
+        private bool UseBlockCustomTransition
+        {
+            get => useCustomTransition;
+            set
+            {
+                useCustomTransition = value;
+                CheckCustomTransitionMethods();
+            }
+        }
 
         // -- 自身控件（归入页面配置） --
 
@@ -339,12 +454,28 @@ namespace Ember.UIExtension
         public string ClassPath => classPath;
         public bool NoCodeGeneration => noCodeGen;
         public bool GenerateCustomSettings => generateCustomSettings;
-        public PageFlags PageFlags => pageFlags;
+        public PageType PageType => pageType;
+
+        [Obsolete("PageFlags 已废弃，请改用互斥的 PageType。")]
+        public PageFlags PageFlags => PageTypeToLegacyFlags(pageType);
+        public bool UseUIUpdate => useUIUpdate;
+        public bool GenerateAutoCreateClickableMaskOverride => generateAutoCreateClickableMaskOverride;
+        public bool GenerateOnClickMaskOverride => generateOnClickMaskOverride;
         public bool UsePresetFade => usePresetFade;
         public bool UseTransitionBlock => useTransitionBlock;
+        public bool UseAnimator => useAnimator;
         public bool UseCustomTransition => useCustomTransition;
         public float FadeInTime => fadeInTime;
         public float FadeOutTime => fadeOutTime;
+
+        public void OnBeforeSerialize()
+        {
+        }
+
+        public void OnAfterDeserialize()
+        {
+            MigrateLegacyPageFlags();
+        }
 
         // Custom 过渡方法缺失警告缓存（非序列化，由 OnValueChanged 和代码生成工具设置）
         private bool _needCustomTransitionMethods;
@@ -383,16 +514,14 @@ namespace Ember.UIExtension
             CheckCustomTransitionMethods();
         }
 
-        /// <summary>勾选「使用预设渐入渐出」时，取消「使用方块过渡」（互斥二选一）。</summary>
-        private void OnPresetFadeChanged()
-        {
-            if (usePresetFade) useTransitionBlock = false;
-        }
-
-        /// <summary>勾选「使用方块过渡」时，取消「使用预设渐入渐出」（互斥二选一）。</summary>
+        /// <summary>
+        /// 方块过渡是独立特殊通道：只排除普通预设/Animator，
+        /// 保留 Loading 已有的自定义阶段。
+        /// </summary>
         private void OnTransitionBlockChanged()
         {
-            if (useTransitionBlock) usePresetFade = false;
+            if (useTransitionBlock) { usePresetFade = false; useAnimator = false; }
+            CheckCustomTransitionMethods();
         }
 
         /// <summary>页面下是否挂了方块过渡组件（EUITransitionBlock），决定「使用方块过渡」选项是否显示。</summary>
@@ -403,8 +532,72 @@ namespace Ember.UIExtension
             return type != WidgetTypes.UILogic;
         }
 
-        private bool HasConflictingPageFlags =>
-            pageFlags.HasFlag(PageFlags.Background) && (pageFlags & ~PageFlags.Background) != 0;
+        private bool HasInvalidLegacyPageFlags => pageFlags != PageFlags.None;
+
+        private bool IsPopupPage =>
+            pageType == PageType.Popup || pageType == PageType.FullScreenPopup;
+
+        private void MigrateLegacyPageFlags()
+        {
+            if (pageFlags == PageFlags.None) return;
+
+            var primaryFlags = pageFlags & ~PageFlags.FullScreen;
+            bool isFullScreen = (pageFlags & PageFlags.FullScreen) != 0;
+            switch (primaryFlags)
+            {
+                case PageFlags.Background:
+                    if (isFullScreen) return;
+                    pageType = PageType.Background;
+                    break;
+                case PageFlags.MainPage:
+                    if (isFullScreen) return;
+                    pageType = PageType.MainPage;
+                    break;
+                case PageFlags.Popup:
+                    pageType = isFullScreen ? PageType.FullScreenPopup : PageType.Popup;
+                    break;
+                case PageFlags.TopMost:
+                    if (isFullScreen) return;
+                    pageType = PageType.TopMost;
+                    break;
+                case PageFlags.SubPage:
+                    if (isFullScreen) return;
+                    pageType = PageType.SubPage;
+                    break;
+                case PageFlags.FreePage:
+                    if (isFullScreen) return;
+                    pageType = PageType.FreePage;
+                    break;
+                default:
+                    return;
+            }
+
+            pageFlags = PageFlags.None;
+        }
+
+        private static PageFlags PageTypeToLegacyFlags(PageType type)
+        {
+            return type switch
+            {
+                PageType.Background => PageFlags.Background,
+                PageType.MainPage => PageFlags.MainPage,
+                PageType.Popup => PageFlags.Popup,
+                PageType.FullScreenPopup => PageFlags.Popup | PageFlags.FullScreen,
+                PageType.TopMost => PageFlags.TopMost,
+                PageType.SubPage => PageFlags.SubPage,
+                PageType.FreePage => PageFlags.FreePage,
+                _ => PageFlags.None,
+            };
+        }
+
+        /// <summary>是否创建遮罩（数据层开关，与页面逻辑代码层 AutoCreateClickableMask 并存：任一 false 则不创建）。</summary>
+        public bool UseMask => useMask;
+
+        /// <summary>本弹窗专属遮罩颜色（注入 EUIPage.MaskColorOverride，缺省回退 EUIManager.PopupMaskColor 全局色）。</summary>
+        public Color MaskColor => maskColor;
+
+        /// <summary>点击遮罩是否关闭本弹窗（页面逻辑 override OnClickMask 时优先于本开关）。</summary>
+        public bool ClickMaskToClose => clickMaskToClose;
 
         /// <summary>
         /// 组件添加时自动从 GameObject 名称推断脚本名和页面名。
@@ -447,6 +640,25 @@ namespace Ember.UIExtension
 
         private bool NotOnPrefab => !(OnIsOnPrefab?.Invoke(this) ?? true);
 
+        private static ValueDropdownList<PageType> GetPageTypeOptions()
+        {
+            return new ValueDropdownList<PageType>
+            {
+                { "背景页 (Background)", PageType.Background },
+                { "主页面 (MainPage)", PageType.MainPage },
+                { "弹窗 (Popup)", PageType.Popup },
+                { "全屏弹窗 (FullScreenPopup)", PageType.FullScreenPopup },
+                { "置顶页 (TopMost)", PageType.TopMost },
+                { "子页面 (SubPage)", PageType.SubPage },
+                { "独立页 (FreePage)", PageType.FreePage },
+            };
+        }
+
+        private void OnPageTypeChanged()
+        {
+            pageFlags = PageFlags.None;
+        }
+
         [PropertyOrder(-110)]
         [FoldoutGroup("$GROUP")]
         [InfoBox("当前 UI 不在预制体上，生成代码时会自动创建预制体到 Prefabs 目录下。", InfoMessageType.Warning, "NotOnPrefab")]
@@ -479,7 +691,7 @@ namespace Ember.UIExtension
         [ShowIf("IsFrameworkMode")]
         [ShowInInspector, DisplayAsString, HideLabel]
         private string FrameworkModeHint =>
-            "框架模式：生成的 .cs 为混合文件——每个函数的前块/尾块（[EmberManaged]）框架所有，两块之间为用户自定义区。";
+            "框架模式：生成的 .cs 为混合文件——[EmberManaged] Lifecycle 块由框架/面板管理，块外 XxxUser 钩子由用户编写。";
 
         #endregion
 
@@ -672,6 +884,7 @@ namespace Ember.UIExtension
         public static int CodeGenLogicIndex { get; set; }
         public static System.Func<string[]> OnGetLogicNames;
         public static System.Func<EUIBinding, string> OnGetGeneratedPath;
+        public static System.Func<EUIBinding, string> OnGetGeneratedPrefabPath;
         public static System.Func<EUIBinding, bool> OnHasGeneratedFile;
         public static System.Func<EUIBinding, UnityEngine.Object> OnGetGeneratedScript;
         public static System.Action<EUIBinding> OnGenerateCode;
@@ -773,6 +986,13 @@ namespace Ember.UIExtension
         [HorizontalGroup("$GROUP/代码生成/PathRow", Width = 60)]
         [Button("复制", ButtonSizes.Small), GUIColor(0.5f, 0.5f, 0.5f)]
         private void CopyPath() => OnCopyGeneratedPath?.Invoke(this);
+
+        [PropertyOrder(-36.9f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/代码生成")]
+        [ShowIf("@!noCodeGen")]
+        [ShowInInspector, ReadOnly, LabelText("预制体路径")]
+        private string GeneratedPrefabPath => OnGetGeneratedPrefabPath?.Invoke(this) ?? "—";
 
         // ── 逻辑脚本 ──
 

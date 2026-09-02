@@ -49,8 +49,8 @@ namespace Ember.Core.Editor
         private const string ChannelPreview = "preview";
         private const string ChannelDeprecated = "deprecated";
 
-        /// <summary>模板快照覆盖的业务层目录（相对项目 Assets/）。</summary>
-        private static readonly string[] TemplateDirNames = { "Game", "Resources", "Ember/Editor", "Settings" };
+        /// <summary>模板快照覆盖的业务层目录（相对项目 Assets/）。GameResource = UI 预制体等资源区（与代码目录分离，资源加载友好）。</summary>
+        private static readonly string[] TemplateDirNames = { "Game", "Resources", "Ember/Editor", "Settings", "GameResource" };
 
         #endregion
 
@@ -219,30 +219,66 @@ namespace Ember.Core.Editor
 
             var tplRoot = Path.Combine(packagePath, "Templates~", templateId);
             var tplAssets = Path.Combine(tplRoot, "Assets");
-            if (Directory.Exists(tplAssets)) Directory.Delete(tplAssets, true);
-            Directory.CreateDirectory(tplAssets);
+            var stageDir = Path.Combine(tplRoot, "Assets.staging");
 
+            // 安全替换：先整树复制到 Assets.staging（全部成功后）再删旧 Assets 落位；
+            // 复制失败旧模板内容分毫不动（杜绝旧实现「先删后拷、失败损坏模板内容」）。
             int n = 0;
-            foreach (var rel in TemplateDirNames)
+            try
             {
-                var src = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
-                if (!Directory.Exists(src)) continue;
+                CleanDirectory(stageDir);
+                Directory.CreateDirectory(stageDir);
 
-                var dst = Path.Combine(tplAssets, rel.Replace('/', Path.DirectorySeparatorChar));
-                foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
+                foreach (var rel in TemplateDirNames)
                 {
-                    var relFile = file.Substring(src.Length + 1);
-                    var dest = Path.Combine(dst, relFile);
-                    var dir = Path.GetDirectoryName(dest);
-                    if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
-                    File.Copy(file, dest, true);
-                    n++;
+                    var src = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
+                    if (!Directory.Exists(src)) continue;
+
+                    var dst = Path.Combine(stageDir, rel.Replace('/', Path.DirectorySeparatorChar));
+                    foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
+                    {
+                        var relFile = file.Substring(src.Length + 1);
+                        var dest = Path.Combine(dst, relFile);
+                        var dir = Path.GetDirectoryName(dest);
+                        if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+                        File.Copy(file, dest, true);
+                        n++;
+                    }
+                }
+
+                // 剥离 dev 测试对象（第三方/开发工具，不进模板）——在暂存区执行，旧模板不受影响
+                StripSceneObjects(Path.Combine(stageDir, "Game", "Scenes", "FrameworkScene.unity"), "RainbowHierarchyRuleset");
+                StripSceneObjects(Path.Combine(stageDir, "Game", "Scenes", "MainScene.unity"), "UnitaskDeme", "OdinDemo", "FeelDemo");
+
+                // 提交：旧 Assets 改名备份 → 暂存落位；失败回滚
+                string backup = null;
+                if (Directory.Exists(tplAssets))
+                {
+                    backup = tplAssets + ".backup";
+                    CleanDirectory(backup);
+                    Directory.Move(tplAssets, backup);
+                }
+                try
+                {
+                    Directory.Move(stageDir, tplAssets);
+                }
+                catch
+                {
+                    if (backup != null && Directory.Exists(backup) && !Directory.Exists(tplAssets))
+                    {
+                        try { Directory.Move(backup, tplAssets); } catch { }
+                    }
+                    throw;
+                }
+                if (backup != null && Directory.Exists(backup))
+                {
+                    try { Directory.Delete(backup, true); } catch { /* 备份清理失败不影响结果 */ }
                 }
             }
-
-            // 剥离 dev 测试对象（第三方/开发工具，不进模板）
-            StripSceneObjects(Path.Combine(tplAssets, "Game", "Scenes", "FrameworkScene.unity"), "RainbowHierarchyRuleset");
-            StripSceneObjects(Path.Combine(tplAssets, "Game", "Scenes", "MainScene.unity"), "UnitaskDeme", "OdinDemo", "FeelDemo");
+            finally
+            {
+                CleanDirectory(stageDir);
+            }
 
             // 写 template.json：模板版本独立于框架版本——已存在则保留原版本/排序，新模板从 InitialTemplateVersion 起
             var existing = ReadTemplateJson(packagePath, templateId);
@@ -272,33 +308,104 @@ namespace Ember.Core.Editor
             var tplAssets = Path.Combine(packagePath, "Templates~", templateId, "Assets");
             if (!Directory.Exists(tplAssets)) return -1;
 
+            // 安全替换：先整树复制到 Temp 暂存区（全部成功后）再「旧目录改名备份 → 暂存落位」。
+            // 复制阶段失败 dev 业务层分毫不动；落位阶段失败自动回滚（同盘 rename，风险窗口极小）。
+            // 杜绝旧实现「先删后拷、复制中途 IO 异常 → 业务层丢文件且无法恢复」。
+            // 备份目录名以 ~ 结尾（Unity 规则：~ 后缀文件夹不参与导入）——即使清理失败残留也不产生重复类编译错误。
+            var stageRoot = Path.Combine(projectRoot, "Temp", "EmberTemplateStage");
+            const string BackupSuffix = ".ember-backup~";
             int n = 0;
 
             // 拷贝期间挂起自动导入，防止文件监视器在真实 .meta 落地前生成随机 GUID（同 DeployTemplate 的竞态修复）
             AssetDatabase.DisallowAutoRefresh();
             try
             {
+                CleanDirectory(stageRoot);
+                Directory.CreateDirectory(stageRoot);
+
+                // ── 阶段 1：模板 → 暂存区（纯新增，失败不影响 dev） ──
+                var stagedDirs = new List<string>();
                 foreach (var rel in TemplateDirNames)
                 {
-                    var dst = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
-                    if (Directory.Exists(dst)) Directory.Delete(dst, true);
-
                     var src = Path.Combine(tplAssets, rel.Replace('/', Path.DirectorySeparatorChar));
                     if (!Directory.Exists(src)) continue;
 
+                    var stageDst = Path.Combine(stageRoot, rel.Replace('/', Path.DirectorySeparatorChar));
                     foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
                     {
                         var relFile = file.Substring(src.Length + 1);
-                        var dest = Path.Combine(dst, relFile);
+                        var dest = Path.Combine(stageDst, relFile);
                         var dir = Path.GetDirectoryName(dest);
                         if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
                         File.Copy(file, dest, true);
                         n++;
                     }
+                    stagedDirs.Add(rel);
+                }
+
+                // ── 阶段 2：提交（旧目录改名备份 → 暂存落位；任一步失败回滚） ──
+                var backups = new List<string>();
+                try
+                {
+                    foreach (var rel in TemplateDirNames)
+                    {
+                        var dst = Path.Combine(projectRoot, "Assets", rel.Replace('/', Path.DirectorySeparatorChar));
+                        var staged = Path.Combine(stageRoot, rel.Replace('/', Path.DirectorySeparatorChar));
+
+                        if (!stagedDirs.Contains(rel))
+                        {
+                            // 模板无此目录：移除 dev 对应目录（保持「模板完全替换这些目录」语义，走备份便于回滚）
+                            if (Directory.Exists(dst))
+                            {
+                                var backup = dst + BackupSuffix;
+                                CleanDirectory(backup);
+                                Directory.Move(dst, backup);
+                                backups.Add(backup);
+                            }
+                            continue;
+                        }
+
+                        if (Directory.Exists(dst))
+                        {
+                            var backup = dst + BackupSuffix;
+                            CleanDirectory(backup);
+                            Directory.Move(dst, backup);
+                            backups.Add(backup);
+                        }
+
+                        Directory.Move(staged, dst);
+                    }
+                }
+                catch
+                {
+                    // 回滚：撤下已落位的新内容，恢复全部旧目录备份
+                    foreach (var backup in backups)
+                    {
+                        var original = backup.Substring(0, backup.Length - BackupSuffix.Length);
+                        if (Directory.Exists(original))
+                        {
+                            try { Directory.Delete(original, true); } catch { }
+                        }
+                        if (Directory.Exists(backup))
+                        {
+                            try { Directory.Move(backup, original); } catch { }
+                        }
+                    }
+                    throw;
+                }
+
+                // ── 阶段 3：清理备份 ──
+                foreach (var backup in backups)
+                {
+                    if (Directory.Exists(backup))
+                    {
+                        try { Directory.Delete(backup, true); } catch { /* 备份清理失败不影响结果 */ }
+                    }
                 }
             }
             finally
             {
+                CleanDirectory(stageRoot);
                 AssetDatabase.AllowAutoRefresh();
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             }
@@ -468,7 +575,12 @@ namespace Ember.Core.Editor
             CheckFile("Assets/Game/State/GameMainState.cs");
             CheckFile("Assets/Game/UI/GamePages.cs");
             CheckFile("Assets/Game/UI/GamePages.User.cs");
-            CheckFile("Assets/Game/UI/Runtime/Prefabs/GMPage.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPanel.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPanel.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPanel.prefab");
+            CheckFile("Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab");
 
             EditorUtility.DisplayDialog("生成物一致性校验", string.Join("\n", report), "确定");
         }
@@ -607,6 +719,13 @@ namespace Ember.Core.Editor
         {
             var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
             return info?.resolvedPath;
+        }
+
+        /// <summary>删除目录（不存在或删除失败静默——用于暂存区/备份清理，不阻断主流程）。</summary>
+        private static void CleanDirectory(string path)
+        {
+            if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
+            try { Directory.Delete(path, true); } catch { /* 清理失败不阻断 */ }
         }
 
         /// <summary>整树复制模板到项目 Assets/。返回部署的文件数。</summary>

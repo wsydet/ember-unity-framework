@@ -12,11 +12,10 @@
 |------|------|------|------|
 | com.borodar.rainbow-folders | 2.4.5 | Project 窗口文件夹自定义图标和背景色 | [GitHub](https://github.com/Borod4r/Rainbow-Folders-2) → 源码移入 |
 | com.borodar.rainbow-hierarchy | 2.6.5 | Hierarchy 窗口 GameObject 自定义图标和背景色 | [GitHub](https://github.com/Borod4r/Rainbow-Hierarchy-2) → 源码移入 |
-| com.cysharp.unitask | 2.5.10 | 零 GC 异步/等待（async/await）框架 | [GitHub](https://github.com/Cysharp/UniTask) → 从 Plugins 迁移 |
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 | com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 | com.ryanindiedev.inputdevicedetector | 1.0.0 | 输入设备检测：自动识别鼠标/键盘/手柄切换并触发事件 | [YouTube](https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ) → 手动移入 |
-| com.ember | 0.3.0 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成 | 框架自带 → embedded |
+| com.ember | 0.10.0 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成；**内置 UniTask（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）** | 框架自带 → embedded |
 
 > 以上包均放在 `Packages/` 下作为 embedded package，随 git 提交，无需额外下载。
 > 📌 2026-08-26 起 11 个 `com.ember.*` 包合并为单一 `com.ember`（模块边界由包内 asmdef 保证），详见 [upm-migration-plan.md](../dev/upm-migration-plan.md) §3.1。
@@ -33,14 +32,14 @@
 > { "name": "OpenUPM", "url": "https://package.openupm.com", "scopes": ["com.github-glitchenzo", "com.neuecc"] }
 > ```
 
-### 1.3 传统 Plugins（`Assets/Plugins/`）
+### 1.3 私有仓库 Git URL 包（消费端安装形态）
 
-| 插件名 | 版本 | 用途 | 来源 |
+| 包名 | 版本/tag | 用途 | 来源 |
 |-------|------|------|------|
-| Sirenix (Odin Inspector) | [TODO] | 编辑器扩展，增强 Inspector 面板 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) → 手动安装 |
+| com.sirenix.odin-inspector | odin-v4.0.2 | 编辑器扩展，增强 Inspector 面板 | 私有仓 [ember-thirdparty-upm](https://github.com/wsydet/ember-thirdparty-upm) `?path=/com.sirenix.odin-inspector#odin-v4.0.2`（付费，需 git 凭据 + 正版授权） |
 
-> Odin Inspector 是付费 Asset Store 产品，以预编译 DLL 形式放在 `Assets/Plugins/Sirenix/`。
-> 因 Odin 依赖结构复杂无法迁移为 UPM embedded package，保留在 Plugins 目录中。
+> Odin Inspector 是付费插件，已从 `Assets/Plugins/Sirenix/` 迁出（2026-08），改由私有仓库 git URL 安装。
+> 同仓托管的还有：DOTween（`dotween-v1.2.815`）、Console Pro（`consolepro-v3.9.81`）、RainbowFolders（`rainbow-folders-v2.4.5`）、RainbowHierarchy（`rainbow-hierarchy-v2.6.5`）、InputDeviceDetector（`inputdevicedetector-v1.0.0`，后三者 tag 待推送）——消费端全部以 git URL 安装，dev 侧保留 embedded 副本。
 
 ---
 

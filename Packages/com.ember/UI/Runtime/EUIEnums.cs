@@ -10,13 +10,18 @@ namespace Ember.UI
     /// <summary>
     /// UI 界面层级预设值。决定界面的渲染顺序和输入优先级。
     /// 值越大，渲染越靠前。也可使用任意 int 值实现更细粒度的层级。
+    ///
+    /// <para>数值与 <see cref="EUIPageContext"/> 内部排序常量对齐（v0.10.0）：
+    /// Normal = MainPageBaseOrder(1000)、TopMost = TopMostBaseOrder(25000)、
+    /// Popup 居中（实际 Popup 从 MainPage + PageGrowStep(500) 起，恒落在 Normal 与 TopMost 之间）。
+    /// SubPage 在父页排序基础上按 SubPageOrderGrowStep(50) 递增，不占用本枚举预设。</para>
     /// </summary>
     public enum UILayer
     {
         Background = 0,
-        Normal     = 100,
-        Popup      = 200,
-        TopMost    = 300,
+        Normal     = 1000,
+        Popup      = 2000,
+        TopMost    = 25000,
     }
 
     /// <summary>
@@ -27,25 +32,28 @@ namespace Ember.UI
     public enum PageType
     {
         /// <summary>背景层。单例，始终在最底层（sortingOrder=0），由 MainState 生命周期管理。</summary>
-        Background,
+        Background = 0,
 
         /// <summary>全屏主页面。替换当前 MainPage，压入主栈。</summary>
-        MainPage,
+        MainPage = 1,
 
         /// <summary>弹窗。叠加在当前 MainPage 之上，不替换，自动创建 BG Mask。</summary>
-        Popup,
+        Popup = 2,
+
+        /// <summary>全屏弹窗。沿用 Popup 栈与遮罩，并在打开时隐藏下层页面。</summary>
+        FullScreenPopup = 7,
 
         /// <summary>置顶弹窗。高于所有 Popup（如全局提示、Loading 遮罩）。</summary>
-        TopMost,
+        TopMost = 3,
 
         /// <summary>子页面。嵌入父页面的指定区域（Tab 切换内容等），父关子关。</summary>
-        SubPage,
+        SubPage = 4,
 
         /// <summary>覆盖层。不受 MainPage/Popup 栈管理（如 Guide Mask、点击特效层）。</summary>
-        Overlay,
+        Overlay = 5,
 
         /// <summary>独立页面。高于 TopMost，不参与栈管理（如全局设置、帮助界面）。</summary>
-        FreePage,
+        FreePage = 6,
     }
 
     /// <summary>

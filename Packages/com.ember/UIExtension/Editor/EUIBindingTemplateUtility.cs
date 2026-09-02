@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using UnityEditor;
@@ -16,6 +16,8 @@ namespace Ember.UIExtension.Editor
     public static class EUIBindingTemplateUtility
     {
         #region 内部参数
+
+        private const string TAG = Ember.Basic.LogTags.EmberUI;
 
         /// <summary>内存剪贴板 —— 复制的模板快照（不保存到磁盘）</summary>
         private static EUIBindingTemplate _savedTemplate;
@@ -66,7 +68,7 @@ namespace Ember.UIExtension.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Ember.Basic.EmberDebug.Log("EmberUI", $"模板已保存至：{path}");
+            Ember.Basic.EmberDebug.Log(TAG, $"模板已保存至：{path}");
         }
 
         /// <summary>通过文件对话框选择模板并加载</summary>
@@ -83,7 +85,7 @@ namespace Ember.UIExtension.Editor
             var template = AssetDatabase.LoadAssetAtPath<EUIBindingTemplate>(path);
             if (template == null)
             {
-                Ember.Basic.EmberDebug.LogWarning("EmberUI", $"未找到有效的模板文件：{path}");
+                Ember.Basic.EmberDebug.LogWarning(TAG, $"未找到有效的模板文件：{path}");
                 return;
             }
 
@@ -93,7 +95,7 @@ namespace Ember.UIExtension.Editor
                 return;
 
             ApplyTemplate(binding, template);
-            Ember.Basic.EmberDebug.Log("EmberUI", $"已从模板 \"{template.name}\" 加载配置");
+            Ember.Basic.EmberDebug.Log(TAG, $"已从模板 \"{template.name}\" 加载配置");
         }
 
         /// <summary>复制当前 binding 配置到内存剪贴板</summary>
@@ -108,7 +110,7 @@ namespace Ember.UIExtension.Editor
             _savedTemplate.CopyFromUIBinding(binding);
             EUIBinding.HasCopiedTemplate = true;
 
-            Ember.Basic.EmberDebug.Log("EmberUI",
+            Ember.Basic.EmberDebug.Log(TAG,
                 $"已复制模板（{_savedTemplate.Bindings?.Length ?? 0} 个绑定）");
         }
 
@@ -119,7 +121,7 @@ namespace Ember.UIExtension.Editor
 
             if (_savedTemplate == null)
             {
-                Ember.Basic.EmberDebug.LogWarning("EmberUI", "没有已复制的模板数据");
+                Ember.Basic.EmberDebug.LogWarning(TAG, "没有已复制的模板数据");
                 return;
             }
 
@@ -133,7 +135,7 @@ namespace Ember.UIExtension.Editor
                 return;
 
             ApplyTemplate(binding, _savedTemplate);
-            Ember.Basic.EmberDebug.Log("EmberUI",
+            Ember.Basic.EmberDebug.Log(TAG,
                 $"已粘贴模板 \"{className}\"（{count} 个绑定）");
         }
 
@@ -159,6 +161,10 @@ namespace Ember.UIExtension.Editor
                 so.FindProperty("isPage").boolValue = template.IsPage;
                 so.FindProperty("pageName").stringValue = template.PageName ?? string.Empty;
                 so.FindProperty("noCodeGen").boolValue = template.NoCodeGeneration;
+                so.FindProperty("useUIUpdate").boolValue = template.UseUIUpdate;
+                so.FindProperty("generateAutoCreateClickableMaskOverride").boolValue =
+                    template.GenerateAutoCreateClickableMaskOverride;
+                so.FindProperty("generateOnClickMaskOverride").boolValue = template.GenerateOnClickMaskOverride;
 
                 // ── 输出设置 ──
                 so.FindProperty("classPath").stringValue = template.ClassPath ?? string.Empty;

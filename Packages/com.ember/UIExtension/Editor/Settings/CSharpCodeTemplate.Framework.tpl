@@ -16,6 +16,8 @@ namespace {namespace_name}
     {{
         // ── 框架生命周期（块内框架所有；每个 override 末尾调用对应的用户级钩子）──
         // [EmberManaged:begin Lifecycle]
+{framework_page_feature_members}
+
         public override void OnInit()
         {{
             base.OnInit();
@@ -84,6 +86,8 @@ namespace {namespace_name}
         {{
             // 页面被关闭
         }}
+
+{framework_optional_user_hooks}
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()

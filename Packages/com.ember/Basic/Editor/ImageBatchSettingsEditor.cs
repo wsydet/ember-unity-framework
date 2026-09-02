@@ -16,6 +16,8 @@ namespace Ember.Basic.Editor
     /// </summary>
     public class ImageBatchSettingsEditor : EmberEditorWindow
     {
+        private const string TAG = LogTags.EmberBasic + "." + nameof(ImageBatchSettingsEditor);
+
         protected override string MenuPath => "Ember/Tool/批量修改图片设置";
         protected override string WindowTitle => "Image Batch Settings";
         protected override Vector2 WindowSize => new(1000, 800);
@@ -306,7 +308,8 @@ namespace Ember.Basic.Editor
             // 直接 CreateAsset 会因路径已存在而报错——先删除坏资产再重建
             if (File.Exists(DataPath))
             {
-                EmberDebug.LogWarning("EmberBasic", $"EmberImageBatchSettings.asset 脚本引用丢失，删除并重建: {DataPath}");
+                EmberDebug.LogWarning(TAG,
+                    $"EmberImageBatchSettings.asset 脚本引用丢失，删除并重建: {DataPath}");
                 AssetDatabase.DeleteAsset(DataPath);
             }
 

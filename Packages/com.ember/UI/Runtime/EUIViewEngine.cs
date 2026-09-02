@@ -42,6 +42,10 @@ namespace Ember.UI
         private EUIPageContext _pageContext;
         private EUIBgMaskPool _bgMaskPool;
 
+        // UIRoot 子节点排序脏标记：页面/遮罩/层 Canvas 变更后置位，
+        // Update 末尾按 Canvas.sortingOrder 重排 UIRoot 子节点（Hierarchy 可视有序，渲染仍由 sortingOrder 决定）
+        private bool _sortDirty;
+
         // 延迟销毁中的页面（key = PrefabPath，对标 Burner GamePage.isClosing）
         private readonly Dictionary<string, EUIPage> _closingPages = new();
 
@@ -62,6 +66,19 @@ namespace Ember.UI
 
         // --------------------------------------------------------
 
+        #region 嵌套类型
+
+        /// <summary>页面在 Showing/Hiding 期间挂起关闭时，保留过渡完成与清理完成两个回调。</summary>
+        private sealed class PendingCloseCallbacks
+        {
+            public Action OnTransitionComplete;
+            public Action OnComplete;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
         #region 帧驱动
 
         void IEmberUpdate.Update()
@@ -71,6 +88,8 @@ namespace Ember.UI
             ProcessNextFrameCallbacks();
             ProcessClosingPages();
             CheckScreenResolution();
+            if (_sortDirty)
+                SortUIRootByOrder();
             Profiler.EndSample();
         }
 
@@ -148,20 +167,12 @@ namespace Ember.UI
                 return;
             }
 
-            // 初始化时隐藏 UIRoot 下所有子节点（编辑时放的预览节点）
-            // 但跳过标记了 IEUIPersistentUI 的持久元素（如 BootSplash）
-            foreach (Transform child in _uiRoot)
-            {
-                if (!child.TryGetComponent(out IEUIPersistentUI _))
-                    child.gameObject.SetActive(false);
-            }
-
             // 默认实现
             _resourceProvider ??= new DefaultUIResourceProvider();
             _transitionHandler ??= new DefaultUITransitionHandler();
 
             _pageContext = new EUIPageContext(this);
-            _bgMaskPool = new EUIBgMaskPool(_uiRoot);
+            _bgMaskPool = new EUIBgMaskPool(_uiRoot, _uiCamera);
 
             _initialized = true;
             _lastScreenResolution = new Vector2Int(Screen.width, Screen.height);
@@ -190,6 +201,7 @@ namespace Ember.UI
 
             page.EUIPageDef = pageDef;
             page.Transform.SetParent(_uiRoot, false);
+            _sortDirty = true;
 
             var canvas = page.Canvas;
             if (!canvas)
@@ -237,15 +249,24 @@ namespace Ember.UI
             ClosePageInternal(page, onComplete);
         }
 
-        internal void ClosePageInternal(EUIPage page, Action onComplete = null)
+        internal void ClosePageInternal(EUIPage page, Action onComplete = null, Action onTransitionComplete = null)
         {
             if (page == null) return;
+
+            _sortDirty = true;
 
             Profiler.BeginSample("EUIViewEngine.ClosePageInternal");
 
             // 页面处于过渡状态（Showing / Hiding）时，挂起 Close 操作
             // 对标 Burner PageTargetState
-            if (page.TryQueuePendingOp(EUIPage.PagePendingOp.Close, onComplete))
+            object pendingCallbacks = onTransitionComplete == null
+                ? onComplete
+                : new PendingCloseCallbacks
+                {
+                    OnTransitionComplete = onTransitionComplete,
+                    OnComplete = onComplete,
+                };
+            if (page.TryQueuePendingOp(EUIPage.PagePendingOp.Close, pendingCallbacks))
             {
                 Profiler.EndSample();
                 return;
@@ -257,6 +278,14 @@ namespace Ember.UI
             page.SetHideCallback(() =>
             {
                 EmberDebug.LogCleanup(TAG, $"页面已关闭: {pageDef}");
+                try
+                {
+                    onTransitionComplete?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    EmberDebug.LogError(TAG, $"页面关闭过渡回调异常 '{pageDef}': {ex}");
+                }
 
                 // Cleanup + 销毁调度
                 _nextFrameCallbacks.Enqueue(() =>
@@ -272,7 +301,18 @@ namespace Ember.UI
                             page.EnterClosingState();
                             var prefabPath = page.PrefabPath;
                             if (!string.IsNullOrEmpty(prefabPath))
+                            {
+                                // 同一路径只保留一个可复用页面。覆盖缓存前先销毁旧页，
+                                // 避免旧页因失去追踪而永久残留在 UIRoot 下。
+                                if (_closingPages.TryGetValue(prefabPath, out var previousPage)
+                                    && previousPage != null
+                                    && !ReferenceEquals(previousPage, page))
+                                {
+                                    previousPage.ForceDispose();
+                                }
+
                                 _closingPages[prefabPath] = page;
+                            }
                         }
                         else
                         {
@@ -378,6 +418,7 @@ namespace Ember.UI
 
             page.EUIPageDef = pageDef;
             page.Transform.SetParent(_uiRoot, false);
+            _sortDirty = true;
 
             var canvas = page.Canvas;
             if (!canvas)
@@ -414,27 +455,33 @@ namespace Ember.UI
             canvas = go.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
             canvas.worldCamera = _uiCamera;
+            canvas.overrideSorting = true;
             canvas.sortingOrder = layer;
 
             go.AddComponent<CanvasScaler>();
             go.AddComponent<GraphicRaycaster>();
 
             _layerCanvases[layer] = canvas;
+            _sortDirty = true;
             return canvas;
         }
 
         // ── BG Mask ──
 
         /// <summary>显示背景遮罩</summary>
-        public GameObject ShowBgMask(int sortingOrder, Action onClick)
+        public GameObject ShowBgMask(int sortingOrder, Action onClick, Color? maskColor = null,
+            int layer = -1)
         {
-            return _bgMaskPool.Get(sortingOrder, onClick);
+            var mask = _bgMaskPool.Get(sortingOrder, onClick, maskColor, layer);
+            _sortDirty = true;
+            return mask;
         }
 
         /// <summary>隐藏背景遮罩</summary>
         public void HideBgMask(GameObject mask)
         {
             _bgMaskPool.Return(mask);
+            _sortDirty = true;
         }
 
         // ── 安全操作队列 ──
@@ -479,6 +526,50 @@ namespace Ember.UI
         // --------------------------------------------------------
 
         #region 内部方法
+
+        /// <summary>
+        /// 按 Canvas.sortingOrder 重排 UIRoot 子节点（稳定排序：同 order 保持原相对顺序）。
+        /// 由脏标记触发（页面/遮罩/层 Canvas 变更后），在 Update 末尾执行一次。
+        /// 仅影响 Hierarchy 可视顺序；渲染顺序本身由 sortingOrder 决定。
+        /// 无 Canvas 的节点按 0 参与排序（与 Background 层并列）。
+        /// </summary>
+        private void SortUIRootByOrder()
+        {
+            if (_uiRoot == null) return;
+
+            var children = new List<Transform>(_uiRoot.childCount);
+            var orders = new List<int>(_uiRoot.childCount);
+            foreach (Transform child in _uiRoot)
+            {
+                var canvas = child.GetComponent<Canvas>();
+                children.Add(child);
+                orders.Add(canvas != null ? canvas.sortingOrder : 0);
+            }
+
+            // 稳定插入排序（节点数量少，避免引入 LINQ 依赖）
+            for (int i = 1; i < children.Count; i++)
+            {
+                var curTransform = children[i];
+                int curOrder = orders[i];
+                int j = i - 1;
+                while (j >= 0 && orders[j] > curOrder)
+                {
+                    children[j + 1] = children[j];
+                    orders[j + 1] = orders[j];
+                    j--;
+                }
+                children[j + 1] = curTransform;
+                orders[j + 1] = curOrder;
+            }
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].GetSiblingIndex() != i)
+                    children[i].SetSiblingIndex(i);
+            }
+
+            _sortDirty = false;
+        }
 
         private void ProcessPendingOperations()
         {
@@ -615,6 +706,7 @@ namespace Ember.UI
             if (page == null || page.PendingOp == EUIPage.PagePendingOp.None) return;
 
             var pendingOp = page.PendingOp;
+            var pendingArgs = page.PendingOpArgs;
             page.ClearPendingOp();
 
             EmberDebug.Log(TAG, $"调度挂起操作: {page.Name} op={pendingOp}");
@@ -624,7 +716,10 @@ namespace Ember.UI
                 if (pendingOp == EUIPage.PagePendingOp.Close)
                 {
                     // 页面刚完成 Show（State=Opened），立即执行 Close
-                    ClosePageInternal(page);
+                    if (pendingArgs is PendingCloseCallbacks callbacks)
+                        ClosePageInternal(page, callbacks.OnComplete, callbacks.OnTransitionComplete);
+                    else
+                        ClosePageInternal(page, pendingArgs as Action);
                 }
                 else if (pendingOp == EUIPage.PagePendingOp.Reopen)
                 {

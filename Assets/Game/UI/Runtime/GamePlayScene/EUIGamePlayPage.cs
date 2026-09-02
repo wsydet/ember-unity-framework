@@ -25,6 +25,8 @@ namespace Game.UI
 
             Btn_Back.onClick.AddListener(() =>
                 GameLauncher.Instance.Fsm.TransitionTo<MainState>());
+            Btn_Settings.onClick.AddListener(() =>
+                GameLauncher.Instance.Fsm.TransitionTo<SettingsState>(SettingsContext.Gameplay));
 
             OnInitUser();
         }
