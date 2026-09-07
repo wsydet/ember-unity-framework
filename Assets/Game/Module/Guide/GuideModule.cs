@@ -13,7 +13,7 @@ namespace Game.Module.Guide
     /// <b>定位：</b>业务模块（<see cref="IEmberModule"/>，Phase = <see cref="ModulePhase.Global"/>），
     /// 登录后常驻，跨场景驱动引导。同时实现 <see cref="IEmberUpdate"/> 逐帧驱动当前引导组与覆盖层。
     ///
-    /// <b>启用：</b>默认 <see cref="Enabled"/> = false（关闭）。启用时改为返回 true。
+    /// <b>启用：</b>通过 <c>[EmberModule(..., Enabled = false)]</c> 默认关闭，启用时修改特性参数。
     ///
     /// <b>使用示例：</b>
     /// <code>
@@ -24,6 +24,7 @@ namespace Game.Module.Guide
     /// GuideModule.Instance.NotifyButtonClick("MainMenu", "m_Btn_Start");
     /// </code>
     /// </summary>
+    [EmberModule(ModulePhase.Global, Enabled = false)]
     public class GuideModule : EmberSingleton<GuideModule>, IEmberModule, IEmberUpdate, IGuideGroupManager
     {
         private const string TAG = LogTags.Game + "." + nameof(GuideModule);
@@ -45,12 +46,6 @@ namespace Game.Module.Guide
 
         /// <summary>测试引导 id（&gt;0 时优先装载该引导，完成后不落盘）。</summary>
         public int TestGuideId;
-
-        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
-        public bool Enabled => false;
-
-        /// <summary>所属初始化阶段（全局业务，常驻）。</summary>
-        public int Phase => ModulePhase.Global;
 
         /// <summary>当前正在执行的引导 id（0 = 无）。</summary>
         public int CurGuideId => _curGuideId;

@@ -19,7 +19,7 @@ namespace Game.Module
     /// 进入玩法时由 <see cref="EmberModuleCollector"/> 自动初始化，离开玩法时销毁。
     ///
     /// <b>启用：</b>
-    /// 本模块 <see cref="Enabled"/> 默认 false（关闭）。启用时改为返回 true，
+    /// 本模块通过 <c>[EmberModule(..., Enabled = false)]</c> 默认关闭，启用时修改特性参数，
     /// 并在 <c>GameplayState.OnGameplayEnter</c> 里调用 <see cref="Initialize"/> 传入配置资产。
     ///
     /// <b>使用示例：</b>
@@ -35,14 +35,10 @@ namespace Game.Module
     /// node.NumChanged += OnMailRedDotChanged;   // OnMailRedDotChanged 里读 node.Num 刷新显示
     /// </code>
     /// </summary>
+    [EmberModule(ModulePhase.Gameplay, Enabled = false)]
     public class RedDotModule : EmberSingleton<RedDotModule>, IEmberModule
     {
         private const string TAG = LogTags.Game + "." + nameof(RedDotModule);
-
-        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
-        public bool Enabled => false;
-
-        public int Phase => ModulePhase.Gameplay;
 
         #region 内部参数
 

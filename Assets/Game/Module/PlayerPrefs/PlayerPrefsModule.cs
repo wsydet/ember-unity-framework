@@ -16,10 +16,9 @@ namespace Game.Module
     /// - OnDestroy 时 Save() 刷写，确保退出前落盘
     /// - 无热重启状态（ResetModuleData 空实现）
     /// </summary>
+    [EmberModule(ModulePhase.Global)]
     public class PlayerPrefsModule : EmberSingleton<PlayerPrefsModule>, IEmberModule
     {
-        public int Phase => ModulePhase.Global;
-
         #region 生命周期
 
         void IEmberModule.OnInit() { }

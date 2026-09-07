@@ -21,17 +21,13 @@ namespace Game.Module
     /// <see cref="SceneLightProfile"/> 执行灯光切换 —— 不直连 Unity 的 SceneManager。
     ///
     /// <b>启用：</b>
-    /// 本模块 <see cref="Enabled"/> 默认 false（关闭）。启用时改为返回 true，
+    /// 本模块通过 <c>[EmberModule(..., Enabled = false)]</c> 默认关闭，启用时修改特性参数，
     /// 并在 OnInit 后调用 <c>Initialize(灯光列表, 配置资产)</c>。
     /// </summary>
+    [EmberModule(ModulePhase.Global, Enabled = false)]
     public class GlobalLightModule : EmberSingleton<GlobalLightModule>, IEmberModule
     {
         private const string TAG = LogTags.Game + "." + nameof(GlobalLightModule);
-
-        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
-        public bool Enabled => false;
-
-        public int Phase => ModulePhase.Global;
 
         #region 内部参数
 

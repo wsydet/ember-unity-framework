@@ -356,7 +356,6 @@ namespace Game.UI
             }
 
             if (Cg_Progress != null) Cg_Progress.alpha = 0f;
-            EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete);
         }
 
         #endregion

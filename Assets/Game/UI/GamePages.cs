@@ -48,6 +48,9 @@ namespace Game.UI
 
         /// <summary>GMPage 页面（FreePage 需显式指定固定 sortingOrder）</summary>
         public static readonly EUIPageDef GMPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
+        /// <summary>EUISceneUIPage 页面</summary>
+        public static readonly EUIPageDef EUISceneUIPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUISceneUIPanel.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 20000);
+
 
     }
 }

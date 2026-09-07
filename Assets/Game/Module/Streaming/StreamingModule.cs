@@ -24,17 +24,13 @@ namespace Game.Module
     /// （不广播事件、不受单加载锁限制），不触碰状态机的大场景切换链路。
     ///
     /// <b>启用：</b>
-    /// 本模块 <see cref="Enabled"/> 默认 false（关闭）。启用时改为返回 true，
+    /// 本模块通过 <c>[EmberModule(..., Enabled = false)]</c> 默认关闭，启用时修改特性参数，
     /// 进入 Gameplay 后调用 <c>StreamingModule.Instance.Initialize(拓扑资产)</c> 启动流送。
     /// </summary>
+    [EmberModule(ModulePhase.Gameplay, Enabled = false)]
     public class StreamingModule : EmberSingleton<StreamingModule>, IEmberModule, IEmberUpdate
     {
         private const string TAG = LogTags.Game + "." + nameof(StreamingModule);
-
-        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
-        public bool Enabled => false;
-
-        public int Phase => ModulePhase.Gameplay;
 
         #region 内部参数
 

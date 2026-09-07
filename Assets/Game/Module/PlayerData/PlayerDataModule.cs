@@ -19,17 +19,13 @@ namespace Game.Module
     /// Release 模式读取本地存档（无存档时用 SO 默认数据深拷贝）。
     ///
     /// <b>启用：</b>
-    /// 本模块 <see cref="Enabled"/> 默认 false（关闭）。启用时改为返回 true。
+    /// 本模块通过 <c>[EmberModule(..., Enabled = false)]</c> 默认关闭，启用时修改特性参数。
     /// </summary>
+    [EmberModule(ModulePhase.Global, Enabled = false)]
     public class PlayerDataModule : EmberSingleton<PlayerDataModule>, IEmberModule
     {
         private const string TAG = LogTags.Game + "." + nameof(PlayerDataModule);
         private const string SAVE_BASE = "player_data";
-
-        /// <summary>模块是否启用。默认关闭，需要时改为返回 true。</summary>
-        public bool Enabled => false;
-
-        public int Phase => ModulePhase.Global;
 
         #region 内部参数
 
