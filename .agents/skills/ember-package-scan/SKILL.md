@@ -14,7 +14,7 @@ description: >-
 扫描项目实际安装的包，与 `docs/user/package-inventory.md` 对比，
 检测差异并生成文档更新建议。
 
-**只读分析，不自动修改文档。** 用户确认后再写入。
+用户只要求扫描时输出差异；要求“同步/更新文档”即执行范围内更新，不重复确认。
 
 ---
 
@@ -37,7 +37,8 @@ description: >-
 | `Packages/manifest.json` | 读取 `dependencies` | 包名、版本 |
 | `Packages/manifest.json` | 读取 `scopedRegistries` | registry 名称、URL、scopes |
 | `Packages/` 目录 | `ls -d Packages/com.*/ Packages/dev.*/` | 包名（embedded package） |
-| embedded package 的 `package.json` | 读每个目录下的 `package.json` | displayName、description |
+| embedded package 的 `package.json` | 读每个目录下的 `package.json` | name、version、displayName、description |
+| `Packages/packages-lock.json` | 查看已解析条目 | source、depth、version、hash（Git 包） |
 
 合并去重，生成 **实际包清单**：
 
@@ -61,7 +62,7 @@ description: >-
 |----------|------|--------|
 | ➕ 新增 | 实际存在但文档未记录 | 🔴 必须处理 |
 | ➖ 过时 | 文档记录了但实际不存在 | 🔴 必须处理 |
-| 🔄 版本变更 | 都存在但版本号不同 | 🟡 需要确认 |
+| 🔄 版本变更 | 都存在但版本号不同 | 🟡 按本地证据更新，无法确定时注明 |
 
 ### Step 4: 生成更新建议
 
@@ -91,9 +92,9 @@ description: >-
 - 如有新增 registry → 提醒在文档中补充
 - 如有 registry 已从 manifest 删除但文档仍有记录 → 提醒清理
 
-### Step 6: 输出并等待确认
+### Step 6: 交付差异或同步结果
 
-展示差异报告，用户确认后更新文档（在对话中执行，不委托子代理）。
+用户要求扫描时输出差异；已要求更新/同步时直接修订文档并核对表格，报告来源与未确定项。
 
 ---
 
@@ -148,7 +149,7 @@ description: >-
 
 ## 易错点
 
-- Unity 内置模块（`com.unity.modules.*`）在文档三、节中列出，但不需要逐个对比——它们随引擎版本绑定，不会变动
+- Unity 内置模块（`com.unity.modules.*`）也按当前 manifest 比对；启用列表会变化，不能把旧数量与配置视为永远不变
 - embedded package 的版本号可能不存在（`package.json` 中没有 `version` 字段），显示为 `embedded` 即可
 - 不要自动推断"用途"列——标记 `[TODO]` 等人工填写
 - 如果用户刚用 `ember-plugin-migrate` 迁移了包，remind 他们同步跑一下这个 scan

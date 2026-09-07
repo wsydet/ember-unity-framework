@@ -11,7 +11,7 @@ description: >-
 ## 概述
 
 检查指定脚本的 Odin Inspector 面板定义，对照 `docs/dev/odin-usage-notes.md`
-和 `Assets/Tem/Examples/OdinInspectorDemo.cs` 中的规范，
+和 `Packages/com.ember/UIExtension/Runtime/EUIBinding.cs` 中的规范，
 发现兼容性问题并给出修正建议。
 
 **只读分析，用户确认后再写入。**
@@ -21,7 +21,7 @@ description: >-
 ## 前置条件
 
 1. 读取 `docs/dev/odin-usage-notes.md`，缓存所有已知问题、规则和示例
-2. 读取 `Assets/Tem/Examples/OdinInspectorDemo.cs`，缓存正确的 Odin 用法示范
+2. 读取 `Packages/com.ember/UIExtension/Runtime/EUIBinding.cs`，缓存正确的 Odin 用法示范
 
 ---
 
@@ -64,9 +64,9 @@ description: >-
 |--------|----------|--------|
 | HorizontalGroup 内是否有 [ShowInInspector] | §1.1 | 🔴 高风险 |
 | HorizontalGroup 内是否有计算属性 | §1.1 | 🔴 高风险 |
-| 连续独立 [Button] 是否未归组 | §1.2 | 🟡 中风险 |
+| 同名 ButtonGroup 是否跨区域合并或混用尺寸 | §1.2 | 🟡 中风险 |
 | 是否用了 [ShowInInspector] 而可以用 [SerializeField] | §2.1 | 🟢 建议 |
-| [AssetsOnly] / [SceneObjectsOnly] 空值 | §1.3 | 🟢 提示 |
+| [AssetsOnly] / [SceneObjectsOnly] 空值 | §1.4 | 🟢 提示 |
 
 ### Step 4: 生成检查报告
 

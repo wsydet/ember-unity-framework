@@ -14,7 +14,7 @@ description: >-
 扫描指定模块的 C# 源码，按 `docs/dev/api-doc-template.md` 模板自动生成 `README.md`，
 输出到模块目录下。
 
-**与用户交互确认路径后再分析，展示预览，用户确认后才写入文件。**
+**依用户指定范围生成；缺少目标时先询问，已有明确授权无需重复确认。输出前核对源码实现与示例。**
 
 ---
 
@@ -28,10 +28,10 @@ description: >-
 
 ### Step 0: 扫描可用模块
 
-先扫描 `Assets/Ember/` 下的所有子目录，找到可作为文档生成目标的模块。
+先扫描 `Packages/com.ember/` 的模块与 `Assets/Game/Module/` 的业务模块；排除 `Templates~`、`UniTask` 等快照/第三方源码。用户已指定目标时直接核对目标，不重复询问。
 
 ```bash
-ls -d Assets/Ember/*/
+ls -d Packages/com.ember/*/
 ```
 
 对每个子目录：
@@ -47,9 +47,9 @@ ls -d Assets/Ember/*/
 
 | # | 模块 | 路径 | .cs 文件 | 文档状态 |
 |---|------|------|----------|----------|
-| 1 | Resource | `Assets/Ember/Resource/` | 2 个 | ❌ 无文档 |
-| 2 | Core | `Assets/Ember/Core/` | 5 个 | ❌ 无文档 |
-| 3 | UI | `Assets/Ember/UI/` | 0 个 | ⏭️ 跳过（无源码） |
+| 1 | Resource | `Packages/com.ember/Resource/` | 2 个 | ❌ 无文档 |
+| 2 | Core | `Packages/com.ember/Core/` | 5 个 | ❌ 无文档 |
+| 3 | UI | `Packages/com.ember/UI/` | 0 个 | ⏭️ 跳过（无源码） |
 ```
 
 无 `.cs` 文件的目录自动跳过（如空目录、纯资源目录）。
@@ -58,13 +58,13 @@ ls -d Assets/Ember/*/
 
 使用 `AskUserQuestion` 让用户选择目标模块，选项来自 Step 0 的扫描结果。
 
-同时让用户确认文档输出路径。默认推荐位置：
+优先更新现有权威文档，避免与 `Packages/com.ember/Documentation~/<module>/README.md` 重复。用户已授权生成且位置明确时直接执行；位置有实质歧义时再询问。没有既有文档时可选：
 
 ```
 <模块路径>/README.md
 ```
 
-例如：`Assets/Ember/Resource/README.md`
+例如：`Packages/com.ember/Documentation~/resource/README.md`
 
 如果用户想放别处，接受自定义路径。
 
@@ -76,9 +76,9 @@ ls -d Assets/Ember/*/
 
 | 推断项 | 规则 | 示例 |
 |--------|------|------|
-| 模块名称 | 路径最深层目录名 | `Assets/Ember/Resource/` → "资源管理（Resource）" |
+| 模块名称 | 路径最深层目录名 | `Packages/com.ember/Resource/` → "资源管理（Resource）" |
 | 命名空间 | 搜索目录下所有 `.cs` 文件中的 `namespace` 声明，取最公共的前缀 | `Ember.Resource` |
-| 模块根目录 | 路径本身 | `Assets/Ember/Resource/` |
+| 模块根目录 | 路径本身 | `Packages/com.ember/Resource/` |
 
 ### Step 3: 收集源码
 
@@ -184,11 +184,11 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 - 哪些推断是低置信度的（需用户确认）
 - 模板中哪些节因为没有对应代码而填了"无"
 
-### Step 7: 写入（用户确认后）
+### Step 7: 按已授权范围写入
 
-用户确认（或修改后确认），写入到 Step 1 确认的输出路径。
+目标与输出路径已明确且用户要求生成/更新时，写入对应路径；只要求预览则不写入。
 
-如果已存在 `README.md`，展示 diff 并确认是否覆盖。
+如果已有文档，以当前版本为基础更新并提供 diff，保留独有设计和用户未提交内容。
 
 ---
 
@@ -199,11 +199,11 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 | # | 模块 | 路径 | .cs 文件 | 文档状态 |
 |---|------|------|----------|----------|
-| 1 | Resource | `Assets/Ember/Resource/` | 2 个 | ❌ 无文档 |
+| 1 | Resource | `Packages/com.ember/Resource/` | 2 个 | ❌ 无文档 |
 
 ---
 
-请选择要生成文档的模块，以及确认输出路径（默认：`Assets/Ember/Resource/README.md`）
+请选择要生成文档的模块，以及确认输出路径（默认：`Packages/com.ember/Documentation~/resource/README.md`）
 ```
 
 用户确认路径后：
@@ -220,7 +220,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 ---
 
-确认写入 `Assets/Ember/Resource/README.md` 吗？
+输出位置：`Packages/com.ember/Documentation~/resource/README.md`；报告是否已写入、验证结果及仍需人工核实的内容。
 ```
 
 ---
@@ -228,7 +228,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 ## 易错点
 
 - 不要分析 `.meta` 文件
-- `using` 语句不等于依赖关系——只取框架模块和外部包的引用，忽略 System/UnityEngine
+- `using` 不等于程序集依赖；结合实际类型使用、最近的 asmdef 和 package.json 确认，包括必要的引擎模块
 - 调用链只追踪模块内部，不要跨越到外部模块（标注 `→ [触发外部事件]` 即可）
 - 方法签名不要列出完整参数类型（如 `Dictionary<string, List<int>>`），用简化的参数名替代
 - 如果一个类型同时有 `public` 和 `internal` 方法，只把 `public` 放 API 节，`internal` 方法放主流程里体现
@@ -239,7 +239,7 @@ find <模块路径> -name "*.cs" -not -path "*/Test*" -not -path "*/Demo*" | sor
 
 ## 验证
 
-- 确认在分析代码前，已经和用户确认了目标路径和输出路径
+- 确认目标路径与输出路径由用户指定或现有文档布局明确推得
 - 确认生成的文档包含模板的全部 8 个节
 - 确认所有占位符都已被替换（没有残留的 `[填写...]`）
 - 确认快速上手示例代码语法正确（至少类型名和方法名与源码一致）

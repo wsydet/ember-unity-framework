@@ -22,8 +22,8 @@ description: >-
 
 1. 读取 `docs/dev/contributing.md`，缓存提交格式规则
 2. 确认当前分支：
-   - 若在 `main` 分支：提醒当前处于初始搭建期，可直接提交，后续应切到 feature 分支
-   - 若在 `feature/*` 分支：按正常流程处理
+   - 若在 `main` 分支：按当前 contributing 规则处理，不再套用初始搭建期的例外
+   - 若在 `codex/*`、`feature/*` 或其他用户指定分支：按正常流程处理
 
 ---
 
@@ -107,18 +107,18 @@ git diff --cached --stat # 已暂存文件的统计
 - 示例：`docs: 将文档按受众重组为 user/ 和 dev/ 目录`、`feat(core): 新增 EventBus 发布订阅系统`
 
 scope 从文件路径推断：
-- `Assets/Ember/Core/` → scope: `core`
-- `Assets/Ember/UI/` → scope: `ui`
-- `Assets/Ember/Resource/` → scope: `resource`
-- `Assets/Ember/Scene/` → scope: `scene`
-- `Assets/Ember/Audio/` → scope: `audio`
+- `Packages/com.ember/Core/` → scope: `core`
+- `Packages/com.ember/UI/` → scope: `ui`
+- `Packages/com.ember/Resource/` → scope: `resource`
+- `Packages/com.ember/Scene/` → scope: `scene`
+- `Packages/com.ember/Audio/` → scope: `audio`
 - `docs/`、`CLAUDE.md` → 无 scope
-- `.claude/`、`Packages/` → scope: `chore`
+- `.agents/skills/`、`.claude/` → 按内容选 docs/chore；第三方 Packages 依赖变更使用 chore 类型，框架代码按模块定 scope
 
 每组提交必须包含：
 
 1. **文件统计**：标注该组共多少个文件，其中新增(N)、修改(M)、删除(D) 各多少。**表格中每行一个文件**（.cs 和 .meta 分开各占一行），序号从 1 开始连续编号，确保用户一眼看清文件数是否与统计一致。
-2. **提交命令**：`git add` + `git commit` 配对输出、可直接复制执行。`git add` 使用 Bash 续行符 `\` 换行，每行放 3~5 个短路径或 1~2 个长路径，方便阅读的同时复制到终端仍作为一条命令执行。紧跟一条 `git commit -m "type(scope): subject"`，提交信息与上方推荐保持一致。如文件过多（超过 20 个），考虑拆分为多个 `git add` 命令或使用目录级 `git add`（如 `git add Assets/Plugins/`）。注意：`git add` 对新增、修改、删除（跟踪文件被删除）的文件均适用。
+2. **提交命令**：`git add` + `git commit` 配对输出、可直接复制执行。命令应适配用户当前 shell；PowerShell 不使用 Bash 的反斜杠续行。优先给出带引号的显式文件列表。紧跟一条 `git commit -m "type(scope): subject"`，提交信息与上方推荐保持一致。如文件过多（超过 20 个），考虑拆分为多个 `git add` 命令；只在整个目录的全部改动已审查且同属本次提交时才使用目录级 git add。注意：`git add` 对新增、修改、删除（跟踪文件被删除）的文件均适用。
 
 ### Step 5: 处理建议
 
