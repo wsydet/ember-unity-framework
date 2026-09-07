@@ -38,10 +38,50 @@
 └─────────────────────────────────┘
 ```
 
+### Manager 与 Module 的组合模型
+
+项目统一使用下面的架构定义：
+
+```text
+具体游戏 = 框架基础 + 必备 Managers + 按需选装的 Modules
+```
+
+| 概念 | Manager | Module |
+|------|---------|--------|
+| 定位 | 框架运行所必需的管理器和全局基础设施 | 可选、可组合的业务功能积木 |
+| 接口 | `IEmberManager` | `IEmberModule` |
+| 启动 | `InitState` 中由 `EmberManagerCollector` 反射发现，按 `EmberInitOrder` 调用 `Init` | `InitState` 只发现并构造 `Enabled = true` 的模块；进入其 `Phase` 后才调用 `OnInit` |
+| 生命周期 | Init 阶段启动，跨游戏状态持续存活，框架退出时逆序销毁 | 仅在所属 Phase 激活，退出 Phase 时销毁业务状态，实例可供再次进入时复用 |
+| 模板关系 | 所有模板共同具备，不作为玩法选项裁剪 | 模板按玩法自由添加、移除或通过 `Enabled = false` 关闭 |
+
+- Manager 定义的是框架基座。被定义为 Manager 的能力必须在 `base` 和业务模板中都可用，不能为了
+  某个模板临时省略；例如 `EmberInputManager`。
+- “必要”是架构约束，不代表 Collector 内置了固定 Manager 清单；Collector 只会初始化当前已加载
+  程序集中实际存在的实现，因此 Package 和模板维护者要负责保证必要 Managers 没有缺失。
+- Module 定义的是业务组合单元。不同模板可以在同一套框架和 Managers 上装配不同 Modules，形成
+  不同类型的游戏；例如 `PlayerControlModule` 只属于需要该操作方式的玩法模板。
+- Module 可以消费 Manager 提供的通用能力；Manager 不依赖具体业务 Module。不要为了提前拿到实例
+  而把可选业务功能实现成 `IEmberManager`。
+- “发现并构造”不等于“已激活”：Module 只有 `OnInit` 成功后才进入活动状态并接收 Update。
+- `Enabled` 是启动扫描时的类型级装配开关，不是运行时热插拔接口；当前内置自动接线覆盖 Global
+  与 Gameplay，Main 或自定义 Phase 需要由对应状态显式驱动。
+
+### 模板开发落盘规范
+
+- `Packages/com.ember/Templates~/*/Assets` 与派生模板的 `ParentSnapshot~` 是模板系统管理的快照，
+  不是日常业务开发目录。业务内容应先在项目 `Assets` 中修改，再通过模板开发面板保存。
+- 正常流程固定为“加载模板 → 修改项目业务层 → 保存模板 → 显式 Bump 版本”。普通保存只更新实时
+  `contentHash`，Bump 才把内容封存进 `versionedContentHash`。
+- 禁止手工复制或直接修改模板快照，也禁止为了绕过校验而手改 `template.json` 的 hash。否则会破坏
+  根模板、派生模板 `ParentSnapshot~`、父级指针和当前编辑记录之间的谱系一致性。
+- 如果面板报告磁盘内容与 metadata 不一致，应先确认真实差异。经明确授权采纳磁盘改动时，必须一次性
+  对齐根模板版本与 hash、派生模板父基线以及编辑记录；不得只修改单个子模板的 `contentHash`。
+
 ### 核心设计原则
 
 - **依赖方向**：业务层 → 框架层 → 引擎，禁止反向依赖
-- **Package 化**：框架的每个模块以独立的 Unity Package（`com.ember.xxx`）形式组织，按需引用
+- **单包交付**：框架统一由 `Packages/com.ember` 交付，并用 `.asmdef` 划分内部子系统；文档中的
+  `IEmberModule` / Module 专指业务层可选积木，不等同于 Package 或框架程序集
 - **程序集隔离**：通过 `.asmdef` 严格划分框架层和业务层的编译边界
 - **接口驱动**：框架提供接口，业务层实现；框架不依赖业务层的具体类型
 
@@ -49,30 +89,39 @@
 
 ```
 Assets/
-├── Ember/                          # 框架层（运行时）
-│   ├── Core/                       #   核心：事件总线、单例模式、对象池
-│   ├── Resource/                   #   资源管理：AssetBundle、Addressables
-│   ├── UI/                         #   UI 管理：界面栈、生命周期
-│   ├── Scene/                      #   场景管理：加载/卸载、过渡
-│   ├── Audio/                      #   音频管理
-│   ├── Input/                      #   输入抽象层
-│   └── Editor/                     #   框架编辑器工具
 ├── Game/                           # 业务层（示例/模板）
 │   ├── Config/                     #   游戏配置
 │   ├── Logic/                      #   游戏逻辑
+│   ├── Module/                     #   可选业务 Module 积木
 │   └── UI/                         #   游戏 UI
-├── Plugins/                        # 第三方插件
-└── Resources/                      # 运行时资源
+├── GameResource/                   # 业务资源
+├── Editor/                         # 项目级编辑器配置
+└── ThirdParty/                     # 非 UPM 第三方内容
 
 Packages/
-├── com.ember.core/                 # 框架核心 Package
-├── com.ember.ui/                   # UI 框架 Package
-├── com.ember.resource/             # 资源框架 Package
-├── ...（更多框架 Package）
-└── com.ember.blueprint/            # 蓝图编辑器 Package（远期目标）
+└── com.ember/                       # 统一框架 Package
+    ├── Core/                        #   生命周期、状态机、Manager、Update
+    ├── Resource/ Scene/ Audio/      #   框架必要 Managers 与通用能力
+    ├── Camera/ Input/ UI/           #   框架必要 Managers 与通用能力
+    ├── SceneUI/                     #   可由业务 Module 持有的通用引擎
+    └── Templates~/                  #   base 与玩法模板
 ```
 
 ## 编码规范
+
+### Unity 编译验证规范
+
+- **Unity MCP 是唯一的自动编译验证入口。** 修改 C#、程序集定义、场景或资源后，优先通过 Unity MCP 触发刷新并读取编译结果。
+- 如果 Unity MCP 可用，只做一次有界的编译状态确认；仅当 MCP 明确报告正在编译时，才等待该次编译完成，禁止无意义地重复轮询。
+- 如果 Unity MCP 无法连接、调用超时或首次查询失败，立即停止编译验证，不再花费时间尝试证明项目能够编译。
+- MCP 不可用时，禁止通过等待 Unity 自动刷新、反复读取 `Editor.log`、轮询 Unity 进程、启动 BatchMode、临时修改生成的 `.csproj`，或运行 `dotnet build` 来替代 Unity 编译验证。
+- MCP 不可用时可以继续执行即时、非阻塞的静态检查，但不得声称“编译通过”。
+- **强制显式提醒：本次任务涉及需要 Unity 编译验证的改动，或正在处理 Unity 编译报错时，只要 MCP 未连接、不可用、调用超时或首次查询失败，最终回复就必须明确写出“请在 Unity 中手动触发编译”。** 即使前文或上一轮已经提醒过，本轮最终回复仍不得省略。
+- 手动编译提醒必须同时说明“本次未完成 Unity 编译验证”，并要求用户在仍有报错时发送首条编译错误及其完整堆栈。仅写“静态检查通过”“未验证”“请刷新”或“请 Reimport”不满足要求；Refresh/Reimport 等操作建议只能作为补充，不能代替显式的手动编译提醒。
+
+MCP 不可用时，最终回复使用以下明确表述：
+
+> 当前 Unity MCP 未连接或不可用，本次未完成 Unity 编译验证。请在 Unity 中手动触发编译；如果仍有报错，请将首条编译错误及其完整堆栈发回当前对话。
 
 ### 🔍 写代码前必查：API 速查手册
 
