@@ -22,7 +22,7 @@ namespace Ember.Core
     ///
     /// <b>启动流程：</b>
     /// 1. Awake:  ConfigureStateMachine() 注册 Init / Main / Gameplay 三个核心状态
-    /// 2. Start:  InitState.OnEnter → InitializeAll → CoreReady → TransitionTo&lt;MainState&gt;
+    /// 2. Start:  InitState.OnEnter → DiscoverModules → InitializeAll → CoreReady → TransitionTo&lt;MainState&gt;
     /// 3. Update / LateUpdate / FixedUpdate: 驱动 EmberUpdateManager + 状态机 Tick
     ///
     /// 使用方式：
@@ -180,7 +180,8 @@ namespace Ember.Core
         #region 内部方法
 
         /// <summary>
-        /// 框架清理：逆序销毁所有 Manager、停止文件日志、重置初始化标志。
+        /// 框架清理：先销毁可选业务 Module，再逆序销毁所有必要 Manager，
+        /// 最后停止文件日志并重置初始化标志。
         /// 编辑器退出 Play Mode 和游戏代码调用 Quit() 共用此方法。
         /// </summary>
         private void ShutdownFramework()

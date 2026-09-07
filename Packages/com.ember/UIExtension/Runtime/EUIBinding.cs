@@ -13,6 +13,18 @@ using UnityEngine;
 namespace Ember.UIExtension
 {
     /// <summary>
+    /// EUI 预制体角色。Page 由 EUIManager 管理；Item 必须由宿主页面或业务模块创建和持有。
+    /// </summary>
+    public enum EUIBindingRole
+    {
+        [LabelText("Item（宿主持有）")]
+        Item = 0,
+
+        [LabelText("Page（页面栈管理）")]
+        Page = 1,
+    }
+
+    /// <summary>
     /// UI 页面旧版标记。仅用于读取 v0.9.x 及更早版本的 EUIBinding 序列化数据。
     /// 新配置统一使用互斥的 <see cref="PageType"/>。
     /// </summary>
@@ -203,14 +215,21 @@ namespace Ember.UIExtension
         // P4: 页面配置（含自身控件）
         // ═══════════════════════════════════════
 
+        [SerializeField, HideInInspector]
+        private bool isPage;
+
         [PropertyOrder(-70)]
         [FoldoutGroup("$GROUP", Expanded = true)]
         [BoxGroup("$GROUP/页面配置", ShowLabel = false)]
-        [Title("页面配置")]
-        [SerializeField, LabelText("是否为 Page")]
-        [Tooltip("勾选后此 binding 为页面级，会生成 EUIPageDef")]
+        [Title("UI 角色")]
+        [ShowInInspector, LabelText("角色")]
+        [Tooltip("Page 进入页面栈并生成 EUIPageDef；Item 只能由宿主页或业务模块创建和持有。")]
         [ShowIf("@!noCodeGen")]
-        private bool isPage;
+        private EUIBindingRole InspectorRole
+        {
+            get => isPage ? EUIBindingRole.Page : EUIBindingRole.Item;
+            set => isPage = value == EUIBindingRole.Page;
+        }
 
         [PropertyOrder(-69)]
         [FoldoutGroup("$GROUP")]
@@ -230,6 +249,15 @@ namespace Ember.UIExtension
         [OnValueChanged("OnPageTypeChanged")]
         [InfoBox("检测到旧 PageFlags 的非法组合，请重新选择唯一的页面类型。", InfoMessageType.Error, "HasInvalidLegacyPageFlags")]
         private PageType pageType = PageType.MainPage;
+
+        [PropertyOrder(-67.95f)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/页面配置")]
+        [SerializeField, LabelText("FreePage 渲染层级")]
+        [Tooltip("数值越大越靠前。点击生成代码后，该值会写入 EUIPageDef 的 freePageSortingOrder 参数。")]
+        [InfoBox("请为 FreePage 填写渲染层级；生成代码时会自动写入页面定义。数值越大越靠前。")]
+        [ShowIf("@isPage && !noCodeGen && IsFreePage")]
+        private int fixedSortingOrder = 30000;
 
         [SerializeField, HideInInspector]
         private PageFlags pageFlags;
@@ -445,6 +473,7 @@ namespace Ember.UIExtension
         public BindingEntry[] Bindings => bindings;
         public WidgetTypes SelfWidgetType => selfWidgetType;
         public string SelfWidgetClassName => selfWidgetClassName;
+        public EUIBindingRole Role => isPage ? EUIBindingRole.Page : EUIBindingRole.Item;
         public bool IsPage => isPage;
         public string PageName => pageName;
         public string ClassName => className;
@@ -455,6 +484,7 @@ namespace Ember.UIExtension
         public bool NoCodeGeneration => noCodeGen;
         public bool GenerateCustomSettings => generateCustomSettings;
         public PageType PageType => pageType;
+        public int FixedSortingOrder => fixedSortingOrder;
 
         [Obsolete("PageFlags 已废弃，请改用互斥的 PageType。")]
         public PageFlags PageFlags => PageTypeToLegacyFlags(pageType);
@@ -650,6 +680,7 @@ namespace Ember.UIExtension
                 { "全屏弹窗 (FullScreenPopup)", PageType.FullScreenPopup },
                 { "置顶页 (TopMost)", PageType.TopMost },
                 { "子页面 (SubPage)", PageType.SubPage },
+                { "覆盖层 (Overlay)", PageType.Overlay },
                 { "独立页 (FreePage)", PageType.FreePage },
             };
         }
@@ -657,7 +688,13 @@ namespace Ember.UIExtension
         private void OnPageTypeChanged()
         {
             pageFlags = PageFlags.None;
+            if (pageType == PageType.Overlay)
+                fixedSortingOrder = 20000;
+            else if (pageType == PageType.FreePage)
+                fixedSortingOrder = 30000;
         }
+
+        private bool IsFreePage => pageType == PageType.FreePage;
 
         [PropertyOrder(-110)]
         [FoldoutGroup("$GROUP")]
@@ -774,7 +811,7 @@ namespace Ember.UIExtension
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/继承", ShowLabel = false)]
         [Title("继承")]
-        [InfoBox("Page 和非 Page 对象无法相互继承。请检查基类与当前的是否为 Page 设置是否一致。", InfoMessageType.Error, "HasInheritanceConflict")]
+        [InfoBox("Page 和 Item 无法相互继承。请检查基类与当前对象的 UI 角色。", InfoMessageType.Error, "HasInheritanceConflict")]
         [ShowInInspector, LabelText("基类 Prefab")]
         private GameObject BasePrefabObject
         {

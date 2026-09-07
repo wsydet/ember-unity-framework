@@ -8,11 +8,12 @@ namespace Ember.Core
     /// 系统初始化状态 —— 框架内置的必需状态。
     ///
     /// 启动流程：
-    /// 1. 初始化所有 Manager
-    /// 2. 初始化 Global 阶段业务模块
-    /// 3. 广播 CoreReady
-    /// 4. 若 MainState.UseUIBg：加载兜底背景页（BootSplash 渐出前就绪）
-    /// 5. 加载 MainScene → await 黑幕淡出 → TransitionTo《MainState》
+    /// 1. 发现并构造所有 Enabled 业务模块（暂不调用 OnInit）
+    /// 2. 初始化所有 Manager
+    /// 3. 初始化 Global 阶段业务模块
+    /// 4. 广播 CoreReady
+    /// 5. 若 MainState.UseUIBg：加载兜底背景页（BootSplash 渐出前就绪）
+    /// 6. 加载 MainScene → await 黑幕淡出 → TransitionTo《MainState》
     ///
     /// <b>InitState 持有 BootSplash（黑幕）</b>：
     /// BootSplash 在 FrameworkScene 启动时自动激活。
@@ -42,6 +43,9 @@ namespace Ember.Core
         {
             EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: bootstrapping framework...");
 
+            // 先构造所有阶段的模块，再初始化会收集 IEmberUpdate 的 Manager。
+            // 这样后续业务场景 Awake 只能绑定框架已经发现的模块，不负责创建模块。
+            EmberModuleCollector.Instance.DiscoverModules();
             EmberManagerCollector.Instance.InitializeAll();
             EmberModuleCollector.Instance.InitPhase(ModulePhase.Global);
             EmberEventBus.OnNext(EmberBroadcastEvent.CoreReady);

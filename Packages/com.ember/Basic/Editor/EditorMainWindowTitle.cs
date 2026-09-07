@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 #if UNITY_EDITOR
@@ -15,7 +15,7 @@ namespace Ember.Basic.Editor
 {
     /// <summary>
     /// 自定义 Unity 编辑器主窗口标题。
-    /// 格式：项目名 [| 子路径] | 分支 | 构建目标 | Git根目录
+    /// 格式：项目名 [| 子路径] | 分支 | 当前模板 | 构建目标 | Git根目录
     /// 子路径仅在 Unity 工程非 Git 仓库根目录时显示。
     /// 通过反射 Hook Unity 内部标题 API，不可用时降级到原生窗口 API。
     /// </summary>
@@ -30,6 +30,8 @@ namespace Ember.Basic.Editor
         private const string UpdateMainWindowTitleEventName = "updateMainWindowTitle";
         private const string UpdateMainWindowTitleMethodName = "UpdateMainWindowTitle";
         private const string TitleFieldName = "title";
+        private const string EditingTemplateRecordPath = "Assets/Editor/EmberEditingTemplate.json";
+        private const string DeployedTemplatesRecordPath = "Assets/Editor/EmberDeployedTemplates.json";
         private const double RefreshIntervalSeconds = 5d;
 
         private static readonly BindingFlags StaticFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
@@ -150,7 +152,8 @@ namespace Ember.Basic.Editor
         {
             var projectPath = GetProjectPath();
             var branch = GetGitBranch(projectPath);
-            return BuildProjectTitle(PlayerSettings.productName, projectPath, branch);
+            var template = GetCurrentTemplateId(projectPath);
+            return BuildProjectTitle(PlayerSettings.productName, projectPath, branch, template, GetBuildTargetLabel());
         }
 
         private static string GetProjectPath()
@@ -239,6 +242,40 @@ namespace Ember.Basic.Editor
             return EditorUserBuildSettings.activeBuildTarget.ToString();
         }
 
+        private static string GetCurrentTemplateId(string projectPath)
+        {
+            var editingRecord = ReadTemplateTitleRecord(projectPath, EditingTemplateRecordPath);
+            if (!string.IsNullOrWhiteSpace(editingRecord?.templateId))
+            {
+                return editingRecord.templateId.Trim();
+            }
+
+            var deployedRecord = ReadTemplateTitleRecord(projectPath, DeployedTemplatesRecordPath);
+            return string.IsNullOrWhiteSpace(deployedRecord?.activeTemplateId)
+                ? "?"
+                : deployedRecord.activeTemplateId.Trim();
+        }
+
+        private static TemplateTitleRecord ReadTemplateTitleRecord(string projectPath, string relativePath)
+        {
+            try
+            {
+                var recordPath = Path.Combine(
+                    projectPath,
+                    relativePath.Replace('/', Path.DirectorySeparatorChar));
+                if (!File.Exists(recordPath))
+                {
+                    return null;
+                }
+
+                return JsonUtility.FromJson<TemplateTitleRecord>(File.ReadAllText(recordPath));
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private static string ToDisplayPath(string path)
         {
             return path?.Replace('\\', '/') ?? string.Empty;
@@ -265,6 +302,13 @@ namespace Ember.Basic.Editor
                 ? "[EditorMainWindowTitle] Unity internal title API is unavailable, fallback to native window title."
                 : $"[EditorMainWindowTitle] Unity internal title API failed, fallback to native window title. {exception.Message}";
             EmberDebug.LogWarning(TAG, message);
+        }
+
+        [Serializable]
+        private sealed class TemplateTitleRecord
+        {
+            public string templateId = string.Empty;
+            public string activeTemplateId = string.Empty;
         }
 
         private static void TryApplyNativeWindowTitle(string title)
@@ -350,20 +394,50 @@ namespace Ember.Basic.Editor
         internal static string BuildProjectTitle(string projectName, string projectPath)
         {
             var branch = GetGitBranch(projectPath);
-            return BuildProjectTitle(projectName, projectPath, branch, GetBuildTargetLabel());
+            return BuildProjectTitle(
+                projectName,
+                projectPath,
+                branch,
+                GetCurrentTemplateId(projectPath),
+                GetBuildTargetLabel());
         }
 
         internal static string BuildProjectTitle(string projectName, string projectPath, string branch)
         {
-            return BuildProjectTitle(projectName, projectPath, branch, GetBuildTargetLabel());
+            return BuildProjectTitle(
+                projectName,
+                projectPath,
+                branch,
+                GetCurrentTemplateId(projectPath),
+                GetBuildTargetLabel());
         }
 
         /// <summary>
         /// 根据项目名、路径、Git 分支和构建目标构建标题字符串。
-        /// 格式：项目名 [| 子路径] | 分支 | 构建目标 | Git根目录
+        /// 格式：项目名 [| 子路径] | 分支 | 当前模板 | 构建目标 | Git根目录
         /// 当 Unity 工程位于 Git 仓库根目录（子路径为 "."）时省略子路径。
         /// </summary>
         internal static string BuildProjectTitle(string projectName, string projectPath, string branch, string buildTarget)
+        {
+            return BuildProjectTitle(
+                projectName,
+                projectPath,
+                branch,
+                GetCurrentTemplateId(projectPath),
+                buildTarget);
+        }
+
+        /// <summary>
+        /// 根据项目名、路径、Git 分支、当前模板和构建目标构建标题字符串。
+        /// 格式：项目名 [| 子路径] | 分支 | 当前模板 | 构建目标 | Git根目录
+        /// 当 Unity 工程位于 Git 仓库根目录（子路径为 "."）时省略子路径。
+        /// </summary>
+        internal static string BuildProjectTitle(
+            string projectName,
+            string projectPath,
+            string branch,
+            string template,
+            string buildTarget)
         {
             var normalizedPath = NormalizeProjectPath(projectPath);
             var normalizedProjectName = string.IsNullOrWhiteSpace(projectName)
@@ -373,13 +447,14 @@ namespace Ember.Basic.Editor
             var projectSubPath = GetProjectSubPath(gitRoot, normalizedPath);
             var target = string.IsNullOrWhiteSpace(buildTarget) ? "Unknown" : buildTarget.Trim();
             var branchDisplay = string.IsNullOrWhiteSpace(branch) ? "?" : branch.Trim();
+            var templateDisplay = string.IsNullOrWhiteSpace(template) ? "?" : template.Trim();
 
             if (projectSubPath == ".")
             {
-                return $"{normalizedProjectName} | {branchDisplay} | {target} | {ToDisplayPath(gitRoot)}";
+                return $"{normalizedProjectName} | {branchDisplay} | {templateDisplay} | {target} | {ToDisplayPath(gitRoot)}";
             }
 
-            return $"{normalizedProjectName} | {ToDisplayPath(projectSubPath)} | {branchDisplay} | {target} | {ToDisplayPath(gitRoot)}";
+            return $"{normalizedProjectName} | {ToDisplayPath(projectSubPath)} | {branchDisplay} | {templateDisplay} | {target} | {ToDisplayPath(gitRoot)}";
         }
 
         #endregion

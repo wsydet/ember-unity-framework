@@ -1,39 +1,23 @@
-# Skill 速查表
+# 项目 Skill 速查
 
-> 忘了哪个 skill 做什么的？Ctrl+F 搜中文关键词即可。
+源文件在 `.agents/skills/`。Codex 中可显式写 `$技能名`；已有 `/技能名` 关键词也保留在各 Skill 的触发描述中。用名称加目标和要求即可。
 
----
+| Skill | 使用场景 |
+|---|---|
+| [ember-doc-maintenance](../../.agents/skills/ember-doc-maintenance/SKILL.md) | 阅读并维护全部项目文档，核对源码、合并旧计划、修复链接与索引 |
+| [ember-generate-doc](../../.agents/skills/ember-generate-doc/SKILL.md) | 为指定模块生成或更新 API 文档 |
+| [ember-package-scan](../../.agents/skills/ember-package-scan/SKILL.md) | 对照 manifest/lock/embedded 包同步依赖清单 |
+| [ember-plugin-migrate](../../.agents/skills/ember-plugin-migrate/SKILL.md) | 评估或实施第三方插件迁移到 UPM |
+| [ember-commit-review](../../.agents/skills/ember-commit-review/SKILL.md) | 审查本地改动，分组建议提交，不自动提交 |
+| [ember-odin-inspector](../../.agents/skills/ember-odin-inspector/SKILL.md) | 指定脚本或目录，检查和优化 Odin 面板 |
+| [ember-odin-capture-style](../../.agents/skills/ember-odin-capture-style/SKILL.md) | 从满意的面板提取写法到 Odin 规范 |
+| [ember-region-organizer](../../.agents/skills/ember-region-organizer/SKILL.md) | 按项目约定整理 C# region |
+| [ember-solution-design](../../.agents/skills/ember-solution-design/SKILL.md) | 先讨论方案，确认方案后再实现 |
 
-## 包管理
+文档维护示例：
 
-| 调用方式 | 做什么 | 一句话 |
-|----------|--------|--------|
-| `/ember-package-scan` | 扫描包 → 更新文档 | 检查项目装了哪些包，跟文档对比，找出差异 |
-| `/ember-plugin-migrate` | 插件迁移 | 把 `Assets/Plugins/` 下的旧插件迁移到 UPM 包 |
-
----
-
-## Odin 面板
-
-| 调用方式 | 做什么 | 一句话 |
-|----------|--------|--------|
-| `/ember-odin-inspector` | 检查/优化面板 | 指定一个脚本，检查它的 Odin 面板有没有兼容问题，给出修正建议 |
-| `/ember-odin-capture-style` | 捕获面板风格 | 面板调到满意了，调用它把当前的风格/写法存入文档，以后检查脚本时参考 |
-
----
-
-## 提交
-
-| 调用方式 | 做什么 | 一句话 |
-|----------|--------|--------|
-| `/ember-commit-review` | 提交前审查 | 看看改了什么，分组推荐提交信息，区分需要提交/忽略/丢弃的文件 |
-
----
-
-## 工作流示例
-
+```text
+$ember-doc-maintenance 阅读并维护项目所有文档，按当前源码更新过时内容，合并或删除已被替代的文档。
 ```
-加了一个新包 → /ember-package-scan → 更新文档 → /ember-commit-review → 提交
-插件迁移     → /ember-plugin-migrate → /ember-package-scan → /ember-commit-review → 提交
-调试面板     → /ember-odin-capture-style → /ember-odin-inspector → /ember-commit-review → 提交
-```
+
+只想查看建议时写明“只审计，不修改”。新增 Skill 参考 [编写指南](skill-writing-guide.md)；不要把空白 Skill 或 Agent 模板当成可调用工具。

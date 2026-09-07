@@ -1,7 +1,7 @@
 # Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
-> 最后更新：2026-08-06 | 覆盖 82 个文件、~120 个公开类型、610+ 个公开成员
+> 最后核对：2026-09-07；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
 
 ---
 
@@ -21,10 +21,11 @@
 - [日志](#日志)
 - [状态机](#状态机)
 - [Update 循环](#update-循环)
-- [Manager 自动发现](#manager-自动发现)
+- [Manager 与 Module 组合模型](#manager-与-module-组合模型)
 - [启动器](#启动器)
 - [资源管理](#资源管理)
 - [UI 管理](#ui-管理)
+- [SceneUI](#sceneui)
 - [场景管理](#场景管理)
 - [音频管理](#音频管理)
 - [输入管理](#输入管理)
@@ -42,7 +43,7 @@
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/ListPool.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/ListPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | List 对象池。从池中取出的 List 保证容量 >= 指定值。归还时自动 Clear。 |
 
@@ -65,7 +66,7 @@ ListPool<int>.Clear();                   // 清空所有缓存
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/DictionaryPool.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/DictionaryPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | Dictionary 对象池。归还时自动 Clear。 |
 
@@ -85,7 +86,7 @@ DictionaryPool<string, object>.Return(dict);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/HashSetPool.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/HashSetPool.cs` |
 | **命名空间** | `Ember.Basic` |
 
 ```csharp
@@ -104,7 +105,7 @@ HashSetPool<int>.Return(set);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/MemoryPool.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/MemoryPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 按实例管理的泛型对象池，每个池有独立的最大容量。池空返回 null，池满丢弃。适用纯 C# class（POCO、StringBuilder 等）。 |
 
@@ -131,12 +132,12 @@ pool.Clear();
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Service/EmberObjectPool.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/Service/EmberObjectPool.cs` |
 | **命名空间** | `Ember.Core` |
 | **说明** | 带 IPoolable 回调的对象池（`T : class, new()`）。支持预填充、容量限制、统计。适用需要 OnTake/OnReturn 回调的对象。 |
 
 ```csharp
-var pool = new EmberObjectPool<MyPoolable>(initial: 4, max: 100, trackStats: true);
+var pool = new EmberObjectPool<MyPoolable>(initialCapacity: 4, maxCapacity: 100, trackStats: true);
 pool.Prewarm(4);
 var obj = pool.Get();
 pool.Return(obj);
@@ -162,7 +163,7 @@ int created = pool.TotalCreated;
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Service/EmberObjectPool.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/Service/EmberObjectPool.cs` |
 | **说明** | 被 `EmberObjectPool` 管理的对象实现此接口以接收回调。 |
 
 ```csharp
@@ -174,7 +175,7 @@ void OnReturnToPool();   // 归还到池中时
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/IPool.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/IPool.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 简单的可池化对象接口：`Dispose()` + `Revive()`。 |
 
@@ -182,7 +183,7 @@ void OnReturnToPool();   // 归还到池中时
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/PoolRefCount.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/PoolRefCount.cs` |
 | **说明** | Editor 下追踪对象池泄漏。`EnableCheck = true` 后记录每次 Get/Return 的堆栈。 |
 
 ```csharp
@@ -201,7 +202,7 @@ poolRefCount.ClearAllStacks();
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/FloatCurve2D.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/FloatCurve2D.cs` |
 | **说明** | 二维 AnimationCurve 组合 `{ AnimationCurve x, y; }`。Evaluate(t) 一次采样两条曲线返回 Vector2。 |
 
 ```csharp
@@ -213,7 +214,7 @@ Vector2 pos = path.Evaluate(0.5f);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/NaturalStringComparer.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/NaturalStringComparer.cs` |
 | **说明** | 自然排序：把数字当数值比而不是字符比。"Frame_2" 排在 "Frame_10" 前面。单例 `Instance`。 |
 
 ```csharp
@@ -226,9 +227,9 @@ Array.Sort(files, NaturalStringComparer.Instance);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/QuickQueue.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/QuickQueue.cs` |
 | **命名空间** | `Ember.Basic` |
-| **说明** | Dictionary + LinkedList 实现的快速双端队列。头尾 Push/Pop O(1)，任意位置 Remove O(1)，通过内部节点池实现 Push/Pop 零 GC。支持排序模式。 |
+| **说明** | Dictionary + LinkedList 实现的快速双端队列。头尾 Push/Pop O(1)，任意位置 Remove O(1)，通过内部节点池减少重复 Push/Pop 分配；首次创建和扩容仍可能分配。支持排序模式。 |
 
 ```csharp
 var q = new QuickQueue<string>();
@@ -258,7 +259,7 @@ sorted.Push(3); sorted.Push(1); sorted.Push(2);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/CacheSortedList.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/CacheSortedList.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 红黑树有序列表，优于 `SortedList<K,V>`：节点缓存无 GC、同 Key 可多值、O(1) ContainsKey、lower_bound / upper_bound。<br>⚠️ **Key 必须能比大小**——推荐 int 或 enum。Key 之间只有 Equals 关系的用 Dictionary。 |
 
@@ -303,7 +304,7 @@ list.FreeCache();         // 释放节点缓存
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/ValueTypeList.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/ValueTypeList.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 值类型专用 List（`T : struct`）。与 `List<T>` 类似但提供 `GetRef(index)` 返回 ref 引用，支持零拷贝读写。 |
 
@@ -327,7 +328,7 @@ list.Sort((a, b) => ...);
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/StringView.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/StringView.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 零分配子串视图。不复制字符，只记录起始位置和长度。支持 == 比较 string 和 StringView、忽略大小写比较、Substring 链式截取、零分配 Split。 |
 
@@ -359,7 +360,7 @@ var sub = view.Substring(6, 5);  // "world"
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Unsafe/NativeDataTypes.cs` |
 | **命名空间** | `Ember.Basic` |
 
 `IntPtr` 是一个整数大小的指针，指着 C# 托管堆之外的某块原生内存。GC 完全不知道这块内存的存在，
@@ -374,7 +375,7 @@ var sub = view.Substring(6, 5);  // "world"
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Utils/Const.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Utils/Const.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 程序里有些值被反复 new 几万次但永远不变。与其每次都 new，不如 new 一次全局共用。 |
 
@@ -403,7 +404,7 @@ StringBuilder 是共享可变对象——只在确定不会被并发访问的单
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Base/PerformanceLevel.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/PerformanceLevel.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 框架统一的设备性能五档分级枚举。画质分级、LOD 策略、特效密度、帧率目标等都基于此枚举做判断。 |
 
@@ -428,7 +429,7 @@ if (level >= PerformanceLevel.High) { EnableHighQualityEffects(); }
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/DataSaver.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/DataSaver.cs` |
 | **说明** | 基于 JsonUtility 的 JSON 存档工具，读写 `Application.persistentDataPath`。 |
 
 ```csharp
@@ -439,7 +440,7 @@ DataSaver.Delete("settings.json");
 bool exists = DataSaver.Exists("settings.json");
 ```
 
-> 异步版本（UniTask）待迁移到 com.ember。
+> 当前 DataSaver 仅有同步文件 I/O，异步存档尚未提供。
 
 ---
 
@@ -447,12 +448,12 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 集合扩展 (`CollectionExtension`)
 
-> 位置: `com.ember/Runtime/Extension/CollectionExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Extension/CollectionExtension.cs`, 命名空间 `Ember.Basic`
 
 | 方法 | 说明 |
 |------|------|
-| `dict.ForEach((k,v) => ...)` | 零 GC 遍历 Dictionary |
-| `e.ForEach(x => ...)` | 零 GC 遍历 IEnumerable |
+| `dict.ForEach((k,v) => ...)` | 遍历 Dictionary；委托/闭包分配需单独评估 |
+| `e.ForEach(x => ...)` | 遍历 IEnumerable；枚举器和委托可能分配 |
 | `e.ForEach((x,i) => ...)` | 带索引遍历 |
 | `list.ParallelForEach(x => ...)` | 并行遍历，异常收集后统一抛出 |
 | `e.ToHashSet()` | IEnumerable → HashSet |
@@ -467,7 +468,7 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 数学扩展 (`MathExtension`)
 
-> 位置: `com.ember/Runtime/Extension/MathExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Extension/MathExtension.cs`, 命名空间 `Ember.Basic`
 
 补上 Unity 自带 Mathf/AnimationCurve 没给的工具。
 
@@ -486,25 +487,18 @@ bool exists = DataSaver.Exists("settings.json");
 
 ### 字符串扩展 (`StringExtension`)
 
-> 位置: `com.ember/Runtime/Extension/StringExtension.cs`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Extension/StringExtension.cs`, 命名空间 `Ember.Basic`
 
-**全部走 ASCII-only 路径，跳过 Unicode 全表映射。**
-
-C# 自带的 `string.ToLower()` 会查 10 万+ 字符的 Unicode 大小写表，还需要考虑 CultureInfo、
-Turkish I 问题等，代价很大。游戏中 99% 的字符串场景（日志标签、配置键、资源路径、事件名）
-都是纯 ASCII，用这套方法比自带方法快一个数量级，且大部分标注了 `[NoGC]` 零分配。
-
-核心方法 `ToAlphaLower(char)` 的实现就是一行位运算：`c >= 'A' && c <= 'Z' ? c + 32 : c`。
-没有字典查表、没有 CultureInfo、没有分配。
+`ToAlphaLower` 只转换 A–Z，适合受控 ASCII 标识符。其它方法的比较规则以实现为准，例如 `EqualsIgnoreCase` 使用 `string.Compare`。这里不提供未经基准测试的速度或零分配保证。
 
 | 方法 | 说明 |
 |------|------|
 | `str.IsNullOrEmpty()` | 同 `string.IsNullOrEmpty` |
 | `str.IsEmpty()` | 是否为空白字符串 |
-| `str.HasNonASCII()` | 是否包含非 ASCII 字符（c >= 255） |
+| `str.HasNonASCII()` | 实现检查 c >= 255；不是严格的 ASCII（0–127）校验 |
 | `sb.HasNonASCII()` | StringBuilder 版 |
 | `str.ToAlphaLower()` | ASCII-only 小写，先检查是否有大写，无则直接返回原串避免分配 |
-| `str.HasUpperChar(str)` | 是否包含大写 ASCII 字符 |
+| `StringExtension.HasUpperChar(str)` | 是否包含大写 ASCII 字符 |
 | `str.ContainsIgnoreCase(cmp)` | ASCII-only 忽略大小写 Contains，`[HasGC]`（内部分配） |
 | `a.EqualsIgnoreCase(b)` | 忽略大小写相等判断 |
 | `str.ToInt()` | 安全 int 解析，失败 = 0 |
@@ -512,12 +506,12 @@ Turkish I 问题等，代价很大。游戏中 99% 的字符串场景（日志�
 | `str.StartsWithIdx(cmp, startIdx, ignoreCase)` | 从指定位置比较前缀，**`[NoGC]`** |
 | `str.EndsWithIdx(cmp, endIdx, ignoreCase)` | 到指定位置比较后缀，**`[NoGC]`** |
 | `str.EndsWith(StringView)` | 与 StringView 比较后缀 |
-| `str.SplitToStringViews('│')` | 零分配分割为 StringView 数组 |
+| `str.SplitToStringViews('│')` | 分割为 StringView 数组，不复制子串字符，但会创建结果数组 |
 | `str.SplitToStringViews(char[])` | 多字符分割 |
 
 ### GameObject / Component 扩展 (`GameObjectComponentExtensions`)
 
-> 位置: `com.ember/Runtime/Extension/GameObjectComponentExtensions.cs`, 命名空间 `Ember.Extensions`
+> 位置: `Packages/com.ember/Extensions/Runtime/Extension/GameObjectComponentExtensions.cs`, 命名空间 `Ember.Extensions`
 
 | 方法 | 说明 |
 |------|------|
@@ -536,41 +530,15 @@ var collider = transform.GetOrAddComponent<BoxCollider>();
 
 ## 异步 STTask
 
-> 位置: `com.ember/Runtime/Async/`, 命名空间 `Ember.Basic.Tasks`
+> 位置: `Packages/com.ember/Basic/Runtime/Async/`, 命名空间 `Ember.Basic.Tasks`
 
-**核心类型**：值类型 Task，零 GC 的 async/await 原语。
+**核心类型**：支持 async/await 的值类型 Task。
 
-<h3>与 UniTask 的关系</h3>
+### 与 UniTask 的关系
 
-STTask 和 UniTask 功能重叠但定位不同，跟事件系统（EmberEventBus vs UniRx）的分层策略一样：
+STTask 位于 Basic，提供完成值、取消和 CompletionSource 等基础异步信号。UniTask 以源码随 `com.ember/UniTask` 交付，Core、Scene、UI 等框架代码也使用它；不存在“框架禁止依赖 UniTask”的边界。新增代码优先沿用所在模块的异步类型，避免为了分层重复包装。
 
-| | STTask | UniTask |
-|---|---|---|
-| 谁用 | 框架内部 | 业务代码 |
-| 规模 | 7 个文件，核心 ~200 行 | 完整库，几百个文件 |
-| 特色能力 | await / FromResult / FromCanceled / CompletionSource | WhenAll / WhenAny / Delay / Yield / 协程桥接 |
-| 分配 | 值类型 struct，已完成状态零分配 | struct 实现，操作符丰富 |
-| 依赖 | 零（Unity 引擎除外），Compatible ember basic | 独立的 UniTask.dll |
-
-<b>框架不依赖 UniTask</b>——保持 Core 零外部依赖的铁律。STTask 就是框架级的异步信号：
-"这件事做完了通知我"。业务层用 UniTask 获取丰富的操作符（Delay/WhenAll/Yield 等）。
-
-```csharp
-// 框架内部用 STTask —— Manager 异步初始化
-class EmberResourceManager {
-    public STTask Initialize() {
-        var tcs = new STTaskCompletionSource();
-        _provider.Initialize(success => tcs.TrySetResult());
-        return tcs.Task;
-    }
-}
-
-// 业务层用 UniTask
-async UniTaskVoid OnBattleStart() {
-    await UniTask.Delay(1000);           // STTask 没有 Delay
-    await UniTask.WhenAll(t1, t2, t3);  // STTask 没有 WhenAll
-}
-```
+`STTask` 本身是值类型；CompletionSource、闭包及实际操作仍可能分配内存。
 
 ```csharp
 // 创建已完成 Task
@@ -609,7 +577,7 @@ tcs.TrySetCanceled();
 
 ## JSON
 
-> 位置: `com.ember/Runtime/LitJson/`, 命名空间 `Ember.Basic.LitJson`
+> 位置: `Packages/com.ember/Basic/Runtime/LitJson/`, 命名空间 `Ember.Basic.LitJson`
 > LitJSON 库 (public domain)，完整 JSON 库，8 个文件。
 
 <h3>与 Unity JsonUtility 的区别</h3>
@@ -663,9 +631,9 @@ while (reader.Read()) {
 
 | 类型 | 位置 | 说明 |
 |------|------|------|
-| `UnsafeStringExtensions` | `com.ember/Runtime/Unsafe/UnsafeString.cs` | UTF-8 字节流直接写入 string 内部缓冲区，绕过 `Encoding.UTF8.GetString` 的中间分配 |
-| `NativeDataView` | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` | IntPtr + Length + Managed，给原生内存指针套一层语义壳 |
-| `NativeUDTView` | `com.ember/Runtime/Unsafe/NativeDataTypes.cs` | 纯 IntPtr 视图，指向某个 C++ 对象 |
+| `UnsafeStringExtensions` | `Packages/com.ember/Basic/Runtime/Unsafe/UnsafeString.cs` | UTF-8 字节流直接写入 string 内部缓冲区，绕过 `Encoding.UTF8.GetString` 的中间分配 |
+| `NativeDataView` | `Packages/com.ember/Basic/Runtime/Unsafe/NativeDataTypes.cs` | IntPtr + Length + Managed，给原生内存指针套一层语义壳 |
+| `NativeUDTView` | `Packages/com.ember/Basic/Runtime/Unsafe/NativeDataTypes.cs` | 纯 IntPtr 视图，指向某个 C++ 对象 |
 
 UnsafeStringExtensions 最危险的一行：`*((int*)dest - 1) = destIdx` —— 直接覆盖了 .NET 运行时 string 对象的内部长度字段。
 正常 C# 里 string 是不可变的，永远不能改。搞错了会把运行时搞崩。
@@ -686,7 +654,7 @@ unsafe {
 
 ## 加密与哈希
 
-> 位置: `com.ember/Runtime/Utils/CryptographyUtils.cs`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Utils/CryptographyUtils.cs`, 命名空间 `Ember.Basic`
 
 ### CryptographyUtils
 
@@ -733,7 +701,7 @@ string hex = CryptographyUtils.ArrayToHexString(bytes);
 
 ## 性能分级
 
-> 位置: `com.ember/Runtime/Utils/GraphicLevelUtils.cs` + `com.ember/Runtime/Base/PerformanceLevel.cs`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Utils/GraphicLevelUtils.cs` + `Packages/com.ember/Basic/Runtime/Base/PerformanceLevel.cs`, 命名空间 `Ember.Basic`
 
 ### GraphicLevelUtils
 
@@ -804,7 +772,7 @@ int fps = GraphicLevelUtils.GetFrameRatePrefs(60);
 
 ## 事件系统
 
-> 位置: `Ember/Core/Runtime/Event/`, 命名空间 `Ember.Core`
+> 位置: `Packages/com.ember/Core/Runtime/Event/`, 命名空间 `Ember.Core`
 
 ### EmberEventBus
 
@@ -844,7 +812,7 @@ bool has = EmberEventBus.HasSubscribers(key);
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Event/EmberEventGroup.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/Event/EmberEventGroup.cs` |
 | **说明** | 批量管理事件订阅，一键清理。一个 UI 页面或模块在初始化时订阅多个事件，退出时只需 Dispose 此 Group。 |
 
 ```csharp
@@ -901,18 +869,19 @@ void OnDestroy()
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Service/EmberSingleton.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/Service/EmberSingleton.cs` |
 | **命名空间** | `Ember.Core` |
 
 | 类型 | 说明 |
 |------|------|
-| `EmberSingleton<T>` | 纯 C# 单例基类（`T : class, new()`）。线程安全，懒初始化。`Instance` / `IsValid` / `Destroy()` |
+| `EmberSingleton<T>` | 纯 C# 单例基类（`T : class, new()`）。线程安全，懒初始化。`Instance` / `IsValid` / `TryGetInstance(out T)` / `Destroy()` |
 | `EmberMonoSingleton<T>` | MonoBehaviour 单例。**无** DontDestroyOnLoad |
 | `EmberMonoSingletonDontDestroy<T>` | MonoBehaviour 单例。**有** DontDestroyOnLoad |
 
 ```csharp
 var mgr = EmberSingleton<MyManager>.Instance;
 bool ok = EmberSingleton<MyManager>.IsValid;
+bool exists = EmberSingleton<MyManager>.TryGetInstance(out var existing);
 EmberSingleton<MyManager>.Destroy();
 
 // MonoBehaviour 版本
@@ -923,7 +892,7 @@ var mgr = EmberMonoSingleton<MyMono>.Instance;
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Service/EmberServiceLocator.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/Service/EmberServiceLocator.cs` |
 | **说明** | 轻量 DI：接口→实现映射。支持即时注册和延迟工厂。 |
 
 ```csharp
@@ -945,14 +914,14 @@ EmberServiceLocator.ClearAll();
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Service/EmberBaseSO.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Base/EmberBaseSO.cs` |
 | **说明** | 带继承溯源面板的 ScriptableObject 基类。创建 SO 时继承此类。 |
 
 ---
 
 ## 日志
 
-> 位置: `Ember/Core/Runtime/Debug/`, 命名空间 `Ember.Basic`
+> 位置: `Packages/com.ember/Basic/Runtime/Debug/`, 命名空间 `Ember.Basic`
 > **规则**: 禁止直接用 `Debug.Log`，全部走 `EmberDebug`。
 
 ### EmberDebug
@@ -1041,7 +1010,7 @@ public interface IEmberLogUploader
 
 ## 状态机
 
-> 位置: `Ember/Core/Runtime/State/`, 命名空间 `Ember.Core`
+> 位置: `Packages/com.ember/Core/Runtime/State/`, 命名空间 `Ember.Core`
 
 ### EmberStateMachine
 
@@ -1106,7 +1075,7 @@ var state = fsm.GetState<MainState>();
 
 | 状态 | IsRequired | 说明 |
 |------|------------|------|
-| `InitState` | ✅ | 初始化所有 Manager → 广播 CoreReady → 自动 TransitionTo MainState |
+| `InitState` | ✅ | 发现启用 Module → 初始化 Manager → 初始化 Global Module → 完成启动事件与过渡后进入 MainState |
 | `MainState` | ✅ | 大厅/主界面。子类 override `OnMainEnter` / `OnMainExit` |
 | `GameplayState` | ✅ | 核心玩法。子类 override `OnGameplayEnter/Exit/Update/Pause/Resume` |
 | `SettingsState` | ❌ | Push 模式设置界面。`SettingsContext` 枚举区分上下文 |
@@ -1131,7 +1100,7 @@ new TransitionDescriptor(typeof(MainState), "返回大厅", "player clicks back"
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Update/`, 命名空间 `Ember.Core` |
+| **位置** | `Packages/com.ember/Core/Runtime/Update/`, 命名空间 `Ember.Core` |
 
 ### 接口
 
@@ -1141,11 +1110,11 @@ public interface IEmberLateUpdate  { void LateUpdate(); }
 public interface IEmberFixedUpdate { void FixedUpdate(); }
 ```
 
-实现任一接口 + `[EmberInitOrder]` → 自动被 `EmberUpdateManager` 扫描并每帧驱动。
+实现 Update 接口的实例由 `EmberUpdateManager` 统一驱动。可选 Module 还必须在声明的 Phase 中成功初始化；仅实现接口或访问单例不会激活禁用 Module。
 
 ### EmberUpdateManager
 
-纯 C# 类（无 MonoBehaviour），反射扫描所有实现者，统一驱动。
+纯 C# 类（无 MonoBehaviour），扫描可驱动实例；Module 通过 Collector 的启用/活动状态过滤，普通更新对象按现有规则注册。
 
 ```csharp
 EmberUpdateManager.Instance.DoUpdate();       // 由 GameLauncher Update 调用
@@ -1155,11 +1124,25 @@ EmberUpdateManager.Instance.DoFixedUpdate();  // 由 GameLauncher FixedUpdate �
 
 ---
 
-## Manager 自动发现
+## Manager 与 Module 组合模型
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/Manager/`, 命名空间 `Ember.Core` |
+| **位置** | `Packages/com.ember/Core/Runtime/Manager/`, 命名空间 `Ember.Core` |
+
+```text
+具体游戏 = 框架基础 + 必备 Managers + 按需选装的 Modules
+```
+
+| | `IEmberManager` | `IEmberModule` |
+|---|---|---|
+| 定位 | 框架必要管理器 | 可选业务积木 |
+| 启动 | Init 阶段统一 `Init` | Init 阶段仅发现启用实例，进入所属 Phase 才 `OnInit` |
+| 生命周期 | 跨状态常驻到框架退出 | 随 Phase 激活和退出 |
+| 模板关系 | 所有模板共同具备 | 各模板自由添加、移除或禁用 |
+
+Module 可以使用 Manager 提供的输入、资源、相机、UI 等稳定能力。不同项目复用同一套框架和
+Managers，只需组合不同 Modules 就能构成不同游戏；Manager 不应反向依赖具体业务 Module。
 
 ### IEmberManager（框架管道）
 
@@ -1170,20 +1153,46 @@ public interface IEmberManager {
 }
 ```
 
-实现此接口 + `[EmberInitOrder]` → 自动扫描并初始化。
+实现此接口并提供公开静态 `Instance` → 在 `InitState` 中自动扫描并初始化；`[EmberInitOrder]`
+决定顺序，未标注时使用 Default。Manager 是框架必要组件，不提供 Module 式的 Enabled 开关。
 
 ### IEmberModule（业务模块）
 
 ```csharp
 public interface IEmberModule {
-    int Phase { get; }           // 所属阶段（Login=1, Gameplay=2, ...）
     void OnInit();               // 状态机驱动的初始化
     void OnDestroy();            // 状态机驱动的销毁
     void ResetModuleData();      // 热重启复用
 }
 ```
 
-两者**平行不继承**——Collector 只扫 IEmberManager，ModuleCollector（待实现）只扫 IEmberModule。
+业务模块必须通过类型元数据声明阶段和启用状态：
+
+```csharp
+[EmberModule(ModulePhase.Gameplay)]
+public sealed class BattleModule : EmberSingleton<BattleModule>, IEmberModule
+{
+    public void OnInit() { }
+    public void OnDestroy() { }
+    public void ResetModuleData() { }
+}
+
+[EmberModule(ModulePhase.Gameplay, Enabled = false)]
+public sealed class OptionalModule : EmberSingleton<OptionalModule>, IEmberModule
+{
+    public void OnInit() { }
+    public void OnDestroy() { }
+    public void ResetModuleData() { }
+}
+```
+
+`EmberModuleCollector` 会先读取 `EmberModuleAttribute`；禁用或缺少特性的类型不会访问
+`Instance`。两者**平行不继承**——Collector 只扫 IEmberManager，ModuleCollector 只扫
+IEmberModule。启用的 Module 在 Init 阶段只会被发现、构造和登记；进入声明的 Phase 并成功执行
+`OnInit` 后才算激活，才会接收 Update。
+
+`Enabled` 是启动扫描时的类型级装配开关，不提供运行时热插拔。当前框架内置驱动 Global 与
+Gameplay；`ModulePhase.Main` 或自定义 Phase 需要由对应状态显式调用 `InitPhase` / `DestroyPhase`。
 
 ### EmberManagerCollector
 
@@ -1193,6 +1202,20 @@ EmberManagerCollector.Instance.DestroyAll();     // 逆序 Destroy
 int count = EmberManagerCollector.Instance.ManagerCount;
 ```
 
+### EmberModuleCollector
+
+```csharp
+var modules = EmberModuleCollector.Instance;
+modules.DiscoverModules();                    // 只装配 Enabled Module，不调用 OnInit
+bool enabled = modules.IsModuleEnabled<BattleModule>();
+bool found = modules.TryGetModule(out BattleModule battle); // 不扫描、不创建
+modules.InitPhase(ModulePhase.Gameplay);      // OnInit，成功后进入活动状态
+modules.DestroyPhase(ModulePhase.Gameplay);   // OnDestroy，保留实例供重入
+```
+
+退出框架时先 `EmberModuleCollector.DestroyAll()`，再
+`EmberManagerCollector.DestroyAll()`，保证上层业务先释放、底层 Manager 后释放。
+
 ---
 
 ## 启动器
@@ -1201,7 +1224,7 @@ int count = EmberManagerCollector.Instance.ManagerCount;
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/GameLauncher.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/GameLauncher.cs` |
 | **基类** | `EmberMonoSingleton<GameLauncher>`（无 DontDestroyOnLoad，由 FrameworkScene 保活） |
 | **说明** | 框架集中入口：驱动 Manager 初始化 → 状态机 → Update 循环 |
 
@@ -1220,7 +1243,7 @@ protected virtual void ConfigureStateMachine(EmberStateMachine fsm) { ... }
 
 ## 资源管理
 
-> 位置: `Ember/Resource/Runtime/`, 命名空间 `Ember.Resource`
+> 位置: `Packages/com.ember/Resource/Runtime/`, 命名空间 `Ember.Resource`
 
 ### EmberResourceManager
 
@@ -1258,7 +1281,7 @@ public interface IResourceProvider {
     float Progress { get; }
     void Initialize(Action<bool> onComplete);
     void LoadAssetAsync<T>(string path, Action<T> onComplete) where T : Object;
-    void LoadSceneAsync(string sceneName, Action onComplete);
+    AsyncOperation LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive);
     void UnloadAsset(string path);
     void UnloadUnusedAssets();
     // Handle API（ember 扩展）
@@ -1270,13 +1293,13 @@ public interface IResourceProvider {
 
 ### ResourcesProvider（默认实现）
 
-Unity Resources API 实现。开发/小项目用，正式项目替换为 AddressablesProvider 或 YooAssetProvider。
+默认实现使用同步 `Resources.Load<T>` 后调用回调，因此 `Async` 命名不保证后台或跨帧加载。Addressables/YooAsset Provider 尚未随框架交付，需要业务自行实现。详见 [资源模块](../../Packages/com.ember/Documentation~/resource/README.md)。
 
 ### EmberAssetHandle《T》
 
 | | |
 |---|---|
-| **位置** | `Ember/Resource/Runtime/EmberAssetHandle.cs` |
+| **位置** | `Packages/com.ember/Resource/Runtime/EmberAssetHandle.cs` |
 | **说明** | 可追踪的异步加载句柄。支持状态查询（IsDone / Succeeded / Error）、取消（Cancel）和引用释放（Dispose）。Completed 事件在注册前已加载完毕时会立即回调。 |
 
 ```csharp
@@ -1311,7 +1334,7 @@ handle.Dispose();
 
 | | |
 |---|---|
-| **位置** | `Ember/Resource/Runtime/EmberAssetHandleSlot.cs` |
+| **位置** | `Packages/com.ember/Resource/Runtime/EmberAssetHandleSlot.cs` |
 | **说明** | 异步加载槽 —— 持有"当前已加载"+"正在加载中"两个状态，自动去重、取消和重入安全。适用于 UI 头像/材质等需要动态切换资源的场景。 |
 
 ```csharp
@@ -1342,7 +1365,7 @@ _slot.Dispose(); // 取消加载 + 释放当前资源
 
 | | |
 |---|---|
-| **位置** | `Ember/Resource/Runtime/EmberFileHandle.cs` |
+| **位置** | `Packages/com.ember/Resource/Runtime/EmberFileHandle.cs` |
 | **说明** | 文件加载句柄 —— Raw File / Bytes / Text 统一抽象。支持 GetBytes（防御性拷贝）、GetText（UTF-8 懒解析+缓存）、GetFilePath。 |
 
 ```csharp
@@ -1388,9 +1411,8 @@ EUIManager.Instance.ShowMainPage(GamePages.EUIMainPage);
 EUIManager.Instance.ShowPopup(GamePages.EUISettingPage, args);
 EUIManager.Instance.ShowTopMost(GamePages.EUILoadingPage);
 EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
-
-// FreePage / Overlay 同样按定义中的 PageType 路由，没有单独的 ShowFreePage API
-EUIManager.Instance.ShowTopMost(GamePages.GMPage);
+EUIManager.Instance.ShowOverlay(GamePages.SceneUIHost);
+EUIManager.Instance.ShowFreePage(GamePages.GMPage);
 
 // 背景与预加载
 EUIManager.Instance.SetBackground(GamePages.EUIBackgroundPage);
@@ -1417,6 +1439,8 @@ object result = EUIManager.Instance.GetReturnValue(page);
 void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ShowPopup(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ShowTopMost(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowOverlay(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowFreePage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ShowSubPage(EUIPageDef pageDef, EUIPage parentPage, object args = null, Action<EUIPage> onComplete = null);
 void PreloadPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ClosePage(EUIPage page, object returnValue = null);
@@ -1463,9 +1487,102 @@ public enum PageType
 
 ---
 
+## SceneUI
+
+> 位置：`Packages/com.ember/SceneUI/Runtime/`；命名空间：`Ember.SceneUI`、`Ember.SceneUI.Integration`
+
+SceneUI 的业务 View 统一使用 EUI Item：Prefab 根节点配置 `EUIBindingRole.Item`，不挂 SceneUI 专用 Behaviour，也不拥有独立 Canvas。`PrefabSceneUIViewHost` 实例化 Item 后通过 `EUIItemFactory` 创建逻辑，并包装为纯 C# `EUIItemSceneUIView`。Binder 可使用 `GetLogic<TLogic>()` 获取生成的强类型逻辑。
+
+### EmberSceneUIEngine
+
+普通的、可释放的 SceneUI 运行引擎。它不是 `IEmberManager`，没有静态 `Instance`，由业务 `SceneUIModule` 在对应 Phase 内持有。
+
+```csharp
+var engine = new EmberSceneUIEngine();
+SceneUIContextHandle context = engine.RegisterContext(descriptor);
+SceneUIHandle entry = engine.Register(request);
+
+engine.MarkSpatialDirty(entry);
+engine.MarkContentDirty(entry);
+engine.SetBusinessVisible(entry, visible);
+engine.Unregister(entry);
+engine.UnregisterContext(context);
+engine.Dispose();
+```
+
+主要 API：
+
+```csharp
+SceneUIContextHandle RegisterContext(in SceneUIContextDescriptor descriptor);
+SceneUIHandle Register(in SceneUIRequest request);
+bool TryRegisterBatch(SceneUIRequest[] requests, SceneUIHandle[] results, int count);
+bool Unregister(SceneUIHandle handle);
+bool UnregisterContext(SceneUIContextHandle handle);
+bool MarkSpatialDirty(SceneUIHandle handle);
+bool MarkContentDirty(SceneUIHandle handle);
+bool SetBusinessVisible(SceneUIHandle handle, bool visible);
+bool SetContextVisible(SceneUIContextHandle handle, bool visible);
+bool FlushContext(SceneUIContextHandle handle);
+SceneUIDiagnostics Diagnostics { get; }
+bool IsDisposed { get; }
+void Dispose();
+```
+
+### EmberSceneUIModuleBase / SceneUIModule
+
+框架提供抽象基类，项目实现具体模块：
+
+```csharp
+[EmberModule(ModulePhase.Gameplay)]
+public sealed class SceneUIModule : EmberSceneUIModuleBase<SceneUIModule>
+{
+    protected override void RegisterSceneUIChannels()
+    {
+        HostedSceneUIContextOptions options = HostedSceneUIContextOptions.Default;
+        RegisterCinemachineChannel(
+            WorldChannel,
+            GamePages.SceneUIHost,
+            sceneCamera,
+            viewCatalog,
+            options);
+    }
+}
+```
+
+模块级 API：
+
+```csharp
+SceneUIChannelState GetChannelState(SceneUIChannelKey channelKey);
+bool TryRegisterSceneUI(SceneUIChannelKey channelKey,
+    in SceneUIModuleRequest request, out SceneUIModuleHandle handle);
+bool UnregisterSceneUI(SceneUIModuleHandle handle);
+bool IsSceneUIValid(SceneUIModuleHandle handle);
+bool MarkSceneUIPositionDirty(SceneUIModuleHandle handle);
+bool RefreshSceneUIPosition(SceneUIModuleHandle handle,
+    Vector3 worldOffset, Vector2 uiOffset);
+bool MarkSceneUIContentDirty(SceneUIModuleHandle handle);
+bool SetSceneUIVisible(SceneUIModuleHandle handle, bool visible);
+bool SetChannelVisible(SceneUIChannelKey channelKey, bool visible);
+bool NotifyCameraUpdated(SceneUIChannelKey channelKey);
+bool UnregisterChannel(SceneUIChannelKey channelKey);
+event Action<SceneUIChannelKey> ChannelReady;
+event Action<SceneUIChannelKey, string> ChannelUnavailable;
+```
+
+每个 Channel 绑定一个 Overlay/FreePage 宿主页、一个 `SceneUIPageHost.BubbleRoot`、一个 SceneCamera 和一个 View Catalog。Channel Loading 时注册会返回 `false`；框架不保存待处理业务请求。
+
+通用模块生成工具只生成默认关闭的 `Assets/Game/Module/SceneUI/SceneUIModule.cs` 骨架；业务需
+自行配置宿主页、BubbleRoot、气泡 Prefab、Catalog 及最终枚举值。`source3d-2p5d v0.2.3` 是已完成
+配置并显式启用的完整示例，相关页面、气泡、Catalog、静态/动态场景目标均随该业务模板交付，
+不进入 SceneUI Package 或 `base`。
+
+完整说明见 [SceneUI 模块设计](scene-ui-module-design.md) 和包内 `Documentation~/scene-ui/README.md`。
+
+---
+
 ## 场景管理
 
-> 位置: `Ember/Scene/Runtime/`, 命名空间 `Ember.Scene`
+> 位置: `Packages/com.ember/Scene/Runtime/`, 命名空间 `Ember.Scene`
 
 ### EmberSceneManager
 
@@ -1491,7 +1608,7 @@ string current = mgr.CurrentScene;
 
 ## 音频管理
 
-> 位置: `Ember/Audio/Runtime/`, 命名空间 `Ember.Audio`
+> 位置: `Packages/com.ember/Audio/Runtime/`, 命名空间 `Ember.Audio`
 
 ### EmberAudioManager
 
@@ -1509,25 +1626,36 @@ audio.SetSFXVolume(1.0f);
 
 ## 输入管理
 
-> 位置: `Ember/Input/Runtime/`, 命名空间 `Ember.Input`
+> 位置: `Packages/com.ember/Input/Runtime/`, 命名空间 `Ember.Input`
 
 ### EmberInputManager
 
 ```csharp
 var input = EmberInputManager.Instance;
-input.Init(inputActionAsset, defaultMap: "Gameplay");
+input.Init(inputActionAsset, defaultMap: "Player");
 input.SwitchMap("UI");                  // 切换到 UI 模式
 
 var move = input.GetAxis("Move");
 bool jump = input.IsPressed("Jump");
 var action = input.GetAction("Attack");
+var playerMove = input.GetAction("Player", "Move");
+
+// 未来接入玩家按键重绑定
+input.SetRebindingService(myRebindingService);
 ```
+
+`EmberInputManager` 继承 `EmberSingleton` 并实现 `IEmberManager`，会在 Manager Init 阶段被反射发现。
+它是 `base` 与其他模板都需要的框架 Manager，由公共 Package 提供；模板不需要在 `Assets` 中复制
+它的实现。`PlayerControlModule` 等输入消费端属于可选业务 Module，不要求 `base` 包含。
+无参 `IEmberManager.Init` 只检查 InputHost；完整初始化仍需业务传入 InputActionAsset。
+当前只提供 `IEmberInputRebindingService`、Binding Target、请求和结果等扩展契约，不包含默认重绑定实现。
+Manager 只提供输入，不负责把玩家输入转换成场景操作；具体消费端由业务模块实现。
 
 ---
 
 ## 相机管理
 
-> 位置: `Ember/Camera/Runtime/`, 命名空间 `Ember.Camera`
+> 位置: `Packages/com.ember/Camera/Runtime/`, 命名空间 `Ember.Camera`
 
 ### EmberCameraManager
 
@@ -1553,6 +1681,11 @@ int stack = cam.OverrideStackCount;
 var active = cam.ActiveCamera;
 ```
 
+场景中的 `EmberCameraRegistration` 负责随 CinemachineCamera 的生命周期自动注册/注销，
+并可配置 Awake 后立即激活。它公开只读 `CameraKey` 以及幂等的 `RegisterCamera()` /
+`UnregisterCamera()`；Awake 激活默认遵守 Lock/Override，只有启用 Force Activation 才执行强制切换。
+玩法模块可以使用 `MainCamera` 做射线换算，但不代管相机注册。
+
 ---
 
 ## Editor 工具（Editor-only）
@@ -1563,7 +1696,7 @@ var active = cam.ActiveCamera;
 
 | | |
 |---|---|
-| **位置** | `com.ember/Editor/FileEncodingUtility.cs` |
+| **位置** | `Packages/com.ember/Basic/Editor/FileEncodingUtility.cs` |
 | **说明** | UTF-8 BOM 检测和转换。外部导入的脚本可能是 ANSI/GBK 编码导致中文乱码，用这个工具检测和批量转换。 |
 
 ```csharp
@@ -1575,14 +1708,14 @@ FileEncodingUtility.ConvertToUTF8BOM("path/to/script.cs");
 
 | | |
 |---|---|
-| **位置** | `com.ember/Editor/DisplayFirstElementInHeaderDrawer.cs` |
+| **位置** | `Packages/com.ember/Basic/Editor/DisplayFirstElementInHeaderDrawer.cs` |
 | **说明** | `[DisplayFirstElementInHeader]` 的 PropertyDrawer。 |
 
 ### ProjectLocalPrefs
 
 | | |
 |---|---|
-| **位置** | `com.ember/Editor/Utils/ProjectLocalPrefs.cs` |
+| **位置** | `Packages/com.ember/Basic/Editor/Utils/ProjectLocalPrefs.cs` |
 | **命名空间** | `Ember.Basic.Editor` |
 | **说明** | Editor-only 的 JSON 文件持久化 key-value 存储。数据保存在 `{ProjectRoot}/Library/EmberLocalPrefs/prefs.json`，不污染 Assets 目录。支持数据迁移回调。 |
 
@@ -1616,7 +1749,7 @@ ProjectLocalPrefs.DeleteAll();
 | `DeleteKey(key)` | 删除指定 key |
 | `DeleteAll()` | 清空所有存储 |
 
-> 与 `EditorPrefs` 的区别：EditorPrefs 存 Windows 注册表（换机器丢失），ProjectLocalPrefs 存项目 `Library/` 下（可 Git 管理、手动编辑 JSON）。
+> 与 `EditorPrefs` 的区别：EditorPrefs 存 Windows 注册表（换机器丢失），ProjectLocalPrefs 存项目 `Library/` 下（本仓库忽略该目录；用于项目本地偏好，不作为共享配置）。
 
 ---
 
@@ -1626,7 +1759,7 @@ ProjectLocalPrefs.DeleteAll();
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Resource/IUpdater.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Resource/IUpdater.cs` |
 | **命名空间** | `Ember.Basic` |
 
 ```csharp
@@ -1645,7 +1778,7 @@ public interface IDelayDisposable : IDisposable {
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Utils/ApplicationQuitUtil.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Utils/ApplicationQuitUtil.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | 应用退出工具。Android 上先通过 `android.os.Process.killProcess` 杀进程，失败时回退到 `Application.Quit()`。 |
 
@@ -1657,7 +1790,7 @@ ApplicationQuitUtil.Quit(); // 替代 Application.Quit()
 
 | | |
 |---|---|
-| **位置** | `com.ember/Runtime/Utils/UrlUtils.cs` |
+| **位置** | `Packages/com.ember/Basic/Runtime/Utils/UrlUtils.cs` |
 | **命名空间** | `Ember.Basic` |
 | **说明** | URL 编解码、路径提取、URL 拼接工具。编码基于 `Uri.EscapeDataString`，符合 RFC 3986。 |
 
@@ -1684,7 +1817,7 @@ var rel     = UrlUtils.GetRelativePath("C:/a/b/c.txt", "C:/a/"); // "b/c.txt"
 
 | | |
 |---|---|
-| **位置** | `Ember/Core/Runtime/EmberSceneField.cs` |
+| **位置** | `Packages/com.ember/Core/Runtime/EmberSceneField.cs` |
 | **说明** | 可拖拽的场景引用。在 Inspector 中拖 .unity 文件替代手写字符串。隐式转换 string。 |
 
 ```csharp

@@ -1,14 +1,15 @@
 # Audio 模块升级方案
 
+> 状态：待实施设计（2026-09-07 核对）。当前 Audio 仍为 BGM/SFX 基础实现，AudioAgent、AudioCategory、AudioGroupConfig 尚不存在。下文新类型和 API 均为拟议方案；实际使用见 [Audio 模块](../../Packages/com.ember/Documentation~/audio/README.md)。
 > 状态：📋 待实施
 > 创建：2026-08-05
-> 参考：[burner Audio 模块](../../c:/Users/wuyu/Project/burner/client/game/Assets/Game/GameCore/Runtime/Common/Audio/) + [burner AudioMgr](../../c:/Users/wuyu/Project/burner/client/game/Assets/Game/GameLogic/GameManagers/Audio/AudioMgr.cs)
+> 参考：2026-08-05 对 Burner Audio/AudioMgr 的历史研究；当前工程不包含该外部源码，本轮未重核外部实现。
 
 ---
 
 ## 一、背景
 
-当前 [EmberAudioManager](../../Assets/Ember/Audio/Runtime/EmberAudioManager.cs) 已具备基本的 BGM/SFX 播放能力，但存在以下局限：
+当前 [EmberAudioManager](../../Packages/com.ember/Audio/Runtime/EmberAudioManager.cs) 已具备基本的 BGM/SFX 播放能力，但存在以下局限：
 
 | 问题 | 影响 |
 |------|------|
@@ -62,7 +63,7 @@ Update() 每帧:
 ## 三、新增文件
 
 ```
-Assets/Ember/Audio/Runtime/
+Packages/com.ember/Audio/Runtime/
 ├── AudioType.cs              ← 新增
 ├── AudioGroupConfig.cs       ← 新增
 ├── AudioAgent.cs             ← 新增
@@ -324,7 +325,7 @@ _categories[(int)AudioType.Sound] = new AudioCategory(new AudioGroupConfig
 
 | # | 风险 | 缓解 |
 |---|------|------|
-| 1 | `PlaySFX` 返回类型从 `void` → `AudioAgent`，现有调用方编译失败 | 如果调用方不接收返回值，完全兼容。如果 `var x = PlaySFX(...)` 后续使用 `x`，类型变为 `AudioAgent`，需要检查。框架内部无此用法，业务层搜索确认 |
+| 1 | `PlaySFX` 返回类型从 `void` → `AudioAgent`，现有调用方编译失败 | 普通语句调用通常可保留，但方法组委托、接口签名及返回值使用点仍需逐一检查。如果 `var x = PlaySFX(...)` 后续使用 `x`，类型变为 `AudioAgent`，需要检查。框架内部无此用法，业务层搜索确认 |
 | 2 | Agent 池耗尽（高频 SFX 超过 `AgentHelperCount`） | 默认 Sound=10 足够；提供 `_customGroups` 覆盖；池耗尽时 Return null（调用方判空） |
 | 3 | AudioMixer Group 路由 | Agent 的 AudioSource 需设置 `outputAudioMixerGroup`，当前全部路由到 Master。后续可通过 `AudioGroupConfig.Name` 匹配 Mixer 中的 Group |
 | 4 | Update 遍历开销 | 只遍历活跃 Agent，空闲 Agent 不参与。`AudioCategory.Update()` 在 `_activeAgents.Count == 0` 时立即返回 |

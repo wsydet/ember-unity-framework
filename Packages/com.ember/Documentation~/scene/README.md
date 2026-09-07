@@ -9,14 +9,14 @@ SceneCoordinator 桥接状态机与场景管理器，实现状态切换自动加
 
 | 角色 | 路径 |
 |------|------|
-| 场景管理器 | `Runtime/EmberSceneManager.cs` |
-| 状态机↔场景桥接器 | `Runtime/SceneCoordinator.cs` |
+| 场景管理器 | [EmberSceneManager.cs](../../Scene/Runtime/EmberSceneManager.cs) |
+| 状态机↔场景桥接器 | [SceneCoordinator.cs](../../Scene/Runtime/SceneCoordinator.cs) |
 
 ## 依赖
 
 | 依赖 | 类型 | 说明 |
 |------|------|------|
-| `Ember.Core` | 框架模块 | EmberSingleton、IEmberManager、EmberEventBus、EmberDebug、GameLauncher |
+| `Ember.Core` | 框架模块 | EmberSingleton、IEmberManager、EmberEventBus、GameLauncher（日志 EmberDebug 来自 Basic） |
 | `UniTask` (Cysharp) | 第三方 | 异步加载驱动 |
 
 ## 公开 API

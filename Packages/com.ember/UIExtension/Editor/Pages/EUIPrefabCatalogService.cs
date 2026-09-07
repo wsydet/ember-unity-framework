@@ -536,6 +536,7 @@ namespace Ember.UIExtension.Editor
                 PageType.Popup => "Popup",
                 PageType.FullScreenPopup => "Popup",
                 PageType.TopMost => "TopMost",
+                PageType.Overlay => "Overlay",
                 PageType.FreePage => "FreePage",
                 _ => "Normal",
             };

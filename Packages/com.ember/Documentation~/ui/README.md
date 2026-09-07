@@ -1,76 +1,50 @@
-﻿# UI — 用户界面管理
+# UI — 页面与宿主 UI 单元
 
-## 概述
+源码：[UI/Runtime](../../UI/Runtime)、[UIExtension](../../UIExtension)。
+`EUIManager` 是业务入口，`EUIViewEngine` 执行资源加载、排序、过渡和生命周期。两者均为
+`EmberSingleton` + `IEmberManager`，不是挂在预制体上的 MonoBehaviour。
 
-基于层级栈的界面管理系统。每个界面实现 `IEUIView` 接口获得完整生命周期，
-通过 `EUIPageDef` 注册页面元数据，由 `EUIManager` 管理多层级 Push/Pop。
+## 打开与关闭页面
 
-## 文件清单
+先用 UI 开发中心创建 Page、生成 Binding 和 `EUIPageDef`，业务使用生成的 `GamePages` 常量：
 
-| 角色 | 路径 |
-|------|------|
-| 主逻辑入口 | `Runtime/EUIManager.cs` |
-| 核心接口 | `Runtime/IEUIView.cs` |
-| 页面定义 | `Runtime/EUIPageDef.cs` |
+```csharp
+EUIManager.Instance.ShowMainPage(GamePages.EUIMainPage);
+// 在拥有该页面的状态退出时关闭
+EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage);
+```
 
-## 依赖
+| 页面角色 | 入口与行为 |
+|---|---|
+| MainPage | `ShowMainPage` 入主页面栈，暂停旧页；状态退出负责关闭自己拥有的页面 |
+| Popup / FullScreenPopup | `ShowPopup`；后者同时隐藏下层，遮罩由配置决定 |
+| TopMost | `ShowTopMost`，用于 Loading 等 |
+| SubPage | `ShowSubPage(def, parentPage, ...)`；父关子关 |
+| Overlay / FreePage | `ShowOverlay` / `ShowFreePage`，固定排序值 |
+| Background | `SetBackground` / `SetBackgroundAsync`，单槽位且不拦射线 |
 
-| 依赖 | 类型 | 说明 |
-|------|------|------|
-| `Ember.Core` | 框架模块 | EmberMonoSingleton |
-| `Ember.Resource` | 框架模块 | EmberResourceManager（异步加载预制体） |
+设置页由状态机 Push/Pop 管理，按 [UI 开发参考](../../../../docs/user/UI开发参考.md) 的状态路由打开，避免只关闭页面却未退出状态。
 
-## 公开 API
+其他入口：`PreloadPage`、`ClosePage(page, returnValue)`、`CloseTopPopup`、`CloseAllPopups`、
+`GetReturnValue`、`HidePageViewOnly` / `ShowPageViewOnly`。预加载完成回调仍需处理，不保证调用瞬间完成。
 
-### EUIManager — 界面管理器
+`EUIPageDef` 构造参数为 `prefabPath, layer, pageType`，可选 `overlaySortingOrder`、`freePageSortingOrder`。
+UILayer 当前为 Background=0、Normal=1000、Popup=2000、TopMost=25000；实际栈排序由 PageContext 管理。
 
-继承 EmberMonoSingleton。每个层级独立维护界面栈。
+## Page、Logic、Binding
 
-| 方法 | 说明 |
-|------|------|
-| `Push(EUIPageDef page, object args)` | 加载预制体 → 实例化 → OnOpen → 入栈。暂停原栈顶 |
-| `Pop(int layer)` | 关闭栈顶：OnClose → Destroy → 恢复新栈顶 |
-| `CloseAll(int layer)` | 关闭指定层级所有界面 |
-| `CloseAll()` | 关闭所有层级所有界面 |
-| `GetTopView(int layer) → IEUIView` | 获取栈顶界面 |
-| `GetCount(int layer) → int` | 界面数量 |
-| `HasView(int layer) → bool` | 是否有界面 |
+- `EUIPage` 是普通 C# 页面包装，持有实例与页面状态；`IEUIView` 描述该层契约。
+- `EUILogic` 是业务逻辑基类；生成的 `.Binding.cs` 实现强类型控件绑定，不能手工改。
+- Page 预制体根挂 `EUIBinding`，桥接层创建 Logic 并填充 `ControlMap`，无需挂一个实现 IEUIView 的业务 MonoBehaviour。
+- 生命周期包括 OnBeginLoad、OnBind、OnResetDefault、OnInit、OnOpen、OnShow、OnHide、OnClose、OnReset、OnDispose。
+- 普通过渡选择无、预设渐变、Animator、自定义 UniTask 之一；自定义覆写 `OnCustomEnter/OnCustomExit`。
+- Framework 模式业务增量写到 `XxxUser` 钩子；使用 UIUpdate 由 Binding 配置并重新生成。
 
-### IEUIView — 界面生命周期
+## Item
 
-| 方法 | 说明 |
-|------|------|
-| `OnOpen(object args)` | 首次打开（预制体实例化后），绑定控件、注册事件 |
-| `OnClose()` | 关闭时调用，注销事件、释放引用 |
-| `OnPause()` | 被其他界面 Push 覆盖时 |
-| `OnResume()` | 覆盖界面 Pop 后恢复时 |
+`EUIBindingRole.Item` 由宿主页面/列表/业务模块持有，不生成 PageDef，不进入 GamePages，不通过 EUIManager 打开。
+`EUIItemFactory` 根据实例根 Binding 创建 Item 与 Logic。Item 逻辑的 `Page` 为 null，`Item` 指向宿主包装。
+Item 没有独立 Canvas/页面排序，复用宿主的渲染环境；临时隐藏与回池、最终 Dispose 是不同生命周期。
+SceneUI 的气泡就是 Item，见 [SceneUI 接入](../scene-ui/README.md)。
 
-### EUIPageDef — 页面定义
-
-| 成员 | 说明 |
-|------|------|
-| `PrefabPath` | 预制体资源路径 |
-| `Layer` | 所属层级值 |
-
-### UILayer — 层级枚举
-
-| 值 | 数值 | 说明 |
-|----|------|------|
-| Background | 0 | 背景 |
-| Normal | 100 | 普通界面 |
-| Popup | 200 | 弹窗 |
-| TopMost | 300 | 顶层（Loading 等） |
-
-## 主流程
-
-**Push：** `Push(page, args)` → 初始化检查 → EnsureLayerRoot → PauseTopView → ResourceManager.LoadAssetAsync → Instantiate → GetComponent<IEUIView> → 无组件则 Destroy → stack.Push → OnOpen
-
-**Pop：** `Pop(layer)` → TryPop → OnClose → DestroyView → ResumeTopView
-
-## 约束与陷阱
-
-| 类别 | 说明 |
-|------|------|
-| 异步 Push | Push 走 ResourceManager 异步加载预制体，连续快速 Push 需自行防重入 |
-| 预制体要求 | 预制体根节点必须有实现 IEUIView 的 MonoBehaviour 组件 |
-| PrefabPath | null 时构造函数抛 ArgumentNullException |
+开发仓库还提供 [完整 UI 使用规范](../../../../docs/user/UI开发参考.md) 与 [EUI API 参考](../../../../docs/dev/eui-reference.md)。

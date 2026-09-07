@@ -4,7 +4,8 @@
 
 管理游戏全局状态的切换。基于 EmberGameState 抽象基类，支持 TransitionTo（替换式切换）、
 Push/Pop（栈式覆盖）、TransitionDescriptor（可视化编辑器数据源）。
-InitState → MainState → GameplayState 构成核心状态管线。
+InitState → MainState → GameplayState 构成核心状态管线。状态机同时负责驱动可选业务 Module 的
+Phase 生命周期；框架必要 Manager 只在 Init 阶段统一启动，不随业务状态切换。
 
 ## 文件清单
 
@@ -58,10 +59,19 @@ InitState → MainState → GameplayState 构成核心状态管线。
 
 | 状态 | IsRequired | ScenePath | 说明 |
 |------|------------|-----------|------|
-| `InitState` | ✅ | — | 系统初始化：Manager 启动、资源就绪。完成后 TransitionTo<MainState> |
+| `InitState` | ✅ | — | 发现启用 Module → 启动全部 Manager → 激活 Global Module → TransitionTo<MainState> |
 | `MainState` | ✅ | MainScene | 主界面/大厅。Init → Main → Gameplay。支持 Push Settings |
 | `GameplayState` | ✅ | GameplayScene | 核心玩法。只需 override OnGameplayXxx 系列方法 |
 | `SettingsState` | ❌ | — | 通用设置。以 Push 模式弹出，通过 SettingsContext 区分上下文 |
+
+### Manager 与 Module 的状态关系
+
+- Manager 是框架必要组件：`InitState` 调用 `EmberManagerCollector.InitializeAll()` 后持续存活到框架退出。
+- Module 是可选业务积木：`Enabled` 决定启动扫描时是否装配，`Phase` 决定已装配模块何时调用
+  `OnInit` / `OnDestroy`。
+- `DiscoverModules()` 只构造和登记，不代表模块已经激活；Module 只有 `OnInit` 成功后才接收 Update。
+- 内置状态当前自动驱动 `Global` 和 `Gameplay`。自定义阶段或 `ModulePhase.Main` 需要在对应状态的
+  Enter/Exit 中显式接入 `InitPhase` / `DestroyPhase`。
 
 ### GameplayState 子类化钩子
 
@@ -69,8 +79,8 @@ InitState → MainState → GameplayState 构成核心状态管线。
 
 | 钩子 | 说明 |
 |------|------|
-| `OnGameplayEnter(object args)` | 进入玩法：加载战斗场景、初始化模块 |
-| `OnGameplayExit()` | 退出玩法：卸载场景、清理模块 |
+| `OnGameplayEnter(object args)` | Gameplay Module 激活后执行玩法入口逻辑 |
+| `OnGameplayExit()` | Gameplay Module 销毁前执行玩法退出逻辑 |
 | `OnGameplayUpdate()` | 每帧驱动玩法主循环 |
 | `OnGameplayPause()` | 被弹窗覆盖时暂停 |
 | `OnGameplayResume()` | 弹窗关闭后恢复 |

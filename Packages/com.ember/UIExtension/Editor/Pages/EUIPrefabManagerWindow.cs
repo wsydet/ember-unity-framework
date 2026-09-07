@@ -17,7 +17,8 @@ using UnityEngine;
 namespace Ember.UIExtension.Editor
 {
     /// <summary>
-    /// UI 开发中心：标准页面创建、UI 资产总览，以及带影响预览的清理与删除。
+    /// UI 开发中心：标准 UI 创建、UI 资产总览、模块目录模板管理，
+    /// 以及带影响预览的清理与删除。
     /// </summary>
     public class EUIPrefabManagerWindow : EditorWindow
     {
@@ -27,10 +28,12 @@ namespace Ember.UIExtension.Editor
         {
             Create,
             Overview,
+            ModuleTemplate,
             Maintenance,
         }
 
-        private static readonly string[] TabLabels = { "创建 UI", "UI 总览", "清理与删除" };
+        private static readonly string[] TabLabels =
+            { "创建 UI", "UI 总览", "模块模板", "清理与删除" };
 
         private static readonly PageType[] SupportedPageTypes =
         {
@@ -40,6 +43,7 @@ namespace Ember.UIExtension.Editor
             PageType.FullScreenPopup,
             PageType.TopMost,
             PageType.SubPage,
+            PageType.Overlay,
             PageType.FreePage,
         };
 
@@ -51,6 +55,7 @@ namespace Ember.UIExtension.Editor
             "全屏弹窗 (FullScreenPopup)",
             "置顶页 (TopMost)",
             "子页面 (SubPage)",
+            "覆盖层 (Overlay)",
             "独立页 (FreePage)",
         };
 
@@ -65,6 +70,7 @@ namespace Ember.UIExtension.Editor
         private EUICreationPlan _creationPlan;
         private EUICreationResult _creationResult;
         private EUIPrefabCatalogSnapshot _catalog;
+        private EUIModuleTemplatePanel _moduleTemplatePanel;
         private readonly List<EUIOrphanScriptGroup> _orphanGroups = new List<EUIOrphanScriptGroup>();
         private readonly List<KeyValuePair<string, string>> _emptyLeaves =
             new List<KeyValuePair<string, string>>();
@@ -81,6 +87,8 @@ namespace Ember.UIExtension.Editor
         private void OnEnable()
         {
             _creationRequest ??= new EUICreationRequest();
+            _moduleTemplatePanel = new EUIModuleTemplatePanel();
+            _moduleTemplatePanel.Refresh();
             Rescan();
         }
 
@@ -96,6 +104,10 @@ namespace Ember.UIExtension.Editor
                     break;
                 case DevelopmentTab.Overview:
                     DrawOverviewTab();
+                    break;
+                case DevelopmentTab.ModuleTemplate:
+                    _moduleTemplatePanel ??= new EUIModuleTemplatePanel();
+                    _moduleTemplatePanel.Draw(ref _lastResult);
                     break;
                 case DevelopmentTab.Maintenance:
                     DrawMaintenanceTab();
@@ -130,9 +142,10 @@ namespace Ember.UIExtension.Editor
         private void DrawCreationTab()
         {
             _createScroll = EditorGUILayout.BeginScrollView(_createScroll);
-            EditorGUILayout.LabelField("标准页面", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("标准 UI", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "创建根 Canvas → Animator 视觉层 → nested EUISafeArea，并生成逻辑脚本、Binding 和 GamePages 条目。"
+                "创建根 Canvas → Animator 视觉层，并生成逻辑脚本和 Binding；"
+                + "勾选 Page 时额外嵌套 EUISafeArea 并生成 GamePages 条目。"
                 + " Animator 默认复用 EUICommon_Ani，资产中保持禁用，由运行时按过渡模式启用。",
                 MessageType.Info);
 
@@ -170,16 +183,36 @@ namespace Ember.UIExtension.Editor
             }
 
             _creationRequest.ClassPath = EditorGUILayout.TextField(
-                new GUIContent("输出子目录", "Business 模式首段也是资源模块名，如 Inventory/Page。"),
+                new GUIContent("输出子目录",
+                    "代码根目录下的相对路径。Business 模式可写 Inventory/Page，"
+                    + "也可写 Module/SceneUI；后者的 Prefab 会进入 Module/SceneUI/Prefabs。"),
                 _creationRequest.ClassPath);
             _creationRequest.ClassName = EditorGUILayout.TextField("类名", _creationRequest.ClassName);
-            _creationRequest.PageName = EditorGUILayout.TextField("PageDef 名", _creationRequest.PageName);
             _creationRequest.PrefabName = EditorGUILayout.TextField("Prefab 名", _creationRequest.PrefabName);
+            _creationRequest.Role = (EUIBindingRole)EditorGUILayout.EnumPopup(
+                new GUIContent("UI 角色",
+                    "Page 由 EUIManager 页面栈管理；Item 只能由宿主页或业务模块创建和持有。"),
+                _creationRequest.Role);
 
-            var currentIndex = Array.IndexOf(SupportedPageTypes, _creationRequest.PageType);
-            if (currentIndex < 0) currentIndex = 1;
-            currentIndex = EditorGUILayout.Popup("页面类型", currentIndex, SupportedPageTypeLabels);
-            _creationRequest.PageType = SupportedPageTypes[currentIndex];
+            if (_creationRequest.IsPage)
+            {
+                _creationRequest.PageName = EditorGUILayout.TextField("PageDef 名",
+                    _creationRequest.PageName);
+                var currentIndex = Array.IndexOf(SupportedPageTypes, _creationRequest.PageType);
+                if (currentIndex < 0) currentIndex = 1;
+                currentIndex = EditorGUILayout.Popup("页面类型", currentIndex,
+                    SupportedPageTypeLabels);
+                var selectedPageType = SupportedPageTypes[currentIndex];
+                if (_creationRequest.PageType != selectedPageType)
+                {
+                    _creationRequest.PageType = selectedPageType;
+                    if (UsesFixedSortingOrder(selectedPageType))
+                    {
+                        _creationRequest.FixedSortingOrder =
+                            EUIBindingEditorUtility.GetDefaultSortingOrder(selectedPageType);
+                    }
+                }
+            }
             EditorGUILayout.EndVertical();
         }
 
@@ -187,8 +220,23 @@ namespace Ember.UIExtension.Editor
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.LabelField("页面行为", EditorStyles.boldLabel);
+            if (!_creationRequest.IsPage)
+            {
+                EditorGUILayout.LabelField(
+                    "Item 不生成 EUIPageDef、Canvas、页面 Animator 或 SafeArea；由宿主持有。",
+                    EditorStyles.miniLabel);
+                EditorGUILayout.EndVertical();
+                return;
+            }
+
             _creationRequest.UseUIUpdate = EditorGUILayout.Toggle("使用 UIUpdate",
                 _creationRequest.UseUIUpdate);
+            if (UsesFixedSortingOrder(_creationRequest.PageType))
+            {
+                _creationRequest.FixedSortingOrder = EditorGUILayout.IntField(
+                    new GUIContent("固定排序值", "Overlay / FreePage 的 Canvas sortingOrder。"),
+                    _creationRequest.FixedSortingOrder);
+            }
             _creationRequest.TransitionMode =
                 (EUIBinding.RegularTransitionMode)EditorGUILayout.EnumPopup(
                     "普通过渡", _creationRequest.TransitionMode);
@@ -223,7 +271,7 @@ namespace Ember.UIExtension.Editor
             {
                 _creationRequest.GenerateCustomSettings = EditorGUILayout.Toggle(
                     "生成自定义 Settings", _creationRequest.GenerateCustomSettings);
-                if (IsPopup(_creationRequest.PageType))
+                if (_creationRequest.IsPage && IsPopup(_creationRequest.PageType))
                 {
                     _creationRequest.GenerateAutoCreateClickableMaskOverride = EditorGUILayout.Toggle(
                         "生成遮罩创建覆写", _creationRequest.GenerateAutoCreateClickableMaskOverride);
@@ -261,9 +309,18 @@ namespace Ember.UIExtension.Editor
                 DrawPath("Binding", _creationPlan.BindingScriptPath);
                 if (!string.IsNullOrEmpty(_creationPlan.SettingsScriptPath))
                     DrawPath("Settings", _creationPlan.SettingsScriptPath);
-                DrawPath("PageDef", _creationPlan.PageDefFile);
+                if (!string.IsNullOrEmpty(_creationPlan.PageDefFile))
+                    DrawPath("PageDef", _creationPlan.PageDefFile);
                 DrawPath("Animator", _creationPlan.AnimatorControllerPath);
-                DrawPath("SafeArea", _creationPlan.SafeAreaPrefabPath);
+                if (!string.IsNullOrEmpty(_creationPlan.SafeAreaPrefabPath))
+                    DrawPath("SafeArea", _creationPlan.SafeAreaPrefabPath);
+                if (_creationPlan.ModuleInitializationPlan?.DirectoriesToCreate.Count > 0)
+                {
+                    DrawPath("新模块", _creationPlan.ModuleDirectory);
+                    EditorGUILayout.LabelField(
+                        $"      将按模板初始化 {_creationPlan.ModuleInitializationPlan.DirectoriesToCreate.Count - 1} 个子目录",
+                        EditorStyles.miniLabel);
+                }
                 EditorGUILayout.EndVertical();
             }
             else if (_creationPlan != null)
@@ -301,10 +358,16 @@ namespace Ember.UIExtension.Editor
             var summary = new StringBuilder()
                 .AppendLine($"Prefab：{_creationPlan.PrefabPath}")
                 .AppendLine($"逻辑：{_creationPlan.LogicScriptPath}")
-                .AppendLine($"Binding：{_creationPlan.BindingScriptPath}")
-                .AppendLine($"PageDef：{_creationPlan.PageDefFile}")
-                .ToString();
-            if (!EditorUtility.DisplayDialog("创建标准 UI", summary + "\n继续？", "创建", "取消"))
+                .AppendLine($"Binding：{_creationPlan.BindingScriptPath}");
+            if (!string.IsNullOrEmpty(_creationPlan.PageDefFile))
+                summary.AppendLine($"PageDef：{_creationPlan.PageDefFile}");
+            if (_creationPlan.ModuleInitializationPlan?.DirectoriesToCreate.Count > 0)
+            {
+                summary.AppendLine($"新模块：{_creationPlan.ModuleDirectory}");
+                summary.AppendLine(
+                    $"模板子目录：{_creationPlan.ModuleInitializationPlan.DirectoriesToCreate.Count - 1} 个");
+            }
+            if (!EditorUtility.DisplayDialog("创建标准 UI", summary.ToString() + "\n继续？", "创建", "取消"))
                 return;
 
             _creationResult = EUICreationService.Create(_creationRequest);
@@ -358,10 +421,11 @@ namespace Ember.UIExtension.Editor
             if (_catalog?.IsConfigured == true)
             {
                 var pageCount = _catalog.Entries.Count(entry => entry.IsPage);
+                var itemCount = _catalog.Entries.Count - pageCount;
                 var issueCount = _catalog.Entries.Count(entry => !entry.IsHealthy);
                 EditorGUILayout.LabelField(
-                    $"共 {_catalog.Entries.Count} · 页面 {pageCount} · 有问题 {issueCount}",
-                    EditorStyles.miniLabel, GUILayout.Width(220f));
+                    $"共 {_catalog.Entries.Count} · Page {pageCount} · Item {itemCount} · 有问题 {issueCount}",
+                    EditorStyles.miniLabel, GUILayout.Width(270f));
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -384,8 +448,8 @@ namespace Ember.UIExtension.Editor
                 : $"脚本 {(entry.LogicScriptExists ? "✅" : "❌")}{Path.GetFileName(entry.LogicScriptPath)}"
                   + $" / {(entry.BindingScriptExists ? "✅" : "❌")}{Path.GetFileName(entry.BindingScriptPath)}";
             var description = (entry.IsPage
-                    ? $"页面 {entry.PageName} · {entry.PageDesc}"
-                    : "非页面")
+                ? $"页面 {entry.PageName} · {entry.PageDesc}"
+                    : "Item（宿主持有）")
                 + $"　|　绑定 {entry.BindingCount}（框架 {entry.FrameworkBindingCount}）"
                 + $"　|　{scriptState}"
                 + (entry.IsPage && !entry.NoCodeGeneration
@@ -646,6 +710,11 @@ namespace Ember.UIExtension.Editor
         private static bool IsPopup(PageType pageType)
         {
             return pageType == PageType.Popup || pageType == PageType.FullScreenPopup;
+        }
+
+        private static bool UsesFixedSortingOrder(PageType pageType)
+        {
+            return pageType == PageType.Overlay || pageType == PageType.FreePage;
         }
 
         private static void DrawPath(string label, string path)

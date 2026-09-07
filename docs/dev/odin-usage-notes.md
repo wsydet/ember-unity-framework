@@ -1,6 +1,6 @@
 # Odin Inspector 使用注意事项
 
-> 适用环境：Unity 6000.x + Odin Inspector 4.x
+> 当前项目：Unity 6000.5.4f1 + Odin Inspector 4.0.2（manifest tag）。以下布局问题是本项目历史观察，不能推断为所有 Unity 6/Odin 4 版本的通用缺陷；本轮只核对源码和引用，未重测面板。
 
 ---
 
@@ -11,9 +11,7 @@
 **现象**：在 `[HorizontalGroup]` 中混入 `[ShowInInspector]` 标注的字段/属性时，
 Inspector 面板出现元素错位、重叠或超出边界。
 
-**原因**：Unity 6 的 IMGUI 布局系统行为有破坏性变更，
-Odin 4.x 的 `HorizontalGroupAttributeDrawer` 在 repaint 阶段
-GUILayout 控件计数与 Layout 阶段不一致。
+**排查方向**：检查 Layout/Repaint 控件顺序、属性分组和自定义 Drawer。旧记录怀疑布局阶段不一致，未保留足以确认引擎或 Odin 根因的证据。
 
 **影响范围**：
 
@@ -116,9 +114,7 @@ private void B() { }
 **现象**：`[AssetsOnly]` 或 `[SceneObjectsOnly]` 字段未赋值时，
 Odin 渲染对象字段图标时抛出 `ArgumentNullException: Value cannot be null. Parameter name: shader`。
 
-**解决方案**：Odin 4.x 在 Unity 6 下的内部图标渲染 bug，不影响功能，
-保持字段为空或有值均可，报错会自行恢复。如要彻底消除，
-给字段赋默认值或等待 Odin 更新。
+**处理**：先保留堆栈，在最小对象上复现并核对字段、Drawer 和包版本。旧记录不能保证异常自行恢复；不要为消除提示而给业务字段填无意义默认值。
 
 ---
 
@@ -158,13 +154,12 @@ public int mp;
 
 | 脚本 | 说明 |
 |------|------|
-| [OdinInspectorDemo.cs](../../Assets/Tem/Examples/OdinInspectorDemo.cs) | 完整特性演示（MonoBehaviour） |
-| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Required]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
-| [EmberDebugConfigSO.cs](../../Packages/com.ember/Runtime/Debug/EmberDebugConfigSO.cs) | SO 继承层级 `L0/L1` + `[BoxGroup]` 无名分隔 + `[GUIColor]` + `[VisibleIf]` 实战（ScriptableObject） |
-| [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | `[FoldoutGroup]` + `[BoxGroup(ShowLabel=false)]` + `[Title]` 基类面板（ScriptableObject） |
-| [EmberCameraManager.cs](../../Assets/Ember/Camera/Runtime/EmberCameraManager.cs) | `[GUIColor]` 动态状态着色 + `[LabelText]` 实战 |
-| [EmberDebugConfigEditor.cs](../../Assets/Ember/Core/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |
-| [EmberSceneMapping.cs](../../Assets/Ember/Editor/EmberSceneMapping.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Button]` + `EmberSceneField` + `$GROUP` 引用实战（ScriptableObject） |
+| [GameLauncher.cs](../../Packages/com.ember/Core/Runtime/GameLauncher.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Required]` + `[ShowInInspector/ReadOnly]` 实战（MonoBehaviour） |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember/Basic/Runtime/Debug/EmberDebugConfigSO.cs) | SO 继承层级 `L0/L1` + `[BoxGroup]` 无名分隔 + `[GUIColor]` + `[VisibleIf]` 实战（ScriptableObject） |
+| [EmberBaseSO.cs](../../Packages/com.ember/Basic/Runtime/Base/EmberBaseSO.cs) | `[FoldoutGroup]` + `[BoxGroup(ShowLabel=false)]` + `[Title]` 基类面板（ScriptableObject） |
+| [EUIBinding.cs](../../Packages/com.ember/UIExtension/Runtime/EUIBinding.cs) | 页面角色、绑定列表、代码生成与分组面板 |
+| [EmberDebugConfigEditor.cs](../../Packages/com.ember/Basic/Editor/EmberDebugConfigEditor.cs) | `OdinEditor` + `[Button]` 批量操作实战 |
+| [EmberSceneMapping.cs](../../Packages/com.ember/Core/Editor/EmberSceneMapping.cs) | `[FoldoutGroup]` + `[BoxGroup]` + `[Button]` + `EmberSceneField` + `$GROUP` 引用实战（ScriptableObject） |
 
 ### 2.5 SO 继承层级面板 —— L*N* 模式
 
@@ -286,7 +281,7 @@ private const string GROUP = "Scene Mapping";
 public List<LoggerClassEntry> userEntries = new();
 ```
 
-**规则**：`VisibleIf` 使用 `@` 前缀的 NCalc 表达式，可引用当前类的任意 public 或 private 成员。
+**规则**：`VisibleIf` 使用 Odin 的 `@` 表达式，可引用当前类的任意 public 或 private 成员。
 
 ### 2.10 LabelText —— 运行时状态中文化
 
@@ -360,9 +355,9 @@ private void LoadTemplate() { }
 
 ---
 
-## 三、版本要求
+## 三、项目版本记录
 
-| 组件 | 最低版本 |
+| 组件 | 当前项目 |
 |------|----------|
-| Unity | 6000.x |
-| Odin Inspector | 4.0.0+（推荐 4.0.2+） |
+| Unity | 6000.5.4f1 |
+| Odin Inspector | 4.0.2（私有 UPM tag） |

@@ -10,6 +10,7 @@ OnNext 广播事件。支持 0～4 个泛型参数，派发中安全增删。
 | 角色 | 路径 |
 |------|------|
 | 事件总线 | `EmberEventBus.cs` |
+| 订阅组 | `EmberEventGroup.cs` |
 | 广播事件常量表 | `EmberBroadcastEvent.cs` |
 
 ## 公开 API
@@ -29,6 +30,8 @@ OnNext 广播事件。支持 0～4 个泛型参数，派发中安全增删。
 | `Unsubscribe<T>(int eventKey, Action<T>)` | 取消订阅泛型事件（1～4 参对应重载） |
 | `OnNext(int eventKey)` | 播报无参事件 |
 | `OnNext<T>(int eventKey, T arg)` | 播报 1 参事件（支持 1～4 参） |
+| `PostNext(int eventKey)` / 泛型重载 | 入队，由下一次 `FlushPostQueue()` 派发 |
+| `FlushPostQueue()` | 由 GameLauncher 每帧消费延迟队列 |
 | `HasSubscribers(int eventKey) → bool` | 检查是否有订阅者 |
 | `ClearSubscribers(int eventKey)` | 清除指定事件所有订阅者 |
 | `ClearAllSubscribers()` | 清除所有事件订阅（仅退出/重置时使用） |
@@ -43,6 +46,10 @@ EmberEventBus.OnNext(EmberBroadcastEvent.ResourceReady);
 // 取消订阅
 sub.Dispose();
 ```
+
+### EmberEventGroup — 订阅组
+
+使用 `Add(key, handler)` 或泛型重载批量订阅，`Clear()` 清理后可复用，`Dispose()` 清理并释放。页面也可用 `EUILogic.TrackDisposable` 管理订阅生命周期。
 
 ### EmberBroadcastEvent — 事件常量表
 

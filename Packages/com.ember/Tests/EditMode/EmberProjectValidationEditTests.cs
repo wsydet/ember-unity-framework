@@ -1,0 +1,196 @@
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+// Package: com.ember
+
+using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Ember.Core.Editor;
+using NUnit.Framework;
+
+namespace Ember.UI.Tests
+{
+    /// <summary>只读检查、保存归一化及效果图来源边界；全部使用独立临时目录。</summary>
+    public sealed class EmberProjectValidationEditTests
+    {
+        #region 内部参数
+
+        private string _root;
+        private string _project;
+        private string _template;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        [SetUp]
+        public void SetUp()
+        {
+            _root = Path.Combine(Path.GetTempPath(), "EmberValidationTests-" + Guid.NewGuid().ToString("N"));
+            _project = Path.Combine(_root, "Project");
+            _template = Path.Combine(_root, "Template");
+            Directory.CreateDirectory(_project);
+            Directory.CreateDirectory(_template);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (Directory.Exists(_root)) Directory.Delete(_root, true);
+        }
+
+        [Test]
+        public void Comparison_BusinessModificationIsDifferenceAndDoesNotWriteEitherSide()
+        {
+            Write(_project, "Game/Example.cs", "// custom gameplay\n");
+            Write(_template, "Game/Example.cs", "// starter gameplay\n");
+            var before = Snapshot();
+            var report = Compare();
+
+            Assert.AreEqual(0, report.ErrorCount);
+            Assert.AreEqual(1, report.DifferenceCount);
+            StringAssert.Contains("用户代码", report.Issues.Single().Message);
+            CollectionAssert.AreEqual(before, Snapshot());
+        }
+
+        [Test]
+        public void Comparison_MissingAndAdditionalFilesAreExplicitSaveDifferences()
+        {
+            Write(_template, "Game/Removed.cs", "old");
+            Write(_project, "Game/Added.cs", "new");
+            var report = Compare();
+
+            Assert.AreEqual(2, report.DifferenceCount);
+            Assert.IsTrue(report.Issues.Any(item => item.Message.StartsWith("项目中缺少") && item.Suggestion.Contains("移除")));
+            Assert.IsTrue(report.Issues.Any(item => item.Message.StartsWith("项目新增") && item.Suggestion.Contains("写入")));
+            Assert.AreEqual(0, report.ErrorCount);
+        }
+
+        [Test]
+        public void Comparison_UsesOnlySaveDirectoriesAndDetectsMetaChanges()
+        {
+            Write(_project, "Game/Example.cs", "same");
+            Write(_template, "Game/Example.cs", "same");
+            Write(_project, "Game/Example.cs.meta", "guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+            Write(_template, "Game/Example.cs.meta", "guid: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n");
+            Write(_project, "Art/NotDeployed.png", "external");
+            Write(_project, "Editor/EmberEditingTemplate.json", "project record");
+            var report = Compare();
+
+            Assert.AreEqual(1, report.DifferenceCount);
+            StringAssert.EndsWith(".meta", report.Issues.Single().AssetPath);
+        }
+
+        [Test]
+        public void Comparison_FingerprintTracksProjectContentNotReferenceTemplate()
+        {
+            Write(_project, "Game/Example.cs", "custom");
+            Write(_template, "Game/Example.cs", "before");
+            string first = Compare().ProjectFingerprint;
+            Write(_template, "Game/Example.cs", "after");
+            Assert.AreEqual(first, Compare().ProjectFingerprint);
+            Write(_project, "Game/Example.cs", "changed");
+            Assert.AreNotEqual(first, Compare().ProjectFingerprint);
+        }
+
+        [Test]
+        public void Comparison_StripsDevSceneObjectsExactlyAsSaveWithoutMutatingProject()
+        {
+            const string scene = "%YAML 1.1\n--- !u!1 &10\nGameObject:\n  m_Component:\n  - component: {fileID: 11}\n  m_Name: RainbowHierarchyRuleset\n--- !u!4 &11\nTransform:\n  m_GameObject: {fileID: 10}\n--- !u!1 &20\nGameObject:\n  m_Name: GameBoot\n";
+            Write(_project, "Game/Scenes/FrameworkScene.unity", scene);
+            string expected = "%YAML 1.1\n--- !u!1 &20\nGameObject:\n  m_Name: GameBoot\n".Replace("\n", Environment.NewLine);
+            Write(_template, "Game/Scenes/FrameworkScene.unity", expected);
+            var before = Snapshot();
+
+            Assert.AreEqual(0, Compare().DifferenceCount);
+            CollectionAssert.AreEqual(before, Snapshot());
+            var consumer = new EmberProjectValidationReport();
+            EmberProjectValidationService.CompareFiles(_project, _template, consumer, false);
+            Assert.AreEqual(1, consumer.DifferenceCount);
+        }
+
+        [Test]
+        public void Metadata_MissingMetaAndDuplicateGuidAreErrorsWithoutRepair()
+        {
+            Write(_project, "Game/First.cs", "first");
+            Write(_project, "Game/Second.cs", "second");
+            Write(_project, "Game/Third.cs", "third");
+            Write(_project, "Game/First.cs.meta", "guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+            Write(_project, "Game/Second.cs.meta", "guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+            var before = Snapshot();
+            var report = new EmberProjectValidationReport();
+            EmberProjectValidationService.ValidateProjectMetadata(_project, report);
+
+            Assert.AreEqual(2, report.ErrorCount);
+            Assert.IsTrue(report.Issues.Any(item => item.Message.Contains("GUID 重复")));
+            Assert.IsTrue(report.Issues.Any(item => item.Message.Contains("缺少 .meta")));
+            CollectionAssert.AreEqual(before, Snapshot());
+        }
+
+        [TestCase("// [EmberManaged:begin Lifecycle]\n// [EmberManaged:end]\n", 0)]
+        [TestCase("// [EmberManaged:begin Lifecycle]\n", 1)]
+        [TestCase("// [EmberManaged:end]\n", 1)]
+        [TestCase("// [EmberManaged:begin A]\n// [EmberManaged:end]\n// [EmberManaged:begin A]\n// [EmberManaged:end]\n", 1)]
+        public void ManagedRegions_ReportMalformedPairsWithoutGuessingRepairs(string text, int errors)
+        {
+            Write(_project, "Game/Page.cs", text);
+            var before = Snapshot();
+            var report = new EmberProjectValidationReport();
+            EmberProjectValidationService.ValidateManagedRegions(_project, report);
+            Assert.AreEqual(errors, report.ErrorCount);
+            CollectionAssert.AreEqual(before, Snapshot());
+        }
+
+        [Test]
+        public void ConsumerBaseline_NeverClaimsHistoricalSnapshotFromVersionRecord()
+        {
+            var template = new TemplateInfo { id = "base", version = "0.5.5" };
+            var deployed = new DeployedTemplateRecord { templateId = "base", version = "0.5.5" };
+            StringAssert.Contains("无历史快照", EmberProjectValidationService.DescribeBaseline(template, null, deployed));
+        }
+
+        [Test]
+        public void Preview_ExpiresOnContentVersionOrFrameworkChange()
+        {
+            var template = new TemplateInfo { id = "base", version = "1.0.0", frameworkVersion = "0.11.0", contentHash = "a" };
+            var record = new EmberTemplatePreviewRecord { templateId = "base", templateVersion = "1.0.0", frameworkVersion = "0.11.0", contentHash = "a" };
+            Assert.IsTrue(EmberTemplatePreviewPanel.IsCurrent(record, template));
+            template.contentHash = "b";
+            Assert.IsFalse(EmberTemplatePreviewPanel.IsCurrent(record, template));
+            template.contentHash = "a";
+            template.version = "1.0.1";
+            Assert.IsFalse(EmberTemplatePreviewPanel.IsCurrent(record, template));
+            template.version = "1.0.0";
+            template.frameworkVersion = "0.12.0";
+            Assert.IsFalse(EmberTemplatePreviewPanel.IsCurrent(record, template));
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部方法
+
+        private EmberProjectValidationReport Compare()
+        {
+            var report = new EmberProjectValidationReport();
+            EmberProjectValidationService.CompareFiles(_project, _template, report, true);
+            return report;
+        }
+
+        private string[] Snapshot() => Directory.GetFiles(_root, "*", SearchOption.AllDirectories)
+            .OrderBy(path => path, StringComparer.Ordinal)
+            .Select(path => path + "|" + Convert.ToBase64String(File.ReadAllBytes(path))).ToArray();
+
+        private static void Write(string root, string path, string text)
+        {
+            string fullPath = Path.Combine(root, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            File.WriteAllText(fullPath, text, new UTF8Encoding(false));
+        }
+
+        #endregion
+    }
+}

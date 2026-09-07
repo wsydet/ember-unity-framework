@@ -2,9 +2,9 @@
 
 ## 概述
 
-EmberUpdateManager 一处驱动所有模块的 Update/LateUpdate/FixedUpdate。
-不需要继承 MonoBehaviour：实现 IEmberUpdate 等接口 + 继承单例基类，
-UpdateManager 通过反射自动发现并按阶段分组调用。
+EmberUpdateManager 一处驱动 Update/LateUpdate/FixedUpdate。业务 Module 的更新接收者只从
+`EmberModuleCollector` 已登记的模块中取得，并且只有模块所属 Phase 已激活、`OnInit` 成功后才驱动；
+其他非业务更新单例才通过反射发现并按优先级阈值调用。
 
 ## 文件清单
 
@@ -17,17 +17,18 @@ UpdateManager 通过反射自动发现并按阶段分组调用。
 
 ### EmberUpdateManager — 统一 Update 循环
 
-继承 EmberMonoSingleton，实现 IEmberManager。反射扫描所有实现更新接口的单例。
+继承 EmberSingleton，实现 IEmberManager，是在 Init 阶段启动的框架必要 Manager。它复用已经发现的
+业务 Module，绝不为了 Update 而自行创建被禁用或未装配的 Module。
 
 | 方法 | 说明 |
 |------|------|
-| `DoUpdate()` | 驱动所有 IEmberUpdate 的 Update()，按 CurrentPhase 过滤，异常不中断 |
-| `DoLateUpdate()` | 驱动所有 IEmberLateUpdate 的 LateUpdate() |
-| `DoFixedUpdate()` | 驱动所有 IEmberFixedUpdate 的 FixedUpdate() |
-| `CurrentPhase` (属性) | 当前激活的模块阶段（默认 int.MaxValue 全量 Tick） |
+| `DoUpdate()` | 驱动活动 Module 与符合优先级阈值的非业务 IEmberUpdate，异常不中断 |
+| `DoLateUpdate()` | 驱动活动 Module 与符合优先级阈值的非业务 IEmberLateUpdate |
+| `DoFixedUpdate()` | 驱动活动 Module 与符合优先级阈值的非业务 IEmberFixedUpdate |
+| `CurrentPhase` (属性) | 非业务更新接收者的优先级阈值（默认 int.MaxValue） |
 
 > 注意：GameLauncher 在 Update/LateUpdate/FixedUpdate 中调用 EmberUpdateManager 的 DoXxx 方法。
-> MonoBehabiour 自身的 Update 不自动驱动，需要通过 GameLauncher 桥接。
+> MonoBehaviour 自身的 Update 不由本 Manager 代替，统一更新接口需要通过 GameLauncher 桥接。
 
 ### IEmberUpdate / IEmberLateUpdate / IEmberFixedUpdate
 
@@ -37,25 +38,33 @@ UpdateManager 通过反射自动发现并按阶段分组调用。
 | `LateUpdate()` | LateUpdate 阶段调用 |
 | `FixedUpdate()` | 物理帧调用 |
 
+业务更新通常由可选 Module 实现：
+
 ```csharp
-[EmberInitOrder(EmberInitOrderAttribute.Game)]
-public class MyUpdater : EmberSingleton<MyUpdater>, IEmberUpdate
+[EmberModule(ModulePhase.Gameplay)]
+public class BattleModule : EmberSingleton<BattleModule>, IEmberModule, IEmberUpdate
 {
-    public void Update() { /* 每帧逻辑 */ }
+    void IEmberModule.OnInit() { }
+    void IEmberModule.OnDestroy() { }
+    void IEmberModule.ResetModuleData() { }
+    void IEmberUpdate.Update() { /* 仅在 Gameplay Phase 活动时调用 */ }
 }
 ```
 
 ## 主流程
 
-**采集：** `IEmberManager.Init()` → 反射遍历程序集 → 过滤系统程序集(Ember/Game开头保留) → 筛选接口实现 → 反射获取 Instance → 读取 EmberInitOrder 作为 phase → 分组存入字典
+**采集：** `IEmberManager.Init()` → 读取 `ModuleCollector.DiscoveredModules` 并保存更新接口条目 →
+反射扫描其余非 Module 更新单例 → 按 `EmberInitOrder` 优先级分组。
 
-**驱动：** `DoUpdate()` → 同帧防重 → 遍历 _updaters → 按 CurrentPhase 过滤 → 逐个 Update() → try/catch 异常不中断
+**驱动：** `DoUpdate()` → 非业务接收者按 `CurrentPhase` 阈值过滤 → Module 接收者按
+`ModuleEntry.IsActive` 过滤 → 逐个 `Update()` → try/catch 异常不中断。
 
 ## 约束与陷阱
 
 | 类别 | 说明 |
 |------|------|
 | 驱动方式 | 必须由 GameLauncher 桥接调用 DoUpdate/DoLateUpdate/DoFixedUpdate。EmberUpdateManager 自身的 Update 不直接驱动 |
-| 阶段过滤 | CurrentPhase 可控制只 Tick 特定阶段，默认全量 |
-| 反射扫描 | 只扫描 Ember/Game 开头的程序集 |
+| Module 门控 | 业务 Module 必须已被 Collector 装配且 OnInit 成功；Enabled=false 的 Module 不会被创建或驱动 |
+| 优先级过滤 | CurrentPhase 只影响非业务接收者，不是 Module Phase 的活动状态 |
+| 反射扫描 | 只用于发现非业务更新单例；业务 Module 不会被二次反射创建 |
 | 异常安全 | 单个 updater 异常不影响其他 updater |

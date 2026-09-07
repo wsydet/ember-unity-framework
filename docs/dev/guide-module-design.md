@@ -1,7 +1,7 @@
 # 新手引导模块（GuideModule）设计文档
 
 > 参考 burner `GuideNew` 模块，落地为 ember-unity-framework 的**业务模块**。
-> 本文档先定义「本地化」后的设计，再据此实现。
+> 当前实现位于 `Assets/Game/Module/Guide/`（2026-09-07 核对）。基础类型、运行器和编辑器已存在；默认通过 `[EmberModule(..., Enabled = false)]` 关闭，需要业务装配后使用。
 > 最后更新：2026-08-19
 
 ---
@@ -181,8 +181,7 @@ public class GuideStepDefine
 }
 ```
 
-> 说明：`[SerializeReference]` 让 Unity 默认 Inspector 自带「类型下拉」，
-> 可直接添加任意 `GuideConditionBase` / `GuideEvent` / `GuideExecutor` 子类。
+> 说明：`[SerializeReference]` 保存多态引用；类型选择 UI 由 Odin 或自定义 Inspector/Drawer 提供，不能仅凭该特性假定默认 Inspector 带任意派生类下拉。
 
 ---
 
@@ -216,7 +215,7 @@ public static class GuideEventKey
 ```
 
 - 页面打开 / 关闭事件来自 `EUIObserver.OnPageOpened` / `OnPageClosed`（UniRx），不占用 EventBus key。
-- 业务代码触发引导事件走 `GuideModule.Instance.NotifyXXX(...)`，内部转发到 EmberEventBus。
+- 业务先通过 `EmberModuleCollector.TryGetModule(out GuideModule guide)` 查询已装配模块，再按具体 `Notify...` API 触发事件（见下方使用方式）；不要读取 `.Instance` 来探测可选模块。
 
 ### 5.3 事件处理器基类
 
@@ -383,16 +382,27 @@ GuideOverlayCanvas (Canvas, sortingOrder=29000)
 
 1. **创建引导定义**：`Assets → Create → Ember/Guide/GuideDefine`，加步骤、配条件 / 事件 / 执行器。
 2. **创建引导注册表**：`Assets → Create → Ember/Guide/GuideConfig`，填 `id` / `sequenceOrder` / `define` / 参数。
-3. **启用模块**：把 `GuideModule.Enabled` 改为 `true`（默认 false）。
-4. **初始化**：在 `GameMainState` 等入口调用
+3. **装配模块**：把 `GuideModule` 上的特性改为
+   `[EmberModule(ModulePhase.Global, Enabled = true)]`（默认 false）。`Enabled` 是启动扫描时的类型级
+   开关；修改后需重新编译并重新进入运行，Collector 才会发现和构造该模块。
+4. **配置并开始业务**：Global Phase 会先由 Collector 调用 `IEmberModule.OnInit`。进入 Main 后，
+   通过无创建查询取得已装配模块，再传入业务配置并开始引导：
    ```csharp
-   GuideModule.Instance.Initialize(config);   // 传入 GuideConfig
-   GuideModule.Instance.Start();              // 装载并开始
+   if (EmberModuleCollector.TryGetInstance(out EmberModuleCollector collector)
+       && collector.TryGetModule(out GuideModule guide))
+   {
+       guide.Initialize(config);
+       guide.Start();
+   }
    ```
-5. **业务触发事件**：
+5. **业务触发事件**：仅在模块已经装配并处于活动 Phase 时调用其业务 API。
    ```csharp
-   GuideModule.Instance.NotifyButtonClick("MainMenu", "m_Btn_Start");
-   GuideModule.Instance.NotifyDelayFinish(token);
+   if (EmberModuleCollector.TryGetInstance(out EmberModuleCollector collector)
+       && collector.TryGetModule(out GuideModule guide))
+   {
+       guide.NotifyButtonClick("MainMenu", "m_Btn_Start");
+       guide.NotifyDelayFinish(token);
+   }
    ```
 
 ---

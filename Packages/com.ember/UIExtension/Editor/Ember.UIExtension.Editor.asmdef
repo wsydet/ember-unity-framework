@@ -3,6 +3,7 @@
     "rootNamespace": "Ember.UIExtension.Editor",
     "references": [
         "Ember.Core.Runtime",
+        "Ember.Core.Editor",
         "Ember.UI.Runtime",
         "Ember.UIExtension.Runtime",
         "Ember.Basic.Runtime",

@@ -12,6 +12,7 @@ using Ember.UIExtension.Editor;
 using NUnit.Framework;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ember.UI.Tests
 {
@@ -147,6 +148,31 @@ namespace Ember.UI.Tests
         }
 
         [Test]
+        public void CreationPlan_ExplicitModulePrefix_ShouldKeepPrefabAndCodePathsAligned()
+        {
+            var suffix = Guid.NewGuid().ToString("N");
+            var prefabName = $"SceneUI{suffix}Item";
+            var className = $"SceneUI{suffix}Item";
+            var request = new EUICreationRequest
+            {
+                IsPage = false,
+                CodePathMode = EUIBinding.CodePathMode.Business,
+                PrefabName = prefabName,
+                ClassPath = "Module/SceneUI",
+                ClassName = className,
+            };
+
+            Assert.IsTrue(EUICreationService.TryBuildPlan(request, out var plan, out var result),
+                result.Error);
+            StringAssert.EndsWith(
+                $"/Module/SceneUI/Prefabs/{prefabName}.prefab", plan.PrefabPath);
+            StringAssert.EndsWith(
+                $"/Module/SceneUI/{className}.cs", plan.LogicScriptPath);
+            StringAssert.EndsWith(
+                $"/Module/SceneUI/{className}.Binding.cs", plan.BindingScriptPath);
+        }
+
+        [Test]
         public void CreationPlan_ReservedWindowsClassName_ShouldFailBeforeWriting()
         {
             var request = new EUICreationRequest
@@ -179,6 +205,44 @@ namespace Ember.UI.Tests
             Assert.IsTrue(plan.IsValid);
         }
 
+        [Test]
+        public void CreationPlan_NonPage_ShouldNotRequireOrResolvePageDefinition()
+        {
+            var suffix = Guid.NewGuid().ToString("N");
+            var request = new EUICreationRequest
+            {
+                IsPage = false,
+                PrefabName = $"NonPage{suffix}Panel",
+                PageName = string.Empty,
+                ClassPath = "DevCenterTests/Component",
+                ClassName = $"NonPage{suffix}Component",
+                PageType = (PageType)int.MaxValue,
+                TransitionMode = (EUIBinding.RegularTransitionMode)int.MaxValue,
+                UseUIUpdate = true,
+                UseMask = true,
+                ClickMaskToClose = true,
+                GenerateAutoCreateClickableMaskOverride = true,
+                GenerateOnClickMaskOverride = true,
+            };
+
+            Assert.IsTrue(EUICreationService.TryBuildPlan(request, out var plan, out var result),
+                result.Error);
+            Assert.IsTrue(plan.IsValid);
+            Assert.IsFalse(plan.Request.IsPage);
+            Assert.IsEmpty(plan.Request.PageName);
+            Assert.AreEqual(PageType.MainPage, plan.Request.PageType);
+            Assert.AreEqual(EUIBinding.RegularTransitionMode.None,
+                plan.Request.TransitionMode);
+            Assert.IsFalse(plan.Request.UseUIUpdate);
+            Assert.IsFalse(plan.Request.UseMask);
+            Assert.IsFalse(plan.Request.ClickMaskToClose);
+            Assert.IsFalse(plan.Request.GenerateAutoCreateClickableMaskOverride);
+            Assert.IsFalse(plan.Request.GenerateOnClickMaskOverride);
+            Assert.IsTrue(string.IsNullOrEmpty(plan.PageDefFile));
+            Assert.IsTrue(string.IsNullOrEmpty(plan.AnimatorControllerPath));
+            Assert.IsTrue(string.IsNullOrEmpty(plan.SafeAreaPrefabPath));
+        }
+
         #endregion
 
         // --------------------------------------------------------
@@ -192,10 +256,20 @@ namespace Ember.UI.Tests
         [TestCase(PageType.TopMost, (int)UILayer.TopMost)]
         [TestCase(PageType.SubPage, (int)UILayer.Normal)]
         [TestCase(PageType.FreePage, 30000)]
-        [TestCase(PageType.Overlay, -1)]
+        [TestCase(PageType.Overlay, 20000)]
         public void DefaultSortingOrder_ShouldMatchPageType(PageType pageType, int expected)
         {
             Assert.AreEqual(expected, EUIBindingEditorUtility.GetDefaultSortingOrder(pageType));
+        }
+
+        [TestCase(PageType.Overlay, 12345)]
+        [TestCase(PageType.FreePage, 12345)]
+        [TestCase(PageType.MainPage, (int)UILayer.Normal)]
+        public void SortingOrder_ShouldUseFixedValueOnlyForIndependentPages(
+            PageType pageType, int expected)
+        {
+            Assert.AreEqual(expected,
+                EUIBindingEditorUtility.GetSortingOrder(pageType, 12345));
         }
 
         [Test]
@@ -343,6 +417,130 @@ namespace Ember.UI.Tests
                 Assert.IsFalse(binding.UsePresetFade);
                 Assert.IsFalse(binding.UseAnimator);
                 Assert.IsTrue(binding.UseCustomTransition);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        [Test]
+        public void ApplyCreationConfig_NonPage_ShouldClearPageOnlyOptions()
+        {
+            var gameObject = new GameObject("CreationComponent");
+            try
+            {
+                var binding = gameObject.AddComponent<EUIBinding>();
+                EUIBindingEditorUtility.ApplyCreationConfig(binding, new EUICreationRequest
+                {
+                    IsPage = false,
+                    PageName = "ShouldBeCleared",
+                    PageType = PageType.Popup,
+                    UseUIUpdate = true,
+                    UseMask = true,
+                    ClickMaskToClose = true,
+                    TransitionMode = EUIBinding.RegularTransitionMode.Animator,
+                    GenerateAutoCreateClickableMaskOverride = true,
+                    GenerateOnClickMaskOverride = true,
+                });
+
+                Assert.IsFalse(binding.IsPage);
+                Assert.IsEmpty(binding.PageName);
+                Assert.AreEqual(PageType.MainPage, binding.PageType);
+                Assert.IsFalse(binding.UseUIUpdate);
+                Assert.IsFalse(binding.UseMask);
+                Assert.IsFalse(binding.ClickMaskToClose);
+                Assert.IsFalse(binding.GenerateAutoCreateClickableMaskOverride);
+                Assert.IsFalse(binding.GenerateOnClickMaskOverride);
+                Assert.IsFalse(binding.UsePresetFade);
+                Assert.IsFalse(binding.UseAnimator);
+                Assert.IsFalse(binding.UseCustomTransition);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        [Test]
+        public void BuildStandardUI_Item_ShouldCreateLightweightHostOwnedPrefab()
+        {
+            var buildMethod = typeof(EUICreationService).GetMethod("BuildStandardPage",
+                BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.IsNotNull(buildMethod);
+
+            var previewScene = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+            try
+            {
+                var plan = new EUICreationPlan
+                {
+                    Request = new EUICreationRequest
+                    {
+                        IsPage = false,
+                        PrefabName = "NonPageWithoutSafeArea",
+                        ClassPath = "Module/SceneUI",
+                        ClassName = "NonPageWithoutSafeArea",
+                    },
+                    SafeAreaPrefabPath = string.Empty,
+                };
+
+                var root = (GameObject)buildMethod.Invoke(null,
+                    new object[] { plan, previewScene });
+
+                Assert.IsNotNull(root);
+                Assert.IsNull(root.GetComponent<Canvas>());
+                Assert.IsNull(root.GetComponent<CanvasScaler>());
+                Assert.IsNull(root.GetComponent<GraphicRaycaster>());
+                Assert.IsNull(root.transform.Find("Animator"));
+                Assert.IsNull(root.GetComponentInChildren<EUISafeArea>(true));
+                Assert.AreEqual(new Vector2(100f, 30f),
+                    root.GetComponent<RectTransform>().sizeDelta);
+                Assert.AreEqual(EUIBindingRole.Item,
+                    root.GetComponent<EUIBinding>().Role);
+            }
+            finally
+            {
+                UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(previewScene);
+            }
+        }
+
+        [Test]
+        public void ApplyCreationConfig_Overlay_ShouldKeepConfiguredSortingOrder()
+        {
+            var gameObject = new GameObject("CreationOverlay");
+            try
+            {
+                var binding = gameObject.AddComponent<EUIBinding>();
+                EUIBindingEditorUtility.ApplyCreationConfig(binding, new EUICreationRequest
+                {
+                    PageType = PageType.Overlay,
+                    FixedSortingOrder = 13500,
+                });
+
+                Assert.AreEqual(PageType.Overlay, binding.PageType);
+                Assert.AreEqual(13500, binding.FixedSortingOrder);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        [Test]
+        public void ApplyCreationConfig_FreePage_ShouldKeepConfiguredSortingOrder()
+        {
+            var gameObject = new GameObject("CreationFreePage");
+            try
+            {
+                var binding = gameObject.AddComponent<EUIBinding>();
+                EUIBindingEditorUtility.ApplyCreationConfig(binding, new EUICreationRequest
+                {
+                    PageType = PageType.FreePage,
+                    FixedSortingOrder = 31000,
+                });
+
+                Assert.AreEqual(PageType.FreePage, binding.PageType);
+                Assert.AreEqual(31000, binding.FixedSortingOrder);
             }
             finally
             {

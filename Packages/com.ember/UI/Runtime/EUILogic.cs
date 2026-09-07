@@ -12,8 +12,8 @@ namespace Ember.UI
 {
     /// <summary>
     /// UI 逻辑层基类 —— 非 MonoBehaviour 的纯 C# 类。
-    /// 每个 EUIPage 持有一个 EUILogic 实例，负责所有业务逻辑。
-    /// MonoBehaviour 生命周期由 EUIPage 桥接到此类。
+    /// 每个 EUIPage 或 EUIItem 持有一个 EUILogic 实例，负责所有业务逻辑。
+    /// MonoBehaviour 生命周期由对应的 EUI 视图对象桥接到此类。
     ///
     /// <para>架构：</para>
     /// <code>
@@ -54,6 +54,12 @@ namespace Ember.UI
         /// <summary>所属 EUIPage（MonoBehaviour）</summary>
         public EUIPage Page { get; set; }
 
+        /// <summary>
+        /// 所属 EUIItem。Item 逻辑中此属性非空、<see cref="Page"/> 为空；
+        /// Page 逻辑中则相反。
+        /// </summary>
+        public EUIItem Item { get; internal set; }
+
         /// <summary>自定义页面参数（由 EUIBindingBridge 从 EUIBinding._pageSettings 注入）</summary>
         public object CustomSettings { get; set; }
 
@@ -72,7 +78,14 @@ namespace Ember.UI
         public virtual bool NeedUpdate
         {
             get => _needUpdate;
-            protected set => _needUpdate = value;
+            protected set
+            {
+                if (_needUpdate == value)
+                    return;
+
+                _needUpdate = value;
+                Item?.RefreshUpdateState();
+            }
         }
 
         private bool _needUpdate;
@@ -163,7 +176,11 @@ namespace Ember.UI
         public void RegisterChildLogic(EUILogic child)
         {
             if (child != null && !_childLogics.Contains(child))
+            {
+                child.Page = Page;
+                child.Item = Item;
                 _childLogics.Add(child);
+            }
         }
 
         #endregion

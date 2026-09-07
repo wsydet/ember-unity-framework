@@ -8,10 +8,10 @@
 ## 一、快速开始
 
 ```csharp
-using Ember.Core;
+using Ember.Basic;
 
 // 1. 定义标签（用 LogTags 中的常量）
-private const string TAG = LogTags.CoreServiceLocator;
+private const string TAG = LogTags.EmberCoreServiceLocator;
 
 // 2. 打日志
 EmberDebug.Log(TAG, "普通消息");
@@ -52,52 +52,34 @@ EmberDebug.GlobalOpen = false;           // 全关（Error 除外）
 
 标签用 `.` 分隔父级和子级：
 
-```
-Core                 ← 父（绿色 🔒）
-├── Core.EventBus       ← 子（绿色 🔒，继承父颜色）
-├── Core.ServiceLocator
-├── Core.ManagerCollector
-├── Core.UpdateManager
-├── Core.StateMachine
-├── Core.Singleton
-└── Core.ObjectPool
-
-Audio                ← 父（金色 🔒）
-└── Audio.Manager
-
-UI                   ← 父（橙色 🔒）
-└── UI.Manager
-
-Scene                ← 父（紫色 🔒）
-└── Scene.Manager
-
-Resource             ← 父（蓝色 🔒）
-├── Resource.Manager
-└── Resource.Provider
-
-Input                ← 父（青色 🔒）
-└── Input.Manager
-
-Game                 ← 父（粉色 🔒）
+```text
+EmberCore
+├── EmberCore.EventBus
+├── EmberCore.ServiceLocator
+├── EmberCore.ManagerCollector
+├── EmberCore.ModuleCollector
+└── EmberCore.UpdateManager（以及 StateMachine、Singleton 等）
+EmberBasic / EmberResource / EmberUI / EmberScene / EmberAudio / EmberInput / EmberExtension
+Game
 ```
 
 ### 级联开关
 
 ```csharp
-EmberDebug.Disable(LogTags.Core);              // 父标签关闭 → EventBus + ServiceLocator + ... 全静默
+EmberDebug.Disable(LogTags.EmberCore);              // 父标签关闭 → EventBus + ServiceLocator + ... 全静默
 EmberDebug.Disable(LogTags.CoreEventBus);      // 只关 EventBus，其他 Core 日志正常
-EmberDebug.Enable(LogTags.Core);               // 重新开启父标签
+EmberDebug.Enable(LogTags.EmberCore);               // 重新开启父标签
 ```
 
 ### 所有预定义标签
 
-在 [EmberLogPresets.cs](../../Packages/com.ember/Runtime/Debug/EmberLogPresets.cs) 的 `LogTags` 类中定义。
+在 [EmberLogPresets.cs](../../Packages/com.ember/Basic/Runtime/Debug/EmberLogPresets.cs) 的 `LogTags` 类中定义。
 
 ---
 
 ## 四、SO 可视化配置
 
-编辑器下自动创建 `Assets/Ember/Core/Runtime/Resources/EmberDebugConfig.asset`，Inspector 面板中可：
+编辑器下自动创建 `Assets/Resources/EmberDebugConfig.asset`，Inspector 面板中可：
 
 - 全局开关：一键静默所有非 Error 日志
 - 自动收集：新类首次调用日志时自动加入列表
@@ -130,7 +112,7 @@ EmberDebug.LogError(LogTags.ResourceProvider, "Load failed.");
 
 ## 六、颜色定义
 
-所有颜色在 [EmberLogPresets.cs](../../Packages/com.ember/Runtime/Debug/EmberLogPresets.cs) 中集中定义：
+所有颜色在 [EmberLogPresets.cs](../../Packages/com.ember/Basic/Runtime/Debug/EmberLogPresets.cs) 中集中定义：
 
 | 类 | 作用 |
 |----|------|
@@ -223,6 +205,6 @@ public class MyLogUploader : IEmberLogUploader
 ## 八、注意事项
 
 - `CallerFilePath` 和 `CallerLineNumber` 自动捕获调用位置，不需要手动传
-- 打包后 SO 正常随包（在 `Runtime/Resources/` 下）
+- 打包后 SO 正常随包（在 `Assets/Resources/` 下）
 - `GlobalOpen = false` 时 `LogError` / `LogException` 不受影响，始终输出
-- 标签颜色不会重复——子标签继承父级预定义颜色，用户自定义标签用 hash 生成
+- 子标签继承父级预定义颜色，用户自定义标签用 hash 生成；不保证所有标签颜色唯一

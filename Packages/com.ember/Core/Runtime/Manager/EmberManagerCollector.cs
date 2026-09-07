@@ -14,7 +14,7 @@ namespace Ember.Core
     ///
     /// 核心流程：
     /// 1. 扫描所有已加载程序集中实现 IEmberManager 的类
-    /// 2. 跳过抽象类、未标注 EmberInitOrder 的类
+    /// 2. 跳过抽象类；未标注 EmberInitOrder 的类使用 Default 顺序
     /// 3. 通过静态 Instance 属性获取单例实例
     /// 4. 按 InitOrder 升序排序，依次调用 Init()
     /// 5. 销毁时逆序调用 Destroy()

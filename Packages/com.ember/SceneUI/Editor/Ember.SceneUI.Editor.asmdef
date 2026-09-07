@@ -1,0 +1,20 @@
+{
+    "name": "Ember.SceneUI.Editor",
+    "rootNamespace": "Ember.SceneUI.Editor",
+    "references": [
+        "Ember.SceneUI.Runtime",
+        "Ember.SceneUI.Integration.Runtime",
+        "Ember.Core.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

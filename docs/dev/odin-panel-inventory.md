@@ -1,86 +1,37 @@
-# Odin 面板脚本清单
+# Odin 面板源码清单
 
-> 记录所有使用 Odin Inspector 优化编辑器面板的脚本。
-> 当面板风格规范更新时，按此清单逐一定位并同步。
+最后扫描：2026-09-07。以下是项目维护的 Odin 使用点，来源为当前源码中的 `Sirenix.OdinInspector` 引用，不代表每一项面板已经实测。第三方包、模板快照和 UniTask 自带编辑器不在此清单内。
 
-**风格规范**：[odin-usage-notes.md](odin-usage-notes.md)
-**最后全量更新**：2026-08-01
+风格规范见 [Odin 使用注意事项](odin-usage-notes.md)。普通纯 C# Manager 没有独立 Unity Inspector，不应仅为“统一面板”添加无效属性。原 `OdinInspectorDemo.cs` 已不存在，参考当前 GameLauncher、EmberBaseSO、EUIBinding 和 EmberSceneMapping。
 
----
-
-## 一、运行时脚本（Runtime）
-
-### Ember/Core
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| [GameLauncher.cs](../../Assets/Ember/Core/Runtime/GameLauncher.cs) | MonoBehaviour | `FoldoutGroup` + `BoxGroup(ShowLabel=false)` + `Required` + `ShowInInspector/ReadOnly` + `LabelText` | 2026-08-01 |
-| [EmberBaseSO.cs](../../Assets/Ember/Core/Runtime/Service/EmberBaseSO.cs) | ScriptableObject | `FoldoutGroup($const)` + `BoxGroup(ShowLabel=false)` + `Title` + `ShowInInspector/ReadOnly` | 2026-08-01 |
-| [EmberDebugConfigSO.cs](../../Packages/com.ember/Runtime/Debug/EmberDebugConfigSO.cs) | ScriptableObject | `FoldoutGroup($const)` + `BoxGroup(ShowLabel=false)` + `GUIColor($prop)` + `InfoBox(VisibleIf)` + `ListDrawerSettings` + `HorizontalGroup/HideLabel` | 2026-08-01 |
-
-### Ember/Scene
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| — | — | — | — |
-
-### Ember/UI
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| — | — | — | — |
-
-### Ember/Audio
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| — | — | — | — |
-
-### Ember/Input
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| — | — | — | — |
-
-### Ember/Camera
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| — | — | — | — |
-
-> ⚠️ EmberCameraManager 曾使用 Odin（FoldoutGroup + GUIColor + ShowInInspector），但因它是纯 C# 单例（不继承 MonoBehaviour），Odin 属性无法渲染，已于 2026-08-01 清理。
-
----
-
-## 二、编辑器脚本（Editor）
-
-| 脚本 | 类型 | Odin 模式 | 最后更新 |
-|------|------|-----------|----------|
-| [EmberDebugConfigEditor.cs](../../Packages/com.ember/Editor/EmberDebugConfigEditor.cs) | OdinEditor | `PropertyOrder` + `HorizontalGroup` + `Button` | — |
-
----
-
-## 三、示例 / 参考脚本
-
-| 脚本 | 说明 | 最后更新 |
-|------|------|----------|
-| [OdinInspectorDemo.cs](../../Assets/Tem/Examples/OdinInspectorDemo.cs) | 完整 Odin 特性演示，仅供开发调试参考 | — |
-
----
-
-## 四、未使用 Odin 的模块（待优化）
-
-| 模块 | 脚本数 | 备注 |
-|------|--------|------|
-| Scene | 1 (EmberSceneManager) | 可考虑运行时状态展示（CurrentScene、Progress 等） |
-| UI | — | 待开发 |
-| Audio | — | 待开发 |
-| Input | — | 待开发 |
-
----
-
-## 更新日志
-
-| 日期 | 变更 |
-|------|------|
-| 2026-08-01 | 建立清单；规范化 GameLauncher / EmberBaseSO / EmberDebugConfigSO 面板；清理 EmberCameraManager 死 Odin 代码；写入风格规范 §2.5-2.10 |
+| 源文件 | 所属区域 |
+|---|---|
+| [AnimationProperty.cs](../../Packages/com.ember/UIExtension/Runtime/Behaviour/AnimationProperty.cs) | UIExtension / Runtime |
+| [EUIBinding.cs](../../Packages/com.ember/UIExtension/Runtime/EUIBinding.cs) | UIExtension / Runtime |
+| [EUIBindingListDrawer.cs](../../Packages/com.ember/UIExtension/Editor/EUIBindingListDrawer.cs) | UIExtension / Editor |
+| [EUIBlockCurves.cs](../../Packages/com.ember/UIExtension/Runtime/Components/EUIBlockCurves.cs) | UIExtension / Runtime |
+| [EUIButtonEx.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIButtonEx.cs) | UIExtension / Runtime |
+| [EUICircleImage.cs](../../Packages/com.ember/UIExtension/Runtime/Behaviour/EUICircleImage.cs) | UIExtension / Runtime |
+| [EUIEventTriggerListener.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIEventTriggerListener.cs) | UIExtension / Runtime |
+| [EUIGradient.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIGradient.cs) | UIExtension / Runtime |
+| [EUIGraphicAnimation.cs](../../Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGraphicAnimation.cs) | UIExtension / Runtime |
+| [EUIImageEx.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs) | UIExtension / Runtime |
+| [EUIMeshOrder.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIMeshOrder.cs) | UIExtension / Runtime |
+| [EUIRoundedImageModifier.cs](../../Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs) | UIExtension / Runtime |
+| [EUISafeArea.cs](../../Packages/com.ember/UIExtension/Runtime/SafeArea/EUISafeArea.cs) | UIExtension / Runtime |
+| [EUIToggleEx.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/EUIToggleEx.cs) | UIExtension / Runtime |
+| [EUITransitionBlock.cs](../../Packages/com.ember/UIExtension/Runtime/Components/EUITransitionBlock.cs) | UIExtension / Runtime |
+| [EmberBaseSO.cs](../../Packages/com.ember/Basic/Runtime/Base/EmberBaseSO.cs) | Basic / Runtime |
+| [EmberDebugConfigEditor.cs](../../Packages/com.ember/Basic/Editor/EmberDebugConfigEditor.cs) | Basic / Editor |
+| [EmberDebugConfigSO.cs](../../Packages/com.ember/Basic/Runtime/Debug/EmberDebugConfigSO.cs) | Basic / Runtime |
+| [EmberSceneField.cs](../../Packages/com.ember/Core/Runtime/EmberSceneField.cs) | Core / Runtime |
+| [EmberSceneMapping.cs](../../Packages/com.ember/Core/Editor/EmberSceneMapping.cs) | Core / Editor |
+| [EmberUPMManager.cs](../../Packages/com.ember/UPMManager/Editor/EmberUPMManager.cs) | UPMManager / Editor |
+| [GameLauncher.cs](../../Packages/com.ember/Core/Runtime/GameLauncher.cs) | Core / Runtime |
+| [OdinIntegrationTest.cs](../../Packages/com.ember/FrameworkTools/Editor/OdinIntegrationTest.cs) | FrameworkTools / Editor |
+| [RelativeCanvasOrder.cs](../../Packages/com.ember/UIExtension/Runtime/UIExt/RelativeCanvasOrder.cs) | UIExtension / Runtime |
+| [EUIBootSplash.cs](../../Assets/Game/UI/EUIBootSplash.cs) | 业务 / UI |
+| [PlayerControlBounds.cs](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/PlayerControl/PlayerControlBounds.cs) | source3d-2p5d 模板 / Module |
+| [PlayerControlSettings.cs](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/PlayerControl/PlayerControlSettings.cs) | source3d-2p5d 模板 / Module |
+| [PlayerControlSceneBinding.cs](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/PlayerControl/PlayerControlSceneBinding.cs) | source3d-2p5d 模板 / Module |
+| [SceneUIObject.cs](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/SceneUI/SceneUIObject.cs) | source3d-2p5d 模板 / Module |

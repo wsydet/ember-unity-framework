@@ -109,8 +109,8 @@ namespace Ember.UIExtension.Editor
             if (!baseBinding) return "（Prefab 上无 EUIBinding 组件）";
 
             var sb = new StringBuilder();
-            sb.Append("页面: ");
-            sb.AppendLine(baseBinding.IsPage ? "是" : "否");
+            sb.Append("UI 角色: ");
+            sb.AppendLine(baseBinding.Role.ToString());
             if (baseBinding.IsPage)
                 sb.AppendLine($"页面名: {baseBinding.PageName}");
             sb.Append($"类路径: {baseBinding.ClassPath}/{baseBinding.ClassName}");

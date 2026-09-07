@@ -1,0 +1,23 @@
+{
+    "name": "Ember.SceneUI.Integration.Runtime",
+    "rootNamespace": "Ember.SceneUI.Integration",
+    "references": [
+        "Ember.SceneUI.Runtime",
+        "Ember.Basic.Runtime",
+        "Ember.Core.Runtime",
+        "Ember.Resource.Runtime",
+        "Ember.UI.Runtime",
+        "Ember.UIExtension.Runtime",
+        "UnityEngine.UI",
+        "Unity.Cinemachine"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

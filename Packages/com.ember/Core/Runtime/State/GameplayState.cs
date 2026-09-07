@@ -20,8 +20,8 @@ namespace Ember.Core
     ///
     /// <b>子类化指南：</b>
     /// - 进入玩法时自动 <c>InitPhase(ModulePhase.Gameplay)</c> 初始化玩法阶段业务模块
-    /// - override <see cref="OnGameplayEnter"/>：加载战斗场景、初始化战斗模块
-    /// - override <see cref="OnGameplayExit"/>：卸载战斗场景、清理战斗模块
+    /// - override <see cref="OnGameplayEnter"/>：在 Gameplay Module 激活后执行玩法入口逻辑
+    /// - override <see cref="OnGameplayExit"/>：在 Gameplay Module 销毁前执行玩法退出逻辑
     /// - override <see cref="OnGameplayUpdate"/>：驱动玩法主循环（如不需要可留空）
     /// - override <see cref="OnGameplayPause"/>：暂停逻辑（被弹出窗口覆盖时）
     /// - override <see cref="OnGameplayResume"/>：恢复逻辑（弹出窗口关闭后）
@@ -88,10 +88,10 @@ namespace Ember.Core
 
         #region 外部方法（子类可 override）
 
-        /// <summary>进入玩法。子类 override 来加载场景、初始化游戏模块。</summary>
+        /// <summary>进入玩法。Gameplay Module 已激活；子类 override 执行业务入口逻辑。</summary>
         protected virtual void OnGameplayEnter(object args) { }
 
-        /// <summary>退出玩法。子类 override 来卸载场景、清理游戏模块。</summary>
+        /// <summary>退出玩法。子类 override 执行业务退出逻辑；随后框架销毁 Gameplay Module。</summary>
         protected virtual void OnGameplayExit() { }
 
         /// <summary>每帧驱动。子类 override 来运行玩法主循环。</summary>

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
+using Ember.Basic;
 using Ember.UI;
 
 namespace Ember.UIExtension
@@ -22,7 +23,11 @@ namespace Ember.UIExtension
     /// </summary>
     public static class EUIBindingBridge
     {
+        private const string TAG = LogTags.EmberUI;
+
         private static bool _registered;
+        private static readonly Dictionary<string, Type> LogicTypeCache =
+            new Dictionary<string, Type>(StringComparer.Ordinal);
 
         /// <summary>
         /// 自动注册到 EUIManager.OnPageCreated 钩子。
@@ -51,6 +56,13 @@ namespace Ember.UIExtension
         public static void Attach(EUIPage page, EUIBinding binding)
         {
             if (page == null || binding == null) return;
+            if (binding.Role != EUIBindingRole.Page)
+            {
+                EmberDebug.LogError(
+                    TAG,
+                    $"[EUI] Item '{binding.name}' cannot be attached to EUIPage or opened through EUIManager.");
+                return;
+            }
 
             // 遮罩配置注入（与 Logic/ClassName 无关，无 Logic 的页面同样生效）
             page.UseMask = binding.UseMask;
@@ -59,20 +71,7 @@ namespace Ember.UIExtension
 
             if (string.IsNullOrEmpty(binding.ClassName)) return;
 
-            // 查找 Logic 类型
-            Type logicType = null;
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                foreach (var t in asm.GetTypes())
-                {
-                    if (t.Name == binding.ClassName && typeof(EUILogic).IsAssignableFrom(t) && !t.IsAbstract)
-                    {
-                        logicType = t;
-                        break;
-                    }
-                }
-                if (logicType != null) break;
-            }
+            Type logicType = FindLogicType(binding.ClassName);
 
             if (logicType != null)
             {
@@ -105,30 +104,17 @@ namespace Ember.UIExtension
                     var childBinding = entry.GameObject.GetComponent<EUIBinding>();
                     if (childBinding != null && parentLogic != null && !string.IsNullOrEmpty(childBinding.ClassName))
                     {
-                        Type childLogicType = null;
-                        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-                        {
-                            foreach (var t in asm.GetTypes())
-                            {
-                                if (t.Name == childBinding.ClassName
-                                    && typeof(EUILogic).IsAssignableFrom(t) && !t.IsAbstract)
-                                {
-                                    childLogicType = t;
-                                    break;
-                                }
-                            }
-                            if (childLogicType != null) break;
-                        }
+                        Type childLogicType = FindLogicType(childBinding.ClassName);
 
                         if (childLogicType != null)
                         {
                             var childLogic = (EUILogic)Activator.CreateInstance(childLogicType);
-                            childLogic.Page = parentLogic.Page;
                             childLogic.ControlMap = new Dictionary<string, Component>();
+                            parentLogic.RegisterChildLogic(childLogic);
                             // 递归填充子 UIBinding 的控件（可能还有更深层嵌套）
                             PopulateControlMap(childBinding, childLogic.ControlMap, childLogic);
+                            childLogic.OnBeginLoad();
                             childLogic.OnBind();
-                            parentLogic.RegisterChildLogic(childLogic);
                         }
                     }
                     continue;
@@ -185,14 +171,9 @@ namespace Ember.UIExtension
                 case EUIBinding.WidgetTypes.Extension:
                     if (!string.IsNullOrEmpty(className))
                     {
-                        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-                        {
-                            foreach (var t in asm.GetTypes())
-                            {
-                                if (t.Name == className && typeof(Component).IsAssignableFrom(t))
-                                    return go.GetComponent(t) as Component;
-                            }
-                        }
+                        Type componentType = FindType(className, typeof(Component));
+                        if (componentType != null)
+                            return go.GetComponent(componentType) as Component;
                     }
                     return null;
                 default:
@@ -215,6 +196,64 @@ namespace Ember.UIExtension
                 return comp;
             }
             return go.GetComponent<Transform>();
+        }
+
+        internal static Type FindLogicType(string className)
+        {
+            if (string.IsNullOrWhiteSpace(className))
+                return null;
+
+            if (LogicTypeCache.TryGetValue(className, out Type cachedType))
+                return cachedType;
+
+            Type logicType = FindType(className, typeof(EUILogic));
+            if (logicType != null)
+                LogicTypeCache[className] = logicType;
+            return logicType;
+        }
+
+        private static Type FindType(string className, Type requiredBaseType)
+        {
+            if (string.IsNullOrWhiteSpace(className) || requiredBaseType == null)
+                return null;
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Type exactType = assembly.GetType(className, false);
+                if (IsUsableType(exactType, requiredBaseType))
+                    return exactType;
+
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (System.Reflection.ReflectionTypeLoadException ex)
+                {
+                    types = ex.Types;
+                }
+
+                if (types == null)
+                    continue;
+
+                for (int i = 0; i < types.Length; i++)
+                {
+                    Type type = types[i];
+                    if (type != null
+                        && string.Equals(type.Name, className, StringComparison.Ordinal)
+                        && IsUsableType(type, requiredBaseType))
+                        return type;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsUsableType(Type type, Type requiredBaseType)
+        {
+            return type != null
+                && requiredBaseType.IsAssignableFrom(type)
+                && !type.IsAbstract;
         }
     }
 }

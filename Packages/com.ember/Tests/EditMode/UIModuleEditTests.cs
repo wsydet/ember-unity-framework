@@ -24,6 +24,81 @@ namespace Ember.UI.Tests
     /// </summary>
     public class UIModuleEditTests
     {
+        private sealed class TestItemLogic : EUILogic
+        {
+            public int BeginLoadCount;
+            public int BindCount;
+            public int InitCount;
+            public int OpenCount;
+            public int ShowCount;
+            public int HideCount;
+            public int CloseCount;
+            public int ResetDefaultCount;
+            public int ResetCount;
+            public int DisposeCount;
+
+            public override void OnBeginLoad() => BeginLoadCount++;
+            public override void OnBind() => BindCount++;
+            public override void OnInit() => InitCount++;
+            public override void OnOpen(object param) => OpenCount++;
+            public override void OnShow() => ShowCount++;
+            public override void OnHide() => HideCount++;
+            public override void OnClose() => CloseCount++;
+            public override void OnResetDefault() => ResetDefaultCount++;
+            public override void OnReset() => ResetCount++;
+            public override void OnDispose() => DisposeCount++;
+        }
+
+        #region EUIItem
+
+        [Test]
+        public void EUIItem_ShouldSeparateHideFromPoolResetLifecycle()
+        {
+            var gameObject = new GameObject(
+                "LifecycleItem",
+                typeof(RectTransform),
+                typeof(CanvasGroup));
+            var logic = new TestItemLogic();
+            try
+            {
+                var item = new EUIItem(gameObject, logic);
+                gameObject.SetActive(false);
+
+                Assert.AreEqual(1, logic.BeginLoadCount);
+                Assert.AreEqual(1, logic.BindCount);
+
+                item.Show();
+                item.Hide();
+                item.Show();
+
+                Assert.AreEqual(1, logic.InitCount);
+                Assert.AreEqual(1, logic.OpenCount);
+                Assert.AreEqual(2, logic.ShowCount);
+                Assert.AreEqual(1, logic.HideCount);
+                Assert.AreEqual(0, logic.CloseCount);
+
+                item.ResetForPool();
+                Assert.AreEqual(2, logic.HideCount);
+                Assert.AreEqual(1, logic.CloseCount);
+
+                item.Show();
+                Assert.AreEqual(1, logic.InitCount);
+                Assert.AreEqual(2, logic.OpenCount);
+
+                item.Dispose();
+                Assert.AreEqual(1, logic.DisposeCount);
+                Assert.IsTrue(item.IsDisposed);
+            }
+            finally
+            {
+                Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
         #region EUIPageDef
 
         [Test]
@@ -828,6 +903,51 @@ namespace Ember.UI.Tests
                 Assert.AreEqual(
                     "Assets/GameResource/Resources/UI/Module/Inventory/Prefabs/InventoryPanel.prefab",
                     path);
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+                Object.DestroyImmediate(implementation);
+            }
+        }
+
+        [Test]
+        public void PrefabPath_BusinessModeWithExplicitModulePrefix_ShouldNotDuplicateModule()
+        {
+            var go = new GameObject("EUIBaseBubbleItem");
+            var implementation = ScriptableObject.CreateInstance<CSharpLogicImplementationData>();
+            try
+            {
+                var binding = go.AddComponent<EUIBinding>();
+                ConfigureBinding(binding, EUIBinding.CodePathMode.Business,
+                    "Module/SceneUI", "EUIBaseBubbleItem");
+
+                Assert.IsTrue(implementation.TryResolvePrefabPath(binding, out var path,
+                    out var error), error);
+                Assert.AreEqual(
+                    "Assets/GameResource/Resources/UI/Module/SceneUI/Prefabs/EUIBaseBubbleItem.prefab",
+                    path);
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+                Object.DestroyImmediate(implementation);
+            }
+        }
+
+        [Test]
+        public void PrefabPath_BusinessModeWithBareModulePrefix_ShouldFail()
+        {
+            var go = new GameObject("InvalidPanel");
+            var implementation = ScriptableObject.CreateInstance<CSharpLogicImplementationData>();
+            try
+            {
+                var binding = go.AddComponent<EUIBinding>();
+                ConfigureBinding(binding, EUIBinding.CodePathMode.Business,
+                    "Module", "InvalidPanel");
+
+                Assert.IsFalse(implementation.TryResolvePrefabPath(binding, out _, out var error));
+                StringAssert.Contains("Module 前缀后", error);
             }
             finally
             {

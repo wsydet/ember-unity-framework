@@ -34,6 +34,7 @@ namespace Ember.Input
 
         private PlayerInput _playerInput;
         private InputActionAsset _actionAsset;
+        private IEmberInputRebindingService _rebindingService;
         private string _currentMap;
         private bool _initialized;
 
@@ -55,6 +56,12 @@ namespace Ember.Input
         {
             if (_initialized) return;
 
+            if (actionAsset == null)
+            {
+                EmberDebug.LogError(TAG, "InputActionAsset 不能为空，InputManager 初始化失败。");
+                return;
+            }
+
             var host = GameLauncher.Instance.InputHost;
             if (host == null)
             {
@@ -70,12 +77,14 @@ namespace Ember.Input
             _playerInput.actions = _actionAsset;
             _playerInput.notificationBehavior = PlayerNotifications.InvokeUnityEvents;
 
+            // SwitchMap 只接受已完成初始化的管理器，因此必须先更新状态。
+            _initialized = true;
+
             if (!string.IsNullOrEmpty(defaultMap))
             {
                 SwitchMap(defaultMap);
             }
 
-            _initialized = true;
             EmberEventBus.OnNext(EmberBroadcastEvent.InputReady);
         }
 
@@ -154,9 +163,39 @@ namespace Ember.Input
         }
 
         /// <summary>
+        /// 获取指定 Action Map 下的 InputAction，避免不同 Map 中存在同名 Action 时产生歧义。
+        /// </summary>
+        public InputAction GetAction(string actionMapName, string actionName)
+        {
+            if (_actionAsset == null || string.IsNullOrEmpty(actionMapName)
+                || string.IsNullOrEmpty(actionName))
+                return null;
+
+            return _actionAsset.FindActionMap(actionMapName)?.FindAction(actionName);
+        }
+
+        /// <summary>
+        /// 注册玩家输入重绑定服务。Ember 当前不提供默认实现，服务生命周期由注册方管理。
+        /// 传入 null 可以移除当前服务。
+        /// </summary>
+        public void SetRebindingService(IEmberInputRebindingService service)
+        {
+            _rebindingService = service;
+        }
+
+        /// <summary>
         /// 当前激活的 Action Map 名称。
         /// </summary>
         public string CurrentMap => _currentMap;
+
+        /// <summary>当前使用的 InputActionAsset，未完成输入初始化时可能为 null。</summary>
+        public InputActionAsset ActionAsset => _actionAsset;
+
+        /// <summary>输入管理器是否已绑定 InputActionAsset 并完成初始化。</summary>
+        public bool IsInitialized => _initialized;
+
+        /// <summary>已注册的玩家输入重绑定服务；未接入实现时为 null。</summary>
+        public IEmberInputRebindingService RebindingService => _rebindingService;
 
         // ======== IEmberManager ========
 
@@ -213,6 +252,9 @@ namespace Ember.Input
                 UnityEngine.Object.Destroy(_playerInput);
                 _playerInput = null;
             }
+            _rebindingService = null;
+            _actionAsset = null;
+            _currentMap = null;
             _initialized = false;
         }
 

@@ -55,6 +55,7 @@ namespace Ember.UIExtension
         public BindingEntry[] Bindings => bindings;
         public EUIBinding.WidgetTypes SelfWidgetType => selfWidgetType;
         public string SelfWidgetClassName => selfWidgetClassName;
+        public EUIBindingRole Role => isPage ? EUIBindingRole.Page : EUIBindingRole.Item;
         public bool IsPage => isPage;
         public bool UseUIUpdate => useUIUpdate;
         public bool GenerateAutoCreateClickableMaskOverride => generateAutoCreateClickableMaskOverride;

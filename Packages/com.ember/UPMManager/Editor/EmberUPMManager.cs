@@ -46,9 +46,10 @@ namespace Ember.UPMManager.Editor
             ("com.ember.network", "网络层（Phase 2 规划）"),
         };
 
+        private static readonly string[] UpgradeSpinnerFrames = { "◐", "◓", "◑", "◒" };
+
         private bool _installing;
         private bool _checking;
-        private bool _upgrading;
         private string _checkMessage;
         private bool _checkFailed;
         private Version _currentVersion;
@@ -116,10 +117,21 @@ namespace Ember.UPMManager.Editor
         /// <summary>框架版本区：当前版本 + 检查更新 + 一键升级（按版本语义标注强制/可选）。</summary>
         private void DrawFrameworkVersionSection()
         {
+            var upgrade = EmberUPMUpgradeTracker.GetSnapshot();
             var currentVersionText = GetPackageVersion(PackageName);
             if (string.IsNullOrEmpty(currentVersionText))
             {
-                EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.10.0", MessageType.Error);
+                if (upgrade.IsActive)
+                {
+                    EditorGUILayout.HelpBox(
+                        "com.ember 正在被 Unity 切换，包信息暂时不可用。升级仍在后台继续。",
+                        MessageType.Info);
+                    DrawUpgradeOperation(upgrade);
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox("未检测到 com.ember 包。请先在 Package Manager 中添加：\nhttps://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.10.0", MessageType.Error);
+                }
                 return;
             }
 
@@ -127,7 +139,7 @@ namespace Ember.UPMManager.Editor
             DrawStatusRow("com.ember（框架）", currentVersionText, true);
 
             EditorGUILayout.BeginHorizontal();
-            GUI.enabled = !_checking && !_upgrading;
+            GUI.enabled = !_checking && !_installing && !upgrade.IsActive;
             if (GUILayout.Button("检查更新", GUILayout.Width(100)))
                 CheckForUpdates(currentVersionText);
             GUI.enabled = true;
@@ -159,7 +171,7 @@ namespace Ember.UPMManager.Editor
                 EditorGUILayout.BeginHorizontal();
                 var style = new GUIStyle(EditorStyles.boldLabel) { normal = { textColor = new Color(1f, 0.55f, 0.2f) } };
                 EditorGUILayout.LabelField($"    ⬆ 强制更新：v{tag}（框架已变化）", style, GUILayout.Width(260));
-                GUI.enabled = !_upgrading;
+                GUI.enabled = !_installing && !upgrade.IsActive;
                 if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
                     UpgradeTo(tag);
                 GUI.enabled = true;
@@ -171,15 +183,14 @@ namespace Ember.UPMManager.Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField($"    可选更新：v{tag}（小修补，可不升）", EditorStyles.miniLabel, GUILayout.Width(260));
-                GUI.enabled = !_upgrading;
+                GUI.enabled = !_installing && !upgrade.IsActive;
                 if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
                     UpgradeTo(tag);
                 GUI.enabled = true;
                 EditorGUILayout.EndHorizontal();
             }
 
-            if (_upgrading)
-                EditorGUILayout.LabelField("    ⏳ 正在重装新版本并等待 Unity 解析...", EditorStyles.miniLabel);
+            DrawUpgradeOperation(upgrade);
         }
 
         /// <summary>版本语义：major/minor 高于当前 = 框架变化 = 强制更新；仅 patch 高 = 可选。</summary>
@@ -272,9 +283,7 @@ namespace Ember.UPMManager.Editor
 
         private void UpgradeTo(Version target)
         {
-            if (_upgrading) return;
-            _upgrading = true;
-            Repaint();
+            if (EmberUPMUpgradeTracker.IsActive) return;
 
             try
             {
@@ -305,37 +314,124 @@ namespace Ember.UPMManager.Editor
                 }
 
                 // 2. Client.Add 同 URL 新 tag = 重新安装新版本（返回请求句柄可用于轮询）
-                var request = UnityEditor.PackageManager.Client.Add(newUrl);
-                EditorApplication.update += PollResolve;
-
-                void PollResolve()
+                var sourceVersion = GetPackageVersion(PackageName) ?? string.Empty;
+                if (!EmberUPMUpgradeTracker.BeginUpgrade(
+                        newUrl, sourceVersion, target.ToString(), out _))
                 {
-                    if (!request.IsCompleted) return;
-                    EditorApplication.update -= PollResolve;
-                    _upgrading = false;
-                    _newerTags.Clear();
-                    _checkMessage = null;
-
-                    if (request.Status == UnityEditor.PackageManager.StatusCode.Success)
-                    {
-                        EditorUtility.DisplayDialog("升级完成",
-                            $"com.ember 已升级到 v{target}。\n若当前有编译报错属解析中间态，稍候即恢复。", "确定");
-                    }
-                    else
-                    {
-                        EditorUtility.DisplayDialog("升级失败",
-                            "解析失败：" + (request.Error?.message ?? "未知错误") +
-                            "\n\n可手动修改 manifest 的 #tag 后重试。", "确定");
-                    }
-                    Repaint();
+                    return;
                 }
+
+                _checkMessage = null;
+                Repaint();
             }
             catch (Exception ex)
             {
-                _upgrading = false;
                 EditorUtility.DisplayDialog("升级失败", ex.Message, "确定");
                 Repaint();
             }
+        }
+
+        private void DrawUpgradeOperation(EmberUPMUpgradeSnapshot upgrade)
+        {
+            if (!upgrade.HasState) return;
+
+            GUILayout.Space(6);
+            if (upgrade.IsActive)
+            {
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.LabelField(
+                    $"框架升级：v{upgrade.SourceVersion} → v{upgrade.TargetVersion}",
+                    EditorStyles.boldLabel);
+
+                var spinner = GetUpgradeSpinner();
+                var progressRect = GUILayoutUtility.GetRect(1f, 20f, GUILayout.ExpandWidth(true));
+                EditorGUI.ProgressBar(
+                    progressRect,
+                    upgrade.StageProgress,
+                    $"{spinner} 阶段 {upgrade.StageIndex}/4 · {upgrade.StageTitle}");
+
+                EditorGUILayout.LabelField(GetUpgradeDescription(upgrade), EditorStyles.wordWrappedMiniLabel);
+                EditorGUILayout.LabelField(
+                    $"已等待 {FormatElapsed(upgrade.Elapsed)}（阶段进度，不代表下载百分比）",
+                    EditorStyles.miniLabel);
+
+                if (upgrade.IsSlow)
+                {
+                    var message = upgrade.IsVerySlow
+                        ? "等待时间已超过 5 分钟。升级仍在后台继续；建议检查 Console、网络和 Git 凭据，不要重复点击升级。"
+                        : "此阶段耗时较长。Git 包下载与 Unity 依赖解析不提供精确进度，升级仍在后台继续。";
+                    EditorGUILayout.HelpBox(message, MessageType.Warning);
+                }
+
+                if (GUILayout.Button("复制诊断信息", GUILayout.Width(120)))
+                    EditorGUIUtility.systemCopyBuffer = upgrade.BuildDiagnostics();
+                EditorGUILayout.EndVertical();
+                return;
+            }
+
+            if (upgrade.IsSucceeded)
+            {
+                _newerTags.Clear();
+                _checkMessage = null;
+                EditorGUILayout.HelpBox(
+                    $"升级完成：com.ember 已从 v{upgrade.SourceVersion} 升级到 v{upgrade.TargetVersion}。",
+                    MessageType.Info);
+            }
+            else if (upgrade.IsFailed)
+            {
+                EditorGUILayout.HelpBox(
+                    "升级失败：" + upgrade.Error +
+                    "\n\n可检查网络或 Git 凭据后重试；也可以手动修改 manifest 的 #tag。",
+                    MessageType.Error);
+            }
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("关闭提示", GUILayout.Width(100)))
+                EmberUPMUpgradeTracker.ClearTerminalState();
+            if (GUILayout.Button("复制诊断信息", GUILayout.Width(120)))
+                EditorGUIUtility.systemCopyBuffer = upgrade.BuildDiagnostics();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private static string GetUpgradeDescription(EmberUPMUpgradeSnapshot upgrade)
+        {
+            if (upgrade.IsCompiling)
+                return "Unity 正在编译新版本脚本，完成后会自动恢复升级状态。";
+            if (upgrade.IsUpdating)
+                return "Unity 正在刷新 AssetDatabase，完成后会自动验证安装版本。";
+
+            switch (upgrade.Phase)
+            {
+                case EmberUPMUpgradePhase.Preparing:
+                    return "正在校验 manifest 与目标版本。";
+                case EmberUPMUpgradePhase.Resolving:
+                    return "Package Manager 正在下载并解析 Git 包。";
+                case EmberUPMUpgradePhase.Registering:
+                    return "Unity 正在注册新包，随后会刷新资源并编译脚本。";
+                case EmberUPMUpgradePhase.Verifying:
+                    return "解析已经完成，正在核对实际安装的框架版本。";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private static string GetUpgradeSpinner()
+        {
+            var index = (int)(EditorApplication.timeSinceStartup * 4d)
+                        % UpgradeSpinnerFrames.Length;
+            return UpgradeSpinnerFrames[index];
+        }
+
+        private static string FormatElapsed(TimeSpan elapsed)
+        {
+            var totalSeconds = Math.Max(0, (int)elapsed.TotalSeconds);
+            return $"{totalSeconds / 60:00}:{totalSeconds % 60:00}";
+        }
+
+        private void OnInspectorUpdate()
+        {
+            if (EmberUPMUpgradeTracker.IsActive)
+                Repaint();
         }
 
         /// <summary>绘制单个依赖体检行：状态 + 一键安装 + 手动指引。</summary>
@@ -348,7 +444,7 @@ namespace Ember.UPMManager.Editor
                 EditorGUILayout.LabelField($"    {desc}", EditorStyles.miniLabel);
 
                 EditorGUILayout.BeginHorizontal();
-                GUI.enabled = !_installing;
+                GUI.enabled = !_installing && !EmberUPMUpgradeTracker.IsActive;
                 if (GUILayout.Button("一键安装（团队仓库）", GUILayout.Width(180)))
                     InstallPackage(installUrl, label);
                 if (GUILayout.Button("手动安装指引", GUILayout.Width(140)))

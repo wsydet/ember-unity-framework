@@ -1,7 +1,7 @@
 /*=============================================================
  * author       : {author_name}
  * prefab name  : {prefab_name}
- * page name    : {page_name}
+ * ui role      : {ui_role}
  * create date  : {create_date}
 ==============================================================*/
 using System.Collections;
@@ -10,7 +10,7 @@ namespace {namespace_name}
 {{
     public partial class {class_name}
     {{
-        // ── 页面配置 ──
+        // ── UI 配置 ──
 
 {page_feature_members}
 
@@ -24,25 +24,25 @@ namespace {namespace_name}
 
         public override void OnOpen(object param)
         {{
-            // 页面被打开，处理传入参数
+            // UI 开始一次使用，处理传入参数
             base.OnOpen(param);
         }}
 
         public override void OnShow()
         {{
-            // 页面变为可见
+            // UI 变为可见
             base.OnShow();
         }}
 
         public override void OnHide()
         {{
-            // 页面被隐藏
+            // UI 被隐藏
             base.OnHide();
         }}
 
         public override void OnClose()
         {{
-            // 页面被关闭
+            // UI 结束本次使用
             base.OnClose();
         }}
 

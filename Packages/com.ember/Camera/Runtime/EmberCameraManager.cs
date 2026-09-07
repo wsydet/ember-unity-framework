@@ -137,8 +137,17 @@ namespace Ember.Camera
         /// <summary>注销。</summary>
         public void Unregister(string key)
         {
-            if (_registry.Remove(key))
-                EmberDebug.Log(TAG, $"Camera unregistered: {key}");
+            if (!_registry.TryGetValue(key, out var camera)) return;
+
+            _registry.Remove(key);
+            if (_active == camera)
+            {
+                if (camera != null)
+                    camera.gameObject.SetActive(false);
+                _active = null;
+            }
+
+            EmberDebug.Log(TAG, $"Camera unregistered: {key}");
         }
 
         /// <summary>是否已注册。</summary>
@@ -306,7 +315,12 @@ namespace Ember.Camera
         /// <summary>激活相机：禁用旧相机 → 启用新相机 → 触发事件。</summary>
         private void ActivateCamera(CinemachineCamera vcam)
         {
-            if (_active == vcam) return;
+            if (_active == vcam)
+            {
+                if (!vcam.gameObject.activeSelf)
+                    vcam.gameObject.SetActive(true);
+                return;
+            }
 
             if (_active != null)
                 _active.gameObject.SetActive(false);

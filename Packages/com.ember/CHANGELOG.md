@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+- **0.11.0 消费声明**：补齐随包 Dependencies~ 的 56 项直接依赖 manifest 基线及版本化发布声明，7 个私有第三方包固定到统一 `ember-v0.11.0`，MCP 固定当前已解析 commit；提供第三方先、框架后的上传命令。经用户授权、在父子内容和父快照 hash 一致性预检后，将父子模板兼容声明同步到 0.11.0，不修改内容版本或 hash。声明不自动执行安装，Unity/消费端验证及依赖自动同步仍未完成。
+- **0.11.0 发布准备**：package.json 已声明 0.11.0，尚未创建/推送发布 tag。经授权从 hash 一致的备份恢复派生模板 `source3d-2p5d 0.2.6` 的正式 Assets，保留本地恢复副本，不改写模板版本、兼容声明或 hash。Rainbow 两包、Console Pro、InputDeviceDetector、Feel 明确纳入私有第三方仓库交付；Feel v5.4 的本地 UPM 封装已准备，安装切换、Unity 验收和依赖自动同步尚未完成。
+- **项目中心校验与模板编辑优化**：生成物校验统一到项目中心，提供明确基准、错误/警告/业务差异分类、资源/.meta/GUID、场景、管理区和 UI 生成链路检查；模板开发调整为左侧模板树与四个详情分区，支持保存差异、文本对照、冲突筛选和版本封存提示。新增真实截图草稿、来源校验、版本效果与演示入口，图片独立于模板部署内容；父级同步自动重载前检查未保存修改。已补充只读边界测试，Unity 编译、测试执行及图形验收待完成。
+- **新增模板场景对象级语义同步**：仅在显式预览和事务应用阶段对并发修改的 `.unity` 场景调用 Unity 自带 UnityYAMLMerge，以 O/N/C 三方语义合并保留不同场景对象的父子修改；工具不可用、超时、输出无效或同一属性真实冲突时安全回退为整场景“保留派生/接受父模板”，普通资源、脚本、Prefab 与 `.meta` 继续使用文件级规则。应用阶段在独立 stage 重跑合并并复核输入、工具/规则、结果 hash、metadata 与 GUID，失败零写入或完整回滚；面板支持语义预览、版本 Bump 与当前编辑副本自动刷新。2026-09-07 已通过 fake runner、事务、真实 UnityYAMLMerge 集成和手工 O/N/C 验收；非冲突合并后派生封存为 `source3d-2p5d 0.2.5`、父基线 `base 0.5.4`，收口时根模板已继续前进为 `base 0.5.5`，等待下一次派生同步决策。
+- **明确业务模块两阶段生命周期**：`InitState` 在 Manager 初始化前统一发现模块，先通过 `EmberModuleAttribute` 判断阶段和启用状态，仅为启用模块创建实例；场景绑定可通过无创建查询获取已登记实例，再由状态 Phase 调用 `OnInit`。`EmberUpdateManager` 复用已登记模块，不再独立创建禁用业务模块，并只驱动 `OnInit` 成功后的活动模块。
+- **完善玩家输入基础设施**：`EmberInputManager` 接入 Manager 反射初始化管道，增加按 Map 获取 Action 的无歧义入口，并预留稳定 BindingId、交互式重绑定、显示文本、恢复默认及 Overrides 导入导出契约；当前仍不内置具体重绑定服务。
+- **新增场景相机自注册组件**：`EmberCameraRegistration` 随 CinemachineCamera 的 Awake/Destroy 自动注册与注销，支持普通或强制的 Awake 激活；玩家控制只使用相机，不再代管相机注册职责。
+- **新增 2.5D PlayerControl 样例**：Gameplay 模块消费 Player Map，等待 Loading 方块完全退出后才开放输入；支持 WASD、世界锚点鼠标拖动、可解锁 BoxCollider 区域列表、可见 3D 围栏边界、滚轮调整正交相机 Orthographic Size，以及播放模式实时读取的 PlayerControlSettings；移动按当前位置约束连续可达区域，避免鼠标拖动跨越区域空隙瞬移，并丢弃撞边后的拖动残差；InputActionAsset 归入模板覆盖的 `Assets/Game`，确保模板交付包含完整输入依赖。
+- **修复 Loading 与 UI 退出时序**：`LoadingFadeOutComplete` 延后到进度条和方块全部退出后广播；UI 引擎 Shutdown 强制释放活动及延迟关闭页面，使未完成异步过渡通过销毁取消正常结束，不再回写已销毁组件。
+- **补齐 SceneUI 模板验收工具**：`SceneUIObject` 使用项目 Odin 风格面板并提供播放模式手动刷新位置；新增往复移动 Cube 验证动态 SceneUI 的 PollPosition 跟随。
+- **修复 UI 创建规则**：输出子目录填写 `Module/<模块>` 时不再重复把 `Module` 当作模块名，Prefab 会正确生成到 `UI/Module/<模块>/Prefabs`，同时保持原有 `<模块>/Page|Component` 写法兼容；非 Page UI 不再依赖或自动嵌套 `EUISafeArea`。
+- **新增 UI 模块目录模板管理**：UI 开发中心增加「模块模板」页签；新业务模块会按 `UI/Module/模板` 自动创建独立 GUID 的空目录树，并提供只补缺失项的一键同步、保留 GUID 的跨模块重命名，以及仅允许空目录且移入系统回收站的双重确认删除。现有模块目录不会随模板删除。
+- **新增通用 SceneUI 模块**：提供场景锚点到 UI 的统一投影、可见性、缩放、优先级/深度排序、View 池化与生命周期管理；完成 EUI、Cinemachine 和 Ember.Resource 接入，并支持预算化遮挡检测、分帧预热、批量注册及运行时诊断。
+- **完成 2.5D SceneUI 模板验收与封存**：`source3d-2p5d` 已包含可运行的方块锚点、Marker UI、正交镜头移动/缩放和 100/500/1000 目标规模验证示例，P0-P4 均已通过手动编译与 Play Mode 测试；业务内容已保存并 Patch 封存为 `source3d-2p5d v0.2.3`，父基线对齐 `base v0.5.3`。
+- **UPM 升级进度可观测**：框架升级改为四阶段进度展示（校验、下载与解析、注册与编译、版本验证），同时显示活动动画、已耗时和慢任务提示；通过 `SessionState` 与 Package Manager 注册事件跨脚本域重载续接，并同步至 Unity 后台 Progress，最终以实际安装版本确认成功。
+
 ## [0.10.0] - 2026-09-02
 
 - **UI 资源与代码路由重构**：逻辑代码统一位于 `Assets/Game/UI/Runtime`，UI 资源根独立为 `Assets/GameResource/Resources/UI`；框架页面进入 `Common/Prefabs`，业务页面按 `classPath` 首段进入 `Module/<模块>/Prefabs`，Prefab、GamePages 与默认 Resources 加载器共用同一套路径规则。

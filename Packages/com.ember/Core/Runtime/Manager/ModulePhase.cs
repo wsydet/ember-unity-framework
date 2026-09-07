@@ -13,8 +13,10 @@
     ///   <item><see cref="Gameplay"/> (3) — Gameplay 状态（玩法业务）</item>
     /// </list>
     ///
-    /// 业务模块通过 <c>public int Phase => ModulePhase.Global;</c> 声明所属阶段，
-    /// 由 <see cref="EmberModuleCollector"/> 在状态机进入对应状态时自动初始化。
+    /// 业务模块通过 <c>[EmberModule(ModulePhase.Global)]</c> 声明所属阶段，
+    /// 由对应状态生命周期调用 <see cref="EmberModuleCollector.InitPhase"/> 和
+    /// <see cref="EmberModuleCollector.DestroyPhase"/> 驱动。框架当前内置接入
+    /// Global 与 Gameplay；Main 或自定义阶段需要显式接线。
     /// </summary>
     public static class ModulePhase
     {

@@ -17,7 +17,8 @@ GameLauncher（框架入口）
 状态机 FSM ── Start<InitState>
    │
    ▼
-InitState ── 初始化 Manager → 加载 MainScene → 等黑幕淡出 → TransitionTo<MainState>
+InitState ── 发现 Module → 初始化 Manager → 激活 Global Module
+   │          → 加载 MainScene → 等黑幕淡出 → TransitionTo<MainState>
    │
    ▼
 MainState ── 广播 MainSceneReady → 开屏动画 → 广播 OpeningAnimationEnd
@@ -31,7 +32,7 @@ GameMainState.OnOpeningAnimationEnd ── ShowMainPage(MainMenu)
 | 阶段 | 干什么 | 关键系统 |
 |------|--------|---------|
 | ① FrameworkScene 加载 | 启动器 + 黑幕就位 | GameLauncher / BootSplash |
-| ② 系统初始化 | 反射扫描并按 InitOrder 初始化所有 Manager | EmberManagerCollector |
+| ② 系统初始化 | 发现可选 Module、初始化必备 Manager、激活 Global Module | EmberModuleCollector / EmberManagerCollector |
 | ③ MainScene 加载 | 异步 Additive 加载主场景 | EmberSceneManager |
 | ④ 黑幕淡出 | 黑幕完全消失才切换状态（门槛①） | BootSplash / BootSplashBridge |
 | ⑤ 主界面就绪 | 开屏动画 + 背景页并行，就绪后开首页（门槛②） | MainState / 开屏动画 / EUIManager |
@@ -47,6 +48,8 @@ sequenceDiagram
     participant GL as GameLauncher
     participant FSM as 状态机
     participant Init as InitState
+    participant Mod as ModuleCollector
+    participant Mgr as ManagerCollector
     participant Splash as BootSplash 黑幕
     participant Br as BootSplashBridge
     participant Main as MainState
@@ -65,9 +68,13 @@ sequenceDiagram
     GL->>FSM: Start InitState
     FSM->>Init: OnEnter
 
-    Note over Init,Br: ② 系统初始化
-    Init->>Init: InitializeAll（按 InitOrder 初始化 Manager）
-    Note right of Init: Update→Time→Resource→Audio→Input→UI→Scene→Camera
+    Note over Init,Mgr: ② 系统初始化
+    Init->>Mod: DiscoverModules
+    Note right of Mod: 仅构造并登记 Enabled Module，不调用 OnInit
+    Init->>Mgr: InitializeAll（按 InitOrder 初始化 Manager）
+    Note right of Mgr: Update→Time→Resource→Audio→Input→UI→Scene→Camera
+    Init->>Mod: InitPhase(Global)
+    Note right of Mod: Global Module 此时才 OnInit 并进入活动状态
     Init->>Init: 广播 CoreReady
     Init->>FSM: LoadSceneAsync("MainScene")
 
@@ -112,7 +119,23 @@ sequenceDiagram
 
 ### ② 系统初始化（InitState.OnEnter）
 
-`EmberManagerCollector.InitializeAll()` 反射扫描所有 `IEmberManager` 实现，按 `EmberInitOrder` 升序初始化：
+系统初始化采用两条平行的生命周期管道：Manager 是所有游戏共同依赖的框架必要服务；Module 是
+模板按玩法选装的业务积木。具体游戏由同一套框架与 Managers 加上不同的 Modules 组合而成。
+
+`InitState.OnEnter` 的实际顺序是：
+
+1. `EmberModuleCollector.DiscoverModules()`：只发现、构造和登记带有
+   `[EmberModule(..., Enabled = true)]` 的 Module，不调用 `OnInit`。
+2. `EmberManagerCollector.InitializeAll()`：反射发现所有 `IEmberManager`，按 `EmberInitOrder`
+   升序调用 `Init`，在 Init 阶段启动框架必要管理器。
+3. `EmberModuleCollector.InitPhase(ModulePhase.Global)`：激活 Global Module。
+4. 广播 `CoreReady`。
+
+“Module 已被发现”不等于“Module 已启动”。Module 只有进入其 Phase、`OnInit` 成功后才活动并接收
+帧更新。`Enabled = false` 的 Module 不会被构造或登记。当前框架内置接线覆盖 Global 与 Gameplay；
+新增 Phase 需要由对应状态生命周期显式调用 `InitPhase` / `DestroyPhase`。
+
+Manager 的默认初始化顺序如下：
 
 | InitOrder | Manager |
 |-----------|---------|
@@ -131,7 +154,7 @@ sequenceDiagram
 - `SceneCoordinator.Init` 注入 `Fsm.OnSceneTransition` 与 `Fsm.LoadSceneAsync` 委托。
 - `EUIManager.Init` 注册 `SceneCoordinator.InterceptSceneLoad`（跨场景 Loading 拦截），并广播 `UIManagerReady`。
 
-完成后广播 `CoreReady`，再调用 `LoadSceneAsync("MainScene")`。
+完成 Manager 初始化和 Global Module 激活后广播 `CoreReady`，再调用 `LoadSceneAsync("MainScene")`。
 
 ### ③ MainScene 异步加载
 
@@ -181,18 +204,18 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 
 | 文件 | 命名空间 | 内容 |
 |------|---------|------|
-| `Assets/Ember/Core/Runtime/GameLauncher.cs` | `Ember.Core` | 启动入口，创建状态机、驱动 Update、销毁 |
-| `Assets/Ember/Core/Runtime/State/EmberStateMachine.cs` | `Ember.Core` | 状态机：Start / TransitionTo / Push / Pop |
-| `Assets/Ember/Core/Runtime/State/InitState.cs` | `Ember.Core` | 初始化状态：Manager 初始化 + 加载 MainScene + 等黑幕 |
-| `Assets/Ember/Core/Runtime/State/MainState.cs` | `Ember.Core` | 主界面状态：开屏动画事件链 |
-| `Assets/Ember/Core/Runtime/Manager/EmberManagerCollector.cs` | `Ember.Core` | 反射扫描并初始化所有 Manager |
-| `Assets/Ember/Core/Runtime/Manager/EmberInitOrderAttribute.cs` | `Ember.Core` | 初始化顺序常量 |
-| `Assets/Ember/Core/Runtime/EmberBootSplashBridge.cs` | `Ember.Core` | 黑幕淡出等待桥接 |
-| `Assets/Ember/Core/Runtime/Event/EmberBroadcastEvent.cs` | `Ember.Core` | 广播事件常量表 |
-| `Assets/Ember/Scene/Runtime/SceneCoordinator.cs` | `Ember.Scene` | 状态机 ↔ 场景管理器桥接 |
-| `Assets/Ember/Scene/Runtime/EmberSceneManager.cs` | `Ember.Scene` | 场景异步加载/卸载 |
-| `Assets/Ember/UI/Runtime/EUIManager.cs` | `Ember.UI` | UI 应用层入口：ShowMainPage / SetBackgroundAsync |
-| `Assets/Ember/UI/Runtime/EUIViewEngine.cs` | `Ember.UI` | UI 视图引擎（底层） |
+| `Packages/com.ember/Core/Runtime/GameLauncher.cs` | `Ember.Core` | 启动入口，创建状态机、驱动 Update、销毁 |
+| `Packages/com.ember/Core/Runtime/State/EmberStateMachine.cs` | `Ember.Core` | 状态机：Start / TransitionTo / Push / Pop |
+| `Packages/com.ember/Core/Runtime/State/InitState.cs` | `Ember.Core` | 初始化状态：Manager 初始化 + 加载 MainScene + 等黑幕 |
+| `Packages/com.ember/Core/Runtime/State/MainState.cs` | `Ember.Core` | 主界面状态：开屏动画事件链 |
+| `Packages/com.ember/Core/Runtime/Manager/EmberManagerCollector.cs` | `Ember.Core` | 反射扫描并初始化所有 Manager |
+| `Packages/com.ember/Core/Runtime/Manager/EmberInitOrderAttribute.cs` | `Ember.Core` | 初始化顺序常量 |
+| `Packages/com.ember/Core/Runtime/EmberBootSplashBridge.cs` | `Ember.Core` | 黑幕淡出等待桥接 |
+| `Packages/com.ember/Core/Runtime/Event/EmberBroadcastEvent.cs` | `Ember.Core` | 广播事件常量表 |
+| `Packages/com.ember/Scene/Runtime/SceneCoordinator.cs` | `Ember.Scene` | 状态机 ↔ 场景管理器桥接 |
+| `Packages/com.ember/Scene/Runtime/EmberSceneManager.cs` | `Ember.Scene` | 场景异步加载/卸载 |
+| `Packages/com.ember/UI/Runtime/EUIManager.cs` | `Ember.UI` | UI 应用层入口：ShowMainPage / SetBackgroundAsync |
+| `Packages/com.ember/UI/Runtime/EUIViewEngine.cs` | `Ember.UI` | UI 视图引擎（底层） |
 | `Assets/Game/State/GameMainState.cs` | `Game.State` | 业务 MainState |
 | `Assets/Game/UI/EUIBootSplash.cs` | `Game.UI` | 黑幕（实现 `IEUIPersistentUI`） |
 | `Assets/Game/UI/EUIMainAnimationStarter.cs` | `Game.UI` | 开屏动画基类 |

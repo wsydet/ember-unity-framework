@@ -1,28 +1,47 @@
 # Core — 框架基础设施层
 
-Core 是 ember-unity-framework 的最底层模块，提供事件总线、服务定位器、单例模式、对象池、
-状态机、统一 Update 循环、调试日志等基础设施能力。所有上层模块均依赖 Core。
+Core 是 ember-unity-framework 的生命周期与运行管线子系统，提供事件总线、服务定位器、单例模式、对象池、
+状态机、统一 Update 循环等基础设施能力。日志和通用数据结构由 Basic 提供。
+
+## Manager 与 Module
+
+Ember 用两条平行管道组装游戏：
+
+```text
+具体游戏 = 框架基础 + 必备 Managers + 按需选装的 Modules
+```
+
+| | Manager | Module |
+|---|---|---|
+| 定位 | 框架运行必需的全局管理器 | 可选、可拼装的业务功能积木 |
+| 生命周期 | Init 阶段统一启动，框架退出时销毁 | 按 `EmberModuleAttribute` 的 `Enabled` 与 `Phase` 激活/退出 |
+| 模板策略 | `base` 和业务模板共同具备 | 每个模板按目标玩法自由组合 |
+
+`InitState` 会先发现并构造所有启用 Module，但暂不启动；随后初始化全部 Manager；最后激活
+Global Phase。其他 Module 只有在所属 Phase 调用 `OnInit` 后才进入活动状态。Module 可以消费
+Manager，Manager 不依赖具体业务 Module。完整规则见 [Manager 文档](../../Core/Runtime/Manager/README.md)。
+当前内置状态已经驱动 Global 与 Gameplay；Main 或自定义 Phase 需要在对应状态显式接线。
 
 ## 📂 子模块
 
 | 子目录 | 说明 | 文档 |
 |--------|------|------|
-| `Event/` | 事件总线 + 广播事件常量表 | [Event/README.md](Event/README.md) |
-| `Manager/` | 管理器接口 + 自动收集器 + 初始化优先级 | [Manager/README.md](Manager/README.md) |
-| `Service/` | 服务定位器 + 单例基类 + 对象池 + SO 基类 | [Service/README.md](Service/README.md) |
-| `State/` | 游戏状态机 + 核心状态 + 流转描述符 | [State/README.md](State/README.md) |
-| `Update/` | 统一 Update/LateUpdate/FixedUpdate 驱动 | [Update/README.md](Update/README.md) |
-| `Debug/` | 增强日志 + 标签过滤 + 彩色输出 + SO 配置 | [Debug/README.md](Debug/README.md) |
-| `Editor/` | Build Settings 同步 + Debug 配置自动创建 + 场景快速打开 | [Editor/README.md](Editor/README.md) |
+| `Event/` | 事件总线 + 广播事件常量表 | [Event/README.md](../../Core/Runtime/Event/README.md) |
+| `Manager/` | 管理器接口 + 自动收集器 + 初始化优先级 | [Manager/README.md](../../Core/Runtime/Manager/README.md) |
+| `Service/` | 服务定位器 + 单例基类 + 对象池 | [Service/README.md](../../Core/Runtime/Service/README.md) |
+| `State/` | 游戏状态机 + 核心状态 + 流转描述符 | [State/README.md](../../Core/Runtime/State/README.md) |
+| `Update/` | 统一 Update/LateUpdate/FixedUpdate 驱动 | [Update/README.md](../../Core/Runtime/Update/README.md) |
+| `Basic/Runtime/Debug/` | 日志 + 标签过滤 + SO 配置 | [日志文档](../../../../docs/dev/ember-debug.md) |
+| `Core/Editor/` | 场景映射、项目初始化与模板开发 | [Editor/README.md](../../Core/Editor/README.md) |
 
 ## 📄 根级文件
 
 | 角色 | 路径 |
 |------|------|
-| 游戏启动器（框架入口） | `Runtime/GameLauncher.cs` |
-| 场景文件引用（Odin 面板） | `Runtime/EmberSceneField.cs` |
-| 程序集可见性声明 | `Runtime/EmberCoreAssemblyInfo.cs` |
-| C# 9 init polyfill | `Runtime/Compatibility/IsExternalInit.cs` |
+| 游戏启动器（框架入口） | [GameLauncher.cs](../../Core/Runtime/GameLauncher.cs) |
+| 场景文件引用（Odin 面板） | [EmberSceneField.cs](../../Core/Runtime/EmberSceneField.cs) |
+| 程序集可见性声明 | [EmberCoreAssemblyInfo.cs](../../Core/Runtime/EmberCoreAssemblyInfo.cs) |
+| C# 9 init polyfill | [IsExternalInit.cs](../../Core/Runtime/Compatibility/IsExternalInit.cs) |
 
 ## 🔌 快速上手
 
@@ -32,7 +51,7 @@ Core 是 ember-unity-framework 的最底层模块，提供事件总线、服务�
 
 // 获取各子系统：
 var fsm = GameLauncher.Instance.Fsm;
-var debug = EmberDebug.Log(LogTags.EmberCore, "框架启动");
+EmberDebug.Log(LogTags.EmberCore, "框架启动");
 var eventSub = EmberEventBus.Subscribe(EmberBroadcastEvent.CoreReady, () => { });
 ```
 
@@ -48,7 +67,19 @@ var eventSub = EmberEventBus.Subscribe(EmberBroadcastEvent.CoreReady, () => { })
 | UI Camera | UI 相机 |
 | Main Camera | 主相机 |
 
-**启动流程**：`Awake` → 创建 StateMachine + 注册状态 → `Start` → InitState.OnEnter（ManagerCollector.InitializeAll）→ TransitionTo<MainState>
+**启动流程**：`Awake` → 创建 StateMachine + 注册状态 → `Start` →
+`InitState.OnEnter`（ModuleCollector.DiscoverModules → ManagerCollector.InitializeAll → Global Module OnInit）→
+TransitionTo<MainState>
+
+业务模块使用“发现/构造”和“阶段激活”两段生命周期。框架在加载业务场景前构造并登记所有启用模块；
+场景组件只能通过 `EmberModuleCollector.TryGetModule` 获取已发现实例并注入引用，不能用 `.Instance`
+隐式创建模块。场景激活完成、状态进入对应 Phase 后，Collector 才调用模块的 `OnInit`。
+
+模块必须声明 `[EmberModule(phase)]`。Collector 在访问 `Instance` 前读取该特性；
+`Enabled = false` 或缺少特性的模块会直接跳过，不会产生实例。UpdateManager 也只复用 Collector
+已经创建的启用模块，不再独立反射创建业务模块；模块只有在 `OnInit` 成功后才接收帧更新。
+
+`EmberSingleton.TryGetInstance` 只返回已存在实例，不会触发懒创建，适合验证框架启动顺序。
 
 **每帧驱动**：`Update` → EmberUpdateManager.DoUpdate + Fsm.Current.OnUpdate
 
@@ -72,4 +103,4 @@ EmberSceneManager.Instance.LoadSceneAsync(_mainScene);
 | `Sirenix.OdinInspector` | 第三方 | Odin 面板属性（Editor 和 Runtime 均使用） |
 | `UniTask` | 第三方 | 异步驱动（Scene 加载等） |
 
-> Core 不依赖其他 Ember 框架模块。它是整个框架的最底层。
+> `Ember.Core.Runtime.asmdef` 引用 `Ember.Basic.Runtime`、Odin 属性程序集和 UniTask。Basic 是其基础依赖，不应写成 Core 零外部依赖。

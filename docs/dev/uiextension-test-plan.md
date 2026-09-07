@@ -4,9 +4,11 @@
 > 1. 绑定的子组件「类型」下拉框能选到哪些类型（原生 + 增强）；
 > 2. 不同组件类型通过 `[EUIExtension]` 暴露哪些相关参数（子组件）。
 > 最后更新：2026-08-22
-> 关联文档：[eui-reference.md](eui-reference.md)（API 明细）· [uiextension-migration-plan.md](uiextension-migration-plan.md)（迁移决策）
+> 关联文档：[eui-reference.md](eui-reference.md)（API 明细）· [uiextension-learning-path.md](uiextension-learning-path.md)（当前源码路线）
 
 ---
+
+> 本文保留 2026-08 的控件验证记录；表中通过状态为历史结果。本次文档维护未执行 Unity 回归，当前通用入口见 [框架测试清单](framework-test-checklist.md)。
 
 ## 一、测试前置
 
@@ -16,7 +18,7 @@
 |----|----|
 | 预制体路径 | `Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab`（模板通用 UI 资源） |
 | 逻辑类 | `Assets/Game/UI/Runtime/Framework/GMPage.cs`（手写 partial，命名空间 `Game.UI`）+ `GMPage.Binding.cs`（自动生成） |
-| 实例化 | `GameInitState.OnEnter`（业务层 InitState 子类）—— 进主界面即创建，FreePage 常驻 |
+| 实例化 | 业务启动/状态钩子打开 `GamePages.GMPage`，以当前调用点为准；FreePage 常驻 |
 | 当前绑定 | 13 个：`Btn_GM`(Button)、`Panel_GM`(Component)、`Pgb_TimeScale`(Slider)、`Txt_TimeScale`(TMP_Text)、`Txt_GameState`(TMP_Text)、`Tgl_Test`(Toggle)、`Scr_Test`(ScrollRect)、`Img_Test`(Image)、`Raw_Test`(RawImage)、`EUIBtn_Exit`(**EUIButtonEx**)、`EUITgl_Test`(**EUIToggleEx**)、`EUIImg_Test`(**EUIImageEx**)、`Img_Circle`(**EUICircleImage**) |
 
 > ⚠️ 迁移原因：GMPage 使用增强组件（EUIButtonEx）后，若留在框架层 `Ember.UI.Runtime` 程序集会与 `Ember.UIExtension.Runtime`（已反向引用 UI.Runtime）形成循环依赖。迁至业务层（无 asmdef，编译进 Assembly-CSharp）后依赖方向正确：业务 → 框架 + 扩展。
@@ -185,7 +187,7 @@ EUIBtn_Confirm.Label.text = "确定";
 
 **根因**：Viewport 的 RectTransform 配置异常（anchor `(0,0)-(0,0)` + sizeDelta `0×0`，尺寸为 0），而 ScrollRect 带 `[ExecuteAlways]` 在编辑器模式实时执行布局（`UpdateCachedData`/`UpdateScrollbars`），尺寸 0 导致计算出非确定浮点残渣（每次数值不同，实测 0.000477 → 0.000381），序列化后永远 dirty。
 
-**结论**：根因是**该 UI 自身的布局配置错误**（非框架缺陷）。已隐藏该节点跳过测试，后续有具体需求时修正 Viewport 为标准布局（anchor `(0,0)-(1,1)` 充满父节点）即可根治。
+**结论**：历史排查定位到**该 UI 自身的布局配置错误**。已隐藏该节点跳过测试，后续有具体需求时修正 Viewport 为标准布局（anchor `(0,0)-(1,1)` 充满父节点）并重新验证 Prefab 保存是否收敛。
 
 ### 6.5 时间缩放无效果（已解决）
 

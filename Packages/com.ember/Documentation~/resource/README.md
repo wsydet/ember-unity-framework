@@ -1,65 +1,54 @@
 # Resource — 资源管理
 
-## 概述
+资源入口是 `EmberResourceManager`，由 `IResourceProvider` 隔离后端。源码位于
+[Resource/Runtime](../../Resource/Runtime)，默认实现为 `ResourcesProvider`。
 
-Resource 模块是框架的资源加载统一入口。通过 `IResourceProvider` 接口隔离具体资源后端，
-`EmberResourceManager` 作为门面委托所有操作。内置 `ResourcesProvider` 用于原型开发。
+## API
 
-## 文件清单
+| 方法 | 行为 |
+|---|---|
+| `Initialize(provider, onComplete = null)` | 初始化后端，成功后注册服务并广播 ResourceReady |
+| `LoadAssetAsync<T>(path, onComplete)` | 回调式资源加载，未就绪返回 null |
+| `LoadAssetHandle<T>(path)` | 返回 `EmberAssetHandle<T>`，可查询状态、取消、释放 |
+| `LoadFileAsync(path)` | 返回 `EmberFileHandle`，读取 bytes/text/filePath |
+| `LoadFileSync(path)` | 同步读取小文件字节 |
+| `LoadSceneAsync(sceneName, mode = Additive)` | 返回 `AsyncOperation`，Scene 模块负责激活时序和完成通知 |
+| `UnloadAsset(path)` / `UnloadUnusedAssets()` | 委托后端释放资源 |
 
-| 角色 | 路径 |
-|------|------|
-| 核心接口 | `Runtime/IResourceProvider.cs` |
-| 主逻辑入口 | `Runtime/EmberResourceManager.cs` |
-| 内置实现 | `Runtime/ResourcesProvider.cs` |
+`IResourceProvider` 提供同名加载/释放方法和 `Progress`，后端初始化使用 `Initialize(Action<bool>)`。
+该接口没有旧版的 `LoadSceneAsync(string, Action)` 签名。
 
-## 依赖
+## Handle 与加载槽
 
-| 依赖 | 类型 | 说明 |
-|------|------|------|
-| `Ember.Core` | 框架模块 | EmberSingleton、IEmberManager、EmberEventBus、EmberBroadcastEvent、EmberDebug |
+`EmberAssetHandle<T>` 提供 `Asset`、`IsDone`、`Succeeded`、`Error`、`Completed`、`Cancel` 和 `Dispose`。
+`EmberFileHandle` 提供同类状态，以及 `GetBytes()`、`GetText()`、`GetFilePath()`。
+后端可能同步完成，应先检查 `IsDone`，否则再订阅 `Completed`。
 
-## 公开 API
+```csharp
+var handle = EmberResourceManager.Instance.LoadAssetHandle<UnityEngine.Sprite>("UI/Icons/coin");
+if (handle.IsDone)
+{
+    if (handle.Succeeded) { /* 使用 handle.Asset */ }
+}
+else
+{
+    handle.Completed += h => { if (h.Succeeded) { /* 使用 h.Asset */ } };
+}
+// 在拥有该请求的对象结束使用时 handle.Dispose()。
+```
 
-### EmberResourceManager — 资源管理器
+`EmberAssetHandleSlot<T>` 持有当前资源和加载中的请求：`LoadAsync(path, onLoaded, reapplyIfCurrent = true)`
+可复用相同请求，替换请求时取消旧加载；`CancelLoading()` 只取消待完成请求，`Dispose()` 清理整个槽。
+适合头像等频繁换资源的 UI，避免旧回调覆盖新结果。它不是全局引用计数缓存。
 
-继承 EmberSingleton，实现 IEmberManager。[EmberInitOrder(Resource)]。
+## 默认后端的实际边界
 
-| 方法 | 说明 |
-|------|------|
-| `Initialize(IResourceProvider, Action<bool> onComplete)` | 初始化，传入后端实现。完成后派发 ResourceReady |
-| `LoadAssetAsync<T>(string path, Action<T> onComplete)` | 异步加载资源，未初始化时回调 null |
-| `LoadSceneAsync(string sceneName, Action onComplete)` | 异步加载场景 |
-| `UnloadAsset(string path)` | 释放指定资源引用 |
-| `UnloadUnusedAssets()` | 释放所有未使用资源 |
+- 资源使用相对于任意 `Resources` 目录的路径，不带扩展名。
+- `LoadAssetAsync` 和资产 Handle 内部仍调用同步 `Resources.Load<T>`；方法名不代表后台异步。
+- 文件加载以 `TextAsset` 获取字节；没有真实磁盘文件路径时 `GetFilePath()` 可以为空。
+- `UnloadAsset(path)` 当前为空操作；`UnloadUnusedAssets()` 调用 Unity 释放未使用资源。
+- 默认场景加载使用 Unity `SceneManager.LoadSceneAsync` 并返回其操作。
+- Addressables/YooAsset Provider、下载/热更新与真正异步化尚待实现。
 
-### IResourceProvider — 资源后端接口
-
-| 方法 | 说明 |
-|------|------|
-| `Initialize(Action<bool> onComplete)` | 初始化后端 |
-| `LoadAssetAsync<T>(string path, Action<T> onComplete)` | 异步加载资源 |
-| `LoadSceneAsync(string sceneName, Action onComplete)` | 异步加载场景 |
-| `UnloadAsset(string path)` | 释放资源引用 |
-| `UnloadUnusedAssets()` | 释放未使用资源 |
-| `Progress` (属性) | 当前加载进度 0.0～1.0 |
-
-### ResourcesProvider — 内置 Resources 后端
-
-基于 Unity Resources 目录。`Initialize` 立即回调 true。`LoadAssetAsync` 底层走 `Resources.Load<T>`（同步包装为异步回调）。`UnloadAsset` 为空操作。`Progress` 始终返回 1.0。
-
-## 主流程
-
-**初始化：** `Initialize(provider, onComplete)` → 重复检查 → provider 判空 → `_provider.Initialize(callback)` → 成功标记 _initialized → `EmberEventBus.OnNext(ResourceReady)` → onComplete
-
-**加载：** `LoadAssetAsync<T>(path, onComplete)` → `IsProviderReady(onComplete)` → 未就绪 LogWarning + 回调 null → 委托 `_provider.LoadAssetAsync`
-
-**销毁：** `IEmberManager.Destroy()` → `EmberEventBus.OnNext(ResourceShutdown)` → `_provider.UnloadUnusedAssets()` → 清理
-
-## 约束与陷阱
-
-| 类别 | 说明 |
-|------|------|
-| 初始化顺序 | 必须在 Initialize 完成后才能调用加载方法，否则返回 null + LogWarning |
-| ResourcesProvider | LoadAssetAsync 实际是同步的（Resources.Load 无异步版本）。UnloadAsset 是空操作（Resources API 限制） |
-| 扩展后端 | 实现 IResourceProvider 即可替换后端（Addressables、YooAsset 等） |
+Manager 在 Init 阶段建立默认后端。自定义后端要遵守一次初始化规则，不应在默认后端已经初始化后无条件重复替换。
+完整生命周期见 [Manager 文档](../../Core/Runtime/Manager/README.md)；场景激活见 [Scene](../scene/README.md)。

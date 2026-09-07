@@ -1,7 +1,7 @@
 # Editor 工具测试清单
 
 > 在 Unity 中逐个打开测试，通过打 ✅，有 bug 记下来。
-> 最后更新：2026-08-05（第三轮修复后更新）
+> 条目核对：2026-09-07。表中 ✅/⬜ 保留 2026-08-05 的历史结果，不是当前工作区回归结果；本轮未运行 Unity 测试。新增模板、UI 开发中心和 UPM 流程见 [框架测试清单](framework-test-checklist.md)。
 
 ---
 
@@ -28,7 +28,7 @@
 
 | # | 测试项 | 操作 | 预期结果 | 结果 |
 |---|--------|------|---------|------|
-| M1 | 顶级菜单 Ember | 点击顶部菜单栏 Ember | 看到 Scene / Tool 两个子菜单，中间有横线分隔 | ✅ |
+| M1 | 顶级菜单 Ember | 点击顶部菜单栏 Ember | 看到当前 Scene / Tool / Setup / UI 等入口及 UPM Manager；分隔线以当前菜单定义为准 | ✅ |
 | M2 | Ember/Scene | Ember → Scene | 看到"跳转到 FrameworkScene"和"快速打开场景" | ✅ |
 | M3 | Ember/Tool 分隔线 🆕 | Ember → Tool | 面板工具列表（批量重命名~次要纹理批量绑定）内部**无**分隔线；列表底部与 4 个维护工具（校验代码规范/清空本地缓存/删除项目空文件夹/批量清理脚本未使用引用）之间有**一条**横线分隔 | ✅ |
 | M4 | 旧菜单路径已移除 | 点击 Tools 菜单 | **不再**出现 Tools/Ember 子菜单 | ✅ |
@@ -267,7 +267,7 @@
 | Q5 | 清理未使用引用 — 无冗余 | 代码干净时执行清理 | 弹窗报告 "No unused using directives found"，无文件被修改 | ⬜ |
 | Q6 | 清理未使用引用 — 语法错误文件跳过 | 包含有编译错误的 .cs 文件时执行 | 有语法错误的文件被跳过，在 Console 中报告，不影响其他文件的清理 | ⬜ |
 | Q7 | 清理未使用引用 — System.Linq 保留 | 代码中使用 `.Where()` `.Select()` 等扩展方法但未直接引用 `Enumerable` 类型 | `using System.Linq;` 被 Roslyn 正确识别为必需（语义分析），不被移除 | ⬜ |
-| Q8 | 刷新编辑器标题 | Ember → Tool → 刷新编辑器标题 | 窗口标题变为 "项目名 \| 子路径 \| StandaloneWindows64 \| Git根路径" 格式 | ⬜ |
+| Q8 | 刷新编辑器标题 | Ember → Tool → 刷新编辑器标题 | 窗口标题变为 "项目名 \| 子路径（可选）\| 分支 \| 当前模板 \| StandaloneWindows64 \| Git根路径" 格式 | ⬜ |
 | Q9 | 编辑器标题自动刷新 | 等待 5 秒或切换 Play Mode / 修改 Project 设置 | 标题自动更新（playModeStateChanged / projectChanged / 定时 5s 触发） | ⬜ |
 | Q10 | 标题 API 降级 | 反射路径不可用时（模拟或自然触发） | 降级到原生窗口 API（Windows SetWindowText / macOS osascript），Console 仅输出一次 Warning，不影响编辑器正常使用 | ⬜ |
 
@@ -297,7 +297,7 @@
 
 ### 新增
 - **Q8-Q10**: 新增第 5 个维护工具"刷新编辑器标题"（`EditorMainWindowTitle`），菜单优先级 390
-  - 从 burner 项目迁移：`Assets/Game/GameCore/Editor/Common/EditorMainWindowTitle.cs`
+  - 从 burner 项目迁移：`Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs`
   - 改造内容：命名空间 → `Ember.Basic.Editor`、日志 → `EmberDebug.LogWarning`、菜单 → `Ember/Tool/刷新编辑器标题`
   - 新增 macOS 降级路径（`osascript`），Windows 保持 `user32.dll SetWindowText`
   - Linux 无可靠方案，静默跳过

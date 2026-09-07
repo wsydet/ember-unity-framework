@@ -407,7 +407,7 @@ namespace Ember.UI
 
         /// <summary>
         /// 预加载页面：准备 GameObject + Logic（触发 OnPreload），但不执行 Init。
-        /// 页面处于 Loaded 状态，后续 <see cref="EUIPageRouter.ShowMainPage"/> 等调用时
+        /// 页面处于 Loaded 状态，后续 <see cref="EUIManager.ShowMainPage"/> 等调用时
         /// 补跑 Init（OnInit/OnOpen/OnReset 用真实打开参数）再 PlayShow。
         /// 对标 Burner GamePage 预加载机制。
         /// </summary>
@@ -735,6 +735,11 @@ namespace Ember.UI
         {
             _bgMaskPool?.Clear();
             _pageContext?.CloseAll();
+
+            // Shutdown 不再等待页面过渡。先标记并销毁所有活跃页面，确保正在 await 的
+            // Show/Hide 任务把 Destroy cancellation 当作正常退出，不再回写已销毁组件。
+            foreach (var page in _activePages)
+                page?.ForceDispose();
             _activePages.Clear();
             _pendingOperations.Clear();
             _layerCanvases.Clear();

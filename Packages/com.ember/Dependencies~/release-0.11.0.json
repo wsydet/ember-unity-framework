@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.11.0",
+  "frameworkTag": "v0.11.0",
+  "status": "declaration-only",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.11.0.json",
+  "coverage": "All 55 direct entries from the development project manifest plus Feel; transitive packages are resolved by UPM.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.0",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.5.5",
+      "frameworkVersion": "0.11.0",
+      "contentHash": "89f9cf6d5de00747eaf5dbf3f812a9d4"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.2.6",
+      "frameworkVersion": "0.11.0",
+      "parentId": "base",
+      "parentVersion": "0.5.5",
+      "parentContentHash": "89f9cf6d5de00747eaf5dbf3f812a9d4",
+      "contentHash": "81729c743e325157f56ff10dc28ac88d"
+    }
+  ],
+  "validation": "Declarations and file hashes checked; Unity compilation, Feel migration and consumer integration not validated."
+}

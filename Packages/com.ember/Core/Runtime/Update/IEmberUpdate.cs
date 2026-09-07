@@ -5,7 +5,7 @@
     ///
     /// 配合 <see cref="EmberUpdateManager"/> 使用——
     /// 不需要继承 MonoBehaviour，只需实现此接口 + 继承单例基类，
-    /// UpdateManager 通过反射自动发现并每帧调用 Update()。
+    /// 业务模块由 ModuleCollector 提供，其他单例由 UpdateManager 反射发现，随后统一调用 Update()。
     ///
     /// 优势：
     /// - 无需挂载 GameObject，零 Inspector 配置

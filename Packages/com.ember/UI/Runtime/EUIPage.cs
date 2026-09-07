@@ -93,6 +93,7 @@ namespace Ember.UI
         private readonly Canvas _canvas;
         private readonly RectTransform _rectTransform;
         private Animator _animator;
+        private bool _disposed;
 
         private PageState _state = PageState.Unloaded;
         private EUIPageDef _pageDef;
@@ -112,6 +113,7 @@ namespace Ember.UI
         /// <summary>是否存在需要 await 的过渡阶段。</summary>
         private bool HasTransition => _usePresetFade || _useTransitionBlock || _useAnimator || _useCustomTransition;
         private bool ShouldBlockRaycasts => _pageDef?.PageType != PageType.Background;
+        private bool CanCompleteTransition => !_disposed && _gameObject != null && _canvasGroup != null;
 
         // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
         private Action _onShowComplete;
@@ -720,18 +722,25 @@ namespace Ember.UI
                     await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
                 }
             }
+            catch (OperationCanceledException) when (!CanCompleteTransition)
+            {
+                // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
+            }
             catch (Exception ex)
             {
                 EmberDebug.LogError(TAG, $"页面 '{Name}' 打开过渡异常，已强制完成: {ex}");
             }
             finally
             {
-                CompleteShow();
+                if (CanCompleteTransition)
+                    CompleteShow();
             }
         }
 
         private void CompleteShow()
         {
+            if (!CanCompleteTransition) return;
+
             var shouldBlockRaycasts = ShouldBlockRaycasts;
             var transitionGroup = GetTransitionCanvasGroup();
             if (transitionGroup == null)
@@ -803,13 +812,18 @@ namespace Ember.UI
                     await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
                 }
             }
+            catch (OperationCanceledException) when (!CanCompleteTransition)
+            {
+                // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
+            }
             catch (Exception ex)
             {
                 EmberDebug.LogError(TAG, $"页面 '{Name}' 关闭过渡异常，已强制完成: {ex}");
             }
             finally
             {
-                CompleteHide();
+                if (CanCompleteTransition)
+                    CompleteHide();
             }
         }
 
@@ -884,6 +898,8 @@ namespace Ember.UI
 
         private void CompleteHide()
         {
+            if (!CanCompleteTransition) return;
+
             var transitionGroup = GetTransitionCanvasGroup();
             if (transitionGroup != null)
                 transitionGroup.alpha = 0f;
@@ -906,6 +922,7 @@ namespace Ember.UI
 
         internal void Dispose()
         {
+            MarkDisposed();
             if (_gameObject != null)
                 UnityEngine.Object.Destroy(_gameObject);
         }
@@ -1179,8 +1196,18 @@ namespace Ember.UI
         internal void ForceDispose()
         {
             _isClosing = false;
+            MarkDisposed();
             if (_gameObject != null)
                 UnityEngine.Object.Destroy(_gameObject);
+        }
+
+        private void MarkDisposed()
+        {
+            _disposed = true;
+            _onShowComplete = null;
+            _showArgs = null;
+            _onHideComplete = null;
+            ClearPendingOp();
         }
 
         #endregion

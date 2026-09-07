@@ -1,8 +1,9 @@
-﻿# Burner 项目架构分析
+# Burner 项目架构分析
 
 > 来源：`c:\Users\wuyu\Project\burner\client\game`
 > 日期：2026-07-20
-> 用途：为 ember-unity-framework 框架开发提供架构参考
+> 用途：保留 2026-07-20 的外部项目研究记录；不是当前 Ember 实现说明。Burner 路径和版本是当时记录，本次未重新核验外部仓库。
+> Ember 当前边界、资源 Provider 和完成状态见 [框架进度](framework-progress.md)；下文建议实现顺序为历史建议。
 
 ---
 

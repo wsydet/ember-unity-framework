@@ -28,7 +28,7 @@ Assets/Game/UI/Runtime/<模块>/Component/<组件类名>.cs  ← 可复用组件
 - 框架演示页面保持现状目录（`Framework/`、`MainScene/` 等）；业务新页面按模块目录写 `classPath`。
 - `classPath` 必须等于逻辑类相对代码根（`Assets/Game/UI/Runtime`）的路径，不带 `.cs`。写错会导致生成到非预期目录（同名类/绑定混乱）。
 - 框架模式的预制体固定生成到 `UI/Common/Prefabs/`。
-- 用户模式从 `classPath` 第一段取得模块名：`Inventory/Page` → `UI/Module/Inventory/Prefabs/`。
+- 用户模式支持两种等价写法：`Inventory/Page` → `UI/Module/Inventory/Prefabs/`；若代码本身按 `Module/<模块>` 组织，则 `Module/SceneUI` → `UI/Module/SceneUI/Prefabs/`，不会重复生成 `Module/Module`。
 - 模块配套资源按同级目录整理：`Animator/`、`Atlas/`、`Prefabs/`。
 
 ## 2. 打开页面
@@ -49,7 +49,7 @@ EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
 | FullScreenPopup | `ShowPopup` | 沿用 Popup 栈与遮罩，并在打开时隐藏下层页面 |
 | TopMost | `ShowTopMost` | 高于所有 Popup（Loading、全局提示） |
 | SubPage | **仅** `ShowSubPage(def, parentPage, ...)` | 经其他入口打开会被拒绝并警告 |
-| FreePage | `ShowTopMost`（按 `PageType.FreePage` 路由） | 需在 `EUIPageDef` 显式指定 `freePageSortingOrder`；例如 GM 常驻页 |
+| FreePage | `ShowTopMost`（按 `PageType.FreePage` 路由） | 在 EUIBinding 面板填写“FreePage 渲染层级”，生成时自动写入 `freePageSortingOrder`；例如 GM 常驻页 |
 | Background | `SetBackground` | 单槽位背景页 |
 
 ### 2.1 MainPage 与状态所有权
@@ -106,6 +106,19 @@ EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
 - 进入过渡尚未完成时，非 Background 页面已经拦截下层射线，但本页 `Selectable` 保持不可交互；Loading 因此从方块扫入开始就不会点击穿透。
 - **方块过渡不参与上述普通四选一**：Loading 保持原链路，打开为「方块扫入 → Custom Enter」，关闭为「Custom Exit → 方块扫出」。
 
+### 3.2 Loading 事件与输入门控
+
+| 事件 | 准确时机 | 常见用途 |
+| --- | --- | --- |
+| `LoadingFadeInStart` | Loading 开始进入 | 立即停止玩家输入 |
+| `LoadingFadeInComplete` | 方块扫入且进度显示准备完成 | 开始场景加载 |
+| `LoadingFadeOutStart` | Custom Exit 开始，进度条开始消失 | 仅做退出阶段表现，不可开放输入 |
+| `LoadingFadeOutComplete` | Custom Exit 和方块扫出全部完成 | 恢复玩家输入、结束 Loading 流程 |
+
+进度条消失后仍有方块扫出，因此所有要求“遮挡完全消失”的逻辑必须等待
+`LoadingFadeOutComplete`。UI 引擎关闭时会强制释放仍在过渡中的页面，未完成的异步动画按取消处理，
+避免退出过程中继续访问已经销毁的组件。
+
 ## 4. 绑定字段（EUIBinding + .Binding.cs）
 
 - `.Binding.cs` 为生成文件，**禁止手工修改**；手写逻辑只使用字段。
@@ -145,23 +158,30 @@ protected override void OnSafeAreaChanged() { }  // 安全区变化（旋转等�
 
 ## 8. 新增 UI 开发流程
 
-优先使用菜单 `Ember/UI/UI 开发中心`，不再从空 GameObject 手工拼装标准页面。窗口分为「创建 UI / UI 总览 / 清理与删除」三个页签。
+优先使用菜单 `Ember/UI/UI 开发中心`，不再从空 GameObject 手工拼装标准页面。窗口分为「创建 UI / UI 总览 / 模块模板 / 清理与删除」四个页签。
 
-1. 在「创建 UI」中确定 prefab 名、页面名、页面类型、代码模式与模块归属（`<模块>/Page|Component`），并预先设置 UIUpdate、遮罩、过渡动画及高级代码钩子。
-2. 确认写入预览中的 prefab、逻辑脚本、`.Binding.cs`、可选 Settings 脚本与 `GamePages` 目标均正确，再点击「创建并在编译后打开 Prefab」。若依赖缺失、名称非法或目标冲突，预检会阻止写入。
-3. 工具生成标准根 Canvas、CanvasGroup、EUIBinding 和 `Animator` 容器；`CanvasScaler` 固定使用 **Scale With Screen Size / 2560×1440 / Match 0.5**。
-4. `Animator` 默认复用 `UI/Common/Animator/EUICommon_Ani.controller`，初始保持禁用，由运行时按页面过渡模式启用；有独立表现需求时可在生成后自行替换 Controller。
-5. 工具自动嵌套公共 `EUISafeArea.prefab`，并生成 `.cs`、`.Binding.cs`、可选 Settings 与 `GamePages` 条目；框架页面路由到 `Common/Prefabs`，业务页面按 `classPath` 模块路由到 `Module/<模块>/Prefabs`。
+1. 在「创建 UI」中先选择 `Page` 或 `Item` 角色，再确定 prefab 名、代码模式与模块归属（`<模块>/Page|Component`）。Page 可继续配置页面名、页面类型、UIUpdate、遮罩、过渡动画及高级代码钩子；Item 生成 prefab、逻辑脚本、Binding 与可选 Settings，不写入 `GamePages`。
+2. 确认写入预览中的 prefab、逻辑脚本、`.Binding.cs`、可选 Settings 脚本，以及 Page 模式下的 `GamePages` 目标均正确，再点击「创建并在编译后打开 Prefab」。若依赖缺失、名称非法或目标冲突，预检会阻止写入。
+3. Page 会生成标准根 Canvas、CanvasGroup、EUIBinding、页面 `Animator` 容器和嵌套 `EUISafeArea`；CanvasScaler 固定使用 **Scale With Screen Size / 2560×1440 / Match 0.5**。Item 只生成 `RectTransform + CanvasGroup + EUIBinding`，不创建 Canvas、Scaler、Raycaster、页面 Animator 或 SafeArea，由宿主页面/模块实例化到指定父节点。
+4. Page 的 Animator 默认复用 `UI/Common/Animator/EUICommon_Ani.controller`，初始保持禁用，由运行时按页面过渡模式启用；Item 如需动画，在自己的表现子节点上配置，不使用页面过渡驱动。
+5. 所有 UI 都生成 `.cs`、`.Binding.cs` 与可选 Settings，仅 Page 模式生成 `GamePages` 条目。框架 UI 路由到 `Common/Prefabs`；业务 UI 可用 `<模块>/Page|Component`，或用 `Module/<模块>` 显式对齐代码与资源目录，最终都路由到 `Module/<模块>/Prefabs`。首次创建某个业务模块时，还会按 `UI/Module/模板` 的当前目录结构初始化该模块；只新建目录，不复制模板 `.meta` 或其中的文件。
 6. 生成脚本后等待 Unity 完成编译；编译成功才自动打开新 prefab。若编译失败，保留产物并提示错误，不继续打开编辑。
 7. 在 Prefab Mode 中补充具体视觉节点与绑定，自动收集后按需重新生成；手写逻辑只改非 `.Binding.cs` 文件，Framework 业务增量写在 `XxxUser` 钩子/自定义 override。
-8. 用 `GamePages.Xxx` 打开页面并完成 Play 验证（禁止手写 prefab 字符串）。
+8. Page 用 `GamePages.Xxx` 打开并完成 Play 验证（禁止手写 prefab 字符串）；Item 由所属页面、列表或业务模块创建并控制，不能直接打开。
 
-### 8.1 UI 总览与安全维护
+### 8.1 模块目录模板
+
+- 「模块模板」读取 `Assets/GameResource/Resources/UI/Module/模板` 的目录树。可在面板中新增任意层级的空目录；新增只修改模板，不会立即改动现有模块。
+- 「预览一键同步」会列出所有模块缺少的目录，确认后只补齐缺失项，不删除、不覆盖也不移动资源。模板中若误放文件，会显示警告且文件不会被同步。
+- 模板目录重命名必须从该面板发起。执行前会预览每个模块的移动或补齐操作，并通过 `AssetDatabase.MoveAsset` 保留目录和内部资源 GUID；模块同时存在旧、新目录时会阻止执行，不做自动合并。直接在 Project 窗口改名不会触发传播。
+- 删除模板目录属于危险操作：`Prefabs` 根目录禁止删除，非空目录也禁止删除；其余空目录需要输入精确名称并二次确认，只移入系统回收站。所有现有模块中的对应目录始终保留。
+
+### 8.2 UI 总览与安全维护
 
 - 「UI 总览」只读扫描配置资源根下含根级 EUIBinding 的 prefab，集中显示页面定义、逻辑脚本、Binding、Settings 与 `GamePages` 健康状态，可直接定位或打开资产。
 - 「清理与删除」先做影响预览，再逐项确认操作；支持失效 `EUIPageDef`、Missing Script、空引用绑定、带自动生成锚点的孤儿脚本组，以及可安全识别的空叶子节点。
 - 删除一个 UI 时只处理该 prefab、确认未被其他页面共用的生成脚本和精确匹配的 `EUIPageDef`；执行前会跨 Framework/User 注册文件重新查重，并重新扫描全 `Assets` 的根 EUIBinding 引用。共享脚本、重复/复杂注册条目、注释示例或越出配置根目录的目标会被保留或拒绝，避免扩大删除范围。
-- 模板镜像不会由开发中心自动写入。dev 资产验证完成后，仍由用户在 `Ember/Setup/模板编辑器` 中手动保存目标模板。
+- 模板镜像不会由开发中心自动写入。dev 资产验证完成后，仍由用户在 `Ember/项目中心 → 模板开发` 中手动保存目标模板。
 
 ## 9. 提交前检查
 
@@ -176,5 +196,6 @@ protected override void OnSafeAreaChanged() { }  // 安全区变化（旋转等�
 - [ ] 「使用 UIUpdate / Popup 高级代码钩子」与页面源码中的可选覆写一致
 - [ ] CanvasScaler 为 Scale With Screen Size / 2560×1440 / Match 0.5
 - [ ] Animator 默认使用 `EUICommon_Ani`（或已明确替换），且公共 `EUISafeArea` 实例完整
+- [ ] 新业务模块的目录结构已按「模块模板」初始化；需要时先预览再执行一键同步
 - [ ] 事件注册在 `OnDispose` 对称清理（或走 `TrackDisposable`）
 - [ ] 修改 C# 后 Unity 编译 0 error；模板改动由用户在「模板编辑器」手动保存

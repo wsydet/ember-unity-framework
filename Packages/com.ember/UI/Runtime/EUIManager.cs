@@ -35,8 +35,8 @@ namespace Ember.UI
 
         #region 内部参数
 
-        private EUIViewEngine _uiManager;
-        private EUIPageContext _context => _uiManager.PageContext;
+        private EUIViewEngine _viewEngine;
+        private EUIPageContext _context => _viewEngine.PageContext;
 
         /// <summary>
         /// Popup 遮罩颜色（全局静态配置，默认半透明黑 α=0.5，对标 Burner GameUIConst.UIBGMaskColor）。
@@ -94,7 +94,7 @@ namespace Ember.UI
         {
             if (_initialized) return;
 
-            _uiManager = EUIViewEngine.Instance;
+            _viewEngine = EUIViewEngine.Instance;
             _initialized = true;
 
             // 注册场景加载拦截器：有 Loading 页面时自动使用
@@ -161,8 +161,8 @@ namespace Ember.UI
                     await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
                     await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
-                    // 关闭 loading → PlayHide → OnCustomExit 播 5012(float) + 5013
-                    ClosePage(loadingPage);
+                    // 关闭 loading：OnCustomExit 播 5012；进度条与方块过渡都结束后再播 5013。
+                    CloseLoadingPage(loadingPage);
 
                     while (!closed)
                         await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
@@ -218,6 +218,36 @@ namespace Ember.UI
         }
 
         /// <summary>
+        /// 显示覆盖层页面。不参与 MainPage/Popup 栈，排序由 EUIPageDef.OverlaySortingOrder 决定。
+        /// </summary>
+        public void ShowOverlay(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null)
+        {
+            if (pageDef == null || pageDef.PageType != PageType.Overlay)
+            {
+                EmberDebug.LogWarning(TAG, "ShowOverlay 仅接受 Overlay 页面定义。");
+                onComplete?.Invoke(null);
+                return;
+            }
+
+            EnqueueShow(pageDef, args, onComplete);
+        }
+
+        /// <summary>
+        /// 显示独立页面。不参与 MainPage/Popup 栈，排序由 EUIPageDef.FreePageSortingOrder 决定。
+        /// </summary>
+        public void ShowFreePage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null)
+        {
+            if (pageDef == null || pageDef.PageType != PageType.FreePage)
+            {
+                EmberDebug.LogWarning(TAG, "ShowFreePage 仅接受 FreePage 页面定义。");
+                onComplete?.Invoke(null);
+                return;
+            }
+
+            EnqueueShow(pageDef, args, onComplete);
+        }
+
+        /// <summary>
         /// 显示子页面。嵌入父页面的指定区域，父关子关。
         /// </summary>
         public void ShowSubPage(EUIPageDef pageDef, EUIPage parentPage, object args = null, Action<EUIPage> onComplete = null)
@@ -237,7 +267,7 @@ namespace Ember.UI
                 EmberDebug.LogWarning(TAG, $"HidePageViewOnly: 未找到已显示的页面 {pageDef?.PrefabPath}");
                 return;
             }
-            _uiManager.EnqueuePageOperation(() => ((IEUIView)page).HideViewOnly());
+            _viewEngine.EnqueuePageOperation(() => ((IEUIView)page).HideViewOnly());
         }
 
         /// <summary>
@@ -251,7 +281,7 @@ namespace Ember.UI
                 EmberDebug.LogWarning(TAG, $"ShowPageViewOnly: 未找到视图隐藏的页面 {pageDef?.PrefabPath}");
                 return;
             }
-            _uiManager.EnqueuePageOperation(() => ((IEUIView)page).RestoreViewOnly());
+            _viewEngine.EnqueuePageOperation(() => ((IEUIView)page).RestoreViewOnly());
         }
 
         /// <summary>
@@ -345,7 +375,7 @@ namespace Ember.UI
             }
 
             EUIObserver.NotifyLoadStarted(pageDef);
-            _uiManager.ResourceProvider.LoadPrefabAsync(prefabPath, prefab =>
+            _viewEngine.ResourceProvider.LoadPrefabAsync(prefabPath, prefab =>
             {
                 if (prefab == null)
                 {
@@ -381,7 +411,7 @@ namespace Ember.UI
                 }
 
                 // 仅 Init，不 PlayShow
-                _uiManager.InitPageOnly(page, pageDef, args, () =>
+                _viewEngine.InitPageOnly(page, pageDef, args, () =>
                 {
                     _preloadedPages[prefabPath] = page;
                     EmberDebug.LogInit(TAG, $"预加载完成: {prefabPath}");
@@ -402,7 +432,11 @@ namespace Ember.UI
         /// 关闭页面核心流程。restoreUnderlying=false 用于主页面整组关闭 Popup，
         /// 避免每个 Popup 退出时又恢复同样正在关闭的下层页面。
         /// </summary>
-        private void ClosePageCore(EUIPage page, object returnValue, bool restoreUnderlying)
+        private void ClosePageCore(
+            EUIPage page,
+            object returnValue,
+            bool restoreUnderlying,
+            Action onPageTransitionComplete = null)
         {
             if (page == null) return;
             if (!_closeRequestedPages.Add(page)) return;
@@ -461,7 +495,7 @@ namespace Ember.UI
                     break;
             }
 
-            _uiManager.ClosePageInternal(
+            _viewEngine.ClosePageInternal(
                 page,
                 onComplete: () => _closeRequestedPages.Remove(page),
                 onTransitionComplete: () =>
@@ -469,14 +503,26 @@ namespace Ember.UI
                     if (hidePopupMask)
                         HideBgMaskForPopup(page);
 
-                    if (!restoreUnderlying || pageToResume == null)
-                        return;
+                    if (restoreUnderlying && pageToResume != null)
+                    {
+                        if (resumeMainPage)
+                            _context.ResumeMainPageAfterClose(pageToResume);
+                        else
+                            _context.ResumePageAfterPopupClose(pageToResume);
+                    }
 
-                    if (resumeMainPage)
-                        _context.ResumeMainPageAfterClose(pageToResume);
-                    else
-                        _context.ResumePageAfterPopupClose(pageToResume);
+                    onPageTransitionComplete?.Invoke();
                 });
+        }
+
+        private void CloseLoadingPage(EUIPage loadingPage)
+        {
+            ClosePageCore(
+                loadingPage,
+                returnValue: null,
+                restoreUnderlying: true,
+                onPageTransitionComplete: () =>
+                    EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete));
         }
 
         /// <summary>
@@ -537,7 +583,7 @@ namespace Ember.UI
         void IEmberUpdate.Update()
         {
             ProcessShowQueue();
-            _uiManager.BroadcastPageUpdate();
+            _viewEngine.BroadcastPageUpdate();
         }
 
         /// <summary>
@@ -569,8 +615,8 @@ namespace Ember.UI
             while (logic == null || !logic.IsTransitionReady)
                 await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
 
-            // 关闭 loading → PlayHide → OnCustomExit 播 LoadingFadeOutStart(float) + LoadingFadeOutComplete
-            ClosePage(loadingPage);
+            // OnCustomExit 先隐藏进度条，之后还会播放方块扫出；全部结束后才广播 Complete。
+            CloseLoadingPage(loadingPage);
 
             // 等待渐出完成
             while (!closed)
@@ -624,7 +670,7 @@ namespace Ember.UI
             if (openedPage != null)
             {
                 EmberDebug.Log(TAG, $"页面已显示，刷新数据: {pageDef.PrefabPath}");
-                _uiManager.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
+                _viewEngine.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
                 Profiler.EndSample();
                 return;
             }
@@ -640,7 +686,7 @@ namespace Ember.UI
             }
 
             // 其次复用延迟销毁中的页面（对标 Burner GamePage 复用逻辑）
-            var reusablePage = _uiManager.FindReusablePage(pageDef.PrefabPath);
+            var reusablePage = _viewEngine.FindReusablePage(pageDef.PrefabPath);
             if (reusablePage != null)
             {
                 RouteAndOpenPage(reusablePage, pageDef, req);
@@ -649,11 +695,12 @@ namespace Ember.UI
             }
 
             EUIObserver.NotifyLoadStarted(pageDef);
-            _uiManager.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
+            _viewEngine.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
             {
                 if (prefab == null)
                 {
                     EmberDebug.LogError(TAG, $"无法加载预制体: {pageDef.PrefabPath}");
+                    req.OnComplete?.Invoke(null);
                     return;
                 }
 
@@ -730,7 +777,7 @@ namespace Ember.UI
                 }
             }
 
-            _uiManager.OpenPage(page, pageDef, req.Args, () =>
+            _viewEngine.OpenPage(page, pageDef, req.Args, () =>
             {
                 req.OnComplete?.Invoke(page);
             });
@@ -756,7 +803,7 @@ namespace Ember.UI
                 }
             }
 
-            var reusablePage = _uiManager.FindReusablePage(request.PrefabPath);
+            var reusablePage = _viewEngine.FindReusablePage(request.PrefabPath);
             if (reusablePage != null && reusablePage.GameObject != null)
             {
                 OpenBackgroundPage(request, pageDef, reusablePage);
@@ -765,7 +812,7 @@ namespace Ember.UI
 
             try
             {
-                _uiManager.ResourceProvider.LoadPrefabAsync(request.PrefabPath, prefab =>
+                _viewEngine.ResourceProvider.LoadPrefabAsync(request.PrefabPath, prefab =>
                 {
                     // ClearBackground 或后来的不同路径请求已使本请求过期：
                     // 在 Instantiate 前终止，不允许旧回调重新写入 Background 槽位。
@@ -818,7 +865,7 @@ namespace Ember.UI
 
                 // PreloadPage 不会为 Background 注册路由，因此消费预加载页时也必须在此显式设置槽位。
                 _context.SetBackground(page);
-                _uiManager.OpenPage(page, pageDef, null, () =>
+                _viewEngine.OpenPage(page, pageDef, null, () =>
                 {
                     if (!IsCurrentBackgroundRequest(request)) return;
 
@@ -895,7 +942,7 @@ namespace Ember.UI
             var canvas = popup.Canvas;
             var sortingOrder = canvas ? canvas.sortingOrder : (int)popup.EUIPageDef.Layer;
 
-            var mask = _uiManager.ShowBgMask(sortingOrder, () =>
+            var mask = _viewEngine.ShowBgMask(sortingOrder, () =>
             {
                 // 点击遮罩：优先转发给页面 Logic（默认实现按 ClickMaskToClose 开关关闭 Popup，可 override 定制），
                 // 无 Logic 时按数据层开关兜底
@@ -913,7 +960,7 @@ namespace Ember.UI
         {
             if (_activeMasks.TryGetValue(popup, out var mask))
             {
-                _uiManager.HideBgMask(mask);
+                _viewEngine.HideBgMask(mask);
                 _activeMasks.Remove(popup);
             }
         }

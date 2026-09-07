@@ -17,7 +17,7 @@ using UnityEngine.UI;
 
 namespace Ember.UIExtension.Editor
 {
-    /// <summary>创建标准 EUI 页面所需的全部配置。</summary>
+    /// <summary>创建标准 EUI 所需的全部配置。</summary>
     [Serializable]
     public sealed class EUICreationRequest
     {
@@ -26,7 +26,14 @@ namespace Ember.UIExtension.Editor
         public string PageName = "NewPage";
         public string ClassPath = "Module/Page";
         public string ClassName = "NewPage";
+        public EUIBindingRole Role = EUIBindingRole.Page;
+        public bool IsPage
+        {
+            get => Role == EUIBindingRole.Page;
+            set => Role = value ? EUIBindingRole.Page : EUIBindingRole.Item;
+        }
         public PageType PageType = PageType.MainPage;
+        public int FixedSortingOrder = 30000;
         public bool UseUIUpdate;
         public bool UseMask = true;
         public Color MaskColor = new Color(0f, 0f, 0f, 0.5f);
@@ -44,7 +51,7 @@ namespace Ember.UIExtension.Editor
         }
     }
 
-    /// <summary>零写入预检解析出的标准页面创建计划。</summary>
+    /// <summary>零写入预检解析出的标准 UI 创建计划。</summary>
     [Serializable]
     public sealed class EUICreationPlan
     {
@@ -58,8 +65,11 @@ namespace Ember.UIExtension.Editor
         public string PageDefFile;
         public string AnimatorControllerPath;
         public string SafeAreaPrefabPath;
+        public string ModuleDirectory;
 
         [NonSerialized] internal string PrefabDirectory;
+        [NonSerialized] internal string UIResourceRoot;
+        [NonSerialized] internal EUIModuleInitializationPlan ModuleInitializationPlan;
         [NonSerialized] internal string PageDefSiblingFile;
         [NonSerialized] internal CSharpLogicImplementationData Implementation;
         [NonSerialized] internal RuntimeAnimatorController AnimatorController;
@@ -93,7 +103,7 @@ namespace Ember.UIExtension.Editor
     }
 
     /// <summary>
-    /// 标准 EUI 页面创建服务。预检阶段只读取配置与资产；正式创建不覆盖任何同名目标，
+    /// 标准 EUI 创建服务。预检阶段只读取配置与资产；正式创建不覆盖任何同名目标，
     /// 所有文件写入后由调用方先登记编译续接状态，再根据 RequiresRefresh 统一刷新一次。
     /// </summary>
     public static class EUICreationService
@@ -191,43 +201,66 @@ namespace Ember.UIExtension.Editor
             }
 
             plan.Implementation = implementation;
-            plan.AnimatorControllerPath = $"{uiResourceRoot}/{CommonAnimatorRelativePath}";
-            plan.SafeAreaPrefabPath = $"{uiResourceRoot}/{CommonSafeAreaRelativePath}";
+            plan.UIResourceRoot = uiResourceRoot;
+            plan.AnimatorControllerPath = normalized.IsPage
+                ? $"{uiResourceRoot}/{CommonAnimatorRelativePath}"
+                : string.Empty;
+            plan.SafeAreaPrefabPath = normalized.IsPage
+                ? $"{uiResourceRoot}/{CommonSafeAreaRelativePath}"
+                : string.Empty;
 
-            plan.AnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(
-                plan.AnimatorControllerPath);
-            plan.SafeAreaPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(plan.SafeAreaPrefabPath);
-            if (!plan.AnimatorController || !plan.SafeAreaPrefab)
+            if (normalized.IsPage)
             {
-                return FailPlan(plan, result,
-                    "标准页面依赖不完整。必须同时存在：\n"
-                    + $"- {plan.AnimatorControllerPath}\n"
-                    + $"- {plan.SafeAreaPrefabPath}");
-            }
+                plan.AnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(
+                    plan.AnimatorControllerPath);
+                if (!plan.AnimatorController)
+                {
+                    return FailPlan(plan, result,
+                        $"标准页面依赖不完整，缺少 Animator：\n- {plan.AnimatorControllerPath}");
+                }
 
-            if (!plan.SafeAreaPrefab.GetComponent<EUISafeArea>()
-                || !plan.SafeAreaPrefab.transform.Find("Center"))
-            {
-                return FailPlan(plan, result,
-                    $"EUISafeArea 预制体结构无效（缺少 EUISafeArea 组件或 Center 节点）：{plan.SafeAreaPrefabPath}");
+                plan.SafeAreaPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                    plan.SafeAreaPrefabPath);
+                if (!plan.SafeAreaPrefab)
+                {
+                    return FailPlan(plan, result,
+                        $"标准页面依赖不完整，缺少 SafeArea：\n- {plan.SafeAreaPrefabPath}");
+                }
+
+                if (!plan.SafeAreaPrefab.GetComponent<EUISafeArea>()
+                    || !plan.SafeAreaPrefab.transform.Find("Center"))
+                {
+                    return FailPlan(plan, result,
+                        $"EUISafeArea 预制体结构无效（缺少 EUISafeArea 组件或 Center 节点）：{plan.SafeAreaPrefabPath}");
+                }
             }
 
             if (LayerMask.NameToLayer("UI") < 0)
                 return FailPlan(plan, result, "项目缺少名为 UI 的 Layer，无法创建标准 UI 预制体。");
 
-            string categoryPath;
-            if (normalized.CodePathMode == EUIBinding.CodePathMode.Framework)
-            {
-                categoryPath = "Common";
-            }
-            else
-            {
-                var moduleName = normalized.ClassPath.Split('/')[0];
-                categoryPath = $"Module/{moduleName}";
-            }
+            if (!CSharpLogicImplementationData.TryResolvePrefabCategoryPath(
+                    normalized.CodePathMode, normalized.ClassPath, out var categoryPath,
+                    out error))
+                return FailPlan(plan, result, error);
 
             plan.PrefabDirectory = $"{uiResourceRoot}/{categoryPath}/Prefabs";
             plan.PrefabPath = $"{plan.PrefabDirectory}/{normalized.PrefabName}.prefab";
+            if (normalized.CodePathMode == EUIBinding.CodePathMode.Business)
+            {
+                plan.ModuleDirectory = $"{uiResourceRoot}/{categoryPath}";
+                if (!AssetDatabase.IsValidFolder(plan.ModuleDirectory))
+                {
+                    var templateSnapshot = EUIModuleTemplateService.Scan(uiResourceRoot);
+                    plan.ModuleInitializationPlan =
+                        EUIModuleTemplateService.BuildInitializationPlan(
+                            templateSnapshot, plan.ModuleDirectory);
+                    if (!plan.ModuleInitializationPlan.CanExecute)
+                    {
+                        return FailPlan(plan, result,
+                            string.Join("\n", plan.ModuleInitializationPlan.Errors));
+                    }
+                }
+            }
             var logicBase = string.IsNullOrEmpty(normalized.ClassPath)
                 ? $"{codeRoot}/{normalized.ClassName}"
                 : $"{codeRoot}/{normalized.ClassPath}/{normalized.ClassName}";
@@ -238,30 +271,34 @@ namespace Ember.UIExtension.Editor
                 ? logicBase + "Settings.cs"
                 : string.Empty;
 
-            plan.PageDefFile = ResolvePageDefFile(implementation.PageDefFile, normalized.CodePathMode);
-            plan.PageDefSiblingFile = ResolveSiblingPageDefFile(plan.PageDefFile);
             result.PrefabPath = plan.PrefabPath;
 
-            if (string.IsNullOrEmpty(plan.PageDefFile))
-                return FailPlan(plan, result, "C# 逻辑实现未配置 EUIPageDef 文件路径。");
-            if (!TryValidateAssetFilePath(plan.PageDefFile, "EUIPageDef 文件",
-                    out var pageDefFullPath, out error))
-                return FailPlan(plan, result, error);
-            if (!File.Exists(pageDefFullPath))
-                return FailPlan(plan, result, $"EUIPageDef 文件不存在：{plan.PageDefFile}");
-
-            if (HasPageDefinition(plan.PageDefFile, normalized.PageName)
-                || HasPageDefinition(plan.PageDefSiblingFile, normalized.PageName))
+            if (normalized.IsPage)
             {
-                return FailPlan(plan, result,
-                    $"GamePages 中已存在同名 EUIPageDef：{normalized.PageName}。创建服务不会覆盖或更新已有页面。");
-            }
+                plan.PageDefFile = ResolvePageDefFile(implementation.PageDefFile,
+                    normalized.CodePathMode);
+                plan.PageDefSiblingFile = ResolveSiblingPageDefFile(plan.PageDefFile);
+                if (string.IsNullOrEmpty(plan.PageDefFile))
+                    return FailPlan(plan, result, "C# 逻辑实现未配置 EUIPageDef 文件路径。");
+                if (!TryValidateAssetFilePath(plan.PageDefFile, "EUIPageDef 文件",
+                        out var pageDefFullPath, out error))
+                    return FailPlan(plan, result, error);
+                if (!File.Exists(pageDefFullPath))
+                    return FailPlan(plan, result, $"EUIPageDef 文件不存在：{plan.PageDefFile}");
 
-            if (HasPrefabPathDefinition(plan.PageDefFile, plan.PrefabPath)
-                || HasPrefabPathDefinition(plan.PageDefSiblingFile, plan.PrefabPath))
-            {
-                return FailPlan(plan, result,
-                    $"GamePages 中已存在指向同一预制体路径的页面定义：{plan.PrefabPath}");
+                if (HasPageDefinition(plan.PageDefFile, normalized.PageName)
+                    || HasPageDefinition(plan.PageDefSiblingFile, normalized.PageName))
+                {
+                    return FailPlan(plan, result,
+                        $"GamePages 中已存在同名 EUIPageDef：{normalized.PageName}。创建服务不会覆盖或更新已有页面。");
+                }
+
+                if (HasPrefabPathDefinition(plan.PageDefFile, plan.PrefabPath)
+                    || HasPrefabPathDefinition(plan.PageDefSiblingFile, plan.PrefabPath))
+                {
+                    return FailPlan(plan, result,
+                        $"GamePages 中已存在指向同一预制体路径的页面定义：{plan.PrefabPath}");
+                }
             }
 
             foreach (var target in EnumerateNewTargets(plan))
@@ -275,7 +312,7 @@ namespace Ember.UIExtension.Editor
             return true;
         }
 
-        /// <summary>创建标准页面预制体并生成代码。失败时不会删除已创建的资产。</summary>
+        /// <summary>创建标准 UI 预制体并生成代码。失败时不会删除已创建的资产。</summary>
         public static EUICreationResult Create(EUICreationRequest request)
         {
             if (!TryBuildPlan(request, out var plan, out var preflightResult))
@@ -294,6 +331,23 @@ namespace Ember.UIExtension.Editor
 
             try
             {
+                if (plan.ModuleInitializationPlan != null)
+                {
+                    var initializationResult = EUIModuleTemplateService.ExecuteInitialization(
+                        plan.ModuleInitializationPlan);
+                    foreach (var createdPath in initializationResult.CreatedPaths)
+                        AddUnique(result.CreatedAssetPaths, createdPath);
+                    if (initializationResult.CreatedPaths.Count > 0)
+                        creationStarted = true;
+                    if (!initializationResult.Success)
+                    {
+                        throw new InvalidOperationException(
+                            string.IsNullOrEmpty(initializationResult.Message)
+                                ? $"新模块目录初始化失败：{plan.ModuleDirectory}"
+                                : initializationResult.Message);
+                    }
+                }
+
                 EnsureAssetFolder(plan.PrefabDirectory);
                 creationStarted = true;
 
@@ -357,6 +411,9 @@ namespace Ember.UIExtension.Editor
             UnityEngine.SceneManagement.Scene previewScene)
         {
             var request = plan.Request;
+            if (!request.IsPage)
+                return BuildStandardItem(request, previewScene);
+
             var root = new GameObject(request.PrefabName,
                 typeof(RectTransform),
                 typeof(Canvas),
@@ -375,7 +432,10 @@ namespace Ember.UIExtension.Editor
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
             canvas.worldCamera = null;
             canvas.planeDistance = 100f;
-            canvas.sortingOrder = EUIBindingEditorUtility.GetDefaultSortingOrder(request.PageType);
+            canvas.sortingOrder = request.IsPage
+                ? EUIBindingEditorUtility.GetSortingOrder(request.PageType,
+                    request.FixedSortingOrder)
+                : 0;
             canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1
                 | AdditionalCanvasShaderChannels.Normal
                 | AdditionalCanvasShaderChannels.Tangent;
@@ -390,7 +450,8 @@ namespace Ember.UIExtension.Editor
             var rootGroup = root.GetComponent<CanvasGroup>();
             rootGroup.alpha = 1f;
             rootGroup.interactable = true;
-            rootGroup.blocksRaycasts = request.PageType != PageType.Background;
+            rootGroup.blocksRaycasts = !request.IsPage
+                || request.PageType != PageType.Background;
             rootGroup.ignoreParentGroups = false;
 
             EUIBindingEditorUtility.ApplyCreationConfig(root.GetComponent<EUIBinding>(), request);
@@ -415,10 +476,45 @@ namespace Ember.UIExtension.Editor
             animatorGroup.blocksRaycasts = false;
             animatorGroup.ignoreParentGroups = false;
 
-            var safeAreaObject = PrefabUtility.InstantiatePrefab(plan.SafeAreaPrefab, animatorRect) as GameObject;
-            if (!safeAreaObject)
-                throw new InvalidOperationException($"EUISafeArea 嵌套实例创建失败：{plan.SafeAreaPrefabPath}");
+            if (request.IsPage)
+            {
+                var safeAreaObject = PrefabUtility.InstantiatePrefab(
+                    plan.SafeAreaPrefab, animatorRect) as GameObject;
+                if (!safeAreaObject)
+                    throw new InvalidOperationException(
+                        $"EUISafeArea 嵌套实例创建失败：{plan.SafeAreaPrefabPath}");
+            }
 
+            SetLayerRecursively(root, LayerMask.NameToLayer("UI"));
+            return root;
+        }
+
+        private static GameObject BuildStandardItem(EUICreationRequest request,
+            UnityEngine.SceneManagement.Scene previewScene)
+        {
+            var root = new GameObject(request.PrefabName,
+                typeof(RectTransform),
+                typeof(CanvasGroup),
+                typeof(EUIBinding));
+            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root, previewScene);
+
+            var rootRect = root.GetComponent<RectTransform>();
+            rootRect.localScale = Vector3.one;
+            rootRect.localPosition = Vector3.zero;
+            rootRect.localRotation = Quaternion.identity;
+            rootRect.anchorMin = new Vector2(0.5f, 0.5f);
+            rootRect.anchorMax = new Vector2(0.5f, 0.5f);
+            rootRect.anchoredPosition = Vector2.zero;
+            rootRect.sizeDelta = new Vector2(100f, 30f);
+            rootRect.pivot = new Vector2(0.5f, 0.5f);
+
+            var rootGroup = root.GetComponent<CanvasGroup>();
+            rootGroup.alpha = 1f;
+            rootGroup.interactable = true;
+            rootGroup.blocksRaycasts = true;
+            rootGroup.ignoreParentGroups = false;
+
+            EUIBindingEditorUtility.ApplyCreationConfig(root.GetComponent<EUIBinding>(), request);
             SetLayerRecursively(root, LayerMask.NameToLayer("UI"));
             return root;
         }
@@ -458,13 +554,20 @@ namespace Ember.UIExtension.Editor
                 return false;
             }
 
-            if (!IsSupportedPageType(request.PageType))
+            if (!Enum.IsDefined(typeof(EUIBindingRole), request.Role))
+            {
+                error = $"无效的 UI 角色：{request.Role}";
+                return false;
+            }
+
+            if (request.IsPage && !IsSupportedPageType(request.PageType))
             {
                 error = $"页面类型 {request.PageType} 不受标准页面创建器支持。";
                 return false;
             }
 
-            if (!Enum.IsDefined(typeof(EUIBinding.RegularTransitionMode), request.TransitionMode))
+            if (request.IsPage
+                && !Enum.IsDefined(typeof(EUIBinding.RegularTransitionMode), request.TransitionMode))
             {
                 error = $"无效的普通过渡模式：{request.TransitionMode}";
                 return false;
@@ -472,8 +575,19 @@ namespace Ember.UIExtension.Editor
 
             normalized = request.Clone();
             normalized.PrefabName = NormalizePrefabName(request.PrefabName);
-            normalized.PageName = request.PageName?.Trim();
+            normalized.PageName = request.IsPage ? request.PageName?.Trim() : string.Empty;
             normalized.ClassName = request.ClassName?.Trim();
+
+            if (!normalized.IsPage)
+            {
+                normalized.PageType = PageType.MainPage;
+                normalized.UseUIUpdate = false;
+                normalized.UseMask = false;
+                normalized.ClickMaskToClose = false;
+                normalized.TransitionMode = EUIBinding.RegularTransitionMode.None;
+                normalized.GenerateAutoCreateClickableMaskOverride = false;
+                normalized.GenerateOnClickMaskOverride = false;
+            }
 
             if (!TryNormalizeRelativePath(request.ClassPath, out var classPath, out error))
                 return false;
@@ -485,7 +599,7 @@ namespace Ember.UIExtension.Editor
                 return false;
             }
 
-            if (!IsValidCSharpIdentifier(normalized.PageName))
+            if (normalized.IsPage && !IsValidCSharpIdentifier(normalized.PageName))
             {
                 error = $"页面名称不是有效的 C# 标识符：{normalized.PageName}";
                 return false;
@@ -507,19 +621,20 @@ namespace Ember.UIExtension.Editor
             if (normalized.CodePathMode == EUIBinding.CodePathMode.Business
                 && string.IsNullOrEmpty(normalized.ClassPath))
             {
-                error = "用户模式的输出子目录必须以模块名开头，例如 Inventory/Page。";
+                error = "用户模式的输出子目录必须包含模块名，例如 Inventory/Page 或 Module/Inventory。";
                 return false;
             }
 
-            if (!IsFiniteNonNegative(normalized.FadeInTime)
-                || !IsFiniteNonNegative(normalized.FadeOutTime))
+            if (normalized.IsPage && (!IsFiniteNonNegative(normalized.FadeInTime)
+                || !IsFiniteNonNegative(normalized.FadeOutTime)))
             {
                 error = "进入/退出时长必须是大于或等于 0 的有限数值。";
                 return false;
             }
 
-            if (!IsFinite(normalized.MaskColor.r) || !IsFinite(normalized.MaskColor.g)
-                || !IsFinite(normalized.MaskColor.b) || !IsFinite(normalized.MaskColor.a))
+            if (normalized.IsPage && (!IsFinite(normalized.MaskColor.r)
+                || !IsFinite(normalized.MaskColor.g)
+                || !IsFinite(normalized.MaskColor.b) || !IsFinite(normalized.MaskColor.a)))
             {
                 error = "遮罩颜色包含无效数值。";
                 return false;
@@ -653,6 +768,7 @@ namespace Ember.UIExtension.Editor
                 || pageType == PageType.FullScreenPopup
                 || pageType == PageType.TopMost
                 || pageType == PageType.SubPage
+                || pageType == PageType.Overlay
                 || pageType == PageType.FreePage;
         }
 

@@ -23,11 +23,13 @@ instance.[核心方法]([参数], result => {
 ---
 
 ## 3. 依赖关系
+
+> 按实际 `.asmdef` 和 `package.json` 填写，删除下表不适用的示例依赖。可选业务 Module 位于 `Assets/Game/Module/`，查询用 `EmberModuleCollector.TryGetModule`，不要套用 Manager 的 `.Instance` 示例。
 > 列出本模块对外部的依赖，帮助评估升级/替换的影响面。
 
 | 依赖 | 类型 | 说明 |
 |------|------|------|
-| `Ember.Core.Singleton` | 框架模块 | 单例基础设施 |
+| `EmberSingleton<T>`（Ember.Core） | 框架模块 | 单例基础设施 |
 | `UniRx 7.1.0` | 外部包 | 响应式事件流 |
 | [填写其他依赖] | | |
 
@@ -38,11 +40,11 @@ instance.[核心方法]([参数], result => {
 
 | 角色 | 路径 |
 |------|------|
-| 主逻辑入口 | `[Assets/Ember/Xxx/Runtime/XxxManager.cs]` |
-| 核心数据类 | `[Assets/Ember/Xxx/Runtime/XxxData.cs]` |
-| 关键接口 | `[Assets/Ember/Xxx/Runtime/IXxx.cs]` |
-| 视图/表现层 | `[Assets/Ember/Xxx/Runtime/XxxView.cs]` 或 `[*.prefab]` |
-| 编辑器扩展 | `[Assets/Ember/Xxx/Editor/XxxEditor.cs]` |
+| 主逻辑入口 | `[Packages/com.ember/Xxx/Runtime/XxxManager.cs]` |
+| 核心数据类 | `[Packages/com.ember/Xxx/Runtime/XxxData.cs]` |
+| 关键接口 | `[Packages/com.ember/Xxx/Runtime/IXxx.cs]` |
+| 视图/表现层 | `[Packages/com.ember/Xxx/Runtime/XxxView.cs]` 或 `[*.prefab]` |
+| 编辑器扩展 | `[Packages/com.ember/Xxx/Editor/XxxEditor.cs]` |
 
 ---
 

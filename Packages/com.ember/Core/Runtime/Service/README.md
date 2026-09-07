@@ -3,7 +3,7 @@
 ## 概述
 
 提供服务定位器（接口驱动注册/解析）、单例基类（纯 C# + MonoBehaviour）、对象池（class 复用）、
-SO 基类（Odin 继承溯源面板）。
+`EmberBaseSO` 已归属 Basic，提供 Odin 继承溯源面板。
 
 ## 文件清单
 
@@ -12,7 +12,7 @@ SO 基类（Odin 继承溯源面板）。
 | 服务定位器 | `EmberServiceLocator.cs` |
 | 纯 C# 单例 | `EmberSingleton.cs` |
 | 对象池 + IPoolable | `EmberObjectPool.cs` |
-| SO 基类 | `EmberBaseSO.cs` |
+| SO 基类（Basic） | [EmberBaseSO.cs](../../../Basic/Runtime/Base/EmberBaseSO.cs) |
 
 ## 公开 API
 
@@ -40,12 +40,13 @@ SO 基类（Odin 继承溯源面板）。
 |------|------|
 | `Instance` (静态属性) | 获取单例，首次访问自动创建 |
 | `IsValid` (静态属性) | 是否已创建，不触发创建 |
+| `TryGetInstance(out T)` (静态) | 查询已存在的实例，不创建 |
 | `Destroy()` (静态) | 销毁实例，调用 OnDestroy 钩子 |
 | `OnDestroy()` (protected virtual) | 子类可重写清理逻辑 |
 
 ### EmberMonoSingleton<T> — MonoBehaviour 单例
 
-用于需要挂载 GameObject 的组件单例。DontDestroyOnLoad。
+用于需要挂载 GameObject 的组件单例。`EmberMonoSingleton<T>` 随场景销毁；需要跨场景保留时使用 `EmberMonoSingletonDontDestroy<T>`。
 
 | 成员 | 说明 |
 |------|------|
@@ -89,5 +90,5 @@ SO 基类（Odin 继承溯源面板）。
 | 类别 | 说明 |
 |------|------|
 | 线程安全 | ServiceLocator 线程不安全。EmberSingleton 双检锁线程安全 |
-| 单例生命周期 | MonoSingleton 挂 DontDestroyOnLoad；EmberSingleton.Destroy() 需手动调用 |
+| 单例生命周期 | 普通 MonoSingleton 随场景销毁；DontDestroy 变体跨场景保留。纯 C# 单例由所有者或 Collector 释放 |
 | 对象池满 | 池满时归还对象会被丢弃（若实现 IDisposable 则自动 Dispose） |

@@ -74,7 +74,7 @@ namespace Ember.UIExtension.Editor
         private DefaultAsset frameworkCodeTemplate;
 
         [SerializeField]
-        [Tooltip("UI 资源根目录（完整 Assets 路径）。框架模式生成到 Common/Prefabs；用户模式按输出子目录首段生成到 Module/<模块>/Prefabs。")]
+        [Tooltip("UI 资源根目录（完整 Assets 路径）。框架模式生成到 Common/Prefabs；用户模式支持 <模块>/Page|Component，也支持 Module/<模块> 显式目录。")]
         private string uiResourceRoot = "Assets/GameResource/Resources/UI";
 
         #endregion
@@ -316,7 +316,8 @@ namespace Ember.UIExtension.Editor
 
         /// <summary>
         /// 解析 binding 的最终预制体路径。
-        /// 框架模式固定进入 Common；用户模式从输出子目录第一段提取模块名。
+        /// 框架模式固定进入 Common；用户模式支持“模块/Page|Component”和
+        /// “Module/模块”两种输出子目录写法。
         /// </summary>
         public bool TryResolvePrefabPath(EUIBinding binding, out string prefabPath, out string error)
         {
@@ -352,26 +353,51 @@ namespace Ember.UIExtension.Editor
                     out var classPath, out error))
                 return false;
 
-            string categoryPath;
-            if (binding.PathMode == EUIBinding.CodePathMode.Framework)
-            {
-                categoryPath = "Common";
-            }
-            else
-            {
-                var separatorIndex = classPath?.IndexOf('/') ?? -1;
-                var moduleName = separatorIndex >= 0 ? classPath.Substring(0, separatorIndex) : classPath;
-                if (string.IsNullOrWhiteSpace(moduleName) || moduleName == "." || moduleName == "..")
-                {
-                    error = "用户模式的输出子目录必须以模块名开头，例如 Inventory/Page。";
-                    return false;
-                }
-
-                categoryPath = $"Module/{moduleName.Trim()}";
-            }
+            if (!TryResolvePrefabCategoryPath(binding.PathMode, classPath,
+                    out var categoryPath, out error))
+                return false;
 
             return TryResolveAssetsPath($"{root}/{categoryPath}/Prefabs/{prefabName}.prefab",
                 "预制体输出路径", out prefabPath, out _, out error);
+        }
+
+        /// <summary>
+        /// 将代码输出子目录映射为 UI 资源分类目录。显式的 Module 前缀不会被重复添加，
+        /// 例如 Module/SceneUI 会映射为 Module/SceneUI。
+        /// </summary>
+        internal static bool TryResolvePrefabCategoryPath(EUIBinding.CodePathMode pathMode,
+            string classPath, out string categoryPath, out string error)
+        {
+            categoryPath = null;
+            error = null;
+            if (pathMode == EUIBinding.CodePathMode.Framework)
+            {
+                categoryPath = "Common";
+                return true;
+            }
+
+            var segments = classPath?.Split(new[] { '/' },
+                StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+            if (segments.Length == 0)
+            {
+                error = "用户模式的输出子目录必须包含模块名，例如 Inventory/Page 或 Module/Inventory。";
+                return false;
+            }
+
+            if (string.Equals(segments[0], "Module", StringComparison.OrdinalIgnoreCase))
+            {
+                if (segments.Length < 2)
+                {
+                    error = "Module 前缀后必须填写模块名，例如 Module/SceneUI。";
+                    return false;
+                }
+
+                categoryPath = $"Module/{segments[1]}";
+                return true;
+            }
+
+            categoryPath = $"Module/{segments[0]}";
+            return true;
         }
 
         public override bool CanGenerate(EUIBinding binding)
@@ -645,8 +671,13 @@ namespace Ember.UIExtension.Editor
             var lines = File.ReadAllLines(fullPath, Encoding.UTF8).ToList();
 
             string targetLayer = PageTypeToLayerName(binding.PageType);
-            bool isFreePage = binding.PageType == PageType.FreePage;
             string targetPageType = $"PageType.{binding.PageType}";
+            string sortingArgument = binding.PageType switch
+            {
+                PageType.Overlay => $", overlaySortingOrder: {binding.FixedSortingOrder}",
+                PageType.FreePage => $", freePageSortingOrder: {binding.FixedSortingOrder}",
+                _ => string.Empty,
+            };
 
             if (!TryResolvePrefabPath(binding, out var newPrefabPath, out var pathError))
             {
@@ -654,7 +685,7 @@ namespace Ember.UIExtension.Editor
                 return false;
             }
 
-            string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType}{(isFreePage ? ", freePageSortingOrder: 30000" : "")});";
+            string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType}{sortingArgument});";
 
             // 写入前同时统计目标与对侧 partial；任一文件内或跨文件重复都 fail-closed，
             // 不能先改目标文件再遗漏 sibling 中的同名定义。
@@ -959,6 +990,7 @@ namespace Ember.UIExtension.Editor
                 || pageType == PageType.FullScreenPopup
                 || pageType == PageType.TopMost
                 || pageType == PageType.SubPage
+                || pageType == PageType.Overlay
                 || pageType == PageType.FreePage;
         }
 
@@ -1251,6 +1283,7 @@ namespace Ember.UIExtension.Editor
                 ["author_name"] = LogicImplementationData.GenerateAuthorName,
                 ["prefab_name"] = prefabName ?? binding.gameObject.name,
                 ["page_name"] = binding.PageName ?? "",
+                ["ui_role"] = binding.IsPage ? $"Page ({binding.PageName})" : "Item",
                 ["class_name"] = binding.ClassName ?? "",
                 ["base_class_name"] = !string.IsNullOrEmpty(baseClsName) ? baseClsName : this.baseClassName,
                 ["namespace_name"] = GetDefaultNamespace(binding.PathMode),
@@ -1614,8 +1647,8 @@ namespace Ember.UIExtension.Editor
 
             EditorGUILayout.PropertyField(uiResourceRoot, new GUIContent("UI 资源根目录"));
             EditorGUILayout.HelpBox(
-                "框架模式 → Common/Prefabs；用户模式 → Module/<输出子目录首段>/Prefabs。\n" +
-                "示例：输出子目录 Inventory/Page → Module/Inventory/Prefabs。",
+                "框架模式 → Common/Prefabs；用户模式支持 <模块>/Page|Component 或 Module/<模块>。\n" +
+                "示例：Inventory/Page → Module/Inventory/Prefabs；Module/SceneUI → Module/SceneUI/Prefabs。",
                 MessageType.Info);
 
             EditorGUILayout.Space();

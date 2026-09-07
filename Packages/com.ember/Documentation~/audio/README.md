@@ -9,13 +9,13 @@ BGM / SFX 播放与音量控制。通过 Unity AudioMixer 实现音量分组，
 
 | 角色 | 路径 |
 |------|------|
-| 主逻辑入口 | `Runtime/EmberAudioManager.cs` |
+| 主逻辑入口 | [EmberAudioManager.cs](../../Audio/Runtime/EmberAudioManager.cs) |
 
 ## 依赖
 
 | 依赖 | 类型 | 说明 |
 |------|------|------|
-| `Ember.Core` | 框架模块 | EmberSingleton、IEmberManager、EmberEventBus、EmberDebug、GameLauncher |
+| `Ember.Core` | 框架模块 | EmberSingleton、IEmberManager、EmberEventBus、GameLauncher（日志 EmberDebug 来自 Basic） |
 | `UnityEngine.Audio` | 引擎 | AudioMixer、AudioSource、AudioClip |
 
 ## 公开 API
@@ -27,7 +27,7 @@ BGM / SFX 播放与音量控制。通过 Unity AudioMixer 实现音量分组，
 | 方法 | 说明 |
 |------|------|
 | `Init(AudioMixer mixer, string bgmParam, string sfxParam)` | 完整初始化（含 Mixer 配置）。已通过 IEmberManager.Init 默认初始化后可再次调用配置 Mixer |
-| `PlayBGM(AudioClip clip, bool loop, float fadeDuration)` | 播放 BGM。相同 clip 忽略 |
+| `PlayBGM(AudioClip clip, bool loop, float fadeDuration)` | 播放 BGM。相同 clip 忽略；fadeDuration 当前未执行渐变 |
 | `StopBGM()` | 停止 BGM |
 | `SetBGMVolume(float volume)` | 设置 BGM 音量（0.0～1.0） |
 | `PlaySFX(AudioClip clip, float volumeScale)` | 播放音效。创建临时 AudioSource，播完自动销毁 |

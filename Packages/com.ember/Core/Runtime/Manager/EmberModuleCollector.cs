@@ -15,7 +15,7 @@ namespace Ember.Core
     /// // 进入 Init 状态（InitState.OnEnter）
     /// EmberModuleCollector.Instance.InitPhase(ModulePhase.Global);
     ///
-    /// // 进入 Main 状态（MainState.OnEnter）
+    /// // 若项目需要 Main Phase，在对应状态生命周期中显式接线
     /// EmberModuleCollector.Instance.InitPhase(ModulePhase.Main);
     ///
     /// // 游戏退出（GameLauncher.ShutdownFramework）
@@ -23,11 +23,15 @@ namespace Ember.Core
     /// </code>
     ///
     /// 生命周期：
+    /// - DiscoverModules：构造并登记所有启用模块，但不调用 OnInit
     /// - InitPhase：首次进入 → OnInit；再次进入（热重启）→ ResetModuleData + OnInit
     /// - DestroyPhase：OnDestroy（对象保留，供热重启复用）
     /// - DestroyAll：销毁全部并清空登记表（游戏退出）
     ///
-    /// 模块以单例形式存在（继承 <see cref="EmberSingleton{T}"/>），通过静态 Instance 属性访问。
+    /// 模块以单例形式存在（继承 <see cref="EmberSingleton{T}"/>），并必须使用
+    /// <see cref="EmberModuleAttribute"/> 声明阶段与启用状态。
+    /// Enabled 决定是否装配；Phase 决定已装配模块何时激活。当前内置状态已接入
+    /// Global 与 Gameplay，其他阶段由项目显式驱动。
     /// </summary>
     public class EmberModuleCollector : EmberSingleton<EmberModuleCollector>
     {
@@ -46,11 +50,54 @@ namespace Ember.Core
         /// <summary>已发现的模块总数</summary>
         public int ModuleCount => _all.Count;
 
+        /// <summary>是否已经完成所有业务模块的发现与实例构造。</summary>
+        public bool IsDiscovered => _scanned;
+
+        /// <summary>供同程序集的更新管理器复用，避免再次反射并创建业务模块。</summary>
+        internal IReadOnlyList<ModuleEntry> DiscoveredModules => _all;
+
         #endregion
 
         // ============================================================
 
         #region 外部方法
+
+        /// <summary>
+        /// 发现、构造并登记所有启用的业务模块，但不触发任何模块的 OnInit。
+        /// 框架在加载业务场景前调用，以保证场景 Awake 只能绑定已存在的模块实例。
+        /// </summary>
+        public void DiscoverModules()
+        {
+            EnsureScanned();
+        }
+
+        /// <summary>读取模块类型元数据中的启用状态；不会访问或创建模块 Instance。</summary>
+        public bool IsModuleEnabled<TModule>()
+            where TModule : class, IEmberModule
+        {
+            var metadata = typeof(TModule).GetCustomAttribute<EmberModuleAttribute>(false);
+            return metadata != null && metadata.Enabled;
+        }
+
+        /// <summary>从已发现模块中取实例；不会扫描，也不会创建任何单例。</summary>
+        public bool TryGetModule<TModule>(out TModule module)
+            where TModule : class, IEmberModule
+        {
+            module = null;
+            if (!_scanned)
+                return false;
+
+            for (int i = 0; i < _all.Count; i++)
+            {
+                if (_all[i].Module is not TModule typedModule)
+                    continue;
+
+                module = typedModule;
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 初始化指定阶段的所有模块。
@@ -74,11 +121,16 @@ namespace Ember.Core
                 }
 
                 EmberDebug.LogInit(TAG, $"Initializing module: {entry.Name}");
-                try { entry.Module.OnInit(); }
-                catch (Exception ex) { EmberDebug.LogError(TAG, $"Error initializing module {entry.Name}: {ex.Message}"); }
-
-                entry.IsActive = true;
-                entry.EverInitialized = true;
+                try
+                {
+                    entry.Module.OnInit();
+                    entry.IsActive = true;
+                    entry.EverInitialized = true;
+                }
+                catch (Exception ex)
+                {
+                    EmberDebug.LogError(TAG, $"Error initializing module {entry.Name}: {ex.Message}");
+                }
             }
         }
 
@@ -152,17 +204,28 @@ namespace Ember.Core
                     if (!typeof(IEmberModule).IsAssignableFrom(type)) continue;
                     if (type.IsAbstract || type.IsInterface) continue;
 
+                    var metadata = type.GetCustomAttribute<EmberModuleAttribute>(false);
+                    if (metadata == null)
+                    {
+                        EmberDebug.LogWarning(
+                            TAG,
+                            $"IEmberModule type '{type.Name}' has no EmberModuleAttribute. Skipping without creating Instance.");
+                        continue;
+                    }
+
+                    if (!metadata.Enabled)
+                        continue;
+
                     var module = GetSingletonInstance(type);
                     if (module == null) continue;
-                    if (!module.Enabled) continue;   // 跳过未启用的模块
 
-                    var entry = new ModuleEntry(module);
+                    var entry = new ModuleEntry(module, metadata.Phase);
                     _all.Add(entry);
 
-                    if (!_phaseMap.TryGetValue(module.Phase, out var list))
+                    if (!_phaseMap.TryGetValue(metadata.Phase, out var list))
                     {
                         list = new List<ModuleEntry>();
-                        _phaseMap[module.Phase] = list;
+                        _phaseMap[metadata.Phase] = list;
                     }
                     list.Add(entry);
                 }
@@ -219,17 +282,19 @@ namespace Ember.Core
         }
 
         /// <summary>模块条目：模块实例 + 生命周期状态标记。</summary>
-        private sealed class ModuleEntry
+        internal sealed class ModuleEntry
         {
             public readonly IEmberModule Module;
+            public readonly int Phase;
             public bool IsActive;          // OnInit 已调用且尚未 OnDestroy
             public bool EverInitialized;   // OnInit 至少调用过一次（决定热重启是否 Reset）
 
             public string Name => Module.GetType().Name;
 
-            public ModuleEntry(IEmberModule module)
+            public ModuleEntry(IEmberModule module, int phase)
             {
                 Module = module;
+                Phase = phase;
             }
         }
 

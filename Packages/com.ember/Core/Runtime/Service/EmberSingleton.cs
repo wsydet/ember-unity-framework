@@ -78,6 +78,16 @@ namespace Ember.Core
         public static bool IsValid => _instance != null;
 
         /// <summary>
+        /// 获取已经存在的单例，但绝不触发创建。
+        /// 适用于场景组件验证框架是否已经完成实例发现的场景。
+        /// </summary>
+        public static bool TryGetInstance(out T instance)
+        {
+            instance = _instance;
+            return instance != null;
+        }
+
+        /// <summary>
         /// 销毁单例实例。销毁前会调用 <see cref="OnDestroy"/> 钩子。
         /// </summary>
         public static void Destroy()
