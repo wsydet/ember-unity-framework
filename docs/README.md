@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.4**；模板 GUID、版本与静态一致性已检查，Unity 编译、模板重新部署与运行验收继续在实际项目中完成。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.5**；本次新增 UnityFarm 改动分流规则，模板内容保持不变，消费项目运行验收继续在实际项目中完成。
 
 ## 使用框架
 
@@ -12,8 +12,9 @@
 | [API 速查](dev/ember-api-reference.md) | 常用类型、签名、路径和限制 |
 | [启动时序](dev/ember-boot-sequence.md) | Manager/Module、场景和启动过渡 |
 | [日志](dev/ember-debug.md) | 标签、SO 配置和文件日志 |
+| [UnityFarm 改动分流](../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md) | 判定项目、框架、模板或两者升级，并规定消费端接收方式 |
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
-| [0.11.4 发布说明](dev/release-0.11.4.md) | 模板 GUID 冲突修复、完整重新部署、依赖基线与验收边界 |
+| [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
 
 ## 模块与业务接入
 

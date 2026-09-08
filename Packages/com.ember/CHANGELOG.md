@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.11.5] - 2026-09-08
+
+- **建立 UnityFarm 改动回流判定规则**：随包新增统一维护文档，明确项目专用改动、框架升级、模板升级及两者联动的边界、版本策略、回流流程和 UnityFarm 接收方式。
+- **增加强制阅读入口**：仓库根 `AGENTS.md` 与 `CLAUDE.md` 在处理 UnityFarm 来源改动前要求先阅读该规则；包说明和文档索引同步提供入口，避免规则只存在于会被遗漏的独立文档。
+- **模板兼容声明同步**：`base 0.5.6` 与 `source3d-2p5d 0.2.7` 的 Assets、内容版本和 hash 均未改变，只将框架兼容声明推进到 `0.11.5`。
+
 ## [0.11.4] - 2026-09-08
 
 - **修复标准 URP 项目的模板 GUID 冲突**：为 GameplayScene 与 2.5D Input Actions 分配 Ember 专用稳定 GUID，并同步更新基础模板、派生模板、父快照、场景映射和项目引用；避免 Unity 与根目录默认 SampleScene / InputSystem_Actions 冲突后静默改写 `.meta`。

@@ -77,6 +77,15 @@
 - 如果面板报告磁盘内容与 metadata 不一致，应先确认真实差异。经明确授权采纳磁盘改动时，必须一次性
   对齐根模板版本与 hash、派生模板父基线以及编辑记录；不得只修改单个子模板的 `contentHash`。
 
+### UnityFarm 改动回流规范（强制阅读）
+
+从 UnityFarm 发现、验证或提出任何改动时，开始修改前必须完整阅读
+[`Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md`](Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md)。
+
+必须先判定改动属于“仅 UnityFarm 项目”“框架升级”“模板升级”或“框架 + 模板升级”。不得直接修改
+UnityFarm 的 PackageCache，不得把产品专用业务误收进通用框架或模板，也不得把升级框架误认为已部署
+模板会自动更新。模板内容随 `com.ember` 交付，因此任何模板发布也必须配套新的框架 tag。
+
 ### 核心设计原则
 
 - **依赖方向**：业务层 → 框架层 → 引擎，禁止反向依赖
