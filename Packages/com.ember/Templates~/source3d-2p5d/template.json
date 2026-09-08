@@ -4,7 +4,7 @@
     "displayName": "3D → 2.5D 视觉模板",
     "description": "基于 Ember 基础模板，面向以 3D 场景和角色为源，通过相机约束、分层构图、风格化材质与光照及后处理形成 2.5D 视觉效果的项目。",
     "version": "0.2.6",
-    "frameworkVersion": "0.11.2",
+    "frameworkVersion": "0.11.3",
     "channel": "preview",
     "order": 99,
     "parentId": "base",

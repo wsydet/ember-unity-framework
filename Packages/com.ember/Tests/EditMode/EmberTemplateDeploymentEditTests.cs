@@ -68,13 +68,13 @@ namespace Ember.UI.Tests
         }
 
         [Test]
-        public void DeploymentGate_DifferentTemplateShouldRequireExplicitSwitch()
+        public void DeploymentGate_DifferentTemplateShouldRequireConfirmedDeployment()
         {
             var data = CreateData("base", "base", "platformer2d");
 
             var reason = EmberProjectSetup.GetDeploymentBlockReason(data, "platformer2d");
 
-            StringAssert.Contains("备份并切换", reason);
+            StringAssert.Contains("确认后部署", reason);
         }
 
         [Test]
@@ -88,19 +88,19 @@ namespace Ember.UI.Tests
         }
 
         [Test]
-        public void TemplateSwitchGate_DifferentActiveTemplateShouldAllowExplicitSwitch()
+        public void ReplacementDeploymentGate_DifferentActiveTemplateShouldAllowDeployment()
         {
             var data = CreateData("base", "base");
 
-            Assert.IsNull(EmberProjectSetup.GetTemplateSwitchBlockReason(
+            Assert.IsNull(EmberProjectSetup.GetReplacementDeploymentBlockReason(
                 data,
                 "source3d-2p5d"));
         }
 
         [Test]
-        public void TemplateSwitchGate_FirstDeploymentShouldUseInitialize()
+        public void ReplacementDeploymentGate_FirstDeploymentShouldUseInitialize()
         {
-            var reason = EmberProjectSetup.GetTemplateSwitchBlockReason(
+            var reason = EmberProjectSetup.GetReplacementDeploymentBlockReason(
                 new DeployedTemplatesData(),
                 "source3d-2p5d");
 
@@ -108,11 +108,11 @@ namespace Ember.UI.Tests
         }
 
         [Test]
-        public void TemplateSwitchGate_AmbiguousLegacyRecordsShouldBlock()
+        public void ReplacementDeploymentGate_AmbiguousLegacyRecordsShouldBlock()
         {
             var data = CreateData(null, "base", "source3d-2p5d");
 
-            var reason = EmberProjectSetup.GetTemplateSwitchBlockReason(
+            var reason = EmberProjectSetup.GetReplacementDeploymentBlockReason(
                 data,
                 "source3d-2p5d");
 
@@ -120,11 +120,11 @@ namespace Ember.UI.Tests
         }
 
         [Test]
-        public void TemplateSwitch_BackupsOldBusinessLayerAndReplacesManagedDirectories()
+        public void ReplacementDeployment_ReplacesManagedDirectoriesWithoutTouchingExternalContent()
         {
             string root = Path.Combine(
                 Path.GetTempPath(),
-                "EmberTemplateSwitchTests-" + Guid.NewGuid().ToString("N"));
+                "EmberTemplateDeployTests-" + Guid.NewGuid().ToString("N"));
             string projectRoot = Path.Combine(root, "Project");
             string templateAssets = Path.Combine(root, "Template", "Assets");
             try
@@ -141,26 +141,20 @@ namespace Ember.UI.Tests
                     id = "source3d-2p5d",
                     schemaVersion = EmberTemplateInheritanceEngine.CurrentSchemaVersion,
                     version = "0.2.6",
-                    frameworkVersion = "0.11.2",
+                    frameworkVersion = "0.11.3",
                     contentHash = EmberTemplateInheritanceEngine.ComputeTemplateContentHash(
                         templateAssets)
                 };
 
-                string backup = EmberProjectSetup.BackupTemplateBusinessLayer(
-                    projectRoot,
-                    "base",
-                    template.id);
-                int deployed = EmberProjectSetup.ReplaceTemplateBusinessLayer(
+                int deployed = EmberProjectSetup.ReplaceManagedDirectoriesFromTemplate(
                     projectRoot,
                     templateAssets,
                     template);
 
                 Assert.Greater(deployed, 0);
-                Assert.IsTrue(File.Exists(Path.Combine(backup, "Assets/Game/Old.txt")));
-                Assert.IsTrue(File.Exists(Path.Combine(backup, "switch.json")));
                 Assert.IsFalse(File.Exists(Path.Combine(projectRoot, "Assets/Game/Old.txt")));
                 StringAssert.Contains(
-                    "v0.2.6 (framework v0.11.2)",
+                    "v0.2.6 (framework v0.11.3)",
                     File.ReadAllText(Path.Combine(projectRoot, "Assets/Game/New.cs")));
                 Assert.AreEqual(
                     "keep",
@@ -170,6 +164,18 @@ namespace Ember.UI.Tests
             {
                 if (Directory.Exists(root)) Directory.Delete(root, true);
             }
+        }
+
+        [TestCase(UnityEditor.PackageManager.PackageSource.Embedded, true)]
+        [TestCase(UnityEditor.PackageManager.PackageSource.Git, false)]
+        [TestCase(UnityEditor.PackageManager.PackageSource.Registry, false)]
+        public void TemplateDevelopment_OnlyEmbeddedPackageSourceShouldBeAllowed(
+            UnityEditor.PackageManager.PackageSource source,
+            bool expected)
+        {
+            Assert.AreEqual(
+                expected,
+                EmberProjectSetup.IsTemplateDevelopmentSource(source));
         }
 
         [Test]

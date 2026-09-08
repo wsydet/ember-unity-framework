@@ -21,7 +21,7 @@ namespace Ember.Core.Editor
     /// 用户只在状态钩子函数里填自己的代码（类 Unity Mono 生命周期）。
     ///
     /// 首次部署 = 整树补齐（.meta 随行，GUID 全链有效）；同模板重复部署不覆盖用户改动。
-    /// 跨模板切换必须由用户显式确认，先备份现有业务层，再用目标完整模板事务替换。
+    /// 跨模板部署由用户显式确认，再用目标完整模板事务替换；消费端不会写回模板包。
     /// </summary>
     public static class EmberProjectSetup
     {
@@ -79,10 +79,10 @@ namespace Ember.Core.Editor
         }
 
         /// <summary>
-        /// 显式切换完整模板：先把当前模板业务层备份到 Library，再事务替换为目标模板。
+        /// 显式部署另一完整模板：事务替换模板管理目录，不把消费项目内容保存回模板包。
         /// 首次部署和同模板补齐仍应使用 Initialize。
         /// </summary>
-        public static TemplateSwitchResult SwitchTemplate(string templateId)
+        public static int DeployReplacingActiveTemplate(string templateId)
         {
             var packagePath = GetResolvedPath(PACKAGE)
                 ?? throw new InvalidOperationException($"包 [{PACKAGE}] 未安装。");
@@ -93,44 +93,27 @@ namespace Ember.Core.Editor
                 throw new InvalidOperationException($"模板 [{templateId}] 缺少 Assets 内容。");
 
             var deploymentData = ReadDeploymentData();
-            var blockReason = GetTemplateSwitchBlockReason(deploymentData, templateId);
+            var blockReason = GetReplacementDeploymentBlockReason(deploymentData, templateId);
             if (!string.IsNullOrEmpty(blockReason))
                 throw new InvalidOperationException(blockReason);
 
             var active = ResolveActiveDeployment(deploymentData);
             var projectRoot = Directory.GetParent(Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("无法解析 Unity 项目根目录。");
-            EnsureStoredContentMatchesMetadata(template, sourceAssets, "切换");
+            EnsureStoredContentMatchesMetadata(template, sourceAssets, "部署");
 
-            string backupPath = BackupTemplateBusinessLayer(
+            int deployed = ReplaceManagedDirectoriesFromTemplate(
                 projectRoot,
-                active.templateId,
-                templateId);
-            try
-            {
-                int deployed = ReplaceTemplateBusinessLayer(
-                    projectRoot,
-                    sourceAssets,
-                    template);
-                RegisterBuildSettings(true);
-                EmberSceneMappingCreator.EnsureAndRescan();
-                RecordDeployment(packagePath, templateId);
-                AssetDatabase.Refresh();
-                EmberDebug.LogInit(
-                    TAG,
-                    $"模板已从 [{active.templateId}] 切换为 [{templateId}]，部署 {deployed} 个文件；切换前备份：{backupPath}");
-                return new TemplateSwitchResult(
-                    active.templateId,
-                    templateId,
-                    backupPath,
-                    deployed);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(
-                    $"切换到模板 [{templateId}] 失败。切换前备份保留在：{backupPath}",
-                    ex);
-            }
+                sourceAssets,
+                template);
+            RegisterBuildSettings(true);
+            EmberSceneMappingCreator.EnsureAndRescan();
+            RecordDeployment(packagePath, templateId);
+            AssetDatabase.Refresh();
+            EmberDebug.LogInit(
+                TAG,
+                $"模板 [{templateId}] 已部署并替换原活动模板 [{active.templateId}]，共 {deployed} 个文件。消费项目内容未写回模板包。");
+            return deployed;
         }
 
         /// <summary>扫描包内 Templates~/ 下的所有模板（未来新增模板自动出现在列表）。</summary>
@@ -181,6 +164,7 @@ namespace Ember.Core.Editor
         /// </summary>
         public static TemplateInfo InitializeTemplateInheritanceMetadata(string templateId)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null)
                 throw new InvalidOperationException($"包 [{PACKAGE}] 未安装。");
@@ -285,6 +269,7 @@ namespace Ember.Core.Editor
             IReadOnlyDictionary<string, TemplateConflictChoice> resolutions,
             int? versionBumpField)
         {
+            EnsureTemplateDevelopmentAllowed();
             if (plan == null) throw new ArgumentNullException(nameof(plan));
 
             var packagePath = GetResolvedPath(PACKAGE);
@@ -403,6 +388,7 @@ namespace Ember.Core.Editor
             string description,
             string parentId)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return -1;
 
@@ -516,6 +502,7 @@ namespace Ember.Core.Editor
             string displayName,
             string description)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
             if (packagePath == null || projectRoot == null) return -1;
@@ -620,12 +607,19 @@ namespace Ember.Core.Editor
         public static bool IsEmbeddedPackage()
         {
             var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(PACKAGE);
-            return info != null && info.source == UnityEditor.PackageManager.PackageSource.Embedded;
+            return info != null && IsTemplateDevelopmentSource(info.source);
+        }
+
+        internal static bool IsTemplateDevelopmentSource(
+            UnityEditor.PackageManager.PackageSource source)
+        {
+            return source == UnityEditor.PackageManager.PackageSource.Embedded;
         }
 
         /// <summary>把当前项目业务层保存为模板（覆盖该模板旧内容，并剥离 dev 测试对象）。返回复制文件数。</summary>
         public static int SaveTemplate(string templateId, string displayName, string description)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
             if (packagePath == null || projectRoot == null) return -1;
@@ -692,6 +686,7 @@ namespace Ember.Core.Editor
         /// <summary>把模板内容加载到项目业务层（替换当前 Game/Resources/Ember/Editor/Settings，供编辑）。返回复制文件数。</summary>
         public static int LoadTemplate(string templateId)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
             if (packagePath == null || projectRoot == null) return -1;
@@ -757,6 +752,7 @@ namespace Ember.Core.Editor
         /// </summary>
         public static void BumpTemplateVersion(string templateId, int field)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return;
 
@@ -776,6 +772,7 @@ namespace Ember.Core.Editor
         /// <summary>把模板版本设为指定值（用于误操作回退/人工对齐，格式 x.y.z）。</summary>
         public static void SetTemplateVersion(string templateId, string version)
         {
+            EnsureTemplateDevelopmentAllowed();
             if (!Regex.IsMatch(version ?? "", @"^\d+\.\d+\.\d+$"))
                 throw new ArgumentException($"版本格式非法 [{version}]，应为 x.y.z（如 0.5.0）。");
 
@@ -798,6 +795,7 @@ namespace Ember.Core.Editor
         /// <summary>更新模板显示名称/描述（不动版本、排序与模板内容）。</summary>
         public static void UpdateTemplateMetadata(string templateId, string displayName, string description)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return;
 
@@ -813,6 +811,7 @@ namespace Ember.Core.Editor
         /// <summary>删除模板（连同 Templates~/ 下全部内容），不可恢复。</summary>
         public static void DeleteTemplate(string templateId)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return;
 
@@ -839,6 +838,7 @@ namespace Ember.Core.Editor
         /// <summary>重新声明模板兼容的框架版本为当前框架版本（模板自身版本不变）。</summary>
         public static void DeclareFrameworkVersion(string templateId)
         {
+            EnsureTemplateDevelopmentAllowed();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return;
 
@@ -854,6 +854,7 @@ namespace Ember.Core.Editor
         /// <summary>设置模板稳定频道：stable / preview / deprecated（deprecated 在消费端隐藏）。</summary>
         public static void SetTemplateChannel(string templateId, string channel)
         {
+            EnsureTemplateDevelopmentAllowed();
             if (channel != ChannelStable && channel != ChannelPreview && channel != ChannelDeprecated)
                 throw new ArgumentException($"非法 channel [{channel}]，仅支持 stable/preview/deprecated。");
 
@@ -1314,7 +1315,7 @@ namespace Ember.Core.Editor
                     requestedTemplateId,
                     StringComparison.Ordinal)
                     ? null
-                    : $"当前活动模板是 [{explicitActive.templateId}]；请使用项目中心的“备份并切换”切换到 [{requestedTemplateId}]。";
+                    : $"当前活动模板是 [{explicitActive.templateId}]；请在项目中心确认后部署 [{requestedTemplateId}]。";
             }
 
             if (data.records.Count == 0) return null;
@@ -1325,13 +1326,13 @@ namespace Ember.Core.Editor
                     requestedTemplateId,
                     StringComparison.Ordinal)
                     ? null
-                    : $"旧部署记录表明当前项目来自 [{data.records[0].templateId}]；请使用项目中心的“备份并切换”切换到 [{requestedTemplateId}]。";
+                    : $"旧部署记录表明当前项目来自 [{data.records[0].templateId}]；请在项目中心确认后部署 [{requestedTemplateId}]。";
             }
 
             return "旧部署记录包含多个模板且没有 activeTemplateId；请先在项目中心明确认定当前活动模板。";
         }
 
-        internal static string GetTemplateSwitchBlockReason(
+        internal static string GetReplacementDeploymentBlockReason(
             DeployedTemplatesData data,
             string requestedTemplateId)
         {
@@ -1493,70 +1494,7 @@ namespace Ember.Core.Editor
             return deployed;
         }
 
-        internal static string BackupTemplateBusinessLayer(
-            string projectRoot,
-            string fromTemplateId,
-            string toTemplateId)
-        {
-            string safeFrom = Regex.Replace(fromTemplateId ?? "unknown", @"[^A-Za-z0-9._-]", "-");
-            string safeTo = Regex.Replace(toTemplateId ?? "unknown", @"[^A-Za-z0-9._-]", "-");
-            string backupId = Guid.NewGuid().ToString("N").Substring(0, 8);
-            string backupRoot = Path.Combine(
-                projectRoot,
-                "Library",
-                "EmberTemplateSwitchBackups",
-                $"{DateTime.Now:yyyyMMdd-HHmmssfff}-{safeFrom}-to-{safeTo}-{backupId}");
-            try
-            {
-                foreach (var relativeDirectory in TemplateDirNames)
-                {
-                    var relativePath = relativeDirectory.Replace('/', Path.DirectorySeparatorChar);
-                    var source = Path.Combine(projectRoot, "Assets", relativePath);
-                    if (!Directory.Exists(source)) continue;
-                    EmberTemplateTransaction.CopyDirectory(
-                        source,
-                        Path.Combine(backupRoot, "Assets", relativePath));
-                }
-
-                CopyBackupFile(projectRoot, backupRoot, DeployedRecordsPath);
-                CopyBackupFile(projectRoot, backupRoot, DeployedRecordsPath + ".meta");
-                CopyBackupFile(
-                    projectRoot,
-                    backupRoot,
-                    "ProjectSettings/EditorBuildSettings.asset");
-                EmberTemplateTransaction.WriteJson(
-                    Path.Combine(backupRoot, "switch.json"),
-                    new TemplateSwitchBackupInfo
-                    {
-                        createdAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                        fromTemplateId = fromTemplateId,
-                        toTemplateId = toTemplateId,
-                        managedDirectories = TemplateDirNames.ToArray()
-                    });
-                return backupRoot;
-            }
-            catch
-            {
-                TryCleanTransactionPath(backupRoot);
-                throw;
-            }
-        }
-
-        private static void CopyBackupFile(
-            string projectRoot,
-            string backupRoot,
-            string projectRelativePath)
-        {
-            var relativePath = projectRelativePath.Replace('/', Path.DirectorySeparatorChar);
-            var source = Path.Combine(projectRoot, relativePath);
-            if (!File.Exists(source)) return;
-            var destination = Path.Combine(backupRoot, relativePath);
-            var directory = Path.GetDirectoryName(destination);
-            if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
-            File.Copy(source, destination, true);
-        }
-
-        internal static int ReplaceTemplateBusinessLayer(
+        internal static int ReplaceManagedDirectoriesFromTemplate(
             string projectRoot,
             string sourceAssets,
             TemplateInfo template)
@@ -1564,7 +1502,7 @@ namespace Ember.Core.Editor
             string stageRoot = Path.Combine(
                 projectRoot,
                 "Temp",
-                $"EmberTemplateSwitch-{Guid.NewGuid():N}~");
+                $"EmberTemplateDeploy-{Guid.NewGuid():N}~");
             var targets = new List<TemplateTransactionTarget>();
             int deployed = 0;
             AssetDatabase.DisallowAutoRefresh();
@@ -1588,8 +1526,8 @@ namespace Ember.Core.Editor
                         true));
                 }
 
-                // 防止包内容在备份/暂存期间被外部修改后仍进入项目。
-                EnsureStoredContentMatchesMetadata(template, sourceAssets, "切换");
+                // 防止包内容在暂存期间被外部修改后仍进入项目。
+                EnsureStoredContentMatchesMetadata(template, sourceAssets, "部署");
                 EmberTemplateTransaction.CommitPreparedTargets(targets);
                 return deployed;
             }
@@ -1642,6 +1580,13 @@ namespace Ember.Core.Editor
             if (projectRoot == null) return fullPath;
             var rel = fullPath.Substring(projectRoot.Length + 1).Replace('\\', '/');
             return rel;
+        }
+
+        private static void EnsureTemplateDevelopmentAllowed()
+        {
+            if (IsEmbeddedPackage()) return;
+            throw new InvalidOperationException(
+                "模板编辑和保存仅允许在 embedded 框架项目中执行；消费项目只能部署包内模板。");
         }
 
         /// <summary>把项目业务层复制到模板暂存 Assets，并剥离只属于 dev 仓库的场景对象。</summary>

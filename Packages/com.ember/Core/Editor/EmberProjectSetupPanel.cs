@@ -109,7 +109,7 @@ namespace Ember.Core.Editor
 
             GUILayout.Space(8);
             EditorGUILayout.HelpBox(
-                "每个选项都是可独立部署的完整模板；2.5D 不是部署 Base 后再叠加的扩展。首次初始化可直接选择最终模板；已有活动模板时，可先自动备份业务层再切换。",
+                "消费项目只能部署包内完整模板，不会保存或修改框架模板。2.5D 不是在 Base 上叠加；部署另一模板会用目标模板替换其管理的业务目录。",
                 MessageType.Info);
         }
 
@@ -171,17 +171,16 @@ namespace Ember.Core.Editor
         private void DrawTemplateRow(TemplateInfo template)
         {
             var active = EmberProjectSetup.GetActiveDeployedTemplate();
-            bool deployed = EmberProjectSetup.IsTemplateDeployed(template.id);
             bool activeTemplate = active != null
                 && string.Equals(active.templateId, template.id, System.StringComparison.Ordinal);
-            bool switching = active != null && !activeTemplate;
+            bool replacingActiveTemplate = active != null && !activeTemplate;
             bool ambiguous = EmberProjectSetup.HasAmbiguousDeploymentState();
             var record = EmberProjectSetup.GetDeployedTemplate(template.id);
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(
-                (activeTemplate ? "✅ " : deployed ? "↩ " : "⬜ ") + template.displayName,
+                (activeTemplate ? "✅ " : "⬜ ") + template.displayName,
                 EditorStyles.boldLabel,
                 GUILayout.Width(220));
             if (template.channel == "preview")
@@ -196,23 +195,19 @@ namespace Ember.Core.Editor
 
             if (activeTemplate)
                 DrawUpgradeStatus(template, record);
-            else if (switching)
+            else if (replacingActiveTemplate)
             {
                 EditorGUILayout.HelpBox(
-                    $"当前活动模板是 [{active.templateId}]。切换会先备份当前模板业务层，再用完整的 [{template.id}] 替换 Game、Resources、Ember/Editor、Settings 和 GameResource。",
+                    $"部署完整模板 [{template.id}] 会替换当前活动模板 [{active.templateId}] 管理的 Game、Resources、Ember/Editor、Settings 和 GameResource；不会把消费项目内容写回框架模板。",
                     MessageType.Warning);
-                if (deployed)
-                    EditorGUILayout.LabelField(
-                        $"    曾部署 v{record?.version}，当前不是活动模板",
-                        EditorStyles.miniLabel);
             }
 
             GUI.enabled = !_context.OperationsBlocked && !ambiguous;
-            string buttonText = activeTemplate ? "补齐缺失" : switching ? "备份并切换" : "一键部署";
+            string buttonText = activeTemplate ? "补齐缺失" : replacingActiveTemplate ? "部署此模板" : "一键部署";
             if (GUILayout.Button(buttonText, GUILayout.Width(180)))
             {
-                if (switching)
-                    SwitchTemplate(template, active);
+                if (replacingActiveTemplate)
+                    DeployReplacingActiveTemplate(template, active);
                 else
                     DeployTemplate(template);
             }
@@ -287,13 +282,15 @@ namespace Ember.Core.Editor
             }, "部署失败");
         }
 
-        private void SwitchTemplate(TemplateInfo template, DeployedTemplateRecord active)
+        private void DeployReplacingActiveTemplate(
+            TemplateInfo template,
+            DeployedTemplateRecord active)
         {
             if (!EditorUtility.DisplayDialog(
-                    "切换完整模板",
-                    $"确定从 [{active.templateId}] 切换到 [{template.id}]？\n\n"
-                    + "当前模板业务层会先备份到项目 Library/EmberTemplateSwitchBackups，然后由目标模板完整替换。Assets/Art、Assets/ThirdParty 等非模板目录不受影响。",
-                    "备份并切换",
+                    "部署完整模板",
+                    $"确定部署 [{template.id}] 并替换当前活动模板 [{active.templateId}]？\n\n"
+                    + "此操作只把包内目标模板部署到消费项目，不会保存或修改框架模板。Assets/Art、Assets/ThirdParty 等非模板目录不受影响。",
+                    "部署此模板",
                     "取消"))
             {
                 return;
@@ -301,13 +298,13 @@ namespace Ember.Core.Editor
 
             RunOperation(() =>
             {
-                var result = EmberProjectSetup.SwitchTemplate(template.id);
-                _lastResult = $"✅ 已切换到 [{template.displayName}]：部署 {result.DeployedFiles} 个文件。\n备份：{result.BackupPath}";
+                int deployed = EmberProjectSetup.DeployReplacingActiveTemplate(template.id);
+                _lastResult = $"✅ [{template.displayName}] 部署完成：写入 {deployed} 个模板文件。";
 
                 var scenePath = ToFullPath("Assets/Game/Scenes/FrameworkScene.unity");
                 if (File.Exists(scenePath))
                     UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
-            }, "切换失败");
+            }, "部署失败");
         }
 
         private void RunOperation(System.Action action, string failureLabel)

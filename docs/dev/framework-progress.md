@@ -8,15 +8,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | `com.ember 0.11.2` | `Packages/com.ember/package.json`；静态检查完成，Unity/消费项目验收待执行 |
-| 发布目标 | `0.11.2` | 修复完整模板切换和消费端模板校验误报 |
+| 框架包 | `com.ember 0.11.3` | `Packages/com.ember/package.json`；静态检查完成，Unity/消费项目验收待执行 |
+| 发布目标 | `0.11.3` | 强制消费端只部署模板，并保留 0.11.2 的校验误报修复 |
 | 根模板 | `base 0.5.5 / stable` | `Templates~/base/template.json`；当前派生父基线已对齐 |
-| 派生模板 | `source3d-2p5d 0.2.6 / preview` | 父基线 `base 0.5.5`，父子共同声明兼容框架 `0.11.2`；运行兼容验收仍待完成 |
+| 派生模板 | `source3d-2p5d 0.2.6 / preview` | 父基线 `base 0.5.5`，父子共同声明兼容框架 `0.11.3`；运行兼容验收仍待完成 |
 | 模板开发副本 | `source3d-2p5d 0.2.6` | `Assets/Editor/EmberEditingTemplate.json`；记录 hash 与恢复模板一致，不代表项目磁盘无新修改 |
 
-0.11.2 增加完整模板的备份切换，并修复 Git URL 包缓存行尾与部署版本头造成的校验误报。
+0.11.3 将跨模板操作收口为消费端纯部署，禁止消费包调用模板编辑写 API；同时保留 Git URL 包缓存行尾与部署版本头的校验误报修复。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.11.2 发布说明](release-0.11.2.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.11.3 发布说明](release-0.11.3.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -35,7 +35,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第�
 | Camera / Input | 相机注册与霸占栈、InputAction 读取、重绑定契约 | [Camera](../../Packages/com.ember/Documentation~/camera/README.md)、[Input](../../Packages/com.ember/Documentation~/input/README.md) |
 | SceneUI | 普通 Engine、业务 Module 基类、EUI Item 宿主、投影/显隐/池化/诊断 | [设计](scene-ui-module-design.md)、[使用](../../Packages/com.ember/Documentation~/scene-ui/README.md) |
 | 2.5D 业务示例 | Gameplay 输入门控、WASD、世界锚点拖动、缩放、连续区域边界 | [PlayerControl](player-control-module.md) |
-| 模板与编辑器 | 项目中心、schema v2、父子三方同步、场景语义合并、事务回滚、活动模板备份切换 | [模板体系](template-upgrade-system.md)、[包维护](upm-migration-plan.md) |
+| 模板与编辑器 | 项目中心、schema v2、父子三方同步、场景语义合并、事务回滚、消费端完整模板部署 | [模板体系](template-upgrade-system.md)、[包维护](upm-migration-plan.md) |
 
 `InitState` 先发现并构造启用 Module，再启动全部 Manager，最后激活 Global。
 Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需业务状态显式接线。
@@ -46,7 +46,7 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
 | P1 | 消费端模板升级向导（P-B） | 已有所有权标记，尚无把新模板安全合并进已有用户工程的完整向导；父子模板同步不等于该能力 |
-| P1 | 新消费项目验收 | 安装 0.11.2，验证首次部署派生模板、Base → 2.5D 备份切换、场景引用和 Play 链路 |
+| P1 | 新消费项目验收 | 安装 0.11.3，验证首次部署派生模板、Base → 2.5D 替换部署、场景引用和 Play 链路 |
 | P1 | Preview 模板生命周期（P-C） | 第二模板已存在；转 stable、deprecated 和消费项目完整演练仍需验收 |
 | P1 | Audio 多分类与池化 | [Audio 升级方案](audio-upgrade-plan.md) 尚未实施 |
 | P1 | Resources 后端真正异步 | 当前 `Resources.Load<T>` 为同步回调包装；Handle 不意味着后台异步或引用计数缓存 |

@@ -17,7 +17,7 @@
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 | com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 | com.ryanindiedev.inputdevicedetector | 1.0.0 | 输入设备检测：自动识别鼠标/键盘/手柄切换并触发事件 | [YouTube](https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ) → 手动移入 |
-| com.ember | 0.11.2 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成；**内置 UniTask（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）** | 框架自带 → embedded |
+| com.ember | 0.11.3 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成；**内置 UniTask（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）** | 框架自带 → embedded |
 | com.neuecc.unirx | 7.1.0 | 响应式编程框架，用于事件流和异步操作 | manifest 声明 OpenUPM 版本，当前 lock 实际解析为 embedded 副本 |
 
 > 以上包均放在 `Packages/` 下作为 embedded package，随 git 提交，无需额外下载。
@@ -54,7 +54,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector 和 Feel
 Feel 的当前安装位置仍为 `Assets/ThirdParty/Feel`，供应商版本 **5.4**。第三方仓库已新增 `com.moremountains.feel 5.4.0` 的本地 UPM 封装，4901 个原始文件及根目录 `.meta` 原样保留，未改变当前工程安装方式。
 该封装面向当前 Unity 6000.5 / URP 17.5.0 基线；尚未完成 Unity 安装、编译、Inspector/运行时和原生插件验收，也未创建或推送 Feel tag。
 
-随框架分发的 [0.11.2 消费端依赖声明](../../Packages/com.ember/Dependencies~/README.md)包含当前 55 项直接依赖加 Feel，共 56 项；第三方内容未变化，7 个私有包复用已发布的 `ember-v0.11.1`，MCP 固定到当前 lock 的 commit。该清单独立于本工程 manifest，不改变这里记录的实际安装来源。
+随框架分发的 [0.11.3 消费端依赖声明](../../Packages/com.ember/Dependencies~/README.md)包含当前 55 项直接依赖加 Feel，共 56 项；第三方内容未变化，7 个私有包复用已发布的 `ember-v0.11.1`，MCP 固定到当前 lock 的 commit。该清单独立于本工程 manifest，不改变这里记录的实际安装来源。
 声明清单不代表升级 `com.ember` 会自动安装或同步这些包，消费端仍须确认后合并清单并配置私有仓库权限；迁移 Feel 时不得同时导入源插件和新包。
 
 ---
