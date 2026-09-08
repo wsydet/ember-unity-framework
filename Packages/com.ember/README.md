@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.11.3**，开发与自动化验证使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.11.4**，开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.3"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.4"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。Feel 目前仅完成本地 UPM 封装，未切换工程或发布；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [manifest 基线](Dependencies~/manifest-0.11.3.json)。0.11.3 未改变第三方包内容，因此继续复用已发布的第三方基线 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能用该文件覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [manifest 基线](Dependencies~/manifest-0.11.4.json)。0.11.4 未改变第三方包内容，因此继续复用已发布的第三方基线 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能用该文件覆盖整份项目 manifest。
 
 ## 能力与文档
 
@@ -46,7 +46,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 已安装旧版时以其菜单为准。模板按“加载 → 修改项目 Assets → 保存 → 显式 Bump”维护。
 
 框架升级使用 `Ember/UPM Manager` 选择已发布版本，由 Package Manager 解析依赖。
-框架包升级不会自动把新模板内容合并进已有用户代码；消费端同模板部署只补缺失文件，跨模板迁移需要另行处理。
+框架包升级不会自动把新模板内容合并进已有用户代码；消费端可选择同模板“补齐缺失”，或在确认覆盖后执行“完整重新部署”。后者会事务替换五个模板管理目录，适合应用 0.11.4 的 GUID 修复，但会覆盖这些目录中的项目修改。
 不要把删除整个 `packages-lock.json` 当作常规升级步骤。
 
 开发仓库的完整资料见 [文档索引](../../docs/README.md)、[包维护](../../docs/dev/upm-migration-plan.md) 和

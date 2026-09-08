@@ -215,6 +215,11 @@ namespace Ember.Core.Editor
 
             if (activeTemplate)
             {
+                GUI.enabled = !_context.OperationsBlocked && !ambiguous;
+                if (GUILayout.Button("完整重新部署", GUILayout.Width(180)))
+                    DeployReplacingActiveTemplate(template, active);
+                GUI.enabled = true;
+
                 GUILayout.Space(2);
                 var scenes = EmberProjectSetup.GetTemplateScenes(template.id);
                 DrawStatusRow(
@@ -250,12 +255,12 @@ namespace Ember.Core.Editor
                     break;
                 case TemplateUpgradeLevel.Patch:
                     EditorGUILayout.LabelField(
-                        $"    可选升级 v{record.version} → v{template.version}（仅补齐，不覆盖）",
+                        $"    可选升级 v{record.version} → v{template.version}（可补齐；已有文件修复需完整重新部署）",
                         PatchStyle);
                     break;
                 case TemplateUpgradeLevel.Minor:
                     EditorGUILayout.HelpBox(
-                        $"结构升级 v{record.version} → v{template.version}；当前只补齐新增文件，不自动合并已有文件。",
+                        $"结构升级 v{record.version} → v{template.version}；可补齐新增文件，或确认后完整重新部署。",
                         MessageType.Warning);
                     break;
                 case TemplateUpgradeLevel.Major:
@@ -286,11 +291,23 @@ namespace Ember.Core.Editor
             TemplateInfo template,
             DeployedTemplateRecord active)
         {
+            bool redeploying = string.Equals(
+                template.id,
+                active.templateId,
+                System.StringComparison.Ordinal);
+            string title = redeploying ? "完整重新部署" : "部署完整模板";
+            string action = redeploying ? "重新部署此模板" : "部署此模板";
+            string description = redeploying
+                ? $"确定完整重新部署 [{template.id}]？\n\n"
+                  + "Game、Resources、Ember/Editor、Settings 和 GameResource 会全部替换，"
+                  + "这些目录中的项目修改将被覆盖。Assets/Art、Assets/ThirdParty 等非模板目录不受影响。"
+                : $"确定部署 [{template.id}] 并替换当前活动模板 [{active.templateId}]？\n\n"
+                  + "此操作只把包内目标模板部署到消费项目，不会保存或修改框架模板。"
+                  + "Assets/Art、Assets/ThirdParty 等非模板目录不受影响。";
             if (!EditorUtility.DisplayDialog(
-                    "部署完整模板",
-                    $"确定部署 [{template.id}] 并替换当前活动模板 [{active.templateId}]？\n\n"
-                    + "此操作只把包内目标模板部署到消费项目，不会保存或修改框架模板。Assets/Art、Assets/ThirdParty 等非模板目录不受影响。",
-                    "部署此模板",
+                    title,
+                    description,
+                    action,
                     "取消"))
             {
                 return;

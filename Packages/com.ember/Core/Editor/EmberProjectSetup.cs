@@ -50,6 +50,10 @@ namespace Ember.Core.Editor
         private const string ChannelPreview = "preview";
         private const string ChannelDeprecated = "deprecated";
 
+        private static readonly Regex AssetGuidPattern = new(
+            @"^guid: ([0-9a-fA-F]{32})\s*$",
+            RegexOptions.Compiled);
+
         /// <summary>模板快照覆盖的业务层目录（相对项目 Assets/）。GameResource = UI 预制体等资源区（与代码目录分离，资源加载友好）。</summary>
         private static readonly string[] TemplateDirNames = { "Game", "Resources", "Ember/Editor", "Settings", "GameResource" };
 
@@ -79,8 +83,8 @@ namespace Ember.Core.Editor
         }
 
         /// <summary>
-        /// 显式部署另一完整模板：事务替换模板管理目录，不把消费项目内容保存回模板包。
-        /// 首次部署和同模板补齐仍应使用 Initialize。
+        /// 显式部署完整模板：事务替换模板管理目录，不把消费项目内容保存回模板包。
+        /// 可用于切换模板，也可在用户确认后完整重新部署当前模板。
         /// </summary>
         public static int DeployReplacingActiveTemplate(string templateId)
         {
@@ -110,9 +114,15 @@ namespace Ember.Core.Editor
             EmberSceneMappingCreator.EnsureAndRescan();
             RecordDeployment(packagePath, templateId);
             AssetDatabase.Refresh();
+            string deploymentDescription = string.Equals(
+                templateId,
+                active.templateId,
+                StringComparison.Ordinal)
+                ? "已完整重新部署"
+                : $"已部署并替换原活动模板 [{active.templateId}]";
             EmberDebug.LogInit(
                 TAG,
-                $"模板 [{templateId}] 已部署并替换原活动模板 [{active.templateId}]，共 {deployed} 个文件。消费项目内容未写回模板包。");
+                $"模板 [{templateId}] {deploymentDescription}，共 {deployed} 个文件。消费项目内容未写回模板包。");
             return deployed;
         }
 
@@ -1353,9 +1363,73 @@ namespace Ember.Core.Editor
             var active = ResolveActiveDeployment(data);
             if (active == null)
                 return "旧部署记录包含多个模板且没有 activeTemplateId；请先在项目中心明确认定当前活动模板。";
-            if (string.Equals(active.templateId, requestedTemplateId, StringComparison.Ordinal))
-                return $"[{requestedTemplateId}] 已是当前活动模板，请使用补齐缺失。";
             return null;
+        }
+
+        /// <summary>
+        /// 在模板写入前检查其资源 GUID 是否已被不会被本次部署替换的项目资源占用。
+        /// Unity 遇到冲突会静默重写新导入的 .meta，但不会同步修复 YAML 中的旧 GUID，
+        /// 因而必须在任何事务写入前阻断。
+        /// </summary>
+        internal static string GetTemplateGuidCollisionBlockReason(
+            string projectRoot,
+            string sourceAssets,
+            bool replacingManagedDirectories)
+        {
+            if (string.IsNullOrWhiteSpace(projectRoot))
+                throw new ArgumentException("项目根目录不能为空。", nameof(projectRoot));
+            if (string.IsNullOrWhiteSpace(sourceAssets))
+                throw new ArgumentException("模板 Assets 路径不能为空。", nameof(sourceAssets));
+
+            string projectAssets = Path.Combine(projectRoot, "Assets");
+            if (!Directory.Exists(projectAssets) || !Directory.Exists(sourceAssets))
+                return null;
+
+            var templateOwners = new Dictionary<string, string>(
+                StringComparer.OrdinalIgnoreCase);
+            foreach (var metaPath in Directory.GetFiles(
+                         sourceAssets,
+                         "*.meta",
+                         SearchOption.AllDirectories))
+            {
+                string guid = ReadAssetGuid(metaPath);
+                if (string.IsNullOrEmpty(guid)) continue;
+                templateOwners[guid] = RelativePath(sourceAssets, metaPath);
+            }
+
+            var collisions = new List<string>();
+            foreach (var metaPath in Directory.GetFiles(
+                         projectAssets,
+                         "*.meta",
+                         SearchOption.AllDirectories))
+            {
+                string projectRelative = RelativePath(projectAssets, metaPath);
+                if (replacingManagedDirectories && IsManagedTemplatePath(projectRelative))
+                    continue;
+
+                string guid = ReadAssetGuid(metaPath);
+                if (string.IsNullOrEmpty(guid)
+                    || !templateOwners.TryGetValue(guid, out var templateRelative))
+                    continue;
+                if (!replacingManagedDirectories
+                    && string.Equals(
+                        projectRelative,
+                        templateRelative,
+                        StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                collisions.Add(
+                    $"GUID {guid}：模板 [{AssetPathWithoutMeta(templateRelative)}] / "
+                    + $"项目 [Assets/{AssetPathWithoutMeta(projectRelative)}]");
+            }
+
+            if (collisions.Count == 0) return null;
+            collisions.Sort(StringComparer.Ordinal);
+            string details = string.Join("；", collisions.Take(8));
+            if (collisions.Count > 8)
+                details += $"；另有 {collisions.Count - 8} 项";
+            return "模板资源 GUID 已被非受管项目资源占用；部署已在写入前中止，"
+                   + "否则 Unity 会静默改写 .meta 并造成引用断链。\n" + details;
         }
 
         private static DeployedTemplatesData ReadDeploymentData()
@@ -1450,6 +1524,8 @@ namespace Ember.Core.Editor
             var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
             if (projectRoot == null) return 0;
 
+            EnsureNoTemplateGuidCollisions(projectRoot, srcRoot, false);
+
             int deployed = 0;
             int refreshed = 0;
 
@@ -1499,6 +1575,8 @@ namespace Ember.Core.Editor
             string sourceAssets,
             TemplateInfo template)
         {
+            EnsureNoTemplateGuidCollisions(projectRoot, sourceAssets, true);
+
             string stageRoot = Path.Combine(
                 projectRoot,
                 "Temp",
@@ -1580,6 +1658,55 @@ namespace Ember.Core.Editor
             if (projectRoot == null) return fullPath;
             var rel = fullPath.Substring(projectRoot.Length + 1).Replace('\\', '/');
             return rel;
+        }
+
+        private static void EnsureNoTemplateGuidCollisions(
+            string projectRoot,
+            string sourceAssets,
+            bool replacingManagedDirectories)
+        {
+            string blockReason = GetTemplateGuidCollisionBlockReason(
+                projectRoot,
+                sourceAssets,
+                replacingManagedDirectories);
+            if (!string.IsNullOrEmpty(blockReason))
+                throw new InvalidOperationException(blockReason);
+        }
+
+        private static string ReadAssetGuid(string metaPath)
+        {
+            foreach (var line in File.ReadLines(metaPath))
+            {
+                var match = AssetGuidPattern.Match(line);
+                if (match.Success) return match.Groups[1].Value.ToLowerInvariant();
+            }
+            return null;
+        }
+
+        private static bool IsManagedTemplatePath(string relativePath)
+        {
+            string normalized = relativePath.Replace('\\', '/');
+            return TemplateDirNames.Any(directory => normalized.StartsWith(
+                directory.Replace('\\', '/') + "/",
+                StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static string RelativePath(string root, string path)
+        {
+            return path.Substring(
+                    root.TrimEnd(
+                            Path.DirectorySeparatorChar,
+                            Path.AltDirectorySeparatorChar)
+                        .Length)
+                .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                .Replace('\\', '/');
+        }
+
+        private static string AssetPathWithoutMeta(string relativeMetaPath)
+        {
+            return relativeMetaPath.EndsWith(".meta", StringComparison.OrdinalIgnoreCase)
+                ? relativeMetaPath.Substring(0, relativeMetaPath.Length - ".meta".Length)
+                : relativeMetaPath;
         }
 
         private static void EnsureTemplateDevelopmentAllowed()

@@ -98,6 +98,16 @@ namespace Ember.UI.Tests
         }
 
         [Test]
+        public void ReplacementDeploymentGate_SameActiveTemplateShouldAllowExplicitRedeploy()
+        {
+            var data = CreateData("source3d-2p5d", "source3d-2p5d");
+
+            Assert.IsNull(EmberProjectSetup.GetReplacementDeploymentBlockReason(
+                data,
+                "source3d-2p5d"));
+        }
+
+        [Test]
         public void ReplacementDeploymentGate_FirstDeploymentShouldUseInitialize()
         {
             var reason = EmberProjectSetup.GetReplacementDeploymentBlockReason(
@@ -159,6 +169,152 @@ namespace Ember.UI.Tests
                 Assert.AreEqual(
                     "keep",
                     File.ReadAllText(Path.Combine(projectRoot, "Assets/Art/Keep.txt")));
+            }
+            finally
+            {
+                if (Directory.Exists(root)) Directory.Delete(root, true);
+            }
+        }
+
+        [Test]
+        public void ReplacementDeployment_ExternalGuidCollisionShouldBlockBeforeMutation()
+        {
+            const string collisionGuid = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string root = Path.Combine(
+                Path.GetTempPath(),
+                "EmberTemplateGuidTests-" + Guid.NewGuid().ToString("N"));
+            string projectRoot = Path.Combine(root, "Project");
+            string templateAssets = Path.Combine(root, "Template", "Assets");
+            try
+            {
+                Write(projectRoot, "Assets/Game/Keep.txt", "unchanged");
+                Write(projectRoot, "Assets/Scenes/SampleScene.unity", "scene");
+                Write(
+                    projectRoot,
+                    "Assets/Scenes/SampleScene.unity.meta",
+                    $"fileFormatVersion: 2\nguid: {collisionGuid}\n");
+                Write(templateAssets, "Game/Scenes/GameplayScene.unity", "scene");
+                Write(
+                    templateAssets,
+                    "Game/Scenes/GameplayScene.unity.meta",
+                    $"fileFormatVersion: 2\nguid: {collisionGuid}\n");
+                var template = new TemplateInfo
+                {
+                    id = "source3d-2p5d",
+                    schemaVersion = EmberTemplateInheritanceEngine.CurrentSchemaVersion,
+                    version = "0.2.7",
+                    frameworkVersion = "0.11.4",
+                    contentHash = EmberTemplateInheritanceEngine.ComputeTemplateContentHash(
+                        templateAssets)
+                };
+
+                var exception = Assert.Throws<InvalidOperationException>(() =>
+                    EmberProjectSetup.ReplaceManagedDirectoriesFromTemplate(
+                        projectRoot,
+                        templateAssets,
+                        template));
+
+                StringAssert.Contains("GUID", exception.Message);
+                StringAssert.Contains("Assets/Scenes/SampleScene.unity", exception.Message);
+                Assert.AreEqual(
+                    "unchanged",
+                    File.ReadAllText(Path.Combine(projectRoot, "Assets/Game/Keep.txt")));
+                Assert.IsFalse(File.Exists(Path.Combine(
+                    projectRoot,
+                    "Assets/Game/Scenes/GameplayScene.unity")));
+            }
+            finally
+            {
+                if (Directory.Exists(root)) Directory.Delete(root, true);
+            }
+        }
+
+        [Test]
+        public void ReplacementDeployment_ManagedGuidOwnerShouldBeReplacedNotBlocked()
+        {
+            const string sharedGuid = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+            string root = Path.Combine(
+                Path.GetTempPath(),
+                "EmberTemplateGuidTests-" + Guid.NewGuid().ToString("N"));
+            string projectRoot = Path.Combine(root, "Project");
+            string templateAssets = Path.Combine(root, "Template", "Assets");
+            try
+            {
+                Write(projectRoot, "Assets/Game/Old.asset", "old");
+                Write(
+                    projectRoot,
+                    "Assets/Game/Old.asset.meta",
+                    $"fileFormatVersion: 2\nguid: {sharedGuid}\n");
+                Write(templateAssets, "Game/New.asset", "new");
+                Write(
+                    templateAssets,
+                    "Game/New.asset.meta",
+                    $"fileFormatVersion: 2\nguid: {sharedGuid}\n");
+                var template = new TemplateInfo
+                {
+                    id = "base",
+                    schemaVersion = EmberTemplateInheritanceEngine.CurrentSchemaVersion,
+                    version = "0.5.6",
+                    frameworkVersion = "0.11.4",
+                    contentHash = EmberTemplateInheritanceEngine.ComputeTemplateContentHash(
+                        templateAssets)
+                };
+
+                EmberProjectSetup.ReplaceManagedDirectoriesFromTemplate(
+                    projectRoot,
+                    templateAssets,
+                    template);
+
+                Assert.IsFalse(File.Exists(Path.Combine(projectRoot, "Assets/Game/Old.asset")));
+                Assert.AreEqual(
+                    "new",
+                    File.ReadAllText(Path.Combine(projectRoot, "Assets/Game/New.asset")));
+            }
+            finally
+            {
+                if (Directory.Exists(root)) Directory.Delete(root, true);
+            }
+        }
+
+        [Test]
+        public void AdditiveDeployment_ExternalGuidCollisionShouldBlockButMatchingPathShouldPass()
+        {
+            const string sharedGuid = "cccccccccccccccccccccccccccccccc";
+            string root = Path.Combine(
+                Path.GetTempPath(),
+                "EmberTemplateGuidTests-" + Guid.NewGuid().ToString("N"));
+            string projectRoot = Path.Combine(root, "Project");
+            string templateAssets = Path.Combine(root, "Template", "Assets");
+            try
+            {
+                Write(templateAssets, "Game/Config.asset", "template");
+                Write(
+                    templateAssets,
+                    "Game/Config.asset.meta",
+                    $"fileFormatVersion: 2\nguid: {sharedGuid}\n");
+                Write(projectRoot, "Assets/Game/Config.asset", "existing");
+                Write(
+                    projectRoot,
+                    "Assets/Game/Config.asset.meta",
+                    $"fileFormatVersion: 2\nguid: {sharedGuid}\n");
+
+                Assert.IsNull(EmberProjectSetup.GetTemplateGuidCollisionBlockReason(
+                    projectRoot,
+                    templateAssets,
+                    false));
+
+                Write(projectRoot, "Assets/Art/Conflicting.asset", "external");
+                Write(
+                    projectRoot,
+                    "Assets/Art/Conflicting.asset.meta",
+                    $"fileFormatVersion: 2\nguid: {sharedGuid}\n");
+
+                string reason = EmberProjectSetup.GetTemplateGuidCollisionBlockReason(
+                    projectRoot,
+                    templateAssets,
+                    false);
+
+                StringAssert.Contains("Assets/Art/Conflicting.asset", reason);
             }
             finally
             {

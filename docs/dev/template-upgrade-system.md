@@ -1,14 +1,14 @@
 # 模板开发、父子同步与消费端升级
 
-> 核对日期：2026-09-07；以当前工作区源码为准。
-> 框架 package.json 与父子模板当前为 `0.11.3`。schema v2、父子同步、场景合并与消费端完整模板部署已实现；消费项目安装与运行验收单独记录。
+> 核对日期：2026-09-08；以当前工作区源码为准。
+> 框架 package.json 与父子模板当前为 `0.11.4`。schema v2、父子同步、场景合并、部署前 GUID 冲突预检与消费端完整模板部署已实现；消费项目安装与运行验收单独记录。
 
 ## 1. 两类升级
 
 | 场景 | 当前能力 |
 |---|---|
 | 开发端：父模板 → 派生模板 | 完整物化模板、父基线、O/N/C 三方计划、冲突选择、场景语义合并和事务回滚 |
-| 消费端：新模板 → 已有用户工程 | 已有兼容过滤、部署记录、同模板补缺与所有权标记；P-B 用户区合并向导尚未实现 |
+| 消费端：新模板 → 已有用户工程 | 已有兼容过滤、部署记录、同模板补缺、显式完整重新部署、GUID 预检与所有权标记；P-B 用户区合并向导尚未实现 |
 
 父子同步的双方都是框架模板，不能直接用它覆盖消费项目中的用户文件和用户代码区。
 
@@ -39,8 +39,8 @@ Packages/com.ember/Templates~/<id>/
 已知文本格式在计算单文件 hash 前把 CRLF 归一化为 LF，避免 Git URL 包安装受消费端 `core.autocrlf` 影响；二进制文件仍按原始字节计算。包内 `.gitattributes` 同时要求 `Templates~` 保留原始字节，形成传输与运行时两层保护。
 用途是变更检测，不是安全认证。资产文件与 `.meta`、目录 metadata、GUID 唯一性和 Windows 路径大小写冲突都参与校验。
 
-当前根模板为 `base 0.5.5 / stable`；派生模板 `source3d-2p5d 0.2.6 / preview` 已记录父 `base 0.5.5`，
-二者已声明框架 `0.11.3`。2026-09-07 经授权从匹配 metadata 的备份恢复派生正式 Assets；0.11.2 调整了跨 Git 行尾稳定的 hash 表示，0.11.3 收紧消费端部署边界，两者均没有修改模板 Assets 或内容版本。消费端验证仍需在实际项目执行。
+当前根模板为 `base 0.5.6 / stable`；派生模板 `source3d-2p5d 0.2.7 / preview` 已记录父 `base 0.5.6`，
+二者已声明框架 `0.11.4`。0.11.4 为 GameplayScene 和 2.5D Input Actions 更换 Ember 专用稳定 GUID，并同步封存父快照与模板 hash；消费端验证仍需在实际项目执行。
 
 ## 3. 项目中心与正常开发
 
@@ -91,7 +91,7 @@ Packages/com.ember/Templates~/<id>/
 正在编辑其他模板时不会自动覆盖项目。执行同步前应按面板提示保存当前业务改动。
 
 `EmberDeployedTemplates.json` 记录消费端 `activeTemplateId` 和历史部署 records。
-每个模板都是独立可部署的完整内容，派生模板不是先部署父模板后再叠加的扩展。首次部署应直接选择最终模板；同模板可补缺。部署另一活动模板时，项目中心以文件事务完整替换模板覆盖的五个业务目录；事务中断自动原位回滚，非模板目录不受影响。消费端不会将现有业务内容写入包内模板，模板创建、保存、加载、父同步与 metadata/版本修改 API 也只允许 embedded 框架项目调用。旧记录只有一条可在明确写操作中迁移；
+每个模板都是独立可部署的完整内容，派生模板不是先部署父模板后再叠加的扩展。首次部署应直接选择最终模板；同模板可补缺，也可在覆盖警告后完整重新部署。完整部署当前或另一活动模板时，项目中心以文件事务替换模板覆盖的五个业务目录；事务中断自动原位回滚，非模板目录不受影响。部署写入前会检查模板 GUID 是否已被不会替换的项目资源占用，冲突时零写入中止。消费端不会将现有业务内容写入包内模板，模板创建、保存、加载、父同步与 metadata/版本修改 API 也只允许 embedded 框架项目调用。旧记录只有一条可在明确写操作中迁移；
 多条旧记录没有 active 时要求选择，不在只读扫描中猜测或修改文件。
 
 ## 5. 父子三方分类
@@ -155,7 +155,7 @@ Framework 页面 Lifecycle 块内是框架 override，块外固定六个基础 `
 UIUpdate、Popup 等可选钩子由 Binding 配置；移除含用户代码的可选钩子必须走生成器的保护流程。
 GamePages.cs / GamePages.User.cs 为 partial 注册表，Page 写入注册，Item 不写入。
 
-现有“补齐缺失”只新增文件和刷新受管头标记，不能声称已更新旧框架逻辑。
+“补齐缺失”只新增文件和刷新受管头标记，不能声称已更新旧框架逻辑；“完整重新部署”会覆盖五个受管目录，只能在用户确认并备份业务修改后使用。
 P-B 将需要差异预览、所有权检查、保留用户区、弃用迁移和场景策略。标记缺失/不匹配应留给人工处理，不能插入猜测区块。
 模板版本语义：major 表示破坏性重构，minor 表示结构变化，patch 表示修复；这只是升级提示，不是覆盖安全证明。
 
@@ -170,7 +170,7 @@ P-B 将需要差异预览、所有权检查、保留用户区、弃用迁移和�
 - 编辑：CreateTemplate、SaveEditingCopyAsNewTemplate、LoadTemplate、SaveTemplate、GetEditingTemplate。
 - 版本：BumpTemplateVersion、SetTemplateVersion、DeclareFrameworkVersion、SetTemplateChannel。
 - 同步：ComputeParentSyncPlan、ComputeParentSyncPreviewPlan、GetTemplateSyncStatus、ApplyParentSync。
-- 部署：Initialize、IsTemplateDeployed、GetActiveDeployedTemplate、HasAmbiguousDeploymentState、SetActiveDeployedTemplate。
+- 部署：Initialize、DeployReplacingActiveTemplate、IsTemplateDeployed、GetActiveDeployedTemplate、HasAmbiguousDeploymentState、SetActiveDeployedTemplate。
 
 测试源码在 `Packages/com.ember/Tests/EditMode`：TemplateMetadata、TemplateDeployment、TemplateSyncPlan、TemplateTransaction、
 UnityYamlMerge 与 Integration 等测试类。
@@ -178,4 +178,4 @@ UnityYamlMerge 与 Integration 等测试类。
 2026-09-07 专项验收已由用户确认通过：Unity 编译和相关 EditMode 测试通过；真实 UnityYAMLMerge 验证了不同场景对象的父子修改可同时保留、同一属性不同值会报告冲突、相同修改结果稳定；手工 O/N/C 验证中，父模板 GameBoot 修改与派生模板正交 2.5D 相机修改显示为场景语义自动合并，同一属性冲突安全回退为整场景“保留派生/接受父模板”。事务测试覆盖 stage 重跑、O/N/C 与结果 hash 复核、工具指纹变化、metadata/GUID 保持和失败零写入；同步当前编辑模板后的自动重载也已通过验证。非冲突合并完成后派生封存为 `source3d-2p5d 0.2.5`、父基线 `base 0.5.4`；随后根模板已前进到 `base 0.5.5`，尚未写入派生父指针。
 
 [框架验收清单](framework-test-checklist.md) 包含父子同步、场景语义合并、回滚、UI 和消费端回归。
-Preview 模板已创建，P-C 的 stable/deprecated 演练与新消费工程验收仍需记录；上述专项通过不替代 0.11.3 消费端运行验收。
+Preview 模板已创建，P-C 的 stable/deprecated 演练与新消费工程验收仍需记录；上述专项通过不替代 0.11.4 消费端运行验收。

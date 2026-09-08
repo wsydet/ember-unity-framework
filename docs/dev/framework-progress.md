@@ -8,15 +8,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | `com.ember 0.11.3` | `Packages/com.ember/package.json`；静态检查完成，Unity/消费项目验收待执行 |
-| 发布目标 | `0.11.3` | 强制消费端只部署模板，并保留 0.11.2 的校验误报修复 |
-| 根模板 | `base 0.5.5 / stable` | `Templates~/base/template.json`；当前派生父基线已对齐 |
-| 派生模板 | `source3d-2p5d 0.2.6 / preview` | 父基线 `base 0.5.5`，父子共同声明兼容框架 `0.11.3`；运行兼容验收仍待完成 |
-| 模板开发副本 | `source3d-2p5d 0.2.6` | `Assets/Editor/EmberEditingTemplate.json`；记录 hash 与恢复模板一致，不代表项目磁盘无新修改 |
+| 框架包 | `com.ember 0.11.4` | `Packages/com.ember/package.json`；静态检查完成，Unity/消费项目验收待执行 |
+| 发布目标 | `0.11.4` | 修复默认 URP 资源与 2.5D 模板的 GUID 冲突，增加部署前阻断与当前模板完整重新部署 |
+| 根模板 | `base 0.5.6 / stable` | `Templates~/base/template.json`；当前派生父基线已对齐 |
+| 派生模板 | `source3d-2p5d 0.2.7 / preview` | 父基线 `base 0.5.6`，父子共同声明兼容框架 `0.11.4`；运行兼容验收仍待完成 |
+| 模板开发副本 | `source3d-2p5d 0.2.7` | `Assets/Editor/EmberEditingTemplate.json`；记录 hash 与当前模板一致，不代表项目磁盘无新修改 |
 
-0.11.3 将跨模板操作收口为消费端纯部署，禁止消费包调用模板编辑写 API；同时保留 Git URL 包缓存行尾与部署版本头的校验误报修复。
+0.11.4 为 GameplayScene 和 2.5D Input Actions 分配 Ember 专用稳定 GUID，避免与新建 URP 项目的 SampleScene / InputSystem_Actions 冲突；部署前会扫描不会被替换的项目资源并在冲突时零写入中止。项目中心同时支持当前模板“完整重新部署”，让已受影响的项目显式覆盖受管目录并恢复正确引用。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.11.3 发布说明](release-0.11.3.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.11.4 发布说明](release-0.11.4.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -46,7 +46,7 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
 | P1 | 消费端模板升级向导（P-B） | 已有所有权标记，尚无把新模板安全合并进已有用户工程的完整向导；父子模板同步不等于该能力 |
-| P1 | 新消费项目验收 | 安装 0.11.3，验证首次部署派生模板、Base → 2.5D 替换部署、场景引用和 Play 链路 |
+| P1 | 新消费项目验收 | 安装 0.11.4，验证首次部署派生模板、Base → 2.5D 替换部署、2.5D 同模板完整重新部署、GUID 冲突阻断、场景引用和 Play 链路 |
 | P1 | Preview 模板生命周期（P-C） | 第二模板已存在；转 stable、deprecated 和消费项目完整演练仍需验收 |
 | P1 | Audio 多分类与池化 | [Audio 升级方案](audio-upgrade-plan.md) 尚未实施 |
 | P1 | Resources 后端真正异步 | 当前 `Resources.Load<T>` 为同步回调包装；Handle 不意味着后台异步或引用计数缓存 |

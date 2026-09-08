@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e16123f1b62d4822a26028a02f27ae08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Module.PlayerControlSceneBinding
-  _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _inputActions: {fileID: -944628639613478452, guid: f278706a84524e3884f033ddb0ca691d, type: 3}
   _settings: {fileID: 11400000, guid: f42745bcfcf14565bbbe0dc61616178d, type: 2}
   _lookAt: {fileID: 1429661077}
   _gameplayCamera: {fileID: 341041339}

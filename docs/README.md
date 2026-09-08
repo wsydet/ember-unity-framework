@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.3**；版本与模板静态一致性已检查，Unity 编译、模板部署与运行验收继续在实际项目中完成。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.4**；模板 GUID、版本与静态一致性已检查，Unity 编译、模板重新部署与运行验收继续在实际项目中完成。
 
 ## 使用框架
 
@@ -13,7 +13,7 @@
 | [启动时序](dev/ember-boot-sequence.md) | Manager/Module、场景和启动过渡 |
 | [日志](dev/ember-debug.md) | 标签、SO 配置和文件日志 |
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
-| [0.11.3 发布说明](dev/release-0.11.3.md) | 消费端部署边界、校验修复、依赖基线与验收边界 |
+| [0.11.4 发布说明](dev/release-0.11.4.md) | 模板 GUID 冲突修复、完整重新部署、依赖基线与验收边界 |
 
 ## 模块与业务接入
 
