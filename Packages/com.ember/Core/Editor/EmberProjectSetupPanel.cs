@@ -109,7 +109,7 @@ namespace Ember.Core.Editor
 
             GUILayout.Space(8);
             EditorGUILayout.HelpBox(
-                "首次部署会把完整模板复制到 Assets/，并保留随行 .meta。当前活动模板可补齐缺失文件；切换到其他模板需要迁移，v0.11.0 不会直接覆盖现有业务层。",
+                "首次部署会把完整模板复制到 Assets/，并保留随行 .meta。当前活动模板可补齐缺失文件；切换到其他模板需要迁移，当前版本不会直接覆盖现有业务层。",
                 MessageType.Info);
         }
 

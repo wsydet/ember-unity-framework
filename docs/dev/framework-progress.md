@@ -8,16 +8,16 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | `com.ember 0.11.0`（声明） | `Packages/com.ember/package.json`；本轮未创建或推送 tag |
-| 发布目标 | `0.11.0`，准备中 | 包/模板/依赖声明已准备；尚需发布私有包、消费端接入与整体发布验收 |
+| 框架包 | `com.ember 0.11.1`（声明） | `Packages/com.ember/package.json`；本轮未创建或推送 tag |
+| 发布目标 | `0.11.1`，准备中 | 包/模板/依赖声明已准备；尚需发布私有包、消费端接入与整体发布验收 |
 | 根模板 | `base 0.5.5 / stable` | `Templates~/base/template.json`；当前派生父基线已对齐 |
-| 派生模板 | `source3d-2p5d 0.2.6 / preview` | 父基线 `base 0.5.5`，父子共同声明兼容框架 `0.11.0`；内容 hash 未改，运行兼容验收仍待完成 |
+| 派生模板 | `source3d-2p5d 0.2.6 / preview` | 父基线 `base 0.5.5`，父子共同声明兼容框架 `0.11.1`；内容 hash 未改，运行兼容验收仍待完成 |
 | 模板开发副本 | `source3d-2p5d 0.2.6` | `Assets/Editor/EmberEditingTemplate.json`；记录 hash 与恢复模板一致，不代表项目磁盘无新修改 |
 
-当前工作区包含尚未提交的模板继承、SceneUI、PlayerControl、UI 开发中心等变更，正在准备发布 0.11.0。
-包版本已从 0.10.0 声明为 0.11.0；下文新增能力仍属于发布准备范围，不代表已经发布。
+模板继承、SceneUI、PlayerControl、UI 开发中心等功能变更已形成本地提交，正在准备发布 0.11.1。
+包版本已从 0.11.0 声明调整为 0.11.1；下文新增能力仍属于发布准备范围，不代表已经发布。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包统一固定到待发布的 `ember-v0.11.0`。消费端仍需手动合并配置，详见 [发布命令](release-0.11.0.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包统一固定到待发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [发布命令](release-0.11.1.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力

@@ -848,7 +848,7 @@ namespace Ember.Core.Editor
                 && !string.Equals(data.activeTemplateId, templateId, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(
-                    $"当前活动模板已是 [{data.activeTemplateId}]；v0.11.0 不支持直接切换模板。");
+                    $"当前活动模板已是 [{data.activeTemplateId}]；当前版本不支持直接切换模板。");
             }
             if (data.records.Find(record =>
                     string.Equals(record.templateId, templateId, StringComparison.Ordinal)) == null)
@@ -1224,7 +1224,7 @@ namespace Ember.Core.Editor
                     requestedTemplateId,
                     StringComparison.Ordinal)
                     ? null
-                    : $"当前活动模板是 [{explicitActive.templateId}]；切换到 [{requestedTemplateId}] 需要迁移，v0.11.0 禁止直接覆盖部署。";
+                    : $"当前活动模板是 [{explicitActive.templateId}]；切换到 [{requestedTemplateId}] 需要迁移，当前版本禁止直接覆盖部署。";
             }
 
             if (data.records.Count == 0) return null;

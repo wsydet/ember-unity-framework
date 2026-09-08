@@ -1,6 +1,6 @@
 # 文档维护记录（2026-09-07）
 
-当前框架正在准备 **0.11.0** 发布。本次按当前工作区源码维护文档；包版本仍为 0.10.0，未执行改版本、模板保存、提交、tag 或发布。
+当前框架正在准备 **0.11.1** 发布。本次按当前工作区源码维护文档；包版本已声明为 0.11.1，尚未创建或推送 0.11.1 tag。
 
 ## 场景同步收口补记
 
@@ -56,9 +56,9 @@
 | `docs/dev/ember-ui-gap-analysis.md` | 删除 | 旧缺口表已失真；当前 UI 参考与框架进度承接 |
 | [docs/dev/ember-vs-burner-ui-comparison.md](../../docs/dev/ember-vs-burner-ui-comparison.md) | 更新 | 旧覆盖率和缺失列表改为当前设计取舍 |
 | [docs/dev/eui-reference.md](../../docs/dev/eui-reference.md) | 更新 | 更新 Page/Logic/Binding/Item、控件 API 与生命周期 |
-| [docs/dev/framework-progress.md](../../docs/dev/framework-progress.md) | 更新 | 重写当前状态和待办，明确 0.11.0 发布准备 |
+| [docs/dev/framework-progress.md](../../docs/dev/framework-progress.md) | 更新 | 重写当前状态和待办，明确 0.11.1 发布准备 |
 | [docs/dev/guide-module-design.md](../../docs/dev/guide-module-design.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
-| [docs/dev/independent-updater-package-plan.md](../../docs/dev/independent-updater-package-plan.md) | 更新 | 保留独立升级器预案，区分 0.11.0 发布目标与现有包内实现 |
+| [docs/dev/independent-updater-package-plan.md](../../docs/dev/independent-updater-package-plan.md) | 更新 | 保留独立升级器预案，区分 0.11.1 发布目标与现有包内实现 |
 | [docs/dev/mcp-troubleshooting.md](../../docs/dev/mcp-troubleshooting.md) | 更新 | 移除失效协议/端口推断，按当前项目 MCP 规则排查 |
 | [docs/dev/odin-panel-inventory.md](../../docs/dev/odin-panel-inventory.md) | 更新 | 重新扫描框架和业务 Odin 引用 |
 | [docs/dev/odin-usage-notes.md](../../docs/dev/odin-usage-notes.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
@@ -74,7 +74,7 @@
 | [docs/dev/uiextension-learning-path.md](../../docs/dev/uiextension-learning-path.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
 | `docs/dev/uiextension-migration-plan.md` | 删除 | 迁移完成；源码路线、测试记录与未完成事项已分流 |
 | [docs/dev/uiextension-test-plan.md](../../docs/dev/uiextension-test-plan.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
-| [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md) | 更新 | 已完成迁移计划改为安装、交付与 0.11.0 发布维护指南 |
+| [docs/dev/upm-migration-plan.md](../../docs/dev/upm-migration-plan.md) | 更新 | 已完成迁移计划改为安装、交付与 0.11.1 发布维护指南 |
 | `docs/dev/v0.11.0-template-branch-handoff.md` | 删除 | 阶段交接已合并到模板体系、进度与发布验收清单 |
 | `docs/dev/v0.8.0-framework-test-plan.md` | 删除 | 历史完成计划；当前回归清单承接，历史结果保留在 CHANGELOG |
 | [docs/README.md](../../docs/README.md) | 更新 | 补全分层索引和维护入口 |
@@ -104,7 +104,7 @@
 
 ## 新增入口
 
-- [框架测试清单](framework-test-checklist.md)：0.11.0 发布准备的当前验收项。
+- [框架测试清单](framework-test-checklist.md)：0.11.1 发布准备的当前验收项。
 - [文档维护 Skill](../../.agents/skills/ember-doc-maintenance/SKILL.md)：下次调用 `$ember-doc-maintenance`。
 - [检查脚本](../../.agents/skills/ember-doc-maintenance/scripts/audit_docs.py)：只读枚举文档与检查 Markdown 本地链接，`--strict` 在存在失效目标时返回非零。
 
@@ -156,4 +156,4 @@
 - 已搜索删除文件引用、旧路径和无效 API；`git diff --check` 通过。安装后的 Skill 文件与已校验草稿逐一按内容比对一致。
 - 原文档维护轮次未运行 Unity 编译、EditMode/PlayMode 或消费项目验收；其后模板场景同步专项已按本页补记由用户确认通过。PlayMode、消费项目与整体发布验收仍未因此完成；未验证外部链接可用性。只读脚本不验证标题锚点与 API 语义，不代表完整发布验证。
 
-0.11.0 发布时应同步 package.json、CHANGELOG 与模板兼容声明，并完成 [发布验收](framework-test-checklist.md)；文档维护不代替该步骤。
+0.11.1 发布时应同步 package.json、CHANGELOG 与模板兼容声明，并完成 [发布验收](framework-test-checklist.md)；文档维护不代替该步骤。

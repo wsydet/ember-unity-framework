@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "frameworkVersion": "0.11.0",
-  "frameworkTag": "v0.11.0",
+  "frameworkVersion": "0.11.1",
+  "frameworkTag": "v0.11.1",
   "status": "declaration-only",
   "unityBaseline": "6000.5.4f1",
-  "manifest": "manifest-0.11.0.json",
+  "manifest": "manifest-0.11.1.json",
   "coverage": "All 55 direct entries from the development project manifest plus Feel; transitive packages are resolved by UPM.",
   "automaticDependencySync": false,
   "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
-  "thirdPartyTag": "ember-v0.11.0",
+  "thirdPartyTag": "ember-v0.11.1",
   "privateRepositoryAccessRequired": true,
   "thirdPartyPackages": [
     {
@@ -62,13 +62,13 @@
     {
       "id": "base",
       "version": "0.5.5",
-      "frameworkVersion": "0.11.0",
+      "frameworkVersion": "0.11.1",
       "contentHash": "89f9cf6d5de00747eaf5dbf3f812a9d4"
     },
     {
       "id": "source3d-2p5d",
       "version": "0.2.6",
-      "frameworkVersion": "0.11.0",
+      "frameworkVersion": "0.11.1",
       "parentId": "base",
       "parentVersion": "0.5.5",
       "parentContentHash": "89f9cf6d5de00747eaf5dbf3f812a9d4",
