@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前仓库使用 Unity `6000.5.4f1`，包与父子模板已声明 **0.11.1**，但版本声明不代表已发布或验收通过。下方安装示例仅在 `v0.11.1` 真正推送后可用：
+当前发布版本为 **0.11.2**，开发与自动化验证使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.1"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.2"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。Feel 目前仅完成本地 UPM 封装，未切换工程或发布；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [manifest 基线](Dependencies~/manifest-0.11.1.json)。先发布第三方 `ember-v0.11.1`，再发布框架 `v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能用该文件覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [manifest 基线](Dependencies~/manifest-0.11.2.json)。0.11.2 未改变第三方包内容，因此继续复用已发布的第三方基线 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能用该文件覆盖整份项目 manifest。
 
 ## 能力与文档
 

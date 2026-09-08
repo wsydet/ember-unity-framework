@@ -80,6 +80,37 @@ namespace Ember.Core.Editor
         #endregion
     }
 
+    /// <summary>完整模板切换结果；BackupPath 指向切换前业务层的本地恢复副本。</summary>
+    public sealed class TemplateSwitchResult
+    {
+        #region 内部参数
+
+        public string PreviousTemplateId { get; }
+        public string TemplateId { get; }
+        public string BackupPath { get; }
+        public int DeployedFiles { get; }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        internal TemplateSwitchResult(
+            string previousTemplateId,
+            string templateId,
+            string backupPath,
+            int deployedFiles)
+        {
+            PreviousTemplateId = previousTemplateId;
+            TemplateId = templateId;
+            BackupPath = backupPath;
+            DeployedFiles = deployedFiles;
+        }
+
+        #endregion
+    }
+
     /// <summary>部署记录文件反序列化结构。</summary>
     [Serializable]
     internal class DeployedTemplatesData
@@ -88,6 +119,20 @@ namespace Ember.Core.Editor
 
         public string activeTemplateId;
         public List<DeployedTemplateRecord> records = new();
+
+        #endregion
+    }
+
+    /// <summary>写入模板切换备份目录的说明文件。</summary>
+    [Serializable]
+    internal sealed class TemplateSwitchBackupInfo
+    {
+        #region 编辑器面板参数
+
+        public string createdAt;
+        public string fromTemplateId;
+        public string toTemplateId;
+        public string[] managedDirectories;
 
         #endregion
     }

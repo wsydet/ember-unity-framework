@@ -18,6 +18,24 @@ namespace Ember.Core.Editor
 
         internal const int CurrentSchemaVersion = 2;
 
+        /// <summary>
+        /// Git URL 包安装可能在缺少仓库根 .gitattributes 的包缓存中把文本文件
+        /// 从 LF 检出为 CRLF。模板 hash 需要跨这种传输保持稳定，但二进制文件仍按
+        /// 原始字节参与校验。
+        /// </summary>
+        private static readonly HashSet<string> LineEndingNormalizedExtensions = new(
+            new[]
+            {
+                ".anim", ".asmdef", ".asmref", ".asset", ".bak", ".cginc", ".compute",
+                ".controller", ".cs", ".hlsl", ".inputactions", ".json", ".lighting",
+                ".mat", ".md", ".meta", ".mixer", ".overrideController", ".playable",
+                ".prefab", ".preset", ".renderTexture", ".scenetemplate", ".shader",
+                ".shadergraph", ".shadersubgraph", ".signal", ".spriteatlas",
+                ".spriteatlasv2", ".terrainlayer", ".tss", ".txt", ".unity", ".uss",
+                ".uxml", ".yaml", ".yml"
+            },
+            StringComparer.OrdinalIgnoreCase);
+
         #endregion
 
         // --------------------------------------------------------
@@ -31,6 +49,44 @@ namespace Ember.Core.Editor
         internal static string ComputeTemplateContentHash(string assetsPath)
         {
             return CaptureDirectory(assetsPath).ContentHash;
+        }
+
+        /// <summary>计算模板文件内容 hash；已知文本格式先把 CRLF 归一化为 LF。</summary>
+        internal static string ComputeTemplateFileContentHash(string path)
+        {
+            return ComputeTemplateFileContentHash(path, File.ReadAllBytes(path));
+        }
+
+        /// <summary>计算内存中的模板文件内容 hash；用于只读预览和部署后比较。</summary>
+        internal static string ComputeTemplateFileContentHash(string path, byte[] bytes)
+        {
+            if (bytes == null)
+                throw new ArgumentNullException(nameof(bytes));
+            if (!LineEndingNormalizedExtensions.Contains(Path.GetExtension(path)))
+                return CryptographyUtils.GetMD5(bytes);
+
+            int crlfCount = 0;
+            for (int i = 0; i + 1 < bytes.Length; i++)
+            {
+                if (bytes[i] == '\r' && bytes[i + 1] == '\n')
+                    crlfCount++;
+            }
+            if (crlfCount == 0)
+                return CryptographyUtils.GetMD5(bytes);
+
+            var normalized = new byte[bytes.Length - crlfCount];
+            int write = 0;
+            for (int read = 0; read < bytes.Length; read++)
+            {
+                if (bytes[read] == '\r'
+                    && read + 1 < bytes.Length
+                    && bytes[read + 1] == '\n')
+                {
+                    continue;
+                }
+                normalized[write++] = bytes[read];
+            }
+            return CryptographyUtils.GetMD5(normalized);
         }
 
         /// <summary>构建 schema v1 → v2 的只读迁移计划，不修改传入对象或磁盘。</summary>
@@ -900,7 +956,7 @@ namespace Ember.Core.Editor
                     ReadMetaProperties(file, out guid, out isFolderMetadata);
                 var fingerprint = new TemplateFileFingerprint(
                     relativePath,
-                    CryptographyUtils.GetMD5File(file),
+                    ComputeTemplateFileContentHash(relativePath, File.ReadAllBytes(file)),
                     guid,
                     isFolderMetadata);
                 files.Add(relativePath, fingerprint);

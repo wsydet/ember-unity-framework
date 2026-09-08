@@ -72,6 +72,34 @@ namespace Ember.UI.Tests
         }
 
         [Test]
+        public void ContentHash_TextLineEndingStyleShouldNotMatter()
+        {
+            var first = CreateAssetsDirectory("LfText");
+            var second = CreateAssetsDirectory("CrLfText");
+
+            WriteFile(first, "Game/State.cs", "first\nsecond\n");
+            WriteFile(second, "Game/State.cs", "first\r\nsecond\r\n");
+
+            Assert.AreEqual(
+                EmberTemplateInheritanceEngine.ComputeTemplateContentHash(first),
+                EmberTemplateInheritanceEngine.ComputeTemplateContentHash(second));
+        }
+
+        [Test]
+        public void ContentHash_BinaryLineEndingBytesShouldRemainSignificant()
+        {
+            var first = CreateAssetsDirectory("LfBinary");
+            var second = CreateAssetsDirectory("CrLfBinary");
+
+            File.WriteAllBytes(Path.Combine(first, "Image.png"), new byte[] { 1, 13, 10, 2 });
+            File.WriteAllBytes(Path.Combine(second, "Image.png"), new byte[] { 1, 10, 2 });
+
+            Assert.AreNotEqual(
+                EmberTemplateInheritanceEngine.ComputeTemplateContentHash(first),
+                EmberTemplateInheritanceEngine.ComputeTemplateContentHash(second));
+        }
+
+        [Test]
         public void ContentHash_EmptyDirectoryShouldBeDeterministic()
         {
             var first = CreateAssetsDirectory("EmptyFirst");

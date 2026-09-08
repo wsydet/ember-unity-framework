@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.11.2",
+  "frameworkTag": "v0.11.2",
+  "status": "framework-release-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.11.2.json",
+  "coverage": "All 55 direct entries from the development project manifest plus Feel; transitive packages are resolved by UPM.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.5.5",
+      "frameworkVersion": "0.11.2",
+      "contentHash": "2d5a48dc8e56f2baac6e49d75f3f22c6"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.2.6",
+      "frameworkVersion": "0.11.2",
+      "parentId": "base",
+      "parentVersion": "0.5.5",
+      "parentContentHash": "2d5a48dc8e56f2baac6e49d75f3f22c6",
+      "contentHash": "762ea4f1015bfe718b1d86a39746b48c"
+    }
+  ],
+  "validation": "Template hashes, parent snapshot, version files and static diffs checked. Unity compilation, EditMode tests and consumer integration remain pending because Unity MCP was unavailable."
+}

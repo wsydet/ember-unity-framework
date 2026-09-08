@@ -1,0 +1,3 @@
+# Templates carry sealed content hashes. Preserve their exact bytes when this
+# package is installed from a Git URL, even if the consumer has core.autocrlf=true.
+Templates~/** -text

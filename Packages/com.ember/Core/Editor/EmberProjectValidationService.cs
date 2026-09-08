@@ -60,7 +60,8 @@ namespace Ember.Core.Editor
                         "部署记录未保存历史文件 hash；下方差异仅与当前包模板比较，不证明部署时的原始内容。",
                         suggestion: "业务修改可保留；版本记录和生成头标记不能证明内容已经升级。");
                 RunCheck(report, "内容差异", () => CompareFiles(Application.dataPath,
-                    EmberProjectSetup.GetTemplateAssetsPath(template.id), report, editing != null));
+                    EmberProjectSetup.GetTemplateAssetsPath(template.id), report, editing != null,
+                    editing == null ? template : null));
             }
 
             RunCheck(report, "资源元数据", () => ValidateProjectMetadata(Application.dataPath, report));
@@ -113,7 +114,8 @@ namespace Ember.Core.Editor
         }
 
         internal static void CompareFiles(string projectAssets, string templateAssets,
-            EmberProjectValidationReport report, bool normalizeForSave)
+            EmberProjectValidationReport report, bool normalizeForSave,
+            TemplateInfo deployedTemplate = null)
         {
             if (!Directory.Exists(templateAssets))
                 throw new DirectoryNotFoundException("模板 Assets 目录缺失。");
@@ -127,14 +129,29 @@ namespace Ember.Core.Editor
                 bool hasExpected = expected.TryGetValue(path, out var expectedPath);
                 bool normalizeScene = normalizeForSave && (path == "Game/Scenes/FrameworkScene.unity" || path == "Game/Scenes/MainScene.unity");
                 string actualHash = hasActual
-                    ? normalizeScene ? CryptographyUtils.GetMD5(EmberProjectSetup.ReadProjectTemplateBytes(actualPath, path))
-                        : CryptographyUtils.GetMD5File(actualPath)
+                    ? normalizeScene
+                        ? EmberTemplateInheritanceEngine.ComputeTemplateFileContentHash(
+                            path,
+                            EmberProjectSetup.ReadProjectTemplateBytes(actualPath, path))
+                        : EmberTemplateInheritanceEngine.ComputeTemplateFileContentHash(path, File.ReadAllBytes(actualPath))
                     : null;
                 if (hasActual)
                     fingerprint.Append(path.Length).Append(':').Append(path).Append(':')
                         .Append(actualHash).Append('\n');
+                string expectedHash = !hasExpected
+                    ? null
+                    : deployedTemplate == null
+                        ? EmberTemplateInheritanceEngine.ComputeTemplateFileContentHash(
+                            path,
+                            File.ReadAllBytes(expectedPath))
+                        : EmberTemplateInheritanceEngine.ComputeTemplateFileContentHash(
+                            path,
+                            EmberProjectSetup.ReadDeploymentTemplateBytes(
+                                expectedPath,
+                                deployedTemplate.version,
+                                deployedTemplate.frameworkVersion));
                 string difference = !hasActual ? "项目中缺少" : !hasExpected ? "项目新增" :
-                    actualHash == CryptographyUtils.GetMD5File(expectedPath) ? null : "项目已修改";
+                    actualHash == expectedHash ? null : "项目已修改";
                 if (difference == null) continue;
                 string ownership = GetOwnership(path, hasActual ? actualPath : expectedPath);
                 report.Add(EmberValidationSeverity.Difference, "内容差异", difference + " · " + ownership,

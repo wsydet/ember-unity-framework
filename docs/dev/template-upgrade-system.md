@@ -1,7 +1,7 @@
 # 模板开发、父子同步与消费端升级
 
 > 核对日期：2026-09-07；以当前工作区源码为准。
-> 框架 package.json 与父子模板已声明 `0.11.1`，仍在发布准备阶段，未因声明版本而创建或推送 tag。schema v2、父子同步与场景合并已实现，并已完成 Unity 编译、相关 EditMode、真实 UnityYAMLMerge 与手工 O/N/C 专项验收；当前新增功能与消费端发布验收仍待完成。
+> 框架 package.json 与父子模板当前为 `0.11.2`。schema v2、父子同步、场景合并与消费端完整模板备份切换已实现；消费项目安装与运行验收单独记录。
 
 ## 1. 两类升级
 
@@ -36,10 +36,11 @@ Packages/com.ember/Templates~/<id>/
 | `versionedContentHash` | 当前 version 已封存的内容 hash |
 
 树 hash 包含 `.meta`，相对路径统一 `/` 并按 ordinal 排序，复用 Basic 的 MD5 工具汇总路径和文件内容。
+已知文本格式在计算单文件 hash 前把 CRLF 归一化为 LF，避免 Git URL 包安装受消费端 `core.autocrlf` 影响；二进制文件仍按原始字节计算。包内 `.gitattributes` 同时要求 `Templates~` 保留原始字节，形成传输与运行时两层保护。
 用途是变更检测，不是安全认证。资产文件与 `.meta`、目录 metadata、GUID 唯一性和 Windows 路径大小写冲突都参与校验。
 
 当前根模板为 `base 0.5.5 / stable`；派生模板 `source3d-2p5d 0.2.6 / preview` 已记录父 `base 0.5.5`，
-二者已声明框架 `0.11.1`。2026-09-07 经授权从匹配 metadata 的备份恢复派生正式 Assets，未改写模板版本、hash 或编辑记录；本地恢复副本保留在 `Library/EmberTemplateRecovery`。随后按用户要求，在复核根模板封存、父内容与 ParentSnapshot 相等、派生与编辑记录一致后，同步父子 frameworkVersion 到 0.11.1，仅修改声明。恢复不是重跑失败的保存，声明不是运行验收；正常保存和 0.11.1 消费端验证仍待完成。
+二者已声明框架 `0.11.2`。2026-09-07 经授权从匹配 metadata 的备份恢复派生正式 Assets；0.11.2 仅调整跨 Git 行尾稳定的 hash 表示和框架兼容声明，没有修改模板 Assets 或内容版本。消费端验证仍需在实际项目执行。
 
 ## 3. 项目中心与正常开发
 
@@ -90,7 +91,7 @@ Packages/com.ember/Templates~/<id>/
 正在编辑其他模板时不会自动覆盖项目。执行同步前应按面板提示保存当前业务改动。
 
 `EmberDeployedTemplates.json` 记录消费端 `activeTemplateId` 和历史部署 records。
-首次部署可选兼容模板，同模板可补缺，不同活动模板禁止直接部署。旧记录只有一条可在明确写操作中迁移；
+每个模板都是独立可部署的完整内容，派生模板不是先部署父模板后再叠加的扩展。首次部署应直接选择最终模板；同模板可补缺。切换活动模板时，项目中心先将当前业务层和部署/Build Settings 记录备份到 `Library/EmberTemplateSwitchBackups`，再以文件事务完整替换模板覆盖的五个业务目录；失败自动回滚事务，非模板目录不受影响。旧记录只有一条可在明确写操作中迁移；
 多条旧记录没有 active 时要求选择，不在只读扫描中猜测或修改文件。
 
 ## 5. 父子三方分类
@@ -177,4 +178,4 @@ UnityYamlMerge 与 Integration 等测试类。
 2026-09-07 专项验收已由用户确认通过：Unity 编译和相关 EditMode 测试通过；真实 UnityYAMLMerge 验证了不同场景对象的父子修改可同时保留、同一属性不同值会报告冲突、相同修改结果稳定；手工 O/N/C 验证中，父模板 GameBoot 修改与派生模板正交 2.5D 相机修改显示为场景语义自动合并，同一属性冲突安全回退为整场景“保留派生/接受父模板”。事务测试覆盖 stage 重跑、O/N/C 与结果 hash 复核、工具指纹变化、metadata/GUID 保持和失败零写入；同步当前编辑模板后的自动重载也已通过验证。非冲突合并完成后派生封存为 `source3d-2p5d 0.2.5`、父基线 `base 0.5.4`；随后根模板已前进到 `base 0.5.5`，尚未写入派生父指针。
 
 [框架验收清单](framework-test-checklist.md) 包含父子同步、场景语义合并、回滚、UI 和消费端回归。
-Preview 模板已创建，P-C 的 stable/deprecated 演练与新消费工程验收仍需记录；上述专项通过不等于 0.11.1 整体发布验收完成。
+Preview 模板已创建，P-C 的 stable/deprecated 演练与新消费工程验收仍需记录；上述专项通过不替代 0.11.2 消费端运行验收。

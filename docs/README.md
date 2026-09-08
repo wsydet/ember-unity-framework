@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前正在准备发布 **0.11.1**，包、模板和消费依赖声明已准备；模板场景语义同步已完成专项验收，新增功能和消费端发布验收尚未完成，尚未创建或推送 0.11.1 tag。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.2**；版本与模板静态一致性已检查，Unity 编译、模板切换与运行验收继续在实际项目中完成。
 
 ## 使用框架
 
@@ -13,7 +13,7 @@
 | [启动时序](dev/ember-boot-sequence.md) | Manager/Module、场景和启动过渡 |
 | [日志](dev/ember-debug.md) | 标签、SO 配置和文件日志 |
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
-| [0.11.1 声明与上传命令](dev/release-0.11.1.md) | 56 项依赖清单、两个仓库的上传顺序与 PowerShell 命令 |
+| [0.11.2 发布说明](dev/release-0.11.2.md) | 模板切换、校验修复、依赖基线与验收边界 |
 
 ## 模块与业务接入
 

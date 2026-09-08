@@ -1,7 +1,7 @@
 # UPM 包交付与维护
 
-> 更新：2026-09-07。早期转包迁移已完成；本文维护当前交付流程。
-> 当前 package.json 已声明 **0.11.1**，仍处于发布准备阶段；本轮未创建 tag 或推送，不能把版本声明当作已发布。
+> 更新：2026-09-08。早期转包迁移已完成；本文维护当前交付流程。
+> 当前发布版本为 **0.11.2**；消费项目安装与运行验收单独记录。
 
 ## 目录与依赖
 
@@ -28,7 +28,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 在 0.11.1 tag 真正发布后，添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.1`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.11.1.json`，不覆盖消费项目其他依赖。
+3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.2`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.11.2.json`，不覆盖消费项目其他依赖。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。
@@ -39,7 +39,7 @@ Git URL 依赖在消费项目 manifest 中直接声明；框架 package.json 只
 ## 模板开发
 
 完整规则见 [模板体系](template-upgrade-system.md)。当前有 `base 0.5.5 / stable` 与
-`source3d-2p5d 0.2.6 / preview`，共同声明框架 `0.11.1`；派生父基线已为 `base 0.5.5`。本轮按用户要求处理发布声明，先确认根模板已封存、父内容与 ParentSnapshot 完全一致、派生内容与编辑记录一致，再同步两份 frameworkVersion；未修改模板 Assets、内容版本、hash 或编辑记录，不据此推断运行验收通过。
+`source3d-2p5d 0.2.6 / preview`，共同声明框架 `0.11.2`；派生父基线已为 `base 0.5.5`。0.11.2 未修改模板 Assets 或内容版本；内容 hash 改为对已知文本统一 CRLF/LF，避免 Git URL 安装后的误报。
 
 2026-09-07 经用户授权恢复保存失败后缺失的派生 `Assets`：备份 275 个文件的 contentHash 为 `81729c743e325157f56ff10dc28ac88d`，与 metadata/编辑记录一致；父快照 hash 为 `89f9cf6d5de00747eaf5dbf3f812a9d4`，与 parentContentHash 一致。恢复未改动版本、hash、父快照或项目业务副本；额外恢复副本在本地 `Library/EmberTemplateRecovery`，不进入发布。该恢复不代表原目录访问拒绝的原因已经消除，仍需验证下一次正常保存。
 
@@ -54,15 +54,13 @@ Git URL 依赖在消费项目 manifest 中直接声明；框架 package.json 只
 通过 SessionState 跨脚本域重载续接。成功以安装结果版本核对为准，不把估算进度当成下载百分比。
 
 Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不需要删除整个 lock 文件。
-当前升级器只更新 `com.ember`，Odin/DOTween 只检测存在与提供安装按钮。已准备随包 `Dependencies~/release-0.11.1.json` 和完整 manifest 基线，第三方统一使用 `ember-v0.11.1`；消费端差异确认、权限检查和自动安装流程仍未实现。消费端需手动合并声明，不能复制开发机 `file:` 路径或覆盖其整份 manifest。
+当前升级器只更新 `com.ember`，Odin/DOTween 只检测存在与提供安装按钮。随包 `Dependencies~/release-0.11.2.json` 和完整 manifest 基线继续使用第三方 `ember-v0.11.1`；消费端差异确认、权限检查和自动安装流程仍未实现。消费端需手动合并声明，不能复制开发机 `file:` 路径或覆盖其整份 manifest。
 更新包与更新已部署模板是两个动作：同模板“补齐缺失”保留已有文件；P-B 的用户区合并向导仍待实现。
-不同活动模板之间直接部署被阻止，不能依靠“跳过同名文件”完成切换。
+不同活动模板不能走普通“补齐缺失”；项目中心提供显式“备份并切换”，先保存当前模板业务层，再事务替换目标完整模板。
 
 ## 发布维护
 
-包和模板兼容版本已声明为 **0.11.1**；内容 hash 与父基线已复核，Unity 和消费端验收仍待完成。日常模板变更继续使用项目中心的根模板声明与父同步流程；本轮是用户授权的无内容变化声明处理，没有复制快照或修改 hash。
-
-两个仓库的实际分支/远程、上传顺序和带失败停止检查的 PowerShell 命令见 [0.11.1 声明与上传命令](release-0.11.1.md)。第三方先推送 `ember-v0.11.1`，框架后推送 `v0.11.1`，不覆盖旧 tag、不一次性推送所有历史 tag。
+包和模板兼容版本为 **0.11.2**；内容 hash 与父基线已复核。第三方内容未变化，复用 `ember-v0.11.1`；框架发布信息与消费验收边界见 [0.11.2 发布说明](release-0.11.2.md)。
 
 发布前完成对应代码和消费项目验收，再按 `package.json → CHANGELOG → commit → tag → push --tags` 对齐版本。
 本次文档维护不执行 commit、tag、推送、依赖安装或模板保存。
@@ -76,7 +74,7 @@ Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不�
 ## 回归重点
 
 - 新消费项目首次部署 stable / preview 模板，页面、场景、输入、材质和字体引用有效。
-- 已有项目补齐同模板时保留业务代码；部署其他模板给出迁移提示。
+- 已有项目补齐同模板时保留业务代码；切换其他模板时先生成业务层备份，再完整替换。
 - consumer 不显示模板开发页；embedded 的编辑副本不会串写另一模板。
 - Package Manager 错误、域重载与版本不匹配可以被诊断，重复点击不会并发发起升级。
 - 编译与测试遵循 [CLAUDE.md](../../CLAUDE.md) 的 MCP 规范，记录实际结果和未验证项。
