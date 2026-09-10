@@ -1,0 +1,26 @@
+{
+    "name": "Ember.Table.Integration.Tests",
+    "rootNamespace": "Ember.Table.Integration.Tests",
+    "references": [
+        "Ember.Table.Runtime",
+        "Ember.Table.Integration",
+        "Ember.Basic.Runtime",
+        "Ember.Core.Runtime",
+        "Ember.Resource.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

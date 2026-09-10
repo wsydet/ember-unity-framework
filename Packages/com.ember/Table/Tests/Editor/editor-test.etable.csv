@@ -1,0 +1,3 @@
+optional,rank,amount,enabled,id
+,High,123.45,TRUE,alpha
+42,Low,-0.5,false,Beta

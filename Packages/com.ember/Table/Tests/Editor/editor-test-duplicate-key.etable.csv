@@ -1,0 +1,3 @@
+optional,rank,amount,enabled,id
+,High,1,true,same
+2,Low,2,false,same
