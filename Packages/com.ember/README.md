@@ -1,17 +1,17 @@
 # Ember Framework（com.ember）
 
-Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源、UI、场景、音频、相机、输入、状态机、编辑器工具和业务模板。
+Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源、强类型配置表、UI、场景、音频、相机、输入、状态机、编辑器工具和业务模板。
 
 框架必要的 `IEmberManager` 在 Init 阶段统一启动；可选的 `IEmberModule` 按特性的 Enabled 与 Phase 装配。
 详见 [Manager 与 Module](Core/Runtime/Manager/README.md)。
 
 ## 安装
 
-当前发布版本为 **0.11.5**，开发基线使用 Unity `6000.5.4f1`：
+当前已发布版本为 **0.12.0**；开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.11.5"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.12.0"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。Feel 目前仅完成本地 UPM 封装，未切换工程或发布；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [manifest 基线](Dependencies~/manifest-0.11.5.json)。0.11.5 未改变第三方包内容，因此继续复用已发布的第三方基线 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能用该文件覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.12.0 manifest 基线](Dependencies~/manifest-0.12.0.json)。Table V1 不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 
@@ -35,6 +35,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 | Audio / Camera / Input | [音频](Documentation~/audio/README.md)、[相机](Documentation~/camera/README.md)、[输入](Documentation~/input/README.md) |
 | UI / UIExtension | [UI](Documentation~/ui/README.md) |
 | SceneUI | [接入](Documentation~/scene-ui/README.md)、[API](SceneUI/README.md) |
+| Table | [强类型配置表](Table/Documentation~/table/README.md) |
 | Core.Editor / FrameworkTools / UPMManager | [编辑器](Documentation~/core/README-Editor.md) |
 | Basic / Extensions / 内置 UniTask | 集合、池、数据结构、存储、日志、扩展和异步基础 |
 | UnityFarm 改动回流 | [项目 / 框架 / 模板升级判定规则](Documentation~/maintenance/unityfarm-change-routing.md) |

@@ -4,6 +4,7 @@
   <Project Path="MoreMountains.Tools.Editor.csproj" />
   <Project Path="Ember.Basic.Runtime.csproj" />
   <Project Path="UniRx.csproj" />
+  <Project Path="Ember.Table.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Ember.SceneUI.Integration.Runtime.csproj" />
   <Project Path="UniRx.Examples.csproj" />
@@ -11,6 +12,7 @@
   <Project Path="UniTask.csproj" />
   <Project Path="DOTween.Modules.csproj" />
   <Project Path="Ember.UIExtension.Runtime.csproj" />
+  <Project Path="Ember.Table.Runtime.csproj" />
   <Project Path="UniTask.Addressables.csproj" />
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
@@ -31,8 +33,10 @@
   <Project Path="Ember.Camera.Runtime.csproj" />
   <Project Path="UniTask.Editor.csproj" />
   <Project Path="Ember.Core.Editor.csproj" />
+  <Project Path="Ember.Table.Integration.Tests.csproj" />
   <Project Path="Ember.Editor.csproj" />
   <Project Path="Ember.UPMManager.Editor.Tests.csproj" />
+  <Project Path="Ember.Table.Editor.Tests.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Game.Module.Editor.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
@@ -40,9 +44,11 @@
   <Project Path="Ember.SceneUI.Editor.csproj" />
   <Project Path="Ember.Scene.Runtime.csproj" />
   <Project Path="Ember.SceneUI.PlayModeTests.csproj" />
+  <Project Path="Ember.Table.Tests.csproj" />
   <Project Path="InputDeviceDetector.csproj" />
   <Project Path="FlyingWorm.ConsolePro.Editor.csproj" />
   <Project Path="Ember.SceneUI.Tests.csproj" />
+  <Project Path="Ember.Table.Integration.csproj" />
   <Project Path="UniTask.DOTween.csproj" />
   <Project Path="FlyingWorm.ConsolePro.Runtime.csproj" />
 </Solution>

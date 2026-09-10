@@ -1,7 +1,7 @@
 # Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
-> 最后核对：2026-09-07；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
+> 最后核对：2026-09-09；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
 
 ---
 
@@ -24,6 +24,7 @@
 - [Manager 与 Module 组合模型](#manager-与-module-组合模型)
 - [启动器](#启动器)
 - [资源管理](#资源管理)
+- [配置表](#配置表)
 - [UI 管理](#ui-管理)
 - [SceneUI](#sceneui)
 - [场景管理](#场景管理)
@@ -1393,6 +1394,38 @@ handle.Dispose();
 | GetFilePath | `string GetFilePath()` — 磁盘路径（非所有 Provider 支持） |
 | Cancel | `void Cancel()` |
 | Dispose | `void Dispose()` |
+
+---
+
+## 配置表
+
+> Runtime：`Packages/com.ember/Table/Runtime/`，命名空间 `Ember.Table`；生命周期接线：`Ember.Table.Integration`；导表工具：`Ember.Table.Editor`。
+
+`EmberTableEngine` 是可独立构造和释放的纯实例引擎。项目声明带 `[EmberTable]`、`[EmberTableKey]`、`[EmberTableConstructor]` 的不可变 Row；Editor 从 `.etable.csv/.etable.tsv` 严格校验并生成每表 Binding、项目 Catalog 和 ETBL V1 `.bytes`。Runtime 不读取 CSV、不反射 Row，也不创建静态全局表缓存。
+
+```csharp
+var engine = new EmberTableEngine();
+EmberTableLoadResult result = engine.Load(catalog, bytesByTableId);
+if (result.Succeeded
+    && engine.Database.TryGetTable<ItemRow>("items", out var table)
+    && table.TryGet("starter_item", out var row))
+{
+    // 使用不可变 row
+}
+engine.Dispose();
+```
+
+| 类型 | 说明 |
+|---|---|
+| `EmberTable<T>` | Ordinal 字符串主键、源行顺序枚举、只读查询；非主键查询只通过显式生成的 `EmberTableIndex` |
+| `EmberTableDatabase` | 一次批量加载的实例快照；`TryGetTable<TRow>(tableId, out table)` |
+| `EmberTableEngine` | Required 全成功才交换 staging 快照；Optional 失败从新快照省略 |
+| `IEmberTableBinding` / `IEmberTableCatalog` | 生成代码与 Runtime 间的无反射加载契约；Catalog 不负责资源加载 |
+| `EmberTableBinaryReader/Writer` | 小端、严格 UTF-8、bool/nullable 标记与长度边界 |
+| `EmberTableModuleBase<TModule>` | Global 业务 Module 的 Resource → Engine 通用生命周期基类 |
+| `EmberTableDefinition` | Editor 中声明源、Row、Required、输出路径、长度上限和二级索引 |
+
+Editor 菜单 `Ember/配置表中心` 提供全量校验、写入预览、事务烘焙/生成、项目 Table 接线、定位源文件和 Runtime Binding 产物浏览。完整格式与接入约束见 [Table 文档](../../Packages/com.ember/Table/Documentation~/table/README.md)。
 
 ---
 
