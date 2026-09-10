@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "frameworkVersion": "0.12.0",
   "frameworkTag": "v0.12.0",
-  "status": "release-candidate-consumer-validation-pending",
+  "status": "released-unityfarm-validation-pending",
   "unityBaseline": "6000.5.4f1",
   "manifest": "manifest-0.12.0.json",
   "coverage": "All 56 direct development-project entries; Table V1 adds no third-party dependency.",
@@ -49,5 +49,5 @@
       "status": "content-synced-versioned-and-framework-inherited"
     }
   ],
-  "validation": "User reported zero Unity compile errors and all three Table EditMode suites passing. Base and source3d-2p5d were saved/versioned through Project Center; both now declare framework 0.12.0, and live hashes, versioned hashes and ParentSnapshot were independently checked. Fresh consumer installation and runtime table query remain pending. No tag has been created or pushed."
+  "validation": "User reported zero Unity compile errors and all three Table EditMode suites passing. Base and source3d-2p5d were saved/versioned through Project Center; both declare framework 0.12.0, and live hashes, versioned hashes and ParentSnapshot were independently checked. The immutable v0.12.0 tag is the release target. UnityFarm UPM upgrade, template migration and runtime table query are post-release consumer validation and remain to be recorded."
 }

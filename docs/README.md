@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.11.5**；工作区正在准备带强类型配置表系统的 **0.12.0**。用户已确认 Unity 编译/测试，模板内容已封存、声明兼容 0.12.0 并通过 Hash 校验；新消费项目 Gate 尚未完成。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为带强类型配置表系统的 **0.12.0**。用户已确认 Unity 编译/测试，模板内容已封存、声明兼容 0.12.0 并通过 Hash 校验；UnityFarm 的 UPM 更新与实际读表作为发布后消费验收记录。
 
 ## 使用框架
 
@@ -15,7 +15,7 @@
 | [UnityFarm 改动分流](../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md) | 判定项目、框架、模板或两者升级，并规定消费端接收方式 |
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
 | [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
-| [0.12.0 候选发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
+| [0.12.0 发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
 
 ## 模块与业务接入
 
