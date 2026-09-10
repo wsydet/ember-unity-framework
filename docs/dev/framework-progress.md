@@ -8,15 +8,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | 已发布 `0.12.0` | `Packages/com.ember/package.json` 与不可变 `v0.12.0` tag 对齐 |
-| 发布状态 | `v0.12.0` | 强类型配置表 Runtime/Integration/Editor、模板内容、兼容声明与静态校验已收口；UnityFarm 消费验收待记录 |
+| 框架包 | 已发布 `0.12.1` | 配置表可视化、查询代码提示和单表二进制导出补丁 |
+| 发布状态 | `v0.12.1` | 发布差异与静态校验已收口；Unity 编译、新增 Editor 测试和 UnityFarm 消费验收待记录 |
 | 根模板 | `base 0.6.0 / stable` | 内容与封存 Hash 均为 `506baffc678f37d420308607c5f70e42`；已通过项目中心声明框架 `0.12.0` |
 | 派生模板 | `source3d-2p5d 0.3.1 / preview` | 父基线 `base 0.6.0`，ParentSnapshot 与父 Hash 一致；已通过父同步继承框架 `0.12.0` |
 | 模板开发副本 | `source3d-2p5d 0.3.1` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.0 正式发布声明；Table 不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.12.0 发布说明](release-0.12.0.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.1 正式发布声明；本补丁不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.12.1 发布说明](release-0.12.1.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -34,7 +34,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第�
 | Audio | BGM / SFX、Mixer、临时音效 AudioSource | [Audio](../../Packages/com.ember/Documentation~/audio/README.md) |
 | Camera / Input | 相机注册与霸占栈、InputAction 读取、重绑定契约 | [Camera](../../Packages/com.ember/Documentation~/camera/README.md)、[Input](../../Packages/com.ember/Documentation~/input/README.md) |
 | SceneUI | 普通 Engine、业务 Module 基类、EUI Item 宿主、投影/显隐/池化/诊断 | [设计](scene-ui-module-design.md)、[使用](../../Packages/com.ember/Documentation~/scene-ui/README.md) |
-| Table | 不可变 Row、CSV/TSV 校验、ETBL V1、强类型 Binding/Catalog、事务 Engine 与 ModuleBase | [使用](../../Packages/com.ember/Table/Documentation~/table/README.md)、[方案](table-system-development-plan.md) |
+| Table | 不可变 Row、CSV/TSV 校验、ETBL V1、强类型 Binding/Catalog、事务 Engine 与 ModuleBase；Editor 声明/数据浏览、代码提示和单表导出 | [使用](../../Packages/com.ember/Table/Documentation~/table/README.md)、[方案](table-system-development-plan.md) |
 | 2.5D 业务示例 | Gameplay 输入门控、WASD、世界锚点拖动、缩放、连续区域边界 | [PlayerControl](player-control-module.md) |
 | 模板与编辑器 | 项目中心、schema v2、父子三方同步、场景语义合并、事务回滚、消费端完整模板部署 | [模板体系](template-upgrade-system.md)、[包维护](upm-migration-plan.md) |
 
@@ -46,9 +46,9 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
-| P0 | UnityFarm 0.12.0 消费验收 | 通过 UPM Manager 更新至不可变 `v0.12.0`，迁移所需 Table 模板文件，验证编译、Module 启动、烘焙与实际读表 |
+| P0 | UnityFarm 0.12.1 消费验收 | 通过 UPM Manager 更新至不可变 `v0.12.1`，验证配置表窗口、单表/全量导出、Module 启动与实际读表 |
 | P1 | 消费端模板升级向导（P-B） | 已有所有权标记，尚无把新模板安全合并进已有用户工程的完整向导；父子模板同步不等于该能力 |
-| P1 | 新消费项目完整回归 | 使用 `v0.12.0` 验证首次部署、模板替换部署、GUID 冲突阻断、场景引用和 Play 链路；不阻塞 UnityFarm 按既定 UPM 流程升级 |
+| P1 | 新消费项目完整回归 | 使用 `v0.12.1` 验证首次部署、模板替换部署、GUID 冲突阻断、场景引用和 Play 链路；不阻塞 UnityFarm 按既定 UPM 流程升级 |
 | P1 | Preview 模板生命周期（P-C） | 第二模板已存在；转 stable、deprecated 和消费项目完整演练仍需验收 |
 | P1 | Audio 多分类与池化 | [Audio 升级方案](audio-upgrade-plan.md) 尚未实施 |
 | P1 | Resources 后端真正异步 | 当前 `Resources.Load<T>` 为同步回调包装；Handle 不意味着后台异步或引用计数缓存 |

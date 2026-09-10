@@ -1425,7 +1425,7 @@ engine.Dispose();
 | `EmberTableModuleBase<TModule>` | Global 业务 Module 的 Resource → Engine 通用生命周期基类 |
 | `EmberTableDefinition` | Editor 中声明源、Row、Required、输出路径、长度上限和二级索引 |
 
-Editor 菜单 `Ember/配置表中心` 提供全量校验、写入预览、事务烘焙/生成、项目 Table 接线、定位源文件和 Runtime Binding 产物浏览。完整格式与接入约束见 [Table 文档](../../Packages/com.ember/Table/Documentation~/table/README.md)。
+Editor 菜单 `Ember/配置表中心` 列出全部 Definition，并展示 Row Schema、严格类型化数据与可复制查询代码；同时提供当前表/全部表导出、全量写入预览、项目 Table 接线、诊断定位和 Runtime Binding 产物浏览。当前表导出只替换已有 Manifest 持有的单表二进制；Schema、路径或表清单变化后必须先执行全量导出。完整格式与接入约束见 [Table 文档](../../Packages/com.ember/Table/Documentation~/table/README.md)。
 
 ---
 
