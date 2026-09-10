@@ -58,22 +58,12 @@ namespace Ember.Table.Editor
             if (!TryPrepare(contents, out List<EmberTableArtifactContent> prepared, out HashSet<string> oldOwned, out diagnostic))
                 return false;
 
-            var result = new List<EmberTableArtifactAction>();
             var current = new HashSet<string>(prepared.Select(item => item.AssetPath), StringComparer.Ordinal);
-            for (int i = 0; i < prepared.Count; i++)
-            {
-                EmberTableArtifactContent content = prepared[i];
-                string fullPath = ToFullPath(content.AssetPath);
-                EmberTableArtifactActionKind kind = !File.Exists(fullPath)
-                    ? EmberTableArtifactActionKind.Create
-                    : BytesEqual(File.ReadAllBytes(fullPath), content.Bytes)
-                        ? EmberTableArtifactActionKind.Unchanged
-                        : EmberTableArtifactActionKind.Replace;
-                result.Add(new EmberTableArtifactAction(kind, content.AssetPath));
-            }
-            foreach (string orphan in oldOwned.Where(item => !current.Contains(item)).OrderBy(item => item, StringComparer.Ordinal))
-                result.Add(new EmberTableArtifactAction(EmberTableArtifactActionKind.DeleteOwnedOrphan, orphan));
-            actions = result.AsReadOnly();
+            List<string> orphans = oldOwned
+                .Where(item => !current.Contains(item))
+                .OrderBy(item => item, StringComparer.Ordinal)
+                .ToList();
+            actions = BuildActions(prepared, orphans);
             return true;
         }
 
@@ -88,6 +78,51 @@ namespace Ember.Table.Editor
                 || !TryPrepare(contents, out List<EmberTableArtifactContent> prepared, out HashSet<string> oldOwned, out diagnostic))
                 return false;
 
+            var newPaths = new HashSet<string>(prepared.Select(item => item.AssetPath), StringComparer.Ordinal);
+            var orphans = oldOwned.Where(item => !newPaths.Contains(item)).OrderBy(item => item, StringComparer.Ordinal).ToList();
+            return TryCommitPrepared(prepared, orphans, out diagnostic);
+        }
+
+        /// <summary>确认一组生成物仍由 Manifest 持有且内容与期望完全一致。</summary>
+        public static bool TryCheckOwnedArtifactsCurrent(
+            IList<EmberTableArtifactContent> contents,
+            out EmberTableDiagnostic diagnostic)
+        {
+            if (!TryPrepareOwnedUpdates(contents, out List<EmberTableArtifactContent> prepared, out diagnostic))
+                return false;
+            for (int i = 0; i < prepared.Count; i++)
+            {
+                EmberTableArtifactContent content = prepared[i];
+                string fullPath = ToFullPath(content.AssetPath);
+                if (!File.Exists(fullPath) || !BytesEqual(File.ReadAllBytes(fullPath), content.Bytes))
+                    return Fail(
+                        EmberTableErrorCode.ArtifactStale,
+                        "Generated Binding or Catalog changed. Export all tables before exporting one table.",
+                        content.AssetPath,
+                        out diagnostic);
+            }
+            return true;
+        }
+
+        /// <summary>只替换 Manifest 已持有的指定产物；不改 Manifest，也不清理其他产物。</summary>
+        public static bool TryCommitOwned(
+            IList<EmberTableArtifactContent> contents,
+            out IReadOnlyList<EmberTableArtifactAction> actions,
+            out EmberTableDiagnostic diagnostic)
+        {
+            actions = Array.Empty<EmberTableArtifactAction>();
+            if (!TryPrepareOwnedUpdates(contents, out List<EmberTableArtifactContent> prepared, out diagnostic))
+                return false;
+            actions = BuildActions(prepared, Array.Empty<string>());
+            return TryCommitPrepared(prepared, Array.Empty<string>(), out diagnostic);
+        }
+
+        private static bool TryCommitPrepared(
+            IList<EmberTableArtifactContent> prepared,
+            IList<string> orphans,
+            out EmberTableDiagnostic diagnostic)
+        {
+            diagnostic = null;
             string projectRoot = ProjectRoot;
             string transactionId = Guid.NewGuid().ToString("N");
             string stageRoot = Path.Combine(projectRoot, "Library", "EmberTableStage", transactionId);
@@ -96,19 +131,24 @@ namespace Ember.Table.Editor
             var originals = new HashSet<string>(StringComparer.Ordinal);
             var created = new List<string>();
             var temporaryPaths = new List<string>();
-            var newPaths = new HashSet<string>(prepared.Select(item => item.AssetPath), StringComparer.Ordinal);
-            var orphans = oldOwned.Where(item => !newPaths.Contains(item)).OrderBy(item => item, StringComparer.Ordinal).ToList();
 
             try
             {
-                for (int i = 0; i < prepared.Count; i++)
+                var changed = prepared.Where(content =>
                 {
-                    string staged = Path.Combine(contentRoot, prepared[i].AssetPath.Replace('/', Path.DirectorySeparatorChar));
+                    string fullPath = ToFullPath(content.AssetPath);
+                    return !File.Exists(fullPath) || !BytesEqual(File.ReadAllBytes(fullPath), content.Bytes);
+                }).ToList();
+                if (changed.Count == 0 && orphans.Count == 0) return true;
+
+                for (int i = 0; i < changed.Count; i++)
+                {
+                    string staged = Path.Combine(contentRoot, changed[i].AssetPath.Replace('/', Path.DirectorySeparatorChar));
                     Directory.CreateDirectory(Path.GetDirectoryName(staged));
-                    File.WriteAllBytes(staged, prepared[i].Bytes);
+                    File.WriteAllBytes(staged, changed[i].Bytes);
                 }
 
-                var originalCandidates = prepared.Select(item => item.AssetPath).Concat(orphans).ToList();
+                var originalCandidates = changed.Select(item => item.AssetPath).Concat(orphans).ToList();
                 for (int i = 0; i < orphans.Count; i++)
                     if (File.Exists(ToFullPath(orphans[i]) + ".meta")) originalCandidates.Add(orphans[i] + ".meta");
                 foreach (string assetPath in originalCandidates.Distinct(StringComparer.Ordinal))
@@ -124,7 +164,7 @@ namespace Ember.Table.Editor
                 AssetDatabase.DisallowAutoRefresh();
                 try
                 {
-                    foreach (EmberTableArtifactContent content in prepared
+                    foreach (EmberTableArtifactContent content in changed
                                  .OrderBy(item => item.AssetPath == MANIFEST_PATH ? 1 : 0)
                                  .ThenBy(item => item.AssetPath, StringComparer.Ordinal))
                     {
@@ -196,6 +236,72 @@ namespace Ember.Table.Editor
                     // 正式产物已提交或回滚；暂存区清理失败不覆盖事务结果。
                 }
             }
+        }
+
+        private static IReadOnlyList<EmberTableArtifactAction> BuildActions(
+            IList<EmberTableArtifactContent> contents,
+            IList<string> orphans)
+        {
+            var result = new List<EmberTableArtifactAction>();
+            for (int i = 0; i < contents.Count; i++)
+            {
+                EmberTableArtifactContent content = contents[i];
+                string fullPath = ToFullPath(content.AssetPath);
+                EmberTableArtifactActionKind kind = !File.Exists(fullPath)
+                    ? EmberTableArtifactActionKind.Create
+                    : BytesEqual(File.ReadAllBytes(fullPath), content.Bytes)
+                        ? EmberTableArtifactActionKind.Unchanged
+                        : EmberTableArtifactActionKind.Replace;
+                result.Add(new EmberTableArtifactAction(kind, content.AssetPath));
+            }
+            for (int i = 0; i < orphans.Count; i++)
+                result.Add(new EmberTableArtifactAction(EmberTableArtifactActionKind.DeleteOwnedOrphan, orphans[i]));
+            return result.AsReadOnly();
+        }
+
+        private static bool TryPrepareOwnedUpdates(
+            IList<EmberTableArtifactContent> contents,
+            out List<EmberTableArtifactContent> prepared,
+            out EmberTableDiagnostic diagnostic)
+        {
+            prepared = new List<EmberTableArtifactContent>();
+            diagnostic = null;
+            HashSet<string> oldOwned = LoadOwnedPaths();
+            if (!oldOwned.Contains(MANIFEST_PATH))
+                return Fail(
+                    EmberTableErrorCode.ArtifactStale,
+                    "The generated artifact Manifest is missing or invalid. Export all tables first.",
+                    MANIFEST_PATH,
+                    out diagnostic);
+
+            var exactPaths = new HashSet<string>(StringComparer.Ordinal);
+            var platformPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            contents ??= Array.Empty<EmberTableArtifactContent>();
+            for (int i = 0; i < contents.Count; i++)
+            {
+                EmberTableArtifactContent content = contents[i];
+                string path = content?.AssetPath;
+                if (!IsAllowedPath(path) || string.Equals(path, MANIFEST_PATH, StringComparison.Ordinal))
+                    return Fail(
+                        EmberTableErrorCode.OutputPathInvalid,
+                        $"Partial output path is invalid or reserved: {path}",
+                        path,
+                        out diagnostic);
+                if (!exactPaths.Add(path) || !platformPaths.Add(path))
+                    return Fail(
+                        EmberTableErrorCode.OutputPathConflict,
+                        $"Partial output path conflicts with another artifact: {path}",
+                        path,
+                        out diagnostic);
+                if (!oldOwned.Contains(path))
+                    return Fail(
+                        EmberTableErrorCode.ArtifactStale,
+                        "The selected artifact is not owned by the current Manifest. Export all tables first.",
+                        path,
+                        out diagnostic);
+                prepared.Add(content);
+            }
+            return true;
         }
 
         private static bool TryPrepare(

@@ -145,6 +145,52 @@ namespace Ember.Table.Editor.Tests
         }
 
         [Test]
+        public void ExplorerBuildsTypedPreviewLiteralsAndCopyableUsageCode()
+        {
+            EmberTableDefinition definition = CreateDefinition();
+            try
+            {
+                var serialized = new SerializedObject(definition);
+                SerializedProperty indexes = serialized.FindProperty("_secondaryIndexes");
+                indexes.arraySize = 1;
+                SerializedProperty index = indexes.GetArrayElementAtIndex(0);
+                index.FindPropertyRelative("_name").stringValue = "by_rank";
+                index.FindPropertyRelative("_columnName").stringValue = "rank";
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+
+                EmberTableValidationResult validation = EmberTableValidationService.Validate(definition);
+                Assert.That(validation.Succeeded, Is.True, Join(validation.Diagnostics));
+                EmberTableValidatedData table = validation.Tables.Single();
+                string code = EmberTableExplorerPresenter.BuildUsageCode(
+                    definition,
+                    table.Schema,
+                    table.Rows);
+
+                Assert.That(code, Does.Contain(
+                    "TryGetModule<global::Game.Module.GameTableModule>(out var tableModule)"));
+                Assert.That(code, Does.Contain(
+                    "TryGetTable<global::Ember.Table.Editor.Tests.EditorTableTestRow>(\"editor_test\", out var table)"));
+                Assert.That(code, Does.Contain("table.TryGet(\"alpha\", out var row)"));
+                Assert.That(code, Does.Contain("var amountValue = row.@Amount; // amount : decimal"));
+                Assert.That(code, Does.Contain(
+                    "TryGetIndex<global::Ember.Table.Editor.Tests.EditorTableTestRank>(\"by_rank\", out var index0)"));
+                Assert.That(
+                    EmberTableExplorerPresenter.FormatCSharpLiteral("line1\n\"line2\"", typeof(string)),
+                    Is.EqualTo("\"line1\\n\\\"line2\\\"\""));
+                Assert.That(
+                    EmberTableExplorerPresenter.FormatCSharpLiteral("a\0b\u001f", typeof(string)),
+                    Is.EqualTo("\"a\\0b\\u001F\""));
+                Assert.That(
+                    EmberTableExplorerPresenter.FormatCSharpLiteral(123.45m, typeof(decimal)),
+                    Is.EqualTo("123.45m"));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(definition);
+            }
+        }
+
+        [Test]
         public void SourceHashIgnoresBomAndPhysicalLineEndings()
         {
             byte[] bomCrLf = new UTF8Encoding(true).GetPreamble()
@@ -296,6 +342,10 @@ namespace Ember.Table.Editor.Tests
                     EmberTableArtifactContent.Text(secondPath, "old-b"),
                 };
                 Assert.That(EmberTableArtifactBatch.TryCommit(original, out _, out _), Is.True);
+                EmberTableArtifactBatch.CommitFailureForTests = _ => true;
+                Assert.That(EmberTableArtifactBatch.TryCommit(original, out _, out _), Is.True,
+                    "Unchanged artifacts must not be replaced during a full commit.");
+                EmberTableArtifactBatch.CommitFailureForTests = null;
                 File.WriteAllText(FullPath(root, firstPath) + ".meta", "owned meta");
 
                 EmberTableArtifactBatch.CommitFailureForTests = path => path == secondPath;
@@ -320,6 +370,70 @@ namespace Ember.Table.Editor.Tests
                 Assert.That(File.Exists(FullPath(root, firstPath)), Is.False);
                 Assert.That(File.Exists(FullPath(root, firstPath) + ".meta"), Is.False);
                 Assert.That(File.ReadAllText(userFullPath), Is.EqualTo("user"));
+            }
+            finally
+            {
+                EmberTableArtifactBatch.CommitFailureForTests = null;
+                EmberTableArtifactBatch.ProjectRootOverrideForTests = null;
+                if (Directory.Exists(root)) Directory.Delete(root, true);
+            }
+        }
+
+        [Test]
+        public void OwnedPartialCommitOnlyReplacesSelectedArtifactAndPreservesManifest()
+        {
+            string root = Path.Combine(Path.GetTempPath(), "EmberTablePartialArtifactTests", Guid.NewGuid().ToString("N"));
+            const string selectedPath = "Assets/GameResource/Resources/Config/Tables/selected.bytes";
+            const string otherPath = "Assets/GameResource/Resources/Config/Tables/other.bytes";
+            const string unownedPath = "Assets/GameResource/Resources/Config/Tables/unowned.bytes";
+            try
+            {
+                Directory.CreateDirectory(root);
+                EmberTableArtifactBatch.ProjectRootOverrideForTests = root;
+                Assert.That(EmberTableArtifactBatch.TryCommit(
+                    new[]
+                    {
+                        EmberTableArtifactContent.Text(selectedPath, "old-selected"),
+                        EmberTableArtifactContent.Text(otherPath, "old-other"),
+                    },
+                    out _,
+                    out _), Is.True);
+                string manifestBefore = File.ReadAllText(FullPath(root, EmberTableArtifactBatch.MANIFEST_PATH));
+
+                Assert.That(EmberTableArtifactBatch.TryCheckOwnedArtifactsCurrent(
+                    new[] { EmberTableArtifactContent.Text(otherPath, "old-other") },
+                    out _), Is.True);
+                Assert.That(EmberTableArtifactBatch.TryCheckOwnedArtifactsCurrent(
+                    new[] { EmberTableArtifactContent.Text(otherPath, "changed-other") },
+                    out EmberTableDiagnostic stale), Is.False);
+                Assert.That(stale.Code, Is.EqualTo(EmberTableErrorCode.ArtifactStale));
+
+                Assert.That(EmberTableArtifactBatch.TryCommitOwned(
+                    new[] { EmberTableArtifactContent.Text(selectedPath, "new-selected") },
+                    out IReadOnlyList<EmberTableArtifactAction> actions,
+                    out _), Is.True);
+                Assert.That(actions.Count, Is.EqualTo(1));
+                Assert.That(actions[0].Kind, Is.EqualTo(EmberTableArtifactActionKind.Replace));
+                Assert.That(File.ReadAllText(FullPath(root, selectedPath)), Is.EqualTo("new-selected"));
+                Assert.That(File.ReadAllText(FullPath(root, otherPath)), Is.EqualTo("old-other"));
+                Assert.That(
+                    File.ReadAllText(FullPath(root, EmberTableArtifactBatch.MANIFEST_PATH)),
+                    Is.EqualTo(manifestBefore));
+
+                Assert.That(EmberTableArtifactBatch.TryCommitOwned(
+                    new[] { EmberTableArtifactContent.Text(unownedPath, "value") },
+                    out _,
+                    out EmberTableDiagnostic unowned), Is.False);
+                Assert.That(unowned.Code, Is.EqualTo(EmberTableErrorCode.ArtifactStale));
+                Assert.That(File.Exists(FullPath(root, unownedPath)), Is.False);
+
+                EmberTableArtifactBatch.CommitFailureForTests = path => path == selectedPath;
+                Assert.That(EmberTableArtifactBatch.TryCommitOwned(
+                    new[] { EmberTableArtifactContent.Text(selectedPath, "failed-selected") },
+                    out _,
+                    out EmberTableDiagnostic rolledBack), Is.False);
+                Assert.That(rolledBack.Code, Is.EqualTo(EmberTableErrorCode.ArtifactCommitFailed));
+                Assert.That(File.ReadAllText(FullPath(root, selectedPath)), Is.EqualTo("new-selected"));
             }
             finally
             {

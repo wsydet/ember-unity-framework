@@ -70,6 +70,67 @@ namespace Ember.Table.Editor
             return Build(true);
         }
 
+        /// <summary>只重写当前表二进制；Schema、路径或表清单改变时要求先执行全量生成。</summary>
+        public static EmberTablePipelineResult BakeCurrent(EmberTableDefinition definition)
+        {
+            EmberTableValidationResult validation = ValidateAll();
+            var diagnostics = new List<EmberTableDiagnostic>(validation.Diagnostics);
+            if (!definition || !validation.Succeeded)
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+
+            EmberTableValidatedData table = validation.Tables.FirstOrDefault(item =>
+                ReferenceEquals(item.Definition, definition));
+            if (table == null)
+            {
+                diagnostics.Add(new EmberTableDiagnostic(
+                    EmberTableDiagnosticSeverity.Error,
+                    EmberTableErrorCode.InvalidRowType,
+                    "The selected Table Definition is not part of the validated project catalog.",
+                    definition.TableId,
+                    AssetDatabase.GetAssetPath(definition)));
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+            }
+            int outputOwners = validation.Tables.Count(item => string.Equals(
+                item.Definition.RuntimeOutputPath,
+                definition.RuntimeOutputPath,
+                StringComparison.OrdinalIgnoreCase));
+            if (outputOwners != 1)
+            {
+                diagnostics.Add(new EmberTableDiagnostic(
+                    EmberTableDiagnosticSeverity.Error,
+                    EmberTableErrorCode.OutputPathConflict,
+                    "The selected Runtime output path is shared by more than one Table Definition.",
+                    definition.TableId,
+                    definition.RuntimeOutputPath));
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+            }
+
+            IReadOnlyList<EmberTableArtifactContent> generated = EmberTableCodeGenerator.Generate(validation.Tables);
+            if (!EmberTableArtifactBatch.TryCheckOwnedArtifactsCurrent(
+                    generated.ToList(),
+                    out EmberTableDiagnostic currentDiagnostic))
+            {
+                diagnostics.Add(currentDiagnostic);
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+            }
+            if (!EmberTableBaker.TryBake(table, out EmberTableBakeArtifact artifact, out EmberTableDiagnostic bakeDiagnostic))
+            {
+                diagnostics.Add(bakeDiagnostic);
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+            }
+
+            var contents = new[]
+            {
+                new EmberTableArtifactContent(definition.RuntimeOutputPath, artifact.FileBytes),
+            };
+            bool success = EmberTableArtifactBatch.TryCommitOwned(
+                contents,
+                out IReadOnlyList<EmberTableArtifactAction> actions,
+                out EmberTableDiagnostic commitDiagnostic);
+            if (!success && commitDiagnostic != null) diagnostics.Add(commitDiagnostic);
+            return new EmberTablePipelineResult(success, diagnostics, actions);
+        }
+
         public static bool IsArtifactCurrent(
             EmberTableValidatedData table,
             out string reason)
