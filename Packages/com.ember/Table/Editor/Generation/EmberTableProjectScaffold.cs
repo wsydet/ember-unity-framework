@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 using UnityEditor;
 using UnityEngine;
@@ -39,9 +38,9 @@ namespace Ember.Table.Editor
             diagnostics = resultDiagnostics.AsReadOnly();
             summary = null;
 
-            byte[] moduleBytes = Utf8(ModuleSource);
+            byte[] moduleBytes = Utf8(ModuleSource, MODULE_PATH);
             string moduleFullPath = ToFullPath(MODULE_PATH);
-            if (File.Exists(moduleFullPath) && !BytesEqual(File.ReadAllBytes(moduleFullPath), moduleBytes))
+            if (File.Exists(moduleFullPath) && !IsModuleSourceCurrent(File.ReadAllBytes(moduleFullPath)))
             {
                 resultDiagnostics.Add(new EmberTableDiagnostic(
                     EmberTableDiagnosticSeverity.Error,
@@ -75,7 +74,7 @@ namespace Ember.Table.Editor
                     string userFullPath = ToFullPath(USER_PATH);
                     if (!File.Exists(userFullPath))
                     {
-                        WriteNewFile(userFullPath, Utf8(UserSource));
+                        WriteNewFile(userFullPath, Utf8(UserSource, USER_PATH));
                         created.Add(userFullPath);
                     }
 
@@ -130,9 +129,16 @@ namespace Ember.Table.Editor
             }
         }
 
-        private static byte[] Utf8(string value)
+        internal static bool IsModuleSourceCurrent(byte[] current)
         {
-            return new UTF8Encoding(false).GetBytes(value.Replace("\r\n", "\n"));
+            // 兼容旧版尚未导入的无 BOM 脚本；正文仍须逐字节匹配，不能吞掉业务改动。
+            return BytesEqual(current, Utf8(ModuleSource, MODULE_PATH))
+                || BytesEqual(current, Utf8(ModuleSource));
+        }
+
+        private static byte[] Utf8(string value, string assetPath = null)
+        {
+            return EmberTableArtifactContent.Text(assetPath, value.Replace("\r\n", "\n")).Bytes;
         }
 
         private static bool BytesEqual(byte[] left, byte[] right)
@@ -154,7 +160,7 @@ namespace Ember.Table.Editor
             return fullPath;
         }
 
-        private static string ModuleSource => MODULE_MARKER + @"
+        internal static string ModuleSource => MODULE_MARKER + @"
 
 using Ember.Core;
 using Ember.Table;

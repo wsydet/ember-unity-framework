@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Ember.Basic.Editor;
+
 using NUnit.Framework;
 
 using UnityEditor;
@@ -439,6 +441,102 @@ namespace Ember.Table.Editor.Tests
             {
                 EmberTableArtifactBatch.CommitFailureForTests = null;
                 EmberTableArtifactBatch.ProjectRootOverrideForTests = null;
+                if (Directory.Exists(root)) Directory.Delete(root, true);
+            }
+        }
+
+        [TestCase("Generated.g.cs", "// 中文\r\n")]
+        [TestCase("Generated.g.cs", "\uFEFF// 中文\n")]
+        [TestCase("Generated.g.cs", "")]
+        [TestCase("Generated.g.CS", "// source\n")]
+        public void ScriptArtifactsIncludeExactlyOneBom(string path, string source)
+        {
+            byte[] bytes = EmberTableArtifactContent.Text(path, source).Bytes;
+            string body = source.StartsWith("\uFEFF", StringComparison.Ordinal) ? source.Substring(1) : source;
+            byte[] expected = new byte[] { 0xEF, 0xBB, 0xBF }.Concat(Encoding.UTF8.GetBytes(body)).ToArray();
+            Assert.That(bytes, Is.EqualTo(expected));
+        }
+
+        [TestCase("EmberTableArtifacts.manifest.json")]
+        [TestCase("README.md")]
+        public void NonScriptTextArtifactsKeepTheirOriginalUtf8Bytes(string path)
+        {
+            const string source = "中文\r\ncontent\n";
+            Assert.That(EmberTableArtifactContent.Text(path, source).Bytes,
+                Is.EqualTo(new UTF8Encoding(false).GetBytes(source)));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ScaffoldAcceptsBothBomFormsButProtectsUserChanges(bool withBom)
+        {
+            string source = EmberTableProjectScaffold.ModuleSource.Replace("\r\n", "\n");
+            byte[] preamble = withBom ? new UTF8Encoding(true).GetPreamble() : Array.Empty<byte>();
+            Assert.That(EmberTableProjectScaffold.IsModuleSourceCurrent(
+                preamble.Concat(Encoding.UTF8.GetBytes(source)).ToArray()), Is.True);
+            Assert.That(EmberTableProjectScaffold.IsModuleSourceCurrent(
+                preamble.Concat(Encoding.UTF8.GetBytes(source.Replace("Enabled = false", "Enabled = true"))).ToArray()),
+                Is.False, "Enabling the product module is a user change, not an encoding difference.");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void GeneratedArtifactsRemainCurrentAfterScriptEncodingConversion(bool legacyWithoutBom)
+        {
+            string root = Path.Combine(Path.GetTempPath(), "EmberTableEncodingTests", Guid.NewGuid().ToString("N"));
+            EmberTableDefinition definition = CreateDefinition();
+            try
+            {
+                var validation = EmberTableValidationService.Validate(definition);
+                Assert.That(validation.Succeeded, Is.True, Join(validation.Diagnostics));
+                var code = EmberTableCodeGenerator.Generate(validation.Tables).ToList();
+                Assert.That(EmberTableBaker.TryBake(validation.Tables[0], out var baked, out var error),
+                    Is.True, error?.ToString());
+                var binary = new EmberTableArtifactContent(definition.RuntimeOutputPath, baked.FileBytes);
+                var contents = code.Concat(new[] { binary }).ToList();
+                Directory.CreateDirectory(root);
+                EmberTableArtifactBatch.ProjectRootOverrideForTests = root;
+                Assert.That(EmberTableArtifactBatch.TryCommit(contents, out _, out var diagnostic),
+                    Is.True, diagnostic?.ToString());
+
+                foreach (var script in code)
+                {
+                    string path = FullPath(root, script.AssetPath);
+                    Assert.That(FileEncodingUtility.HasBOM(path), Is.True, script.AssetPath);
+                    if (legacyWithoutBom) File.WriteAllBytes(path, script.Bytes.Skip(3).ToArray());
+                    // 调用正式导入器使用的编码工具；不在项目 Assets 中生成测试脚本或触发域重载。
+                    FileEncodingUtility.ConvertToUTF8BOM(path);
+                    Assert.That(File.ReadAllBytes(path), Is.EqualTo(script.Bytes), script.AssetPath);
+                }
+
+                Assert.That(File.ReadAllBytes(FullPath(root, binary.AssetPath)), Is.EqualTo(baked.FileBytes));
+                string manifestPath = FullPath(root, EmberTableArtifactBatch.MANIFEST_PATH);
+                byte[] manifestBefore = File.ReadAllBytes(manifestPath);
+                Assert.That(FileEncodingUtility.HasBOM(manifestPath), Is.False);
+                Assert.That(EmberTableArtifactBatch.TryCheckOwnedArtifactsCurrent(code, out diagnostic),
+                    Is.True, diagnostic?.ToString());
+                Assert.That(EmberTableArtifactBatch.TryPreview(contents, out var actions, out diagnostic),
+                    Is.True, diagnostic?.ToString());
+                Assert.That(actions.All(item => item.Kind == EmberTableArtifactActionKind.Unchanged), Is.True);
+
+                // 任何意外重写都会触发失败，证明重复全量导出与未改数据的单表提交均无写入。
+                EmberTableArtifactBatch.CommitFailureForTests = _ => true;
+                Assert.That(EmberTableArtifactBatch.TryCommit(contents, out _, out diagnostic),
+                    Is.True, diagnostic?.ToString());
+                Assert.That(EmberTableArtifactBatch.TryCommitOwned(new[] { binary }, out _, out diagnostic),
+                    Is.True, diagnostic?.ToString());
+                Assert.That(File.ReadAllBytes(manifestPath), Is.EqualTo(manifestBefore));
+
+                string changedPath = FullPath(root, code[0].AssetPath);
+                File.WriteAllBytes(changedPath, code[0].Bytes.Concat(Encoding.UTF8.GetBytes("// edited\n")).ToArray());
+                Assert.That(EmberTableArtifactBatch.TryCheckOwnedArtifactsCurrent(code, out diagnostic), Is.False);
+                Assert.That(diagnostic.Code, Is.EqualTo(EmberTableErrorCode.ArtifactStale));
+            }
+            finally
+            {
+                EmberTableArtifactBatch.CommitFailureForTests = null;
+                EmberTableArtifactBatch.ProjectRootOverrideForTests = null;
+                UnityEngine.Object.DestroyImmediate(definition);
                 if (Directory.Exists(root)) Directory.Delete(root, true);
             }
         }

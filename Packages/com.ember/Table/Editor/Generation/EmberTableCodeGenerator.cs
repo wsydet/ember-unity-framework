@@ -18,9 +18,22 @@ namespace Ember.Table.Editor
             Bytes = bytes == null ? Array.Empty<byte>() : (byte[])bytes.Clone();
         }
 
+        /// <summary>C# 文本带 UTF-8 BOM，与脚本导入器保持一致；其他文本保持无 BOM。</summary>
         public static EmberTableArtifactContent Text(string assetPath, string content)
         {
-            return new EmberTableArtifactContent(assetPath, new UTF8Encoding(false).GetBytes(content));
+            var encoding = new UTF8Encoding(false);
+            byte[] bytes = encoding.GetBytes(content);
+            if (assetPath != null && assetPath.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)
+                && !content.StartsWith("\uFEFF", StringComparison.Ordinal))
+            {
+                // GetBytes 不包含编码前导；显式加一次 BOM，避免导入后字节变化。
+                byte[] preamble = new UTF8Encoding(true).GetPreamble();
+                var scriptBytes = new byte[preamble.Length + bytes.Length];
+                Buffer.BlockCopy(preamble, 0, scriptBytes, 0, preamble.Length);
+                Buffer.BlockCopy(bytes, 0, scriptBytes, preamble.Length, bytes.Length);
+                bytes = scriptBytes;
+            }
+            return new EmberTableArtifactContent(assetPath, bytes);
         }
     }
 

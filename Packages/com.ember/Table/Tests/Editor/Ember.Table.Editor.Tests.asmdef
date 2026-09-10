@@ -3,7 +3,8 @@
     "rootNamespace": "Ember.Table.Editor.Tests",
     "references": [
         "Ember.Table.Runtime",
-        "Ember.Table.Editor"
+        "Ember.Table.Editor",
+        "Ember.Basic.Editor"
     ],
     "includePlatforms": [
         "Editor"

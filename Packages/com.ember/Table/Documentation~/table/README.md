@@ -64,6 +64,12 @@ if (EmberModuleCollector.TryGetInstance(out var moduleCollector)
 
 ## 可视化浏览与代码提示
 
+### 0.12.2 编码修复与升级
+
+0.12.2 起，生成的 C#（Binding、Catalog 与接线脚本）使用 UTF-8 BOM，与 Ember 脚本导入器一致；Manifest 保持 UTF-8 无 BOM，ETBL V1 二进制格式不变。生成物仍逐字节核对，不忽略真实内容差异。
+
+从 0.12.0/0.12.1 升级后，在配置表中心执行一次“校验全部 → 预览全部变更 → 导出全部表”，手动触发编译，再运行项目表测试和项目校验。未改变配置时再次预览应无替换；之后可继续单表导出。框架升级不要求重新部署模板，不要手改生成脚本、Manifest 或 PackageCache。
+
 打开 `Ember/配置表中心` 后，左侧会列出项目中的全部 `EmberTableDefinition`。选中一张表可以直接查看：
 
 - Table ID、Row 类型、Required/Optional、源文件、Runtime 路径和 Hash；
