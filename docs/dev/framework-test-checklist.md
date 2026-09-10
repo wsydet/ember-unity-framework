@@ -1,8 +1,8 @@
 # 框架回归与发布验收清单
 
-> 当前用于 0.11.5 发布与消费端验收。模板 hash 和版本静态检查沿用 0.11.4 基线并重新核对兼容声明；Unity 编译、EditMode、UnityFarm 安装与 Play Mode 以本轮实际执行记录为准。
+> 当前用于 0.12.0 候选发布与消费端验收。Unity 编译、EditMode、模板保存/同步、新消费项目安装和 UnityFarm 升级均以本轮实际执行记录为准。
 
-本轮状态：包与父子模板已声明 0.11.5；模板内容版本和 hash 未改。0.11.5 只新增随包的 UnityFarm 改动分流文档、代理强制入口和版本声明；不能由静态检查推断 UnityFarm 的安装或运行兼容已经通过。
+本轮状态：0.12.0 Table 实现已落盘；用户确认 Unity 零编译错误并报告三套 Table EditMode 通过。`base 0.6.0` 与 `source3d-2p5d 0.3.1` 已经项目中心保存、封存、父同步并声明兼容框架 `0.12.0`，实时/封存/父快照 Hash 一致；新消费项目验收仍待完成。本会话没有 Unity MCP，不把静态检查写成自动编译结论。
 > 旧 v0.8.0 临时计划记录过 2026-08-31 的 51 项通过和 Farm 冒烟，属于历史记录，不证明当前新功能通过。
 
 ## 记录方式
@@ -19,6 +19,9 @@
 | Ember.SceneUI.Tests | `Packages/com.ember/SceneUI/Tests/EditMode` |
 | Ember.SceneUI.PlayModeTests | `Packages/com.ember/SceneUI/Tests/PlayMode` |
 | Ember.UPMManager.Editor.Tests | `Packages/com.ember/UPMManager/Tests/Editor` |
+| Ember.Table.Tests | `Packages/com.ember/Table/Tests/EditMode`：纯 Runtime、快照事务和固定格式向量 |
+| Ember.Table.Integration.Tests | `Packages/com.ember/Table/Tests/Integration`：Resource/ModuleBase 生命周期 |
+| Ember.Table.Editor.Tests | `Packages/com.ember/Table/Tests/Editor`：CSV/TSV、Schema、Hash、烘焙和生成 |
 
 测试数量以当次 Test Runner 结果为准，文件名或历史数字不作为通过证据。
 
@@ -79,6 +82,21 @@
 - [ ] 加载 base 后仍有公共 Input Manager，且无 PlayerControl/SceneUI 业务残留引用。
 
 完整业务验收：[SceneUI](../../Packages/com.ember/Documentation~/scene-ui/README.md)、[PlayerControl](player-control-module.md)。
+
+## 强类型配置表
+
+- [x] `Ember.Table.Runtime` 不引用 Core、Resource、Scene、UI 或 `Game.*`，Engine 可独立构造、加载和释放。
+- [x] Ordinal 主键、大小写、空键/重复键、源序枚举、未知表/键和显式二级索引符合契约。
+- [x] Required 任一失败保持旧数据库；Optional 失败从新快照省略；数据库只做一次完整交换。
+- [x] V1 Magic、版本、Flags、Table/Row/Schema、长度、Payload Hash、截断和尾随数据全部严格拒绝。
+- [x] UTF-8 BOM/无 BOM、CRLF/LF、CSV/TSV 分隔符、引号/转义/单元格换行以及行列诊断通过。
+- [x] bool、全部整数位宽、float/double、decimal、enum、nullable 使用 InvariantCulture 且溢出/非法值失败。
+- [x] Source/Schema/完整文件固定向量跨平台一致；相同逻辑输入重复烘焙逐字节一致。
+- [x] 主键与跨表引用校验通过；缺列、重复列、未知列、路径越界和同路径冲突得到确定诊断。
+- [x] 回读或提交故障保持旧产物；只清理所有权清单中的孤儿，不覆盖用户文件。
+- [x] ModuleBase 只负责 Resource → Engine，初始化异常/销毁/Reset 共用幂等清理；模板 Module 不复制事务。
+- [x] base 默认关闭的空 Catalog 可编译；source3d-2p5d 经正式父同步保留自身差异。
+- [ ] 新消费项目从最终 tag 安装、部署、启用 Module 并成功读取测试表。
 
 ## UPM 与交付
 

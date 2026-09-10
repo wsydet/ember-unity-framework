@@ -1,7 +1,7 @@
 # UPM 包交付与维护
 
-> 更新：2026-09-08。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为 **0.11.5**；消费项目安装与运行验收单独记录。
+> 更新：2026-09-09。早期转包迁移已完成；本文维护当前交付流程。
+> 当前发布版本为 **0.11.5**；工作区正在准备配置表版本 **0.12.0**，尚未 tag，Unity、模板与消费项目 Gate 单独记录。模板 Gate 已完成，消费项目 Gate 尚未完成。
 
 ## 目录与依赖
 
@@ -38,8 +38,7 @@ Git URL 依赖在消费项目 manifest 中直接声明；框架 package.json 只
 
 ## 模板开发
 
-完整规则见 [模板体系](template-upgrade-system.md)。当前有 `base 0.5.6 / stable` 与
-`source3d-2p5d 0.2.7 / preview`，共同声明框架 `0.11.5`；派生父基线已为 `base 0.5.6`。0.11.5 未修改模板 Assets、内容版本和 hash，只推进兼容声明并新增随包的 [UnityFarm 改动回流规则](../../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md)；消费项目只能部署包内模板，模板写 API 仅允许 embedded 框架项目。
+完整规则见 [模板体系](template-upgrade-system.md)。已发布 0.11.5 基线包含 `base 0.5.6 / stable` 与 `source3d-2p5d 0.2.7 / preview`。当前 0.12.0 候选已通过项目中心封存 `base 0.6.0` 与 `source3d-2p5d 0.3.1`，派生父基线为 `base 0.6.0`，内容与 ParentSnapshot Hash 已校验；二者已通过根声明和父同步把兼容框架推进到 `0.12.0`。消费项目只能部署包内模板，模板写 API 仅允许 embedded 框架项目。
 
 2026-09-07 经用户授权恢复保存失败后缺失的派生 `Assets`：备份 275 个文件的 contentHash 为 `81729c743e325157f56ff10dc28ac88d`，与 metadata/编辑记录一致；父快照 hash 为 `89f9cf6d5de00747eaf5dbf3f812a9d4`，与 parentContentHash 一致。恢复未改动版本、hash、父快照或项目业务副本；额外恢复副本在本地 `Library/EmberTemplateRecovery`，不进入发布。该恢复不代表原目录访问拒绝的原因已经消除，仍需验证下一次正常保存。
 
@@ -59,6 +58,8 @@ Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不�
 不同活动模板不能走普通“补齐缺失”；项目中心提供“部署此模板”，只把包内目标完整模板事务部署到消费项目，不保存当前内容或修改包内模板。
 
 ## 发布维护
+
+0.12.0 候选新增 `Ember.Table.Runtime / Integration / Editor`，不增加第三方依赖。用户已确认 Unity 零编译错误和三套 Table EditMode 通过；base 保存/Bump、派生父同步、框架兼容声明及最终内容 Hash 校验完成。候选发布声明与完整 manifest 位于 `Dependencies~/release-0.12.0.json` 和 `manifest-0.12.0.json`；新消费项目读表完成前，不能创建或推送 `v0.12.0`。
 
 包和模板兼容版本为 **0.11.5**；模板内容 hash、父基线和 GUID 引用沿用已复核的 0.11.4 基线，本次只推进兼容声明。第三方内容未变化，复用 `ember-v0.11.1`；框架发布信息与消费验收边界见 [0.11.5 发布说明](release-0.11.5.md)。
 

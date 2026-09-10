@@ -1,6 +1,6 @@
 # Ember Framework 当前状态与后续工作
 
-> 核对日期：2026-09-08。实现以当前工作区与发布 tag 为准；消费项目验收单独记录。
+> 核对日期：2026-09-10。实现以当前工作区与发布 tag 为准；消费项目验收单独记录。
 > 2026-09-07 模板分支与场景语义同步批次已由用户确认通过 Unity 编译、相关 EditMode、真实 UnityYAMLMerge 和手工 O/N/C 验收；未列明的 PlayMode、消费项目与整体发布项仍按未验证处理。
 
 ## 当前基线
@@ -8,15 +8,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | `com.ember 0.11.5` | `Packages/com.ember/package.json`；文档与版本静态检查完成，消费项目验收待执行 |
-| 发布目标 | `0.11.5` | 随包交付 UnityFarm 改动回流规则，并由仓库代理入口强制阅读 |
-| 根模板 | `base 0.5.6 / stable` | `Templates~/base/template.json`；当前派生父基线已对齐 |
-| 派生模板 | `source3d-2p5d 0.2.7 / preview` | 父基线 `base 0.5.6`，父子共同声明兼容框架 `0.11.5`；运行兼容验收仍待完成 |
-| 模板开发副本 | `source3d-2p5d 0.2.7` | `Assets/Editor/EmberEditingTemplate.json`；记录 hash 与当前模板一致，不代表项目磁盘无新修改 |
+| 框架包 | 已发布 `0.11.5`；工作区候选 `0.12.0` | `Packages/com.ember/package.json` 已进入 Table minor 候选；尚未创建或推送 tag |
+| 发布目标 | `0.12.0` | 强类型配置表 Runtime/Integration/Editor、模板内容、兼容声明与静态校验已落盘；消费端 Gate 待完成 |
+| 根模板 | `base 0.6.0 / stable` | 内容与封存 Hash 均为 `506baffc678f37d420308607c5f70e42`；已通过项目中心声明框架 `0.12.0` |
+| 派生模板 | `source3d-2p5d 0.3.1 / preview` | 父基线 `base 0.6.0`，ParentSnapshot 与父 Hash 一致；已通过父同步继承框架 `0.12.0` |
+| 模板开发副本 | `source3d-2p5d 0.3.1` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和版本化发布声明；7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.11.5 发布说明](release-0.11.5.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.0 候选发布声明；Table 不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端仍需手动合并配置，详见 [0.12.0 候选发布说明](release-0.12.0.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -34,6 +34,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第�
 | Audio | BGM / SFX、Mixer、临时音效 AudioSource | [Audio](../../Packages/com.ember/Documentation~/audio/README.md) |
 | Camera / Input | 相机注册与霸占栈、InputAction 读取、重绑定契约 | [Camera](../../Packages/com.ember/Documentation~/camera/README.md)、[Input](../../Packages/com.ember/Documentation~/input/README.md) |
 | SceneUI | 普通 Engine、业务 Module 基类、EUI Item 宿主、投影/显隐/池化/诊断 | [设计](scene-ui-module-design.md)、[使用](../../Packages/com.ember/Documentation~/scene-ui/README.md) |
+| Table | 不可变 Row、CSV/TSV 校验、ETBL V1、强类型 Binding/Catalog、事务 Engine 与 ModuleBase | [使用](../../Packages/com.ember/Table/Documentation~/table/README.md)、[方案](table-system-development-plan.md) |
 | 2.5D 业务示例 | Gameplay 输入门控、WASD、世界锚点拖动、缩放、连续区域边界 | [PlayerControl](player-control-module.md) |
 | 模板与编辑器 | 项目中心、schema v2、父子三方同步、场景语义合并、事务回滚、消费端完整模板部署 | [模板体系](template-upgrade-system.md)、[包维护](upm-migration-plan.md) |
 
@@ -45,8 +46,9 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
+| P0 | Table 0.12.0 发布 Gate | 用户已确认 Unity 零编译错误和三套 Table EditMode 通过；模板内容保存、封存、父同步、框架兼容声明及 Hash 校验完成。仍需新消费项目安装读表 |
 | P1 | 消费端模板升级向导（P-B） | 已有所有权标记，尚无把新模板安全合并进已有用户工程的完整向导；父子模板同步不等于该能力 |
-| P1 | 新消费项目验收 | 安装 0.11.5，验证随包规则可读取，以及首次部署派生模板、Base → 2.5D 替换部署、完整重新部署、GUID 冲突阻断、场景引用和 Play 链路 |
+| P1 | 新消费项目验收 | 使用 0.12.0 最终发布提交验证首次部署、Table Module 启用与读表；模板替换部署、GUID 冲突阻断、场景引用和 Play 链路继续按完整清单验收 |
 | P1 | Preview 模板生命周期（P-C） | 第二模板已存在；转 stable、deprecated 和消费项目完整演练仍需验收 |
 | P1 | Audio 多分类与池化 | [Audio 升级方案](audio-upgrade-plan.md) 尚未实施 |
 | P1 | Resources 后端真正异步 | 当前 `Resources.Load<T>` 为同步回调包装；Handle 不意味着后台异步或引用计数缓存 |

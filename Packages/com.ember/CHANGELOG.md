@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.12.0] - Unreleased
+
+- **新增强类型配置表 Runtime**：加入不可变 Row 契约、Ordinal 字符串主键、只读表/二级索引、实例数据库、结构化诊断、严格 ETBL V1 Reader/Writer/Codec，以及 Required 整批回滚、Optional 省略和单次数据库快照交换的纯 `EmberTableEngine`。
+- **新增 Table Integration**：`EmberTableModuleBase<TModule>` 统一连接 Core Module 生命周期、`EmberResourceManager.LoadFileSync` 与 Engine；初始化异常、销毁和热重启共用幂等关闭路径，具体项目只需提供 Catalog 与项目钩子。
+- **新增 CSV/TSV Editor 管线**：支持 UTF-8 BOM/无 BOM、CRLF/LF、RFC 4180 引号/转义/单元格换行、严格类型与引用校验、规范 Source/Schema Hash、确定性 V1 烘焙、Runtime Codec 回读、强类型 Binding/Catalog 生成、陈旧检测、项目校验和诊断中心。
+- **提供模板项目接线入口**：配置表中心可先生成空或当前 Catalog，再只补缺失的默认关闭 `GameTableModule` 与项目所有的 User 扩展；模板内容仍须由项目中心保存、Bump 和父级同步。
+- **保护生成物事务**：全量产物以所有权清单管理，提交前预览并暂存，保护非生成器文件；替换或孤儿清理失败时整批回滚，成功后只刷新一次 AssetDatabase。
+- **补齐独立测试矩阵和文档**：新增 Runtime、Integration、Editor 三个 EditMode 测试程序集、跨平台固定向量与 Table 包文档。用户已确认 Unity 零编译错误和三套测试通过，基础模板与 2.5D 模板已通过项目中心封存、声明兼容 `0.12.0` 并完成父同步；新消费项目验收完成后发布 `v0.12.0`。
+
 ## [0.11.5] - 2026-09-08
 
 - **建立 UnityFarm 改动回流判定规则**：随包新增统一维护文档，明确项目专用改动、框架升级、模板升级及两者联动的边界、版本策略、回流流程和 UnityFarm 接收方式。
