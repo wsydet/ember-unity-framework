@@ -121,6 +121,15 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.35999995, g: 0.5727599, b: 0.9, a: 1}
     className: EUIBindingSettings
+  - enabled: 1
+    color: {r: 0.6624, g: 0.9, b: 0.35999995, a: 1}
+    className: SceneUI
+  - enabled: 1
+    color: {r: 0.5911199, g: 0.35999995, b: 0.9, a: 1}
+    className: SceneUI.Module
+  - enabled: 1
+    color: {r: 0.49392, g: 0.35999995, b: 0.9, a: 1}
+    className: Table.Module
   enableFileLog: 1
   logDirectory: 
   maxFileSizeMB: 10
