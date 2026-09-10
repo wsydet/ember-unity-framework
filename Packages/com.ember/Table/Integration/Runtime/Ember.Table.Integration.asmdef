@@ -1,0 +1,19 @@
+{
+    "name": "Ember.Table.Integration",
+    "rootNamespace": "Ember.Table.Integration",
+    "references": [
+        "Ember.Table.Runtime",
+        "Ember.Basic.Runtime",
+        "Ember.Core.Runtime",
+        "Ember.Resource.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

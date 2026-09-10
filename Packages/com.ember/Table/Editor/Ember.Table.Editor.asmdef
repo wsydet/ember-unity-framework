@@ -1,0 +1,20 @@
+{
+    "name": "Ember.Table.Editor",
+    "rootNamespace": "Ember.Table.Editor",
+    "references": [
+        "Ember.Table.Runtime",
+        "Ember.Basic.Runtime",
+        "Ember.Core.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
