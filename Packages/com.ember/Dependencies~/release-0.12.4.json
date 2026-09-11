@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.12.4",
+  "frameworkTag": "v0.12.4",
+  "status": "released-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.12.4.json",
+  "coverage": "All 56 direct development-project entries; shared SDF multi-atlas configuration adds no third-party dependency.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.6.0",
+      "frameworkVersion": "0.12.0",
+      "contentHash": "506baffc678f37d420308607c5f70e42",
+      "status": "content-unchanged-and-patch-compatible"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.3.1",
+      "frameworkVersion": "0.12.0",
+      "parentId": "base",
+      "parentVersion": "0.6.0",
+      "parentContentHash": "506baffc678f37d420308607c5f70e42",
+      "contentHash": "cb76b93536d23691f81faf22f9fc0902",
+      "status": "content-unchanged-and-patch-compatible"
+    }
+  ],
+  "validation": "Static checks only: shared SDF multi-atlas policy, unchanged source/GUID/material references, release SDF delta limited to one serialized boolean, preserved 0.12.3 TTF bytes and attributes, binary integrity including clean checkouts. Added SharedFontAtlasPlayModeTests with a bounded single-atlas negative control, same-font overflow retry, six Chinese labels, atlas-specific materials/TMP submeshes, and real SceneUI EUI pool hide/show/reuse. Unity MCP is unavailable. Initial user-reported test compilation errors were corrected; post-fix Unity compilation, PlayMode execution and runtime acceptance remain unverified until results are supplied. Upgrade consumers only through Ember/UPM Manager; manifest/lock are read-only verification targets. Templates and third-party dependencies are unchanged."
+}

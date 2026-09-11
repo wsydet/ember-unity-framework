@@ -19,3 +19,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/check-shared-binaries.py --revision HEAD --checkout
+      - run: python scripts/check-shared-font-config.py --revision HEAD
