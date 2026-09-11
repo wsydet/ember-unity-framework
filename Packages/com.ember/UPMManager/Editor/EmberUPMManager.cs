@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,7 +12,7 @@ using UnityEngine;
 namespace Ember.UPMManager.Editor
 {
     /// <summary>
-    /// Ember UPM 管理器 —— 框架版本升级 + 前置依赖体检 + 未来扩展包预留。
+    /// Ember UPM 管理器 —— 框架版本升级 + 必需依赖与可选第三方包体检。
     ///
     /// 命名说明：与框架的 Manager/Module 体系（EmberManagerCollector、EmberModuleCollector）无关，
     /// 本窗口只负责「Unity 包（UPM）」层面的管理。
@@ -39,6 +38,24 @@ namespace Ember.UPMManager.Editor
         private const string DotweenUrl =
             "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815";
 
+        private const string ThirdPartyRepoUrl = "https://github.com/wsydet/ember-thirdparty-upm.git";
+        private const string ThirdPartyTag = "ember-v0.11.1";
+
+        /// <summary>与随包 Dependencies~ 发布清单对应；类型探针兼容直接导入的插件。</summary>
+        private static readonly (string packageName, string label, string typeName, string desc)[] OptionalPackages =
+        {
+            ("com.borodar.rainbow-folders", "Rainbow Folders", "Borodar.RainbowFolders.RainbowFoldersGUI",
+                "Project 文件夹颜色与图标"),
+            ("com.borodar.rainbow-hierarchy", "Rainbow Hierarchy", "Borodar.RainbowHierarchy.RainbowHierarchyGUI",
+                "Hierarchy 层级颜色与分组"),
+            ("com.flyingworm.consolepro", "Console Pro", "FlyingWormConsole3.ConsoleProDebug",
+                "Console 日志增强"),
+            ("com.ryanindiedev.inputdevicedetector", "InputDeviceDetector", "InputDeviceDetection.InputDeviceDetector",
+                "键鼠与手柄输入设备识别"),
+            ("com.moremountains.feel", "Feel", "MoreMountains.Feedbacks.MMF_Player",
+                "反馈、动效与振动工具")
+        };
+
         /// <summary>未来扩展包（预留区，Phase 2/3 规划）</summary>
         private static readonly (string name, string desc)[] PlannedPackages =
         {
@@ -49,12 +66,16 @@ namespace Ember.UPMManager.Editor
         private static readonly string[] UpgradeSpinnerFrames = { "◐", "◓", "◑", "◒" };
 
         private bool _installing;
+        private string _installingLabel;
         private bool _checking;
+        private EmberUPMUpdateCheck _updateCheck;
+        private Version _checkCurrentVersion;
         private string _checkMessage;
         private bool _checkFailed;
         private Version _currentVersion;
         private readonly List<Version> _newerTags = new();
         private Version _latestRemote;
+        private Vector2 _scrollPosition;
 
         #endregion
 
@@ -77,17 +98,22 @@ namespace Ember.UPMManager.Editor
 
         private void OnGUI()
         {
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember UPM 管理器", EditorStyles.boldLabel);
 
             DrawFrameworkVersionSection();
 
+            if (_installing)
+                EditorGUILayout.HelpBox($"正在安装 {_installingLabel}，请等待 Unity 完成包解析。", MessageType.Info);
+
             GUILayout.Space(8);
-            EditorGUILayout.LabelField("前置依赖体检", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("前置依赖体检（框架必需）", EditorStyles.boldLabel);
 
             // ---- Odin ----
             DrawDependencyRow(
                 "Odin Inspector（付费）",
+                GetPackageVersion("com.sirenix.odin-inspector") != null ||
                 IsAssemblyLoaded("Sirenix.OdinInspector.Editor") || IsAssemblyLoaded("Sirenix.OdinInspector.Attributes"),
                 OdinUrl,
                 "https://odininspector.com/",
@@ -96,10 +122,16 @@ namespace Ember.UPMManager.Editor
             // ---- DOTween ----
             DrawDependencyRow(
                 "DOTween（免费，禁止再分发）",
-                IsAssemblyLoaded("DOTween"),
+                GetPackageVersion("com.demigiant.dotween") != null || IsAssemblyLoaded("DOTween"),
                 DotweenUrl,
                 "https://dotween.demigiant.com/",
                 "补间动画（UI 过渡等）");
+
+            GUILayout.Space(8);
+            EditorGUILayout.LabelField("可选第三方包", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("按需安装，缺少可选包不影响框架基础运行。", EditorStyles.wordWrappedMiniLabel);
+            foreach (var package in OptionalPackages)
+                DrawOptionalDependencyRow(package.packageName, package.label, package.typeName, package.desc);
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("可选扩展包（未来）", EditorStyles.boldLabel);
@@ -112,6 +144,7 @@ namespace Ember.UPMManager.Editor
             EditorGUILayout.HelpBox(
                 "Odin 为付费插件：一键安装走团队私有仓库（需仓库访问权限 + 正版授权）；\n无权限时请从官网购买后自行导入（Assets/Plugins 方式同样有效）。\nDOTween 免费但许可禁止再分发，团队内统一从私有仓库安装。",
                 MessageType.Info);
+            EditorGUILayout.EndScrollView();
         }
 
         /// <summary>框架版本区：当前版本 + 检查更新 + 一键升级（按版本语义标注强制/可选）。</summary>
@@ -141,12 +174,15 @@ namespace Ember.UPMManager.Editor
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = !_checking && !_installing && !upgrade.IsActive;
             if (GUILayout.Button("检查更新", GUILayout.Width(100)))
+            {
                 CheckForUpdates(currentVersionText);
+                upgrade = EmberUPMUpgradeTracker.GetSnapshot();
+            }
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
             if (_checking)
-                EditorGUILayout.LabelField("    ⏳ 正在查询远程 tag（git ls-remote）...", EditorStyles.miniLabel);
+                DrawUpdateCheckProgress();
 
             if (!string.IsNullOrEmpty(_checkMessage))
             {
@@ -161,17 +197,19 @@ namespace Ember.UPMManager.Editor
             {
                 var latestText = _currentVersion != null && _latestRemote > _currentVersion
                     ? $"远程最新：v{_latestRemote}（当前 v{_currentVersion}，可升级）"
-                    : $"远程最新：v{_latestRemote}（与当前一致）";
+                    : _latestRemote == _currentVersion
+                        ? $"远程最新：v{_latestRemote}（与当前一致）"
+                        : $"远程最新：v{_latestRemote}（当前 v{_currentVersion}）";
                 EditorGUILayout.LabelField($"    {latestText}", EditorStyles.miniLabel);
             }
 
             // 强制更新：major/minor 比当前高（框架已变化，强烈建议）
-            foreach (var tag in _newerTags.Where(IsForcedUpgrade))
+            foreach (var tag in _newerTags.Where(t => (_currentVersion == null || t > _currentVersion) && IsForcedUpgrade(t)))
             {
                 EditorGUILayout.BeginHorizontal();
                 var style = new GUIStyle(EditorStyles.boldLabel) { normal = { textColor = new Color(1f, 0.55f, 0.2f) } };
                 EditorGUILayout.LabelField($"    ⬆ 强制更新：v{tag}（框架已变化）", style, GUILayout.Width(260));
-                GUI.enabled = !_installing && !upgrade.IsActive;
+                GUI.enabled = !_checking && !_installing && !upgrade.IsActive;
                 if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
                     UpgradeTo(tag);
                 GUI.enabled = true;
@@ -179,11 +217,11 @@ namespace Ember.UPMManager.Editor
             }
 
             // 可选更新：仅 patch 高于当前（小修补，框架不变）
-            foreach (var tag in _newerTags.Where(t => !IsForcedUpgrade(t)))
+            foreach (var tag in _newerTags.Where(t => (_currentVersion == null || t > _currentVersion) && !IsForcedUpgrade(t)))
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField($"    可选更新：v{tag}（小修补，可不升）", EditorStyles.miniLabel, GUILayout.Width(260));
-                GUI.enabled = !_installing && !upgrade.IsActive;
+                GUI.enabled = !_checking && !_installing && !upgrade.IsActive;
                 if (GUILayout.Button("升级到 v" + tag, GUILayout.Width(120)))
                     UpgradeTo(tag);
                 GUI.enabled = true;
@@ -202,6 +240,7 @@ namespace Ember.UPMManager.Editor
 
         private void CheckForUpdates(string currentVersion)
         {
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive) return;
             if (!Version.TryParse(currentVersion, out var current))
             {
                 _checkMessage = "当前版本号无法解析：" + currentVersion;
@@ -209,81 +248,98 @@ namespace Ember.UPMManager.Editor
                 return;
             }
 
+            // 旧操作提示只在发起新检查时清理，绘制提示不能修改本次查询结果。
+            EmberUPMUpgradeTracker.ClearTerminalState();
             _checking = true;
             _checkMessage = null;
             _checkFailed = false;
             _newerTags.Clear();
+            _latestRemote = null;
+            _checkCurrentVersion = current;
             Repaint();
 
             try
             {
-                var tags = ListRemoteTags();
-                _latestRemote = tags.Count > 0 ? tags.Max() : null;
-                _newerTags.AddRange(tags.Where(v => v > current).OrderByDescending(v => v));
-                if (_newerTags.Count == 0)
-                {
-                    _checkMessage = $"已是最新版本（v{current}），远程没有更新的 tag。";
-                    _checkFailed = false;
-                }
+                _updateCheck = new EmberUPMUpdateCheck(FrameworkRepoUrl);
+                EditorApplication.update += PollUpdateCheck;
             }
             catch (Exception ex)
             {
                 _checkMessage = "检查更新失败：" + ex.Message +
                     "\n（需要本机安装 git，且能访问 " + FrameworkRepoUrl + "）";
                 _checkFailed = true;
-            }
-            finally
-            {
-                _checking = false;
-                Repaint();
+                StopUpdateCheck();
             }
         }
 
-        private static List<Version> ListRemoteTags()
+        private void PollUpdateCheck()
         {
-            var psi = new ProcessStartInfo("git", $"ls-remote --tags {FrameworkRepoUrl}")
+            if (_updateCheck == null) return;
+            _updateCheck.Poll();
+            if (!_updateCheck.IsCompleted) return;
+
+            try
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
-
-            using var process = Process.Start(psi);
-            if (process == null)
-                throw new InvalidOperationException("无法启动 git 进程。请确认本机已安装 git 并加入 PATH。");
-
-            var stdout = process.StandardOutput.ReadToEnd();
-            var stderr = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-
-            if (process.ExitCode != 0)
-                throw new InvalidOperationException(string.IsNullOrWhiteSpace(stderr)
-                    ? $"git ls-remote 失败（exit {process.ExitCode}）"
-                    : stderr.Trim());
-
-            var versions = new List<Version>();
-            foreach (var line in stdout.Split('\n'))
-            {
-                var idx = line.IndexOf("refs/tags/", StringComparison.Ordinal);
-                if (idx < 0) continue;
-
-                // 归一化 tag：去 annotated tag 的 "^{}"（或 "^{"）后缀、去 "v" 前缀，再交给 Version.TryParse
-                // （Version.TryParse 不认 "v" 前缀，历史 bug：v 前缀 tag 全部解析失败 → 永远显示「已是最新」）
-                var tag = line.Substring(idx + "refs/tags/".Length).Trim();
-                tag = tag.Replace("^{}", "").TrimEnd('^', '{', '}');
-                if (tag.StartsWith("v", StringComparison.Ordinal))
-                    tag = tag.Substring(1);
-                if (Version.TryParse(tag, out var v))
-                    versions.Add(v);
+                _checkFailed = !string.IsNullOrEmpty(_updateCheck.Error);
+                if (_checkFailed)
+                {
+                    _checkMessage = "检查更新失败：" + _updateCheck.Error;
+                    return;
+                }
+                var tags = _updateCheck.Versions;
+                _latestRemote = tags.Max();
+                _newerTags.AddRange(tags.Where(v => v > _checkCurrentVersion).OrderByDescending(v => v));
+                _checkMessage = _newerTags.Count == 0
+                    ? $"当前 v{_checkCurrentVersion}，远程没有更新的 tag。"
+                    : $"检查完成，发现 {_newerTags.Count} 个更新版本。";
             }
-            // annotated tag 会同时列出 tag 行与解引用行，去重
-            return versions.Distinct().ToList();
+            finally
+            {
+                StopUpdateCheck();
+            }
+        }
+
+        private void DrawUpdateCheckProgress()
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField($"{GetUpgradeSpinner()} 正在查询远程版本…", EditorStyles.boldLabel);
+            var rect = GUILayoutUtility.GetRect(1f, 8f, GUILayout.ExpandWidth(true));
+            EditorGUI.DrawRect(rect, new Color(0.15f, 0.15f, 0.15f, 0.35f));
+            var width = rect.width * 0.25f;
+            var offset = Mathf.PingPong((float)EditorApplication.timeSinceStartup * 0.7f, 1f);
+            EditorGUI.DrawRect(new Rect(rect.x + offset * (rect.width - width), rect.y, width, rect.height),
+                new Color(0.25f, 0.6f, 0.95f));
+            var elapsed = _updateCheck?.Elapsed ?? TimeSpan.Zero;
+            EditorGUILayout.LabelField($"已等待 {FormatElapsed(elapsed)} · 60 秒后自动超时",
+                EditorStyles.miniLabel);
+            if (elapsed.TotalSeconds >= 15)
+                EditorGUILayout.HelpBox("远程响应较慢，可以继续等待或取消后检查网络与 Git 凭据。", MessageType.Info);
+            if (GUILayout.Button("取消检查", GUILayout.Width(100)))
+            {
+                _checkMessage = "已取消检查，可重新查询。";
+                _checkFailed = false;
+                StopUpdateCheck();
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private void StopUpdateCheck()
+        {
+            EditorApplication.update -= PollUpdateCheck;
+            _updateCheck?.Dispose();
+            _updateCheck = null;
+            _checking = false;
+            Repaint();
+        }
+
+        private void OnDisable()
+        {
+            StopUpdateCheck();
         }
 
         private void UpgradeTo(Version target)
         {
-            if (EmberUPMUpgradeTracker.IsActive) return;
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive) return;
 
             try
             {
@@ -331,7 +387,7 @@ namespace Ember.UPMManager.Editor
             }
         }
 
-        private void DrawUpgradeOperation(EmberUPMUpgradeSnapshot upgrade)
+        internal void DrawUpgradeOperation(EmberUPMUpgradeSnapshot upgrade)
         {
             if (!upgrade.HasState) return;
 
@@ -371,8 +427,6 @@ namespace Ember.UPMManager.Editor
 
             if (upgrade.IsSucceeded)
             {
-                _newerTags.Clear();
-                _checkMessage = null;
                 EditorGUILayout.HelpBox(
                     $"升级完成：com.ember 已从 v{upgrade.SourceVersion} 升级到 v{upgrade.TargetVersion}。",
                     MessageType.Info);
@@ -381,7 +435,7 @@ namespace Ember.UPMManager.Editor
             {
                 EditorGUILayout.HelpBox(
                     "升级失败：" + upgrade.Error +
-                    "\n\n可检查网络或 Git 凭据后重试；也可以手动修改 manifest 的 #tag。",
+                    "\n\n可检查网络或 Git 凭据后重新检查更新，再选择目标版本重试。",
                     MessageType.Error);
             }
 
@@ -430,7 +484,7 @@ namespace Ember.UPMManager.Editor
 
         private void OnInspectorUpdate()
         {
-            if (EmberUPMUpgradeTracker.IsActive)
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive)
                 Repaint();
         }
 
@@ -444,7 +498,7 @@ namespace Ember.UPMManager.Editor
                 EditorGUILayout.LabelField($"    {desc}", EditorStyles.miniLabel);
 
                 EditorGUILayout.BeginHorizontal();
-                GUI.enabled = !_installing && !EmberUPMUpgradeTracker.IsActive;
+                GUI.enabled = !_checking && !_installing && !EmberUPMUpgradeTracker.IsActive;
                 if (GUILayout.Button("一键安装（团队仓库）", GUILayout.Width(180)))
                     InstallPackage(installUrl, label);
                 if (GUILayout.Button("手动安装指引", GUILayout.Width(140)))
@@ -452,9 +506,35 @@ namespace Ember.UPMManager.Editor
                 GUI.enabled = true;
                 EditorGUILayout.EndHorizontal();
 
-                if (_installing)
-                    EditorGUILayout.LabelField("    ⏳ 正在安装，请稍候（Unity 后台解析）...", EditorStyles.miniLabel);
             }
+        }
+
+        private void DrawOptionalDependencyRow(string packageName, string label, string typeName, string desc)
+        {
+            var version = GetPackageVersion(packageName);
+            var imported = version == null && IsPluginTypeLoaded(typeName);
+            var installed = version != null || imported;
+            var status = version != null ? $"已安装 v{version}（UPM）"
+                : imported ? "已检测到插件（直接导入/自定义包）" : "未安装（可选）";
+
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(status, EditorStyles.wordWrappedMiniLabel);
+            EditorGUILayout.LabelField(desc, EditorStyles.wordWrappedMiniLabel);
+            if (!installed)
+            {
+                using (new EditorGUI.DisabledScope(_checking || _installing || EmberUPMUpgradeTracker.IsActive))
+                {
+                    if (GUILayout.Button("一键安装（团队仓库）", GUILayout.Width(180)))
+                        InstallPackage($"{ThirdPartyRepoUrl}?path=/{packageName}#{ThirdPartyTag}", label);
+                }
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private static bool IsPluginTypeLoaded(string typeName)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().Any(assembly => assembly.GetType(typeName, false) != null);
         }
 
         private void DrawStatusRow(string label, string value, bool ok)
@@ -479,10 +559,22 @@ namespace Ember.UPMManager.Editor
 
         private void InstallPackage(string url, string label)
         {
-            if (_installing) return;
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive) return;
             _installing = true;
+            _installingLabel = label;
 
-            var request = UnityEditor.PackageManager.Client.Add(url);
+            UnityEditor.PackageManager.Requests.AddRequest request;
+            try
+            {
+                request = UnityEditor.PackageManager.Client.Add(url);
+            }
+            catch (Exception exception)
+            {
+                _installing = false;
+                _installingLabel = null;
+                EditorUtility.DisplayDialog("安装失败", $"{label} 安装请求未启动：{exception.Message}", "确定");
+                return;
+            }
             EditorApplication.update += Poll;
 
             void Poll()
@@ -490,6 +582,7 @@ namespace Ember.UPMManager.Editor
                 if (!request.IsCompleted) return;
                 EditorApplication.update -= Poll;
                 _installing = false;
+                _installingLabel = null;
 
                 if (request.Status == UnityEditor.PackageManager.StatusCode.Success)
                 {
@@ -502,7 +595,7 @@ namespace Ember.UPMManager.Editor
                         $"{label} 安装失败：{request.Error?.message ?? "未知错误"}\n\n" +
                         "若为网络/权限问题：\n" +
                         "• 团队私有仓库需配置 git 凭据\n" +
-                        "• 无权限用户请走「手动安装指引」（Odin 官网购买 / DOTween 官网下载）", "确定");
+                        "• 无权限时请从插件官网取得授权和安装文件", "确定");
                 }
 
                 Repaint();

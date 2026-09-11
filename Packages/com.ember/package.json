@@ -1,7 +1,7 @@
 {
     "name": "com.ember",
     "displayName": "Ember Framework",
-    "version": "0.12.4",
+    "version": "0.12.5",
     "description": "Ember 通用游戏开发框架：事件、资源、强类型配置表、UI、场景/音频/相机/输入、状态机与编辑器生成工具，全模块合一的单一包。内置 UniTask（Unity 6000.5 修复版）。",
     "unity": "6000.0",
     "dependencies": {

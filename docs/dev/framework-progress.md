@@ -5,6 +5,8 @@
 
 ## 当前基线
 
+0.12.5 将 UPM 检查更新改为非阻塞查询，增加循环进度、耗时、取消与 60 秒超时，并增加五项可选第三方包体检、修复升级完成提示清空新查询结果。Unity MCP 不可用，Unity 编译、6 个新增 EditMode 测试与面板交互验收待手动完成。详见 [0.12.5 发布说明](release-0.12.5.md)。
+
 0.12.4 启用共享钉钉 SDF 多图集，并补充单张溢出、材质/子网格、SceneUI 显隐与池复用的 PlayMode 测试。静态检查通过；Unity MCP 不可用，修正首次测试编译错误后尚未取得编译和运行结果。详见 [0.12.4 发布说明](release-0.12.4.md)。
 
 0.12.3 修复两份共享 TTF 的 Git 换行损坏，增加长度/SHA256、字体结构与干净检出回归；Unity MCP 不可用，编译和运行验收未完成，见 [0.12.3 发布说明](release-0.12.3.md)。
@@ -14,15 +16,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | 已发布 `0.12.4` | 共享钉钉 SDF 多图集容量修复 |
-| 发布状态 | `v0.12.4` | 静态配置/二进制检查通过；Unity 编译、容量及 SceneUI 回归待确认 |
+| 框架包 | 已发布 `0.12.5` | UPM 检查更新动态进度与非阻塞查询 |
+| 发布状态 | `v0.12.5` | 静态检查完成；Unity 编译、EditMode 与交互回归待确认 |
 | 根模板 | `base 0.6.0 / stable` | 内容与封存 Hash 均为 `506baffc678f37d420308607c5f70e42`；已通过项目中心声明框架 `0.12.0` |
 | 派生模板 | `source3d-2p5d 0.3.1 / preview` | 父基线 `base 0.6.0`，ParentSnapshot 与父 Hash 一致；已通过父同步继承框架 `0.12.0` |
 | 模板开发副本 | `source3d-2p5d 0.3.1` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.4 正式发布声明；本补丁不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要配置，详见 [0.12.4 发布说明](release-0.12.4.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.5 正式发布声明；本补丁不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要配置，详见 [0.12.5 发布说明](release-0.12.5.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
