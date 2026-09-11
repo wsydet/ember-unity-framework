@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.12.3] - 2026-09-11
+
+- **修复共享字体发布损坏**：SharedAssets 默认关闭 LFS 与换行转换，meta、TXT 和文本序列化 asset 单独保留文本处理；从已验证的本地原件恢复钉钉进步体和阿里妈妈东方大楷 TTF，分别补回被 CRLF→LF 删除的 299 和 3,943 字节。
+- **二进制完整性回归**：新增已验证原件的长度/SHA256 清单与标准库 Python 检查，覆盖完整共享目录二进制清单、工作区/暂存区或发布 Git blob、两种 autocrlf 的干净检出、可选消费包核对，以及 TTF 表校验和/字形偏移/重点中文 cmap。CI 在提交、PR 与 tag 执行静态检查。
+- **验证边界**：两份本地字体通过结构检查与 FreeType 栅格化，旧发布均被结构检查拒绝。Unity MCP 不可用，Unity 编译、导入与 UnityFarm 六个正式 SceneUI 标记的运行验收待手动完成。仅框架升级，模板、SDF 发布内容、GameplayScene、FarmM1、EUI 美术、Binding 与农场规则不变。
+
 ## [0.12.2] - 2026-09-10
 
 - **修复 Table 导入后的生成物误判**：Binding/Catalog 的 C# 文本产物显式包含 UTF-8 BOM，与框架脚本导入器保持一致，避免导入后多出三字节而触发 ArtifactStale、重复全量替换或阻止单表导出。Manifest、CSV 和 ETBL 编码与格式不变，生成物仍逐字节校验。

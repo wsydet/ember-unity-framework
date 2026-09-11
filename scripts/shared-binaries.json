@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf",
+      "length": 2129136,
+      "sha256": "6F6A1E15F33D559FF3D0D7DCC8BD9AB25A6DBD8E9BCD29865DAF7615A17EA284"
+    },
+    {
+      "path": "SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf",
+      "length": 5251184,
+      "sha256": "043CEBA922A6EE7A376687F36D27E3D96EB2B6E0784CC32826D8B062E9038214"
+    }
+  ]
+}
