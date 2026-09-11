@@ -104,8 +104,13 @@ UnityFarm 通过 UPM 升级；PackageCache 中的试验性修改最多用于定�
 
 ### 7.1 仅框架变化
 
-发布 Ember 后，在 UnityFarm 使用 `Ember/UPM Manager` 或项目 manifest 升级 `com.ember`。让 Unity 完成解析、
-编译和回归；不需要执行模板部署。
+**禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。**
+此规则适用于 UnityFarm 及其他 Ember 消费项目，也适用于人工操作与代理自动化。不得手改
+`Packages/manifest.json` 的版本或 Git URL，也不得手改 `Packages/packages-lock.json` 的版本或提交 hash 来完成升级。
+
+发布 Ember 后，在消费项目打开 `Ember/UPM Manager`，选择已发布版本并执行升级，由升级器与 Unity
+Package Manager 管理依赖声明和锁文件。若无法操作 UPM Manager，应让用户在 Unity 中执行，不得退回直接改文件。
+升级后可以只读核对 manifest、lock、实际解析版本及包文件完整性，再完成编译和回归；仅框架变化不需要执行模板部署。
 
 ### 7.2 模板也发生变化
 
@@ -125,13 +130,14 @@ UnityFarm 通过 UPM 升级；PackageCache 中的试验性修改最多用于定�
 3. 框架改动在 `Packages/com.ember` 实现；模板改动在 embedded 框架项目中通过项目中心保存和封存。
 4. 执行与改动匹配的 Unity 编译、EditMode、Play Mode、模板 hash/父快照和消费项目验证。
 5. 更新 `package.json`、`CHANGELOG`、依赖声明和发布说明，创建不可变版本 tag 并推送。
-6. UnityFarm 升级框架；如模板有变化，再按 7.2 节选择补齐、完整重新部署或人工迁移。
+6. UnityFarm 必须通过 `Ember/UPM Manager` 升级框架，禁止直接修改 manifest 或 lock 来升级；如模板有变化，再按 7.2 节选择补齐、完整重新部署或人工迁移。
 7. 在 UnityFarm 重新验证原始问题和受影响链路，不能用框架开发项目通过代替消费项目通过。
 
 ## 9. 每次任务结束前检查
 
 - [ ] 已明确改动归属，没有把产品业务收进 Ember。
 - [ ] 没有直接修改或依赖 UnityFarm PackageCache 中的临时内容。
+- [ ] 消费端升级通过 `Ember/UPM Manager` 执行，没有直接修改 manifest 或 lock 来升级。
 - [ ] 框架 API、模板初始内容及调用方的版本关系一致。
 - [ ] 模板变更经过保存、Bump；父模板变更已评估派生同步。
 - [ ] 已明确 UnityFarm 是只升级框架，还是还要迁移模板。

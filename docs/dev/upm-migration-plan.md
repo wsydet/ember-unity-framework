@@ -24,7 +24,7 @@
 
 Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel 明确纳入第三方交付范围，统一使用私有 `ember-thirdparty-upm`。前四个包已与 embedded 副本逐文件核对一致；Feel v5.4 已准备 `com.moremountains.feel 5.4.0` 本地封装，保留 GUID、许可证和原始结构，当前工程尚未切换来源。MCP 不可用时不宣称迁移已通过，也不删除源插件；后续完成安装/编译/功能验收再清理。
 
-## 消费项目安装
+## 消费项目首次安装
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
@@ -47,6 +47,12 @@ Git URL 依赖在消费项目 manifest 中直接声明；框架 package.json 只
 `Assets/Art` 不属于快照范围；框架共享字体和精选资源放在 `SharedAssets`，通过 GUID 引用。
 
 ## 框架升级
+
+**禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。**
+不得手改 `Packages/manifest.json` 的版本/Git URL 或 `Packages/packages-lock.json` 的版本/提交 hash 来升级。
+该要求适用于所有 Ember 消费项目及代理操作；上面的首次安装说明不能作为已有项目升级的替代流程。
+如果无法操作 UPM Manager，应由用户在 Unity 中执行升级，不能退回文件编辑。升级后可以只读核对声明、锁文件和实际包内容。
+正式规则见 [UnityFarm 改动回流与升级规则 §7.1](../../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md#71-仅框架变化)。
 
 `Ember/UPM Manager` 读取已安装版本和远程 tag，消费端选择目标后通过 Package Manager 安装。
 当前工作区新增的 `EmberUPMUpgradeTracker` 记录校验、下载/解析、注册/编译、版本验证阶段，

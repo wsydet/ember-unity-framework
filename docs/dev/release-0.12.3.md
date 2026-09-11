@@ -49,7 +49,7 @@ python scripts/check-shared-binaries.py --revision v0.12.3 --package-root "<Unit
 
 版本、CHANGELOG、`Dependencies~/release-0.12.3.json` 与 `manifest-0.12.3.json` 对齐；第三方依赖不变。模板仍为 `base 0.6.0` 与 `source3d-2p5d 0.3.1`，保持原内容、hash、ParentSnapshot 与 0.12.0 兼容声明，**不重新部署模板**。
 
-UnityFarm 只更新现有 manifest 的 com.ember URL，以及 packages-lock 内同一依赖的 URL/commit hash。保留此前所有用户修改与未跟踪文件，包括 GameplayScene、FarmM1、EUI 美术和生成 Binding；不进入 P4，不修改农场规则，不写 PackageCache。
+**禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。** 消费端依赖声明与锁文件由升级器和 Unity Package Manager 管理，不得手改 URL、版本或提交 hash；无法操作升级器时应由用户在 Unity 中执行。保留此前所有用户修改与未跟踪文件，包括 GameplayScene、FarmM1、EUI 美术和生成 Binding；不进入 P4，不修改农场规则，不写 PackageCache。此要求在本次发布后的流程修订中确立，正式规则见 [升级规则 §7.1](../../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md#71-仅框架变化)。
 
 manifest/lock 修改成功只表示依赖声明升级。最终安装必须由 Unity Package Manager 解析后确认实际包版本与文件 SHA256；如果没有解析，仍按“UPM 实际安装待完成”记录，不将旧缓存哈希冒充新包结果。
 
@@ -59,7 +59,14 @@ manifest/lock 修改成功只表示依赖声明升级。最终安装必须由 Un
 
 当前 Unity MCP 未连接或不可用，本次未完成 Unity 编译验证。请在 Unity 中手动触发编译；如果仍有报错，请将首条编译错误及其完整堆栈发回当前对话。
 
-1. 在 UnityFarm 的 Package Manager 解析 com.ember v0.12.3，核对实际 package.json 为 0.12.3，并运行上述 `--package-root` 检查。不要编辑缓存或重新部署模板。
+1. 在 UnityFarm 的 `Ember/UPM Manager` 选择 v0.12.3 并升级，核对实际 package.json 为 0.12.3，并运行上述 `--package-root` 检查。不要直接编辑 manifest、锁文件、缓存或重新部署模板。
 2. 手动触发编译，确认 Console 没有编译/字体导入错误。必要时对已更新的源字体执行 Reimport，再次编译；不替换字体或更改图集配置。
 3. 从 **FrameworkScene** 进入农场，检查六个正式 **SceneUI** 标记；按游戏状态覆盖“主控中心、无人机、待命、小麦、胡萝卜、成熟、锁定田、解锁、水井、不消耗水”，确认中文正常且没有缺字警告，特别是“定”(U+5B9A) 与“田”(U+7530)。
 4. 保留截图/Console 与实际安装版本作为验收证据。静态字体检查、Unity 编译、运行时人工验收分别记录；本说明不宣称后两项已通过。
+
+## 发布后消费端核对（2026-09-11）
+
+用户确认升级完成。只读核对 UnityFarm 实际解析的 `com.ember@b2574aa1ee79/package.json` 为 0.12.3，
+锁定提交为 `6e85f3809016c3d130279dc37fb6c5c4b5b2c7cb`；上述 `--package-root` 回归通过，
+两份实际消费 TTF 的长度与 SHA256 均与原件、发布 blob 一致。此结果仅补全实际安装和二进制完整性验证；
+Unity MCP 自动编译与六个正式 SceneUI 标记的人工运行验收仍未取得结果。

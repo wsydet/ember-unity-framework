@@ -47,7 +47,8 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 当前开发版菜单为 `Ember/项目中心`。消费项目使用“项目初始化”部署兼容模板；embedded 开发环境额外显示“模板开发”。
 已安装旧版时以其菜单为准。模板按“加载 → 修改项目 Assets → 保存 → 显式 Bump”维护。
 
-框架升级使用 `Ember/UPM Manager` 选择已发布版本，由 Package Manager 解析依赖。
+**禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。**
+选择已发布版本执行升级，由升级器与 Package Manager 管理依赖及锁文件；不得手改 manifest 的版本/Git URL 或 packages-lock 的提交 hash。无法操作升级器时应由用户在 Unity 中执行，不能退回直接修改文件。上面的首次安装步骤不适用于已有消费项目升级。
 框架包升级不会自动把新模板内容合并进已有用户代码；消费端可选择同模板“补齐缺失”，或在确认覆盖后执行“完整重新部署”。后者会事务替换五个模板管理目录，适合应用 0.11.4 的 GUID 修复，但会覆盖这些目录中的项目修改。UnityFarm 开发中发现改动时，先按[改动回流规则](Documentation~/maintenance/unityfarm-change-routing.md)判定项目、框架和模板归属。
 不要把删除整个 `packages-lock.json` 当作常规升级步骤。
 
