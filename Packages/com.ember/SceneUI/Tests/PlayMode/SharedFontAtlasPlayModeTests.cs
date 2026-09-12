@@ -25,6 +25,7 @@ namespace Ember.SceneUI.PlayModeTests
         private const string FONT_PATH = "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset";
         private const string FONT_GUID = "a32ba8ab7d4aa814e8b5f0a267b29b42";
         private const string SOURCE_GUID = "3990ff594a20c3e42a78428e8b921683";
+        private const string SYMBOL_PATH = "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset";
         private static readonly string[] LABELS =
         {
             "主控中心", "无人机 A · 待命", "小麦 · 成熟", "胡萝卜 · 成熟",
@@ -35,6 +36,8 @@ namespace Ember.SceneUI.PlayModeTests
         private TMP_FontAsset _font;
         private TMP_FontAsset _source;
         private byte[] _sourceBytes;
+        private TMP_FontAsset _symbolFont;
+        private byte[] _symbolSourceBytes;
         private EmberSceneUIEngine _engine;
         private PrefabSceneUIViewHost _host;
 
@@ -76,6 +79,34 @@ namespace Ember.SceneUI.PlayModeTests
             _font.material.mainTexture = _font.atlasTextures[0];
             Assert.IsFalse(EditorUtility.IsPersistent(_font));
             Assert.IsFalse(EditorUtility.IsPersistent(_font.material));
+        }
+
+        private void CloneSymbolFallback(TMP_FontAsset primary)
+        {
+            _symbolSourceBytes = File.ReadAllBytes(SYMBOL_PATH);
+            var symbol = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(SYMBOL_PATH);
+            Assert.IsNotNull(symbol);
+            CollectionAssert.Contains(primary.fallbackFontAssetTable, symbol,
+                "The shipped primary asset must reference the bundled symbol fallback.");
+            Assert.IsNotNull(symbol.sourceFontFile);
+            Assert.AreEqual(AtlasPopulationMode.Dynamic, symbol.atlasPopulationMode);
+            Assert.IsTrue(symbol.isMultiAtlasTexturesEnabled);
+            Assert.AreSame(symbol.atlasTextures[0], symbol.material.mainTexture);
+
+            // Exercise the shipped SDF metrics/material, but isolate every mutable atlas from the asset.
+            _symbolFont = Object.Instantiate(symbol);
+            _symbolFont.hideFlags = HideFlags.DontSave;
+            var textures = new Texture2D[symbol.atlasTextures.Length];
+            for (int i = 0; i < textures.Length; i++)
+            {
+                textures[i] = Object.Instantiate(symbol.atlasTextures[i]);
+                textures[i].hideFlags = HideFlags.DontSave;
+            }
+            _symbolFont.atlasTextures = textures;
+            _symbolFont.material = new Material(symbol.material) { hideFlags = HideFlags.DontSave };
+            _symbolFont.material.mainTexture = textures[0];
+            _symbolFont.fallbackFontAssetTable = new List<TMP_FontAsset>();
+            _font.fallbackFontAssetTable = new List<TMP_FontAsset> { _symbolFont };
         }
 
         private char FillSingleAtlas(out char first)
@@ -216,6 +247,56 @@ namespace Ember.SceneUI.PlayModeTests
 
         #region 外部方法
 
+        [UnityTest]
+        public IEnumerator SymbolFallback_RendersMissingSymbolsAndKeepsChinesePrimary()
+        {
+            var primary = LoadSharedFont();
+            CreateTransientFont(primary);
+            Assert.IsFalse(_font.HasCharacter('▶', false, true),
+                "Negative control: the primary source must really lack U+25B6.");
+            CloneSymbolFallback(primary);
+            const string symbols = "▶◀▲▼▷◁△▽✓✔✕✖★☆●○◆◇■□⚠⏸⏹⏵⏴";
+            Assert.IsTrue(_symbolFont.TryAddCharacters(symbols, out string missing, false), missing);
+
+            SceneUIHandle handle = CreateSceneUI(out var updates, out var root);
+            Assert.IsTrue(handle.IsValid);
+            updates.NotifyCameraUpdated();
+            yield return null;
+            var label = root.GetComponentInChildren<TextMeshProUGUI>();
+            Assert.IsNotNull(label);
+            const string value = "主界面 ▶1 ✓完成 ✕取消 ⚠";
+            label.text = value;
+            label.ForceMeshUpdate();
+            Canvas.ForceUpdateCanvases();
+            Assert.AreEqual(value.Length, label.textInfo.characterCount);
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (char.IsWhiteSpace(value[i])) continue;
+                TMP_CharacterInfo character = label.textInfo.characterInfo[i];
+                Assert.AreEqual(value[i], character.character, "Missing symbols must not become replacement squares.");
+                Assert.IsTrue(character.isVisible);
+                TMP_FontAsset expected = _font.HasCharacter(value[i], false, false) ? _font : _symbolFont;
+                Assert.AreSame(expected, character.fontAsset);
+                var glyph = expected.characterLookupTable[value[i]].glyph;
+                Material material = label.textInfo.meshInfo[character.materialReferenceIndex].material;
+                Assert.AreSame(expected.atlasTextures[glyph.atlasIndex], material.mainTexture);
+                Assert.AreSame(expected.material.shader, material.shader);
+            }
+            Assert.AreSame(_font, label.textInfo.characterInfo[0].fontAsset);
+            Assert.AreSame(_symbolFont, label.textInfo.characterInfo[4].fontAsset);
+            bool foundSymbolSubmesh = false;
+            foreach (TMP_SubMeshUI submesh in label.GetComponentsInChildren<TMP_SubMeshUI>(true))
+            {
+                if (submesh.fontAsset != _symbolFont) continue;
+                foundSymbolSubmesh = true;
+                Assert.IsTrue(submesh.isActiveAndEnabled);
+                Assert.Greater(submesh.mesh.vertexCount, 0);
+                Assert.Greater(submesh.canvasRenderer.materialCount, 0);
+            }
+            Assert.IsTrue(foundSymbolSubmesh, "Fallback glyphs must create a live symbol submesh.");
+            LogAssert.NoUnexpectedReceived();
+        }
+
         [Test]
         public void SharedFont_PreservesSourceStyleAndAllowsMultipleAtlases()
         {
@@ -287,11 +368,23 @@ namespace Ember.SceneUI.PlayModeTests
                 Object.Destroy(_font);
                 _font = null;
             }
+            if (_symbolFont)
+            {
+                foreach (Texture2D texture in _symbolFont.atlasTextures)
+                    if (texture) Object.Destroy(texture);
+                Object.Destroy(_symbolFont.material);
+                Object.Destroy(_symbolFont);
+                _symbolFont = null;
+            }
             yield return null;
             if (_sourceBytes != null)
                 CollectionAssert.AreEqual(_sourceBytes, File.ReadAllBytes(FONT_PATH), "Test must not persist dynamic cache into the shared asset.");
             _sourceBytes = null;
             _source = null;
+            if (_symbolSourceBytes != null)
+                CollectionAssert.AreEqual(_symbolSourceBytes, File.ReadAllBytes(SYMBOL_PATH),
+                    "Test must not persist dynamic cache into the symbol fallback asset.");
+            _symbolSourceBytes = null;
         }
 
         #endregion

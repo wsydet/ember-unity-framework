@@ -5,6 +5,8 @@
 
 ## 当前基线
 
+0.12.8 为共享钉钉进步体接入 Noto Sans Symbols 2 后备字体，补齐 ▶ 等符号；原版 TTF 与 OFL 许可证随包交付。用户确认 Unity 编译无报错；本会话没有独立 MCP 验证，新增 PlayMode 与消费端混排渲染待验收。模板和第三方依赖不变。见 [0.12.8 发布说明](release-0.12.8.md)。
+
 0.12.7 发布引导步骤编辑器、模块菜单开关和原生 EntityId 回调，并修复 UI 开发中心保存后 Layout/Repaint 控件数量不一致。交付 base 0.6.3 与 source3d-2p5d 0.3.5，两个 GuideModule 均关闭；静态完整性检查通过，Unity 编译和 5 个新增案例待验证。见 [0.12.7 发布说明](release-0.12.7.md)。
 
 0.12.6 增加 EUI 中文用途、清理与删除列表用途显示及基础 UI 删除保护，交付用户已保存封存的 base 0.6.1 与 source3d-2p5d 0.3.3。内容 Hash 与父快照一致；Unity 编译、4 个新增 EditMode 案例及交互验收待完成。详见 [0.12.6 发布说明](release-0.12.6.md)。
@@ -20,15 +22,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | 已发布 `0.12.7` | 引导编辑器模板与 UI 开发中心布局修复 |
-| 发布状态 | `v0.12.7` | 静态检查完成；Unity 编译、EditMode 与交互回归待确认 |
+| 框架包 | 已发布 `0.12.8` | 共享符号后备字体与缺字渲染回归 |
+| 发布状态 | `v0.12.8` | 用户确认编译无报错；静态检查完成，PlayMode 与消费渲染待确认 |
 | 根模板 | `base 0.6.3 / stable` | 内容与封存 Hash 均为 `d822aa4b70ceedad14bac56c1989303b`；已通过项目中心声明框架 `0.12.0` |
 | 派生模板 | `source3d-2p5d 0.3.5 / preview` | 父基线 `base 0.6.3`，ParentSnapshot 与父 Hash 一致；已通过父同步继承框架 `0.12.0` |
 | 模板开发副本 | `source3d-2p5d 0.3.5` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.7 正式发布声明；本补丁不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要配置，详见 [0.12.7 发布说明](release-0.12.7.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.12.8 正式发布声明；本补丁不增加第三方依赖，7 个第三方包继续固定到已发布的 `ember-v0.11.1`。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要配置，详见 [0.12.8 发布说明](release-0.12.8.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -58,7 +60,7 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
-| P0 | UnityFarm 0.12.4 消费验收 | 通过 Ember/UPM Manager 升级，确认实际版本和多图集配置；手动编译，执行容量/材质/SceneUI 回归并验收六个正式标记 |
+| P0 | UnityFarm 0.12.8 字体验收 | 通过 Ember/UPM Manager 升级，确认后备字体与 ▶ 混排显示；新增符号 PlayMode 与既有容量/材质/SceneUI 回归仍待执行 |
 | P1 | 消费端模板升级向导（P-B） | 已有所有权标记，尚无把新模板安全合并进已有用户工程的完整向导；父子模板同步不等于该能力 |
 | P1 | 新消费项目完整回归 | 使用 `v0.12.1` 验证首次部署、模板替换部署、GUID 冲突阻断、场景引用和 Play 链路；不阻塞 UnityFarm 按既定 UPM 流程升级 |
 | P1 | Preview 模板生命周期（P-C） | 第二模板已存在；转 stable、deprecated 和消费项目完整演练仍需验收 |

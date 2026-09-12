@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.12.4**，启用共享钉钉 SDF 多图集以处理单张容量溢出，并保留 0.12.3 二进制修复。静态检查通过；Unity MCP 不可用，Unity 编译、容量压力测试与 UnityFarm 中文标记验收待确认。模板内容未变化，现有 0.12.0 兼容声明按 major.minor 规则继续适用。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.12.8**，为钉钉进步体补充共享符号后备字体。用户确认 Unity 编译无报错；静态检查通过，PlayMode 与 UnityFarm 符号渲染待验收。模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。
 
 ## 使用框架
 
@@ -16,6 +16,7 @@
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
 | [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
 | [0.12.0 发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
+| [0.12.8 发布说明](dev/release-0.12.8.md) | 共享符号后备字体、OFL 交付与验证边界 |
 | [0.12.7 发布说明](dev/release-0.12.7.md) | 引导编辑器、模块菜单开关与 UI 保存后布局修复 |
 | [0.12.6 发布说明](dev/release-0.12.6.md) | EUI 中文用途、删除保护与两个模板更新 |
 | [0.12.5 发布说明](dev/release-0.12.5.md) | UPM 检查进度、可选包体检与升级提示修复 |

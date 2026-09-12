@@ -36,7 +36,7 @@ def checksum(data):
     return sum(struct.unpack('>' + 'I' * (len(data) // 4), data)) & 0xffffffff
 
 
-def validate_ttf(data):
+def validate_ttf(data, required_characters='主控中心无人机待命小麦胡萝卜成熟锁定田解锁水井不消耗水'):
     """Validate sfnt directory, all table checksums, loca and Unicode cmap."""
     require(data[:4] == b'\0\1\0\0', 'Expected TrueType sfnt')
     count = struct.unpack_from('>H', data, 4)[0]
@@ -83,8 +83,9 @@ def validate_ttf(data):
                 start, end, first = struct.unpack_from('>III', cmap, off+16+12*group)
                 require(start <= end <= 0x10ffff and first+end-start < glyphs, 'Invalid cmap group')
                 mapped.update(range(start if first else start+1, end+1))
-    required = set(map(ord, '主控中心无人机待命小麦胡萝卜成熟锁定田解锁水井不消耗水'))
-    require(required <= mapped, 'Missing required Chinese codepoints: ' + str(sorted(required-mapped)))
+    required = set(map(ord, required_characters))
+    require(required <= mapped, 'Missing required codepoints: ' + str(sorted(required-mapped)))
+    return mapped
 
 
 def verify(data, entry, source):
@@ -93,7 +94,10 @@ def verify(data, entry, source):
     require(actual == entry['sha256'], f'{source}: SHA256 {actual}')
     require(not data.startswith(b'version https://git-lfs.github.com/spec/'), f'{source}: LFS pointer')
     if entry['path'].endswith('.ttf'):
-        validate_ttf(data)
+        if 'requiredCharacters' in entry:
+            validate_ttf(data, entry['requiredCharacters'])
+        else:
+            validate_ttf(data)
 
 
 def main():

@@ -10,6 +10,12 @@
       "path": "SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf",
       "length": 5251184,
       "sha256": "043CEBA922A6EE7A376687F36D27E3D96EB2B6E0784CC32826D8B062E9038214"
+    },
+    {
+      "path": "SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular.ttf",
+      "length": 1233128,
+      "sha256": "7D5FB73B7CA67A6798101741F5D280A3D016A56A197AFCD4199DBB57B4B82A21",
+      "requiredCharacters": "▶◀▲▼▷◁△▽✓✔✕✖★☆●○◆◇■□⚠⏸⏹⏵⏴"
     }
   ]
 }
