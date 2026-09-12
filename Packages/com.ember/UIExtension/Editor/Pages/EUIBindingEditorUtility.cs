@@ -28,6 +28,8 @@ namespace Ember.UIExtension.Editor
         public string PageName;
         public string ClassPath;
         public string ClassName;
+        public string UIDescription;
+        public bool IsDeletionProtected;
         public bool IsPage;
         public PageType PageType;
         public int FixedSortingOrder;
@@ -148,6 +150,7 @@ namespace Ember.UIExtension.Editor
         private const string PageNameProperty = "pageName";
         private const string ClassPathProperty = "classPath";
         private const string ClassNameProperty = "className";
+        private const string UIDescriptionProperty = "uiDescription";
         private const string CodePathModeProperty = "codePathMode";
         private const string PrefabNameProperty = "prefabName";
         private const string GenerateCustomSettingsProperty = "generateCustomSettings";
@@ -188,6 +191,8 @@ namespace Ember.UIExtension.Editor
                 PageName = binding.PageName,
                 ClassPath = binding.ClassPath,
                 ClassName = binding.ClassName,
+                UIDescription = binding.UIDescription,
+                IsDeletionProtected = binding.IsDeletionProtected,
                 IsPage = binding.IsPage,
                 PageType = binding.PageType,
                 FixedSortingOrder = binding.FixedSortingOrder,
@@ -225,6 +230,14 @@ namespace Ember.UIExtension.Editor
         {
             if (!binding) throw new ArgumentNullException(nameof(binding));
             if (snapshot == null) throw new ArgumentNullException(nameof(snapshot));
+            using (var so = new SerializedObject(binding))
+            {
+                so.FindProperty(UIDescriptionProperty).stringValue = snapshot.UIDescription ?? string.Empty;
+                // 普通快照应用不能解除已有保护，兼容不含保护字段的旧快照。
+                so.FindProperty("deletionProtected").boolValue =
+                    binding.IsDeletionProtected || snapshot.IsDeletionProtected;
+                so.ApplyModifiedProperties();
+            }
             SetPageInfo(binding, snapshot.PageName, snapshot.ClassPath, snapshot.ClassName,
                 snapshot.IsPage, snapshot.PageType, snapshot.NoCodeGen, snapshot.FixedSortingOrder);
             SetOptionalCodeFeatures(binding, snapshot.UseUIUpdate,

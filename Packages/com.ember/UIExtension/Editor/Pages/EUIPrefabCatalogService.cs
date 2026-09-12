@@ -20,6 +20,8 @@ namespace Ember.UIExtension.Editor
     public sealed class EUIPrefabCatalogEntry
     {
         public string PrefabPath;
+        public string UIDescription;
+        public bool IsDeletionProtected;
         public bool IsPage;
         public bool NoCodeGeneration;
         public PageType PageType;
@@ -255,6 +257,8 @@ namespace Ember.UIExtension.Editor
             var entry = new EUIPrefabCatalogEntry
             {
                 PrefabPath = prefabPath,
+                UIDescription = binding.UIDescription,
+                IsDeletionProtected = binding.IsDeletionProtected,
                 IsPage = binding.IsPage,
                 NoCodeGeneration = binding.NoCodeGeneration,
                 PageType = binding.PageType,

@@ -137,6 +137,21 @@ namespace Ember.UIExtension
 
         #region 编辑器面板参数
 
+        [PropertyOrder(-110)]
+        [FoldoutGroup("$GROUP", Expanded = true)]
+        [BoxGroup("$GROUP/UI 信息", ShowLabel = false)]
+        [SerializeField, LabelText("UI 用途"), TextArea(2, 4)]
+        [Tooltip("用中文说明这个 UI 的用途，例如：游戏模式主UI。保存 Prefab 后显示在 UI 开发中心，也可以按用途筛选；不影响类名和代码生成。")]
+        private string uiDescription;
+
+        [PropertyOrder(-109)]
+        [FoldoutGroup("$GROUP")]
+        [BoxGroup("$GROUP/UI 信息")]
+        [SerializeField, ReadOnly, LabelText("禁止删除")]
+        [ShowIf("@deletionProtected")]
+        [Tooltip("受保护的基础 UI，UI 开发中心及其删除服务均禁止删除；不提供面板解锁入口。")]
+        private bool deletionProtected;
+
         // ═══════════════════════════════════════
         // P1: 模板
         // ═══════════════════════════════════════
@@ -477,6 +492,10 @@ namespace Ember.UIExtension
         public bool IsPage => isPage;
         public string PageName => pageName;
         public string ClassName => className;
+        /// <summary>面向编辑者的 UI 用途说明，与类名及页面标识独立。</summary>
+        public string UIDescription => uiDescription ?? string.Empty;
+        /// <summary>禁止通过 UI 开发中心及其维护服务删除该 UI。</summary>
+        public bool IsDeletionProtected => deletionProtected;
         public string PrefabName => !string.IsNullOrEmpty(prefabName) ? prefabName : ClassName;
         public CodePathMode PathMode => codePathMode;
         public string CodePath => OnGetCodeRootPath?.Invoke(codePathMode);

@@ -765,10 +765,12 @@ namespace Ember.UI.Tests
             var snapshot = EUIPrefabCatalogService.Scan();
             Assert.IsTrue(snapshot.IsConfigured, snapshot.Error);
             Assert.IsNotEmpty(snapshot.Entries);
+            // 该用例只检查不生成代码的计划结构，不借用可能受保护的真实框架 UI。
             var existing = snapshot.Entries[0];
+            var probePath = snapshot.UIResourceRoot + "/NoCodePlanProbe" + Guid.NewGuid().ToString("N") + ".prefab";
             var entry = new EUIPrefabCatalogEntry
             {
-                PrefabPath = existing.PrefabPath,
+                PrefabPath = probePath,
                 IsPage = false,
                 NoCodeGeneration = true,
                 LogicScriptPath = existing.LogicScriptPath,
@@ -780,7 +782,7 @@ namespace Ember.UI.Tests
             var plan = EUIPrefabMaintenanceService.BuildDeletePlan(snapshot, entry);
 
             Assert.IsTrue(plan.CanExecute, string.Join("\n", plan.Errors));
-            CollectionAssert.AreEqual(new[] { existing.PrefabPath }, plan.AssetPaths);
+            CollectionAssert.AreEqual(new[] { probePath }, plan.AssetPaths);
         }
 
         [Test]

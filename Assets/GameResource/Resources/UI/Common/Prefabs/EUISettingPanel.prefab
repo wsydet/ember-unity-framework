@@ -609,6 +609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611d9d61619885f46bd4797707cc8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIBinding
+  uiDescription: "游戏设置界面"
+  deletionProtected: 1
   baseBindingUUID: 
   codePathMode: 0
   classPath: SettingScene

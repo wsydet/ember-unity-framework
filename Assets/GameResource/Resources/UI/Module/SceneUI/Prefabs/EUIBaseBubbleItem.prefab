@@ -196,6 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611d9d61619885f46bd4797707cc8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIBinding
+  uiDescription: "\u573A\u666F\u57FA\u7840\u6C14\u6CE1"
+  deletionProtected: 0
   baseBindingUUID: 
   codePathMode: 1
   classPath: Module/SceneUI

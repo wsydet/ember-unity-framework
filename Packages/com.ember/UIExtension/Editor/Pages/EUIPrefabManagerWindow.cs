@@ -118,6 +118,12 @@ namespace Ember.UIExtension.Editor
                 EditorGUILayout.HelpBox(_lastResult, MessageType.Info);
         }
 
+        private void OnProjectChange()
+        {
+            _catalog = null;
+            Repaint();
+        }
+
         private void DrawHeader()
         {
             EditorGUILayout.BeginHorizontal();
@@ -417,7 +423,8 @@ namespace Ember.UIExtension.Editor
                     ? $"扫描完成：{_catalog.Entries.Count} 个 UI 预制体。"
                     : _catalog?.Error;
             }
-            _overviewFilter = EditorGUILayout.TextField("筛选", _overviewFilter);
+            _overviewFilter = EditorGUILayout.TextField(
+                new GUIContent("筛选", "按 UI 用途、页面名称或预制体路径筛选"), _overviewFilter);
             if (_catalog?.IsConfigured == true)
             {
                 var pageCount = _catalog.Entries.Count(entry => entry.IsPage);
@@ -433,11 +440,16 @@ namespace Ember.UIExtension.Editor
         private void DrawCatalogEntry(EUIPrefabCatalogEntry entry)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            if (!string.IsNullOrWhiteSpace(entry.UIDescription))
+                EditorGUILayout.LabelField(new GUIContent(entry.UIDescription, "UI 用途"),
+                    new GUIStyle(EditorStyles.boldLabel) { wordWrap = true });
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(entry.IsHealthy ? "✅" : "⚠", GUILayout.Width(22f));
             EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(entry.PrefabPath),
                 EditorStyles.boldLabel, GUILayout.Width(190f));
             EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.miniLabel);
+            if (entry.IsDeletionProtected)
+                EditorGUILayout.LabelField("禁止删除（受保护）", EditorStyles.boldLabel, GUILayout.Width(135f));
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("定位", GUILayout.Width(52f))) PingAsset(entry.PrefabPath);
             if (GUILayout.Button("打开", GUILayout.Width(52f))) OpenAsset(entry.PrefabPath);
@@ -505,15 +517,24 @@ namespace Ember.UIExtension.Editor
             EditorGUILayout.LabelField("删除单个 UI", EditorStyles.boldLabel);
             foreach (var entry in FilteredEntries())
             {
-                EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                if (!string.IsNullOrWhiteSpace(entry.UIDescription))
+                    EditorGUILayout.LabelField(new GUIContent(entry.UIDescription, "UI 用途"),
+                        new GUIStyle(EditorStyles.boldLabel) { wordWrap = true });
+                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(entry.PrefabPath),
                     GUILayout.Width(210f));
                 EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.miniLabel);
                 var oldColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.85f, 0.35f, 0.3f);
-                if (GUILayout.Button("预览并删除", GUILayout.Width(105f))) DeleteUI(entry);
+                using (new EditorGUI.DisabledScope(entry.IsDeletionProtected))
+                {
+                    if (GUILayout.Button(entry.IsDeletionProtected ? "禁止删除（受保护）" : "预览并删除",
+                            GUILayout.Width(140f))) DeleteUI(entry);
+                }
                 GUI.backgroundColor = oldColor;
                 EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
             }
         }
 
@@ -698,7 +719,8 @@ namespace Ember.UIExtension.Editor
             var filter = _overviewFilter.Trim();
             return _catalog.Entries.Where(entry =>
                 entry.PrefabPath.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0
-                || (entry.PageName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) ?? -1) >= 0);
+                || (entry.PageName?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) ?? -1) >= 0
+                || (entry.UIDescription?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) ?? -1) >= 0);
         }
 
         private IEnumerable<string> PageDefFiles()

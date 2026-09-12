@@ -25,7 +25,7 @@ namespace Ember.UIExtension.Editor
         public readonly List<string> Errors = new List<string>();
         public string PageDefFile;
 
-        public bool CanExecute => Entry != null && Errors.Count == 0;
+        public bool CanExecute => Entry != null && !Entry.IsDeletionProtected && Errors.Count == 0;
 
         public string BuildSummary()
         {
@@ -90,6 +90,23 @@ namespace Ember.UIExtension.Editor
                 || !entry.PrefabPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
             {
                 plan.Errors.Add($"预制体不在允许的 UI Assets 范围：{entry.PrefabPath}");
+                return plan;
+            }
+
+            // 不信任调用方传入的目录标记；预览阶段也读取实际 Prefab。
+            try
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(entry.PrefabPath);
+                var binding = prefab ? prefab.GetComponent<EUIBinding>() : null;
+                if (entry.IsDeletionProtected || (binding && binding.IsDeletionProtected))
+                {
+                    plan.Errors.Add($"受保护的 UI 禁止删除：{entry.PrefabPath}");
+                    return plan;
+                }
+            }
+            catch (Exception exception)
+            {
+                plan.Errors.Add($"无法核对 UI 删除保护，已拒绝删除：{exception.Message}");
                 return plan;
             }
             plan.AssetPaths.Add(entry.PrefabPath);
@@ -638,6 +655,11 @@ namespace Ember.UIExtension.Editor
             if (!liveBinding)
             {
                 error = $"待删除资产已不是根 EUIBinding 预制体：{plan.Entry.PrefabPath}";
+                return false;
+            }
+            if (liveBinding.IsDeletionProtected)
+            {
+                error = $"受保护的 UI 禁止删除：{plan.Entry.PrefabPath}";
                 return false;
             }
             if (liveBinding.IsPage != plan.Entry.IsPage
