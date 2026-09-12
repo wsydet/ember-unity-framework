@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.12.7",
+  "frameworkTag": "v0.12.7",
+  "status": "released-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.12.7.json",
+  "coverage": "All 56 direct development-project entries; guide editor templates and UI catalog layout fixes add no third-party dependency.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.6.3",
+      "frameworkVersion": "0.12.0",
+      "contentHash": "d822aa4b70ceedad14bac56c1989303b",
+      "status": "content-updated-and-versioned"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.3.5",
+      "frameworkVersion": "0.12.0",
+      "parentId": "base",
+      "parentVersion": "0.6.3",
+      "parentContentHash": "d822aa4b70ceedad14bac56c1989303b",
+      "contentHash": "5b72df281ab2916646b5ade4e137fdd5",
+      "status": "content-updated-and-versioned"
+    }
+  ],
+  "validation": "Static release integrity only: template content/versioned hashes, parent snapshot, development editor copies, Enabled=false in both templates, native EntityId callback, release dependency consistency, shared font configuration, binary integrity and clean checkouts. Added three development-project Guide editor EditMode cases and two packaged UI catalog layout cases, including real IMGUI repaint. Unity MCP is unavailable; compilation, all five new tests, guide menu/editor interaction and consumer upgrade remain unverified. User saved and versioned both templates through the template editor. Third-party dependencies and published shared fonts are unchanged."
+}

@@ -70,6 +70,10 @@ namespace Ember.UIExtension.Editor
         private EUICreationPlan _creationPlan;
         private EUICreationResult _creationResult;
         private EUIPrefabCatalogSnapshot _catalog;
+        private bool _catalogRefreshPending;
+        private bool _reportCatalogRefresh;
+        private string _layoutStatusMessage;
+        private MessageType _layoutStatusType;
         private EUIModuleTemplatePanel _moduleTemplatePanel;
         private readonly List<EUIOrphanScriptGroup> _orphanGroups = new List<EUIOrphanScriptGroup>();
         private readonly List<KeyValuePair<string, string>> _emptyLeaves =
@@ -89,11 +93,12 @@ namespace Ember.UIExtension.Editor
             _creationRequest ??= new EUICreationRequest();
             _moduleTemplatePanel = new EUIModuleTemplatePanel();
             _moduleTemplatePanel.Refresh();
-            Rescan();
+            RequestCatalogRefresh();
         }
 
         private void OnGUI()
         {
+            PrepareLayoutState();
             DrawHeader();
             EditorGUILayout.Space(6f);
 
@@ -120,8 +125,7 @@ namespace Ember.UIExtension.Editor
 
         private void OnProjectChange()
         {
-            _catalog = null;
-            Repaint();
+            RequestCatalogRefresh();
         }
 
         private void DrawHeader()
@@ -131,16 +135,8 @@ namespace Ember.UIExtension.Editor
             _tab = (DevelopmentTab)GUILayout.Toolbar((int)_tab, TabLabels, GUILayout.Height(25f));
             EditorGUILayout.EndHorizontal();
 
-            if (EUICreationCompilationContinuation.IsPending)
-            {
-                EditorGUILayout.HelpBox(
-                    $"正在等待 Unity 编译/资源更新完成：{EUICreationCompilationContinuation.PendingPrefabPath}",
-                    MessageType.Info);
-            }
-            else if (EditorApplication.isCompiling || EditorApplication.isUpdating)
-            {
-                EditorGUILayout.HelpBox("Unity 正在编译或更新资源，创建和维护操作暂时禁用。", MessageType.Warning);
-            }
+            if (!string.IsNullOrEmpty(_layoutStatusMessage))
+                EditorGUILayout.HelpBox(_layoutStatusMessage, _layoutStatusType);
         }
 
         #region 创建 UI
@@ -418,10 +414,8 @@ namespace Ember.UIExtension.Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("刷新扫描", GUILayout.Width(100f)))
             {
-                Rescan();
-                _lastResult = _catalog?.IsConfigured == true
-                    ? $"扫描完成：{_catalog.Entries.Count} 个 UI 预制体。"
-                    : _catalog?.Error;
+                RequestCatalogRefresh();
+                _reportCatalogRefresh = true;
             }
             _overviewFilter = EditorGUILayout.TextField(
                 new GUIContent("筛选", "按 UI 用途、页面名称或预制体路径筛选"), _overviewFilter);
@@ -624,7 +618,7 @@ namespace Ember.UIExtension.Editor
             var removed = targets.Sum(entry =>
                 EUIPrefabMaintenanceService.RemoveMissingScriptsInPrefab(entry.PrefabPath));
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            Rescan();
+            RequestCatalogRefresh();
             _lastResult = $"已移除 {removed} 个 Missing Script。";
         }
 
@@ -639,7 +633,7 @@ namespace Ember.UIExtension.Editor
             var removed = targets.Sum(entry =>
                 EUIPrefabMaintenanceService.RemoveNullBindingsInPrefab(entry.PrefabPath));
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            Rescan();
+            RequestCatalogRefresh();
             _lastResult = $"已删除 {removed} 条空引用绑定。";
         }
 
@@ -684,7 +678,7 @@ namespace Ember.UIExtension.Editor
             {
                 _emptyLeaves.Remove(candidate);
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-                Rescan();
+                RequestCatalogRefresh();
                 _lastResult = $"已删除空叶子：{candidate.Value}";
             }
             else
@@ -697,16 +691,47 @@ namespace Ember.UIExtension.Editor
 
         #region 通用
 
-        private void Rescan()
+        private void RequestCatalogRefresh()
         {
-            _catalog = EUIPrefabCatalogService.Scan();
-            _orphanGroups.Clear();
-            _emptyLeaves.Clear();
+            // 保存/导入通知可能落在 Layout 与 Repaint 之间，保留这一轮的绘制快照。
+            _catalogRefreshPending = true;
+            Repaint();
+        }
+
+        private void PrepareLayoutState()
+        {
+            if (Event.current.type != EventType.Layout) return;
+            if (_catalogRefreshPending || _catalog == null)
+            {
+                _catalogRefreshPending = false;
+                _catalog = EUIPrefabCatalogService.Scan();
+                _orphanGroups.Clear();
+                _emptyLeaves.Clear();
+                if (_reportCatalogRefresh)
+                {
+                    _reportCatalogRefresh = false;
+                    _lastResult = _catalog.IsConfigured
+                        ? $"扫描完成：{_catalog.Entries.Count} 个 UI 预制体。"
+                        : _catalog.Error;
+                }
+            }
+
+            // 编译/资源更新提示同样会改变控件数量，只在新一轮 Layout 切换。
+            _layoutStatusMessage = null;
+            if (EUICreationCompilationContinuation.IsPending)
+            {
+                _layoutStatusMessage = $"正在等待 Unity 编译/资源更新完成：{EUICreationCompilationContinuation.PendingPrefabPath}";
+                _layoutStatusType = MessageType.Info;
+            }
+            else if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            {
+                _layoutStatusMessage = "Unity 正在编译或更新资源，创建和维护操作暂时禁用。";
+                _layoutStatusType = MessageType.Warning;
+            }
         }
 
         private bool EnsureCatalog()
         {
-            if (_catalog == null) Rescan();
             if (_catalog?.IsConfigured == true) return true;
             EditorGUILayout.HelpBox(_catalog?.Error ?? "UI 目录尚未扫描。", MessageType.Error);
             return false;

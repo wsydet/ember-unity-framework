@@ -1,8 +1,8 @@
 # 新手引导模块（GuideModule）设计文档
 
 > 参考 burner `GuideNew` 模块，落地为 ember-unity-framework 的**业务模块**。
-> 当前实现位于 `Assets/Game/Module/Guide/`（2026-09-07 核对）。基础类型、运行器和编辑器已存在；默认通过 `[EmberModule(..., Enabled = false)]` 关闭，需要业务装配后使用。
-> 最后更新：2026-08-19
+> 当前实现位于 `Assets/Game/Module/Guide/`（2026-09-12 核对）。基础类型、运行器、独立步骤编辑窗口和 Inspector 已存在；默认通过 `[EmberModule(..., Enabled = false)]` 关闭，需要业务装配后使用。
+> 最后更新：2026-09-12
 
 ---
 
@@ -62,7 +62,12 @@ Assets/Game/Module/Guide/
 ├── GuideOverlay.cs             # 运行时构建的遮罩 / 小手覆盖层
 ├── GuideUtils.cs               # 工具（查找 UI 控件 / 屏幕矩形 / 日志）
 └── Editor/
-    └── GuideDefineEditor.cs    # 自定义 Inspector（加步骤 / 折叠显示）
+    ├── GuideDefineEditor.cs    # Inspector 入口，共用参数绘制
+    ├── GuideEditorWindow.cs    # 左侧步骤排序 / 右侧阶段编辑
+    ├── GuideEditorFields.cs    # 中文类型选择、托管引用参数与条件组
+    ├── GuideEditorModel.cs     # 参数映射、步骤深复制、只读校验
+    ├── GuideEditorPicker.cs    # GamePages 页面用途与 Prefab 节点选择
+    └── GuideEditorMenu.cs      # 按模块 Enabled 标记动态显示顶部菜单
 ```
 
 - **命名空间**：`Game.Module.Guide`（独立子命名空间，避免 `GuideEvent` 等泛化名冲突）。
@@ -380,7 +385,7 @@ GuideOverlayCanvas (Canvas, sortingOrder=29000)
 
 ## 10. 使用流程（业务接入）
 
-1. **创建引导定义**：`Assets → Create → Ember/Guide/GuideDefine`，加步骤、配条件 / 事件 / 执行器。
+1. **创建引导定义**：`Ember → 引导 → 引导编辑器 → 新建引导`，选中步骤编辑条件 / 事件 / 执行器；也可双击已有 GuideDefine。详见 [引导编辑器使用](../user/引导编辑器使用.md)。
 2. **创建引导注册表**：`Assets → Create → Ember/Guide/GuideConfig`，填 `id` / `sequenceOrder` / `define` / 参数。
 3. **装配模块**：把 `GuideModule` 上的特性改为
    `[EmberModule(ModulePhase.Global, Enabled = true)]`（默认 false）。`Enabled` 是启动扫描时的类型级
@@ -426,4 +431,16 @@ GuideOverlayCanvas (Canvas, sortingOrder=29000)
 - **正式美术**：`GuideOverlay` 换成 prefab（手指动画、气泡九宫格）。
 - **更多条件 / 事件 / 执行器**：按枚举 + 注册表扩展。
 - **自动化测试**：为状态机补 EditMode 测试。
-- **可视化编辑器**：远期在蓝图 / 节点编辑器里搭引导流程。
+- **节点图编辑器**：当前已提供列表排序与分阶段表单；自由连线、分支图与运行时预览尚未实现。
+
+## 13. 2026-09-12 步骤编辑器
+
+参考 Burner GuideNewEditorWindow 的左右分栏、步骤排序、分阶段参数与中文选择，复用现有 GuideDefine / SerializeReference 数据，不引入 Burner CSV、SLG 条件或服务器依赖。新建步骤使用空定义，复制步骤通过 Unity 克隆整个 SO 隔离嵌套引用；表单和列表操作支持 Undo。配置检查只读，保存只写当前引导资产。
+
+菜单 `Ember/引导/引导编辑器`；Inspector 与双击资产均可进入。支持嵌套 AND/OR、事件/执行器排序、参数创建与重建、按中文用途选择 GamePages 页面及实际节点名称。当前 GuideUtils 按节点名递归查找，并不解析文档中原先声称的点分层级，编辑器不会填写伪路径；同名节点仍需业务侧消歧。
+
+顶部菜单按 GuideModule 的 EmberModuleAttribute.Enabled 显示或隐藏；关闭模块后不保留置灰菜单。编译重载后延迟同步一次，无每帧轮询、无单例创建。动态菜单使用反射隔离 Unity 内部 Menu API；接口来源见 [UnityCsReference](https://github.com/Unity-Technologies/UnityCsReference/blob/master/Editor/Mono/Menu.bindings.cs)。若版本不兼容，输出明确诊断；Inspector 和双击资产入口继续可用。
+
+2026-09-12 用户已通过模板面板将本轮编辑器和原生 EntityId 回调保存并封存为 base 0.6.3，再同步封存 source3d-2p5d 0.3.5；父版本、实际内容与封存 Hash 一致，随框架 0.12.7 交付。两个 GuideModule 均保持 Enabled=false。当前编辑记录为 source3d-2p5d 0.3.5。
+
+开发工程回归位于 Assets/Tests/Editor/GuideEditor，3 个 EditMode 用例覆盖嵌套引用深复制、新建空步骤与 Undo、校验不修改资产。该测试目录不属于业务模板快照。Unity MCP 不可用，本次未完成 Unity 编译验证及测试执行；请在 Unity 中手动触发编译，若仍有报错，请提供首条错误和完整堆栈。

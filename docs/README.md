@@ -16,6 +16,7 @@
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
 | [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
 | [0.12.0 发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
+| [0.12.7 发布说明](dev/release-0.12.7.md) | 引导编辑器、模块菜单开关与 UI 保存后布局修复 |
 | [0.12.6 发布说明](dev/release-0.12.6.md) | EUI 中文用途、删除保护与两个模板更新 |
 | [0.12.5 发布说明](dev/release-0.12.5.md) | UPM 检查进度、可选包体检与升级提示修复 |
 | [0.12.4 发布说明](dev/release-0.12.4.md) | 共享 SDF 多图集、容量/材质/SceneUI 回归与验证边界 |
@@ -37,6 +38,7 @@
 | [Table](../Packages/com.ember/Table/Documentation~/table/README.md) | 强类型 Row、CSV/TSV、ETBL V1、Binding/Catalog、Engine 与 ModuleBase |
 | [PlayerControl](dev/player-control-module.md) | 2.5D 输入、拖动、缩放、边界与模板归属 |
 | [Guide](dev/guide-module-design.md) | 可选新手引导模块、配置与扩展 |
+| [引导编辑器使用](user/引导编辑器使用.md) | 中文步骤编辑、条件组合、页面选择、排序与撤销 |
 
 ## 模板、编辑器和验证
 
