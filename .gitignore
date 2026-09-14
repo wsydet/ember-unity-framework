@@ -11,6 +11,9 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 .utmp/
+# Skills are maintained in .agents/skills; .claude/skills is a local compatibility junction.
+# Previously tracked compatibility files remain tracked; do not add new duplicate entries.
+/.claude/skills/
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
