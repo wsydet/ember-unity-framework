@@ -1,7 +1,7 @@
 # UPM 包交付与维护
 
 > 更新：2026-09-14。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为修复快速场景打开器刷新的 **0.12.9**；静态检查、Unity 与消费项目验证分别记录。
+> 当前发布版本为增加 UPM 版本更新内容的 **0.12.10**；静态检查、Unity 与消费项目验证分别记录。
 
 ## 目录与依赖
 
@@ -28,7 +28,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.12.9`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.12.9.json`，不覆盖消费项目其他依赖。
+3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.12.10`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.12.10.json`，不覆盖消费项目其他依赖。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。
@@ -55,15 +55,22 @@ Git URL 依赖在消费项目 manifest 中直接声明；框架 package.json 只
 正式规则见 [UnityFarm 改动回流与升级规则 §7.1](../../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md#71-仅框架变化)。
 
 `Ember/UPM Manager` 读取已安装版本和远程 tag，消费端选择目标后通过 Package Manager 安装。
+0.12.10 已增加“更新内容”功能：检测到可升级版本后，最新版本默认展开说明，其他版本可展开查看。
+通过已有 Git 凭据对最新固定标签做 bare partial clone，仅读取包内 CHANGELOG 并按版本匹配，不检出 Assets。
+读取异步执行，60 秒超时；同一窗口复用已取得的说明，失败可重试或打开该版本日志原文，缺少说明不阻挡升级。
+后台结果只在 Layout 阶段应用，关闭窗口取消读取；临时 Git 数据位于 Library/EmberUPMReleaseNotes，按请求清理。
+5 个新增离线 EditMode 回归包含真实 IMGUI 重绘；已验证远端标签的 Git 文本读取，Unity 编译与测试尚未执行。
 当前工作区新增的 `EmberUPMUpgradeTracker` 记录校验、下载/解析、注册/编译、版本验证阶段，
 通过 SessionState 跨脚本域重载续接。成功以安装结果版本核对为准，不把估算进度当成下载百分比。
 
 Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不需要删除整个 lock 文件。
-当前升级器只更新 `com.ember`，Odin/DOTween 标为框架必需，同时展示五项可选第三方包的 UPM/直接导入状态，并为未安装项提供按需安装按钮。随包 `Dependencies~/release-0.12.9.json` 和完整 manifest 基线继续使用第三方 `ember-v0.11.1`；消费端差异确认、权限检查和自动安装流程仍未实现。消费端需手动合并声明，不能复制开发机 `file:` 路径或覆盖其整份 manifest。
+当前升级器只更新 `com.ember`，Odin/DOTween 标为框架必需，同时展示五项可选第三方包的 UPM/直接导入状态，并为未安装项提供按需安装按钮。随包 `Dependencies~/release-0.12.10.json` 和完整 manifest 基线继续使用第三方 `ember-v0.11.1`；消费端差异确认、权限检查和自动安装流程仍未实现。消费端需手动合并声明，不能复制开发机 `file:` 路径或覆盖其整份 manifest。
 更新包与更新已部署模板是两个动作：同模板“补齐缺失”保留已有文件；“完整重新部署”会在确认后事务替换五个模板管理目录，用于显式应用已有文件修复；P-B 的用户区合并向导仍待实现。
 不同活动模板不能走普通“补齐缺失”；项目中心提供“部署此模板”，只把包内目标完整模板事务部署到消费项目，不保存当前内容或修改包内模板。
 
 ## 发布维护
+
+0.12.10 为每个可升级版本增加可展开的更新内容，默认展开最新版本，异步读取固定标签发布日志并支持失败重试。远端中文日志传输已验证；Unity 编译、5 个新增 EditMode 案例与消费交互尚未验证。详见 [0.12.10 发布说明](release-0.12.10.md)。
 
 0.12.9 修复快速打开场景刷新后依赖 SO Inspector 的问题，直接按资产路径打开并保留刷新选择。Unity MCP 不可用，编译、4 个新增 EditMode 案例与消费交互待验证。详见 [0.12.9 发布说明](release-0.12.9.md)。
 
@@ -84,7 +91,7 @@ Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不�
 
 0.12.1 在 `Ember.Table.Editor` 增加声明/数据可视化、可复制查询代码和安全单表导出，不增加第三方依赖。正式发布声明与完整 manifest 位于 `Dependencies~/release-0.12.1.json` 和 `manifest-0.12.1.json`；本次会话无 Unity MCP，修复最后一条用户报告的编译错误后尚未独立取得 Unity 编译与新增 Editor 测试结果。
 
-框架包版本为 **0.12.9**；根模板为 `base 0.6.3`，派生模板为 `source3d-2p5d 0.3.5` 且父基线对齐 `base 0.6.3`。用户已通过模板面板保存和 Bump，内容、封存 Hash 与父快照一致。模板声明保持 0.12.0，并按 major.minor 闸门兼容本补丁；第三方内容未变化，复用 `ember-v0.11.1`。发布信息与验证边界见 [0.12.9 发布说明](release-0.12.9.md)。 两个模板的 GuideModule 均保持 Enabled=false。
+框架包版本为 **0.12.10**；根模板为 `base 0.6.3`，派生模板为 `source3d-2p5d 0.3.5` 且父基线对齐 `base 0.6.3`。用户已通过模板面板保存和 Bump，内容、封存 Hash 与父快照一致。模板声明保持 0.12.0，并按 major.minor 闸门兼容本补丁；第三方内容未变化，复用 `ember-v0.11.1`。发布信息与验证边界见 [0.12.10 发布说明](release-0.12.10.md)。 两个模板的 GuideModule 均保持 Enabled=false。
 
 发布按 `package.json → CHANGELOG → release/manifest 声明 → commit → tag → push` 对齐版本。Unity MCP 不可用时不得用 BatchMode 或 dotnet 结果替代 Unity 编译结论，必须在发布说明中保留手动验证边界。
 

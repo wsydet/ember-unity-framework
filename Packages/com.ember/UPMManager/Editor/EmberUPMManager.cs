@@ -76,6 +76,12 @@ namespace Ember.UPMManager.Editor
         private readonly List<Version> _newerTags = new();
         private Version _latestRemote;
         private Vector2 _scrollPosition;
+        private EmberUPMReleaseNotes _releaseNotesRequest;
+        private Dictionary<Version, string> _releaseNotesByVersion;
+        private readonly HashSet<Version> _expandedReleaseNotes = new();
+        private Version _releaseNotesSourceVersion;
+        private string _releaseNotesError;
+        private bool _retryReleaseNotes;
 
         #endregion
 
@@ -98,6 +104,7 @@ namespace Ember.UPMManager.Editor
 
         private void OnGUI()
         {
+            if (Event.current.type == EventType.Layout) UpdateReleaseNotes();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember UPM 管理器", EditorStyles.boldLabel);
@@ -214,6 +221,7 @@ namespace Ember.UPMManager.Editor
                     UpgradeTo(tag);
                 GUI.enabled = true;
                 EditorGUILayout.EndHorizontal();
+                DrawReleaseNotes(tag);
             }
 
             // 可选更新：仅 patch 高于当前（小修补，框架不变）
@@ -226,9 +234,80 @@ namespace Ember.UPMManager.Editor
                     UpgradeTo(tag);
                 GUI.enabled = true;
                 EditorGUILayout.EndHorizontal();
+                DrawReleaseNotes(tag);
             }
 
             DrawUpgradeOperation(upgrade);
+        }
+
+        private void UpdateReleaseNotes()
+        {
+            // Publish asynchronous content only at Layout, keeping control structure stable for Repaint.
+            if (!_checking && !_checkFailed && _newerTags.Count > 0 && _latestRemote != null
+                && (_retryReleaseNotes || _releaseNotesSourceVersion != _latestRemote))
+            {
+                _retryReleaseNotes = false;
+                StopReleaseNotes();
+                _releaseNotesSourceVersion = _latestRemote;
+                _releaseNotesByVersion = null;
+                _releaseNotesError = null;
+                _expandedReleaseNotes.Add(_latestRemote);
+                try
+                {
+                    string root = Directory.GetParent(Application.dataPath)?.FullName
+                        ?? throw new InvalidOperationException("无法定位项目目录。");
+                    _releaseNotesRequest = new EmberUPMReleaseNotes(FrameworkRepoUrl, _latestRemote,
+                        Path.Combine(root, "Library", "EmberUPMReleaseNotes"));
+                }
+                catch (Exception ex) { _releaseNotesError = ex.Message; }
+            }
+
+            if (_releaseNotesRequest == null) return;
+            _releaseNotesRequest.Poll();
+            if (!_releaseNotesRequest.IsCompleted) return;
+            _releaseNotesError = _releaseNotesRequest.Error;
+            _releaseNotesByVersion = _releaseNotesRequest.Notes;
+            StopReleaseNotes();
+        }
+
+        private void DrawReleaseNotes(Version version)
+        {
+            bool expanded = EditorGUILayout.Foldout(_expandedReleaseNotes.Contains(version), "更新内容", true);
+            if (expanded) _expandedReleaseNotes.Add(version);
+            else _expandedReleaseNotes.Remove(version);
+            if (!expanded) return;
+
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+            {
+                if (_releaseNotesRequest != null)
+                    EditorGUILayout.LabelField("正在加载更新内容…（最长等待 60 秒）", EditorStyles.wordWrappedMiniLabel);
+                else if (!string.IsNullOrEmpty(_releaseNotesError))
+                {
+                    EditorGUILayout.HelpBox("更新内容暂时无法加载，仍可升级。\n" + _releaseNotesError, MessageType.Warning);
+                    if (GUILayout.Button("重试加载更新内容", GUILayout.Width(140))) _retryReleaseNotes = true;
+                }
+                else if (_releaseNotesByVersion != null && _releaseNotesByVersion.TryGetValue(version, out string notes)
+                    && !string.IsNullOrWhiteSpace(notes))
+                {
+                    var style = new GUIStyle(EditorStyles.wordWrappedLabel) { richText = false };
+                    EditorGUILayout.LabelField(EmberUPMReleaseNotes.ToDisplayText(notes), style);
+                }
+                else
+                    EditorGUILayout.LabelField("该版本尚未提供更新说明，仍可升级。", EditorStyles.wordWrappedMiniLabel);
+
+                if (_releaseNotesSourceVersion != null)
+                    EditorGUILayout.LabelField($"来源：v{_releaseNotesSourceVersion} 发布日志中的 v{version} 条目",
+                        EditorStyles.wordWrappedMiniLabel);
+                if (GUILayout.Button("查看该版本发布日志原文", GUILayout.Width(180)))
+                    Application.OpenURL("https://github.com/wsydet/ember-unity-framework/blob/v" + version +
+                        "/Packages/com.ember/CHANGELOG.md");
+            }
+        }
+
+        private void StopReleaseNotes()
+        {
+            _releaseNotesRequest?.Dispose();
+            _releaseNotesRequest = null;
         }
 
         /// <summary>版本语义：major/minor 高于当前 = 框架变化 = 强制更新；仅 patch 高 = 可选。</summary>
@@ -256,6 +335,12 @@ namespace Ember.UPMManager.Editor
             _newerTags.Clear();
             _latestRemote = null;
             _checkCurrentVersion = current;
+            _retryReleaseNotes = false;
+            if (_releaseNotesRequest != null)
+            {
+                StopReleaseNotes();
+                _releaseNotesSourceVersion = null;
+            }
             Repaint();
 
             try
@@ -335,6 +420,9 @@ namespace Ember.UPMManager.Editor
         private void OnDisable()
         {
             StopUpdateCheck();
+            StopReleaseNotes();
+            _releaseNotesSourceVersion = null;
+            _retryReleaseNotes = false;
         }
 
         private void UpgradeTo(Version target)
@@ -484,7 +572,7 @@ namespace Ember.UPMManager.Editor
 
         private void OnInspectorUpdate()
         {
-            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive)
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive || _releaseNotesRequest != null || _retryReleaseNotes)
                 Repaint();
         }
 
