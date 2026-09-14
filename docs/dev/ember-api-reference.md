@@ -1853,6 +1853,9 @@ var rel     = UrlUtils.GetRelativePath("C:/a/b/c.txt", "C:/a/"); // "b/c.txt"
 | **位置** | `Packages/com.ember/Core/Runtime/EmberSceneField.cs` |
 | **说明** | 可拖拽的场景引用。在 Inspector 中拖 .unity 文件替代手写字符串。隐式转换 string。 |
 
+编辑器工具可通过 `EditorScenePath` 取得已绑定 SceneAsset 的真实路径（仅 `UNITY_EDITOR` 可用）；
+该属性不依赖未序列化的场景名缓存，也不要求先在 Inspector 中选中配置 SO。
+
 ```csharp
 [SerializeField] private EmberSceneField _battleScene;
 // Inspector 中拖拽场景文件

@@ -7,6 +7,7 @@
         "Ember.UIExtension.Editor",
         "Ember.Core.Runtime",
         "Ember.Core.Editor",
+        "Ember.Editor",
         "Ember.Basic.Runtime",
         "UniRx"
     ],

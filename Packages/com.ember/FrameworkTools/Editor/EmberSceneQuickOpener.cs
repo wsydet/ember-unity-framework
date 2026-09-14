@@ -39,18 +39,31 @@ namespace Ember.Core.Editor
         private void RefreshMapping()
         {
             var guids = AssetDatabase.FindAssets("t:EmberSceneMapping");
-            _mapping = guids
+            var mapping = guids
                 .Select(g => AssetDatabase.LoadAssetAtPath<EmberSceneMapping>(
                     AssetDatabase.GUIDToAssetPath(g)))
-                .FirstOrDefault();
+                .FirstOrDefault(m => m != null);
+            UpdateMapping(mapping);
+        }
 
-            if (_mapping == null) return;
+        private void UpdateMapping(EmberSceneMapping mapping)
+        {
+            var selectedState = _mainIndex >= 0 && _mainIndex < _mainStates.Count
+                ? _mainStates[_mainIndex].stateName : null;
+            var selectedOverlays = new HashSet<string>();
+            for (int i = 0; i < _overlayStates.Count && i < _overlayToggles.Count; i++)
+                if (_overlayToggles[i]) selectedOverlays.Add(_overlayStates[i].stateName);
 
+            _mapping = mapping;
             _mainStates.Clear();
             _overlayStates.Clear();
+            _overlayToggles.Clear();
+            _mainIndex = 0;
+            if (_mapping == null || _mapping.entries == null) return;
 
             foreach (var e in _mapping.entries)
             {
+                if (e == null || string.IsNullOrEmpty(e.stateName)) continue;
                 if (e.stateName == "InitState") continue;       // 隐藏，无用户场景
                 if (e.stateName == "SettingsState")              // 可叠加
                     _overlayStates.Add(e);
@@ -58,27 +71,33 @@ namespace Ember.Core.Editor
                     _mainStates.Add(e);                          // 主场景
             }
 
-            // 同步 toggle 列表长度
-            while (_overlayToggles.Count < _overlayStates.Count)
-                _overlayToggles.Add(false);
-            if (_overlayToggles.Count > _overlayStates.Count)
-                _overlayToggles.RemoveRange(_overlayStates.Count, _overlayToggles.Count - _overlayStates.Count);
+            // 按状态身份保留选择，避免刷新后的顺序或数量变化选中另一个场景。
+            int index = _mainStates.FindIndex(e => e.stateName == selectedState);
+            if (index >= 0) _mainIndex = index;
+            foreach (var entry in _overlayStates)
+                _overlayToggles.Add(selectedOverlays.Contains(entry.stateName));
         }
 
         private void OnGUI()
         {
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            bool refresh = GUILayout.Button("刷新", GUILayout.Width(50));
+            using (new EditorGUI.DisabledScope(_mapping == null))
+                if (GUILayout.Button("SO", GUILayout.Width(40))) Selection.activeObject = _mapping;
+            EditorGUILayout.EndHorizontal();
+            if (refresh)
+            {
+                RefreshMapping();
+                Repaint();
+                GUIUtility.ExitGUI(); // 列表可能改变，下一次 Layout 重新构建控件。
+            }
+
             if (_mapping == null)
             {
                 EditorGUILayout.HelpBox("EmberSceneMapping.asset 未找到，下次编译自动生成。", MessageType.Info);
                 return;
             }
-
-            // 工具栏
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("刷新", GUILayout.Width(50))) RefreshMapping();
-            if (GUILayout.Button("SO", GUILayout.Width(40))) Selection.activeObject = _mapping;
-            EditorGUILayout.EndHorizontal();
 
             GUILayout.Space(4);
 
@@ -110,69 +129,73 @@ namespace Ember.Core.Editor
             GUILayout.Space(8);
 
             // --- 打开按钮 ---
-            GUI.enabled = CanOpen();
-            if (GUILayout.Button("打开场景", GUILayout.Height(28)))
-                OpenScenes();
-            GUI.enabled = true;
+            using (new EditorGUI.DisabledScope(!CanOpen()))
+                if (GUILayout.Button("打开场景", GUILayout.Height(28)))
+                    OpenScenes();
         }
 
         private static void ShowSceneStatus(StateSceneEntry entry)
         {
-            if (entry.sceneField.HasValue)
-                EditorGUILayout.LabelField($"  {entry.sceneField.SceneName}", EditorStyles.miniLabel);
+            var path = ResolveScenePath(entry.sceneField);
+            if (!string.IsNullOrEmpty(path))
+                EditorGUILayout.LabelField($"  {System.IO.Path.GetFileNameWithoutExtension(path)}", EditorStyles.miniLabel);
             else
-                EditorGUILayout.LabelField("  (未设置 — 请在 SO 中手动赋值)", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField("  (场景未设置、已丢失或名称不唯一 — 请在 SO 中指定)", EditorStyles.miniLabel);
         }
 
         private bool CanOpen()
         {
-            if (_mapping.frameworkScene == null) return false;
-            if (_mainStates.Count == 0) return false;
-            return _mainStates[_mainIndex].sceneField.HasValue;
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return false;
+            if (_mapping == null || _mapping.frameworkScene == null) return false;
+            if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(_mapping.frameworkScene))) return false;
+            if (_mainIndex < 0 || _mainIndex >= _mainStates.Count) return false;
+            if (string.IsNullOrEmpty(ResolveScenePath(_mainStates[_mainIndex].sceneField))) return false;
+            if (_overlayStates.Count != _overlayToggles.Count) return false;
+            for (int i = 0; i < _overlayStates.Count; i++)
+                if (_overlayToggles[i] && string.IsNullOrEmpty(ResolveScenePath(_overlayStates[i].sceneField)))
+                    return false;
+            return true;
         }
 
         private void OpenScenes()
         {
-            if (EditorApplication.isPlaying) return;
+            if (!CanOpen()) return;
+            // 先解析全部路径，再询问保存与切换，避免打开框架后才发现目标场景无效。
+            var paths = new List<string> { AssetDatabase.GetAssetPath(_mapping.frameworkScene) };
+            var mainPath = ResolveScenePath(_mainStates[_mainIndex].sceneField);
+            if (!paths.Contains(mainPath)) paths.Add(mainPath);
+            for (int i = 0; i < _overlayStates.Count; i++)
+            {
+                if (!_overlayToggles[i]) continue;
+                var path = ResolveScenePath(_overlayStates[i].sceneField);
+                if (!paths.Contains(path)) paths.Add(path);
+            }
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
-            var frameworkPath = AssetDatabase.GetAssetPath(_mapping.frameworkScene);
-            EditorSceneManager.OpenScene(frameworkPath, OpenSceneMode.Single);
+            for (int i = 0; i < paths.Count; i++)
+                EditorSceneManager.OpenScene(paths[i], i == 0 ? OpenSceneMode.Single : OpenSceneMode.Additive);
 
-            // 主场景
-            var mainPath = FindScenePath(_mainStates[_mainIndex].sceneField.SceneName);
-            EditorSceneManager.OpenScene(mainPath, OpenSceneMode.Additive);
-
-            // 叠加场景
-            var opened = new List<string> { frameworkPath, mainPath };
-            for (int i = 0; i < _overlayToggles.Count; i++)
-            {
-                if (_overlayToggles[i] && _overlayStates[i].sceneField.HasValue)
-                {
-                    var path = FindScenePath(_overlayStates[i].sceneField.SceneName);
-                    if (path != null)
-                    {
-                        EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
-                        opened.Add(path);
-                    }
-                }
-            }
-
-            EmberDebug.Log(TAG, $"场景已打开: {string.Join(" + ", opened.Select(System.IO.Path.GetFileNameWithoutExtension))}");
+            EmberDebug.Log(TAG, $"场景已打开: {string.Join(" + ", paths.Select(System.IO.Path.GetFileNameWithoutExtension))}");
             Close();
         }
 
-        private static string FindScenePath(string sceneName)
+        private static string ResolveScenePath(EmberSceneField field)
         {
+            var assetPath = field.EditorScenePath;
+            if (!string.IsNullOrEmpty(assetPath)) return assetPath;
+            // 保留代码通过场景名构造引用的用法；重名时要求显式指定资产。
+            var sceneName = field.SceneName;
             if (string.IsNullOrEmpty(sceneName)) return null;
             var guids = AssetDatabase.FindAssets($"t:Scene {sceneName}");
+            string match = null;
             foreach (var g in guids)
             {
                 var p = AssetDatabase.GUIDToAssetPath(g);
-                if (System.IO.Path.GetFileNameWithoutExtension(p) == sceneName)
-                    return p;
+                if (System.IO.Path.GetFileNameWithoutExtension(p) != sceneName) continue;
+                if (match != null) return null;
+                match = p;
             }
-            return null;
+            return match;
         }
     }
 }

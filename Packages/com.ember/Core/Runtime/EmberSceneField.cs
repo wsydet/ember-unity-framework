@@ -77,6 +77,11 @@ namespace Ember.Core
         #region Editor 工厂
 
 #if UNITY_EDITOR
+        /// <summary>编辑器中已绑定场景的真实路径，不依赖 Inspector 更新场景名缓存。</summary>
+        public readonly string EditorScenePath => _sceneAsset is SceneAsset
+            ? AssetDatabase.GetAssetPath(_sceneAsset)
+            : string.Empty;
+
         /// <summary>从资产路径加载 SceneAsset 并构造。</summary>
         public static EmberSceneField FromAssetPath(string assetPath)
         {
