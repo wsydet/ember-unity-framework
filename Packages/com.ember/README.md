@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.13.0**（AI Skill 独立更新、EUI 公开接口与 Player 修复；静态检查通过，Unity 编译与消费验收待确认）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.13.1**（9 个可安装 AI Skill 与消费项目适配；技能/Python 静态检查通过，Unity 安装与此前代码验收待确认）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.13.0"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.13.1"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.13.0 manifest 基线](Dependencies~/manifest-0.13.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.13.1 manifest 基线](Dependencies~/manifest-0.13.1.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 

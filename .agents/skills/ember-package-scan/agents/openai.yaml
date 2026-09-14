@@ -1,3 +1,4 @@
-display_name: ember-package-scan
-short_description: 扫描项目实际安装的包依赖，与包清单文档对比，生成文档更新建议
-default_prompt: 扫描一下项目里现在的包，看看文档要不要更新
+interface:
+  display_name: "Ember 包清单同步"
+  short_description: "核对 Unity 项目的依赖声明与解析结果，生成或同步项目自己的包清单文档。"
+  default_prompt: "使用 $ember-package-scan 处理我指定的项目范围，并报告实际验证结果。"

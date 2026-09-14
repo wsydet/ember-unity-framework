@@ -1,3 +1,4 @@
-display_name: ember-commit-review
-short_description: 提交前审查本地变更，智能分类文件并按照提交规范推荐提交信息
-default_prompt: 看看现在有什么改动能提交的，帮我分类一下
+interface:
+  display_name: "Ember 提交审查"
+  short_description: "审查当前项目的已暂存、未暂存及未跟踪文件，按项目规范整理提交建议。"
+  default_prompt: "使用 $ember-commit-review 处理我指定的项目范围，并报告实际验证结果。"

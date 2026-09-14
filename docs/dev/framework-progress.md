@@ -5,6 +5,8 @@
 
 ## 当前基线
 
+0.13.1 在原有 EUI 技能之外新增 8 个可安装技能，共 9 个；补齐独立参考资料、项目规则适配和依赖包只读保护。文档审计脚本隔离回归通过；Unity 面板安装尚未实测。见 [0.13.1 发布说明](release-0.13.1.md)。
+
 0.13.0 增加 UPM Manager 独立 AI Skill 更新、框架维护的 EUI 技能及公开重新生成 API，并修复 EUIBinding 的 Player 编辑器引用。静态检查通过；Unity 编译、EditMode、实际技能安装与 UnityFarm 打包仍待验证。见 [0.13.0 发布说明](release-0.13.0.md)。
 
 0.12.11 增强可选第三方包安装状态，显示实际版本与来源，兼容直接导入插件；提供固定版本安装、刷新与复制地址按钮，安装前重查以防重复安装。安装标签与静态检查已核对；Unity 编译、8 个新增 EditMode 案例与实际安装待验证。见 [0.12.11 发布说明](release-0.12.11.md)。
@@ -30,15 +32,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | 已发布 `0.13.0` | AI Skill 更新、EUI 公开接口与 Player 修复 |
-| 发布状态 | `v0.13.0` | 静态检查通过；Unity 编译、EditMode、技能安装及消费端打包待确认 |
+| 框架包 | 已发布 `0.13.1` | 9 个可安装技能与消费项目适配 |
+| 发布状态 | `v0.13.1` | 技能/Python 与发布静态检查通过；Unity 安装及此前代码验收仍待确认 |
 | 根模板 | `base 0.6.3 / stable` | 内容与封存 Hash 均为 `d822aa4b70ceedad14bac56c1989303b`；内容不变，框架兼容声明推进到 `0.13.0` |
 | 派生模板 | `source3d-2p5d 0.3.5 / preview` | 父基线 `base 0.6.3`，ParentSnapshot 与父 Hash 一致；内容不变，框架兼容声明推进到 `0.13.0` |
 | 模板开发副本 | `source3d-2p5d 0.3.5` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.13.0 正式发布声明；完整 manifest 的第三方基线仍为 `ember-v0.11.1`。可选安装按钮改用各包独立标签（Feel 除外），对应地址单独记入发布声明。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要点击安装，详见 [0.12.11 发布说明](release-0.12.11.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.13.1 正式发布声明；完整 manifest 的第三方基线仍为 `ember-v0.11.1`。可选安装按钮改用各包独立标签（Feel 除外），对应地址单独记入发布声明。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要点击安装，详见 [0.12.11 发布说明](release-0.12.11.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -68,6 +70,7 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
+| P0 | 9 技能消费端验收 | 通过 UPM Manager 选择 v0.13.1，逐项验证首次安装、更新与项目本地修改保护 |
 | P0 | AI Skill 与 EUI 0.13.0 验收 | 手动编译、运行新增 EditMode；验证技能检查/安装/本地修改保护，以及 UnityFarm Player 构建 |
 | P0 | UPM 可选包 0.12.11 验收 | 手动编译并执行 8 个新增 EditMode 案例；验证实际安装、自动刷新及已有插件保护 |
 | P0 | UPM 更新内容 0.12.10 验收 | 手动编译并执行 5 个新增 EditMode 案例；验证版本说明展开、加载失败重试和升级按钮可用 |

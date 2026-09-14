@@ -8,14 +8,14 @@
 | [ember-generate-doc](../../.agents/skills/ember-generate-doc/SKILL.md) | 为指定模块生成或更新 API 文档 |
 | [ember-package-scan](../../.agents/skills/ember-package-scan/SKILL.md) | 对照 manifest/lock/embedded 包同步依赖清单 |
 | [ember-plugin-migrate](../../.agents/skills/ember-plugin-migrate/SKILL.md) | 评估或实施第三方插件迁移到 UPM |
-| [ember-commit-review](../../.agents/skills/ember-commit-review/SKILL.md) | 审查本地改动，分组建议提交，不自动提交 |
+| [ember-commit-review](../../.agents/skills/ember-commit-review/SKILL.md) | 审查本地改动并分组；明确要求代提交时按项目授权执行 |
 | [ember-odin-inspector](../../.agents/skills/ember-odin-inspector/SKILL.md) | 指定脚本或目录，检查和优化 Odin 面板 |
 | [ember-odin-capture-style](../../.agents/skills/ember-odin-capture-style/SKILL.md) | 从满意的面板提取写法到 Odin 规范 |
 | [ember-region-organizer](../../.agents/skills/ember-region-organizer/SKILL.md) | 按项目约定整理 C# region |
-| [ember-solution-design](../../.agents/skills/ember-solution-design/SKILL.md) | 先讨论方案，确认方案后再实现 |
+| [ember-solution-design](../../.agents/skills/ember-solution-design/SKILL.md) | 先讨论方案；保留已有实施授权，不重复确认 |
 | [ember-eui-build](../../.agents/skills/ember-eui-build/SKILL.md) | 使用 UI 开发中心制作 EUI Prefab、生成真实绑定并完成用户逻辑；可通过 UPM Manager 安装到消费项目 |
 
-消费项目的技能安装、更新、兼容要求与备份恢复见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。发布目录由框架 `.agents/skills/catalog.json` 维护；仅纳入消费端可用的技能。
+消费项目的技能安装、更新、兼容要求与备份恢复见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。发布目录由框架 `.agents/skills/catalog.json` 维护；v0.13.1 发布其中 9 个技能；除 ember-plugin-migrate 外，上表所有技能均可独立安装。空白 template-skill 不发布。
 
 文档维护示例：
 

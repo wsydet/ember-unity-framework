@@ -1,6 +1,6 @@
 # Ember Skill 编写与维护
 
-最后核对：2026-09-07。项目 Skill 的真实目录是 `.agents/skills/<name>/SKILL.md`；本工作区 `.claude/skills` 是兼容 junction，修改真实目录即可，不维护两份副本。Skill 清单见 [速查表](skills-reference.md)。
+最后核对：2026-09-07。项目 Skill 的真实目录是 `.agents/skills/<name>/SKILL.md`；本工作区 `.claude/skills` 是兼容 junction，修改真实目录即可，不维护两份副本。Git 只跟踪真实技能目录；兼容路径不重复提交。Skill 清单见 [速查表](skills-reference.md)。
 
 ## 结构与触发
 
@@ -36,3 +36,5 @@ description: 说明该技能解决的任务、何时使用，以及相邻但不�
 - 用应触发/不应触发的真实请求检查 description，保留有效工作流，删除本次会话状态和重复约束。
 
 可复用实例：[文档维护 Skill](../../.agents/skills/ember-doc-maintenance/SKILL.md)。
+
+消费项目可安装技能必须自包含，必需资料放在各自 references/assets 中；不能强制依赖开发仓库 docs/dev。项目文档与风格记录写入项目自有位置，不写回安装技能目录或依赖包。新增技能在没有框架开发文档的隔离消费项目中验证；脚本变更执行行为回归。

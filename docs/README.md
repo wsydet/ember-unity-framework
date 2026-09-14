@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.0**，新增 AI Skill 独立更新和 EUI 公开生成 API，并修复 Player 编辑器引用。静态检查通过；Unity 编译、EditMode 和消费端验收待完成。模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.1**，AI Skill 目录扩充为 **9 个**，支持独立安装及项目规则适配。技能/Python 与发布静态检查通过，Unity 面板安装尚待实测；模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。
 
 ## 使用框架
 
@@ -17,6 +17,7 @@
 | [AI Skill 独立更新](../Packages/com.ember/Documentation~/maintenance/ai-skills.md) | UPM Manager 单独安装/更新技能、来源版本、本地修改保护与备份恢复（0.13.0 起） |
 | [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
 | [0.12.0 发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
+| [0.13.1 发布说明](dev/release-0.13.1.md) | 9 个可安装技能、消费项目适配与文档保护 |
 | [0.13.0 发布说明](dev/release-0.13.0.md) | AI Skill 独立更新、EUI 公开接口与 Player 修复 |
 | [0.12.11 发布说明](dev/release-0.12.11.md) | 可选包安装状态、固定版本安装与验证边界 |
 | [0.12.10 发布说明](dev/release-0.12.10.md) | UPM 版本更新内容、异步读取和验证边界 |

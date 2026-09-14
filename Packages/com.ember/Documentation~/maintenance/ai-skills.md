@@ -1,6 +1,6 @@
 # AI Skill 独立安装与更新
 
-此功能从框架 **0.13.0** 开始提供。消费项目先通过 UPM Manager 升级并完成编译，再使用技能更新入口；可选择固定标签 `v0.13.0` 安装本次发布的技能。
+此功能从框架 **0.13.0** 开始提供。消费项目先通过 UPM Manager 升级并完成编译，再使用技能更新入口；当前固定标签 `v0.13.1` 提供 9 个技能。已有 0.13.0 更新器也可选择此标签检查技能，无需为纯技能更新强制升级框架。
 
 ## 使用入口
 
@@ -14,10 +14,29 @@
 
 安装只修改当前项目的 `.agents/skills/<id>/` 和 `.agents/ember-ai-skills.json`，不修改个人技能目录、其他项目技能、`Assets`、UPM manifest/lock 或模板。
 
+
+## 0.13.1 技能目录
+
+| 技能 | 用途 |
+|---|---|
+| `ember-eui-build` | Ember EUI 制作 |
+| `ember-commit-review` | Ember 提交审查 |
+| `ember-region-organizer` | Ember 代码分块 |
+| `ember-solution-design` | Ember 方案评估 |
+| `ember-package-scan` | Ember 包清单同步 |
+| `ember-generate-doc` | Ember API 文档 |
+| `ember-odin-inspector` | Ember Odin 面板检查 |
+| `ember-doc-maintenance` | Ember 文档维护 |
+| `ember-odin-capture-style` | Ember Odin 风格记录 |
+
+每个技能可单独安装，无须安装其他技能。Odin 两项在执行时检查项目 Odin 条件；当前面板不做 Odin 专用安装阻断。EUI 仍检查公开生成 API。文档维护需要 Python 3 及 rg 或 Git；下载和安装不会自动执行审计脚本。
+
+API 文档模板和 Odin 检查依据随各自技能分发。项目自己的文档、提交规范与风格记录优先；缺少开发仓库 docs/dev 不阻止使用。文档审计默认 consumer 模式保护所有依赖包，framework 模式仅用于明确的框架源码维护。
+
 ## 来源、版本与备份
 
 - **唯一维护源**：框架仓库 `.agents/skills/`。消费者持有安装副本，不应分别维护一套同名通用技能。
-- **发布目录**：`.agents/skills/catalog.json`。只有列入目录的技能可通过面板安装。当前先开放通用的 `ember-eui-build`；依赖开发仓库专有文档或流程的其他技能不会自动安装到消费项目。
+- **发布目录**：`.agents/skills/catalog.json`。只有列入目录的技能可通过面板安装。当前发布 9 个消费项目可用技能，见下表；插件迁移与空白模板不在目录内。
 - **独立更新**：Git 浅克隆、partial clone 和非 cone 稀疏检出只展开 `.agents/skills/`，不检出框架源码、模板和游戏资产。支持过滤的服务器只传输所需 blobs；若服务器忽略过滤，Git 可能额外传输对象，但安装范围不变。
 - **固定来源**：检查时解析分支/标签的提交 SHA，安装使用同一缓存快照，期间远程分支推进不改变待安装内容。
 - **安装记录**：`.agents/ember-ai-skills.json` 保存仓库、请求的分支/标签、实际 SHA、UTC 安装时间及各文件 SHA256。应与项目技能一起提交。
@@ -41,6 +60,6 @@ API 接收已保存 Prefab 资源上的 EUIBinding，调用原统一生成流程
 
 ## 维护与验证
 
-维护一个技能时更新源目录及相关接口说明；新增可供消费端使用的技能时在 catalog 中声明 id、显示名、描述、最低框架版本及需要的能力。catalog schemaVersion 当前为 1，未知能力会被拒绝。
+维护源只提交 `.agents/skills`；本地 `.claude/skills` 兼容 junction 不重复跟踪。维护一个技能时更新源目录及相关接口说明；新增可供消费端使用的技能时在 catalog 中声明 id、显示名、描述、最低框架版本及需要的能力。catalog schemaVersion 当前为 1，未知能力会被拒绝。
 
 回归覆盖目录范围、固定 tag 下载、取消/超时/重试、首次安装、清理旧文件、本地修改与未管理副本、预览后变化、替换失败恢复和源码保护。Unity EditMode 测试与实际 IMGUI/消费端验收需在 Unity 中完成，不能用 Git 或 JSON 静态检查替代。
