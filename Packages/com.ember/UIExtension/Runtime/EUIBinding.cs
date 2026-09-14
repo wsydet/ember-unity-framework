@@ -181,12 +181,14 @@ namespace Ember.UIExtension
         [ValueDropdown("GetCodePathModeOptions")]
         private CodePathMode codePathMode;
 
+#if UNITY_EDITOR
         [PropertyOrder(-79)]
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/输出设置")]
         [ShowInInspector, ReadOnly, LabelText("输出根目录")]
         [Tooltip("统一生成到业务层根目录（在 Project Settings 中配置）")]
         private string CodeRootPath => OnGetCodeRootPath?.Invoke(codePathMode) ?? "（未配置）";
+#endif
 
         [PropertyOrder(-78)]
         [FoldoutGroup("$GROUP")]
@@ -498,7 +500,9 @@ namespace Ember.UIExtension
         public bool IsDeletionProtected => deletionProtected;
         public string PrefabName => !string.IsNullOrEmpty(prefabName) ? prefabName : ClassName;
         public CodePathMode PathMode => codePathMode;
+#if UNITY_EDITOR
         public string CodePath => OnGetCodeRootPath?.Invoke(codePathMode);
+#endif
         public string ClassPath => classPath;
         public bool NoCodeGeneration => noCodeGen;
         public bool GenerateCustomSettings => generateCustomSettings;
@@ -541,6 +545,7 @@ namespace Ember.UIExtension
         /// </summary>
         private void CheckCustomTransitionMethods()
         {
+#if UNITY_EDITOR
             _needCustomTransitionMethods = false;
             if (!useCustomTransition) return;
 
@@ -553,6 +558,7 @@ namespace Ember.UIExtension
 
             var content = System.IO.File.ReadAllText(fullPath);
             _needCustomTransitionMethods = !content.Contains("OnCustomEnter") || !content.Contains("OnCustomExit");
+#endif
         }
 
         /// <summary>
