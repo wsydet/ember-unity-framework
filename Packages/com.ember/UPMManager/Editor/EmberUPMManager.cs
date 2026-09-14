@@ -38,24 +38,6 @@ namespace Ember.UPMManager.Editor
         private const string DotweenUrl =
             "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815";
 
-        private const string ThirdPartyRepoUrl = "https://github.com/wsydet/ember-thirdparty-upm.git";
-        private const string ThirdPartyTag = "ember-v0.11.1";
-
-        /// <summary>与随包 Dependencies~ 发布清单对应；类型探针兼容直接导入的插件。</summary>
-        private static readonly (string packageName, string label, string typeName, string desc)[] OptionalPackages =
-        {
-            ("com.borodar.rainbow-folders", "Rainbow Folders", "Borodar.RainbowFolders.RainbowFoldersGUI",
-                "Project 文件夹颜色与图标"),
-            ("com.borodar.rainbow-hierarchy", "Rainbow Hierarchy", "Borodar.RainbowHierarchy.RainbowHierarchyGUI",
-                "Hierarchy 层级颜色与分组"),
-            ("com.flyingworm.consolepro", "Console Pro", "FlyingWormConsole3.ConsoleProDebug",
-                "Console 日志增强"),
-            ("com.ryanindiedev.inputdevicedetector", "InputDeviceDetector", "InputDeviceDetection.InputDeviceDetector",
-                "键鼠与手柄输入设备识别"),
-            ("com.moremountains.feel", "Feel", "MoreMountains.Feedbacks.MMF_Player",
-                "反馈、动效与振动工具")
-        };
-
         /// <summary>未来扩展包（预留区，Phase 2/3 规划）</summary>
         private static readonly (string name, string desc)[] PlannedPackages =
         {
@@ -82,6 +64,9 @@ namespace Ember.UPMManager.Editor
         private Version _releaseNotesSourceVersion;
         private string _releaseNotesError;
         private bool _retryReleaseNotes;
+        private Dictionary<string, EmberUPMOptionalPackages.State> _optionalPackageStates;
+        private bool _optionalPackagesDirty = true;
+        private string _optionalPackagesError;
 
         #endregion
 
@@ -102,9 +87,44 @@ namespace Ember.UPMManager.Editor
 
         #region 内部方法
 
+        private void OnEnable()
+        {
+            UnityEditor.PackageManager.Events.registeredPackages += OnPackagesRegistered;
+            RequestOptionalPackageRefresh();
+        }
+
+        private void OnFocus() => RequestOptionalPackageRefresh();
+        private void OnProjectChange() => RequestOptionalPackageRefresh();
+
+        private void OnPackagesRegistered(UnityEditor.PackageManager.PackageRegistrationEventArgs args)
+            => RequestOptionalPackageRefresh();
+
+        private void RequestOptionalPackageRefresh()
+        {
+            _optionalPackagesDirty = true;
+            Repaint();
+        }
+
+        private void RefreshOptionalPackages()
+        {
+            if (!_optionalPackagesDirty || EditorApplication.isCompiling || EditorApplication.isUpdating || _installing) return;
+            _optionalPackagesDirty = false;
+            _optionalPackagesError = null;
+            try { _optionalPackageStates = EmberUPMOptionalPackages.Capture(); }
+            catch (Exception ex)
+            {
+                _optionalPackageStates = null;
+                _optionalPackagesError = "无法读取安装状态：" + ex.Message;
+            }
+        }
+
         private void OnGUI()
         {
-            if (Event.current.type == EventType.Layout) UpdateReleaseNotes();
+            if (Event.current.type == EventType.Layout)
+            {
+                UpdateReleaseNotes();
+                RefreshOptionalPackages();
+            }
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember UPM 管理器", EditorStyles.boldLabel);
@@ -137,8 +157,11 @@ namespace Ember.UPMManager.Editor
             GUILayout.Space(8);
             EditorGUILayout.LabelField("可选第三方包", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("按需安装，缺少可选包不影响框架基础运行。", EditorStyles.wordWrappedMiniLabel);
-            foreach (var package in OptionalPackages)
-                DrawOptionalDependencyRow(package.packageName, package.label, package.typeName, package.desc);
+            if (GUILayout.Button("刷新安装状态", GUILayout.Width(120))) RequestOptionalPackageRefresh();
+            if (!string.IsNullOrEmpty(_optionalPackagesError))
+                EditorGUILayout.HelpBox(_optionalPackagesError, MessageType.Warning);
+            foreach (var package in EmberUPMOptionalPackages.All)
+                DrawOptionalDependencyRow(package);
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("可选扩展包（未来）", EditorStyles.boldLabel);
@@ -419,6 +442,7 @@ namespace Ember.UPMManager.Editor
 
         private void OnDisable()
         {
+            UnityEditor.PackageManager.Events.registeredPackages -= OnPackagesRegistered;
             StopUpdateCheck();
             StopReleaseNotes();
             _releaseNotesSourceVersion = null;
@@ -572,7 +596,8 @@ namespace Ember.UPMManager.Editor
 
         private void OnInspectorUpdate()
         {
-            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive || _releaseNotesRequest != null || _retryReleaseNotes)
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive || _releaseNotesRequest != null
+                || _retryReleaseNotes || _optionalPackagesDirty)
                 Repaint();
         }
 
@@ -597,32 +622,57 @@ namespace Ember.UPMManager.Editor
             }
         }
 
-        private void DrawOptionalDependencyRow(string packageName, string label, string typeName, string desc)
+        private void DrawOptionalDependencyRow(EmberUPMOptionalPackages.Definition package)
         {
-            var version = GetPackageVersion(packageName);
-            var imported = version == null && IsPluginTypeLoaded(typeName);
-            var installed = version != null || imported;
-            var status = version != null ? $"已安装 v{version}（UPM）"
-                : imported ? "已检测到插件（直接导入/自定义包）" : "未安装（可选）";
-
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
-            EditorGUILayout.LabelField(status, EditorStyles.wordWrappedMiniLabel);
-            EditorGUILayout.LabelField(desc, EditorStyles.wordWrappedMiniLabel);
-            if (!installed)
+            var state = _optionalPackageStates != null && _optionalPackageStates.TryGetValue(package.Name, out var found)
+                ? found : new EmberUPMOptionalPackages.State("状态未确认，请刷新安装状态", false, false);
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                using (new EditorGUI.DisabledScope(_checking || _installing || EmberUPMUpgradeTracker.IsActive))
+                EditorGUILayout.LabelField(package.Label, EditorStyles.boldLabel);
+                var style = new GUIStyle(EditorStyles.wordWrappedLabel)
                 {
-                    if (GUILayout.Button("一键安装（团队仓库）", GUILayout.Width(180)))
-                        InstallPackage($"{ThirdPartyRepoUrl}?path=/{packageName}#{ThirdPartyTag}", label);
+                    fontStyle = FontStyle.Bold,
+                    normal = { textColor = state.Installed ? new Color(0.25f, 0.75f, 0.4f) : new Color(0.95f, 0.65f, 0.25f) }
+                };
+                EditorGUILayout.LabelField(state.Text, style);
+                EditorGUILayout.LabelField(package.Description, EditorStyles.wordWrappedMiniLabel);
+                EditorGUILayout.LabelField(package.Name, EditorStyles.wordWrappedMiniLabel);
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    bool busy = _checking || _installing || EmberUPMUpgradeTracker.IsActive
+                        || EditorApplication.isCompiling || EditorApplication.isUpdating || _optionalPackagesDirty;
+                    using (new EditorGUI.DisabledScope(busy || !state.CanInstall))
+                    {
+                        string button = state.Installed ? "已安装" : state.CanInstall ? "安装 v" + package.Version : "等待状态确认";
+                        if (GUILayout.Button(new GUIContent(button, package.InstallUrl), GUILayout.Width(160)))
+                            InstallOptionalPackage(package);
+                    }
+                    if (GUILayout.Button("复制安装地址", GUILayout.Width(110)))
+                        EditorGUIUtility.systemCopyBuffer = package.InstallUrl;
                 }
             }
-            EditorGUILayout.EndVertical();
         }
 
-        private static bool IsPluginTypeLoaded(string typeName)
+        private void InstallOptionalPackage(EmberUPMOptionalPackages.Definition package)
         {
-            return AppDomain.CurrentDomain.GetAssemblies().Any(assembly => assembly.GetType(typeName, false) != null);
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive
+                || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
+            // Recheck immediately before Client.Add, so a stale row cannot replace an installed plugin.
+            try
+            {
+                var packages = UnityEditor.PackageManager.PackageInfo.GetAllRegisteredPackages();
+                if (packages == null || !EmberUPMOptionalPackages.Inspect(package, packages).CanInstall)
+                {
+                    RequestOptionalPackageRefresh();
+                    return;
+                }
+                InstallPackage(package.InstallUrl, package.Label);
+            }
+            catch (Exception ex)
+            {
+                EditorUtility.DisplayDialog("无法确认安装状态", ex.Message, "确定");
+                RequestOptionalPackageRefresh();
+            }
         }
 
         private void DrawStatusRow(string label, string value, bool ok)
@@ -669,13 +719,15 @@ namespace Ember.UPMManager.Editor
             {
                 if (!request.IsCompleted) return;
                 EditorApplication.update -= Poll;
+                if (this == null) return;
                 _installing = false;
                 _installingLabel = null;
+                RequestOptionalPackageRefresh();
 
                 if (request.Status == UnityEditor.PackageManager.StatusCode.Success)
                 {
                     EditorUtility.DisplayDialog("安装完成",
-                        $"{label} 安装成功。若编译报错属预期中间态，等 Unity 解析编译完成后即恢复。", "确定");
+                        $"{label} 的 UPM 安装请求已完成，面板将刷新安装状态。请等待 Unity 完成导入与编译。", "确定");
                 }
                 else
                 {
