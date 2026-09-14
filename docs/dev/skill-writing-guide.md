@@ -27,6 +27,8 @@ description: 说明该技能解决的任务、何时使用，以及相邻但不�
 
 ## 路径和验证
 
+面向消费项目分发的技能在 `.agents/skills/catalog.json` 登记，声明最低版本和需要的 API 能力。维护源保留在框架仓库，由 `Ember/UPM Manager → AI Skill` 独立安装到消费项目；不要将技能复制进业务模板快照。安装副本与来源记录应一起提交，详细规则见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。
+
 - 运行产物放 `.utmp/<skill-name>/`（已被仓库忽略），正式交付物放对应源码或文档目录；不把缓存写进 Skill。
 - 脚本提供 `--help`、明确失败信息，避免固化用户目录或机器上解释器路径。按当前 shell 生成命令，Windows 不套用 Bash 续行/删除命令。
 - 创建或大改后校验 YAML、目录名、引用、未完成占位符；可用 skill-creator 自带 `quick_validate.py`。脚本还要验证真实输入输出及关键边界。

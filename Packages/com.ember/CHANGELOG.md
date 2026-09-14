@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-09-14
+
+- **AI Skill 独立更新**：UPM Manager 新增技能分支/标签检查、目录下载和项目级安装入口；只安装发布目录中的技能，记录来源提交与文件哈希，保护本地修改、其他技能和框架维护源，支持备份、失败恢复及取消/超时。
+- **EUI 技能归入框架**：统一维护 `ember-eui-build`，通过技能目录向消费项目分发；新增公开的已保存 Prefab 重新生成 API，技能适配器不再反射内部生成方法。保留旧内部入口和 UnityFarm 已部署适配器，模板不变。
+- **验证边界**：新增技能下载/安装与 EUI 入口回归；Unity MCP 不可用，Unity 编译、EditMode 和面板实际安装尚待验证。技能目录随 v0.13.0 固定发布，可独立检查和安装。
+
+- **EUIBinding Player 编译修复**：将代码输出路径属性与自定义过渡源码检查隔离到 `UNITY_EDITOR`，修复打包时引用 `OnGetCodeRootPath` / `OnGetGeneratedPath` 导致的三处 CS0103；序列化字段保持不变。Unity MCP 不可用，尚未完成 Unity 编译和 UnityFarm 打包验证。UnityFarm 同次报告的 Odin UPM DLL 导入异常仍需单独处理。
+
 ## [0.12.11] - 2026-09-14
 
 - **可选第三方包状态与安装**：UPM 管理器突出显示已安装/未安装、实际版本和 Git/本地/内嵌来源，兼容直接导入插件和待编译的 Assets 文件。提供刷新安装状态、固定版本安装及复制地址按钮；Rainbow Folders、Rainbow Hierarchy、InputDeviceDetector 和 Console Pro 改用各自已发布标签，Feel 保留 ember-v0.11.1。安装前重查避免重复安装，包注册与安装完成后刷新，状态快照在 Layout 更新。新增检测和地址回归；Unity MCP 不可用，编译、测试和实际安装尚未验证。

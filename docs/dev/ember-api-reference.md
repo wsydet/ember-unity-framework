@@ -1723,6 +1723,11 @@ var active = cam.ActiveCamera;
 
 ## Editor 工具（Editor-only）
 
+### EUI 自动重新生成（0.13.0 起）
+
+`Ember.UIExtension.Editor.EUIBindingCodeGenUtility.TryRegenerateCode(EUIBinding binding, out string error)`
+接收已保存项目 Prefab 资源上的绑定，复用统一生成器并保留用户代码及模式/路径保护。无弹窗、不创建 Prefab、不主动 Refresh；成功只代表生成完成，调用方批处理结束后统一刷新。技能安装与兼容要求见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。
+
 > 这些只在 `#if UNITY_EDITOR` 下编译，运行时不可用。
 
 ### FileEncodingUtility

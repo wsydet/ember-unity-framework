@@ -25,7 +25,7 @@ namespace Ember.UPMManager.Editor
     /// `git ls-remote --tags` 对比远程与当前版本，提取 manifest 中 com.ember 的
     /// git URL 并替换 #tag 后调用 Client.Add 重装——体验等同点击升级，零服务器。
     /// </summary>
-    public class EmberUPMManager : EditorWindow
+    public partial class EmberUPMManager : EditorWindow
     {
         #region 内部参数
 
@@ -102,6 +102,7 @@ namespace Ember.UPMManager.Editor
         private void RequestOptionalPackageRefresh()
         {
             _optionalPackagesDirty = true;
+            _aiSkillsDirty = true;
             Repaint();
         }
 
@@ -124,12 +125,14 @@ namespace Ember.UPMManager.Editor
             {
                 UpdateReleaseNotes();
                 RefreshOptionalPackages();
+                UpdateAiSkillsLayout();
             }
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember UPM 管理器", EditorStyles.boldLabel);
 
             DrawFrameworkVersionSection();
+            DrawAiSkillsSection();
 
             if (_installing)
                 EditorGUILayout.HelpBox($"正在安装 {_installingLabel}，请等待 Unity 完成包解析。", MessageType.Info);
@@ -445,6 +448,7 @@ namespace Ember.UPMManager.Editor
             UnityEditor.PackageManager.Events.registeredPackages -= OnPackagesRegistered;
             StopUpdateCheck();
             StopReleaseNotes();
+            StopAiSkillDownload();
             _releaseNotesSourceVersion = null;
             _retryReleaseNotes = false;
         }

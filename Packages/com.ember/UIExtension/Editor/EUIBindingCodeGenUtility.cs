@@ -23,6 +23,32 @@ namespace Ember.UIExtension.Editor
     {
         private const string TAG = LogTags.EmberUI;
 
+        #region 外部方法
+
+        /// <summary>
+        /// 对已保存的项目 Prefab 重新生成代码，不显示确认弹窗、不创建 Prefab、不主动刷新资产。
+        /// 保留用户代码和统一生成器的模式、路径及包内资产保护；调用方完成批处理后自行刷新。
+        /// 返回 false 时查看 error；成功仅代表文件生成完成，不代表 Unity 编译通过。
+        /// </summary>
+        public static bool TryRegenerateCode(EUIBinding binding, out string error)
+        {
+            string prefabPath = binding ? AssetDatabase.GetAssetPath(binding) : null;
+            if (!binding || !EditorUtility.IsPersistent(binding)
+                || string.IsNullOrEmpty(prefabPath) || !prefabPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+            {
+                error = "请先保存项目 Prefab，再从已保存的资源读取 EUIBinding。";
+                return false;
+            }
+            if (!prefabPath.StartsWith("Assets/", StringComparison.Ordinal))
+            {
+                error = "仅可重新生成项目 Assets 内的 Prefab，包内资源保持只读。";
+                return false;
+            }
+            return TryGenerateCode(binding, false, false, false, out error);
+        }
+
+        #endregion
+
         #region 生命周期（初始化）
 
         static EUIBindingCodeGenUtility()

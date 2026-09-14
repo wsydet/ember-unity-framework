@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "id": "ember-eui-build",
+      "displayName": "Ember EUI 制作",
+      "description": "通过 UI 开发中心创建正式 Prefab、生成绑定并完成用户逻辑接线。",
+      "minimumFrameworkVersion": "0.13.0",
+      "requiredCapability": "eui-regenerate-v1"
+    }
+  ]
+}

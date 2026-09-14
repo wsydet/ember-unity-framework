@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.12.11**，UPM 管理器明确显示可选包安装状态，支持按固定版本安装、刷新和复制地址。静态检查通过；Unity 编译、8 个新增 EditMode 案例及实际安装待验证。模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.0**，新增 AI Skill 独立更新和 EUI 公开生成 API，并修复 Player 编辑器引用。静态检查通过；Unity 编译、EditMode 和消费端验收待完成。模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。
 
 ## 使用框架
 
@@ -14,8 +14,10 @@
 | [日志](dev/ember-debug.md) | 标签、SO 配置和文件日志 |
 | [UnityFarm 改动分流](../Packages/com.ember/Documentation~/maintenance/unityfarm-change-routing.md) | 判定项目、框架、模板或两者升级，并规定消费端接收方式 |
 | [UPM 交付维护](dev/upm-migration-plan.md) | 开发仓库与消费项目、安装升级和发布流程 |
+| [AI Skill 独立更新](../Packages/com.ember/Documentation~/maintenance/ai-skills.md) | UPM Manager 单独安装/更新技能、来源版本、本地修改保护与备份恢复（0.13.0 起） |
 | [0.11.5 发布说明](dev/release-0.11.5.md) | UnityFarm 改动分流、强制阅读入口、模板兼容声明与升级边界 |
 | [0.12.0 发布说明](dev/release-0.12.0.md) | 强类型配置表能力、模板接入目标、验证边界与 UnityFarm 迁移 |
+| [0.13.0 发布说明](dev/release-0.13.0.md) | AI Skill 独立更新、EUI 公开接口与 Player 修复 |
 | [0.12.11 发布说明](dev/release-0.12.11.md) | 可选包安装状态、固定版本安装与验证边界 |
 | [0.12.10 发布说明](dev/release-0.12.10.md) | UPM 版本更新内容、异步读取和验证边界 |
 | [0.12.9 发布说明](dev/release-0.12.9.md) | 快速场景打开器刷新修复与验证边界 |

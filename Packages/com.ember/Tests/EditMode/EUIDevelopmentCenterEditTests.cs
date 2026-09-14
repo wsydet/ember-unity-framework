@@ -19,6 +19,20 @@ namespace Ember.UI.Tests
     /// <summary>UI 开发中心的纯逻辑 Edit Mode 测试。</summary>
     public class EUIDevelopmentCenterEditTests
     {
+        [Test]
+        public void PublicRegeneration_RejectsUnsavedObjectsWithoutCreatingAssets()
+        {
+            Assert.IsFalse(EUIBindingCodeGenUtility.TryRegenerateCode(null, out var nullError));
+            Assert.IsNotEmpty(nullError);
+            var gameObject = new GameObject("UnsavedRegenerationTest", typeof(RectTransform), typeof(EUIBinding));
+            try
+            {
+                Assert.IsFalse(EUIBindingCodeGenUtility.TryRegenerateCode(gameObject.GetComponent<EUIBinding>(), out var error));
+                StringAssert.Contains("保存", error);
+            }
+            finally { UnityEngine.Object.DestroyImmediate(gameObject); }
+        }
+
         #region 创建计划
 
         [Test]

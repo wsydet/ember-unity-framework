@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.12.4**（共享钉钉 SDF 多图集容量修复；静态检查通过，Unity 编译与容量/显示回归待确认）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.13.0**（AI Skill 独立更新、EUI 公开接口与 Player 修复；静态检查通过，Unity 编译与消费验收待确认）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.12.4"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.13.0"
 }
 ```
 
@@ -22,9 +22,9 @@ Odin Inspector 和 DOTween 是当前代码的前置依赖，需要合法取得�
 `Ember/UPM Manager` 提供团队依赖检测入口；私有仓库需要访问权限。UniTask 随包内置，避免重复导入。
 UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Registry 依赖由 package.json 声明。
 
-Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。Feel 目前仅完成本地 UPM 封装，未切换工程或发布；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
+Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.12.4 manifest 基线](Dependencies~/manifest-0.12.4.json)。共享字体配置修复不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.13.0 manifest 基线](Dependencies~/manifest-0.13.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 
@@ -38,6 +38,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 | Table | [强类型配置表](Table/Documentation~/table/README.md) |
 | Core.Editor / FrameworkTools / UPMManager | [编辑器](Documentation~/core/README-Editor.md) |
 | Basic / Extensions / 内置 UniTask | 集合、池、数据结构、存储、日志、扩展和异步基础 |
+| AI Skill 独立更新 | [安装、来源与备份](Documentation~/maintenance/ai-skills.md) |
 | UnityFarm 改动回流 | [项目 / 框架 / 模板升级判定规则](Documentation~/maintenance/unityfarm-change-routing.md) |
 
 各目录通过 `.asmdef` 隔离 Runtime、Editor 和 Tests；包内子系统不等于可选业务 Module。
