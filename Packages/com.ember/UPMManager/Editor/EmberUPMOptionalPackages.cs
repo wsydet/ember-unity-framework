@@ -14,11 +14,14 @@ namespace Ember.UPMManager.Editor
         internal sealed class Definition
         {
             internal readonly string Name, Label, TypeName, Description, Version, Tag;
-            internal string InstallUrl => "https://github.com/wsydet/ember-thirdparty-upm.git?path=/" + Name + "#" + Tag;
+            private readonly string _installUrl;
+            internal string InstallUrl => _installUrl ?? "https://github.com/wsydet/ember-thirdparty-upm.git?path=/" + Name + "#" + Tag;
 
-            internal Definition(string name, string label, string typeName, string description, string version, string tag)
+            internal Definition(string name, string label, string typeName, string description, string version, string tag,
+                string installUrl = null)
             {
                 Name = name; Label = label; TypeName = typeName; Description = description; Version = version; Tag = tag;
+                _installUrl = installUrl;
             }
         }
 
@@ -33,6 +36,10 @@ namespace Ember.UPMManager.Editor
 
         internal static readonly Definition[] All =
         {
+            new("com.coplaydev.unity-mcp", "Unity MCP（AI 编辑器连接）", "MCPForUnity.Editor.Windows.MCPForUnityEditorWindow",
+                "连接 AI 助手与 Unity 编辑器。安装后请在 Window > MCP for Unity 配置服务与客户端；已安装不代表已连接。",
+                "10.1.2", "4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50",
+                "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"),
             new("com.borodar.rainbow-folders", "Rainbow Folders", "Borodar.RainbowFolders.RainbowFoldersGUI",
                 "Project 文件夹颜色与图标", "2.4.5", "rainbow-folders-v2.4.5"),
             new("com.borodar.rainbow-hierarchy", "Rainbow Hierarchy", "Borodar.RainbowHierarchy.RainbowHierarchyGUI",

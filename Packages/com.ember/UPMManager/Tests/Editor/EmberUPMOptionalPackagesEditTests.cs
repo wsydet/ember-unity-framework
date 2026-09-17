@@ -9,6 +9,20 @@ namespace Ember.UPMManager.Editor.Tests
 {
     public class EmberUPMOptionalPackagesEditTests
     {
+        [Test]
+        public void UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory()
+        {
+            var definition = EmberUPMOptionalPackages.All.Single(p => p.Name == "com.coplaydev.unity-mcp");
+            var uri = new System.Uri(definition.InstallUrl);
+            Assert.AreEqual("https", uri.Scheme);
+            Assert.AreEqual("github.com", uri.Host);
+            Assert.AreEqual("/CoplayDev/unity-mcp.git", uri.AbsolutePath);
+            Assert.AreEqual("?path=/MCPForUnity", uri.Query);
+            Assert.AreEqual("#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50", uri.Fragment);
+            Assert.AreEqual("10.1.2", definition.Version);
+            Assert.AreEqual("MCPForUnity.Editor.Windows.MCPForUnityEditorWindow", definition.TypeName);
+        }
+
         [TestCase("com.borodar.rainbow-folders", "rainbow-folders-v2.4.5")]
         [TestCase("com.borodar.rainbow-hierarchy", "rainbow-hierarchy-v2.6.5")]
         [TestCase("com.ryanindiedev.inputdevicedetector", "inputdevicedetector-v1.0.0")]

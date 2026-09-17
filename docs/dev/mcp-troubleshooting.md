@@ -1,6 +1,18 @@
 # Unity MCP 连接排查
 
-最后核对：2026-09-07。项目依赖为 `com.coplaydev.unity-mcp`，来源见 [manifest](../../Packages/manifest.json)；具体解析提交见 [packages-lock](../../Packages/packages-lock.json)。不要用历史服务版本推断当前协议或端口。
+最后核对：2026-09-17。项目依赖为 `com.coplaydev.unity-mcp`，来源见 [manifest](../../Packages/manifest.json)；具体解析提交见 [packages-lock](../../Packages/packages-lock.json)。不要用历史服务版本推断当前协议或端口。
+
+## 消费端安装入口（0.13.2 起）
+
+0.13.2 为 `Ember/UPM Manager → 可选第三方包` 增加 **Unity MCP（AI 编辑器连接）**。
+此前只有完整依赖清单包含它，面板没有对应安装项。消费端需先通过 UPM Manager 升级到 0.13.2 或更高版本，再使用此入口。
+
+- 未安装时点击“安装 v10.1.2”，由 Unity Package Manager 下载、解析并维护 manifest/lock；已有安装显示实际版本和来源，不被强制覆盖或降级。
+- 安装来源为官方 `CoplayDev/unity-mcp` 仓库的 `/MCPForUnity` 子目录，固定到 `4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50`，与既有发布依赖清单一致，不跟随浮动 main。
+- 提供复制安装地址和刷新安装状态。安装完成后等待导入与编译，再在 `Window > MCP for Unity` 配置服务与客户端。仅安装 Unity 包不会替用户配置 Python/uv、启动服务或连接 AI 客户端。
+- 这是可选编辑器工具，不增加框架 Runtime 依赖，也不需要保存或部署模板。
+
+已核对 [固定提交的官方包信息](https://github.com/CoplayDev/unity-mcp/blob/4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50/MCPForUnity/package.json) 与本地包信息；本轮未实际安装，Unity 编译及新增 EditMode 回归尚未验证。
 
 ## 排查顺序
 

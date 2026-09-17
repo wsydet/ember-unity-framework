@@ -1,9 +1,11 @@
 # Ember Framework 当前状态与后续工作
 
-> 核对日期：2026-09-14。实现以当前工作区与发布 tag 为准；消费项目验收单独记录。
+> 核对日期：2026-09-17。实现以当前工作区与发布 tag 为准；消费项目验收单独记录。
 > 2026-09-07 模板分支与场景语义同步批次已由用户确认通过 Unity 编译、相关 EditMode、真实 UnityYAMLMerge 和手工 O/N/C 验收；未列明的 PlayMode、消费项目与整体发布项仍按未验证处理。
 
 ## 当前基线
+
+0.13.2 在 UPM Manager 的可选包列表增加 Unity MCP，支持状态检测、官方固定提交安装与复制地址；安装后另行配置连接。静态检查通过；Unity 编译、新增 EditMode 回归和消费端安装尚未验证。见 [0.13.2 发布说明](release-0.13.2.md)。
 
 0.13.1 在原有 EUI 技能之外新增 8 个可安装技能，共 9 个；补齐独立参考资料、项目规则适配和依赖包只读保护。文档审计脚本隔离回归通过；Unity 面板安装尚未实测。见 [0.13.1 发布说明](release-0.13.1.md)。
 
@@ -32,15 +34,15 @@
 | 对象 | 当前值 | 证据 |
 |---|---|---|
 | Unity | 6000.5.4f1 | `ProjectSettings/ProjectVersion.txt` |
-| 框架包 | 已发布 `0.13.1` | 9 个可安装技能与消费项目适配 |
-| 发布状态 | `v0.13.1` | 技能/Python 与发布静态检查通过；Unity 安装及此前代码验收仍待确认 |
+| 框架包 | 已发布 `0.13.2` | Unity MCP 按需安装入口 |
+| 发布状态 | `v0.13.2` | 静态检查通过；Unity 编译、新增 EditMode 回归与消费端安装待确认 |
 | 根模板 | `base 0.6.3 / stable` | 内容与封存 Hash 均为 `d822aa4b70ceedad14bac56c1989303b`；内容不变，框架兼容声明推进到 `0.13.0` |
 | 派生模板 | `source3d-2p5d 0.3.5 / preview` | 父基线 `base 0.6.3`，ParentSnapshot 与父 Hash 一致；内容不变，框架兼容声明推进到 `0.13.0` |
 | 模板开发副本 | `source3d-2p5d 0.3.5` | `Assets/Editor/EmberEditingTemplate.json` 记录 Hash 与当前模板一致，不代表消费项目验收通过 |
 
 0.11.5 新增随包的 UnityFarm 改动回流规则，明确项目、框架、模板及两者联动的判定、版本和消费流程；根 `AGENTS.md` 与 `CLAUDE.md` 提供强制阅读入口。模板 Assets 未改变，继续保留 0.11.4 的稳定 GUID、冲突预检与完整重新部署能力。
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第三方仓库交付；前四包已核对镜像一致，Feel v5.4 已备好 5.4.0 UPM 封装，尚未切换安装或验收。依赖自动同步仍待实现。
-随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.13.1 正式发布声明；完整 manifest 的第三方基线仍为 `ember-v0.11.1`。可选安装按钮改用各包独立标签（Feel 除外），对应地址单独记入发布声明。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要点击安装，详见 [0.12.11 发布说明](release-0.12.11.md)。
+随包 `Dependencies~` 已提供 56 项直接依赖的可移植 manifest 和 0.13.2 正式发布声明；完整 manifest 的第三方基线仍为 `ember-v0.11.1`。可选安装按钮改用各包独立标签（Feel 除外），Unity MCP 使用官方仓库固定提交，所有按钮地址单独记入发布声明。消费端框架升级必须通过 Ember/UPM Manager；第三方依赖按实际需要点击安装，详见 [0.12.11 发布说明](release-0.12.11.md)。
 部署记录和开发编辑记录用途不同，不能根据 `EmberDeployedTemplates.json` 的旧 base 记录推断当前编辑的是 base。
 
 ## 已有能力
@@ -67,6 +69,8 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 禁用或尚未装配的 Module 不能通过 `.Instance` 偷偷创建，业务查询使用 Collector。
 
 ## 尚未完成的工作
+
+0.13.2：手动触发 Unity 编译并执行 Unity MCP 安装地址回归；在消费端验证未安装时安装、已安装保护、安装后状态刷新及后续连接配置。
 
 | 优先级 | 事项 | 当前边界 |
 |---|---|---|
