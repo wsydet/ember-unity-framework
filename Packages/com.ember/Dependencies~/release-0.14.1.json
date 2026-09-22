@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.14.1",
+  "frameworkTag": "v0.14.1",
+  "status": "released-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.14.1.json",
+  "coverage": "Same 56 direct dependency entries as 0.14.0; only com.ember advances. All three template framework compatibility declarations advance to 0.14.1; template content versions and hashes are unchanged.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.6.4",
+      "frameworkVersion": "0.14.1",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "2257aea46640e1f91735ba006522507d",
+      "versionedContentHash": "2257aea46640e1f91735ba006522507d",
+      "channel": "stable"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.3.7",
+      "frameworkVersion": "0.14.1",
+      "parentId": "base",
+      "parentVersion": "0.6.4",
+      "parentContentHash": "2257aea46640e1f91735ba006522507d",
+      "contentHash": "1b8968b60ad01ac0d3011907c098f067",
+      "versionedContentHash": "1b8968b60ad01ac0d3011907c098f067",
+      "channel": "preview"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.7.0",
+      "frameworkVersion": "0.14.1",
+      "parentId": "base",
+      "parentVersion": "0.6.4",
+      "parentContentHash": "2257aea46640e1f91735ba006522507d",
+      "contentHash": "43fb51b0679d7ca4c82e4d6f1b5a22ce",
+      "versionedContentHash": "43fb51b0679d7ca4c82e4d6f1b5a22ce",
+      "channel": "preview"
+    }
+  ],
+  "validation": "Metadata-only compatibility correction. JSON, version alignment and parent metadata consistency checked locally; no new Unity runtime or consumer validation performed.",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#ember-v0.11.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.13.1",
+    "skills": [
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-export-story"
+    ],
+    "bundleSourceCommit": "cc9dc1cf6414785ce59ec2ce492c52cbdc5b17a7"
+  }
+}

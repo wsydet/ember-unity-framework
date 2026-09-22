@@ -4,7 +4,7 @@
     "displayName": "视觉小说",
     "description": "基于 base 0.6.4：E0–E5 演出、剧情编辑与四项模板技能（图片导入、飞书剧情导入、演出优化、流程回写）；支持正式消费部署身份编辑。0.7.0 preview，编译与消费端工作流验收待完成。",
     "version": "0.7.0",
-    "frameworkVersion": "0.13.0",
+    "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
