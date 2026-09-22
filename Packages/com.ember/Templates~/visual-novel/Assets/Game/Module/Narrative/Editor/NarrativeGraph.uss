@@ -1,0 +1,22 @@
+.narrative-summary {
+    white-space: normal;
+    max-height: 76px;
+    overflow: hidden;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: rgb(192, 199, 208);
+}
+.narrative-current > #node-border {
+    border-left-color: rgb(64, 217, 140);
+    border-right-color: rgb(64, 217, 140);
+    border-top-color: rgb(64, 217, 140);
+    border-bottom-color: rgb(64, 217, 140);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+}
+.narrative-help { color: rgb(159, 167, 177); padding: 6px; font-size: 11px; }
+.narrative-heading { -unity-font-style: bold; font-size: 13px; padding: 8px; }

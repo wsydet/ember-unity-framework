@@ -1,0 +1,5 @@
+{
+    "name": "Game.NovelSave.Runtime",
+    "references": ["Game.Narrative.Runtime", "Ember.Basic.Runtime", "Ember.Core.Runtime", "Ember.Audio.Runtime"],
+    "autoReferenced": true
+}

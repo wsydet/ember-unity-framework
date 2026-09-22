@@ -1,12 +1,15 @@
-# Ember 文档索引
+﻿# Ember 文档索引
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.2**，UPM Manager 支持检测与按需安装 Unity MCP。静态检查通过，Unity 编译及消费端安装待验证；模板保持 base 0.6.3 与 source3d-2p5d 0.3.5，9 个技能继续使用 v0.13.1 来源。
+> 2026-09-21 M5 本批测试与文档已收束：用户确认双结局测试宿主修正后全部通过；归档 XML 保留 380/382，未取得新全量报告。完整示例与编辑工具已落盘；人工画面、项目中心保存/Bump 和消费端验收仍待完成，当前封存为 visual-novel 0.4.0 / preview。参见 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.2**，UPM Manager 支持检测与按需安装 Unity MCP。静态检查通过，Unity 编译及消费端安装待验证；已发布模板为 base 0.6.3 与 source3d-2p5d 0.3.5；本地文档整理已封存 base 0.6.4 与 source3d-2p5d 0.3.7（尚未发布），9 个技能继续使用 v0.13.1 来源。
 
 ## 使用框架
 
 | 文档 | 内容 |
 |---|---|
 | [项目规则](../CLAUDE.md) | 架构、编码、Unity 验证与模板维护约束 |
+| [业务代码与资源目录规范](../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md) | Game/Module、Game/UI/Runtime/Module、GameResource 的模块归属；Runtime 必需，UI 必须通过 UI 中心生成；专用 Atlas 与 Common 规则 |
 | [UI 开发参考](user/UI开发参考.md) | 页面、Item、Binding、状态路由和代码生成 |
 | [Package 清单](user/package-inventory.md) | 实际依赖、来源与版本 |
 | [API 速查](dev/ember-api-reference.md) | 常用类型、签名、路径和限制 |
@@ -42,16 +45,20 @@
 | [UI 概述](../Packages/com.ember/Documentation~/ui/README.md) | Page/Logic/Binding/Item；[EUI 明细](dev/eui-reference.md)、[过渡块](dev/ember-transition-block.md) |
 | [Audio](../Packages/com.ember/Documentation~/audio/README.md) | 当前 BGM/SFX 接口 |
 | [Camera](../Packages/com.ember/Documentation~/camera/README.md) / [Input](../Packages/com.ember/Documentation~/input/README.md) | 相机注册、输入读取与重绑定契约 |
-| [SceneUI 设计](dev/scene-ui-module-design.md) | [包内结构](../Packages/com.ember/SceneUI/README.md)、[接入说明](../Packages/com.ember/Documentation~/scene-ui/README.md)、[业务示例](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/SceneUI/README.md) |
+| [SceneUI 设计](dev/scene-ui-module-design.md) | [包内结构](../Packages/com.ember/SceneUI/README.md)、[接入说明](../Packages/com.ember/Documentation~/scene-ui/README.md)、[业务示例](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/scene-ui-business.md) |
 | [Table](../Packages/com.ember/Table/Documentation~/table/README.md) | 强类型 Row、CSV/TSV、ETBL V1、Binding/Catalog、Engine 与 ModuleBase |
-| [PlayerControl](dev/player-control-module.md) | 2.5D 输入、拖动、缩放、边界与模板归属 |
-| [Guide](dev/guide-module-design.md) | 可选新手引导模块、配置与扩展 |
-| [引导编辑器使用](user/引导编辑器使用.md) | 中文步骤编辑、条件组合、页面选择、排序与撤销 |
+| [PlayerControl](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/player-control-module.md) | 2.5D 输入、拖动、缩放、边界与模板归属 |
+| [Guide](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/guide-module-design.md) | 可选新手引导模块、配置与扩展 |
+| [引导编辑器使用](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/guide-editor-usage.md) | 中文步骤编辑、条件组合、页面选择、排序与撤销 |
 
 ## 模板、编辑器和验证
 
 | 文档 | 内容 |
 |---|---|
+| [文档归属与随模板加载](dev/template-documentation.md) | 框架公共文档、基础文档、派生专属文档的存放与保存规则 |
+| [视觉小说模板文档](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/visual-novel/README.md) | 已封存 visual-novel 0.4.0 / preview（M3＋M4），父 base 0.6.4，未发布；包含新游戏揭幕修复。测试证据与剩余人工验收见模板 Implementation.md，M5 未开始 |
+| [基础模板文档](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/README.md) | 随 base 及派生模板交付的 Guide 与配置表说明；此链接只读查看已封存内容 |
+| [2.5D 模板文档](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/README.md) | 玩家操作和 SceneUI 业务说明；只读查看已封存内容 |
 | [模板升级体系](dev/template-upgrade-system.md) | 项目中心、schema v2、父子同步、场景合并、事务、消费端边界 |
 | [Core 编辑器](../Packages/com.ember/Core/Editor/README.md) | 当前文件职责与菜单；[兼容入口](../Packages/com.ember/Documentation~/core/README-Editor.md) |
 | [框架测试清单](dev/framework-test-checklist.md) | 当前回归入口，不沿用旧版本通过结论 |
@@ -77,3 +84,7 @@
 | [美术目录](../Assets/Art/README.md) | 美术源资产约定 |
 
 第三方包、素材随附说明和许可证保持原始语义；缓存、构建产物和模板 Assets/ParentSnapshot 快照不作为普通文档直接清理。
+
+> 最新验收（2026-09-20）：用户确认观察窗口专项通过、手动验证无问题，M4 功能验收通过。已有全量 XML 为 431/432（13 项 M4 全通过），唯一失败项后续通过为用户确认，未取得新的全量 XML；保存封存与 M3 其他待办保留，M5 未开始。
+
+> 2026-09-20 增量：新游戏 Loading 已改为等待首屏内容和阅读页完成打开后揭幕；MCP 编译及含读档流程的专项 1/1 通过，人工揭幕效果待确认。详情见 visual-novel 工作副本 Implementation.md 末尾。

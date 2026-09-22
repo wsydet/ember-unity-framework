@@ -23,7 +23,7 @@ namespace Ember.Core.Editor
     /// 首次部署 = 整树补齐（.meta 随行，GUID 全链有效）；同模板重复部署不覆盖用户改动。
     /// 跨模板部署由用户显式确认，再用目标完整模板事务替换；消费端不会写回模板包。
     /// </summary>
-    public static class EmberProjectSetup
+    public static partial class EmberProjectSetup
     {
         #region 内部参数
 
@@ -77,7 +77,6 @@ namespace Ember.Core.Editor
             int deployed = DeployTemplate(packagePath, templateId);
             RegisterBuildSettings();
             EmberSceneMappingCreator.EnsureAndRescan();
-            RecordDeployment(packagePath, templateId);
             AssetDatabase.Refresh();
             return deployed;
         }
@@ -112,7 +111,6 @@ namespace Ember.Core.Editor
                 template);
             RegisterBuildSettings(true);
             EmberSceneMappingCreator.EnsureAndRescan();
-            RecordDeployment(packagePath, templateId);
             AssetDatabase.Refresh();
             string deploymentDescription = string.Equals(
                 templateId,
@@ -551,6 +549,7 @@ namespace Ember.Core.Editor
             try
             {
                 int count = CopyProjectBusinessLayer(projectRoot, stagedAssets);
+                Ember.UPMManager.Editor.EmberAISkillInstaller.ValidateTemplateSkillSource(stagedAssets);
                 if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(
                         stagedAssets,
                         out var contentHash,
@@ -594,14 +593,17 @@ namespace Ember.Core.Editor
                 EmberTemplateTransaction.WriteJson(
                     stagedEditing,
                     CreateEditingRecord(info));
-                EmberTemplateTransaction.CommitPreparedTargets(
-                    new[]
+                var skillPreview = ConfirmLifecycleSkills(projectRoot, stagedAssets, info, true);
+                var targets = new List<TemplateTransactionTarget>
                     {
                         new TemplateTransactionTarget(stagedTemplate, templateRoot),
                         new TemplateTransactionTarget(
                             stagedEditing,
                             ToFullPath(EditingRecordPath))
-                    });
+                    };
+                AddPreparedSkills(targets, skillPreview, true);
+                Ember.UPMManager.Editor.EmberAISkillInstaller.ValidateTemplatePreview(skillPreview);
+                EmberTemplateTransaction.CommitPreparedTargets(targets);
 
                 EmberDebug.LogInit(TAG,
                     $"当前编辑副本已另存为派生模板 [{templateId}]（{count} 文件）。");
@@ -652,6 +654,7 @@ namespace Ember.Core.Editor
             try
             {
                 n = CopyProjectBusinessLayer(projectRoot, stagedAssets);
+                Ember.UPMManager.Editor.EmberAISkillInstaller.ValidateTemplateSkillSource(stagedAssets);
 
                 if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(
                         stagedAssets,
@@ -706,56 +709,13 @@ namespace Ember.Core.Editor
             var tplAssets = Path.Combine(packagePath, "Templates~", templateId, "Assets");
             if (!Directory.Exists(tplAssets)) return -1;
             EnsureStoredContentMatchesMetadata(info, tplAssets, "加载");
+            var skillPreview = ConfirmLifecycleSkills(projectRoot, tplAssets, info, true);
 
-            var stageRoot = Path.Combine(
-                projectRoot,
-                "Temp",
-                $"EmberTemplateStage-{Guid.NewGuid():N}");
-            var stagedEditingRecord = Path.Combine(stageRoot, "EmberEditingTemplate.json");
-            int n = 0;
-
-            // 对项目 Assets 的全部落盘操作保持在同一个禁止自动刷新的事务窗口内，
-            // 避免 Unity 在真实 .meta 到达前生成随机 GUID。
-            AssetDatabase.DisallowAutoRefresh();
-            try
-            {
-                Directory.CreateDirectory(stageRoot);
-                var targets = new List<TemplateTransactionTarget>();
-                foreach (var rel in TemplateDirNames)
-                {
-                    var normalizedRel = rel.Replace('/', Path.DirectorySeparatorChar);
-                    var src = Path.Combine(tplAssets, normalizedRel);
-                    var staged = Path.Combine(stageRoot, normalizedRel);
-                    var destination = Path.Combine(projectRoot, "Assets", normalizedRel);
-                    if (Directory.Exists(src))
-                    {
-                        n += EmberTemplateTransaction.CopyDirectory(src, staged);
-                    }
-                    targets.Add(new TemplateTransactionTarget(
-                        staged,
-                        destination,
-                        allowMissingStage: true));
-                }
-                EmberTemplateTransaction.WriteJson(
-                    stagedEditingRecord,
-                    CreateEditingRecord(info));
-                targets.Add(new TemplateTransactionTarget(
-                    stagedEditingRecord,
-                    ToFullPath(EditingRecordPath)));
-                EnsureStoredContentMatchesMetadata(info, tplAssets, "加载");
-                EmberTemplateTransaction.CommitPreparedTargets(targets);
-            }
-            finally
-            {
-                TryCleanTransactionPath(stageRoot);
-                AssetDatabase.AllowAutoRefresh();
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            }
-
-            EmberDebug.LogInit(TAG, $"模板 [{templateId}] 已加载到项目业务层（{n} 文件）。");
-            return n;
+            int count = CommitTemplateDeployment(projectRoot, tplAssets, info, true, skillPreview, editing: true);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            EmberDebug.LogInit(TAG, $"模板 [{templateId}] 已加载到项目业务层（{count} 文件）。");
+            return count;
         }
-
         /// <summary>
         /// 模板版本号 +1（独立于框架版本）。field：0=主版本（次/补丁归零），1=次版本（补丁归零），2=补丁。
         /// 模板不存在时抛异常。
@@ -822,6 +782,9 @@ namespace Ember.Core.Editor
         public static void DeleteTemplate(string templateId)
         {
             EnsureTemplateDevelopmentAllowed();
+            if (Ember.UPMManager.Editor.EmberAISkillInstaller.HasTemplateSkillOwnership(
+                    Directory.GetParent(Application.dataPath).FullName, templateId))
+                throw new InvalidOperationException("此模板仍拥有项目发现目录中的技能，请先通过正式加载/切换流程移出技能后再删除模板。");
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return;
 
@@ -911,6 +874,10 @@ namespace Ember.Core.Editor
         public static void SetActiveDeployedTemplate(string templateId)
         {
             var data = ReadDeploymentData();
+            if (Ember.UPMManager.Editor.EmberAISkillInstaller.HasTemplateSkillOwnership(
+                    Directory.GetParent(Application.dataPath).FullName)
+                && ResolveActiveDeployment(data)?.templateId != templateId)
+                throw new InvalidOperationException("已有模板技能所有权时不能只改活动身份；请恢复匹配记录，再通过完整部署切换。");
             if (!string.IsNullOrEmpty(data.activeTemplateId)
                 && !string.Equals(data.activeTemplateId, templateId, StringComparison.Ordinal))
             {
@@ -1265,26 +1232,20 @@ namespace Ember.Core.Editor
             return enc.GetBytes(replaced);
         }
 
-        /// <summary>写入/更新消费端部署记录（upsert：templateId + version + frameworkVersion + deployedAt）。</summary>
-        private static void RecordDeployment(string packagePath, string templateId)
+        /// <summary>构建消费端部署记录更新；由调用方将记录与模板/技能一起事务提交。</summary>
+        private static void UpdateDeploymentRecord(DeployedTemplatesData data, TemplateInfo info)
         {
-            var info = ReadTemplateJson(packagePath, templateId);
-            if (info == null) return;
-
-            var data = ReadDeploymentData();
-
-            var record = data.records.Find(r => r.templateId == templateId);
+            var record = data.records.Find(r => r.templateId == info.id);
             if (record == null)
             {
-                record = new DeployedTemplateRecord { templateId = templateId };
+                record = new DeployedTemplateRecord { templateId = info.id };
                 data.records.Add(record);
             }
             record.version = info.version;
             record.frameworkVersion = info.frameworkVersion;
-            record.deployedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            data.activeTemplateId = templateId;
-
-            WriteDeploymentData(data);
+            record.deployedAt = DateTime.UtcNow.ToString("o");
+            record.contentHash = info.contentHash;
+            data.activeTemplateId = info.id;
         }
 
         internal static DeployedTemplateRecord ResolveActiveDeployment(
@@ -1474,7 +1435,8 @@ namespace Ember.Core.Editor
                 templateId = source.templateId,
                 version = source.version,
                 frameworkVersion = source.frameworkVersion,
-                deployedAt = source.deployedAt
+                deployedAt = source.deployedAt,
+                contentHash = source.contentHash
             };
         }
 
@@ -1512,62 +1474,19 @@ namespace Ember.Core.Editor
         /// <summary>整树复制模板到项目 Assets/。返回部署的文件数。</summary>
         private static int DeployTemplate(string packagePath, string templateId)
         {
-            var srcRoot = Path.Combine(packagePath, "Templates~", templateId, "Assets");
-            if (!Directory.Exists(srcRoot))
-            {
-                EmberDebug.LogWarning(TAG, $"模板缺失：{srcRoot}");
-                return 0;
-            }
-
-            var tplInfo = ReadTemplateJson(packagePath, templateId);
-
-            var projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
-            if (projectRoot == null) return 0;
-
-            EnsureNoTemplateGuidCollisions(projectRoot, srcRoot, false);
-
-            int deployed = 0;
-            int refreshed = 0;
-
-            // 拷贝期间挂起自动导入：Unity 运行中 File.Copy 落盘瞬间，文件监视器会先为新文件生成随机 GUID 的 .meta，
-            // 真实 .meta 随后到达时已造成 GUID 错位（场景预制体实例/脚本引用全断）。全部文件（含 .meta）落盘后一次性导入。
-            AssetDatabase.DisallowAutoRefresh();
-            try
-            {
-                foreach (var file in Directory.GetFiles(srcRoot, "*", SearchOption.AllDirectories))
-                {
-                    var rel = file.Substring(srcRoot.Length + 1);
-                    var dest = Path.Combine(projectRoot, "Assets", rel);
-                    if (File.Exists(dest))
-                    {
-                        // 已有文件不覆盖内容：仅刷新头标记版本（标记刷新；无头标记的用户文件不受影响）
-                        if (tplInfo != null
-                            && RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion))
-                        {
-                            refreshed++;
-                        }
-                        continue;
-                    }
-
-                    var dir = Path.GetDirectoryName(dest);
-                    if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                        Directory.CreateDirectory(dir);
-
-                    File.Copy(file, dest, false);
-                    if (tplInfo != null)
-                        RewriteVersionMarker(dest, tplInfo.version, tplInfo.frameworkVersion);
-                    deployed++;
-                }
-            }
-            finally
-            {
-                AssetDatabase.AllowAutoRefresh();
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            }
-
-            EmberDebug.LogInit(TAG,
-                $"模板 [{templateId}] 部署完成：新增 {deployed} 个文件，刷新头标记 {refreshed} 个。");
-            return deployed;
+            var source = Path.Combine(packagePath, "Templates~", templateId, "Assets");
+            var template = ReadTemplateJson(packagePath, templateId)
+                ?? throw new InvalidOperationException("模板不存在。");
+            var root = Directory.GetParent(Application.dataPath).FullName;
+            EnsureStoredContentMatchesMetadata(template, source, "部署");
+            var active = GetActiveDeployedTemplate();
+            var preview = ConfirmLifecycleSkills(root, source, template, false);
+            if (preview.Differences.Count > 0 && active != null
+                && (active.version != template.version || active.contentHash != template.contentHash))
+                throw new InvalidOperationException("模板版本变化且包含模板技能，请使用完整重新部署，不使用补缺更新。");
+            if (preview.Differences.Count > 0 && template.contentHash != template.versionedContentHash)
+                throw new InvalidOperationException("模板技能必须随已封存模板部署，请先由作者 Bump。");
+            return CommitTemplateDeployment(root, source, template, false, preview);
         }
 
         internal static int ReplaceManagedDirectoriesFromTemplate(
@@ -1575,48 +1494,11 @@ namespace Ember.Core.Editor
             string sourceAssets,
             TemplateInfo template)
         {
-            EnsureNoTemplateGuidCollisions(projectRoot, sourceAssets, true);
-
-            string stageRoot = Path.Combine(
-                projectRoot,
-                "Temp",
-                $"EmberTemplateDeploy-{Guid.NewGuid():N}~");
-            var targets = new List<TemplateTransactionTarget>();
-            int deployed = 0;
-            AssetDatabase.DisallowAutoRefresh();
-            try
-            {
-                foreach (var relativeDirectory in TemplateDirNames)
-                {
-                    var relativePath = relativeDirectory.Replace('/', Path.DirectorySeparatorChar);
-                    var source = Path.Combine(sourceAssets, relativePath);
-                    var staged = Path.Combine(stageRoot, relativePath);
-                    if (Directory.Exists(source))
-                    {
-                        deployed += EmberTemplateTransaction.CopyDirectory(source, staged);
-                        foreach (var file in Directory.GetFiles(staged, "*", SearchOption.AllDirectories))
-                            RewriteVersionMarker(file, template.version, template.frameworkVersion);
-                    }
-
-                    targets.Add(new TemplateTransactionTarget(
-                        staged,
-                        Path.Combine(projectRoot, "Assets", relativePath),
-                        true));
-                }
-
-                // 防止包内容在暂存期间被外部修改后仍进入项目。
-                EnsureStoredContentMatchesMetadata(template, sourceAssets, "部署");
-                EmberTemplateTransaction.CommitPreparedTargets(targets);
-                return deployed;
-            }
-            finally
-            {
-                TryCleanTransactionPath(stageRoot);
-                AssetDatabase.AllowAutoRefresh();
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-            }
+            var preview = ConfirmLifecycleSkills(projectRoot, sourceAssets, template, false);
+            if (preview.Differences.Count > 0 && template.contentHash != template.versionedContentHash)
+                throw new InvalidOperationException("模板技能必须随已封存模板部署，请先由作者 Bump。");
+            return CommitTemplateDeployment(projectRoot, sourceAssets, template, true, preview);
         }
-
         private static void RegisterBuildSettings(bool pruneMissingScenes = false)
         {
             var scenes = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);

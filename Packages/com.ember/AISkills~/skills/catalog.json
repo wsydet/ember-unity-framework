@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "id": "ember-eui-build",
+      "displayName": "Ember EUI 制作",
+      "description": "通过 UI 开发中心创建正式 Prefab、生成绑定并完成用户逻辑接线。",
+      "minimumFrameworkVersion": "0.13.0",
+      "requiredCapability": "eui-regenerate-v1"
+    },
+    {
+      "id": "ember-commit-review",
+      "displayName": "Ember 提交审查",
+      "description": "审查当前项目的已暂存、未暂存及未跟踪文件，按项目规范整理提交建议。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-region-organizer",
+      "displayName": "Ember 代码分块",
+      "description": "按项目约定整理指定 C# 脚本的 region，保留初始化顺序与条件编译边界。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-solution-design",
+      "displayName": "Ember 方案评估",
+      "description": "调研项目现状并比较实现方案，明确业务、框架与模板的改动归属和验证路径。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-package-scan",
+      "displayName": "Ember 包清单同步",
+      "description": "核对 Unity 项目的依赖声明与解析结果，生成或同步项目自己的包清单文档。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-generate-doc",
+      "displayName": "Ember API 文档",
+      "description": "依据实际源码与程序集边界，为指定业务模块生成或维护可用的 API 文档。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-odin-inspector",
+      "displayName": "Ember Odin 面板检查",
+      "description": "检查指定脚本的 Odin 布局与序列化问题，按当前版本证据提出修正建议。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-doc-maintenance",
+      "displayName": "Ember 文档维护",
+      "description": "审计并维护项目自有文档，检查链接、合并重复内容并保护依赖包和历史资料。",
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-odin-capture-style",
+      "displayName": "Ember Odin 风格记录",
+      "description": "从已认可的 Odin 面板提取可复用模式，记录到项目文档并保留适用版本与证据。",
+      "minimumFrameworkVersion": "0.13.0"
+    }
+  ]
+}

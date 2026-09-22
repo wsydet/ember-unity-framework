@@ -20,6 +20,38 @@ namespace Ember.UI.Tests
     public class EUIDevelopmentCenterEditTests
     {
         [Test]
+        public void ExtensionTypeLookup_ResolvesFullAndSimpleNamesWithoutCachingComponentInstances()
+        {
+            var first = new GameObject("First", typeof(RectTransform), typeof(Button), typeof(EUIBinding));
+            var second = new GameObject("Second", typeof(RectTransform), typeof(Button), typeof(EUIBinding));
+            try
+            {
+                foreach (var go in new[] { first, second })
+                {
+                    var binding = go.GetComponent<EUIBinding>();
+                    var serialized = new UnityEditor.SerializedObject(binding);
+                    var entries = serialized.FindProperty("bindings"); entries.arraySize = 3;
+                    var types = new[] { "UnityEngine.UI.Button", "Button", "System.String" };
+                    for (int i = 0; i < types.Length; i++)
+                    {
+                        var entry = entries.GetArrayElementAtIndex(i);
+                        entry.FindPropertyRelative("Name").stringValue = "value" + i;
+                        entry.FindPropertyRelative("GameObject").objectReferenceValue = go;
+                        entry.FindPropertyRelative("Type").intValue = (int)EUIBinding.WidgetTypes.Extension;
+                        entry.FindPropertyRelative("ClassName").stringValue = types[i];
+                    }
+                    serialized.ApplyModifiedPropertiesWithoutUndo();
+                    var map = new System.Collections.Generic.Dictionary<string, Component>();
+                    EUIBindingBridge.PopulateControlMap(binding, map);
+                    Assert.AreSame(go.GetComponent<Button>(), map["value0"]);
+                    Assert.AreSame(go.GetComponent<Button>(), map["value1"]);
+                    Assert.IsFalse(map.ContainsKey("value2"), "非 Component 类型不可绑定");
+                }
+            }
+            finally { UnityEngine.Object.DestroyImmediate(first); UnityEngine.Object.DestroyImmediate(second); }
+        }
+
+        [Test]
         public void PublicRegeneration_RejectsUnsavedObjectsWithoutCreatingAssets()
         {
             Assert.IsFalse(EUIBindingCodeGenUtility.TryRegenerateCode(null, out var nullError));

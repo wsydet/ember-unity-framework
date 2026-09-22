@@ -1,0 +1,6 @@
+{
+    "name": "Game.Narrative.Runtime",
+    "rootNamespace": "Game.Narrative",
+    "references": ["Ember.Basic.Runtime", "Ember.Core.Runtime", "Ember.Table.Runtime", "Game.Table.Runtime", "Ember.Resource.Runtime", "Ember.Audio.Runtime", "Ember.Input.Runtime", "Unity.InputSystem", "Ember.UI.Runtime"],
+    "autoReferenced": true
+}

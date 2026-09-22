@@ -125,6 +125,7 @@ namespace Ember.Audio
         /// </summary>
         public void StopBGM()
         {
+            if (!_bgmSource) return;
             _bgmSource.Stop();
             _bgmSource.clip = null;
         }
@@ -139,6 +140,36 @@ namespace Ember.Audio
         }
 
         // ======== SFX ========
+
+        /// <summary>播放可暂停和释放的音效。调用方必须 Dispose 返回的句柄。</summary>
+        public EmberAudioPlayback PlayOwnedSFX(AudioClip clip, float volumeScale = 1f)
+        {
+            if (!_initialized || clip == null) throw new System.InvalidOperationException("Audio is not ready or clip is missing.");
+            var source = GameLauncher.Instance.AudioHost.AddComponent<AudioSource>();
+            source.playOnAwake = false; source.loop = false; source.clip = clip;
+            source.volume = _sfxVolume * Mathf.Clamp01(volumeScale);
+            source.Play();
+            return new EmberAudioPlayback(source);
+        }
+
+        public bool IsInitialized => _initialized;
+
+        /// <summary>独立于 BGM/SFX 的配音句柄；调用方负责单路所有权、Tick 和 Dispose。</summary>
+        public EmberAudioPlayback PlayOwnedVoice(AudioClip clip, float volume = 1f)
+        {
+            if (!_initialized || clip == null) throw new System.InvalidOperationException("Audio is not ready or clip is missing.");
+            var source = GameLauncher.Instance.AudioHost.AddComponent<AudioSource>();
+            source.playOnAwake = false; source.loop = false; source.clip = clip;
+            source.volume = Mathf.Clamp01(volume); source.Play();
+            return new EmberAudioPlayback(source);
+        }
+
+        /// <summary>暂停背景音乐；恢复不从头重播。</summary>
+        public void SetBGMPaused(bool paused)
+        {
+            if (!_bgmSource) return;
+            if (paused) _bgmSource.Pause(); else _bgmSource.UnPause();
+        }
 
         /// <summary>
         /// 播放音效。支持多个 SFX 同时播放（每个 SFX 独立的临时 AudioSource）。
@@ -229,6 +260,7 @@ namespace Ember.Audio
 
         private void ApplyVolume()
         {
+            if (_bgmSource) _bgmSource.volume = _mixer == null ? _bgmVolume : 1f;
             if (_mixer != null)
             {
                 _mixer.SetFloat(_bgmMixerParam, VolumeToDB(_bgmVolume));

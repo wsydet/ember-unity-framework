@@ -1,0 +1,23 @@
+# 策划五列表格
+
+格式依据用户提供的截图：`场景 | 说话人 | 台词 | 美术 | 变化`。截图仅确认结构，不能证明在线数据内容或完整范围。
+
+| 列 | 映射原则 |
+| --- | --- |
+| 场景 | 指定场景或段落；合并区内的后续行沿用该合并区值。非合并空格是否表示延续需确认约定；选区从中间开始时只读上下文解析场景，不顺带导入前文。场景变化不自动等于章节切换 |
+| 说话人 | 匹配角色表显示名与稳定 ID；重名询问。`旁白` 通常映射空角色键；`旁白（心里想法）` 独立保留其语义，询问是否使用无姓名旁白或已有内心角色，不擅自并成主角对白 |
+| 台词 | 逐字保留，不改错字、不合并重复句、不改变省略号、不把括号内容自动移到演出。单元格真实换行保留；截图因列宽折行不当成正文换行 |
+| 美术 | 是制作要求而非资源键。从实际配表匹配背景/立绘，展示候选和缺失资源。`模糊的人影` 不自动承诺有模糊滤镜；资源缺失交由用户补图/图片导入，不用样例顶替 |
+| 变化 | 按作者明确意图映射现有动作，保存原备注。空白不代表清除前一个画面，也不凭空新增效果 |
+
+空说话人且有台词时不能默认沿用上一角色：截图中离开教室后的叙述可能属于旁白，应问一次该段的约定。全空行保留为来源分隔记录，不产生空 Say。无台词但美术/变化有 `fade out` 等内容是独立演出行，不可丢弃；需明确是黑幕淡出、背景透明还是人物退场，时长未给时展示建议参数让用户确认。`Opacity Stage=0` 不等于黑幕；黑幕采用现有 Cover 并明确后续撤幕。
+
+场景“课堂”“家”等是策划名称，先映射实际背景键，不据名称生成新美术。选项/条件/跳转若以新增列或备注表达，单独识别和确认，不能把它们扁平为台词。选区引用范围外的节点时展示外部依赖，由用户决定扩展范围或映射到已有节点，不默认生成结局或把下一行当分支目标。
+
+## 现有资产与接口
+
+命名空间 `Game.Narrative`：Story 使用 `NarrativeStorySO`，Chapter 使用 `NarrativeChapterSO`，对话使用 `NarrativeDialogueSO`，分支/选项/出口等以项目 `Assets/Game/Module/Narrative/Assets/` 实际类为准。Say 来自 `NovelCommand`，字段定义以 `NarrativeData.cs` 为准，禁止凭空假定 setter 或反射写私有字段。
+
+编辑接口在 `Game.Narrative.Editor`：`NarrativeStoryModel.CreateStory(path)`、`CreateChapter(story, folderName)`；`NarrativeGraphModel.CreateNode(chapter, kind)`、`SetEntry(chapter,node)`、`Connect(chapter,node,port,target)`、`AppendCommands(node,commands)`、`Save(chapter)`。端口名从现有 `Ports(node)` 获取。AppendCommands 只追加，不能拿它实现中间插入或重复导入；需要改序列时先查实际序列化结构、使用 Undo/SerializedObject，并保持稳定标识。
+
+先查 `IsTemplateActive(true)` / `CanEdit` 等限制，接口拒绝时停止，不冒充开发模板。校验用真实 `INarrativeCatalog`，不得用“所有键都存在”的假实现让校验通过。跨章使用 Story 出口和路线，不生成跨章节直接节点连接。

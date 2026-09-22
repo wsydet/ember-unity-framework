@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
+using Cysharp.Threading.Tasks;
+
 using Ember.UI;
 using Ember.UIExtension;
 using Ember.UIExtension.Editor;
@@ -16,9 +18,22 @@ using UnityEditor;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.TestTools;
 
 namespace Ember.UI.Tests
 {
+    public sealed class GatedPageTransition : MonoBehaviour, IEUITransitionHandler
+    {
+        public readonly UniTaskCompletionSource ShowGate = new UniTaskCompletionSource();
+        public int HideCount;
+        public UniTask PlayShowAsync(GameObject page, float duration) => ShowGate.Task;
+        public UniTask PlayHideAsync(GameObject page, float duration)
+        {
+            HideCount++;
+            return UniTask.CompletedTask;
+        }
+    }
+
     /// <summary>
     /// 纯 C# 逻辑的 Edit Mode 测试（不需要 Play Mode）。
     /// </summary>
@@ -502,6 +517,72 @@ namespace Ember.UI.Tests
             var field = typeof(EUIPage).GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.IsNotNull(field);
             return (bool)field.GetValue(page);
+        }
+
+        private sealed class GatedTransitionLogic : EUILogic
+        {
+            public readonly UniTaskCompletionSource ExitGate = new UniTaskCompletionSource();
+            public int EnterCount;
+            public override UniTask OnCustomEnter()
+            {
+                EnterCount++;
+                return UniTask.CompletedTask;
+            }
+            public override UniTask OnCustomExit() => ExitGate.Task;
+        }
+
+        [TestCase(false, 0)]
+        [TestCase(false, 1)]
+        [TestCase(false, 2)]
+        [TestCase(true, 0)]
+        [TestCase(true, 1)]
+        [TestCase(true, 2)]
+        public void Page_BlockChain_ShouldStopAfterAwaitIfPageIsGone(bool show, int teardown)
+        {
+            var go = new GameObject("GatedTransitionPage");
+            var logic = new GatedTransitionLogic();
+            var block = go.AddComponent<GatedPageTransition>();
+            var showGate = block.ShowGate;
+            try
+            {
+                var page = new EUIPage(go);
+                page.SetTransition(false, true, false, true, 0.3f, 0.2f);
+                typeof(EUIPage).GetField("_logic", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(page, logic);
+                int completed = 0;
+                typeof(EUIPage).GetField(show ? "_onShowComplete" : "_onHideComplete",
+                    BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(page, (System.Action)(() => completed++));
+                var task = (UniTask)typeof(EUIPage).GetMethod(
+                    show ? "RunShowAnimationSequence" : "RunHideAnimationSequence",
+                    BindingFlags.Instance | BindingFlags.NonPublic).Invoke(page, null);
+                Assert.AreEqual(UniTaskStatus.Pending, task.Status);
+                Assert.AreEqual(0, logic.EnterCount);
+                Assert.AreEqual(0, block.HideCount);
+
+                if (teardown == 1)
+                    Object.DestroyImmediate(go);
+                else if (teardown == 2)
+                    typeof(EUIPage).GetMethod("MarkDisposed", BindingFlags.Instance | BindingFlags.NonPublic)
+                        .Invoke(page, null);
+
+                if (teardown == 0)
+                    LogAssert.Expect(LogType.Log, new System.Text.RegularExpressions.Regex(
+                        show ? "页面已打开:" : "页面已关闭:"));
+                if (show) showGate.TrySetResult();
+                else logic.ExitGate.TrySetResult();
+
+                Assert.AreEqual(UniTaskStatus.Succeeded, task.Status);
+                task.GetAwaiter().GetResult();
+                Assert.AreEqual(show && teardown == 0 ? 1 : 0, logic.EnterCount);
+                Assert.AreEqual(!show && teardown == 0 ? 1 : 0, block.HideCount);
+                Assert.AreEqual(teardown == 0 ? 1 : 0, completed);
+                LogAssert.NoUnexpectedReceived();
+            }
+            finally
+            {
+                if (go != null) Object.DestroyImmediate(go);
+            }
         }
 
         #endregion

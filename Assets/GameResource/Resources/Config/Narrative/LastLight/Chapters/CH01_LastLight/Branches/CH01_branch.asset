@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb016b628299664584f2d647b3b1421, type: 3}
+  m_Name: CH01_branch
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeBranchSO
+  _nodeId: last_light_branch
+  _chapterId: last_light_ch01
+  _contentRevision: 1
+  _branches:
+  - _optionId: last_light_heard_route
+    _text: 有人听见
+    _condition:
+      _junction: 0
+      _predicates:
+      - _variableId: heard
+        _scope: 0
+        _comparison: 0
+        _value:
+          _type: 0
+          _bool: 1
+          _int: 0
+          _string: ""
+    _target: {fileID: 11400000, guid: f9d225f7ada84874b613846b5047d794, type: 2}
+  _fallback: {fileID: 11400000, guid: 1097e41a8f4047119981134ecd1bf6d3, type: 2}

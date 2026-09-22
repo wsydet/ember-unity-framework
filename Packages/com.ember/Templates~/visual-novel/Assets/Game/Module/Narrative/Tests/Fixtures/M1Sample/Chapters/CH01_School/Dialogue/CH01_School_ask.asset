@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2efa25a9198a84abcf7b57a3b60f7c, type: 3}
+  m_Name: CH01_School_ask
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
+  _nodeId: ask
+  _chapterId: vn_m1_sample
+  _contentRevision: 1
+  _commands:
+  - _commandId: m2_smile
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: alice_smile
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.2
+    _slot: 0
+    _visualAction: 1
+  - _commandId: m2_chime
+    _kind: 6
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: choice_chime
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: trust_set
+    _kind: 1
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: 
+    _variableId: trust
+    _scope: 0
+    _value:
+      _type: 1
+      _bool: 0
+      _int: 1
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: ask_say
+    _kind: 0
+    _lineId: line_ask
+    _textRevision: 1
+    _characterId: lin
+    _text: "\u597D\u554A\uFF0C\u4F60\u5728\u770B\u4EC0\u4E48\uFF1F"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  _next: {fileID: 11400000, guid: eb35bbf31f296cc4e90ba993c7ad440e, type: 2}

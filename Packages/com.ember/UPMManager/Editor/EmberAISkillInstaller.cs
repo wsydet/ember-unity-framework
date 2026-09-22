@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Ember.UPMManager.Editor
 {
     /// <summary>项目级技能安装：校验目录、检测本地修改、保留备份并事务替换单个技能。</summary>
-    internal static class EmberAISkillInstaller
+    public static partial class EmberAISkillInstaller
     {
         #region 内部参数
         internal const string CatalogFile = "catalog.json";
@@ -33,6 +33,8 @@ namespace Ember.UPMManager.Editor
             public string description;
             public string minimumFrameworkVersion;
             public string requiredCapability;
+            public string templateId;
+            public string minimumTemplateVersion;
         }
 
         [Serializable] internal sealed class Fingerprint
@@ -49,6 +51,13 @@ namespace Ember.UPMManager.Editor
             public string commit;
             public string installedAtUtc;
             public Fingerprint[] files;
+            public string ownerKind;
+            public string templateId;
+            public string templateVersion;
+            public string templateContentHash;
+            public string originTemplateId;
+            public string templateMode;
+            public string[] directories;
         }
 
         [Serializable] internal sealed class State
@@ -71,6 +80,7 @@ namespace Ember.UPMManager.Editor
             internal Package Package;
             internal Status Status;
             internal string InstalledCommit;
+            internal string InstalledTemplateId;
             internal Fingerprint[] LocalFiles;
             internal string StateHash;
             internal bool NeedsOverwrite => Status == EmberAISkillInstaller.Status.LocalChanges
@@ -83,6 +93,8 @@ namespace Ember.UPMManager.Editor
         {
             if (id == null || !Regex.IsMatch(id, @"\A[a-z0-9][a-z0-9-]{0,63}\z"))
                 throw new InvalidDataException("技能目录名无效：" + id);
+            if (Regex.IsMatch(id, @"\A(con|prn|aux|nul|com[1-9]|lpt[1-9])\z"))
+                throw new InvalidDataException("技能目录不能使用系统设备名：" + id);
         }
 
         private static string Within(string root, string relative)
@@ -96,9 +108,14 @@ namespace Ember.UPMManager.Editor
                 throw new InvalidDataException("技能路径超出项目目录。");
             // Reject junctions/symlinks in every existing ancestor, including the project root.
             for (string current = full; !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
-                if ((File.Exists(current) || Directory.Exists(current))
-                    && (File.GetAttributes(current) & FileAttributes.ReparsePoint) != 0)
+            {
+                FileAttributes attributes;
+                try { attributes = File.GetAttributes(current); }
+                catch (FileNotFoundException) { continue; }
+                catch (DirectoryNotFoundException) { continue; }
+                if ((attributes & FileAttributes.ReparsePoint) != 0)
                     throw new IOException("技能目录不能通过符号链接或 junction 写入：" + current);
+            }
             return full;
         }
 
@@ -158,30 +175,47 @@ namespace Ember.UPMManager.Editor
             string path = Within(projectRoot, StateFile);
             if (!File.Exists(path)) return new State();
             var state = JsonUtility.FromJson<State>(File.ReadAllText(path, Utf8));
-            if (state == null || state.schemaVersion != 1 || state.skills == null)
+            if (state == null || (state.schemaVersion != 1 && state.schemaVersion != 2) || state.skills == null)
                 throw new InvalidDataException("AI Skill 安装记录无效，请先检查 " + StateFile);
             var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var item in state.skills)
             {
                 if (item == null || item.files == null) throw new InvalidDataException("AI Skill 安装记录不完整。");
                 CheckId(item.id);
+                if (!string.IsNullOrEmpty(item.ownerKind) && item.ownerKind != "template")
+                    throw new InvalidDataException("未知技能所有权类型，请升级管理器。");
+                if (item.ownerKind == "template")
+                {
+                    if (state.schemaVersion != 2) throw new InvalidDataException("模板所有权需要记录 schema v2。");
+                    CheckId(item.templateId);
+                    if (!Version.TryParse(item.templateVersion, out _) || string.IsNullOrEmpty(item.templateContentHash))
+                        throw new InvalidDataException("模板技能所有权记录不完整。");
+                    if (item.templateMode != "editing" && item.templateMode != "deployed")
+                        throw new InvalidDataException("模板技能身份模式无效。");
+                }
                 if (!ids.Add(item.id) || item.files.Any(f => f == null || string.IsNullOrEmpty(f.path)
                         || !Regex.IsMatch(f.sha256 ?? "", @"\A[0-9a-f]{64}\z")))
                     throw new InvalidDataException("AI Skill 安装记录包含重复或无效项。");
+                var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var file in item.files)
+                {
+                    Within(Path.Combine(projectRoot, ".agents/skills", item.id), file.path);
+                    if (!paths.Add(file.path)) throw new InvalidDataException("技能记录包含重复文件路径。");
+                }
             }
             return state;
         }
         #endregion
 
         #region 外部方法
-        internal static List<Package> ReadCatalog(string skillsRoot)
+        internal static List<Package> ReadCatalog(string skillsRoot, bool templateCatalog = false)
         {
             string catalogPath = Within(skillsRoot, CatalogFile);
             if (!File.Exists(catalogPath) || new FileInfo(catalogPath).Length > 128 * 1024)
                 throw new InvalidDataException("所选版本缺少有效的 AI Skill 发布目录，请选择包含 catalog.json 的版本。");
             var catalog = JsonUtility.FromJson<Catalog>(File.ReadAllText(catalogPath, Utf8));
-            if (catalog == null || catalog.schemaVersion != 1 || catalog.skills == null
-                || catalog.skills.Length == 0 || catalog.skills.Length > 64)
+            if (catalog == null || catalog.schemaVersion != (templateCatalog ? 2 : 1) || catalog.skills == null
+                || (!templateCatalog && catalog.skills.Length == 0) || catalog.skills.Length > 64)
                 throw new InvalidDataException("AI Skill 发布目录为空或版本不受支持。");
             var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var packages = new List<Package>();
@@ -189,6 +223,15 @@ namespace Ember.UPMManager.Editor
             {
                 if (definition == null) throw new InvalidDataException("技能定义为空。");
                 CheckId(definition.id);
+                if (templateCatalog)
+                {
+                    CheckId(definition.templateId);
+                    if (!Version.TryParse(definition.minimumTemplateVersion, out _)
+                        || !Version.TryParse(definition.minimumFrameworkVersion, out _))
+                        throw new InvalidDataException("模板技能必须声明最低框架和模板版本：" + definition.id);
+                }
+                else if (!string.IsNullOrEmpty(definition.templateId) || !string.IsNullOrEmpty(definition.minimumTemplateVersion))
+                    throw new InvalidDataException("通用目录不能分发模板技能，请通过项目中心部署模板。");
                 if (!ids.Add(definition.id)) throw new InvalidDataException("技能目录重复：" + definition.id);
                 string directory = Within(skillsRoot, definition.id);
                 var files = Snapshot(directory);
@@ -235,7 +278,8 @@ namespace Ember.UPMManager.Editor
             return new Preview
             {
                 Package = package, Status = status, LocalFiles = local,
-                InstalledCommit = installation?.commit, StateHash = Hash(Within(projectRoot, StateFile))
+                InstalledCommit = installation?.commit, StateHash = Hash(Within(projectRoot, StateFile)),
+                InstalledTemplateId = installation?.ownerKind == "template" ? installation.templateId : null
             };
         }
 
@@ -244,6 +288,9 @@ namespace Ember.UPMManager.Editor
             string commit, bool allowOverwrite)
         {
             if (IsSourceProject(projectRoot)) throw new InvalidOperationException("框架开发仓库直接维护技能源文件，不通过更新器覆盖。");
+            if (!string.IsNullOrEmpty(preview.Package.Definition.templateId)
+                || ReadState(projectRoot).skills.Any(s => s.id == preview.Package.Definition.id && s.ownerKind == "template"))
+                throw new InvalidOperationException("模板技能只能通过项目中心同步，通用安装不能覆盖模板所有权。");
             if (preview.NeedsOverwrite && !allowOverwrite) throw new InvalidOperationException("技能存在本地内容，请先确认备份并覆盖。");
             if (!Regex.IsMatch(commit ?? "", @"\A[0-9a-f]{40,64}\z")) throw new InvalidDataException("缺少有效的技能来源提交。");
             var fresh = Inspect(projectRoot, preview.Package);

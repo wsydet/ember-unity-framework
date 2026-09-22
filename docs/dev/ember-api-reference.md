@@ -1,4 +1,4 @@
-# Ember API 速查手册
+﻿# Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
 > 最后核对：2026-09-09；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
@@ -1138,12 +1138,16 @@ EmberUpdateManager.Instance.DoFixedUpdate();  // 由 GameLauncher FixedUpdate �
 | | `IEmberManager` | `IEmberModule` |
 |---|---|---|
 | 定位 | 框架必要管理器 | 可选业务积木 |
-| 启动 | Init 阶段统一 `Init` | Init 阶段仅发现启用实例，进入所属 Phase 才 `OnInit` |
+| 启动 | Init 阶段统一 `Init` | Init 内先发现启用实例，再激活 Global；其他模块在对应 Phase 执行 `OnInit` |
 | 生命周期 | 跨状态常驻到框架退出 | 随 Phase 激活和退出 |
 | 模板关系 | 所有模板共同具备 | 各模板自由添加、移除或禁用 |
 
 Module 可以使用 Manager 提供的输入、资源、相机、UI 等稳定能力。不同项目复用同一套框架和
 Managers，只需组合不同 Modules 就能构成不同游戏；Manager 不应反向依赖具体业务 Module。
+
+**分类看职能与可选性，不看启动阶段。** Manager 是不可按玩法裁剪的框架必要基座；Module 是
+可拆装业务积木。`[EmberModule(ModulePhase.Global, Enabled = true)]` 的模块在 `InitState` 内
+启动并可常驻到退出，仍属于 Module。`Enabled` 决定是否装配，`Phase` 决定何时激活。
 
 ### IEmberManager（框架管道）
 
@@ -1167,10 +1171,10 @@ public interface IEmberModule {
 }
 ```
 
-业务模块必须通过类型元数据声明阶段和启用状态：
+业务模块必须通过类型元数据声明阶段和启用状态；新增 Module 必须显式填写 `Enabled = true` 或 `Enabled = false`，不得省略并依赖默认值，配套编辑器入口也须服从该开关（见 [项目规则](../../CLAUDE.md)）：
 
 ```csharp
-[EmberModule(ModulePhase.Gameplay)]
+[EmberModule(ModulePhase.Gameplay, Enabled = true)]
 public sealed class BattleModule : EmberSingleton<BattleModule>, IEmberModule
 {
     public void OnInit() { }
@@ -1189,8 +1193,9 @@ public sealed class OptionalModule : EmberSingleton<OptionalModule>, IEmberModul
 
 `EmberModuleCollector` 会先读取 `EmberModuleAttribute`；禁用或缺少特性的类型不会访问
 `Instance`。两者**平行不继承**——Collector 只扫 IEmberManager，ModuleCollector 只扫
-IEmberModule。启用的 Module 在 Init 阶段只会被发现、构造和登记；进入声明的 Phase 并成功执行
-`OnInit` 后才算激活，才会接收 Update。
+IEmberModule。`DiscoverModules` 只发现、构造和登记；同一次 `InitState.OnEnter` 随后在 Manager
+初始化完成后调用 `InitPhase(Global)`，启动 Global 模块。其他 Phase 等对应状态显式激活。
+成功执行 `OnInit` 后才算激活，才会接收 Update。
 
 `Enabled` 是启动扫描时的类型级装配开关，不提供运行时热插拔。当前框架内置驱动 Global 与
 Gameplay；`ModulePhase.Main` 或自定义 Phase 需要由对应状态显式调用 `InitPhase` / `DestroyPhase`。
@@ -1469,7 +1474,7 @@ object result = EUIManager.Instance.GetReturnValue(page);
 主要签名：
 
 ```csharp
-void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
+void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null, Func<bool> isCurrent = null);
 void ShowPopup(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ShowTopMost(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
 void ShowOverlay(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null);
@@ -1480,6 +1485,7 @@ void ClosePage(EUIPage page, object returnValue = null);
 ```
 
 - `ShowMainPage` 压入 MainPage 栈并暂停旧页。跨状态的替换式切换应由旧状态在退出钩子中 `ClosePageByDef`，不要依赖新页自动销毁旧页。
+- `isCurrent` 可绑定会话代数/释放状态；入队处理及异步加载返回时检查，失效请求不入栈、不调用完成回调，已加载资源交还 Provider。已经打开的页面仍由宿主关闭。
 - Popup 遮罩默认点击后执行 `EUIManager.ClosePage`。如果弹窗本身由状态机 `Push/Pop` 管理，应关闭 `clickMaskToClose`，再由按钮执行状态机 `Pop`，避免只关页面而未退出状态。
 - `FullScreenPopup` 沿用 Popup 栈和遮罩，并在打开时隐藏下层；普通 Popup 保留下层渲染，由遮罩拦截交互。
 - 全局遮罩兜底色可通过 `EUIManager.PopupMaskColor` 设置；默认 Loading 定义可通过 `EUIManager.DefaultLoadingPageDef` 设置。
@@ -1651,6 +1657,16 @@ audio.Init(mixer);                    // 传 AudioMixer
 audio.PlayBGM(bgmClip, loop: true);
 audio.StopBGM();
 audio.PlaySFX(sfxClip);
+var ownedSfx = audio.PlayOwnedSFX(sfxClip); // 调用方持有并 Dispose，停止且释放本次 AudioSource
+ownedSfx.SetPaused(true);
+ownedSfx.Dispose();
+var voice = audio.PlayOwnedVoice(voiceClip, volume: 0.8f); // 独立于 SFX 音量；调用方保持单路所有权
+voice.Completed += OnVoiceFinished; // 只通知自然完成一次
+voice.Tick();                      // 拥有者逐帧更新完成检查
+voice.SetVolume(0.5f);
+voice.SetPaused(true);
+voice.Dispose();                   // 主动停止，不触发 Completed
+audio.SetBGMPaused(true); // 仅当前 BGM；不改变全局音量
 audio.SetBGMVolume(0.8f);
 audio.SetSFXVolume(1.0f);
 ```
@@ -1722,6 +1738,25 @@ var active = cam.ActiveCamera;
 ---
 
 ## Editor 工具（Editor-only）
+
+### 模板 AI Skill（本地未发布）
+
+项目中心 `Ember.Core.Editor.EmberProjectSetup` 新增：
+
+| API | 用途 |
+|---|---|
+| `PreviewSelectedTemplateSkills(templateId)` | 包内模板分发的只读差异预览，不启用技能 |
+| `PreviewCurrentTemplateSkills()` | 根据正式编辑/部署记录生成当前模板预览；消费端校验固定版本/hash |
+| `SyncCurrentTemplateSkills(preview, allowBackup)` | 显式应用当前模板预览；复核身份与文件变化，使用原文件事务 |
+| `GetTemplateSkillExecutionBlockReason(skillId)` | 执行前校验归属、身份模式、版本/hash 与安装指纹；非空时停止 |
+
+`Ember.UPMManager.Editor.EmberAISkillInstaller` 提供 `PreviewTemplateSkills`、`ValidateTemplateBinding`、
+`BindTemplateIdentityRecord`、`ValidateTemplatePreview`、`PrepareTemplateSkills`、`ValidateTemplateSkillSource` 和
+`HasTemplateSkillOwnership`，供 Core 生命周期编排使用。`PrepareTemplateSkills` 只准备目标/备份，必须加入正式模板事务；
+不应把它当成绕过正式部署的独立安装入口。Core.Editor → UPMManager.Editor 单向引用，UPM 仍无 Core/Odin 引用。
+
+框架级 Skill 由包内生成 bundle 首次自动安装，后续继续独立更新。模板自有与继承 Skill 的目录、schema、最低版本和发布边界见
+[框架与模板 AI Skill](../../Packages/com.ember/Documentation~/maintenance/template-ai-skills.md)。
 
 ### EUI 自动重新生成（0.13.0 起）
 
@@ -1866,3 +1901,7 @@ var rel     = UrlUtils.GetRelativePath("C:/a/b/c.txt", "C:/a/"); // "b/c.txt"
 // Inspector 中拖拽场景文件
 string path = _battleScene;  // 隐式转换
 ```
+
+### 异步业务操作复用 Loading（2026-09-18）
+
+`EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束且经过一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 仍负责场景加载、PrepareEnter、状态进入和旧场景卸载。没有操作持有者时，原有场景 Loading 流程保持原行为。

@@ -28,6 +28,7 @@ namespace Ember.UPMManager.Editor
         {
             internal EmberAISkillInstaller.Preview Preview;
             internal string Error;
+            internal bool ShowDifferences;
         }
         #endregion
 
@@ -75,10 +76,12 @@ namespace Ember.UPMManager.Editor
             {
                 try
                 {
+                    var preview = EmberAISkillInstaller.Inspect(AiSkillProjectRoot, package);
                     _aiSkillRows.Add(new AiSkillRow
                     {
-                        Preview = EmberAISkillInstaller.Inspect(AiSkillProjectRoot, package),
-                        Error = EmberAISkillInstaller.Incompatibility(package.Definition,
+                        Preview = preview,
+                        Error = preview.InstalledTemplateId != null ? "同名技能归属于模板 " + preview.InstalledTemplateId + "，通用更新不能覆盖。"
+                            : EmberAISkillInstaller.Incompatibility(package.Definition,
                             GetPackageVersion(PackageName), HasEuiRegenerateApi())
                     });
                 }
@@ -92,6 +95,18 @@ namespace Ember.UPMManager.Editor
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 EditorGUILayout.LabelField("AI Skill · 独立安装与更新", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("通用技能 · 模板专属技能随固定模板版本，由项目中心预览与同步。", EditorStyles.wordWrappedMiniLabel);
+                string bootstrap = SessionState.GetString("Ember.AISkills.BootstrapStatus", "");
+                if (!string.IsNullOrEmpty(bootstrap)) EditorGUILayout.HelpBox(bootstrap
+                    + "\n框架技能安装后请重新加载 AI 会话。", MessageType.Info);
+                if (GUILayout.Button("查看模板专属 Skill（项目中心）"))
+                {
+                    var window = AppDomain.CurrentDomain.GetAssemblies()
+                        .Select(a => a.GetType("Ember.Core.Editor.EmberTemplateSkillsWindow")).FirstOrDefault(t => t != null);
+                    var open = window?.GetMethod("Open", BindingFlags.Public | BindingFlags.Static);
+                    if (open != null) open.Invoke(null, null);
+                    else { _aiSkillMessage = "项目中心不可用，请先安装支持模板技能的框架并完成编译。"; _aiSkillError = true; }
+                }
                 EditorGUILayout.LabelField("从框架仓库获取技能，安装到当前项目；技能更新与框架升级分开进行。",
                     EditorStyles.wordWrappedMiniLabel);
                 bool unavailable = _installing || EmberUPMUpgradeTracker.IsActive
@@ -135,9 +150,14 @@ namespace Ember.UPMManager.Editor
                     EditorStyles.boldLabel);
                 EditorGUILayout.LabelField(definition.description ?? "", EditorStyles.wordWrappedMiniLabel);
                 EditorGUILayout.LabelField(definition.id + " · " + AiSkillStatusLabel(preview.Status), EditorStyles.wordWrappedLabel);
+                EditorGUILayout.LabelField("通用 · 最低框架 " + definition.minimumFrameworkVersion, EditorStyles.miniLabel);
                 if (!string.IsNullOrEmpty(preview.InstalledCommit))
                     EditorGUILayout.LabelField("安装来源：" + preview.InstalledCommit, EditorStyles.wordWrappedMiniLabel);
                 if (!string.IsNullOrEmpty(row.Error)) EditorGUILayout.HelpBox(row.Error, MessageType.Warning);
+                row.ShowDifferences = EditorGUILayout.Foldout(row.ShowDifferences, "具体文件差异（+ 新增 / ~ 修改 / - 移除）");
+                if (row.ShowDifferences)
+                    foreach (string difference in EmberAISkillInstaller.DescribeFileDifferences(preview))
+                        EditorGUILayout.LabelField(difference, EditorStyles.wordWrappedMiniLabel);
                 using (new EditorGUI.DisabledScope(unavailable || !string.IsNullOrEmpty(row.Error)))
                 {
                     string action = preview.NeedsOverwrite ? "备份并覆盖" : preview.Status == EmberAISkillInstaller.Status.Missing

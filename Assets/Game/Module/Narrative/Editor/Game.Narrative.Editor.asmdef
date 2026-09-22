@@ -1,0 +1,6 @@
+{
+    "name": "Game.Narrative.Editor",
+    "references": ["Game.Narrative.Runtime", "Game.NovelSave.Runtime", "Game.Table.Runtime", "Ember.Basic.Runtime", "Ember.Core.Runtime", "Ember.Core.Editor", "Ember.Table.Runtime", "Ember.Table.Editor", "Game.UI.Editor", "Unity.InputSystem"],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": true
+}

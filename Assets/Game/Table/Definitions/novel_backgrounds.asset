@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ac809db763a8bd27cd20088e94103a, type: 3}
+  m_Name: novel_backgrounds
+  m_EditorClassIdentifier: Ember.Table.Editor::Ember.Table.Editor.EmberTableDefinition
+  _tableId: novel_backgrounds
+  _source: {fileID: 4900000, guid: 1e29f22e9be08554ca0ff15056201ce5, type: 3}
+  _rowScript: {fileID: 11500000, guid: 9238563d4e384044abdfd8ee4a5d4be6, type: 3}
+  _required: 1
+  _unknownColumnPolicy: 0
+  _runtimeOutputPath: 
+  _maxFileBytes: 16777216
+  _maxRows: 100000
+  _maxStringBytes: 1048576
+  _secondaryIndexes: []

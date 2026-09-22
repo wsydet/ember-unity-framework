@@ -706,6 +706,8 @@ namespace Ember.UI
                 {
                     // Loading 专用特殊链路：保持原时序（方块扫入 → Custom Enter）。
                     await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
+                    // await 期间页面可能被销毁或释放，不能再进入下一段业务动画。
+                    if (!CanCompleteTransition) return;
                     if (_useCustomTransition)
                         await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
                 }
@@ -797,6 +799,8 @@ namespace Ember.UI
                     // Loading 专用特殊链路：保持原时序（Custom Exit → 方块扫出）。
                     if (_useCustomTransition)
                         await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+                    // Custom Exit 可以在页面销毁后正常结束，此时不再解析方块组件。
+                    if (!CanCompleteTransition) return;
                     await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
                 }
                 else if (_usePresetFade)

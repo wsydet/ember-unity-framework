@@ -76,13 +76,30 @@ namespace Game.UI
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
         {
-            // 在此初始化业务数据和事件绑定
+            InitScreenPreferences();
+            NovelTextSpeed.onValueChanged.AddListener(SaveNovelPreferences);
+            NovelAutoInterval.onValueChanged.AddListener(SaveNovelPreferences);
+            NovelBgmVolume.onValueChanged.AddListener(SaveNovelPreferences);
+            NovelSfxVolume.onValueChanged.AddListener(SaveNovelPreferences);
+            NovelVoiceVolume.onValueChanged.AddListener(SaveNovelPreferences);
         }
 
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            // 页面被打开，处理传入参数
+            _novelSettingsPause?.Dispose();
+            if (EmberModuleCollector.Instance.TryGetModule(out Game.Narrative.NarrativeModule narrative))
+                _novelSettingsPause = narrative.Session?.AcquirePause("Settings");
+            _novelPreferences = NovelSaveUI.Module;
+            var a = _novelPreferences?.Account;
+            if (a != null)
+            {
+                NovelTextSpeed.SetValueWithoutNotify(a.TextSpeed); NovelAutoInterval.SetValueWithoutNotify(a.AutoInterval);
+                NovelBgmVolume.SetValueWithoutNotify(a.BgmVolume); NovelSfxVolume.SetValueWithoutNotify(a.SfxVolume); NovelVoiceVolume.SetValueWithoutNotify(a.VoiceVolume);
+                _novelPreferences.Changed += RefreshNovelPreferences;
+            }
+            foreach (var slider in new[] { NovelTextSpeed, NovelAutoInterval, NovelBgmVolume, NovelSfxVolume, NovelVoiceVolume }) slider.interactable = a != null;
+            RefreshNovelPreferences();
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
@@ -100,13 +117,34 @@ namespace Game.UI
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
-            // 页面被关闭
+            ReleaseNovelPreferences();
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            // 清理事件与引用
+            ReleaseNovelPreferences();
+            DisposeScreenPreferences();
+            NovelTextSpeed.onValueChanged.RemoveListener(SaveNovelPreferences); NovelAutoInterval.onValueChanged.RemoveListener(SaveNovelPreferences);
+            NovelBgmVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelSfxVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelVoiceVolume.onValueChanged.RemoveListener(SaveNovelPreferences);
+        }
+        private System.IDisposable _novelSettingsPause;
+        private Game.NovelSave.NovelSaveModule _novelPreferences;
+        private void ReleaseNovelPreferences()
+        {
+            _novelSettingsPause?.Dispose(); _novelSettingsPause = null;
+            if (_novelPreferences != null) _novelPreferences.Changed -= RefreshNovelPreferences;
+            _novelPreferences = null;
+        }
+        private void SaveNovelPreferences(float value)
+        {
+            _novelPreferences?.SavePreferences(NovelTextSpeed.value, NovelAutoInterval.value, NovelBgmVolume.value, NovelSfxVolume.value, NovelVoiceVolume.value);
+            RefreshNovelPreferences();
+        }
+        private void RefreshNovelPreferences()
+        {
+            RefreshScreenPreferences();
+            NovelPreferenceStatus.text = $"{NovelTextSpeed.value:0} 字/秒 · 间隔 {NovelAutoInterval.value:0.0} 秒\n音乐 {NovelBgmVolume.value:P0} / 音效 {NovelSfxVolume.value:P0} / 配音 {NovelVoiceVolume.value:P0}\n{_novelPreferences?.Message}{ScreenPreferenceSummary()}";
         }
     }
 }

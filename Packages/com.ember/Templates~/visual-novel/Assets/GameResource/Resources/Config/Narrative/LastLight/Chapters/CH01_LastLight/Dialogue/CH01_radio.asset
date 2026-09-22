@@ -1,0 +1,1497 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2efa25a9198a84abcf7b57a3b60f7c, type: 3}
+  m_Name: CH01_radio
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
+  _nodeId: last_light_radio
+  _chapterId: last_light_ch01
+  _contentRevision: 7
+  _commands:
+  - _commandId: last_light_radio_stage_e5_reset
+    _kind: 28
+    _actionId: last_light_radio_stage_e5_reset
+    _duration: 0
+    _parallel: 1
+    _ease: 1
+    _cameraZoom: 1
+    _position: {x: 0, y: 0}
+  - _commandId: "last_light_radio_stage_background"
+    _kind: 3
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: "lastlight_rooftop"
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0.3
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_music"
+    _kind: 5
+    _volume: 0.6
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: "quiet_afternoon"
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_stage_reset"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_stage_reset"
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_background_reset"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 1
+    _actionId: "last_light_radio_stage_background_reset"
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_emphasis_reset"
+    _kind: 16
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_clear_0"
+    _kind: 4
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 2
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_clear_1"
+    _kind: 4
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 1
+    _visualAction: 2
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_clear_2"
+    _kind: 4
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 2
+    _visualAction: 2
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_wan"
+    _kind: 4
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: "lastlight_alice"
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_zhou"
+    _kind: 4
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: "lastlight_zhou"
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 2
+    _visualAction: 0
+    _instanceId: "zhou"
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_heard"
+    _kind: 1
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: "heard"
+    _scope: 0
+    _value: {_type: 0, _bool: 1, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_auto"
+    _kind: 16
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 1
+    _dimFactor: 0.72
+  - _commandId: "CH01_radio_e3_motes"
+    _kind: 21
+    _duration: 0
+    _volume: 1
+    _position: {"x": 0.5, "y": 0.5}
+    _scale: {"x": 1, "y": 1}
+    _resourceKey: "lastlight_motes"
+    _instanceId: "roof-motes"
+    _persistent: 1
+    _keepOnSceneChange: 1
+    _layer: 5
+  - _commandId: "CH01_radio_e3_wind"
+    _kind: 24
+    _duration: 1.5
+    _volume: 0.3
+    _position: {"x": 0.5, "y": 0.5}
+    _scale: {"x": 1, "y": 1}
+    _resourceKey: "lastlight_rooftop_wind"
+    _instanceId: "roof-wind"
+    _parallel: 1
+    _keepOnSceneChange: 1
+  - _commandId: last_light_radio_001
+    _kind: 0
+    _lineId: last_light_line_radio_001
+    _textRevision: 2
+    _characterId: lastlight_wan
+    _text: "\u90A3\u5C31\u73B0\u5728\u542C\u5427\u3002\u4E0D\u662F\u628A\u8FD9\u4E00\u5E74\u8FFD\u56DE\u6765\uFF0C\u53EA\u662F\u8BA9\u6211\u4EEC\u7EC8\u4E8E\u77E5\u9053\uFF0C\u505C\u7535\u4E4B\u540E\uFF0C\u5979\u539F\u672C\u8FD8\u60F3\u8BF4\u4EC0\u4E48\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_e2_memory_flash"
+    _kind: 19
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0.7
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "radio_e2_memory_flash"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.22
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 1, g: 1, b: 1, a: 1}
+    _hold: 0.08
+    _wholeReader: 0
+  - _commandId: "radio_e3_glint"
+    _kind: 21
+    _duration: 0
+    _volume: 1
+    _position: {"x": 0.48, "y": 0.4}
+    _scale: {"x": 0.5, "y": 0.5}
+    _resourceKey: "lastlight_spark"
+    _instanceId: "radio-glint"
+    _layer: 10
+  - _commandId: "last_light_radio_stage_chime"
+    _kind: 6
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: "choice_chime"
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_memory_background"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.8
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 1
+    _actionId: "last_light_radio_stage_memory_background"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.65
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_wan_listens"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 2
+    _actionId: "last_light_radio_stage_wan_listens"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.78
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_zhou_listens"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "zhou"
+    _targetKind: 2
+    _actionId: "last_light_radio_stage_zhou_listens"
+    _parallel: 1
+    _delay: 0.2
+    _opacity: 0.65
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: last_light_radio_002
+    _kind: 0
+    _lineId: last_light_line_radio_002
+    _textRevision: 2
+    _characterId: 
+    _text: "\u5468\u781A\u6309\u4E0B\u64AD\u653E\u952E\u3002\u77ED\u4FC3\u7684\u63D0\u793A\u97F3\u8FC7\u540E\uFF0C\u5148\u54CD\u8D77\u4E00\u6BB5\u7A7A\u767D\u3002\u4F60\u51E0\u4E4E\u4EE5\u4E3A\u5F55\u97F3\u635F\u574F\u4E86\uFF0C\u968F\u540E\u624D\u542C\u89C1\u5F88\u8F7B\u7684\u547C\u5438\u548C\u7FFB\u52A8\u7EB8\u5F20\u7684\u58F0\u97F3\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_memory_quiet"
+    _kind: 9
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: ["last_light_radio_stage_memory_background", "last_light_radio_stage_wan_listens", "last_light_radio_stage_zhou_listens"]
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_e2_memory_flash_done"
+    _kind: 9
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: ["radio_e2_memory_flash"]
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+  - _commandId: last_light_radio_003
+    _kind: 0
+    _lineId: last_light_line_radio_003
+    _textRevision: 2
+    _characterId: lastlight_zhou
+    _text: "\u5F00\u5934\u7559\u4E86\u51E0\u79D2\u7A7A\u767D\u3002\u6211\u4EE5\u524D\u603B\u60F3\u628A\u5B83\u526A\u6389\uFF0C\u73B0\u5728\u5374\u89C9\u5F97\uFF0C\u8FD9\u51E0\u79D2\u8BA9\u4EBA\u77E5\u9053\uFF0C\u5979\u4E5F\u662F\u60F3\u4E86\u5F88\u4E45\u624D\u5F00\u53E3\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_004
+    _kind: 0
+    _lineId: last_light_line_radio_004
+    _textRevision: 2
+    _characterId: lastlight_inner
+    _text: "\uFF08\u539F\u6765\u53EA\u6709\u4E00\u53E5\u8BDD\u8981\u8BF4\u7684\u65F6\u5019\uFF0C\u4E5F\u53EF\u4EE5\u5148\u6C89\u9ED8\u3002\u5F55\u97F3\u6CA1\u6709\u56E0\u4E3A\u8FD9\u6BB5\u7A7A\u767D\u5931\u53BB\u610F\u4E49\uFF0C\u6211\u90A3\u4E9B\u7B28\u62D9\u7684\u5F00\u5934\uFF0C\u4E5F\u4E0D\u5FC5\u5168\u90E8\u64E6\u6389\u3002\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_005
+    _kind: 0
+    _lineId: last_light_line_radio_005
+    _textRevision: 2
+    _characterId: 
+    _text: "\u5F55\u97F3\u91CC\u7684\u8001\u5E08\u6CA1\u6709\u53D1\u8868\u957F\u7BC7\u544A\u522B\u3002\u5979\u611F\u8C22\u503C\u73ED\u540C\u5B66\u5173\u597D\u95E8\u7A97\uFF0C\u63D0\u9192\u5927\u5BB6\u5E26\u8D70\u96E8\u4F1E\uFF0C\u53C8\u8BF4\u5982\u679C\u660E\u5929\u8FD8\u4E0B\u96E8\uFF0C\u8282\u76EE\u53EF\u4EE5\u665A\u4E00\u70B9\u518D\u64AD\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_lean_in"
+    _kind: 11
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_lean_in"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1.025, y: 1.025}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_listen_tilt"
+    _kind: 12
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_listen_tilt"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: -2
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: last_light_radio_006
+    _kind: 0
+    _lineId: last_light_line_radio_006
+    _textRevision: 2
+    _characterId: lastlight_wan
+    _text: "\u6211\u8BB0\u5F97\u5979\u90A3\u5929\u4E00\u76F4\u5728\u7B11\u3002\u6211\u4EE5\u4E3A\u5979\u4E00\u70B9\u4E5F\u4E0D\u7D27\u5F20\uFF0C\u539F\u6765\u7A3F\u7EB8\u7FFB\u4E86\u90A3\u4E48\u591A\u6B21\u3002\u90A3\u65F6\u5019\u6211\u4EEC\u7AD9\u5F97\u5F88\u8FD1\uFF0C\u5374\u6CA1\u6709\u8BA4\u771F\u542C\u8FC7\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_sit_back"
+    _kind: 11
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0.8
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_sit_back"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_straighten"
+    _kind: 12
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0.8
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_straighten"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: last_light_radio_007
+    _kind: 0
+    _lineId: last_light_line_radio_007
+    _textRevision: 2
+    _characterId: lastlight_zhou
+    _text: "\u5728\u73B0\u573A\u7684\u4EBA\u4E5F\u4F1A\u9519\u8FC7\u5F88\u591A\u4E1C\u897F\u3002\u73B0\u5728\u542C\u89C1\uFF0C\u5E76\u4E0D\u610F\u5473\u7740\u90A3\u65F6\u7684\u6211\u4EEC\u505A\u9519\u4E86\u4EC0\u4E48\u3002\u90A3\u5929\u5927\u5BB6\u90FD\u5728\u5FD9\u7740\u63A5\u4F4F\u773C\u524D\u7684\u96E8\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_e2_memory_haze"
+    _kind: 18
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "radio_e2_memory_haze"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.12
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 1, g: 1, b: 1, a: 1}
+    _hold: 0
+    _wholeReader: 0
+  - _commandId: last_light_radio_008
+    _kind: 0
+    _lineId: last_light_line_radio_008
+    _textRevision: 2
+    _characterId: 
+    _text: "\u4F60\u60F3\u5230\u81EA\u5DF1\u66FE\u7ECF\u7B49\u8FC7\u4E00\u4E2A\u5F88\u957F\u7684\u89E3\u91CA\uFF0C\u540E\u6765\u8FDE\u7B49\u7684\u662F\u4EC0\u4E48\u90FD\u6A21\u7CCA\u4E86\u3002\u53EF\u8FD9\u6BB5\u5F55\u97F3\u6CA1\u6709\u89E3\u91CA\u6240\u6709\u4E8B\u60C5\uFF0C\u53EA\u628A\u4E00\u4E2A\u666E\u901A\u4E0B\u5348\uFF0C\u5B8C\u6574\u5730\u4EA4\u8FD8\u7ED9\u4F60\u4EEC\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_009
+    _kind: 0
+    _lineId: last_light_line_radio_009
+    _textRevision: 2
+    _characterId: lastlight_wan
+    _text: "\u5979\u8BF4\uFF0C\u6CA1\u80FD\u5B8C\u6210\u7684\u8282\u76EE\u4E0D\u5FC5\u8865\u6210\u5B8C\u7F8E\u7248\u672C\u3002\u613F\u610F\u518D\u6765\u7684\u4EBA\uFF0C\u4E0B\u6B21\u89C1\uFF1B\u5DF2\u7ECF\u5F80\u524D\u8D70\u7684\u4EBA\uFF0C\u4E5F\u4E0D\u7528\u4E3A\u6CA1\u56DE\u5934\u9053\u6B49\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_010
+    _kind: 0
+    _lineId: last_light_line_radio_010
+    _textRevision: 2
+    _characterId: lastlight_inner
+    _text: "\uFF08\u6211\u4E00\u76F4\u4EE5\u4E3A\uFF0C\u6709\u56DE\u5E94\u624D\u7B97\u8D70\u5B8C\u4E00\u6BB5\u8DEF\u3002\u539F\u6765\u6709\u4EBA\u613F\u610F\u8BF4\u201C\u4F60\u53EF\u4EE5\u7EE7\u7EED\u8D70\u201D\uFF0C\u4E5F\u5DF2\u7ECF\u662F\u4E00\u79CD\u56DE\u5E94\u3002\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_011
+    _kind: 0
+    _lineId: last_light_line_radio_011
+    _textRevision: 2
+    _characterId: lastlight_zhou
+    _text: "\u6700\u540E\u8FD8\u6709\u4E00\u53E5\u3002\u522B\u6025\u7740\u5173\uFF0C\u542C\u5B8C\u518D\u8BF4\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_hushed_world"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.4
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_hushed_world"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.72
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: radio_e3_wind_soften
+    _kind: 26
+    _instanceId: roof-wind
+    _duration: 1.5
+    _volume: 0.12
+    _parallel: 1
+  - _commandId: last_light_radio_012
+    _kind: 0
+    _textMode: 0
+    _dialogueVisible: 1
+    _textBeats:
+    - _at: 7
+      _pause: 0.65
+      _speed: 0.7
+      _instant: 0
+    _lineId: last_light_line_radio_012
+    _textRevision: 2
+    _characterId: 
+    _text: "\u4F60\u4EEC\u5C4F\u4F4F\u547C\u5438\u3002\u8FDC\u5904\u8F66\u8F86\u9A76\u8FC7\uFF0C\u98CE\u628A\u6742\u97F3\u5439\u5F97\u5F88\u8584\u3002\u5F55\u97F3\u5728\u4E00\u53E5\u8F7B\u8F7B\u7684\u201C\u665A\u5B89\u201D\u4E4B\u540E\u505C\u4E0B\uFF0C\u673A\u5668\u4ECD\u7136\u4EAE\u7740\uFF0C\u50CF\u662F\u5728\u7B49\u4E00\u4E2A\u4E0D\u5FC5\u8BF4\u51FA\u53E3\u7684\u56DE\u7B54\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_present_world"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "last_light_radio_stage_present_world"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_present_background"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 1
+    _actionId: "last_light_radio_stage_present_background"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_wan_present"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "wan"
+    _targetKind: 2
+    _actionId: "last_light_radio_stage_wan_present"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_zhou_present"
+    _kind: 8
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: "zhou"
+    _targetKind: 2
+    _actionId: "last_light_radio_stage_zhou_present"
+    _parallel: 1
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_e2_memory_clear"
+    _kind: 18
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 1.2
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: "radio_e2_memory_clear"
+    _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 1, g: 1, b: 1, a: 1}
+    _hold: 0
+    _wholeReader: 0
+  - _commandId: last_light_radio_013
+    _kind: 0
+    _lineId: last_light_line_radio_013
+    _textRevision: 2
+    _characterId: lastlight_wan
+    _text: "\u665A\u5B89\uFF0C\u8BB8\u8001\u5E08\u3002\u8FDF\u4E86\u4E00\u5E74\uFF0C\u4E5F\u8FD8\u662F\u60F3\u8BF4\u7ED9\u4F60\u542C\u3002"
+    _resourceKey: lastlight_voice_goodnight
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_goodnight_lands"
+    _kind: 9
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: ["last_light_radio_stage_present_world", "last_light_radio_stage_present_background", "last_light_radio_stage_wan_present", "last_light_radio_stage_zhou_present"]
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  - _commandId: "last_light_radio_stage_e2_memory_clear_done"
+    _kind: 9
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: ["radio_e2_memory_haze", "radio_e2_memory_clear"]
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+  - _commandId: last_light_radio_014
+    _kind: 0
+    _lineId: last_light_line_radio_014
+    _textRevision: 2
+    _characterId: lastlight_zhou
+    _text: "\u6211\u628A\u4ECA\u5929\u7684\u65E5\u671F\u5199\u5728\u6807\u7B7E\u80CC\u9762\u5427\u3002\u4E0D\u8986\u76D6\u539F\u6765\u7684\u65E5\u671F\uFF0C\u8FD9\u4E24\u5929\u90FD\u503C\u5F97\u7559\u4E0B\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_015
+    _kind: 0
+    _lineId: last_light_line_radio_015
+    _textRevision: 2
+    _characterId: 
+    _text: "\u6797\u665A\u62FF\u51FA\u7B14\uFF0C\u5728\u65E7\u6807\u7B7E\u65C1\u8FB9\u8865\u4E0A\u4E00\u884C\u5C0F\u5B57\u3002\u6CA1\u6709\u4EBA\u6495\u6389\u53D1\u9EC4\u7684\u90E8\u5206\uFF0C\u4E5F\u6CA1\u6709\u4EBA\u628A\u4E2D\u95F4\u7684\u7A7A\u767D\u6D82\u6EE1\u3002\u8FC7\u53BB\u548C\u4ECA\u665A\uFF0C\u7EC8\u4E8E\u53EF\u4EE5\u653E\u5728\u540C\u4E00\u4E2A\u76D2\u5B50\u91CC\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_016
+    _kind: 0
+    _lineId: last_light_line_radio_016
+    _textRevision: 2
+    _characterId: lastlight_inner
+    _text: "\uFF08\u6211\u628A\u90A3\u5E45\u65E7\u753B\u62CD\u4E0B\u6765\u3002\u8FD9\u4E00\u6B21\uFF0C\u6211\u6CA1\u6709\u8C03\u6574\u5230\u770B\u4E0D\u51FA\u7B14\u89E6\uFF0C\u4E5F\u6CA1\u6709\u89E3\u91CA\u4E3A\u4EC0\u4E48\u753B\u5F97\u4E0D\u597D\u3002\u6211\u53EA\u95EE\uFF1A\u4F60\u73B0\u5728\u65B9\u4FBF\u770B\u4E00\u5F20\u4EE5\u524D\u7684\u753B\u5417\uFF1F\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_017
+    _kind: 0
+    _lineId: last_light_line_radio_017
+    _textRevision: 2
+    _characterId: lastlight_wan
+    _text: "\u53D1\u51FA\u53BB\u4E86\uFF1F\u4E0D\u7528\u7ED9\u6211\u4EEC\u770B\u3002\u770B\u4F60\u7684\u8868\u60C5\uFF0C\u6211\u5C31\u77E5\u9053\u6709\u4E00\u4EF6\u4E8B\u5DF2\u7ECF\u8D70\u5230\u4E86\u4E0B\u4E00\u6B65\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_018
+    _kind: 0
+    _lineId: last_light_line_radio_018
+    _textRevision: 2
+    _characterId: lastlight_zhou
+    _text: "\u63A5\u4E0B\u6765\u5C31\u8F6E\u5230\u7B49\u5F85\u4E86\u3002\u4E0D\u8FC7\u8FD9\u4E00\u6B21\uFF0C\u7B49\u5F85\u7684\u524D\u9762\u6709\u4E00\u4E2A\u4F60\u81EA\u5DF1\u6309\u4E0B\u7684\u53D1\u9001\u952E\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_019
+    _kind: 0
+    _lineId: last_light_line_radio_019
+    _textRevision: 2
+    _characterId: 
+    _text: "\u624B\u673A\u6682\u65F6\u6CA1\u6709\u56DE\u5E94\u3002\u4F60\u628A\u5B83\u653E\u8FDB\u53E3\u888B\uFF0C\u542C\u89C1\u5F55\u97F3\u673A\u505C\u6B62\u8F6C\u52A8\u3002\u4ECA\u665A\u6CA1\u6709\u7A81\u7136\u53D8\u5F97\u5706\u6EE1\uFF0C\u4F46\u90A3\u53E5\u88AB\u622A\u65AD\u7684\u665A\u5B89\uFF0C\u786E\u5B9E\u5DF2\u7ECF\u6709\u4EBA\u542C\u89C1\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: last_light_radio_020
+    _kind: 0
+    _lineId: last_light_line_radio_020
+    _textRevision: 2
+    _characterId: 
+    _text: "\u4F60\u4EEC\u6536\u597D\u5F55\u97F3\u673A\uFF0C\u7EA6\u5B9A\u4EE5\u540E\u518D\u542C\u65F6\uFF0C\u4E0D\u5FC5\u6BCF\u6B21\u90FD\u628A\u4ECA\u665A\u8BB2\u5F97\u90D1\u91CD\u3002\u5B83\u4E5F\u53EF\u4EE5\u53EA\u662F\u4E00\u4E2A\u4E0B\u96E8\u540E\u3001\u6070\u597D\u6709\u4EBA\u613F\u610F\u7559\u4E0B\u7684\u508D\u665A\u3002"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: "last_light_radio_stage_pose_settled"
+    _kind: 9
+    _lineId: ""
+    _textRevision: 1
+    _characterId: ""
+    _text: ""
+    _resourceKey: ""
+    _variableId: ""
+    _scope: 0
+    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: ""
+    _targetKind: 0
+    _actionId: ""
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: ["last_light_radio_stage_lean_in", "last_light_radio_stage_listen_tilt", "last_light_radio_stage_sit_back", "last_light_radio_stage_straighten"]
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+  _next: {fileID: 11400000, guid: 56a592e609114229bf5db0e8d06ddc9f, type: 2}

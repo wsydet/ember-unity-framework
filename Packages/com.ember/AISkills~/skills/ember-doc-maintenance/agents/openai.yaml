@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ember 文档维护"
+  short_description: "审计并维护项目自有文档，检查链接、合并重复内容并保护依赖包和历史资料。"
+  default_prompt: "使用 $ember-doc-maintenance 处理我指定的项目范围，并报告实际验证结果。"

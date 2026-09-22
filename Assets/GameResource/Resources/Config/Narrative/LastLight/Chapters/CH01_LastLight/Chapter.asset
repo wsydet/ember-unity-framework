@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f55e888cf7c7b04ebfb825a7cd33326, type: 3}
+  m_Name: Chapter
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChapterSO
+  _chapterId: last_light_ch01
+  _displayName: 最后一盏灯
+  _assetPrefix: CH01_LastLight
+  _storyRevision: 1
+  _entry: {fileID: 11400000, guid: b17a0711480a474e8acce685768a581e, type: 2}
+  _nodes:
+  - {fileID: 11400000, guid: b17a0711480a474e8acce685768a581e, type: 2}
+  - {fileID: 11400000, guid: 01c04de328ad4214b86c604f41781a7f, type: 2}
+  - {fileID: 11400000, guid: ed622819a3be4ecea0539f00e28fa3df, type: 2}
+  - {fileID: 11400000, guid: 0616193b45f9491fa7957e0ba6e4da75, type: 2}
+  - {fileID: 11400000, guid: 56a592e609114229bf5db0e8d06ddc9f, type: 2}
+  - {fileID: 11400000, guid: 497cd8aff7ad4b0084740971b5b65acb, type: 2}
+  - {fileID: 11400000, guid: f9d225f7ada84874b613846b5047d794, type: 2}
+  - {fileID: 11400000, guid: 1097e41a8f4047119981134ecd1bf6d3, type: 2}
+  _variables:
+  - _id: heard
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: ""

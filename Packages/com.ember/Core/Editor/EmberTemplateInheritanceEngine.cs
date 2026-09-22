@@ -930,6 +930,7 @@ namespace Ember.Core.Editor
         {
             if (string.IsNullOrWhiteSpace(assetsPath))
                 throw new ArgumentException("模板 Assets 路径不能为空。", nameof(assetsPath));
+            EmberTemplateTransaction.ValidateDirectorySafety(assetsPath);
 
             var root = Path.GetFullPath(assetsPath)
                 .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);

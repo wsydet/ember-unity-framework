@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f55e888cf7c7b04ebfb825a7cd33326, type: 3}
+  m_Name: Chapter
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChapterSO
+  _chapterId: 09c5898afe44498ba64d211783e1a78d
+  _displayName: CH00_Prologue
+  _assetPrefix: CH00_Prologue
+  _storyRevision: 1
+  _entry: {fileID: 11400000, guid: d7513837d2c81c54ea5affa078aef9af, type: 2}
+  _nodes:
+  - {fileID: 11400000, guid: d7513837d2c81c54ea5affa078aef9af, type: 2}
+  - {fileID: 11400000, guid: 9ffcfe7c5a2fa41429aa5617eb5b3344, type: 2}
+  - {fileID: 11400000, guid: f1fb0c30529477e4ea409d5c15116ecc, type: 2}
+  - {fileID: 11400000, guid: 183498243dc4e304b80fc360e118fb94, type: 2}
+  - {fileID: 11400000, guid: dcc48303714325d448db4b5e76c70e1f, type: 2}
+  _variables: []

@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2efa25a9198a84abcf7b57a3b60f7c, type: 3}
+  m_Name: CH01_School_intro
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
+  _nodeId: intro
+  _chapterId: vn_m1_sample
+  _contentRevision: 1
+  _commands:
+  - _commandId: m2_vn_m1_sample_background
+    _kind: 3
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: campus
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.35
+    _slot: 0
+    _visualAction: 0
+  - _commandId: m2_vn_m1_sample_bgm
+    _kind: 5
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: quiet_afternoon
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  - _commandId: m2_vn_m1_sample_alice
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: alice_neutral
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.3
+    _slot: 0
+    _visualAction: 0
+  - _commandId: m2_vn_m1_sample_lin
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _text: 
+    _resourceKey: lin_neutral
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.3
+    _slot: 2
+    _visualAction: 0
+  - _commandId: intro_say
+    _kind: 0
+    _lineId: line_intro
+    _textRevision: 1
+    _characterId: alice
+    _text: "\u653E\u5B66\u4E86\uFF0C\u8981\u804A\u4E00\u4F1A\u513F\u5417\uFF1F"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _slot: 0
+    _visualAction: 0
+  _next: {fileID: 11400000, guid: 72ead6ac2b421cb4dab6d521a46e34e6, type: 2}

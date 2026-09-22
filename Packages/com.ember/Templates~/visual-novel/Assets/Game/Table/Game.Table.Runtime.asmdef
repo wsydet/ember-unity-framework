@@ -1,0 +1,6 @@
+{
+    "name": "Game.Table.Runtime",
+    "rootNamespace": "Game.Table",
+    "references": ["Ember.Basic.Runtime", "Ember.Table.Runtime"],
+    "autoReferenced": true
+}

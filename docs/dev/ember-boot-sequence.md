@@ -122,6 +122,10 @@ sequenceDiagram
 系统初始化采用两条平行的生命周期管道：Manager 是所有游戏共同依赖的框架必要服务；Module 是
 模板按玩法选装的业务积木。具体游戏由同一套框架与 Managers 加上不同的 Modules 组合而成。
 
+两者按职能与可选性分类，不能把 Init 阶段等同于“只能启动 Manager”。需要在主菜单之前准备
+数据的可选业务模块，可以声明 `[EmberModule(ModulePhase.Global, Enabled = true)]`，在同一
+Init 阶段启动并常驻；`Enabled` 管装配，`Phase` 管生命周期，互不替代。
+
 `InitState.OnEnter` 的实际顺序是：
 
 1. `EmberModuleCollector.DiscoverModules()`：只发现、构造和登记带有
@@ -130,6 +134,11 @@ sequenceDiagram
    升序调用 `Init`，在 Init 阶段启动框架必要管理器。
 3. `EmberModuleCollector.InitPhase(ModulePhase.Global)`：激活 Global Module。
 4. 广播 `CoreReady`。
+
+例如，存档模块应先准备主菜单需要的槽位索引，主菜单再据此决定存档入口的可见性；剧情恢复和
+资源准备留到玩家点击新游戏/继续或选定存档时执行。此需求不改变存档能力的 Module 身份。
+当前 `OnInit` 是同步接口；若模块内部发起异步准备，`CoreReady` 不自动保证该业务数据已就绪，
+需要由业务显式等待或显示加载/失败状态，不能把“尚未读取”当成“没有存档”。
 
 “Module 已被发现”不等于“Module 已启动”。Module 只有进入其 Phase、`OnInit` 成功后才活动并接收
 帧更新。`Enabled = false` 的 Module 不会被构造或登记。当前框架内置接线覆盖 Global 与 Gameplay；

@@ -115,6 +115,7 @@ namespace Ember.Core.Editor
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember 项目中心", EditorStyles.boldLabel);
+            if (GUILayout.Button("模板专属 AI Skill · 预览与同步")) EmberTemplateSkillsWindow.Open();
             if (devMode)
                 _selectedTab = GUILayout.Toolbar(_selectedTab, DevTabs);
             else

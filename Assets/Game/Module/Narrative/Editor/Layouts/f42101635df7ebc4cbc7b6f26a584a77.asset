@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f04d5bec14b0484b8f83f3ba5e6f1c0, type: 3}
+  m_Name: f42101635df7ebc4cbc7b6f26a584a77
+  m_EditorClassIdentifier: Game.Narrative.Editor::Game.Narrative.Editor.NarrativeGraphLayout
+  _chapterGuid: f42101635df7ebc4cbc7b6f26a584a77
+  _positions:
+  - _nodeId: 0c8bf10c9bc744dfa1975714d6d06c23
+    _position: {x: 0, y: 0}
+  - _nodeId: dc361bd0aa6e488788d2a9ff82a9a669
+    _position: {x: 360, y: 0}
+  - _nodeId: 41c1b97ded3a4bd0af71ee476b1ccfb7
+    _position: {x: 720, y: 0}
+  - _nodeId: ef78e3992e1f4437910167cfef65722e
+    _position: {x: 720, y: 240}
+  - _nodeId: 633e8e1df9984836869df0548687aad4
+    _position: {x: 1080, y: 0}

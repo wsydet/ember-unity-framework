@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba05619e27dcd54fba3a9a3c896306b, type: 3}
+  m_Name: "CH00_Prologue_\u524D\u5F80\u4F55\u5904"
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChoiceSO
+  _nodeId: dc361bd0aa6e488788d2a9ff82a9a669
+  _chapterId: 09c5898afe44498ba64d211783e1a78d
+  _contentRevision: 1
+  _prompt: "\u9009\u62E9\u63A5\u4E0B\u6765\u7684\u53BB\u5411"
+  _options:
+  - _optionId: dc77daedff0c4abcad202f048cd9c38b
+    _text: "\u53BB\u6821\u56ED\u627E\u670B\u53CB"
+    _condition:
+      _junction: 0
+      _predicates: []
+    _target: {fileID: 11400000, guid: f1fb0c30529477e4ea409d5c15116ecc, type: 2}
+  - _optionId: 1ef48a28a91648219a5106826b2bb065
+    _text: "\u4ECA\u5929\u5148\u56DE\u5BB6"
+    _condition:
+      _junction: 0
+      _predicates: []
+    _target: {fileID: 11400000, guid: 183498243dc4e304b80fc360e118fb94, type: 2}

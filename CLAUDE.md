@@ -50,7 +50,7 @@
 |------|---------|--------|
 | 定位 | 框架运行所必需的管理器和全局基础设施 | 可选、可组合的业务功能积木 |
 | 接口 | `IEmberManager` | `IEmberModule` |
-| 启动 | `InitState` 中由 `EmberManagerCollector` 反射发现，按 `EmberInitOrder` 调用 `Init` | `InitState` 只发现并构造 `Enabled = true` 的模块；进入其 `Phase` 后才调用 `OnInit` |
+| 启动 | `InitState` 中由 `EmberManagerCollector` 反射发现，按 `EmberInitOrder` 调用 `Init` | `InitState` 先发现并构造启用模块，再于 Manager 初始化后调用 Global 模块的 `OnInit`；其他模块在对应 Phase 激活 |
 | 生命周期 | Init 阶段启动，跨游戏状态持续存活，框架退出时逆序销毁 | 仅在所属 Phase 激活，退出 Phase 时销毁业务状态，实例可供再次进入时复用 |
 | 模板关系 | 所有模板共同具备，不作为玩法选项裁剪 | 模板按玩法自由添加、移除或通过 `Enabled = false` 关闭 |
 
@@ -60,6 +60,12 @@
   程序集中实际存在的实现，因此 Package 和模板维护者要负责保证必要 Managers 没有缺失。
 - Module 定义的是业务组合单元。不同模板可以在同一套框架和 Managers 上装配不同 Modules，形成
   不同类型的游戏；例如 `PlayerControlModule` 只属于需要该操作方式的玩法模板。
+- **分类依据是职能与可选性，不是启动阶段。** Manager 是框架不可按玩法裁剪的必要基座；Module
+  是可以像积木一样选装、移除或禁用的业务能力。某个游戏必需的业务能力，不等于所有模板必需的 Manager。
+- **Init 阶段也会启动 Module。** `[EmberModule(ModulePhase.Global, Enabled = true)]` 的模块在
+  `InitState` 内启动，并可常驻到退出；提前启动或全局常驻都不会改变它的 Module 身份。
+  `Enabled` 决定是否装配，`Phase` 决定何时激活；`ModulePhase.Global` 不是新增的顶层游戏状态。
+- 新增业务 Module 必须显式声明 `[EmberModule(ModulePhase.对应阶段, Enabled = true/false)]`，不得省略 `Enabled` 依赖默认值；依据当前项目是否使用该模块填写明确的布尔值，配套编辑器入口也必须服从该启用开关。
 - Module 可以消费 Manager 提供的通用能力；Manager 不依赖具体业务 Module。不要为了提前拿到实例
   而把可选业务功能实现成 `IEmberManager`。
 - “发现并构造”不等于“已激活”：Module 只有 `OnInit` 成功后才进入活动状态并接收 Update。
@@ -94,16 +100,32 @@ UnityFarm 的 PackageCache，不得把产品专用业务误收进通用框架或
 - **程序集隔离**：通过 `.asmdef` 严格划分框架层和业务层的编译边界
 - **接口驱动**：框架提供接口，业务层实现；框架不依赖业务层的具体类型
 
-## 目录结构规划
+## 业务代码与资源目录规范
+
+新增功能及目录整理必须遵循包内公共规范
+[`business-directory-layout.md`](Packages/com.ember/Documentation~/maintenance/business-directory-layout.md)。
+
+- 主要业务代码按职责分模块放到 `Assets/Game/Module/<模块名>/`。
+- UI 逻辑放在 `Assets/Game/UI/Runtime/Module/<模块名>/`，**`Runtime` 是必需层级**，不得省略。
+  **所有正式 UI 的创建及代码生成
+  必须通过 UI 中心（EUI 开发中心）完成**，覆盖页面、弹窗、Item、Prefab 骨架、Binding 和配套注册。
+  保持 UI 中心生成的 `Game/UI/Runtime/Module` 结构和模块归属。按实际 Binding
+  编写用户逻辑，调整绑定后通过中心重新生成，不手工拼造生成文件或绕开中心另建 UI 骨架。
+- 业务资源放到 `Assets/GameResource` 下对应的资源类别和模块位置。当前模块 UI 资源为
+  `Resources/UI/Module/<模块名>/`；图片放其 `Atlas`，通用图片与同组通用控件图标放
+  `Resources/UI/Common/Atlas/`；配置、音频分别归 `Resources/Config/<模块名>/`、
+  `Resources/Audio/<模块名>/`。
+- 模板名称不作为混放各类内容的顶层业务目录；项目公共接线及配表生成目录继续遵循各自规则。
+- 实际迁移时保持生成配置、Prefab ClassPath、页面注册和资源加载路径一致，保留 GUID；不为匹配
+  文档示意而自行修改 UI 中心生成的路径。
 
 ```
 Assets/
 ├── Game/                           # 业务层（示例/模板）
-│   ├── Config/                     #   游戏配置
-│   ├── Logic/                      #   游戏逻辑
-│   ├── Module/                     #   可选业务 Module 积木
-│   └── UI/                         #   游戏 UI
-├── GameResource/                   # 业务资源
+│   ├── Module/<模块名>/            #   主要业务代码
+│   ├── UI/Runtime/Module/<模块名>/ #   UI 逻辑与 Binding，Runtime 必需，由 UI 中心生成
+│   └── UI/Editor/<模块名>/         #   UI 编辑工具
+├── GameResource/                   # 按资源类别、模块与 UI 归属组织
 ├── Editor/                         # 项目级编辑器配置
 └── ThirdParty/                     # 非 UPM 第三方内容
 

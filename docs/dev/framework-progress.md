@@ -61,7 +61,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第�
 | Camera / Input | 相机注册与霸占栈、InputAction 读取、重绑定契约 | [Camera](../../Packages/com.ember/Documentation~/camera/README.md)、[Input](../../Packages/com.ember/Documentation~/input/README.md) |
 | SceneUI | 普通 Engine、业务 Module 基类、EUI Item 宿主、投影/显隐/池化/诊断 | [设计](scene-ui-module-design.md)、[使用](../../Packages/com.ember/Documentation~/scene-ui/README.md) |
 | Table | 不可变 Row、CSV/TSV 校验、ETBL V1、强类型 Binding/Catalog、事务 Engine 与 ModuleBase；Editor 声明/数据浏览、代码提示和单表导出 | [使用](../../Packages/com.ember/Table/Documentation~/table/README.md)、[方案](table-system-development-plan.md) |
-| 2.5D 业务示例 | Gameplay 输入门控、WASD、世界锚点拖动、缩放、连续区域边界 | [PlayerControl](player-control-module.md) |
+| 2.5D 业务示例 | Gameplay 输入门控、WASD、世界锚点拖动、缩放、连续区域边界 | [PlayerControl](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/player-control-module.md) |
 | 模板与编辑器 | 项目中心、schema v2、父子三方同步、场景语义合并、事务回滚、消费端完整模板部署 | [模板体系](template-upgrade-system.md)、[包维护](upm-migration-plan.md) |
 
 `InitState` 先发现并构造启用 Module，再启动全部 Manager，最后激活 Global。
@@ -91,7 +91,7 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 | P2 | UI 高级能力 | 通用虚拟列表、Tab/挂件资源生命周期、可等待的页面打开 API、按模块拆分页面注册表；按真实需求推进 |
 | P2 | UI 编辑器增强 | 对尚未激活的 Preview / Bake / Validation 等工具逐项评估，不再按旧迁移文件总数估算完成度 |
 | P2 | 公开分发前的依赖解耦 | 当前 Odin 仍是硬程序集依赖；无 Odin 变体或条件编译方案尚未实施，保留原 UPM 方案中的此项后续工作 |
-| P2 | GM 与引导增强 | GM 快捷操作；Guide 正式美术、状态机测试、更多业务条件；见 [Guide](guide-module-design.md) |
+| P2 | GM 与引导增强 | GM 快捷操作；Guide 正式美术、状态机测试、更多业务条件；见 [Guide](../../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/guide-module-design.md) |
 | 远期 | 可视化与网络 | 状态流转图、节点编辑器、联网状态同步、YooAsset/Addressables Provider、Wwise；当前无默认实现 |
 | 预案 | 独立升级器 | [独立升级器方案](independent-updater-package-plan.md) 保留，当前仍使用包内 UPMManager |
 

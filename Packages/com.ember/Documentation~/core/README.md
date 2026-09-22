@@ -17,6 +17,10 @@ Ember 用两条平行管道组装游戏：
 | 生命周期 | Init 阶段统一启动，框架退出时销毁 | 按 `EmberModuleAttribute` 的 `Enabled` 与 `Phase` 激活/退出 |
 | 模板策略 | `base` 和业务模板共同具备 | 每个模板按目标玩法自由组合 |
 
+分类依据是职能与可选性，不是启动阶段。Manager 是框架不可按玩法裁剪的必要基座；Module
+是可拆装的业务积木。Module 也可以在 Init 阶段启动并全程常驻：使用
+`[EmberModule(ModulePhase.Global, Enabled = true)]`，不会因此变成 Manager。
+
 `InitState` 会先发现并构造所有启用 Module，但暂不启动；随后初始化全部 Manager；最后激活
 Global Phase。其他 Module 只有在所属 Phase 调用 `OnInit` 后才进入活动状态。Module 可以消费
 Manager，Manager 不依赖具体业务 Module。完整规则见 [Manager 文档](../../Core/Runtime/Manager/README.md)。
@@ -73,9 +77,10 @@ TransitionTo<MainState>
 
 业务模块使用“发现/构造”和“阶段激活”两段生命周期。框架在加载业务场景前构造并登记所有启用模块；
 场景组件只能通过 `EmberModuleCollector.TryGetModule` 获取已发现实例并注入引用，不能用 `.Instance`
-隐式创建模块。场景激活完成、状态进入对应 Phase 后，Collector 才调用模块的 `OnInit`。
+隐式创建模块。Global 模块在 Init 内、业务场景加载前调用 `OnInit`；Gameplay 模块则在对应
+场景激活、Gameplay Phase 进入时启动。不能把场景激活当作所有 Module 的统一启动前提。
 
-模块必须声明 `[EmberModule(phase)]`。Collector 在访问 `Instance` 前读取该特性；
+模块必须显式声明 `[EmberModule(phase, Enabled = true/false)]`。Collector 在访问 `Instance` 前读取该特性；
 `Enabled = false` 或缺少特性的模块会直接跳过，不会产生实例。UpdateManager 也只复用 Collector
 已经创建的启用模块，不再独立反射创建业务模块；模块只有在 `OnInit` 成功后才接收帧更新。
 

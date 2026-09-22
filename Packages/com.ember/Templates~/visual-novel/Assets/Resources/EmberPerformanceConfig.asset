@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253aa532fedf7d74ea21774276f28c73, type: 3}
+  m_Name: EmberPerformanceConfig
+  m_EditorClassIdentifier: Ember.Basic.Runtime::Ember.Basic.EmberPerformanceConfigSO
+  adreno:
+    veryHighModel: 740
+    veryHighRam: 10000
+    highModel: 661
+    midModel: 621
+    veryLowMaxModel: 500
+  maliG:
+    veryHighModel: 715
+    veryHighRam: 10000
+    highModel: 701
+    midModel: 77
+    veryLowMaxModel: 52
+  maleoon:
+    veryHighModel: 910
+    veryHighRam: 10000
+    highModel: 910
+    midModel: 0
+    veryLowMaxModel: 0
+  maliTVeryLowMaxRam: 3500
+  powerVRMidMinRam: 6000
+  powerVRVeryLowMaxRam: 3500
+  iphone:
+    veryHighMajor: 15
+    veryHighRam: 7000
+    highMajor: 13
+    midMajor: 10
+    veryLowMaxRam: 2500
+  ipad:
+    veryHighMajor: 13
+    veryHighRam: 7000
+    highMajor: 12
+    midMajor: 10
+    veryLowMaxRam: 2500
+  fallback:
+    veryHighRam: 12000
+    veryHighCpu: 2500
+    highRam: 8000
+    highCpu: 2200
+    midRam: 6000
+    midCpu: 2000
+    veryLowMaxRam: 3000
+  memoryHighMinRam: 12000
+  memoryMidMinRam: 6000
+  iosMemoryHighMinRam: 5000
+  iosMemoryMidMinRam: 3000

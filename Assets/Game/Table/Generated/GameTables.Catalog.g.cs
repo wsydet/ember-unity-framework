@@ -10,6 +10,10 @@ namespace Game.Table.Generated
             return new global::Ember.Table.EmberTableCatalog(
                 new global::Ember.Table.EmberTableCatalogEntry[]
                 {
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelAudioRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelBackgroundRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelCharacterRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelPortraitRowTableBinding(), true, 16777216, 100000, 1048576),
                 });
         }
     }

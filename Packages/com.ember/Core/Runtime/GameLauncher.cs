@@ -204,12 +204,12 @@ namespace Ember.Core
 
         /// <summary>
         /// 退出应用。先执行框架清理（逆序销毁 Manager、刷写文件日志），
-        /// 再调用 <see cref="ApplicationQuitUtil.Quit"/> 终止进程。
+        /// 再调用 <see cref="ApplicationQuitUtil.Quit"/> 退出应用或停止编辑器 Play Mode。
         ///
         /// 业务层应通过此方法退出，而不是直接调用 Application.Quit()。
         ///
-        /// 注意：编辑器退出 Play Mode 走 <see cref="OnSingletonDestroy"/>，
-        /// 不会调用此方法（无需手动退出编辑器）。
+        /// 编辑器中调用此方法会停止 Play Mode；手动停止 Play Mode 时，
+        /// 由 <see cref="OnSingletonDestroy"/> 执行相同的框架清理。
         /// </summary>
         public void Quit()
         {

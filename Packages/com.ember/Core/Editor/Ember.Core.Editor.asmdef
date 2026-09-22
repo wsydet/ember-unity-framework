@@ -2,6 +2,7 @@
     "name": "Ember.Core.Editor",
     "rootNamespace": "Ember.Core.Editor",
     "references": [
+        "Ember.UPMManager.Editor",
         "Ember.Core.Runtime",
         "Ember.Basic.Runtime",
         "Sirenix.OdinInspector"

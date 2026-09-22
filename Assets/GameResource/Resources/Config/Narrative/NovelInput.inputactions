@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "name": "NovelInput",
+  "maps": [
+    {
+      "name": "UI",
+      "id": "4cbbb0ea-7787-49e5-ab18-cc88caa3e6ef",
+      "actions": [
+        {
+          "name": "Idle",
+          "type": "Button",
+          "id": "24ec7239-f10a-4cf8-ad41-eb3e170bab05",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        }
+      ],
+      "bindings": []
+    },
+    {
+      "name": "Novel",
+      "id": "a5cb9f10-7792-4db8-8dd6-747d85fb0687",
+      "actions": [
+        {
+          "name": "Advance",
+          "type": "Button",
+          "id": "82844414-3e9a-432e-8899-3a50307ac0be",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "Menu",
+          "type": "Button",
+          "id": "f330971b-774f-4bad-bbf4-024c12cecd83",
+          "expectedControlType": "",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "SkipHeld",
+          "type": "Button",
+          "id": "ba601843-b91c-4a2c-9f6d-dc2db112b7b7",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "HideUI",
+          "type": "Button",
+          "id": "09bbe0c0-0ebb-4a08-b214-852ecb058c8d",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "QuickLoad",
+          "type": "Button",
+          "id": "4bb4079e-2f6a-425f-a71a-f249406288ad",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "QuickSave",
+          "type": "Button",
+          "id": "6be35a4e-8fda-4509-a592-4e1e47eac1e6",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "History",
+          "type": "Button",
+          "id": "bef84267-b580-45ab-afe2-8c6005605da5",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        },
+        {
+          "name": "AutoToggle",
+          "type": "Button",
+          "id": "9eed3980-99fe-4349-8f25-4a7ae00406c8",
+          "expectedControlType": "Button",
+          "processors": "",
+          "interactions": "",
+          "initialStateCheck": false
+        }
+      ],
+      "bindings": [
+        {
+          "name": "",
+          "id": "a7829bee-5abf-495f-94ee-e91bbb40a8ef",
+          "path": "<Keyboard>/space",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Advance",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "92128293-a506-4b82-ae03-6b0292d99218",
+          "path": "<Keyboard>/enter",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Advance",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "e44d793a-4f6b-4671-a9d2-639941dc2da9",
+          "path": "<Keyboard>/escape",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Menu",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "1cb59eac-4264-4928-b1d2-22e2f3f6a3ad",
+          "path": "<Keyboard>/leftCtrl",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "SkipHeld",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "001c9f2f-a2c5-4922-908b-290e05e836cc",
+          "path": "<Mouse>/rightButton",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "HideUI",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "36e289b3-192f-4ee5-997b-81431f4946d7",
+          "path": "<Keyboard>/f9",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "QuickLoad",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "9603c265-b453-4ccc-baa9-ee09e3c726e1",
+          "path": "<Keyboard>/f5",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "QuickSave",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "b4915c24-f010-489e-8563-8af394577623",
+          "path": "<Keyboard>/h",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "History",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "708d6c88-db75-42d8-bad9-abf5bb9c24b4",
+          "path": "<Keyboard>/a",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "AutoToggle",
+          "isComposite": false,
+          "isPartOfComposite": false
+        }
+      ]
+    }
+  ],
+  "controlSchemes": []
+}

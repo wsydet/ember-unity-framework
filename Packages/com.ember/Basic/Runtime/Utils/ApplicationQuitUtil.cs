@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 //
 // This file is part of Ember Unity Packages.
 // Package: com.ember
@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Ember.Basic
 {
     /// <summary>
-    /// 应用退出工具 —— 封装 Android 上的"真退出"逻辑。
+    /// 应用退出工具 —— 在编辑器中停止播放，在运行平台上退出应用。
     ///
     /// Unity 的 <see cref="Application.Quit"/> 在部分 Android 机型上不会立即杀死进程，
     /// App 可能挂在后台。此工具在 Android 上直接调用系统 Process.killProcess，
@@ -34,13 +34,16 @@ namespace Ember.Basic
 
         /// <summary>
         /// 退出应用。
+        /// 编辑器中停止 Play Mode；
         /// Android 上先通过 android.os.Process.killProcess 杀进程，
         /// 失败时回退到 <see cref="Application.Quit"/>；
         /// 其他平台直接调用 Application.Quit()。
         /// </summary>
         public static void Quit()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_ANDROID
             try
             {
                 using (var process = new AndroidJavaClass("android.os.Process"))

@@ -1,0 +1,7 @@
+id,characterId,expression,resourcePath
+alice_neutral,alice,neutral,UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening
+alice_smile,alice,smile,UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening
+lin_neutral,lin,neutral,UI/Module/Narrative/Atlas/LastLight/Portraits/zhou_evening
+lastlight_alice,lastlight_wan,evening,UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening
+lastlight_zhou,lastlight_zhou,evening,UI/Module/Narrative/Atlas/LastLight/Portraits/zhou_evening
+lastlight_wan_smile,lastlight_wan,smile,UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile

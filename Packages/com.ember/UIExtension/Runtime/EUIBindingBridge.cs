@@ -28,6 +28,8 @@ namespace Ember.UIExtension
         private static bool _registered;
         private static readonly Dictionary<string, Type> LogicTypeCache =
             new Dictionary<string, Type>(StringComparer.Ordinal);
+        private static readonly Dictionary<string, Type> ComponentTypeCache =
+            new Dictionary<string, Type>(StringComparer.Ordinal);
 
         /// <summary>
         /// 自动注册到 EUIManager.OnPageCreated 钩子。
@@ -171,7 +173,12 @@ namespace Ember.UIExtension
                 case EUIBinding.WidgetTypes.Extension:
                     if (!string.IsNullOrEmpty(className))
                     {
-                        Type componentType = FindType(className, typeof(Component));
+                        if (!ComponentTypeCache.TryGetValue(className, out Type componentType))
+                        {
+                            componentType = FindType(className, typeof(Component));
+                            // Do not cache misses: another assembly may be loaded later in the Editor.
+                            if (componentType != null) ComponentTypeCache[className] = componentType;
+                        }
                         if (componentType != null)
                             return go.GetComponent(componentType) as Component;
                     }
@@ -216,6 +223,19 @@ namespace Ember.UIExtension
         {
             if (string.IsNullOrWhiteSpace(className) || requiredBaseType == null)
                 return null;
+
+            // Extension bindings contain fully qualified names. GetTypes on every preceding
+            // assembly costs hundreds of milliseconds per Item in a large Editor project.
+            // A dotted name cannot match Type.Name, so no simple-name scan is needed here.
+            if (className.IndexOf('.') >= 0)
+            {
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    Type exactType = assembly.GetType(className, false);
+                    if (IsUsableType(exactType, requiredBaseType)) return exactType;
+                }
+                return null;
+            }
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {

@@ -81,7 +81,7 @@
 - [ ] WASD/拖动不能跨未连接区域；边界反向拖动无空行程；缩放和 SO 实时参数生效。
 - [ ] 加载 base 后仍有公共 Input Manager，且无 PlayerControl/SceneUI 业务残留引用。
 
-完整业务验收：[SceneUI](../../Packages/com.ember/Documentation~/scene-ui/README.md)、[PlayerControl](player-control-module.md)。
+完整业务验收：[SceneUI](../../Packages/com.ember/Documentation~/scene-ui/README.md)、[PlayerControl](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/player-control-module.md)。
 
 ## 强类型配置表
 

@@ -76,6 +76,7 @@ namespace Ember.Core.Editor
         public string version;
         public string frameworkVersion;
         public string deployedAt;
+        public string contentHash;
 
         #endregion
     }

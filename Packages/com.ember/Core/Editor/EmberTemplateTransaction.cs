@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using Ember.Basic;
 
@@ -43,6 +44,7 @@ namespace Ember.Core.Editor
                 CopyDirectory(request.ChildAssetsPath, stagedAssets);
                 ApplyChangesToStage(request, applyModes, stagedAssets);
                 PruneEmptyDirectories(stagedAssets);
+                Ember.UPMManager.Editor.EmberAISkillInstaller.ValidateTemplateSkillSource(stagedAssets);
 
                 if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(
                         stagedAssets,
@@ -119,6 +121,10 @@ namespace Ember.Core.Editor
         /// <summary>递归复制完整目录树（包含空目录、.meta 与仅由 folderAsset .meta 表示的空目录）。</summary>
         internal static int CopyDirectory(string source, string destination)
         {
+            ValidatePathLinks(source);
+            ValidatePathLinks(destination);
+            ValidateTreeLinks(source);
+            ValidateTreeLinks(destination);
             if (!Directory.Exists(source))
                 throw new DirectoryNotFoundException($"源目录不存在：{source}");
 
@@ -597,6 +603,14 @@ namespace Ember.Core.Editor
                 }
 
                 var destination = Path.GetFullPath(target.DestinationPath);
+                ValidatePathLinks(destination);
+                ValidatePathLinks(target.StagedPath);
+                ValidatePathLinks(destination + BackupSuffix);
+                ValidateTreeLinks(destination);
+                ValidateTreeLinks(target.StagedPath);
+                if (destinations.Any(existing => destination.StartsWith(existing + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                    || existing.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
+                    throw new InvalidOperationException("事务目标不能互相包含：" + destination);
                 if (!destinations.Add(destination))
                     throw new InvalidOperationException($"事务目标重复：{destination}");
 
@@ -609,6 +623,36 @@ namespace Ember.Core.Editor
                     throw new InvalidOperationException(
                         $"事务备份已存在，请先人工确认并处理：{backup}");
                 }
+            }
+        }
+
+        private static void ValidatePathLinks(string path)
+        {
+            for (string current = Path.GetFullPath(path); !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
+            {
+                FileAttributes attributes;
+                try { attributes = File.GetAttributes(current); }
+                catch (FileNotFoundException) { continue; }
+                catch (DirectoryNotFoundException) { continue; }
+                if ((attributes & FileAttributes.ReparsePoint) != 0)
+                    throw new IOException("模板事务拒绝符号链接/junction：" + current);
+            }
+        }
+
+        internal static void ValidateDirectorySafety(string path)
+        {
+            ValidatePathLinks(path);
+            ValidateTreeLinks(path);
+        }
+
+        private static void ValidateTreeLinks(string path)
+        {
+            if (!Directory.Exists(path)) return;
+            foreach (string entry in Directory.GetFileSystemEntries(path))
+            {
+                if ((File.GetAttributes(entry) & FileAttributes.ReparsePoint) != 0)
+                    throw new IOException("模板内容不能含符号链接/junction：" + entry);
+                if (Directory.Exists(entry)) ValidateTreeLinks(entry);
             }
         }
 

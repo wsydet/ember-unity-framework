@@ -20,13 +20,18 @@ Manager 通过 `EmberInitOrderAttribute` 指定初始化优先级；Module 通�
 | 架构定位 | 框架必要管理器、全局基础设施 | 可选业务模块，可像积木一样组合 |
 | 接口 | `IEmberManager` | `IEmberModule` |
 | 是否可由模板省略 | 否；被定义为 Manager 的能力应由所有模板共同具备 | 是；类型可以不存在，也可以通过 `Enabled = false` 关闭 |
-| 启动时机 | `InitState` 中反射发现并按顺序调用 `Init()` | Init 阶段仅发现并构造；进入声明的 `Phase` 后才调用 `OnInit()` |
+| 启动时机 | `InitState` 中反射发现并按顺序调用 `Init()` | Init 内先发现并构造，随后激活 Global 模块；其他模块在对应 Phase 调用 `OnInit()` |
 | 存活范围 | 从 Init 到框架退出，跨业务状态持续可用 | 只在所属 Phase 活跃，退出 Phase 时调用 `OnDestroy()` |
 | 依赖方向 | 提供稳定的框架能力，不依赖具体业务 Module | 可以组合并消费一个或多个 Manager |
 
-Manager 和 Module 不是父子关系，也不能仅凭类名判断。一个功能是否属于 Manager，取决于它是否是
-所有游戏都必须在 Init 阶段启动的框架基础设施；一个功能是否属于 Module，取决于它能否按模板和
-玩法阶段选装。不同游戏共享同一套框架与 Managers，通过选择不同 Modules 形成不同玩法组合。
+Manager 和 Module 不是父子关系，分类依据是职能与可选性，不是启动阶段、单例形式或存活时长。
+Manager 是框架不可按玩法裁剪的必要基础设施；Module 是按模板和玩法选装、移除或禁用的业务积木。
+某个项目必须使用某业务能力，并不意味着它应成为所有模板必备的 Manager。
+不同游戏共享同一套框架与 Managers，通过选择不同 Modules 形成不同玩法组合。
+
+**Init 阶段也能启动 Module。** `ModulePhase.Global` 的启用模块就在 `InitState` 内、所有 Manager
+初始化后调用 `OnInit()`，并可常驻到退出。它仍然是可选业务模块；提前启动不需要改成 Manager。
+`Enabled` 决定是否装配，`Phase` 决定何时激活；Global 是模块阶段标记，不是一个额外的顶层状态。
 
 例如，`EmberInputManager` 是所有模板都需要的输入基础设施；`PlayerControlModule` 只是把输入转换
 成某种 2.5D 相机操作的业务积木，`base` 可以不包含它。
@@ -36,8 +41,9 @@ Manager 和 Module 不是父子关系，也不能仅凭类名判断。一个功�
 
 ### 新能力如何归类
 
-1. 所有游戏从 Init 到退出都必须依赖，并且需要提供稳定的全局服务：实现 `IEmberManager`。
-2. 只有部分模板或部分游戏状态需要，可以独立添加、移除或关闭：实现 `IEmberModule`。
+1. 框架运行所必需、所有模板共同具备且不可按玩法裁剪的基础设施：实现 `IEmberManager`。
+2. 按项目/玩法选装，可以独立添加、移除或关闭的业务能力：实现 `IEmberModule`。即使它必须在
+   主菜单之前启动并全程常驻，也仍然属于 Module，选择 `ModulePhase.Global` 即可。
 3. 只是某项能力的内部运行对象：保持普通类，由对应 Manager 或 Module 持有，不因为名称里有
    Manager/Engine 就加入生命周期管道。
 
@@ -93,7 +99,7 @@ public class MyManager : EmberSingleton<MyManager>, IEmberManager
 | `ResetModuleData()` | 热重启：清空运行时数据，保留对象引用 |
 
 ```csharp
-[EmberModule(ModulePhase.Gameplay)]
+[EmberModule(ModulePhase.Gameplay, Enabled = true)]
 public sealed class BattleModule : EmberSingleton<BattleModule>, IEmberModule
 {
     void IEmberModule.OnInit() { /* 初始化 */ }
@@ -148,6 +154,12 @@ Global 与 Gameplay；`ModulePhase.Main` 或自定义 Phase 需要由对应状�
 
 **InitState：** `DiscoverModules()`（仅构造并登记启用 Module）→ `InitializeAll()`（发现并启动全部
 Manager）→ `InitPhase(Global)`（激活全局业务 Module）。
+
+例如，主菜单要根据存档记录显示“继续游戏”和“读取存档”，存档业务模块应在 Init 的 Global
+阶段完成索引初始化，让主菜单读取已准备的数据；这不要求在 Init 恢复剧情或加载全部存档资源。
+完整读档校验、资源准备和会话交换在玩家选择进度后执行。该需求属于业务，不能据此把存档模块
+改为必备 Manager。若模块采用异步初始化，业务仍须提供明确的就绪/失败状态；当前 `OnInit()`
+为同步接口，Collector 不会自动等待模块内部发起的异步任务完成。
 
 **Manager 初始化：** `InitializeAll()` → 重复检查 → `ScanAndCollect()` → 反射遍历程序集 →
 过滤系统程序集 → 筛选 `IEmberManager` → 反射获取 `Instance` → 读取 `EmberInitOrder` → 排序 →

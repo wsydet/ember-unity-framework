@@ -1,5 +1,7 @@
 # Ember 消费端依赖声明
 
+**当前版本 0.14.0**：`manifest-0.14.0.json` / `release-0.14.0.json` 对齐发布，visual-novel 0.7.0 包含四项模板 Skill。用户确认手动编译无报错；自动回归及消费项目验收仍待完成，详见仓库 `docs/dev/release-0.14.0.md`。以下保留 0.13.2 的历史依赖基线说明，第三方来源在本版不变。
+
 0.13.2 为 UPM Manager 增加 Unity MCP 按需安装入口，显示安装状态和实际版本，使用官方仓库固定提交。静态检查通过；Unity MCP 不可用，Unity 编译、新增 EditMode 回归与消费端安装/连接尚未验证。
 
 当前发布基线是 `0.13.2`；`manifest-0.13.2.json` 与 `release-0.13.2.json` 是正式发布声明。模板保持 base 0.6.3 与 source3d-2p5d 0.3.5。

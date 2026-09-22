@@ -42,7 +42,7 @@
 | [.githooks/README.md](../../.githooks/README.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
 | [Assets/Art/Icons/game-icon-pack-v1.4/README.md](../../Assets/Art/Icons/game-icon-pack-v1.4/README.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
 | [Assets/Art/README.md](../../Assets/Art/README.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
-| [source3d-2p5d SceneUI 示例](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Module/SceneUI/README.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
+| [source3d-2p5d SceneUI 示例](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/scene-ui-business.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
 | [CLAUDE.md](../../CLAUDE.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
 | [docs/dev/api-doc-template.md](../../docs/dev/api-doc-template.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
 | [docs/dev/audio-upgrade-plan.md](../../docs/dev/audio-upgrade-plan.md) | 更新 | 保留未实施方案，更新路径并说明 API 尚未落地 |
@@ -57,12 +57,12 @@
 | [docs/dev/ember-vs-burner-ui-comparison.md](../../docs/dev/ember-vs-burner-ui-comparison.md) | 更新 | 旧覆盖率和缺失列表改为当前设计取舍 |
 | [docs/dev/eui-reference.md](../../docs/dev/eui-reference.md) | 更新 | 更新 Page/Logic/Binding/Item、控件 API 与生命周期 |
 | [docs/dev/framework-progress.md](../../docs/dev/framework-progress.md) | 更新 | 重写当前状态和待办，明确 0.11.1 发布准备 |
-| [docs/dev/guide-module-design.md](../../docs/dev/guide-module-design.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
+| [docs/dev/guide-module-design.md](../../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/guide-module-design.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
 | [docs/dev/independent-updater-package-plan.md](../../docs/dev/independent-updater-package-plan.md) | 更新 | 保留独立升级器预案，区分 0.11.1 发布目标与现有包内实现 |
 | [docs/dev/mcp-troubleshooting.md](../../docs/dev/mcp-troubleshooting.md) | 更新 | 移除失效协议/端口推断，按当前项目 MCP 规则排查 |
 | [docs/dev/odin-panel-inventory.md](../../docs/dev/odin-panel-inventory.md) | 更新 | 重新扫描框架和业务 Odin 引用 |
 | [docs/dev/odin-usage-notes.md](../../docs/dev/odin-usage-notes.md) | 更新 | 核对并修正源码路径、当前 API、配置归属或历史状态说明 |
-| [docs/dev/player-control-module.md](../../docs/dev/player-control-module.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
+| [docs/dev/player-control-module.md](../../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/player-control-module.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
 | `docs/dev/res-migration-plan.md` | 删除 | Handle/Slot/EventGroup 等已有实现；Resource/API/进度文档承接 |
 | [docs/dev/scene-ui-module-design.md](../../docs/dev/scene-ui-module-design.md) | 保留 | 核对后保留；现有约定有效，或属于第三方/许可/历史资料 |
 | [docs/dev/skill-writing-guide.md](../../docs/dev/skill-writing-guide.md) | 更新 | 改为 .agents 真目录、.utmp 产物与已授权任务执行规则 |

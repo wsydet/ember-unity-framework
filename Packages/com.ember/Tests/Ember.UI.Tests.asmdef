@@ -2,6 +2,7 @@
     "name": "Ember.UI.Tests",
     "rootNamespace": "Ember.UI.Tests",
     "references": [
+        "Ember.UPMManager.Editor",
         "Ember.UI.Runtime",
         "Ember.UIExtension.Runtime",
         "Ember.UIExtension.Editor",
@@ -9,7 +10,8 @@
         "Ember.Core.Editor",
         "Ember.Editor",
         "Ember.Basic.Runtime",
-        "UniRx"
+        "UniRx",
+        "UniTask"
     ],
     "includePlatforms": [
         "Editor"

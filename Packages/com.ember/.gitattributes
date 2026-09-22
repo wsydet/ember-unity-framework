@@ -1,3 +1,6 @@
 # Templates carry sealed content hashes. Preserve their exact bytes when this
 # package is installed from a Git URL, even if the consumer has core.autocrlf=true.
-Templates~/** -text -whitespace
+Templates~/** -text -filter -diff -merge -whitespace
+
+# Generated Skill bundles are verified with byte-level SHA256, including scripts.
+AISkills~/skills/** -text -filter -whitespace

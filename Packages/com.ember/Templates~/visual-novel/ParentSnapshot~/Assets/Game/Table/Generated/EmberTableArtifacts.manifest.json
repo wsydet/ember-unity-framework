@@ -1,0 +1,7 @@
+{
+    "generator": "Ember.Table.Editor",
+    "formatVersion": 1,
+    "paths": [
+        "Assets/Game/Table/Generated/GameTables.Catalog.g.cs"
+    ]
+}

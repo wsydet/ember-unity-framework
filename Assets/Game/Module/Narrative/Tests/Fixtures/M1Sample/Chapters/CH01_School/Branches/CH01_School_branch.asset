@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb016b628299664584f2d647b3b1421, type: 3}
+  m_Name: CH01_School_branch
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeBranchSO
+  _nodeId: branch
+  _chapterId: vn_m1_sample
+  _contentRevision: 1
+  _branches:
+  - _optionId: trust_route
+    _text: "\u4FE1\u4EFB"
+    _condition:
+      _junction: 0
+      _predicates:
+      - _variableId: trust
+        _comparison: 3
+        _value:
+          _type: 1
+          _bool: 0
+          _int: 1
+          _string: 
+    _target: {fileID: 11400000, guid: 86ed39cae8e49ba42b245350dd323fc5, type: 2}
+  _fallback: {fileID: 11400000, guid: 0113602d91a33f84fbe02b4158e72c45, type: 2}

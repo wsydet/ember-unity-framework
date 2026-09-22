@@ -59,6 +59,8 @@ namespace Ember.UI
         private int _backgroundRequestVersion;
 
         private bool _initialized;
+        private bool _loadingOperation;
+        private EUIPage _operationLoadingPage;
 
         #endregion
 
@@ -71,6 +73,7 @@ namespace Ember.UI
             public EUIPageDef EUIPageDef;
             public object Args;
             public Action<EUIPage> OnComplete;
+            public Func<bool> IsCurrent;
             public EUIPage ParentPage; // SubPage 时非空
         }
 
@@ -101,6 +104,13 @@ namespace Ember.UI
             // 流程：Show loading → 5011 事件 → 状态机 LoadScene → 轮询完成 → Proceed → 关 loading
             Ember.Scene.SceneCoordinator.InterceptSceneLoad = (sceneName, fromScene, onLoaded) =>
             {
+                // A covered operation owns the existing curtain until its business content is ready.
+                // Use SceneCoordinator's normal load/prepare/proceed path without opening a second page.
+                if (_operationLoadingPage?.IsOpened == true)
+                {
+                    EmberStateMachine.QuickSceneLoad = false;
+                    return false;
+                }
                 if (DefaultLoadingPageDef == null) return false;
 
                 var sceneMgr = Ember.Scene.EmberSceneManager.Instance;
@@ -185,6 +195,8 @@ namespace Ember.UI
             _closeRequestedPages.Clear();
             _preloadedPages.Clear();
             _initialized = false;
+            _operationLoadingPage = null;
+            _loadingOperation = false;
         }
 
         #endregion
@@ -196,9 +208,9 @@ namespace Ember.UI
         /// <summary>
         /// 显示主页面。替换当前 MainPage。
         /// </summary>
-        public void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null)
+        public void ShowMainPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null, Func<bool> isCurrent = null)
         {
-            EnqueueShow(pageDef, args, onComplete);
+            EnqueueShow(pageDef, args, onComplete, isCurrent: isCurrent);
         }
 
         /// <summary>
@@ -623,13 +635,67 @@ namespace Ember.UI
                 await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
         }
 
+        /// <summary>
+        /// Waits for the Loading enter animation, runs an asynchronous operation under the curtain,
+        /// then closes it. Scene transitions inside the operation share this curtain. The operation
+        /// must await its destination content, not merely dispatch a state transition. Args configure
+        /// the page's display mode in OnOpen. Concurrent Loading owners are rejected.
+        /// </summary>
+        [HasGC]
+        public async UniTask RunWithLoadingAsync(EUIPageDef loadingPageDef, object args,
+            Func<UniTask> operation, System.Threading.CancellationToken cancellationToken = default)
+        {
+            if (!_initialized || loadingPageDef == null || operation == null)
+                throw new InvalidOperationException("Loading operation is unavailable.");
+            if (_loadingOperation || _context.FindOpenedPage(loadingPageDef) != null)
+                throw new InvalidOperationException("A Loading transition is already active.");
+            _loadingOperation = true;
+            EUIPage page = null;
+            bool opened = false, abandoned = false;
+            try
+            {
+                ShowTopMost(loadingPageDef, args, result =>
+                {
+                    page = result; opened = true;
+                    if (abandoned && result != null) ClosePage(result);
+                });
+                await UniTask.WaitUntil(() => opened, cancellationToken: cancellationToken);
+                if (page == null) throw new InvalidOperationException("Loading page could not be opened.");
+                _operationLoadingPage = page;
+                // Let the fully opaque curtain render before doing potentially expensive main-thread work.
+                await UniTask.NextFrame(cancellationToken: cancellationToken);
+                await operation();
+                // Destination UI/layout must have a render opportunity before the curtain starts leaving.
+                await UniTask.NextFrame(cancellationToken: cancellationToken);
+                await UniTask.NextFrame(cancellationToken: cancellationToken);
+            }
+            finally
+            {
+                abandoned = true;
+                try
+                {
+                    if (_initialized && page?.GameObject != null)
+                    {
+                        bool closed = false;
+                        ClosePageCore(page, null, true, () =>
+                        {
+                            closed = true;
+                            EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete);
+                        });
+                        await UniTask.WaitUntil(() => closed || !_initialized, cancellationToken: cancellationToken);
+                    }
+                }
+                finally { _operationLoadingPage = null; _loadingOperation = false; }
+            }
+        }
+
         #endregion
 
         // --------------------------------------------------------
 
         #region 内部方法
 
-        private void EnqueueShow(EUIPageDef pageDef, object args, Action<EUIPage> onComplete, EUIPage parentPage = null)
+        private void EnqueueShow(EUIPageDef pageDef, object args, Action<EUIPage> onComplete, EUIPage parentPage = null, Func<bool> isCurrent = null)
         {
             // SubPage 必须经 ShowSubPage 带父页面打开（对标 Burner：禁止全局入口打开 SubPage），否则会成为无归属的孤儿页
             if (pageDef != null && pageDef.PageType == PageType.SubPage && parentPage == null)
@@ -643,6 +709,7 @@ namespace Ember.UI
                 EUIPageDef = pageDef,
                 Args = args,
                 OnComplete = onComplete,
+                IsCurrent = isCurrent,
                 ParentPage = parentPage,
             });
         }
@@ -662,6 +729,7 @@ namespace Ember.UI
 
         private void ProcessShowRequest(ShowRequest req)
         {
+            if (req.IsCurrent != null && !req.IsCurrent()) return;
             Profiler.BeginSample("EUIManager.ProcessShowRequest");
             var pageDef = req.EUIPageDef;
 
@@ -695,8 +763,15 @@ namespace Ember.UI
             }
 
             EUIObserver.NotifyLoadStarted(pageDef);
-            _viewEngine.ResourceProvider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
+            var provider = _viewEngine.ResourceProvider;
+            provider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
             {
+                // A departed owner must not route a late page over the replacement screen.
+                if (req.IsCurrent != null && !req.IsCurrent())
+                {
+                    provider.Release(pageDef.PrefabPath);
+                    return;
+                }
                 if (prefab == null)
                 {
                     EmberDebug.LogError(TAG, $"无法加载预制体: {pageDef.PrefabPath}");

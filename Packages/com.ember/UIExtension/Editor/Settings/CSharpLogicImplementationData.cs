@@ -685,6 +685,16 @@ namespace Ember.UIExtension.Editor
                 return false;
             }
 
+            // 已保存的 Prefab 可能经开发中心迁移；注册必须指向实际资产，
+            // 默认分类路径只用于尚未保存的创建骨架。
+            string savedPrefabPath = AssetDatabase.GetAssetPath(binding.gameObject);
+            if (!string.IsNullOrEmpty(savedPrefabPath)
+                && savedPrefabPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!TryResolveAssetsPath(savedPrefabPath, "已保存的页面预制体",
+                        out newPrefabPath, out _, out error)) return false;
+            }
+
             string newLine = $"        public static readonly EUIPageDef {binding.PageName} = new(\"{newPrefabPath}\", UILayer.{targetLayer}, {targetPageType}{sortingArgument});";
 
             // 写入前同时统计目标与对侧 partial；任一文件内或跨文件重复都 fail-closed，

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "Ember AI Skill Bundle",
+  "sourceCommit": "cc9dc1cf6414785ce59ec2ce492c52cbdc5b17a7",
+  "files": [
+    {
+      "path": "catalog.json",
+      "sha256": "bf2ae05570fb00b89e175bd8fe8e66516ddfdbca6f679697c94a62f327d5d1a3"
+    },
+    {
+      "path": "ember-commit-review/agents/openai.yaml",
+      "sha256": "a7ecc81a5ed07d1f2d6ee975ec526c37799d6cdbe84042bee5811d0a81aebaa9"
+    },
+    {
+      "path": "ember-commit-review/SKILL.md",
+      "sha256": "06e3a9e4e518c1654c358848e591b8f77a0c12178582b18579b3f53d6980bf5d"
+    },
+    {
+      "path": "ember-doc-maintenance/agents/openai.yaml",
+      "sha256": "ca7fe8e0b777bd83b0c557ff2b2e7e05f2a8ea161ed1dfca045b532d7b42b559"
+    },
+    {
+      "path": "ember-doc-maintenance/scripts/audit_docs.py",
+      "sha256": "c1aad6dd82798879d23f4bfbb6575b3bba67b95dab99efb577e55c9cb55a1bd1"
+    },
+    {
+      "path": "ember-doc-maintenance/SKILL.md",
+      "sha256": "1aebe89ca340442950d758ef59fe2a25630286937feafdf84deca43253817366"
+    },
+    {
+      "path": "ember-eui-build/agents/openai.yaml",
+      "sha256": "fc278133636c300549e9cc1c73b76547a26b9eafc7af1394a0f1382db917722a"
+    },
+    {
+      "path": "ember-eui-build/assets/EmberEuiSkillAdapter.cs",
+      "sha256": "0f0f400b37e23e6aa65fccc429f9e8eec53d69a15706d5a2270b08dea0a92611"
+    },
+    {
+      "path": "ember-eui-build/references/editor-api.md",
+      "sha256": "010adf6781cc1af2d5783df62d439cb1eb02b4e07bc88e9613bf92943f40fca9"
+    },
+    {
+      "path": "ember-eui-build/SKILL.md",
+      "sha256": "33e0745010883510b53d035d0cab0713e02ab82c687c4bf532cde705bf15ae47"
+    },
+    {
+      "path": "ember-generate-doc/agents/openai.yaml",
+      "sha256": "fb052751cbb4f20d32b91e9f46c77e5639a460ad0adace05f6cfa164550fcfb7"
+    },
+    {
+      "path": "ember-generate-doc/references/api-documentation.md",
+      "sha256": "a6dfde36e9379f042f39d4de9cec6b377fef43a3c27ab06d9640bbf4a2179fd4"
+    },
+    {
+      "path": "ember-generate-doc/SKILL.md",
+      "sha256": "37bcc59b1007786d41e13ab67de66f726fdca528edbfa921edf895eb38dce0ac"
+    },
+    {
+      "path": "ember-odin-capture-style/agents/openai.yaml",
+      "sha256": "762c383c115a9372077a6e64a884a78914f4ebda7383aded81a548d5fd123e86"
+    },
+    {
+      "path": "ember-odin-capture-style/SKILL.md",
+      "sha256": "a3e176c01a50098c61cb11c2546debb5a8397fe20b69e4961998077f86ff24d1"
+    },
+    {
+      "path": "ember-odin-inspector/agents/openai.yaml",
+      "sha256": "e67601e970f1218df36321a834f897c6d9473c71ae6c5b66884f98375ff6bbba"
+    },
+    {
+      "path": "ember-odin-inspector/references/inspector-review.md",
+      "sha256": "9986f5eb0bbf1d7b72767fee0090fed451fca334e0b2b54e75a1c86734eea782"
+    },
+    {
+      "path": "ember-odin-inspector/SKILL.md",
+      "sha256": "ef62061c36a7143e9ace2ed74cc68f0e45c0d4f78b8a2767052da63f1677447f"
+    },
+    {
+      "path": "ember-package-scan/agents/openai.yaml",
+      "sha256": "de34b487a91941cde628e8839dec2936f5059b7774486f46002e07e19a8da91f"
+    },
+    {
+      "path": "ember-package-scan/SKILL.md",
+      "sha256": "89424bffc1ea08d2eb00023dd31965515df9912cc4eeab8cb41329e7f5230581"
+    },
+    {
+      "path": "ember-region-organizer/agents/openai.yaml",
+      "sha256": "b7486f2573feff2bc8582bf7a0718387215054953711d30cddc19f1e7cb1db63"
+    },
+    {
+      "path": "ember-region-organizer/SKILL.md",
+      "sha256": "bc78aa373bafb5ffc3d2c96090580bb869f5b39160ae6c8e39b8179aa492eb8f"
+    },
+    {
+      "path": "ember-solution-design/agents/openai.yaml",
+      "sha256": "800ba75abdd9f4b266e302a9fc7ad1931d3a32873b60d06c96b5c6814e010e4f"
+    },
+    {
+      "path": "ember-solution-design/SKILL.md",
+      "sha256": "88c92f4dccb05a86cab365cac933593c8f7d4329326362be799d731606438508"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f04d5bec14b0484b8f83f3ba5e6f1c0, type: 3}
+  m_Name: f1f1a8ad66d139541a1ae44a687071aa
+  m_EditorClassIdentifier: Game.Narrative.Editor::Game.Narrative.Editor.NarrativeGraphLayout
+  _chapterGuid: f1f1a8ad66d139541a1ae44a687071aa
+  _positions:
+  - _nodeId: intro
+    _position: {x: 0, y: 80}
+  - _nodeId: choice
+    _position: {x: 300, y: 80}
+  - _nodeId: ask
+    _position: {x: 600, y: 0}
+  - _nodeId: leave
+    _position: {x: 600, y: 240}
+  - _nodeId: merge
+    _position: {x: 900, y: 80}
+  - _nodeId: branch
+    _position: {x: 1200, y: 80}
+  - _nodeId: good
+    _position: {x: 1495.9183, y: -17.687084}
+  - _nodeId: quiet
+    _position: {x: 1500, y: 240}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ember EUI 制作"
+  short_description: "通过项目 UI 中心接口创建预制体、生成真实绑定并完成用户逻辑接线"
+  default_prompt: "使用 $ember-eui-build 在当前 Unity 项目创建所需正式 UI，调整预制体并通过 UI 中心生成绑定，然后完成用户逻辑。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ember Odin 风格记录"
+  short_description: "从已认可的 Odin 面板提取可复用模式，记录到项目文档并保留适用版本与证据。"
+  default_prompt: "使用 $ember-odin-capture-style 处理我指定的项目范围，并报告实际验证结果。"
