@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>视觉小说 · 图片导入确认</title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;background:#f4f5f8;color:#202738;margin:0;padding:24px}
+main{max-width:1400px;margin:auto}h1{margin:0}header,p{margin-bottom:16px}.toolbar,article,.review{background:white;border:1px solid #d4dae4;border-radius:12px;padding:16px;margin:16px 0}
+button,input,select{font:inherit;padding:8px;border:1px solid #a7b1c2;border-radius:6px;max-width:100%;box-sizing:border-box}button{cursor:pointer;background:#e9edf5}button.primary{background:#244ecd;color:white}button:disabled{opacity:.45;cursor:default}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:end;position:sticky;top:0;z-index:1;box-shadow:0 2px 12px #20273818}label{display:flex;flex-direction:column;gap:5px;font-size:13px}article{display:grid;grid-template-columns:220px 1fr;gap:18px}.thumb{width:210px;height:210px;object-fit:contain;background:repeating-conic-gradient(#e3e6ec 0% 25%,white 0% 50%) 0/20px 20px}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}small{display:block;overflow-wrap:anywhere}.warn{color:#94440c}.status{padding:12px;background:#e8edf9;white-space:pre-wrap;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}.actions{display:flex;gap:12px;flex-wrap:wrap}.picked{display:inline-flex;flex-direction:row;align-items:center} .invalid{color:#b52038}
+@media(max-width:650px){body{padding:12px}article{grid-template-columns:1fr}.toolbar{position:static}}
+</style>
+<main><header><h1>图片导入确认</h1><p>逐图核对归属与最终配表。预填建议和草稿均不代表确认；此页面不会复制素材或修改配表。</p><div id="mode" class="status">正在连接本地服务…</div></header>
+<section class="toolbar" aria-label="批量设置">
+<label class="picked"><input id="all" type="checkbox">全选图片</label>
+<label>批量剧情<input id="batch-story" placeholder="留空保持原值"></label>
+<label>批量用途<select id="batch-kind"><option value="">保持原值</option><option value="portrait">角色立绘</option><option value="background">场景背景</option><option value="other">其他用途</option><option value="skip">跳过</option></select></label>
+<label>批量角色<select id="batch-character"><option value="">保持原值</option><option value="__new">新建角色</option></select></label>
+<label>新角色 ID<input id="batch-id"></label><label>新角色显示名<input id="batch-name"></label>
+<button id="apply">应用到勾选图片</button></section>
+<div id="images"></div>
+<section class="review"><h2>最终导入计划</h2><p>更改选择后须重新预览。冲突可通过修改资源 ID、选择同内容复用或跳过解决；本页面不允许覆盖不同内容。其他用途仅复制图片，UI 接线和 CG 播放需另行处理。</p>
+<div class="actions"><button id="draft">保存选择草稿</button><button id="preview">生成最终计划</button><button id="confirm" class="primary" disabled>确认导入</button><button id="cancel">取消</button></div>
+<p id="status" class="status" role="status">尚未提交。请填写归属后生成最终计划。</p><div id="plan"></div></section></main>
+<script>
+let manifest, choices=[], reviewHash=null, terminal=false;
+const $=id=>document.getElementById(id), endpoint=location.pathname;
+async function api(action,data){const r=await fetch(endpoint+action,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await r.json();if(!r.ok)throw Error(result.error);return result;}
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('invalid',error);}
+function invalidate(){reviewHash=null;$('confirm').disabled=true;$('plan').replaceChildren();status('选择已改变，尚未确认。请重新生成最终计划。');}
+function option(select,value,text){const o=document.createElement('option');o.value=value;o.textContent=text;select.append(o);}
+function field(parent,label,key,choice,values){const l=document.createElement('label');l.textContent=label;const el=document.createElement(values?'select':'input');el.dataset.key=key;if(values)for(const [v,t] of values)option(el,v,t);el.value=choice[key]||'';el.addEventListener(values?'change':'input',()=>{choice[key]=el.value;if(key==='character'){const c=manifest.characters.find(x=>x.id===el.value);choice.characterId=c?.id||'';choice.displayName=c?.displayName||'';render();}if(key==='kind')render();invalidate();});l.append(el);parent.append(l);return el;}
+function render(){const host=$('images');host.replaceChildren();for(const image of manifest.images){const choice=choices[image.index], article=document.createElement('article');article.dataset.index=image.index;
+const visual=document.createElement('div'), pick=document.createElement('label');pick.className='picked';const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=!!choice.selected;checkbox.onchange=()=>choice.selected=checkbox.checked;pick.append(checkbox,document.createTextNode(image.name));const img=document.createElement('img');img.className='thumb';img.src=endpoint+'image/'+image.index;img.alt=image.name;visual.append(pick,img);const info=document.createElement('small');info.textContent=`${image.width} × ${image.height} · ${image.alpha?'包含透明像素':'无透明像素'}\n${image.source}`;visual.append(info);if(image.duplicates.length){const warning=document.createElement('small');warning.className='warn';warning.textContent='同内容重复：'+image.duplicates.join('、');visual.append(warning);}article.append(visual);
+const form=document.createElement('div');form.className='fields';field(form,'用途','kind',choice,[['skip','跳过'],['portrait','角色立绘'],['background','场景背景'],['other','其他用途']]);field(form,'所属剧情','story',choice);
+if(choice.kind==='portrait'){field(form,'角色','character',choice,[['__new','新建角色'],...manifest.characters.map(c=>[c.id,`${c.displayName} (${c.id})`])]);const id=field(form,'角色 ID','characterId',choice),name=field(form,'显示名','displayName',choice);id.disabled=name.disabled=choice.character!=='__new';if(!image.alpha){const warning=document.createElement('small');warning.className='warn';warning.textContent='此立绘无透明像素：确认即表示按原图导入，不自动抠图。';form.append(warning);}}
+if(choice.kind==='background'||choice.kind==='other')field(form,choice.kind==='background'?'场景名':'图片名称','scene',choice);
+if(choice.kind==='other')field(form,'其他用途','otherUse',choice,[['TitleUI','标题 UI'],['CG','剧情 CG（仅保存资源）'],['Icon','图标'],['Mask','遮罩'],['Other','其他']]);
+if(choice.kind!=='skip'){field(form,'表情 / 变体','variant',choice);field(form,'资源 ID（留空自动生成）','resourceId',choice);field(form,'冲突处理','conflict',choice,[['block','冲突时阻止，改 ID 或跳过'],['reuse','只复用相同内容与相同绑定']]);}article.append(form);host.append(article);}}
+function payload(){return choices.map(({selected,character,...rest})=>rest);}
+function finish(message){terminal=true;for(const el of document.querySelectorAll('button,input,select'))el.disabled=true;status(message);}
+async function run(action){try{await action();}catch(e){status(e.message,true);}}
+$('all').onchange=()=>{choices.forEach(c=>c.selected=$('all').checked);render();};
+$('apply').onclick=()=>{if(terminal)return;for(const c of choices.filter(x=>x.selected)){if($('batch-story').value)c.story=$('batch-story').value;if($('batch-kind').value)c.kind=$('batch-kind').value;if($('batch-character').value){const existing=manifest.characters.find(x=>x.id===$('batch-character').value);c.character=$('batch-character').value;c.characterId=existing?.id||$('batch-id').value;c.displayName=existing?.displayName||$('batch-name').value;}}render();invalidate();};
+$('draft').onclick=()=>run(async()=>{await api('draft',{choices:payload()});status('草稿已保存到批次目录 draft.json，尚未确认，不会导入资产。');});
+$('preview').onclick=()=>run(async()=>{invalidate();const result=await api('preview',{choices:payload()});reviewHash=result.reviewHash;for(const item of result.plan){const h=document.createElement('h3');h.textContent=manifest.images[item.index].name;const p=document.createElement('pre');p.textContent=JSON.stringify(item,null,2);$('plan').append(h,p);}$('confirm').disabled=!manifest.ready;status(manifest.ready?'最终计划已生成，请核对下方资源 ID、路径、表行和冲突处理，再明确提交。':'最终计划已生成；Unity MCP 未验证，实际导入尚不可执行。可以保存草稿。');});
+$('confirm').onclick=()=>run(async()=>{const result=await api('confirm',{choices:payload(),reviewHash});finish('确认已保存，等待当前任务读取并重新校验后执行。此页面尚未导入任何资产。\n'+result.path);});
+$('cancel').onclick=()=>run(async()=>{await api('cancel',{});finish('已取消，本批不能导入。结果已保存到 decision.json。');});
+fetch(endpoint+'manifest').then(r=>r.json()).then(data=>{manifest=data;choices=data.images.map(i=>({index:i.index,kind:'skip',story:'',character:'__new',characterId:'',displayName:'',scene:'',variant:'default',resourceId:'',otherUse:'TitleUI',conflict:'block'}));if(data.draft){for(const saved of data.draft){const c=choices[saved.index];if(c){Object.assign(c,saved);c.character=data.characters.some(x=>x.id===c.characterId)?c.characterId:'__new';}}}for(const c of data.characters)option($('batch-character'),c.id,`${c.displayName} (${c.id})`);$('mode').textContent=data.ready?'Unity MCP 前置检查已通过；提交后仍须由任务复核连接与指纹。':'仅浏览 / 草稿模式：没有经验证的 Unity MCP，实际导入尚不可执行。';render();if(data.state!=='pending')finish('本批已经结束：'+data.state);}).catch(e=>status('页面连接失败：'+e.message,true));
+</script></html>
