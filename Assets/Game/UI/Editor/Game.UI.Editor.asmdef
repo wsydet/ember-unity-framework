@@ -4,6 +4,7 @@
     "references": [
         "Ember.UI.Runtime",
         "Ember.Core.Runtime",
+        "Ember.Core.Editor",
         "Ember.Basic.Runtime",
         "Ember.UIExtension.Runtime",
         "Ember.UIExtension.Editor",

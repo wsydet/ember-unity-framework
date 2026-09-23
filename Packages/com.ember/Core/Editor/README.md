@@ -50,3 +50,7 @@
 - 日志配置创建和 Inspector 在 [Basic/Editor](../../Basic/Editor)，配置资产是 `Assets/Resources/EmberDebugConfig.asset`。
 - 依赖安装与升级在 [UPMManager/Editor](../../UPMManager/Editor)。
 - UI 创建、Binding 生成与维护在 [UIExtension/Editor](../../UIExtension/Editor)。
+
+## 正式模板身份（0.14.3）
+
+EmberProjectSetup.IsTemplateActive(templateId) 只读判断当前正式模板是否为目标或其派生模板。embedded 项目仅使用编辑记录，消费项目仅使用活动部署记录；不跨环境回退，不写入身份文件。业务编辑工具引用 Ember.Core.Editor 调用此 API，避免编辑器程序集循环依赖；各工具仍自行检查 Play、Module 和资源编辑冲突。

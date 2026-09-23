@@ -69,29 +69,9 @@ namespace Game.Narrative.Editor
         {
             if (!refresh && _templateActive.HasValue) return _templateActive.Value;
             TemplateReadCount++;
-            try
-            {
-                bool embedded = Ember.Core.Editor.EmberProjectSetup.IsEmbeddedPackage();
-                string id = SelectTemplateIdentity(embedded,
-                    embedded ? Ember.Core.Editor.EmberProjectSetup.GetEditingTemplate()?.templateId : null,
-                    embedded ? null : Ember.Core.Editor.EmberProjectSetup.GetActiveDeployedTemplate()?.templateId);
-                var templates = Ember.Core.Editor.EmberProjectSetup.GetTemplates();
-                var visited = new HashSet<string>(StringComparer.Ordinal);
-                _templateActive = false;
-                while (!string.IsNullOrEmpty(id) && visited.Add(id))
-                {
-                    var template = templates.Find(t => t.id == id);
-                    if (template == null) break;
-                    if (id == "visual-novel") { _templateActive = true; break; }
-                    id = template.parentId;
-                }
-            }
-            catch (IOException) { _templateActive = false; }
+            _templateActive = Ember.Core.Editor.EmberProjectSetup.IsTemplateActive("visual-novel");
             return _templateActive.Value;
         }
-        // 消费项目中的残留编辑记录不能覆盖正式部署身份；开发项目也不能回退到部署历史。
-        private static string SelectTemplateIdentity(bool embedded, string editingId, string deployedId)
-            => embedded ? editingId : deployedId;
         public static bool CanEdit(UnityEngine.Object asset)
             => NarrativeEditorAvailability.Enabled && !EditorApplication.isPlayingOrWillChangePlaymode && IsTemplateActive() && asset &&
                 AssetDatabase.GetAssetPath(asset).StartsWith("Assets/", StringComparison.Ordinal);

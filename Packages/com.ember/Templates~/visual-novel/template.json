@@ -2,14 +2,14 @@
     "schemaVersion": 2,
     "id": "visual-novel",
     "displayName": "视觉小说",
-    "description": "基于 base 0.6.4：E0–E5 演出、剧情编辑与四项模板技能；图片导入提供本地交互页面、草稿和绑定指纹的确认回执。0.7.1 preview，消费项目验收待完成。",
-    "version": "0.7.1",
+    "description": "基于 base 0.6.4：E0–E5 演出、剧情编辑与四项模板技能；0.7.2 修复开发、部署及派生模板的 Gameplay 布局身份判断，需框架 0.14.3。preview，消费项目验收待完成。",
+    "version": "0.7.2",
     "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.6.4",
     "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "e882995d80bd534138a3ef33de921338",
-    "versionedContentHash": "e882995d80bd534138a3ef33de921338"
+    "contentHash": "e81241729c7de881dae7a5b6a4c98fa1",
+    "versionedContentHash": "e81241729c7de881dae7a5b6a4c98fa1"
 }

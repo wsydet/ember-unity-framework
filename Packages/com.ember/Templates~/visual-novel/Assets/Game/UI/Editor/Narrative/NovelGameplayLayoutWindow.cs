@@ -26,7 +26,6 @@ namespace Game.UI.Editor
         private static readonly string[] Keys = { "Background", "Left", "Center", "Right", "Dialogue", "Speaker", "Body", "Advance", "Choices", "Menu", "Settings", "Saves", "QuickSave", "QuickLoad", "Status", "Auto", "Skip", "History", "HideDialogue", "Speed", "MenuSettings", "ReadSkip", "ReturnMenu", "Shading", "ChoiceTemplate", "MenuPanel" };
         private static readonly string[] Labels = { "背景", "左立绘", "中立绘", "右立绘", "对白框（整体）", "角色姓名", "对白正文", "推进按钮", "选项区域", "阅读菜单入口", "字号按钮", "菜单 · 存档/读档", "菜单 · 快速保存", "菜单 · 快速读取", "状态提示", "自动播放", "已读快进", "历史按钮", "隐藏对话按钮", "阅读倍率", "菜单 · 系统设置", "菜单 · 仅已读快进", "菜单 · 返回主菜单", "对话底板 / 渐变", "选项样式", "阅读菜单外观" };
         private static readonly Vector2[] Resolutions = { new(1920, 1080), new(1920, 1200), new(1440, 1080), new(2520, 1080) };
-        [Serializable] private sealed class Identity { public string templateId; }
         [Serializable] private sealed class LayoutRecord
         {
             public string Key;
@@ -172,9 +171,8 @@ namespace Game.UI.Editor
             if (EditorApplication.isPlayingOrWillChangePlaymode) reason = "请退出 Play Mode 后编辑布局。";
             else if (((EmberModuleAttribute)Attribute.GetCustomAttribute(typeof(NarrativeModule), typeof(EmberModuleAttribute)))?.Enabled != true)
                 reason = "NarrativeModule 未启用。";
-            else if (!File.Exists("Assets/Editor/EmberEditingTemplate.json") ||
-                JsonUtility.FromJson<Identity>(File.ReadAllText("Assets/Editor/EmberEditingTemplate.json"))?.templateId != "visual-novel")
-                reason = "当前加载模板不是 visual-novel，布局编辑已停止。";
+            else if (!Ember.Core.Editor.EmberProjectSetup.IsTemplateActive("visual-novel"))
+                reason = "当前正式编辑或部署的模板不是 visual-novel 或其派生模板，布局编辑已停止。";
             else if (PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == PrefabPath || PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == ReadingMenuPrefabPath)
                 reason = "请先保存并关闭阅读页的 Prefab Mode，避免两个编辑入口互相覆盖。";
             return reason == null;

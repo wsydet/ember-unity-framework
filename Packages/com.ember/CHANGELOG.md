@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.3] - 2026-09-23
+
+- **已部署小说布局菜单修复**：visual-novel 0.7.2 的 Gameplay 主UI布局使用统一的正式模板身份判断；支持开发、部署及多级派生模板，消费项目不再依赖 EmberEditingTemplate.json。
+- **统一判断与程序集边界**：在 Ember.Core.Editor 提供 EmberProjectSetup.IsTemplateActive，剧情图与布局工具共用，避免 Game.Narrative.Editor / Game.UI.Editor 循环引用。保留 Play、NarrativeModule、阅读页及阅读菜单 Prefab Mode 保护，Play 主菜单入口条件不变。
+- **回归**：Unity MCP 编译完成、Console 无错误；24 项 EditMode 身份、菜单、Prefab 冲突及布局外观回归通过。
+- **升级**：先通过 Ember/UPM Manager 升级框架，再迁移已部署模板脚本及程序集引用。补齐缺失不会更新旧脚本；完整重新部署会覆盖受管目录，应先备份并合回项目定制。详情见 docs/dev/release-0.14.3.md。
+
 ## [0.14.2] - 2026-09-22
 
 - **视觉小说 0.7.1 图片确认页面**：图片导入技能随附 Python 回环服务与交互 HTML，实际打开并展示缩略图、尺寸、透明度和重复提示；支持逐图/批量剧情、用途、已有及新角色、表情与场景变体。
