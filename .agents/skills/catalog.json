@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "id": "ember-template-conflict-recovery",
+      "displayName": "Ember 模板冲突恢复",
+      "description": "依据旧模板、新模板与本地内容合并升级冲突，保留业务改动并重新预览。",
+      "minimumFrameworkVersion": "0.14.5"
+    },
+    {
       "id": "ember-eui-build",
       "displayName": "Ember EUI 制作",
       "description": "通过 UI 开发中心创建正式 Prefab、生成绑定并完成用户逻辑接线。",
