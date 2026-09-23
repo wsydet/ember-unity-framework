@@ -22,6 +22,8 @@ namespace Ember.Core.Editor
         private readonly EmberSetupWindowContext _context;
         private string _lastResult;
         private int _legacyActiveIndex;
+        private TemplatePatchPlan _patchPlan;
+        private readonly Dictionary<string, TemplateConflictChoice> _patchChoices = new();
 
         private static GUIStyle _patchStyle;
         private static GUIStyle _previewStyle;
@@ -109,7 +111,7 @@ namespace Ember.Core.Editor
 
             GUILayout.Space(8);
             EditorGUILayout.HelpBox(
-                "消费项目只能部署包内完整模板，不会保存或修改框架模板。2.5D 不是在 Base 上叠加；部署另一模板会用目标模板替换其管理的业务目录。",
+                "消费项目可从包内模板初始化或进行补丁增量更新，不会修改框架模板。跨前两位版本或切换模板时，先保护本地内容，再完整部署。",
                 MessageType.Info);
         }
 
@@ -203,6 +205,7 @@ namespace Ember.Core.Editor
             }
 
             GUI.enabled = !_context.OperationsBlocked && !ambiguous;
+            GUI.enabled &= !activeTemplate || (active.version == template.version && active.contentHash == template.contentHash);
             string buttonText = activeTemplate ? "补齐缺失" : replacingActiveTemplate ? "部署此模板" : "一键部署";
             if (GUILayout.Button(buttonText, GUILayout.Width(180)))
             {
@@ -216,6 +219,10 @@ namespace Ember.Core.Editor
             if (activeTemplate)
             {
                 GUI.enabled = !_context.OperationsBlocked && !ambiguous;
+                if (EmberProjectSetup.IsForwardTemplatePatch(active.version, template.version))
+                    DrawPatchUpdate(template);
+                GUI.enabled = !_context.OperationsBlocked && !ambiguous
+                    && !EmberProjectSetup.IsForwardTemplatePatch(active.version, template.version);
                 if (GUILayout.Button("完整重新部署", GUILayout.Width(180)))
                     DeployReplacingActiveTemplate(template, active);
                 GUI.enabled = true;
@@ -255,20 +262,84 @@ namespace Ember.Core.Editor
                     break;
                 case TemplateUpgradeLevel.Patch:
                     EditorGUILayout.LabelField(
-                        $"    可选升级 v{record.version} → v{template.version}（可补齐；已有文件修复需完整重新部署）",
+                        $"    可选升级 v{record.version} → v{template.version}（预览增量差异，保留本地开发内容）",
                         PatchStyle);
                     break;
                 case TemplateUpgradeLevel.Minor:
                     EditorGUILayout.HelpBox(
-                        $"结构升级 v{record.version} → v{template.version}；可补齐新增文件，或确认后完整重新部署。",
+                        $"结构升级 v{record.version} → v{template.version}；请先保护本地改动，再完整部署并恢复。",
                         MessageType.Warning);
                     break;
                 case TemplateUpgradeLevel.Major:
                     EditorGUILayout.HelpBox(
-                        $"重大升级 v{record.version} → v{template.version}；需要人工迁移。",
+                        $"重大升级 v{record.version} → v{template.version}；请先保护本地改动，再完整部署并合并恢复。",
                         MessageType.Error);
                     break;
             }
+        }
+
+        private void DrawPatchUpdate(TemplateInfo template)
+        {
+            GUI.enabled = !_context.OperationsBlocked;
+            if (GUILayout.Button("预览补丁增量更新", GUILayout.Width(180)))
+                RunOperation(() =>
+                {
+                    _patchPlan = null;
+                    _patchChoices.Clear();
+                    _patchPlan = EmberProjectSetup.PreviewTemplatePatch(template.id);
+                }, "增量预览失败");
+            if (GUILayout.Button("从旧模板恢复部署基线", GUILayout.Width(180)))
+            {
+                string folder = EditorUtility.OpenFolderPanel("选择部署时旧版本模板的 Assets 目录", "", "");
+                if (!string.IsNullOrEmpty(folder))
+                    RunOperation(() =>
+                    {
+                        EmberProjectSetup.RestoreTemplateDeploymentBaseline(folder);
+                        _patchPlan = null;
+                        _lastResult = "部署基线已恢复，项目业务内容未改动。请重新预览。";
+                    }, "恢复基线失败");
+            }
+            GUI.enabled = true;
+            if (_patchPlan == null || _patchPlan.TemplateId != template.id) return;
+            EditorGUILayout.LabelField($"增量预览：{_patchPlan.FromVersion} → {_patchPlan.ToVersion}", EditorStyles.boldLabel);
+            if (GUILayout.Button("复制冲突日志", GUILayout.Width(180)))
+            {
+                EditorGUIUtility.systemCopyBuffer = EmberProjectSetup.BuildTemplatePatchConflictLog(_patchPlan, _patchChoices);
+                _lastResult = "冲突日志已复制，可交给本地改动恢复 Skill。合并后请重新预览。";
+            }
+            bool unresolved = false;
+            foreach (var change in _patchPlan.Changes)
+            {
+                if (!change.IsConflict && change.RecommendedChoice == TemplateConflictChoice.KeepChild) continue;
+                if (change.IsConflict)
+                {
+                    _patchChoices.TryGetValue(change.UnitPath, out var choice);
+                    int selected = choice == TemplateConflictChoice.KeepChild ? 1
+                        : choice == TemplateConflictChoice.AcceptParent ? 2 : 0;
+                    EditorGUILayout.LabelField("冲突：" + change.UnitPath, EditorStyles.wordWrappedLabel);
+                    // 路径类型改变不是 patch 契约，仍可保留本地并交给作者发布结构升级。
+                    string[] choices = change.UnitKind == TemplateChangeUnitKind.PathTypeConflict
+                        ? new[] { "请选择", "保留本地" }
+                        : new[] { "请选择", "保留本地", "采用新版（覆盖此文件单元）" };
+                    selected = EditorGUILayout.Popup("处理方式", selected, choices);
+                    _patchChoices[change.UnitPath] = selected == 1 ? TemplateConflictChoice.KeepChild
+                        : selected == 2 ? TemplateConflictChoice.AcceptParent : TemplateConflictChoice.Unresolved;
+                    unresolved |= selected == 0;
+                }
+                else
+                    EditorGUILayout.LabelField("更新：" + change.UnitPath + " · " + change.Kind, EditorStyles.wordWrappedLabel);
+            }
+            EditorGUILayout.HelpBox("自动应用仅新版改动，保留本地独有内容。冲突选择作用于整个资源及其 .meta；需要合并双方逻辑时，可先编辑本地文件，再重新预览。", MessageType.Info);
+            GUI.enabled = !_context.OperationsBlocked && !unresolved;
+            if (GUILayout.Button("应用增量更新", GUILayout.Width(180)))
+                RunOperation(() =>
+                {
+                    int count = EmberProjectSetup.ApplyTemplatePatch(_patchPlan, _patchChoices);
+                    _patchPlan = null;
+                    _patchChoices.Clear();
+                    _lastResult = $"增量更新完成：变更 {count} 个文件，已推进部署基线。";
+                }, "增量更新失败");
+            GUI.enabled = true;
         }
 
         private void DeployTemplate(TemplateInfo template)

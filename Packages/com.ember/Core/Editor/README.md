@@ -18,6 +18,7 @@
 | 文件 | 职责 |
 |---|---|
 | `EmberProjectSetup.cs` | 模板扫描、兼容过滤、部署、创建/保存/加载、版本和同步编排 |
+| `EmberProjectSetup.Patch.cs` | 消费端补丁增量、部署原稿基线、冲突日志、旧基线恢复与事务提交 |
 | `EmberProjectSetupPanel.cs` | 消费端项目初始化和活动模板状态 |
 | `EmberTemplateDevelopmentPanel.cs` | 左侧模板树；概览与效果 / 内容差异 / 父级更新 / 版本与设置 |
 | `EmberProjectValidationService.cs` / `EmberProjectValidationModels.cs` | 只读报告、基准说明、文件差异、资源元数据、场景和管理区检查 |

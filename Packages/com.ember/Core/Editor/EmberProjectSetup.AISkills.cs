@@ -193,6 +193,15 @@ namespace Ember.Core.Editor
             foreach (string relative in TemplateDirNames)
                 EmberTemplateTransaction.ValidateDirectorySafety(Path.Combine(projectRoot, "Assets", relative));
             EnsureNoTemplateGuidCollisions(projectRoot, sourceAssets, replace);
+            string recordPath = Path.Combine(projectRoot, DeployedRecordsPath);
+            var previousData = File.Exists(recordPath)
+                ? JsonUtility.FromJson<DeployedTemplatesData>(File.ReadAllText(recordPath)) : new DeployedTemplatesData();
+            if (!editing && previousData?.records == null)
+                throw new InvalidDataException("部署记录损坏，不能部署模板。");
+            var previous = ResolveActiveDeployment(previousData);
+            if (!editing && !replace && previous != null
+                && (previous.templateId != template.id || previous.version != template.version || previous.contentHash != template.contentHash))
+                throw new InvalidOperationException("补齐缺失不能升级模板；同 major.minor 请使用增量更新，跨 major.minor 请保护本地改动后完整部署。");
             string stageRoot = Path.Combine(projectRoot, "Temp", "EmberTemplateDeploy-" + Guid.NewGuid().ToString("N") + "~");
             var targets = new List<TemplateTransactionTarget>();
             int count = 0;
@@ -234,7 +243,11 @@ namespace Ember.Core.Editor
                     EmberTemplateTransaction.WriteJson(stagedRecord, CreateEditingRecord(template));
                     targets.Add(new TemplateTransactionTarget(stagedRecord, Path.Combine(projectRoot, EditingRecordPath)));
                 }
-                else AddDeploymentRecord(targets, stageRoot, projectRoot, template);
+                else if (replace || previous == null)
+                {
+                    AddDeploymentRecord(targets, stageRoot, projectRoot, template);
+                    AddDeploymentBaseline(targets, stageRoot, projectRoot, sourceAssets, template);
+                }
                 if (skills != null)
                 {
                     AddPreparedSkills(targets, skills, true);
