@@ -64,6 +64,16 @@ namespace Ember.UPMManager.Editor
         {
             public int schemaVersion = 1;
             public List<Installation> skills = new List<Installation>();
+            public TemplateSkillBaseline templateBaseline;
+        }
+
+        [Serializable] internal sealed class TemplateSkillBaseline
+        {
+            public string templateId, businessVersion, businessContentHash, sourceVersion, sourceContentHash;
+            public bool sourceExists;
+            public Fingerprint[] sourceFiles;
+            public string[] sourceDirectories;
+            public string sourceMetaHash;
         }
 
         internal sealed class Package
@@ -143,7 +153,7 @@ namespace Ember.UPMManager.Editor
             return BitConverter.ToString(algorithm.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
         }
 
-        private static Fingerprint[] Snapshot(string directory)
+        private static Fingerprint[] Snapshot(string directory, int fileLimit = MaxFiles, long byteLimit = MaxBytes)
         {
             if (!Directory.Exists(directory)) return Array.Empty<Fingerprint>();
             var result = new List<Fingerprint>();
@@ -151,8 +161,8 @@ namespace Ember.UPMManager.Editor
             foreach (string file in EnumerateFiles(directory))
             {
                 size += new FileInfo(file).Length;
-                if (result.Count >= MaxFiles || size > MaxBytes)
-                    throw new InvalidDataException("单个技能超过 512 个文件或 16 MB，停止安装。");
+                if (result.Count >= fileLimit || size > byteLimit)
+                    throw new InvalidDataException("技能源超过文件数量或大小上限，停止安装。");
                 result.Add(new Fingerprint
                 {
                     path = file.Substring(directory.TrimEnd(Path.DirectorySeparatorChar).Length + 1).Replace('\\', '/'),
@@ -175,8 +185,38 @@ namespace Ember.UPMManager.Editor
             string path = Within(projectRoot, StateFile);
             if (!File.Exists(path)) return new State();
             var state = JsonUtility.FromJson<State>(File.ReadAllText(path, Utf8));
-            if (state == null || (state.schemaVersion != 1 && state.schemaVersion != 2) || state.skills == null)
+            if (state == null || (state.schemaVersion != 1 && state.schemaVersion != 2 && state.schemaVersion != 3) || state.skills == null)
                 throw new InvalidDataException("AI Skill 安装记录无效，请先检查 " + StateFile);
+            // JsonUtility materializes null serializable classes as empty objects and null strings as empty strings.
+            var empty = state.templateBaseline;
+            if (empty != null && string.IsNullOrEmpty(empty.templateId) && string.IsNullOrEmpty(empty.businessVersion)
+                && string.IsNullOrEmpty(empty.businessContentHash) && string.IsNullOrEmpty(empty.sourceVersion)
+                && string.IsNullOrEmpty(empty.sourceContentHash) && !empty.sourceExists
+                && (empty.sourceFiles == null || empty.sourceFiles.Length == 0)
+                && (empty.sourceDirectories == null || empty.sourceDirectories.Length == 0)
+                && string.IsNullOrEmpty(empty.sourceMetaHash)) state.templateBaseline = null;
+            if (state.templateBaseline != null)
+            {
+                var baseline = state.templateBaseline;
+                if (string.IsNullOrEmpty(baseline.sourceMetaHash)) baseline.sourceMetaHash = null;
+                else if (!Regex.IsMatch(baseline.sourceMetaHash, @"\A[0-9a-f]{64}\z"))
+                    throw new InvalidDataException("模板技能源根 meta 指纹无效。");
+                if (state.schemaVersion != 3 || !Version.TryParse(baseline.businessVersion, out _)
+                    || !Version.TryParse(baseline.sourceVersion, out _) || string.IsNullOrEmpty(baseline.businessContentHash)
+                    || string.IsNullOrEmpty(baseline.sourceContentHash) || baseline.sourceFiles == null
+                    || baseline.sourceDirectories == null)
+                    throw new InvalidDataException("模板技能源独立基线记录无效。");
+                CheckId(baseline.templateId);
+                var baselinePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var file in baseline.sourceFiles)
+                {
+                    if (file == null || !Regex.IsMatch(file.sha256 ?? "", @"\A[0-9a-f]{64}\z")
+                        || !baselinePaths.Add(file.path)) throw new InvalidDataException("模板技能源基线指纹无效。");
+                    Within(Path.Combine(projectRoot, "Assets", TemplateSourceDirectory), file.path);
+                }
+                foreach (string directory in baseline.sourceDirectories)
+                    Within(Path.Combine(projectRoot, "Assets", TemplateSourceDirectory), directory);
+            }
             var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var item in state.skills)
             {
@@ -186,7 +226,7 @@ namespace Ember.UPMManager.Editor
                     throw new InvalidDataException("未知技能所有权类型，请升级管理器。");
                 if (item.ownerKind == "template")
                 {
-                    if (state.schemaVersion != 2) throw new InvalidDataException("模板所有权需要记录 schema v2。");
+                    if (state.schemaVersion < 2) throw new InvalidDataException("模板所有权需要记录 schema v2 或更新版本。");
                     CheckId(item.templateId);
                     if (!Version.TryParse(item.templateVersion, out _) || string.IsNullOrEmpty(item.templateContentHash))
                         throw new InvalidDataException("模板技能所有权记录不完整。");

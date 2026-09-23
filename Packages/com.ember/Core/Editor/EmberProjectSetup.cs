@@ -1335,7 +1335,7 @@ namespace Ember.Core.Editor
         internal static string GetTemplateGuidCollisionBlockReason(
             string projectRoot,
             string sourceAssets,
-            bool replacingManagedDirectories)
+            bool replacingManagedDirectories, string skillSubdirectory = null)
         {
             if (string.IsNullOrWhiteSpace(projectRoot))
                 throw new ArgumentException("项目根目录不能为空。", nameof(projectRoot));
@@ -1353,6 +1353,8 @@ namespace Ember.Core.Editor
                          "*.meta",
                          SearchOption.AllDirectories))
             {
+                string incomingRelative = RelativePath(sourceAssets, metaPath);
+                if (skillSubdirectory != null && !IsSkillSourcePath(incomingRelative, skillSubdirectory)) continue;
                 string guid = ReadAssetGuid(metaPath);
                 if (string.IsNullOrEmpty(guid)) continue;
                 templateOwners[guid] = RelativePath(sourceAssets, metaPath);
@@ -1365,7 +1367,8 @@ namespace Ember.Core.Editor
                          SearchOption.AllDirectories))
             {
                 string projectRelative = RelativePath(projectAssets, metaPath);
-                if (replacingManagedDirectories && IsManagedTemplatePath(projectRelative))
+                if (skillSubdirectory != null ? IsSkillSourcePath(projectRelative, skillSubdirectory)
+                    : replacingManagedDirectories && IsManagedTemplatePath(projectRelative))
                     continue;
 
                 string guid = ReadAssetGuid(metaPath);
@@ -1554,6 +1557,10 @@ namespace Ember.Core.Editor
             if (!string.IsNullOrEmpty(blockReason))
                 throw new InvalidOperationException(blockReason);
         }
+
+        private static bool IsSkillSourcePath(string path, string root) =>
+            path.Equals(root + ".meta", StringComparison.OrdinalIgnoreCase)
+            || path.StartsWith(root + "/", StringComparison.OrdinalIgnoreCase);
 
         private static string ReadAssetGuid(string metaPath)
         {

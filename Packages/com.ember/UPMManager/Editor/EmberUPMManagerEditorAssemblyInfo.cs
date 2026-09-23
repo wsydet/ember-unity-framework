@@ -4,3 +4,4 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Ember.UPMManager.Editor.Tests")]
+[assembly: InternalsVisibleTo("Ember.UI.Tests")]

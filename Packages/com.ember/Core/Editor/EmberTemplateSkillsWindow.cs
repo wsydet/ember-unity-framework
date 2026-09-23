@@ -26,7 +26,7 @@ namespace Ember.Core.Editor
         {
             EditorGUILayout.LabelField("模板专属 AI Skill", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox("源：Assets/Game/Documentation/TemplateSkills\n发现副本：.agents/skills/<id>\n"
-                + "部署/加载同步；保存、Bump、父同步和包升级不静默覆盖发现副本。"
+                + "消费项目升级框架后，在此独立更新技能，保留剧情、配表、图片、场景和业务代码。"
                 + "\n编辑源文件后使用当前模板预览。通用 Skill 仍由 UPM Manager 独立管理。", MessageType.Info);
             using (new EditorGUI.DisabledScope(EditorApplication.isCompiling || EditorApplication.isUpdating
                 || EditorApplication.isPlayingOrWillChangePlaymode))
@@ -38,17 +38,17 @@ namespace Ember.Core.Editor
                     if (GUILayout.Button("查看所选模板技能（只读）"))
                         Preview(false);
                 }
-                if (GUILayout.Button("预览当前正式编辑 / 部署模板技能")) Preview(true);
+                if (GUILayout.Button("预览当前模板技能更新（保留业务内容）")) Preview(true);
                 using (new EditorGUI.DisabledScope(!_current || _preview == null || _preview.Errors.Count > 0 || !_preview.HasChanges))
-                    if (GUILayout.Button(_preview?.NeedsBackupConfirmation == true ? "备份并同步当前模板技能" : "同步当前模板技能"))
+                    if (GUILayout.Button(_preview?.NeedsBackupConfirmation == true ? "备份并更新技能" : "更新技能"))
                     {
                         try
                         {
                             if (_preview.NeedsBackupConfirmation && !EditorUtility.DisplayDialog("保留本地技能修改",
-                                    "将完整旧目录备份到 .utmp/ember-ai-skills，再同步当前模板。", "备份并同步", "取消")) return;
+                                    "将旧技能源、目录 .meta、发现副本和技能记录备份到 .utmp/ember-ai-skills，再更新技能。业务部署记录及业务内容保持不变。", "备份并同步", "取消")) return;
                             EmberProjectSetup.SyncCurrentTemplateSkills(_preview, _preview.NeedsBackupConfirmation);
                             _preview = null;
-                            _message = "已同步；备份见 .utmp/ember-ai-skills。请重新加载 AI 会话。";
+                            _message = "技能已更新，业务内容未改动；备份见 .utmp/ember-ai-skills。请重新加载 AI 会话。";
                         }
                         catch (Exception ex) { _message = ex.Message; }
                     }
@@ -58,6 +58,7 @@ namespace Ember.Core.Editor
             if (_preview != null)
             {
                 EditorGUILayout.LabelField(_preview.TemplateId + " · " + _preview.TemplateVersion, EditorStyles.boldLabel);
+                if (_preview.IsIndependentUpdate) EditorGUILayout.LabelField("业务部署 " + _preview.BusinessTemplateVersion + " → 保持；技能源 " + _preview.TemplateVersion);
                 if (!_current) EditorGUILayout.HelpBox("只读分发预览。必须先通过正式模板加载/部署流程，才能启用；包内可读不代表已启用。", MessageType.Info);
                 foreach (string error in _preview.Errors) EditorGUILayout.HelpBox(error, MessageType.Error);
                 foreach (string difference in _preview.Differences) EditorGUILayout.SelectableLabel(difference,

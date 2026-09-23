@@ -24,6 +24,13 @@ namespace Ember.Core.Editor
             return preview;
         }
 
+        private static void EnsureSkillSourceGuids(string projectRoot, string sourceAssets)
+        {
+            string reason = GetTemplateGuidCollisionBlockReason(projectRoot, sourceAssets, true,
+                EmberAISkillInstaller.TemplateSourceDirectory);
+            if (!string.IsNullOrEmpty(reason)) throw new InvalidOperationException(reason);
+        }
+
         private static bool HasSkillEuiApi()
         {
             var type = AppDomain.CurrentDomain.GetAssemblies()
@@ -99,7 +106,7 @@ namespace Ember.Core.Editor
                 template, IsEmbeddedPackage() ? GetEditingTemplate()?.templateId : GetActiveDeployedTemplate()?.templateId, IsEmbeddedPackage());
         }
 
-        /// <summary>当前正式编辑/部署模板的技能预览。消费端必须匹配已部署版本与 hash，不能取得包内最新技能。</summary>
+        /// <summary>当前正式编辑/部署模板的技能预览。消费端可独立更新兼容的技能，保留业务部署基线。</summary>
         public static EmberAISkillInstaller.TemplatePreview PreviewCurrentTemplateSkills()
         {
             string root = Directory.GetParent(Application.dataPath).FullName;
@@ -115,12 +122,26 @@ namespace Ember.Core.Editor
                 // Source editing is explicit. Save/Bump do not silently overwrite a modified discovery copy.
                 return PreviewSkills(root, Application.dataPath, template, id, true);
             }
-            if (template.version != deployed.version || string.IsNullOrEmpty(deployed.contentHash)
-                || template.contentHash != deployed.contentHash || template.versionedContentHash != template.contentHash)
-                throw new InvalidOperationException("包内模板与正式部署版本/hash 不一致或旧记录未记录 hash；请预览并完整重新部署。不会从最新包单独安装技能。");
             string assets = Path.Combine(GetResolvedPath(PACKAGE), "Templates~", id, "Assets");
-            EnsureStoredContentMatchesMetadata(template, assets, "技能同步");
-            return PreviewSkills(root, assets, template, id);
+            return PreviewDeployedTemplateSkillUpdate(root, assets, template, deployed, GetFrameworkVersion(), HasSkillEuiApi());
+        }
+
+        internal static EmberAISkillInstaller.TemplatePreview PreviewDeployedTemplateSkillUpdate(
+            string projectRoot, string assets, TemplateInfo template, DeployedTemplateRecord deployed,
+            string frameworkVersion, bool hasEuiApi)
+        {
+            if (deployed == null || deployed.templateId != template.id || string.IsNullOrEmpty(deployed.contentHash))
+                throw new InvalidOperationException("没有匹配且带 hash 的正式业务部署记录，不能独立更新技能。");
+            if (template.versionedContentHash != template.contentHash)
+                throw new InvalidOperationException("包内技能源尚未随模板 Bump 封存，不能分发草稿。");
+            EnsureStoredContentMatchesMetadata(template, assets, "技能更新");
+            EnsureSkillSourceGuids(projectRoot, assets);
+            var preview = EmberAISkillInstaller.PreviewTemplateSkills(projectRoot, assets,
+                new EmberAISkillInstaller.TemplateContext(template.id, template.version, template.contentHash,
+                    deployed.templateId, frameworkVersion, hasEuiApi, false, deployed.version, deployed.contentHash, true));
+            EmberAISkillInstaller.BindTemplateIdentityRecord(preview, EditingRecordPath);
+            EmberAISkillInstaller.BindTemplateIdentityRecord(preview, DeployedRecordsPath);
+            return preview;
         }
 
         /// <summary>显式刷新当前模板的发现副本；重新核对正式身份，保留本地修改备份。</summary>
@@ -129,14 +150,36 @@ namespace Ember.Core.Editor
             if (preview == null) throw new ArgumentNullException(nameof(preview));
             var current = PreviewCurrentTemplateSkills();
             EmberAISkillInstaller.ValidateTemplatePreview(current);
-            if (current.TemplateId != preview.TemplateId || current.TemplateVersion != preview.TemplateVersion
+            if (Path.GetFullPath(current.ProjectRootPath) != Path.GetFullPath(preview.ProjectRootPath)
+                || Path.GetFullPath(current.SourceAssetsPath) != Path.GetFullPath(preview.SourceAssetsPath)
+                || current.TemplateId != preview.TemplateId || current.TemplateVersion != preview.TemplateVersion
+                || current.IsIndependentUpdate != preview.IsIndependentUpdate || current.IsEditing != preview.IsEditing
+                || current.TemplateContentHash != preview.TemplateContentHash || current.BusinessContentHash != preview.BusinessContentHash
+                || current.BusinessTemplateVersion != preview.BusinessTemplateVersion
                 || !current.Differences.SequenceEqual(preview.Differences))
                 throw new IOException("模板身份或技能计划在预览后变化，请重新预览。");
             EmberAISkillInstaller.ValidateTemplatePreview(preview);
-            var targets = new List<TemplateTransactionTarget>();
-            AddPreparedSkills(targets, preview, allowBackup);
-            EmberAISkillInstaller.ValidateTemplatePreview(preview);
-            if (targets.Count > 0) EmberTemplateTransaction.CommitPreparedTargets(targets);
+            CommitTemplateSkillUpdate(preview, allowBackup);
+            AssetDatabase.Refresh();
+        }
+
+        /// <summary>技能专用事务；不会提交业务目录或部署记录。隔离测试复用同一入口。</summary>
+        internal static void CommitTemplateSkillUpdate(EmberAISkillInstaller.TemplatePreview preview, bool allowBackup,
+            Action<int> faultInjector = null)
+        {
+            if (!preview.IsEditing && !preview.IsIndependentUpdate)
+                throw new InvalidOperationException("消费端技能更新需要独立更新计划，不能复用完整部署计划。");
+            AssetDatabase.DisallowAutoRefresh();
+            try
+            {
+                if (preview.IsIndependentUpdate) EnsureSkillSourceGuids(preview.ProjectRootPath, preview.SourceAssetsPath);
+                var targets = new List<TemplateTransactionTarget>();
+                AddPreparedSkills(targets, preview, allowBackup);
+                EmberAISkillInstaller.ValidateTemplatePreview(preview);
+                if (preview.IsIndependentUpdate) EnsureSkillSourceGuids(preview.ProjectRootPath, preview.SourceAssetsPath);
+                if (targets.Count > 0) EmberTemplateTransaction.CommitPreparedTargets(targets, faultInjector);
+            }
+            finally { AssetDatabase.AllowAutoRefresh(); }
         }
 
         /// <summary>部署/加载暂存与提交入口，也供隔离夹具验证；必须提供经过确认的技能计划。</summary>
@@ -145,7 +188,7 @@ namespace Ember.Core.Editor
         {
             EmberAISkillInstaller.ValidateTemplateBinding(skills, projectRoot, sourceAssets,
                 template.id, template.version, template.contentHash);
-            if (skills.IsEditing != editing) throw new InvalidOperationException("模板编辑/部署计划模式不一致。");
+            if (skills.IsIndependentUpdate || skills.IsEditing != editing) throw new InvalidOperationException("模板编辑/部署计划模式不一致。");
             EmberTemplateTransaction.ValidateDirectorySafety(sourceAssets);
             foreach (string relative in TemplateDirNames)
                 EmberTemplateTransaction.ValidateDirectorySafety(Path.Combine(projectRoot, "Assets", relative));
@@ -178,7 +221,9 @@ namespace Ember.Core.Editor
                         }
                         if (!editing)
                             foreach (string file in Directory.GetFiles(staged, "*", SearchOption.AllDirectories))
-                                RewriteVersionMarker(file, template.version, template.frameworkVersion);
+                                if (!IsSkillSourcePath(RelativePath(Path.Combine(stageRoot, "Assets"), file),
+                                        EmberAISkillInstaller.TemplateSourceDirectory))
+                                    RewriteVersionMarker(file, template.version, template.frameworkVersion);
                     }
                     targets.Add(new TemplateTransactionTarget(staged, destination, true));
                 }
