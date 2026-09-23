@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "generatedBy": "Ember AI Skill Bundle",
-  "sourceCommit": "cc9dc1cf6414785ce59ec2ce492c52cbdc5b17a7",
+  "sourceCommit": "4cc3e78b94dc1fcdb3de1424485b197b06a035b1",
   "files": [
     {
       "path": "catalog.json",
-      "sha256": "bf2ae05570fb00b89e175bd8fe8e66516ddfdbca6f679697c94a62f327d5d1a3"
+      "sha256": "3c492a7b9910b069e8848ff6f57aea05a84472c971598d1913cd06891d7646f0"
     },
     {
       "path": "ember-commit-review/agents/openai.yaml",
@@ -98,6 +98,14 @@
     {
       "path": "ember-solution-design/SKILL.md",
       "sha256": "88c92f4dccb05a86cab365cac933593c8f7d4329326362be799d731606438508"
+    },
+    {
+      "path": "ember-template-conflict-recovery/agents/openai.yaml",
+      "sha256": "1485da9b74ad4f7abab40cee99112cbb588d1954a6a6db36650e9f3f2224b669"
+    },
+    {
+      "path": "ember-template-conflict-recovery/SKILL.md",
+      "sha256": "6a7f03551c9a015af94714e67cb3808be22ec3acf752191289564e1d5bcfaa48"
     }
   ]
 }

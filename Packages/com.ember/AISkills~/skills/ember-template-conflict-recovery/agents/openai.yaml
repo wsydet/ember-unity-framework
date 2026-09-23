@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ember 模板冲突恢复"
+  short_description: "三方核对模板更新冲突，保留项目业务改动并交回项目中心重新预览。"
+  default_prompt: "使用 $ember-template-conflict-recovery 处理当前项目的模板更新冲突，保留本地业务改动并报告验证和未决项。"

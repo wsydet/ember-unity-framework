@@ -4,6 +4,7 @@
 
 | Skill | 使用场景 |
 |---|---|
+| [ember-template-conflict-recovery](../../.agents/skills/ember-template-conflict-recovery/SKILL.md) | 合并消费项目模板升级冲突、恢复本地业务改动，并交回项目中心重新预览；框架最低 0.14.5 |
 | [ember-doc-maintenance](../../.agents/skills/ember-doc-maintenance/SKILL.md) | 阅读并维护全部项目文档，核对源码、合并旧计划、修复链接与索引 |
 | [ember-generate-doc](../../.agents/skills/ember-generate-doc/SKILL.md) | 为指定模块生成或更新 API 文档 |
 | [ember-package-scan](../../.agents/skills/ember-package-scan/SKILL.md) | 对照 manifest/lock/embedded 包同步依赖清单 |
@@ -15,7 +16,7 @@
 | [ember-solution-design](../../.agents/skills/ember-solution-design/SKILL.md) | 先讨论方案；保留已有实施授权，不重复确认 |
 | [ember-eui-build](../../.agents/skills/ember-eui-build/SKILL.md) | 使用 UI 开发中心制作 EUI Prefab、生成真实绑定并完成用户逻辑；可通过 UPM Manager 安装到消费项目 |
 
-消费项目的技能安装、更新、兼容要求与备份恢复见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。发布目录由框架 `.agents/skills/catalog.json` 维护；v0.13.1 发布其中 9 个技能；除 ember-plugin-migrate 外，上表所有技能均可独立安装。空白 template-skill 不发布。
+消费项目的技能安装、更新、兼容要求与备份恢复见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。发布目录由框架 `.agents/skills/catalog.json` 维护；v0.13.1 发布其中 9 个技能，v0.14.7 新增模板冲突恢复技能，共 10 项；除 ember-plugin-migrate 外，上表所有技能均可独立安装。空白 template-skill 不发布。
 
 文档维护示例：
 
