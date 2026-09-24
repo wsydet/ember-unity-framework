@@ -19,7 +19,12 @@ namespace Game.UI
         private static bool _cancelRequested;
         internal static bool IsLoading => _loading;
         internal static bool IsStarting { get; private set; }
-        internal sealed class RestoreLoadingRequest { }
+        internal sealed class RestoreLoadingRequest
+        {
+            internal bool ShowProgress { get; }
+            internal float Progress { get; set; }
+            internal RestoreLoadingRequest(bool showProgress = false) { ShowProgress = showProgress; }
+        }
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Reset() { _opening = false; _loading = false; _cancelRequested = false; IsStarting = false; }
         internal static void CancelLoad()
@@ -62,15 +67,18 @@ namespace Game.UI
             var token = UnityEngine.Application.exitCancellationToken;
             NovelSession session = null;
             NarrativeModule owner = null;
+            var loading = new RestoreLoadingRequest(true);
             try
             {
-                await EUIManager.Instance.RunWithLoadingAsync(GamePages.EUILoadingPage, new RestoreLoadingRequest(), async () =>
+                await EUIManager.Instance.RunWithLoadingAsync(GamePages.EUILoadingPage, loading, async () =>
                 {
+                    loading.Progress = .15f;
                     Module?.ReportMessage("");
                     GameLauncher.Instance.Fsm.TransitionTo<GameplayState>(request);
                     await UniTask.WaitUntil(() => EmberModuleCollector.Instance.TryGetModule(out owner) && owner.Session != null,
                         cancellationToken: token);
                     session = owner.Session;
+                    loading.Progress = .45f;
                     await UniTask.WaitUntil(() => session.IsDisposed || session.Snapshot.State == NarrativeState.Faulted ||
                         session.IsReady && (session.Snapshot.State == NarrativeState.Revealing ||
                         session.Snapshot.State == NarrativeState.AwaitingAdvance || session.Snapshot.State == NarrativeState.AwaitingChoice ||
@@ -89,6 +97,9 @@ namespace Game.UI
                     // Freeze the first prepared reading point while the existing Loading owner renders and exits.
                     owner.PreparingEntryUnderCover = false;
                     session.Pause("SceneLoading");
+                    // Only report completion once the actual first reading frame is ready under the curtain.
+                    loading.Progress = 1f;
+                    await UniTask.Delay(TimeSpan.FromSeconds(.2), ignoreTimeScale: true, cancellationToken: token);
                 }, token);
             }
             catch (OperationCanceledException) { }

@@ -82,14 +82,20 @@ namespace Game.UI.Editor
             { EditorGUILayout.HelpBox("请在 visual-novel 工作区退出 Play Mode，并关闭正式阅读页的 Prefab Mode。", MessageType.Info); return; }
             DrawToolbar();
             EditorGUILayout.LabelField(_node ? _node.name : "请在节点编辑器选中对话节点并点击“播放节点”。", EditorStyles.boldLabel);
-            if (_changed) EditorGUILayout.HelpBox("源内容或资源已变化，指令仍使用启动时的副本。点击从头重播加载修改。", MessageType.Warning);
-            if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
             using (new EditorGUILayout.HorizontalScope())
             {
                 using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
                 {
                     DrawStage(GUILayoutUtility.GetRect(320, 280, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true)));
-                    DrawStatus();
+                    // Reserve the same height for every state: diagnostics must never resize the stage.
+                    using (new EditorGUILayout.VerticalScope(GUILayout.Height(164), GUILayout.ExpandHeight(false)))
+                    {
+                        _statusScroll = EditorGUILayout.BeginScrollView(_statusScroll, GUILayout.Height(164));
+                        if (_changed) EditorGUILayout.HelpBox("源内容或资源已变化，点击从头重播加载修改。", MessageType.Warning);
+                        if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
+                        DrawStatus();
+                        EditorGUILayout.EndScrollView();
+                    }
                 }
                 if (_showSetup)
                     using (new EditorGUILayout.VerticalScope(GUILayout.Width(280)))
@@ -192,9 +198,8 @@ namespace Game.UI.Editor
             using (new EditorGUI.DisabledScope(_locate == null || index < 0))
                 if (GUILayout.Button("定位当前指令", GUILayout.Width(125)))
                     _locate(new NarrativeError("Preview", "试播定位", _chapter.ChapterId, _node.NodeId, commandId));
-            _statusScroll = EditorGUILayout.BeginScrollView(_statusScroll, GUILayout.Height(76));
+
             foreach (string action in snapshot.Actions) GUILayout.Label(action, EditorStyles.miniLabel);
-            EditorGUILayout.EndScrollView();
         }
         private void DrawStage(Rect available)
         {

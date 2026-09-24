@@ -11,9 +11,9 @@ namespace Game.Narrative.Editor
         private void CreateStory()
         {
             if (!NarrativeGraphModel.IsTemplateActive(true) || EditorApplication.isPlayingOrWillChangePlaymode) return;
-            string selected = EditorUtility.SaveFilePanelInProject("新剧情：文件名作为剧情目录名", "NewStory", "asset", "创建同名目录和 Story.asset", "Assets/GameResource/Resources/Config/Narrative");
+            string selected = EditorUtility.SaveFilePanelInProject("新剧情", "NewStory", "asset", "选择小说文件名；之后可自由重命名", "Assets/GameResource/Resources/Config/Narrative");
             if (string.IsNullOrEmpty(selected)) return;
-            string path = System.IO.Path.ChangeExtension(selected, null) + "/Story.asset";
+            string path = System.IO.Path.ChangeExtension(selected, null) + "/" + System.IO.Path.GetFileName(selected);
             TryEdit(() => ShowStory(NarrativeStoryModel.CreateStory(path)));
         }
         private void ValidateStory()

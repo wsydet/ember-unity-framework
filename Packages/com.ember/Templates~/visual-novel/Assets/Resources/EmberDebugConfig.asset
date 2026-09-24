@@ -130,12 +130,6 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.49392, g: 0.35999995, b: 0.9, a: 1}
     className: Table.Module
-  - enabled: 1
-    color: {r: 0.9, g: 0.35999995, b: 0.54467994, a: 1}
-    className: Narrative.E2
-  - enabled: 1
-    color: {r: 0.35999995, g: 0.9, b: 0.36863995, a: 1}
-    className: Narrative.UI
   enableFileLog: 1
   logDirectory: 
   maxFileSizeMB: 10

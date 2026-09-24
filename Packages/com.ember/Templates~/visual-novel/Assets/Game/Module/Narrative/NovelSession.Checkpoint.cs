@@ -156,7 +156,7 @@ namespace Game.Narrative
         // --------------------------------------------------------
         #region 外部方法
         public NovelSession(NovelCheckpoint checkpoint, Func<NarrativeTableCatalog> catalogProvider, INovelResources resources, INovelAudio audio = null)
-            : this(new NovelNewGameRequest(checkpoint.StoryPath), catalogProvider, resources, audio)
+            : this(new NovelNewGameRequest(checkpoint.StoryPath, storyId: checkpoint.StoryId), catalogProvider, resources, audio)
         {
             // Deep copy prevents callers mutating an in-flight restore.
             _restore = JsonUtility.FromJson<NovelCheckpoint>(JsonUtility.ToJson(checkpoint)); _restoring = true;

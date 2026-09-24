@@ -14,15 +14,16 @@ namespace Game.Narrative
     public sealed class NovelNewGameRequest
     {
         public string StoryPath { get; }
+        public string StoryId { get; }
         public string ChapterId { get; }
         public string NodeId { get; }
-        public NovelNewGameRequest(string storyPath = "Config/Narrative/LastLight/Story", string chapterId = null, string nodeId = null)
+        public NovelNewGameRequest(string storyPath = NarrativeLibrarySO.CURRENT_STORY, string chapterId = null, string nodeId = null, string storyId = null)
         {
             // 目录迁移前的存档仍保存旧 Resources 路径；加载时归一化，后续存档写入新路径。
             StoryPath = storyPath != null && storyPath.StartsWith("VisualNovel/", StringComparison.Ordinal)
                 ? "Config/Narrative/" + storyPath.Substring("VisualNovel/".Length)
                 : storyPath;
-            ChapterId = chapterId; NodeId = nodeId;
+            ChapterId = chapterId; NodeId = nodeId; StoryId = storyId;
         }
     }
 
@@ -47,7 +48,12 @@ namespace Game.Narrative
         INovelAssetLease<T> Load<T>(string path) where T : UnityEngine.Object;
     }
 
-    public sealed class NovelResources : INovelResources
+    public interface INovelStoryResources
+    {
+        INovelAssetLease<NarrativeStorySO> LoadStory(string path, string storyId);
+    }
+
+    public sealed class NovelResources : INovelResources, INovelStoryResources
     {
         private sealed class Lease<T> : INovelAssetLease<T> where T : UnityEngine.Object
         {
@@ -58,7 +64,30 @@ namespace Game.Narrative
             public Lease(string path) { _handle = EmberResourceManager.Instance.LoadAssetHandle<T>(path); }
             public void Dispose() { _handle?.Dispose(); _handle = null; }
         }
-        public INovelAssetLease<T> Load<T>(string path) where T : UnityEngine.Object => new Lease<T>(path);
+        private sealed class StoryLease : INovelAssetLease<NarrativeStorySO>
+        {
+            private NarrativeLibrarySO _library;
+            public bool IsDone => true;
+            public NarrativeStorySO Asset { get; private set; }
+            public string Error => Asset ? null : "小说入口或存档对应的小说未登记，请打开 Ember/视觉小说/当前小说。";
+            public StoryLease(NarrativeLibrarySO library, NarrativeStorySO story) { _library = library; Asset = story; }
+            public void Dispose() { Asset = null; _library = null; }
+        }
+        public INovelAssetLease<NarrativeStorySO> LoadStory(string path, string storyId)
+        {
+            var library = Resources.Load<NarrativeLibrarySO>(NarrativeLibrarySO.RESOURCE_PATH);
+            var story = library && !string.IsNullOrEmpty(storyId) ? library.Find(storyId) : null;
+            if (story) return new StoryLease(library, story);
+            if (path == NarrativeLibrarySO.CURRENT_STORY)
+                return new StoryLease(library, library && string.IsNullOrEmpty(storyId) ? library.Current : null);
+            return new Lease<NarrativeStorySO>(path);
+        }
+        public INovelAssetLease<T> Load<T>(string path) where T : UnityEngine.Object
+        {
+            if (typeof(T) == typeof(NarrativeStorySO))
+                return (INovelAssetLease<T>)(object)LoadStory(path, null);
+            return new Lease<T>(path);
+        }
     }
 
     public interface INovelAudio : IDisposable

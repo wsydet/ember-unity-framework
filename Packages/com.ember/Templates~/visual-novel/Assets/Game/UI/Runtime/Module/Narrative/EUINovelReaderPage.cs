@@ -141,7 +141,7 @@ namespace Game.UI
                 if (reason.StartsWith("History#", StringComparison.Ordinal)) { historyOpen = true; break; }
             Dialogue.gameObject.SetActive(_storyDialogueVisible && !hidden && !historyOpen); Choices.gameObject.SetActive(!hidden && !historyOpen);
             ReadingShading.gameObject.SetActive(!hidden);
-            ReadingControls.gameObject.SetActive(!hidden && !historyOpen); HideDialogue.gameObject.SetActive(!hidden && !historyOpen);
+            ReadingControls.gameObject.SetActive(!hidden && !historyOpen && _activeTextMode != NovelTextMode.Title); HideDialogue.gameObject.SetActive(!hidden && !historyOpen);
             RestoreUI.gameObject.SetActive(hidden);
             Saves.gameObject.SetActive(false); QuickSave.gameObject.SetActive(false); QuickLoad.gameObject.SetActive(false);
             Skip.gameObject.SetActive(!hidden && snapshot.ReadMode == NarrativeReadMode.Skip);

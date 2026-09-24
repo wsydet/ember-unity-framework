@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIMainPanel
  * page name    : EUIMainPage
- * update time  : 2026/9/18 11:59:23
+ * update time  : 2026/9/24 14:21:45
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -44,6 +44,11 @@ namespace Game.UI
         /// </summary>
         private UnityEngine.UI.Button NovelQuit;
 
+        /// <summary>
+        /// Animator/EUISafeArea/TitleText
+        /// </summary>
+        private TMP_Text NovelTitle;
+
 
 
     public override void OnBind()
@@ -55,6 +60,7 @@ namespace Game.UI
             NovelLoad = ControlMap["NovelLoad"] as UnityEngine.UI.Button;
             NovelMessage = ControlMap["NovelMessage"] as TMPro.TextMeshProUGUI;
             NovelQuit = ControlMap["NovelQuit"] as UnityEngine.UI.Button;
+            NovelTitle = ControlMap["NovelTitle"] as TMP_Text;
 
     }
 }

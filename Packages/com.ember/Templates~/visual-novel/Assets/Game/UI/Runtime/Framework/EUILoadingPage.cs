@@ -367,6 +367,7 @@ namespace Game.UI
         // ── 用户级生命周期（块外用户区，永不触碰）──
         private CanvasGroup[] _restoreRaycastGroups;
         private bool[] _restoreRaycastValues;
+        private NovelSaveUI.RestoreLoadingRequest _novelLoading;
 
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
@@ -377,7 +378,8 @@ namespace Game.UI
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            if (param is NovelSaveUI.RestoreLoadingRequest)
+            _novelLoading = param as NovelSaveUI.RestoreLoadingRequest;
+            if (_novelLoading != null)
             {
                 SkipFakeProgress = true;
                 HideProgressVisuals();
@@ -396,7 +398,7 @@ namespace Game.UI
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
         private void OnShowUser()
         {
-            // 页面变为可见
+            RefreshNovelLoadingProgress();
         }
 
         /// <summary>用户隐藏钩子：框架 OnHide 结束时调用。</summary>
@@ -408,6 +410,7 @@ namespace Game.UI
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
+            _novelLoading = null;
             if (_restoreRaycastGroups == null) return;
             for (int i = 0; i < _restoreRaycastGroups.Length; i++)
                 if (_restoreRaycastGroups[i]) _restoreRaycastGroups[i].blocksRaycasts = _restoreRaycastValues[i];
@@ -417,8 +420,17 @@ namespace Game.UI
         /// <summary>用户逐帧更新钩子：框架 OnUpdate 结束时调用。</summary>
         private void OnUpdateUser()
         {
+            RefreshNovelLoadingProgress();
             if (_restoreRaycastGroups != null && Ember.Input.EmberInputManager.Instance.IsPressed("Novel/Menu"))
                 NovelSaveUI.CancelLoad();
+        }
+
+        private void RefreshNovelLoadingProgress()
+        {
+            if (_novelLoading?.ShowProgress != true) return;
+            // Keep the loading owner's actual readiness contract; only opt the new-game UI into progress.
+            SetProgress(_novelLoading.Progress);
+            if (Txt_ProgressNum != null) Txt_ProgressNum.text = $"{Mathf.RoundToInt(_novelLoading.Progress * 100f)}%";
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>

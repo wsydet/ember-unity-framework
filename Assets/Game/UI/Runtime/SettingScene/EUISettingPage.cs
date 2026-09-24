@@ -144,7 +144,15 @@ namespace Game.UI
         private void RefreshNovelPreferences()
         {
             RefreshScreenPreferences();
-            NovelPreferenceStatus.text = $"{NovelTextSpeed.value:0} 字/秒 · 间隔 {NovelAutoInterval.value:0.0} 秒\n音乐 {NovelBgmVolume.value:P0} / 音效 {NovelSfxVolume.value:P0} / 配音 {NovelVoiceVolume.value:P0}\n{_novelPreferences?.Message}{ScreenPreferenceSummary()}";
+            NovelTextSpeedValue.text = $"{NovelTextSpeed.value:0} 字/秒";
+            NovelAutoIntervalValue.text = $"{NovelAutoInterval.value:0.0} 秒";
+            NovelBgmVolumeValue.text = $"{NovelBgmVolume.value:P0}";
+            NovelSfxVolumeValue.text = $"{NovelSfxVolume.value:P0}";
+            NovelVoiceVolumeValue.text = $"{NovelVoiceVolume.value:P0}";
+            string EffectLabel(float value) => UnityEngine.Mathf.RoundToInt(value) switch { 1 => "减弱", 2 => "关闭", _ => "正常" };
+            NovelShakePreferenceValue.text = EffectLabel(NovelShakePreference.value);
+            NovelFlashPreferenceValue.text = EffectLabel(NovelFlashPreference.value);
+            NovelPreferenceStatus.text = _novelPreferences?.Message ?? string.Empty;
         }
     }
 }

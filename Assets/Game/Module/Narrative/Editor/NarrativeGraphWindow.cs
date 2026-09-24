@@ -106,13 +106,15 @@ namespace Game.Narrative.Editor
             if (!NarrativeEditorAvailability.Visible) return;
             var sheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Game/Module/Narrative/Editor/NarrativeGraph.uss");
             if (sheet) rootVisualElement.styleSheets.Add(sheet);
-            if (!_story) _story = Resources.Load<NarrativeStorySO>(new NovelNewGameRequest().StoryPath);
+            if (!_story) _story = Resources.Load<NarrativeLibrarySO>(NarrativeLibrarySO.RESOURCE_PATH)?.Current;
             if (!_story) _story = AssetDatabase.FindAssets("t:NarrativeStorySO", new[] { "Assets/GameResource" })
                 .Select(g => AssetDatabase.LoadAssetAtPath<NarrativeStorySO>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault();
             var global = new Toolbar();
             ConfigureToolbar(global, "剧情");
             _storyField = new ObjectField { objectType = typeof(NarrativeStorySO), allowSceneObjects = false, value = _story };
             _storyField.style.width = 210; _storyField.RegisterValueChangedCallback(e => ShowStory(e.newValue as NarrativeStorySO)); global.Add(_storyField);
+            Button(global, "当前小说", NarrativeLibraryWindow.Open);
+            Button(global, "设为新游戏入口", () => TryEdit(() => NarrativeLibraryWindow.SetCurrent(_story)));
             Button(global, "章节总览", () => ShowStory(_story));
             Button(global, "保存剧情", () => TryEdit(() => NarrativeStoryModel.Save(_story)));
             Button(global, "校验剧情", ValidateStory);

@@ -58,6 +58,7 @@ namespace Game.Narrative.Editor
                 }
                 const string legacy = "Ember/Visual Novel/Gameplay 主UI布局";
                 if ((bool)exists.Invoke(null, new object[] { legacy })) remove.Invoke(null, new object[] { legacy });
+                Register("Ember/视觉小说/当前小说", NarrativeLibraryWindow.Open);
                 Register("Ember/视觉小说/流程编辑与运行观察", NarrativeGraphWindow.Open);
                 Register("Ember/视觉小说/Gameplay 主UI布局", Game.UI.Editor.NovelGameplayLayoutWindow.Open, Game.UI.Editor.NovelGameplayLayoutWindow.CanOpen);
                 Register("Ember/视觉小说/从所选入口开始新游戏（Play 主菜单）", NarrativeEntryLauncher.Start, NarrativeEntryLauncher.CanStart);

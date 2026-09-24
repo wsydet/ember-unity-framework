@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUISettingPanel
  * page name    : EUISettingPage
- * update time  : 2026/9/21 21:29:05
+ * update time  : 2026/9/24 14:51:01
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -64,6 +64,41 @@ namespace Game.UI
         /// </summary>
         private UnityEngine.UI.Slider NovelFlashPreference;
 
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelTextSpeedValue
+        /// </summary>
+        private TMP_Text NovelTextSpeedValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelAutoIntervalValue
+        /// </summary>
+        private TMP_Text NovelAutoIntervalValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelBgmVolumeValue
+        /// </summary>
+        private TMP_Text NovelBgmVolumeValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelSfxVolumeValue
+        /// </summary>
+        private TMP_Text NovelSfxVolumeValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelVoiceVolumeValue
+        /// </summary>
+        private TMP_Text NovelVoiceVolumeValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelShakePreferenceValue
+        /// </summary>
+        private TMP_Text NovelShakePreferenceValue;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/NovelFlashPreferenceValue
+        /// </summary>
+        private TMP_Text NovelFlashPreferenceValue;
+
 
 
     public override void OnBind()
@@ -79,6 +114,13 @@ namespace Game.UI
             NovelPreferenceStatus = ControlMap["NovelPreferenceStatus"] as TMPro.TextMeshProUGUI;
             NovelShakePreference = ControlMap["NovelShakePreference"] as UnityEngine.UI.Slider;
             NovelFlashPreference = ControlMap["NovelFlashPreference"] as UnityEngine.UI.Slider;
+            NovelTextSpeedValue = ControlMap["NovelTextSpeedValue"] as TMP_Text;
+            NovelAutoIntervalValue = ControlMap["NovelAutoIntervalValue"] as TMP_Text;
+            NovelBgmVolumeValue = ControlMap["NovelBgmVolumeValue"] as TMP_Text;
+            NovelSfxVolumeValue = ControlMap["NovelSfxVolumeValue"] as TMP_Text;
+            NovelVoiceVolumeValue = ControlMap["NovelVoiceVolumeValue"] as TMP_Text;
+            NovelShakePreferenceValue = ControlMap["NovelShakePreferenceValue"] as TMP_Text;
+            NovelFlashPreferenceValue = ControlMap["NovelFlashPreferenceValue"] as TMP_Text;
 
     }
 }

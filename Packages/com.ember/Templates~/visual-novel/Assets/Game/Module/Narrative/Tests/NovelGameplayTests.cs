@@ -94,7 +94,10 @@ namespace Game.Narrative.Tests
                 CollectionAssert.AreEqual(new[] { "m_Btn_Start", "NovelContinue", "NovelLoad", "m_Btn_Settings", "NovelQuit" }
                     .Where(n => (n != "NovelContinue" || resume) && (n != "NovelLoad" || load)), buttons.Select(b => b.name));
                 LayoutRebuilder.ForceRebuildLayoutImmediate(group);
-                Assert.AreEqual(count * 80 + (count - 1) * 20, group.rect.height, .1f);
+                float contentHeight = buttons.Sum(b => LayoutUtility.GetPreferredHeight((RectTransform)b.transform));
+                var layout = group.GetComponent<VerticalLayoutGroup>();
+                Assert.AreEqual(contentHeight + (count - 1) * layout.spacing + layout.padding.vertical, group.rect.height, .1f,
+                    "菜单高度应随可见按钮收缩，不能为隐藏的继续/读档按钮保留空行");
             }
             finally { Object.DestroyImmediate(root); }
         }

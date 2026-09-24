@@ -9,7 +9,9 @@ namespace Game.UI
     {
         #region 内部参数
         private bool _textLayoutCached, _storyDialogueVisible = true;
-        private TextRect _dialogueTextRect, _bodyTextRect;
+        private TextRect _dialogueTextRect, _bodyTextRect, _advanceTextRect;
+        private Transform _dialogueParent;
+        private int _dialogueSibling;
         private TextAlignmentOptions _normalTextAlignment;
         private TextOverflowModes _normalTextOverflow;
         private bool _normalRichText, _normalParseControls;
@@ -41,6 +43,7 @@ namespace Game.UI
             _textBackdrop = Dialogue.GetComponent<UnityEngine.UI.Image>();
             if (_textBackdrop) { _textBackdropSprite = _textBackdrop.sprite; _textBackdropColor = _textBackdrop.color; }
             _textDivider = Dialogue.Find("SpeakerDivider"); _textDividerVisible = _textDivider && _textDivider.gameObject.activeSelf;
+            _dialogueParent = Dialogue.parent; _dialogueSibling = Dialogue.GetSiblingIndex(); _advanceTextRect = new TextRect((RectTransform)Advance.transform);
             _textLayoutCached = true; _dialogueTextRect = new TextRect(Dialogue); _bodyTextRect = new TextRect(Body.rectTransform);
             _normalTextAlignment = Body.alignment; _normalTextOverflow = Body.overflowMode; _normalRichText = Body.richText; _normalParseControls = Body.parseCtrlCharacters;
         }
@@ -48,15 +51,28 @@ namespace Game.UI
         {
             CacheTextLayout();
             if (_activeTextMode == mode) return;
-            _activeTextMode = mode; _dialogueTextRect.Apply(Dialogue); _bodyTextRect.Apply(Body.rectTransform);
+            _activeTextMode = mode; RestoreTextHierarchy(); _dialogueTextRect.Apply(Dialogue); _bodyTextRect.Apply(Body.rectTransform);
             Body.alignment = _normalTextAlignment;
             if (_textBackdrop)
             {
                 _textBackdrop.sprite = mode == NovelTextMode.Dialogue ? _textBackdropSprite : null;
-                _textBackdrop.color = mode == NovelTextMode.Dialogue ? _textBackdropColor : new Color(.02f, .025f, .04f, .85f);
+                _textBackdrop.color = mode == NovelTextMode.Dialogue ? _textBackdropColor : new Color(.02f, .025f, .04f, mode == NovelTextMode.Title ? 1f : .85f);
             }
             if (_textDivider) _textDivider.gameObject.SetActive(mode == NovelTextMode.Dialogue && _textDividerVisible);
-            if (mode != NovelTextMode.Dialogue)
+            if (mode == NovelTextMode.Title)
+            {
+                Dialogue.SetParent(Background.parent, false);
+                Dialogue.SetSiblingIndex(ReadingShading.GetSiblingIndex() + 1);
+                Dialogue.anchorMin = Vector2.zero; Dialogue.anchorMax = Vector2.one;
+                Dialogue.offsetMin = Dialogue.offsetMax = Vector2.zero;
+                Body.rectTransform.anchorMin = new Vector2(.15f, .25f); Body.rectTransform.anchorMax = new Vector2(.85f, .75f);
+                Body.rectTransform.offsetMin = Body.rectTransform.offsetMax = Vector2.zero;
+                Body.alignment = TextAlignmentOptions.Center;
+                var advance = (RectTransform)Advance.transform;
+                advance.anchorMin = Vector2.zero; advance.anchorMax = Vector2.one;
+                advance.offsetMin = advance.offsetMax = Vector2.zero;
+            }
+            else if (mode != NovelTextMode.Dialogue)
             {
                 // Safe-area-relative margins leave the existing bottom reading controls/advance surface accessible.
                 Dialogue.anchorMin = new Vector2(.06f, .16f); Dialogue.anchorMax = new Vector2(.94f, .9f);
@@ -66,9 +82,15 @@ namespace Game.UI
                 Body.alignment = mode == NovelTextMode.Title ? TextAlignmentOptions.Center : TextAlignmentOptions.TopLeft;
             }
         }
+        private void RestoreTextHierarchy()
+        {
+            Dialogue.SetParent(_dialogueParent, false); Dialogue.SetSiblingIndex(_dialogueSibling);
+            _advanceTextRect.Apply((RectTransform)Advance.transform);
+        }
         private void ResetTextLayout()
         {
             if (!_textLayoutCached) return;
+            RestoreTextHierarchy();
             _dialogueTextRect.Apply(Dialogue); _bodyTextRect.Apply(Body.rectTransform);
             Body.alignment = _normalTextAlignment; Body.overflowMode = _normalTextOverflow; Body.richText = _normalRichText; Body.parseCtrlCharacters = _normalParseControls;
             Body.pageToDisplay = 1; Body.maxVisibleCharacters = int.MaxValue;
@@ -83,7 +105,7 @@ namespace Game.UI
         public int PrepareText(NovelCommand command, int start)
         {
             ApplyTextMode(command.TextMode);
-            Body.fontSize = _bodyFontSize * NovelReadingUI.FontScale;
+            Body.fontSize = _bodyFontSize * NovelReadingUI.FontScale * (command.TextMode == NovelTextMode.Title ? 1.6f : 1f);
             Body.richText = false; Body.parseCtrlCharacters = false; Body.overflowMode = TextOverflowModes.Page; Body.pageToDisplay = 1;
             Body.rectTransform.ForceUpdateRectTransforms();
             bool textChanged = _textPresentationCommand != command || _renderTextStart != start;

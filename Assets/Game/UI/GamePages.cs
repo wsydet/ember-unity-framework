@@ -36,7 +36,7 @@ namespace Game.UI
         // Popup 层 —— 弹窗
         // ============================================================
 
-        public static readonly EUIPageDef EUISettingPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab", UILayer.Popup, PageType.FullScreenPopup);
+        public static readonly EUIPageDef EUISettingPage = new("Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab", UILayer.Popup, PageType.Popup);
 
         // ============================================================
         // TopMost 层 —— 顶层（引导、加载遮罩等）

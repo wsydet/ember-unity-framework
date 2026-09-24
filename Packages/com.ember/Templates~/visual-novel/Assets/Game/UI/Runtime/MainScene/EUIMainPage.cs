@@ -115,6 +115,8 @@ namespace Game.UI
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
+            var library = UnityEngine.Resources.Load<Game.Narrative.NarrativeLibrarySO>(Game.Narrative.NarrativeLibrarySO.RESOURCE_PATH);
+            NovelTitle.text = library && library.Current ? library.Current.DisplayName : "视觉小说";
             _novelSave = NovelSaveUI.Module;
             if (_novelSave != null) _novelSave.Changed += RefreshNovelSave;
             RefreshNovelSave();

@@ -177,7 +177,7 @@ namespace Game.Narrative
             _resources = resources; _catalogProvider = catalogProvider;
             _runner.Changed += RunnerChanged;
             _audio.VoiceCompleted += Notify;
-            try { _story = Own(resources.Load<NarrativeStorySO>(request.StoryPath)); }
+            try { _story = Own(resources is INovelStoryResources stories ? stories.LoadStory(request.StoryPath, request.StoryId) : resources.Load<NarrativeStorySO>(request.StoryPath)); }
             catch (Exception ex) { Fail(ex.Message); }
         }
         public void AttachView(INovelView view) { if (_disposed) return; _view = view; Resume("PageUnavailable"); Render(); }
