@@ -16,6 +16,8 @@ namespace Game.Narrative
         private readonly Dictionary<string, NovelChapter> _chapters = new(StringComparer.Ordinal);
         private readonly Dictionary<(string, string), NovelChapterExit> _exits = new();
         private NovelStory _story;
+        private readonly uint _initialRandomState;
+        private uint _randomState;
         private readonly HashSet<string> _pauses = new(StringComparer.Ordinal);
         private readonly List<NovelRoute> _options = new();
         private NovelChapter _chapter;
@@ -34,8 +36,21 @@ namespace Game.Narrative
         public string LastObserverError { get; private set; }
         public long AutoSaveRevision { get; private set; }
         public event Action Changed;
-        public NovelCommand CurrentCommand => _node?.Kind == NovelNodeKind.Dialogue &&
-            _commandIndex >= 0 && _commandIndex < _node.Commands.Count ? _node.Commands[_commandIndex] : null;
+        private NovelCommand _resolvedSource, _resolvedCommand;
+        public NovelCommand CurrentCommand
+        {
+            get
+            {
+                var raw = _node?.Kind == NovelNodeKind.Dialogue && _commandIndex >= 0 && _commandIndex < _node.Commands.Count ? _node.Commands[_commandIndex] : null;
+                if (raw == null || raw.Kind != NovelCommandKind.Say || raw.TextBindings.Count == 0) return raw;
+                if (_resolvedSource != raw)
+                {
+                    _resolvedCommand = raw.WithResolvedText(NovelTextBindings.Resolve(raw, _variables, _globals));
+                    _resolvedSource = raw;
+                }
+                return _resolvedCommand;
+            }
+        }
         public NarrativeSnapshot Snapshot => new(_generation, _positionVersion, _chapter?.Id, _node?.Id,
             CurrentCommand?.CommandId, _state, _wait, _pauses, _variables, _options, _error, _endingId, _globals, _story?.Id);
         #endregion
@@ -66,6 +81,7 @@ namespace Game.Narrative
         {
             if (nodeId == null || !_nodes.TryGetValue(nodeId, out NovelNode next))
             { Fault("BadTarget", "目标节点不存在"); return; }
+            _resolvedSource = _resolvedCommand = null;
             _node = next; _commandIndex = 0; _options.Clear();
             _state = NarrativeState.Executing; _wait = NarrativeWait.None;
         }
@@ -101,6 +117,10 @@ namespace Game.Narrative
                         if (command == null) { Enter(_node.NextId); break; }
                         switch (command.Kind)
                         {
+                            case NovelCommandKind.CalculateVariable:
+                            case NovelCommandKind.RandomVariable:
+                                if (!ExecuteVariable(command)) return;
+                                _commandIndex++; break;
                             case NovelCommandKind.SetVariable:
                                 (command.Scope == NovelVariableScope.Global ? _globals : _variables)[command.VariableId] = command.Value; _commandIndex++; break;
                             case NovelCommandKind.Say:
@@ -135,10 +155,13 @@ namespace Game.Narrative
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public NarrativeRunner(int maxImmediateSteps = 1024)
+        public NarrativeRunner(int maxImmediateSteps = 1024, uint randomSeed = 0)
         {
             if (maxImmediateSteps < 1) throw new ArgumentOutOfRangeException(nameof(maxImmediateSteps));
             _maxImmediateSteps = maxImmediateSteps;
+            _initialRandomState = randomSeed == 0 ? unchecked((uint)Guid.NewGuid().GetHashCode()) : randomSeed;
+            if (_initialRandomState == 0) _initialRandomState = 1;
+            _randomState = _initialRandomState;
         }
 
         public bool Start(NovelChapter chapter, INarrativeCatalog catalog)
@@ -154,6 +177,7 @@ namespace Game.Narrative
             Mutate(() =>
             {
                 _generation = Interlocked.Increment(ref _nextGeneration); _chapter = chapter; _node = null;
+                _randomState = _initialRandomState;
                 _story = story; _globals.Clear(); _chapters.Clear(); _exits.Clear();
                 _nodes.Clear(); _variables.Clear(); _options.Clear(); _pauses.Clear();
                 _error = null; _endingId = null; _commandIndex = 0; _remainingWait = 0;

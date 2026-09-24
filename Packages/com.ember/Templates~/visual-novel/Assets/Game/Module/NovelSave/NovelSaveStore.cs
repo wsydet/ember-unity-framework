@@ -75,7 +75,7 @@ namespace Game.NovelSave
         private Func<string> PrepareSave(int slot, NovelCheckpoint checkpoint)
         {
             if (IndexError != null) throw new IOException(IndexError);
-            if (slot < 0 || slot > 7 || checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 6) ||
+            if (slot < 0 || slot > 7 || checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 7) ||
                 (checkpoint.Stop != NarrativeState.AwaitingAdvance && checkpoint.Stop != NarrativeState.AwaitingChoice))
                 throw new IOException("无效槽位或非稳定点快照");
             string file = "slot-" + slot + "-" + Guid.NewGuid().ToString("N") + ".json";
@@ -109,7 +109,7 @@ namespace Game.NovelSave
         private NovelCheckpoint Decode(byte[] bytes)
         {
             var checkpoint = JsonUtility.FromJson<NovelCheckpoint>(Encoding.UTF8.GetString(bytes));
-            if (checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 6) || string.IsNullOrWhiteSpace(checkpoint.StoryPath))
+            if (checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 7) || string.IsNullOrWhiteSpace(checkpoint.StoryPath))
                 throw new IOException("存档版本不支持或内容损坏");
             return checkpoint;
         }

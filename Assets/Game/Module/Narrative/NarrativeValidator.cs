@@ -110,6 +110,10 @@ namespace Game.Narrative
                     if (c.Kind == NovelCommandKind.WaitActions && (c.WaitActions.Count == 0 ||
                         System.Linq.Enumerable.Any(c.WaitActions, string.IsNullOrWhiteSpace)))
                         Error("BadActionWait", "等待列表不能为空，填写已启动的动作 ID", node.Id, c.CommandId);
+                    string bindingError = NovelTextBindings.Validate(c, variables, globals);
+                    if (bindingError != null) Error("BadTextBinding", bindingError, node.Id, c.CommandId);
+                    string variableError = NovelVariableRules.Validate(c, variables, globals);
+                    if (variableError != null) Error("BadVariableOperation", variableError, node.Id, c.CommandId);
                     var assignments = c.Scope == NovelVariableScope.Global ? globals : variables;
                     if (c.Kind == NovelCommandKind.SetVariable && (!Enum.IsDefined(typeof(NovelVariableScope), c.Scope) || string.IsNullOrWhiteSpace(c.VariableId) ||
                         assignments == null || !assignments.TryGetValue(c.VariableId, out NovelValue v) || v.Type != c.Value.Type))

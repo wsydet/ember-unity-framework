@@ -2,14 +2,14 @@
     "schemaVersion": 2,
     "id": "visual-novel",
     "displayName": "视觉小说",
-    "description": "基于 base 0.6.4：主 UI 自定义布局、章节卡点击渐隐及文字效果、彩色二级步骤与自定义预设。LastLight 提供 15 组示例与三份可复用预设，三项剧情技能支持二级步骤；修复旧剧情文字参数反序列化兼容。177 项相关回归通过；消费项目部署验收待完成。",
-    "version": "0.8.0",
+    "description": "基于 base 0.6.4：保留主 UI 自定义布局、章节卡文字效果与二级步骤；新增剧情整数运算、可存档随机事件、动态文字绑定及逻辑导入审计。70 项相关回归通过，最终 19 项变量逻辑专项通过；具体游戏规则由消费项目配置。",
+    "version": "0.9.0",
     "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.6.4",
     "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "92090cf03438c7d73bac80795ede3b17",
-    "versionedContentHash": "92090cf03438c7d73bac80795ede3b17"
+    "contentHash": "bd18ed6a62bb2be51a9ef43d14b9a4ce",
+    "versionedContentHash": "bd18ed6a62bb2be51a9ef43d14b9a4ce"
 }

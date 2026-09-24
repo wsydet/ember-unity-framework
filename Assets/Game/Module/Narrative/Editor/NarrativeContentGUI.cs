@@ -9,7 +9,7 @@ namespace Game.Narrative.Editor
     internal static class NarrativeContentGUI
     {
         #region 内部方法
-        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场", "隐藏所有立绘" };
+        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场", "隐藏所有立绘", "整数运算", "随机整数" };
         private static readonly string[] SlotNames = { "左侧", "居中", "右侧" };
         private static readonly string[] ActionNames = { "显示", "替换", "隐藏" };
         private static void EnumField(SerializedProperty parent, string field, string label, string[] names)
@@ -92,6 +92,7 @@ namespace Game.Narrative.Editor
             }
             if (kind == NovelCommandKind.Say)
             {
+                Field(item, "_textBindings", "正文变量绑定（保留原文占位符）");
                 Key(item, "_characterId", "角色键（留空为旁白）", catalog, kind, true);
                 var text = item.FindPropertyRelative("_text");
                 EditorGUILayout.LabelField("台词");
@@ -129,6 +130,22 @@ namespace Game.Narrative.Editor
                 EditorGUILayout.HelpBox("只隐藏对白层，不暂停演出。下一句、选择或结局自动恢复；玩家手动隐藏独立处理。", MessageType.Info);
             }
             else if (kind == NovelCommandKind.SetVariable) { EnumField(item, "_scope", "作用域", new[] { "本章节", "全局" }); Field(item, "_variableId", "变量 ID"); Field(item, "_value", "赋值"); }
+            else if (kind == NovelCommandKind.CalculateVariable || kind == NovelCommandKind.RandomVariable)
+            {
+                EnumField(item, "_scope", "目标作用域", new[] { "本章节", "全局" }); Field(item, "_variableId", "目标整数变量");
+                if (kind == NovelCommandKind.RandomVariable)
+                {
+                    Field(item, "_randomMin", "最小值（含）"); Field(item, "_randomMax", "最大值（含）");
+                    EditorGUILayout.HelpBox("随机结果写入变量，再用条件分支选事件。存档保存随机状态，读档不重抽。", MessageType.Info);
+                }
+                else
+                {
+                    EnumField(item, "_integerOperation", "运算", new[] { "赋值", "加", "减", "乘", "除（截断）", "取余" });
+                    Field(item, "_operandVariableId", "来源变量（空为常量）");
+                    if (string.IsNullOrEmpty(item.FindPropertyRelative("_operandVariableId").stringValue)) Field(item, "_integerOperand", "整数常量");
+                    else EnumField(item, "_operandScope", "来源作用域", new[] { "本章节", "全局" });
+                }
+            }
             else if (kind == NovelCommandKind.Wait) Field(item, "_duration", "等待秒数");
             else if (kind == NovelCommandKind.Camera)
             {
@@ -284,6 +301,18 @@ namespace Game.Narrative.Editor
             if (NovelActorRules.IsAction(kind)) return CommandNames[(int)kind] + " · " + item.FindPropertyRelative("_instanceId").stringValue +
                 " · " + item.FindPropertyRelative("_actionId").stringValue + (item.FindPropertyRelative("_parallel").boolValue ? "（并行）" : "（等待）");
             if (kind == NovelCommandKind.Wait) return "暂停剧情推进 · " + Seconds(item);
+            if (kind == NovelCommandKind.RandomVariable)
+                return item.FindPropertyRelative("_variableId").stringValue + " ← 随机整数 [" +
+                    item.FindPropertyRelative("_randomMin").intValue + ", " + item.FindPropertyRelative("_randomMax").intValue + "]";
+            if (kind == NovelCommandKind.CalculateVariable)
+            {
+                string source = item.FindPropertyRelative("_operandVariableId").stringValue;
+                string operand = string.IsNullOrEmpty(source) ? item.FindPropertyRelative("_integerOperand").intValue.ToString() : source;
+                string[] symbols = { "=", "+=", "-=", "*=", "/=", "%=" };
+                int operation = item.FindPropertyRelative("_integerOperation").enumValueIndex;
+                return item.FindPropertyRelative("_variableId").stringValue + " " +
+                    (operation >= 0 && operation < symbols.Length ? symbols[operation] : "?") + " " + operand;
+            }
             if (kind == NovelCommandKind.SetVariable)
             {
                 var value = item.FindPropertyRelative("_value");

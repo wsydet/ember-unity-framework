@@ -30,6 +30,7 @@ namespace Game.Narrative
             { error = "请等待当前句完整显示或选项准备完成后保存"; return false; }
             checkpoint = new NovelCheckpoint
             {
+                RandomState = _randomState,
                 StoryId = _story.Id, StoryRevision = _story.Revision, Semantics = NovelCompatibility.Fingerprint(_story),
                 ChapterId = _chapter.Id, NodeId = _node.Id, CommandId = CurrentCommand?.CommandId,
                 LineId = CurrentCommand?.LineId, TextRevision = CurrentCommand?.TextRevision ?? 0, Stop = _state,
@@ -47,11 +48,15 @@ namespace Game.Narrative
             if (_busy || _state != NarrativeState.Idle) { error = "恢复必须使用独立的新运行器"; return false; }
             try
             {
-                if (checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 6)) throw new InvalidOperationException("未知存档格式版本");
+                if (checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > 7)) throw new InvalidOperationException("未知存档格式版本");
                 var issues = NarrativeStoryValidator.Validate(story, catalog);
                 if (issues.Count > 0) throw new InvalidOperationException(issues[0].ToString());
                 if (checkpoint.StoryId != story.Id || checkpoint.Semantics != NovelCompatibility.Fingerprint(story))
                     throw new InvalidOperationException("剧情语义已变化，存档不兼容；文件已保留");
+                if (checkpoint.SchemaVersion >= 7 && checkpoint.RandomState == 0)
+                    throw new InvalidOperationException("存档随机状态无效");
+                if (checkpoint.SchemaVersion < 7 && story.Chapters.Any(c => c.Nodes.Any(n => n.Commands.Any(x => x.Kind == NovelCommandKind.RandomVariable))))
+                    throw new InvalidOperationException("旧存档缺少随机状态，不能恢复随机剧情");
                 var chapter = story.Chapters.Single(c => c.Id == checkpoint.ChapterId);
                 var node = chapter.Nodes.Single(n => n.Id == checkpoint.NodeId);
                 var globals = ReadVariables(checkpoint.Globals, story.Globals);
@@ -79,6 +84,7 @@ namespace Game.Narrative
                     foreach (var n in chapter.Nodes) _nodes.Add(n.Id, n);
                     foreach (var v in globals) _globals.Add(v.Key, v.Value);
                     foreach (var v in locals) _variables.Add(v.Key, v.Value);
+                    _randomState = checkpoint.SchemaVersion >= 7 ? checkpoint.RandomState : _initialRandomState;
                     _commandIndex = index; _options.AddRange(options); _state = checkpoint.Stop;
                     _wait = _state == NarrativeState.AwaitingAdvance ? NarrativeWait.Advance : NarrativeWait.Choice;
                 });

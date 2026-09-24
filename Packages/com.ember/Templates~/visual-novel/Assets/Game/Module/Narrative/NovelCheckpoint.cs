@@ -11,7 +11,8 @@ namespace Game.Narrative
     [Serializable]
     public sealed class NovelCheckpoint
     {
-        public int SchemaVersion = 6;
+        public int SchemaVersion = 7;
+        public uint RandomState;
         public float CameraZoom = 1;
         public UnityEngine.Vector2 CameraOffset;
         public string StoryPath, StoryId, Semantics, ChapterId, NodeId, CommandId, LineId;
@@ -109,6 +110,19 @@ namespace Game.Narrative
                         w.Write(cmd.CharacterId ?? ""); w.Write(cmd.ResourceKey ?? ""); w.Write(cmd.VariableId ?? "");
                         w.Write((int)cmd.Scope); Value(w, cmd.Value); w.Write(cmd.Duration);
                         w.Write((int)cmd.Slot); w.Write((int)cmd.VisualAction);
+                        if (cmd.TextBindings.Count > 0)
+                        {
+                            w.Write("TextBindings1"); w.Write(cmd.TextBindings.Count);
+                            foreach (var binding in cmd.TextBindings)
+                            { w.Write(binding.Token); w.Write(binding.VariableId); w.Write((int)binding.Scope); }
+                        }
+                        if (cmd.Kind == NovelCommandKind.CalculateVariable)
+                        {
+                            w.Write("Integer1"); w.Write((int)cmd.IntegerOperation); w.Write(cmd.IntegerOperand);
+                            w.Write(cmd.OperandVariableId ?? ""); w.Write((int)cmd.OperandScope);
+                        }
+                        if (cmd.Kind == NovelCommandKind.RandomVariable)
+                        { w.Write("Random1"); w.Write(cmd.RandomMin); w.Write(cmd.RandomMax); }
                         // Keep the exact legacy byte stream for stories without E0 fields.
                         if (!string.IsNullOrEmpty(cmd.InstanceId) || cmd.Kind == NovelCommandKind.Opacity || cmd.Kind == NovelCommandKind.WaitActions)
                         {
