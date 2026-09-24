@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeLibrarySO
   _current: {fileID: 11400000, guid: 3ca021765dd540dd833655571b6c99ef, type: 2}
   _stories:
-  - {fileID: 11400000, guid: f3de9fa82f5dc4c4488ec4a4962d4c7e, type: 2}
   - {fileID: 11400000, guid: 3ca021765dd540dd833655571b6c99ef, type: 2}

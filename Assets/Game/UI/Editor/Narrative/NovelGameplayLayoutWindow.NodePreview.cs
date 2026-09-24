@@ -93,7 +93,7 @@ namespace Game.UI.Editor
         }
         private void ApplyNodePreview()
         {
-            _nodeNotice = null;
+            _nodeNotice = null; _previewTextMode = NovelTextMode.Dialogue;
             var speaker = _previewTargets["Speaker"].GetComponent<TMP_Text>();
             var body = _previewTargets["Body"].GetComponent<TMP_Text>();
             speaker.text = body.text = string.Empty;
@@ -117,8 +117,9 @@ namespace Game.UI.Editor
                         if (_catalog != null && _catalog.TryGetCharacter(command.CharacterId, out var character)) speaker.text = character.DisplayName;
                         if (line == _previewLine)
                         {
-                            if (command.TextMode != NovelTextMode.Dialogue || command.TextBeats.Count > 0)
-                                _nodeNotice = "当前为布局静态预览；本句的标题/全屏模式、分页与文字节奏请使用“播放节点”检查。";
+                            _previewTextMode = command.TextMode;
+                            if (command.TextBeats.Count > 0)
+                                _nodeNotice = "当前为布局静态预览；本句的分页与文字节奏请使用“播放节点”检查。";
                             break;
                         }
                     }

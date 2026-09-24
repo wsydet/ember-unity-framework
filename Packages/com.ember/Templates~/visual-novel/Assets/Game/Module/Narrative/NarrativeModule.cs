@@ -111,8 +111,8 @@ namespace Game.Narrative
             previous?.Dispose(); _observation?.Dispose(); _observation = null;
             if (previous != null && EmberInputManager.TryGetInstance(out var input)) input.SwitchMap(_previousMap ?? "UI");
         }
-        public void OnDestroy() { _active = false; EndSession(); MenuRequested = null; SessionChanged = null; FatalRestoreError = null; HistoryRequested = null; QuickSaveRequested = null; QuickLoadRequested = null; }
-        public void ResetModuleData() { OnDestroy(); }
+        void IEmberModule.OnDestroy() { _active = false; EndSession(); MenuRequested = null; SessionChanged = null; FatalRestoreError = null; HistoryRequested = null; QuickSaveRequested = null; QuickLoadRequested = null; }
+        public void ResetModuleData() { ((IEmberModule)this).OnDestroy(); }
         #endregion
     }
 }

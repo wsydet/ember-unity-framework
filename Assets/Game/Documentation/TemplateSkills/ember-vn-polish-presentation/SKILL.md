@@ -59,3 +59,15 @@ description: 通过本地选择页面选择方案并优化 Ember 视觉小说已
 在用户允许的试播范围，通过现有单节点/章节试播检查背景、遮罩撤除、人物实例、动作等待、分支汇合、结束复位；避免自动启动完整游戏并改变用户存档。通过 MCP 检查错误，实际视觉质量由用户验收，不能把静态校验说成画面通过。失败时停止并恢复本批未被并发修改的文件，保留备份及诊断。
 
 把实际新增/修改效果、参数、锚点、优化前后指纹、剧情保持项比较结果及验证范围记录到 `Assets/Game/Documentation/NarrativeImports/<批次ID>-presentation.json`（schemaVersion=1）。仅报告已真正写入的效果，未实现项列待办。交付后可由回写 Skill 从当前资产生成策划可读流程；本 Skill 不自行修改飞书。
+
+## 二级步骤与文字过渡（模板 0.8.0 起）
+
+先核对目标项目实际存在 `NarrativeStepGroups`、`NarrativeStepPresetSO`、`NovelTextReveal` 与 `HideAllCharacters`；缺少时只报告所需业务升级，不向旧项目写入无法执行的字段。参考当前 LastLight 示例与 `Assets/GameResource/Authoring/Narrative/StepPresets` 的实际自定义步骤资产。
+
+二级步骤是连续基础命令上的 `StepGroupId / StepGroupName / StepGroupColor` 编辑分组，运行仍执行基础命令。通过 `Game.Narrative.Editor.NarrativeStepGroups.GroupRange(node, start, count, label, color)` 原位包装（索引从 0 起），保留原 command/line/action ID；新副本使用 `Wrap(commands, label, color)` 再 `Insert(node, index, commands)`。Wrap 自动重建命令、台词、动作 ID 及内部 WaitActions 引用；组合外等待引用必须补全选区或明确处理，不能伪造完成。人物实例 ID、变量、资源键不会自动替换，要按插入路径的真实状态核对。
+
+内置组合由 `NarrativePresentationPresets.Build` 生成：进场、受击、回忆、镜头/遮罩复位、隐藏所有立绘、恢复舞台状态、场景收尾。HideAllCharacters 同时渐隐包含自由位置的全部人物并释放其动作/绑定效果；场景收尾不清空剧情变量、不停止音乐，也不承诺清除所有粒子。自定义步骤是 NarrativeStepPresetSO 中的命令快照，插入后独立，不因修改资产而自动改变既有剧情。
+
+章节卡 Say 支持 TextReveal（Default/Typewriter/Fade/Instant）、TextFadeDuration、TitleExitDuration、TextSpeedMultiplier、TextEase。默认章节卡文字渐显，其他正文为打字机；点击未完成文字先补全，再次点击等待章节卡渐隐结束才推进。进入/退出时长 0–30 秒，速度倍率 0.05–20；暂停冻结，已读快进收束。不要用附加 Wait 或 Cover 重复模拟已经由章节卡自身管理的退出渐隐。
+
+优化优先复用满足当前资源/实例前置条件的内置或自定义组合，并按准确锚点插入；禁止把所有预设追加到段末。保留作者已有组，调整组内动作或将既有连续动作原位包装时使用 GroupRange，不能以 Wrap 默认复制来替换原 Say 导致稳定 line ID 改变。方案页面同时展示组合摘要、可展开基础动作、时长/缓动/等待、结束状态和章节卡文字/退出参数。比较剧情保持项时展开组合后逐项核对；颜色和名称不改变运行语义。

@@ -22,9 +22,9 @@ namespace Game.UI.Editor
         private const string ReadingMenuPrefabPath = "Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReadingMenuPage.prefab";
         private static readonly string[] MenuKeys = { "Saves", "QuickSave", "QuickLoad", "MenuSettings", "ReadSkip", "ReturnMenu" };
         private static bool IsMenuKey(string key) => MenuKeys.Contains(key) || key == "MenuPanel";
-        private string SourceHash => AssetDatabase.GetAssetDependencyHash(PrefabPath) + ":" + AssetDatabase.GetAssetDependencyHash(ReadingMenuPrefabPath);
-        private static readonly string[] Keys = { "Background", "Left", "Center", "Right", "Dialogue", "Speaker", "Body", "Advance", "Choices", "Menu", "Settings", "Saves", "QuickSave", "QuickLoad", "Status", "Auto", "Skip", "History", "HideDialogue", "Speed", "MenuSettings", "ReadSkip", "ReturnMenu", "Shading", "ChoiceTemplate", "MenuPanel" };
-        private static readonly string[] Labels = { "背景", "左立绘", "中立绘", "右立绘", "对白框（整体）", "角色姓名", "对白正文", "推进按钮", "选项区域", "阅读菜单入口", "字号按钮", "菜单 · 存档/读档", "菜单 · 快速保存", "菜单 · 快速读取", "状态提示", "自动播放", "已读快进", "历史按钮", "隐藏对话按钮", "阅读倍率", "菜单 · 系统设置", "菜单 · 仅已读快进", "菜单 · 返回主菜单", "对话底板 / 渐变", "选项样式", "阅读菜单外观" };
+        private string SourceHash => AssetDatabase.GetAssetDependencyHash(PrefabPath) + ":" + AssetDatabase.GetAssetDependencyHash(ReadingMenuPrefabPath) + string.Concat(PopupPaths.Values.Select(p => AssetDatabase.GetAssetDependencyHash(p).ToString()));
+        private static readonly string[] Keys = { "Background", "Left", "Center", "Right", "Dialogue", "Speaker", "Body", "Advance", "Choices", "Menu", "Settings", "Saves", "QuickSave", "QuickLoad", "Status", "Auto", "Skip", "History", "HideDialogue", "Speed", "MenuSettings", "ReadSkip", "ReturnMenu", "Shading", "ChoiceTemplate", "MenuPanel", "FullScreenLayout", "FullScreenBody", "TitleLayout", "TitleBody", "TitleAdvance", "ReadingControls", "RestoreUI", "FontPanel", "HistoryPanel" };
+        private static readonly string[] Labels = { "背景", "左立绘", "中立绘", "右立绘", "对白框（整体）", "角色姓名", "对白正文", "推进按钮", "选项区域", "阅读菜单入口", "字号按钮", "菜单 · 存档/读档", "菜单 · 快速保存", "菜单 · 快速读取", "状态提示", "自动播放", "已读快进", "历史按钮", "隐藏对话按钮", "阅读倍率", "菜单 · 系统设置", "菜单 · 仅已读快进", "菜单 · 返回主菜单", "对话底板 / 渐变", "选项样式", "阅读菜单外观", "全屏旁白框", "全屏旁白正文", "章节标题卡", "章节标题正文", "标题推进点击区域", "底部阅读工具栏", "隐藏后恢复点击区域", "字号设置弹窗", "历史记录弹窗" };
         private static readonly Vector2[] Resolutions = { new(1920, 1080), new(1920, 1200), new(1440, 1080), new(2520, 1080) };
         [Serializable] private sealed class LayoutRecord
         {
@@ -120,7 +120,7 @@ namespace Game.UI.Editor
                 GUILayout.FlexibleSpace();
                 if (GUILayout.Button("UI 开发中心", EditorStyles.toolbarButton, GUILayout.Width(96))) EUIPrefabManagerWindow.Open();
                 if (GUILayout.Button("定位正式 Prefab", EditorStyles.toolbarButton, GUILayout.Width(110)))
-                    EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<GameObject>(IsMenuKey(Keys[_selected]) ? ReadingMenuPrefabPath : PrefabPath));
+                    EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<GameObject>(PopupPaths.TryGetValue(Keys[_selected], out var popupPath) ? popupPath : IsMenuKey(Keys[_selected]) ? ReadingMenuPrefabPath : PrefabPath));
             }
             if (!CanEdit(out var reason)) { EditorGUILayout.HelpBox(reason, MessageType.Info); return; }
             if (!_contents) { EditorGUILayout.HelpBox(_message ?? "请重新载入阅读页。", MessageType.Warning); return; }
@@ -173,7 +173,7 @@ namespace Game.UI.Editor
                 reason = "NarrativeModule 未启用。";
             else if (!Ember.Core.Editor.EmberProjectSetup.IsTemplateActive("visual-novel"))
                 reason = "当前正式编辑或部署的模板不是 visual-novel 或其派生模板，布局编辑已停止。";
-            else if (PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == PrefabPath || PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == ReadingMenuPrefabPath)
+            else if (PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == PrefabPath || PrefabStageUtility.GetCurrentPrefabStage()?.assetPath == ReadingMenuPrefabPath || PopupPaths.Values.Contains(PrefabStageUtility.GetCurrentPrefabStage()?.assetPath))
                 reason = "请先保存并关闭阅读页的 Prefab Mode，避免两个编辑入口互相覆盖。";
             return reason == null;
         }
@@ -183,7 +183,7 @@ namespace Game.UI.Editor
             var binding = root.GetComponent<EUIBinding>();
             if (!binding || EUIBindingEditorUtility.ValidateBinding(binding).HasError)
                 throw new InvalidOperationException("阅读页 Binding 校验失败，请在 UI 开发中心修复。");
-            foreach (string key in Keys.Where(k => k != "Dialogue" && k != "Shading" && k != "ChoiceTemplate" && !IsMenuKey(k)))
+            foreach (string key in Keys.Where(k => k != "Dialogue" && k != "Shading" && k != "ChoiceTemplate" && !IsMenuKey(k) && !PopupPaths.ContainsKey(k)))
             {
                 var entry = Array.Find(binding.Bindings, b => b.Name == key);
                 if (!entry.GameObject || !(entry.GameObject.transform is RectTransform rect))
@@ -214,7 +214,9 @@ namespace Game.UI.Editor
                     throw new InvalidOperationException("Prefab 或依赖已被其他入口修改，已停止载入。草稿仍保留；重新载入将放弃草稿。" );
                 _contents = PrefabUtility.LoadPrefabContents(PrefabPath);
                 _menuContents = _menuContents ? _menuContents : PrefabUtility.LoadPrefabContents(ReadingMenuPrefabPath);
+                LoadPopups(_popupContents);
                 FindTargets(_contents, _targets, _menuContents);
+                AddPopupTargets(_popupContents, _targets);
                 foreach (var record in _draft) record.Apply(_targets[record.Key]);
                 ApplyStyles();
                 _sourceHash = hash; hasUnsavedChanges = _draft.Count > 0;
@@ -228,6 +230,7 @@ namespace Game.UI.Editor
         private void ReleaseContents()
         {
             if (_preview != null) { _preview.Cleanup(); _preview = null; }
+            _popupPreviews.Clear(); ReleasePopups(_popupContents);
             _previewRoot = _menuPreview = null; _previewTargets.Clear();
             if (_menuContents) { foreach (var component in _menuContents.GetComponentsInChildren<Component>(true)) if (component) Undo.ClearUndo(component); Undo.ClearUndo(_menuContents); PrefabUtility.UnloadPrefabContents(_menuContents); }
             _menuContents = null;
@@ -249,7 +252,10 @@ namespace Game.UI.Editor
             EditorGUILayout.LabelField("位置与尺寸（画布单位）", EditorStyles.miniLabel);
             EditorGUI.BeginChangeCheck();
             var position = EditorGUILayout.Vector2Field("位置 X / Y", rect.anchoredPosition);
-            var size = EditorGUILayout.Vector2Field("尺寸增量 W / H", rect.sizeDelta);
+            var previewRect = _previewTargets[SelectedKey];
+            previewRect.ForceUpdateRectTransforms();
+            var previousSize = previewRect.rect.size;
+            var size = EditorGUILayout.Vector2Field("宽度 / 高度", previousSize);
             var scale = EditorGUILayout.Vector3Field("缩放", rect.localScale);
             var min = EditorGUILayout.Vector2Field("锚点 Min", rect.anchorMin);
             var max = EditorGUILayout.Vector2Field("锚点 Max", rect.anchorMax);
@@ -258,12 +264,13 @@ namespace Game.UI.Editor
             {
                 Undo.RecordObject(rect, "调整小说 UI 布局");
                 rect.anchorMin = Vector2.Min(min, max); rect.anchorMax = Vector2.Max(min, max);
-                rect.pivot = pivot; rect.anchoredPosition = position; rect.sizeDelta = size;
+                rect.pivot = pivot; rect.anchoredPosition = position;
+                rect.sizeDelta += new Vector2(Mathf.Max(1, size.x), Mathf.Max(1, size.y)) - previousSize;
                 rect.localScale = new Vector3(Mathf.Max(.01f, scale.x), Mathf.Max(.01f, scale.y), Mathf.Max(.01f, scale.z));
                 if (PrefabUtility.IsPartOfPrefabInstance(rect)) PrefabUtility.RecordPrefabInstancePropertyModifications(rect);
                 Changed();
             }
-            EditorGUILayout.HelpBox("拉伸锚点下，尺寸增量是相对锚点区域的偏移，并非最终宽高。Y 正方向向上。", MessageType.None);
+            EditorGUILayout.HelpBox("宽高为当前预览比例下的实际画布尺寸；拉伸锚点会随分辨率适配。Y 正方向向上。", MessageType.None);
             if (rect.TryGetComponent<VerticalLayoutGroup>(out var layout))
             {
                 EditorGUI.BeginChangeCheck();
@@ -297,6 +304,7 @@ namespace Game.UI.Editor
             _previewRoot = Instantiate(_contents, host.transform, false); _previewRoot.name = "ReaderLayoutPreview";
             _menuPreview = Instantiate(_menuContents, host.transform, false);
             FindTargets(_previewRoot, _previewTargets, _menuPreview);
+            BuildPopupPreviews(_previewRoot.transform);
             // 仅预览克隆合入同一画布；正式菜单仍是独立 EUI Popup。
             _menuPreview.transform.SetParent(_previewRoot.transform, false);
             DestroyImmediate(_menuPreview.GetComponent<GraphicRaycaster>());
@@ -347,6 +355,15 @@ namespace Game.UI.Editor
             menuRoot.anchorMin = menuRoot.anchorMax = menuRoot.pivot = new Vector2(.5f, .5f);
             menuRoot.sizeDelta = Size; menuRoot.position = new Vector3(0, 0, -1); menuRoot.rotation = Quaternion.identity; menuRoot.localScale = Vector3.one;
             _menuPreview.SetActive(IsMenuKey(Keys[_selected]));
+            // Safe-area geometry is screen-driven, never copy the prefab's uninitialized values into a preview.
+            foreach (var safe in _previewRoot.GetComponentsInChildren<EUISafeArea>(true))
+            {
+                var safeRect = (RectTransform)safe.transform;
+                safeRect.anchorMin = Vector2.zero; safeRect.anchorMax = Vector2.one;
+                safeRect.offsetMin = safeRect.offsetMax = Vector2.zero;
+            }
+            ApplyTextLayoutPreview();
+            SyncPopupPreviews();
             Canvas.ForceUpdateCanvases(); LayoutRebuilder.ForceRebuildLayoutImmediate(root);
             LayoutRebuilder.ForceRebuildLayoutImmediate(menuRoot);
             foreach (var text in _menuPreview.GetComponentsInChildren<TMP_Text>(true)) text.ForceMeshUpdate();
@@ -426,6 +443,7 @@ namespace Game.UI.Editor
             {
                 _menuContents = _menuContents ? _menuContents : PrefabUtility.LoadPrefabContents(ReadingMenuPrefabPath);
                 FindTargets(_contents, _targets, _menuContents);
+                AddPopupTargets(_popupContents, _targets);
                 string folder = ".utmp/visual-novel-ui-layout/" + DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
                 Directory.CreateDirectory(folder); File.Copy(PrefabPath, folder + "/EUINovelReaderPage.prefab");
                 File.Copy(PrefabPath + ".meta", folder + "/EUINovelReaderPage.prefab.meta");
@@ -439,8 +457,9 @@ namespace Game.UI.Editor
                 if (!menuSuccess) throw new IOException("阅读菜单保存失败，修改与备份仍保留。");
                 var binding = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath).GetComponent<EUIBinding>();
                 File.WriteAllText(folder + "/binding.json", JsonUtility.ToJson(EUIBindingEditorUtility.GetBindingSnapshot(binding), true));
+                SavePopups(folder);
                 _sourceHash = SourceHash; _draft.Clear(); _styles.Clear();
-                base.SaveChanges(); _message = "布局已保存到正式阅读页与阅读菜单；备份：" + folder;
+                base.SaveChanges(); _message = "布局已保存到阅读页、阅读菜单、字号与历史弹窗；备份：" + folder;
             }
             catch (Exception ex) { _message = ex.Message; }
         }

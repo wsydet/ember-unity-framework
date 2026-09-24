@@ -9,7 +9,7 @@ namespace Game.Narrative.Editor
     internal static class NarrativeContentGUI
     {
         #region 内部方法
-        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场" };
+        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场", "隐藏所有立绘" };
         private static readonly string[] SlotNames = { "左侧", "居中", "右侧" };
         private static readonly string[] ActionNames = { "显示", "替换", "隐藏" };
         private static void EnumField(SerializedProperty parent, string field, string label, string[] names)
@@ -101,6 +101,13 @@ namespace Game.Narrative.Editor
                 Key(item, "_resourceKey", "配音键（可留空）", catalog, NovelCommandKind.Voice);
                 EnumField(item, "_textMode", "显示方式", new[] { "普通对白", "居中标题 / 章节卡", "全屏旁白" });
                 var beats = item.FindPropertyRelative("_textBeats");
+                EnumField(item, "_textReveal", "文字入场", new[] { "默认（标题渐显，其余打字机）", "打字机", "渐显", "立即显示" });
+                Field(item, "_textFadeDuration", "文字渐显秒数");
+                Field(item, "_textSpeedMultiplier", "打字速度倍率");
+                Field(item, "_textEase", "文字 / 章节卡渐变缓动");
+                if (item.FindPropertyRelative("_textMode").enumValueIndex == (int)NovelTextMode.Title)
+                    Field(item, "_titleExitDuration", "点击后章节卡渐隐秒数（0 为立即）");
+                EditorGUILayout.HelpBox("点击未完成文字先完整显示；再次点击等待章节卡渐隐后推进。暂停会冻结渐变；已读快进直接收束。", MessageType.None);
                 int previousCount = beats.arraySize;
                 Field(item, "_textBeats", "结构化文字节奏");
                 for (int index = previousCount; index < beats.arraySize; index++)
@@ -114,6 +121,8 @@ namespace Game.Narrative.Editor
                 EditorGUILayout.LabelField("正文字数（Unicode 标量）", NovelTextRules.Length(text.stringValue).ToString());
                 EditorGUILayout.HelpBox("At：从 0 起的正文 Unicode 标量索引（包含换行与标点）；Pause：到达位置后停顿秒数；Speed：此处起速度倍率；Instant：停顿后即时显示的字数。按 At 递增。正文按纯文本显示，不写控制标记。长文自动分页，末页才进入整句稳定点。", MessageType.Info);
             }
+            else if (kind == NovelCommandKind.HideAllCharacters)
+            { Field(item, "_duration", "全部立绘同时渐隐秒数"); Field(item, "_ease", "缓动"); EditorGUILayout.HelpBox("包含移动后的自由位置实例；结束后释放渲染槽、绑定粒子和人物动作。没有立绘时直接完成。", MessageType.Info); }
             else if (kind == NovelCommandKind.DialogueVisibility)
             {
                 Field(item, "_dialogueVisible", "显示剧情对白层");
@@ -355,7 +364,7 @@ namespace Game.Narrative.Editor
             {
                 bool commands = list.name == "_commands";
                 EditorGUILayout.LabelField(commands ? "段内步骤（从上到下执行）" : "按顺序判定的选项 / 分流", EditorStyles.boldLabel);
-                if (commands && GUILayout.Button("插入演出预设…"))
+                if (commands && GUILayout.Button("插入二级步骤 / 自定义步骤…"))
                 { data.ApplyModifiedProperties(); NarrativePresetWindow.Open((NarrativeDialogueSO)asset); data.Update(); }
                 using (new EditorGUILayout.HorizontalScope())
                 {
@@ -368,10 +377,18 @@ namespace Game.Narrative.Editor
                 for (int i = 0; i < list.arraySize; i++)
                 {
                     var item = list.GetArrayElementAtIndex(i); int index = i;
+                    if (commands && NarrativeStepGroups.DrawHeader(data, (NarrativeDialogueSO)asset, list, ref i, ref pending)) continue;
+                    item = list.GetArrayElementAtIndex(i); index = i;
                     string id = item.FindPropertyRelative(commands ? "_commandId" : "_optionId").stringValue;
                     bool current = snapshot != null && snapshot.NodeId == node.NodeId &&
                         snapshot.ChapterId == node.ChapterId && (commands ? snapshot.CommandId == id : snapshot.Error?.OptionId == id);
                     Color previous = GUI.backgroundColor;
+                    if (commands)
+                    {
+                        var group = item.FindPropertyRelative("_stepGroupId");
+                        if (!string.IsNullOrEmpty(group.stringValue)) GUI.backgroundColor = item.FindPropertyRelative("_stepGroupColor").colorValue;
+                        else GUI.backgroundColor = NarrativeStepGroups.BasicColor((NovelCommandKind)item.FindPropertyRelative("_kind").enumValueIndex);
+                    }
                     if (current) GUI.backgroundColor = new Color(.25f, 1f, .65f);
                     using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
                     {

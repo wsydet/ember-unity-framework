@@ -59,7 +59,7 @@ namespace Game.Narrative.Tests
             NarrativeGraphWindow.Open();
             Assert.IsNotEmpty(Resources.FindObjectsOfTypeAll<NarrativeGraphWindow>());
             SetEnabled(false);
-            var story = AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/Story.asset");
+            var story = AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/M1StoryFixture.asset");
             Assert.IsNotNull(story);
             var before = EditorJsonUtility.ToJson(story);
             NarrativeGraphWindow.Open(); NarrativeGraphWindow.OpenFor(story);

@@ -2,14 +2,14 @@
     "schemaVersion": 2,
     "id": "visual-novel",
     "displayName": "视觉小说",
-    "description": "基于 base 0.6.4：E0–E5 演出与剧情制作技能；0.7.4 加入当前小说引用入口并统一阅读和菜单 UI；0.7.5 修复设置普通弹窗、新游戏阶段进度、全屏章节卡与设置量化数值。144 项 EditMode 回归通过；完整 Play Mode 端到端及消费项目验收待完成。",
-    "version": "0.7.5",
+    "description": "基于 base 0.6.4：主 UI 自定义布局、章节卡点击渐隐及文字效果、彩色二级步骤与自定义预设。LastLight 提供 15 组示例与三份可复用预设，三项剧情技能支持二级步骤；修复旧剧情文字参数反序列化兼容。177 项相关回归通过；消费项目部署验收待完成。",
+    "version": "0.8.0",
     "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.6.4",
     "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "0bfb674b190aeb9d16a0a233cfcec7dd",
-    "versionedContentHash": "0bfb674b190aeb9d16a0a233cfcec7dd"
+    "contentHash": "92090cf03438c7d73bac80795ede3b17",
+    "versionedContentHash": "92090cf03438c7d73bac80795ede3b17"
 }

@@ -214,14 +214,14 @@ namespace Game.NovelSave
                 _savingSlot = 7; _saveTask = Store.SaveAsync(7, _autoSaves.Dequeue()); Feedback("正在保存自动槽…");
             }
         }
-        public void OnDestroy()
+        void IEmberModule.OnDestroy()
         {
             Changed = null; CancelLoad(); ReleaseCandidate(); _handoff?.Dispose(); _handoff = null; Track(null); _read.Clear();
             // Drain the newest immutable account snapshot through the same ordered queue without blocking a frame.
             if (_accountDirty && _accountWritable) Store.SaveAccountAsync(Account);
             _accountDirty = false; _accountTask = null; _saveTask = null; _autoSaves.Clear(); _preferencesPending = false;
         }
-        public void ResetModuleData() { OnDestroy(); }
+        public void ResetModuleData() { ((IEmberModule)this).OnDestroy(); }
         #endregion
     }
 }

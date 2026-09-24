@@ -53,3 +53,15 @@ description: 从用户给定的飞书策划表格链接中，按指定工作表�
 ## 完成条件
 
 通过当前 Story/Chapter 的 `TryReadDefinition` 和实际已导出配表校验完整图、角色、资源、变量与分支；按源行逐项核对台词全文、说话人和顺序，包括空格、标点及单元格内显式换行。报告已导入/跳过/阻断行号、资产路径、来源清单与验证结果。流程校验未通过时不称为可运行导入。完成后可交给演出优化 Skill，但不自动执行优化或回写飞书。
+
+## 二级步骤与文字过渡（模板 0.8.0 起）
+
+先核对目标项目实际存在 `NarrativeStepGroups`、`NarrativeStepPresetSO`、`NovelTextReveal` 与 `HideAllCharacters`；缺少时只报告所需业务升级，不向旧项目写入无法执行的字段。参考当前 LastLight 示例与 `Assets/GameResource/Authoring/Narrative/StepPresets` 的实际自定义步骤资产。
+
+二级步骤是连续基础命令上的 `StepGroupId / StepGroupName / StepGroupColor` 编辑分组，运行仍执行基础命令。通过 `Game.Narrative.Editor.NarrativeStepGroups.GroupRange(node, start, count, label, color)` 原位包装（索引从 0 起），保留原 command/line/action ID；新副本使用 `Wrap(commands, label, color)` 再 `Insert(node, index, commands)`。Wrap 自动重建命令、台词、动作 ID 及内部 WaitActions 引用；组合外等待引用必须补全选区或明确处理，不能伪造完成。人物实例 ID、变量、资源键不会自动替换，要按插入路径的真实状态核对。
+
+内置组合由 `NarrativePresentationPresets.Build` 生成：进场、受击、回忆、镜头/遮罩复位、隐藏所有立绘、恢复舞台状态、场景收尾。HideAllCharacters 同时渐隐包含自由位置的全部人物并释放其动作/绑定效果；场景收尾不清空剧情变量、不停止音乐，也不承诺清除所有粒子。自定义步骤是 NarrativeStepPresetSO 中的命令快照，插入后独立，不因修改资产而自动改变既有剧情。
+
+章节卡 Say 支持 TextReveal（Default/Typewriter/Fade/Instant）、TextFadeDuration、TitleExitDuration、TextSpeedMultiplier、TextEase。默认章节卡文字渐显，其他正文为打字机；点击未完成文字先补全，再次点击等待章节卡渐隐结束才推进。进入/退出时长 0–30 秒，速度倍率 0.05–20；暂停冻结，已读快进收束。不要用附加 Wait 或 Cover 重复模拟已经由章节卡自身管理的退出渐隐。
+
+导入时仅把来源明确指定的常用组合映射为二级步骤，不额外润色。预览同时展示组合名称、颜色、插入锚点和展开后的实际命令/等待；映射清单增加组 ID 与基础命令 ID 的对应关系。重新导入保留既有组边界、ID 及本地调整；源改动触及组内部时逐项三方比较。标题效果参数作为结构化元数据，不写进台词。

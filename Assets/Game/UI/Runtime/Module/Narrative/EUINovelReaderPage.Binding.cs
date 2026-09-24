@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelReaderPage
  * page name    : EUINovelReaderPage
- * update time  : 2026/9/24 14:21:44
+ * update time  : 2026/9/24 16:23:36
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -134,6 +134,31 @@ namespace Game.UI
         /// </summary>
         private UnityEngine.RectTransform ReadingShading;
 
+        /// <summary>
+        /// Animator/EUISafeArea/FullScreenLayout
+        /// </summary>
+        private UnityEngine.RectTransform FullScreenLayout;
+
+        /// <summary>
+        /// Animator/EUISafeArea/FullScreenLayout/FullScreenBody
+        /// </summary>
+        private UnityEngine.RectTransform FullScreenBody;
+
+        /// <summary>
+        /// TitleLayout
+        /// </summary>
+        private UnityEngine.RectTransform TitleLayout;
+
+        /// <summary>
+        /// TitleLayout/TitleBody
+        /// </summary>
+        private UnityEngine.RectTransform TitleBody;
+
+        /// <summary>
+        /// ReadingShading/TitleAdvance
+        /// </summary>
+        private UnityEngine.RectTransform TitleAdvance;
+
 
 
     public override void OnBind()
@@ -163,6 +188,11 @@ namespace Game.UI
             Speed = ControlMap["Speed"] as UnityEngine.UI.Button;
             RestoreUI = ControlMap["RestoreUI"] as UnityEngine.UI.Button;
             ReadingShading = ControlMap["ReadingShading"] as UnityEngine.RectTransform;
+            FullScreenLayout = ControlMap["FullScreenLayout"] as UnityEngine.RectTransform;
+            FullScreenBody = ControlMap["FullScreenBody"] as UnityEngine.RectTransform;
+            TitleLayout = ControlMap["TitleLayout"] as UnityEngine.RectTransform;
+            TitleBody = ControlMap["TitleBody"] as UnityEngine.RectTransform;
+            TitleAdvance = ControlMap["TitleAdvance"] as UnityEngine.RectTransform;
 
     }
 }

@@ -49,7 +49,7 @@ namespace Game.UI.Editor
         private void DrawDetailSelector()
         {
             var root = _targets[Keys[_selected]];
-            var entries = _targets.Where(p => (p.Key.StartsWith("reader/") || p.Key.StartsWith("menu/")) &&
+            var entries = _targets.Where(p => (p.Key.StartsWith("reader/") || p.Key.StartsWith("menu/") || p.Key.StartsWith("popup/")) &&
                 (p.Value == root || p.Value.IsChildOf(root))).ToArray();
             if (entries.Length == 0) return;
             int current = Array.FindIndex(entries, p => p.Value == _targets[SelectedKey]);
@@ -60,7 +60,13 @@ namespace Game.UI.Editor
 
         private static IEnumerable<(string path, string label)> StyleFields(Component component)
         {
-            if (component is Image)
+            if (component.GetType().FullName == "Game.UI.NovelHistoryAppearance")
+            {
+                yield return ("SpeakerColor", "姓名颜色"); yield return ("LatestMarkerColor", "最新记录标记颜色");
+                yield return ("TextIndent", "正文缩进（字号倍数）"); yield return ("MarkerPosition", "标记位置（字号倍数）");
+                yield return ("SpeakerWidth", "姓名最大宽度（字号倍数）"); yield return ("CenterShortHistory", "短记录垂直居中");
+            }
+            else if (component is Image)
             {
                 yield return ("m_Sprite", "图片 Sprite"); yield return ("m_Color", "颜色 / 透明度");
                 yield return ("m_Type", "图片模式"); yield return ("m_PreserveAspect", "保持比例");
@@ -157,6 +163,7 @@ namespace Game.UI.Editor
         private void RestoreAppearanceElement(RectTransform rect)
         {
             GameObject reader = null, menu = null;
+            var popups = new Dictionary<string, GameObject>();
             try
             {
                 if (SourceHash != _sourceHash) { _message = "资源已在外部改变，请重新载入。"; return; }
@@ -164,6 +171,7 @@ namespace Game.UI.Editor
                 menu = PrefabUtility.LoadPrefabContents(ReadingMenuPrefabPath);
                 var originals = new Dictionary<string, RectTransform>();
                 FindTargets(reader, originals, menu);
+                LoadPopups(popups); AddPopupTargets(popups, originals);
                 var original = originals[SelectedKey];
                 Undo.RecordObjects(rect.GetComponents<Component>(), "还原 UI 元素");
                 new LayoutRecord(SelectedKey, original).Apply(rect);
@@ -190,6 +198,7 @@ namespace Game.UI.Editor
             }
             finally
             {
+                ReleasePopups(popups);
                 if (menu) PrefabUtility.UnloadPrefabContents(menu);
                 if (reader) PrefabUtility.UnloadPrefabContents(reader);
             }
@@ -209,7 +218,7 @@ namespace Game.UI.Editor
         private void CaptureStyles()
         {
             _styles.Clear();
-            foreach (var pair in _targets.Where(p => p.Key.StartsWith("reader/") || p.Key.StartsWith("menu/")))
+            foreach (var pair in _targets.Where(p => p.Key.StartsWith("reader/") || p.Key.StartsWith("menu/") || p.Key.StartsWith("popup/")))
             {
                 var components = pair.Value.GetComponents<Component>();
                 for (int i = 0; i < components.Length; i++)

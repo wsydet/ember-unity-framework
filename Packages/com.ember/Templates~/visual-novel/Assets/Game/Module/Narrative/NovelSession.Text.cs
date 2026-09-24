@@ -9,17 +9,21 @@ namespace Game.Narrative
         private NovelCommand _textCommand;
         private int _pageStart, _pageEnd;
         private long _textAdvanceFrame = -1;
+        private float _textEnterElapsed, _textExitElapsed;
+        private bool _textExiting;
+        private bool TextEntering => _textCommand?.TextReveal == NovelTextReveal.Fade && _textEnterElapsed < _textCommand.TextFadeDuration;
+        public bool TextTransitionActive => _textExiting || TextEntering;
         public bool StoryDialogueVisible { get; private set; } = true;
         public int TextPageStart => _pageStart;
         public int TextPageEnd => _pageEnd;
-        public bool TextPageComplete => _visible >= _pageEnd;
+        public bool TextPageComplete => _visible >= _pageEnd && !TextEntering;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
         private void ResetText(NovelCommand command)
         {
             _textCommand = command; _pageStart = _pageEnd = 0; _textClock.Reset(command.TextBeats);
-            _visible = 0; _autoElapsed = 0; StoryDialogueVisible = true;
+            _visible = 0; _autoElapsed = 0; _textEnterElapsed = _textExitElapsed = 0; _textExiting = false; StoryDialogueVisible = true;
         }
         private void PrepareText(NovelCommand command, bool restored)
         {
@@ -27,6 +31,7 @@ namespace Game.Narrative
             if (_textCommand != command)
             {
                 ResetText(command);
+                if (restored) _textEnterElapsed = command.TextFadeDuration;
                 // Stable saves represent the fully read sentence. Restore its final page without replaying beats/voice.
                 if (restored && _view is INovelTextView savedView)
                 {
@@ -46,13 +51,19 @@ namespace Game.Narrative
             PrepareText(_runner.CurrentCommand, false);
             if (_readMode == NarrativeReadMode.Skip)
             {
-                _textClock.Complete(FullTextLength); _visible = FullTextLength;
+                _textEnterElapsed = _textCommand.TextFadeDuration; _textClock.Complete(FullTextLength); _visible = FullTextLength;
                 if (_view is INovelTextView)
                     while (_pageEnd < FullTextLength) { _pageStart = _pageEnd; PrepareText(_runner.CurrentCommand, false); }
                 _runner.CompleteReveal(s.SessionGeneration, s.PositionVersion); return;
             }
             bool wasComplete = TextPageComplete;
-            _visible = _textClock.Tick(delta * ReadingMultiplier, _textSpeed, _pageEnd);
+            if (_textCommand.TextReveal == NovelTextReveal.Typewriter)
+                _visible = _textClock.Tick(delta * ReadingMultiplier, _textSpeed * _textCommand.TextSpeedMultiplier, _pageEnd);
+            else
+            {
+                _textEnterElapsed += delta * ReadingMultiplier;
+                _visible = _pageEnd;
+            }
             if (!TextPageComplete) return;
             if (_pageEnd >= FullTextLength)
             { _autoElapsed = 0; _runner.CompleteReveal(s.SessionGeneration, s.PositionVersion); return; }
@@ -65,6 +76,28 @@ namespace Game.Narrative
                     AdvanceTextPage(frame);
             }
         }
+        private void RenderTextEffects()
+        {
+            if (_view is not INovelTextEffectsView effects) return;
+            float enter = TextEntering ? NovelActorRules.Ease(_textCommand.TextEase, Mathf.Clamp01(_textEnterElapsed / _textCommand.TextFadeDuration)) : 1;
+            float exit = _textExiting ? 1 - NovelActorRules.Ease(_textCommand.TextEase, Mathf.Clamp01(_textExitElapsed / _textCommand.TitleExitDuration)) : 1;
+            effects.SetTextEffects(enter, exit);
+        }
+        private bool BeginTextExit()
+        {
+            if (_runner.Snapshot.State != NarrativeState.AwaitingAdvance || _textCommand?.TextMode != NovelTextMode.Title ||
+                _textCommand.TitleExitDuration <= 0 || _readMode == NarrativeReadMode.Skip) return false;
+            _textExiting = true; _textExitElapsed = 0; Render(); return true;
+        }
+        private bool TickTextExit(float delta, long frame)
+        {
+            if (!_textExiting) return false;
+            _textExitElapsed += delta * ReadingMultiplier;
+            if (_textExitElapsed >= _textCommand.TitleExitDuration || _readMode == NarrativeReadMode.Skip)
+            { _textExiting = false; AdvanceRunnerCore(frame); }
+            else Render();
+            return true;
+        }
         private bool AdvanceTextPage(long frame)
         {
             var s = _runner.Snapshot;
@@ -74,12 +107,12 @@ namespace Game.Narrative
             PrepareText(_runner.CurrentCommand, s.State == NarrativeState.AwaitingAdvance);
             if (s.State == NarrativeState.Revealing && !TextPageComplete)
             {
-                _textClock.Complete(_pageEnd); _visible = _pageEnd; _autoElapsed = 0;
+                _textEnterElapsed = _textCommand.TextFadeDuration; _textClock.Complete(_pageEnd); _visible = _pageEnd; _autoElapsed = 0;
                 if (_pageEnd >= FullTextLength) _runner.CompleteReveal(s.SessionGeneration, s.PositionVersion);
                 return true;
             }
             if (_pageEnd < FullTextLength)
-            { _pageStart = _pageEnd; _autoElapsed = 0; PrepareText(_runner.CurrentCommand, false); Notify(); return true; }
+            { _pageStart = _pageEnd; _textEnterElapsed = 0; _autoElapsed = 0; PrepareText(_runner.CurrentCommand, false); Notify(); return true; }
             return false;
         }
         #endregion

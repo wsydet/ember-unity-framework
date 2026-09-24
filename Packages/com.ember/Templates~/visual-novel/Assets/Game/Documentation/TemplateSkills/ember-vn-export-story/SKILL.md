@@ -58,3 +58,15 @@ description: 通过本地选择页面确认范围、目标与预览，将 Ember 
 ## 回读验收
 
 用 `+csv-get` / `+cells-get` 分段回读全体导出内容，核对行数、首尾、逐字台词、稳定 ID、分支去向和效果参数。只收到成功响应不算验收。再读取工作簿页清单，确认原页仍存在且本次写入目标始终为新 ID；不将他人并发编辑归因于本次。验证完整后交付**新页链接**、导出范围、行数、流程校验与回读结果、尚未实现的项。不要只给原文档链接并声称新页已完成。
+
+## 二级步骤与文字过渡（模板 0.8.0 起）
+
+先核对目标项目实际存在 `NarrativeStepGroups`、`NarrativeStepPresetSO`、`NovelTextReveal` 与 `HideAllCharacters`；缺少时只报告所需业务升级，不向旧项目写入无法执行的字段。参考当前 LastLight 示例与 `Assets/GameResource/Authoring/Narrative/StepPresets` 的实际自定义步骤资产。
+
+二级步骤是连续基础命令上的 `StepGroupId / StepGroupName / StepGroupColor` 编辑分组，运行仍执行基础命令。通过 `Game.Narrative.Editor.NarrativeStepGroups.GroupRange(node, start, count, label, color)` 原位包装（索引从 0 起），保留原 command/line/action ID；新副本使用 `Wrap(commands, label, color)` 再 `Insert(node, index, commands)`。Wrap 自动重建命令、台词、动作 ID 及内部 WaitActions 引用；组合外等待引用必须补全选区或明确处理，不能伪造完成。人物实例 ID、变量、资源键不会自动替换，要按插入路径的真实状态核对。
+
+内置组合由 `NarrativePresentationPresets.Build` 生成：进场、受击、回忆、镜头/遮罩复位、隐藏所有立绘、恢复舞台状态、场景收尾。HideAllCharacters 同时渐隐包含自由位置的全部人物并释放其动作/绑定效果；场景收尾不清空剧情变量、不停止音乐，也不承诺清除所有粒子。自定义步骤是 NarrativeStepPresetSO 中的命令快照，插入后独立，不因修改资产而自动改变既有剧情。
+
+章节卡 Say 支持 TextReveal（Default/Typewriter/Fade/Instant）、TextFadeDuration、TitleExitDuration、TextSpeedMultiplier、TextEase。默认章节卡文字渐显，其他正文为打字机；点击未完成文字先补全，再次点击等待章节卡渐隐结束才推进。进入/退出时长 0–30 秒，速度倍率 0.05–20；暂停冻结，已读快进收束。不要用附加 Wait 或 Cover 重复模拟已经由章节卡自身管理的退出渐隐。
+
+导出为每个连续组增加“二级步骤名称 / 组ID / 组内顺序”列；可先列组合摘要，但仍逐条导出实际基础命令，不能用组名代替内部效果、赋值和等待。自定义预设以节点当前插入副本为准，不以可能后来修改的预设资产替换流程。章节卡输出文字入场方式、渐显时长、打字速度倍率、退出渐隐时长与缓动，注明“完成文字后点击，等待渐隐结束才进入下一步”。组颜色可用于新页行样式，不影响原台词或原页。来源映射缺失仍标记本地新增。

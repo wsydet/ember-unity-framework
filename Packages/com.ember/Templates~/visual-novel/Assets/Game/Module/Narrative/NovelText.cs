@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace Game.Narrative
 {
+    public enum NovelTextReveal { Default, Typewriter, Fade, Instant }
+
+    public interface INovelTextEffectsView
+    {
+        void SetTextEffects(float textOpacity, float cardOpacity);
+    }
+
     public enum NovelTextMode { Dialogue, Title, FullScreen }
 
     /// <summary>Offsets count Unicode scalars in plain story text, including punctuation and newlines.</summary>
@@ -66,6 +73,11 @@ namespace Game.Narrative
         {
             if (command.Kind != NovelCommandKind.Say) return null;
             if (!Enum.IsDefined(typeof(NovelTextMode), command.TextMode)) return "正文显示模式无效";
+            if (!Enum.IsDefined(typeof(NovelTextReveal), command.TextReveal) || !Enum.IsDefined(typeof(NovelEase), command.TextEase) ||
+                !NovelActionHandle.ValidTime(command.TextFadeDuration) || command.TextFadeDuration > 30 ||
+                !NovelActionHandle.ValidTime(command.TitleExitDuration) || command.TitleExitDuration > 30 ||
+                !NovelActionHandle.ValidTime(command.TextSpeedMultiplier) || command.TextSpeedMultiplier < .05f || command.TextSpeedMultiplier > 20)
+                return "文字效果：渐变时长 0–30 秒，打字速度倍率 0.05–20，效果与缓动须有效";
             int length = Length(command.Text), previous = -1;
             foreach (var beat in command.TextBeats)
             {

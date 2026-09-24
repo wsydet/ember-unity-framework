@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470ddc6bebc05134580147e119770cfc, type: 3}
+  m_Name: HideAllCharacters
+  m_EditorClassIdentifier: 
+  _displayName: "\u9690\u85CF\u6240\u6709\u7ACB\u7ED8\uFF08\u6E10\u9690\uFF09"
+  _color: {r: 0.55, g: 0.8, b: 0.6, a: 1}
+  _commands:
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 5da2db70f4b744de88f6fb27c0642857
+    _stepGroupName: "\u9690\u85CF\u6240\u6709\u7ACB\u7ED8\uFF08\u6E10\u9690\uFF09"
+    _stepGroupColor: {r: 0.55, g: 0.8, b: 0.6, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _commandId: sample-hide-all
+    _kind: 30
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.8
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 1
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0

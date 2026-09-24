@@ -135,6 +135,12 @@ namespace Game.Narrative
                             foreach (var beat in cmd.TextBeats)
                             { w.Write(beat.At); w.Write(beat.Pause); w.Write(beat.Speed); w.Write(beat.Instant); }
                         }
+                        if (cmd.Kind == NovelCommandKind.Say && (cmd.TextMode == NovelTextMode.Title || cmd.TextReveal != NovelTextReveal.Typewriter || cmd.TextSpeedMultiplier != 1))
+                        {
+                            w.Write("TextEffects"); w.Write((int)cmd.TextReveal); w.Write(cmd.TextFadeDuration);
+                            w.Write(cmd.TitleExitDuration); w.Write(cmd.TextSpeedMultiplier); w.Write((int)cmd.TextEase);
+                        }
+                        if (cmd.Kind == NovelCommandKind.HideAllCharacters) w.Write((int)cmd.Ease);
                         if (cmd.Kind == NovelCommandKind.Camera || cmd.Kind == NovelCommandKind.Wipe)
                         {
                             w.Write("E5"); w.Write(cmd.ActionId ?? ""); w.Write(cmd.Parallel); w.Write(cmd.Delay); w.Write((int)cmd.Ease);

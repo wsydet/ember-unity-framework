@@ -193,7 +193,7 @@ namespace Game.Narrative.Tests
         [TestCase(false, false, "return_home")]
         public void RealStoryAssetsRunAllThreeRoutesWithoutWrites(bool school, bool ask, string ending)
         {
-            var asset = UnityEditor.AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/Story.asset"); Assert.IsNotNull(asset);
+            var asset = UnityEditor.AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/M1StoryFixture.asset"); Assert.IsNotNull(asset);
             var assets = new List<UnityEngine.Object> { asset };
             foreach (var c in asset.Chapters) { assets.Add(c); assets.AddRange(c.Nodes.Cast<UnityEngine.Object>()); }
             var before = assets.ToDictionary(a => a, UnityEngine.JsonUtility.ToJson);

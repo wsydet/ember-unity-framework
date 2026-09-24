@@ -96,6 +96,13 @@ namespace Game.Narrative.Tests
                 Button(Page("EUIMainPage"),"Btn_Start").onClick.Invoke();
                 yield return Wait(()=>Session?.Snapshot.State==NarrativeState.Revealing && Session.Snapshot.PauseReasons.Count==0 && !NovelLoadInProgress && !Page("EUILoadingPage"),"新游戏揭幕未完成");
                 var session=Session; var reader=Page("EUINovelReaderPage");
+                // Leave the chapter card through its public advance path before testing reading controls.
+                var title = session.Snapshot.CommandId;
+                session.Advance(Time.frameCount); yield return null;
+                session.Advance(Time.frameCount);
+                Assert.IsTrue(session.TextTransitionActive, "章节卡应先渐隐");
+                yield return Wait(() => session.Snapshot.CommandId != title && session.Snapshot.State == NarrativeState.Revealing,
+                    "章节卡渐隐后未进入正文");
                 session.Advance(Time.frameCount); session.SetReadMode(NarrativeReadMode.Auto);
                 var position=session.Snapshot.CommandId;
                 Button(reader,"History").onClick.Invoke(); yield return Wait(()=>Page("EUINovelHistoryPage"),"历史页未打开");

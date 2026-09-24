@@ -13,6 +13,8 @@ namespace Game.UI
         #region 内部参数
         private IDisposable _pause;
         private float _baseFontSize;
+        private Vector4 _baseMargin;
+        private NovelHistoryAppearance _appearance;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -28,22 +30,22 @@ namespace Game.UI
                 string speaker = string.IsNullOrEmpty(entry.Speaker) ? "旁白" : entry.Speaker;
                 // Fixed columns in font units keep wrapped dialogue aligned below its body.
                 float nameWidth = Entries.GetPreferredValues(speaker).x;
-                float nameScale = Mathf.Min(1, Entries.fontSize * 5.5f / Mathf.Max(1, nameWidth));
-                text.Append("<pos=0><color=#999999><size=")
+                float nameScale = Mathf.Min(1, Entries.fontSize * _appearance.SpeakerWidth / Mathf.Max(1, nameWidth));
+                text.Append("<pos=0><color=#").Append(ColorUtility.ToHtmlStringRGBA(_appearance.SpeakerColor)).Append("><size=")
                     .Append((nameScale * 100).ToString("0.##", CultureInfo.InvariantCulture))
                     .Append("%><noparse>").Append(speaker.Replace("<", "＜").Replace(">", "＞"))
                     .Append("</noparse></size></color>");
-                if (i == history.Count - 1) text.Append("<pos=6em><color=#FFD52A>▶</color>");
-                text.Append("<pos=7em><indent=7em>").Append((entry.Text ?? string.Empty).Replace("<", "<noparse><</noparse>")).Append("</indent>");
+                if (i == history.Count - 1) text.Append("<pos=").Append(_appearance.MarkerPosition.ToString(CultureInfo.InvariantCulture)).Append("em><color=#").Append(ColorUtility.ToHtmlStringRGBA(_appearance.LatestMarkerColor)).Append(">▶</color>");
+                text.Append("<pos=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em><indent=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em>").Append((entry.Text ?? string.Empty).Replace("<", "<noparse><</noparse>")).Append("</indent>");
                 if (i < history.Count - 1) text.Append("\n\n");
             }
             Entries.text = text.Length == 0 ? "尚无已完整显示的对白。" : text.ToString();
             Canvas.ForceUpdateCanvases();
             // Short histories sit in the middle; long histories open at the latest line.
-            Entries.margin = Vector4.zero;
+            Entries.margin = _baseMargin;
             float height = Entries.GetPreferredValues(Entries.text, HistoryScroll.viewport.rect.width, Mathf.Infinity).y;
-            float padding = Mathf.Max(0, (HistoryScroll.viewport.rect.height - height) * .5f);
-            Entries.margin = new Vector4(0, padding, 0, padding);
+            float padding = _appearance.CenterShortHistory ? Mathf.Max(0, (HistoryScroll.viewport.rect.height - height) * .5f) : 0;
+            Entries.margin = _baseMargin + new Vector4(0, padding, 0, padding);
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(Entries.rectTransform);
             Canvas.ForceUpdateCanvases();
             HistoryScroll.StopMovement();
@@ -54,7 +56,7 @@ namespace Game.UI
         #region 外部方法
         public override void OnInit()
         {
-            base.OnInit(); _baseFontSize = Entries.fontSize; Close.onClick.AddListener(ClosePage); Saves.onClick.AddListener(OpenSaves);
+            base.OnInit(); _baseFontSize = Entries.fontSize; _baseMargin = Entries.margin; _appearance = Entries.GetComponent<NovelHistoryAppearance>(); Close.onClick.AddListener(ClosePage); Saves.onClick.AddListener(OpenSaves);
         }
         public override void OnOpen(object param)
         {

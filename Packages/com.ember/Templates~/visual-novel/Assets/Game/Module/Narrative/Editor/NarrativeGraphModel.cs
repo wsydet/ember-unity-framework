@@ -234,6 +234,14 @@ namespace Game.Narrative.Editor
                     item.FindPropertyRelative("_cameraZoom").floatValue = 1;
                     item.FindPropertyRelative("_wipeDirection").enumValueIndex = 0;
                     item.FindPropertyRelative("_textMode").enumValueIndex = 0;
+                    item.FindPropertyRelative("_textEffectsVersion").intValue = 1;
+                    item.FindPropertyRelative("_textReveal").enumValueIndex = 0;
+                    item.FindPropertyRelative("_textFadeDuration").floatValue = .8f;
+                    item.FindPropertyRelative("_titleExitDuration").floatValue = .65f;
+                    item.FindPropertyRelative("_textSpeedMultiplier").floatValue = 1;
+                    item.FindPropertyRelative("_textEase").enumValueIndex = (int)NovelEase.SmoothStep;
+                    item.FindPropertyRelative("_stepGroupId").stringValue = "";
+                    item.FindPropertyRelative("_stepGroupName").stringValue = "";
                     item.FindPropertyRelative("_textBeats").ClearArray();
                     item.FindPropertyRelative("_dialogueVisible").boolValue = true;
                     item.FindPropertyRelative("_persistent").boolValue = false;

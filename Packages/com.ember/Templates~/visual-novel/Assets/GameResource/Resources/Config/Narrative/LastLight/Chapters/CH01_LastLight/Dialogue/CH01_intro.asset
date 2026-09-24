@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
   _nodeId: last_light_intro
   _chapterId: last_light_ch01
-  _contentRevision: 10
+  _contentRevision: 11
   _commands:
   - _commandId: last_light_intro_stage_e5_reset
     _kind: 28
@@ -121,6 +121,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: a3a4274af6704a5796fd0802cbeba442
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_intro_stage_background_reset"
     _kind: 8
     _lineId: ""
@@ -153,6 +156,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: a3a4274af6704a5796fd0802cbeba442
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_intro_stage_emphasis_reset"
     _kind: 16
     _lineId: ""
@@ -185,8 +191,11 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: a3a4274af6704a5796fd0802cbeba442
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_intro_stage_clear_0"
-    _kind: 4
+    _kind: 30
     _lineId: ""
     _textRevision: 1
     _characterId: ""
@@ -217,70 +226,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_clear_1"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 1
-    _visualAction: 2
-    _instanceId: ""
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
-    _waitActions: []
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_clear_2"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 2
-    _visualAction: 2
-    _instanceId: ""
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
-    _waitActions: []
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
+    _stepGroupId: 4bb965dc78d044a2ac71fd3544a8ab23
+    _stepGroupName: "隐藏所有立绘"
+    _stepGroupColor: {r: 0.55, g: 0.8, b: 0.6, a: 1}
   - _commandId: "last_light_intro_stage_wan"
     _kind: 4
     _lineId: ""
@@ -394,6 +342,9 @@ MonoBehaviour:
     _persistent: 1
     _keepOnSceneChange: 1
     _layer: 5
+    _stepGroupId: b8a84fbfc8da40be9b595a8ceef73930
+    _stepGroupName: "房间微尘与环境风声"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: "CH01_intro_e3_wind"
     _kind: 24
     _duration: 1.5
@@ -404,6 +355,9 @@ MonoBehaviour:
     _instanceId: "roof-wind"
     _parallel: 1
     _keepOnSceneChange: 1
+    _stepGroupId: b8a84fbfc8da40be9b595a8ceef73930
+    _stepGroupName: "房间微尘与环境风声"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_intro_e4_title
     _kind: 0
     _lineId: last_light_intro_e4_title
@@ -412,6 +366,12 @@ MonoBehaviour:
     _text: 最后一盏灯
     _resourceKey:
     _textMode: 1
+    _textEffectsVersion: 1
+    _textReveal: 2
+    _textFadeDuration: 1
+    _titleExitDuration: 0.8
+    _textSpeedMultiplier: 1
+    _textEase: 1
     _dialogueVisible: 1
     _textBeats:
     - _at: 0
@@ -753,6 +713,9 @@ MonoBehaviour:
     _ease: 1
     _cameraZoom: 1.12
     _position: {x: 0, y: 0}
+    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
+    _stepGroupName: "回忆氛围"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_intro_stage_e5_warm
     _kind: 18
     _actionId: last_light_intro_stage_e5_warm
@@ -760,6 +723,9 @@ MonoBehaviour:
     _parallel: 1
     _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
     _opacity: 0.08
+    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
+    _stepGroupName: "回忆氛围"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_intro_010
     _kind: 0
     _textMode: 0
@@ -824,6 +790,9 @@ MonoBehaviour:
     _ease: 1
     _cameraZoom: 1
     _position: {x: 0, y: 0}
+    _stepGroupId: e391c6db7b134e4881a27b9e6303f462
+    _stepGroupName: "回忆氛围复位"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_intro_stage_e5_clear
     _kind: 18
     _actionId: last_light_intro_stage_e5_clear
@@ -831,6 +800,9 @@ MonoBehaviour:
     _parallel: 1
     _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
     _opacity: 0
+    _stepGroupId: e391c6db7b134e4881a27b9e6303f462
+    _stepGroupName: "回忆氛围复位"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_intro_011
     _kind: 0
     _lineId: last_light_line_intro_011

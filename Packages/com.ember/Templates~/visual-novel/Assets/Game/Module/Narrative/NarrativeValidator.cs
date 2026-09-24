@@ -92,6 +92,7 @@ namespace Game.Narrative
                         string.IsNullOrWhiteSpace(c.ActionId) || !NovelActionHandle.ValidTime(c.Delay) ||
                         !NovelActionHandle.ValidTime(c.Opacity) || c.Opacity > 1))
                         Error("BadAction", "透明度动作需要有效目标、动作 ID、0–1 透明度和非负延迟；遮罩请用 Cover/Flash，粒子实例使用 EffectPlay/EffectStop", node.Id, c.CommandId);
+                    if (c.Kind == NovelCommandKind.HideAllCharacters && !Enum.IsDefined(typeof(NovelEase), c.Ease)) Error("BadEase", "隐藏全部立绘的缓动无效", node.Id, c.CommandId);
                     string cameraError = NovelCameraRules.Validate(c);
                     if (cameraError != null) Error("BadCamera", cameraError, node.Id, c.CommandId);
                     string textError = NovelTextRules.Validate(c);

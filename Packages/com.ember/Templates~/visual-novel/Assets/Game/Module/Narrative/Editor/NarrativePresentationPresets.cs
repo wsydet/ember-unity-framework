@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Narrative.Editor
 {
-    public enum NarrativePresetKind { Entrance, Impact, Memory, Reset }
+    public enum NarrativePresetKind { Entrance, Impact, Memory, Reset, HideAll, RestoreStage, SceneCleanup }
     /// <summary>Author-time expansion into ordinary commands. No runtime macro interpreter or shared mutable preset state.</summary>
     public static class NarrativePresentationPresets
     {
@@ -21,6 +21,10 @@ namespace Game.Narrative.Editor
             if (kind == NarrativePresetKind.Entrance && string.IsNullOrWhiteSpace(portrait)) throw new ArgumentException("进场需要立绘资源键");
             var result = new List<NovelCommand>(); var waits = new List<string>();
             void Add(NovelCommand c) { result.Add(c); if (!string.IsNullOrEmpty(c.ActionId)) waits.Add(c.ActionId); }
+            if (kind == NarrativePresetKind.HideAll)
+                return new[] { new NovelCommand(prefix + "-hide-all", NovelCommandKind.HideAllCharacters, duration: duration, ease: NovelEase.SmoothStep) };
+            if (kind == NarrativePresetKind.SceneCleanup)
+                result.Add(new NovelCommand(prefix + "-hide-all", NovelCommandKind.HideAllCharacters, duration: duration, ease: NovelEase.SmoothStep));
             if (kind == NarrativePresetKind.Entrance)
             {
                 Add(new NovelCommand(prefix + "-show", NovelCommandKind.Character, resourceKey: portrait, instanceId: actor, slot: slot,
@@ -38,11 +42,17 @@ namespace Game.Narrative.Editor
             }
             else
             {
-                bool reset = kind == NarrativePresetKind.Reset;
+                bool reset = kind != NarrativePresetKind.Memory;
                 Add(new NovelCommand(prefix + "-camera", NovelCommandKind.Camera, actionId: prefix + "-camera", cameraZoom: reset ? 1 : 1 + .1f * strength,
                     duration: duration, ease: NovelEase.SmoothStep, parallel: true));
                 Add(new NovelCommand(prefix + "-cover", NovelCommandKind.Cover, actionId: prefix + "-cover", duration: duration,
                     color: new Color(.6f, .43f, .25f, 1), opacity: reset ? 0 : .08f * strength, parallel: true));
+            }
+            if (kind == NarrativePresetKind.RestoreStage || kind == NarrativePresetKind.SceneCleanup)
+            {
+                Add(new NovelCommand(prefix + "-opacity", NovelCommandKind.Opacity, targetKind: NovelTargetKind.Stage, opacity: 1, actionId: prefix + "-opacity", duration: duration, parallel: true));
+                result.Add(new NovelCommand(prefix + "-emphasis", NovelCommandKind.Emphasis, emphasisMode: NovelEmphasisMode.Off));
+                result.Add(new NovelCommand(prefix + "-dialogue", NovelCommandKind.DialogueVisibility, dialogueVisible: true));
             }
             result.Add(new NovelCommand(prefix + "-wait", NovelCommandKind.WaitActions, waitActions: waits.ToArray()));
             return result.AsReadOnly();

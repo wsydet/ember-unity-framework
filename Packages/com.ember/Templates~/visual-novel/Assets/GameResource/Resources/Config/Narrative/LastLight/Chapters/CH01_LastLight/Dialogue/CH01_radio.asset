@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
   _nodeId: last_light_radio
   _chapterId: last_light_ch01
-  _contentRevision: 7
+  _contentRevision: 8
   _commands:
   - _commandId: last_light_radio_stage_e5_reset
     _kind: 28
@@ -121,6 +121,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: 662dec5c217443bbb9d95f6fff98d854
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_radio_stage_background_reset"
     _kind: 8
     _lineId: ""
@@ -153,6 +156,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: 662dec5c217443bbb9d95f6fff98d854
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_radio_stage_emphasis_reset"
     _kind: 16
     _lineId: ""
@@ -185,8 +191,11 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _stepGroupId: 662dec5c217443bbb9d95f6fff98d854
+    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
   - _commandId: "last_light_radio_stage_clear_0"
-    _kind: 4
+    _kind: 30
     _lineId: ""
     _textRevision: 1
     _characterId: ""
@@ -217,70 +226,9 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_radio_stage_clear_1"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 1
-    _visualAction: 2
-    _instanceId: ""
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
-    _waitActions: []
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
-  - _commandId: "last_light_radio_stage_clear_2"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 2
-    _visualAction: 2
-    _instanceId: ""
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
-    _waitActions: []
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
+    _stepGroupId: 0c771165a4d841c29448296c6ea842b0
+    _stepGroupName: "隐藏所有立绘"
+    _stepGroupColor: {r: 0.55, g: 0.8, b: 0.6, a: 1}
   - _commandId: "last_light_radio_stage_wan"
     _kind: 4
     _lineId: ""
@@ -420,6 +368,9 @@ MonoBehaviour:
     _persistent: 1
     _keepOnSceneChange: 1
     _layer: 5
+    _stepGroupId: 00fd2b7523e04709bc396cca981118e8
+    _stepGroupName: "房间微尘与环境风声"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: "CH01_radio_e3_wind"
     _kind: 24
     _duration: 1.5
@@ -430,6 +381,9 @@ MonoBehaviour:
     _instanceId: "roof-wind"
     _parallel: 1
     _keepOnSceneChange: 1
+    _stepGroupId: 00fd2b7523e04709bc396cca981118e8
+    _stepGroupName: "房间微尘与环境风声"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
   - _commandId: last_light_radio_001
     _kind: 0
     _lineId: last_light_line_radio_001

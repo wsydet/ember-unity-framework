@@ -8,6 +8,7 @@ namespace Game.UI
     public partial class EUINovelFontPage
     {
         private IDisposable _pause;
+        private float _previewFontSize;
         private Game.NovelSave.NovelSaveModule _save;
         private void ClosePage() => EUIManager.Instance.ClosePage(Page);
         private void SetSmall() => SelectSize(0);
@@ -22,12 +23,12 @@ namespace Game.UI
             int selected = Mathf.Clamp(_save?.Account?.FontSize ?? 1, 0, 2);
             var buttons = new[] { Small, Medium, Large };
             for (int i = 0; i < buttons.Length; i++)
-                buttons[i].targetGraphic.color = i == selected ? new Color(.65f,.49f,.22f,.55f) : Color.clear;
-            Preview.fontSize = 30 * NovelReadingUI.FontScale;
+                buttons[i].targetGraphic.color = i == selected ? buttons[i].colors.selectedColor : buttons[i].colors.normalColor;
+            Preview.fontSize = _previewFontSize * NovelReadingUI.FontScale;
         }
         public override void OnInit()
         {
-            base.OnInit(); Close.onClick.AddListener(ClosePage);
+            base.OnInit(); _previewFontSize = Preview.fontSize; Close.onClick.AddListener(ClosePage);
             Small.onClick.AddListener(SetSmall); Medium.onClick.AddListener(SetMedium); Large.onClick.AddListener(SetLarge);
         }
         public override void OnOpen(object param)

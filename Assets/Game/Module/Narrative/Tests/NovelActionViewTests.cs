@@ -15,7 +15,7 @@ namespace Game.Narrative.Tests
         private sealed class E0ActualResources : INovelResources
         {
             public INovelAssetLease<T> Load<T>(string path) where T : UnityEngine.Object =>
-                new Lease<T> { IsDone = true, Asset = Resources.Load<T>(path) };
+                new Lease<T> { IsDone = true, Asset = path.StartsWith("Assets/", StringComparison.Ordinal) ? AssetDatabase.LoadAssetAtPath<T>(path) : Resources.Load<T>(path) };
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Game.Narrative.Tests
                 EUIBindingBridge.Attach(page, root.GetComponent<EUIBinding>());
                 page.Logic.OnInit(); root.GetComponent<CanvasGroup>().alpha = 1;
                 var view = (INovelView)page.Logic;
-                session = new NovelSession(new NovelNewGameRequest("Config/Narrative/PresentationE0/Story"), () => _tables, new E0ActualResources());
+                session = new NovelSession(new NovelNewGameRequest("Assets/Game/Module/Narrative/Tests/Fixtures/PresentationE0/E0StoryFixture.asset"), () => _tables, new E0ActualResources());
                 session.AttachView(view); session.Tick(0, 0);
                 int frame = 0; PumpAction(session, "intro", ref frame); session.Advance(++frame); session.Advance(++frame);
                 PumpAction(session, "parallel", ref frame);

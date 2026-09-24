@@ -109,7 +109,13 @@ namespace Game.Narrative
         }
         private void AdvanceCore(long frame)
         {
+            if (_textExiting) return;
             if (AdvanceTextPage(frame)) { Render(); RecordStableLine(); return; }
+            if (BeginTextExit()) return;
+            AdvanceRunnerCore(frame);
+        }
+        private void AdvanceRunnerCore(long frame)
+        {
             var s = _runner.Snapshot;
             if (_runner.Advance(s.SessionGeneration, s.PositionVersion, frame) && s.State == NarrativeState.AwaitingAdvance)
             {

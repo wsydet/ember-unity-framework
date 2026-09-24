@@ -10,10 +10,12 @@ namespace Game.Narrative.Tests
 {
     public sealed partial class NovelSessionTests
     {
-        private sealed class TextView : INovelView, INovelTextView
+        private sealed class TextView : INovelView, INovelTextView, INovelTextEffectsView
         {
             public int Capacity = 4, Start, Visible, Clears;
             public bool StoryVisible = true;
+            public float TextAlpha = 1, CardAlpha = 1;
+            public void SetTextEffects(float textOpacity, float cardOpacity) { TextAlpha = textOpacity; CardAlpha = cardOpacity; }
             public NovelCommand Command;
             public int TextLength => NovelTextRules.Length(Command?.Text);
             public int PrepareText(NovelCommand command, int start)
@@ -258,11 +260,11 @@ namespace Game.Narrative.Tests
                 view.ShowText("旁白", int.MaxValue); view.Flush(); Assert.IsFalse(speaker.gameObject.activeSelf);
                 Assert.AreEqual(TextOverflowModes.Page, body.overflowMode); Assert.IsFalse(body.richText);
                 var formal = (INovelView)typeof(NovelPlaybackView).GetField("_visual", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(view);
-                var baseFont = formal.GetType().GetField("_bodyFontSize", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-                float normalFont = (float)baseFont.GetValue(formal);
-                baseFont.SetValue(formal, normalFont * 1.2f);
+                var narrationStyle = root.GetComponentsInChildren<TMP_Text>(true).Single(t => t.name == "FullScreenBody");
+                float normalFont = narrationStyle.fontSize;
+                narrationStyle.fontSize = normalFont * 1.2f;
                 Assert.Less(view.PrepareText(longCommand, 0), end, "A larger font must invalidate measured page boundaries.");
-                baseFont.SetValue(formal, normalFont);
+                narrationStyle.fontSize = normalFont;
                 var ordinary = new NovelCommand("line", NovelCommandKind.Say, "正文", "line");
                 view.PrepareText(ordinary, 0); view.ShowText("林晚", int.MaxValue);
                 Assert.AreEqual(originalMin, body.rectTransform.anchorMin); Assert.AreEqual(originalMax, body.rectTransform.anchorMax);

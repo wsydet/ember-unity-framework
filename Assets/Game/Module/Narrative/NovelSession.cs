@@ -85,6 +85,7 @@ namespace Game.Narrative
             PrepareText(command, snapshot.State == NarrativeState.AwaitingAdvance);
             (_view as INovelTextView)?.SetStoryDialogueVisible(StoryDialogueVisible);
             _view.Render(snapshot, command, speaker, visible, status);
+            RenderTextEffects();
         }
         private void Prepare()
         {
@@ -104,6 +105,7 @@ namespace Game.Narrative
             var snapshot = _runner.Snapshot;
             var command = _runner.CurrentCommand;
             if ((_runner.Snapshot.Wait & NarrativeWait.Presentation) == 0) return;
+            if (command.Kind == NovelCommandKind.HideAllCharacters) { PresentHideAll(command, snapshot, delta); return; }
             if (command.Kind == NovelCommandKind.DialogueVisibility)
             { StoryDialogueVisible = command.DialogueVisible; _runner.CompletePresentation(snapshot.SessionGeneration, snapshot.PositionVersion); return; }
             if (NovelMediaRules.IsMedia(command.Kind) && (command.Kind != NovelCommandKind.BGM || _audio is INovelLoopAudio))
@@ -211,6 +213,7 @@ namespace Game.Narrative
                 TickActions(Mathf.Max(0, delta) * ReadingMultiplier);
                 _audio.SetPaused(false);
                 _audio.Tick();
+                if (TickTextExit(Mathf.Max(0, delta), frame)) return;
                 var snapshot = _runner.Snapshot;
                 if (snapshot.State == NarrativeState.Revealing || snapshot.State == NarrativeState.AwaitingAdvance) TickLineVoice();
                 if (snapshot.State == NarrativeState.Revealing)

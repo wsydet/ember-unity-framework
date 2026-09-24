@@ -81,7 +81,7 @@ namespace Game.Narrative.Editor
                 }
                 finally { UnityEngine.Object.DestroyImmediate(actions); }
             }
-            var story=AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/Story.asset");
+            var story=AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/M1StoryFixture.asset");
             foreach(var chapter in story.Chapters)
             {
                 var intro=chapter.Entry as NarrativeDialogueSO;

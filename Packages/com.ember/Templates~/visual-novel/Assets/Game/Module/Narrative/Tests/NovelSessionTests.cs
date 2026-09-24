@@ -211,7 +211,7 @@ namespace Game.Narrative.Tests
                 Assert.IsFalse(committed); Assert.IsFalse(original.IsDisposed);
                 Assert.AreEqual("say1", original.Snapshot.CommandId); Assert.AreEqual(0, view.Clears);
             }
-            finally { module.OnDestroy(); }
+            finally { ((Ember.Core.IEmberModule)module).OnDestroy(); }
         }
 
         [Test]

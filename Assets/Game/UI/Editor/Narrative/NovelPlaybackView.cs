@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Game.UI.Editor
 {
     /// <summary>Formal reader stage with editor-owned text/input; never opens a page through the game manager.</summary>
-    public sealed class NovelPlaybackView : INovelView, INovelOpacityView, INovelActorView, INovelScreenView, INovelEffectView, INovelTextView, INovelCameraView, INovelWipeView, IDisposable
+    public sealed class NovelPlaybackView : INovelView, INovelOpacityView, INovelActorView, INovelScreenView, INovelEffectView, INovelTextView, INovelTextEffectsView, INovelCameraView, INovelWipeView, IDisposable
     {
         #region 内部参数
         private readonly EUIPage _page;
@@ -110,6 +110,7 @@ namespace Game.UI.Editor
             if (_body) { _body.text = string.Empty; _body.maxVisibleCharacters = int.MaxValue; }
             if (_speaker) _speaker.text = string.Empty;
         }
+        public void SetTextEffects(float textOpacity, float cardOpacity) => (_visual as INovelTextEffectsView)?.SetTextEffects(textOpacity, cardOpacity);
         public void Dispose()
         {
             if (_disposed) return;

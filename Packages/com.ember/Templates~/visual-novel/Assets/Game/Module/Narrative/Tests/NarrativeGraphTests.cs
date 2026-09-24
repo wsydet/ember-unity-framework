@@ -315,7 +315,7 @@ namespace Game.Narrative.Tests
         private static void CheckStoryOverview()
         {
             Assert.IsTrue(EditorApplication.isPlaying);
-            var story = AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/Story.asset");
+            var story = AssetDatabase.LoadAssetAtPath<NarrativeStorySO>("Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/M1StoryFixture.asset");
             var catalog = new Catalog(); Assert.IsTrue(story.TryReadDefinition(catalog, out var definition, out _));
             string before = JsonUtility.ToJson(story);
             var runner = new NarrativeRunner(); runner.StartStory(definition, catalog);
