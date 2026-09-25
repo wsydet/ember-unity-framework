@@ -88,9 +88,12 @@ namespace Game.Narrative
         }
         private NovelActionHandle StartAction(NovelCommand command, NarrativeSnapshot snapshot)
         {
-            if (_actions.TryGetValue(command.ActionId, out var previous) && !previous.IsFinished)
-                throw new InvalidOperationException("动作 ID 正在使用：" + command.ActionId);
-            if (!_actions.ContainsKey(command.ActionId) && _actions.Count >= 4096) throw new InvalidOperationException("动作 ID 超过会话上限 4096");
+            // 句柄身份统一取解析值；留空 ActionId 时回退到步骤 ID。Camera / Screen 也在这里就完成
+            // 冲突守卫和上限检查，再委派给各自的 Start*，所以它们内部写入 _actions 时不会再覆盖活动句柄。
+            string handleId = NovelActionHandle.ResolveId(command);
+            if (_actions.TryGetValue(handleId, out var previous) && !previous.IsFinished)
+                throw new InvalidOperationException("动作 ID 正在使用：" + handleId);
+            if (!_actions.ContainsKey(handleId) && _actions.Count >= 4096) throw new InvalidOperationException("动作 ID 超过会话上限 4096");
             if (command.Kind == NovelCommandKind.Camera) return StartCamera(command, snapshot);
             if (NovelScreenRules.IsAction(command.Kind)) return StartScreenAction(command, snapshot);
             bool opacity = command.Kind == NovelCommandKind.Opacity;
@@ -107,7 +110,7 @@ namespace Game.Narrative
             }
             CancelTarget(kind, id, command.Kind.ToString());
             var action = new NovelActionHandle { Generation = snapshot.SessionGeneration, Sequence = ++_actionSequence,
-                Id = command.ActionId, Kind = command.Kind, Property = command.Kind.ToString(), TargetKind = kind, TargetId = id,
+                Id = handleId, Kind = command.Kind, Property = command.Kind.ToString(), TargetKind = kind, TargetId = id,
                 From = target?.Opacity ?? _stageOpacity, To = command.Opacity, Duration = command.Duration, Delay = command.Delay,
                 Ease = opacity ? NovelEase.Linear : command.Ease, Gesture = command.Gesture, Strength = command.Strength, ExitAfterMove = command.ExitAfterMove };
             switch (command.Kind)
@@ -121,7 +124,7 @@ namespace Game.Narrative
                 case NovelCommandKind.Mirror: action.To = command.Mirror ? 1 : 0; break;
                 case NovelCommandKind.Layer: action.To = command.Layer; break;
             }
-            _actions[command.ActionId] = action; _runningActions.Add(action); return action;
+            _actions[handleId] = action; _runningActions.Add(action); return action;
         }
         private void WriteAction(NovelActionHandle action, float progress)
         {

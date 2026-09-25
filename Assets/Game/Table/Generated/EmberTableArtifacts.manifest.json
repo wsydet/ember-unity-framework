@@ -6,10 +6,22 @@
         "Assets/Game/Table/Generated/Game_Table_NovelAudioRowTableBinding.TableBinding.g.cs",
         "Assets/Game/Table/Generated/Game_Table_NovelBackgroundRowTableBinding.TableBinding.g.cs",
         "Assets/Game/Table/Generated/Game_Table_NovelCharacterRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelContentTextRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelLanguageRowTableBinding.TableBinding.g.cs",
         "Assets/Game/Table/Generated/Game_Table_NovelPortraitRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelSkinRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelSkinSpriteRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelStorySkinRowTableBinding.TableBinding.g.cs",
+        "Assets/Game/Table/Generated/Game_Table_NovelUiTextRowTableBinding.TableBinding.g.cs",
         "Assets/GameResource/Resources/Config/Tables/novel_audio.bytes",
         "Assets/GameResource/Resources/Config/Tables/novel_backgrounds.bytes",
         "Assets/GameResource/Resources/Config/Tables/novel_characters.bytes",
-        "Assets/GameResource/Resources/Config/Tables/novel_portraits.bytes"
+        "Assets/GameResource/Resources/Config/Tables/novel_content_text.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_languages.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_portraits.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_skin_sprites.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_skins.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_story_skin.bytes",
+        "Assets/GameResource/Resources/Config/Tables/novel_ui_text.bytes"
     ]
 }

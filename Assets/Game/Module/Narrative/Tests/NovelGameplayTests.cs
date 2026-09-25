@@ -5,7 +5,6 @@ using Ember.UIExtension;
 using Ember.UI;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -138,8 +137,7 @@ namespace Game.Narrative.Tests
         [UnityTest]
         public IEnumerator MainMenuContinueLoadsDirectlyAndLoadOpensChooser()
         {
-            EditorSceneManager.OpenScene("Assets/Game/Scenes/FrameworkScene.unity");
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             bool background = Application.runInBackground; Application.runInBackground = true;
             try
             {
@@ -265,24 +263,28 @@ namespace Game.Narrative.Tests
                 Assert.AreEqual("读档成功", saves.Message);
             }
             finally { Application.runInBackground = background; }
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
 
         [UnityTest]
         public IEnumerator RealMenuReaderBranchEndingAndRepeatedExit()
         {
-            EditorSceneManager.OpenScene("Assets/Game/Scenes/FrameworkScene.unity");
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             bool background = Application.runInBackground;
             Application.runInBackground = true;
             try { yield return CheckGameplay(); }
             finally { Application.runInBackground = background; }
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
         [UnityTearDown]
         public IEnumerator ExitAfterFailedGameplayCheck()
         {
-            if (EditorApplication.isPlaying) yield return new ExitPlayMode();
+            // ExitPlayMode 必须由本方法直接 yield：在 [UnitySetUp]/[UnityTearDown] 里
+            // 通过嵌套枚举器（包一层 helper）yield 退出指令会被框架拒绝，报
+            // "Nested enumerators are not allowed to yield ExitPlayMode"。
+            NovelPlayModeScenes.DiscardUnsavedScenes();
+            if (EditorApplication.isPlayingOrWillChangePlaymode) yield return new ExitPlayMode();
+            NovelPlayModeScenes.DiscardUnsavedScenes();
         }
         private IEnumerator CheckGameplay()
         {

@@ -38,6 +38,15 @@ namespace Game.Narrative
         #region 外部方法
         [NoGC]
         public static bool ValidTime(float value) => !float.IsNaN(value) && !float.IsInfinity(value) && value >= 0;
+
+        /// <summary>
+        /// 句柄身份的唯一真源：填充 ActionId 时用它，留空时回退到步骤 ID。
+        /// 步骤 ID 已由校验器保证章节内唯一，因此回退不会破坏唯一性。
+        /// 只在运行期解析句柄；存档指纹继续写原始字段，老剧情指纹逐字节不变。
+        /// </summary>
+        [NoGC]
+        public static string ResolveId(NovelCommand command) =>
+            string.IsNullOrWhiteSpace(command.ActionId) ? command.CommandId : command.ActionId;
         #endregion
     }
 

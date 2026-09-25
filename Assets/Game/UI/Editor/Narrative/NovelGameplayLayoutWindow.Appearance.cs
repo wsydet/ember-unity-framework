@@ -26,6 +26,8 @@ namespace Game.UI.Editor
         [SerializeField] private List<StyleValue> _styles = new();
         [SerializeField] private string _detailKey;
         [SerializeField] private bool _showHitArea;
+        // 皮肤清单按钮用的目标皮肤标识：留空则复制成 SKINID 占位，便于先取行再决定皮肤名。
+        [SerializeField] private string _skinId = "lastlight_alt";
         private string SelectedKey => !string.IsNullOrEmpty(_detailKey) && _targets.ContainsKey(_detailKey) ? _detailKey : Keys[_selected];
         #endregion
 
@@ -158,6 +160,28 @@ namespace Game.UI.Editor
                 EditorGUILayout.HelpBox("整体是推进点击范围；在子元素中选择箭头换图。请保持整体覆盖底部对白区域。", MessageType.Info);
             if (GUILayout.Button("还原此元素到已保存状态")) RestoreAppearanceElement(rect);
             _showHitArea = EditorGUILayout.Toggle("显示推进点击范围", _showHitArea);
+
+            GUILayout.Space(8);
+            GUILayout.Label("皮肤覆盖", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("皮肤只换图片，不改位置与大小；这一行填进 novel_skin_sprites 即可。" +
+                "覆盖值必须是项目 Resources 下的图片，Unity 内置图片无法用路径表示。", MessageType.None);
+            _skinId = EditorGUILayout.TextField("目标皮肤", _skinId);
+            if (GUILayout.Button("把此元素加入皮肤清单（复制 CSV 行）"))
+            {
+                if (!rect.TryGetComponent<Image>(out _)) _message = "此元素上没有 Image；皮肤本期只覆盖图片。";
+                else if (!NovelSkinImageCatalog.TryDescribe(rect, out string page, out string control, out string node, out string spritePath))
+                    _message = "无法定位页面，未复制任何内容。";
+                else
+                {
+                    // 内置图没有可寻址路径：仍给出定位信息，路径留占位提醒换成项目图片。
+                    string path = string.IsNullOrEmpty(spritePath) ? "UI/Common/Atlas/Novel/换成项目图片" : spritePath;
+                    EditorGUIUtility.systemCopyBuffer = NovelSkinImageCatalog.BuildRow(
+                        string.IsNullOrWhiteSpace(_skinId) ? "SKINID" : _skinId.Trim(), page, control, node, path);
+                    _message = string.IsNullOrEmpty(spritePath)
+                        ? "当前图片是 Unity 内置资源（无法用路径表示），已复制带占位路径的行。"
+                        : "已复制到剪贴板：" + EditorGUIUtility.systemCopyBuffer;
+                }
+            }
         }
 
         private void RestoreAppearanceElement(RectTransform rect)

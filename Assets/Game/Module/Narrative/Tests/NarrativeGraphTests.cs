@@ -275,7 +275,7 @@ namespace Game.Narrative.Tests
         {
             TestContext.WriteLine("Observation: entering Play Mode");
             EditorApplication.isPaused = false;
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             EditorApplication.isPaused = false;
             bool background = Application.runInBackground;
             Application.runInBackground = true;
@@ -288,7 +288,7 @@ namespace Game.Narrative.Tests
             }
             finally { Application.runInBackground = background; }
             TestContext.WriteLine("Observation: exiting Play Mode");
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
             var afterExit = ScriptableObject.CreateInstance<NarrativeGraphWindow>();
             try { Assert.IsNull(afterExit.ObservedSnapshot); }
             finally { Object.DestroyImmediate(afterExit); }
@@ -298,19 +298,24 @@ namespace Game.Narrative.Tests
         {
             TestContext.WriteLine("Overview: entering Play Mode");
             EditorApplication.isPaused = false;
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             EditorApplication.isPaused = false;
             // ShowStory and runner notifications update the observed model synchronously.
             // This test checks that model, not a rendered frame or scheduled graph framing.
             TestContext.WriteLine("Overview: checking synchronous cross-chapter observation in Play Mode");
             CheckStoryOverview();
             TestContext.WriteLine("Overview: exiting Play Mode");
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
         [UnityTearDown]
         public IEnumerator ExitAfterFailedObservationCheck()
         {
-            if (EditorApplication.isPlaying) yield return new ExitPlayMode();
+            // ExitPlayMode 必须由本方法直接 yield：在 [UnitySetUp]/[UnityTearDown] 里
+            // 通过嵌套枚举器（包一层 helper）yield 退出指令会被框架拒绝，报
+            // "Nested enumerators are not allowed to yield ExitPlayMode"。
+            NovelPlayModeScenes.DiscardUnsavedScenes();
+            if (EditorApplication.isPlayingOrWillChangePlaymode) yield return new ExitPlayMode();
+            NovelPlayModeScenes.DiscardUnsavedScenes();
         }
         private static void CheckStoryOverview()
         {

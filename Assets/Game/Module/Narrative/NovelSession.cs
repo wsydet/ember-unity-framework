@@ -78,7 +78,7 @@ namespace Game.Narrative
             if (command?.Kind == NovelCommandKind.Say && !ReferenceEquals(_revealing, command))
             { _revealing = command; _visible = 0; }
             string speaker = "";
-            if (command != null && _catalog != null && _catalog.TryGetCharacter(command.CharacterId, out var row)) speaker = row.DisplayName;
+            if (command != null && _catalog != null && _catalog.TryGetCharacter(command.CharacterId, out var row)) speaker = NovelLocalization.CharacterName(command.CharacterId, row.DisplayName);
             string status = snapshot.Error?.ToString() ?? (snapshot.State == NarrativeState.Ended ? "结局 · " + snapshot.EndingId
                 : !_started ? "正在准备配表、页面与剧情…" : snapshot.PauseReasons.Count > 0 ? "已暂停" : "");
             int visible = snapshot.State == NarrativeState.AwaitingAdvance ? int.MaxValue : (int)_visible;

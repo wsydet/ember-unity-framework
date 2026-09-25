@@ -37,6 +37,7 @@ namespace Game.UI
             base.OnInit(); Close.onClick.AddListener(ClosePage); Saves.onClick.AddListener(OpenSaves);
             QuickSave.onClick.AddListener(SaveQuick); QuickLoad.onClick.AddListener(LoadQuick);
             Settings.onClick.AddListener(OpenSettings); ReadSkip.onClick.AddListener(StartSkip); ReturnMenu.onClick.AddListener(ReturnMain);
+            NovelSkin.Apply(this, "EUINovelReadingMenuPage");
         }
         public override void OnOpen(object param)
         {

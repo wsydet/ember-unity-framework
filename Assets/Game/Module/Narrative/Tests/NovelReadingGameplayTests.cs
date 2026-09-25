@@ -5,7 +5,6 @@ using Ember.Audio;
 using Ember.Core;
 using Game.NovelSave;
 using NUnit.Framework;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -16,8 +15,7 @@ namespace Game.Narrative.Tests
         [UnityTest]
         public IEnumerator DialogueRegionAndSpaceAdvanceWithoutClickThrough()
         {
-            EditorSceneManager.OpenScene("Assets/Game/Scenes/FrameworkScene.unity");
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             bool background = Application.runInBackground;
             Application.runInBackground = true;
             // Keep the settings object alive across the Input System's Play Mode/domain snapshots.
@@ -78,14 +76,13 @@ namespace Game.Narrative.Tests
                 inputSettings.backgroundBehavior = previousBackgroundBehavior;
                 Application.runInBackground = background;
             }
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
 
         [UnityTest]
         public IEnumerator M4RealHistorySaveNestingAndHiddenDialogueKeepPresentation()
         {
-            EditorSceneManager.OpenScene("Assets/Game/Scenes/FrameworkScene.unity");
-            yield return new EnterPlayMode(); bool background=Application.runInBackground; Application.runInBackground=true;
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode(); bool background=Application.runInBackground; Application.runInBackground=true;
             try
             {
                 yield return Wait(()=>Page("EUIMainPage"),"主菜单未就绪");
@@ -139,17 +136,16 @@ namespace Game.Narrative.Tests
                 Assert.IsTrue(session.IsDisposed);
             }
             finally { Application.runInBackground=background; }
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
 
         [UnityTest]
         public IEnumerator M4VoiceHandleCompletionPauseVolumeAndBgmSfxRegression()
         {
-            EditorSceneManager.OpenScene("Assets/Game/Scenes/FrameworkScene.unity");
-            yield return new EnterPlayMode();
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
             // Create captured playback state after the domain reload, inside a fresh iterator.
             yield return VerifyVoiceHandlePlayback();
-            yield return new ExitPlayMode();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
         }
 
         private IEnumerator VerifyVoiceHandlePlayback()

@@ -47,7 +47,8 @@ namespace Game.Narrative
             k >= NovelCommandKind.BGMStop && k <= NovelCommandKind.AmbientVolume;
         [NoGC] public static bool IsMedia(NovelCommandKind k) => IsAudio(k) || k == NovelCommandKind.EffectPlay || k == NovelCommandKind.EffectStop;
         [NoGC] public static bool NeedsResource(NovelCommandKind k) => k == NovelCommandKind.BGM || k == NovelCommandKind.AmbientPlay || k == NovelCommandKind.EffectPlay;
-        [NoGC] public static string ActionId(NovelCommand c) => string.IsNullOrEmpty(c.ActionId) ? c.CommandId : c.ActionId;
+        // 句柄解析只有一处真源；保留原签名与既有调用点，不在这里复制回退规则。
+        [NoGC] public static string ActionId(NovelCommand c) => NovelActionHandle.ResolveId(c);
         [HasGC] public static string EffectPath(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;

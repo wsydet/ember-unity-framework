@@ -11,6 +11,8 @@ namespace Game.Narrative
         #region 编辑器面板参数
         [SerializeField] private string _storyId = Guid.NewGuid().ToString("N");
         [SerializeField] private string _displayName;
+        /// <summary>剧情显示名的多语言 Key；留空用 _displayName。</summary>
+        [SerializeField] private string _displayNameKey;
         [SerializeField] private int _revision = 1;
         [SerializeField] private NarrativeChapterSO _entry;
         [SerializeField] private List<NarrativeChapterSO> _chapters = new();
@@ -21,6 +23,8 @@ namespace Game.Narrative
         #region 内部参数
         public string StoryId => _storyId;
         public string DisplayName => string.IsNullOrWhiteSpace(_displayName) ? name : _displayName;
+        /// <summary>运行期显示名：填了 Key 就取当前语言，否则用 DisplayName（源语言）。</summary>
+        public string LocalizedDisplayName => NovelLocalization.TryGetContent(_displayNameKey, out string localized) ? localized : DisplayName;
         public NarrativeChapterSO Entry => _entry;
         public IReadOnlyList<NarrativeChapterSO> Chapters => _chapters.AsReadOnly();
         public IReadOnlyList<NovelVariable> Globals => _globals.AsReadOnly();
@@ -51,7 +55,7 @@ namespace Game.Narrative
                 if (!link.Fallback || !_chapters.Contains(link.Fallback) || link.Routes.Any(r => r == null || !r.Target || !_chapters.Contains(r.Target)))
                     failures.Add(new NarrativeError("BadStory", "路线必须直接引用本剧情已登记章节", link.Source?.ChapterId, link.Exit?.NodeId));
                 exits.Add(new NovelChapterExit(link.Source?.ChapterId, link.Exit?.NodeId, link.Fallback?.ChapterId,
-                    link.Routes.Select(r => r == null ? null : new NovelRoute(r.Id, r.Text, r.Target?.ChapterId,
+                    link.Routes.Select(r => r == null ? null : new NovelRoute(r.Id, r.LocalizedText, r.Target?.ChapterId,
                         r.Condition == null ? null : JsonUtility.FromJson<NovelCondition>(JsonUtility.ToJson(r.Condition)))).ToList()));
             }
             var story = new NovelStory(_storyId, _revision, _entry?.ChapterId, chapters,
@@ -87,6 +91,8 @@ namespace Game.Narrative
         #region 编辑器面板参数
         [SerializeField] private string _id = Guid.NewGuid().ToString("N");
         [SerializeField] private string _text;
+        /// <summary>路线文字的多语言 Key；留空用 _text。</summary>
+        [SerializeField] private string _textKey;
         [SerializeField] private NovelCondition _condition = new();
         [SerializeField] private NarrativeChapterSO _target;
         #endregion
@@ -94,6 +100,8 @@ namespace Game.Narrative
         #region 内部参数
         public string Id => _id;
         public string Text => _text;
+        public string TextKey => _textKey;
+        public string LocalizedText => NovelLocalization.TryGetContent(_textKey, out string localized) ? localized : _text;
         public NovelCondition Condition => _condition;
         public NarrativeChapterSO Target => _target;
         #endregion

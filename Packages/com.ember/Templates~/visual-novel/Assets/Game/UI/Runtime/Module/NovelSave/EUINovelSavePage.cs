@@ -47,7 +47,7 @@ namespace Game.UI
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public override void OnInit() { base.OnInit(); Close.onClick.AddListener(ClosePage); }
+        public override void OnInit() { base.OnInit(); Close.onClick.AddListener(ClosePage); NovelSkin.Apply(this, "EUINovelSavePage"); }
         public override void OnOpen(object param)
         {
             base.OnOpen(param); _confirmSlot = -1; _save = NovelSaveUI.Module;

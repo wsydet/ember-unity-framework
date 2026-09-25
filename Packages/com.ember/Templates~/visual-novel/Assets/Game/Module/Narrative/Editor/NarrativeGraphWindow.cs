@@ -36,6 +36,7 @@ namespace Game.Narrative.Editor
         private NarrativeStoryGraphView _storyGraph;
         private ObjectField _storyField;
         private Toolbar _chapterToolbar;
+        private ToolbarMenu _languageMenu;
         private SerializedObject _storyContent;
         private SerializedObject _overviewContent;
         private NarrativeChapterSO _existingChapter;
@@ -118,6 +119,7 @@ namespace Game.Narrative.Editor
             Button(global, "章节总览", () => ShowStory(_story));
             Button(global, "保存剧情", () => TryEdit(() => NarrativeStoryModel.Save(_story)));
             Button(global, "校验剧情", ValidateStory);
+            BuildLanguageMenu(global);
             var create = new ToolbarMenu { text = "新建 ▾" };
             create.menu.AppendAction("新剧情", _ => CreateStory(), _ => WriteStatus(_story, true));
             create.menu.AppendAction("新章节", _ => CreateChapter(), _ => WriteStatus(_story, true));
@@ -188,6 +190,39 @@ namespace Game.Narrative.Editor
             RefreshGraph(); _graph.SelectModel(_selected, false); _graph.UpdateViewTransform(_pan, Vector3.one * Mathf.Clamp(_zoom, .1f, 3));
             _storyGraph.UpdateViewTransform(_overviewPan, _overviewScale);
             _graph.schedule.Execute(() => { if (_follow && _snapshot != null && !_overview) LocateCurrent(true); });
+        }
+        // 全局语言切换：改写持久化的语言偏好，并让流程面板上的多语言预览立刻跟着变。
+        private void BuildLanguageMenu(Toolbar toolbar)
+        {
+            _languageMenu = new ToolbarMenu { text = LanguageMenuText() };
+            var localizer = NovelLocalization.Localizer;
+            if (localizer != null)
+            {
+                var languages = localizer.Languages;
+                if (languages != null)
+                    for (int i = 0; i < languages.Count; i++)
+                    {
+                        string language = languages[i];
+                        _languageMenu.menu.AppendAction(language,
+                            _ => { NovelLocalization.SetLanguage(language); RefreshLanguageMenu(); },
+                            _ => language == localizer.CurrentLanguage ? DropdownMenuAction.Status.Checked : DropdownMenuAction.Status.Normal);
+                    }
+            }
+            _languageMenu.menu.AppendAction("重刷 TMPEx 显示", _ => { NovelLocalization.RefreshUiText(); RefreshLanguageMenu(); });
+            toolbar.Add(_languageMenu);
+        }
+
+        private static string LanguageMenuText()
+        {
+            var localizer = NovelLocalization.Localizer;
+            return localizer == null ? "语言：未装配" : "语言：" + localizer.CurrentLanguage;
+        }
+
+        private void RefreshLanguageMenu()
+        {
+            if (_languageMenu != null) _languageMenu.text = LanguageMenuText();
+            _inspector?.MarkDirtyRepaint();
+            Repaint();
         }
         private static void ConfigureToolbar(Toolbar toolbar, string label = null)
         {
@@ -271,6 +306,8 @@ namespace Game.Narrative.Editor
                 bytes.Add(entry.TableId, asset.bytes);
             }
             if (_tableEngine.Load(catalog, bytes).Succeeded) _catalog = new NarrativeTableCatalog(_tableEngine.Database);
+            // 编辑器预览也要装配多语言与皮肤，否则试播画面与运行期不一致。
+            if (_catalog != null) { NovelLocalization.Install(_catalog); NovelSkin.Install(_catalog); }
             else _message = "导表产物加载失败，请在配置表中心检查。";
         }
         private void Validate()

@@ -43,7 +43,7 @@ namespace Game.Narrative
         #endregion
         // --------------------------------------------------------
         #region 内部方法
-        private string ResolveSpeaker(string key) => _catalog != null && _catalog.TryGetCharacter(key, out var row) ? row.DisplayName : key;
+        private string ResolveSpeaker(string key) => _catalog != null && _catalog.TryGetCharacter(key, out var row) ? NovelLocalization.CharacterName(key, row.DisplayName) : NovelLocalization.CharacterName(key, key);
         private bool CurrentIsRead()
         {
             var c = _runner.CurrentCommand;

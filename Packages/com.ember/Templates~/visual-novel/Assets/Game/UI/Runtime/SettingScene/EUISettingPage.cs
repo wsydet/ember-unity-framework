@@ -77,6 +77,7 @@ namespace Game.UI
         private void OnInitUser()
         {
             InitScreenPreferences();
+            InitLanguagePreferences();
             NovelTextSpeed.onValueChanged.AddListener(SaveNovelPreferences);
             NovelAutoInterval.onValueChanged.AddListener(SaveNovelPreferences);
             NovelBgmVolume.onValueChanged.AddListener(SaveNovelPreferences);
@@ -100,6 +101,7 @@ namespace Game.UI
             }
             foreach (var slider in new[] { NovelTextSpeed, NovelAutoInterval, NovelBgmVolume, NovelSfxVolume, NovelVoiceVolume }) slider.interactable = a != null;
             RefreshNovelPreferences();
+            RefreshLanguagePreferences();
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
@@ -124,6 +126,7 @@ namespace Game.UI
         private void OnDisposeUser()
         {
             ReleaseNovelPreferences();
+            ReleaseLanguagePreferences();
             DisposeScreenPreferences();
             NovelTextSpeed.onValueChanged.RemoveListener(SaveNovelPreferences); NovelAutoInterval.onValueChanged.RemoveListener(SaveNovelPreferences);
             NovelBgmVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelSfxVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelVoiceVolume.onValueChanged.RemoveListener(SaveNovelPreferences);

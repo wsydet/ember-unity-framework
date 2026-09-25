@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUISettingPanel
  * page name    : EUISettingPage
- * update time  : 2026/9/24 14:51:01
+ * update time  : 2026/9/25 21:50:01
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -99,6 +99,26 @@ namespace Game.UI
         /// </summary>
         private TMP_Text NovelFlashPreferenceValue;
 
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/LanguageZhHans
+        /// </summary>
+        private UnityEngine.UI.Button LanguageZhHans;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/LanguageZhHant
+        /// </summary>
+        private UnityEngine.UI.Button LanguageZhHant;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/LanguageJa
+        /// </summary>
+        private UnityEngine.UI.Button LanguageJa;
+
+        /// <summary>
+        /// Animator/EUISafeArea/NovelPreferences/LanguageEn
+        /// </summary>
+        private UnityEngine.UI.Button LanguageEn;
+
 
 
     public override void OnBind()
@@ -121,6 +141,10 @@ namespace Game.UI
             NovelVoiceVolumeValue = ControlMap["NovelVoiceVolumeValue"] as TMP_Text;
             NovelShakePreferenceValue = ControlMap["NovelShakePreferenceValue"] as TMP_Text;
             NovelFlashPreferenceValue = ControlMap["NovelFlashPreferenceValue"] as TMP_Text;
+            LanguageZhHans = ControlMap["LanguageZhHans"] as UnityEngine.UI.Button;
+            LanguageZhHant = ControlMap["LanguageZhHant"] as UnityEngine.UI.Button;
+            LanguageJa = ControlMap["LanguageJa"] as UnityEngine.UI.Button;
+            LanguageEn = ControlMap["LanguageEn"] as UnityEngine.UI.Button;
 
     }
 }

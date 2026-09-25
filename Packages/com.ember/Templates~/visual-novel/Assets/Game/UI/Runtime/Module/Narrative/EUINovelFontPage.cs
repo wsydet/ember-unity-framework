@@ -30,6 +30,7 @@ namespace Game.UI
         {
             base.OnInit(); _previewFontSize = Preview.fontSize; Close.onClick.AddListener(ClosePage);
             Small.onClick.AddListener(SetSmall); Medium.onClick.AddListener(SetMedium); Large.onClick.AddListener(SetLarge);
+            NovelSkin.Apply(this, "EUINovelFontPage");
         }
         public override void OnOpen(object param)
         {

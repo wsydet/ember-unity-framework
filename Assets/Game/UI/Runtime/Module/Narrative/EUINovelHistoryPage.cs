@@ -57,6 +57,7 @@ namespace Game.UI
         public override void OnInit()
         {
             base.OnInit(); _baseFontSize = Entries.fontSize; _baseMargin = Entries.margin; _appearance = Entries.GetComponent<NovelHistoryAppearance>(); Close.onClick.AddListener(ClosePage); Saves.onClick.AddListener(OpenSaves);
+            NovelSkin.Apply(this, "EUINovelHistoryPage");
         }
         public override void OnOpen(object param)
         {

@@ -297,7 +297,7 @@ namespace Game.Narrative.Tests
                 var store = new Game.NovelSave.NovelSaveStore(directory);
                 Assert.IsTrue(store.Save(0, save, out error), error);
                 Assert.IsTrue(store.Read(0, out var loaded, out error), error);
-                Assert.AreEqual(6, loaded.SchemaVersion); Assert.AreEqual(1.4f, loaded.CameraZoom); Assert.AreEqual(1, loaded.Loops.Count);
+                Assert.AreEqual(NovelCheckpoint.CurrentSchemaVersion, loaded.SchemaVersion); Assert.AreEqual(1.4f, loaded.CameraZoom); Assert.AreEqual(1, loaded.Loops.Count);
                 loaded.SchemaVersion = 4; loaded.Loops.Clear();
                 var a = new MediaAudio();
                 using var restored = new NovelSession(loaded, () => _tables, MediaAssets(), a);

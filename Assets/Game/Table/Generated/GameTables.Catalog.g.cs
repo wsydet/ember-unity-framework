@@ -13,7 +13,13 @@ namespace Game.Table.Generated
                     new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelAudioRowTableBinding(), true, 16777216, 100000, 1048576),
                     new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelBackgroundRowTableBinding(), true, 16777216, 100000, 1048576),
                     new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelCharacterRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelContentTextRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelLanguageRowTableBinding(), true, 16777216, 100000, 1048576),
                     new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelPortraitRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelSkinSpriteRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelSkinRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelStorySkinRowTableBinding(), true, 16777216, 100000, 1048576),
+                    new global::Ember.Table.EmberTableCatalogEntry(new Game_Table_NovelUiTextRowTableBinding(), true, 16777216, 100000, 1048576),
                 });
         }
     }

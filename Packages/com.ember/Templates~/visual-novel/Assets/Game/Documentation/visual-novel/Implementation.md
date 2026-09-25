@@ -1,4 +1,4 @@
-# 视觉小说模板实施清单
+﻿# 视觉小说模板实施清单
 
 ## 当前交付与验证（2026-09-22）
 
@@ -1515,3 +1515,19 @@ Unity MCP 未连接或不可用，本次未完成 Unity 编译验证。请在 Un
 - 用户提供的 TestResults_20260924_170905.xml 共 645 项，其中 35 项失败。根因是旧命令的新增文字参数在反序列化后为零，触发 BadText 并造成后续加载失败；使用序列化版本与默认值迁移修复，保留新配置非法值的校验。剩余页面用例改为先完成章节卡退出，再验证阅读控制。
 - Unity MCP 恢复后编译错误为零；156 项运行/剧情/存档用例、8 项正式 Prefab 布局/透明度用例通过。13 项实际页面/观察用例首轮 12 项通过，修复旧层级假设后最后 1 项单独复测通过，相关用例合计 177 项。跨 Play Mode 回调会丢失 MCP job 进度，以项目 NarrativeTestReport 落盘 XML 为最终结果。证据：`.utmp/visual-novel-m3/tests-20260924-091422231.xml`、`tests-20260924-091807200.xml`、`tests-20260924-092005330.xml`、`tests-20260924-092051840.xml`。
 - 未重新运行全部 645 项框架测试，未发布框架 tag，也未部署/验收消费项目。
+
+## 0.9.1 UI 皮肤与配表多语言（2026-09-25，工作副本未封存）
+
+- 新增配表多语言：`novel_languages` / `novel_content_text`（内容）/ `novel_ui_text`（界面）；源语言列固定 `zh_Hans`，暂定简体、繁体、日语、英语，可继续扩展。回退链为目标语言列 → 源语言列 → 资产原文，因此缺翻译显示源语言而不是空白，Key 查不到也不报错。
+- 字段新增：Say、选项/分流、章节出口路线加 `_textKey`，选择提示加 `_promptTextKey`，章节名与剧情名加 `_displayNameKey`。角色名走内容表的 `character.〈角色键〉`，未命中回退 `novel_characters.displayName`（该表结构未改，消费项目零迁移）。
+- 正文替换放在 runner 的运行期文本副本上（变量绑定之后、`NovelValidator` 之后），校验始终面对原文，所以译文长短不同不会触发 `TextBeats` 越界；Key 不进指纹，切语言与补译文都不会让既有存档失效。选项、提示、章节名没有长度校验，在读定义时替换。
+- UI 文本由 `TMPEx`（`Ember.UIExtension`）承接：TMP 的 Inspector 右上角三点菜单「替换为 TMPEx（多语言文本）」，沿用既有 `EUIComponentReplaceMenu` 延迟替换机制，字体/材质/对齐等原设置全部保留；编辑期不改写文本（带 `ExecuteAlways`，保住所见即所得），未装配配表时行为与普通 TMP 完全一致。
+- 新增 UI 皮肤：`novel_skins` / `novel_skin_sprites` / `novel_story_skin`。覆盖行按「页面 + EUI 绑定控件 + 相对节点」寻址，运行期在页面绑定完成后按名换图，不修改任何 Prefab、Binding 或布局；按小说赋值，主界面与阅读页共用同一套解析。本期只换图片，位置与大小仍由各小说在布局窗口调整。
+- 编辑器：节点与章节 Inspector 顶部、流程窗口工具栏各提供全局语言切换；对白、选项、提示、章节名四处新增多语言 Key 输入与逐语言预览（命中显示译文，未命中显示「缺条目 → 回退：原文」）。菜单 `Ember/视觉小说/导出皮肤可覆盖图片清单` 扫描全部页面 Prefab（含主界面），列出可覆盖图片并输出候选 CSV 行到剪贴板；布局窗口的外观区另提供「把此元素加入皮肤清单（复制 CSV 行）」，单个元素一键取行。两者共用同一套寻址实现（`NovelSkinImageCatalog.TryDescribe`），不会分叉。
+- 编辑器内的三个预览入口（流程窗口、节点试播、布局窗口节点预览）在建立配表后同样装配多语言与皮肤，试播画面与运行期一致；已实测该装配方式下语言解析与按小说解析皮肤均生效。
+- 导入/导出技能同步：新增 `references/localization.md` 作为 Key 与配表的唯一口径；导入时写 Key 并在 `novel_content_text` 追加行（只填 `zh_Hans`，不覆盖已交付译文）；导出新增「多语言Key」列。`catalog.json` 的 `minimumTemplateVersion` 待随本次 Bump 一并更新。
+- 实测：新增 8 项多语言/皮肤用例 8/8 通过；指纹、定义读取、变量逻辑、图模型等高风险既有类 82/82 通过；`NovelSessionTests` 137 项中 134 项通过。失败 3 项均为既有 schema 断言（`NovelCheckpoint.cs` 的 `SchemaVersion = 7` 与两处硬编码 6 的断言），这三个文件与模板快照逐字节一致且未被本次修改。
+- 指纹回归：`E0StoryFixture` 与 `M1StoryFixture` 的 `Fingerprint` 与改动前基线逐字节一致（`7D8B67D3…3FC32`、`FFBCEEA6…26AFB`），装配多语言并切换三种语言后仍一致。
+- 皮肤实测：演示皮肤 `lastlight_alt` 在阅读页 `History/SkinIcon` 与主界面 `NovelBackdrop` 各命中 1 并真的换图；无覆盖行的 `lastlight_default` 命中 0（保持 Prefab 外观）。已知约束：覆盖值必须是项目 `Resources` 下的图片，Unity 内置 `UISprite` 无法用路径表示，只能当被替换方。
+- 未验证：编辑器面板的实际渲染（Key 行与语言下拉的排版、交互）与运行期皮肤在真实页面上的画面效果，需要人工或 Play Mode 确认；`NarrativeLibraryTests.RenamingAndMovingStoryPreservesEntryAndStableLookup` 需要编辑器前台焦点，本轮未跑通；`NovelGameplayTests` 重场景用例在本环境下不稳定（改动前同样如此）。
+- 未运行框架全量回归，未发布框架 tag，未部署或验收消费项目，模板尚未保存与 Bump。

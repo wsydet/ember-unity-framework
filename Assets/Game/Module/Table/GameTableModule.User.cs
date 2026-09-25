@@ -14,15 +14,21 @@ namespace Game.Module
         partial void OnGameTableModuleInitialized()
         {
             NovelCatalog = new NarrativeTableCatalog(Database);
+            // 多语言与皮肤跟着配表一起装配：缺表时安装方法内部按未接入处理，行为与接入前一致。
+            NovelLocalization.Install(NovelCatalog);
+            NovelSkin.Install(NovelCatalog);
         }
 
         partial void OnGameTableModuleDestroying()
         {
+            NovelLocalization.Uninstall();
+            NovelSkin.Uninstall();
             NovelCatalog = null;
         }
 
         partial void OnResetGameTableModuleData()
         {
+            NovelLocalization.Uninstall();
             NovelCatalog = null;
         }
         #endregion

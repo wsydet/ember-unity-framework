@@ -11,7 +11,10 @@ namespace Game.Narrative
     [Serializable]
     public sealed class NovelCheckpoint
     {
-        public int SchemaVersion = 7;
+        /// <summary>当前存档格式版本。新增字段时递增，并在 NovelSession / NarrativeRunner 的恢复路径按版本迁移。</summary>
+        public const int CurrentSchemaVersion = 7;
+
+        public int SchemaVersion = CurrentSchemaVersion;
         public uint RandomState;
         public float CameraZoom = 1;
         public UnityEngine.Vector2 CameraOffset;

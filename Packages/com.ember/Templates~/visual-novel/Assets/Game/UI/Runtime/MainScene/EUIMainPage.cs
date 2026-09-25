@@ -90,6 +90,8 @@ namespace Game.UI
             });
             NovelContinue.onClick.AddListener(NovelSaveUI.Continue); NovelLoad.onClick.AddListener(NovelSaveUI.Open);
             NovelQuit.onClick.AddListener(QuitGame);
+            // 主界面图片同样按当前小说套皮肤；与阅读页共用同一套解析（NarrativeLibrarySO.Current）。
+            Game.Narrative.NovelSkin.Apply(this, "EUIMainPanel");
         }
         private void QuitGame()
         {
@@ -116,7 +118,7 @@ namespace Game.UI
         private void OnOpenUser(object param)
         {
             var library = UnityEngine.Resources.Load<Game.Narrative.NarrativeLibrarySO>(Game.Narrative.NarrativeLibrarySO.RESOURCE_PATH);
-            NovelTitle.text = library && library.Current ? library.Current.DisplayName : "视觉小说";
+            NovelTitle.text = library && library.Current ? library.Current.LocalizedDisplayName : "视觉小说";
             _novelSave = NovelSaveUI.Module;
             if (_novelSave != null) _novelSave.Changed += RefreshNovelSave;
             RefreshNovelSave();

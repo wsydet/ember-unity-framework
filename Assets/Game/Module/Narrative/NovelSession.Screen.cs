@@ -37,6 +37,8 @@ namespace Game.Narrative
         private NovelActionHandle StartScreenAction(NovelCommand c, NarrativeSnapshot snapshot)
         {
             if (_view is not INovelScreenView view) throw new InvalidOperationException("页面未提供画面演出适配：" + c.Kind);
+            // 冲突守卫与 4096 上限已在 StartAction 完成；这里只登记解析后的句柄，不重复判定。
+            string handleId = NovelActionHandle.ResolveId(c);
             bool mask = c.Kind == NovelCommandKind.Cover || c.Kind == NovelCommandKind.Flash;
             var kind = mask ? NovelTargetKind.Mask : c.TargetKind;
             string id = mask ? "cover" : kind == NovelTargetKind.Stage ? "stage" : kind == NovelTargetKind.Background ? "background" : c.InstanceId;
@@ -46,7 +48,7 @@ namespace Game.Narrative
             // Cancellation settles a previous blend before its replacement reads the new baseline.
             CancelTarget(kind, id, property);
             var action = new NovelActionHandle { Generation = snapshot.SessionGeneration, Sequence = ++_actionSequence,
-                Id = c.ActionId, Kind = c.Kind, Property = property, TargetKind = kind, TargetId = id, Slot = target?.Slot ?? default,
+                Id = handleId, Kind = c.Kind, Property = property, TargetKind = kind, TargetId = id, Slot = target?.Slot ?? default,
                 Duration = c.Duration + (mask ? c.Hold : 0), FadeDuration = c.Duration, Hold = c.Hold, Delay = c.Delay, Ease = c.Ease,
                 WipeDirection = c.WipeDirection, Strength = c.Strength, Frequency = c.Frequency, Decay = c.Decay, VectorTo = c.Direction.normalized,
                 ColorFrom = _coverColor, ColorTo = new Color(c.Color.r, c.Color.g, c.Color.b, c.Color.a * c.Opacity),
@@ -61,7 +63,7 @@ namespace Game.Narrative
                     target.CharacterId = _catalog.Portraits.FirstOrDefault(p => p.Id == c.ResourceKey)?.CharacterId;
                 _crossFadeLoading = null; _crossFadeSprite = null;
             }
-            _actions[c.ActionId] = action; _runningActions.Add(action);
+            _actions[handleId] = action; _runningActions.Add(action);
             if (c.Kind == NovelCommandKind.CrossFade || c.Kind == NovelCommandKind.Wipe) RefreshEmphasis();
             return action;
         }

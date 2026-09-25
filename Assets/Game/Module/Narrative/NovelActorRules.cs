@@ -40,8 +40,8 @@ namespace Game.Narrative
             }
             if (c.Kind >= NovelCommandKind.Move && c.Kind <= NovelCommandKind.Gesture)
             {
-                if (string.IsNullOrWhiteSpace(c.InstanceId) || string.IsNullOrWhiteSpace(c.ActionId) ||
-                    !NovelActionHandle.ValidTime(c.Delay) || !Enum.IsDefined(typeof(NovelEase), c.Ease)) return "人物动作需要实例/动作 ID、有效延迟和缓动";
+                if (string.IsNullOrWhiteSpace(c.InstanceId) ||
+                    !NovelActionHandle.ValidTime(c.Delay) || !Enum.IsDefined(typeof(NovelEase), c.Ease)) return "人物动作需要实例 ID、有效延迟和缓动";
                 if (c.Kind == NovelCommandKind.Move && (!Enum.IsDefined(typeof(NovelPositionMode), c.PositionMode) ||
                     !Enum.IsDefined(typeof(NovelPortraitSlot), c.Slot) || !Coordinates(c.Position) ||
                     c.ExitAfterMove && (c.PositionMode != NovelPositionMode.Normalized || c.Position.x >= 0 && c.Position.x <= 1 && c.Position.y >= 0 && c.Position.y <= 1)))

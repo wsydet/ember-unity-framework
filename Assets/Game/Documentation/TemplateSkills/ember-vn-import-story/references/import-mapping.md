@@ -1,4 +1,4 @@
-# 策划五列表格
+﻿# 策划五列表格
 
 格式依据用户提供的截图：`场景 | 说话人 | 台词 | 美术 | 变化`。截图仅确认结构，不能证明在线数据内容或完整范围。
 
@@ -21,3 +21,9 @@
 编辑接口在 `Game.Narrative.Editor`：`NarrativeStoryModel.CreateStory(path)`、`CreateChapter(story, folderName)`；`NarrativeGraphModel.CreateNode(chapter, kind)`、`SetEntry(chapter,node)`、`Connect(chapter,node,port,target)`、`AppendCommands(node,commands)`、`Save(chapter)`。端口名从现有 `Ports(node)` 获取。AppendCommands 只追加，不能拿它实现中间插入或重复导入；需要改序列时先查实际序列化结构、使用 Undo/SerializedObject，并保持稳定标识。
 
 先查 `IsTemplateActive(true)` / `CanEdit` 等限制，接口拒绝时停止，不冒充开发模板。校验用真实 `INarrativeCatalog`，不得用“所有键都存在”的假实现让校验通过。跨章使用 Story 出口和路线，不生成跨章节直接节点连接。
+
+## 多语言
+
+五列里的台词、选项文字、提示与章节名都要带稳定的多语言 Key，并把原文登记进 
+ovel_content_text；
+Key 命名、配表写入与烘焙步骤见 [多语言 Key 与配表约定](localization.md)。

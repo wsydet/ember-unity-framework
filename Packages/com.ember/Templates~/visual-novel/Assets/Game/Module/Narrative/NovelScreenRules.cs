@@ -27,8 +27,8 @@ namespace Game.Narrative
         [HasGC] public static string Validate(NovelCommand c)
         {
             if (!IsAction(c.Kind)) return null;
-            if (string.IsNullOrWhiteSpace(c.ActionId) || !NovelActionHandle.ValidTime(c.Delay) ||
-                !Enum.IsDefined(typeof(NovelEase), c.Ease)) return "画面动作需要动作 ID、非负延迟与有效缓动";
+            if (!NovelActionHandle.ValidTime(c.Delay) ||
+                !Enum.IsDefined(typeof(NovelEase), c.Ease)) return "画面动作需要非负延迟与有效缓动";
             if (c.Kind == NovelCommandKind.Wipe && (c.TargetKind != NovelTargetKind.Background || !Enum.IsDefined(typeof(NovelWipeDirection), c.WipeDirection)))
                 return "擦除转场仅支持已有背景，方向必须为左到右/右到左/下到上/上到下";
             if (c.Kind == NovelCommandKind.Shake)

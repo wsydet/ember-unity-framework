@@ -78,6 +78,7 @@ namespace Game.UI
             Advance.onClick.AddListener(Continue); Menu.onClick.AddListener(ReturnMenu); Settings.onClick.AddListener(OpenSettings);
             Saves.onClick.AddListener(OpenSaves); QuickSave.onClick.AddListener(SaveQuick); QuickLoad.onClick.AddListener(LoadQuick);
             Auto.onClick.AddListener(ToggleAuto); Skip.onClick.AddListener(ToggleSkip); History.onClick.AddListener(OpenHistory); HideDialogue.onClick.AddListener(ToggleDialogue);
+            NovelSkin.Apply(this, "EUINovelReaderPage");
         }
         public override void OnOpen(object param)
         {

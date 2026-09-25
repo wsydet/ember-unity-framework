@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611d9d61619885f46bd4797707cc8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIBinding
-  uiDescription: "GM调试与游戏控制面板"
+  uiDescription: "GM\u8C03\u8BD5\u4E0E\u6E38\u620F\u63A7\u5236\u9762\u677F"
   deletionProtected: 1
   baseBindingUUID: 
   codePathMode: 0
@@ -1180,6 +1180,7 @@ MonoBehaviour:
   isPage: 1
   pageName: GMPage
   pageType: 6
+  fixedSortingOrder: 30000
   pageFlags: 0
   useUIUpdate: 1
   useMask: 1

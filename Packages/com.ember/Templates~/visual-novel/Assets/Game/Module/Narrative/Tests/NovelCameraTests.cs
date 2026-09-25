@@ -56,7 +56,7 @@ namespace Game.Narrative.Tests
             session.Tick(1, ++frame); PumpAction(session, "done", ref frame); Assert.AreEqual(1, view.CameraZoom);
         }
 
-        [TestCase(6, 1.4f)]
+        [TestCase(NovelCheckpoint.CurrentSchemaVersion, 1.4f)]
         [TestCase(5, 1f)]
         public void E5CaptureProjectsCameraWithoutAdvancingLiveAndOldSchemaRestoresNeutral(int schema, float expected)
         {
@@ -64,7 +64,7 @@ namespace Game.Narrative.Tests
             using var session = ActionSession(view, CameraAction("camera"), SayAction("line"));
             int frame = 0; PumpAction(session, "line", ref frame); session.Tick(.5f, ++frame);
             Assert.IsTrue(session.TryCapture(out var save, out var error), error);
-            Assert.AreEqual(6, save.SchemaVersion); Assert.AreEqual(1.4f, save.CameraZoom); Assert.AreEqual(1.1f, view.CameraZoom, .0001);
+            Assert.AreEqual(NovelCheckpoint.CurrentSchemaVersion, save.SchemaVersion); Assert.AreEqual(1.4f, save.CameraZoom); Assert.AreEqual(1.1f, view.CameraZoom, .0001);
             save.SchemaVersion = schema;
             using var restored = new NovelSession(save, () => _tables, new ActionResources { Story = _story });
             restored.Tick(0, ++frame); restored.Tick(0, ++frame); Assert.IsTrue(restored.RestoreReady, restored.Snapshot.Error?.ToString());

@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611d9d61619885f46bd4797707cc8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIBinding
-  uiDescription: "游戏模式主UI"
+  uiDescription: "\u6E38\u620F\u6A21\u5F0F\u4E3BUI"
   deletionProtected: 1
   baseBindingUUID: 
   codePathMode: 0
@@ -955,6 +955,7 @@ MonoBehaviour:
   isPage: 1
   pageName: EUIGamePlayPage
   pageType: 1
+  fixedSortingOrder: 30000
   pageFlags: 0
   useUIUpdate: 0
   useMask: 1

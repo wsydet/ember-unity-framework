@@ -1,0 +1,3 @@
+id,skinId,page,control,node,spritePath
+lastlight_alt.EUINovelReaderPage.History.SkinIcon,lastlight_alt,EUINovelReaderPage,History,SkinIcon,UI/Common/Atlas/Novel/return
+lastlight_alt.EUIMainPanel..NovelBackdrop,lastlight_alt,EUIMainPanel,,NovelBackdrop,UI/Common/Atlas/Novel/menu_evening

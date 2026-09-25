@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611d9d61619885f46bd4797707cc8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIBinding
-  uiDescription: "场景加载与转场UI"
+  uiDescription: "\u573A\u666F\u52A0\u8F7D\u4E0E\u8F6C\u573AUI"
   deletionProtected: 1
   baseBindingUUID: 
   codePathMode: 0
@@ -777,6 +777,7 @@ MonoBehaviour:
   isPage: 1
   pageName: EUILoadingPage
   pageType: 3
+  fixedSortingOrder: 30000
   pageFlags: 0
   useUIUpdate: 1
   useMask: 1

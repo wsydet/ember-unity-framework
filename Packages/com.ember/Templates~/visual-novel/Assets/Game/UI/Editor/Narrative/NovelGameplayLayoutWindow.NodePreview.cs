@@ -90,6 +90,8 @@ namespace Game.UI.Editor
             }
             if (!_tableEngine.Load(catalog, bytes).Succeeded) throw new InvalidOperationException("导表产物加载失败，请检查配置表中心。");
             _catalog = new NarrativeTableCatalog(_tableEngine.Database);
+            // 预览与运行期保持一致：装上多语言与皮肤，预览才会显示当前语言的文本与皮肤图。
+            NovelLocalization.Install(_catalog); NovelSkin.Install(_catalog);
         }
         private void ApplyNodePreview()
         {

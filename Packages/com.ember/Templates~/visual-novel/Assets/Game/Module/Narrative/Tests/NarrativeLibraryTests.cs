@@ -28,8 +28,17 @@ namespace Game.Narrative.Tests
             AssetDatabase.SaveAssetIfDirty(_library);
         }
 
+        /// <summary>
+        /// 删掉临时夹具后必须把资源管线刷干净。
+        /// 否则残留的待处理导入会让紧随其后的 Play Mode 用例卡在
+        /// EnterPlayMode 上（过渡等不到装配重载），表现为运行期用例整批失败。
+        /// </summary>
         [TearDown]
-        public void TearDown() => AssetDatabase.DeleteAsset(_folder);
+        public void TearDown()
+        {
+            AssetDatabase.DeleteAsset(_folder);
+            AssetDatabase.Refresh();
+        }
 
         [Test]
         public void RenamingAndMovingStoryPreservesEntryAndStableLookup()

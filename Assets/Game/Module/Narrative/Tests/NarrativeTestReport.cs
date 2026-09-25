@@ -6,7 +6,11 @@ using UnityEditor.TestTools.TestRunner.Api;
 
 namespace Game.Narrative.Tests
 {
-    /// <summary>域重载后重新注册，保留本轮真实 NUnit 结果；仅在运行小说测试时写本地证据目录。</summary>
+    /// <summary>
+    /// 域重载后重新注册，保留本轮真实 NUnit 结果；仅在运行小说测试时写本地证据目录。
+    /// 同时负责在测试前后留/还原被 Unity 改写的非业务文件（见 <see cref="NarrativeTestArtifactGuard"/>），
+    /// 这样跑完测试不用再手工 checkout。
+    /// </summary>
     [InitializeOnLoad]
     internal sealed class NarrativeTestReport : ICallbacks
     {
@@ -15,15 +19,23 @@ namespace Game.Narrative.Tests
         private static bool ContainsNarrative(ITestResultAdaptor result)
             => result.FullName.StartsWith("Game.Narrative.Tests", StringComparison.Ordinal) ||
                (result.HasChildren && result.Children.Any(ContainsNarrative));
+        private static bool ContainsNarrative(ITestAdaptor test)
+            => test.FullName.StartsWith("Game.Narrative.Tests", StringComparison.Ordinal) ||
+               (test.HasChildren && test.Children.Any(ContainsNarrative));
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public void RunStarted(ITestAdaptor test) { }
+        public void RunStarted(ITestAdaptor test)
+        {
+            if (!ContainsNarrative(test)) return;
+            NarrativeTestArtifactGuard.CaptureBaseline();
+        }
         public void TestStarted(ITestAdaptor test) { }
         public void TestFinished(ITestResultAdaptor result) { }
         public void RunFinished(ITestResultAdaptor result)
         {
             if (!ContainsNarrative(result)) return;
+            NarrativeTestArtifactGuard.RestoreBaseline();
             const string folder = ".utmp/visual-novel-m3";
             Directory.CreateDirectory(folder);
             TestRunnerApi.SaveResultToFile(result, folder + "/tests-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmssfff") + ".xml");

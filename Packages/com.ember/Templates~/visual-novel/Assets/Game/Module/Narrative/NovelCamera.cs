@@ -19,9 +19,9 @@ namespace Game.Narrative
         public static string Validate(NovelCommand c)
         {
             if (c.Kind != NovelCommandKind.Camera) return null;
-            if (string.IsNullOrWhiteSpace(c.ActionId) || !NovelActionHandle.ValidTime(c.Delay) ||
+            if (!NovelActionHandle.ValidTime(c.Delay) ||
                 !Enum.IsDefined(typeof(NovelEase), c.Ease) || !Valid(c.Position, c.CameraZoom))
-                return "舞台镜头需要动作 ID、非负延迟和有效缓动；缩放 1–3，平移各轴绝对值不得超过 (缩放−1)/2，复位为 1 倍及 (0,0)";
+                return "舞台镜头需要非负延迟和有效缓动；缩放 1–3，平移各轴绝对值不得超过 (缩放−1)/2，复位为 1 倍及 (0,0)";
             return null;
         }
         #endregion
@@ -42,7 +42,7 @@ namespace Game.Narrative
             if (_view is not INovelCameraView) throw new InvalidOperationException("页面未提供舞台镜头适配");
             CancelTarget(NovelTargetKind.Stage, "stage", "Camera");
             var action = new NovelActionHandle { Generation = snapshot.SessionGeneration, Sequence = ++_actionSequence,
-                Id = command.ActionId, Kind = NovelCommandKind.Camera, Property = "Camera", TargetKind = NovelTargetKind.Stage, TargetId = "stage",
+                Id = NovelActionHandle.ResolveId(command), Kind = NovelCommandKind.Camera, Property = "Camera", TargetKind = NovelTargetKind.Stage, TargetId = "stage",
                 VectorFrom = _cameraOffset, VectorTo = command.Position, From = _cameraZoom, To = command.CameraZoom,
                 Duration = command.Duration, Delay = command.Delay, Ease = command.Ease };
             _actions[action.Id] = action; _runningActions.Add(action); return action;

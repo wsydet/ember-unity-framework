@@ -127,9 +127,6 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.5911199, g: 0.35999995, b: 0.9, a: 1}
     className: SceneUI.Module
-  - enabled: 1
-    color: {r: 0.49392, g: 0.35999995, b: 0.9, a: 1}
-    className: Table.Module
   enableFileLog: 1
   logDirectory: 
   maxFileSizeMB: 10

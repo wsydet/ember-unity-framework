@@ -3,13 +3,13 @@
     "id": "visual-novel",
     "displayName": "视觉小说",
     "description": "基于 base 0.6.4：保留主 UI 自定义布局、章节卡文字效果与二级步骤；新增剧情整数运算、可存档随机事件、动态文字绑定及逻辑导入审计。70 项相关回归通过，最终 19 项变量逻辑专项通过；具体游戏规则由消费项目配置。",
-    "version": "0.9.0",
+    "version": "0.9.2",
     "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.6.4",
     "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "bd18ed6a62bb2be51a9ef43d14b9a4ce",
-    "versionedContentHash": "bd18ed6a62bb2be51a9ef43d14b9a4ce"
+    "contentHash": "3a7ae624944ecd5baf2fa058b6782055",
+    "versionedContentHash": "3a7ae624944ecd5baf2fa058b6782055"
 }

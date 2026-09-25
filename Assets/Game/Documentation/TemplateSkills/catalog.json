@@ -15,7 +15,7 @@
       "description": "检查飞书 CLI，按指定范围读取策划表格并保真导入视觉小说剧情。",
       "templateId": "visual-novel",
       "minimumFrameworkVersion": "0.14.0",
-      "minimumTemplateVersion": "0.8.0"
+      "minimumTemplateVersion": "0.9.2"
     },
     {
       "id": "ember-vn-polish-presentation",
@@ -31,7 +31,7 @@
       "description": "将实际剧情与演出流程导出到指定飞书表格的新页，保留所有原页。",
       "templateId": "visual-novel",
       "minimumFrameworkVersion": "0.14.0",
-      "minimumTemplateVersion": "0.8.0"
+      "minimumTemplateVersion": "0.9.2"
     }
   ]
 }

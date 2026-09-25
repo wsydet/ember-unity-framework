@@ -10,6 +10,8 @@ namespace Game.Narrative
         #region 编辑器面板参数
         [SerializeField] private string _chapterId = Guid.NewGuid().ToString("N");
         [SerializeField] private string _displayName;
+        /// <summary>章节名的多语言 Key；留空用 _displayName。</summary>
+        [SerializeField] private string _displayNameKey;
         [SerializeField] private string _assetPrefix;
         [SerializeField] private int _storyRevision = 1;
         [SerializeField] private NarrativeNodeSO _entry;
@@ -20,6 +22,8 @@ namespace Game.Narrative
         #region 内部参数
         public string ChapterId => _chapterId;
         public string DisplayName => string.IsNullOrWhiteSpace(_displayName) ? name : _displayName;
+        /// <summary>运行期显示名：填了 Key 就取当前语言，否则用 DisplayName（源语言）。</summary>
+        public string LocalizedDisplayName => NovelLocalization.TryGetContent(_displayNameKey, out string localized) ? localized : DisplayName;
         public string AssetPrefix => string.IsNullOrWhiteSpace(_assetPrefix) ? _chapterId : _assetPrefix;
         public int StoryRevision => _storyRevision;
         public NarrativeNodeSO Entry => _entry;

@@ -1,8 +1,9 @@
-// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
 using System;
 
+using TMPro;
 using UnityEditor;
 
 using UnityEngine;
@@ -179,6 +180,20 @@ namespace Ember.UIExtension.Editor
         [MenuItem("CONTEXT/Image/替换为 EUICircleImage")]
         private static void ReplaceCircleImage(MenuCommand command)
             => ReplaceDeferred<Image, EUICircleImage>(command);
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region TextMeshPro
+
+        [MenuItem("CONTEXT/TextMeshProUGUI/替换为 TMPEx（多语言文本）", true)]
+        private static bool ReplaceTMPExValidate(MenuCommand command)
+            => EUIComponentReplaceUtility.CanReplace<TextMeshProUGUI, TMPEx>(command.context);
+
+        [MenuItem("CONTEXT/TextMeshProUGUI/替换为 TMPEx（多语言文本）")]
+        private static void ReplaceTMPEx(MenuCommand command)
+            => ReplaceDeferred<TextMeshProUGUI, TMPEx>(command);
 
         #endregion
     }

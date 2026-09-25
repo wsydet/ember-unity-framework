@@ -1,6 +1,6 @@
----
+﻿---
 name: ember-vn-import-story
-description: 审计飞书复杂剧情的逻辑与框架支持，或从用户给定的飞书策划表格链接中，按指定工作表、行范围或剧情段落导入 Ember 视觉小说剧情。先检查 lark-cli，缺少时提示安装并停止；通过本地选择页面确认范围与映射后导入场景、说话人、台词、美术、变化五列，保留原文和剧情逻辑。适用于飞书剧情导入和指定片段更新，不负责演出润色或向飞书回写。
+description: 审计飞书复杂剧情的逻辑与框架支持，或从用户给定的飞书策划表格链接中，按指定工作表、行范围或剧情段落导入 Ember 视觉小说剧情。先检查 lark-cli，缺少时提示安装并停止；通过本地选择页面确认范围与映射后导入场景、说话人、台词、美术、变化五列，保留原文和剧情逻辑，并为每句台词、选项、提示与章节名写入稳定的多语言 Key 与对应的内容文案行。适用于飞书剧情导入和指定片段更新，不负责演出润色或向飞书回写。
 ---
 
 # 飞书剧情导入
@@ -55,17 +55,40 @@ description: 审计飞书复杂剧情的逻辑与框架支持，或从用户给�
 
 ## 导入
 
-- 首次导入建立来源映射清单，放在 `Assets/Game/Documentation/NarrativeImports/<批次ID>.json`，与剧情一起保存：schemaVersion、源 URL/工作表 ID/明确范围、读取时间、来源内容指纹、表头映射、每行原始五列和行号、生成资产 GUID、story/chapter/node/command/line ID、源稳定键（若有）及导入后的目标指纹。只存本次范围和必要上下文，不存认证信息。未知清单版本停止自动更新。
+- 首次导入建立来源映射清单，放在 `Assets/Game/Documentation/NarrativeImports/<批次ID>.json`，与剧情一起保存：schemaVersion、源 URL/工作表 ID/明确范围、读取时间、来源内容指纹、表头映射、每行原始五列和行号、生成资产 GUID、story/chapter/node/command/line ID、多语言 Key（命名规范见 [多语言 Key 与配表约定](references/localization.md)）、源稳定键（若有）及导入后的目标指纹。只存本次范围和必要上下文，不存认证信息。未知清单版本停止自动更新。
 - 导入前保存受影响资产、`.meta` 和来源映射备份到 `.utmp/vn-story-import/<批次>/`。通过 Unity MCP 和现有剧情模型/SerializedObject 写资产，不手拼 YAML、不修改包内模板快照。新增剧情默认放 `Assets/GameResource/Resources/Config/Narrative/<剧情名>/`，不覆盖 LastLight，不自动改新游戏入口。
 - 使用实际项目的 `Game.Narrative.Editor.NarrativeStoryModel`、`NarrativeGraphModel` 公开 API；调用前核对当前源码和身份限制。0.7.0 起图编辑接口按框架开发/消费模式读取正式编辑/活动部署记录，并识别 visual-novel 派生谱系。旧版本或身份记录异常可能被拒绝：**不能伪造编辑记录或绕过检查**，报告需要正式兼容接口的具体阻断，保留预览。资产写入只能在当前正式接口允许时进行。
-- 按段落/场景组织对话段，保留输入顺序与分支逻辑；不要每句话创建一个节点。只有用户提供的切场、转场等明确指示才生成基础演出，本阶段不自作主张润色。创建有效的新 ID，更新保留既有 ID/GUID；不把行号当永久 ID。
+- 按段落/场景组织对话段，保留输入顺序与分支逻辑；不要每句话创建一个节点。只有用户提供的切场、转场等明确指示才生成基础演出，本阶段不自作主张润色。创建有效的新 ID，更新保留既有 ID/GUID；不把行号当永久 ID。同时按 [多语言 Key 与配表约定](references/localization.md) 给台词写 _textKey、给选项/路线写 _textKey、给提示写 _promptTextKey、给章节名与剧情名写 _displayNameKey，并在 
+ovel_content_text 追加对应行。
 - 重新导入比较来源基线、最新源内容与当前资产。源表插行或重排行导致无法唯一匹配时要求人工映射，不能按偏移覆盖；重复台词不能仅凭文本合并。相同范围无变化则无操作；有本地演出优化时保留，不能重建整章抹掉优化。删行、新增、改字和逻辑变更逐项预览，删除需明确确认。文字修改按项目约定提升修订，提示存档兼容影响，不清存档。
 - 写入前复核选定远端内容指纹与本地目标指纹，发生变化则重新预览。分批失败时停止并恢复本批写入，保留其他修改；不能承诺跨 CLI 与 Unity 的原子事务。未解决的条目保留在预览里，不将不完整图接入正式剧情入口。
 
 ## 完成条件
 
-通过当前 Story/Chapter 的 `TryReadDefinition` 和实际已导出配表校验完整图、角色、资源、变量与分支；按源行逐项核对台词全文、说话人和顺序，包括空格、标点及单元格内显式换行。报告已导入/跳过/阻断行号、资产路径、来源清单与验证结果。流程校验未通过时不称为可运行导入。完成后可交给演出优化 Skill，但不自动执行优化或回写飞书。
+通过当前 Story/Chapter 的 `TryReadDefinition` 和实际已导出配表校验完整图、角色、资源、变量与分支；按源行逐项核对台词全文、说话人和顺序，包括空格、标点及单元格内显式换行。报告已导入/跳过/阻断行号、资产路径、来源清单与验证结果。流程校验未通过时不称为可运行导入。多语言部分逐项核对：每个 Key 在 
+ovel_content_text 里都有行、zh_Hans 与资产原文逐字一致、其余语言列未被改动；烘焙成功且新表能被 Resources.Load 读到。完成后可交给演出优化 Skill，但不自动执行优化或回写飞书。
 
+## 多语言 Key 与配表
+
+导入时台词、选项、提示、章节名与剧情名都要带稳定的多语言 Key，完整规范见
+[多语言 Key 与配表约定](references/localization.md)，以下是必须落实的几条：
+
+- Key 从既有稳定 ID 拼出（`text.<storyId>.<lineId>`、`option.<storyId>.<optionId>`、
+  `prompt.<storyId>.<nodeId>`、`chapter.<storyId>.<chapterId>`、`story.<storyId>`），
+  **不用行号、序号或台词文本拼 Key**；重新导入必须保留既有 ID，Key 才不会漂移。
+- 原文照旧写进 `_text` / `_displayName`，它们同时是源语言文本与回退文本；
+  Key 字段只写 Key，不把 Key 写进正文。
+- 在 `novel_content_text` 追加对应行：`key` 用上面的规范，`zh_Hans` 填原文，其余语言列留空待译。
+  已存在的 Key 只更新 `zh_Hans`，**绝不覆盖其它语言列**（那是已交付的译文）。
+- 角色显示名按 `character.<characterId>` 在 `novel_content_text` 里建行；
+  `novel_characters.displayName` 保持不动，它是源语言回退值。
+- 目标项目没有多语言表时（老项目）：只在报告里说明所需升级，**不要**凭空创建配表或往资产里写 Key。
+
+### 烘焙
+
+改完 CSV 必须烘焙，且 **Windows 上先卸载已加载资源**，否则报
+`无法删除要被替换的文件`；烘焙后要 `AssetDatabase.Refresh()`，否则读表仍拿到旧缓存。
+只有本批图片、源表、烘焙都成功才算这一批完成。
 ## 二级步骤与文字过渡（模板 0.8.0 起）
 
 先核对目标项目实际存在 `NarrativeStepGroups`、`NarrativeStepPresetSO`、`NovelTextReveal` 与 `HideAllCharacters`；缺少时只报告所需业务升级，不向旧项目写入无法执行的字段。参考当前 LastLight 示例与 `Assets/GameResource/Authoring/Narrative/StepPresets` 的实际自定义步骤资产。
