@@ -205,6 +205,8 @@ namespace Game.Narrative.Editor
             {
                 Field(item, "_textBindings", "正文变量绑定（保留原文占位符）");
                 Key(item, "_characterId", "角色键（留空为旁白）", catalog, kind, true);
+                // 说话人称呼只覆盖显示名，不换真实角色键：改它不会动存档指纹，也不影响强调匹配。
+                LocalizationKeyField(item, "_speakerNameKey", "说话人称呼 Key（留空用角色名）", SpeakerFallbackName(item, catalog));
                 var text = item.FindPropertyRelative("_text");
                 EditorGUILayout.LabelField("台词");
                 EditorGUI.BeginChangeCheck();
@@ -391,15 +393,24 @@ namespace Game.Narrative.Editor
                 if (kind == NovelCommandKind.Say) { Id(item, "_lineId", "台词 ID"); Field(item, "_textRevision", "台词修订"); }
             }
         }
+        // 说话人的回退名：与运行期同一条链的「角色名」端——角色表 displayName，取不到时退回角色键；
+        // 空角色键是旁白。摘要与称呼 Key 预览共用它，避免两处各写一份回退规则。
+        private static string SpeakerFallbackName(SerializedProperty item, NarrativeTableCatalog catalog)
+        {
+            string character = item.FindPropertyRelative("_characterId").stringValue;
+            if (string.IsNullOrEmpty(character)) return "旁白";
+            if (catalog != null && catalog.TryGetCharacter(character, out var row)) return row.DisplayName;
+            return character;
+        }
         private static string Summary(SerializedProperty item, bool command, NarrativeTableCatalog catalog)
         {
             if (!command) return item.FindPropertyRelative("_text").stringValue;
             var kind = (NovelCommandKind)item.FindPropertyRelative("_kind").enumValueIndex;
             if (kind == NovelCommandKind.Say)
             {
-                string character = item.FindPropertyRelative("_characterId").stringValue;
-                string name = string.IsNullOrEmpty(character) ? "旁白" : character;
-                if (catalog != null && catalog.TryGetCharacter(character, out var row)) name = row.DisplayName;
+                // 摘要显示覆盖后的名字：填了称呼 Key 就是运行期真正显示的那一个。
+                string name = NovelLocalization.SpeakerName(item.FindPropertyRelative("_characterId").stringValue,
+                    item.FindPropertyRelative("_speakerNameKey").stringValue, SpeakerFallbackName(item, catalog));
                 string mode = item.FindPropertyRelative("_textMode").enumValueIndex switch { 1 => "[标题] ", 2 => "[全屏旁白] ", _ => "" };
                 return mode + name + "：" + item.FindPropertyRelative("_text").stringValue;
             }

@@ -150,6 +150,8 @@ namespace Game.Narrative
         [SerializeField] private string _lineId;
         [SerializeField] private int _textRevision = 1;
         [SerializeField] private string _characterId;
+        /// <summary>说话人称呼的多语言 Key；留空时用角色名。用于「名字揭晓前显示 ？？？」这类临时称呼。</summary>
+        [SerializeField] private string _speakerNameKey;
         [SerializeField, TextArea] private string _text;
         [SerializeField] private string _resourceKey;
         [SerializeField] private string _variableId;
@@ -226,6 +228,7 @@ namespace Game.Narrative
         public string LineId => _lineId;
         public int TextRevision => _textRevision;
         public string CharacterId => _characterId;
+        public string SpeakerNameKey => _speakerNameKey;
         public string Text => _text;
         public string TextKey => _textKey;
         public string ResourceKey => _resourceKey;
@@ -289,7 +292,8 @@ namespace Game.Narrative
             Color? color = null, float hold = 0, bool wholeReader = false, bool persistent = false, bool keepOnSceneChange = false, string bindingId = null, float volume = 1, NovelTextMode textMode = NovelTextMode.Dialogue, NovelTextBeat[] textBeats = null, bool dialogueVisible = true, float cameraZoom = 1, NovelWipeDirection wipeDirection = NovelWipeDirection.LeftToRight, NovelTextReveal textReveal = NovelTextReveal.Default, float textFadeDuration = .8f, float titleExitDuration = .65f, float textSpeedMultiplier = 1, NovelEase textEase = NovelEase.SmoothStep,
             NovelIntegerOperation integerOperation = NovelIntegerOperation.Assign, int integerOperand = 0,
             string operandVariableId = null, NovelVariableScope operandScope = NovelVariableScope.Chapter,
-            int randomMin = 0, int randomMax = 99, NovelTextBinding[] textBindings = null, string textKey = null)
+            int randomMin = 0, int randomMax = 99, NovelTextBinding[] textBindings = null, string textKey = null,
+            string speakerNameKey = null)
         {
             _textBindings = new List<NovelTextBinding>(textBindings ?? Array.Empty<NovelTextBinding>());
             _integerOperation = integerOperation; _integerOperand = integerOperand;
@@ -300,6 +304,7 @@ namespace Game.Narrative
             _textReveal = textReveal; _textFadeDuration = textFadeDuration; _titleExitDuration = titleExitDuration; _textSpeedMultiplier = textSpeedMultiplier; _textEase = textEase;
             _textMode = textMode; _textBeats = new List<NovelTextBeat>(textBeats ?? Array.Empty<NovelTextBeat>()); _dialogueVisible = dialogueVisible;
             _commandId = commandId; _kind = kind; _text = text; _lineId = lineId; _textKey = textKey;
+            _speakerNameKey = speakerNameKey;
             _characterId = characterId; _resourceKey = resourceKey; _variableId = variableId;
             _value = value; _duration = duration; _textRevision = textRevision; _scope = scope;
             _slot = slot; _visualAction = visualAction;

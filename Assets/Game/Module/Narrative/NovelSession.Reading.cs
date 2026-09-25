@@ -21,7 +21,7 @@ namespace Game.Narrative
         public bool VoiceWaiting => _lineVoicePending || _audio.VoicePlaying;
         public IReadOnlyList<NovelHistoryEntry> History => _history.Select(h => new NovelHistoryEntry
         { ChapterId = h.ChapterId, NodeId = h.NodeId, CommandId = h.CommandId, LineId = h.LineId,
-            TextRevision = h.TextRevision, Text = h.Text, Speaker = ResolveSpeaker(h.Speaker) }).ToList().AsReadOnly();
+            TextRevision = h.TextRevision, Text = h.Text, SpeakerNameKey = h.SpeakerNameKey, Speaker = ResolveSpeaker(h) }).ToList().AsReadOnly();
         private NarrativeSnapshot ReadingSnapshot
         {
             get
@@ -43,7 +43,10 @@ namespace Game.Narrative
         #endregion
         // --------------------------------------------------------
         #region 内部方法
-        private string ResolveSpeaker(string key) => _catalog != null && _catalog.TryGetCharacter(key, out var row) ? NovelLocalization.CharacterName(key, row.DisplayName) : NovelLocalization.CharacterName(key, key);
+        // 历史是读时解析：称呼 Key 与角色键都按当前语言重新解析，所以旧句不会因为后来揭晓真名而串味，
+        // 也不会因为补译文而失效。旧档缺 SpeakerNameKey 字段时退化为原来的角色名回退链。
+        private string ResolveSpeaker(NovelHistoryEntry entry) => NovelLocalization.SpeakerName(entry.Speaker, entry.SpeakerNameKey,
+            _catalog != null && _catalog.TryGetCharacter(entry.Speaker, out var row) ? row.DisplayName : entry.Speaker);
         private bool CurrentIsRead()
         {
             var c = _runner.CurrentCommand;

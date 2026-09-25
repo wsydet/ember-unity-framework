@@ -58,7 +58,8 @@ namespace Game.Narrative
             _recordedPosition = s.PositionVersion;
             var c = _runner.CurrentCommand;
             var entry = new NovelHistoryEntry { ChapterId = s.ChapterId, NodeId = s.NodeId, CommandId = c.CommandId,
-                LineId = c.LineId, TextRevision = c.TextRevision, Text = c.Text, Speaker = c.CharacterId };
+                LineId = c.LineId, TextRevision = c.TextRevision, Text = c.Text, Speaker = c.CharacterId,
+                SpeakerNameKey = c.SpeakerNameKey };
             _history.Add(entry); if (_history.Count > 200) _history.RemoveAt(0);
             LineRead?.Invoke(entry);
         }
@@ -74,6 +75,9 @@ namespace Game.Narrative
                     if (!_story.Asset) throw new InvalidOperationException(_story.Error ?? "剧情资源缺失");
                     if (!_story.Asset.TryReadDefinition(_catalog, out var definition, out var issues)) throw new InvalidOperationException(issues[0].ToString());
                     if (!_runner.TryRestore(definition, _catalog, _restore, out var error)) throw new InvalidOperationException(error);
+                    // 历史只做结构与规模检查：条目里的 Speaker 与 SpeakerNameKey 都是表现层字段，
+                    // 由读时解析（ResolveSpeaker）处理。旧档缺 SpeakerNameKey 即为空，行为与接入前一致，
+                    // 所以不推进 SchemaVersion、也不加版本迁移分支。
                     if (_restore.Visuals == null || _restore.Visuals.Count > 4 || _restore.History == null || _restore.History.Count > 200 || _restore.History.Any(h => h == null) || !_restore.BgmLoop)
                         throw new InvalidOperationException("存档演出或历史格式不支持");
                     if (_restore.SchemaVersion == 1)
@@ -209,7 +213,8 @@ namespace Game.Narrative
             checkpoint.Actions = _actions.Values.Select(a => new NovelSavedAction { Id = a.Id,
                 Status = a.Status == NovelActionStatus.Running ? NovelActionStatus.Completed : a.Status }).ToList();
             checkpoint.History = _history.Select(h => new NovelHistoryEntry { ChapterId = h.ChapterId, NodeId = h.NodeId,
-                CommandId = h.CommandId, LineId = h.LineId, TextRevision = h.TextRevision, Text = h.Text, Speaker = h.Speaker }).ToList();
+                CommandId = h.CommandId, LineId = h.LineId, TextRevision = h.TextRevision, Text = h.Text, Speaker = h.Speaker,
+                SpeakerNameKey = h.SpeakerNameKey }).ToList();
             return true;
         }
         /// <summary>Owner releases old session BEFORE this boundary. Failure after it returns to menu.</summary>

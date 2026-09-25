@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.12] - 2026-09-26
+
+- **视觉小说模板 0.10.0**：Say 新增「说话人称呼 Key（留空用角色名）」。剧情里「主角先遇到一个人、后面才知道名字」时，揭晓前的台词仍填真实角色键，另加 `speaker.〈语义〉` 称呼 Key（模板已备好 `speaker.unknown → ？？？`），揭晓后留空即显示真名。
+- **统一解析链**：`NovelLocalization.SpeakerName(characterId, speakerNameKey, displayName)` 收敛「称呼 Key → `character.〈角色键〉` → `novel_characters.displayName`」，运行期当前句、历史解析、编辑器摘要与布局窗口节点预览四处共用，覆盖 Key 留空或查不到时按原链回退，不显示空白、不报错。
+- **存档兼容**：称呼 Key 是表现层字段，不写进 `NovelCompatibility.Fingerprint`，也不换角色键，因此补称呼 Key 不作废玩家已有存档、不影响「角色强调 → Auto」匹配；`NovelHistoryEntry` 增加 `SpeakerNameKey`，旧档缺该字段时行为与改动前完全一致，`SchemaVersion` 保持 7，无迁移分支。
+- **编辑器与技能**：对白 Inspector 复用现成的多语言 Key 字段（逐语言预览），摘要显示覆盖后的名字，新建指令会清空该字段；`references/localization.md` 补 Key 家族与第 4.1 节，导入技能把源表临时称呼映射为「真实角色键 + 称呼 Key」（不再映射成空角色键），导出技能明确 `说话人` 列写真实角色名、称呼 Key 附注而不回写 `？？？`。框架 API、base/source3d-2p5d 模板及第三方依赖不变。
+
 ## [0.14.11] - 2026-09-25
 
 - **视觉小说模板 0.9.2**：9 个正式 Prefab 的 44 个静态文案控件挂上 `novel_ui_text` 多语言 Key（换为 `TMPEx`），运行期按语言显示、未接入或查不到条目时回退原文；`novel_ui_text` 增加 12 行设置面板文案。

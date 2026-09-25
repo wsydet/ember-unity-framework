@@ -188,6 +188,17 @@ namespace Game.Narrative
         public static string CharacterName(string characterId, string fallback)
             => TryGetCharacterName(characterId, out string localized) ? localized : fallback;
 
+        /// <summary>
+        /// 说话人显示名。解析顺序固定为：称呼 Key（例如 speaker.unknown → ？？？）→
+        /// character.《角色键》→ 传入的 displayName（通常是 novel_characters.displayName）。
+        /// <para>称呼 Key 是表现层字段：它只覆盖这一句的显示名，不改变对白角色键，
+        /// 因此不影响存档指纹与 Emphasis Auto 匹配。Key 留空或查不到时按原回退链继续，
+        /// 不显示空白、不报错。运行期当前句、历史解析与编辑器预览共用这一条链。</para>
+        /// </summary>
+        [HasGC]
+        public static string SpeakerName(string characterId, string speakerNameKey, string displayName)
+            => TryGetContent(speakerNameKey, out string overridden) ? overridden : CharacterName(characterId, displayName);
+
         /// <summary>解析 name 对应的语言列，供编辑器逐语言预览；未安装时返回 false。</summary>
         [HasGC]
         public static bool TryGetContent(string key, string language, out string text)

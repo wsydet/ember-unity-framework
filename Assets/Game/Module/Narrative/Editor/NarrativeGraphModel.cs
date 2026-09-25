@@ -230,7 +230,7 @@ namespace Game.Narrative.Editor
                 {
                     item.FindPropertyRelative("_kind").enumValueIndex = 0;
                     item.FindPropertyRelative("_scope").enumValueIndex = 0;
-                    foreach (string field in new[] { "_text", "_characterId", "_resourceKey", "_variableId" }) item.FindPropertyRelative(field).stringValue = "";
+                    foreach (string field in new[] { "_text", "_characterId", "_resourceKey", "_variableId", "_speakerNameKey" }) item.FindPropertyRelative(field).stringValue = "";
                     item.FindPropertyRelative("_duration").floatValue = 0;
                     item.FindPropertyRelative("_volume").floatValue = 1;
                     item.FindPropertyRelative("_cameraZoom").floatValue = 1;

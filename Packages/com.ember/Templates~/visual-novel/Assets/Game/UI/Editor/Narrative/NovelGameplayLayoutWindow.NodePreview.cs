@@ -115,8 +115,11 @@ namespace Game.UI.Editor
                     {
                         line++;
                         body.text = command.Text;
-                        speaker.text = command.CharacterId ?? string.Empty;
-                        if (_catalog != null && _catalog.TryGetCharacter(command.CharacterId, out var character)) speaker.text = character.DisplayName;
+                        // 与运行期同一条解析链：称呼 Key → character.〈角色键〉→ 角色表 displayName。
+                        string fallback = string.IsNullOrEmpty(command.CharacterId) ? string.Empty
+                            : _catalog != null && _catalog.TryGetCharacter(command.CharacterId, out var character)
+                                ? character.DisplayName : command.CharacterId;
+                        speaker.text = NovelLocalization.SpeakerName(command.CharacterId, command.SpeakerNameKey, fallback);
                         if (line == _previewLine)
                         {
                             _previewTextMode = command.TextMode;

@@ -1,4 +1,4 @@
-﻿# 视觉小说模板实施清单
+# 视觉小说模板实施清单
 
 ## 当前交付与验证（2026-09-22）
 
@@ -1531,3 +1531,40 @@ Unity MCP 未连接或不可用，本次未完成 Unity 编译验证。请在 Un
 - 皮肤实测：演示皮肤 `lastlight_alt` 在阅读页 `History/SkinIcon` 与主界面 `NovelBackdrop` 各命中 1 并真的换图；无覆盖行的 `lastlight_default` 命中 0（保持 Prefab 外观）。已知约束：覆盖值必须是项目 `Resources` 下的图片，Unity 内置 `UISprite` 无法用路径表示，只能当被替换方。
 - 未验证：编辑器面板的实际渲染（Key 行与语言下拉的排版、交互）与运行期皮肤在真实页面上的画面效果，需要人工或 Play Mode 确认；`NarrativeLibraryTests.RenamingAndMovingStoryPreservesEntryAndStableLookup` 需要编辑器前台焦点，本轮未跑通；`NovelGameplayTests` 重场景用例在本环境下不稳定（改动前同样如此）。
 - 未运行框架全量回归，未发布框架 tag，未部署或验收消费项目，模板尚未保存与 Bump。
+
+## 0.10.0 说话人临时称呼（2026-09-26）
+
+- 新增 Say 字段 `_speakerNameKey`（「说话人称呼 Key（留空用角色名）」）：只为这一句覆盖**姓名框显示**，
+  用于「主角先遇到一个人、后面才知道名字」——揭晓前显示 `？？？`，揭晓后留空即显示真名。
+  构造参数追加在参数列表末尾，`WithResolvedText` 的 `MemberwiseClone` 自然继承，`JsonUtility` 往返保留。
+- 显示名解析收敛为一条链：`_speakerNameKey` 命中内容表 → `character.〈角色键〉` → `novel_characters.displayName`，
+  共用入口 `NovelLocalization.SpeakerName(characterId, speakerNameKey, displayName)`。运行期当前句
+  （`NovelSession.Render`）、历史解析（`NovelSession.Reading.ResolveSpeaker`）、运行期摘要
+  （`NarrativeContentGUI.Summary`）与布局窗口节点预览（`NovelGameplayLayoutWindow.ApplyNodePreview`
+  写 Speaker 文本处）四处都走它，不再各写一份回退规则。覆盖 Key 留空或查不到时按原回退链继续，不显示空白、不报错；
+  编辑器里该字段复用现成的 `LocalizationKeyField`，逐语言预览未命中时显示「缺条目 → 回退：〈角色名〉」。
+- **不改进存档指纹**：称呼 Key 是表现层字段，与 `_text` 同类，不写进 `NovelCompatibility.Fingerprint`，
+  因此给既有剧情补称呼 Key 不会让玩家已读存档被判「剧情语义已变化」。新增用例锁定「只改称呼 Key
+  时指纹逐字节一致」。
+- 历史与存档：`NovelHistoryEntry` 增加 `SpeakerNameKey`，`RecordStableLine` 写入、`TryCapture` 复制、
+  `History` 解析优先使用它，所以回看揭晓前的旧句仍是 `？？？`，不会因为后面说了真名而串味。
+  旧档没有这个字段，反序列化后为空、解析退回角色名回退链，行为与改动前完全一致；恢复校验仍只做
+  结构与规模检查，`SchemaVersion` 保持 **7**，没有版本迁移分支。
+- 配表：内容表新增 Key 家族 `speaker.〈语义〉`，模板已提供 `speaker.unknown`（`？？？` / `？？？` / `？？？` / `???`，
+  `novel_content_text` 与烘焙产物已同步）。多语言 Key 表、回退链与「揭晓前显示占位名」写法写入
+  `references/localization.md` 第 2、4、4.1 节，导入技能的五列映射补「临时称呼 → 真实角色键 + 称呼 Key」，
+  导出技能明确 `说话人` 列写真实角色名、称呼 Key 附注而不回写 `？？？`。
+- 编辑器还顺手保证新建指令会清空该字段（`NarrativeGraphModel.AddItem`），不会从被复制的上一条指令继承。
+- 实测：新增 5 项 `NovelSpeakerNameTests` 用例 **5/5 通过**（覆盖 Key 命中显示译文、Key 未命中回退角色名、
+  只改称呼 Key 时指纹不变、历史带 Key 且旧档缺字段仍能恢复、Emphasis Auto 仍按真实角色键匹配）。
+  过滤掉需要编辑器前台焦点的历史用例后，`Game.Narrative.Tests` 相关 11 个类 **228/228 通过**
+  （含 `NovelSessionTests` 全部分片即 NovelLocalization / NovelText / NovelReading / NovelCheckpoint /
+  NovelActor / NovelCamera / NovelScreen / NovelMedia / NovelStepPresentation / NovelVariableLogic、
+  `NovelCheckpointTests`、`NarrativeRunnerTests`、`NarrativeStory*`、`NarrativeGraph*` 与
+  `NarrativeAvailability/TemplateIdentity`）。既有指纹基线（E0 `7D8B67D3…`、M1 `FFBCEEA6…`）未变。
+- 未验证：`NarrativeLibraryTests.RenamingAndMovingStoryPreservesEntryAndStableLookup` 需要编辑器前台焦点，
+  本环境未跑通；`NovelGameplayTests` 重场景用例在本环境下无法启动（改动前同样如此）；
+  未运行框架全量回归，未跑 Play Mode，未部署或验收消费项目。
+- 已知边界：称呼 Key 是**跨角色**的语义 Key（`speaker.unknown` 谁都能用），不是「角色键的别名」；
+  同一个临时称呼在同一部作品里应复用同一个 Key，语义不同才另开一个。译文与原文长度差异不影响它，
+  因为它只替换姓名框，不参与正文分页与 `TextBeats` 校验。

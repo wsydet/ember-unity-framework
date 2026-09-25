@@ -1,4 +1,4 @@
-﻿# 多语言 Key 与配表约定
+# 多语言 Key 与配表约定
 
 本文件是视觉小说模板多语言的**唯一口径**。导入、回写、演出优化都按这里的约定写数据。
 
@@ -27,6 +27,7 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
 | 章节名 | `_displayNameKey` | `chapter.<storyId>.<chapterId>` |
 | 剧情名 | `_displayNameKey` | `story.<storyId>` |
 | 角色名 | 无字段，按约定查表 | `character.<characterId>` |
+| 说话人临时称呼（揭晓前） | `_speakerNameKey`（Say） | `speaker.<语义>`，如 `speaker.unknown` |
 
 `lineId` / `optionId` / `routeId` / `nodeId` / `chapterId` 都是已有的稳定 ID，**导入时保留既有值**，
 所以 Key 天然稳定。不要用行号、序号或台词文本本身拼 Key。
@@ -42,7 +43,10 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
    已存在的 Key **只更新 `zh_Hans`**，绝不覆盖其它语言列。
 3. 角色名在 `novel_content_text` 里按 `character.<characterId>` 追加，`zh_Hans` 填显示名；
    `novel_characters.displayName` 保持不变，它是源语言回退值。
-4. 改完 CSV 后烘焙。**Windows 上必须先卸载已加载资源再烘焙**，否则会
+4. 说话人临时称呼按 `speaker.<语义>` 追加，`zh_Hans` 填原文（例如 `？？？`），其余语言列可一起填。
+   模板已提供 `speaker.unknown → ？？？`，同一个语义复用同一个 Key；只有语义不同（例如`？？？` 与
+   `神秘的声音`）才新开一个 Key。**不要**用 `speaker.<characterId>` 这种带角色键的写法。
+5. 改完 CSV 后烘焙。**Windows 上必须先卸载已加载资源再烘焙**，否则会
    `Table artifact batch was rolled back: 无法删除要被替换的文件`：
 
    ```
@@ -52,7 +56,7 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
    ```
 
    烘焙改写了 `.bytes`，不 `Refresh` 的话 `Resources.Load` 仍返回旧缓存。
-5. 不改生成代码、不手改 `.bytes`、不手改 `template.json` 的 hash。
+6. 不改生成代码、不手改 `.bytes`、不手改 `template.json` 的 hash。
 
 ## 4. 回退链
 
@@ -61,7 +65,23 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
 - 某一语言列留空 = 该语言未翻译，显示源语言文本，不会显示空白。
 - Key 查不到 = 回退原文，不报错。
 - 角色名查不到 `character.<id>` = 回退 `novel_characters.displayName`。
+- **说话人显示名**多一层：`_speakerNameKey` 命中 → `character.<角色键>` → `novel_characters.displayName`。
+  称呼 Key 留空或查不到都按后面的链继续，不显示空白、不报错。
 - 没有装配多语言配表时，全部回退原文，行为与未接入前完全一致。
+
+## 4.1 揭晓前显示占位名
+
+「主角先遇到一个人、后面才知道名字」的台词，**仍然填真实角色键**，另加一个称呼 Key：
+
+| 字段 | 填什么 |
+|---|---|
+| 角色键 | 真实角色键（例如 `lastlight_wan`）。**不要为了显示 ？？？而留空或换成别的键** |
+| 说话人称呼 Key | 揭晓前那句填 `speaker.unknown`，揭晓后那句留空 |
+| 台词 | 照常写，照常配 `_textKey` |
+
+说话人称呼是**表现层字段**：它只改这一句显示的名字，不参与存档语义指纹，也不影响
+「角色强调 → Auto」按角色键找说话人，所以把称呼 Key 加上去不会作废玩家已有的存档。
+历史回看按当时的称呼 Key 重新解析，旧句不会因为后面揭晓了真名而变成真名。
 
 ## 5. 两条不能踩的线
 

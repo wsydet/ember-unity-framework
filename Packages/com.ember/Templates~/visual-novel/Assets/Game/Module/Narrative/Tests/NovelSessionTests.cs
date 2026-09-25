@@ -41,8 +41,9 @@ namespace Game.Narrative.Tests
         {
             public int TextLength => 10;
             public int Visible, Clears;
+            public string Speaker = "";
             public float Progress;
-            public void Render(NarrativeSnapshot snapshot, NovelCommand command, string speaker, int visibleCharacters, string status) { Visible = visibleCharacters; }
+            public void Render(NarrativeSnapshot snapshot, NovelCommand command, string speaker, int visibleCharacters, string status) { Visible = visibleCharacters; Speaker = speaker; }
             public void Visual(NovelCommand command, Sprite sprite, float progress) { Progress = progress; }
             public void ClearVisuals() { Clears++; }
         }

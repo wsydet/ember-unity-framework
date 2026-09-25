@@ -64,6 +64,9 @@ namespace Game.Narrative
     public sealed class NovelHistoryEntry
     {
         public string ChapterId, NodeId, CommandId, LineId, Text, Speaker;
+        /// <summary>说话人称呼的多语言 Key（如 speaker.unknown）。旧档没有这个字段，反序列化后为空，
+        /// 解析退回角色名回退链，所以不需要迁移、也不推进 SchemaVersion。</summary>
+        public string SpeakerNameKey;
         public int TextRevision;
     }
 
