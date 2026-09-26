@@ -1,4 +1,4 @@
-﻿# Ember API 速查手册
+# Ember API 速查手册
 
 > **写代码前先查这里，避免重复造轮子。**
 > 最后核对：2026-09-09；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
@@ -861,6 +861,12 @@ void OnDestroy()
 | `AudioShutdown` | 5002 | Audio 退出 |
 | `InputReady` | 6001 | Input 初始化完成 |
 | `InputShutdown` | 6002 | Input 退出 |
+| `LanguageChanged` | 7001 | 全局语言已切换（载荷为新语言标识）|
+
+`LanguageChanged` 由 `Ember.UIExtension.TextLocalization.PublishLanguageChanged(language)` **单一发布**：
+发布前它已经重刷过所有活动 `TMPEx`，所以订阅方只需重刷「自己持有的运行期文本」
+（剧情正文、选项、历史这类不挂在 `TMPEx` Key 上的字符串）。语言偏好不进存档、不影响剧情指纹，
+该事件只表达显示语言变化。
 
 ---
 
@@ -951,7 +957,7 @@ EmberDebug.GlobalOpen = false;              // 全关（Error 除外）
 | 父标签 | 子标签 |
 |--------|--------|
 | `EmberBasic` | `BasicCrypto`, `BasicPerformance`, `BasicAppQuit`（Editor 工具用动态标签 `EmberBasic.ToolName`，由 autoCollect 自动收集） |
-| `EmberCore` | `CoreEventBus`, `CoreServiceLocator`, `CoreSingleton`, `CoreObjectPool`, `CoreManagerCollector`, `CoreUpdateManager`, `CoreStateMachine`, `CoreGameLauncher`, `CoreCameraManager`, `CoreEditor` |
+| `EmberCore` | `CoreEventBus`, `CoreServiceLocator`, `CoreSingleton`, `CoreObjectPool`, `CoreManagerCollector`, `CoreUpdateManager`, `CoreStateMachine`, `CoreGameLauncher`, `CoreQuitCurtain`, `CoreCameraManager`, `CoreEditor` |
 | `EmberResource` | `ResourceManager`, `ResourceProvider` |
 | `EmberUI` | `UIManager` |
 | `EmberScene` | `SceneManager` |
@@ -1241,9 +1247,40 @@ GameLauncher.Instance.UIRoot          // UI 根节点
 GameLauncher.Instance.UICamera        // UI 相机
 GameLauncher.Instance.MainCamera      // 主相机
 
+GameLauncher.Instance.Quit();         // 业务唯一退出入口（不要直接调 Application.Quit）
+
 // 子类重写以定制状态机
 protected virtual void ConfigureStateMachine(EmberStateMachine fsm) { ... }
 ```
+
+`Quit()` 的顺序固定为：**退出封屏 → 框架清理（日志落盘 + 逆序销毁）→ 退出应用**。
+封屏必须在清理之前，否则「UI 已销毁、只剩 3D 场景」的那一帧会真的显示出来；
+系统/窗口关闭等不经过 `Quit()` 的路径由 `OnApplicationQuit` 兜底执行同样的封屏。
+
+### EmberQuitCurtain
+
+| | |
+|---|---|
+| **位置** | `Packages/com.ember/Core/Runtime/EmberQuitCurtain.cs` |
+| **命名空间** | `Ember.Core` |
+| **说明** | 退出封屏：3D 主相机转纯黑 + 请求 UI 层盖不透明全屏遮罩。由 `GameLauncher.Quit()` 与 `OnApplicationQuit` 兜底自动调用 |
+
+```csharp
+EmberQuitCurtain.Show();                  // 立即封屏（幂等，同帧生效）
+EmberQuitCurtain.IsShown;                 // 本次运行是否已封屏
+EmberQuitCurtain.BlackoutCamera(camera);  // 额外的 3D 相机自行黑屏
+EmberQuitCurtain.CoverRequested += ...;   // 自定义封屏画面（默认由 Ember.UI 盖纯黑遮罩）
+```
+
+| 方法 | 说明 | GC |
+|------|------|-----|
+| `Show()` | 封屏：主相机 `cullingMask=0` + Solid Color 黑，并请求 UI 遮罩 | `[HasGC]` |
+| `BlackoutCamera(Camera)` | 单台相机转纯黑输出，null 无操作 | `[NoGC]` |
+| `Reset()` | 清空封屏标记（编辑器重进 Play / 测试用），不还原相机 | `[NoGC]` |
+
+UI 侧遮罩（`Packages/com.ember/UI/Runtime/EUIQuitCurtainCover.cs`，框架内部）是
+`RenderMode.ScreenSpaceOverlay`、`sortingOrder = 32767` 的纯黑满屏图，
+不参与 EUI 页面栈，因此框架销毁页面时不会被销毁。
 
 ---
 
@@ -1853,10 +1890,11 @@ public interface IDelayDisposable : IDisposable {
 |---|---|
 | **位置** | `Packages/com.ember/Basic/Runtime/Utils/ApplicationQuitUtil.cs` |
 | **命名空间** | `Ember.Basic` |
-| **说明** | 应用退出工具。Android 上先通过 `android.os.Process.killProcess` 杀进程，失败时回退到 `Application.Quit()`。 |
+| **说明** | 应用退出工具。Android 上先通过 `android.os.Process.killProcess` 杀进程，失败时回退到 `Application.Quit()`。业务应调用 `GameLauncher.Quit()`，由它先封屏并清理框架 |
 
 ```csharp
 ApplicationQuitUtil.Quit(); // 替代 Application.Quit()
+ApplicationQuitUtil.DescribeBranch(); // 本次退出实际走的分支名（退出前日志用）
 ```
 
 ### UrlUtils

@@ -107,7 +107,7 @@ namespace Game.UI.Editor
 
                 root = PrefabUtility.LoadPrefabContents(PREFAB);
                 var binding = root.GetComponent<EUIBinding>();
-                var panel = root.transform.Find("Animator/EUISafeArea/NovelPreferences");
+                var panel = root.transform.Find("Animator/EUISafeArea/Center/NovelPreferences");
                 if (panel == null) throw new InvalidOperationException("找不到 NovelPreferences 节点");
 
                 // 标签：复用现有行标签（已是 TMPEx），改 Key 与原文即可。

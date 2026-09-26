@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6308656211864760781}
+  m_Father: {fileID: 2327110691966713537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.09, y: 0.69}
   m_AnchorMax: {x: 0.58, y: 0.83}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  _key: ui.main.Title
+  _key: 
 --- !u!1 &819547197067679334
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6308656211864760781}
+  m_Father: {fileID: 2327110691966713537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.092, y: 0.65}
   m_AnchorMax: {x: 0.55, y: 0.69}
@@ -873,7 +873,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6308656211864760781}
+  m_Father: {fileID: 2327110691966713537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.09, y: 0.625}
   m_AnchorMax: {x: 0.39, y: 0.625}
@@ -3030,21 +3030,21 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6331671151823732797, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7801105514560460422}
-    - targetCorrespondingSourceObject: {fileID: 6331671151823732797, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5229699094186436369}
-    - targetCorrespondingSourceObject: {fileID: 6331671151823732797, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2910360846435903149}
     - targetCorrespondingSourceObject: {fileID: 2313102962269359921, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2169570190601217469}
     - targetCorrespondingSourceObject: {fileID: 2313102962269359921, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6534039695935199879}
+    - targetCorrespondingSourceObject: {fileID: 2313102962269359921, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7801105514560460422}
+    - targetCorrespondingSourceObject: {fileID: 2313102962269359921, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5229699094186436369}
+    - targetCorrespondingSourceObject: {fileID: 2313102962269359921, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2910360846435903149}
     - targetCorrespondingSourceObject: {fileID: 946884122348797817, guid: 89b5f16b84d545f45b919cfc3f1c61d3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6609751973352677992}

@@ -10,6 +10,7 @@
 using Ember.Basic;
 using Ember.Core;
 using Ember.UI;
+using System;
 
 namespace Game.UI
 {
@@ -92,6 +93,8 @@ namespace Game.UI
             NovelQuit.onClick.AddListener(QuitGame);
             // 主界面图片同样按当前小说套皮肤；与阅读页共用同一套解析（NarrativeLibrarySO.Current）。
             Game.Narrative.NovelSkin.Apply(this, "EUIMainPanel");
+            // 标题是运行期写入的剧情名，订阅全局语言变更后自己重刷（TMPEx 的 Key 覆盖不到它）。
+            _languageSubscription = EmberEventBus.Subscribe<string>(EmberBroadcastEvent.LanguageChanged, RefreshNovelTitle);
         }
         private void QuitGame()
         {
@@ -99,10 +102,29 @@ namespace Game.UI
             GameLauncher.Instance.Quit();
         }
         private Game.NovelSave.NovelSaveModule _novelSave;
+        private IDisposable _languageSubscription;
+
+        /// <summary>
+        /// 主界面标题显示的是当前小说的显示名（`story.《剧情 ID》` 表项），不是界面静态文案，
+        /// 所以必须自己跟着语言重刷：TMPEx 的 Key 覆盖不到它。
+        /// <para>标题控件上原本挂的 `ui.main.Title` Key 已移除——运行期接管的文本不能同时挂 Key，
+        /// 否则每次切语言都会被表里的界面标题顶掉。</para>
+        /// </summary>
+        private void RefreshNovelTitle(string language = null)
+        {
+            var library = UnityEngine.Resources.Load<Game.Narrative.NarrativeLibrarySO>(Game.Narrative.NarrativeLibrarySO.RESOURCE_PATH);
+            string title = library && library.Current ? library.Current.LocalizedDisplayName
+                : Game.Narrative.NovelLocalization.Runtime("ui.main.Title", "视觉小说");
+            if (NovelTitle is Ember.UIExtension.TMPEx localized) localized.SetSource(title);
+            else NovelTitle.text = title;
+        }
         private void RefreshNovelSave()
         {
             NovelMessage.text = _novelSave?.Message ?? "";
             bool busy = NovelSaveUI.IsLoading || _novelSave?.IsBusy == true;
+            // 两个入口分工不同，都要保留：
+            // 「继续游戏」直接续读最新进度（含自动槽），只有存在存档时才出现；
+            // 「读取存档」打开槽位页让玩家主动挑档，因此只在存在手动槽（0–5）时才出现。
             bool hasAny = false, hasManual = false;
             if (_novelSave != null)
                 foreach (var slot in _novelSave.Store.Slots)
@@ -117,8 +139,7 @@ namespace Game.UI
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            var library = UnityEngine.Resources.Load<Game.Narrative.NarrativeLibrarySO>(Game.Narrative.NarrativeLibrarySO.RESOURCE_PATH);
-            NovelTitle.text = library && library.Current ? library.Current.LocalizedDisplayName : "视觉小说";
+            RefreshNovelTitle();
             _novelSave = NovelSaveUI.Module;
             if (_novelSave != null) _novelSave.Changed += RefreshNovelSave;
             RefreshNovelSave();
@@ -145,6 +166,7 @@ namespace Game.UI
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
+            _languageSubscription?.Dispose(); _languageSubscription = null;
             OnCloseUser(); NovelContinue.onClick.RemoveListener(NovelSaveUI.Continue); NovelLoad.onClick.RemoveListener(NovelSaveUI.Open);
             NovelQuit.onClick.RemoveListener(QuitGame);
         }

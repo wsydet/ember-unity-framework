@@ -5,46 +5,70 @@ ui.main.Continue,继续游戏,繼續遊戲,つづきから,Continue
 ui.main.Load,读取存档,讀取存檔,ロード,Load
 ui.main.Settings,设置,設定,設定,Settings
 ui.main.Quit,退出游戏,結束遊戲,ゲーム終了,Quit
-ui.reader.Saves.Label,存读档,,,
-ui.reader.QuickSave.Label,快存,,,
-ui.reader.QuickLoad.Label,快读,,,
-ui.reader.Settings.Label,字号,,,
-ui.reader.History.Label,历史,,,
-ui.reader.HideDialogue.Label,隐藏,,,
-ui.reader.Skip.Label,已读快进,,,
-ui.reader.Menu.Label,菜单,,,
+ui.reader.Saves.Label,存读档,存檔／讀取,セーブ／ロード,Save/Load
+ui.reader.QuickSave.Label,快存,快速存檔,クイックセーブ,Quick Save
+ui.reader.QuickLoad.Label,快读,快速讀取,クイックロード,Quick Load
+ui.reader.Settings.Label,字号,字級,文字サイズ,Font Size
+ui.reader.History.Label,历史,歷史,履歴,History
+ui.reader.HideDialogue.Label,隐藏,隱藏,非表示,Hide
+ui.reader.Skip.Label,已读快进,已讀快進,既読スキップ,Skip Read Text
+ui.reader.Menu.Label,菜单,選單,メニュー,Menu
 ui.reader.Choice.Label,选项,,,
-ui.menu.Title,阅读菜单,,,
-ui.menu.Saves.Label,存档 / 读档,,,
-ui.menu.QuickSave.Label,快速保存,,,
-ui.menu.QuickLoad.Label,快速读取,,,
-ui.menu.Settings.Label,系统设置,,,
-ui.menu.ReadSkip.Label,仅已读快进,,,
-ui.menu.ReturnMenu.Label,返回主菜单,,,
-ui.history.Title,对话历史 · 仅查看,,,
-ui.history.Close.Label,返回阅读,,,
-ui.history.Saves.Label,存读档,,,
-ui.history.Empty,尚无已完整显示的对白,,,
-ui.font.Title,字号,,,
-ui.font.Small.Label,小,,,
-ui.font.Medium.Label,中,,,
-ui.font.Large.Label,大,,,
-ui.font.Preview,即时预览,,,
-ui.save.Title,存档与读取,,,
-ui.save.Close.Label,返回,,,
-ui.save.Feedback,选择槽位,,,
-ui.save.Slot.Summary,空槽位,,,
-ui.save.Slot.Write.Label,保存,,,
-ui.save.Slot.Read.Label,读取,,,
-ui.setting.Title,设置,,,
-ui.setting.Close.Label,返回,,,
-ui.setting.CurrentScene.Label,当前场景,,,
-ui.setting.ReadingAndAudio.Title,阅读与声音,,,
-ui.setting.TextSpeed.Label,文字速度,,,
-ui.setting.AutoInterval.Label,自动间隔,,,
-ui.setting.BgmVolume.Label,背景音乐,,,
-ui.setting.SfxVolume.Label,音效,,,
-ui.setting.VoiceVolume.Label,配音,,,
-ui.setting.ShakePreference.Label,震动强度,,,
-ui.setting.FlashPreference.Label,闪光强度,,,
-ui.setting.Language.Label,语言,,,
+ui.menu.Title,阅读菜单,閱讀選單,メニュー,Reader Menu
+ui.menu.Saves.Label,存档 / 读档,存檔 / 讀取,セーブ／ロード,Save / Load
+ui.menu.QuickSave.Label,快速保存,快速存檔,クイックセーブ,Quick Save
+ui.menu.QuickLoad.Label,快速读取,快速讀取,クイックロード,Quick Load
+ui.menu.Settings.Label,系统设置,系統設定,システム設定,System Settings
+ui.menu.ReadSkip.Label,仅已读快进,僅已讀快進,既読のみスキップ,Skip Read Only
+ui.menu.ReturnMenu.Label,返回主菜单,返回主選單,タイトルへ戻る,Return to Title
+ui.history.Title,对话历史 · 仅查看,對話歷史 · 僅檢視,会話履歴 · 閲覧のみ,Dialogue History · View Only
+ui.history.Close.Label,返回阅读,返回閱讀,読書に戻る,Back to Reader
+ui.history.Saves.Label,存读档,存檔／讀取,セーブ／ロード,Save/Load
+ui.history.Empty,尚无已完整显示的对白,尚無已完整顯示的對白,まだ全文表示された台詞はありません,No fully displayed lines yet
+ui.font.Title,字号,字級,文字サイズ,Font Size
+ui.font.Small.Label,小,小,小,Small
+ui.font.Medium.Label,中,中,中,Medium
+ui.font.Large.Label,大,大,大,Large
+ui.font.Preview,即时预览,即時預覽,リアルタイムプレビュー,Live Preview
+ui.save.Title,存档与读取,存檔與讀取,セーブとロード,Save & Load
+ui.save.Close.Label,返回,返回,戻る,Back
+ui.save.Feedback,选择槽位,選擇欄位,スロットを選択,Select a Slot
+ui.save.Slot.Summary,空槽位,空欄位,空きスロット,Empty Slot
+ui.save.Slot.Write.Label,保存,儲存,セーブ,Save
+ui.save.Slot.Read.Label,读取,讀取,ロード,Load
+ui.setting.Title,设置,設定,設定,Settings
+ui.setting.Close.Label,返回,返回,戻る,Back
+ui.setting.CurrentScene.Label,当前场景,目前場景,現在のシーン,Current Scene
+ui.setting.ReadingAndAudio.Title,阅读与声音,閱讀與音訊,読書とサウンド,Reading & Audio
+ui.setting.TextSpeed.Label,文字速度,文字速度,文字速度,Text Speed
+ui.setting.AutoInterval.Label,自动间隔,自動間隔,オート間隔,Auto Interval
+ui.setting.BgmVolume.Label,背景音乐,背景音樂,BGM,Music
+ui.setting.SfxVolume.Label,音效,音效,効果音,Sound Effects
+ui.setting.VoiceVolume.Label,配音,語音,ボイス,Voice
+ui.setting.ShakePreference.Label,震动强度,震動強度,振動の強さ,Shake Intensity
+ui.setting.FlashPreference.Label,闪光强度,閃光強度,フラッシュの強さ,Flash Intensity
+ui.setting.Language.Label,语言,語言,言語,Language
+ui.setting.CurrentScene.Main,当前场景：主界面,目前場景：主畫面,現在のシーン：メイン画面,Current Scene: Main Menu
+ui.setting.CurrentScene.Gameplay,当前场景：玩法中,目前場景：遊戲中,現在のシーン：プレイ中,Current Scene: Gameplay
+ui.setting.TextSpeed.Unit,字/秒,字/秒,文字/秒,chars/s
+ui.setting.AutoInterval.Unit,秒,秒,秒,s
+ui.setting.Effect.Normal,正常,正常,通常,Normal
+ui.setting.Effect.Reduced,减弱,減弱,軽減,Reduced
+ui.setting.Effect.Off,关闭,關閉,オフ,Off
+ui.history.Narrator,旁白,旁白,ナレーション,Narrator
+ui.save.Slot.Unsaved,尚未保存,尚未儲存,未セーブ,Unsaved
+ui.reader.Choice.Prompt,你会如何选择？,你會如何選擇？,どう選びますか？,How will you choose?
+ui.reader.Status.Preparing,正在准备配表、页面与剧情…,正在準備配表、頁面與劇情…,テーブル・ページ・シナリオを準備しています…,"Preparing tables, pages and story…"
+ui.reader.Status.Paused,已暂停,已暫停,一時停止中,Paused
+ui.reader.Status.Ending,结局,結局,エンディング,Ending
+ui.reader.Auto.On,自动 ON,自動 ON,オート ON,Auto ON
+ui.reader.Auto.Off,自动 OFF,自動 OFF,オート OFF,Auto OFF
+ui.reader.Speed.Label,速度,速度,速度,Speed
+ui.reader.Skip.Stop,停止快进,停止快進,スキップ停止,Stop Skipping
+ui.reader.Ending.Text,故事暂告一段落。感谢阅读。,故事暫告一段落。感謝閱讀。,物語はここで一区切り。読んでくれてありがとう。,The story pauses here. Thank you for reading.
+ui.save.Slot.Manual,手动槽,手動存檔,手動スロット,Manual Slot
+ui.save.Slot.Quick,快速槽,快速存檔,クイックスロット,Quick Slot
+ui.save.Slot.Auto,自动槽,自動存檔,オートスロット,Auto Slot
+ui.name.Hint,这个名字会被他们记住。,這個名字會被他們記住。,この名前は、きっと彼らに記憶される。,They will remember this name.
+ui.name.Confirm,确定,確定,決定,Confirm
+ui.save.InputPending,正在输入名字，完成输入后才能保存。,正在輸入名字，完成輸入後才能儲存。,名前を入力中です。入力を終えるとセーブできます。,You are entering a name. Finish the input to save.

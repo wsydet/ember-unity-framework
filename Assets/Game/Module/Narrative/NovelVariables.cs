@@ -96,5 +96,35 @@ namespace Game.Narrative
             }
         }
         #endregion
+        // --------------------------------------------------------
+        #region 外部方法
+        /// <summary>
+        /// 宿主或自定义节点写入剧情变量。目标必须已声明且类型一致：不做隐式转换、不自动创建变量，
+        /// 失败时给出可定位的原因。变量写入不属于执行位置变化，因此不推进位置版本，
+        /// 也就不会作废正在等待中的完成令牌。
+        /// </summary>
+        [HasGC]
+        public bool TrySetVariable(NovelVariableScope scope, string id, NovelValue value, out string error)
+        {
+            error = null;
+            if (!Enum.IsDefined(typeof(NovelVariableScope), scope)) { error = "变量作用域无效"; return false; }
+            if (string.IsNullOrWhiteSpace(id)) { error = "变量 ID 为空"; return false; }
+            if (!Enum.IsDefined(typeof(NovelValueType), value.Type)) { error = "变量类型无效"; return false; }
+            var target = scope == NovelVariableScope.Global ? _globals : _variables;
+            if (!target.TryGetValue(id, out NovelValue declared)) { error = "变量未声明：" + id; return false; }
+            if (declared.Type != value.Type) { error = "变量类型不符：" + id + " 需要 " + declared.Type; return false; }
+            if (_busy) { error = "运行器正忙，变量未写入"; return false; }
+            return Mutate(() => target[id] = value, false);
+        }
+
+        /// <summary>读取剧情变量；未声明时返回 false。</summary>
+        [NoGC]
+        public bool TryGetVariable(NovelVariableScope scope, string id, out NovelValue value)
+        {
+            value = default;
+            if ((uint)scope > (uint)NovelVariableScope.Global || string.IsNullOrWhiteSpace(id)) return false;
+            return (scope == NovelVariableScope.Global ? _globals : _variables).TryGetValue(id, out value);
+        }
+        #endregion
     }
 }

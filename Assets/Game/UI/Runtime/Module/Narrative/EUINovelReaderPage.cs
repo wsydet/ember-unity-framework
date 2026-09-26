@@ -20,10 +20,44 @@ namespace Game.UI
         private float _stageAlpha = 1;
         private readonly float[] _visualAlpha = { 1, 1, 1, 1 };
         private float _bodyFontSize;
+        private IDisposable _languageSubscription;
         public int TextLength => Body.textInfo.characterCount;
+
+        /// <summary>阅读页自带的运行期文案 Key：这些字不挂在 TMPEx 上，由代码按当前语言取。</summary>
+        private const string ENDING_KEY = "ui.reader.Ending.Text";
+        private const string CHOICE_PROMPT_KEY = "ui.reader.Choice.Prompt";
+        private const string AUTO_ON_KEY = "ui.reader.Auto.On";
+        private const string AUTO_OFF_KEY = "ui.reader.Auto.Off";
+        private const string SPEED_KEY = "ui.reader.Speed.Label";
+        private const string SKIP_STOP_KEY = "ui.reader.Skip.Stop";
         #endregion
         // --------------------------------------------------------
         #region 内部方法
+        /// <summary>界面运行期文案：命中当前语言就用表项，未装配多语言时用传入的源语言原文。</summary>
+        private static string Localized(string key, string fallback) => NovelLocalization.Runtime(key, fallback);
+
+        /// <summary>
+        /// 写按钮文案。挂了多语言 Key 的控件必须用 <c>SetSource</c> 接管（同时清掉 Key），
+        /// 否则下一次切语言的 RefreshAll 会把它换回表里的静态文案。
+        /// </summary>
+        private static void ApplyLabel(UnityEngine.UI.Button button, string text)
+        {
+            var label = button.GetComponentInChildren<TMPro.TMP_Text>();
+            if (!label || label.text == text) return;
+            if (label is TMPEx localized) localized.SetSource(text);
+            else label.text = text;
+        }
+
+        /// <summary>
+        /// 语言变更：选项文字是读定义时的快照，必须整批重建（清掉缓存代次，下一次渲染重建）；
+        /// 当前句由会话按语言缓存键重新解析，这里推动它立刻重渲染一次，
+        /// 所以设置弹窗盖着阅读页时也能当场看到新语言。
+        /// </summary>
+        private void OnLanguageChanged(string language)
+        {
+            _choiceGeneration = long.MinValue; _choicePosition = -1;
+            _session?.RefreshLocalization();
+        }
         private EUIItem CreateItem(GameObject root)
         {
             if (!EUIItemFactory.TryCreate(root, out var item, out string error)) throw new InvalidOperationException(error);
@@ -79,6 +113,8 @@ namespace Game.UI
             Saves.onClick.AddListener(OpenSaves); QuickSave.onClick.AddListener(SaveQuick); QuickLoad.onClick.AddListener(LoadQuick);
             Auto.onClick.AddListener(ToggleAuto); Skip.onClick.AddListener(ToggleSkip); History.onClick.AddListener(OpenHistory); HideDialogue.onClick.AddListener(ToggleDialogue);
             NovelSkin.Apply(this, "EUINovelReaderPage");
+            // 正文、选项、状态行都不挂在 TMPEx 的 Key 上，所以这里自己订阅全局语言变更。
+            _languageSubscription = EmberEventBus.Subscribe<string>(EmberBroadcastEvent.LanguageChanged, OnLanguageChanged);
         }
         public override void OnOpen(object param)
         {
@@ -109,6 +145,7 @@ namespace Game.UI
         public override void OnDispose()
         {
             OnClose();
+            _languageSubscription?.Dispose(); _languageSubscription = null;
             Speed.onClick.RemoveListener(CycleSpeed); RestoreUI.onClick.RemoveListener(RestoreHiddenUI);
             Advance.onClick.RemoveListener(Continue); Menu.onClick.RemoveListener(ReturnMenu); Settings.onClick.RemoveListener(OpenSettings);
             Saves.onClick.RemoveListener(OpenSaves); QuickSave.onClick.RemoveListener(SaveQuick); QuickLoad.onClick.RemoveListener(LoadQuick);
@@ -121,8 +158,10 @@ namespace Game.UI
         {
             bool say = command?.Kind == NovelCommandKind.Say &&
                 (snapshot.State == NarrativeState.Revealing || snapshot.State == NarrativeState.AwaitingAdvance);
-            string text = say ? command.Text : snapshot.State == NarrativeState.Ended ? "故事暂告一段落。感谢阅读。"
-                : snapshot.State == NarrativeState.AwaitingChoice ? "你会如何选择？" : status;
+            string text = say ? command.Text
+                : snapshot.State == NarrativeState.Ended ? Localized(ENDING_KEY, "故事暂告一段落。感谢阅读。")
+                : snapshot.State == NarrativeState.AwaitingChoice ? Localized(CHOICE_PROMPT_KEY, "你会如何选择？")
+                : status;
             if (say)
             {
                 PrepareText(command, _textPresentationCommand == command ? _renderTextStart : 0);
@@ -148,10 +187,12 @@ namespace Game.UI
             Skip.gameObject.SetActive(!hidden && snapshot.ReadMode == NarrativeReadMode.Skip);
             Auto.interactable = Skip.interactable = unblocked && snapshot.HasActiveSession && snapshot.State != NarrativeState.AwaitingChoice;
             Speed.interactable = unblocked; History.interactable = unblocked; HideDialogue.interactable = unblocked;
-            Auto.GetComponentInChildren<TMPro.TMP_Text>().text = snapshot.ReadMode == NarrativeReadMode.Auto ? "自动 ON" : "自动 OFF";
-            Speed.GetComponentInChildren<TMPro.TMP_Text>().text = "速度 " + (_session?.ReadingMultiplier ?? 1) + "X";
-            Skip.GetComponentInChildren<TMPro.TMP_Text>().text = "停止快进";
-            HideDialogue.GetComponentInChildren<TMPro.TMP_Text>().text = "隐藏";
+            bool auto = snapshot.ReadMode == NarrativeReadMode.Auto;
+            ApplyLabel(Auto, Localized(auto ? AUTO_ON_KEY : AUTO_OFF_KEY, auto ? "自动 ON" : "自动 OFF"));
+            ApplyLabel(Speed, Localized(SPEED_KEY, "速度") + " " + (_session?.ReadingMultiplier ?? 1) + "X");
+            ApplyLabel(Skip, Localized(SKIP_STOP_KEY, "停止快进"));
+            // 「隐藏」按钮的文案由 Prefab 上的多语言 Key（ui.reader.HideDialogue.Label）驱动，
+            // 这里不再每帧写死中文，否则切到其它语言它不会跟着变。
             Advance.interactable = say && unblocked;
             Menu.interactable = unblocked; Settings.interactable = unblocked;
             Saves.interactable = unblocked; QuickLoad.interactable = unblocked && NovelSaveUI.Module?.IsBusy == false;
@@ -165,7 +206,9 @@ namespace Game.UI
                 {
                     var root = UnityEngine.Object.Instantiate(ChoiceTemplate.gameObject, Choices);
                     var item = CreateItem(root); _choices.Add(item);
-                    ((EUINovelChoiceItem)item.Logic).Configure(option.Text,
+                    // 选项文字在读定义时就被烤成了当时的语言，显示时按 Key 重新解析，
+                    // 语言切换后由 OnLanguageChanged 清掉缓存代次、这里整批重建即可跟上。
+                    ((EUINovelChoiceItem)item.Logic).Configure(NovelLocalization.RouteText(option),
                         () => owner?.Choose(snapshot.SessionGeneration, snapshot.PositionVersion, option.Id, Time.frameCount));
                 }
             }

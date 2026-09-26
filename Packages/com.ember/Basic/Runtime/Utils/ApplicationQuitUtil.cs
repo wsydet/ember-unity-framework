@@ -33,6 +33,23 @@ namespace Ember.Basic
         #region 外部方法
 
         /// <summary>
+        /// 当前平台退出时实际会走的实现分支名，用于退出前的日志记录
+        /// （排查「真机退出露场景」一类问题时，先确认走的是哪条退出路径）。
+        /// </summary>
+        /// <returns><c>EditorStopPlayMode</c> / <c>AndroidKillProcess</c> / <c>ApplicationQuit</c></returns>
+        [NoGC]
+        public static string DescribeBranch()
+        {
+#if UNITY_EDITOR
+            return "EditorStopPlayMode";
+#elif UNITY_ANDROID
+            return "AndroidKillProcess";
+#else
+            return "ApplicationQuit";
+#endif
+        }
+
+        /// <summary>
         /// 退出应用。
         /// 编辑器中停止 Play Mode；
         /// Android 上先通过 android.os.Process.killProcess 杀进程，
@@ -42,6 +59,7 @@ namespace Ember.Basic
         public static void Quit()
         {
 #if UNITY_EDITOR
+            EmberDebug.LogShutdown(TAG, "Quit: stopping editor Play Mode.");
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_ANDROID
             try
@@ -49,6 +67,7 @@ namespace Ember.Basic
                 using (var process = new AndroidJavaClass("android.os.Process"))
                 {
                     int pid = process.CallStatic<int>("myPid");
+                    EmberDebug.LogShutdown(TAG, $"Quit: killProcess({pid}) requested.");
                     process.CallStatic("killProcess", pid);
                     // killProcess 后进程应立即终止，以下代码通常不会执行
                     Application.Quit();
@@ -60,6 +79,7 @@ namespace Ember.Basic
                 Application.Quit();
             }
 #else
+            EmberDebug.LogShutdown(TAG, "Quit: Application.Quit() requested.");
             Application.Quit();
 #endif
         }

@@ -114,10 +114,14 @@ namespace Game.Narrative
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public INovelLoopPlayback CreateLoop(AudioClip clip)
+        public INovelLoopPlayback CreateLoop(AudioClip clip, bool bgm)
         {
             if (!EmberAudioManager.Instance.IsInitialized) throw new InvalidOperationException("音频 Manager 尚未就绪");
-            return new NovelLoopPlayback(Ember.Core.GameLauncher.Instance.AudioHost.transform, clip, false);
+            // 与 EmberAudioManager 的 BGM / SFX 共用 Mixer 分组：BGM 循环进 BGM 分组、环境音循环进 SFX 分组。
+            // 项目没有配置 Mixer 时两个分组都是 null，退回原来的音源音量路径。
+            var audio = EmberAudioManager.Instance;
+            var group = bgm ? audio.BgmMixerGroup : audio.SfxMixerGroup;
+            return new NovelLoopPlayback(Ember.Core.GameLauncher.Instance.AudioHost.transform, clip, false, group);
         }
         public void Play(NovelCommandKind kind, AudioClip clip)
         {

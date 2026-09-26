@@ -37,11 +37,25 @@ namespace Game.Narrative
             if (command.Kind == NovelCommandKind.Character) return ResolveActorVisual(command);
             if (command.Kind != NovelCommandKind.Background) return command;
             var old = Target(NovelTargetKind.Background, "background");
-            _visualFromOpacity = command.VisualAction == NovelVisualAction.Hide ? old?.Opacity ?? 1 : 0;
+            _visualFromOpacity = command.VisualAction == NovelVisualAction.Hide ? old?.Opacity ?? 1 : BackgroundEnterOpacity(old, command);
             CancelTarget(NovelTargetKind.Background, "background");
             return new NovelCommand(command.CommandId, command.Kind, resourceKey: command.ResourceKey,
                 visualAction: command.VisualAction, instanceId: "background");
         }
+
+        /// <summary>
+        /// 背景演出淡入的起始透明度。
+        ///
+        /// 与当前显示的背景同键的重设视为**幂等**：画面保持现状，只把资源重新指向该键，
+        /// 因此起始值取当前透明度而不是 0。这修掉了「每个对话节点开头按官方推荐重新声明一次
+        /// 场景背景」时的整屏闪一下——声明本身不该让画面先消失再回来。
+        ///
+        /// 换键、或当前背景已经不可见（透明度 0，说明作者显式淡出过）时仍从 0 淡入，
+        /// 保持原有的「换景淡入」语义；Hide 语义不变。
+        /// </summary>
+        private static float BackgroundEnterOpacity(NovelVisualState old, NovelCommand command)
+            => old != null && old.Opacity > 0 && string.Equals(old.Key, command.ResourceKey, StringComparison.Ordinal)
+                ? old.Opacity : 0;
 
         private NovelVisualState Target(NovelTargetKind kind, string id)
         {

@@ -196,6 +196,10 @@ namespace Game.UI
             // A failure chooser opens only after the curtain has finished leaving.
             if (error != null && !token.IsCancellationRequested) failed?.Invoke(error);
         }
+        /// <summary>
+        /// 直接读取最新档位（含自动槽与快速槽）；只有失败时才打开槽位页。
+        /// 主菜单的「继续游戏」用它续读最新进度；「读取存档」另走 <see cref="Open"/> 直接开槽位页。
+        /// </summary>
         internal static void Continue()
         {
             var save = Module; if (save == null) return;

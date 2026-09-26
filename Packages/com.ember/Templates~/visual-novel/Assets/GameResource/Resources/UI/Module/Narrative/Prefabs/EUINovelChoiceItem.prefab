@@ -258,7 +258,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  _key: ui.reader.Choice.Label
+  _key: 
 --- !u!1 &5936530426128801790
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,8 +48,9 @@ namespace Game.Narrative
         internal NovelRoute ReadDefinition(NarrativeChapterSO chapter, string nodeId)
         {
             // 选项/分流文字不进指纹（Routes 只写 Id/TargetId/Condition），所以在读定义时解析是安全的。
+            // 同时带上 Key：会话进行中切语言时显示层按 Key 重新解析（NovelLocalization.RouteText）。
             return new NovelRoute(_optionId, LocalizedText, chapter.ResolveTarget(_target, nodeId, _optionId),
-                _condition == null ? null : JsonUtility.FromJson<NovelCondition>(JsonUtility.ToJson(_condition)));
+                _condition == null ? null : JsonUtility.FromJson<NovelCondition>(JsonUtility.ToJson(_condition)), _textKey);
         }
         #endregion
     }

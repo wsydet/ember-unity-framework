@@ -18,6 +18,7 @@ MonoBehaviour:
   _branches:
   - _optionId: last_light_heard_route
     _text: 有人听见
+    _textKey: option.last_light_m5.last_light_heard_route
     _condition:
       _junction: 0
       _predicates:

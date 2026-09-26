@@ -14,32 +14,197 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeDialogueSO
   _nodeId: last_light_intro
   _chapterId: last_light_ch01
-  _contentRevision: 11
+  _contentRevision: 16
   _commands:
-  - _commandId: last_light_intro_stage_e5_reset
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_cover_in
+    _kind: 18
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: sample_open_cover_in
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e5_reset
     _kind: 28
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
     _actionId: last_light_intro_stage_e5_reset
-    _duration: 0
     _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
     _ease: 1
-    _cameraZoom: 1
-    _position: {x: 0, y: 0}
-  - _commandId: "last_light_intro_stage_background"
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_background
     _kind: 3
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_rooftop"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_rooftop
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.3
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -56,23 +221,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_music"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_music
     _kind: 5
-    _volume: 0.6
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "quiet_afternoon"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: quiet_afternoon
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 2
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -89,22 +293,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_stage_reset"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0.6
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: a3a4274af6704a5796fd0802cbeba442
+    _stepGroupName: "\u821E\u53F0\u900F\u660E\u5EA6\u4E0E\u5F3A\u8C03\u590D\u4F4D"
+    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_stage_reset
     _kind: 8
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: "last_light_intro_stage_stage_reset"
+    _actionId: last_light_intro_stage_stage_reset
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -121,25 +365,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
     _stepGroupId: a3a4274af6704a5796fd0802cbeba442
-    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupName: "\u821E\u53F0\u900F\u660E\u5EA6\u4E0E\u5F3A\u8C03\u590D\u4F4D"
     _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
-  - _commandId: "last_light_intro_stage_background_reset"
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_background_reset
     _kind: 8
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 1
-    _actionId: "last_light_intro_stage_background_reset"
+    _actionId: last_light_intro_stage_background_reset
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -156,25 +437,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
     _stepGroupId: a3a4274af6704a5796fd0802cbeba442
-    _stepGroupName: "舞台透明度与强调复位"
+    _stepGroupName: "\u821E\u53F0\u900F\u660E\u5EA6\u4E0E\u5F3A\u8C03\u590D\u4F4D"
     _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
-  - _commandId: "last_light_intro_stage_emphasis_reset"
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_emphasis_reset
     _kind: 16
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -191,25 +509,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-    _stepGroupId: a3a4274af6704a5796fd0802cbeba442
-    _stepGroupName: "舞台透明度与强调复位"
-    _stepGroupColor: {r: 0.45, g: 0.65, b: 0.95, a: 1}
-  - _commandId: "last_light_intro_stage_clear_0"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 4bb965dc78d044a2ac71fd3544a8ab23
+    _stepGroupName: "\u9690\u85CF\u6240\u6709\u7ACB\u7ED8"
+    _stepGroupColor: {r: 0.55, g: 0.8, b: 0.6, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_clear_0
     _kind: 30
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 2
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -226,25 +581,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-    _stepGroupId: 4bb965dc78d044a2ac71fd3544a8ab23
-    _stepGroupName: "隐藏所有立绘"
-    _stepGroupColor: {r: 0.55, g: 0.8, b: 0.6, a: 1}
-  - _commandId: "last_light_intro_stage_wan"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_wan
     _kind: 4
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_alice"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_alice
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 1
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -261,22 +653,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_auto"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_auto
     _kind: 16
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -293,22 +725,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 1
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_e2_door_settle"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e2_door_settle
     _kind: 17
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.6
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: "intro_e2_door_settle"
+    _actionId: intro_e2_door_settle
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -331,40 +803,664 @@ MonoBehaviour:
     _color: {r: 0, g: 0, b: 0, a: 1}
     _hold: 0
     _wholeReader: 0
-  - _commandId: "CH01_intro_e3_motes"
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: b8a84fbfc8da40be9b595a8ceef73930
+    _stepGroupName: "\u623F\u95F4\u5FAE\u5C18\u4E0E\u73AF\u5883\u98CE\u58F0"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: CH01_intro_e3_motes
     _kind: 21
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_motes
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
-    _volume: 1
-    _position: {"x": 0.5, "y": 0.5}
-    _scale: {"x": 1, "y": 1}
-    _resourceKey: "lastlight_motes"
-    _instanceId: "roof-motes"
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: roof-motes
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0.5, y: 0.5}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 5
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
     _persistent: 1
     _keepOnSceneChange: 1
-    _layer: 5
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
     _stepGroupId: b8a84fbfc8da40be9b595a8ceef73930
-    _stepGroupName: "房间微尘与环境风声"
+    _stepGroupName: "\u623F\u95F4\u5FAE\u5C18\u4E0E\u73AF\u5883\u98CE\u58F0"
     _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: "CH01_intro_e3_wind"
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: CH01_intro_e3_wind
     _kind: 24
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_rooftop_wind
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 1.5
-    _volume: 0.3
-    _position: {"x": 0.5, "y": 0.5}
-    _scale: {"x": 1, "y": 1}
-    _resourceKey: "lastlight_rooftop_wind"
-    _instanceId: "roof-wind"
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: roof-wind
+    _targetKind: 0
+    _actionId: 
     _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0.5, y: 0.5}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
     _keepOnSceneChange: 1
-    _stepGroupId: b8a84fbfc8da40be9b595a8ceef73930
-    _stepGroupName: "房间微尘与环境风声"
-    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: last_light_intro_e4_title
-    _kind: 0
-    _lineId: last_light_intro_e4_title
+    _bindingId: 
+    _volume: 0.3
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_segment_on
+    _kind: 34
+    _lineId: 
     _textRevision: 1
-    _characterId:
-    _text: 最后一盏灯
-    _resourceKey:
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: Game.Narrative.NovelOpeningSegmentSO.Begin
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 2
+    _textFadeDuration: 0.9
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_line_1
+    _kind: 0
+    _lineId: sample_open_line_1
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: "\uFF08\u6709\u4E9B\u544A\u522B\uFF0C\u662F\u4ECE\u4E00\u76CF\u706F\u5F00\u59CB\u7684\u3002\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: text.last_light_m5.sample_open_line_1
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 2
+    _textFadeDuration: 0.9
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_line_2
+    _kind: 0
+    _lineId: sample_open_line_2
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: "\uFF08\u90A3\u5929\u508D\u665A\uFF0C\u98CE\u628A\u5929\u53F0\u7684\u94C1\u95E8\u5439\u5F97\u8F7B\u8F7B\u54CD\u3002\u6211\u8FD8\u4E0D\u77E5\u9053\uFF0C\u81EA\u5DF1\u4F1A\u5728\u8FD9\u91CC\u8BF4\u51FA\u540D\u5B57\u3002\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: text.last_light_m5.sample_open_line_2
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_name
+    _kind: 34
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: Game.Narrative.NovelPlayerNameInputStep
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 2
+    _textFadeDuration: 0.9
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings:
+    - _token: '{playerName}'
+      _variableId: playerName
+      _scope: 1
+    _commandId: sample_open_line_3
+    _kind: 0
+    _lineId: sample_open_line_3
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: "\uFF08{playerName}\u3002\u9ED8\u5FF5\u4E00\u904D\uFF0C\u597D\u50CF\u8FDE\u90A3\u5E74\u590F\u5929\u7684\u6E29\u5EA6\u90FD\u60F3\u8D77\u6765\u4E86\u3002\uFF09"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: text.last_light_m5.sample_open_line_3
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_segment_off
+    _kind: 34
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: Game.Narrative.NovelOpeningSegmentSO.End
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: d109d7d0d1874540aa703253e8c6f141
+    _stepGroupName: "\u5F00\u5C40 \xB7 \u8F93\u5165\u540D\u5B57"
+    _stepGroupColor: {r: 0.75, g: 0.68, b: 0.95, a: 1}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: sample_open_cover_out
+    _kind: 18
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.6
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 99
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: sample_open_cover_out
+    _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 1
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.55
+    _direction: {x: 1, y: 0}
+    _frequency: 12
+    _decay: 1
+    _color: {r: 0, g: 0, b: 0, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 1
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
     _textMode: 1
     _textEffectsVersion: 1
     _textReveal: 2
@@ -372,24 +1468,98 @@ MonoBehaviour:
     _titleExitDuration: 0.8
     _textSpeedMultiplier: 1
     _textEase: 1
-    _dialogueVisible: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
     _textBeats:
     - _at: 0
       _pause: 0.35
       _speed: 1
       _instant: 5
-  - _commandId: last_light_intro_001
-    _kind: 0
-    _textMode: 2
     _dialogueVisible: 1
+    _textBindings: []
+    _commandId: last_light_intro_e4_title
+    _kind: 0
+    _lineId: last_light_intro_e4_title
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: "\u6700\u540E\u4E00\u76CF\u706F"
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_intro_e4_title
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 2
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
     _textBeats:
     - _at: 10
       _pause: 0.65
       _speed: 0.7
       _instant: 0
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: last_light_intro_001
+    _kind: 0
     _lineId: last_light_line_intro_001
     _textRevision: 2
     _characterId: 
+    _speakerNameKey: 
     _text: "\u5929\u53F0\u7684\u95E8\u5728\u8EAB\u540E\u5408\u4E0A\u3002\u96E8\u540E\u7684\u680F\u6746\u8FD8\u7559\u7740\u6C34\u73E0\uFF0C\u8FDC\u5904\u4E00\u6392\u7A97\u6237\u9010\u6E10\u4EAE\u8D77\u6765\u3002\u6797\u665A\u7AD9\u5728\u6700\u540E\u4E00\u675F\u5915\u5149\u91CC\uFF0C\u6000\u4E2D\u62B1\u7740\u4E00\u4E2A\u6CA1\u6709\u7F72\u540D\u7684\u4FE1\u5C01\u3002"
     _resourceKey: 
     _variableId: 
@@ -400,13 +1570,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_002
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_001
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_002
     _kind: 0
     _lineId: last_light_line_intro_002
     _textRevision: 2
     _characterId: lastlight_inner
+    _speakerNameKey: 
     _text: "\uFF08\u6211\u4EE5\u4E3A\u5979\u7EA6\u6211\u4E0A\u6765\uFF0C\u53EA\u662F\u4E3A\u4E86\u770B\u6700\u540E\u4E00\u6B21\u65E5\u843D\u3002\u76F4\u5230\u770B\u89C1\u4FE1\u5C01\u4E0A\u719F\u6089\u7684\u5B57\uFF0C\u6211\u624D\u660E\u767D\uFF0C\u6709\u4E9B\u544A\u522B\u4ECE\u6765\u6CA1\u6709\u771F\u6B63\u8BF4\u5B8C\u3002\uFF09"
     _resourceKey: 
     _variableId: 
@@ -417,13 +1642,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: playerName
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_003
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_002
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_003
     _kind: 0
     _lineId: last_light_line_intro_003
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u7B49\u8FD9\u76CF\u706F\u4EAE\u8D77\u6765\uFF0C\u6211\u4EEC\u5C31\u4E00\u8D77\u56DE\u53BB\u3002"
     _resourceKey: lastlight_voice_wan
     _variableId: 
@@ -434,13 +1714,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_004
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_003
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_004
     _kind: 0
     _lineId: last_light_line_intro_004
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u8FD9\u662F\u8BB8\u8001\u5E08\u53BB\u5E74\u8BF4\u7684\u8BDD\u3002\u90A3\u5929\u793E\u56E2\u7684\u544A\u522B\u5E7F\u64AD\u56E0\u4E3A\u505C\u7535\u4E2D\u65AD\uFF0C\u5979\u628A\u8282\u76EE\u5355\u5939\u8FDB\u4FE1\u5C01\uFF0C\u8BF4\u7B49\u5927\u5BB6\u51C6\u5907\u597D\uFF0C\u518D\u4E00\u8D77\u542C\u5B8C\u3002"
     _resourceKey: 
     _variableId: 
@@ -451,24 +1786,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_make_room"
-    _kind: 10
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 1.4
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: 
     _targetKind: 0
-    _actionId: "last_light_intro_stage_make_room"
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_004
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_make_room
+    _kind: 10
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 1.4
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: last_light_intro_stage_make_room
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -485,22 +1888,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_zhou_door"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_door
     _kind: 4
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_zhou"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_zhou
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 2
     _visualAction: 0
-    _instanceId: "zhou"
+    _instanceId: zhou
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -517,22 +1960,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_zhou_enter"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_enter
     _kind: 10
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 1.6
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 2
     _visualAction: 0
-    _instanceId: "zhou"
+    _instanceId: zhou
     _targetKind: 0
-    _actionId: "last_light_intro_stage_zhou_enter"
+    _actionId: last_light_intro_stage_zhou_enter
     _parallel: 1
     _delay: 0.2
     _opacity: 1
@@ -549,11 +2032,38 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_005
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_005
     _kind: 0
     _lineId: last_light_line_intro_005
     _textRevision: 2
     _characterId: 
+    _speakerNameKey: 
     _text: "\u697C\u68AF\u95F4\u4F20\u6765\u8F7B\u8F7B\u7684\u811A\u6B65\u58F0\u3002\u5468\u781A\u63A8\u95E8\u8D70\u6765\uFF0C\u628A\u4E00\u53F0\u65E7\u5F55\u97F3\u673A\u653E\u5728\u680F\u6746\u65C1\u3002\u6797\u665A\u5411\u5DE6\u8BA9\u51FA\u4F4D\u7F6E\uFF0C\u4E24\u4E2A\u4EBA\u7EC8\u4E8E\u7AD9\u8FDB\u540C\u4E00\u7247\u665A\u971E\u3002"
     _resourceKey: 
     _variableId: 
@@ -564,28 +2074,98 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_arrive"
-    _kind: 9
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_005
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_arrive
+    _kind: 9
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
-    _waitActions: ["last_light_intro_stage_make_room", "last_light_intro_stage_zhou_enter"]
+    _waitActions:
+    - last_light_intro_stage_make_room
+    - last_light_intro_stage_zhou_enter
     _positionMode: 0
     _position: {x: 0, y: 0}
     _scale: {x: 1, y: 1}
@@ -598,11 +2178,38 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_006
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_006
     _kind: 0
     _lineId: last_light_line_intro_006
     _textRevision: 2
     _characterId: lastlight_zhou
+    _speakerNameKey: 
     _text: "\u7535\u6C60\u6362\u597D\u4E86\u3002\u4E0D\u8FC7\u6211\u53EA\u68C0\u67E5\u4E86\u5F00\u5173\uFF0C\u6CA1\u6709\u66FF\u4F60\u4EEC\u6309\u64AD\u653E\u3002\u8FD9\u91CC\u9762\u7684\u6700\u540E\u4E00\u6BB5\uFF0C\u5E94\u8BE5\u7531\u60F3\u542C\u7684\u4EBA\u51B3\u5B9A\u4EC0\u4E48\u65F6\u5019\u5F00\u59CB\u3002"
     _resourceKey: 
     _variableId: 
@@ -613,13 +2220,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_007
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_006
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_007
     _kind: 0
     _lineId: last_light_line_intro_007
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u4F60\u8FD8\u662F\u8FD9\u4E48\u8BA4\u771F\u3002\u6211\u539F\u672C\u4EE5\u4E3A\uFF0C\u53EA\u8981\u627E\u5230\u5F55\u97F3\u673A\uFF0C\u628A\u6CA1\u64AD\u5B8C\u7684\u8BDD\u653E\u51FA\u6765\uFF0C\u8FD9\u4EF6\u4E8B\u5C31\u7B97\u5B8C\u6210\u4E86\u3002"
     _resourceKey: 
     _variableId: 
@@ -630,13 +2292,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_008
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_007
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_008
     _kind: 0
     _lineId: last_light_line_intro_008
     _textRevision: 2
     _characterId: lastlight_zhou
+    _speakerNameKey: 
     _text: "\u5B8C\u6210\u4E0D\u662F\u4FEE\u597D\u4E00\u4E2A\u5F00\u5173\u3002\u6211\u4EEC\u5F97\u5148\u77E5\u9053\uFF0C\u90A3\u4E2A\u4EBA\u73B0\u5728\u8FD8\u613F\u4E0D\u613F\u610F\u8BA9\u522B\u4EBA\u542C\u89C1\u3002\u4F60\u8054\u7CFB\u8FC7\u8BB8\u8001\u5E08\u4E86\u5417\uFF1F"
     _resourceKey: 
     _variableId: 
@@ -647,24 +2364,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_zhou_nod"
-    _kind: 15
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0.55
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "zhou"
+    _instanceId: 
     _targetKind: 0
-    _actionId: "last_light_intro_stage_zhou_nod"
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_008
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_nod
+    _kind: 15
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.55
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: zhou
+    _targetKind: 0
+    _actionId: last_light_intro_stage_zhou_nod
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -681,18 +2466,42 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_009
-    _kind: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
     _textMode: 0
-    _dialogueVisible: 1
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
     _textBeats:
     - _at: 22
       _pause: 0.4
       _speed: 1
       _instant: 37
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: last_light_intro_009
+    _kind: 0
     _lineId: last_light_line_intro_009
     _textRevision: 2
     _characterId: 
+    _speakerNameKey: 
     _text: "\u6797\u665A\u70B9\u4EAE\u624B\u673A\u3002\u5C4F\u5E55\u4E0A\u53EA\u6709\u4E00\u6761\u521A\u6536\u5230\u7684\u6D88\u606F\uFF1A\u201C\u6211\u8BB0\u5F97\u90A3\u6BB5\u5F55\u97F3\u3002\u4F60\u4EEC\u53EF\u4EE5\u542C\uFF0C\u4E5F\u53EF\u4EE5\u628A\u5B83\u7559\u5230\u4E0B\u6B21\u89C1\u9762\u3002\u4ECA\u665A\u4E0D\u5FC5\u66FF\u6211\u5B8C\u6210\u4EC0\u4E48\u3002\u201D"
     _resourceKey: 
     _variableId: 
@@ -703,41 +2512,216 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_stage_e5_memory
-    _kind: 28
-    _actionId: last_light_intro_stage_e5_memory
-    _duration: 1.2
-    _parallel: 1
-    _ease: 1
-    _cameraZoom: 1.12
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
     _position: {x: 0, y: 0}
-    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
-    _stepGroupName: "回忆氛围"
-    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: last_light_intro_stage_e5_warm
-    _kind: 18
-    _actionId: last_light_intro_stage_e5_warm
-    _duration: 0.8
-    _parallel: 1
-    _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
-    _opacity: 0.08
-    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
-    _stepGroupName: "回忆氛围"
-    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: last_light_intro_010
-    _kind: 0
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_009
+  - _cameraZoom: 1.12
+    _wipeDirection: 0
     _textMode: 0
-    _dialogueVisible: 1
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
+    _stepGroupName: "\u56DE\u5FC6\u6C1B\u56F4"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e5_memory
+    _kind: 28
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 1.2
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: last_light_intro_stage_e5_memory
+    _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 1
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 73c2a7eaf0ad48c4995fce2e3a78437e
+    _stepGroupName: "\u56DE\u5FC6\u6C1B\u56F4"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e5_warm
+    _kind: 18
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.8
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: last_light_intro_stage_e5_warm
+    _parallel: 1
+    _delay: 0
+    _opacity: 0.08
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
     _textBeats:
     - _at: 7
       _pause: 0.65
       _speed: 0.7
       _instant: 0
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: last_light_intro_010
+    _kind: 0
     _lineId: last_light_line_intro_010
     _textRevision: 2
     _characterId: lastlight_inner
+    _speakerNameKey: 
     _text: "\uFF08\u6211\u8BFB\u4E86\u4E24\u904D\u3002\u6CA1\u6709\u8D23\u602A\uFF0C\u4E5F\u6CA1\u6709\u50AC\u4FC3\u3002\u53EF\u6B63\u56E0\u4E3A\u6CA1\u6709\u4EBA\u50AC\uFF0C\u6211\u624D\u66F4\u6E05\u695A\u5730\u542C\u89C1\u81EA\u5DF1\u5FC3\u91CC\u90A3\u4E2A\u603B\u8BF4\u201C\u518D\u7B49\u4E00\u4E0B\u201D\u7684\u58F0\u97F3\u3002\uFF09"
     _resourceKey: 
     _variableId: 
@@ -748,24 +2732,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: playerName
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_letter_focus"
-    _kind: 16
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_010
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_letter_focus
+    _kind: 16
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -782,32 +2834,182 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 2
     _dimFactor: 0.72
-  - _commandId: last_light_intro_stage_e5_return
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 1
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: e391c6db7b134e4881a27b9e6303f462
+    _stepGroupName: "\u56DE\u5FC6\u6C1B\u56F4\u590D\u4F4D"
+    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e5_return
     _kind: 28
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.8
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
     _actionId: last_light_intro_stage_e5_return
-    _duration: 0.8
     _parallel: 1
-    _ease: 1
-    _cameraZoom: 1
-    _position: {x: 0, y: 0}
-    _stepGroupId: e391c6db7b134e4881a27b9e6303f462
-    _stepGroupName: "回忆氛围复位"
-    _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: last_light_intro_stage_e5_clear
-    _kind: 18
-    _actionId: last_light_intro_stage_e5_clear
-    _duration: 0.8
-    _parallel: 1
-    _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
+    _delay: 0
     _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 1
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
     _stepGroupId: e391c6db7b134e4881a27b9e6303f462
-    _stepGroupName: "回忆氛围复位"
+    _stepGroupName: "\u56DE\u5FC6\u6C1B\u56F4\u590D\u4F4D"
     _stepGroupColor: {r: 0.9, g: 0.7, b: 0.45, a: 1}
-  - _commandId: last_light_intro_011
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e5_clear
+    _kind: 18
+    _lineId: 
+    _textRevision: 0
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.8
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: last_light_intro_stage_e5_clear
+    _parallel: 1
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0.6, g: 0.43, b: 0.25, a: 1}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_011
     _kind: 0
     _lineId: last_light_line_intro_011
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u5979\u7ED9\u4E86\u6211\u4EEC\u9009\u62E9\uFF0C\u6211\u5374\u53CD\u800C\u4E0D\u6562\u9009\u4E86\u3002\u8981\u662F\u5F55\u97F3\u91CC\u53EA\u5269\u4E00\u53E5\u666E\u901A\u7684\u665A\u5B89\uFF0C\u6211\u4EEC\u7B49\u8FD9\u4E00\u5E74\uFF0C\u4F1A\u4E0D\u4F1A\u663E\u5F97\u5F88\u50BB\uFF1F"
     _resourceKey: 
     _variableId: 
@@ -818,24 +3020,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_listen"
-    _kind: 16
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_011
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_listen
+    _kind: 16
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -852,11 +3122,38 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 1
     _dimFactor: 0.72
-  - _commandId: last_light_intro_012
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_012
     _kind: 0
     _lineId: last_light_line_intro_012
     _textRevision: 2
     _characterId: lastlight_zhou
+    _speakerNameKey: 
     _text: "\u666E\u901A\u4E5F\u53EF\u4EE5\u88AB\u8BA4\u771F\u5BF9\u5F85\u3002\u6211\u4EEC\u7B49\u7684\u53C8\u4E0D\u662F\u4E00\u4E2A\u8DB3\u591F\u7CBE\u5F69\u7684\u7ED3\u5C40\uFF0C\u53EA\u662F\u5F53\u65F6\u88AB\u6253\u65AD\u7684\u4E00\u53E5\u8BDD\u3002"
     _resourceKey: 
     _variableId: 
@@ -867,24 +3164,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_catch_paper"
-    _kind: 12
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 1.5
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: 
     _targetKind: 0
-    _actionId: "last_light_intro_stage_catch_paper"
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_012
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_catch_paper
+    _kind: 12
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 1.5
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: last_light_intro_stage_catch_paper
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -901,22 +3266,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_paper_pause"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_paper_pause
     _kind: 2
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.25
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -933,22 +3338,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_steady_paper"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_steady_paper
     _kind: 12
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.7
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 0
-    _actionId: "last_light_intro_stage_steady_paper"
+    _actionId: last_light_intro_stage_steady_paper
     _parallel: 1
     _delay: 0.15
     _opacity: 1
@@ -965,22 +3410,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_e2_wind"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e2_wind
     _kind: 17
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.8
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 2
-    _actionId: "intro_e2_wind"
+    _actionId: intro_e2_wind
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -1003,12 +3488,33 @@ MonoBehaviour:
     _color: {r: 0, g: 0, b: 0, a: 1}
     _hold: 0
     _wholeReader: 0
-  - _commandId: last_light_intro_013
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_013
     _kind: 0
     _lineId: last_light_line_intro_013
     _textRevision: 3
     _characterId: 
-    _text: "风从我们之间穿过去，把信封翻了个面。一行铅笔字露出来：“如果你还没准备好告诉别人。”林晚倾身按住翘起的纸角，又慢慢收回手，目光停在那封始终没有寄出的回信上。"
+    _speakerNameKey: 
+    _text: "\u98CE\u4ECE\u6211\u4EEC\u4E4B\u95F4\u7A7F\u8FC7\u53BB\uFF0C\u628A\u4FE1\u5C01\u7FFB\u4E86\u4E2A\u9762\u3002\u4E00\u884C\u94C5\u7B14\u5B57\u9732\u51FA\u6765\uFF1A\u201C\u5982\u679C\u4F60\u8FD8\u6CA1\u51C6\u5907\u597D\u544A\u8BC9\u522B\u4EBA\u3002\u201D\u6797\u665A\u503E\u8EAB\u6309\u4F4F\u7FD8\u8D77\u7684\u7EB8\u89D2\uFF0C\u53C8\u6162\u6162\u6536\u56DE\u624B\uFF0C\u76EE\u5149\u505C\u5728\u90A3\u5C01\u59CB\u7EC8\u6CA1\u6709\u5BC4\u51FA\u7684\u56DE\u4FE1\u4E0A\u3002"
     _resourceKey: 
     _variableId: 
     _scope: 0
@@ -1018,28 +3524,98 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_paper_settles"
-    _kind: 9
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_013
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_paper_settles
+    _kind: 9
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
-    _waitActions: ["last_light_intro_stage_catch_paper", "last_light_intro_stage_steady_paper"]
+    _waitActions:
+    - last_light_intro_stage_catch_paper
+    - last_light_intro_stage_steady_paper
     _positionMode: 0
     _position: {x: 0, y: 0}
     _scale: {x: 1, y: 1}
@@ -1052,11 +3628,38 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_014
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_014
     _kind: 0
     _lineId: last_light_line_intro_014
     _textRevision: 2
     _characterId: lastlight_inner
+    _speakerNameKey: 
     _text: "\uFF08\u90A3\u5E45\u753B\u7B54\u5E94\u7ED9\u670B\u53CB\u770B\uFF0C\u5374\u4E00\u76F4\u6CA1\u5BC4\u51FA\u53BB\u3002\u6211\u628A\u6BCF\u4E00\u6B21\u72B9\u8C6B\u53EB\u4F5C\u4FEE\u6539\uFF0C\u4EFF\u4F5B\u53EA\u8981\u8FD8\u5728\u4FEE\u6539\uFF0C\u5C31\u4E0D\u5FC5\u627F\u8BA4\u81EA\u5DF1\u5BB3\u6015\u88AB\u770B\u89C1\u3002\uFF09"
     _resourceKey: 
     _variableId: 
@@ -1067,13 +3670,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: playerName
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_015
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_014
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_015
     _kind: 0
     _lineId: last_light_line_intro_015
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u4F60\u4E00\u76F4\u6CA1\u8BF4\u8BDD\u3002\u662F\u60F3\u8D77\u4EC0\u4E48\u4E86\u5417\uFF1F\u5982\u679C\u4E0D\u65B9\u4FBF\u8BB2\uFF0C\u53EF\u4EE5\u4E0D\u8BB2\u3002\u6211\u4EEC\u6765\u8FD9\u91CC\uFF0C\u4E0D\u662F\u8981\u8F6E\u6D41\u4EA4\u51FA\u81EA\u5DF1\u7684\u79D8\u5BC6\u3002"
     _resourceKey: 
     _variableId: 
@@ -1084,13 +3742,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_016
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_015
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_016
     _kind: 0
     _lineId: last_light_line_intro_016
     _textRevision: 2
     _characterId: lastlight_zhou
+    _speakerNameKey: 
     _text: "\u6211\u4EEC\u53EF\u4EE5\u5B89\u9759\u4E00\u4F1A\u513F\u3002\u5929\u8FD8\u6CA1\u5168\u9ED1\uFF0C\u95E8\u4E5F\u4E0D\u4F1A\u7ACB\u523B\u9501\u4E0A\u3002\u505A\u51B3\u5B9A\u4E4B\u524D\u7684\u7A7A\u767D\uFF0C\u4E0D\u7B97\u6D6A\u8D39\u65F6\u95F4\u3002"
     _resourceKey: 
     _variableId: 
@@ -1101,24 +3814,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_wan_out_of_focus"
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_016
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_wan_out_of_focus
     _kind: 8
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 1
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 2
-    _actionId: "last_light_intro_stage_wan_out_of_focus"
+    _actionId: last_light_intro_stage_wan_out_of_focus
     _parallel: 1
     _delay: 0
     _opacity: 0
@@ -1135,22 +3916,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_zhou_out_of_focus"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_out_of_focus
     _kind: 8
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 1.2
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "zhou"
+    _instanceId: zhou
     _targetKind: 2
-    _actionId: "last_light_intro_stage_zhou_out_of_focus"
+    _actionId: last_light_intro_stage_zhou_out_of_focus
     _parallel: 1
     _delay: 0.15
     _opacity: 0
@@ -1167,12 +3988,39 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_017
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_017
     _kind: 0
     _lineId: last_light_line_intro_017
     _textRevision: 3
     _characterId: 
-    _text: "谁都没有继续说话。我把目光从两个人身上移开，望向楼下。街口的灯开始接连亮起，先是一盏，再是一整排店铺。城市照常运转，没有因为某个傍晚停下来，却也没有把谁丢在后面。"
+    _speakerNameKey: 
+    _text: "\u8C01\u90FD\u6CA1\u6709\u7EE7\u7EED\u8BF4\u8BDD\u3002\u6211\u628A\u76EE\u5149\u4ECE\u4E24\u4E2A\u4EBA\u8EAB\u4E0A\u79FB\u5F00\uFF0C\u671B\u5411\u697C\u4E0B\u3002\u8857\u53E3\u7684\u706F\u5F00\u59CB\u63A5\u8FDE\u4EAE\u8D77\uFF0C\u5148\u662F\u4E00\u76CF\uFF0C\u518D\u662F\u4E00\u6574\u6392\u5E97\u94FA\u3002\u57CE\u5E02\u7167\u5E38\u8FD0\u8F6C\uFF0C\u6CA1\u6709\u56E0\u4E3A\u67D0\u4E2A\u508D\u665A\u505C\u4E0B\u6765\uFF0C\u5374\u4E5F\u6CA1\u6709\u628A\u8C01\u4E22\u5728\u540E\u9762\u3002"
     _resourceKey: 
     _variableId: 
     _scope: 0
@@ -1182,112 +4030,286 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_quiet"
-    _kind: 9
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
-    _opacity: 1
-    _waitActions: ["last_light_intro_stage_wan_out_of_focus", "last_light_intro_stage_zhou_out_of_focus"]
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_wan_hide"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 2
-    _instanceId: "wan"
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
+    _opacity: 0
     _waitActions: []
     _positionMode: 0
     _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
+    _scale: {x: 0, y: 0}
     _rotation: 0
     _mirror: 0
     _layer: 0
     _ease: 0
     _gesture: 0
-    _strength: 1
+    _strength: 0
     _exitAfterMove: 0
     _emphasisMode: 0
-    _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_zhou_hide"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 2
-    _instanceId: "zhou"
-    _targetKind: 0
-    _actionId: ""
-    _parallel: 0
-    _delay: 0
-    _opacity: 1
-    _waitActions: []
-    _positionMode: 0
-    _position: {x: 0, y: 0}
-    _scale: {x: 1, y: 1}
-    _rotation: 0
-    _mirror: 0
-    _layer: 0
-    _ease: 0
-    _gesture: 0
-    _strength: 1
-    _exitAfterMove: 0
-    _emphasisMode: 0
-    _dimFactor: 0.72
-  - _commandId: last_light_intro_018
-    _kind: 0
-    _textMode: 2
-    _dialogueVisible: 1
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_017
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
     _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_quiet
+    _kind: 9
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions:
+    - last_light_intro_stage_wan_out_of_focus
+    - last_light_intro_stage_zhou_out_of_focus
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_wan_hide
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 2
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_hide
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 2
+    _instanceId: zhou
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 1
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 1, y: 1}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 1
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0.72
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 2
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 1
+    _textBindings: []
+    _commandId: last_light_intro_018
+    _kind: 0
     _lineId: last_light_line_intro_018
     _textRevision: 2
     _characterId: lastlight_inner
+    _speakerNameKey: 
     _text: "\uFF08\u6211\u7B2C\u4E00\u6B21\u8BD5\u7740\u4E0D\u66FF\u81EA\u5DF1\u8FA9\u89E3\u3002\u4E5F\u8BB8\u90A3\u5E45\u753B\u4E0D\u9700\u8981\u518D\u597D\u4E00\u70B9\uFF0C\u53EA\u9700\u8981\u4E00\u53E5\u8BDA\u5B9E\u7684\u8BDD\uFF1A\u8FD9\u662F\u5F53\u65F6\u7684\u6211\uFF0C\u753B\u5F97\u4E0D\u591F\u597D\uFF0C\u4F46\u6211\u8FD8\u8BB0\u5F97\u4F60\u3002\uFF09"
     _resourceKey: 
     _variableId: 
@@ -1298,24 +4320,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: playerName
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_wan_return"
-    _kind: 4
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_alice"
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_018
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_wan_return
+    _kind: 4
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_alice
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -1332,22 +4422,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_wan_close"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_wan_close
     _kind: 10
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 1
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 0
-    _actionId: "last_light_intro_stage_wan_close"
+    _actionId: last_light_intro_stage_wan_close
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -1364,22 +4494,62 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_zhou_return"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_zhou_return
     _kind: 4
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_zhou"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_zhou
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 2
     _visualAction: 0
-    _instanceId: "zhou"
+    _instanceId: zhou
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
@@ -1396,26 +4566,67 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_return"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_return
     _kind: 9
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
-    _waitActions: ["last_light_intro_stage_wan_close"]
+    _waitActions:
+    - last_light_intro_stage_wan_close
     _positionMode: 0
     _position: {x: 0, y: 0}
     _scale: {x: 1, y: 1}
@@ -1428,12 +4639,39 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: last_light_intro_019
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_019
     _kind: 0
     _lineId: last_light_line_intro_019
     _textRevision: 3
     _characterId: 
-    _text: "片刻后，林晚从栏杆边走回来，将信封在我们面前摊平。周砚把录音机转向我。那颗小小的播放键还没有被按下，我却觉得，自己的决定已经没有刚才那么重了。"
+    _speakerNameKey: 
+    _text: "\u7247\u523B\u540E\uFF0C\u6797\u665A\u4ECE\u680F\u6746\u8FB9\u8D70\u56DE\u6765\uFF0C\u5C06\u4FE1\u5C01\u5728\u6211\u4EEC\u9762\u524D\u644A\u5E73\u3002\u5468\u781A\u628A\u5F55\u97F3\u673A\u8F6C\u5411\u6211\u3002\u90A3\u9897\u5C0F\u5C0F\u7684\u64AD\u653E\u952E\u8FD8\u6CA1\u6709\u88AB\u6309\u4E0B\uFF0C\u6211\u5374\u89C9\u5F97\uFF0C\u81EA\u5DF1\u7684\u51B3\u5B9A\u5DF2\u7ECF\u6CA1\u6709\u521A\u624D\u90A3\u4E48\u91CD\u4E86\u3002"
     _resourceKey: 
     _variableId: 
     _scope: 0
@@ -1443,13 +4681,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_020
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_019
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_020
     _kind: 0
     _lineId: last_light_line_intro_020
     _textRevision: 2
     _characterId: lastlight_wan
+    _speakerNameKey: 
     _text: "\u5982\u679C\u73B0\u5728\u542C\uFF0C\u6211\u60F3\u628A\u5B83\u5F53\u4F5C\u91CD\u65B0\u5F00\u59CB\uFF0C\u800C\u4E0D\u662F\u8BC1\u660E\u8FC7\u53BB\u6CA1\u6709\u767D\u7B49\u3002\u5982\u679C\u4E0D\u542C\uFF0C\u6211\u4E5F\u60F3\u8BA4\u771F\u5730\u628A\u4FE1\u5BC4\u51FA\u53BB\u3002"
     _resourceKey: 
     _variableId: 
@@ -1460,13 +4753,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_021
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_020
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_021
     _kind: 0
     _lineId: last_light_line_intro_021
     _textRevision: 2
     _characterId: lastlight_zhou
+    _speakerNameKey: 
     _text: "\u90A3\u5C31\u9009\u4F60\u771F\u6B63\u60F3\u505A\u7684\u3002\u542C\u5B8C\u4EE5\u540E\u4ECD\u7136\u53EF\u4EE5\u5199\u4FE1\uFF0C\u5199\u5B8C\u4EE5\u540E\u4E5F\u53EF\u4EE5\u518D\u89C1\u9762\u3002\u6211\u4EEC\u9009\u7684\u662F\u4ECA\u665A\u5148\u8FC8\u51FA\u7684\u90A3\u4E00\u6B65\u3002"
     _resourceKey: 
     _variableId: 
@@ -1477,24 +4825,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_e2_smile"
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_021
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e2_smile
     _kind: 20
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: "lastlight_wan_smile"
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: lastlight_wan_smile
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0.75
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: wan
     _targetKind: 2
-    _actionId: "intro_e2_smile"
+    _actionId: intro_e2_smile
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -1517,11 +4933,32 @@ MonoBehaviour:
     _color: {r: 0, g: 0, b: 0, a: 1}
     _hold: 0
     _wholeReader: 0
-  - _commandId: last_light_intro_022
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_022
     _kind: 0
     _lineId: last_light_line_intro_022
     _textRevision: 2
     _characterId: 
+    _speakerNameKey: 
     _text: "\u8BB8\u8001\u5E08\u53C8\u53D1\u6765\u4E00\u5F20\u7167\u7247\u3002\u7167\u7247\u91CC\u7684\u8584\u8377\u76C6\u683D\u6B6A\u5411\u7A97\u8FB9\uFF0C\u914D\u6587\u662F\u201C\u660E\u5929\u8BB0\u5F97\u6D47\u6C34\u201D\u3002\u6797\u665A\u7B11\u8D77\u6765\uFF0C\u539F\u6765\u8BA4\u771F\u544A\u522B\u7684\u4EBA\uFF0C\u4E5F\u4F1A\u5FD8\u8BB0\u7167\u987E\u81EA\u5DF1\u7684\u690D\u7269\u3002"
     _resourceKey: 
     _variableId: 
@@ -1532,24 +4969,92 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: "last_light_intro_stage_laugh"
-    _kind: 15
-    _lineId: ""
-    _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
-    _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
-    _duration: 0.6
-    _slot: 0
-    _visualAction: 0
-    _instanceId: "wan"
+    _instanceId: 
     _targetKind: 0
-    _actionId: "last_light_intro_stage_laugh"
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_022
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_laugh
+    _kind: 15
+    _lineId: 
+    _textRevision: 1
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
+    _scope: 0
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
+    _duration: 0.6
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
+    _slot: 0
+    _visualAction: 0
+    _instanceId: wan
+    _targetKind: 0
+    _actionId: last_light_intro_stage_laugh
     _parallel: 1
     _delay: 0
     _opacity: 1
@@ -1566,26 +5071,67 @@ MonoBehaviour:
     _exitAfterMove: 0
     _emphasisMode: 0
     _dimFactor: 0.72
-  - _commandId: "last_light_intro_stage_e2_smile_done"
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_stage_e2_smile_done
     _kind: 9
-    _lineId: ""
+    _lineId: 
     _textRevision: 1
-    _characterId: ""
-    _text: ""
-    _resourceKey: ""
-    _variableId: ""
+    _characterId: 
+    _speakerNameKey: 
+    _text: 
+    _resourceKey: 
+    _variableId: 
     _scope: 0
-    _value: {_type: 0, _bool: 0, _int: 0, _string: ""}
+    _value:
+      _type: 0
+      _bool: 0
+      _int: 0
+      _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-    _instanceId: ""
+    _instanceId: 
     _targetKind: 0
-    _actionId: ""
+    _actionId: 
     _parallel: 0
     _delay: 0
     _opacity: 1
-    _waitActions: ["intro_e2_smile"]
+    _waitActions:
+    - intro_e2_smile
     _positionMode: 0
     _position: {x: 0, y: 0}
     _scale: {x: 1, y: 1}
@@ -1604,11 +5150,32 @@ MonoBehaviour:
     _color: {r: 0, g: 0, b: 0, a: 1}
     _hold: 0
     _wholeReader: 0
-  - _commandId: last_light_intro_023
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: 
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_023
     _kind: 0
     _lineId: last_light_line_intro_023
     _textRevision: 2
     _characterId: lastlight_inner
+    _speakerNameKey: 
     _text: "\uFF08\u6211\u628A\u670B\u53CB\u7684\u804A\u5929\u7A97\u53E3\u6253\u5F00\uFF0C\u53C8\u6682\u65F6\u5408\u4E0A\u3002\u5148\u628A\u773C\u524D\u8FD9\u4EF6\u4E8B\u505A\u5B8C\u3002\u4E0D\u662F\u6C38\u8FDC\u7B49\u4E0B\u53BB\uFF0C\u53EA\u662F\u7ED9\u4ECA\u665A\u4E00\u4E2A\u6E05\u695A\u3001\u80FD\u591F\u8BB0\u4F4F\u7684\u987A\u5E8F\u3002\uFF09"
     _resourceKey: 
     _variableId: 
@@ -1619,14 +5186,72 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: playerName
+    _speakerVariableScope: 1
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_024
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_023
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings:
+    - _token: '{playerName}'
+      _variableId: playerName
+      _scope: 1
+    _commandId: last_light_intro_024
     _kind: 0
     _lineId: last_light_line_intro_024
     _textRevision: 2
     _characterId: lastlight_wan
-    _text: "\u6211\u51C6\u5907\u597D\u4E86\u3002\u65E0\u8BBA\u4F60\u9009\u54EA\u4E00\u79CD\uFF0C\u6211\u90FD\u7559\u5728\u8FD9\u91CC\u3002\u7B49\u6700\u540E\u90A3\u76CF\u706F\u4EAE\u8D77\u6765\uFF0C\u6211\u4EEC\u4E00\u8D77\u4E0B\u697C\u3002"
+    _speakerNameKey: 
+    _text: "{playerName}\uFF0C\u6211\u51C6\u5907\u597D\u4E86\u3002\u65E0\u8BBA\u4F60\u9009\u54EA\u4E00\u79CD\uFF0C\u6211\u90FD\u7559\u5728\u8FD9\u91CC\u3002\u7B49\u6700\u540E\u90A3\u76CF\u706F\u4EAE\u8D77\u6765\uFF0C\u6211\u4EEC\u4E00\u8D77\u4E0B\u697C\u3002"
     _resourceKey: 
     _variableId: 
     _scope: 0
@@ -1636,13 +5261,68 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
-  - _commandId: last_light_intro_025
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_024
+  - _cameraZoom: 0
+    _wipeDirection: 0
+    _textMode: 0
+    _textEffectsVersion: 1
+    _textReveal: 0
+    _textFadeDuration: 0.8
+    _titleExitDuration: 0.65
+    _textSpeedMultiplier: 1
+    _textEase: 1
+    _stepGroupId: 
+    _stepGroupName: 
+    _stepGroupColor: {r: 0, g: 0, b: 0, a: 0}
+    _textBeats: []
+    _dialogueVisible: 0
+    _textBindings: []
+    _commandId: last_light_intro_025
     _kind: 0
     _lineId: last_light_line_intro_025
     _textRevision: 2
     _characterId: 
+    _speakerNameKey: 
     _text: "\u5F55\u97F3\u673A\u548C\u4FE1\u7EB8\u5E76\u6392\u653E\u5728\u680F\u6746\u4E0A\u3002\u4F60\u53EF\u4EE5\u73B0\u5728\u64AD\u653E\u6700\u540E\u4E00\u6BB5\u5F55\u97F3\uFF0C\u4E5F\u53EF\u4EE5\u5148\u5199\u4E00\u5C01\u56DE\u4FE1\uFF0C\u628A\u503E\u542C\u7559\u5230\u771F\u6B63\u89C1\u9762\u7684\u90A3\u4E00\u5929\u3002"
     _resourceKey: 
     _variableId: 
@@ -1653,6 +5333,45 @@ MonoBehaviour:
       _int: 0
       _string: 
     _duration: 0
+    _integerOperation: 0
+    _operandVariableId: 
+    _operandScope: 0
+    _integerOperand: 0
+    _customStepId: 
+    _speakerVariableId: 
+    _speakerVariableScope: 0
+    _randomMin: 0
+    _randomMax: 0
     _slot: 0
     _visualAction: 0
+    _instanceId: 
+    _targetKind: 0
+    _actionId: 
+    _parallel: 0
+    _delay: 0
+    _opacity: 0
+    _waitActions: []
+    _positionMode: 0
+    _position: {x: 0, y: 0}
+    _scale: {x: 0, y: 0}
+    _rotation: 0
+    _mirror: 0
+    _layer: 0
+    _ease: 0
+    _gesture: 0
+    _strength: 0
+    _exitAfterMove: 0
+    _emphasisMode: 0
+    _dimFactor: 0
+    _direction: {x: 0, y: 0}
+    _frequency: 0
+    _decay: 0
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _hold: 0
+    _wholeReader: 0
+    _persistent: 0
+    _keepOnSceneChange: 0
+    _bindingId: 
+    _volume: 0
+    _textKey: text.last_light_m5.last_light_line_intro_025
   _next: {fileID: 11400000, guid: 01c04de328ad4214b86c604f41781a7f, type: 2}

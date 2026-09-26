@@ -34,5 +34,8 @@ namespace Game.UI
         /// <summary>EUINovelReadingMenuPage 页面</summary>
         public static readonly EUIPageDef EUINovelReadingMenuPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReadingMenuPage.prefab", UILayer.Popup, PageType.Popup);
 
+        /// <summary>EUINovelNameInputPage 页面</summary>
+        public static readonly EUIPageDef EUINovelNameInputPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelNameInputPage.prefab", UILayer.Popup, PageType.Popup);
+
     }
 }

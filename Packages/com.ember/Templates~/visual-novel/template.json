@@ -2,14 +2,14 @@
     "schemaVersion": 2,
     "id": "visual-novel",
     "displayName": "视觉小说",
-    "description": "基于 base 0.6.4：完整视觉小说阅读、存档、演出与配表多语言/皮肤；新增说话人临时称呼（揭晓前显示占位名）与 speaker.〈语义〉Key 家族，解析链为称呼 Key → character.〈角色键〉 → novel_characters.displayName，称呼 Key 不进存档指纹也不影响强调匹配。具体游戏规则由消费项目配置。",
-    "version": "0.10.0",
+    "description": "基于 base 0.6.4：完整视觉小说阅读、存档、演出与配表多语言/皮肤；说话人临时称呼（揭晓前显示占位名）与 speaker.〈语义〉Key 家族。0.10.1 把消费项目被迫绕开的表现/交互缺陷修回模板——阅读页不透明底板（揭幕只作用于内容容器）、背景同键重设幂等、空实例 ID 立绘隐藏的退化语义与诊断、章节卡与背景顺序、循环音 Mixer 分组；均为运行期修复，不改剧情语义指纹与存档 Schema。主菜单存档入口维持原设计（继续游戏续读最新进度、读取存档打开槽位页）。0.11.0 把 BGM 改为常驻分段通道：新增 novel_bgm 表（一行一曲的前奏/循环/高潮/尾段；旧 novel_audio 的 BGM 行自动等价于只有循环段），BGM 节点从前奏起播并只接本曲目自己的循环，新增「BGM 高潮段」指令立即切入并在播完后回循环，菜单/历史/设置/存档页/读档事务/场景加载都不再暂停音乐，退出阅读回到主界面时自动转尾段；存档 Schema 7→8 记录曲目与段落，读档同曲同段不打断、否则从新曲目前奏开始；编辑器试播与正式运行期走同一条分段链路。具体游戏规则由消费项目配置。0.12.0 开放剧本层自定义节点扩展点：段内新增「自定义节点」步骤，只保存继承 NovelCustomStepSO 的脚本稳定 ID，脚本资产登记在剧情的自定义节点脚本清单上，随剧情一起加载、校验并计入存档指纹；新增中性契约 INovelStepService 与模板自带的「模块桥接节点」，小游戏与外部系统只需实现业务 Module 即可接入，节点侧零代码；新增说话人变量绑定（表现层字段，不进指纹，历史逐句读时重新解析）；运行期提供写回剧情变量、逐帧钩子、取消与超时契约，未登记脚本在剧情校验阶段直接报错。详见 Assets/Game/Documentation/visual-novel/CustomNodes.md。 0.13.0 补齐开局演出、多语言即时切换与安全区归属：新增「开场段落」自定义步骤（成对 Begin/End，Begin 锁住玩家推进并切自动播放、固定本段间隔，被打断时兜底解锁还原），以及「输入玩家名字」步骤与配套的名字输入弹窗（强制步骤、不提供取消，页面被读档/退出关闭时写回默认名以防剧情卡死）；新增 ember-vn-custom-node 模板技能。多语言新增全局语言变更广播（EmberBroadcastEvent.LanguageChanged + TextLocalization.PublishLanguageChanged），正文、选项、选择提示、历史回看、阅读页状态行、设置页单位与档位、槽位名都随语言当场重刷，运行期接管的文本统一走 TMPEx.SetSource 以免被切语言刷新顶掉；示例小说 LastLight 的全部台词与界面文案补齐简繁日英四语言；七个页面的内容统一迁入安全区 Center 锚点（布局逐像素不变）；输入名字期间禁止存档并给出明确提醒。",
+    "version": "0.13.0",
     "frameworkVersion": "0.14.1",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.6.4",
     "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "eaa11d4aa58981fc45bce818f83f710b",
-    "versionedContentHash": "eaa11d4aa58981fc45bce818f83f710b"
+    "contentHash": "0aa62a24f632c2f426a691f97002eb56",
+    "versionedContentHash": "0aa62a24f632c2f426a691f97002eb56"
 }

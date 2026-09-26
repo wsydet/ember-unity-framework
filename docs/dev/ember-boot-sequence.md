@@ -248,3 +248,41 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 6. **`ShowMainPage` 是入队而非即时打开**：`MainMenu` 在下一帧 `ProcessShowQueue` 才真正加载并 `PlayShow`。
 
 7. **未挂 BootSplash 也能跑**：`WaitForFadeOut == null` 时 InitState 跳过等待直接切换，启动链自动退化为「无黑幕」路径。
+
+---
+
+## 八、退出流程（Quit Sequence）
+
+退出与启动对称：**先封屏，再清理，最后退出**。
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant B as 业务（退出按钮 / 系统关闭窗口）
+    participant GL as GameLauncher
+    participant QC as EmberQuitCurtain
+    participant UI as EUIViewEngine
+    participant Log as EmberFileLog
+
+    B->>GL: Quit()（或 OnApplicationQuit 兜底）
+    GL->>QC: Show()
+    Note right of QC: 主相机 cullingMask=0 + SolidColor 黑<br/>并请求 UI 盖不透明 Overlay 遮罩（sortingOrder 32767）
+    GL->>GL: ShutdownFramework()
+    GL->>UI: EUIViewEngine.Destroy() → 销毁全部 EUI 页面
+    Note right of UI: 封屏遮罩不参与页面栈，<br/>因此不会被一起销毁
+    GL->>Log: Stop()（等写线程刷盘后关文件）
+    GL->>GL: ApplicationQuitUtil.Quit()
+    Note right of GL: Android: killProcess；其他平台: Application.Quit()
+```
+
+**为什么必须这个顺序：**
+
+1. Unity 的 `Object.Destroy` 在「当前 Update 之后、渲染之前」生效；而 PC 等平台的
+   `Application.Quit()` 之后仍会继续出帧。若先清理再退出，就会出现
+   「UI 已经没了、只剩 3D 场景」的穿帮帧（视觉小说等以 3D 场景承载 2D 画面的项目尤其明显）。
+2. 所以封屏（相机黑屏 + UI 遮罩）必须排在清理之前：它同帧生效，之后渲染出的任何一帧都是全黑。
+3. UI 遮罩必须**活过**框架清理，因此 `EUIViewEngine.Shutdown` 只退订、不销毁遮罩。
+4. 日志落盘（`EmberFileLog.Stop()`）必须在真正退出之前，否则最后一个写线程缓冲会丢。
+
+**兜底路径：** 系统/窗口关闭等不经过退出按钮的退出会触发 `OnApplicationQuit`，
+框架在那里执行同样的封屏 + 清理；业务若接入渠道 SDK 等自有退出流程，应改为调用 `GameLauncher.Quit()`。

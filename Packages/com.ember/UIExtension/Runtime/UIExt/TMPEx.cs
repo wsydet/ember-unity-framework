@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 // Package: com.ember
 
+using Ember.Basic;
 using TMPro;
 using UnityEngine;
 
@@ -104,7 +105,24 @@ namespace Ember.UIExtension
 
         #region 外部方法
 
+        /// <summary>
+        /// 运行期接管这段文本：把 <paramref name="source"/> 写成原文并清空 Key。
+        ///
+        /// <para>给「本该是静态文案、但运行期会被代码写入」的控件用（标题、选项文字、状态行等）。
+        /// 只写 <c>text</c> 而不清 Key 时，下一次 <see cref="TextLocalization.RefreshAll"/>
+        /// （例如切语言）会按 Key 把这段文本顶掉，所以这类控件要么不挂 Key，要么用本方法接管。</para>
+        ///
+        /// <para>反过来，如果希望切语言后回到表里的译文，就不要用本方法，直接写 <c>text</c>。</para>
+        /// </summary>
+        [HasGC]
+        public void SetSource(string source)
+        {
+            _key = string.Empty;
+            text = source;
+        }
+
         /// <summary>把显示文本恢复为原文，供语言切换清理或编辑器调试使用。</summary>
+        [HasGC]
         public void RestoreSource()
         {
             string source = Source;

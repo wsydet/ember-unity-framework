@@ -20,7 +20,9 @@ namespace Game.Narrative.Editor
         {
             if (!_story) return;
             LoadTables(); _errors = NarrativeAssetValidation.Validate(_story, null, _catalog);
-            _message = _errors.Count == 0 ? "剧情全部章节与跨章路线校验通过。" : null; _inspector?.MarkDirtyRepaint();
+            _hints = NarrativeAssetValidation.ValidateHints(_story, null);
+            _message = _errors.Count == 0 ? (_hints.Count == 0 ? "剧情全部章节与跨章路线校验通过。"
+                : "剧情校验通过，另有 " + _hints.Count + " 条编写提示。") : null; _inspector?.MarkDirtyRepaint();
         }
         private void DrawStoryInspector()
         {
@@ -39,6 +41,9 @@ namespace Game.Narrative.Editor
                     EditorGUILayout.PropertyField(_storyContent.FindProperty("_entry"), new GUIContent("入口章节"));
                     EditorGUILayout.PropertyField(_storyContent.FindProperty("_globals"), new GUIContent("会话全局变量"), true);
                     EditorGUILayout.HelpBox("全局变量跨章保留。章节卡之间的条件仅使用全局变量；按顺序首个命中，否则走兜底。", MessageType.None);
+                    EditorGUILayout.PropertyField(_storyContent.FindProperty("_customSteps"), new GUIContent("自定义节点脚本清单"), true);
+                    EditorGUILayout.HelpBox("段内「自定义节点」步骤只保存脚本稳定 ID，实际脚本资产必须在这里登记："
+                        + "它们随剧情一起加载，参与剧情校验与存档指纹。取消登记后，引用它的步骤会报「脚本未在本剧情登记」。", MessageType.None);
                     _existingChapter = (NarrativeChapterSO)EditorGUILayout.ObjectField("已有章节", _existingChapter, typeof(NarrativeChapterSO), false);
                     if (_existingChapter && GUILayout.Button("登记已有章节")) TryEdit(() => NarrativeStoryModel.AddChapter(_story, _existingChapter));
                 }
@@ -68,6 +73,11 @@ namespace Game.Narrative.Editor
                 {
                     LocateError(error);
                 }
+            }
+            foreach (var hint in _hints)
+            {
+                EditorGUILayout.HelpBox("编写提示（不阻断运行）\n" + hint, MessageType.Warning);
+                if (GUILayout.Button("定位此提示")) LocateError(hint);
             }
         }
         private void DrawChapterExits()
@@ -134,7 +144,8 @@ namespace Game.Narrative.Editor
         #region 外部方法
         public void ShowStory(NarrativeStorySO story)
         {
-            _story = story; _overview = true; _selectedChapter = null; _errors = Array.Empty<NarrativeError>(); _message = null;
+            _story = story; _overview = true; _selectedChapter = null; _errors = Array.Empty<NarrativeError>();
+            _hints = Array.Empty<NarrativeError>(); _message = null;
             RefreshGraph(); _storyGraph?.schedule.Execute(() => _storyGraph.FrameAll());
         }
         #endregion

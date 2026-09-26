@@ -53,8 +53,10 @@ namespace Game.Narrative
                 {
                     string text = bindings ? NovelTextBindings.Resolve(raw, _variables, _globals) : raw.Text;
                     // 多语言在变量绑定之后覆盖：Key 命中就用译文，否则保留原文。
+                    // 译文同样走一遍文字绑定替换，否则译文里的 {playerName} 会被原样显示出来。
                     // 校验仍按原文进行，所以译文变短也不会让正文节奏点越界报错。
-                    if (localized && NovelLocalization.TryGetContent(raw.TextKey, out string translated)) text = translated;
+                    if (localized && NovelLocalization.TryGetContent(raw.TextKey, out string translated))
+                        text = bindings ? NovelTextBindings.Resolve(translated, raw.TextBindings, _variables, _globals) : translated;
                     _resolvedCommand = raw.WithResolvedText(text);
                     _resolvedSource = raw; _resolvedLanguage = language;
                 }
@@ -265,7 +267,8 @@ namespace Game.Narrative
 
         public bool SetPresentationWait(long generation, long positionVersion, NarrativeWait reasons)
         {
-            const NarrativeWait allowed = NarrativeWait.Resource | NarrativeWait.Transition | NarrativeWait.Voice | NarrativeWait.Actions;
+            const NarrativeWait allowed = NarrativeWait.Resource | NarrativeWait.Transition | NarrativeWait.Voice |
+                NarrativeWait.Actions | NarrativeWait.CustomStep;
             if (!Matches(generation, positionVersion) || (_wait & NarrativeWait.Presentation) == 0 || (reasons & ~allowed) != 0) return false;
             return Mutate(() => _wait = NarrativeWait.Presentation | reasons, false);
         }

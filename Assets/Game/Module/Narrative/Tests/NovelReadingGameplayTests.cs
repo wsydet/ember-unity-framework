@@ -34,6 +34,12 @@ namespace Game.Narrative.Tests
                 yield return Wait(() => Session?.Snapshot.State == NarrativeState.AwaitingAdvance &&
                     Session.Snapshot.PauseReasons.Count == 0 && !NovelLoadInProgress, "对白未就绪");
                 var session = Session;
+                // 开场是自动播放段落（玩家推进被锁住），先走完它并离开章节卡，再在正文上测点击与空格。
+                yield return DriveOpeningToChapterCard(session);
+                session.Advance(Time.frameCount); yield return null; session.Advance(Time.frameCount);
+                yield return Wait(() => session.Snapshot.State == NarrativeState.AwaitingAdvance &&
+                    session.Snapshot.CommandId != "last_light_intro_e4_title" &&
+                    session.Snapshot.PauseReasons.Count == 0, "正文未就绪");
                 var advance = Button(Page("EUINovelReaderPage"), "Advance");
                 var rect = (RectTransform)advance.transform;
                 var events = UnityEngine.EventSystems.EventSystem.current;
@@ -93,6 +99,8 @@ namespace Game.Narrative.Tests
                 Button(Page("EUIMainPage"),"Btn_Start").onClick.Invoke();
                 yield return Wait(()=>Session?.Snapshot.State==NarrativeState.Revealing && Session.Snapshot.PauseReasons.Count==0 && !NovelLoadInProgress && !Page("EUILoadingPage"),"新游戏揭幕未完成");
                 var session=Session; var reader=Page("EUINovelReaderPage");
+                // 先走完自动开场（黑幕两句话 + 名字输入 + 一句话），回到第一章章节卡上再测阅读控件。
+                yield return DriveOpeningToChapterCard(session);
                 // Leave the chapter card through its public advance path before testing reading controls.
                 var title = session.Snapshot.CommandId;
                 session.Advance(Time.frameCount); yield return null;
@@ -103,7 +111,7 @@ namespace Game.Narrative.Tests
                 session.Advance(Time.frameCount); session.SetReadMode(NarrativeReadMode.Auto);
                 var position=session.Snapshot.CommandId;
                 Button(reader,"History").onClick.Invoke(); yield return Wait(()=>Page("EUINovelHistoryPage"),"历史页未打开");
-                StringAssert.Contains(session.History.Last().Text,Page("EUINovelHistoryPage").transform.Find("Animator/EUISafeArea/HistoryPanel/Viewport/Content").GetComponent<TMPro.TMP_Text>().text);
+                StringAssert.Contains(session.History.Last().Text,Page("EUINovelHistoryPage").transform.Find("Animator/EUISafeArea/Center/HistoryPanel/Viewport/Content").GetComponent<TMPro.TMP_Text>().text);
                 Button(Page("EUINovelHistoryPage"),"Saves").onClick.Invoke(); yield return Wait(()=>Page("EUINovelSavePage"),"嵌套存档未打开");
                 Assert.IsTrue(session.Snapshot.PauseReasons.Any(p=>p.StartsWith("History#")));
                 Assert.IsTrue(session.Snapshot.PauseReasons.Any(p=>p.StartsWith("SavePage#")));
@@ -112,9 +120,9 @@ namespace Game.Narrative.Tests
                 Assert.AreEqual(NarrativeReadMode.Auto,session.ReadMode);
                 Button(Page("EUINovelHistoryPage"),"Close").onClick.Invoke(); yield return Wait(()=>session.Snapshot.PauseReasons.Count==0,"历史关闭后未恢复");
                 Button(reader,"HideDialogue").onClick.Invoke();
-                Assert.IsTrue(session.DialogueHidden); Assert.IsFalse(reader.transform.Find("Animator/EUISafeArea/Dialogue").gameObject.activeSelf);
+                Assert.IsTrue(session.DialogueHidden); Assert.IsFalse(reader.transform.Find("Animator/EUISafeArea/Center/Dialogue").gameObject.activeSelf);
                 Assert.IsTrue(reader.transform.Find("Background").gameObject.activeSelf); Assert.IsTrue(reader.transform.Find("Left").gameObject.activeSelf);
-                Assert.IsFalse(reader.transform.Find("Animator/EUISafeArea/ReadingControls").gameObject.activeSelf);
+                Assert.IsFalse(reader.transform.Find("Animator/EUISafeArea/Center/ReadingControls").gameObject.activeSelf);
                 Button(reader,"RestoreUI").onClick.Invoke(); session.Advance(Time.frameCount);
                 Assert.IsFalse(session.DialogueHidden); Assert.AreEqual(position,session.Snapshot.CommandId);
                 yield return null;

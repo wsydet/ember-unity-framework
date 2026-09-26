@@ -18,10 +18,22 @@ namespace Game.Narrative
         void SetVolume(float volume);
         void SetPaused(bool paused);
         void Tick(float delta);
+        /// <summary>
+        /// 这条循环音是否已经接到 Mixer 分组输出。
+        /// true 表示玩家音量由分组承担，调用方写 <see cref="SetVolume"/> 时不要再叠乘一次，
+        /// 否则玩家音量会被衰减两次。
+        /// </summary>
+        bool MixerRouted { get; }
     }
     public interface INovelLoopAudio
     {
-        INovelLoopPlayback CreateLoop(AudioClip clip);
+        /// <summary>
+        /// 新建一条独立循环音。
+        /// </summary>
+        /// <param name="clip">循环播放的音频。</param>
+        /// <param name="bgm">true = 这条循环音是 BGM，应按 BGM 的 Mixer 分组与玩家音量输出；
+        /// false = 环境音循环，按 SFX 分组。两条路径不能混用同一个分组，否则玩家调 BGM 音量会连带环境音。</param>
+        INovelLoopPlayback CreateLoop(AudioClip clip, bool bgm);
     }
     [Serializable]
     public sealed class NovelEffectState
@@ -45,7 +57,12 @@ namespace Game.Narrative
         #region 外部方法
         [NoGC] public static bool IsAudio(NovelCommandKind k) => k == NovelCommandKind.BGM ||
             k >= NovelCommandKind.BGMStop && k <= NovelCommandKind.AmbientVolume;
-        [NoGC] public static bool IsMedia(NovelCommandKind k) => IsAudio(k) || k == NovelCommandKind.EffectPlay || k == NovelCommandKind.EffectStop;
+        /// <summary>BGM 族指令：由分段 BGM 通道统一处理，不创建循环音实例，也不占动作句柄。</summary>
+        [NoGC] public static bool IsBgmCommand(NovelCommandKind k) => k == NovelCommandKind.BGM ||
+            k == NovelCommandKind.BGMClimax || k == NovelCommandKind.BGMStop;
+        /// <summary>只作用于当前曲目的 BGM 段落指令；没有曲目时必须安全忽略而不是报错。</summary>
+        [NoGC] public static bool IsBgmSegment(NovelCommandKind k) => k == NovelCommandKind.BGMClimax;
+        [NoGC] public static bool IsMedia(NovelCommandKind k) => IsAudio(k) || IsBgmSegment(k) || k == NovelCommandKind.EffectPlay || k == NovelCommandKind.EffectStop;
         [NoGC] public static bool NeedsResource(NovelCommandKind k) => k == NovelCommandKind.BGM || k == NovelCommandKind.AmbientPlay || k == NovelCommandKind.EffectPlay;
         // 句柄解析只有一处真源；保留原签名与既有调用点，不在这里复制回退规则。
         [NoGC] public static string ActionId(NovelCommand c) => NovelActionHandle.ResolveId(c);
@@ -60,7 +77,8 @@ namespace Game.Narrative
             if (!IsMedia(c.Kind)) return null;
             if (!NovelActionHandle.ValidTime(c.Duration) || !NovelActionHandle.ValidTime(c.Delay) ||
                 !NovelActionHandle.ValidTime(c.Volume) || c.Volume > 1 || !Enum.IsDefined(typeof(NovelEase), c.Ease)) return "E3 音量须为 0–1，时间须有限非负，缓动须有效";
-            if (c.Kind != NovelCommandKind.BGM && c.Kind != NovelCommandKind.BGMStop && string.IsNullOrWhiteSpace(c.InstanceId)) return "E3 需要独立实例 ID";
+            // BGM 族是单通道曲目指令，按曲目键寻址，不需要独立实例 ID。
+            if (!IsBgmCommand(c.Kind) && string.IsNullOrWhiteSpace(c.InstanceId)) return "E3 需要独立实例 ID";
             if (c.Kind == NovelCommandKind.EffectPlay &&
                 (EffectPath(c.ResourceKey) == null || !NovelActorRules.Coordinates(c.Position) || !NovelActorRules.Scaling(c.Scale) || c.Layer < -100 || c.Layer > 100))
                 return "效果需要有效资源键、归一化位置、0.05–5 缩放和 -100–100 层级";

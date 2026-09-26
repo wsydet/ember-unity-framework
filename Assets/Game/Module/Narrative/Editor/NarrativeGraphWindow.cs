@@ -58,6 +58,8 @@ namespace Game.Narrative.Editor
         private NarrativeNodeSO _existing;
         private string _message;
         private IReadOnlyList<NarrativeError> _errors = Array.Empty<NarrativeError>();
+        /// <summary>编写提示（不阻断运行，只在流程窗口以警告显示）。</summary>
+        private IReadOnlyList<NarrativeError> _hints = Array.Empty<NarrativeError>();
         public NarrativeSnapshot ObservedSnapshot => _snapshot;
         public NarrativeChapterSO Chapter => _chapter;
         public NarrativeNodeSO SelectedNode => _selected;
@@ -315,7 +317,9 @@ namespace Game.Narrative.Editor
             if (!_chapter) return;
             LoadTables();
             _errors = NarrativeAssetValidation.Validate(_story, _chapter, _catalog);
-            _message = _errors.Count == 0 ? "章节校验通过（已重新读取导出配表）。" : null; QueueRefresh();
+            _hints = NarrativeAssetValidation.ValidateHints(_story, _chapter);
+            _message = _errors.Count == 0 ? (_hints.Count == 0 ? "章节校验通过（已重新读取导出配表）。"
+                : "章节校验通过，另有 " + _hints.Count + " 条编写提示。") : null; QueueRefresh();
         }
         private void BindContent()
         {
@@ -351,6 +355,11 @@ namespace Game.Narrative.Editor
                 {
                     EditorGUILayout.HelpBox(error.ToString(), MessageType.Error);
                     if (GUILayout.Button("定位此错误")) LocateError(error);
+                }
+                foreach (var hint in _hints)
+                {
+                    EditorGUILayout.HelpBox("编写提示（不阻断运行）\n" + hint, MessageType.Warning);
+                    if (GUILayout.Button("定位此提示")) LocateError(hint);
                 }
             }
             EditorGUILayout.EndScrollView();
@@ -496,8 +505,8 @@ namespace Game.Narrative.Editor
             var matches = (_story ? _story.Chapters : _chapter ? new[] { _chapter } : Array.Empty<NarrativeChapterSO>())
                 .Where(c => c && c.ChapterId == error.ChapterId).ToArray();
             if (matches.Length != 1) { _message = "错误章节无法唯一定位：" + error.ChapterId; return; }
-            var errors = _errors;
-            ShowChapter(matches[0]); _errors = errors;
+            var errors = _errors; var hints = _hints;
+            ShowChapter(matches[0]); _errors = errors; _hints = hints;
             var nodes = _chapter.Nodes.Where(n => n && n.NodeId == error.NodeId).ToArray();
             if (nodes.Length != 1) { _message = error.ToString(); return; }
             SelectNode(nodes[0]); _graph?.SelectModel(nodes[0], true);
@@ -548,7 +557,7 @@ namespace Game.Narrative.Editor
         {
             _overview = false;
             if (chapter && (!_story || !_story.Chapters.Contains(chapter))) _story = NarrativeStoryModel.FindStory(chapter);
-            _chapter = chapter; _selected = null; _errors = Array.Empty<NarrativeError>();
+            _chapter = chapter; _selected = null; _errors = Array.Empty<NarrativeError>(); _hints = Array.Empty<NarrativeError>();
             BindContent(); RefreshGraph(); _graph?.schedule.Execute(() => _graph.FrameAll());
         }
         public void SelectNode(NarrativeNodeSO node) { SetInspectedNode(node); _graph?.SelectModel(node, false); }

@@ -35,7 +35,7 @@ namespace Game.Narrative
         {
             if (!_active) throw new InvalidOperationException("Narrative Gameplay 模块未激活");
             EndSession();
-            Session = new NovelSession(request, catalog, new NovelResources());
+            Session = new NovelSession(request, catalog, new NovelResources(), null, NovelBgmModule.Active);
             ConfigureSession();
         }
         public void BeginPrepared(NovelSession candidate)
@@ -108,6 +108,9 @@ namespace Game.Narrative
         {
             PreparingEntryUnderCover = false;
             var previous = Session; Session = null;
+            // 退出阅读时把当前曲目转入尾段：通道常驻，尾段会在主界面继续播完。
+            // 必须发生在会话 Dispose 之前，且会话销毁不会波及它（音源与句柄都归通道所有）。
+            if (NovelBgmModule.Active is { } bgm) bgm.FinishWithOutro();
             previous?.Dispose(); _observation?.Dispose(); _observation = null;
             if (previous != null && EmberInputManager.TryGetInstance(out var input)) input.SwitchMap(_previousMap ?? "UI");
         }

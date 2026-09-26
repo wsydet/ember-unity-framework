@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelReaderPage
  * page name    : EUINovelReaderPage
- * update time  : 2026/9/24 16:23:36
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -35,12 +35,12 @@ namespace Game.UI
         private UnityEngine.RectTransform Right;
 
         /// <summary>
-        /// Animator/EUISafeArea/Dialogue/Speaker
+        /// Animator/EUISafeArea/Center/Dialogue/Speaker
         /// </summary>
         private TMPro.TextMeshProUGUI Speaker;
 
         /// <summary>
-        /// Animator/EUISafeArea/Dialogue/Body
+        /// Animator/EUISafeArea/Center/Dialogue/Body
         /// </summary>
         private TMPro.TextMeshProUGUI Body;
 
@@ -50,7 +50,7 @@ namespace Game.UI
         private UnityEngine.UI.Button Advance;
 
         /// <summary>
-        /// Animator/EUISafeArea/Choices
+        /// Animator/EUISafeArea/Center/Choices
         /// </summary>
         private UnityEngine.RectTransform Choices;
 
@@ -60,72 +60,72 @@ namespace Game.UI
         private UnityEngine.RectTransform ChoiceTemplate;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Menu
+        /// Animator/EUISafeArea/Center/ReadingControls/Menu
         /// </summary>
         private UnityEngine.UI.Button Menu;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Settings
+        /// Animator/EUISafeArea/Center/ReadingControls/Settings
         /// </summary>
         private UnityEngine.UI.Button Settings;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Status
+        /// Animator/EUISafeArea/Center/ReadingControls/Status
         /// </summary>
         private TMPro.TextMeshProUGUI Status;
 
         /// <summary>
-        /// Animator/EUISafeArea/Saves
+        /// Animator/EUISafeArea/Center/Saves
         /// </summary>
         private UnityEngine.UI.Button Saves;
 
         /// <summary>
-        /// Animator/EUISafeArea/QuickSave
+        /// Animator/EUISafeArea/Center/QuickSave
         /// </summary>
         private UnityEngine.UI.Button QuickSave;
 
         /// <summary>
-        /// Animator/EUISafeArea/QuickLoad
+        /// Animator/EUISafeArea/Center/QuickLoad
         /// </summary>
         private UnityEngine.UI.Button QuickLoad;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Auto
+        /// Animator/EUISafeArea/Center/ReadingControls/Auto
         /// </summary>
         private UnityEngine.UI.Button Auto;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Skip
+        /// Animator/EUISafeArea/Center/ReadingControls/Skip
         /// </summary>
         private UnityEngine.UI.Button Skip;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/History
+        /// Animator/EUISafeArea/Center/ReadingControls/History
         /// </summary>
         private UnityEngine.UI.Button History;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/HideDialogue
+        /// Animator/EUISafeArea/Center/ReadingControls/HideDialogue
         /// </summary>
         private UnityEngine.UI.Button HideDialogue;
 
         /// <summary>
-        /// Animator/EUISafeArea/Dialogue
+        /// Animator/EUISafeArea/Center/Dialogue
         /// </summary>
         private UnityEngine.RectTransform Dialogue;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls
+        /// Animator/EUISafeArea/Center/ReadingControls
         /// </summary>
         private UnityEngine.RectTransform ReadingControls;
 
         /// <summary>
-        /// Animator/EUISafeArea/ReadingControls/Speed
+        /// Animator/EUISafeArea/Center/ReadingControls/Speed
         /// </summary>
         private UnityEngine.UI.Button Speed;
 
         /// <summary>
-        /// Animator/EUISafeArea/RestoreUI
+        /// Animator/EUISafeArea/Center/RestoreUI
         /// </summary>
         private UnityEngine.UI.Button RestoreUI;
 
@@ -135,12 +135,12 @@ namespace Game.UI
         private UnityEngine.RectTransform ReadingShading;
 
         /// <summary>
-        /// Animator/EUISafeArea/FullScreenLayout
+        /// Animator/EUISafeArea/Center/FullScreenLayout
         /// </summary>
         private UnityEngine.RectTransform FullScreenLayout;
 
         /// <summary>
-        /// Animator/EUISafeArea/FullScreenLayout/FullScreenBody
+        /// Animator/EUISafeArea/Center/FullScreenLayout/FullScreenBody
         /// </summary>
         private UnityEngine.RectTransform FullScreenBody;
 

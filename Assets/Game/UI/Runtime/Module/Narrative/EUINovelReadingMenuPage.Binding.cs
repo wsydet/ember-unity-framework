@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelReadingMenuPage
  * page name    : EUINovelReadingMenuPage
- * update time  : 2026/9/21 10:09:20
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,42 +15,42 @@ namespace Game.UI
     public partial class EUINovelReadingMenuPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Close
+        /// Animator/EUISafeArea/Center/Panel/Close
         /// </summary>
         private UnityEngine.UI.Button Close;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Saves
+        /// Animator/EUISafeArea/Center/Panel/Saves
         /// </summary>
         private UnityEngine.UI.Button Saves;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/QuickSave
+        /// Animator/EUISafeArea/Center/Panel/QuickSave
         /// </summary>
         private UnityEngine.UI.Button QuickSave;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/QuickLoad
+        /// Animator/EUISafeArea/Center/Panel/QuickLoad
         /// </summary>
         private UnityEngine.UI.Button QuickLoad;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Settings
+        /// Animator/EUISafeArea/Center/Panel/Settings
         /// </summary>
         private UnityEngine.UI.Button Settings;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/ReadSkip
+        /// Animator/EUISafeArea/Center/Panel/ReadSkip
         /// </summary>
         private UnityEngine.UI.Button ReadSkip;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/ReturnMenu
+        /// Animator/EUISafeArea/Center/Panel/ReturnMenu
         /// </summary>
         private UnityEngine.UI.Button ReturnMenu;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Feedback
+        /// Animator/EUISafeArea/Center/Panel/Feedback
         /// </summary>
         private TMPro.TextMeshProUGUI Feedback;
 

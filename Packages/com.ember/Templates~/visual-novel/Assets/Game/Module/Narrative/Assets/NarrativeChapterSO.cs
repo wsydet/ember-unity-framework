@@ -42,7 +42,8 @@ namespace Game.Narrative
 
         /// <summary>创建本次会话的纯数据副本；编辑或播放均不共享可变运行状态。</summary>
         public bool TryReadDefinition(INarrativeCatalog catalog, out NovelChapter definition,
-            out IReadOnlyList<NarrativeError> errors, IReadOnlyDictionary<string, NovelValue> globals = null, bool allowChapterExit = false)
+            out IReadOnlyList<NarrativeError> errors, IReadOnlyDictionary<string, NovelValue> globals = null, bool allowChapterExit = false,
+            IReadOnlyDictionary<string, NovelCustomStepSO> customSteps = null)
         {
             definition = null;
             var failures = new List<NarrativeError>();
@@ -61,7 +62,7 @@ namespace Game.Narrative
                 foreach (NovelVariable variable in _variables)
                     variables.Add(variable == null ? null : new NovelVariable(variable.Id, variable.Value));
                 var result = new NovelChapter(_chapterId, _storyRevision, entry, nodes, variables);
-                failures.AddRange(NarrativeValidator.Validate(result, catalog, globals, allowChapterExit));
+                failures.AddRange(NarrativeValidator.Validate(result, catalog, globals, allowChapterExit, customSteps));
                 if (failures.Count == 0) definition = result;
             }
             catch (NarrativeDefinitionException ex) { failures.Add(ex.Error); }

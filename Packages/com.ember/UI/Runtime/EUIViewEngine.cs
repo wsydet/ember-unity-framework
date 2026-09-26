@@ -173,6 +173,7 @@ namespace Ember.UI
 
             _pageContext = new EUIPageContext(this);
             _bgMaskPool = new EUIBgMaskPool(_uiRoot, _uiCamera);
+            EUIQuitCurtainCover.Install();   // 退出封屏遮罩：预创建 + 订阅 EmberQuitCurtain
 
             _initialized = true;
             _lastScreenResolution = new Vector2Int(Screen.width, Screen.height);
@@ -734,6 +735,7 @@ namespace Ember.UI
         private void Shutdown()
         {
             _bgMaskPool?.Clear();
+            EUIQuitCurtainCover.Uninstall();   // 只退订：封屏遮罩需活到进程退出
             _pageContext?.CloseAll();
 
             // Shutdown 不再等待页面过渡。先标记并销毁所有活跃页面，确保正在 await 的

@@ -42,7 +42,13 @@ namespace Game.UI
                 ((EUINovelSaveSlotItem)_items[i].Logic).Configure(i, slots.FirstOrDefault(s => s.Slot == i), canSave, NovelSaveUI.IsLoading || _save.IsBusy,
                     () => SaveSlot(slot), () => LoadSlot(slot));
             }
-            Feedback.text = _save.Message ?? "6 个手动槽 · 1 个快速槽 · 1 个自动槽。当前句完整显示或选项就绪后可保存。";
+            // 输入名字这类自定义步骤等待期间不能保存（状态不是稳定点）：给出明确提醒，
+            // 而不是只把按钮变灰、让人以为存档坏了。提醒优先于上一条存档反馈。
+            bool waitingStep = _paused != null && !_paused.IsDisposed &&
+                (_paused.Snapshot.Wait & NarrativeWait.CustomStep) != 0;
+            Feedback.text = waitingStep
+                ? NovelLocalization.Runtime("ui.save.InputPending", "正在输入名字，完成输入后才能保存。")
+                : _save.Message ?? "6 个手动槽 · 1 个快速槽 · 1 个自动槽。当前句完整显示或选项就绪后可保存。";
         }
         #endregion
         // --------------------------------------------------------

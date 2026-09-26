@@ -141,6 +141,23 @@ namespace Ember.Audio
 
         // ======== SFX ========
 
+        /// <summary>
+        /// 当前 BGM 输出使用的 Mixer 分组；没有配置 Mixer 时为 null。
+        ///
+        /// 业务层自建循环音源（例如视觉小说主题曲、环境音）时，把返回值赋给
+        /// <c>AudioSource.outputAudioMixerGroup</c> 就能与 BGM 走同一条混音路径。
+        /// <b>注意：</b>配置了 Mixer 时玩家音量由该分组承担（见 <see cref="ApplyVolume"/> 会把
+        /// <c>_bgmSource.volume</c> 设为 1），所以调用方不要再在音源音量里叠乘一次玩家 BGM 音量，
+        /// 否则会双重衰减。
+        /// </summary>
+        public AudioMixerGroup BgmMixerGroup => _bgmSource != null ? _bgmSource.outputAudioMixerGroup : null;
+
+        /// <summary>当前 SFX 输出使用的 Mixer 分组；没有配置 Mixer 时为 null。注意点同 <see cref="BgmMixerGroup"/>。</summary>
+        public AudioMixerGroup SfxMixerGroup => _sfxSource != null ? _sfxSource.outputAudioMixerGroup : null;
+
+        /// <summary>是否已经接入 Mixer；业务层据此决定玩家音量是走音源还是走分组。</summary>
+        public bool HasMixer => _mixer != null;
+
         /// <summary>播放可暂停和释放的音效。调用方必须 Dispose 返回的句柄。</summary>
         public EmberAudioPlayback PlayOwnedSFX(AudioClip clip, float volumeScale = 1f)
         {

@@ -19,11 +19,14 @@ namespace Game.Narrative
         private readonly EmberTable<NovelSkinRow> _skins;
         private readonly EmberTable<NovelSkinSpriteRow> _skinSprites;
         private readonly EmberTable<NovelStorySkinRow> _storySkins;
+        private readonly EmberTable<NovelBgmRow> _bgm;
         public bool IsReady { get; }
         /// <summary>多语言三张表是否齐备。缺表时多语言整体回退原文，未迁移的项目行为不变。</summary>
         public bool LocalizationReady { get; }
         /// <summary>皮肤三张表是否齐备。缺表时运行期不套任何皮肤，沿用 Prefab 外观。</summary>
         public bool SkinsReady { get; }
+        /// <summary>分段 BGM 表是否就绪。缺表时曲目退回旧的单文件 novel_audio 路径。</summary>
+        public bool BgmReady { get; }
         public IReadOnlyList<NovelCharacterRow> Characters => _characters ?? (IReadOnlyList<NovelCharacterRow>)Array.Empty<NovelCharacterRow>();
         public IReadOnlyList<NovelPortraitRow> Portraits => _portraits ?? (IReadOnlyList<NovelPortraitRow>)Array.Empty<NovelPortraitRow>();
         public IReadOnlyList<NovelBackgroundRow> Backgrounds => _backgrounds ?? (IReadOnlyList<NovelBackgroundRow>)Array.Empty<NovelBackgroundRow>();
@@ -33,6 +36,7 @@ namespace Game.Narrative
         public IReadOnlyList<NovelContentTextRow> ContentText => _contentText ?? (IReadOnlyList<NovelContentTextRow>)Array.Empty<NovelContentTextRow>();
         public IReadOnlyList<NovelSkinRow> Skins => _skins ?? (IReadOnlyList<NovelSkinRow>)Array.Empty<NovelSkinRow>();
         public IReadOnlyList<NovelSkinSpriteRow> SkinSprites => _skinSprites ?? (IReadOnlyList<NovelSkinSpriteRow>)Array.Empty<NovelSkinSpriteRow>();
+        public IReadOnlyList<NovelBgmRow> Bgm => _bgm ?? (IReadOnlyList<NovelBgmRow>)Array.Empty<NovelBgmRow>();
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -53,6 +57,15 @@ namespace Game.Narrative
             bool skinSprites = database.TryGetTable("novel_skin_sprites", out _skinSprites);
             bool storySkins = database.TryGetTable("novel_story_skin", out _storySkins);
             SkinsReady = skins && skinSprites && storySkins;
+            // 分段 BGM 同样是可选表：缺表时不进 IsReady，旧项目继续用 novel_audio 的单文件 BGM。
+            BgmReady = database.TryGetTable("novel_bgm", out _bgm);
+        }
+
+        /// <summary>按曲目键查询四段拆分：前奏 / 循环 / 高潮 / 尾段。缺表时返回 false。</summary>
+        public bool TryGetBgm(string key, out NovelBgmRow row)
+        {
+            row = null;
+            return BgmReady && !string.IsNullOrWhiteSpace(key) && _bgm.TryGet(key, out row);
         }
 
         /// <summary>UI 文案表按 key 查询；未接入多语言时返回 false。</summary>
@@ -97,6 +110,10 @@ namespace Game.Narrative
             else if (kind == NovelCommandKind.Character && _portraits.TryGet(key, out NovelPortraitRow portrait)
                 && HasCharacter(portrait.CharacterId) && !string.IsNullOrWhiteSpace(portrait.Expression))
                 resourcePath = portrait.ResourcePath;
+            // 分段曲目的键只存在于 novel_bgm 表；用循环段路径代表这首曲目存在，
+            // 这样校验器与剧情解析对两种曲目（分段表 / 旧单文件）都只有一条判定路径。
+            else if (kind == NovelCommandKind.BGM && BgmReady && _bgm.TryGet(key, out NovelBgmRow bgm))
+                resourcePath = bgm.LoopPath;
             else if ((kind == NovelCommandKind.BGM || kind == NovelCommandKind.SFX || kind == NovelCommandKind.Voice)
                 && _audio.TryGet(key, out NovelAudioRow audio) && audio.Category == kind.ToString())
                 resourcePath = audio.ResourcePath;

@@ -17,7 +17,8 @@ namespace Game.Narrative
         #region 外部方法
         [HasGC]
         public static IReadOnlyList<NarrativeError> Validate(NovelChapter chapter, INarrativeCatalog catalog,
-            IReadOnlyDictionary<string, NovelValue> globals = null, bool allowChapterExit = false)
+            IReadOnlyDictionary<string, NovelValue> globals = null, bool allowChapterExit = false,
+            IReadOnlyDictionary<string, NovelCustomStepSO> customSteps = null)
         {
             var errors = new List<NarrativeError>();
             void Error(string code, string message, string node = null, string command = null,
@@ -129,6 +130,29 @@ namespace Game.Narrative
                         if (string.IsNullOrWhiteSpace(c.Text)) Error("EmptyText", "台词为空", node.Id, c.CommandId);
                         if (!string.IsNullOrEmpty(c.CharacterId) && (catalog == null || !catalog.HasCharacter(c.CharacterId)))
                             Error("MissingCharacter", "角色键不存在", node.Id, c.CommandId, key: c.CharacterId);
+                        // 说话人变量只覆盖显示名，不进指纹；但类型必须确定，否则运行期会静默退回角色名。
+                        if (!string.IsNullOrWhiteSpace(c.SpeakerVariableId))
+                        {
+                            var speakerSource = c.SpeakerVariableScope == NovelVariableScope.Global ? globals : variables;
+                            if (!Enum.IsDefined(typeof(NovelVariableScope), c.SpeakerVariableScope) || speakerSource == null ||
+                                !speakerSource.TryGetValue(c.SpeakerVariableId, out NovelValue speakerValue) ||
+                                speakerValue.Type != NovelValueType.String)
+                                Error("BadSpeakerVariable", "说话人变量必须是已声明的字符串变量", node.Id, c.CommandId);
+                        }
+                    }
+                    if (c.Kind == NovelCommandKind.CustomStep)
+                    {
+                        if (string.IsNullOrWhiteSpace(c.CustomStepId))
+                            Error("BadCustomStep", "自定义节点必须选择脚本", node.Id, c.CommandId);
+                        else if (customSteps == null)
+                            Error("MissingStory", "自定义节点必须在剧情会话中运行", node.Id, c.CommandId);
+                        else if (!customSteps.TryGetValue(c.CustomStepId, out NovelCustomStepSO script) || script == null)
+                            Error("BadCustomStep", "自定义节点脚本未在本剧情登记：" + c.CustomStepId, node.Id, c.CommandId);
+                        else
+                        {
+                            string scriptError = script.Validate(new NovelCustomStepValidation(chapter.Id, node.Id, c.CommandId, variables, globals));
+                            if (!string.IsNullOrEmpty(scriptError)) Error("BadCustomStep", scriptError, node.Id, c.CommandId);
+                        }
                     }
                     bool needsResource = NovelMediaRules.NeedsResource(c.Kind) || (c.Kind == NovelCommandKind.CrossFade || c.Kind == NovelCommandKind.Wipe) || (c.Kind >= NovelCommandKind.Background && c.Kind <= NovelCommandKind.Voice) || (c.Kind == NovelCommandKind.Say && !string.IsNullOrEmpty(c.ResourceKey));
                     if (c.Kind == NovelCommandKind.Character || c.Kind == NovelCommandKind.Background)

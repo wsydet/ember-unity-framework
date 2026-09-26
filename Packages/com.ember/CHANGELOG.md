@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.14.13] - 2026-09-26
+
+- **视觉小说模板 0.13.0**（封存 hash `0aa62a24f632c2f426a691f97002eb56`）：新增「开场段落」自定义步骤（成对 Begin/End：锁住玩家推进并切自动播放、固定本段间隔，被打断或超时兜底解锁还原）与「输入玩家名字」步骤及配套的 `EUINovelNameInputPage`（**强制步骤，不提供取消**；页面被读档/退出关闭时在 `OnClose` 兜底写回默认名以防剧情卡死），并新增 `ember-vn-custom-node` 模板技能。
+- **多语言即时切换**：框架新增 `EmberBroadcastEvent.LanguageChanged`（`Localization = 7000` 基址）与唯一发布点 `TextLocalization.PublishLanguageChanged`（先重刷活动 `TMPEx` 再播报），以及 `TMPEx.SetSource`（写原文并清 Key，供运行期接管挂了 Key 的控件）。业务侧正文、选项、选择提示、历史回看、阅读页状态行、设置页单位与档位、槽位名都会随语言当场重刷：当前句按语言缓存键重建且保留显示进度（不重播打字机），选项按 `NovelRoute.TextKey` 整批重建（原本在读定义时就被烤成当时的语言），历史按 `NovelHistoryEntry.TextKey` 读时重解析。**语言不进存档、不影响剧情指纹**，补 Key 与译文不作废既有存档。
+- **示例小说四语言**：LastLight 的 83 条台词、选项/提示/章节名/剧情名、角色名与全部界面文案补齐 `zh_Hans`/`zh_Hant`/`ja`/`en`；译文里的 `{playerName}` 也会被替换（译文同样过一遍文字绑定替换）。
+- **安全区归属与 EUI 规范**：7 个页面的内容从 `EUISafeArea` 直接子节点迁入全尺寸锚点 `Center`（两者 rect 恒等，逐节点世界矩形实测布局不变，迁移后 9 个页面直接子节点只剩 9 个锚点），Binding 全部经 UI 中心重新生成并同步了工具/测试里的硬编码层级路径；名字输入页绑定子组件改名到 `m_`+类型前缀并补 UI 中文简述；输入名字期间禁止存档并在存档页给出明确提醒（`ui.save.InputPending`）。
+- **退出封屏**：新增 `EmberQuitCurtain` 与 `EUIQuitCurtainCover`——退出前把 3D 主相机清黑并盖一张不进页面栈的全屏遮罩，避免「UI 已销毁、3D 场景还在渲染」的穿帮帧；`GameLauncher` 加退出重入保护，新增 `ApplicationQuitUtil.DescribeBranch()` 与日志标签 `CoreQuitCurtain`。`EmberAudioManager` 另暴露只读 `BgmMixerGroup`/`SfxMixerGroup` 供业务循环音源走同一混音路径。
+- **验证与迁移**：Unity MCP 编译 0 error；`NovelSessionTests` **179/179 通过**（新增切语言契约用例，并在首次运行抓到 `NovelSession.History` 投影漏拷 `TextKey` 的真实缺陷），`Game.Narrative.Tests` 全量 EditMode **327/328**（唯一失败项为改动前即存在的时序抖动用例）；配表烘焙 0 诊断、跨表核对 0 缺失/0 孤儿；模板 `SaveTemplate` + minor Bump。**未运行** `Packages/com.ember/Tests/EditMode`（退出封屏用例）与新增的 3 个名字输入存读档 PlayMode 用例（按用户要求只写不跑），未跑 Play Mode、未在消费项目验收。框架 0.14.12 → 0.14.13 向后兼容；模板 0.12.0 → 0.13.0 跨 minor，**必须先升级框架再吸收模板内容**（模板代码依赖 0.14.13 新增 API）。详见 [0.14.13 发布说明](../../docs/dev/release-0.14.13.md)。
+
 ## [0.14.12] - 2026-09-26
 
 - **视觉小说模板 0.10.0**：Say 新增「说话人称呼 Key（留空用角色名）」。剧情里「主角先遇到一个人、后面才知道名字」时，揭晓前的台词仍填真实角色键，另加 `speaker.〈语义〉` 称呼 Key（模板已备好 `speaker.unknown → ？？？`），揭晓后留空即显示真名。

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Ember.Core;
 using Ember.UI;
+using Ember.UIExtension;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -64,8 +66,10 @@ namespace Game.Narrative.Tests
                 Assert.AreNotEqual(zh, en); Assert.AreNotEqual(ja, en);
 
                 // 某语言列留空 → 回退源语言，而不是空白。
-                Assert.IsTrue(NovelLocalization.TryGetContent("ui.reader.Menu.Label", "ja", out string fallback));
-                Assert.IsTrue(NovelLocalization.TryGetContent("ui.reader.Menu.Label", "zh_Hans", out string source));
+                // ui.reader.Choice.Label 是刻意留空三列的回退探针：它已经不挂任何控件，
+                // 专门留给这条断言用——补其它 UI 译文时不要顺手把它的 zh_Hant/ja/en 填上。
+                Assert.IsTrue(NovelLocalization.TryGetContent("ui.reader.Choice.Label", "ja", out string fallback));
+                Assert.IsTrue(NovelLocalization.TryGetContent("ui.reader.Choice.Label", "zh_Hans", out string source));
                 Assert.AreEqual(source, fallback);
 
                 // 查不到的 Key 返回 false，由调用方回退原文。
@@ -159,6 +163,55 @@ namespace Game.Narrative.Tests
                 Assert.AreEqual("原文台词", RunFirstLine("nope.missing.key", "en"));
                 // 没有 Key → 完全保持原文。
                 Assert.AreEqual("原文台词", RunFirstLine(string.Empty, "en"));
+            }
+            finally { RemoveLocalization(); }
+        }
+
+        /// <summary>
+        /// 会话进行中切语言的三条契约：当前句按新语言重建、同一条 Say 的显示进度不重置、
+        /// 历史回看跟着当前语言走。外加框架广播点的唯一定义——发布一次就播报一次 LanguageChanged。
+        /// </summary>
+        [Test]
+        public void LanguageSwitchMidSessionRefreshesVisibleTextHistoryAndBroadcast()
+        {
+            InstallLocalization();
+            try
+            {
+                // 挂一个四语言都齐全的真实表项，这样断言不依赖某个语言的翻译进度。
+                Commands(new NovelCommand("line", NovelCommandKind.Say, "源语言台词", "line", textKey: "ui.main.Start"));
+                Assert.IsTrue(NovelLocalization.TryGetContent("ui.main.Start", "zh_Hans", out string zh));
+                Assert.IsTrue(NovelLocalization.TryGetContent("ui.main.Start", "en", out string en));
+                Assert.AreNotEqual(zh, en);
+
+                NovelLanguageSettings.SetPreview("zh_Hans");
+                using var session = ReadingSession(out _, out _);
+                var view = new TextView { Capacity = 100 };
+                session.AttachView(view);
+                Assert.AreEqual(zh, view.Command.Text, "源语言下应按源语言列显示");
+
+                session.Tick(.2f, 1);
+                int visibleBefore = view.Visible;
+                Assert.Greater(visibleBefore, 0, "先让打字机推进一段，后面的「进度不被重置」才有意义");
+
+                NovelLanguageSettings.SetPreview("en");
+                session.RefreshLocalization();
+                Assert.AreEqual(en, view.Command.Text, "切语言后当前句必须按新语言重建");
+                Assert.AreEqual(visibleBefore, view.Visible, "同一条 Say 只换文本，显示进度不能被重置");
+
+                for (int frame = 2; frame <= 8 && session.Snapshot.State != NarrativeState.AwaitingAdvance; frame++) session.Advance(frame);
+                Assert.AreEqual(NarrativeState.AwaitingAdvance, session.Snapshot.State);
+                var entry = session.History[0];
+                Assert.IsTrue(entry.TextKey == "ui.main.Start", "历史条目要记住 Key 才能回看时重解析");
+                Assert.AreEqual(en, NovelLocalization.HistoryText(entry), "历史回看应跟着当前语言");
+                NovelLanguageSettings.SetPreview("zh_Hans");
+                Assert.AreEqual(zh, NovelLocalization.HistoryText(entry), "再切回来也要能重解析");
+
+                // 广播点：唯一发布处先重刷 TMPEx，再播报新语言标识。
+                int fired = 0; string payload = null;
+                using (EmberEventBus.Subscribe<string>(EmberBroadcastEvent.LanguageChanged, code => { fired++; payload = code; }))
+                    TextLocalization.PublishLanguageChanged("ja");
+                Assert.AreEqual(1, fired);
+                Assert.AreEqual("ja", payload);
             }
             finally { RemoveLocalization(); }
         }

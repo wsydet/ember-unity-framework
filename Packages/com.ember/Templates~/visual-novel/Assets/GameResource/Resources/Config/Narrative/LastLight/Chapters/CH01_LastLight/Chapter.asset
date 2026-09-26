@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChapterSO
   _chapterId: last_light_ch01
   _displayName: 最后一盏灯
+  _displayNameKey: chapter.last_light_m5.last_light_ch01
   _assetPrefix: CH01_LastLight
   _storyRevision: 1
   _entry: {fileID: 11400000, guid: b17a0711480a474e8acce685768a581e, type: 2}

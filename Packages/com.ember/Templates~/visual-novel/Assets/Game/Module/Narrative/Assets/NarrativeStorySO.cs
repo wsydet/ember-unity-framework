@@ -18,6 +18,12 @@ namespace Game.Narrative
         [SerializeField] private List<NarrativeChapterSO> _chapters = new();
         [SerializeField] private List<NovelVariable> _globals = new();
         [SerializeField] private List<NarrativeChapterLink> _exits = new();
+        /// <summary>
+        /// 本剧情登记的自定义节点脚本（<see cref="NovelCustomStepSO"/> 子类资产）。
+        /// 剧情步骤只保存 ScriptId 字符串，实际资产实例必须在这里登记，才能随剧情一起加载、
+        /// 校验并计入剧情指纹。取消登记会让引用它的步骤在剧情校验阶段报错。
+        /// </summary>
+        [SerializeField] private List<NovelCustomStepSO> _customSteps = new();
         #endregion
         // --------------------------------------------------------
         #region 内部参数
@@ -29,6 +35,8 @@ namespace Game.Narrative
         public IReadOnlyList<NarrativeChapterSO> Chapters => _chapters.AsReadOnly();
         public IReadOnlyList<NovelVariable> Globals => _globals.AsReadOnly();
         public IReadOnlyList<NarrativeChapterLink> Exits => _exits.AsReadOnly();
+        /// <summary>本剧情登记的自定义节点脚本清单。</summary>
+        public IReadOnlyList<NovelCustomStepSO> CustomSteps => _customSteps.AsReadOnly();
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -39,11 +47,22 @@ namespace Game.Narrative
             var globals = new Dictionary<string, NovelValue>(StringComparer.Ordinal);
             foreach (var v in _globals)
                 if (v != null && !string.IsNullOrWhiteSpace(v.Id) && !globals.ContainsKey(v.Id)) globals.Add(v.Id, v.Value);
+            var customSteps = new Dictionary<string, NovelCustomStepSO>(StringComparer.Ordinal);
+            foreach (var step in _customSteps)
+            {
+                if (!step) { failures.Add(new NarrativeError("BadStory", "自定义节点脚本引用为空", null)); continue; }
+                string scriptId = step.ScriptId;
+                if (string.IsNullOrWhiteSpace(scriptId))
+                { failures.Add(new NarrativeError("BadStory", "自定义节点脚本缺少 ScriptId：" + step.name, null)); continue; }
+                if (customSteps.ContainsKey(scriptId))
+                { failures.Add(new NarrativeError("BadStory", "自定义节点 ScriptId 重复：" + scriptId, null)); continue; }
+                customSteps.Add(scriptId, step);
+            }
             var chapters = new List<NovelChapter>();
             foreach (var chapter in _chapters)
             {
                 if (!chapter) { failures.Add(new NarrativeError("BadStory", "章节引用为空", null)); continue; }
-                if (chapter.TryReadDefinition(catalog, out var data, out var issues, globals, true)) chapters.Add(data);
+                if (chapter.TryReadDefinition(catalog, out var data, out var issues, globals, true, customSteps)) chapters.Add(data);
                 else failures.AddRange(issues);
             }
             var exits = new List<NovelChapterExit>();
@@ -59,7 +78,7 @@ namespace Game.Narrative
                         r.Condition == null ? null : JsonUtility.FromJson<NovelCondition>(JsonUtility.ToJson(r.Condition)))).ToList()));
             }
             var story = new NovelStory(_storyId, _revision, _entry?.ChapterId, chapters,
-                _globals.Select(v => v == null ? null : new NovelVariable(v.Id, v.Value)).ToList(), exits);
+                _globals.Select(v => v == null ? null : new NovelVariable(v.Id, v.Value)).ToList(), exits, customSteps);
             failures.AddRange(NarrativeStoryValidator.Validate(story, catalog));
             errors = failures.AsReadOnly(); if (failures.Count == 0) definition = story;
             return definition != null;

@@ -102,6 +102,11 @@ namespace Game.UI
             foreach (var slider in new[] { NovelTextSpeed, NovelAutoInterval, NovelBgmVolume, NovelSfxVolume, NovelVoiceVolume }) slider.interactable = a != null;
             RefreshNovelPreferences();
             RefreshLanguagePreferences();
+            // 当前场景提示由生成区用源语言写死，这里按当前语言重写一遍（控件当前未启用，行为与之前一致）。
+            Txt_NowScene.text = Game.Narrative.NovelLocalization.Runtime(
+                param is SettingsContext sceneContext && sceneContext == SettingsContext.Gameplay
+                    ? "ui.setting.CurrentScene.Gameplay" : "ui.setting.CurrentScene.Main",
+                Txt_NowScene.text);
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
@@ -147,12 +152,17 @@ namespace Game.UI
         private void RefreshNovelPreferences()
         {
             RefreshScreenPreferences();
-            NovelTextSpeedValue.text = $"{NovelTextSpeed.value:0} 字/秒";
-            NovelAutoIntervalValue.text = $"{NovelAutoInterval.value:0.0} 秒";
+            NovelTextSpeedValue.text = $"{NovelTextSpeed.value:0} {Game.Narrative.NovelLocalization.Runtime("ui.setting.TextSpeed.Unit", "字/秒")}";
+            NovelAutoIntervalValue.text = $"{NovelAutoInterval.value:0.0} {Game.Narrative.NovelLocalization.Runtime("ui.setting.AutoInterval.Unit", "秒")}";
             NovelBgmVolumeValue.text = $"{NovelBgmVolume.value:P0}";
             NovelSfxVolumeValue.text = $"{NovelSfxVolume.value:P0}";
             NovelVoiceVolumeValue.text = $"{NovelVoiceVolume.value:P0}";
-            string EffectLabel(float value) => UnityEngine.Mathf.RoundToInt(value) switch { 1 => "减弱", 2 => "关闭", _ => "正常" };
+            string EffectLabel(float value) => UnityEngine.Mathf.RoundToInt(value) switch
+            {
+                1 => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Reduced", "减弱"),
+                2 => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Off", "关闭"),
+                _ => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Normal", "正常")
+            };
             NovelShakePreferenceValue.text = EffectLabel(NovelShakePreference.value);
             NovelFlashPreferenceValue.text = EffectLabel(NovelFlashPreference.value);
             NovelPreferenceStatus.text = _novelPreferences?.Message ?? string.Empty;

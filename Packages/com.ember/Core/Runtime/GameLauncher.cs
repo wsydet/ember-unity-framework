@@ -92,6 +92,9 @@ namespace Ember.Core
         public Camera UICamera => _uiCamera;
         public Camera MainCamera => _mainCamera;
 
+        /// <summary>是否已经开始退出流程（防止退出按钮连点重复封屏与重复清理）。</summary>
+        private bool _isQuitting;
+
         #endregion
 
         // ============================================================
@@ -103,6 +106,7 @@ namespace Ember.Core
         /// <inheritdoc />
         protected override void OnBootAwake()
         {
+            EmberQuitCurtain.Reset();  // 同域重进 Play Mode 时清掉上一次的封屏标记
             EmberDebug.LoadConfig();  // 自动同步 SO 配置到 EmberFileLog
             EmberFileLog.Start();     // 启动后台写线程
 
@@ -167,9 +171,14 @@ namespace Ember.Core
         /// <summary>应用暂停/恢复。当前无需处理。</summary>
         protected override void OnBootApplicationPause(bool pauseStatus) { }
 
-        /// <summary>应用退出。与 OnBootDestroy 形成双保险：部分平台 OnDestroy 不保证调用。</summary>
+        /// <summary>
+        /// 应用退出。与 OnBootDestroy 形成双保险：部分平台 OnDestroy 不保证调用。
+        /// 这里同样先封屏，覆盖「系统/窗口关闭」等不经过 <see cref="Quit"/> 的退出路径：
+        /// 清理之后 Unity 仍可能渲染若干帧，没有封屏就会露出 3D 场景。
+        /// </summary>
         protected override void OnBootApplicationQuit()
         {
+            EmberQuitCurtain.Show();
             ShutdownFramework();
         }
 
@@ -203,18 +212,31 @@ namespace Ember.Core
         #region 外部方法
 
         /// <summary>
-        /// 退出应用。先执行框架清理（逆序销毁 Manager、刷写文件日志），
-        /// 再调用 <see cref="ApplicationQuitUtil.Quit"/> 退出应用或停止编辑器 Play Mode。
+        /// 退出应用。顺序为：先执行退出封屏（3D 主相机转纯黑 + UI 不透明遮罩），
+        /// 再执行框架清理（逆序销毁 Manager、刷写文件日志），
+        /// 最后调用 <see cref="ApplicationQuitUtil.Quit"/> 退出应用或停止编辑器 Play Mode。
         ///
         /// 业务层应通过此方法退出，而不是直接调用 Application.Quit()。
+        ///
+        /// <para><b>为什么封屏必须在清理之前：</b>Unity 的 <c>Object.Destroy</c> 在
+        /// 「当前 Update 之后、渲染之前」生效，而 PC 等平台的 <c>Application.Quit()</c> 之后仍会继续出帧。
+        /// 若先清理再退出，就会出现「UI 已销毁、只剩 3D 场景」的穿帮帧
+        /// （视觉小说等以 3D 场景承载 2D 画面的项目尤其明显）。
+        /// 封屏与相机黑屏同帧生效，因此之后渲染的任何一帧都是全黑。</para>
         ///
         /// 编辑器中调用此方法会停止 Play Mode；手动停止 Play Mode 时，
         /// 由 <see cref="OnSingletonDestroy"/> 执行相同的框架清理。
         /// </summary>
         public void Quit()
         {
-            ShutdownFramework();
-            ApplicationQuitUtil.Quit();
+            if (_isQuitting) return;
+            _isQuitting = true;
+
+            EmberDebug.LogShutdown(TAG, $"GameLauncher: quit requested (exit branch: {ApplicationQuitUtil.DescribeBranch()}).");
+
+            EmberQuitCurtain.Show();       // ① 封屏：3D 主相机纯黑 + UI 不透明遮罩（同帧生效）
+            ShutdownFramework();           // ② 框架清理：日志落盘 + 逆序销毁（此时销毁页面已无穿帮风险）
+            ApplicationQuitUtil.Quit();    // ③ 退出应用 / 停止编辑器 Play Mode
         }
 
         /// <summary>

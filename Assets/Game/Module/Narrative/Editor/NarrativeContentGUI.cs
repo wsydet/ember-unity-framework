@@ -9,7 +9,8 @@ namespace Game.Narrative.Editor
     internal static class NarrativeContentGUI
     {
         #region 内部方法
-        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场", "隐藏所有立绘", "整数运算", "随机整数" };
+        // 顺序必须与 NovelCommandKind 逐一对应（下面按 (int)kind 直接索引）。
+        private static readonly string[] CommandNames = { "对白 / 旁白", "设置变量", "等待", "背景", "立绘", "背景音乐", "音效", "独立配音", "透明度动作", "等待动作组", "人物移动", "人物缩放", "人物旋转", "人物镜像", "人物层级", "跳动 / 点头", "角色强调", "舞台 / 人物震动", "遮罩淡入淡出", "短暂闪光", "图片交叉淡化", "播放粒子效果", "停止粒子效果", "停止背景音乐", "播放环境循环音", "停止环境循环音", "环境音量", "剧情对白显隐", "舞台镜头", "背景擦除转场", "隐藏所有立绘", "整数运算", "随机整数", "BGM 高潮段", "自定义节点" };
         private static readonly string[] SlotNames = { "左侧", "居中", "右侧" };
         private static readonly string[] ActionNames = { "显示", "替换", "隐藏" };
         private static void EnumField(SerializedProperty parent, string field, string label, string[] names)
@@ -207,6 +208,14 @@ namespace Game.Narrative.Editor
                 Key(item, "_characterId", "角色键（留空为旁白）", catalog, kind, true);
                 // 说话人称呼只覆盖显示名，不换真实角色键：改它不会动存档指纹，也不影响强调匹配。
                 LocalizationKeyField(item, "_speakerNameKey", "说话人称呼 Key（留空用角色名）", SpeakerFallbackName(item, catalog));
+                Field(item, "_speakerVariableId", "说话人变量 ID（留空用上面的称呼）");
+                if (!string.IsNullOrEmpty(item.FindPropertyRelative("_speakerVariableId").stringValue))
+                {
+                    EnumField(item, "_speakerVariableScope", "说话人变量作用域", new[] { "本章节", "全局" });
+                    EditorGUILayout.HelpBox("填了就以该字符串变量的当前值作为显示名，优先于称呼 Key。"
+                        + "它是表现层字段：不改变对白角色键、不影响强调匹配、不进存档指纹；历史逐句读时重新解析，"
+                        + "所以玩家中途改名后，历史里的旧句也会一起变。变量未声明或不是字符串时剧情校验会报错。", MessageType.Info);
+                }
                 var text = item.FindPropertyRelative("_text");
                 EditorGUILayout.LabelField("台词");
                 EditorGUI.BeginChangeCheck();
@@ -346,7 +355,7 @@ namespace Game.Narrative.Editor
             }
             else if (NovelMediaRules.IsMedia(kind))
             {
-                if (kind != NovelCommandKind.BGM && kind != NovelCommandKind.BGMStop) Field(item, "_instanceId", "实例 ID");
+                if (!NovelMediaRules.IsBgmCommand(kind)) Field(item, "_instanceId", "实例 ID");
                 if (NovelMediaRules.NeedsResource(kind)) Key(item, "_resourceKey", "资源键", catalog, kind);
                 if (kind == NovelCommandKind.EffectPlay)
                 {
@@ -359,7 +368,24 @@ namespace Game.Narrative.Editor
                     Field(item, "_volume", "剧情音量（叠乘玩家设置）"); Field(item, "_duration", "渐变秒数"); Field(item, "_delay", "渐变延迟");
                     Field(item, "_ease", "缓动"); ActionIdField(item); Field(item, "_parallel", "并行渐变");
                 }
-                EditorGUILayout.HelpBox("持续效果与循环音不等待生命周期；仅有限音量渐变参与动作等待。相同实例接管；BGM 使用双音轨交叉渐变。停止不存在的实例安全忽略。", MessageType.Info);
+                if (NovelMediaRules.IsBgmSegment(kind))
+                {
+                    Field(item, "_duration", "切入淡入秒数（0 = 默认 0.15 秒）");
+                    EditorGUILayout.HelpBox("作用于当前曲目的高潮段，播完自动回到该曲目的循环段。"
+                        + "当前没有曲目、或该曲目没有配高潮段时安全忽略，不会中断剧情。"
+                        + "要写曲目的高潮段，请在 novel_bgm 表里填高潮段路径。", MessageType.Info);
+                }
+                EditorGUILayout.HelpBox("BGM 由常驻通道播放：前奏播完自动接本曲目自己的循环段，"
+                    + "菜单、历史、设置、存档页与读档都不会把它暂停，回到主界面时自动转尾段。"
+                    + "持续效果与循环音不等待生命周期；仅有限音量渐变参与动作等待。相同实例接管；BGM 换曲使用双音轨交叉渐变。停止不存在的实例安全忽略。", MessageType.Info);
+            }
+            else if (kind == NovelCommandKind.CustomStep)
+            {
+                CustomStepField(item);
+                EditorGUILayout.HelpBox("自定义节点执行一个继承 NovelCustomStepSO 的脚本。步骤只保存脚本稳定 ID，"
+                    + "脚本资产必须登记到剧情的「自定义节点脚本清单」（章节总览页），否则剧情校验会直接报错。\n"
+                    + "脚本只负责启动业务并接收结果；复杂逻辑请放进独立的业务 Module，"
+                    + "多数小游戏直接用「模块桥接节点」即可，不需要写代码。", MessageType.Info);
             }
             else if (kind != NovelCommandKind.Character && kind != NovelCommandKind.Background)
                 Key(item, "_resourceKey", "配表资源键", catalog, kind);
@@ -369,7 +395,9 @@ namespace Game.Narrative.Editor
                 {
                     EnumField(item, "_slot", "画面位置", SlotNames);
                     Field(item, "_instanceId", "实例 ID（旧剧情可留空）");
-                    EditorGUILayout.HelpBox("Show 在指定空槽创建实例；Replace/Hide 按实例寻址，忽略位置。留空保留旧槽位语义。", MessageType.Info);
+                    EditorGUILayout.HelpBox("Show 在指定空槽创建实例。留空实例 ID 时按槽位寻址：Show/Replace 作用于该槽位，"
+                        + "Hide 先找认领了该命名位置的人物，找不到再隐藏该渲染槽上尚未认领命名位置的实例（归一化入场）并给出运行期警告；"
+                        + "位置原本为空时是安全空操作，也会警告。新编排请始终填写实例 ID。", MessageType.Info);
                 }
                 EnumField(item, "_visualAction", "动作", ActionNames);
                 if (kind == NovelCommandKind.Character && item.FindPropertyRelative("_visualAction").enumValueIndex == (int)NovelVisualAction.Show)
@@ -380,7 +408,8 @@ namespace Game.Narrative.Editor
                 }
                 if ((NovelVisualAction)item.FindPropertyRelative("_visualAction").enumValueIndex == NovelVisualAction.Hide)
                     EditorGUILayout.HelpBox(kind == NovelCommandKind.Character
-                        ? "让这个位置的人物退场；位置原本为空时保持为空。隐藏不需要图片，资源键留空是正常的。"
+                        ? "让这个位置的人物退场。实例 ID 留空时只按该槽位尚未认领命名位置的人物退化匹配；"
+                            + "已移动到别的命名位置的人物不会被这条隐藏删掉。隐藏不需要图片，资源键留空是正常的。"
                         : "移除当前背景。隐藏不需要图片，资源键留空是正常的。", MessageType.Info);
                 else Key(item, "_resourceKey", "使用的图片资源键", catalog, kind);
                 Field(item, "_duration", "过渡秒数");
@@ -392,6 +421,53 @@ namespace Game.Narrative.Editor
                 Id(item, "_commandId", "指令 ID");
                 if (kind == NovelCommandKind.Say) { Id(item, "_lineId", "台词 ID"); Field(item, "_textRevision", "台词修订"); }
             }
+        }
+        // 自定义节点脚本按稳定 ID 索引。运行期从剧情清单（NarrativeStorySO）解析，
+        // 编辑器这里只需要一份项目内可选项：缓存到项目或撤销栈变化为止，避免每次重绘都扫资产。
+        private static Dictionary<string, NovelCustomStepSO> _customSteps;
+        private static bool _customStepsHooked;
+        private static Dictionary<string, NovelCustomStepSO> CustomSteps()
+        {
+            if (!_customStepsHooked)
+            {
+                _customStepsHooked = true;
+                EditorApplication.projectChanged += () => _customSteps = null;
+                Undo.undoRedoPerformed += () => _customSteps = null;
+            }
+            if (_customSteps != null) return _customSteps;
+            _customSteps = new Dictionary<string, NovelCustomStepSO>(StringComparer.Ordinal);
+            foreach (string guid in AssetDatabase.FindAssets("t:NovelCustomStepSO"))
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<NovelCustomStepSO>(AssetDatabase.GUIDToAssetPath(guid));
+                if (asset == null || string.IsNullOrWhiteSpace(asset.ScriptId)) continue;
+                // 同一 ScriptId 只保留一个：重复登记由剧情校验报错，这里不静默取任意一个。
+                if (!_customSteps.ContainsKey(asset.ScriptId)) _customSteps.Add(asset.ScriptId, asset);
+            }
+            return _customSteps;
+        }
+        // 步骤里只存稳定 ID；脚本资产的登记与校验在剧情总览页完成。
+        private static void CustomStepField(SerializedProperty item)
+        {
+            var id = item.FindPropertyRelative("_customStepId");
+            var map = CustomSteps();
+            var ids = map.Keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
+            ids.Insert(0, "");
+            int index = ids.IndexOf(id.stringValue ?? string.Empty);
+            var labels = ids.Select(k => string.IsNullOrEmpty(k) ? "（未选择）" : map[k].name + " — " + map[k].DisplayName).ToList();
+            if (index < 0) { index = ids.Count; ids.Add(id.stringValue); labels.Add("（未找到）" + id.stringValue); }
+            EditorGUI.BeginChangeCheck();
+            int selected = EditorGUILayout.Popup("自定义节点脚本", index, labels.ToArray());
+            if (EditorGUI.EndChangeCheck()) id.stringValue = ids[selected];
+            using (new EditorGUI.DisabledScope(true)) EditorGUILayout.TextField("脚本稳定 ID", id.stringValue ?? string.Empty);
+            if (string.IsNullOrEmpty(id.stringValue)) return;
+            if (!map.TryGetValue(id.stringValue, out NovelCustomStepSO script))
+            {
+                EditorGUILayout.HelpBox("当前项目里找不到这个 ScriptId 的脚本资产。请确认脚本仍在项目中，"
+                    + "或该脚本已改过类型名（默认 ScriptId 是类型全名，重命名后需要显式覆写 ScriptId 并保留旧值）。", MessageType.Error);
+                return;
+            }
+            EditorGUILayout.LabelField("脚本摘要", script.Summary(), EditorStyles.wordWrappedLabel);
+            if (GUILayout.Button("选中这个脚本资产")) Selection.activeObject = script;
         }
         // 说话人的回退名：与运行期同一条链的「角色名」端——角色表 displayName，取不到时退回角色键；
         // 空角色键是旁白。摘要与称呼 Key 预览共用它，避免两处各写一份回退规则。
@@ -408,11 +484,22 @@ namespace Game.Narrative.Editor
             var kind = (NovelCommandKind)item.FindPropertyRelative("_kind").enumValueIndex;
             if (kind == NovelCommandKind.Say)
             {
-                // 摘要显示覆盖后的名字：填了称呼 Key 就是运行期真正显示的那一个。
-                string name = NovelLocalization.SpeakerName(item.FindPropertyRelative("_characterId").stringValue,
-                    item.FindPropertyRelative("_speakerNameKey").stringValue, SpeakerFallbackName(item, catalog));
+                // 摘要显示运行期真正会显示的那个名字：填了说话人变量优先，其次才是称呼 Key 覆盖后的名字。
+                string speakerVariable = item.FindPropertyRelative("_speakerVariableId").stringValue;
+                string name = string.IsNullOrEmpty(speakerVariable)
+                    ? NovelLocalization.SpeakerName(item.FindPropertyRelative("_characterId").stringValue,
+                        item.FindPropertyRelative("_speakerNameKey").stringValue, SpeakerFallbackName(item, catalog))
+                    : "{" + speakerVariable + "}";
                 string mode = item.FindPropertyRelative("_textMode").enumValueIndex switch { 1 => "[标题] ", 2 => "[全屏旁白] ", _ => "" };
                 return mode + name + "：" + item.FindPropertyRelative("_text").stringValue;
+            }
+            if (kind == NovelCommandKind.CustomStep)
+            {
+                string stepId = item.FindPropertyRelative("_customStepId").stringValue;
+                if (string.IsNullOrEmpty(stepId)) return "自定义节点 · ⚠ 尚未选择脚本";
+                return CustomSteps().TryGetValue(stepId, out NovelCustomStepSO script)
+                    ? "自定义节点 · " + script.Summary()
+                    : "自定义节点 · ⚠ 项目里找不到脚本 " + stepId;
             }
             if (kind == NovelCommandKind.Opacity) return "透明度 · " + item.FindPropertyRelative("_targetKind").enumDisplayNames[item.FindPropertyRelative("_targetKind").enumValueIndex] +
                 "/" + item.FindPropertyRelative("_instanceId").stringValue + " → " + item.FindPropertyRelative("_opacity").floatValue +
@@ -447,6 +534,7 @@ namespace Game.Narrative.Editor
                 };
                 return (item.FindPropertyRelative("_scope").enumValueIndex == 0 ? "本章节" : "全局") + " · " + item.FindPropertyRelative("_variableId").stringValue + " = " + text;
             }
+            if (NovelMediaRules.IsBgmSegment(kind)) return CommandNames[(int)kind] + " · 当前曲目";
             if (NovelMediaRules.IsMedia(kind)) return CommandNames[(int)kind] + " · " + item.FindPropertyRelative("_instanceId").stringValue + " · " + item.FindPropertyRelative("_resourceKey").stringValue;
             string key = item.FindPropertyRelative("_resourceKey").stringValue;
             if (kind == NovelCommandKind.Background || kind == NovelCommandKind.Character)

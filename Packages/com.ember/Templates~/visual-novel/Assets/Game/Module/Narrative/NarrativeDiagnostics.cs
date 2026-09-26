@@ -6,7 +6,7 @@ namespace Game.Narrative
 {
     public enum NarrativeState { Idle, Preparing, Executing, Revealing, AwaitingAdvance, AwaitingChoice, Ended, Faulted, Cancelled, Restoring }
     [Flags]
-    public enum NarrativeWait { None = 0, Text = 1, Advance = 2, Choice = 4, Timer = 8, Presentation = 16, Resource = 32, Transition = 64, Voice = 128, Table = 256, Page = 512, Actions = 1024 }
+    public enum NarrativeWait { None = 0, Text = 1, Advance = 2, Choice = 4, Timer = 8, Presentation = 16, Resource = 32, Transition = 64, Voice = 128, Table = 256, Page = 512, Actions = 1024, CustomStep = 2048 }
     public enum NarrativeReadMode { Manual, Auto, Skip }
 
     public sealed class NarrativeError

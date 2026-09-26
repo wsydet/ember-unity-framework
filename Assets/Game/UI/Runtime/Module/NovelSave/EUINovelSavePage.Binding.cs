@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelSavePage
  * page name    : EUINovelSavePage
- * update time  : 2026/9/24 14:21:46
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,17 +15,17 @@ namespace Game.UI
     public partial class EUINovelSavePage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Close
+        /// Animator/EUISafeArea/Center/Panel/Close
         /// </summary>
         private UnityEngine.UI.Button Close;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Feedback
+        /// Animator/EUISafeArea/Center/Panel/Feedback
         /// </summary>
         private TMPro.TextMeshProUGUI Feedback;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Rows
+        /// Animator/EUISafeArea/Center/Panel/Rows
         /// </summary>
         private UnityEngine.RectTransform Rows;
 

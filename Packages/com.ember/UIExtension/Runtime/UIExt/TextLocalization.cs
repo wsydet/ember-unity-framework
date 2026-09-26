@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Ember.Basic;
+using Ember.Core;
 using UnityEngine;
 
 namespace Ember.UIExtension
@@ -53,6 +54,24 @@ namespace Ember.UIExtension
         {
             text = null;
             return _localizer != null && !string.IsNullOrEmpty(key) && _localizer.TryGet(key, language, out text);
+        }
+
+        /// <summary>
+        /// 语言切换后的唯一广播点：先重刷所有活动 TMPEx，再播报
+        /// <see cref="EmberBroadcastEvent.LanguageChanged"/>。
+        ///
+        /// <para>订阅方用它重刷自己持有的运行期文本（剧情正文、选项、历史等）——
+        /// 这些字符串不挂在 TMPEx 的 Key 上，<see cref="RefreshAll"/> 覆盖不到。
+        /// 语言偏好由接入方自己持久化，本方法只负责「让已经显示出来的东西跟上新语言」。</para>
+        ///
+        /// <para><paramref name="language"/> 为新语言标识；传空时用当前解析器的语言。</para>
+        /// </summary>
+        [HasGC]
+        public static void PublishLanguageChanged(string language)
+        {
+            RefreshAll();
+            EmberEventBus.OnNext(EmberBroadcastEvent.LanguageChanged,
+                string.IsNullOrEmpty(language) ? CurrentLanguage : language);
         }
 
         /// <summary>语言切换后重刷所有活动 TMPEx。</summary>

@@ -306,7 +306,8 @@ namespace Game.UI.Editor
                 var initial = InitialCommands(); ShowInitialFrame();
                 _data = new NovelPlaybackStory(_node, _chapter, _story, initial, _variables);
                 _audio = new NovelPlaybackAudio(_host.transform); _audio.SetMuted(_muted);
-                _session = new NovelSession(new NovelNewGameRequest("editor-preview"), () => _catalog, _data, _audio);
+                // 同一个对象既是通用音频输出，也是分段 BGM 通道：试播因此与正式运行期走同一条分段链路。
+                _session = new NovelSession(new NovelNewGameRequest("editor-preview"), () => _catalog, _data, _audio, _audio);
                 _session.AttachView(_view); _session.ConfigureReading(null, 32, 1, 1, 1, 1);
                 _session.SetReadingMultiplier(_multiplier);
                 _frame = 0; _paused = false; _changed = false; _sourceJson = SourceJson;

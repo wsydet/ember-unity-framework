@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: Story
   m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeStorySO
   _storyId: last_light_m5
-  _displayName: 最后一盏灯 · 完整示例
+  _displayName: "\u6700\u540E\u4E00\u76CF\u706F \xB7 \u5B8C\u6574\u793A\u4F8B"
+  _displayNameKey: story.last_light_m5
   _revision: 1
   _entry: {fileID: 11400000, guid: 538fafc29410455caae01d5dca7c7a5a, type: 2}
   _chapters:
   - {fileID: 11400000, guid: 538fafc29410455caae01d5dca7c7a5a, type: 2}
-  _globals: []
+  _globals:
+  - _id: playerName
+    _value:
+      _type: 2
+      _bool: 0
+      _int: 0
+      _string: "\u65C5\u4EBA"
   _exits: []
+  _customSteps:
+  - {fileID: 11400000, guid: 1b5604ff2a9253940840c15014d176a0, type: 2}
+  - {fileID: 11400000, guid: 15583cb76cac68f44b3e2a2153486e6c, type: 2}
+  - {fileID: 11400000, guid: 0ae387ae992e08a40b247937fb01898f, type: 2}

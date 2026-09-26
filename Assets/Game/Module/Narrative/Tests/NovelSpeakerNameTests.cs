@@ -144,9 +144,9 @@ namespace Game.Narrative.Tests
                 Assert.IsTrue(string.IsNullOrEmpty(history[1].SpeakerNameKey), "没填称呼 Key 的句子保持空");
                 Assert.AreEqual(realName, history[1].Speaker);
 
-                // 存档：本能力不推进 SchemaVersion，历史带回称呼 Key。
+                // 存档：称呼 Key 本身不推进 SchemaVersion（当前 8 是 BGM 分段推上去的），历史带回称呼 Key。
                 Assert.IsTrue(session.TryCapture(out var save, out var error), error);
-                Assert.AreEqual(7, NovelCheckpoint.CurrentSchemaVersion, "称呼 Key 不需要新的存档版本");
+                Assert.AreEqual(8, NovelCheckpoint.CurrentSchemaVersion, "称呼 Key 不需要新的存档版本；8 来自 BGM 分段");
                 Assert.AreEqual(NovelCheckpoint.CurrentSchemaVersion, save.SchemaVersion);
                 Assert.AreEqual(UNKNOWN_SPEAKER, save.History[0].SpeakerNameKey);
 

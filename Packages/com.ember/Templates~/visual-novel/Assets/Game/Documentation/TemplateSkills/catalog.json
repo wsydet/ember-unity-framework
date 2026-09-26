@@ -32,6 +32,14 @@
       "templateId": "visual-novel",
       "minimumFrameworkVersion": "0.14.0",
       "minimumTemplateVersion": "0.10.0"
+    },
+    {
+      "id": "ember-vn-custom-node",
+      "displayName": "自定义节点方案与实施",
+      "description": "把框架没有内置的剧情行为归到三级阶梯并出方案，经本地方案确认页面确认后按已实现的自定义节点扩展点落地。",
+      "templateId": "visual-novel",
+      "minimumFrameworkVersion": "0.14.12",
+      "minimumTemplateVersion": "0.12.0"
     }
   ]
 }

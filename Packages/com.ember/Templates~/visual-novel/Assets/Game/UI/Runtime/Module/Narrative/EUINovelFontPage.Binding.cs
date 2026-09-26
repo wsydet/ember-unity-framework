@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelFontPage
  * page name    : EUINovelFontPage
- * update time  : 2026/9/20 20:18:51
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,27 +15,27 @@ namespace Game.UI
     public partial class EUINovelFontPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Close
+        /// Animator/EUISafeArea/Center/Panel/Close
         /// </summary>
         private UnityEngine.UI.Button Close;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Small
+        /// Animator/EUISafeArea/Center/Panel/Small
         /// </summary>
         private UnityEngine.UI.Button Small;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Medium
+        /// Animator/EUISafeArea/Center/Panel/Medium
         /// </summary>
         private UnityEngine.UI.Button Medium;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Large
+        /// Animator/EUISafeArea/Center/Panel/Large
         /// </summary>
         private UnityEngine.UI.Button Large;
 
         /// <summary>
-        /// Animator/EUISafeArea/Panel/Preview
+        /// Animator/EUISafeArea/Center/Panel/Preview
         /// </summary>
         private TMPro.TextMeshProUGUI Preview;
 

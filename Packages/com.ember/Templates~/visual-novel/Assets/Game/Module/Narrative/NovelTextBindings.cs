@@ -57,16 +57,28 @@ namespace Game.Narrative
         {
             string error = Validate(command, locals, globals);
             if (error != null) throw new InvalidOperationException(error);
-            if (command.TextBindings.Count == 0) return command.Text;
+            return Resolve(command.Text, command.TextBindings, locals, globals);
+        }
+
+        /// <summary>
+        /// 对给定文本做占位符替换。多语言译文走同一个入口，所以译文里的占位符与原文按同一套绑定替换；
+        /// 译文没有出现某个占位符时那处就不替换（不报错），译文因此可以自由调整语序、省略称呼。
+        /// </summary>
+        [HasGC]
+        public static string Resolve(string text, IReadOnlyList<NovelTextBinding> bindings,
+            IReadOnlyDictionary<string, NovelValue> locals, IReadOnlyDictionary<string, NovelValue> globals)
+        {
+            if (string.IsNullOrEmpty(text) || bindings == null || bindings.Count == 0) return text;
             var result = new StringBuilder();
-            for (int i = 0; i < command.Text.Length;)
+            for (int i = 0; i < text.Length;)
             {
                 NovelTextBinding match = null;
-                foreach (var binding in command.TextBindings)
-                    if (i + binding.Token.Length <= command.Text.Length &&
-                        string.CompareOrdinal(command.Text, i, binding.Token, 0, binding.Token.Length) == 0)
+                foreach (var binding in bindings)
+                    if (binding != null && !string.IsNullOrEmpty(binding.Token) &&
+                        i + binding.Token.Length <= text.Length &&
+                        string.CompareOrdinal(text, i, binding.Token, 0, binding.Token.Length) == 0)
                     { match = binding; break; }
-                if (match == null) result.Append(command.Text[i++]);
+                if (match == null) result.Append(text[i++]);
                 else
                 {
                     // Values are appended once, never reinterpreted as further placeholders.

@@ -86,6 +86,8 @@ namespace Game.Narrative.Tests
                 page.Logic.GetType().GetField("_novelSave", flags).SetValue(page.Logic, module);
                 page.Logic.GetType().GetMethod("RefreshNovelSave", flags).Invoke(page.Logic, null);
                 var group = (RectTransform)root.transform.Find("Animator/EUISafeArea/Center/MenuButtons");
+                // 两个入口分工不同：「继续游戏」续读最新进度，有任意存档就出现；
+                // 「读取存档」打开槽位页，只在存在手动槽（0–5）时出现。
                 Assert.AreEqual(resume, group.Find("NovelContinue").gameObject.activeSelf);
                 Assert.AreEqual(load, group.Find("NovelLoad").gameObject.activeSelf);
                 var buttons = group.GetComponentsInChildren<Button>(true).Where(b => b.gameObject.activeSelf).ToArray();
@@ -115,6 +117,59 @@ namespace Game.Narrative.Tests
             public void Release(string path) { Released++; Inner.Release(path); }
             internal void Complete() { var callback = Pending; Pending = null; Inner.LoadPrefabAsync(Path, callback); }
         }
+
+        /// <summary>
+        /// 把「当前小说」临时钉到模板自带的验收样例 LastLight，并在 Dispose 时还原。
+        ///
+        /// 这些模板用例验证的是模板的读取 / 存档 / 演出链路，不是「消费项目此刻把哪一部小说设成了当前小说」。
+        /// 消费项目把 <c>NarrativeLibrarySO.Current</c> 换成自己的小说之后，不钉住的话：
+        /// 新游戏入口会打开另一部小说，而用例仍按 LastLight 的资源路径读指令表，
+        /// 于是「规范示例的居中立绘应加载」这类断言必然失败——那是用例与当前小说耦合，不是模板缺陷。
+        ///
+        /// 还原时同时核对 <c>Library.asset</c> 的磁盘内容没有被写脏；资源引用的临时改写
+        /// 只应存在于内存里。
+        /// </summary>
+        private sealed class PinnedSampleStory : System.IDisposable
+        {
+            private const string LIBRARY_ASSET = "Assets/GameResource/Resources/Config/Narrative/Library.asset";
+            private readonly NarrativeLibrarySO _library;
+            private readonly NarrativeStorySO _previous;
+            private readonly string _before;
+            internal NarrativeStorySO Story { get; }
+            internal PinnedSampleStory()
+            {
+                _library = Resources.Load<NarrativeLibrarySO>(NarrativeLibrarySO.RESOURCE_PATH);
+                Assert.IsNotNull(_library, "缺少小说入口配置：" + NarrativeLibrarySO.RESOURCE_PATH);
+                Story = AssetDatabase.LoadAssetAtPath<NarrativeStorySO>(
+                    "Assets/GameResource/Resources/Config/Narrative/LastLight/Story.asset");
+                Assert.IsNotNull(Story, "缺少内置样例小说，无法在解耦的用例里钉住它");
+                _previous = _library.Current;
+                _before = System.IO.File.ReadAllText(LIBRARY_ASSET);
+                SetCurrent(Story);
+                Assert.AreSame(Story, _library.Current, "临时改写的当前小说没有生效");
+            }
+            public void Dispose()
+            {
+                if (!_library) return;
+                SetCurrent(_previous);
+                Assert.AreEqual(_before, System.IO.File.ReadAllText(LIBRARY_ASSET),
+                    "用例只在内存里临时改写当前小说，不能把小说入口资产写脏");
+            }
+            private void SetCurrent(NarrativeStorySO story) => typeof(NarrativeLibrarySO)
+                .GetField("_current", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(_library, story);
+        }
+
+        /// <summary>背景是否已经落到首屏；未就位时由阅读页的不透明底板兜底（见 P4 的方案）。</summary>
+        private static bool FirstScreenHasBackgroundOrOpaqueBackdrop(EUIBinding page, out bool backgroundApplied, out bool opaqueBackdrop)
+        {
+            var root = page.transform;
+            backgroundApplied = root.Find("Background").GetComponentsInChildren<Image>(true).Any(image => image.sprite != null);
+            var backdrop = root.Find("Backdrop");
+            opaqueBackdrop = backdrop && backdrop.TryGetComponent(out Image plate) && plate.color.a >= 1f;
+            return backgroundApplied || opaqueBackdrop;
+        }
+
         private EUIBinding Page(string name) => GameLauncher.Instance.UIRoot
             .GetComponentsInChildren<EUIBinding>(true).FirstOrDefault(x => x.ClassName == name && x.gameObject.activeInHierarchy);
         private Button Button(EUIBinding page, string name) => page.GetComponentsInChildren<Button>(true)
@@ -134,6 +189,30 @@ namespace Game.Narrative.Tests
                 (EmberModuleCollector.Instance.TryGetModule(out Game.NovelSave.NovelSaveModule save) ? save.Message : ""));
         }
 
+        /// <summary>
+        /// 新开场是「瞬时黑幕 → 两句自动播放的内心独白 → 名字输入 → 一句话 → 黑幕散去 → 第一章章节卡」。
+        /// 自动化用例按真实页面把它走完：输入页出现时替玩家填名字并确认，其余交给自动播放。
+        /// </summary>
+        private IEnumerator DriveOpeningToChapterCard(NovelSession session)
+        {
+            float deadline = Time.realtimeSinceStartup + 90;
+            while (Time.realtimeSinceStartup < deadline)
+            {
+                var snapshot = session.Snapshot;
+                if (snapshot.CommandId == "last_light_intro_e4_title" && snapshot.State == NarrativeState.AwaitingAdvance) yield break;
+                var popup = Page("EUINovelNameInputPage");
+                if (popup != null)
+                {
+                    var field = popup.GetComponentInChildren<TMPro.TMP_InputField>(true);
+                    if (field != null) field.text = "自动测试";
+                    Button(popup, "Btn_Confirm").onClick.Invoke();
+                }
+                yield return null;
+            }
+            Assert.Fail("开场未走到章节卡：" + session.Snapshot.CommandId + " state=" + session.Snapshot.State +
+                " wait=" + session.Snapshot.Wait);
+        }
+
         [UnityTest]
         public IEnumerator MainMenuContinueLoadsDirectlyAndLoadOpensChooser()
         {
@@ -141,6 +220,8 @@ namespace Game.Narrative.Tests
             bool background = Application.runInBackground; Application.runInBackground = true;
             try
             {
+                // 与「当前小说是哪一部」解耦：本用例验证模板链路，临时钉住内置样例 LastLight。
+                using var sample = new PinnedSampleStory();
                 yield return Wait(() => GameLauncher.Instance && GameLauncher.Instance.UIRoot && Page("EUIMainPage"), "主菜单未就绪");
                 Assert.IsTrue(EmberModuleCollector.Instance.TryGetModule(out Game.NovelSave.NovelSaveModule saves));
                 string root = System.IO.Path.Combine(".utmp/visual-novel-m3/menu-flow-tests", System.Guid.NewGuid().ToString("N"));
@@ -169,8 +250,11 @@ namespace Game.Narrative.Tests
                     Assert.Contains(Session.Snapshot.State, new[] { NarrativeState.Revealing, NarrativeState.AwaitingAdvance });
                     Assert.AreEqual(NarrativeWait.None, Session.Snapshot.Wait &
                         (NarrativeWait.Resource | NarrativeWait.Presentation | NarrativeWait.Transition));
-                    Assert.IsTrue(Page("EUINovelReaderPage").transform.Find("Background").GetComponentsInChildren<Image>(true).Any(image => image.sprite != null),
-                        "揭幕前首屏背景必须已应用");
+                    // P4：首屏允许以章节卡开场（此时背景指令排在它之后），但那时必须已有不透明底板兜底，
+                    // 不能透出页面之后的画面。底板本身无条件是页面基色，所以这里始终要求它不透明。
+                    Assert.IsTrue(FirstScreenHasBackgroundOrOpaqueBackdrop(Page("EUINovelReaderPage"), out bool entryBackground, out bool entryPlate),
+                        "揭幕前首屏既没有背景，也没有不透明底板");
+                    Assert.IsTrue(entryPlate, "阅读页必须始终有不透明底板：章节卡开场时它是唯一的底色（本次背景已就位=" + entryBackground + "）");
                 }
                 finally { EUIViewEngine.Instance.ResourceProvider = entryProvider; }
                 yield return Wait(() => Session != null && Session.IsReady && Session.Snapshot.PauseReasons.Count == 0 && Page("EUINovelReaderPage"), "新游戏未进入阅读");
@@ -183,12 +267,15 @@ namespace Game.Narrative.Tests
                 typeof(EUIPage).GetField("_destroyDelay", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(reader, 0f);
                 GameLauncher.Instance.Fsm.TransitionTo<MainState>();
                 yield return Wait(() => Page("EUIMainPage") && Session == null && !Page("EUILoadingPage"), "未返回菜单");
+                // 两个入口分工不同：「继续游戏」续读最新进度（这里只有快速槽，所以它可见、读档不可见）。
+                Assert.IsTrue(Button(Page("EUIMainPage"), "NovelContinue").gameObject.activeSelf);
                 Assert.IsFalse(Button(Page("EUIMainPage"), "NovelLoad").gameObject.activeSelf);
                 var provider = EUIViewEngine.Instance.ResourceProvider;
                 var delayed = new DelayedReader { Inner = provider };
                 EUIViewEngine.Instance.ResourceProvider = delayed;
                 try
                 {
+                    // 「继续游戏」直接读最新档，不走槽位页。
                     Button(Page("EUIMainPage"), "NovelContinue").onClick.Invoke();
                     Assert.IsFalse(saves.IsBusy, "遮挡完成前不能开始读取");
                     yield return Wait(() => delayed.Pending != null, "未捕获继续游戏的阅读页加载");
@@ -199,7 +286,7 @@ namespace Game.Narrative.Tests
                         Assert.IsTrue(curtain.Logic.SkipFakeProgress);
                         Assert.IsFalse(curtain.GameObject.GetComponentsInChildren<UnityEngine.UI.Image>(true).First(x => x.name == "m_Img_ProgressBar").gameObject.activeSelf);
                         Assert.AreEqual(1, EUIViewEngine.Instance.ActivePages.Count(p => p.Logic?.GetType().Name == "EUILoadingPage"));
-                        Assert.IsNull(Page("EUINovelSavePage"));
+                        Assert.IsNull(Page("EUINovelSavePage"), "继续游戏不应打开槽位页");
                         Assert.IsFalse(Session.IsReady);
                         yield return null;
                     }
@@ -241,6 +328,7 @@ namespace Game.Narrative.Tests
                 Assert.IsTrue(saves.Save(0)); yield return Wait(() => !saves.IsBusy && store.Latest == 0, "手动存档未完成");
                 GameLauncher.Instance.Fsm.TransitionTo<MainState>();
                 yield return Wait(() => Page("EUIMainPage") && Session == null && !Page("EUILoadingPage"), "未返回菜单");
+                // 已经有手动槽 0，所以「继续游戏」与「读取存档」都应可见。
                 Assert.IsTrue(Button(Page("EUIMainPage"), "NovelLoad").gameObject.activeSelf);
                 Button(Page("EUIMainPage"), "NovelLoad").onClick.Invoke();
                 yield return Wait(() => Page("EUINovelSavePage"), "读取存档未打开选择页");
@@ -288,6 +376,9 @@ namespace Game.Narrative.Tests
         }
         private IEnumerator CheckGameplay()
         {
+            // 与「当前小说是哪一部」解耦：本用例按 LastLight 的资源路径读指令表并断言它的画面，
+            // 所以先把当前小说临时钉到内置样例，结束时还原（见 PinnedSampleStory）。
+            using var sample = new PinnedSampleStory();
             yield return Wait(() => GameLauncher.Instance && GameLauncher.Instance.UIRoot && Page("EUIMainPage"), "主菜单未就绪");
             // M3 自动存档/已读会在真实 Gameplay 中写盘，整合测试必须使用独立数据目录。
             Assert.IsTrue(EmberModuleCollector.Instance.TryGetModule(out Game.NovelSave.NovelSaveModule saves));
@@ -326,12 +417,13 @@ namespace Game.Narrative.Tests
                     EUIViewEngine.Instance.ActivePages.Any(p => p.Logic?.GetType().Name == "EUIMainPage" && p.IsOpened),
                     "主菜单新游戏入口未恢复可用");
                 Button(Page("EUIMainPage"), "Btn_Start").onClick.Invoke();
-                yield return Wait(() => Session != null && Session.Snapshot.State == NarrativeState.Revealing && Session.Snapshot.PauseReasons.Count == 0 && !NovelLoadInProgress && !Page("EUILoadingPage") && Page("EUINovelReaderPage"), "阅读页面未开始对白");
+                // 开场是自动播放段落：玩家推进被锁住，所以这里等它自己走到稳定点，而不是靠点击补全文字。
+                yield return Wait(() => Session != null && Session.Snapshot.State == NarrativeState.AwaitingAdvance && Session.Snapshot.PauseReasons.Count == 0 && !NovelLoadInProgress && !Page("EUILoadingPage") && Page("EUINovelReaderPage"), "阅读页面未开始对白");
                 var session = Session;
                 Assert.AreSame(session, NarrativeObservation.Current);
                 var page = Page("EUINovelReaderPage");
                 Assert.IsNotNull(page.transform.Find("Background").GetComponentInChildren<Image>(true).sprite, "示例背景应加载");
-                Assert.IsNotNull(page.transform.Find("Center").GetComponentInChildren<Image>(true).sprite, "规范示例的居中立绘应加载");
+                Assert.IsNotNull(page.transform.Find("Center").GetComponentInChildren<Image>(true).sprite, "规范示例的居中立绘应加载（本用例已把当前小说钉到 LastLight）");
                 string command = session.Snapshot.CommandId;
                 Button(page, "Advance").onClick.Invoke(); Button(page, "Advance").onClick.Invoke();
                 Assert.AreEqual(command, session.Snapshot.CommandId, "同帧双击不能跨句");
@@ -375,6 +467,17 @@ namespace Game.Narrative.Tests
                         var choices = page.GetComponentsInChildren<Button>().Where(x => x.name == "Select" && x.interactable).ToArray();
                         Assert.IsNotEmpty(choices);
                         choices[route == 0 ? 0 : choices.Length - 1].onClick.Invoke();
+                    }
+                    else if (session.Snapshot.CommandId == "sample_open_name" && Page("EUINovelNameInputPage") != null)
+                    {
+                        // 开局的名字输入是交互步骤。自动化用例仍然走真实的页面链路，
+                        // 只是替玩家填名字并确认，并顺带验证名字确实写回了剧情变量。
+                        var nameField = Page("EUINovelNameInputPage").GetComponentInChildren<TMPro.TMP_InputField>(true);
+                        Assert.IsNotNull(nameField, "名字输入页应有输入框");
+                        nameField.text = "自动测试";
+                        Button(Page("EUINovelNameInputPage"), "Btn_Confirm").onClick.Invoke();
+                        Assert.AreEqual("自动测试", session.Snapshot.GlobalVariables["playerName"].String,
+                            "名字输入应写回 playerName 全局变量");
                     }
                     else if (session.Snapshot.State == NarrativeState.Revealing || session.Snapshot.State == NarrativeState.AwaitingAdvance)
                     {

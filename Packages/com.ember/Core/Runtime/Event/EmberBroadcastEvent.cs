@@ -38,6 +38,9 @@
         /// <summary>Input 模块基址，预留偏移 1～999</summary>
         public const int Input    = 6000;
 
+        /// <summary>Localization（UIExtension 本地化）模块基址，预留偏移 1～999</summary>
+        public const int Localization = 7000;
+
         /// <summary>业务层预留基址，起始 ID = 10000</summary>
         public const int Game     = 10000;
 
@@ -123,5 +126,20 @@
 
         /// <summary>Input 模块即将销毁</summary>
         public const int InputShutdown = Input + 2;
+
+        // ============================================================
+        // Localization 模块事件（Localization + 1 ~ Localization + 999）
+        // ============================================================
+
+        /// <summary>
+        /// 全局语言已切换，载荷是新语言标识（例如 zh_Hant / ja / en）。
+        ///
+        /// 由 <c>Ember.UIExtension.TextLocalization.PublishLanguageChanged</c> 单一发布：
+        /// 发布前已经重刷过所有活动 TMPEx，因此订阅方只需要重刷「自己持有的运行期文本」
+        /// （剧情正文、选项、历史这类不挂在 TMPEx Key 上的字符串）。
+        ///
+        /// 语言偏好不进存档、不影响剧情指纹，所以这个事件只表达显示语言变化，不代表任何存档状态。
+        /// </summary>
+        public const int LanguageChanged = Localization + 1;
     }
 }

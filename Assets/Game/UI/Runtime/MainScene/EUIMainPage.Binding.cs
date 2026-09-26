@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIMainPanel
  * page name    : EUIMainPage
- * update time  : 2026/9/24 14:21:45
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -45,7 +45,7 @@ namespace Game.UI
         private UnityEngine.UI.Button NovelQuit;
 
         /// <summary>
-        /// Animator/EUISafeArea/TitleText
+        /// Animator/EUISafeArea/Center/TitleText
         /// </summary>
         private TMP_Text NovelTitle;
 

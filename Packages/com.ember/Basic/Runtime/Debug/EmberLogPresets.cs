@@ -41,6 +41,7 @@ namespace Ember.Basic
         public const string CoreUpdateManager  = EmberCore + ".UpdateManager";
         public const string CoreStateMachine   = EmberCore + ".StateMachine";
         public const string CoreGameLauncher   = EmberCore + ".GameLauncher";
+        public const string CoreQuitCurtain    = EmberCore + ".QuitCurtain";
         public const string CoreCameraManager  = EmberCore + ".CameraManager";
         public const string CoreTimeManager    = EmberCore + ".TimeManager";
         public const string CoreTimer          = EmberCore + ".Timer";
@@ -75,7 +76,7 @@ namespace Ember.Basic
             BasicCrypto, BasicPerformance, BasicAppQuit,
             // Core 子
             CoreEventBus, CoreServiceLocator, CoreSingleton, CoreObjectPool,
-            CoreManagerCollector, CoreModuleCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreCameraManager, CoreTimeManager, CoreTimer, CoreEditor,
+            CoreManagerCollector, CoreModuleCollector, CoreUpdateManager, CoreStateMachine, CoreGameLauncher, CoreQuitCurtain, CoreCameraManager, CoreTimeManager, CoreTimer, CoreEditor,
             // Extension 子
             ExtensionJsonUtils, ExtensionCacheLRU,
             // 其他子

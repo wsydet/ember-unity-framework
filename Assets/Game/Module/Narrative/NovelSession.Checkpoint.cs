@@ -59,7 +59,9 @@ namespace Game.Narrative
             var c = _runner.CurrentCommand;
             var entry = new NovelHistoryEntry { ChapterId = s.ChapterId, NodeId = s.NodeId, CommandId = c.CommandId,
                 LineId = c.LineId, TextRevision = c.TextRevision, Text = c.Text, Speaker = c.CharacterId,
-                SpeakerNameKey = c.SpeakerNameKey };
+                SpeakerNameKey = c.SpeakerNameKey, SpeakerVariableId = c.SpeakerVariableId,
+                SpeakerVariableScope = c.SpeakerVariableScope,
+                TextKey = c.TextKey, TextHasBindings = c.TextBindings.Count > 0 };
             _history.Add(entry); if (_history.Count > 200) _history.RemoveAt(0);
             LineRead?.Invoke(entry);
         }
@@ -75,6 +77,7 @@ namespace Game.Narrative
                     if (!_story.Asset) throw new InvalidOperationException(_story.Error ?? "剧情资源缺失");
                     if (!_story.Asset.TryReadDefinition(_catalog, out var definition, out var issues)) throw new InvalidOperationException(issues[0].ToString());
                     if (!_runner.TryRestore(definition, _catalog, _restore, out var error)) throw new InvalidOperationException(error);
+                    _definition = definition;
                     // 历史只做结构与规模检查：条目里的 Speaker 与 SpeakerNameKey 都是表现层字段，
                     // 由读时解析（ResolveSpeaker）处理。旧档缺 SpeakerNameKey 即为空，行为与接入前一致，
                     // 所以不推进 SchemaVersion、也不加版本迁移分支。
@@ -141,7 +144,9 @@ namespace Game.Narrative
                         _restoreSprites.Add((visual, Load<Sprite>(path)));
                     }
                     PrepareMediaRestore();
-                    if (!string.IsNullOrEmpty(_restore.BgmKey) && !_restore.Loops.Exists(l => l != null && l.Bgm))
+                    // 有常驻 BGM 通道时曲目资源由通道自己加载与持有（尾段要活过会话销毁），
+                    // 这里只保留没有通道的旧路径：把单文件 BGM 当成一条循环音恢复。
+                    if (_bgm == null && !string.IsNullOrEmpty(_restore.BgmKey) && !_restore.Loops.Exists(l => l != null && l.Bgm))
                     {
                         if (!_catalog.TryResolve(NovelCommandKind.BGM, _restore.BgmKey, out var path)) throw new InvalidOperationException("存档 BGM 键缺失");
                         _restoreBgm = Load<AudioClip>(path);
@@ -159,8 +164,8 @@ namespace Game.Narrative
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public NovelSession(NovelCheckpoint checkpoint, Func<NarrativeTableCatalog> catalogProvider, INovelResources resources, INovelAudio audio = null)
-            : this(new NovelNewGameRequest(checkpoint.StoryPath, storyId: checkpoint.StoryId), catalogProvider, resources, audio)
+        public NovelSession(NovelCheckpoint checkpoint, Func<NarrativeTableCatalog> catalogProvider, INovelResources resources, INovelAudio audio = null, INovelBgmChannel bgm = null)
+            : this(new NovelNewGameRequest(checkpoint.StoryPath, storyId: checkpoint.StoryId), catalogProvider, resources, audio, bgm)
         {
             // Deep copy prevents callers mutating an in-flight restore.
             _restore = JsonUtility.FromJson<NovelCheckpoint>(JsonUtility.ToJson(checkpoint)); _restoring = true;
@@ -214,7 +219,8 @@ namespace Game.Narrative
                 Status = a.Status == NovelActionStatus.Running ? NovelActionStatus.Completed : a.Status }).ToList();
             checkpoint.History = _history.Select(h => new NovelHistoryEntry { ChapterId = h.ChapterId, NodeId = h.NodeId,
                 CommandId = h.CommandId, LineId = h.LineId, TextRevision = h.TextRevision, Text = h.Text, Speaker = h.Speaker,
-                SpeakerNameKey = h.SpeakerNameKey }).ToList();
+                SpeakerNameKey = h.SpeakerNameKey, SpeakerVariableId = h.SpeakerVariableId,
+                SpeakerVariableScope = h.SpeakerVariableScope }).ToList();
             return true;
         }
         /// <summary>Owner releases old session BEFORE this boundary. Failure after it returns to menu.</summary>
@@ -249,9 +255,11 @@ namespace Game.Narrative
             foreach (var a in _restore.Actions) _actions.Add(a.Id, new NovelActionHandle { Id = a.Id, Status = a.Status,
                 Generation = _runner.Snapshot.SessionGeneration, Sequence = ++_actionSequence, Progress = 1 });
             CommitMediaRestore();
+            // 没有常驻通道时（编辑器试播、单测）BGM 仍按单文件循环音恢复；有通道的情况已在
+            // CommitBgmRestore 里处理，并遵守「同曲同段不动、否则从新曲目前奏开始」。
             if (_restoreBgm != null) _audio.Play(NovelCommandKind.BGM, _restoreBgm.Asset);
             _restoreSprites.Clear();
-            _bgmKey = _restore.BgmKey; _history.AddRange(_restore.History);
+            _bgmKey = _restore.BgmKey; _bgmVolume = Mathf.Clamp01(_restore.BgmVolume); _history.AddRange(_restore.History);
             _recordedPosition = _runner.Snapshot.PositionVersion; // repaint/restore must not append history or mark revised text read
             _started = true; _restoring = false;
             foreach (var pause in _pauses) _runner.Pause(pause);

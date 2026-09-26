@@ -16,15 +16,18 @@ MonoBehaviour:
   _chapterId: last_light_ch01
   _contentRevision: 2
   _prompt: "\u4ECA\u665A\uFF0C\u4F60\u60F3\u5148\u8FC8\u51FA\u54EA\u4E00\u6B65\uFF1F"
+  _promptTextKey: prompt.last_light_m5.last_light_choice
   _options:
   - _optionId: last_light_choose_radio
     _text: "\u73B0\u5728\u64AD\u653E\u5F55\u97F3\uFF0C\u4E00\u8D77\u542C\u5B8C\u90A3\u53E5\u665A\u5B89"
+    _textKey: option.last_light_m5.last_light_choose_radio
     _condition:
       _junction: 0
       _predicates: []
     _target: {fileID: 11400000, guid: ed622819a3be4ecea0539f00e28fa3df, type: 2}
   - _optionId: last_light_choose_letter
     _text: "\u5148\u5199\u4E00\u5C01\u56DE\u4FE1\uFF0C\u7EA6\u5B9A\u4E0B\u6B21\u5F53\u9762\u542C"
+    _textKey: option.last_light_m5.last_light_choose_letter
     _condition:
       _junction: 0
       _predicates: []

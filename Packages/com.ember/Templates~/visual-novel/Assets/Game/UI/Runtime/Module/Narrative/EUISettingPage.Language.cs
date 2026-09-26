@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Ember.Core;
 using Ember.UI;
 using UnityEngine.UI;
 
@@ -28,7 +30,7 @@ namespace Game.UI
         };
 
         private readonly Dictionary<string, Button> _languageButtons = new();
-        private bool _languageSubscribed;
+        private IDisposable _languageSubscription;
 
         /// <summary>novel_languages 里 <c>isSource = true</c> 的那一行；解析器没装配时用它兜底。</summary>
         private const string SourceLanguage = "zh_Hans";
@@ -50,12 +52,20 @@ namespace Game.UI
                 button.onClick.AddListener(() => SelectLanguage(language));
             }
 
-            if (!_languageSubscribed)
+            if (_languageSubscription == null)
             {
-                Game.Narrative.NovelLocalization.Changed += RefreshLanguagePreferences;
-                _languageSubscribed = true;
+                // 订阅框架的全局语言事件，而不是业务层的静态事件：
+                // 设置页只关心「语言变了，重刷高亮与单位文案」，不需要认识 Game.Narrative。
+                _languageSubscription = EmberEventBus.Subscribe<string>(EmberBroadcastEvent.LanguageChanged, OnLanguageChanged);
             }
             RefreshLanguagePreferences();
+        }
+
+        /// <summary>语言变更：重刷选中高亮，并让「字/秒」「秒」「正常/减弱/关闭」这些运行期文案跟着换语言。</summary>
+        private void OnLanguageChanged(string language)
+        {
+            RefreshLanguagePreferences();
+            RefreshNovelPreferences();
         }
 
         private void SelectLanguage(string language)
@@ -94,9 +104,8 @@ namespace Game.UI
                 if (button) button.onClick.RemoveAllListeners();
             _languageButtons.Clear();
 
-            if (!_languageSubscribed) return;
-            Game.Narrative.NovelLocalization.Changed -= RefreshLanguagePreferences;
-            _languageSubscribed = false;
+            _languageSubscription?.Dispose();
+            _languageSubscription = null;
         }
 
         #endregion

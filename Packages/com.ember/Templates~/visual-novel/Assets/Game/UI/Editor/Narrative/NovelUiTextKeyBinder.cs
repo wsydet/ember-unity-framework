@@ -51,7 +51,7 @@ namespace Game.UI.Editor
         private static readonly Assignment[] Assignments =
         {
             // 主菜单
-            new Assignment(Main, "Animator/EUISafeArea/TitleText", "ui.main.Title"),
+            new Assignment(Main, "Animator/EUISafeArea/Center/TitleText", "ui.main.Title"),
             new Assignment(Main, "Animator/EUISafeArea/Center/MenuButtons/m_Btn_Start/Text", "ui.main.Start"),
             new Assignment(Main, "Animator/EUISafeArea/Center/MenuButtons/NovelContinue/Label", "ui.main.Continue"),
             new Assignment(Main, "Animator/EUISafeArea/Center/MenuButtons/NovelLoad/Label", "ui.main.Load"),
@@ -62,52 +62,52 @@ namespace Game.UI.Editor
             // 「当前场景：主界面」这类拼接文本，挂 Key 会在切语言刷新时被覆盖回去）
             new Assignment(Setting, "Animator/EUISafeArea/Center/PanelBg/TitleText", "ui.setting.Title"),
             new Assignment(Setting, "Animator/EUISafeArea/Center/PanelBg/m_Btn_Close/Text", "ui.setting.Close.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/Title", "ui.setting.ReadingAndAudio.Title"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelTextSpeedLabel", "ui.setting.TextSpeed.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelAutoIntervalLabel", "ui.setting.AutoInterval.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelBgmVolumeLabel", "ui.setting.BgmVolume.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelSfxVolumeLabel", "ui.setting.SfxVolume.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelVoiceVolumeLabel", "ui.setting.VoiceVolume.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelShakePreferenceLabel", "ui.setting.ShakePreference.Label"),
-            new Assignment(Setting, "Animator/EUISafeArea/NovelPreferences/NovelFlashPreferenceLabel", "ui.setting.FlashPreference.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/Title", "ui.setting.ReadingAndAudio.Title"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelTextSpeedLabel", "ui.setting.TextSpeed.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelAutoIntervalLabel", "ui.setting.AutoInterval.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelBgmVolumeLabel", "ui.setting.BgmVolume.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelSfxVolumeLabel", "ui.setting.SfxVolume.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelVoiceVolumeLabel", "ui.setting.VoiceVolume.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelShakePreferenceLabel", "ui.setting.ShakePreference.Label"),
+            new Assignment(Setting, "Animator/EUISafeArea/Center/NovelPreferences/NovelFlashPreferenceLabel", "ui.setting.FlashPreference.Label"),
 
             // 阅读页
-            new Assignment(Reader, "Animator/EUISafeArea/Saves/Label", "ui.reader.Saves.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/QuickSave/Label", "ui.reader.QuickSave.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/QuickLoad/Label", "ui.reader.QuickLoad.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/ReadingControls/Settings/Label", "ui.reader.Settings.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/ReadingControls/History/Label", "ui.reader.History.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/ReadingControls/HideDialogue/Label", "ui.reader.HideDialogue.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/ReadingControls/Skip/Label", "ui.reader.Skip.Label"),
-            new Assignment(Reader, "Animator/EUISafeArea/ReadingControls/Menu/Label", "ui.reader.Menu.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/Saves/Label", "ui.reader.Saves.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/QuickSave/Label", "ui.reader.QuickSave.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/QuickLoad/Label", "ui.reader.QuickLoad.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/ReadingControls/Settings/Label", "ui.reader.Settings.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/ReadingControls/History/Label", "ui.reader.History.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/ReadingControls/HideDialogue/Label", "ui.reader.HideDialogue.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/ReadingControls/Skip/Label", "ui.reader.Skip.Label"),
+            new Assignment(Reader, "Animator/EUISafeArea/Center/ReadingControls/Menu/Label", "ui.reader.Menu.Label"),
 
             // 选项 Item（阅读页 ChoiceTemplate 的来源）
             new Assignment(ChoiceItem, "Select/Label", "ui.reader.Choice.Label"),
 
             // 阅读菜单
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/Title", "ui.menu.Title"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/Saves/Label", "ui.menu.Saves.Label"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/QuickSave/Label", "ui.menu.QuickSave.Label"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/QuickLoad/Label", "ui.menu.QuickLoad.Label"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/Settings/Label", "ui.menu.Settings.Label"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/ReadSkip/Label", "ui.menu.ReadSkip.Label"),
-            new Assignment(ReadingMenu, "Animator/EUISafeArea/Panel/ReturnMenu/Label", "ui.menu.ReturnMenu.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/Title", "ui.menu.Title"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/Saves/Label", "ui.menu.Saves.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/QuickSave/Label", "ui.menu.QuickSave.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/QuickLoad/Label", "ui.menu.QuickLoad.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/Settings/Label", "ui.menu.Settings.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/ReadSkip/Label", "ui.menu.ReadSkip.Label"),
+            new Assignment(ReadingMenu, "Animator/EUISafeArea/Center/Panel/ReturnMenu/Label", "ui.menu.ReturnMenu.Label"),
 
             // 历史
-            new Assignment(History, "Animator/EUISafeArea/HistoryPanel/Title", "ui.history.Title"),
-            new Assignment(History, "Animator/EUISafeArea/HistoryPanel/Close/Label", "ui.history.Close.Label"),
-            new Assignment(History, "Animator/EUISafeArea/HistoryPanel/Saves/Label", "ui.history.Saves.Label"),
+            new Assignment(History, "Animator/EUISafeArea/Center/HistoryPanel/Title", "ui.history.Title"),
+            new Assignment(History, "Animator/EUISafeArea/Center/HistoryPanel/Close/Label", "ui.history.Close.Label"),
+            new Assignment(History, "Animator/EUISafeArea/Center/HistoryPanel/Saves/Label", "ui.history.Saves.Label"),
 
             // 字号弹窗
-            new Assignment(Font, "Animator/EUISafeArea/Panel/Title", "ui.font.Title"),
-            new Assignment(Font, "Animator/EUISafeArea/Panel/Small/Label", "ui.font.Small.Label"),
-            new Assignment(Font, "Animator/EUISafeArea/Panel/Medium/Label", "ui.font.Medium.Label"),
-            new Assignment(Font, "Animator/EUISafeArea/Panel/Large/Label", "ui.font.Large.Label"),
-            new Assignment(Font, "Animator/EUISafeArea/Panel/Preview", "ui.font.Preview"),
+            new Assignment(Font, "Animator/EUISafeArea/Center/Panel/Title", "ui.font.Title"),
+            new Assignment(Font, "Animator/EUISafeArea/Center/Panel/Small/Label", "ui.font.Small.Label"),
+            new Assignment(Font, "Animator/EUISafeArea/Center/Panel/Medium/Label", "ui.font.Medium.Label"),
+            new Assignment(Font, "Animator/EUISafeArea/Center/Panel/Large/Label", "ui.font.Large.Label"),
+            new Assignment(Font, "Animator/EUISafeArea/Center/Panel/Preview", "ui.font.Preview"),
 
             // 存档页
-            new Assignment(SavePage, "Animator/EUISafeArea/Panel/Title", "ui.save.Title"),
-            new Assignment(SavePage, "Animator/EUISafeArea/Panel/Close/Label", "ui.save.Close.Label"),
+            new Assignment(SavePage, "Animator/EUISafeArea/Center/Panel/Title", "ui.save.Title"),
+            new Assignment(SavePage, "Animator/EUISafeArea/Center/Panel/Close/Label", "ui.save.Close.Label"),
 
             // 存档槽位 Item（存档页 SlotTemplate 的来源）
             new Assignment(SaveSlot, "Write/Label", "ui.save.Slot.Write.Label"),

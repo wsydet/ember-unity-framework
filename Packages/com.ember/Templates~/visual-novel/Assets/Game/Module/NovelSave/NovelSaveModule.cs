@@ -172,7 +172,7 @@ namespace Game.NovelSave
                 var loading = _loadTask; _loadTask = null;
                 try
                 {
-                    _candidate = new NovelSession(loading.GetAwaiter().GetResult(), _loadCatalog, new NovelResources());
+                    _candidate = new NovelSession(loading.GetAwaiter().GetResult(), _loadCatalog, new NovelResources(), null, NovelBgmModule.Active);
                     _restoreObservation = NarrativeObservation.Register(_candidate); Feedback("正在校验并准备恢复资源…");
                 }
                 catch (Exception ex) { FailLoad(ex.Message); }

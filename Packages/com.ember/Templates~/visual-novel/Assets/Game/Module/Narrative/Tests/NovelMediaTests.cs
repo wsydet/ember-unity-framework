@@ -15,6 +15,7 @@ namespace Game.Narrative.Tests
         {
             public float Volume, Elapsed;
             public bool Paused, Disposed;
+            public bool MixerRouted { get; set; }
             public void SetVolume(float v) { Assert.IsFalse(Disposed); Volume = v; }
             public void SetPaused(bool p) { Assert.IsFalse(Disposed); Paused = p; }
             public void Tick(float d) { Assert.IsFalse(Disposed); if (!Paused) Elapsed += d; }
@@ -26,7 +27,14 @@ namespace Game.Narrative.Tests
             public bool VoicePlaying => false;
             public event Action VoiceCompleted { add { } remove { } }
             public int OneShots;
-            public INovelLoopPlayback CreateLoop(AudioClip clip) { var loop = new MediaLoop(); Loops.Add(loop); return loop; }
+            public readonly List<bool> LoopKinds = new();
+            /// <summary>下一条 CreateLoop 出来的循环音是否算「已接 Mixer 分组」。</summary>
+            public bool NextMixerRouted;
+            public INovelLoopPlayback CreateLoop(AudioClip clip, bool bgm)
+            {
+                var loop = new MediaLoop { MixerRouted = NextMixerRouted };
+                Loops.Add(loop); LoopKinds.Add(bgm); return loop;
+            }
             public void Play(NovelCommandKind kind, AudioClip clip) { OneShots++; }
             public void Tick() { }
             public void StopVoice() { }
@@ -281,6 +289,33 @@ namespace Game.Narrative.Tests
             Assert.IsFalse(restored.RestoreReady); Assert.AreEqual(NarrativeState.Faulted, restored.Snapshot.State);
             Assert.IsEmpty(a.Loops); Assert.AreEqual(1, s.ActiveEffectCount, "Failed preparation leaves current session untouched");
             restored.Dispose(); Assert.IsTrue(r.Released.All(check => check()));
+        }
+
+        [Test]
+        public void E6BgmAndAmbientLoopsDeclareTheirMixerRoleToTheAudioAdapter()
+        {
+            using var view = new ActionView(); var a = new MediaAudio();
+            using var s = MediaSession(view, MediaAssets(), a,
+                new NovelCommand("bgm", NovelCommandKind.BGM, resourceKey: "quiet_afternoon"), Ambient("wind"), SayAction("line"));
+            int f = 0; PumpAction(s, "line", ref f);
+            Assert.AreEqual(2, a.LoopKinds.Count);
+            Assert.IsTrue(a.LoopKinds[0], "BGM 循环必须按 BGM 分组输出");
+            Assert.IsFalse(a.LoopKinds[1], "环境音循环必须按 SFX 分组输出，不能被玩家 BGM 音量带走");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void E6MixerRoutedLoopLeavesPlayerVolumeToTheMixerGroup(bool mixerRouted)
+        {
+            using var view = new ActionView(); var a = new MediaAudio { NextMixerRouted = mixerRouted };
+            using var s = MediaSession(view, MediaAssets(), a, Ambient("wind"), SayAction("line"));
+            int f = 0; PumpAction(s, "line", ref f);
+            s.ConfigureReading(null, 100, 0, .5f, .25f, 1);
+            s.Tick(.5f, ++f);
+            Assert.AreEqual(1, a.Loops.Count);
+            Assert.AreEqual(mixerRouted ? .2f : .05f, a.Loops[0].Volume, .001f,
+                mixerRouted ? "接上 Mixer 分组后音源只写剧情增益，玩家音量交给分组承担"
+                    : "未接 Mixer 时仍是原来的音源音量路径：渐变一半 × 剧情 0.8 × 玩家 0.25");
         }
 
         [Test]

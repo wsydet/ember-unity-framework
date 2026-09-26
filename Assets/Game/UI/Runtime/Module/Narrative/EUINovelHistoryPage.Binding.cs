@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelHistoryPage
  * page name    : EUINovelHistoryPage
- * update time  : 2026/9/20 20:18:51
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,22 +15,22 @@ namespace Game.UI
     public partial class EUINovelHistoryPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/HistoryPanel/Close
+        /// Animator/EUISafeArea/Center/HistoryPanel/Close
         /// </summary>
         private UnityEngine.UI.Button Close;
 
         /// <summary>
-        /// Animator/EUISafeArea/HistoryPanel/Saves
+        /// Animator/EUISafeArea/Center/HistoryPanel/Saves
         /// </summary>
         private UnityEngine.UI.Button Saves;
 
         /// <summary>
-        /// Animator/EUISafeArea/HistoryPanel/Viewport/Content
+        /// Animator/EUISafeArea/Center/HistoryPanel/Viewport/Content
         /// </summary>
         private TMPro.TextMeshProUGUI Entries;
 
         /// <summary>
-        /// Animator/EUISafeArea/HistoryPanel/Viewport
+        /// Animator/EUISafeArea/Center/HistoryPanel/Viewport
         /// </summary>
         private UnityEngine.UI.ScrollRect HistoryScroll;
 

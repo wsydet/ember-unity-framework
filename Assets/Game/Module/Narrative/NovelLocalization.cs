@@ -144,14 +144,21 @@ namespace Game.Narrative
             TextLocalization.SetLocalizer(null);
         }
 
-        /// <summary>切换全局语言：持久化偏好、立即重刷 UI、再通知内容侧。</summary>
+        /// <summary>
+        /// 切换全局语言：持久化偏好 → 重刷界面 TMPEx → 播报语言变更事件，
+        /// 内容侧（正文、选项、历史）订阅该事件后自己重刷运行期文本。
+        ///
+        /// <para><see cref="Changed"/> 是本类最早的本地订阅点，行为保持不变；
+        /// 新代码请订阅 <c>EmberBroadcastEvent.LanguageChanged</c>，不要再依赖业务层的静态事件。</para>
+        /// </summary>
         [HasGC]
         public static void SetLanguage(string language)
         {
             string previous = NovelLanguageSettings.Current;
             NovelLanguageSettings.SetLanguage(language);
             if (previous == NovelLanguageSettings.Current) return;
-            TextLocalization.RefreshAll();
+            // 唯一广播点在框架的 TextLocalization：先重刷所有活动 TMPEx，再播报语言变更。
+            TextLocalization.PublishLanguageChanged(NovelLanguageSettings.Current);
             Changed?.Invoke();
         }
 
@@ -205,6 +212,41 @@ namespace Game.Narrative
         {
             text = null;
             return _localizer != null && _localizer.TryGet(key, language, out text);
+        }
+
+        /// <summary>
+        /// 界面自带的运行期文案（状态行、单位、占位提示等）：命中当前语言就用表项，
+        /// 未装配多语言或 Key 缺失时用传入的源语言原文。
+        /// <para>调用点在 UI 与状态行的每一帧渲染路径上，所以按需调用、不要在不必要时反复取。</para>
+        /// </summary>
+        [HasGC]
+        public static string Runtime(string key, string fallback)
+            => !string.IsNullOrEmpty(key) && TryGetContent(key, out string localized) ? localized : fallback;
+
+        /// <summary>
+        /// 选项 / 分流文本：填了 Key 就按当前语言解析，否则用原文。
+        /// <para>选项文字在读定义时就被烤进 <see cref="NovelRoute.Text"/>，定义整场会话只编译一次，
+        /// 所以显示时必须走这里，否则会话进行中切语言选项不会跟着变。</para>
+        /// </summary>
+        [HasGC]
+        public static string RouteText(NovelRoute route)
+        {
+            if (route == null) return null;
+            return !string.IsNullOrEmpty(route.TextKey) && TryGetContent(route.TextKey, out string localized)
+                ? localized : route.Text;
+        }
+
+        /// <summary>
+        /// 历史正文：没有文字变量绑定的句子按 Key 用当前语言重新解析，其余用当时存下来的文本。
+        /// <para>带绑定的句子存的是已替换过变量的文本，而历史里没有可复用的变量值，
+        /// 按 Key 重解析只会显示未替换的占位符，因此这类句子固定用存档里的文本。</para>
+        /// </summary>
+        [HasGC]
+        public static string HistoryText(NovelHistoryEntry entry)
+        {
+            if (entry == null) return null;
+            if (entry.TextHasBindings || string.IsNullOrEmpty(entry.TextKey)) return entry.Text;
+            return TryGetContent(entry.TextKey, out string localized) ? localized : entry.Text;
         }
         #endregion
     }

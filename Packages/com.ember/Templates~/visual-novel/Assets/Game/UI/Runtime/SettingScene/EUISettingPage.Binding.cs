@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUISettingPanel
  * page name    : EUISettingPage
- * update time  : 2026/9/25 21:50:01
+ * update time  : 2026/9/26 23:49:30
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -25,97 +25,97 @@ namespace Game.UI
         private TMP_Text Txt_NowScene;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelTextSpeed
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelTextSpeed
         /// </summary>
         private UnityEngine.UI.Slider NovelTextSpeed;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelAutoInterval
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelAutoInterval
         /// </summary>
         private UnityEngine.UI.Slider NovelAutoInterval;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelBgmVolume
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelBgmVolume
         /// </summary>
         private UnityEngine.UI.Slider NovelBgmVolume;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelSfxVolume
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelSfxVolume
         /// </summary>
         private UnityEngine.UI.Slider NovelSfxVolume;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelVoiceVolume
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelVoiceVolume
         /// </summary>
         private UnityEngine.UI.Slider NovelVoiceVolume;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelPreferenceStatus
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelPreferenceStatus
         /// </summary>
         private TMPro.TextMeshProUGUI NovelPreferenceStatus;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelShakePreference
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelShakePreference
         /// </summary>
         private UnityEngine.UI.Slider NovelShakePreference;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelFlashPreference
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelFlashPreference
         /// </summary>
         private UnityEngine.UI.Slider NovelFlashPreference;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelTextSpeedValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelTextSpeedValue
         /// </summary>
         private TMP_Text NovelTextSpeedValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelAutoIntervalValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelAutoIntervalValue
         /// </summary>
         private TMP_Text NovelAutoIntervalValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelBgmVolumeValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelBgmVolumeValue
         /// </summary>
         private TMP_Text NovelBgmVolumeValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelSfxVolumeValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelSfxVolumeValue
         /// </summary>
         private TMP_Text NovelSfxVolumeValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelVoiceVolumeValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelVoiceVolumeValue
         /// </summary>
         private TMP_Text NovelVoiceVolumeValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelShakePreferenceValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelShakePreferenceValue
         /// </summary>
         private TMP_Text NovelShakePreferenceValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/NovelFlashPreferenceValue
+        /// Animator/EUISafeArea/Center/NovelPreferences/NovelFlashPreferenceValue
         /// </summary>
         private TMP_Text NovelFlashPreferenceValue;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/LanguageZhHans
+        /// Animator/EUISafeArea/Center/NovelPreferences/LanguageZhHans
         /// </summary>
         private UnityEngine.UI.Button LanguageZhHans;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/LanguageZhHant
+        /// Animator/EUISafeArea/Center/NovelPreferences/LanguageZhHant
         /// </summary>
         private UnityEngine.UI.Button LanguageZhHant;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/LanguageJa
+        /// Animator/EUISafeArea/Center/NovelPreferences/LanguageJa
         /// </summary>
         private UnityEngine.UI.Button LanguageJa;
 
         /// <summary>
-        /// Animator/EUISafeArea/NovelPreferences/LanguageEn
+        /// Animator/EUISafeArea/Center/NovelPreferences/LanguageEn
         /// </summary>
         private UnityEngine.UI.Button LanguageEn;
 

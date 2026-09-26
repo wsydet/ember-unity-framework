@@ -11,6 +11,8 @@ namespace Game.Narrative
         private NarrativeReadMode _readMode;
         private Func<string, string, int, bool> _isRead;
         private float _textSpeed = 32, _autoInterval = 1, _autoElapsed;
+        /// <summary>脚本化段落对自动间隔的临时覆盖；为 null 时用玩家设置里的间隔。</summary>
+        private float? _autoIntervalOverride;
         private long _readingVersion = -1, _lastReadingFrame = -1, _pauseSerial;
         private INovelAssetLease<AudioClip> _lineVoice;
         private bool _lineVoicePending, _lineHasVoice, _suppressReadingTick;
@@ -21,7 +23,12 @@ namespace Game.Narrative
         public bool VoiceWaiting => _lineVoicePending || _audio.VoicePlaying;
         public IReadOnlyList<NovelHistoryEntry> History => _history.Select(h => new NovelHistoryEntry
         { ChapterId = h.ChapterId, NodeId = h.NodeId, CommandId = h.CommandId, LineId = h.LineId,
-            TextRevision = h.TextRevision, Text = h.Text, SpeakerNameKey = h.SpeakerNameKey, Speaker = ResolveSpeaker(h) }).ToList().AsReadOnly();
+            TextRevision = h.TextRevision, Text = h.Text, SpeakerNameKey = h.SpeakerNameKey,
+            SpeakerVariableId = h.SpeakerVariableId, SpeakerVariableScope = h.SpeakerVariableScope,
+            // 正文的多语言 Key 与「是否含文字变量绑定」必须一起带出来，
+            // 否则历史页拿到的条目永远按存档文本显示，切语言不会跟着变。
+            TextKey = h.TextKey, TextHasBindings = h.TextHasBindings,
+            Speaker = ResolveSpeaker(h) }).ToList().AsReadOnly();
         private NarrativeSnapshot ReadingSnapshot
         {
             get
@@ -45,8 +52,22 @@ namespace Game.Narrative
         #region 内部方法
         // 历史是读时解析：称呼 Key 与角色键都按当前语言重新解析，所以旧句不会因为后来揭晓真名而串味，
         // 也不会因为补译文而失效。旧档缺 SpeakerNameKey 字段时退化为原来的角色名回退链。
-        private string ResolveSpeaker(NovelHistoryEntry entry) => NovelLocalization.SpeakerName(entry.Speaker, entry.SpeakerNameKey,
+        private string ResolveSpeaker(NovelHistoryEntry entry) => ResolveSpeakerName(entry.Speaker, entry.SpeakerNameKey,
+            entry.SpeakerVariableId, entry.SpeakerVariableScope,
             _catalog != null && _catalog.TryGetCharacter(entry.Speaker, out var row) ? row.DisplayName : entry.Speaker);
+
+        // 说话人显示名的唯一解析链：称呼 Key → 角色名 → 传入回退名；填了说话人变量则由变量覆盖。
+        // 变量与称呼 Key 同属表现层：不参与存档指纹，也不改变对白角色键与强调匹配。
+        // 解析不到（未声明、类型不符、空串）时退回原回退链，不显示空白、不报错。
+        private string ResolveSpeakerName(string characterId, string speakerNameKey, string variableId,
+            NovelVariableScope scope, string displayName)
+        {
+            string fallback = NovelLocalization.SpeakerName(characterId, speakerNameKey, displayName);
+            if (string.IsNullOrWhiteSpace(variableId)) return fallback;
+            return _runner.TryGetVariable(scope, variableId, out NovelValue value) &&
+                value.Type == NovelValueType.String && !string.IsNullOrWhiteSpace(value.String)
+                ? value.String : fallback;
+        }
         private bool CurrentIsRead()
         {
             var c = _runner.CurrentCommand;
@@ -108,7 +129,7 @@ namespace Game.Narrative
             _autoElapsed += delta;
             // 无配音：全文显示后，每秒 20 字、至少 0.5 秒，再加用户间隔。
             float minimum = _lineHasVoice ? 0 : Mathf.Max(.5f, (_pageEnd - _pageStart) / 20f);
-            if (_autoElapsed >= (minimum + _autoInterval) / ReadingMultiplier) AdvanceCore(frame);
+            if (_autoElapsed >= (minimum + (_autoIntervalOverride ?? _autoInterval)) / ReadingMultiplier) AdvanceCore(frame);
         }
         private void AdvanceCore(long frame)
         {
@@ -139,6 +160,17 @@ namespace Game.Narrative
         // --------------------------------------------------------
         #region 外部方法
         public IDisposable AcquirePause(string reason) => new PauseLease(this, reason + "#" + ++_pauseSerial);
+
+        /// <summary>
+        /// 临时覆盖自动播放间隔（秒）；传 null 恢复玩家在设置里的间隔。
+        /// 脚本化段落用它固定节奏，不受玩家自动间隔偏好影响（玩家把它设成 60 秒也不会拖慢开场）。
+        /// </summary>
+        internal void SetStoryAutoIntervalOverride(float? seconds)
+        {
+            _autoIntervalOverride = seconds.HasValue ? Mathf.Clamp(seconds.Value, 0f, 60f) : (float?)null;
+            _autoElapsed = 0f;
+            Notify();
+        }
         public void ConfigureReading(Func<string, string, int, bool> isRead, float textSpeed, float autoInterval,
             float bgmVolume, float sfxVolume, float voiceVolume)
         {

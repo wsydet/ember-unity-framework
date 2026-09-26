@@ -27,7 +27,8 @@ namespace Game.UI
             for (int i = 0; i < history.Count; i++)
             {
                 var entry = history[i];
-                string speaker = string.IsNullOrEmpty(entry.Speaker) ? "旁白" : entry.Speaker;
+                string speaker = string.IsNullOrEmpty(entry.Speaker)
+                    ? NovelLocalization.Runtime("ui.history.Narrator", "旁白") : entry.Speaker;
                 // Fixed columns in font units keep wrapped dialogue aligned below its body.
                 float nameWidth = Entries.GetPreferredValues(speaker).x;
                 float nameScale = Mathf.Min(1, Entries.fontSize * _appearance.SpeakerWidth / Mathf.Max(1, nameWidth));
@@ -36,10 +37,12 @@ namespace Game.UI
                     .Append("%><noparse>").Append(speaker.Replace("<", "＜").Replace(">", "＞"))
                     .Append("</noparse></size></color>");
                 if (i == history.Count - 1) text.Append("<pos=").Append(_appearance.MarkerPosition.ToString(CultureInfo.InvariantCulture)).Append("em><color=#").Append(ColorUtility.ToHtmlStringRGBA(_appearance.LatestMarkerColor)).Append(">▶</color>");
-                text.Append("<pos=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em><indent=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em>").Append((entry.Text ?? string.Empty).Replace("<", "<noparse><</noparse>")).Append("</indent>");
+                // 正文走 HistoryText：没有文字变量绑定的句子按 Key 用当前语言重新解析，
+                // 所以回看旧句时会跟着当前语言走，而不是固定成读到那句时的语言。
+                text.Append("<pos=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em><indent=").Append(_appearance.TextIndent.ToString(CultureInfo.InvariantCulture)).Append("em>").Append((NovelLocalization.HistoryText(entry) ?? string.Empty).Replace("<", "<noparse><</noparse>")).Append("</indent>");
                 if (i < history.Count - 1) text.Append("\n\n");
             }
-            Entries.text = text.Length == 0 ? "尚无已完整显示的对白。" : text.ToString();
+            Entries.text = text.Length == 0 ? NovelLocalization.Runtime("ui.history.Empty", "尚无已完整显示的对白。") : text.ToString();
             Canvas.ForceUpdateCanvases();
             // Short histories sit in the middle; long histories open at the latest line.
             Entries.margin = _baseMargin;

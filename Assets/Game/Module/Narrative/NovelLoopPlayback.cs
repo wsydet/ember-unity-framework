@@ -19,10 +19,20 @@ namespace Game.Narrative
         private float _volume;
         private bool _paused, _muted;
         public bool IsDisposed => !_root;
+        /// <summary>
+        /// 是否已经接到 Mixer 分组输出。
+        /// 接上以后玩家音量由分组承担（与 BGM 的既有约定一致），调用方不能再在
+        /// <see cref="SetVolume"/> 里叠乘一次玩家音量，否则会双重衰减。
+        /// </summary>
+        public bool MixerRouted => _source && _source.outputAudioMixerGroup;
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public NovelLoopPlayback(Transform host, AudioClip clip, bool manual)
+        /// <param name="group">
+        /// 这条循环音要接的 Mixer 分组；BGM 循环传 BGM 分组、环境音循环传 SFX 分组。
+        /// 传 null 表示不接 Mixer（例如编辑器试播，它自己管理静音与音量）。
+        /// </param>
+        public NovelLoopPlayback(Transform host, AudioClip clip, bool manual, AudioMixerGroup group = null)
         {
             if (!host || !clip || clip.length <= 0) throw new InvalidOperationException("循环音缺少 Host 或有效 AudioClip");
             _manual = manual; _duration = clip.length;
@@ -32,6 +42,9 @@ namespace Game.Narrative
                 _root.transform.SetParent(host, false);
                 _source = _root.AddComponent<AudioSource>(); _source.playOnAwake = false;
                 _source.spatialBlend = 0; _source.volume = 0;
+                // 与 EmberAudioManager 的 BGM / SFX 走同一条混音路径，否则玩家音量、分组静音
+                // 和总线效果都作用不到循环音上。
+                if (group) _source.outputAudioMixerGroup = group;
                 _source.ignoreListenerPause = manual; _source.ignoreListenerVolume = manual;
                 _graph = PlayableGraph.Create("Novel owned loop");
                 _graph.SetTimeUpdateMode(manual ? DirectorUpdateMode.Manual : DirectorUpdateMode.UnscaledGameTime);
