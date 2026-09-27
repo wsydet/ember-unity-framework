@@ -124,10 +124,11 @@ namespace Game.UI.Editor
                 }
                 using (new EditorGUI.DisabledScope(_session == null))
                     if (GUILayout.Button("停止", EditorStyles.toolbarButton)) StopAndReset();
-                using (new EditorGUI.DisabledScope(_session == null || _paused ||
+                using (new EditorGUI.DisabledScope(_session == null || _paused || _session.IsInputLocked ||
                     (_session.Snapshot.State != NarrativeState.Revealing && _session.Snapshot.State != NarrativeState.AwaitingAdvance)))
                     if (GUILayout.Button("推进", EditorStyles.toolbarButton)) Advance();
-                _automatic = GUILayout.Toggle(_automatic, "自动对白", EditorStyles.toolbarButton);
+                using (new EditorGUI.DisabledScope(_session?.IsInputLocked == true))
+                    _automatic = GUILayout.Toggle(_automatic, "自动对白", EditorStyles.toolbarButton);
                 bool mute = GUILayout.Toggle(_muted, "静音", EditorStyles.toolbarButton);
                 if (mute != _muted) { _muted = mute; _audio?.SetMuted(mute); }
                 _multiplier = EditorGUILayout.IntPopup(_multiplier, new[] { "1X", "2X", "3X" }, new[] { 1, 2, 3 }, GUILayout.Width(48));
@@ -210,6 +211,8 @@ namespace Game.UI.Editor
         {
             if (_session == null) return;
             var snapshot = _session.Snapshot;
+            if (_session.IsInputLocked)
+                EditorGUILayout.LabelField("剧情控制自动播放 · 手动推进暂不可用");
             string commandId = snapshot.Error?.CommandId ?? snapshot.CommandId;
             int index = _node ? _node.Commands.ToList().FindIndex(c => c?.CommandId == commandId) : -1;
             if (snapshot.State == NarrativeState.Revealing || snapshot.State == NarrativeState.AwaitingAdvance)
@@ -342,7 +345,7 @@ namespace Game.UI.Editor
         }
         private void Advance()
         {
-            if (_session == null || _paused) return;
+            if (_session == null || _paused || _session.IsInputLocked) return;
             _automatic = false; _session.Advance(++_frame); Repaint();
         }
         private void SetPaused(bool paused)
@@ -367,7 +370,8 @@ namespace Game.UI.Editor
                 _audio.AdvanceTime(delta);
                 if (_session.ReadingMultiplier != _multiplier) _session.SetReadingMultiplier(_multiplier);
                 var desired = _automatic ? NarrativeReadMode.Auto : NarrativeReadMode.Manual;
-                if (_session.IsReady && _session.Snapshot.HasActiveSession && _session.ReadMode != desired) _session.SetReadMode(desired);
+                // 开场段落持有推进锁时由剧情控制阅读模式，不能被窗口的手动偏好覆盖。
+                if (_session.IsReady && !_session.IsInputLocked && _session.Snapshot.HasActiveSession && _session.ReadMode != desired) _session.SetReadMode(desired);
                 _session.Tick(delta, ++_frame);
                 if (_session.Snapshot.State == NarrativeState.Faulted) { _audio.Dispose(); _paused = true; }
                 Repaint();

@@ -45,6 +45,8 @@ namespace Game.Narrative
         public event Action Changed;
         public bool IsReady => _started && !_disposed && _view != null && !_restoring;
         public bool IsDisposed => _disposed;
+        /// <summary>剧情是否正在接管推进输入；自动播放仍然运行。</summary>
+        public bool IsInputLocked => _inputLocks.Count > 0;
 #if UNITY_EDITOR
         /// <summary>编辑器试播当前等待步骤的交互数据；停止或完成后立即失效。</summary>
         public object PreviewCustomStepState => _customStepContext?.State;

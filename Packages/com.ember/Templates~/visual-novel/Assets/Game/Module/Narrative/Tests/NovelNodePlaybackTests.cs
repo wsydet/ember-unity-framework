@@ -11,6 +11,57 @@ namespace Game.Narrative.Tests
 {
     public sealed partial class NovelSessionTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public void EditorPlaybackOpeningKeepsAutoAfterNameSubmissionAndStageClick(bool automatic)
+        {
+            JsonUtility.FromJsonOverwrite(GLOBALS_JSON, _story);
+            var begin = Create<NovelOpeningSegmentSO>();
+            var end = Create<NovelOpeningSegmentSO>();
+            JsonUtility.FromJsonOverwrite("{\"_mode\":1}", end);
+            var input = ScriptableObject.CreateInstance("NovelPlayerNameInputStep") as NovelCustomStepSO;
+            var window = ScriptableObject.CreateInstance<NovelNodePlaybackWindow>();
+            var host = new GameObject("name preview regression");
+            var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+            var type = typeof(NovelNodePlaybackWindow);
+            try
+            {
+                List(_story, "_customSteps", begin, end, input);
+                using var session = StepSession(new View(), null,
+                    StepCommand("begin", begin.ScriptId),
+                    new NovelCommand("before", NovelCommandKind.Say, text: "输入前", lineId: "before"),
+                    StepCommand("name", input.ScriptId),
+                    new NovelCommand("after", NovelCommandKind.Say, text: "输入后", lineId: "after"),
+                    StepCommand("end", end.ScriptId));
+                type.GetField("_session", flags).SetValue(window, session);
+                type.GetField("_audio", flags).SetValue(window, new NovelPlaybackAudio(host.transform));
+                type.GetField("_automatic", flags).SetValue(window, automatic);
+                var update = type.GetMethod("UpdatePlayback", flags);
+                void Tick()
+                {
+                    type.GetField("_lastTime", flags).SetValue(window, EditorApplication.timeSinceStartup - .1);
+                    update.Invoke(window, null);
+                }
+                for (int i = 0; i < 500 && session.PreviewCustomStepState is not INovelPreviewTextInput; i++) Tick();
+                var request = session.PreviewCustomStepState as INovelPreviewTextInput;
+                Assert.IsNotNull(request, session.Snapshot.Error?.ToString());
+                Assert.IsTrue(session.IsInputLocked);
+                request.Submit("林晚");
+                type.GetMethod("Advance", flags).Invoke(window, null);
+                for (int i = 0; i < 500 && session.Snapshot.State != NarrativeState.Ended; i++) Tick();
+                Assert.AreEqual(NarrativeState.Ended, session.Snapshot.State, session.Snapshot.Error?.ToString());
+                Assert.IsFalse(session.IsInputLocked);
+                Assert.AreEqual("林晚", session.Snapshot.GlobalVariables["playerName"].String);
+                Assert.AreEqual(automatic, type.GetField("_automatic", flags).GetValue(window));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(window);
+                UnityEngine.Object.DestroyImmediate(host);
+                if (input) UnityEngine.Object.DestroyImmediate(input);
+            }
+        }
+
         [Test]
         public void EditorPlaybackDrainsParallelTailPausesAndNeverFollowsOriginalNext()
         {
