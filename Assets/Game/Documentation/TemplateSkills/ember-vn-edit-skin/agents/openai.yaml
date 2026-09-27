@@ -1,0 +1,4 @@
+interface:
+  display_name: "视觉小说 UI 皮肤制作"
+  short_description: "复制视觉小说皮肤、批量替换占位图片，调整九宫格与显示效果并预览检查"
+  default_prompt: "使用 $ember-vn-edit-skin 将我指定的图片应用到目标 UI 皮肤，并预览检查效果。"

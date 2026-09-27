@@ -11,6 +11,9 @@ namespace Game.Narrative
     /// 由 <see cref="NovelPlayerNameInputStep"/> 创建并在打开页面时传入。
     /// </summary>
     public sealed class NovelNameInputRequest
+#if UNITY_EDITOR
+        : INovelPreviewTextInput
+#endif
     {
         #region 内部参数
         private readonly Action<string> _submit;
@@ -106,12 +109,15 @@ namespace Game.Narrative
                 name => Write(context, name),
                 () => Write(context, string.IsNullOrWhiteSpace(_defaultName) ? "旅人" : _defaultName.Trim()));
             context.State = request;
+            // 编辑模式的试播由窗口收集输入，不启动正式页面或游戏 UI 管理器。
+            if (!Application.isPlaying) return;
             EUIManager.Instance.ShowPopup(GamePages.EUINovelNameInputPage, request);
         }
 
         public override void OnCancel(NovelCustomStepContext context)
         {
             // 读档 / 退出 / 故障：先关掉还开着的输入页，避免它留在屏幕上收不到结果。
+            if (!Application.isPlaying) return;
             var request = context.State as NovelNameInputRequest;
             if (request != null && request.Page != null) EUIManager.Instance.ClosePage(request.Page);
             else if (request == null) EUIManager.Instance.ClosePageByDef(GamePages.EUINovelNameInputPage);

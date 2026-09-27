@@ -8,7 +8,7 @@ namespace Game.UI
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public override void OnInit() { base.OnInit(); Select.onClick.AddListener(Choose); }
+        public override void OnInit() { base.OnInit(); Game.Narrative.NovelUISkinRuntime.ApplyCurrent(this, "EUINovelChoiceItem"); Select.onClick.AddListener(Choose); }
         public void Configure(string label, Action selected)
         {
             // 选项文字是运行期写入的：控件上必须用 SetSource 接管（同时清掉 Key），

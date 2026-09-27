@@ -45,6 +45,10 @@ namespace Game.Narrative
         public event Action Changed;
         public bool IsReady => _started && !_disposed && _view != null && !_restoring;
         public bool IsDisposed => _disposed;
+#if UNITY_EDITOR
+        /// <summary>编辑器试播当前等待步骤的交互数据；停止或完成后立即失效。</summary>
+        public object PreviewCustomStepState => _customStepContext?.State;
+#endif
         public int OwnedResourceCount => _leases.Count + MediaResourceCount;
         public NarrativeSnapshot Snapshot => _restoring ? RestoreSnapshot : _started ? ReadingSnapshot : new NarrativeSnapshot(
             _preparingGeneration, 0, null, null, null,

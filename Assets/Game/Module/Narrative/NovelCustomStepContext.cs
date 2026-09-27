@@ -3,6 +3,17 @@ using UnityEngine;
 
 namespace Game.Narrative
 {
+#if UNITY_EDITOR
+    /// <summary>编辑器试播中的文本输入请求；由步骤持有生命周期，窗口仅负责显示和提交。</summary>
+    public interface INovelPreviewTextInput
+    {
+        string Title { get; }
+        string DefaultName { get; }
+        int MaxLength { get; }
+        bool Settled { get; }
+        void Submit(string value);
+    }
+#endif
     /// <summary>
     /// 自定义节点本次执行的唯一凭据。会话代次与位置版本封装在内部，
     /// 脚本拿不到 <see cref="NarrativeRunner"/>，也不能直接改剧情位置。

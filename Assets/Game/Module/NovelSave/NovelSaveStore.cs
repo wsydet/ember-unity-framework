@@ -83,7 +83,7 @@ namespace Game.NovelSave
             var candidate = new NovelSlotIndex { Latest = slot, Slots = Slots.ToList() };
             candidate.Slots.RemoveAll(s => s.Slot == slot);
             candidate.Slots.Add(new NovelSlot { Slot = slot, File = file, Digest = Digest(bytes), SavedUtcTicks = DateTime.UtcNow.Ticks,
-                Chapter = checkpoint.ChapterId, Summary = checkpoint.Stop == NarrativeState.AwaitingChoice ? "选择" : checkpoint.History.LastOrDefault()?.Text ?? checkpoint.LineId });
+                Chapter = checkpoint.ChapterId, Summary = checkpoint.Stop == NarrativeState.AwaitingChoice ? "选择" : checkpoint.History.LastOrDefault()?.Text ?? "已保存" });
             byte[] indexBytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(candidate));
             return () =>
             {

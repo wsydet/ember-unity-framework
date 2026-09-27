@@ -50,7 +50,7 @@ namespace Game.UI
 
         public override void OnInit()
         {
-            base.OnInit();
+            base.OnInit(); Game.Narrative.NovelUISkinRuntime.ApplyCurrent(this, "EUINovelNameInputPage");
             if (Btn_Confirm != null) Btn_Confirm.onClick.AddListener(Submit);
         }
 

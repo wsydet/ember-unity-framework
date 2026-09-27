@@ -17,7 +17,7 @@ namespace Game.UI
         #region 外部方法
         public override void OnInit()
         {
-            base.OnInit(); Write.onClick.AddListener(Save); Read.onClick.AddListener(Load);
+            base.OnInit(); Game.Narrative.NovelUISkinRuntime.ApplyCurrent(this, "EUINovelSaveSlotItem"); Write.onClick.AddListener(Save); Read.onClick.AddListener(Load);
         }
         public void Configure(int slot, NovelSlot entry, bool canSave, bool busy, Action write, Action read)
         {
@@ -32,7 +32,7 @@ namespace Game.UI
             Summary.text = entry == null
                 ? name + "\n" + Game.Narrative.NovelLocalization.Runtime("ui.save.Slot.Unsaved", "尚未保存")
                 : name + "    " + new DateTime(entry.SavedUtcTicks, DateTimeKind.Utc).ToLocalTime().ToString("MM-dd HH:mm:ss")
-                    + "    " + entry.Chapter + "\n" + preview.Replace('\n', ' ').Replace('\r', ' ');
+                    + "\n" + preview.Replace('\n', ' ').Replace('\r', ' ');
             Write.gameObject.SetActive(slot < 7); Write.interactable = canSave && !busy; Read.interactable = entry != null && !busy;
         }
         public override void OnDispose()

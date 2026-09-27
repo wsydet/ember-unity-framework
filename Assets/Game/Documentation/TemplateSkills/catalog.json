@@ -40,6 +40,14 @@
       "templateId": "visual-novel",
       "minimumFrameworkVersion": "0.14.12",
       "minimumTemplateVersion": "0.12.0"
+    },
+    {
+      "id": "ember-vn-edit-skin",
+      "displayName": "视觉小说 UI 皮肤制作",
+      "description": "创建独立皮肤，替换占位图片并校正显示效果。",
+      "templateId": "visual-novel",
+      "minimumFrameworkVersion": "0.14.10",
+      "minimumTemplateVersion": "0.14.0"
     }
   ]
 }

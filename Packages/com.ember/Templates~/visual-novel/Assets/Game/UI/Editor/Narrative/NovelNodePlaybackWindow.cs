@@ -39,6 +39,8 @@ namespace Game.UI.Editor
         private long _frame;
         private bool _paused, _changed;
         private string _message, _sourceJson;
+        private INovelPreviewTextInput _nameInputRequest;
+        private string _previewName;
         private Vector2 _setupScroll, _statusScroll;
         private Action<NarrativeError> _locate;
         private Vector2 Pixels => _resolution == 1 ? new Vector2(1440, 1080) : new Vector2(1920, 1080);
@@ -93,6 +95,7 @@ namespace Game.UI.Editor
                         _statusScroll = EditorGUILayout.BeginScrollView(_statusScroll, GUILayout.Height(164));
                         if (_changed) EditorGUILayout.HelpBox("源内容或资源已变化，点击从头重播加载修改。", MessageType.Warning);
                         if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
+                        DrawNameInput();
                         DrawStatus();
                         EditorGUILayout.EndScrollView();
                     }
@@ -181,6 +184,27 @@ namespace Game.UI.Editor
             if (!string.IsNullOrEmpty(key) && !options.Contains(key)) options.Add(key);
             int selected = Mathf.Max(0, options.IndexOf(key ?? ""));
             return options[EditorGUILayout.Popup(label, selected, options.Select(s => s == "" ? "（无）" : s).ToArray())];
+        }
+        private void DrawNameInput()
+        {
+            var request = _session?.PreviewCustomStepState as INovelPreviewTextInput;
+            if (request == null || request.Settled)
+            { _nameInputRequest = null; _previewName = null; return; }
+            if (!ReferenceEquals(_nameInputRequest, request))
+            { _nameInputRequest = request; _previewName = request.DefaultName ?? string.Empty; }
+            using (new EditorGUI.DisabledScope(_paused))
+            {
+                _previewName = EditorGUILayout.TextField(request.Title, _previewName);
+                int maxLength = Mathf.Max(1, request.MaxLength);
+                if (_previewName.Length > maxLength) _previewName = _previewName.Substring(0, maxLength);
+                if (GUILayout.Button("确认名字并继续"))
+                {
+                    request.Submit(_previewName);
+                    _nameInputRequest = null; _previewName = null;
+                    _lastTime = EditorApplication.timeSinceStartup;
+                    Repaint();
+                }
+            }
         }
         private void DrawStatus()
         {
@@ -363,6 +387,7 @@ namespace Game.UI.Editor
             finally
             {
                 _session = null; _audio?.Dispose(); _audio = null;
+                _nameInputRequest = null; _previewName = null;
                 _data?.Dispose(); _data = null; _paused = false; _changed = false;
             }
         }

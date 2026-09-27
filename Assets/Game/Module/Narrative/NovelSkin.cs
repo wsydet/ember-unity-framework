@@ -81,7 +81,9 @@ namespace Game.Narrative
         [HasGC]
         public static int Apply(EUILogic logic, string page, string skinId = null)
         {
-            if (logic == null || !IsInstalled || string.IsNullOrWhiteSpace(page)) return 0;
+            if (logic == null || string.IsNullOrWhiteSpace(page)) return 0;
+            if (string.IsNullOrEmpty(skinId) && NovelUISkinRuntime.ApplyCurrent(logic, page)) return 0;
+            if (!IsInstalled) return 0;
             string target = skinId;
             if (string.IsNullOrEmpty(target))
             {

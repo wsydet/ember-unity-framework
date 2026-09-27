@@ -46,6 +46,30 @@ namespace Game.Narrative.Tests
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        [TestCase("林晚", "林晚")]
+        [TestCase("   ", "旅人")]
+        public void NameInputPreviewSubmitsAndContinuesWithoutGameUI(string value, string expected)
+        {
+            JsonUtility.FromJsonOverwrite(GLOBALS_JSON, _story);
+            var script = ScriptableObject.CreateInstance("NovelPlayerNameInputStep") as NovelCustomStepSO;
+            Assert.IsNotNull(script);
+            try
+            {
+                using var session = StepSession(new View(), script, StepCommand("name", script.ScriptId));
+                session.Tick(0, 1);
+                var request = session.PreviewCustomStepState as INovelPreviewTextInput;
+                Assert.IsNotNull(request, "编辑态应向试播窗口提供输入请求");
+                Assert.IsFalse(request.Settled);
+                request.Submit(value);
+                session.Tick(0, 2);
+                Assert.IsTrue(request.Settled);
+                Assert.AreEqual(expected, session.Snapshot.GlobalVariables["playerName"].String);
+                Assert.AreEqual(NarrativeState.Ended, session.Snapshot.State);
+                Assert.IsNull(session.PreviewCustomStepState);
+            }
+            finally { Object.DestroyImmediate(script); }
+        }
+
         [Test]
         public void CustomStepWritesAVariableAndContinuesToTheNextNode()
         {
