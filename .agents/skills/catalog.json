@@ -4,7 +4,7 @@
     {
       "id": "ember-template-conflict-recovery",
       "displayName": "Ember 模板冲突恢复",
-      "description": "依据旧模板、新模板与本地内容合并升级冲突，保留业务改动并重新预览。",
+      "description": "保护大量本地修改，分批合并模板冲突，支持全量部署前备份和部署后恢复。",
       "minimumFrameworkVersion": "0.14.5"
     },
     {
