@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ember 框架发布"
+  short_description: "准备并发布 Ember 框架版本，核对模板谱系、验证结果与远端标签。"
+  default_prompt: "使用 $ember-release-framework 发布当前 Ember 框架的新版本，保留无关改动，并核对远端提交和版本标签。"
