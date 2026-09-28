@@ -1,4 +1,4 @@
 interface:
   display_name: "Ember 模板冲突恢复"
-  short_description: "三方核对模板更新冲突，保留项目业务改动并交回项目中心重新预览。"
-  default_prompt: "使用 $ember-template-conflict-recovery 处理当前项目的模板更新冲突，保留本地业务改动并报告验证和未决项。"
+  short_description: "保护大量本地修改，分批合并模板冲突，支持全量部署前备份和部署后恢复。"
+  default_prompt: "使用 $ember-template-conflict-recovery 帮助当前项目升级模板，先保护本地修改，再分批合并与恢复，记录续跑进度、验证结果和未决项。"
