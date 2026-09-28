@@ -1943,3 +1943,9 @@ string path = _battleScene;  // 隐式转换
 ### 异步业务操作复用 Loading（2026-09-18）
 
 `EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束且经过一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 仍负责场景加载、PrepareEnter、状态进入和旧场景卸载。没有操作持有者时，原有场景 Loading 流程保持原行为。
+
+## 通用多语言（0.15.0）
+
+`Ember.UIExtension.EmberLocalization` 在场景加载前装配 `Resources/Config/Localization` 下的 `EmberLocalizationTable`。`SetLanguage(string language)` 保存偏好并广播语言变化；`Reload()` 重读产物，并保留业务注入的解析器；`RestoreDefault()` 显式恢复通用解析器。`Language` 为当前偏好，`Default` 返回 `ITextLocalizer`。`SetPreview(string language)` 仅改变内存预览语言，`ResetCache()` 使下次读取回到持久化偏好。
+
+Editor 通过 `EmberLocalizationSource` 注册源表、语言列、源语言与输出资产；跨表 Key 必须唯一。源表草稿使用 `EmberTableSourceDocument`，保存检查外部变化并在烘焙失败时回退。详细使用与翻译复核见 [多语言中心](../../Packages/com.ember/Documentation~/manual/localization-center.md)。

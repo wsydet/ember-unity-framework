@@ -2,6 +2,7 @@
     "name": "Game.UI.Editor",
     "rootNamespace": "Game.UI.Editor",
     "references": [
+        "Ember.Table.Editor",
         "Ember.UI.Runtime",
         "Ember.Core.Runtime",
         "Ember.Core.Editor",

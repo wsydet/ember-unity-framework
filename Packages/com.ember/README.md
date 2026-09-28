@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.13.1**（9 个可安装 AI Skill 与消费项目适配；技能/Python 静态检查通过，Unity 安装与此前代码验收待确认）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.15.0**（通用多语言中心、小说立绘管理与列表显示修复；196 项相关 EditMode 回归通过，消费端升级待验证）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.13.1"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.15.0"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.13.1 manifest 基线](Dependencies~/manifest-0.13.1.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.15.0 manifest 基线](Dependencies~/manifest-0.15.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 
@@ -33,6 +33,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 | Core：启动、事件、服务、Module、状态、Update、时间 | [Core](Documentation~/core/README.md) |
 | Resource / Scene | [资源](Documentation~/resource/README.md)、[场景](Documentation~/scene/README.md) |
 | Audio / Camera / Input | [音频](Documentation~/audio/README.md)、[相机](Documentation~/camera/README.md)、[输入](Documentation~/input/README.md) |
+| 多语言中心 | [编辑、注册与辅助翻译](Documentation~/manual/localization-center.md) |
 | UI / UIExtension | [UI](Documentation~/ui/README.md) |
 | SceneUI | [接入](Documentation~/scene-ui/README.md)、[API](SceneUI/README.md) |
 | Table | [强类型配置表](Table/Documentation~/table/README.md) |
@@ -50,7 +51,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 
 **禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。**
 选择已发布版本执行升级，由升级器与 Package Manager 管理依赖及锁文件；不得手改 manifest 的版本/Git URL 或 packages-lock 的提交 hash。无法操作升级器时应由用户在 Unity 中执行，不能退回直接修改文件。上面的首次安装步骤不适用于已有消费项目升级。
-框架包升级不会自动把新模板内容合并进已有用户代码；消费端可选择同模板“补齐缺失”，或在确认覆盖后执行“完整重新部署”。后者会事务替换五个模板管理目录，适合应用 0.11.4 的 GUID 修复，但会覆盖这些目录中的项目修改。UnityFarm 开发中发现改动时，先按[改动回流规则](Documentation~/maintenance/unityfarm-change-routing.md)判定项目、框架和模板归属。
+框架包升级不会自动合并已部署的 Assets。同模板 major.minor 内的 patch 可走三方增量；“补齐缺失”仅修复相同版本/hash 的缺失文件。本次三个模板均跨 minor，需先备份定制内容，再通过项目中心完整部署并恢复/合并业务修改。完整部署会替换五个受管目录。UnityFarm 开发中发现改动时，先按[改动回流规则](Documentation~/maintenance/unityfarm-change-routing.md)判定项目、框架和模板归属。
 不要把删除整个 `packages-lock.json` 当作常规升级步骤。
 
 开发仓库的完整资料见 [文档索引](../../docs/README.md)、[包维护](../../docs/dev/upm-migration-plan.md) 和

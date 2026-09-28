@@ -1,5 +1,6 @@
 ﻿using System;
 using Ember.Basic;
+using Ember.UIExtension;
 using UnityEngine;
 
 namespace Game.Narrative
@@ -12,7 +13,6 @@ namespace Game.Narrative
     {
         #region 内部参数
         private const string PREFERENCE_KEY = "Ember.Novel.Language";
-        private static string _current;
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -21,8 +21,9 @@ namespace Game.Narrative
         {
             get
             {
-                if (_current == null) _current = PlayerPrefs.GetString(PREFERENCE_KEY, string.Empty) ?? string.Empty;
-                return _current;
+                if (!PlayerPrefs.HasKey("Ember.Localization.Language") && PlayerPrefs.HasKey(PREFERENCE_KEY))
+                    EmberLocalization.SetPreference(PlayerPrefs.GetString(PREFERENCE_KEY, string.Empty));
+                return EmberLocalization.Language;
             }
         }
 
@@ -32,18 +33,16 @@ namespace Game.Narrative
         {
             string next = language ?? string.Empty;
             if (Current == next) return;
-            _current = next;
-            PlayerPrefs.SetString(PREFERENCE_KEY, next);
-            PlayerPrefs.Save();
+            EmberLocalization.SetPreference(next);
         }
 
         /// <summary>只改内存值、不写盘；供编辑器预览与测试隔离使用。</summary>
         [NoGC]
-        public static void SetPreview(string language) => _current = language ?? string.Empty;
+        public static void SetPreview(string language) => EmberLocalization.SetPreview(language);
 
         /// <summary>清除内存缓存，让下次读取重新走 PlayerPrefs；供测试隔离使用。</summary>
         [NoGC]
-        public static void ResetCache() => _current = null;
+        public static void ResetCache() => EmberLocalization.ResetCache();
         #endregion
     }
 }

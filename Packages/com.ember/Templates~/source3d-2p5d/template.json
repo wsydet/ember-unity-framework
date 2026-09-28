@@ -3,13 +3,13 @@
     "id": "source3d-2p5d",
     "displayName": "3D → 2.5D 视觉模板",
     "description": "基于 Ember 基础模板，面向以 3D 场景和角色为源，通过相机约束、分层构图、风格化材质与光照及后处理形成 2.5D 视觉效果的项目。",
-    "version": "0.3.7",
-    "frameworkVersion": "0.14.1",
+    "version": "0.4.0",
+    "frameworkVersion": "0.15.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
-    "parentVersion": "0.6.4",
-    "parentContentHash": "2257aea46640e1f91735ba006522507d",
-    "contentHash": "1b8968b60ad01ac0d3011907c098f067",
-    "versionedContentHash": "1b8968b60ad01ac0d3011907c098f067"
+    "parentVersion": "0.7.0",
+    "parentContentHash": "274ae24260525ab08b7264fc66625b57",
+    "contentHash": "0ad733aaf3f71e7f77625ba7f814ddb9",
+    "versionedContentHash": "0ad733aaf3f71e7f77625ba7f814ddb9"
 }

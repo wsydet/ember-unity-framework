@@ -2,6 +2,8 @@
     "name": "Ember.UIExtension.Editor",
     "rootNamespace": "Ember.UIExtension.Editor",
     "references": [
+        "Ember.Table.Runtime",
+        "Ember.Table.Editor",
         "Ember.Core.Runtime",
         "Ember.Core.Editor",
         "Ember.UI.Runtime",

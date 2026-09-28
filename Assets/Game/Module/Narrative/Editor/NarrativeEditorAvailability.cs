@@ -48,17 +48,19 @@ namespace Game.Narrative.Editor
                 var add = menu.GetMethod("AddMenuItem", MENU_FLAGS, null,
                     new[] { typeof(string), typeof(string), typeof(bool), typeof(int), typeof(Action), typeof(Func<bool>) }, null);
                 if (exists == null || remove == null || add == null) throw new MissingMethodException("当前 Unity 版本缺少动态菜单 API。");
-                void Register(string path, Action action, Func<bool> validate = null)
+                void Register(string path, Action action, Func<bool> validate = null, bool moduleOnly = false)
                 {
                     bool registered = (bool)exists.Invoke(null, new object[] { path });
                     if (registered) remove.Invoke(null, new object[] { path });
-                    if (!Visible) return;
+                    bool available = moduleOnly ? Enabled : Visible;
+                    if (!available) return;
                     add.Invoke(null, new object[] { path, string.Empty, false, 1000,
-                        (Action)(() => { if (Visible) action(); }), (Func<bool>)(() => Visible && (validate?.Invoke() ?? true)) });
+                        (Action)(() => { if (moduleOnly ? Enabled : Visible) action(); }), (Func<bool>)(() => (moduleOnly ? Enabled : Visible) && (validate?.Invoke() ?? true)) });
                 }
                 const string legacy = "Ember/Visual Novel/Gameplay 主UI布局";
                 if ((bool)exists.Invoke(null, new object[] { legacy })) remove.Invoke(null, new object[] { legacy });
                 Register("Ember/视觉小说/当前小说", NarrativeLibraryWindow.Open);
+                Register("Ember/视觉小说/立绘管理", NovelPortraitWindow.Open, moduleOnly: true);
                 Register("Ember/视觉小说/流程编辑与运行观察", NarrativeGraphWindow.Open);
                 Register("Ember/视觉小说/Gameplay 主UI布局", Game.UI.Editor.NovelGameplayLayoutWindow.Open, Game.UI.Editor.NovelGameplayLayoutWindow.CanOpen);
                 Register("Ember/视觉小说/从所选入口开始新游戏（Play 主菜单）", NarrativeEntryLauncher.Start, NarrativeEntryLauncher.CanStart);

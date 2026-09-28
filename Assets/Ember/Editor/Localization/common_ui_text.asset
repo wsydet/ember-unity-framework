@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798c601d577d64747aaf610deb9b0786, type: 3}
+  m_Name: common_ui_text
+  m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.EmberLocalizationSource
+  DisplayName: "\u516C\u5171 UI \u6587\u6848"
+  TableId: common_ui_text
+  Source: {fileID: 4900000, guid: d0a4b0385b328bc4ab71882a50a28929, type: 3}
+  Definition: {fileID: 0}
+  KeyColumn: key
+  SourceLanguage: zh_Hans
+  Languages:
+  - zh_Hans
+  - zh_Hant
+  - ja
+  - en
+  TranslationContext: 
+  Output: {fileID: 11400000, guid: 22e98aa75cfa66f48b9baf0e0de08306, type: 2}
+  Reviews:
+  - Key: common.confirm
+    SourceText: "\u786E\u5B9A"
+    Pending: 0
+  - Key: common.cancel
+    SourceText: "\u53D6\u6D88"
+    Pending: 0

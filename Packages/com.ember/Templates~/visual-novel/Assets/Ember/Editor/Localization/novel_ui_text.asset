@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798c601d577d64747aaf610deb9b0786, type: 3}
+  m_Name: novel_ui_text
+  m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.EmberLocalizationSource
+  DisplayName: "\u5C0F\u8BF4 UI \u6587\u6848"
+  TableId: novel_ui_text
+  Source: {fileID: 4900000, guid: d1998ed0afbe00a4cb96bcc4a883b966, type: 3}
+  Definition: {fileID: 11400000, guid: f3dfa67b6e41d4443a420def33eeb5a0, type: 2}
+  KeyColumn: key
+  SourceLanguage: zh_Hans
+  Languages:
+  - zh_Hans
+  - zh_Hant
+  - ja
+  - en
+  TranslationContext: "\u6E38\u620F\u754C\u9762\u6587\u6848\uFF0C\u4FDD\u6301\u7B80\u6D01\uFF0C\u4FDD\u7559\u53D8\u91CF\u3002"
+  Output: {fileID: 11400000, guid: d219e451b28ff7f4bae02d8c78346543, type: 2}
+  Reviews:
+  - Key: ui.main.Title
+    SourceText: "\u89C6\u89C9\u5C0F\u8BF4"
+    Pending: 0
+  - Key: ui.main.Start
+    SourceText: "\u65B0\u6E38\u620F"
+    Pending: 0
+  - Key: ui.main.Continue
+    SourceText: "\u7EE7\u7EED\u6E38\u620F"
+    Pending: 0
+  - Key: ui.main.Load
+    SourceText: "\u8BFB\u53D6\u5B58\u6863"
+    Pending: 0
+  - Key: ui.main.Settings
+    SourceText: "\u8BBE\u7F6E"
+    Pending: 0
+  - Key: ui.main.Quit
+    SourceText: "\u9000\u51FA\u6E38\u620F"
+    Pending: 0
+  - Key: ui.reader.Saves.Label
+    SourceText: "\u5B58\u8BFB\u6863"
+    Pending: 0
+  - Key: ui.reader.QuickSave.Label
+    SourceText: "\u5FEB\u5B58"
+    Pending: 0
+  - Key: ui.reader.QuickLoad.Label
+    SourceText: "\u5FEB\u8BFB"
+    Pending: 0
+  - Key: ui.reader.Settings.Label
+    SourceText: "\u5B57\u53F7"
+    Pending: 0
+  - Key: ui.reader.History.Label
+    SourceText: "\u5386\u53F2"
+    Pending: 0
+  - Key: ui.reader.HideDialogue.Label
+    SourceText: "\u9690\u85CF"
+    Pending: 0
+  - Key: ui.reader.Skip.Label
+    SourceText: "\u5DF2\u8BFB\u5FEB\u8FDB"
+    Pending: 0
+  - Key: ui.reader.Menu.Label
+    SourceText: "\u83DC\u5355"
+    Pending: 0
+  - Key: ui.reader.Choice.Label
+    SourceText: "\u9009\u9879"
+    Pending: 0
+  - Key: ui.menu.Title
+    SourceText: "\u9605\u8BFB\u83DC\u5355"
+    Pending: 0
+  - Key: ui.menu.Saves.Label
+    SourceText: "\u5B58\u6863 / \u8BFB\u6863"
+    Pending: 0
+  - Key: ui.menu.QuickSave.Label
+    SourceText: "\u5FEB\u901F\u4FDD\u5B58"
+    Pending: 0
+  - Key: ui.menu.QuickLoad.Label
+    SourceText: "\u5FEB\u901F\u8BFB\u53D6"
+    Pending: 0
+  - Key: ui.menu.Settings.Label
+    SourceText: "\u7CFB\u7EDF\u8BBE\u7F6E"
+    Pending: 0
+  - Key: ui.menu.ReadSkip.Label
+    SourceText: "\u4EC5\u5DF2\u8BFB\u5FEB\u8FDB"
+    Pending: 0
+  - Key: ui.menu.ReturnMenu.Label
+    SourceText: "\u8FD4\u56DE\u4E3B\u83DC\u5355"
+    Pending: 0
+  - Key: ui.history.Title
+    SourceText: "\u5BF9\u8BDD\u5386\u53F2 \xB7 \u4EC5\u67E5\u770B"
+    Pending: 0
+  - Key: ui.history.Close.Label
+    SourceText: "\u8FD4\u56DE\u9605\u8BFB"
+    Pending: 0
+  - Key: ui.history.Saves.Label
+    SourceText: "\u5B58\u8BFB\u6863"
+    Pending: 0
+  - Key: ui.history.Empty
+    SourceText: "\u5C1A\u65E0\u5DF2\u5B8C\u6574\u663E\u793A\u7684\u5BF9\u767D"
+    Pending: 0
+  - Key: ui.font.Title
+    SourceText: "\u5B57\u53F7"
+    Pending: 0
+  - Key: ui.font.Small.Label
+    SourceText: "\u5C0F"
+    Pending: 0
+  - Key: ui.font.Medium.Label
+    SourceText: "\u4E2D"
+    Pending: 0
+  - Key: ui.font.Large.Label
+    SourceText: "\u5927"
+    Pending: 0
+  - Key: ui.font.Preview
+    SourceText: "\u5373\u65F6\u9884\u89C8"
+    Pending: 0
+  - Key: ui.save.Title
+    SourceText: "\u5B58\u6863\u4E0E\u8BFB\u53D6"
+    Pending: 0
+  - Key: ui.save.Close.Label
+    SourceText: "\u8FD4\u56DE"
+    Pending: 0
+  - Key: ui.save.Feedback
+    SourceText: "\u9009\u62E9\u69FD\u4F4D"
+    Pending: 0
+  - Key: ui.save.Slot.Summary
+    SourceText: "\u7A7A\u69FD\u4F4D"
+    Pending: 0
+  - Key: ui.save.Slot.Write.Label
+    SourceText: "\u4FDD\u5B58"
+    Pending: 0
+  - Key: ui.save.Slot.Read.Label
+    SourceText: "\u8BFB\u53D6"
+    Pending: 0
+  - Key: ui.setting.Title
+    SourceText: "\u8BBE\u7F6E"
+    Pending: 0
+  - Key: ui.setting.Close.Label
+    SourceText: "\u8FD4\u56DE"
+    Pending: 0
+  - Key: ui.setting.CurrentScene.Label
+    SourceText: "\u5F53\u524D\u573A\u666F"
+    Pending: 0
+  - Key: ui.setting.ReadingAndAudio.Title
+    SourceText: "\u9605\u8BFB\u4E0E\u58F0\u97F3"
+    Pending: 0
+  - Key: ui.setting.TextSpeed.Label
+    SourceText: "\u6587\u5B57\u901F\u5EA6"
+    Pending: 0
+  - Key: ui.setting.AutoInterval.Label
+    SourceText: "\u81EA\u52A8\u95F4\u9694"
+    Pending: 0
+  - Key: ui.setting.BgmVolume.Label
+    SourceText: "\u80CC\u666F\u97F3\u4E50"
+    Pending: 0
+  - Key: ui.setting.SfxVolume.Label
+    SourceText: "\u97F3\u6548"
+    Pending: 0
+  - Key: ui.setting.VoiceVolume.Label
+    SourceText: "\u914D\u97F3"
+    Pending: 0
+  - Key: ui.setting.ShakePreference.Label
+    SourceText: "\u9707\u52A8\u5F3A\u5EA6"
+    Pending: 0
+  - Key: ui.setting.FlashPreference.Label
+    SourceText: "\u95EA\u5149\u5F3A\u5EA6"
+    Pending: 0
+  - Key: ui.setting.Language.Label
+    SourceText: "\u8BED\u8A00"
+    Pending: 0
+  - Key: ui.setting.CurrentScene.Main
+    SourceText: "\u5F53\u524D\u573A\u666F\uFF1A\u4E3B\u754C\u9762"
+    Pending: 0
+  - Key: ui.setting.CurrentScene.Gameplay
+    SourceText: "\u5F53\u524D\u573A\u666F\uFF1A\u73A9\u6CD5\u4E2D"
+    Pending: 0
+  - Key: ui.setting.TextSpeed.Unit
+    SourceText: "\u5B57/\u79D2"
+    Pending: 0
+  - Key: ui.setting.AutoInterval.Unit
+    SourceText: "\u79D2"
+    Pending: 0
+  - Key: ui.setting.Effect.Normal
+    SourceText: "\u6B63\u5E38"
+    Pending: 0
+  - Key: ui.setting.Effect.Reduced
+    SourceText: "\u51CF\u5F31"
+    Pending: 0
+  - Key: ui.setting.Effect.Off
+    SourceText: "\u5173\u95ED"
+    Pending: 0
+  - Key: ui.history.Narrator
+    SourceText: "\u65C1\u767D"
+    Pending: 0
+  - Key: ui.save.Slot.Unsaved
+    SourceText: "\u5C1A\u672A\u4FDD\u5B58"
+    Pending: 0
+  - Key: ui.reader.Choice.Prompt
+    SourceText: "\u4F60\u4F1A\u5982\u4F55\u9009\u62E9\uFF1F"
+    Pending: 0
+  - Key: ui.reader.Status.Preparing
+    SourceText: "\u6B63\u5728\u51C6\u5907\u914D\u8868\u3001\u9875\u9762\u4E0E\u5267\u60C5\u2026"
+    Pending: 0
+  - Key: ui.reader.Status.Paused
+    SourceText: "\u5DF2\u6682\u505C"
+    Pending: 0
+  - Key: ui.reader.Status.Ending
+    SourceText: "\u7ED3\u5C40"
+    Pending: 0
+  - Key: ui.reader.Auto.On
+    SourceText: "\u81EA\u52A8 ON"
+    Pending: 0
+  - Key: ui.reader.Auto.Off
+    SourceText: "\u81EA\u52A8 OFF"
+    Pending: 0
+  - Key: ui.reader.Speed.Label
+    SourceText: "\u901F\u5EA6"
+    Pending: 0
+  - Key: ui.reader.Skip.Stop
+    SourceText: "\u505C\u6B62\u5FEB\u8FDB"
+    Pending: 0
+  - Key: ui.reader.Ending.Text
+    SourceText: "\u6545\u4E8B\u6682\u544A\u4E00\u6BB5\u843D\u3002\u611F\u8C22\u9605\u8BFB\u3002"
+    Pending: 0
+  - Key: ui.save.Slot.Manual
+    SourceText: "\u624B\u52A8\u69FD"
+    Pending: 0
+  - Key: ui.save.Slot.Quick
+    SourceText: "\u5FEB\u901F\u69FD"
+    Pending: 0
+  - Key: ui.save.Slot.Auto
+    SourceText: "\u81EA\u52A8\u69FD"
+    Pending: 0
+  - Key: ui.name.Hint
+    SourceText: "\u8FD9\u4E2A\u540D\u5B57\u4F1A\u88AB\u4ED6\u4EEC\u8BB0\u4F4F\u3002"
+    Pending: 0
+  - Key: ui.name.Confirm
+    SourceText: "\u786E\u5B9A"
+    Pending: 0
+  - Key: ui.save.InputPending
+    SourceText: "\u6B63\u5728\u8F93\u5165\u540D\u5B57\uFF0C\u5B8C\u6210\u8F93\u5165\u540E\u624D\u80FD\u4FDD\u5B58\u3002"
+    Pending: 0

@@ -1,5 +1,7 @@
 # UPM 包交付与维护
 
+> 2026-09-28：当前框架 **0.15.0**，通用多语言中心与小说立绘管理已交付；196 项相关 EditMode 回归通过。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0，兼容声明统一 0.15.0。迁移与验证边界见 [0.15.0 发布说明](release-0.15.0.md)。以下旧版验收记录保留历史语义。
+
 > 2026-09-27：框架 **0.14.15 / visual-novel 0.14.1** 修复姓名提交后试播被开场锁卡住的问题。4 项相关回归及消费节点验证通过。见 [发布说明](release-0.14.15.md)。
 
 > 2026-09-27：框架 **0.14.14 / visual-novel 0.14.0** 发布皮肤编辑器与 Skill，修复姓名输入试播和存档内部 ID 显示。合并后 6 项专项回归通过，跨 minor 保留定制后迁移。见 [发布说明](release-0.14.14.md)。
@@ -21,7 +23,7 @@
 > 2026-09-23：已发布流程推进至 **0.14.3 / visual-novel 0.7.2**，修复消费项目布局菜单身份判断；验证及定制工程迁移步骤见 [0.14.3 发布说明](release-0.14.3.md)。以下旧版本段落保留历史语境。
 
 > 更新：2026-09-17。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为增加 Unity MCP 安装入口的 **0.13.2**；静态检查、Unity 与消费项目验证分别记录。
+> 当前发布版本为 **0.15.0**；历史版本验收不替代当前消费项目验证。
 
 ## 目录与依赖
 
@@ -50,7 +52,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.13.2`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.13.2.json`，不覆盖消费项目其他依赖。
+3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.15.0`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.15.0.json`，不覆盖消费项目其他依赖。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。
@@ -94,7 +96,7 @@ Rainbow Folders 使用 rainbow-folders-v2.4.5，Rainbow Hierarchy 使用 rainbow
 通过 SessionState 跨脚本域重载续接。成功以安装结果版本核对为准，不把估算进度当成下载百分比。
 
 Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不需要删除整个 lock 文件。
-框架升级只更新 `com.ember`；Odin/DOTween 标为框架必需，可选第三方包单独按需安装。随包 `Dependencies~/release-0.13.2.json` 的 `optionalPackageInstallTargets` 记录安装按钮的独立标签；完整 manifest 基线继续使用第三方 `ember-v0.11.1`。依据整份依赖声明自动同步仍未实现，不能复制开发机 `file:` 路径或覆盖消费端整份 manifest。
+框架升级只更新 `com.ember`；Odin/DOTween 标为框架必需，可选第三方包单独按需安装。随包 `Dependencies~/release-0.15.0.json` 的 `optionalPackageInstallTargets` 记录安装按钮的独立标签；完整 manifest 基线继续使用第三方 `ember-v0.11.1`。依据整份依赖声明自动同步仍未实现，不能复制开发机 `file:` 路径或覆盖消费端整份 manifest。
 更新包与更新已部署模板是两个动作：0.14.5 起，同模板 major.minor 内的 patch 升级走三方增量；“补齐缺失”仅修复相同版本/hash 的缺失文件，不推进版本。前两位变化时先保护本地内容，再完整部署五个受管目录并恢复；自动用户代码区合并仍待实现。
 不同活动模板不能走普通“补齐缺失”；项目中心提供“部署此模板”，只把包内目标完整模板事务部署到消费项目，不保存当前内容或修改包内模板。
 
@@ -129,7 +131,7 @@ Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不�
 
 0.12.1 在 `Ember.Table.Editor` 增加声明/数据可视化、可复制查询代码和安全单表导出，不增加第三方依赖。正式发布声明与完整 manifest 位于 `Dependencies~/release-0.12.1.json` 和 `manifest-0.12.1.json`；本次会话无 Unity MCP，修复最后一条用户报告的编译错误后尚未独立取得 Unity 编译与新增 Editor 测试结果。
 
-框架包版本为 **0.13.2**；根模板为 `base 0.6.3`，派生模板为 `source3d-2p5d 0.3.5` 且父基线对齐 `base 0.6.3`。用户已通过模板面板保存和 Bump，内容、封存 Hash 与父快照一致。模板兼容声明推进到 0.13.0，内容版本、Hash 和父快照不变；第三方包内容未变化，完整清单复用 `ember-v0.11.1`，可选安装按钮使用上述逐包标签。发布信息与验证边界见 [0.13.2 发布说明](release-0.13.2.md)。 两个模板的 GuideModule 均保持 Enabled=false。
+历史 0.13.2 发布时：框架包版本为 **0.13.2**；根模板为 `base 0.6.3`，派生模板为 `source3d-2p5d 0.3.5` 且父基线对齐 `base 0.6.3`。用户已通过模板面板保存和 Bump，内容、封存 Hash 与父快照一致。模板兼容声明推进到 0.13.0，内容版本、Hash 和父快照不变；第三方包内容未变化，完整清单复用 `ember-v0.11.1`，可选安装按钮使用上述逐包标签。发布信息与验证边界见 [0.13.2 发布说明](release-0.13.2.md)。 两个模板的 GuideModule 均保持 Enabled=false。
 
 发布按 `package.json → CHANGELOG → release/manifest 声明 → commit → tag → push` 对齐版本。Unity MCP 不可用时不得用 BatchMode 或 dotnet 结果替代 Unity 编译结论，必须在发布说明中保留手动验证边界。
 

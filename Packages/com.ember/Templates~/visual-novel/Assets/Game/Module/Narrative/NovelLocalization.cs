@@ -10,8 +10,7 @@ namespace Game.Narrative
     /// 配表驱动的多语言解析器：把 novel_content_text / novel_ui_text 接到框架的
     /// <see cref="ITextLocalizer"/> 上，供 UI 的 TMPEx 与剧情正文共用同一条回退链。
     /// <para><b>回退链：</b>目标语言列 → 源语言列（默认 zh_Hans）→ 返回 false，由调用方使用原文。</para>
-    /// <para><b>加语言：</b>novel_languages 加一行、两张文案表与对应 Row 加一列、在
-    /// <see cref="Pick"/> 里加一个分支。宽表方案的固有代价，已在文档中写明。</para>
+    /// <para>小说负责把强类型配表适配到框架解析器；语言偏好、回退和公共文案由框架提供。</para>
     /// </summary>
     public sealed class NovelLocalizer : ITextLocalizer
     {
@@ -20,6 +19,8 @@ namespace Game.Narrative
         public const string DEFAULT_SOURCE_LANGUAGE = "zh_Hans";
         private readonly NarrativeTableCatalog _catalog;
         private readonly List<string> _languages = new List<string>(8);
+        private readonly EmberTextLocalizer _resolver;
+        private static readonly string[] Columns = { "zh_Hans", "zh_Hant", "ja", "en" };
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -47,6 +48,12 @@ namespace Game.Narrative
             }
             if (_languages.Count == 0) _languages.Add(DEFAULT_SOURCE_LANGUAGE);
             SourceLanguage = source;
+            _resolver = new EmberTextLocalizer(source, _languages, () => NovelLanguageSettings.Current);
+            if (catalog != null && catalog.LocalizationReady)
+            {
+                foreach (var row in catalog.ContentText) Add(row.Key, row.ZhHans, row.ZhHant, row.Ja, row.En);
+                foreach (var row in catalog.UiText) Add(row.Key, row.ZhHans, row.ZhHant, row.Ja, row.En);
+            }
         }
 
         /// <summary>当前语言；没设置过全局语言时等于源语言。</summary>
@@ -69,32 +76,17 @@ namespace Game.Narrative
             text = null;
             if (_catalog == null || !_catalog.LocalizationReady || string.IsNullOrWhiteSpace(key)) return false;
             string target = string.IsNullOrEmpty(language) ? CurrentLanguage : language;
-            // 内容表优先、UI 表兜底：两张表按 ui. 前缀分工，但这里不强制，
-            // 避免 Key 放错表就直接失效（放错只是查表顺序不同，行为仍然可预期）。
-            if (_catalog.TryGetContentText(key, out NovelContentTextRow content) &&
-                Pick(content.ZhHans, content.ZhHant, content.Ja, content.En, target, out text)) return true;
-            if (_catalog.TryGetUiText(key, out NovelUiTextRow ui) &&
-                Pick(ui.ZhHans, ui.ZhHant, ui.Ja, ui.En, target, out text)) return true;
-            return false;
+            if (_resolver.TryGet(key, target, out text)) return true;
+            return EmberLocalization.Default != null && EmberLocalization.Default.TryGet(key, target, out text);
         }
         #endregion
         // --------------------------------------------------------
         #region 内部方法
         /// <summary>按语言取列；目标语言列为空时回退源语言列；源语言列也为空则判定为未命中。</summary>
-        private bool Pick(string source, string traditional, string japanese, string english, string language, out string text)
+        private void Add(string key, string source, string traditional, string japanese, string english)
         {
-            text = null;
-            string value = language switch
-            {
-                "zh_Hant" => traditional,
-                "ja" => japanese,
-                "en" => english,
-                _ => source
-            };
-            if (string.IsNullOrEmpty(value)) value = source;
-            if (string.IsNullOrEmpty(value)) return false;
-            text = value;
-            return true;
+            var values = new[] { source, traditional, japanese, english };
+            _resolver.Add(key, language => EmberTextLocalizer.ResolveValue(Columns, values, language, SourceLanguage));
         }
         #endregion
     }
@@ -141,7 +133,7 @@ namespace Game.Narrative
         {
             _localizer = null;
             _catalog = null;
-            TextLocalization.SetLocalizer(null);
+            EmberLocalization.RestoreDefault();
         }
 
         /// <summary>

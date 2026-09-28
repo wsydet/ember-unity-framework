@@ -1,13 +1,14 @@
-﻿# Ember 文档索引
+# Ember 文档索引
 
-> 2026-09-21 M5 本批测试与文档已收束：用户确认双结局测试宿主修正后全部通过；归档 XML 保留 380/382，未取得新全量报告。完整示例与编辑工具已落盘；人工画面、项目中心保存/Bump 和消费端验收仍待完成，当前封存为 visual-novel 0.4.0 / preview。参见 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+> 2026-09-28：当前发布 **0.15.0**，提供通用多语言中心、小说立绘管理与列表显示修复。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0。196 项相关 EditMode 回归通过；完整 PlayMode、外部翻译服务和消费端升级待验证。
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解已有能力和待办。当前发布版本为 **0.13.2**，UPM Manager 支持检测与按需安装 Unity MCP。静态检查通过，Unity 编译及消费端安装待验证；已发布模板为 base 0.6.3 与 source3d-2p5d 0.3.5；本地文档整理已封存 base 0.6.4 与 source3d-2p5d 0.3.7（尚未发布），9 个技能继续使用 v0.13.1 来源。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。版本、迁移与验证边界见 [0.15.0 发布说明](dev/release-0.15.0.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
 
 ## 使用框架
 
 | 文档 | 内容 |
 |---|---|
+| [多语言中心](../Packages/com.ember/Documentation~/manual/localization-center.md) | 通用文案编辑、语言切换与辅助翻译 |
 | [项目规则](../CLAUDE.md) | 架构、编码、Unity 验证与模板维护约束 |
 | [业务代码与资源目录规范](../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md) | Game/Module、Game/UI/Runtime/Module、GameResource 的模块归属；Runtime 必需，UI 必须通过 UI 中心生成；专用 Atlas 与 Common 规则 |
 | [UI 开发参考](user/UI开发参考.md) | 页面、Item、Binding、状态路由和代码生成 |

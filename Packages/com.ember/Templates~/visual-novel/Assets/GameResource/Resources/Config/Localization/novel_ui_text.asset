@@ -1,0 +1,460 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902fab8c01f9a2f41aa59e5c4d2ce898, type: 3}
+  m_Name: novel_ui_text
+  m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EmberLocalizationTable
+  TableId: novel_ui_text
+  SourceLanguage: zh_Hans
+  Languages:
+  - zh_Hans
+  - zh_Hant
+  - ja
+  - en
+  Entries:
+  - Key: ui.main.Title
+    Values:
+    - "\u89C6\u89C9\u5C0F\u8BF4"
+    - "\u8996\u89BA\u5C0F\u8AAA"
+    - "\u30D3\u30B8\u30E5\u30A2\u30EB\u30CE\u30D9\u30EB"
+    - Visual Novel
+  - Key: ui.main.Start
+    Values:
+    - "\u65B0\u6E38\u620F"
+    - "\u65B0\u904A\u6232"
+    - "\u306F\u3058\u3081\u304B\u3089"
+    - New Game
+  - Key: ui.main.Continue
+    Values:
+    - "\u7EE7\u7EED\u6E38\u620F"
+    - "\u7E7C\u7E8C\u904A\u6232"
+    - "\u3064\u3065\u304D\u304B\u3089"
+    - Continue
+  - Key: ui.main.Load
+    Values:
+    - "\u8BFB\u53D6\u5B58\u6863"
+    - "\u8B80\u53D6\u5B58\u6A94"
+    - "\u30ED\u30FC\u30C9"
+    - Load
+  - Key: ui.main.Settings
+    Values:
+    - "\u8BBE\u7F6E"
+    - "\u8A2D\u5B9A"
+    - "\u8A2D\u5B9A"
+    - Settings
+  - Key: ui.main.Quit
+    Values:
+    - "\u9000\u51FA\u6E38\u620F"
+    - "\u7D50\u675F\u904A\u6232"
+    - "\u30B2\u30FC\u30E0\u7D42\u4E86"
+    - Quit
+  - Key: ui.reader.Saves.Label
+    Values:
+    - "\u5B58\u8BFB\u6863"
+    - "\u5B58\u6A94\uFF0F\u8B80\u53D6"
+    - "\u30BB\u30FC\u30D6\uFF0F\u30ED\u30FC\u30C9"
+    - Save/Load
+  - Key: ui.reader.QuickSave.Label
+    Values:
+    - "\u5FEB\u5B58"
+    - "\u5FEB\u901F\u5B58\u6A94"
+    - "\u30AF\u30A4\u30C3\u30AF\u30BB\u30FC\u30D6"
+    - Quick Save
+  - Key: ui.reader.QuickLoad.Label
+    Values:
+    - "\u5FEB\u8BFB"
+    - "\u5FEB\u901F\u8B80\u53D6"
+    - "\u30AF\u30A4\u30C3\u30AF\u30ED\u30FC\u30C9"
+    - Quick Load
+  - Key: ui.reader.Settings.Label
+    Values:
+    - "\u5B57\u53F7"
+    - "\u5B57\u7D1A"
+    - "\u6587\u5B57\u30B5\u30A4\u30BA"
+    - Font Size
+  - Key: ui.reader.History.Label
+    Values:
+    - "\u5386\u53F2"
+    - "\u6B77\u53F2"
+    - "\u5C65\u6B74"
+    - History
+  - Key: ui.reader.HideDialogue.Label
+    Values:
+    - "\u9690\u85CF"
+    - "\u96B1\u85CF"
+    - "\u975E\u8868\u793A"
+    - Hide
+  - Key: ui.reader.Skip.Label
+    Values:
+    - "\u5DF2\u8BFB\u5FEB\u8FDB"
+    - "\u5DF2\u8B80\u5FEB\u9032"
+    - "\u65E2\u8AAD\u30B9\u30AD\u30C3\u30D7"
+    - Skip Read Text
+  - Key: ui.reader.Menu.Label
+    Values:
+    - "\u83DC\u5355"
+    - "\u9078\u55AE"
+    - "\u30E1\u30CB\u30E5\u30FC"
+    - Menu
+  - Key: ui.reader.Choice.Label
+    Values:
+    - "\u9009\u9879"
+    - 
+    - 
+    - 
+  - Key: ui.menu.Title
+    Values:
+    - "\u9605\u8BFB\u83DC\u5355"
+    - "\u95B1\u8B80\u9078\u55AE"
+    - "\u30E1\u30CB\u30E5\u30FC"
+    - Reader Menu
+  - Key: ui.menu.Saves.Label
+    Values:
+    - "\u5B58\u6863 / \u8BFB\u6863"
+    - "\u5B58\u6A94 / \u8B80\u53D6"
+    - "\u30BB\u30FC\u30D6\uFF0F\u30ED\u30FC\u30C9"
+    - Save / Load
+  - Key: ui.menu.QuickSave.Label
+    Values:
+    - "\u5FEB\u901F\u4FDD\u5B58"
+    - "\u5FEB\u901F\u5B58\u6A94"
+    - "\u30AF\u30A4\u30C3\u30AF\u30BB\u30FC\u30D6"
+    - Quick Save
+  - Key: ui.menu.QuickLoad.Label
+    Values:
+    - "\u5FEB\u901F\u8BFB\u53D6"
+    - "\u5FEB\u901F\u8B80\u53D6"
+    - "\u30AF\u30A4\u30C3\u30AF\u30ED\u30FC\u30C9"
+    - Quick Load
+  - Key: ui.menu.Settings.Label
+    Values:
+    - "\u7CFB\u7EDF\u8BBE\u7F6E"
+    - "\u7CFB\u7D71\u8A2D\u5B9A"
+    - "\u30B7\u30B9\u30C6\u30E0\u8A2D\u5B9A"
+    - System Settings
+  - Key: ui.menu.ReadSkip.Label
+    Values:
+    - "\u4EC5\u5DF2\u8BFB\u5FEB\u8FDB"
+    - "\u50C5\u5DF2\u8B80\u5FEB\u9032"
+    - "\u65E2\u8AAD\u306E\u307F\u30B9\u30AD\u30C3\u30D7"
+    - Skip Read Only
+  - Key: ui.menu.ReturnMenu.Label
+    Values:
+    - "\u8FD4\u56DE\u4E3B\u83DC\u5355"
+    - "\u8FD4\u56DE\u4E3B\u9078\u55AE"
+    - "\u30BF\u30A4\u30C8\u30EB\u3078\u623B\u308B"
+    - Return to Title
+  - Key: ui.history.Title
+    Values:
+    - "\u5BF9\u8BDD\u5386\u53F2 \xB7 \u4EC5\u67E5\u770B"
+    - "\u5C0D\u8A71\u6B77\u53F2 \xB7 \u50C5\u6AA2\u8996"
+    - "\u4F1A\u8A71\u5C65\u6B74 \xB7 \u95B2\u89A7\u306E\u307F"
+    - "Dialogue History \xB7 View Only"
+  - Key: ui.history.Close.Label
+    Values:
+    - "\u8FD4\u56DE\u9605\u8BFB"
+    - "\u8FD4\u56DE\u95B1\u8B80"
+    - "\u8AAD\u66F8\u306B\u623B\u308B"
+    - Back to Reader
+  - Key: ui.history.Saves.Label
+    Values:
+    - "\u5B58\u8BFB\u6863"
+    - "\u5B58\u6A94\uFF0F\u8B80\u53D6"
+    - "\u30BB\u30FC\u30D6\uFF0F\u30ED\u30FC\u30C9"
+    - Save/Load
+  - Key: ui.history.Empty
+    Values:
+    - "\u5C1A\u65E0\u5DF2\u5B8C\u6574\u663E\u793A\u7684\u5BF9\u767D"
+    - "\u5C1A\u7121\u5DF2\u5B8C\u6574\u986F\u793A\u7684\u5C0D\u767D"
+    - "\u307E\u3060\u5168\u6587\u8868\u793A\u3055\u308C\u305F\u53F0\u8A5E\u306F\u3042\u308A\u307E\u305B\u3093"
+    - No fully displayed lines yet
+  - Key: ui.font.Title
+    Values:
+    - "\u5B57\u53F7"
+    - "\u5B57\u7D1A"
+    - "\u6587\u5B57\u30B5\u30A4\u30BA"
+    - Font Size
+  - Key: ui.font.Small.Label
+    Values:
+    - "\u5C0F"
+    - "\u5C0F"
+    - "\u5C0F"
+    - Small
+  - Key: ui.font.Medium.Label
+    Values:
+    - "\u4E2D"
+    - "\u4E2D"
+    - "\u4E2D"
+    - Medium
+  - Key: ui.font.Large.Label
+    Values:
+    - "\u5927"
+    - "\u5927"
+    - "\u5927"
+    - Large
+  - Key: ui.font.Preview
+    Values:
+    - "\u5373\u65F6\u9884\u89C8"
+    - "\u5373\u6642\u9810\u89BD"
+    - "\u30EA\u30A2\u30EB\u30BF\u30A4\u30E0\u30D7\u30EC\u30D3\u30E5\u30FC"
+    - Live Preview
+  - Key: ui.save.Title
+    Values:
+    - "\u5B58\u6863\u4E0E\u8BFB\u53D6"
+    - "\u5B58\u6A94\u8207\u8B80\u53D6"
+    - "\u30BB\u30FC\u30D6\u3068\u30ED\u30FC\u30C9"
+    - Save & Load
+  - Key: ui.save.Close.Label
+    Values:
+    - "\u8FD4\u56DE"
+    - "\u8FD4\u56DE"
+    - "\u623B\u308B"
+    - Back
+  - Key: ui.save.Feedback
+    Values:
+    - "\u9009\u62E9\u69FD\u4F4D"
+    - "\u9078\u64C7\u6B04\u4F4D"
+    - "\u30B9\u30ED\u30C3\u30C8\u3092\u9078\u629E"
+    - Select a Slot
+  - Key: ui.save.Slot.Summary
+    Values:
+    - "\u7A7A\u69FD\u4F4D"
+    - "\u7A7A\u6B04\u4F4D"
+    - "\u7A7A\u304D\u30B9\u30ED\u30C3\u30C8"
+    - Empty Slot
+  - Key: ui.save.Slot.Write.Label
+    Values:
+    - "\u4FDD\u5B58"
+    - "\u5132\u5B58"
+    - "\u30BB\u30FC\u30D6"
+    - Save
+  - Key: ui.save.Slot.Read.Label
+    Values:
+    - "\u8BFB\u53D6"
+    - "\u8B80\u53D6"
+    - "\u30ED\u30FC\u30C9"
+    - Load
+  - Key: ui.setting.Title
+    Values:
+    - "\u8BBE\u7F6E"
+    - "\u8A2D\u5B9A"
+    - "\u8A2D\u5B9A"
+    - Settings
+  - Key: ui.setting.Close.Label
+    Values:
+    - "\u8FD4\u56DE"
+    - "\u8FD4\u56DE"
+    - "\u623B\u308B"
+    - Back
+  - Key: ui.setting.CurrentScene.Label
+    Values:
+    - "\u5F53\u524D\u573A\u666F"
+    - "\u76EE\u524D\u5834\u666F"
+    - "\u73FE\u5728\u306E\u30B7\u30FC\u30F3"
+    - Current Scene
+  - Key: ui.setting.ReadingAndAudio.Title
+    Values:
+    - "\u9605\u8BFB\u4E0E\u58F0\u97F3"
+    - "\u95B1\u8B80\u8207\u97F3\u8A0A"
+    - "\u8AAD\u66F8\u3068\u30B5\u30A6\u30F3\u30C9"
+    - Reading & Audio
+  - Key: ui.setting.TextSpeed.Label
+    Values:
+    - "\u6587\u5B57\u901F\u5EA6"
+    - "\u6587\u5B57\u901F\u5EA6"
+    - "\u6587\u5B57\u901F\u5EA6"
+    - Text Speed
+  - Key: ui.setting.AutoInterval.Label
+    Values:
+    - "\u81EA\u52A8\u95F4\u9694"
+    - "\u81EA\u52D5\u9593\u9694"
+    - "\u30AA\u30FC\u30C8\u9593\u9694"
+    - Auto Interval
+  - Key: ui.setting.BgmVolume.Label
+    Values:
+    - "\u80CC\u666F\u97F3\u4E50"
+    - "\u80CC\u666F\u97F3\u6A02"
+    - BGM
+    - Music
+  - Key: ui.setting.SfxVolume.Label
+    Values:
+    - "\u97F3\u6548"
+    - "\u97F3\u6548"
+    - "\u52B9\u679C\u97F3"
+    - Sound Effects
+  - Key: ui.setting.VoiceVolume.Label
+    Values:
+    - "\u914D\u97F3"
+    - "\u8A9E\u97F3"
+    - "\u30DC\u30A4\u30B9"
+    - Voice
+  - Key: ui.setting.ShakePreference.Label
+    Values:
+    - "\u9707\u52A8\u5F3A\u5EA6"
+    - "\u9707\u52D5\u5F37\u5EA6"
+    - "\u632F\u52D5\u306E\u5F37\u3055"
+    - Shake Intensity
+  - Key: ui.setting.FlashPreference.Label
+    Values:
+    - "\u95EA\u5149\u5F3A\u5EA6"
+    - "\u9583\u5149\u5F37\u5EA6"
+    - "\u30D5\u30E9\u30C3\u30B7\u30E5\u306E\u5F37\u3055"
+    - Flash Intensity
+  - Key: ui.setting.Language.Label
+    Values:
+    - "\u8BED\u8A00"
+    - "\u8A9E\u8A00"
+    - "\u8A00\u8A9E"
+    - Language
+  - Key: ui.setting.CurrentScene.Main
+    Values:
+    - "\u5F53\u524D\u573A\u666F\uFF1A\u4E3B\u754C\u9762"
+    - "\u76EE\u524D\u5834\u666F\uFF1A\u4E3B\u756B\u9762"
+    - "\u73FE\u5728\u306E\u30B7\u30FC\u30F3\uFF1A\u30E1\u30A4\u30F3\u753B\u9762"
+    - 'Current Scene: Main Menu'
+  - Key: ui.setting.CurrentScene.Gameplay
+    Values:
+    - "\u5F53\u524D\u573A\u666F\uFF1A\u73A9\u6CD5\u4E2D"
+    - "\u76EE\u524D\u5834\u666F\uFF1A\u904A\u6232\u4E2D"
+    - "\u73FE\u5728\u306E\u30B7\u30FC\u30F3\uFF1A\u30D7\u30EC\u30A4\u4E2D"
+    - 'Current Scene: Gameplay'
+  - Key: ui.setting.TextSpeed.Unit
+    Values:
+    - "\u5B57/\u79D2"
+    - "\u5B57/\u79D2"
+    - "\u6587\u5B57/\u79D2"
+    - chars/s
+  - Key: ui.setting.AutoInterval.Unit
+    Values:
+    - "\u79D2"
+    - "\u79D2"
+    - "\u79D2"
+    - s
+  - Key: ui.setting.Effect.Normal
+    Values:
+    - "\u6B63\u5E38"
+    - "\u6B63\u5E38"
+    - "\u901A\u5E38"
+    - Normal
+  - Key: ui.setting.Effect.Reduced
+    Values:
+    - "\u51CF\u5F31"
+    - "\u6E1B\u5F31"
+    - "\u8EFD\u6E1B"
+    - Reduced
+  - Key: ui.setting.Effect.Off
+    Values:
+    - "\u5173\u95ED"
+    - "\u95DC\u9589"
+    - "\u30AA\u30D5"
+    - Off
+  - Key: ui.history.Narrator
+    Values:
+    - "\u65C1\u767D"
+    - "\u65C1\u767D"
+    - "\u30CA\u30EC\u30FC\u30B7\u30E7\u30F3"
+    - Narrator
+  - Key: ui.save.Slot.Unsaved
+    Values:
+    - "\u5C1A\u672A\u4FDD\u5B58"
+    - "\u5C1A\u672A\u5132\u5B58"
+    - "\u672A\u30BB\u30FC\u30D6"
+    - Unsaved
+  - Key: ui.reader.Choice.Prompt
+    Values:
+    - "\u4F60\u4F1A\u5982\u4F55\u9009\u62E9\uFF1F"
+    - "\u4F60\u6703\u5982\u4F55\u9078\u64C7\uFF1F"
+    - "\u3069\u3046\u9078\u3073\u307E\u3059\u304B\uFF1F"
+    - How will you choose?
+  - Key: ui.reader.Status.Preparing
+    Values:
+    - "\u6B63\u5728\u51C6\u5907\u914D\u8868\u3001\u9875\u9762\u4E0E\u5267\u60C5\u2026"
+    - "\u6B63\u5728\u6E96\u5099\u914D\u8868\u3001\u9801\u9762\u8207\u5287\u60C5\u2026"
+    - "\u30C6\u30FC\u30D6\u30EB\u30FB\u30DA\u30FC\u30B8\u30FB\u30B7\u30CA\u30EA\u30AA\u3092\u6E96\u5099\u3057\u3066\u3044\u307E\u3059\u2026"
+    - "Preparing tables, pages and story\u2026"
+  - Key: ui.reader.Status.Paused
+    Values:
+    - "\u5DF2\u6682\u505C"
+    - "\u5DF2\u66AB\u505C"
+    - "\u4E00\u6642\u505C\u6B62\u4E2D"
+    - Paused
+  - Key: ui.reader.Status.Ending
+    Values:
+    - "\u7ED3\u5C40"
+    - "\u7D50\u5C40"
+    - "\u30A8\u30F3\u30C7\u30A3\u30F3\u30B0"
+    - Ending
+  - Key: ui.reader.Auto.On
+    Values:
+    - "\u81EA\u52A8 ON"
+    - "\u81EA\u52D5 ON"
+    - "\u30AA\u30FC\u30C8 ON"
+    - Auto ON
+  - Key: ui.reader.Auto.Off
+    Values:
+    - "\u81EA\u52A8 OFF"
+    - "\u81EA\u52D5 OFF"
+    - "\u30AA\u30FC\u30C8 OFF"
+    - Auto OFF
+  - Key: ui.reader.Speed.Label
+    Values:
+    - "\u901F\u5EA6"
+    - "\u901F\u5EA6"
+    - "\u901F\u5EA6"
+    - Speed
+  - Key: ui.reader.Skip.Stop
+    Values:
+    - "\u505C\u6B62\u5FEB\u8FDB"
+    - "\u505C\u6B62\u5FEB\u9032"
+    - "\u30B9\u30AD\u30C3\u30D7\u505C\u6B62"
+    - Stop Skipping
+  - Key: ui.reader.Ending.Text
+    Values:
+    - "\u6545\u4E8B\u6682\u544A\u4E00\u6BB5\u843D\u3002\u611F\u8C22\u9605\u8BFB\u3002"
+    - "\u6545\u4E8B\u66AB\u544A\u4E00\u6BB5\u843D\u3002\u611F\u8B1D\u95B1\u8B80\u3002"
+    - "\u7269\u8A9E\u306F\u3053\u3053\u3067\u4E00\u533A\u5207\u308A\u3002\u8AAD\u3093\u3067\u304F\u308C\u3066\u3042\u308A\u304C\u3068\u3046\u3002"
+    - The story pauses here. Thank you for reading.
+  - Key: ui.save.Slot.Manual
+    Values:
+    - "\u624B\u52A8\u69FD"
+    - "\u624B\u52D5\u5B58\u6A94"
+    - "\u624B\u52D5\u30B9\u30ED\u30C3\u30C8"
+    - Manual Slot
+  - Key: ui.save.Slot.Quick
+    Values:
+    - "\u5FEB\u901F\u69FD"
+    - "\u5FEB\u901F\u5B58\u6A94"
+    - "\u30AF\u30A4\u30C3\u30AF\u30B9\u30ED\u30C3\u30C8"
+    - Quick Slot
+  - Key: ui.save.Slot.Auto
+    Values:
+    - "\u81EA\u52A8\u69FD"
+    - "\u81EA\u52D5\u5B58\u6A94"
+    - "\u30AA\u30FC\u30C8\u30B9\u30ED\u30C3\u30C8"
+    - Auto Slot
+  - Key: ui.name.Hint
+    Values:
+    - "\u8FD9\u4E2A\u540D\u5B57\u4F1A\u88AB\u4ED6\u4EEC\u8BB0\u4F4F\u3002"
+    - "\u9019\u500B\u540D\u5B57\u6703\u88AB\u4ED6\u5011\u8A18\u4F4F\u3002"
+    - "\u3053\u306E\u540D\u524D\u306F\u3001\u304D\u3063\u3068\u5F7C\u3089\u306B\u8A18\u61B6\u3055\u308C\u308B\u3002"
+    - They will remember this name.
+  - Key: ui.name.Confirm
+    Values:
+    - "\u786E\u5B9A"
+    - "\u78BA\u5B9A"
+    - "\u6C7A\u5B9A"
+    - Confirm
+  - Key: ui.save.InputPending
+    Values:
+    - "\u6B63\u5728\u8F93\u5165\u540D\u5B57\uFF0C\u5B8C\u6210\u8F93\u5165\u540E\u624D\u80FD\u4FDD\u5B58\u3002"
+    - "\u6B63\u5728\u8F38\u5165\u540D\u5B57\uFF0C\u5B8C\u6210\u8F38\u5165\u5F8C\u624D\u80FD\u5132\u5B58\u3002"
+    - "\u540D\u524D\u3092\u5165\u529B\u4E2D\u3067\u3059\u3002\u5165\u529B\u3092\u7D42\u3048\u308B\u3068\u30BB\u30FC\u30D6\u3067\u304D\u307E\u3059\u3002"
+    - You are entering a name. Finish the input to save.

@@ -24,6 +24,12 @@ namespace Game.UI.Editor
     /// </summary>
     internal static class NovelLocalizationEditorPreview
     {
+        [InitializeOnLoadMethod]
+        private static void SubscribeToSourceChanges()
+        {
+            Ember.UIExtension.Editor.EmberLocalizationEditorService.SourcesSaved -= Install;
+            Ember.UIExtension.Editor.EmberLocalizationEditorService.SourcesSaved += Install;
+        }
         #region 内部参数
 
         private const string TAG = "Novel.Localization";
