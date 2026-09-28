@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.16.0",
+  "frameworkTag": "v0.16.0",
+  "status": "release-ready-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.16.0.json",
+  "coverage": "Odin image resource library, explicit image source registration, grouped portrait/background/skin editing, logical folders and transactional import; visual-novel 0.16.0. No third-party dependency changes.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.7.0",
+      "frameworkVersion": "0.16.0",
+      "channel": "stable",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "274ae24260525ab08b7264fc66625b57",
+      "versionedContentHash": "274ae24260525ab08b7264fc66625b57"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.4.0",
+      "frameworkVersion": "0.16.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.7.0",
+      "parentContentHash": "274ae24260525ab08b7264fc66625b57",
+      "contentHash": "0ad733aaf3f71e7f77625ba7f814ddb9",
+      "versionedContentHash": "0ad733aaf3f71e7f77625ba7f814ddb9"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.16.0",
+      "frameworkVersion": "0.16.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.7.0",
+      "parentContentHash": "274ae24260525ab08b7264fc66625b57",
+      "contentHash": "5bee1c5da2ac80794fbfe86b16a4f440",
+      "versionedContentHash": "5bee1c5da2ac80794fbfe86b16a4f440"
+    }
+  ],
+  "validation": "Unity 6000.5.4f1 compilation passed. All 34 Table Editor EditMode tests passed. PNG import/save/bake and missing-image/invalid-character rollback verified. Template seals and parent snapshots, shared binaries/fonts and skill bundle verified. Full PlayMode, all-resolution visual acceptance and consumer upgrades remain unverified.",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#ember-v0.11.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.16.0",
+    "skills": [
+      "ember-template-conflict-recovery",
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-export-story",
+      "ember-vn-custom-node",
+      "ember-vn-edit-skin"
+    ],
+    "bundleSourceCommit": "6152fb6fa539e574e00248291260c619fb3de8a2",
+    "templateSkillUpdaterVersion": "0.14.4",
+    "templateSkillStateSchemaVersion": 3
+  }
+}

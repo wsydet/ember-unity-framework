@@ -7,15 +7,15 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.15.0**（通用多语言中心、小说立绘管理与列表显示修复；196 项相关 EditMode 回归通过，消费端升级待验证）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.16.0**（Odin 图片资源管理、分类文件夹与导入编辑；34 项表编辑器 EditMode 回归通过，消费端升级待验证）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.15.0"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.16.0"
 }
 ```
 
-把该条目加入项目 `Packages/manifest.json` 的 `dependencies`。开发仓库自身使用 embedded `file:com.ember`。
+首次安装时把该条目加入项目 `Packages/manifest.json` 的 `dependencies`；已有项目升级必须通过 `Ember/UPM Manager`。开发仓库自身使用 embedded `file:com.ember`。
 本地未提交的新功能不在旧 tag 中；安装 tag 时以该 tag 随附的文档、模板和依赖为准。
 
 Odin Inspector 和 DOTween 是当前代码的前置依赖，需要合法取得并安装。
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.15.0 manifest 基线](Dependencies~/manifest-0.15.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；消费端按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.16.0 manifest 基线](Dependencies~/manifest-0.16.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 

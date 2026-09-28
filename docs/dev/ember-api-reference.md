@@ -1,5 +1,9 @@
 # Ember API 速查手册
 
+## 图片资源编辑器（0.16.0）
+
+`Ember.Table.Editor.EmberImageLibraryWindow` 提供源表驱动的三栏图片管理基类；模板通过 `BuiltinSources()` 声明图片表，使用 `FolderAssetPath` 指定编辑器分组资产。`EmberImageSourceAsset` 可登记额外来源，明确 TableId、KeyColumn、ImageColumn、GroupColumns、Sprite 和 ImportFolder；不会按字段名猜测音频或图片。`EmberImageLibraryFolders` 按来源、自动分组和 Key 隔离逻辑目录。面板复用 `EmberTableSourceDocument.Save` 的外部修改检查与烘焙事务，新增图片保存失败时撤回。全部类型仅在 Editor 程序集中。
+
 > **写代码前先查这里，避免重复造轮子。**
 > 最后核对：2026-09-09；这是常用 API 速查，完整签名以当前源码和各模块文档为准。
 
