@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "skills": [
     {
+      "id": "ember-add-font",
+      "displayName": "Ember 添加字体",
+      "description": "导入字体并批量补齐字体皮肤、Prefab、场景和运行时 UI 的使用映射，适用于所有模板。",
+      "minimumFrameworkVersion": "0.17.0"
+    },
+    {
       "id": "ember-template-conflict-recovery",
       "displayName": "Ember 模板冲突恢复",
       "description": "保护大量本地修改，分批合并模板冲突，支持全量部署前备份和部署后恢复。",
