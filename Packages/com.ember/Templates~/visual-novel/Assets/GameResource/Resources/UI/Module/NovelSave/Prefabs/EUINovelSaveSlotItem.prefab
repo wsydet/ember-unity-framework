@@ -380,6 +380,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.save.Slot.Write.Label
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &3858403741267170079
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6308533812587176054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 54679fcd251ee6b4eb0752e1e279265f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
@@ -592,6 +601,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &7973668098990661243
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,6 +749,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.save.Slot.Read.Label
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &8001608628761183034
 GameObject:
   m_ObjectHideFlags: 0

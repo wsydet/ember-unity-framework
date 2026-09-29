@@ -28,7 +28,8 @@ namespace Ember.UIExtension.Editor
             where TOriginal : Component
             where TReplacement : Component
         {
-            return context is TOriginal && !(context is TReplacement);
+            return typeof(TOriginal).IsAssignableFrom(typeof(TReplacement)) &&
+                   context is TOriginal && !(context is TReplacement);
         }
 
         /// <summary>
@@ -40,6 +41,8 @@ namespace Ember.UIExtension.Editor
         {
             if (original == null) return null;
             if (original is TReplacement replacement) return replacement;
+            if (!typeof(TOriginal).IsAssignableFrom(typeof(TReplacement)))
+                throw new ArgumentException("增强组件替换仅支持继承类型；Legacy Text → TMPEx 请使用字体皮肤工具的显示属性迁移。");
 
             var go = original.gameObject;
 

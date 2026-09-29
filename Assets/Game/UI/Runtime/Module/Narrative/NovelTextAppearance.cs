@@ -30,7 +30,11 @@ namespace Game.UI
         [HasGC]
         public void Apply(TMP_Text text, float fontScale = 1)
         {
-            text.font = _font; text.fontSharedMaterial = _material; text.fontSize = _size * fontScale;
+            if (!(text is Ember.UIExtension.TMPEx extended) || !extended.UsesFontSkin || !extended.ApplyFontSkin())
+            {
+                text.font = _font; text.fontSharedMaterial = _material;
+            }
+            text.fontSize = _size * fontScale;
             text.color = _color; text.fontStyle = _style; text.alignment = _alignment;
             text.characterSpacing = _characters; text.lineSpacing = _lines; text.margin = _margin;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.Table;
 using Game.Table.Generated;
 using UnityEditor;
@@ -339,18 +340,25 @@ namespace Game.Narrative.Editor
             if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
             if (_snapshot != null)
             {
-                _showDiagnostics = EditorGUILayout.Foldout(_showDiagnostics, "运行观察 · " + _snapshot.State + " / " + _snapshot.Wait, true);
+                _showDiagnostics = SirenixEditorGUI.Foldout(_showDiagnostics, "运行观察 · " + _snapshot.State + " / " + _snapshot.Wait);
                 if (_showDiagnostics) Diagnostics();
             }
             else EditorGUILayout.HelpBox(EditorApplication.isPlaying ? "Play Mode · 无已发布的小说会话" : "编辑模式 · 无运行会话", MessageType.None);
             if (_overview) { DrawStoryInspector(); EditorGUILayout.EndScrollView(); return; }
-            EditorGUILayout.LabelField(_selected ? "内容 · " + _selected.name : "章节内容", EditorStyles.boldLabel);
+            SirenixEditorGUI.Title(_selected ? "内容 · " + _selected.name : "章节内容", _chapter ? _chapter.name : "尚未选择章节", TextAlignment.Left, true);
             if (!_chapter) EditorGUILayout.HelpBox("选择或新建章节；画布按空格添加节点。", MessageType.Info);
             else
             {
-                if (_selected) _contentTab = GUILayout.Toolbar(_contentTab, new[] { "对话内容", "SO 设置" });
+                if (_selected) _contentTab = GUILayout.Toolbar(_contentTab, new[] { "对话内容", "节点设置与操作" }, GUILayout.Height(26));
                 BindContent(); if (_content != null) NarrativeContentGUI.Draw(_content, ChapterSnapshot, _catalog, _selected && _contentTab == 1);
-                if (!_selected || _contentTab == 1) NodeActions();
+                if (!_selected || _contentTab == 1)
+                {
+                    SirenixEditorGUI.BeginBox("节点操作");
+                    try { NodeActions(); }
+                    finally { SirenixEditorGUI.EndBox(); }
+                }
+                if (_errors.Count > 0 || _hints.Count > 0)
+                    SirenixEditorGUI.Title("校验结果", $"{_errors.Count} 个错误 · {_hints.Count} 条提示", TextAlignment.Left, true);
                 foreach (var error in _errors)
                 {
                     EditorGUILayout.HelpBox(error.ToString(), MessageType.Error);

@@ -190,6 +190,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.name.Confirm
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &1142181664041076094
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1142181664041076094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 54679fcd251ee6b4eb0752e1e279265f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
@@ -327,6 +336,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &2727317710170573908
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +484,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.name.Hint
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &3074690838264863583
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +892,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4456182584500763123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 54679fcd251ee6b4eb0752e1e279265f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
@@ -947,6 +975,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &6383558291718456295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,6 +1274,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &8583399710231329428
 GameObject:
   m_ObjectHideFlags: 0

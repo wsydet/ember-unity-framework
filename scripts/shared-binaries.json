@@ -16,6 +16,11 @@
       "length": 1233128,
       "sha256": "7D5FB73B7CA67A6798101741F5D280A3D016A56A197AFCD4199DBB57B4B82A21",
       "requiredCharacters": "▶◀▲▼▷◁△▽✓✔✕✖★☆●○◆◇■□⚠⏸⏹⏵⏴"
+    },
+    {
+      "path": "SharedAssets/Fonts/NotoSerifSC/NotoSerifSC.ttf",
+      "length": 25125512,
+      "sha256": "050080D9255A86808F2945BFFAC582B31EF32BC36411CE29563B4961670C66F9"
     }
   ]
 }

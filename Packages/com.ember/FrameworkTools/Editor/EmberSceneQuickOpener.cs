@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.Basic;
 using Ember.Core;
 using UnityEditor;
@@ -21,13 +22,14 @@ namespace Ember.Core.Editor
         private List<StateSceneEntry> _overlayStates = new();  // 可叠加场景
         private int _mainIndex;
         private readonly List<bool> _overlayToggles = new();
+        private Vector2 _scroll;
 
         [MenuItem("Ember/快速打开场景", false, 1)]
         public static void Open()
         {
             var window = GetWindow<EmberSceneQuickOpener>(true, "快速打开场景");
-            window.minSize = new Vector2(320, 160);
-            window.maxSize = new Vector2(420, 260);
+            window.minSize = new Vector2(380, 320);
+            window.maxSize = new Vector2(900, 900);
             window.Show();
         }
 
@@ -84,7 +86,7 @@ namespace Ember.Core.Editor
             GUILayout.FlexibleSpace();
             bool refresh = GUILayout.Button("刷新", GUILayout.Width(50));
             using (new EditorGUI.DisabledScope(_mapping == null))
-                if (GUILayout.Button("SO", GUILayout.Width(40))) Selection.activeObject = _mapping;
+                if (GUILayout.Button("场景映射", GUILayout.Width(80))) Selection.activeObject = _mapping;
             EditorGUILayout.EndHorizontal();
             if (refresh)
             {
@@ -99,34 +101,38 @@ namespace Ember.Core.Editor
                 return;
             }
 
-            GUILayout.Space(4);
+            SirenixEditorGUI.Title("打开场景组合", "框架场景 + 一个主场景 + 可选叠加场景", TextAlignment.Left, true);
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
 
             // --- 主场景（互斥） ---
             if (_mainStates.Count > 0)
             {
-                GUILayout.Label("主场景", EditorStyles.boldLabel);
+                SirenixEditorGUI.BeginBox("主场景 · 单选");
                 var labels = _mainStates.Select(e => e.stateName.Replace("State", "")).ToArray();
                 _mainIndex = Mathf.Clamp(_mainIndex, 0, labels.Length - 1);
-                _mainIndex = GUILayout.Toolbar(_mainIndex, labels);
+                _mainIndex = EditorGUILayout.Popup("选择场景", _mainIndex, labels);
 
                 var selected = _mainStates[_mainIndex];
                 ShowSceneStatus(selected);
+                SirenixEditorGUI.EndBox();
             }
 
             // --- 叠加场景（多选） ---
             if (_overlayStates.Count > 0)
             {
                 GUILayout.Space(4);
-                GUILayout.Label("叠加场景（可多选）", EditorStyles.boldLabel);
+                SirenixEditorGUI.BeginBox("叠加场景 · 多选");
                 for (int i = 0; i < _overlayStates.Count; i++)
                 {
                     _overlayToggles[i] = GUILayout.Toggle(_overlayToggles[i],
                         _overlayStates[i].stateName.Replace("State", ""));
                     ShowSceneStatus(_overlayStates[i]);
                 }
+                SirenixEditorGUI.EndBox();
             }
-
+            EditorGUILayout.EndScrollView();
             GUILayout.Space(8);
+            if (!CanOpen()) EditorGUILayout.HelpBox("请选择有效主场景，并补齐框架及所选叠加场景映射；播放期间不能打开。", MessageType.Info);
 
             // --- 打开按钮 ---
             using (new EditorGUI.DisabledScope(!CanOpen()))

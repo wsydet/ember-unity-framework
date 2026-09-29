@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 
 using UnityEditor;
 using UnityEngine;
@@ -44,6 +45,7 @@ namespace Ember.Table.Editor
         private bool _showData = true;
         private bool _showCode = true;
         private bool _showDiagnostics = true;
+        [SerializeField] private int _detailTab;
 
         #endregion
 
@@ -153,12 +155,16 @@ namespace Ember.Table.Editor
                 }
 
                 DrawSelectedToolbar();
+                _detailTab = GUILayout.Toolbar(_detailTab, new[] { "数据预览", "配置与结构", "诊断与产物", "调用示例" }, GUILayout.Height(28));
                 _detailScroll = EditorGUILayout.BeginScrollView(_detailScroll);
-                DrawOverview();
-                DrawSchema();
-                DrawData();
-                DrawUsageCode();
-                DrawDiagnosticsAndResults();
+                SirenixEditorGUI.Title(DisplayTableId(_selected), _selectedData == null ? "尚无有效数据预览，请先校验" : _selectedData.Rows.Count + " 行", TextAlignment.Left, true);
+                switch (_detailTab)
+                {
+                    case 0: DrawData(); break;
+                    case 1: DrawOverview(); DrawSchema(); break;
+                    case 2: DrawDiagnosticsAndResults(); break;
+                    case 3: DrawUsageCode(); break;
+                }
                 EditorGUILayout.EndScrollView();
             }
         }
@@ -211,7 +217,7 @@ namespace Ember.Table.Editor
 
         private void DrawSchema()
         {
-            _showSchema = EditorGUILayout.Foldout(_showSchema, "字段结构（程序中的 Row Schema）", true);
+            _showSchema = SirenixEditorGUI.Foldout(_showSchema, "字段结构（程序中的 Row Schema）");
             if (!_showSchema) return;
             if (_selectedSchema == null)
             {
@@ -484,6 +490,7 @@ namespace Ember.Table.Editor
 
         private void RunValidation()
         {
+            _detailTab = 2;
             RefreshCatalog();
             _operationDiagnostics = _catalogValidation.Diagnostics;
             _summary = _catalogValidation.Succeeded
@@ -493,6 +500,7 @@ namespace Ember.Table.Editor
 
         private void RunCurrentValidation()
         {
+            _detailTab = 2;
             EmberTableValidationResult result = EmberTablePipeline.Validate(_selected);
             RefreshCatalog();
             _operationDiagnostics = result.Diagnostics;
@@ -501,6 +509,7 @@ namespace Ember.Table.Editor
 
         private void RunPipeline(bool commit)
         {
+            _detailTab = 2;
             EmberTablePipelineResult result = commit
                 ? EmberTablePipeline.BakeAndGenerateAll()
                 : EmberTablePipeline.PreviewAll();
@@ -514,6 +523,7 @@ namespace Ember.Table.Editor
 
         private void RunCurrentBake()
         {
+            _detailTab = 2;
             EmberTablePipelineResult result = EmberTablePipeline.BakeCurrent(_selected);
             RefreshCatalog();
             _operationDiagnostics = result.Diagnostics;
@@ -531,6 +541,7 @@ namespace Ember.Table.Editor
 
         private void CreateProjectScaffold()
         {
+            _detailTab = 2;
             bool succeeded = EmberTableProjectScaffold.TryCreate(out string summary, out var diagnostics);
             RefreshCatalog();
             _operationDiagnostics = diagnostics;
@@ -539,6 +550,7 @@ namespace Ember.Table.Editor
 
         private void BrowseArtifact()
         {
+            _detailTab = 2;
             if (EmberTableArtifactBrowser.TryLoad(
                     _selected,
                     out IEmberTableData table,

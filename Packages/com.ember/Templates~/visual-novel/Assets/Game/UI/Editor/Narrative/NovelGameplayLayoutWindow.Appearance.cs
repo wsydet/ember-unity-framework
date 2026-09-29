@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.UIExtension;
 using TMPro;
 using UnityEditor;
@@ -26,6 +27,7 @@ namespace Game.UI.Editor
         [SerializeField] private List<StyleValue> _styles = new();
         [SerializeField] private string _detailKey;
         [SerializeField] private bool _showHitArea;
+        [SerializeField] private bool _showSkinExport;
         // 皮肤清单按钮用的目标皮肤标识：留空则复制成 SKINID 占位，便于先取行再决定皮肤名。
         [SerializeField] private string _skinId = "lastlight_alt";
         private string SelectedKey => !string.IsNullOrEmpty(_detailKey) && _targets.ContainsKey(_detailKey) ? _detailKey : Keys[_selected];
@@ -115,6 +117,7 @@ namespace Game.UI.Editor
                 if (!component) continue;
                 var fields = StyleFields(component).ToArray();
                 if (fields.Length == 0) continue;
+                SirenixEditorGUI.BeginBox(component.GetType().Name);
                 using var serialized = new SerializedObject(component);
                 serialized.Update();
                 var oldFont = component is TMP_Text previousText ? previousText.font : null;
@@ -153,6 +156,7 @@ namespace Game.UI.Editor
                     Changed();
                     RebuildPreview();
                 }
+                SirenixEditorGUI.EndBox();
             }
             if (rect.TryGetComponent<Image>(out var image) && image.color.a == 0)
                 EditorGUILayout.HelpBox("此图片透明度为 0，换图后仍不可见。可提高颜色的 Alpha；推进命中区域本身通常保持透明。", MessageType.Info);
@@ -162,7 +166,8 @@ namespace Game.UI.Editor
             _showHitArea = EditorGUILayout.Toggle("显示推进点击范围", _showHitArea);
 
             GUILayout.Space(8);
-            GUILayout.Label("皮肤覆盖", EditorStyles.boldLabel);
+            _showSkinExport = SirenixEditorGUI.Foldout(_showSkinExport, "皮肤覆盖 · 导出配置行");
+            if (!_showSkinExport) return;
             EditorGUILayout.HelpBox("皮肤只换图片，不改位置与大小；这一行填进 novel_skin_sprites 即可。" +
                 "覆盖值必须是项目 Resources 下的图片，Unity 内置图片无法用路径表示。", MessageType.None);
             _skinId = EditorGUILayout.TextField("目标皮肤", _skinId);

@@ -1,6 +1,6 @@
 # Ember 消费端依赖声明
 
-当前发布基线为 **0.16.0**：[发布声明](release-0.16.0.json)、[完整 manifest](manifest-0.16.0.json)。Unity 开发基线为 **6000.5.4f1**。
+当前发布基线为 **0.17.0**：[发布声明](release-0.17.0.json)、[完整 manifest](manifest-0.17.0.json)。Unity 开发基线为 **6000.5.4f1**。
 
 ## 清单范围
 
@@ -14,7 +14,7 @@
 
 ## 首次安装与依赖配置
 
-1. 先确认第三方仓库 `ember-v0.11.1` 和框架仓库 `v0.16.0` 已真正发布，且消费机器有私有仓库访问权限及适用的插件授权。
+1. 先确认第三方仓库 `ember-v0.11.1` 和框架仓库 `v0.17.0` 已真正发布，且消费机器有私有仓库访问权限及适用的插件授权。
 2. 备份消费项目的 `Packages/manifest.json`、`packages-lock.json` 和现有插件/设置。
 3. 将本清单的 `dependencies` 按包名合并到消费项目 manifest，将 `scopedRegistries` 按 registry URL 合并 scope。保留该项目其他依赖、registry、testables 及其他配置，不直接覆盖整份 manifest。
 4. 已有同名 embedded 包或 Assets 插件时，先核对本地修改并制定迁移；特别是 Feel/MMTools/MMFeedbacks/NiceVibrations，不能让原 Assets 插件和新 UPM 包同时被导入。本文不授权自动删除旧内容。
@@ -22,14 +22,14 @@
 
 这些 JSON 是发布声明，不是会自动执行的安装脚本。框架升级只更新 `com.ember`；可选包须逐项点击安装，不会自动装齐全部依赖。
 
-可选包按钮使用 `release-0.16.0.json` 的 `optionalPackageInstallTargets`：Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector 使用各自独立版本标签，Feel 保留 `ember-v0.11.1`。Unity MCP 使用官方仓库 10.1.2 的固定提交，与完整 manifest 的 Unity MCP 地址一致。完整 manifest 的历史第三方基线未变；这两类地址用途不同。已安装的包（包括直接导入的插件）不会被安装按钮覆盖。
+可选包按钮使用 `release-0.17.0.json` 的 `optionalPackageInstallTargets`：Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector 使用各自独立版本标签，Feel 保留 `ember-v0.11.1`。Unity MCP 使用官方仓库 10.1.2 的固定提交，与完整 manifest 的 Unity MCP 地址一致。完整 manifest 的历史第三方基线未变；这两类地址用途不同。已安装的包（包括直接导入的插件）不会被安装按钮覆盖。
 
 ## 模板声明与验证
 
-发布 base **0.7.0**、source3d-2p5d **0.4.0**、visual-novel **0.16.0**，框架兼容声明统一为 **0.16.0**。两个子模板继承 base 0.7.0，父快照逐文件一致；本次只有小说图片编辑入口和适配内容变化，base 与 2.5D 内容 hash 保持不变。内容 Hash 见发布 JSON。
+发布 base **0.7.0**、source3d-2p5d **0.4.0**、visual-novel **0.17.3**，框架兼容声明统一为 **0.17.0**。两个子模板继承 base 0.7.0，父快照逐文件一致；本次小说字体皮肤、编辑面板和图片入口变化，base 与 2.5D 内容 hash 保持不变。内容 Hash 见发布 JSON。
 
-Unity 编译及 34 项表编辑器 EditMode 测试通过；实际导入、烘焙与失败回滚已验证。完整 PlayMode、所有分辨率视觉验收、真实消费项目全新安装与升级尚未验证。第三方授权、访问权限和按需安装规则保持不变。
+Unity 编译及 16 项字体/多语言 EditMode 测试通过；模板实际内容、封存 hash、父快照与编辑记录一致。旧小说项目须配套迁移同 GUID 的 Assets 宋体。完整 PlayMode、所有分辨率视觉验收、真实消费项目全新安装与升级尚未验证。第三方授权、访问权限和按需安装规则保持不变。
 
 ## 发布顺序
 
-按 `package.json → CHANGELOG → release/manifest → commit → annotated tag → push` 发布 `v0.16.0`。框架技能来源对齐此 tag，技能内容沿用既有版本。
+按 `package.json → CHANGELOG → release/manifest → commit → annotated tag → push` 发布 `v0.17.0`。框架技能来源对齐此 tag，技能内容沿用既有版本。

@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.16.0**（Odin 图片资源管理、分类文件夹与导入编辑；34 项表编辑器 EditMode 回归通过，消费端升级待验证）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.17.0**（通用字体皮肤、Odin 工作区整理与统一图片入口；16 项字体/多语言 EditMode 回归通过，消费端升级待验证）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.16.0"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.17.0"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.16.0 manifest 基线](Dependencies~/manifest-0.16.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.17.0 manifest 基线](Dependencies~/manifest-0.17.0.json)。本次更新不增加第三方依赖，继续复用 `ember-v0.11.1`；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
 
 ## 能力与文档
 
@@ -51,7 +51,8 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 
 **禁止直接修改项目的 manifest 文件来升级，所有的消费端升级都必须通过 `Ember/UPM Manager`。**
 选择已发布版本执行升级，由升级器与 Package Manager 管理依赖及锁文件；不得手改 manifest 的版本/Git URL 或 packages-lock 的提交 hash。无法操作升级器时应由用户在 Unity 中执行，不能退回直接修改文件。上面的首次安装步骤不适用于已有消费项目升级。
-框架包升级不会自动合并已部署的 Assets。同模板 major.minor 内的 patch 可走三方增量；“补齐缺失”仅修复相同版本/hash 的缺失文件。本次三个模板均跨 minor，需先备份定制内容，再通过项目中心完整部署并恢复/合并业务修改。完整部署会替换五个受管目录。UnityFarm 开发中发现改动时，先按[改动回流规则](Documentation~/maintenance/unityfarm-change-routing.md)判定项目、框架和模板归属。
+框架包升级不会自动合并已部署的 Assets。同模板 major.minor 内的 patch 可走三方增量；“补齐缺失”仅修复相同版本/hash 的缺失文件。本次小说模板从 0.16.0 升至 0.17.3，跨 minor；base 与 2.5D 内容不变。小说项目需先备份定制内容，再通过项目中心完整部署并恢复/合并业务修改。完整部署会替换五个受管目录。UnityFarm 开发中发现改动时，先按[改动回流规则](Documentation~/maintenance/unityfarm-change-routing.md)判定项目、框架和模板归属。
+旧小说项目还需迁移 Assets 中同 GUID 的思源宋体，避免与新增包内字体并存，见[字体皮肤迁移](Documentation~/manual/font-skins.md)。
 不要把删除整个 `packages-lock.json` 当作常规升级步骤。
 
 开发仓库的完整资料见 [文档索引](../../docs/README.md)、[包维护](../../docs/dev/upm-migration-plan.md) 和

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,10 +13,12 @@ namespace Game.Narrative.Editor
         private const string ASSET_PATH = "Assets/GameResource/Resources/" + NarrativeLibrarySO.RESOURCE_PATH + ".asset";
         private NarrativeStorySO[] _stories = Array.Empty<NarrativeStorySO>();
         private string _error;
+        [SerializeField] private string _search = "";
+        private Vector2 _scroll;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
-        private void OnEnable() { titleContent = new GUIContent("当前小说"); minSize = new Vector2(460, 230); Reload(); }
+        private void OnEnable() { titleContent = new GUIContent("当前小说"); minSize = new Vector2(540, 420); Reload(); }
         private void OnFocus() => Reload();
         private void Reload()
         {
@@ -25,17 +28,14 @@ namespace Game.Narrative.Editor
         }
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("新游戏 · 当前小说", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("选择后，主菜单的新游戏使用这部小说。引用不依赖文件名；重命名或移动资源不会丢失选择。旧存档按剧情 ID 恢复原小说。", MessageType.Info);
             var library = Resources.Load<NarrativeLibrarySO>(NarrativeLibrarySO.RESOURCE_PATH);
             var current = library ? library.Current : null;
+            SirenixEditorGUI.Title("新游戏入口", current ? current.DisplayName : "尚未选择小说", TextAlignment.Left, true);
+            EditorGUILayout.HelpBox("设置入口后，主菜单的新游戏使用这部小说；旧存档仍按稳定剧情 ID 恢复原小说。", MessageType.Info);
+            SirenixEditorGUI.BeginBox("当前小说");
             using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
-                int index = Array.IndexOf(_stories, current) + 1;
-                var labels = new[] { "（请选择）" }.Concat(_stories.Select(s => s.DisplayName + " — " + AssetDatabase.GetAssetPath(s))).ToArray();
-                int next = EditorGUILayout.Popup("快速选择", index, labels);
                 var chosen = (NarrativeStorySO)EditorGUILayout.ObjectField("小说资源", current, typeof(NarrativeStorySO), false);
-                if (next != index && next > 0) chosen = _stories[next - 1];
                 if (chosen && chosen != current)
                 {
                     try { SetCurrent(chosen); _error = null; }
@@ -48,7 +48,31 @@ namespace Game.Narrative.Editor
                 if (GUILayout.Button("打开小说流程")) AssetDatabase.OpenAsset(current);
                 if (GUILayout.Button("定位小说资源")) { Selection.activeObject = current; EditorGUIUtility.PingObject(current); }
             }
+            SirenixEditorGUI.EndBox();
             if (!string.IsNullOrEmpty(_error)) EditorGUILayout.HelpBox(_error, MessageType.Error);
+            SirenixEditorGUI.Title("项目小说", _stories.Length + " 部 · 按名称或剧情 ID 搜索", TextAlignment.Left, true);
+            _search = EditorGUILayout.TextField(_search, EditorStyles.toolbarSearchField);
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+            foreach (var story in _stories)
+            {
+                if (!story || (!string.IsNullOrEmpty(_search) &&
+                    (story.DisplayName + " " + story.StoryId).IndexOf(_search, StringComparison.OrdinalIgnoreCase) < 0)) continue;
+                SirenixEditorGUI.BeginBox(story.DisplayName + (story == current ? " · 当前入口" : ""));
+                EditorGUILayout.LabelField("剧情 ID", story.StoryId);
+                EditorGUILayout.LabelField(AssetDatabase.GetAssetPath(story), EditorStyles.miniLabel);
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("打开流程")) AssetDatabase.OpenAsset(story);
+                    using (new EditorGUI.DisabledScope(story == current || EditorApplication.isPlayingOrWillChangePlaymode))
+                        if (GUILayout.Button("设为新游戏入口"))
+                        {
+                            try { SetCurrent(story); _error = null; }
+                            catch (Exception ex) { _error = ex.Message; }
+                        }
+                }
+                SirenixEditorGUI.EndBox();
+            }
+            EditorGUILayout.EndScrollView();
         }
         #endregion
         // --------------------------------------------------------

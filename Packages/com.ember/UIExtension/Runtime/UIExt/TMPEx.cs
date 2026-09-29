@@ -2,6 +2,8 @@
 // Package: com.ember
 
 using Ember.Basic;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +17,7 @@ namespace Ember.UIExtension
     /// <para><b>编辑期不覆盖文本：</b>本组件带 <c>ExecuteAlways</c>，为保证所见即所得，只有运行期才写入多语言文本；
     /// 编辑期预览请用 Inspector 的「多语言」区或小说流程面板。</para>
     /// </summary>
-    [AddComponentMenu("Ember/UI/TMPEx（多语言文本）")]
+    [AddComponentMenu("Ember/UI/TMPEx（字体皮肤与多语言）")]
     public class TMPEx : TextMeshProUGUI
     {
         #region 编辑器面板参数
@@ -23,6 +25,11 @@ namespace Ember.UIExtension
         [SerializeField]
         [Tooltip("多语言 Key。留空时显示原文，行为与普通 TMP 完全相同。")]
         private string _key;
+
+        [SerializeField, Tooltip("-1 手动字体，0 跟随全局，其余为字体皮肤库中的稳定 ID。")]
+        private int _fontSkinId = -1;
+        [SerializeField] private int _fontSlotId = 1;
+        [SerializeField] private List<SkinFontSelection> _skinFonts = new List<SkinFontSelection>();
 
         #endregion
 
@@ -35,6 +42,13 @@ namespace Ember.UIExtension
         // 外部对 text 的写入也同步更新原文，两种赋值顺序都能得到正确的回退文本。
         private string _source;
         private bool _applying;
+
+        [Serializable]
+        public sealed class SkinFontSelection
+        {
+            public int SkinId;
+            public int SlotId;
+        }
 
         /// <summary>TMP 显示文本。外部写入会同时记为原文；本组件写入多语言文本时不会污染原文。</summary>
         public override string text
@@ -62,6 +76,10 @@ namespace Ember.UIExtension
         /// <summary>Key 留空或解析失败时显示的原文。</summary>
         public string Source => _source ?? m_text;
 
+        public int FontSkinId => _fontSkinId;
+        public int FontSlotId => _fontSlotId;
+        public bool UsesFontSkin => _fontSkinId >= 0;
+
         #endregion
 
         // --------------------------------------------------------
@@ -73,12 +91,15 @@ namespace Ember.UIExtension
             base.OnEnable();
             if (_source == null) _source = m_text;
             TextLocalization.Register(this);
+            EmberFontSkins.Register(this);
+            ApplyFontSkin();
             ApplyLocalizedText();
         }
 
         protected override void OnDisable()
         {
             TextLocalization.Unregister(this);
+            EmberFontSkins.Unregister(this);
             base.OnDisable();
         }
 
@@ -104,6 +125,46 @@ namespace Ember.UIExtension
         // --------------------------------------------------------
 
         #region 外部方法
+
+        /// <summary>选择皮肤及其中的字体槽位；0 跟随全局，-1 保留手动字体。</summary>
+        [HasGC]
+        public void SetFontSkin(int skinId, int slotId)
+        {
+            _fontSkinId = skinId;
+            _fontSlotId = slotId;
+            ApplyFontSkin();
+        }
+
+        /// <summary>只调整字体和对应材质，不修改文本、Key、字号或布局。缺失映射保留现有字体。</summary>
+        [HasGC]
+        public bool ApplyFontSkin()
+        {
+            int skinId = _fontSkinId == 0 ? EmberFontSkins.ActiveSkinId : _fontSkinId;
+            if (!EmberFontSkins.TryGetFont(skinId, GetFontSlotForSkin(skinId), out var selected)) return false;
+            if (font == selected) return true;
+            font = selected;
+            fontSharedMaterial = selected.material;
+            SetAllDirty();
+            return true;
+        }
+
+        /// <summary>每套皮肤独立选择字体；尚未配置的皮肤使用默认槽位。</summary>
+        public int GetFontSlotForSkin(int skinId)
+        {
+            for (int i = 0; i < _skinFonts.Count; i++)
+                if (_skinFonts[i].SkinId == skinId) return _skinFonts[i].SlotId;
+            return _fontSlotId;
+        }
+
+        [HasGC]
+        public void SetFontForSkin(int skinId, int slotId)
+        {
+            var selection = _skinFonts.Find(s => s.SkinId == skinId);
+            if (selection == null)
+                _skinFonts.Add(new SkinFontSelection { SkinId = skinId, SlotId = slotId });
+            else selection.SlotId = slotId;
+            ApplyFontSkin();
+        }
 
         /// <summary>
         /// 运行期接管这段文本：把 <paramref name="source"/> 写成原文并清空 Key。

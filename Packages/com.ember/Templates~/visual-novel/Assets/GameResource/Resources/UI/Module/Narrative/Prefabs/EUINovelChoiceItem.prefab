@@ -188,8 +188,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u9009\u9879"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
-  m_sharedMaterial: {fileID: 5312024000564916581, guid: a32ba8ab7d4aa814e8b5f0a267b29b42, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 410e2504c5fcf9f43a3d390f5cacdbd9, type: 2}
+  m_sharedMaterial: {fileID: 7475404661569658496, guid: 410e2504c5fcf9f43a3d390f5cacdbd9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -259,6 +259,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &5936530426128801790
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 
 using UnityEditor;
+using System.Collections.Generic;
+using Sirenix.Utilities.Editor;
 using UnityEngine;
 
 using Ember.SceneUI.Integration;
@@ -10,6 +12,10 @@ namespace Ember.SceneUI.Editor
     /// <summary>SceneUI 运行时只读诊断面板。</summary>
     public sealed class SceneUIDiagnosticsWindow : EditorWindow
     {
+        private readonly List<(SceneUIPageHost Host, SceneUIDiagnostics Data)> _snapshots = new();
+        private Vector2 _scroll;
+        private string _filter = "";
+        private bool _freeze, _showDetails;
         #region 生命周期
 
         [MenuItem("Ember/Diagnostics/Scene UI")]
@@ -28,8 +34,7 @@ namespace Ember.SceneUI.Editor
 
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("SceneUI Runtime Diagnostics", EditorStyles.boldLabel);
-            EditorGUILayout.Space();
+            SirenixEditorGUI.Title("Scene UI 诊断", _freeze ? "快照已冻结" : "实时只读统计", TextAlignment.Left, true);
 
             if (!EditorApplication.isPlaying)
             {
@@ -37,26 +42,40 @@ namespace Ember.SceneUI.Editor
                 return;
             }
 
-            SceneUIPageHost[] hosts = FindObjectsByType<SceneUIPageHost>(
-                FindObjectsInactive.Include);
-            bool drewDiagnostics = false;
-            for (int i = 0; i < hosts.Length; i++)
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
-                SceneUIPageHost host = hosts[i];
-                if (!host || !host.TryGetDiagnostics(out SceneUIDiagnostics diagnostics))
+                _filter = EditorGUILayout.TextField(_filter, EditorStyles.toolbarSearchField);
+                _freeze = GUILayout.Toggle(_freeze, "冻结快照", EditorStyles.toolbarButton, GUILayout.Width(80));
+            }
+            _showDetails = SirenixEditorGUI.Foldout(_showDetails, "显示池、预热、投影与排序明细");
+            // 在 Layout 固定同一轮绘制的数据，避免运行时 Host 数量变化破坏控件结构。
+            if (Event.current.type == EventType.Layout && !_freeze)
+            {
+                _snapshots.Clear();
+                foreach (var host in FindObjectsByType<SceneUIPageHost>(FindObjectsInactive.Include))
+                    if (host && host.TryGetDiagnostics(out SceneUIDiagnostics data)) _snapshots.Add((host, data));
+            }
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+            bool drewDiagnostics = false;
+            for (int i = 0; i < _snapshots.Count; i++)
+            {
+                SceneUIPageHost host = _snapshots[i].Host;
+                if (!host || (!string.IsNullOrEmpty(_filter) && host.name.IndexOf(_filter, System.StringComparison.OrdinalIgnoreCase) < 0))
                     continue;
-
-                EditorGUILayout.LabelField($"Host: {host.name}", EditorStyles.boldLabel);
-                DrawDiagnostics(diagnostics);
+                SirenixEditorGUI.BeginBox(host.name);
+                if (GUILayout.Button("定位 Host", GUILayout.Width(90))) EditorGUIUtility.PingObject(host);
+                DrawDiagnostics(_snapshots[i].Data, _showDetails);
+                SirenixEditorGUI.EndBox();
                 drewDiagnostics = true;
             }
 
             if (!drewDiagnostics)
             {
                 EditorGUILayout.HelpBox(
-                    "当前没有已绑定的 SceneUIPageHost。SceneUI Engine 由业务模块按 Phase 创建。",
+                    _snapshots.Count > 0 ? "没有匹配的 Host。" : "当前没有已绑定的 SceneUIPageHost。SceneUI Engine 由业务模块按 Phase 创建。",
                     MessageType.Info);
             }
+            EditorGUILayout.EndScrollView();
         }
 
         #endregion
@@ -65,13 +84,14 @@ namespace Ember.SceneUI.Editor
 
         #region 内部方法
 
-        private static void DrawDiagnostics(in SceneUIDiagnostics diagnostics)
+        private static void DrawDiagnostics(in SceneUIDiagnostics diagnostics, bool details)
         {
             DrawSection("Active");
             DrawValue("Contexts", diagnostics.ActiveContextCount);
             DrawValue("Entries", diagnostics.ActiveEntryCount);
             DrawValue("Views", diagnostics.ActiveViewCount);
             DrawValue("Pending delayed recycle", diagnostics.PendingDelayedRecycleCount);
+            if (!details) return;
 
             DrawSection("Pool");
             DrawValue("Pooled views", diagnostics.PooledViewCount);

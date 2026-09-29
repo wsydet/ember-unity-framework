@@ -26,7 +26,7 @@ namespace Game.Narrative.Tests
         private static readonly string[] VolatilePaths =
         {
             "Assets/Game/Scenes/FrameworkScene.unity",
-            "Assets/GameResource/Resources/UI/Common/Fonts/NotoSerifSC/NovelSerif SDF.asset",
+            "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
             "Assets/Resources/EmberDebugConfig.asset",
             "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night.png.meta",
             "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile.png.meta"

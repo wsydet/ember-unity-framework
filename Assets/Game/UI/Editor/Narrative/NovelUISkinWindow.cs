@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Game.Narrative;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Game.UI.Editor
         [SerializeField] private string _id = "new_skin", _displayName = "新皮肤";
         [SerializeField] private bool _pendingOnly, _before, _create;
         [SerializeField] private int _resolution, _pageIndex;
+        [SerializeField] private string _imageSearch = "";
+        [SerializeField] private bool _showReplacement = true, _showAppearance = true;
         #endregion
         // --------------------------------------------------------
         #region 内部参数
@@ -88,6 +91,7 @@ namespace Game.UI.Editor
         }
         private void DrawHeader()
         {
+            SirenixEditorGUI.Title("UI 皮肤编辑器", _skin ? _skin.DisplayName + " · 选择素材 → 调整效果 → 关联剧情" : "选择或创建皮肤", TextAlignment.Left, true);
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
                 var selected = (NovelUISkin)EditorGUILayout.ObjectField(_skin, typeof(NovelUISkin), false, GUILayout.Width(260));
@@ -129,10 +133,12 @@ namespace Game.UI.Editor
                 EditorGUILayout.LabelField(_skin.DisplayName, EditorStyles.boldLabel);
                 EditorGUILayout.LabelField($"待替换 {_skin.Images.Count(e => e.Pending)} / {_skin.Images.Count}");
                 _pendingOnly = EditorGUILayout.Toggle("只看待替换", _pendingOnly);
+                _imageSearch = EditorGUILayout.TextField(_imageSearch, EditorStyles.toolbarSearchField);
                 _listScroll = EditorGUILayout.BeginScrollView(_listScroll);
                 string page = _prefabs.Length > 0 ? Path.GetFileNameWithoutExtension(_prefabs[_pageIndex]) : "";
                 foreach (var entry in _skin.Images.Where(e => e.Page == page && (!_pendingOnly || e.Pending)))
                 {
+                    if (!string.IsNullOrEmpty(_imageSearch) && entry.Key.IndexOf(_imageSearch, StringComparison.OrdinalIgnoreCase) < 0) continue;
                     string label = (entry.Pending ? "○ " : "● ") + (string.IsNullOrEmpty(entry.Control) ? "页面" : entry.Control) + "/" + entry.Node;
                     if (GUILayout.Toggle(_selectedKey == entry.Key, new GUIContent(label, entry.Key), "Button"))
                         if (_selectedKey != entry.Key) Select(entry);
@@ -183,46 +189,56 @@ namespace Game.UI.Editor
                 var entry = _skin.Images.FirstOrDefault(e => e.Key == _selectedKey);
                 if (entry != null)
                 {
-                    EditorGUILayout.LabelField("图片与效果", EditorStyles.boldLabel);
+                    SirenixEditorGUI.Title("当前素材", entry.Pending ? "待替换" : "已完成", TextAlignment.Left, true);
                     EditorGUILayout.SelectableLabel(entry.Key, EditorStyles.wordWrappedLabel, GUILayout.Height(48));
-                    var sprite = (Sprite)EditorGUILayout.ObjectField("替换图片", entry.Sprite, typeof(Sprite), false);
-                    if (sprite && sprite != entry.Sprite) Run(() =>
+                    _showReplacement = SirenixEditorGUI.Foldout(_showReplacement, "素材替换 · 加入待应用列表");
+                    if (_showReplacement)
                     {
-                        string path = AssetDatabase.GetAssetPath(sprite);
-                        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
-                        if (!importer || importer.spriteImportMode != SpriteImportMode.Single)
-                            throw new ArgumentException("请选择独立图片；图集子图请先导出为单独图片再替换。");
-                        Queue(entry, path);
-                    });
-                    var drop = GUILayoutUtility.GetRect(120, 64, GUILayout.ExpandWidth(true)); GUI.Box(drop, "将图片文件拖到这里");
-                    var ev = Event.current;
-                    if (drop.Contains(ev.mousePosition) && (ev.type == EventType.DragUpdated || ev.type == EventType.DragPerform))
-                    {
-                        DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-                        if (ev.type == EventType.DragPerform)
+                        var sprite = (Sprite)EditorGUILayout.ObjectField("替换图片", entry.Sprite, typeof(Sprite), false);
+                        if (sprite && sprite != entry.Sprite) Run(() =>
                         {
-                            DragAndDrop.AcceptDrag();
-                            if (DragAndDrop.paths.Length == 1) Run(() => Queue(entry, DragAndDrop.paths[0]));
-                            else _message = "一个目标对应一张图片；请逐项指定后批量应用。";
+                            string path = AssetDatabase.GetAssetPath(sprite);
+                            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                            if (!importer || importer.spriteImportMode != SpriteImportMode.Single)
+                                throw new ArgumentException("请选择独立图片；图集子图请先导出为单独图片再替换。");
+                            Queue(entry, path);
+                        });
+                        var drop = GUILayoutUtility.GetRect(120, 64, GUILayout.ExpandWidth(true)); GUI.Box(drop, "将图片文件拖到这里");
+                        var ev = Event.current;
+                        if (drop.Contains(ev.mousePosition) && (ev.type == EventType.DragUpdated || ev.type == EventType.DragPerform))
+                        {
+                            DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                            if (ev.type == EventType.DragPerform)
+                            {
+                                DragAndDrop.AcceptDrag();
+                                if (DragAndDrop.paths.Length == 1) Run(() => Queue(entry, DragAndDrop.paths[0]));
+                                else _message = "一个目标对应一张图片；请逐项指定后批量应用。";
+                            }
+                            ev.Use();
                         }
-                        ev.Use();
+                        if (GUILayout.Button("选择图片文件"))
+                        {
+                            string path = EditorUtility.OpenFilePanel("选择替换图片", "", "png,jpg,jpeg,tga,psd");
+                            if (!string.IsNullOrEmpty(path)) Queue(entry, path);
+                        }
+                        if (_batch.TryGetValue(entry.Key, out string queued)) EditorGUILayout.HelpBox("待应用：" + queued, MessageType.Info);
                     }
-                    if (GUILayout.Button("选择图片文件"))
+                    _showAppearance = SirenixEditorGUI.Foldout(_showAppearance, "显示效果 · 保存到当前皮肤");
+                    if (_showAppearance)
                     {
-                        string path = EditorUtility.OpenFilePanel("选择替换图片", "", "png,jpg,jpeg,tga,psd");
-                        if (!string.IsNullOrEmpty(path)) Queue(entry, path);
+                        SirenixEditorGUI.BeginBox();
+                        _type = (Image.Type)EditorGUILayout.EnumPopup("图片显示方式", _type);
+                        _aspect = EditorGUILayout.Toggle("保持比例", _aspect);
+                        _color = EditorGUILayout.ColorField("颜色与透明度", _color);
+                        _ppu = EditorGUILayout.FloatField("九宫格比例", _ppu);
+                        _border = EditorGUILayout.Vector4Field("边距（左 下 右 上）", _border);
+                        if (GUILayout.Button("保存显示效果")) Run(() =>
+                        {
+                            NovelUISkinEditorService.SetAppearance(_skin, entry.Key, _color, _type, _aspect, _ppu, _border);
+                            _message = "显示参数已保存。";
+                        });
+                        SirenixEditorGUI.EndBox();
                     }
-                    if (_batch.TryGetValue(entry.Key, out string queued)) EditorGUILayout.HelpBox("待应用：" + queued, MessageType.Info);
-                    _type = (Image.Type)EditorGUILayout.EnumPopup("图片显示方式", _type);
-                    _aspect = EditorGUILayout.Toggle("保持比例", _aspect);
-                    _color = EditorGUILayout.ColorField("颜色与透明度", _color);
-                    _ppu = EditorGUILayout.FloatField("九宫格比例", _ppu);
-                    _border = EditorGUILayout.Vector4Field("边距（左 下 右 上）", _border);
-                    if (GUILayout.Button("保存显示效果")) Run(() =>
-                    {
-                        NovelUISkinEditorService.SetAppearance(_skin, entry.Key, _color, _type, _aspect, _ppu, _border);
-                        _message = "显示参数已保存。";
-                    });
                     if (GUILayout.Button(entry.Pending ? "保留此图，标记完成" : "重新标记为待替换"))
                     { Undo.RecordObject(_skin, "标记皮肤素材"); entry.Pending = !entry.Pending; EditorUtility.SetDirty(_skin); AssetDatabase.SaveAssets(); }
                 }
@@ -234,6 +250,7 @@ namespace Game.UI.Editor
         { _batch[entry.Key] = Path.GetFullPath(path); _message = "已加入替换列表；指定其他目标后可一起应用。"; }
         private void DrawAssignment()
         {
+            SirenixEditorGUI.BeginBox("剧情关联");
             _story = (NarrativeStorySO)EditorGUILayout.ObjectField("目标剧情", _story, typeof(NarrativeStorySO), false);
             using (new EditorGUI.DisabledScope(!_story))
             using (new EditorGUILayout.HorizontalScope())
@@ -241,6 +258,7 @@ namespace Game.UI.Editor
                 if (GUILayout.Button("应用此皮肤")) Run(() => { NovelUISkinEditorService.Assign(_story, _skin); _message = "剧情关联已保存，下次打开页面生效。"; });
                 if (GUILayout.Button("恢复基础外观")) Run(() => { NovelUISkinEditorService.Assign(_story, null); _message = "已恢复基础外观，下次打开页面生效。"; });
             }
+            SirenixEditorGUI.EndBox();
         }
         #endregion
         // --------------------------------------------------------

@@ -213,6 +213,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.save.Title
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &223934337835868783
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 223934337835868783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 54679fcd251ee6b4eb0752e1e279265f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
@@ -350,6 +359,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  _key: 
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1 &350106335440817369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1193,15 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   _key: ui.save.Close.Label
+  _fontSkinId: 0
+  _fontSlotId: 1
+  _skinFonts:
+  - SkinId: 1
+    SlotId: 1
+  - SkinId: 2
+    SlotId: 1
+  - SkinId: 3
+    SlotId: 1
 --- !u!1001 &4376799346125107473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1372,6 +1400,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _fontSkinId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[0].SkinId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[0].SlotId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[1].SkinId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[1].SlotId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[2].SkinId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525592943799490298, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[2].SlotId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8001608628761183034, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
       propertyPath: m_Name
       value: SlotTemplate
@@ -1379,6 +1439,38 @@ PrefabInstance:
     - target: {fileID: 8001608628761183034, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _fontSkinId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[0].SkinId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[0].SlotId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[1].SkinId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[1].SlotId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[2].SkinId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430050148761643740, guid: ee4d91ed9bbe7844083943af8bd22448, type: 3}
+      propertyPath: _skinFonts.Array.data[2].SlotId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

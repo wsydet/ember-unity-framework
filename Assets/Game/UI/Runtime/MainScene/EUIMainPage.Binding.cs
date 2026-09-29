@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIMainPanel
  * page name    : EUIMainPage
- * update time  : 2026/9/26 23:49:30
+ * update time  : 2026/9/29 14:51:54
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

@@ -1,5 +1,8 @@
 # 视觉小说模板目录规范
 
+统一入口：`Ember/视觉小说/图片资源管理`。在左侧选择角色立绘、场景背景或界面皮肤，
+沿用原图片表、角色分类与导入保存流程，不再提供单独的“立绘管理”窗口。
+
 2026-09-21：按业务模块和资源实际使用方归档。`visual-novel` 是模板名称，不作为运行时脚本、图片、剧情及音频的统一收纳目录。
 
 | 内容 | 目录（相对项目根） |
@@ -13,7 +16,8 @@
 | 存档 Prefab | `Assets/GameResource/Resources/UI/Module/NovelSave/Prefabs/` |
 | 阅读背景及立绘 | `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/<剧情名>/{Backgrounds,Portraits}/` |
 | 主对话框与阅读菜单的整组 8 张图标 | `Assets/GameResource/Resources/UI/Common/Atlas/Novel/` |
-| 各界面共用的字体及许可证 | `Assets/GameResource/Resources/UI/Common/Fonts/NotoSerifSC/` |
+| 所有模板共用的字体及许可证 | `Packages/com.ember/SharedAssets/Fonts/` |
+| 项目字体皮肤与默认皮肤 | `Assets/GameResource/Resources/Config/FontSkins/EmberFontSkins.asset` |
 | 剧情、章节及节点 SO | `Assets/GameResource/Resources/Config/Narrative/<剧情名>/` |
 | M1 跨章节测试剧情（不作为运行示例） | `Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample/` |
 | 小说输入配置 | `Assets/GameResource/Resources/Config/Narrative/NovelInput.inputactions` |

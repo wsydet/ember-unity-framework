@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.Table;
 using Game.Narrative;
 using Game.Table.Generated;
@@ -19,6 +20,7 @@ namespace Game.UI.Editor
         [SerializeField] private bool _automatic = true, _muted, _useContext, _showSetup = true;
         [SerializeField] private string _backgroundKey;
         [SerializeField] private int _multiplier = 1, _resolution;
+        [SerializeField] private bool _showActors = true, _showVariables = true;
         [SerializeField] private List<NovelPlaybackActor> _actors = new()
         {
             new() { Slot = NovelPortraitSlot.Left }, new() { Slot = NovelPortraitSlot.Center }, new() { Slot = NovelPortraitSlot.Right }
@@ -137,6 +139,7 @@ namespace Game.UI.Editor
         }
         private void DrawSetup()
         {
+            SirenixEditorGUI.Title("起始设置", _session == null ? "停止状态 · 可编辑" : "试播中 · 停止后可编辑", TextAlignment.Left, true);
             EditorGUI.BeginChangeCheck();
             using (new EditorGUI.DisabledScope(_session != null))
             {
@@ -146,29 +149,41 @@ namespace Game.UI.Editor
                 if (_useContext)
                 {
                     _backgroundKey = DrawResourceKey("背景资源键", _backgroundKey, false);
+                    bool contextChanged = GUI.changed;
+                    _showActors = SirenixEditorGUI.Foldout(_showActors, "人物初始状态");
+                    GUI.changed = contextChanged;
+                    if (_showActors)
                     foreach (var actor in _actors)
                     {
+                        SirenixEditorGUI.BeginBox(actor.Slot.ToString());
                         actor.Enabled = EditorGUILayout.Toggle("人物 · " + actor.Slot, actor.Enabled);
-                        if (!actor.Enabled) continue;
+                        if (!actor.Enabled) { SirenixEditorGUI.EndBox(); continue; }
                         actor.ResourceKey = DrawResourceKey("立绘资源键", actor.ResourceKey, true);
                         actor.InstanceId = EditorGUILayout.TextField("实例 ID", actor.InstanceId);
                         actor.CustomPosition = EditorGUILayout.Toggle("归一化坐标", actor.CustomPosition);
                         if (actor.CustomPosition) actor.Position = EditorGUILayout.Vector2Field("位置", actor.Position);
+                        SirenixEditorGUI.EndBox();
                     }
                 }
-                GUILayout.Space(8); GUILayout.Label("变量初值", EditorStyles.boldLabel);
-                if (_variables.Count == 0) GUILayout.Label("当前章节 / 剧情无变量。");
-                foreach (var variable in _variables)
+                GUILayout.Space(8);
+                bool setupChanged = GUI.changed;
+                _showVariables = SirenixEditorGUI.Foldout(_showVariables, "变量初值（" + _variables.Count + "）");
+                GUI.changed = setupChanged;
+                if (_showVariables)
                 {
-                    string label = (variable.Scope == NovelVariableScope.Global ? "全局 · " : "章节 · ") + variable.Id;
-                    variable.Value = variable.Value.Type switch
+                    if (_variables.Count == 0) GUILayout.Label("当前章节 / 剧情无变量。");
+                    foreach (var variable in _variables)
                     {
-                        NovelValueType.Bool => new NovelValue(EditorGUILayout.Toggle(label, variable.Value.Bool)),
-                        NovelValueType.Int => new NovelValue(EditorGUILayout.IntField(label, variable.Value.Int)),
-                        _ => new NovelValue(EditorGUILayout.TextField(label, variable.Value.String))
-                    };
+                        string label = (variable.Scope == NovelVariableScope.Global ? "全局 · " : "章节 · ") + variable.Id;
+                        variable.Value = variable.Value.Type switch
+                        {
+                            NovelValueType.Bool => new NovelValue(EditorGUILayout.Toggle(label, variable.Value.Bool)),
+                            NovelValueType.Int => new NovelValue(EditorGUILayout.IntField(label, variable.Value.Int)),
+                            _ => new NovelValue(EditorGUILayout.TextField(label, variable.Value.String))
+                        };
+                    }
+                    if (GUILayout.Button("恢复变量定义初值")) { ResetVariables(); GUI.changed = true; }
                 }
-                if (GUILayout.Button("恢复变量定义初值")) { ResetVariables(); GUI.changed = true; }
             }
             if (EditorGUI.EndChangeCheck() && _session == null && _view != null)
             {

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Sirenix.OdinInspector.Editor;
+using Sirenix.Utilities.Editor;
 
 using Ember.Basic;
 using Ember.UI;
@@ -63,9 +65,11 @@ namespace Ember.UIExtension.Editor
         [SerializeField] private EUICreationRequest _creationRequest = new EUICreationRequest();
         [SerializeField] private bool _showAdvancedCreation;
         [SerializeField] private string _overviewFilter = string.Empty;
+        [SerializeField] private string _selectedPrefabPath;
 
         private Vector2 _createScroll;
         private Vector2 _overviewScroll;
+        private Vector2 _overviewDetailScroll;
         private Vector2 _maintenanceScroll;
         private EUICreationPlan _creationPlan;
         private EUICreationResult _creationResult;
@@ -79,12 +83,13 @@ namespace Ember.UIExtension.Editor
         private readonly List<KeyValuePair<string, string>> _emptyLeaves =
             new List<KeyValuePair<string, string>>();
         private string _lastResult;
+        private OdinMenuTree _navigation;
 
         [MenuItem("Ember/UI/UI 开发中心", false, 20)]
         public static void Open()
         {
             var window = GetWindow<EUIPrefabManagerWindow>("UI 开发中心");
-            window.minSize = new Vector2(900f, 580f);
+            window.minSize = new Vector2(1000f, 580f);
             window.Show();
         }
 
@@ -101,26 +106,46 @@ namespace Ember.UIExtension.Editor
             PrepareLayoutState();
             DrawHeader();
             EditorGUILayout.Space(6f);
-
-            switch (_tab)
+            using (new EditorGUILayout.HorizontalScope())
             {
-                case DevelopmentTab.Create:
-                    DrawCreationTab();
-                    break;
-                case DevelopmentTab.Overview:
-                    DrawOverviewTab();
-                    break;
-                case DevelopmentTab.ModuleTemplate:
-                    _moduleTemplatePanel ??= new EUIModuleTemplatePanel();
-                    _moduleTemplatePanel.Draw(ref _lastResult);
-                    break;
-                case DevelopmentTab.Maintenance:
-                    DrawMaintenanceTab();
-                    break;
-            }
+                using (new EditorGUILayout.VerticalScope(GUILayout.Width(170)))
+                {
+                    if (_navigation == null)
+                    {
+                        _navigation = new OdinMenuTree(false);
+                        for (int i = 0; i < TabLabels.Length; i++) _navigation.Add(TabLabels[i], (DevelopmentTab)i);
+                        _navigation.MenuItems[(int)_tab].Select();
+                    }
+                    _navigation.DrawMenuTree();
+                    if (_navigation.Selection.FirstOrDefault()?.Value is DevelopmentTab tab && tab != _tab)
+                    { _tab = tab; GUI.FocusControl(null); Repaint(); }
+                }
+                using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
+                {
+                    SirenixEditorGUI.Title(TabLabels[(int)_tab], _tab == DevelopmentTab.Maintenance
+                        ? "先扫描并检查影响，再执行清理" : _tab == DevelopmentTab.Create
+                        ? "配置 UI → 检查生成预览 → 创建" : "选择目标并查看可用操作", TextAlignment.Left, true);
+                    switch (_tab)
+                    {
+                        case DevelopmentTab.Create:
+                            DrawCreationTab();
+                            break;
+                        case DevelopmentTab.Overview:
+                            DrawOverviewTab();
+                            break;
+                        case DevelopmentTab.ModuleTemplate:
+                            _moduleTemplatePanel ??= new EUIModuleTemplatePanel();
+                            _moduleTemplatePanel.Draw(ref _lastResult);
+                            break;
+                        case DevelopmentTab.Maintenance:
+                            DrawMaintenanceTab();
+                            break;
+                    }
 
-            if (!string.IsNullOrEmpty(_lastResult))
-                EditorGUILayout.HelpBox(_lastResult, MessageType.Info);
+                    if (!string.IsNullOrEmpty(_lastResult))
+                        EditorGUILayout.HelpBox(_lastResult, MessageType.Info);
+                }
+            }
         }
 
         private void OnProjectChange()
@@ -132,7 +157,8 @@ namespace Ember.UIExtension.Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("UI 开发中心", EditorStyles.boldLabel, GUILayout.Width(120f));
-            _tab = (DevelopmentTab)GUILayout.Toolbar((int)_tab, TabLabels, GUILayout.Height(25f));
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.LabelField(_catalogRefreshPending ? "正在准备 UI 清单…" : "UI 创建、绑定与生成", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
 
             if (!string.IsNullOrEmpty(_layoutStatusMessage))
@@ -403,10 +429,32 @@ namespace Ember.UIExtension.Editor
         {
             DrawCatalogToolbar();
             if (!EnsureCatalog()) return;
-
-            _overviewScroll = EditorGUILayout.BeginScrollView(_overviewScroll);
-            foreach (var entry in FilteredEntries()) DrawCatalogEntry(entry);
-            EditorGUILayout.EndScrollView();
+            var entries = FilteredEntries().ToList();
+            var selected = entries.FirstOrDefault(e => e.PrefabPath == _selectedPrefabPath);
+            if (selected == null && entries.Count > 0) selected = entries[0];
+            if (selected != null) _selectedPrefabPath = selected.PrefabPath;
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                using (new EditorGUILayout.VerticalScope(GUILayout.Width(205)))
+                {
+                    _overviewScroll = EditorGUILayout.BeginScrollView(_overviewScroll);
+                    foreach (var entry in entries)
+                    {
+                        string label = (entry.IsHealthy ? "✓ " : "! ") + Path.GetFileNameWithoutExtension(entry.PrefabPath);
+                        if (GUILayout.Toggle(entry.PrefabPath == _selectedPrefabPath, new GUIContent(label, entry.PrefabPath), "Button", GUILayout.Height(28)))
+                            _selectedPrefabPath = entry.PrefabPath;
+                    }
+                    EditorGUILayout.EndScrollView();
+                }
+                using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
+                {
+                    _overviewDetailScroll = EditorGUILayout.BeginScrollView(_overviewDetailScroll);
+                    selected = entries.FirstOrDefault(e => e.PrefabPath == _selectedPrefabPath);
+                    if (selected != null) DrawCatalogEntry(selected);
+                    else EditorGUILayout.HelpBox("没有匹配的 UI。调整筛选条件或刷新扫描。", MessageType.Info);
+                    EditorGUILayout.EndScrollView();
+                }
+            }
         }
 
         private void DrawCatalogToolbar()
@@ -419,6 +467,7 @@ namespace Ember.UIExtension.Editor
             }
             _overviewFilter = EditorGUILayout.TextField(
                 new GUIContent("筛选", "按 UI 用途、页面名称或预制体路径筛选"), _overviewFilter);
+            EditorGUILayout.EndHorizontal();
             if (_catalog?.IsConfigured == true)
             {
                 var pageCount = _catalog.Entries.Count(entry => entry.IsPage);
@@ -426,24 +475,24 @@ namespace Ember.UIExtension.Editor
                 var issueCount = _catalog.Entries.Count(entry => !entry.IsHealthy);
                 EditorGUILayout.LabelField(
                     $"共 {_catalog.Entries.Count} · Page {pageCount} · Item {itemCount} · 有问题 {issueCount}",
-                    EditorStyles.miniLabel, GUILayout.Width(270f));
+                    EditorStyles.miniLabel);
             }
-            EditorGUILayout.EndHorizontal();
         }
 
         private void DrawCatalogEntry(EUIPrefabCatalogEntry entry)
         {
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            SirenixEditorGUI.BeginBox("UI 详情");
             if (!string.IsNullOrWhiteSpace(entry.UIDescription))
                 EditorGUILayout.LabelField(new GUIContent(entry.UIDescription, "UI 用途"),
                     new GUIStyle(EditorStyles.boldLabel) { wordWrap = true });
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(entry.IsHealthy ? "✅" : "⚠", GUILayout.Width(22f));
             EditorGUILayout.LabelField(Path.GetFileNameWithoutExtension(entry.PrefabPath),
-                EditorStyles.boldLabel, GUILayout.Width(190f));
-            EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.miniLabel);
-            if (entry.IsDeletionProtected)
-                EditorGUILayout.LabelField("禁止删除（受保护）", EditorStyles.boldLabel, GUILayout.Width(135f));
+                EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.LabelField(entry.PrefabPath, EditorStyles.wordWrappedMiniLabel);
+            if (entry.IsDeletionProtected) EditorGUILayout.HelpBox("禁止删除（受保护）", MessageType.None);
+            EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("定位", GUILayout.Width(52f))) PingAsset(entry.PrefabPath);
             if (GUILayout.Button("打开", GUILayout.Width(52f))) OpenAsset(entry.PrefabPath);
@@ -464,10 +513,10 @@ namespace Ember.UIExtension.Editor
                 + (entry.MissingScriptCount > 0 ? $"　|　Missing × {entry.MissingScriptCount}" : string.Empty)
                 + (entry.NullBindingCount > 0 ? $"　|　空绑定 × {entry.NullBindingCount}" : string.Empty)
                 + (entry.EmptyLeafCount > 0 ? $"　|　空叶子候选 × {entry.EmptyLeafCount}" : string.Empty);
-            EditorGUILayout.LabelField(description, EditorStyles.miniLabel);
+            EditorGUILayout.LabelField(description.Replace("　|　", "\n"), EditorStyles.wordWrappedLabel);
             if (!string.IsNullOrEmpty(entry.PageDefLine))
-                EditorGUILayout.LabelField("      " + entry.PageDefLine, EditorStyles.miniLabel);
-            EditorGUILayout.EndVertical();
+                EditorGUILayout.LabelField(entry.PageDefLine, EditorStyles.wordWrappedMiniLabel);
+            SirenixEditorGUI.EndBox();
         }
 
         #endregion
@@ -500,6 +549,8 @@ namespace Ember.UIExtension.Editor
             if (GUILayout.Button("清理失效 PageDef", GUILayout.Width(155f))) CleanStalePageDefsAll();
             if (GUILayout.Button("移除 Missing Script", GUILayout.Width(170f))) RemoveMissingScriptsAll();
             if (GUILayout.Button("清理空引用绑定", GUILayout.Width(160f))) RemoveNullBindingsAll();
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("孤儿生成脚本 dry-run", GUILayout.Width(180f))) BuildOrphanList();
             if (GUILayout.Button("空叶子 dry-run", GUILayout.Width(145f))) BuildEmptyLeafList();
             EditorGUILayout.EndHorizontal();

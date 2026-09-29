@@ -14,6 +14,14 @@
 - 在 Unity 编辑器中，Game 视图获得焦点后才接收 Space；流程图窗口的空格搜索与小说推进不是同一输入上下文。
 
 后面的概念图及早期运行截图为设计来源和历史证据。当前尺寸以正式 Prefab 为准，不应按旧图恢复大块菜单留白或末项分割线。
+## 编辑窗口参数分区（2026-09-29）
+
+Gameplay 主 UI 布局窗口把“位置与尺寸”“外观与文字”“仅本窗口预览图片”分别折叠，
+外观参数按实际组件分组；保存按钮带未保存标记。拖拽、子元素选择、Undo 与正式 Prefab 保存仍使用原调用。
+皮肤编辑器增加素材搜索，并把素材替换队列、显示效果和剧情关联分开。
+节点试播的人物槽位和变量初值独立分组；预览场景、试播控制与固定高度状态区保留。
+这些面板调整尚待本轮 Unity 编译、Odin 绘制与交互验收，不能用早期图片替代本轮验证。
+
 ## 已确认的实例与视觉规范
 
 ![阅读界面已确认布局 A](Images/reading-ui-approved-a.png)
@@ -89,7 +97,7 @@
 
 阅读页、字号弹窗、历史、菜单均为正式 EUI；8 张图标统一位于 Resources/UI/Common/Atlas/Novel：history、hide、auto、speed、save、quick_save、settings、return。菜单依次使用 save、quick_save、auto、settings、speed、return；字号 Aa 和菜单三横线仍由 TMP/uGUI 绘制。所有装饰图片关闭 Raycast，不新增交互绑定。弹窗风格、按钮位置与字体已写入正式 Prefab，因此布局编辑器与实际游戏共同使用。
 
-中文字体为 Noto Serif SC，来源 https://github.com/google/fonts/tree/main/ofl/notoserifsc ，字体文件和 SIL OFL 1.1 许可证位于 Resources/UI/Common/Fonts/NotoSerifSC，动态 TMP 资源为 NovelSerif SDF.asset。
+默认中文字体为 Noto Serif SC，字体文件和 SIL OFL 1.1 许可证位于框架 `Packages/com.ember/SharedAssets/Fonts/NotoSerifSC`，动态 TMP 资源为 `NovelSerif SDF.asset`。通过 `Ember/Tool/字体皮肤` 管理思源宋体、钉钉进步体、阿里妈妈东方大楷三套皮肤；每个 TMPEx 分别指定各皮肤下的字体，特殊文本可固定字体而不参与切换。
 
 示例新增配表键 lastlight_rooftop、lastlight_alice，由现有配表流程烘焙；CH01_intro/common 以中心单立绘呈现。既有台词/角色 ID 保留；该段为早期接入记录；当前 LastLight 剧本与角色命名见 [示例说明](SampleWalkthrough.md)。
 

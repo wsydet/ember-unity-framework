@@ -2,6 +2,8 @@
     "name": "Ember.UI.Tests",
     "rootNamespace": "Ember.UI.Tests",
     "references": [
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
         "Ember.Table.Runtime",
         "Ember.Table.Editor",
         "Ember.UPMManager.Editor",

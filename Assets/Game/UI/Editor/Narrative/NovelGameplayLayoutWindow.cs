@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.Utilities.Editor;
 using System.IO;
 using System.Linq;
 using Ember.Core;
@@ -49,6 +50,7 @@ namespace Game.UI.Editor
         [SerializeField] private string _sourceHash;
         [SerializeField] private int _selected = 1, _resolution;
         [SerializeField] private bool _showChoices;
+        [SerializeField] private bool _showLayout = true, _showAppearance = true, _showPreviewImages;
         [SerializeField] private Vector2Int _customResolution = new(1920, 1080);
         [SerializeField] private Sprite _background, _left, _center, _right;
         private GameObject _contents, _previewRoot, _menuContents, _menuPreview;
@@ -111,7 +113,7 @@ namespace Game.UI.Editor
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
                 using (new EditorGUI.DisabledScope(!_contents || !CanEdit(out _)))
-                    if (GUILayout.Button("保存布局与外观", EditorStyles.toolbarButton, GUILayout.Width(110))) SaveChanges();
+                    if (GUILayout.Button(hasUnsavedChanges ? "保存布局与外观 *" : "保存布局与外观", EditorStyles.toolbarButton, GUILayout.Width(130))) SaveChanges();
                 if (GUILayout.Button("重新载入", EditorStyles.toolbarButton, GUILayout.Width(78)))
                 {
                     if (!hasUnsavedChanges || EditorUtility.DisplayDialog("重新载入", "放弃未保存的布局修改？", "放弃并载入", "返回"))
@@ -248,37 +250,45 @@ namespace Game.UI.Editor
         {
             DrawDetailSelector();
             var rect = _targets[SelectedKey];
-            GUILayout.Label(Labels[_selected], EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("位置与尺寸（画布单位）", EditorStyles.miniLabel);
-            EditorGUI.BeginChangeCheck();
-            var position = EditorGUILayout.Vector2Field("位置 X / Y", rect.anchoredPosition);
-            var previewRect = _previewTargets[SelectedKey];
-            previewRect.ForceUpdateRectTransforms();
-            var previousSize = previewRect.rect.size;
-            var size = EditorGUILayout.Vector2Field("宽度 / 高度", previousSize);
-            var scale = EditorGUILayout.Vector3Field("缩放", rect.localScale);
-            var min = EditorGUILayout.Vector2Field("锚点 Min", rect.anchorMin);
-            var max = EditorGUILayout.Vector2Field("锚点 Max", rect.anchorMax);
-            var pivot = EditorGUILayout.Vector2Field("轴心 Pivot", rect.pivot);
-            if (EditorGUI.EndChangeCheck())
+            SirenixEditorGUI.Title(Labels[_selected], "正式 UI · 修改后需保存", TextAlignment.Left, true);
+            _showLayout = SirenixEditorGUI.Foldout(_showLayout, "位置与尺寸");
+            if (_showLayout)
             {
-                Undo.RecordObject(rect, "调整小说 UI 布局");
-                rect.anchorMin = Vector2.Min(min, max); rect.anchorMax = Vector2.Max(min, max);
-                rect.pivot = pivot; rect.anchoredPosition = position;
-                rect.sizeDelta += new Vector2(Mathf.Max(1, size.x), Mathf.Max(1, size.y)) - previousSize;
-                rect.localScale = new Vector3(Mathf.Max(.01f, scale.x), Mathf.Max(.01f, scale.y), Mathf.Max(.01f, scale.z));
-                if (PrefabUtility.IsPartOfPrefabInstance(rect)) PrefabUtility.RecordPrefabInstancePropertyModifications(rect);
-                Changed();
-            }
-            EditorGUILayout.HelpBox("宽高为当前预览比例下的实际画布尺寸；拉伸锚点会随分辨率适配。Y 正方向向上。", MessageType.None);
-            if (rect.TryGetComponent<VerticalLayoutGroup>(out var layout))
-            {
+                EditorGUILayout.LabelField("位置与尺寸（画布单位）", EditorStyles.miniLabel);
                 EditorGUI.BeginChangeCheck();
-                float spacing = EditorGUILayout.FloatField("选项间距", layout.spacing);
-                if (EditorGUI.EndChangeCheck()) { Undo.RecordObject(layout, "调整选项间距"); layout.spacing = spacing; Changed(); }
+                var position = EditorGUILayout.Vector2Field("位置 X / Y", rect.anchoredPosition);
+                var previewRect = _previewTargets[SelectedKey];
+                previewRect.ForceUpdateRectTransforms();
+                var previousSize = previewRect.rect.size;
+                var size = EditorGUILayout.Vector2Field("宽度 / 高度", previousSize);
+                var scale = EditorGUILayout.Vector3Field("缩放", rect.localScale);
+                var min = EditorGUILayout.Vector2Field("锚点 Min", rect.anchorMin);
+                var max = EditorGUILayout.Vector2Field("锚点 Max", rect.anchorMax);
+                var pivot = EditorGUILayout.Vector2Field("轴心 Pivot", rect.pivot);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(rect, "调整小说 UI 布局");
+                    rect.anchorMin = Vector2.Min(min, max); rect.anchorMax = Vector2.Max(min, max);
+                    rect.pivot = pivot; rect.anchoredPosition = position;
+                    rect.sizeDelta += new Vector2(Mathf.Max(1, size.x), Mathf.Max(1, size.y)) - previousSize;
+                    rect.localScale = new Vector3(Mathf.Max(.01f, scale.x), Mathf.Max(.01f, scale.y), Mathf.Max(.01f, scale.z));
+                    if (PrefabUtility.IsPartOfPrefabInstance(rect)) PrefabUtility.RecordPrefabInstancePropertyModifications(rect);
+                    Changed();
+                }
+                EditorGUILayout.HelpBox("宽高为当前预览比例下的实际画布尺寸；拉伸锚点会随分辨率适配。Y 正方向向上。", MessageType.None);
+                if (rect.TryGetComponent<VerticalLayoutGroup>(out var layout))
+                {
+                    EditorGUI.BeginChangeCheck();
+                    float spacing = EditorGUILayout.FloatField("选项间距", layout.spacing);
+                    if (EditorGUI.EndChangeCheck()) { Undo.RecordObject(layout, "调整选项间距"); layout.spacing = spacing; Changed(); }
+                }
             }
-            DrawAppearance(rect);
-            GUILayout.Space(18); GUILayout.Label("预览图片（不保存到 Prefab）", EditorStyles.boldLabel);
+            _showAppearance = SirenixEditorGUI.Foldout(_showAppearance, "外观与文字");
+            if (_showAppearance) DrawAppearance(rect);
+            GUILayout.Space(12);
+            _showPreviewImages = SirenixEditorGUI.Foldout(_showPreviewImages, "预览图片 · 仅本窗口");
+            if (!_showPreviewImages) return;
+            EditorGUILayout.HelpBox("以下图片用于预览，不保存到 Prefab。", MessageType.None);
             if (GUILayout.Button("使用规范示例：黄昏天台 / 林晚"))
             {
                 const string sample = "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/";

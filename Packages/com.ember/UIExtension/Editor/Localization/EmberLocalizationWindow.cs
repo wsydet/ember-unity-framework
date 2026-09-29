@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.Table.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -48,7 +49,7 @@ namespace Ember.UIExtension.Editor
         #region 内部方法
         protected override void DrawHeader()
         {
-            EditorGUILayout.LabelField("多语言中心", EditorStyles.largeLabel);
+            SirenixEditorGUI.Title("多语言中心", Document == null ? "选择文案表，开始编辑" : $"{Document.Rows.Count} 个 Key · {(Document.Dirty ? "有未保存修改" : "已保存")}", TextAlignment.Left, true);
             using (new EditorGUILayout.HorizontalScope())
             {
                 int index = Array.IndexOf(_sources, _source);
@@ -62,7 +63,7 @@ namespace Ember.UIExtension.Editor
                 EditorGUILayout.HelpBox("先初始化公共文案，或注册项目现有的 CSV/TSV 表。", MessageType.Info);
                 if (GUILayout.Button("初始化公共 UI 文案")) Run(() => { Select(EmberLocalizationEditorService.InitializeCommon()); _sources = EmberLocalizationEditorService.Sources(); });
             }
-            _register = EditorGUILayout.Foldout(_register, "注册已有文案表");
+            _register = SirenixEditorGUI.Foldout(_register, "注册已有文案表");
             if (_register)
             {
                 _newSource = (TextAsset)EditorGUILayout.ObjectField("CSV / TSV", _newSource, typeof(TextAsset), false);
@@ -105,12 +106,13 @@ namespace Ember.UIExtension.Editor
         }
         protected override void DrawDetail(EmberTableSourceDocument.Row row)
         {
-            foreach (string language in _source.Languages)
-            {
-                EditorGUILayout.LabelField(language + (language == _source.SourceLanguage ? " · 源语言" : ""), EditorStyles.boldLabel);
-                Set(row, language, EditorGUILayout.TextArea(Document.Get(row, language), GUILayout.MinHeight(65)));
-            }
             if (Pending(row)) EditorGUILayout.HelpBox("源文案有变动，其他语言需要复核。", MessageType.Warning);
+            foreach (string language in _source.Languages.OrderBy(l => l == _source.SourceLanguage ? 0 : 1))
+            {
+                SirenixEditorGUI.BeginBox(language + (language == _source.SourceLanguage ? " · 源语言" : " · 译文"));
+                Set(row, language, EditorGUILayout.TextArea(Document.Get(row, language), GUILayout.MinHeight(65)));
+                SirenixEditorGUI.EndBox();
+            }
             if (GUILayout.Button("标记本条翻译已复核")) Run(() =>
             {
                 // 先保存才能记录与正式源文案一致的复核状态。
@@ -119,7 +121,7 @@ namespace Ember.UIExtension.Editor
                 Undo.RecordObject(_source, "确认翻译复核"); review.Pending = false;
                 EditorUtility.SetDirty(_source); AssetDatabase.SaveAssets();
             });
-            _translation = EditorGUILayout.Foldout(_translation, "翻译到其他语言");
+            _translation = SirenixEditorGUI.Foldout(_translation, "翻译助手 · 生成、复核与应用");
             if (_translation) DrawTranslation(row);
         }
         private void DrawTranslation(EmberTableSourceDocument.Row row)

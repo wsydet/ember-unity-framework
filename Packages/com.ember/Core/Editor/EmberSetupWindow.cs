@@ -2,6 +2,9 @@
 // Package: com.ember
 
 using System;
+using System.Linq;
+using Sirenix.OdinInspector.Editor;
+using Sirenix.Utilities.Editor;
 
 using UnityEditor;
 using UnityEngine;
@@ -29,6 +32,9 @@ namespace Ember.Core.Editor
         private EmberTemplateDevelopmentPanel _templateDevelopmentPanel;
         private EmberProjectValidationPanel _projectValidationPanel;
         private Vector2 _scroll;
+        private OdinMenuTree _navigation;
+        private bool _navigationDevMode;
+        private int? _pendingTab;
 
         #endregion
 
@@ -40,8 +46,10 @@ namespace Ember.Core.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<EmberSetupWindow>("Ember 项目中心");
-            window.minSize = new Vector2(820, 560);
+            window.minSize = new Vector2(1000, 560);
             window._selectedTab = 0;
+            window._navigation = null;
+            window._pendingTab = null;
             window.Show();
         }
 
@@ -49,8 +57,10 @@ namespace Ember.Core.Editor
         public static void ShowTemplateDevelopment()
         {
             var window = GetWindow<EmberSetupWindow>("Ember 项目中心");
-            window.minSize = new Vector2(820, 560);
+            window.minSize = new Vector2(1000, 560);
             window._selectedTab = EmberProjectSetup.IsEmbeddedPackage() ? 1 : 0;
+            window._navigation = null;
+            window._pendingTab = null;
             window.Show();
         }
 
@@ -58,9 +68,11 @@ namespace Ember.Core.Editor
         public static void ShowProjectValidation(bool runScan = false)
         {
             var window = GetWindow<EmberSetupWindow>("Ember 项目中心");
-            window.minSize = new Vector2(820, 560);
+            window.minSize = new Vector2(1000, 560);
             window.EnsurePanels();
             window._selectedTab = 2;
+            window._navigation = null;
+            window._pendingTab = null;
             if (runScan) window._projectValidationPanel.RequestScan();
             window.Show();
         }
@@ -111,37 +123,70 @@ namespace Ember.Core.Editor
         {
             EnsurePanels();
             bool devMode = EmberProjectSetup.IsEmbeddedPackage();
+            if (Event.current.type == EventType.Layout && _pendingTab.HasValue)
+            {
+                _selectedTab = _pendingTab.Value;
+                _pendingTab = null;
+            }
             if (!devMode && _selectedTab == 1) _selectedTab = 0;
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("Ember 项目中心", EditorStyles.boldLabel);
-            if (GUILayout.Button("模板专属 AI Skill · 预览与同步")) EmberTemplateSkillsWindow.Open();
-            if (devMode)
-                _selectedTab = GUILayout.Toolbar(_selectedTab, DevTabs);
-            else
-                _selectedTab = GUILayout.Toolbar(_selectedTab == 2 ? 1 : 0, ConsumerTabs) == 1 ? 2 : 0;
-
-            if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            EditorGUILayout.LabelField(devMode ? "框架开发仓库 · 可保存与封存模板" : "项目工作区 · 初始化与校验", EditorStyles.miniLabel);
+            using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.HelpBox(
-                    EditorApplication.isCompiling
-                        ? "Unity 正在编译，写操作暂时禁用。"
-                        : "Unity 正在更新资源，写操作暂时禁用。",
-                    MessageType.Info);
-            }
+                using (new EditorGUILayout.VerticalScope(GUILayout.Width(175)))
+                {
+                    if (_navigation == null || _navigationDevMode != devMode)
+                    {
+                        _navigationDevMode = devMode;
+                        _navigation = new OdinMenuTree(false);
+                        _navigation.Add("项目初始化", 0);
+                        if (devMode) _navigation.Add("模板开发", 1);
+                        _navigation.Add("项目校验", 2);
+                        _navigation.MenuItems.FirstOrDefault(i => i.Value is int value && value == _selectedTab)?.Select();
+                        var navigation = _navigation;
+                        navigation.Selection.SelectionChanged += change =>
+                        {
+                            if (!ReferenceEquals(_navigation, navigation)) return;
+                            if (navigation.Selection.SelectedValue is int selected)
+                            {
+                                _pendingTab = selected;
+                                Repaint();
+                            }
+                        };
+                    }
+                    _navigation.DrawMenuTree();
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("模板 AI Skill", GUILayout.Height(28))) EmberTemplateSkillsWindow.Open();
+                }
+                using (new EditorGUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
+                {
+                    SirenixEditorGUI.Title(DevTabs[_selectedTab], _selectedTab == 1 ? "当前 Assets → 保存模板 → 显式 Bump 版本" : "", TextAlignment.Left, true);
 
-            GUILayout.Space(6);
-            if (EditorApplication.isPlayingOrWillChangePlaymode)
-                EditorGUILayout.HelpBox("运行期间可以查看信息；退出播放模式后可保存、同步和校验。", MessageType.Info);
-            if (_selectedTab == 1 && devMode)
-                _templateDevelopmentPanel.Draw(position.width);
-            else if (_selectedTab == 2)
-                _projectValidationPanel.Draw();
-            else
-            {
-                _scroll = EditorGUILayout.BeginScrollView(_scroll);
-                _projectSetupPanel.Draw();
-                EditorGUILayout.EndScrollView();
+                    if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+                    {
+                        EditorGUILayout.HelpBox(
+                            EditorApplication.isCompiling
+                                ? "Unity 正在编译，写操作暂时禁用。"
+                                : "Unity 正在更新资源，写操作暂时禁用。",
+                            MessageType.Info);
+                    }
+
+                    GUILayout.Space(6);
+                    if (EditorApplication.isPlayingOrWillChangePlaymode)
+                        EditorGUILayout.HelpBox("运行期间可以查看信息；退出播放模式后可保存、同步和校验。", MessageType.Info);
+                    if (_selectedTab == 1 && devMode)
+                        _templateDevelopmentPanel.Draw(position.width - 180);
+                    else if (_selectedTab == 2)
+                        _projectValidationPanel.Draw();
+                    else
+                    {
+                        _scroll = EditorGUILayout.BeginScrollView(_scroll);
+                        _projectSetupPanel.Draw();
+                        EditorGUILayout.EndScrollView();
+                    }
+                }
             }
         }
 

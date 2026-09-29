@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 using System;
 using System.Linq;
+using Sirenix.Utilities.Editor;
 using Ember.UPMManager.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -17,30 +18,35 @@ namespace Ember.Core.Editor
         private Vector2 _scroll;
         private int _selected;
         private TemplateInfo[] _templates = Array.Empty<TemplateInfo>();
+        [SerializeField] private bool _showDistribution, _showHelp;
+        private string _differenceSearch = "";
         #endregion
 
         #region 生命周期
-        private void OnEnable() { _templates = EmberProjectSetup.GetTemplates().ToArray(); }
+        private void OnEnable() { minSize = new Vector2(650, 480); _templates = EmberProjectSetup.GetTemplates().ToArray(); }
 
         private void OnGUI()
         {
-            EditorGUILayout.LabelField("模板专属 AI Skill", EditorStyles.boldLabel);
+            SirenixEditorGUI.Title("模板专属 AI Skill", "预览当前模板 → 检查差异 → 同步技能", TextAlignment.Left, true);
+            _showHelp = SirenixEditorGUI.Foldout(_showHelp, "技能源与同步说明");
+            if (_showHelp)
             EditorGUILayout.HelpBox("源：Assets/Game/Documentation/TemplateSkills\n发现副本：.agents/skills/<id>\n"
                 + "消费项目升级框架后，在此独立更新技能，保留剧情、配表、图片、场景和业务代码。"
                 + "\n编辑源文件后使用当前模板预览。通用 Skill 仍由 UPM Manager 独立管理。", MessageType.Info);
             using (new EditorGUI.DisabledScope(EditorApplication.isCompiling || EditorApplication.isUpdating
                 || EditorApplication.isPlayingOrWillChangePlaymode))
             {
-                if (_templates.Length > 0)
+                _showDistribution = SirenixEditorGUI.Foldout(_showDistribution, "浏览包内模板 · 只读");
+                if (_showDistribution && _templates.Length > 0)
                 {
                     _selected = EditorGUILayout.Popup("包内模板", Mathf.Clamp(_selected, 0, _templates.Length - 1),
                         _templates.Select(t => t.id + " " + t.version).ToArray());
                     if (GUILayout.Button("查看所选模板技能（只读）"))
                         Preview(false);
                 }
-                if (GUILayout.Button("预览当前模板技能更新（保留业务内容）")) Preview(true);
+                if (GUILayout.Button("预览当前模板技能更新（保留业务内容）", GUILayout.Height(32))) Preview(true);
                 using (new EditorGUI.DisabledScope(!_current || _preview == null || _preview.Errors.Count > 0 || !_preview.HasChanges))
-                    if (GUILayout.Button(_preview?.NeedsBackupConfirmation == true ? "备份并更新技能" : "更新技能"))
+                    if (GUILayout.Button(_preview?.NeedsBackupConfirmation == true ? "备份并更新技能" : "更新技能", GUILayout.Height(28)))
                     {
                         try
                         {
@@ -54,6 +60,11 @@ namespace Ember.Core.Editor
                     }
             }
             if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
+            if (_preview != null)
+            {
+                SirenixEditorGUI.Title("差异预览", (_current ? "当前模板" : "只读分发") + " · " + _preview.Errors.Count + " 个错误 · " + _preview.Differences.Count + " 项差异", TextAlignment.Left, true);
+                _differenceSearch = EditorGUILayout.TextField(_differenceSearch, EditorStyles.toolbarSearchField);
+            }
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
             if (_preview != null)
             {
@@ -61,7 +72,7 @@ namespace Ember.Core.Editor
                 if (_preview.IsIndependentUpdate) EditorGUILayout.LabelField("业务部署 " + _preview.BusinessTemplateVersion + " → 保持；技能源 " + _preview.TemplateVersion);
                 if (!_current) EditorGUILayout.HelpBox("只读分发预览。必须先通过正式模板加载/部署流程，才能启用；包内可读不代表已启用。", MessageType.Info);
                 foreach (string error in _preview.Errors) EditorGUILayout.HelpBox(error, MessageType.Error);
-                foreach (string difference in _preview.Differences) EditorGUILayout.SelectableLabel(difference,
+                foreach (string difference in _preview.Differences.Where(d => string.IsNullOrEmpty(_differenceSearch) || d.IndexOf(_differenceSearch, StringComparison.OrdinalIgnoreCase) >= 0)) EditorGUILayout.SelectableLabel(difference,
                     EditorStyles.wordWrappedLabel, GUILayout.Height(36));
                 if (_preview.Differences.Count == 0) EditorGUILayout.LabelField("此模板没有专属技能，也没有待移出的受管技能。");
             }

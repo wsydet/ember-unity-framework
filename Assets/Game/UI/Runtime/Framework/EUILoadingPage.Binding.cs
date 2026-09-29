@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUILoadingPanel
  * page name    : EUILoadingPage
- * update time  : 2026/8/31 20:50:45
+ * update time  : 2026/9/29 14:51:54
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,22 +15,22 @@ namespace Game.UI
     public partial class EUILoadingPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// m_Cg_Progress
+        /// Animator/EUISafeArea/BottomCenter/m_Cg_Progress
         /// </summary>
         private CanvasGroup Cg_Progress;
 
         /// <summary>
-        /// m_Cg_Progress/Pos/m_Img_ProgressBar
+        /// Animator/EUISafeArea/BottomCenter/m_Cg_Progress/m_Img_ProgressBar
         /// </summary>
         private Image Img_ProgressBar;
 
         /// <summary>
-        /// m_Cg_Progress/Pos/m_Txt_ProgressNum
+        /// Animator/EUISafeArea/BottomCenter/m_Cg_Progress/m_Txt_ProgressNum
         /// </summary>
         private TMP_Text Txt_ProgressNum;
 
         /// <summary>
-        /// m_TransitionBlock
+        /// Animator/m_TransitionBlock
         /// </summary>
         private Component TransitionBlock;
 

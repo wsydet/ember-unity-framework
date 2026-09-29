@@ -1953,3 +1953,15 @@ string path = _battleScene;  // 隐式转换
 `Ember.UIExtension.EmberLocalization` 在场景加载前装配 `Resources/Config/Localization` 下的 `EmberLocalizationTable`。`SetLanguage(string language)` 保存偏好并广播语言变化；`Reload()` 重读产物，并保留业务注入的解析器；`RestoreDefault()` 显式恢复通用解析器。`Language` 为当前偏好，`Default` 返回 `ITextLocalizer`。`SetPreview(string language)` 仅改变内存预览语言，`ResetCache()` 使下次读取回到持久化偏好。
 
 Editor 通过 `EmberLocalizationSource` 注册源表、语言列、源语言与输出资产；跨表 Key 必须唯一。源表草稿使用 `EmberTableSourceDocument`，保存检查外部变化并在烘焙失败时回退。详细使用与翻译复核见 [多语言中心](../../Packages/com.ember/Documentation~/manual/localization-center.md)。
+
+## 字体皮肤（本地未发布）
+
+`Ember.UIExtension.EmberFontSkins.SetSkin(int skinId)` 切换全局皮肤；`Catalog` 优先读取项目配置，
+不存在时使用框架共享预设。`Reload()` 恢复配置中的默认皮肤。切换不写玩家存档。
+`TMPEx.SetFontForSkin(int skinId, int slotId)` 设置该文本在指定皮肤下的独立字体选择；
+`SetFontSkin(0, defaultSlotId)` 跟随全局，`SetFontSkin(-1, defaultSlotId)` 固定当前 Font Asset。
+`ApplyFontSkin()` 只更新字体和匹配材质，不修改 Key 或布局；缺失映射保留原字体并返回 false。
+
+编辑器入口 `Ember/Tool/字体皮肤` 管理配置、生成项目枚举和切换默认皮肤，
+`EmberFontSkinMigration.ConvertPrefabs` 迁移项目 UI 并由 EUI 中心重新生成绑定。
+详见 [字体皮肤](../../Packages/com.ember/Documentation~/manual/font-skins.md)。

@@ -38,6 +38,7 @@ namespace Game.Narrative.Editor
             NarrativeEditorAvailability.RequireEnabled();
             GetWindow<NovelPortraitWindow>().Show();
         }
+
         #endregion
     }
 }
