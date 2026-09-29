@@ -1,11 +1,23 @@
 {
   "schemaVersion": 1,
   "generatedBy": "Ember AI Skill Bundle",
-  "sourceCommit": "6152fb6fa539e574e00248291260c619fb3de8a2",
+  "sourceCommit": "f58d4e1f61648fa0193b4066abb31c6b46ea969f",
   "files": [
     {
       "path": "catalog.json",
-      "sha256": "05b89d13a16795ce6ea8b14b89ce8863171483d04c4da00ee734f3b2378e4cc4"
+      "sha256": "b294c2f8e59a215fd85fee268f107f599187b73c2f9fdfa81b3d4ac7f093c45f"
+    },
+    {
+      "path": "ember-add-font/agents/openai.yaml",
+      "sha256": "15f450b558d60da8b4bc094546ecf540115c44b360ee1235e57a858f4ea8e1b9"
+    },
+    {
+      "path": "ember-add-font/references/font-wiring.md",
+      "sha256": "034b593de1c7df856777f6d2b1d450f76d2101a6d6eeadb8bd25ef9eed97bb6c"
+    },
+    {
+      "path": "ember-add-font/SKILL.md",
+      "sha256": "d2f101efcdc68886982cfab921e3668431d734d5651880ddf576aa80c5e44662"
     },
     {
       "path": "ember-commit-review/agents/openai.yaml",
@@ -21,7 +33,7 @@
     },
     {
       "path": "ember-doc-maintenance/scripts/audit_docs.py",
-      "sha256": "287b8f658ab9ef5d0f7f89b672be42f0fb56bcceb3cc468a8ddd526ee07853ee"
+      "sha256": "c1aad6dd82798879d23f4bfbb6575b3bba67b95dab99efb577e55c9cb55a1bd1"
     },
     {
       "path": "ember-doc-maintenance/SKILL.md",
@@ -29,19 +41,19 @@
     },
     {
       "path": "ember-eui-build/agents/openai.yaml",
-      "sha256": "a496b24983fd287502fc953f85ac3c6220f0de382191a5c42aa2ce8e25413d94"
+      "sha256": "fc278133636c300549e9cc1c73b76547a26b9eafc7af1394a0f1382db917722a"
     },
     {
       "path": "ember-eui-build/assets/EmberEuiSkillAdapter.cs",
-      "sha256": "61981919b7647adcfe0d6498511378161cc855467e2a5cc15b87124435517985"
+      "sha256": "0f0f400b37e23e6aa65fccc429f9e8eec53d69a15706d5a2270b08dea0a92611"
     },
     {
       "path": "ember-eui-build/references/editor-api.md",
-      "sha256": "0200662f8ee140405d42b68aba9f2fb6e7d70b85d281a81cbf2d9658c6231312"
+      "sha256": "010adf6781cc1af2d5783df62d439cb1eb02b4e07bc88e9613bf92943f40fca9"
     },
     {
       "path": "ember-eui-build/SKILL.md",
-      "sha256": "33bde2d2e4e371d4dbed58b14b982fe3ff9f68c69f9a9bf83caf49188efce2c2"
+      "sha256": "33e0745010883510b53d035d0cab0713e02ab82c687c4bf532cde705bf15ae47"
     },
     {
       "path": "ember-generate-doc/agents/openai.yaml",

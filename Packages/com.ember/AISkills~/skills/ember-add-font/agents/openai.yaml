@@ -1,0 +1,3 @@
+interface:
+  display_name: "Ember 添加字体"
+  short_description: "为各类模板项目导入字体并批量补齐皮肤配置、预制体和场景中的使用映射"
