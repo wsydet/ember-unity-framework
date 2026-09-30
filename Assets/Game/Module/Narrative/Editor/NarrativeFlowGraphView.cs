@@ -33,6 +33,12 @@ namespace Game.Narrative.Editor
             internal NarrativeNodeSO Model { get; }
             internal Port Input { get; }
             internal Dictionary<string, Port> Outputs { get; } = new();
+            private readonly Label _relatedLabel;
+            internal void SetRelated(bool related)
+            {
+                EnableInClassList("narrative-related", related);
+                _relatedLabel.style.display = related ? DisplayStyle.Flex : DisplayStyle.None;
+            }
             internal FlowNode(NarrativeNodeSO model, NarrativeChapterSO chapter, NarrativeTableCatalog catalog, bool editable)
             {
                 Model = model; viewDataKey = model.NodeId;
@@ -50,6 +56,10 @@ namespace Game.Narrative.Editor
                 if (model is not NarrativeReceiverSO && model is not NarrativeFlowStartSO) inputContainer.Add(Input);
                 var summary = new Label(Summary(model, catalog, chapter)); summary.AddToClassList("narrative-summary");
                 extensionContainer.Add(summary);
+                _relatedLabel = new Label(model is NarrativeJumpSO ? "关联跳转点" : "关联接收点");
+                _relatedLabel.AddToClassList("narrative-related-label");
+                _relatedLabel.style.display = DisplayStyle.None;
+                extensionContainer.Add(_relatedLabel);
                 var paths = NarrativeGraphModel.Ports(model);
                 for (int i = 0; i < paths.Count; i++)
                 {
@@ -178,11 +188,18 @@ namespace Game.Narrative.Editor
         public override void AddToSelection(ISelectable selectable)
         {
             base.AddToSelection(selectable);
+            if (!_building) RefreshRelatedNodes();
             if (!_building && selectable is FlowNode node) _selected(node.Model);
+        }
+        public override void RemoveFromSelection(ISelectable selectable)
+        {
+            base.RemoveFromSelection(selectable);
+            if (!_building) RefreshRelatedNodes();
         }
         public override void ClearSelection()
         {
-            base.ClearSelection(); if (!_building) _selected?.Invoke(null);
+            base.ClearSelection();
+            if (!_building) { RefreshRelatedNodes(); _selected?.Invoke(null); }
         }
         public override void BuildContextualMenu(ContextualMenuPopulateEvent e)
         {
@@ -230,13 +247,13 @@ namespace Game.Narrative.Editor
                 ApplyFlowVisibility();
                 foreach (var model in selectedModels) if (model && _nodes.TryGetValue(model, out var node)) AddToSelection(node);
             }
-            finally { _building = false; _miniMap.SetNodes(_nodes.Values); }
+            finally { _building = false; _miniMap.SetNodes(_nodes.Values); RefreshRelatedNodes(); }
         }
         public void SelectModel(NarrativeNodeSO model, bool frame)
         {
             _building = true;
             try { ClearSelection(); if (model && _nodes.TryGetValue(model, out var node)) AddToSelection(node); }
-            finally { _building = false; }
+            finally { _building = false; RefreshRelatedNodes(); }
             if (model && _nodes.TryGetValue(model, out var selected) && selected.style.display == DisplayStyle.None)
             {
                 ViewFlow = model as NarrativeFlowStartSO ?? model.Flow;

@@ -1,6 +1,6 @@
 # visual-novel 成对跳转与复合流程交付记录
 
-> 发布衔接（2026-09-30）：本记录的实现与封存成果随 [框架 0.17.2](release-0.17.2.md) 交付；下文“未发布/不发布”描述各实施阶段当时的范围。消费项目尚未升级。
+> 发布衔接（2026-09-30）：本记录的 0.18.0 实现与 0.18.1 文档封存成果随 [框架 0.17.2](release-0.17.2.md) 交付；下文“未发布/不发布”描述各实施阶段当时的范围。消费项目尚未升级。后补选择关联标记由 0.18.2 封存并随框架 0.17.3 交付，见文末追加记录。
 
 日期：2026-09-30。工作目录：正式 Ember 开发仓库；未修改 Call Me Heartless、UnityFarm 或任何消费端 PackageCache。
 
@@ -76,3 +76,21 @@
 编辑前副本及完整 Git 状态保存于 `.utmp/ember-doc-maintenance/before/` 和 `status-before.txt`。307 份自有文档的维护前与维护后严格审计均无本地 Markdown 文件目标问题；审计不验证外链或所有标题锚点，本轮新增锚点已按目标标题人工核对。未改 C#、场景或运行资产，不触发 Unity 编译或重复运行测试；299/299 与 15/15 均是上节功能实现的既有证据。
 
 文档通过正式 `SaveTemplate` 保存 1153 文件，再执行 patch Bump 为 **0.18.1 / preview**；保存前工作副本与快照仅有 4 份 Markdown 差异。实算 hash、contentHash 和 versionedContentHash 均为 `4f853face913953d7939443048d355a1`，编辑记录未过期，模板谱系校验 0 问题。上节 hash 为 0.18.0 历史封存值，未回写冒充本版。框架包仍为 0.17.1，未提交、推送、发布或部署消费项目。
+
+## 成对节点选择标记补充（工作副本，未封存）
+
+操作及显示边界统一见 [选择关联标记](../../Assets/Game/Documentation/NovelFlow.md#选择关联标记)。归属仍为模板编辑器改动，不新增运行时契约，不修改存档格式。
+
+新增 `SelectionHighlightsPairedNodesWithoutChangingSelectionOrAssets`，覆盖双向、多来源、多选取消、重建、重新关联及 Undo、空章节和资产不变。本次 Unity MCP 刷新请求成功，但首次读取 Console 返回 `ping not answered`；按 CLAUDE.md 停止编译验证，未执行测试、未正式 SaveTemplate/Bump。当前正式封存仍为 0.18.1，不能把原 299/299 或 15/15 的结果作为本次验证。后续须手动编译并运行图编辑器相关测试，通过后再走正式模板保存流程。
+
+收尾顺序：手动触发 Unity 编译；运行 NovelFlowEditorTests、NarrativeGraphTests、NarrativeGraphInteractionTests 并检查实际颜色与屏幕外定位；通过后使用正式 SaveTemplate → 显式 Bump 保存模板，记录版本/hash/谱系校验结果；发布和消费升级再按已有流程单独执行。
+
+本次文档收束仅更新流程说明、模板首页、开发索引与本记录，不改代码、不重试 Unity 编译、不手改模板快照。保留全部历史验证与封存证据。
+
+## 发布补丁封存（0.18.2 / 框架 0.17.3）
+
+2026-09-30 重试发布时取回此前失败报告：16 项中 1 项失败，发生于新增用例 Undo 后关联检查。同帧测试准备与用户编辑未隔离 Undo 分组；修正测试分组并增加撤销后稳定关联 ID 断言，未修改运行时行为。
+
+修正后本轮 NovelFlowEditorTests、NarrativeGraphTests、NarrativeGraphInteractionTests **16/16 通过、0 失败、0 跳过**，job `2b3d2233134b4ab38a2f6553002ff604`；NUnit 报告 `.utmp/visual-novel-m3/tests-20260930-061050879.xml`，96.42 秒。刷新后 Console 无错误，测试状态查询再次 TimeoutError，因此不追加编译验证；结果依据本轮 Unity Test Framework 落盘报告，不沿用旧版通过数字。请在 Unity 中手动触发编译；若仍报错，反馈首条错误及完整堆栈。实际颜色、屏幕外定位、消费项目及 Player/设备仍未验收。
+
+通过正式 SaveTemplate 保存 1153 文件，再 patch Bump 为 **0.18.2 / preview**。实算 hash、contentHash 与 versionedContentHash 一致为 `b7acc31df3161bcb52a807f3fd929fdd`；父级 base 0.7.0 及父快照不变，兼容声明 0.17.0，谱系 0 问题、编辑记录未过期。无直接修改模板快照或 hash。随 [框架 0.17.3](release-0.17.3.md) 交付；消费项目尚未升级。

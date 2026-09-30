@@ -28,6 +28,44 @@ namespace Game.Narrative.Tests
             _layout = NarrativeGraphModel.LAYOUT_ROOT + "/" + AssetDatabase.AssetPathToGUID(_folder + "/Chapter.asset") + ".asset";
         }
         [TearDown] public void Cleanup() { AssetDatabase.DeleteAsset(_layout); AssetDatabase.DeleteAsset(_folder); }
+        [Test] public void SelectionHighlightsPairedNodesWithoutChangingSelectionOrAssets()
+        {
+            var receiver = (NarrativeReceiverSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Receiver);
+            var other = (NarrativeReceiverSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Receiver);
+            var a = (NarrativeJumpSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Jump);
+            var b = (NarrativeJumpSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Jump);
+            NarrativeGraphModel.SetReceiver(_chapter, a, receiver); NarrativeGraphModel.SetReceiver(_chapter, b, receiver);
+            var before = _chapter.Nodes.Select(EditorJsonUtility.ToJson).ToArray();
+            var graph = new NarrativeFlowGraphView(_ => { }, action => action(), (_, _) => { });
+            graph.Rebuild(_chapter, null);
+            Node View(NarrativeNodeSO model) => graph.nodes.Single(n => n.viewDataKey == model.NodeId);
+            string[] Related() => graph.nodes.Where(n => n.ClassListContains("narrative-related")).Select(n => n.viewDataKey).ToArray();
+            graph.AddToSelection(View(receiver));
+            CollectionAssert.AreEquivalent(new[] { a.NodeId, b.NodeId }, Related());
+            Assert.AreEqual(1, graph.selection.Count);
+            graph.SelectModel(a, false);
+            CollectionAssert.AreEqual(new[] { receiver.NodeId }, Related());
+            graph.AddToSelection(View(receiver));
+            CollectionAssert.AreEquivalent(new[] { receiver.NodeId, a.NodeId, b.NodeId }, Related());
+            graph.RemoveFromSelection(View(a));
+            CollectionAssert.AreEquivalent(new[] { a.NodeId, b.NodeId }, Related());
+            graph.Rebuild(_chapter, null);
+            CollectionAssert.AreEquivalent(new[] { a.NodeId, b.NodeId }, Related());
+            graph.ClearSelection(); Assert.IsEmpty(Related());
+            graph.SelectModel(other, false); Assert.IsEmpty(Related());
+            CollectionAssert.AreEqual(before, _chapter.Nodes.Select(EditorJsonUtility.ToJson).ToArray());
+            graph.SelectModel(a, false);
+            // Isolate the user edit from fixture creation in this synchronous test.
+            Undo.FlushUndoRecordObjects(); Undo.IncrementCurrentGroup();
+            NarrativeGraphModel.SetReceiver(_chapter, a, other); Undo.FlushUndoRecordObjects();
+            graph.Rebuild(_chapter, null); CollectionAssert.AreEqual(new[] { other.NodeId }, Related());
+            Undo.PerformUndo();
+            Assert.AreEqual(receiver.NodeId, a.ReceiverId);
+            graph.Rebuild(_chapter, null);
+            CollectionAssert.AreEqual(new[] { receiver.NodeId }, Related());
+            graph.Rebuild(null, null); Assert.IsEmpty(Related());
+        }
+
         [Test] public void ReceiverRenameSaveReloadDeleteUndoKeepsStableAssociation()
         {
             var receiver = (NarrativeReceiverSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Receiver);

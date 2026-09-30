@@ -42,7 +42,7 @@ namespace Game.Narrative.Editor
             if (Event.current.type == EventType.Repaint)
             {
                 foreach (var node in _nodes)
-                    if (node.parent != null) EditorGUI.DrawRect(mapping.Project(node.GetPosition()), node.selected ? new Color(.35f, .65f, 1) : new Color(.55f, .58f, .62f));
+                    if (node.parent != null) EditorGUI.DrawRect(mapping.Project(node.GetPosition()), node.selected ? new Color(.35f, .65f, 1) : node.ClassListContains("narrative-related") ? new Color(1, .7f, .25f) : new Color(.55f, .58f, .62f));
                 Rect view = mapping.Project(Viewport());
                 EditorGUI.DrawRect(view, new Color(.8f, .85f, .25f, .12f));
                 Color border = new(.8f, .85f, .25f, .8f);
@@ -75,6 +75,7 @@ namespace Game.Narrative.Editor
             RegisterCallback<WheelEvent>(e => e.StopPropagation());
         }
         public void SetNodes(IEnumerable<Node> nodes) { _nodes.Clear(); _nodes.AddRange(nodes); _canvas.MarkDirtyRepaint(); }
+        public void RefreshHighlights() => _canvas.MarkDirtyRepaint();
         public Mapping GetMapping(Rect area)
         {
             Rect world = Viewport();

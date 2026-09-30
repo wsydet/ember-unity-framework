@@ -8,6 +8,22 @@
     margin-right: 10px;
     color: rgb(192, 199, 208);
 }
+.narrative-related-label {
+    color: rgb(255, 179, 64);
+    -unity-font-style: bold;
+    margin-left: 10px;
+    margin-bottom: 6px;
+}
+.narrative-related > #node-border {
+    border-left-color: rgb(255, 179, 64);
+    border-right-color: rgb(255, 179, 64);
+    border-top-color: rgb(255, 179, 64);
+    border-bottom-color: rgb(255, 179, 64);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+}
 .narrative-current > #node-border {
     border-left-color: rgb(64, 217, 140);
     border-right-color: rgb(64, 217, 140);

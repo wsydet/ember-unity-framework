@@ -2,11 +2,11 @@
 
 > 历史发布记录（2026-09-28）：**0.15.0**，提供通用多语言中心、小说立绘管理与列表显示修复。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0。196 项相关 EditMode 回归通过；完整 PlayMode、外部翻译服务和消费端升级待验证。
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。当前版本、迁移与验证边界见 [0.17.2 发布说明](dev/release-0.17.2.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。当前版本、迁移与验证边界见 [0.17.3 发布说明](dev/release-0.17.3.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
 
 ## 本次模板交付
 
-visual-novel 成对跳转与复合流程已实现并封存；功能版 0.18.0，文档补丁 0.18.1。本次随 [框架 0.17.2](dev/release-0.17.2.md) 交付，模板版本与框架版本独立。用法见 [流程使用说明](../Assets/Game/Documentation/NovelFlow.md)，设计归属、299/299 与最后 15/15 回归证据、封存和发布边界见 [交付记录](dev/visual-novel-flow-nodes.md)。本批没有升级消费项目。
+visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/release-0.17.3.md) 交付。图编辑器本轮 16/16 通过，模板已正式封存；MCP 测试查询超时，手动编译与视觉/消费验收待完成。用法见 [选择关联标记](../Assets/Game/Documentation/NovelFlow.md#选择关联标记)，历史实现、验证及本次封存见 [交付记录](dev/visual-novel-flow-nodes.md)。框架升级与消费端模板迁移分开执行。
 
 ## 使用框架
 

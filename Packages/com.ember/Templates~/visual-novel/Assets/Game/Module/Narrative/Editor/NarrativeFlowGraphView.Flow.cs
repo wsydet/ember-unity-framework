@@ -18,6 +18,20 @@ namespace Game.Narrative.Editor
         #endregion
         // --------------------------------------------------------
         #region 内部方法
+        private void RefreshRelatedNodes()
+        {
+            var selected = selection.OfType<FlowNode>().Select(n => n.Model).ToArray();
+            foreach (var node in _nodes.Values)
+            {
+                var model = node.Model;
+                bool related = model && selected.Any(source => source && source.ScopeId == model.ScopeId &&
+                    (source is NarrativeJumpSO jump && model is NarrativeReceiverSO && jump.ReceiverId == model.NodeId ||
+                     source is NarrativeReceiverSO && model is NarrativeJumpSO origin && origin.ReceiverId == source.NodeId));
+                node.SetRelated(related);
+            }
+            _miniMap?.RefreshHighlights();
+        }
+
         private IEnumerable<FlowNode> ExpandFlowSelection(IEnumerable<FlowNode> selected)
         {
             var list = selected.ToList();
@@ -40,7 +54,7 @@ namespace Game.Narrative.Editor
                 {
                     _building = true; ClearSelection();
                     foreach (var n in _nodes.Values.Where(n => n.Model.ScopeId == flow.NodeId)) AddToSelection(n);
-                    _building = false;
+                    _building = false; RefreshRelatedNodes();
                 });
             }
             if (model is NarrativeJumpSO jump)
