@@ -44,6 +44,47 @@ namespace Game.Narrative.Tests
         // --------------------------------------------------------
         #region 外部方法
         [Test]
+        public void FlowSpeakerHistoryRetainsReleasedCallValueAcrossSave()
+        {
+            var chapter = _story.Entry;
+            var end = chapter.Nodes.OfType<NarrativeEndingSO>().Single();
+            var nodes = new System.Collections.Generic.List<NarrativeNodeSO> { end };
+            NarrativeFlowCallSO previous = null;
+            for (int i = 0; i < 2; i++)
+            {
+                var flow = Create<NarrativeFlowStartSO>(); var call = Create<NarrativeFlowCallSO>();
+                var body = Create<NarrativeDialogueSO>(); var ret = Create<NarrativeFlowReturnSO>();
+                foreach (var node in new NarrativeNodeSO[] { flow, call, body, ret }) Set(node, "_chapterId", chapter.ChapterId);
+                Ref(flow, "_next", body); Ref(body, "_flow", flow); Ref(body, "_next", ret); Ref(ret, "_flow", flow); Ref(call, "_callee", flow);
+                JsonUtility.FromJsonOverwrite("{\"_variables\":[{\"_id\":\"name\",\"_value\":{\"_type\":2,\"_string\":\"第" + i + "次称呼\"}}]}", flow);
+                var command = new NovelCommand("flow-say-" + i, NovelCommandKind.Say, "正文", "flow-line-" + i,
+                    speakerVariableId: "name", speakerVariableScope: NovelVariableScope.Flow);
+                JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new ActionCommands { _commands = new() { command } }), body);
+                using (var so = new UnityEditor.SerializedObject(call))
+                {
+                    var results = so.FindProperty("_results"); results.arraySize = 1;
+                    results.GetArrayElementAtIndex(0).FindPropertyRelative("_name").stringValue = "完成";
+                    results.GetArrayElementAtIndex(0).FindPropertyRelative("_target").objectReferenceValue = end;
+                    so.ApplyModifiedPropertiesWithoutUndo();
+                }
+                if (previous) Ref(previous, "_results.Array.data[0]._target", call); else Ref(chapter, "_entry", call);
+                previous = call; nodes.AddRange(new NarrativeNodeSO[] { flow, call, body, ret });
+            }
+            List(chapter, "_nodes", nodes.Cast<UnityEngine.Object>().ToArray());
+            var resources = new ResourcesFake(); resources.Story.Asset = _story; resources.Story.IsDone = true;
+            using var session = new NovelSession(new NovelNewGameRequest(), () => _tables, resources);
+            session.AttachView(new View()); session.Tick(0, 0);
+            Assert.IsTrue(session.IsReady, session.Snapshot.Error?.ToString());
+            session.Advance(1); session.Advance(2); session.Advance(3);
+            Assert.AreEqual("第0次称呼", session.History[0].Speaker);
+            Assert.AreEqual("第1次称呼", session.History[1].Speaker);
+            Assert.IsTrue(session.TryCapture(out var save, out var error), error);
+            var restored = JsonUtility.FromJson<NovelCheckpoint>(JsonUtility.ToJson(save));
+            Assert.AreEqual("第0次称呼", restored.History[0].FlowSpeaker);
+            Assert.AreEqual("第1次称呼", restored.History[1].FlowSpeaker);
+        }
+
+        [Test]
         public void SpeakerNameKeyOverridesTheLineAndFallsBackToTheCharacterName()
         {
             InstallLocalization();
@@ -144,9 +185,8 @@ namespace Game.Narrative.Tests
                 Assert.IsTrue(string.IsNullOrEmpty(history[1].SpeakerNameKey), "没填称呼 Key 的句子保持空");
                 Assert.AreEqual(realName, history[1].Speaker);
 
-                // 存档：称呼 Key 本身不推进 SchemaVersion（当前 8 是 BGM 分段推上去的），历史带回称呼 Key。
+                // 称呼 Key 本身不推进格式版本；当前格式也包含调用栈，历史仍带回称呼 Key。
                 Assert.IsTrue(session.TryCapture(out var save, out var error), error);
-                Assert.AreEqual(8, NovelCheckpoint.CurrentSchemaVersion, "称呼 Key 不需要新的存档版本；8 来自 BGM 分段");
                 Assert.AreEqual(NovelCheckpoint.CurrentSchemaVersion, save.SchemaVersion);
                 Assert.AreEqual(UNKNOWN_SPEAKER, save.History[0].SpeakerNameKey);
 

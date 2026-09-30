@@ -20,7 +20,12 @@ namespace Game.Narrative.Editor
             new SearchTreeEntry(new GUIContent("选择 Choice")) { level = 1, userData = NovelNodeKind.Choice },
             new SearchTreeEntry(new GUIContent("条件分流 Branch")) { level = 1, userData = NovelNodeKind.Branch },
             new SearchTreeEntry(new GUIContent("结局 Ending")) { level = 1, userData = NovelNodeKind.Ending },
-            new SearchTreeEntry(new GUIContent("章节出口 Chapter Exit")) { level = 1, userData = NovelNodeKind.ChapterExit }
+            new SearchTreeEntry(new GUIContent("章节出口 Chapter Exit")) { level = 1, userData = NovelNodeKind.ChapterExit },
+            new SearchTreeEntry(new GUIContent("跳转点 Jump")) { level = 1, userData = NovelNodeKind.Jump },
+            new SearchTreeEntry(new GUIContent("接收点 Receiver")) { level = 1, userData = NovelNodeKind.Receiver },
+            new SearchTreeEntry(new GUIContent("复合流程调用 Call")) { level = 1, userData = NovelNodeKind.FlowCall },
+            new SearchTreeEntry(new GUIContent("流程开始 Start")) { level = 1, userData = NovelNodeKind.FlowStart },
+            new SearchTreeEntry(new GUIContent("流程结束 Return")) { level = 1, userData = NovelNodeKind.FlowReturn }
         };
         public bool OnSelectEntry(SearchTreeEntry entry, SearchWindowContext context)
         {

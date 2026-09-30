@@ -41,6 +41,29 @@ namespace Ember.UPMManager.Editor.Tests
             EmberAISkillInstaller.Install(_project, preview, "https://example.invalid/framework.git", "main", Commit, overwrite);
 
         [Test]
+        public void Catalog_RejectsBomAndInvalidUtf8BeforeInstallation()
+        {
+            string path = Path.Combine(_source, Id, "SKILL.md");
+            string text = File.ReadAllText(path);
+            File.WriteAllText(path, text, new System.Text.UTF8Encoding(true));
+            StringAssert.Contains("BOM", Assert.Throws<InvalidDataException>(() => Preview()).Message);
+            File.WriteAllBytes(path, new byte[] { 0xff, 0xfe, 0x2d, 0x00 });
+            StringAssert.Contains("UTF-8", Assert.Throws<InvalidDataException>(() => Preview()).Message);
+            Assert.IsFalse(File.Exists(Target("SKILL.md")));
+        }
+
+        [TestCase(" \n---\nname: ember-test-skill\ndescription: test\n---\n")]
+        [TestCase("---\nname: ember-test-skill\ndescription: test\n")]
+        [TestCase("---\nname: ember-test-skill\n---\n")]
+        [TestCase("---\nname: ember-test-skill\ndescription: \n---\n")]
+        [TestCase("---\nname: ember-test-skill\nname: other\ndescription: test\n---\n")]
+        public void Catalog_RejectsInvalidFrontmatter(string markdown)
+        {
+            Write(Path.Combine(_source, Id, "SKILL.md"), markdown);
+            Assert.Throws<InvalidDataException>(() => Preview());
+        }
+
+        [Test]
         public void Install_RecordsSourceAndPreservesOtherSkillsAndProjectConfiguration()
         {
             string personal = Path.Combine(_project, ".agents/skills/personal/SKILL.md");

@@ -26,11 +26,11 @@ namespace Game.Narrative
         public bool TryCapture(out NovelCheckpoint checkpoint, out string error)
         {
             checkpoint = null; error = null;
-            if (_busy || _story == null || (_state != NarrativeState.AwaitingAdvance && _state != NarrativeState.AwaitingChoice))
-            { error = "请等待当前句完整显示或选项准备完成后保存"; return false; }
+            if (_busy || _story == null || (_state != NarrativeState.AwaitingAdvance && _state != NarrativeState.AwaitingChoice && !(_state == NarrativeState.Executing && _wait == NarrativeWait.Timer)))
+            { error = "当前状态不可保存；自定义步骤/小游戏须完成后保存，支持完整对白、选择或计时等待 [" + _chapter?.Id + "/" + _node?.Id + "/" + CurrentCommand?.CommandId + "]"; return false; }
             checkpoint = new NovelCheckpoint
             {
-                RandomState = _randomState,
+                RandomState = _randomState, CallStack = CaptureFrames(), RemainingWait = _remainingWait,
                 StoryId = _story.Id, StoryRevision = _story.Revision, Semantics = NovelCompatibility.Fingerprint(_story),
                 ChapterId = _chapter.Id, NodeId = _node.Id, CommandId = CurrentCommand?.CommandId,
                 LineId = CurrentCommand?.LineId, TextRevision = CurrentCommand?.TextRevision ?? 0, Stop = _state,
@@ -53,14 +53,16 @@ namespace Game.Narrative
                 if (issues.Count > 0) throw new InvalidOperationException(issues[0].ToString());
                 if (checkpoint.StoryId != story.Id || checkpoint.Semantics != NovelCompatibility.Fingerprint(story))
                     throw new InvalidOperationException("剧情语义已变化，存档不兼容；文件已保留");
-                if (checkpoint.SchemaVersion >= NovelCheckpoint.CurrentSchemaVersion && checkpoint.RandomState == 0)
+                if (checkpoint.SchemaVersion >= 8 && checkpoint.RandomState == 0)
                     throw new InvalidOperationException("存档随机状态无效");
-                if (checkpoint.SchemaVersion < NovelCheckpoint.CurrentSchemaVersion && story.Chapters.Any(c => c.Nodes.Any(n => n.Commands.Any(x => x.Kind == NovelCommandKind.RandomVariable))))
+                if (checkpoint.SchemaVersion < 8 && story.Chapters.Any(c => c.Nodes.Any(n => n.Commands.Any(x => x.Kind == NovelCommandKind.RandomVariable))))
                     throw new InvalidOperationException("旧存档缺少随机状态，不能恢复随机剧情");
                 var chapter = story.Chapters.Single(c => c.Id == checkpoint.ChapterId);
                 var node = chapter.Nodes.Single(n => n.Id == checkpoint.NodeId);
                 var globals = ReadVariables(checkpoint.Globals, story.Globals);
                 var locals = ReadVariables(checkpoint.Locals, chapter.Variables);
+                var frames = ReadFrames(checkpoint, chapter, node);
+                var flow = frames.Count == 0 ? _emptyFlow : frames[frames.Count - 1].Variables;
                 int index = 0; var options = new List<NovelRoute>();
                 if (checkpoint.Stop == NarrativeState.AwaitingAdvance && node.Kind == NovelNodeKind.Dialogue)
                 {
@@ -70,10 +72,18 @@ namespace Game.Narrative
                 }
                 else if (checkpoint.Stop == NarrativeState.AwaitingChoice && node.Kind == NovelNodeKind.Choice)
                 {
-                    options.AddRange(node.Routes.Where(r => r.Condition.Evaluate(locals, globals)));
+                    options.AddRange(node.Routes.Where(r => r.Condition.Evaluate(locals, globals, flow)));
                     if (options.Count == 0 || checkpoint.Options == null || checkpoint.Options.Count != options.Count ||
                         !new HashSet<string>(checkpoint.Options).SetEquals(options.Select(o => o.Id)))
                         throw new InvalidOperationException("存档合法选项不一致");
+                }
+                else if (checkpoint.SchemaVersion >= 9 && checkpoint.Stop == NarrativeState.Executing && node.Kind == NovelNodeKind.Dialogue)
+                {
+                    index = node.Commands.ToList().FindIndex(c => c.CommandId == checkpoint.CommandId);
+                    if (index < 0 || node.Commands[index].Kind != NovelCommandKind.Wait ||
+                        float.IsNaN(checkpoint.RemainingWait) || float.IsInfinity(checkpoint.RemainingWait) ||
+                        checkpoint.RemainingWait <= 0 || checkpoint.RemainingWait > node.Commands[index].Duration)
+                        throw new InvalidOperationException("存档等待位置或剩余时间无效：" + node.Id + "/" + checkpoint.CommandId);
                 }
                 else throw new InvalidOperationException("存档不是合法稳定点");
                 return Mutate(() =>
@@ -84,12 +94,13 @@ namespace Game.Narrative
                     foreach (var n in chapter.Nodes) _nodes.Add(n.Id, n);
                     foreach (var v in globals) _globals.Add(v.Key, v.Value);
                     foreach (var v in locals) _variables.Add(v.Key, v.Value);
-                    _randomState = checkpoint.SchemaVersion >= NovelCheckpoint.CurrentSchemaVersion ? checkpoint.RandomState : _initialRandomState;
+                    _randomState = checkpoint.SchemaVersion >= 8 ? checkpoint.RandomState : _initialRandomState;
+                    _frames.AddRange(frames); _remainingWait = checkpoint.RemainingWait;
                     _commandIndex = index; _options.AddRange(options); _state = checkpoint.Stop;
-                    _wait = _state == NarrativeState.AwaitingAdvance ? NarrativeWait.Advance : NarrativeWait.Choice;
+                    _wait = _state == NarrativeState.AwaitingAdvance ? NarrativeWait.Advance : _state == NarrativeState.AwaitingChoice ? NarrativeWait.Choice : NarrativeWait.Timer;
                 });
             }
-            catch (Exception ex) { error = ex.Message; return false; }
+            catch (Exception ex) { error = ex.Message + " [" + checkpoint?.ChapterId + "/" + checkpoint?.NodeId + "/" + checkpoint?.CommandId + "]"; return false; }
         }
         #endregion
     }

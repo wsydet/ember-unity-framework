@@ -116,7 +116,7 @@ namespace Game.Narrative
             if (validation == null) return null;
             // 模块只返回字符串，目标限定为能确定性转换的三种类型（bool / int / string）。
             if (!validation.TryGetVariable(_resultScope, _resultVariableId, out NovelValue declared))
-                return "结果变量未声明：" + _resultVariableId + "（作用域 " + (_resultScope == NovelVariableScope.Global ? "全局" : "本章节") + "）";
+                return "结果变量未声明：" + _resultVariableId + "（作用域 " + (_resultScope == NovelVariableScope.Flow ? "当前流程" : _resultScope == NovelVariableScope.Global ? "全局" : "本章节") + "）";
             if (!Enum.IsDefined(typeof(NovelValueType), declared.Type)) return "结果变量类型无效：" + _resultVariableId;
             return null;
         }

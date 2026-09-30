@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace Game.Narrative.Editor
 {
     /// <summary>保留式画布。导航只更新视图变换，不读取 SO、磁盘或重建节点。</summary>
-    public sealed class NarrativeFlowGraphView : GraphView
+    public sealed partial class NarrativeFlowGraphView : GraphView
     {
         #region 内部参数
         private readonly Dictionary<NarrativeNodeSO, FlowNode> _nodes = new();
@@ -36,7 +36,7 @@ namespace Game.Narrative.Editor
             internal FlowNode(NarrativeNodeSO model, NarrativeChapterSO chapter, NarrativeTableCatalog catalog, bool editable)
             {
                 Model = model; viewDataKey = model.NodeId;
-                title = (chapter.Entry == model ? "开始 · " : "") + (model is NarrativeChoiceSO ? "玩家选择" : model is NarrativeBranchSO ? "条件分支" : model is NarrativeEndingSO ? "结局" : model is NarrativeChapterExitSO ? "转到下一章" : "对话段") + " · " + model.name;
+                title = (chapter.Entry == model ? "开始 · " : "") + (model is NarrativeJumpSO ? "跳转点" : model is NarrativeReceiverSO ? "接收点" : model is NarrativeFlowCallSO ? "流程调用" : model is NarrativeFlowStartSO ? "流程开始" : model is NarrativeFlowReturnSO ? "流程结束" : model is NarrativeChoiceSO ? "玩家选择" : model is NarrativeBranchSO ? "条件分支" : model is NarrativeEndingSO ? "结局" : model is NarrativeChapterExitSO ? "转到下一章" : "对话段") + " · " + model.name;
                 tooltip = model.NodeId;
                 style.width = 260;
                 style.minHeight = 150;
@@ -46,8 +46,9 @@ namespace Game.Narrative.Editor
                     model is NarrativeEndingSO ? new Color(.3f, .55f, .38f) : new Color(.2f, .42f, .64f);
                 titleContainer.style.backgroundColor = color;
                 Input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(NarrativeNodeSO));
-                Input.portName = "入口"; Input.SetEnabled(editable); inputContainer.Add(Input);
-                var summary = new Label(Summary(model, catalog)); summary.AddToClassList("narrative-summary");
+                Input.portName = "入口"; Input.SetEnabled(editable);
+                if (model is not NarrativeReceiverSO && model is not NarrativeFlowStartSO) inputContainer.Add(Input);
+                var summary = new Label(Summary(model, catalog, chapter)); summary.AddToClassList("narrative-summary");
                 extensionContainer.Add(summary);
                 var paths = NarrativeGraphModel.Ports(model);
                 for (int i = 0; i < paths.Count; i++)
@@ -55,14 +56,14 @@ namespace Game.Narrative.Editor
                     string path = paths[i];
                     var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(NarrativeNodeSO));
                     port.portName = path == "_next" ? "后续" : path == "_fallback" ? "兜底" :
-                        model is NarrativeChoiceSO choice ? (i + 1) + ". " + choice.Options[i]?.Text :
+                        model is NarrativeFlowCallSO call ? call.Results[i]?.Name : model is NarrativeChoiceSO choice ? (i + 1) + ". " + choice.Options[i]?.Text :
                         model is NarrativeBranchSO branch ? (i + 1) + ". " + branch.Branches[i]?.Text : path;
                     port.tooltip = port.portName; port.userData = path; port.SetEnabled(editable);
                     outputContainer.Add(port); Outputs.Add(path, port);
                 }
                 RefreshExpandedState(); RefreshPorts();
             }
-            private static string Summary(NarrativeNodeSO node, NarrativeTableCatalog catalog)
+            private static string Summary(NarrativeNodeSO node, NarrativeTableCatalog catalog, NarrativeChapterSO chapter)
             {
                 if (node is NarrativeDialogueSO dialogue)
                 {
@@ -73,6 +74,11 @@ namespace Game.Narrative.Editor
                     if (string.IsNullOrEmpty(name)) name = "旁白";
                     return commands.Count + " 条指令\n" + (command == null ? "对话与演出" : name + "：" + command.Text);
                 }
+                if (node is NarrativeJumpSO jump) return "跳转至 · " + (chapter.Nodes.FirstOrDefault(n => n && n.NodeId == jump.ReceiverId)?.name ?? "接收点缺失");
+                if (node is NarrativeReceiverSO) return "多来源接收 · 稳定 ID：" + node.NodeId;
+                if (node is NarrativeFlowStartSO) return "独立流程 · 每次调用创建局部变量";
+                if (node is NarrativeFlowReturnSO end) return "返回本次调用 · " + end.Result;
+                if (node is NarrativeFlowCallSO call) return call.Callee ? call.Callee.name : "请选择调用流程";
                 if (node is NarrativeChoiceSO choice) return choice.Prompt;
                 if (node is NarrativeBranchSO) return "按顺序首个命中，否则走兜底";
                 if (node is NarrativeChapterExitSO) return "章节出口 · 在章节总览配置下一章";
@@ -116,7 +122,7 @@ namespace Game.Narrative.Editor
         private void DeleteSelected()
         {
             if (!_editable) return;
-            var nodes = selection.OfType<FlowNode>().Select(n => n.Model).ToArray();
+            var nodes = ExpandFlowSelection(selection.OfType<FlowNode>()).Select(n => n.Model).ToArray();
             var edges = selection.OfType<Edge>().ToArray();
             if (nodes.Length > 0)
             {
@@ -151,6 +157,9 @@ namespace Game.Narrative.Editor
             style.flexGrow = 1; focusable = true;
             SetupZoom(.1f, 3f);
             var grid = new GridBackground(); grid.StretchToParentSize(); Insert(0, grid);
+            _linkOverlay = new IMGUIContainer(DrawJumpLinks) { pickingMode = PickingMode.Ignore };
+            _linkOverlay.StretchToParentSize(); Insert(1, _linkOverlay);
+            viewTransformChanged += _ => _linkOverlay.MarkDirtyRepaint();
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger()); // Unity 自带节点对齐辅助线与吸附。
             this.AddManipulator(new RectangleSelector());
@@ -164,7 +173,7 @@ namespace Game.Narrative.Editor
             _miniMap = new NarrativeMiniMap(this); Add(_miniMap);
         }
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter adapter)
-            => _editable ? ports.Where(p => p.direction != startPort.direction).ToList() : new List<Port>();
+            => _editable ? ports.Where(p => p.direction != startPort.direction && p.node is FlowNode a && startPort.node is FlowNode b && a.Model.ScopeId == b.Model.ScopeId && (p.direction != Direction.Input || a.Model is not NarrativeReceiverSO && a.Model is not NarrativeFlowStartSO)).ToList() : new List<Port>();
 
         public override void AddToSelection(ISelectable selectable)
         {
@@ -183,6 +192,7 @@ namespace Game.Narrative.Editor
                 if (selection.OfType<FlowNode>().Any()) e.menu.AppendAction("复制所选  Ctrl+D", _ => DuplicateSelection());
                 if (selection.Count > 0) e.menu.AppendAction("删除所选", _ => DeleteSelected());
             }
+            BuildFlowMenu(e);
             e.menu.AppendAction("显示全部  A", _ => FrameAll());
             e.menu.AppendAction("聚焦所选  F", _ => FrameSelection());
         }
@@ -194,10 +204,12 @@ namespace Game.Narrative.Editor
             {
                 ClearSelection();
                 foreach (var element in graphElements.Where(e => e is Node || e is Edge).ToList()) RemoveElement(element);
+                if (_chapter != chapter || ViewFlow && (!chapter || !chapter.Nodes.Contains(ViewFlow))) ViewFlow = null;
                 _nodes.Clear(); _current = null; _chapter = chapter;
-                _editable = NarrativeGraphModel.CanEdit(chapter);
+                _editable = NarrativeGraphModel.CanEdit(chapter); _catalog = catalog;
                 if (!chapter) return;
                 var layout = NarrativeGraphModel.GetLayout(chapter, false); int index = 0;
+                _collapsedFlows.Clear(); if (layout) foreach (var id in layout.CollapsedFlows) _collapsedFlows.Add(id);
                 var defaultPositions = NarrativeAutoLayout.Calculate(chapter);
                 foreach (var model in chapter.Nodes)
                 {
@@ -210,11 +222,12 @@ namespace Game.Narrative.Editor
                     foreach (var output in node.Outputs)
                     {
                         var target = NarrativeGraphModel.Target(node.Model, output.Key);
-                        if (!target || !_nodes.TryGetValue(target, out var destination)) continue;
+                        if (!target || !_nodes.TryGetValue(target, out var destination) || target is NarrativeReceiverSO || target is NarrativeFlowStartSO) continue;
                         var edge = output.Value.ConnectTo(destination.Input);
                         if (!_editable) edge.capabilities &= ~Capabilities.Deletable;
                         AddElement(edge);
                     }
+                ApplyFlowVisibility();
                 foreach (var model in selectedModels) if (model && _nodes.TryGetValue(model, out var node)) AddToSelection(node);
             }
             finally { _building = false; _miniMap.SetNodes(_nodes.Values); }
@@ -224,6 +237,11 @@ namespace Game.Narrative.Editor
             _building = true;
             try { ClearSelection(); if (model && _nodes.TryGetValue(model, out var node)) AddToSelection(node); }
             finally { _building = false; }
+            if (model && _nodes.TryGetValue(model, out var selected) && selected.style.display == DisplayStyle.None)
+            {
+                ViewFlow = model as NarrativeFlowStartSO ?? model.Flow;
+                Rebuild(_chapter, _catalog); SelectModel(model, frame); return;
+            }
             if (frame && model) FrameSelection();
         }
         public void ShowExecution(NarrativeSnapshot snapshot)
@@ -255,7 +273,7 @@ namespace Game.Narrative.Editor
         public void DuplicateSelection()
         {
             if (!_editable || !_chapter) return;
-            var sources = selection.OfType<FlowNode>().ToArray();
+            var sources = ExpandFlowSelection(selection.OfType<FlowNode>()).ToArray();
             if (sources.Length == 0) return;
             _edit(() =>
             {
@@ -267,6 +285,7 @@ namespace Game.Narrative.Editor
                     var copy = NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Dialogue, source.Model);
                     copies[source.Model] = copy; positions[copy] = source.GetPosition().position + new Vector2(60, 60);
                 }
+                NarrativeGraphModel.RemapFlowCopies(copies);
                 foreach (var copy in copies.Values)
                     foreach (string port in NarrativeGraphModel.Ports(copy))
                     {

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f04d5bec14b0484b8f83f3ba5e6f1c0, type: 3}
+  m_Name: 1ca13f6176e84f64ea606d98714edba6
+  m_EditorClassIdentifier: Game.Narrative.Editor::Game.Narrative.Editor.NarrativeGraphLayout
+  _chapterGuid: 1ca13f6176e84f64ea606d98714edba6
+  _collapsedFlows: []
+  _positions:
+  - _nodeId: afb75d8602a94d7398429beaa11233d8
+    _position: {x: 0, y: 0}
+  - _nodeId: be3e43991dc2491286f65ff88e9d7a2a
+    _position: {x: 360, y: 0}
+  - _nodeId: 8769e28b2ed24cb0b257977ed42d848d
+    _position: {x: 720, y: 0}
+  - _nodeId: 27fbf2befd994e10901e2821104af27f
+    _position: {x: 0, y: 240}
+  - _nodeId: 8be6e2163eac4beba21562b017c0388f
+    _position: {x: 1080, y: 0}
+  - _nodeId: 24ae2423f1674de68a73f8071af68da8
+    _position: {x: 1440, y: 0}
+  - _nodeId: 57433c36e1834e36bd535617459739a4
+    _position: {x: 1440, y: 260}
+  - _nodeId: 0b69df400d1348e58eb75e68476a0827
+    _position: {x: 1800, y: 0}
+  - _nodeId: bf91b570721440669707bccdbe35f476
+    _position: {x: 2160, y: 0}
+  - _nodeId: f5e476229c8b42a59fe620c2a2829104
+    _position: {x: 1800, y: 240}
+  - _nodeId: 516fc9ce492340989b40d338d1d1fec1
+    _position: {x: 1080, y: 260}
+  - _nodeId: 43d2a9223e2b424eb0d175aad47c30a8
+    _position: {x: 1440, y: 520}
+  - _nodeId: bed5bb4db528472dbe4d6c2258385e99
+    _position: {x: 720, y: 260}
+  - _nodeId: 3b25854ae044433cbc5cb3c98492a322
+    _position: {x: 0, y: 880}
+  - _nodeId: f01b2559009f41398925f6857644d590
+    _position: {x: 360, y: 880}
+  - _nodeId: 21bd6a9bf0f34272aede1048f71b68c6
+    _position: {x: 720, y: 880}
+  - _nodeId: bd60038b9b934cf1b65acc80ec25c892
+    _position: {x: 1080, y: 880}
+  - _nodeId: 2cae769f56204e3ea06cfc109446e4c6
+    _position: {x: 720, y: 1120}

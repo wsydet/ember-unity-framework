@@ -10,12 +10,15 @@ namespace Game.Narrative
         [SerializeField] private string _nodeId = Guid.NewGuid().ToString("N");
         [SerializeField] private string _chapterId;
         [SerializeField] private int _contentRevision = 1;
+        [SerializeField] private NarrativeFlowStartSO _flow;
         #endregion
         // --------------------------------------------------------
         #region 内部参数
         public string NodeId => _nodeId;
         public string ChapterId => _chapterId;
         public int ContentRevision => _contentRevision;
+        public NarrativeFlowStartSO Flow => _flow;
+        public string ScopeId => this is NarrativeFlowStartSO ? NodeId : _flow ? _flow.NodeId : "";
         #endregion
         // --------------------------------------------------------
         #region 外部方法

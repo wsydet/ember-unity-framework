@@ -211,10 +211,10 @@ namespace Game.Narrative.Editor
                 Field(item, "_speakerVariableId", "说话人变量 ID（留空用上面的称呼）");
                 if (!string.IsNullOrEmpty(item.FindPropertyRelative("_speakerVariableId").stringValue))
                 {
-                    EnumField(item, "_speakerVariableScope", "说话人变量作用域", new[] { "本章节", "全局" });
+                    EnumField(item, "_speakerVariableScope", "说话人变量作用域", new[] { "本章节", "全局", "当前流程" });
                     EditorGUILayout.HelpBox("填了就以该字符串变量的当前值作为显示名，优先于称呼 Key。"
                         + "它是表现层字段：不改变对白角色键、不影响强调匹配、不进存档指纹；历史逐句读时重新解析，"
-                        + "所以玩家中途改名后，历史里的旧句也会一起变。变量未声明或不是字符串时剧情校验会报错。", MessageType.Info);
+                        + "所以玩家中途改名后，历史里的旧句也会一起变；当前流程变量例外，历史保留本次调用的称呼。变量未声明或不是字符串时剧情校验会报错。", MessageType.Info);
                 }
                 var text = item.FindPropertyRelative("_text");
                 EditorGUILayout.LabelField("台词");
@@ -252,10 +252,10 @@ namespace Game.Narrative.Editor
                 Field(item, "_dialogueVisible", "显示剧情对白层");
                 EditorGUILayout.HelpBox("只隐藏对白层，不暂停演出。下一句、选择或结局自动恢复；玩家手动隐藏独立处理。", MessageType.Info);
             }
-            else if (kind == NovelCommandKind.SetVariable) { EnumField(item, "_scope", "作用域", new[] { "本章节", "全局" }); Field(item, "_variableId", "变量 ID"); Field(item, "_value", "赋值"); }
+            else if (kind == NovelCommandKind.SetVariable) { EnumField(item, "_scope", "作用域", new[] { "本章节", "全局", "当前流程" }); Field(item, "_variableId", "变量 ID"); Field(item, "_value", "赋值"); }
             else if (kind == NovelCommandKind.CalculateVariable || kind == NovelCommandKind.RandomVariable)
             {
-                EnumField(item, "_scope", "目标作用域", new[] { "本章节", "全局" }); Field(item, "_variableId", "目标整数变量");
+                EnumField(item, "_scope", "目标作用域", new[] { "本章节", "全局", "当前流程" }); Field(item, "_variableId", "目标整数变量");
                 if (kind == NovelCommandKind.RandomVariable)
                 {
                     Field(item, "_randomMin", "最小值（含）"); Field(item, "_randomMax", "最大值（含）");
@@ -266,7 +266,7 @@ namespace Game.Narrative.Editor
                     EnumField(item, "_integerOperation", "运算", new[] { "赋值", "加", "减", "乘", "除（截断）", "取余" });
                     Field(item, "_operandVariableId", "来源变量（空为常量）");
                     if (string.IsNullOrEmpty(item.FindPropertyRelative("_operandVariableId").stringValue)) Field(item, "_integerOperand", "整数常量");
-                    else EnumField(item, "_operandScope", "来源作用域", new[] { "本章节", "全局" });
+                    else EnumField(item, "_operandScope", "来源作用域", new[] { "本章节", "全局", "当前流程" });
                 }
             }
             else if (kind == NovelCommandKind.Wait) Field(item, "_duration", "等待秒数");
@@ -532,7 +532,7 @@ namespace Game.Narrative.Editor
                     1 => value.FindPropertyRelative("_int").intValue.ToString(),
                     _ => "“" + value.FindPropertyRelative("_string").stringValue + "”"
                 };
-                return (item.FindPropertyRelative("_scope").enumValueIndex == 0 ? "本章节" : "全局") + " · " + item.FindPropertyRelative("_variableId").stringValue + " = " + text;
+                return (item.FindPropertyRelative("_scope").enumValueIndex switch { 0 => "本章节", 1 => "全局", _ => "当前流程" }) + " · " + item.FindPropertyRelative("_variableId").stringValue + " = " + text;
             }
             if (NovelMediaRules.IsBgmSegment(kind)) return CommandNames[(int)kind] + " · 当前曲目";
             if (NovelMediaRules.IsMedia(kind)) return CommandNames[(int)kind] + " · " + item.FindPropertyRelative("_instanceId").stringValue + " · " + item.FindPropertyRelative("_resourceKey").stringValue;
@@ -582,6 +582,21 @@ namespace Game.Narrative.Editor
                 data.ApplyModifiedProperties(); return;
             }
             var node = (NarrativeNodeSO)asset;
+            if (node is not NarrativeFlowStartSO)
+                EditorGUILayout.PropertyField(data.FindProperty("_flow"), new GUIContent("所属流程（空为章节主线）"));
+            foreach (string field in new[] { "_receiverId", "_callee", "_results", "_result" })
+            {
+                var property = data.FindProperty(field);
+                if (property != null) EditorGUILayout.PropertyField(property, new GUIContent(field switch
+                { "_receiverId" => "接收点稳定 ID", "_callee" => "调用流程", "_results" => "结果出口", _ => "返回结果" }), true);
+            }
+            if (node is NarrativeFlowStartSO)
+            {
+                EditorGUILayout.PropertyField(data.FindProperty("_variables"), new GUIContent("每次调用的初始局部变量"), true);
+                EditorGUILayout.PropertyField(data.FindProperty("_next"), new GUIContent("流程首节点"));
+            }
+            if (node is NarrativeReceiverSO)
+                EditorGUILayout.PropertyField(data.FindProperty("_next"), new GUIContent("接收后续"));
             if (settings)
             {
                 using (new EditorGUI.DisabledScope(true)) EditorGUILayout.PropertyField(data.FindProperty("_nodeId"), new GUIContent("节点 ID"));

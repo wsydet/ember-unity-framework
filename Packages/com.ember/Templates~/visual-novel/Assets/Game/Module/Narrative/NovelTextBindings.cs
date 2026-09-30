@@ -31,7 +31,7 @@ namespace Game.Narrative
         #region 外部方法
         [HasGC]
         public static string Validate(NovelCommand command, IReadOnlyDictionary<string, NovelValue> locals,
-            IReadOnlyDictionary<string, NovelValue> globals)
+            IReadOnlyDictionary<string, NovelValue> globals, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
             if (command.TextBindings.Count == 0) return null;
             if (command.Kind != NovelCommandKind.Say) return "文字变量绑定只用于对白";
@@ -41,7 +41,7 @@ namespace Game.Narrative
             {
                 if (binding == null || string.IsNullOrEmpty(binding.Token) ||
                     string.IsNullOrWhiteSpace(binding.VariableId) || !Enum.IsDefined(typeof(NovelVariableScope), binding.Scope)) return "文字绑定字段无效";
-                var source = binding.Scope == NovelVariableScope.Global ? globals : locals;
+                var source = binding.Scope == NovelVariableScope.Flow ? flow : binding.Scope == NovelVariableScope.Global ? globals : locals;
                 if (source == null || !source.ContainsKey(binding.VariableId)) return "文字绑定变量未声明：" + binding.VariableId;
                 if (command.Text == null || !command.Text.Contains(binding.Token)) return "正文不包含绑定占位符：" + binding.Token;
                 foreach (var token in tokens)
@@ -53,11 +53,11 @@ namespace Game.Narrative
 
         [HasGC]
         public static string Resolve(NovelCommand command, IReadOnlyDictionary<string, NovelValue> locals,
-            IReadOnlyDictionary<string, NovelValue> globals)
+            IReadOnlyDictionary<string, NovelValue> globals, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
-            string error = Validate(command, locals, globals);
+            string error = Validate(command, locals, globals, flow);
             if (error != null) throw new InvalidOperationException(error);
-            return Resolve(command.Text, command.TextBindings, locals, globals);
+            return Resolve(command.Text, command.TextBindings, locals, globals, flow);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Game.Narrative
         /// </summary>
         [HasGC]
         public static string Resolve(string text, IReadOnlyList<NovelTextBinding> bindings,
-            IReadOnlyDictionary<string, NovelValue> locals, IReadOnlyDictionary<string, NovelValue> globals)
+            IReadOnlyDictionary<string, NovelValue> locals, IReadOnlyDictionary<string, NovelValue> globals, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
             if (string.IsNullOrEmpty(text) || bindings == null || bindings.Count == 0) return text;
             var result = new StringBuilder();
@@ -82,7 +82,7 @@ namespace Game.Narrative
                 else
                 {
                     // Values are appended once, never reinterpreted as further placeholders.
-                    result.Append((match.Scope == NovelVariableScope.Global ? globals : locals)[match.VariableId].ToString());
+                    result.Append((match.Scope == NovelVariableScope.Flow ? flow : match.Scope == NovelVariableScope.Global ? globals : locals)[match.VariableId].ToString());
                     i += match.Token.Length;
                 }
             }

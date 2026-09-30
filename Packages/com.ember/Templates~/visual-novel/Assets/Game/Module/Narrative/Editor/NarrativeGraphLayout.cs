@@ -10,11 +10,13 @@ namespace Game.Narrative.Editor
     {
         #region 编辑器面板参数
         [SerializeField] private string _chapterGuid;
+        [SerializeField] private List<string> _collapsedFlows = new();
         [SerializeField] private List<NodePosition> _positions = new();
         #endregion
         // --------------------------------------------------------
         #region 内部参数
         public string ChapterGuid => _chapterGuid;
+        public IReadOnlyList<string> CollapsedFlows => _collapsedFlows;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -27,6 +29,8 @@ namespace Game.Narrative.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        internal void SetFlowCollapsed(string id, bool collapsed)
+        { _collapsedFlows.Remove(id); if (collapsed) _collapsedFlows.Add(id); }
         internal void Initialize(string guid) { _chapterGuid = guid; }
         public Vector2 GetPosition(string id, int index)
         {

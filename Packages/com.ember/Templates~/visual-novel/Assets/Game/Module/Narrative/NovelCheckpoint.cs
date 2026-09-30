@@ -12,10 +12,12 @@ namespace Game.Narrative
     public sealed class NovelCheckpoint
     {
         /// <summary>当前存档格式版本。新增字段时递增，并在 NovelSession / NarrativeRunner 的恢复路径按版本迁移。</summary>
-        public const int CurrentSchemaVersion = 8;
+        public const int CurrentSchemaVersion = 9;
 
         public int SchemaVersion = CurrentSchemaVersion;
         public uint RandomState;
+        public List<NovelCallFrame> CallStack = new();
+        public float RemainingWait;
         public float CameraZoom = 1;
         public UnityEngine.Vector2 CameraOffset;
         public string StoryPath, StoryId, Semantics, ChapterId, NodeId, CommandId, LineId;
@@ -78,6 +80,8 @@ namespace Game.Narrative
         /// <summary>说话人显示名的变量 ID（表现层字段）。旧档没有这个字段，反序列化后为空，
         /// 解析退回称呼 Key / 角色名回退链，所以不需要迁移、也不推进 SchemaVersion。</summary>
         public string SpeakerVariableId;
+        /// <summary>流程变量随返回释放，历史保留当次调用的称呼，不读取后来调用的同名变量。</summary>
+        public string FlowSpeaker;
         /// <summary>说话人变量的作用域；SpeakerVariableId 为空时无意义。</summary>
         public NovelVariableScope SpeakerVariableScope;
         /// <summary>该句正文的多语言 Key。旧档没有这个字段，反序列化后为空 → 用存下来的 Text，
@@ -126,6 +130,11 @@ namespace Game.Narrative
                 foreach (var n in c.Nodes.OrderBy(n => n.Id, StringComparer.Ordinal))
                 {
                     w.Write(n.Id); w.Write((int)n.Kind); w.Write(n.NextId ?? ""); w.Write(n.EndingId ?? "");
+                    if (!string.IsNullOrEmpty(n.ScopeId) || n.Kind >= NovelNodeKind.Jump)
+                    {
+                        w.Write("Flow1"); w.Write(n.ScopeId); w.Write(n.LinkId ?? ""); w.Write(n.Result ?? "");
+                        Variables(w, n.FlowVariables);
+                    }
                     Routes(w, n.Kind == NovelNodeKind.Choice ? n.Routes.OrderBy(r => r.Id, StringComparer.Ordinal) : n.Routes);
                     // Command order and priority branch order ARE execution semantics.
                     w.Write(n.Commands.Count);

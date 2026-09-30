@@ -82,7 +82,7 @@ namespace Game.UI
                     await UniTask.WaitUntil(() => session.IsDisposed || session.Snapshot.State == NarrativeState.Faulted ||
                         session.IsReady && (session.Snapshot.State == NarrativeState.Revealing ||
                         session.Snapshot.State == NarrativeState.AwaitingAdvance || session.Snapshot.State == NarrativeState.AwaitingChoice ||
-                        session.Snapshot.State == NarrativeState.Ended) &&
+                        session.Snapshot.State == NarrativeState.Ended || session.Snapshot.Wait == NarrativeWait.Timer) &&
                         (session.Snapshot.Wait & (NarrativeWait.Resource | NarrativeWait.Presentation | NarrativeWait.Transition)) == 0 &&
                         EUIViewEngine.Instance.ActivePages.Any(p => p.EUIPageDef == GamePages.EUINovelReaderPage &&
                             p.IsOpened && ReferenceEquals(p.Logic, session.View)), cancellationToken: token);

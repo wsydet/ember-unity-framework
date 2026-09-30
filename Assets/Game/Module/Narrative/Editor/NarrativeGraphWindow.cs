@@ -180,10 +180,16 @@ namespace Game.Narrative.Editor
             Button(observe, "预览节点", () => Game.UI.Editor.NovelGameplayLayoutWindow.OpenNodePreview(_selected));
             Button(observe, "播放节点", () =>
             {
-                if (_selected is not NarrativeDialogueSO dialogue)
-                { _message = "演出试播需要选中一个对话节点。"; _inspector?.MarkDirtyRepaint(); return; }
-                Game.UI.Editor.NovelNodePlaybackWindow.Play(dialogue, _chapter, _story, error =>
+                if (!_selected)
+                { _message = "请先选中一个节点。"; _inspector?.MarkDirtyRepaint(); return; }
+                Game.UI.Editor.NovelNodePlaybackWindow.Play(_selected, _chapter, _story, error =>
                 { if (this) { LocateError(error); Focus(); } });
+            });
+            Button(observe, "连续试播", () =>
+            {
+                if (!_selected) return;
+                Game.UI.Editor.NovelNodePlaybackWindow.Play(_selected, _chapter, _story, error =>
+                { if (this) { LocateError(error); Focus(); } }, true);
             });
             _inspector = new IMGUIContainer(DrawInspector); _inspector.style.flexGrow = 1; sidebar.Add(_inspector);
             split.Add(sidebar); rootVisualElement.Add(split);
@@ -430,7 +436,7 @@ namespace Game.Narrative.Editor
                 if (_selected)
                 {
                     if (GUILayout.Button("设为章节入口")) TryEdit(() => NarrativeGraphModel.SetEntry(_chapter, _selected));
-                    if (GUILayout.Button("复制节点（新 ID）")) TryEdit(() => SelectNode(NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Dialogue, _selected)));
+                    if (GUILayout.Button("复制节点（新 ID）")) TryEdit(() => { _graph.SelectModel(_selected, false); _graph.DuplicateSelection(); });
                     if (GUILayout.Button("从本章移除…"))
                     {
                         var incoming = NarrativeGraphModel.Incoming(_chapter, _selected);
@@ -453,6 +459,20 @@ namespace Game.Narrative.Editor
             EditorGUILayout.LabelField("章节", s.ChapterId ?? "—");
             EditorGUILayout.LabelField("节点 / 指令", (s.NodeId ?? "—") + " / " + (s.CommandId ?? "—"));
             EditorGUILayout.LabelField("等待", s.Wait.ToString());
+            var observed = FindObservedChapter();
+            if (observed)
+            {
+                string Label(string id) => observed.Nodes.FirstOrDefault(n => n && n.NodeId == id)?.name ?? id;
+                EditorGUILayout.LabelField("执行路径", observed.DisplayName + " → " + string.Join(" → ", s.CallPath.Select(Label).Concat(new[] { Label(s.NodeId) })), EditorStyles.wordWrappedLabel);
+                foreach (var id in s.CallPath)
+                {
+                    var call = observed.Nodes.FirstOrDefault(n => n && n.NodeId == id) as NarrativeFlowCallSO;
+                    if (call && GUILayout.Button("定位调用点：" + call.name)) { ShowChapter(observed); SelectNode(call); }
+                    if (call) foreach (var r in call.Results.Where(r => r.Target))
+                        if (GUILayout.Button("返回 " + r.Name + "：" + r.Target.name)) { ShowChapter(observed); SelectNode(r.Target); }
+                }
+            }
+            foreach (var pair in s.FlowVariables) EditorGUILayout.LabelField("流程局部 / " + pair.Key, pair.Value.ToString());
             if (!string.IsNullOrEmpty(s.WaitingActions)) EditorGUILayout.LabelField("等待动作", s.WaitingActions);
             foreach (var action in s.Actions) EditorGUILayout.LabelField(action, EditorStyles.wordWrappedMiniLabel);
             EditorGUILayout.LabelField("暂停原因", s.PauseReasons.Count == 0 ? "无" : string.Join(", ", s.PauseReasons));
@@ -575,6 +595,7 @@ namespace Game.Narrative.Editor
             {
                 Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
                 var node = NarrativeGraphModel.CreateNode(_chapter, kind);
+                if (_graph.ViewFlow && node is not NarrativeFlowStartSO) NarrativeGraphModel.AssignFlow(_chapter, node, _graph.ViewFlow);
                 if (_story && kind == NovelNodeKind.ChapterExit) NarrativeStoryModel.SyncExits(_story);
                 NarrativeGraphModel.Move(_chapter, node, _snap ? NarrativeAutoLayout.Snap(position) : position);
                 Undo.CollapseUndoOperations(group); RefreshGraph(); SelectNode(node);

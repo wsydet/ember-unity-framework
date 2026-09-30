@@ -76,7 +76,7 @@ namespace Game.NovelSave
         {
             if (IndexError != null) throw new IOException(IndexError);
             if (slot < 0 || slot > 7 || checkpoint == null || (checkpoint.SchemaVersion < 1 || checkpoint.SchemaVersion > NovelCheckpoint.CurrentSchemaVersion) ||
-                (checkpoint.Stop != NarrativeState.AwaitingAdvance && checkpoint.Stop != NarrativeState.AwaitingChoice))
+                (checkpoint.Stop != NarrativeState.AwaitingAdvance && checkpoint.Stop != NarrativeState.AwaitingChoice && !(checkpoint.SchemaVersion >= 9 && checkpoint.Stop == NarrativeState.Executing && checkpoint.RemainingWait > 0 && !float.IsInfinity(checkpoint.RemainingWait))))
                 throw new IOException("无效槽位或非稳定点快照");
             string file = "slot-" + slot + "-" + Guid.NewGuid().ToString("N") + ".json";
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(checkpoint));

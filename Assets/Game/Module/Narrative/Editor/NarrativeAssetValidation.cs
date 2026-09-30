@@ -56,6 +56,22 @@ namespace Game.Narrative.Editor
             foreach (var current in chapters.Where(c => c))
                 foreach (var node in current.Nodes.OfType<NarrativeDialogueSO>())
                 { CollectSlotHideHints(current.ChapterId, node, hints); CollectChapterCardHints(current.ChapterId, node, hints); }
+            foreach (var current in chapters.Where(c => c))
+            {
+                var reached = new HashSet<NarrativeNodeSO>(); var pending = new Stack<NarrativeNodeSO>();
+                if (current.Entry) pending.Push(current.Entry);
+                while (pending.Count > 0)
+                {
+                    var n = pending.Pop(); if (!n || !reached.Add(n)) continue;
+                    foreach (var port in NarrativeGraphModel.Ports(n))
+                    { var target = NarrativeGraphModel.Target(n, port); if (target && current.Nodes.Contains(target)) pending.Push(target); }
+                    if (n is NarrativeFlowCallSO call && call.Callee && current.Nodes.Contains(call.Callee)) pending.Push(call.Callee);
+                    if (n is NarrativeJumpSO jump)
+                    { var target = current.Nodes.FirstOrDefault(x => x && x.NodeId == jump.ReceiverId); if (target) pending.Push(target); }
+                }
+                foreach (var n in current.Nodes.Where(n => n && !reached.Contains(n)))
+                    hints.Add(new NarrativeError("Unreachable", "从章节入口不可达（忽略条件的保守分析）", current.ChapterId, n.NodeId));
+            }
             return hints;
         }
 

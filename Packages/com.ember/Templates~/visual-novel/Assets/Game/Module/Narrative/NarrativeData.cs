@@ -23,8 +23,8 @@ namespace Game.Narrative
         /// </summary>
         CustomStep }
     public enum NovelIntegerOperation { Assign, Add, Subtract, Multiply, Divide, Modulo }
-    public enum NovelNodeKind { Dialogue, Choice, Branch, Ending, ChapterExit }
-    public enum NovelVariableScope { Chapter, Global }
+    public enum NovelNodeKind { Dialogue, Choice, Branch, Ending, ChapterExit, Jump, Receiver, FlowCall, FlowStart, FlowReturn }
+    public enum NovelVariableScope { Chapter, Global, Flow }
     public enum NovelPortraitSlot { Left, Center, Right }
     public enum NovelVisualAction { Show, Replace, Hide }
 
@@ -114,12 +114,12 @@ namespace Game.Narrative
         public NovelCondition(NovelJunction junction = NovelJunction.All, params NovelPredicate[] predicates)
         { _junction = junction; _predicates = new List<NovelPredicate>(predicates ?? Array.Empty<NovelPredicate>()); }
 
-        public bool Evaluate(IReadOnlyDictionary<string, NovelValue> variables, IReadOnlyDictionary<string, NovelValue> globals = null)
+        public bool Evaluate(IReadOnlyDictionary<string, NovelValue> variables, IReadOnlyDictionary<string, NovelValue> globals = null, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
             if (_predicates.Count == 0) return true;
             foreach (NovelPredicate p in _predicates)
             {
-                var source = p.Scope == NovelVariableScope.Global ? globals : variables;
+                var source = p.Scope == NovelVariableScope.Flow ? flow : p.Scope == NovelVariableScope.Global ? globals : variables;
                 if (source == null || !source.TryGetValue(p.VariableId, out NovelValue actual) || actual.Type != p.Value.Type)
                     throw new InvalidOperationException("条件变量缺失或类型不一致：" + p.VariableId);
                 int order = actual.Type == NovelValueType.Int ? actual.Int.CompareTo(p.Value.Int)
@@ -377,15 +377,23 @@ namespace Game.Narrative
         public string NextId { get; }
         public string EndingId { get; }
         public string Prompt { get; }
+        public string ScopeId { get; private set; }
+        public string LinkId { get; }
+        public string Result { get; }
+        public IReadOnlyList<NovelVariable> FlowVariables { get; }
+        internal NovelNode InScope(string id) { ScopeId = id ?? ""; return this; }
         public IReadOnlyList<NovelCommand> Commands { get; }
         public IReadOnlyList<NovelRoute> Routes { get; }
         #endregion
         // --------------------------------------------------------
         #region 外部方法
         public NovelNode(string id, NovelNodeKind kind, string nextId = null, string endingId = null,
-            IList<NovelCommand> commands = null, IList<NovelRoute> routes = null, string prompt = null)
+            IList<NovelCommand> commands = null, IList<NovelRoute> routes = null, string prompt = null,
+            string scopeId = null, string linkId = null, string result = "完成", IList<NovelVariable> flowVariables = null)
         {
             Id = id; Kind = kind; NextId = nextId; EndingId = endingId; Prompt = prompt;
+            ScopeId = scopeId ?? ""; LinkId = linkId; Result = result;
+            FlowVariables = new List<NovelVariable>(flowVariables ?? Array.Empty<NovelVariable>()).AsReadOnly();
             Commands = new List<NovelCommand>(commands ?? Array.Empty<NovelCommand>()).AsReadOnly();
             Routes = new List<NovelRoute>(routes ?? Array.Empty<NovelRoute>()).AsReadOnly();
         }

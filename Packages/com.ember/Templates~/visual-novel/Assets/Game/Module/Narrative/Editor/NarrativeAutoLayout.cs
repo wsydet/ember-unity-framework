@@ -60,13 +60,21 @@ namespace Game.Narrative.Editor
                     if (--incoming[next] == 0) queue.Enqueue(next);
                 }
             }
-            var heights = new Dictionary<int, float>();
+            var heights = new Dictionary<(string, int), float>();
             var result = new Dictionary<NarrativeNodeSO, Vector2>();
             foreach (var node in nodes)
             {
-                int rank = ranks[component[node]]; heights.TryGetValue(rank, out float y);
+                int rank = ranks[component[node]]; heights.TryGetValue((node.ScopeId, rank), out float y);
                 result[node] = new Vector2(rank * 360, y);
-                heights[rank] = y + Mathf.Ceil(Mathf.Max(160, 110 + NarrativeGraphModel.Ports(node).Count * 26) / GRID) * GRID + 80;
+                heights[(node.ScopeId, rank)] = y + Mathf.Ceil(Mathf.Max(160, 110 + NarrativeGraphModel.Ports(node).Count * 26) / GRID) * GRID + 80;
+            }
+            float offset = 0;
+            foreach (var scope in nodes.Select(n => n.ScopeId).Distinct().OrderBy(s => s == "" ? 0 : 1))
+            {
+                var band = nodes.Where(n => n.ScopeId == scope).ToArray();
+                float height = band.Length == 0 ? 0 : band.Max(n => result[n].y) + 360;
+                foreach (var node in band) result[node] += new Vector2(0, offset);
+                offset += height;
             }
             return result;
         }

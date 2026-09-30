@@ -9,7 +9,7 @@ namespace Game.Narrative.Editor
 {
     /// <summary>所有图操作直接修改 SO。撤销创建/移除仅改变章节成员，不销毁独立资产文件。</summary>
     [InitializeOnLoad]
-    public static class NarrativeGraphModel
+    public static partial class NarrativeGraphModel
     {
         #region 内部参数
         public const string LAYOUT_ROOT = "Assets/Game/Module/Narrative/Editor/Layouts";
@@ -104,7 +104,10 @@ namespace Game.Narrative.Editor
             if (copy) RequireMember(chapter, copy);
             Type type = kind switch { NovelNodeKind.Dialogue => typeof(NarrativeDialogueSO),
                 NovelNodeKind.Choice => typeof(NarrativeChoiceSO), NovelNodeKind.Branch => typeof(NarrativeBranchSO),
-                NovelNodeKind.ChapterExit => typeof(NarrativeChapterExitSO), _ => typeof(NarrativeEndingSO) };
+                NovelNodeKind.ChapterExit => typeof(NarrativeChapterExitSO),
+                NovelNodeKind.Jump => typeof(NarrativeJumpSO), NovelNodeKind.Receiver => typeof(NarrativeReceiverSO),
+                NovelNodeKind.FlowCall => typeof(NarrativeFlowCallSO), NovelNodeKind.FlowStart => typeof(NarrativeFlowStartSO),
+                NovelNodeKind.FlowReturn => typeof(NarrativeFlowReturnSO), _ => typeof(NarrativeEndingSO) };
             var node = copy ? UnityEngine.Object.Instantiate(copy) : (NarrativeNodeSO)ScriptableObject.CreateInstance(type);
             using (var data = new SerializedObject(node))
             {
@@ -136,7 +139,9 @@ namespace Game.Narrative.Editor
         public static List<string> Ports(NarrativeNodeSO node)
         {
             var result = new List<string>();
-            if (node is NarrativeDialogueSO) result.Add("_next");
+            if (node is NarrativeDialogueSO || node is NarrativeReceiverSO || node is NarrativeFlowStartSO) result.Add("_next");
+            if (node is NarrativeFlowCallSO call)
+                for (int i = 0; i < call.Results.Count; i++) result.Add("_results.Array.data[" + i + "]._target");
             if (node is NarrativeBranchSO branch)
             {
                 for (int i = 0; i < branch.Branches.Count; i++) result.Add("_branches.Array.data[" + i + "]._target");
@@ -148,10 +153,13 @@ namespace Game.Narrative.Editor
         }
         public static NarrativeNodeSO Target(NarrativeNodeSO node, string port)
         {
+            if (node is NarrativeReceiverSO receiver && port == "_next") return receiver.Next;
+            if (node is NarrativeFlowStartSO flow && port == "_next") return flow.Next;
             if (node is NarrativeDialogueSO dialogue && port == "_next") return dialogue.Next;
             if (node is NarrativeBranchSO fallback && port == "_fallback") return fallback.Fallback;
             int start = port.IndexOf('['), end = port.IndexOf(']');
             if (start < 0 || end <= start || !int.TryParse(port.Substring(start + 1, end - start - 1), out int index)) return null;
+            if (node is NarrativeFlowCallSO call) return index < call.Results.Count ? call.Results[index]?.Target : null;
             var routes = node is NarrativeChoiceSO choice ? choice.Options : (node as NarrativeBranchSO)?.Branches;
             return routes != null && index >= 0 && index < routes.Count ? routes[index]?.Target : null;
         }
@@ -170,7 +178,12 @@ namespace Game.Narrative.Editor
         public static void Connect(NarrativeChapterSO chapter, NarrativeNodeSO node, string port, NarrativeNodeSO target)
         {
             RequireMember(chapter, node);
-            if (target) RequireMember(chapter, target);
+            if (target)
+            {
+                RequireMember(chapter, target);
+                if (target.ScopeId != node.ScopeId || target is NarrativeFlowStartSO || target is NarrativeReceiverSO)
+                    throw new InvalidOperationException("不能跨流程直连，也不能直连接收点或流程开始；请使用跳转或调用。");
+            }
             if (!Ports(node).Contains(port)) throw new ArgumentException("输出端口已失效。");
             using var data = new SerializedObject(node);
             data.FindProperty(port).objectReferenceValue = target; data.ApplyModifiedProperties();
@@ -179,6 +192,12 @@ namespace Game.Narrative.Editor
         {
             var result = new List<string>();
             if (chapter.Entry == node) result.Add("章节入口");
+            foreach (var source in chapter.Nodes.Where(n => n))
+            {
+                if (source is NarrativeJumpSO j && j.ReceiverId == node.NodeId) result.Add(source.name + " / 跳转关联");
+                if (source is NarrativeFlowCallSO c && c.Callee == node) result.Add(source.name + " / 流程调用");
+                if (source.Flow == node) result.Add(source.name + " / 流程成员");
+            }
             foreach (var source in chapter.Nodes.Where(n => n))
                 foreach (string port in Ports(source))
                     if (Target(source, port) == node) result.Add(source.name + " / " + port);
@@ -193,6 +212,15 @@ namespace Game.Narrative.Editor
             foreach (var source in chapter.Nodes.Where(n => n).ToArray())
                 foreach (string port in Ports(source))
                     if (Target(source, port) == node) Connect(chapter, source, port, null);
+            foreach (var source in chapter.Nodes.Where(n => n))
+            {
+                if (source is NarrativeJumpSO jump && jump.ReceiverId == node.NodeId) SetReceiver(chapter, jump, null);
+                if (source is NarrativeFlowCallSO call && call.Callee == node)
+                {
+                    using var callData = new SerializedObject(call);
+                    callData.FindProperty("_callee").objectReferenceValue = null; callData.ApplyModifiedProperties();
+                }
+            }
             using var data = new SerializedObject(chapter);
             if (chapter.Entry == node) data.FindProperty("_entry").objectReferenceValue = null;
             var nodes = data.FindProperty("_nodes");

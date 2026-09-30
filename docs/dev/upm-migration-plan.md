@@ -1,5 +1,7 @@
 # UPM 包交付与维护
 
+> 2026-09-30：当前框架 **0.17.2**，修复技能文件头编码校验，交付 **visual-novel 0.18.1** 的成对跳转与复合流程。base 0.7.0 / source3d-2p5d 0.4.0、兼容声明 0.17.0 和第三方依赖不变。跨模板 minor 须保护定制后迁移，见 [0.17.2 发布说明](release-0.17.2.md)。
+
 > 2026-09-29：当前框架 **0.17.1**，新增通用字体接入技能 ember-add-font，公共技能共 11 项。模板、运行时代码与第三方依赖沿用 0.17.0；本次仅技能与发布资料更新。见 [0.17.1 发布说明](release-0.17.1.md)。
 
 > 2026-09-29：当前框架 **0.17.0**，发布通用字体皮肤、Odin 工作区整理与统一图片入口。visual-novel **0.17.3**；base 0.7.0 / source3d-2p5d 0.4.0 内容不变，兼容声明统一 0.17.0。Unity 编译及 16 项字体/多语言回归通过；旧小说项目需迁移同 GUID 字体。见 [0.17.0 发布说明](release-0.17.0.md)。
@@ -31,7 +33,7 @@
 > 2026-09-23：已发布流程推进至 **0.14.3 / visual-novel 0.7.2**，修复消费项目布局菜单身份判断；验证及定制工程迁移步骤见 [0.14.3 发布说明](release-0.14.3.md)。以下旧版本段落保留历史语境。
 
 > 更新：2026-09-17。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为 **0.17.1**；历史版本验收不替代当前消费项目验证。
+> 当前发布版本为 **0.17.2**；历史版本验收不替代当前消费项目验证。
 
 ## 目录与依赖
 
@@ -60,7 +62,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.17.1`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.17.1.json`，不覆盖消费项目其他依赖。
+3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.17.2`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.17.2.json`，不覆盖消费项目其他依赖。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。
@@ -104,7 +106,7 @@ Rainbow Folders 使用 rainbow-folders-v2.4.5，Rainbow Hierarchy 使用 rainbow
 通过 SessionState 跨脚本域重载续接。成功以安装结果版本核对为准，不把估算进度当成下载百分比。
 
 Embedded 开发副本不能通过消费端升级按钮覆盖。常规升级不需要删除整个 lock 文件。
-框架升级只更新 `com.ember`；Odin/DOTween 标为框架必需，可选第三方包单独按需安装。随包 `Dependencies~/release-0.17.1.json` 的 `optionalPackageInstallTargets` 记录安装按钮的独立标签；完整 manifest 基线继续使用第三方 `ember-v0.11.1`。依据整份依赖声明自动同步仍未实现，不能复制开发机 `file:` 路径或覆盖消费端整份 manifest。
+框架升级只更新 `com.ember`；Odin/DOTween 标为框架必需，可选第三方包单独按需安装。随包 `Dependencies~/release-0.17.2.json` 的 `optionalPackageInstallTargets` 记录安装按钮的独立标签；完整 manifest 基线继续使用第三方 `ember-v0.11.1`。依据整份依赖声明自动同步仍未实现，不能复制开发机 `file:` 路径或覆盖消费端整份 manifest。
 更新包与更新已部署模板是两个动作：0.14.5 起，同模板 major.minor 内的 patch 升级走三方增量；“补齐缺失”仅修复相同版本/hash 的缺失文件，不推进版本。前两位变化时先保护本地内容，再完整部署五个受管目录并恢复；自动用户代码区合并仍待实现。
 不同活动模板不能走普通“补齐缺失”；项目中心提供“部署此模板”，只把包内目标完整模板事务部署到消费项目，不保存当前内容或修改包内模板。
 

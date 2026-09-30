@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba05619e27dcd54fba3a9a3c896306b, type: 3}
+  m_Name: "\u786E\u8BA4\u884C\u52A8"
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChoiceSO
+  _nodeId: f01b2559009f41398925f6857644d590
+  _chapterId: c9e0a98e45f74a52967a4f8d75d190f5
+  _contentRevision: 1
+  _flow: {fileID: 11400000, guid: 2d2655a591176aa4daaaf08a38a456f6, type: 2}
+  _prompt: 
+  _promptTextKey: 
+  _options:
+  - _optionId: 38d55f44c3404085a675e7f05eb0327f
+    _text: "\u5B8C\u6210\u884C\u52A8"
+    _textKey: 
+    _condition:
+      _junction: 0
+      _predicates: []
+    _target: {fileID: 11400000, guid: b10619e6e1ffbc54a8e8be81e804291f, type: 2}
+  - _optionId: d75b8c286c6c4e5c9906355b0bc4993c
+    _text: "\u53D6\u6D88\uFF0C\u4E0D\u63A8\u8FDB\u65F6\u95F4"
+    _textKey: 
+    _condition:
+      _junction: 0
+      _predicates: []
+    _target: {fileID: 11400000, guid: a6483d85655b45047b09609de3c07843, type: 2}

@@ -77,6 +77,78 @@ namespace Game.UI.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        private NovelPlaybackStory() { }
+
+        /// <summary>Continuous audition through the real executor. Internal selections start at their flow entry.</summary>
+        public static NovelPlaybackStory ForFlow(NarrativeNodeSO source, NarrativeChapterSO chapter, NarrativeStorySO story,
+            IEnumerable<NovelCommand> initialCommands = null, IEnumerable<NovelPlaybackVariable> variables = null)
+        {
+            var preview = new NovelPlaybackStory();
+            try
+            {
+                if (!source || !chapter || !chapter.Nodes.Contains(source) || (story && !story.Chapters.Contains(chapter)))
+                    throw new InvalidOperationException("试播节点必须属于当前剧情章节。");
+                var copies = new Dictionary<UnityEngine.Object, UnityEngine.Object>();
+                var chapters = story ? story.Chapters.ToArray() : new[] { chapter };
+                foreach (var original in chapters.Cast<ScriptableObject>().Concat(chapters.SelectMany(c => c.Nodes)).Distinct())
+                    if (original) copies.Add(original, preview.Own(UnityEngine.Object.Instantiate(original)));
+                preview.Story = preview.Own(story ? UnityEngine.Object.Instantiate(story) : ScriptableObject.CreateInstance<NarrativeStorySO>());
+                foreach (var copy in copies.Values.Append(preview.Story))
+                {
+                    using var so = new SerializedObject(copy);
+                    var property = so.GetIterator();
+                    while (property.Next(true))
+                        if (property.propertyType == SerializedPropertyType.ObjectReference && property.objectReferenceValue &&
+                            copies.TryGetValue(property.objectReferenceValue, out var target)) property.objectReferenceValue = target;
+                    so.ApplyModifiedPropertiesWithoutUndo();
+                }
+                var copyChapter = (NarrativeChapterSO)copies[chapter];
+                var selected = (NarrativeNodeSO)copies[source];
+                var nodes = copyChapter.Nodes.Cast<UnityEngine.Object>().ToList();
+                string prefix = "preview-" + Guid.NewGuid().ToString("N");
+                var setup = preview.Own(ScriptableObject.CreateInstance<NarrativeDialogueSO>());
+                Set(setup, "_chapterId", chapter.ChapterId); Set(setup, "_nodeId", prefix + "-setup");
+                JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Commands { _commands = (initialCommands ?? Array.Empty<NovelCommand>()).ToList() }), setup);
+                nodes.Add(setup);
+                var flow = selected as NarrativeFlowStartSO ?? selected.Flow;
+                if (flow)
+                {
+                    var call = preview.Own(ScriptableObject.CreateInstance<NarrativeFlowCallSO>());
+                    var end = preview.Own(ScriptableObject.CreateInstance<NarrativeEndingSO>());
+                    Set(call, "_chapterId", chapter.ChapterId); Set(call, "_nodeId", prefix + "-call"); Ref(call, "_callee", flow);
+                    Set(end, "_chapterId", chapter.ChapterId); Set(end, "_nodeId", prefix + "-end"); Set(end, "_endingId", prefix);
+                    using (var so = new SerializedObject(call))
+                    {
+                        var names = copyChapter.Nodes.OfType<NarrativeFlowReturnSO>().Where(n => n.Flow == flow).Select(n => n.Result).Distinct().ToArray();
+                        var results = so.FindProperty("_results"); results.arraySize = names.Length;
+                        for (int i = 0; i < names.Length; i++)
+                        {
+                            var result = results.GetArrayElementAtIndex(i);
+                            result.FindPropertyRelative("_name").stringValue = names[i];
+                            result.FindPropertyRelative("_target").objectReferenceValue = end;
+                        }
+                        so.ApplyModifiedPropertiesWithoutUndo();
+                    }
+                    JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Variables { _variables = Merge(flow.Variables, variables, NovelVariableScope.Flow) }), flow);
+                    Ref(setup, "_next", call); nodes.Add(call); nodes.Add(end);
+                }
+                else if (selected is NarrativeReceiverSO receiver)
+                {
+                    var jump = preview.Own(ScriptableObject.CreateInstance<NarrativeJumpSO>());
+                    Set(jump, "_chapterId", chapter.ChapterId); Set(jump, "_nodeId", prefix + "-jump");
+                    Set(jump, "_receiverId", receiver.NodeId); Ref(setup, "_next", jump); nodes.Add(jump);
+                }
+                else Ref(setup, "_next", selected);
+                Ref(copyChapter, "_entry", setup); Refs(copyChapter, "_nodes", nodes.ToArray());
+                JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Variables { _variables = Merge(chapter.Variables, variables, NovelVariableScope.Chapter) }), copyChapter);
+                JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Globals { _globals = Merge(story ? story.Globals : null, variables, NovelVariableScope.Global) }), preview.Story);
+                Ref(preview.Story, "_entry", copyChapter);
+                Refs(preview.Story, "_chapters", chapters.Select(c => copies[c]).ToArray());
+                return preview;
+            }
+            catch { preview.Dispose(); throw; }
+        }
+
         public NovelPlaybackStory(NarrativeDialogueSO source, NarrativeChapterSO chapter, NarrativeStorySO story,
             IEnumerable<NovelCommand> initialCommands = null, IEnumerable<NovelPlaybackVariable> variables = null)
         {
@@ -101,7 +173,26 @@ namespace Game.UI.Editor
                 var setup = Own(ScriptableObject.CreateInstance<NarrativeDialogueSO>());
                 Set(setup, "_chapterId", chapter.ChapterId); Set(setup, "_nodeId", prefix + "-setup"); Ref(setup, "_next", Dialogue);
                 JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Commands { _commands = (initialCommands ?? Array.Empty<NovelCommand>()).ToList() }), setup);
-                Ref(copyChapter, "_entry", setup); Refs(copyChapter, "_nodes", setup, Dialogue, ending);
+                Ref(copyChapter, "_entry", setup);
+                if (source.Flow)
+                {
+                    var flow = Own(UnityEngine.Object.Instantiate(source.Flow));
+                    var call = Own(ScriptableObject.CreateInstance<NarrativeFlowCallSO>());
+                    var ret = Own(ScriptableObject.CreateInstance<NarrativeFlowReturnSO>());
+                    Set(flow, "_nodeId", prefix + "-flow"); Ref(flow, "_flow", null); Ref(flow, "_next", Dialogue);
+                    Set(call, "_chapterId", chapter.ChapterId); Set(call, "_nodeId", prefix + "-call"); Ref(call, "_callee", flow);
+                    Set(ret, "_chapterId", chapter.ChapterId); Set(ret, "_nodeId", prefix + "-return"); Ref(ret, "_flow", flow);
+                    Ref(Dialogue, "_flow", flow); Ref(Dialogue, "_next", ret); Ref(setup, "_next", call);
+                    using (var data = new SerializedObject(call))
+                    {
+                        var results = data.FindProperty("_results"); results.arraySize = 1;
+                        results.GetArrayElementAtIndex(0).FindPropertyRelative("_name").stringValue = "完成";
+                        results.GetArrayElementAtIndex(0).FindPropertyRelative("_target").objectReferenceValue = ending; data.ApplyModifiedPropertiesWithoutUndo();
+                    }
+                    JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Variables { _variables = Merge(source.Flow.Variables, variables, NovelVariableScope.Flow) }), flow);
+                    Refs(copyChapter, "_nodes", setup, call, flow, Dialogue, ret, ending);
+                }
+                else Refs(copyChapter, "_nodes", setup, Dialogue, ending);
                 JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Variables { _variables = Merge(chapter.Variables, variables, NovelVariableScope.Chapter) }), copyChapter);
                 JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(new Globals { _globals = Merge(story ? story.Globals : null, variables, NovelVariableScope.Global) }), Story);
                 Ref(Story, "_entry", copyChapter); Refs(Story, "_chapters", copyChapter); Refs(Story, "_exits");

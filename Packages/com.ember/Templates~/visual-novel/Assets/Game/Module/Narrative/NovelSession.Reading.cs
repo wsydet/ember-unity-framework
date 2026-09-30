@@ -24,7 +24,7 @@ namespace Game.Narrative
         public IReadOnlyList<NovelHistoryEntry> History => _history.Select(h => new NovelHistoryEntry
         { ChapterId = h.ChapterId, NodeId = h.NodeId, CommandId = h.CommandId, LineId = h.LineId,
             TextRevision = h.TextRevision, Text = h.Text, SpeakerNameKey = h.SpeakerNameKey,
-            SpeakerVariableId = h.SpeakerVariableId, SpeakerVariableScope = h.SpeakerVariableScope,
+            SpeakerVariableId = h.SpeakerVariableId, SpeakerVariableScope = h.SpeakerVariableScope, FlowSpeaker = h.FlowSpeaker,
             // 正文的多语言 Key 与「是否含文字变量绑定」必须一起带出来，
             // 否则历史页拿到的条目永远按存档文本显示，切语言不会跟着变。
             TextKey = h.TextKey, TextHasBindings = h.TextHasBindings,
@@ -52,7 +52,8 @@ namespace Game.Narrative
         #region 内部方法
         // 历史是读时解析：称呼 Key 与角色键都按当前语言重新解析，所以旧句不会因为后来揭晓真名而串味，
         // 也不会因为补译文而失效。旧档缺 SpeakerNameKey 字段时退化为原来的角色名回退链。
-        private string ResolveSpeaker(NovelHistoryEntry entry) => ResolveSpeakerName(entry.Speaker, entry.SpeakerNameKey,
+        private string ResolveSpeaker(NovelHistoryEntry entry) => entry.SpeakerVariableScope == NovelVariableScope.Flow && !string.IsNullOrEmpty(entry.FlowSpeaker)
+            ? entry.FlowSpeaker : ResolveSpeakerName(entry.Speaker, entry.SpeakerNameKey,
             entry.SpeakerVariableId, entry.SpeakerVariableScope,
             _catalog != null && _catalog.TryGetCharacter(entry.Speaker, out var row) ? row.DisplayName : entry.Speaker);
 

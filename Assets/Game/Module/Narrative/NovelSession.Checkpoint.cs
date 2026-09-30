@@ -62,6 +62,9 @@ namespace Game.Narrative
                 SpeakerNameKey = c.SpeakerNameKey, SpeakerVariableId = c.SpeakerVariableId,
                 SpeakerVariableScope = c.SpeakerVariableScope,
                 TextKey = c.TextKey, TextHasBindings = c.TextBindings.Count > 0 };
+            if (c.SpeakerVariableScope == NovelVariableScope.Flow && !string.IsNullOrEmpty(c.SpeakerVariableId))
+                entry.FlowSpeaker = ResolveSpeakerName(c.CharacterId, c.SpeakerNameKey, c.SpeakerVariableId,
+                    c.SpeakerVariableScope, _catalog.TryGetCharacter(c.CharacterId, out var row) ? row.DisplayName : c.CharacterId);
             _history.Add(entry); if (_history.Count > 200) _history.RemoveAt(0);
             LineRead?.Invoke(entry);
         }
@@ -220,7 +223,8 @@ namespace Game.Narrative
             checkpoint.History = _history.Select(h => new NovelHistoryEntry { ChapterId = h.ChapterId, NodeId = h.NodeId,
                 CommandId = h.CommandId, LineId = h.LineId, TextRevision = h.TextRevision, Text = h.Text, Speaker = h.Speaker,
                 SpeakerNameKey = h.SpeakerNameKey, SpeakerVariableId = h.SpeakerVariableId,
-                SpeakerVariableScope = h.SpeakerVariableScope }).ToList();
+                SpeakerVariableScope = h.SpeakerVariableScope, FlowSpeaker = h.FlowSpeaker,
+                TextKey = h.TextKey, TextHasBindings = h.TextHasBindings }).ToList();
             return true;
         }
         /// <summary>Owner releases old session BEFORE this boundary. Failure after it returns to menu.</summary>

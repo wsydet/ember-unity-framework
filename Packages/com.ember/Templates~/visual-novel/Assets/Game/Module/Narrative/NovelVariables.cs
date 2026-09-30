@@ -15,11 +15,11 @@ namespace Game.Narrative
         #region 外部方法
         [HasGC]
         public static string Validate(NovelCommand command, IReadOnlyDictionary<string, NovelValue> locals,
-            IReadOnlyDictionary<string, NovelValue> globals)
+            IReadOnlyDictionary<string, NovelValue> globals, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
             if (command.Kind != NovelCommandKind.CalculateVariable && command.Kind != NovelCommandKind.RandomVariable) return null;
             if (!Enum.IsDefined(typeof(NovelVariableScope), command.Scope) ||
-                !IsInteger(command.Scope == NovelVariableScope.Global ? globals : locals, command.VariableId))
+                !IsInteger(command.Scope == NovelVariableScope.Flow ? flow : command.Scope == NovelVariableScope.Global ? globals : locals, command.VariableId))
                 return "目标必须是已声明的整数变量";
             if (command.Kind == NovelCommandKind.RandomVariable)
                 return command.RandomMin > command.RandomMax ? "随机整数下限不能大于上限（两端均包含）" : null;
@@ -27,7 +27,7 @@ namespace Game.Narrative
             if (!string.IsNullOrEmpty(command.OperandVariableId))
             {
                 if (!Enum.IsDefined(typeof(NovelVariableScope), command.OperandScope) ||
-                    !IsInteger(command.OperandScope == NovelVariableScope.Global ? globals : locals, command.OperandVariableId))
+                    !IsInteger(command.OperandScope == NovelVariableScope.Flow ? flow : command.OperandScope == NovelVariableScope.Global ? globals : locals, command.OperandVariableId))
                     return "来源必须是已声明的整数变量";
             }
             else if ((command.IntegerOperation == NovelIntegerOperation.Divide || command.IntegerOperation == NovelIntegerOperation.Modulo) && command.IntegerOperand == 0)
@@ -63,9 +63,9 @@ namespace Game.Narrative
 
         private bool ExecuteVariable(NovelCommand command)
         {
-            string error = NovelVariableRules.Validate(command, _variables, _globals);
+            string error = NovelVariableRules.Validate(command, _variables, _globals, FlowValues);
             if (error != null) { Fault("BadVariableOperation", error); return false; }
-            var target = command.Scope == NovelVariableScope.Global ? _globals : _variables;
+            var target = Values(command.Scope);
             try
             {
                 int result;
@@ -73,7 +73,7 @@ namespace Game.Narrative
                 else
                 {
                     int operand = string.IsNullOrEmpty(command.OperandVariableId) ? command.IntegerOperand :
-                        (command.OperandScope == NovelVariableScope.Global ? _globals : _variables)[command.OperandVariableId].Int;
+                        Values(command.OperandScope)[command.OperandVariableId].Int;
                     int current = target[command.VariableId].Int;
                     result = command.IntegerOperation switch
                     {
@@ -110,7 +110,7 @@ namespace Game.Narrative
             if (!Enum.IsDefined(typeof(NovelVariableScope), scope)) { error = "变量作用域无效"; return false; }
             if (string.IsNullOrWhiteSpace(id)) { error = "变量 ID 为空"; return false; }
             if (!Enum.IsDefined(typeof(NovelValueType), value.Type)) { error = "变量类型无效"; return false; }
-            var target = scope == NovelVariableScope.Global ? _globals : _variables;
+            var target = Values(scope);
             if (!target.TryGetValue(id, out NovelValue declared)) { error = "变量未声明：" + id; return false; }
             if (declared.Type != value.Type) { error = "变量类型不符：" + id + " 需要 " + declared.Type; return false; }
             if (_busy) { error = "运行器正忙，变量未写入"; return false; }
@@ -122,8 +122,8 @@ namespace Game.Narrative
         public bool TryGetVariable(NovelVariableScope scope, string id, out NovelValue value)
         {
             value = default;
-            if ((uint)scope > (uint)NovelVariableScope.Global || string.IsNullOrWhiteSpace(id)) return false;
-            return (scope == NovelVariableScope.Global ? _globals : _variables).TryGetValue(id, out value);
+            if ((uint)scope > (uint)NovelVariableScope.Flow || string.IsNullOrWhiteSpace(id)) return false;
+            return (Values(scope)).TryGetValue(id, out value);
         }
         #endregion
     }

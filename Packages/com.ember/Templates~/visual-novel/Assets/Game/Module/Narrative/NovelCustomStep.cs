@@ -89,6 +89,7 @@ namespace Game.Narrative
         #region 内部参数
         private readonly IReadOnlyDictionary<string, NovelValue> _locals;
         private readonly IReadOnlyDictionary<string, NovelValue> _globals;
+        private readonly IReadOnlyDictionary<string, NovelValue> _flow;
         public string ChapterId { get; }
         public string NodeId { get; }
         public string CommandId { get; }
@@ -96,10 +97,10 @@ namespace Game.Narrative
         // --------------------------------------------------------
         #region 外部方法
         public NovelCustomStepValidation(string chapterId, string nodeId, string commandId,
-            IReadOnlyDictionary<string, NovelValue> locals, IReadOnlyDictionary<string, NovelValue> globals)
+            IReadOnlyDictionary<string, NovelValue> locals, IReadOnlyDictionary<string, NovelValue> globals, IReadOnlyDictionary<string, NovelValue> flow = null)
         {
             ChapterId = chapterId; NodeId = nodeId; CommandId = commandId;
-            _locals = locals; _globals = globals;
+            _locals = locals; _globals = globals; _flow = flow;
         }
 
         /// <summary>查询已声明的变量；未声明或作用域无效应返回 false。</summary>
@@ -108,7 +109,7 @@ namespace Game.Narrative
         {
             value = default;
             if (!Enum.IsDefined(typeof(NovelVariableScope), scope) || string.IsNullOrWhiteSpace(id)) return false;
-            var source = scope == NovelVariableScope.Global ? _globals : _locals;
+            var source = scope == NovelVariableScope.Flow ? _flow : scope == NovelVariableScope.Global ? _globals : _locals;
             return source != null && source.TryGetValue(id, out value);
         }
         #endregion

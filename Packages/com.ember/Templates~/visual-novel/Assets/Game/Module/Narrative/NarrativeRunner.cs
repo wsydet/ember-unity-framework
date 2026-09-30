@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 namespace Game.Narrative
 {
@@ -51,12 +52,12 @@ namespace Game.Narrative
                 string language = localized ? NovelLanguageSettings.Current : null;
                 if (_resolvedSource != raw || _resolvedLanguage != language)
                 {
-                    string text = bindings ? NovelTextBindings.Resolve(raw, _variables, _globals) : raw.Text;
+                    string text = bindings ? NovelTextBindings.Resolve(raw, _variables, _globals, FlowValues) : raw.Text;
                     // 多语言在变量绑定之后覆盖：Key 命中就用译文，否则保留原文。
                     // 译文同样走一遍文字绑定替换，否则译文里的 {playerName} 会被原样显示出来。
                     // 校验仍按原文进行，所以译文变短也不会让正文节奏点越界报错。
                     if (localized && NovelLocalization.TryGetContent(raw.TextKey, out string translated))
-                        text = bindings ? NovelTextBindings.Resolve(translated, raw.TextBindings, _variables, _globals) : translated;
+                        text = bindings ? NovelTextBindings.Resolve(translated, raw.TextBindings, _variables, _globals, FlowValues) : translated;
                     _resolvedCommand = raw.WithResolvedText(text);
                     _resolvedSource = raw; _resolvedLanguage = language;
                 }
@@ -64,7 +65,7 @@ namespace Game.Narrative
             }
         }
         public NarrativeSnapshot Snapshot => new(_generation, _positionVersion, _chapter?.Id, _node?.Id,
-            CurrentCommand?.CommandId, _state, _wait, _pauses, _variables, _options, _error, _endingId, _globals, _story?.Id);
+            CurrentCommand?.CommandId, _state, _wait, _pauses, _variables, _options, _error, _endingId, _globals, _story?.Id, _frames.Select(f => f.Call.Id), FlowValues);
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -94,6 +95,7 @@ namespace Game.Narrative
             if (nodeId == null || !_nodes.TryGetValue(nodeId, out NovelNode next))
             { Fault("BadTarget", "目标节点不存在"); return; }
             _resolvedSource = _resolvedCommand = null; _resolvedLanguage = null;
+            if (next.ScopeId != ActiveScope) { Fault("IllegalScope", "连接跨越流程边界：" + nodeId); return; }
             _node = next; _commandIndex = 0; _options.Clear();
             _state = NarrativeState.Executing; _wait = NarrativeWait.None;
         }
@@ -106,23 +108,32 @@ namespace Game.Narrative
                 if (++steps > _maxImmediateSteps) { Fault("StepLimit", "连续即时指令与节点跳转超过上限"); return; }
                 switch (_node.Kind)
                 {
+                    case NovelNodeKind.Jump:
+                        Enter(_node.LinkId); break;
+                    case NovelNodeKind.Receiver:
+                    case NovelNodeKind.FlowStart:
+                        Enter(_node.NextId); break;
+                    case NovelNodeKind.FlowCall:
+                        CallFlow(); break;
+                    case NovelNodeKind.FlowReturn:
+                        ReturnFlow(); break;
                     case NovelNodeKind.ChapterExit:
                         if (!_exits.TryGetValue((_chapter.Id, _node.Id), out var exit)) { Fault("BadExit", "章节出口未配置"); return; }
                         string nextChapter = exit.FallbackChapterId;
                         foreach (var route in exit.Routes)
-                            if (route.Condition.Evaluate(_variables, _globals)) { nextChapter = route.TargetId; break; }
+                            if (route.Condition.Evaluate(_variables, _globals, FlowValues)) { nextChapter = route.TargetId; break; }
                         EnterChapter(_chapters[nextChapter]); break;
                     case NovelNodeKind.Ending:
                         _endingId = _node.EndingId; _state = NarrativeState.Ended; return;
                     case NovelNodeKind.Choice:
                         foreach (NovelRoute route in _node.Routes)
-                            if (route.Condition.Evaluate(_variables, _globals)) _options.Add(route);
+                            if (route.Condition.Evaluate(_variables, _globals, FlowValues)) _options.Add(route);
                         if (_options.Count == 0) { Fault("ZeroOptions", "筛选后没有合法选项"); return; }
                         _state = NarrativeState.AwaitingChoice; _wait = NarrativeWait.Choice; return;
                     case NovelNodeKind.Branch:
                         string target = _node.NextId;
                         foreach (NovelRoute route in _node.Routes)
-                            if (route.Condition.Evaluate(_variables, _globals)) { target = route.TargetId; break; }
+                            if (route.Condition.Evaluate(_variables, _globals, FlowValues)) { target = route.TargetId; break; }
                         Enter(target); break;
                     case NovelNodeKind.Dialogue:
                         NovelCommand command = CurrentCommand;
@@ -134,7 +145,7 @@ namespace Game.Narrative
                                 if (!ExecuteVariable(command)) return;
                                 _commandIndex++; break;
                             case NovelCommandKind.SetVariable:
-                                (command.Scope == NovelVariableScope.Global ? _globals : _variables)[command.VariableId] = command.Value; _commandIndex++; break;
+                                Values(command.Scope)[command.VariableId] = command.Value; _commandIndex++; break;
                             case NovelCommandKind.Say:
                                 _state = NarrativeState.Revealing; _wait = NarrativeWait.Text; return;
                             case NovelCommandKind.Wait:
@@ -159,7 +170,7 @@ namespace Game.Narrative
         private void EnterChapter(NovelChapter chapter, string entryNodeId = null)
         {
             AutoSaveRevision++;
-            _chapter = chapter; _nodes.Clear(); _variables.Clear();
+            _chapter = chapter; _nodes.Clear(); _variables.Clear(); _frames.Clear();
             foreach (var node in chapter.Nodes) _nodes.Add(node.Id, node);
             foreach (var variable in chapter.Variables) _variables.Add(variable.Id, variable.Value);
             Enter(entryNodeId ?? chapter.EntryId);
@@ -191,7 +202,7 @@ namespace Game.Narrative
                 _generation = Interlocked.Increment(ref _nextGeneration); _chapter = chapter; _node = null;
                 _randomState = _initialRandomState;
                 _story = story; _globals.Clear(); _chapters.Clear(); _exits.Clear();
-                _nodes.Clear(); _variables.Clear(); _options.Clear(); _pauses.Clear();
+                _nodes.Clear(); _variables.Clear(); _frames.Clear(); _options.Clear(); _pauses.Clear();
                 _error = null; _endingId = null; _commandIndex = 0; _remainingWait = 0;
                 _lastInputFrame = -1; _lastTickFrame = -1; LastObserverError = null;
                 _state = NarrativeState.Preparing; _wait = NarrativeWait.None;

@@ -276,11 +276,22 @@ namespace Ember.UPMManager.Editor
                 string directory = Within(skillsRoot, definition.id);
                 var files = Snapshot(directory);
                 if (!files.Any(f => f.path == "SKILL.md")) throw new InvalidDataException("技能缺少 SKILL.md：" + definition.id);
-                string markdown = File.ReadAllText(Path.Combine(directory, "SKILL.md"), Utf8).TrimStart('\uFEFF');
+                // Read raw bytes: StreamReader silently consumes BOMs before frontmatter validation.
+                byte[] markdownBytes = File.ReadAllBytes(Path.Combine(directory, "SKILL.md"));
+                string markdown;
+                try { markdown = new UTF8Encoding(false, true).GetString(markdownBytes); }
+                catch (DecoderFallbackException exception)
+                { throw new InvalidDataException("SKILL.md 必须使用有效的 UTF-8 无 BOM 编码：" + definition.id, exception); }
+                if (markdown.StartsWith("\uFEFF", StringComparison.Ordinal))
+                    throw new InvalidDataException("SKILL.md 不允许 UTF-8 BOM，请在维护源移除 BOM 后重新保存模板：" + definition.id);
                 var frontmatter = Regex.Match(markdown, @"\A---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)");
                 if (!frontmatter.Success || !Regex.IsMatch(frontmatter.Groups[1].Value,
-                        @"(?m)^name:\s*" + Regex.Escape(definition.id) + @"\s*$"))
+                        @"(?m)^name:[ \t]*" + Regex.Escape(definition.id) + @"[ \t]*\r?$"))
                     throw new InvalidDataException("技能名称与 SKILL.md 不一致：" + definition.id);
+                if (Regex.Matches(frontmatter.Groups[1].Value, @"(?m)^name:").Count != 1
+                    || Regex.Matches(frontmatter.Groups[1].Value, @"(?m)^description:").Count != 1
+                    || !Regex.IsMatch(frontmatter.Groups[1].Value, @"(?m)^description:[ \t]*[^\s\r\n][^\r\n]*\r?$"))
+                    throw new InvalidDataException("SKILL.md 文件头必须包含唯一的 name 和非空 description：" + definition.id);
                 packages.Add(new Package { Definition = definition, Directory = directory, Files = files });
             }
             return packages;

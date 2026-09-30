@@ -130,6 +130,9 @@ MonoBehaviour:
   - enabled: 1
     color: {r: 0.49392, g: 0.35999995, b: 0.9, a: 1}
     className: Table.Module
+  - enabled: 1
+    color: {r: 0.35999995, g: 0.38484004, b: 0.9, a: 1}
+    className: Novel.UiText
   enableFileLog: 1
   logDirectory: 
   maxFileSizeMB: 10

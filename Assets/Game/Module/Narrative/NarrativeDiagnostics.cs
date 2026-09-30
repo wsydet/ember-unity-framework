@@ -59,6 +59,8 @@ namespace Game.Narrative
         public string EndingId { get; }
         public IReadOnlyList<string> Actions { get; } = Array.Empty<string>();
         public string WaitingActions { get; }
+        public IReadOnlyList<string> CallPath { get; }
+        public IReadOnlyDictionary<string, NovelValue> FlowVariables { get; }
         public bool HasActiveSession => State != NarrativeState.Idle && State != NarrativeState.Cancelled
             && State != NarrativeState.Ended && State != NarrativeState.Faulted;
         #endregion
@@ -67,7 +69,7 @@ namespace Game.Narrative
         internal NarrativeSnapshot(long generation, long positionVersion, string chapterId, string nodeId,
             string commandId, NarrativeState state, NarrativeWait wait, IEnumerable<string> pauseReasons,
             IDictionary<string, NovelValue> variables, IList<NovelRoute> options, NarrativeError error, string endingId,
-            IDictionary<string, NovelValue> globals = null, string storyId = null)
+            IDictionary<string, NovelValue> globals = null, string storyId = null, IEnumerable<string> callPath = null, IDictionary<string, NovelValue> flowVariables = null)
         {
             SessionGeneration = generation; PositionVersion = positionVersion; ChapterId = chapterId;
             NodeId = nodeId; CommandId = commandId; State = state; Wait = wait;
@@ -76,6 +78,8 @@ namespace Game.Narrative
             Variables = new ReadOnlyDictionary<string, NovelValue>(new Dictionary<string, NovelValue>(variables, StringComparer.Ordinal));
             GlobalVariables = new ReadOnlyDictionary<string, NovelValue>(globals == null ? new Dictionary<string, NovelValue>() : new Dictionary<string, NovelValue>(globals, StringComparer.Ordinal));
             StoryId = storyId;
+            CallPath = new List<string>(callPath ?? Array.Empty<string>()).AsReadOnly();
+            FlowVariables = new ReadOnlyDictionary<string, NovelValue>(new Dictionary<string, NovelValue>(flowVariables ?? new Dictionary<string, NovelValue>()));
             Options = new List<NovelRoute>(options).AsReadOnly(); Error = error; EndingId = endingId;
         }
         internal NarrativeSnapshot(NarrativeSnapshot source, NarrativeReadMode mode, NarrativeWait wait, IReadOnlyList<string> actions = null, string waitingActions = null)
@@ -85,6 +89,7 @@ namespace Game.Narrative
             Actions = actions ?? Array.Empty<string>(); WaitingActions = waitingActions;
             State = source.State; Wait = wait; ReadMode = mode; PauseReasons = source.PauseReasons;
             Variables = source.Variables; GlobalVariables = source.GlobalVariables; StoryId = source.StoryId;
+            CallPath = source.CallPath; FlowVariables = source.FlowVariables;
             Options = source.Options; Error = source.Error; EndingId = source.EndingId;
         }
         #endregion

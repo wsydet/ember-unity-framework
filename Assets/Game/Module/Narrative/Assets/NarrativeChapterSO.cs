@@ -56,7 +56,9 @@ namespace Game.Narrative
                     if (node == null || node.ChapterId != _chapterId || node.ContentRevision < 1)
                         throw new NarrativeDefinitionException(new NarrativeError("BadNode",
                             "节点为空、章节归属不符或内容修订无效", _chapterId, node?.NodeId));
-                    nodes.Add(node.ReadDefinition(this));
+                    if (node.Flow && (!_nodes.Contains(node.Flow) || node.Flow.ChapterId != _chapterId))
+                        throw new NarrativeDefinitionException(new NarrativeError("BadScope", "流程归属不在本章", _chapterId, node.NodeId));
+                    nodes.Add(node.ReadDefinition(this).InScope(node.ScopeId));
                 }
                 var variables = new List<NovelVariable>();
                 foreach (NovelVariable variable in _variables)

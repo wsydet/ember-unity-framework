@@ -275,7 +275,7 @@ namespace Game.Narrative
             if (_restore.SchemaVersion < 5) { _restore.PersistentEffects = new(); _restore.Loops = new(); }
             // Schema 8 起 BGM 单独记录曲目与段落；旧档只有 BgmKey，而旧曲目都没有前奏，
             // 所以旧档一律迁移成「停在循环段」。
-            if (_restore.SchemaVersion < NovelCheckpoint.CurrentSchemaVersion)
+            if (_restore.SchemaVersion < 8)
                 _restore.BgmSegment = string.IsNullOrEmpty(_restore.BgmKey) ? NovelBgmSegment.None : NovelBgmSegment.Loop;
             if (!NovelActionHandle.ValidTime(_restore.BgmVolume) || _restore.BgmVolume > 1)
                 throw new InvalidOperationException("存档 BGM 音量无效");

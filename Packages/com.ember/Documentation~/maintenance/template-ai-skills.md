@@ -121,6 +121,22 @@ Assets/Game/Documentation/TemplateSkills/
 
 ## 验证与发布
 
+所有 `SKILL.md` 必须使用有效的 UTF-8 **无 BOM** 编码，首字节直接为 `---` 文件头。
+安装器从原始字节严格解码，并检查文件头起止分隔符、唯一且匹配目录的 `name`、唯一且非空的
+`description`；这是必需文件头校验，不是完整 YAML 语法解析器。保存、部署及独立更新共用该校验。
+复制继续保留原始字节，不在安装阶段隐式转码，以保持文件指纹、预览复核及本地修改保护一致。
+作者新增文本时应显式使用 `new UTF8Encoding(false)`（C#）或 `encoding='utf-8'`（Python）；
+不要使用会输出 BOM 的 Windows PowerShell 5 `-Encoding UTF8` 写入技能正文。
+
+框架仓库在保存/封存及发布前执行 `python scripts/check-skill-headers.py`，检查 Assets 维护源、
+全部模板（含父快照）、框架技能源/生成 bundle 及本地发现副本；该命令只检查，不重写正文或换行。
+对应脚本回归为 `python scripts/tests/test-skill-headers.py`，Unity 回归覆盖
+`EmberTemplateSkillsEditTests` 与 `EmberAISkillInstallerEditTests`。
+
+已有消费项目的 BOM 修复仍走上文独立技能更新：通过 UPM Manager 安装包含修复的正式框架版本，
+再预览并更新模板专属技能。有本地修改时先备份确认，不能手工覆盖发现副本或改安装指纹。
+框架升级本身不会自动覆盖现有技能；不需要为技能编码修复完整重部署业务模板。
+
 相关隔离测试位于 `EmberTemplateSkillsEditTests` 与 `EmberAISkillInstallerEditTests`。覆盖部署/切换/编辑身份、继承、保存/Bump、独立更新保留业务、旧状态迁移、兼容下限、明确备份、预览变化和事务各阶段回滚。每个版本实际执行结果与尚未验收的边界记录在对应发布说明，不沿用历史通过数。
 
 模板正文发生变化时仍须作者正式 Load → 编辑 Assets → Save → Bump；仅框架安装器变化无需伪造模板 Bump。发布框架时检查通用技能 bundle，更新 package、CHANGELOG、release/manifest，提交并发布新 tag。消费项目之后通过技能专用入口更新，不能为了 skill 升级要求整模板覆盖。

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c023a03c8e3b74c4791b19c32b191ffc, type: 3}
+  m_Name: "\u53D6\u6D88\u8FD4\u56DE\u9009\u62E9"
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeJumpSO
+  _nodeId: f5e476229c8b42a59fe620c2a2829104
+  _chapterId: c9e0a98e45f74a52967a4f8d75d190f5
+  _contentRevision: 1
+  _flow: {fileID: 0}
+  _receiverId: 27fbf2befd994e10901e2821104af27f

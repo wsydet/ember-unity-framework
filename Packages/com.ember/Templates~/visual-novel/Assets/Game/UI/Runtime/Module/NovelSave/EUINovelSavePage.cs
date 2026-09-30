@@ -34,7 +34,7 @@ namespace Game.UI
         {
             if (_save == null) return;
             bool canSave = _paused != null && !_paused.IsDisposed && _paused.IsReady &&
-                (_paused.Snapshot.State == NarrativeState.AwaitingAdvance || _paused.Snapshot.State == NarrativeState.AwaitingChoice);
+                (_paused.Snapshot.State == NarrativeState.AwaitingAdvance || _paused.Snapshot.State == NarrativeState.AwaitingChoice || _paused.Snapshot.Wait == NarrativeWait.Timer);
             var slots = _save.Store.Slots;
             for (int i = 0; i < _items.Count; i++)
             {

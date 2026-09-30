@@ -14,7 +14,8 @@ namespace Game.UI.Editor
     public sealed class NovelNodePlaybackWindow : EditorWindow
     {
         #region 编辑器面板参数
-        [SerializeField] private NarrativeDialogueSO _node;
+        [SerializeField] private NarrativeNodeSO _node;
+        [SerializeField] private bool _continuous;
         [SerializeField] private NarrativeChapterSO _chapter;
         [SerializeField] private NarrativeStorySO _story;
         [SerializeField] private bool _automatic = true, _muted, _useContext, _showSetup = true;
@@ -47,7 +48,8 @@ namespace Game.UI.Editor
         private Action<NarrativeError> _locate;
         private Vector2 Pixels => _resolution == 1 ? new Vector2(1440, 1080) : new Vector2(1920, 1080);
         private string SourceJson => (_node ? EditorJsonUtility.ToJson(_node) : "") +
-            (_chapter ? EditorJsonUtility.ToJson(_chapter) : "") + (_story ? EditorJsonUtility.ToJson(_story) : "");
+            (_chapter ? EditorJsonUtility.ToJson(_chapter) : "") + (_story ? EditorJsonUtility.ToJson(_story) : "") +
+            (_continuous && _chapter ? string.Concat(_chapter.Nodes.Where(n => n).Select(EditorJsonUtility.ToJson)) : "");
         #endregion
         // --------------------------------------------------------
         #region 生命周期
@@ -174,7 +176,7 @@ namespace Game.UI.Editor
                     if (_variables.Count == 0) GUILayout.Label("当前章节 / 剧情无变量。");
                     foreach (var variable in _variables)
                     {
-                        string label = (variable.Scope == NovelVariableScope.Global ? "全局 · " : "章节 · ") + variable.Id;
+                        string label = (variable.Scope == NovelVariableScope.Global ? "全局 · " : variable.Scope == NovelVariableScope.Flow ? "流程 · " : "章节 · ") + variable.Id;
                         variable.Value = variable.Value.Type switch
                         {
                             NovelValueType.Bool => new NovelValue(EditorGUILayout.Toggle(label, variable.Value.Bool)),
@@ -190,7 +192,8 @@ namespace Game.UI.Editor
                 try { BuildStage(); ShowInitialFrame(); _message = null; }
                 catch (Exception ex) { _message = "起始设置无效：" + ex.Message; }
             }
-            EditorGUILayout.HelpBox("只播放当前对话节点。按钮、选项分支和存读档不在此窗口执行。窗口使用已保存的正式阅读页布局。", MessageType.None);
+            EditorGUILayout.HelpBox(_continuous ? "连续执行跳转、调用和结果分支；内部节点从所属流程入口开始。选项在下方状态栏选择。窗口不写入存档。" :
+                "只播放当前对话节点。按钮、选项分支和存读档不在此窗口执行。窗口使用已保存的正式阅读页布局。", MessageType.None);
         }
         private string DrawResourceKey(string label, string key, bool portrait)
         {
@@ -229,17 +232,27 @@ namespace Game.UI.Editor
             if (_session.IsInputLocked)
                 EditorGUILayout.LabelField("剧情控制自动播放 · 手动推进暂不可用");
             string commandId = snapshot.Error?.CommandId ?? snapshot.CommandId;
-            int index = _node ? _node.Commands.ToList().FindIndex(c => c?.CommandId == commandId) : -1;
+            var activeChapter = _data?.Story.Chapters.FirstOrDefault(c => c.ChapterId == snapshot.ChapterId);
+            var activeNode = activeChapter?.Nodes.FirstOrDefault(n => n.NodeId == snapshot.NodeId);
+            var dialogue = activeNode as NarrativeDialogueSO;
+            int index = dialogue ? dialogue.Commands.ToList().FindIndex(c => c?.CommandId == commandId) : -1;
             if (snapshot.State == NarrativeState.Revealing || snapshot.State == NarrativeState.AwaitingAdvance)
                 EditorGUILayout.LabelField($"正文范围 {_session.TextPageStart + 1}–{_session.TextPageEnd}" +
                     (_session.TextPageComplete || snapshot.State == NarrativeState.AwaitingAdvance ? " · 再次推进翻页 / 下一句" : " · 推进补全本页"));
-            string position = commandId == _data?.DrainCommandId ? "等待本节点剩余动作结束" : index >= 0 ? $"指令 {index + 1}/{_node.Commands.Count} · {commandId}" : commandId;
+            string position = commandId == _data?.DrainCommandId ? "等待本节点剩余动作结束" : index >= 0 ? $"指令 {index + 1}/{dialogue.Commands.Count} · {commandId}" : commandId;
             EditorGUILayout.LabelField(snapshot.State == NarrativeState.Ended ? "本节点播放结束（持续效果与循环音保留，停止后全部清理）" :
                 (_paused ? "已暂停 · " : "") + position + " · " + snapshot.State + " / " + snapshot.Wait);
             if (snapshot.Error != null) EditorGUILayout.HelpBox(snapshot.Error + "\n若缺少人物，请检查起始设置中的实例 ID。", MessageType.Error);
-            using (new EditorGUI.DisabledScope(_locate == null || index < 0))
+            if (_continuous) EditorGUILayout.LabelField("执行路径", (activeChapter ? activeChapter.DisplayName : snapshot.ChapterId) + " → " +
+                string.Join(" → ", snapshot.CallPath.Select(id => activeChapter?.Nodes.FirstOrDefault(n => n.NodeId == id)?.name ?? id).Append(activeNode ? activeNode.name : snapshot.NodeId)));
+            using (new EditorGUI.DisabledScope(_locate == null || !activeNode))
                 if (GUILayout.Button("定位当前指令", GUILayout.Width(125)))
-                    _locate(new NarrativeError("Preview", "试播定位", _chapter.ChapterId, _node.NodeId, commandId));
+                    _locate(new NarrativeError("Preview", "试播定位", snapshot.ChapterId, snapshot.NodeId, commandId));
+
+            using (new EditorGUI.DisabledScope(_paused))
+                foreach (var option in snapshot.Options)
+                    if (GUILayout.Button(option.Text))
+                    { _session.Choose(snapshot.SessionGeneration, snapshot.PositionVersion, option.Id, ++_frame); break; }
 
             foreach (string action in snapshot.Actions) GUILayout.Label(action, EditorStyles.miniLabel);
         }
@@ -274,6 +287,8 @@ namespace Game.UI.Editor
             _variables.Clear();
             if (_chapter) _variables.AddRange(_chapter.Variables.Select(v => new NovelPlaybackVariable { Id = v.Id, Value = v.Value, Scope = NovelVariableScope.Chapter }));
             if (_story) _variables.AddRange(_story.Globals.Select(v => new NovelPlaybackVariable { Id = v.Id, Value = v.Value, Scope = NovelVariableScope.Global }));
+            var flow = _node as NarrativeFlowStartSO ?? _node?.Flow;
+            if (flow) _variables.AddRange(flow.Variables.Select(v => new NovelPlaybackVariable { Id = v.Id, Value = v.Value, Scope = NovelVariableScope.Flow }));
         }
         private void LoadTables()
         {
@@ -346,7 +361,8 @@ namespace Game.UI.Editor
             {
                 ReleaseSession(); LoadTables(); BuildStage();
                 var initial = InitialCommands(); ShowInitialFrame();
-                _data = new NovelPlaybackStory(_node, _chapter, _story, initial, _variables);
+                _data = _continuous ? NovelPlaybackStory.ForFlow(_node, _chapter, _story, initial, _variables) :
+                    new NovelPlaybackStory((NarrativeDialogueSO)_node, _chapter, _story, initial, _variables);
                 _audio = new NovelPlaybackAudio(_host.transform); _audio.SetMuted(_muted);
                 // 同一个对象既是通用音频输出，也是分段 BGM 通道：试播因此与正式运行期走同一条分段链路。
                 _session = new NovelSession(new NovelNewGameRequest("editor-preview"), () => _catalog, _data, _audio, _audio);
@@ -423,13 +439,14 @@ namespace Game.UI.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public static void Play(NarrativeDialogueSO node, NarrativeChapterSO chapter, NarrativeStorySO story,
-            Action<NarrativeError> locate = null)
+        public static void Play(NarrativeNodeSO node, NarrativeChapterSO chapter, NarrativeStorySO story,
+            Action<NarrativeError> locate = null, bool continuous = false)
         {
             if (!NovelGameplayLayoutWindow.CanOpen()) return;
             var window = GetWindow<NovelNodePlaybackWindow>();
-            bool contextChanged = window._chapter != chapter || window._story != story;
+            bool contextChanged = window._chapter != chapter || window._story != story || window._node != node;
             window._node = node; window._chapter = chapter; window._story = story; window._locate = locate;
+            window._continuous = continuous || node is not NarrativeDialogueSO;
             if (contextChanged) window.ResetVariables();
             window.Show(); window.StartPlayback();
         }

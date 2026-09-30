@@ -32,6 +32,46 @@ namespace Ember.UI.Tests
         public void TearDown() { if (Directory.Exists(_root)) Directory.Delete(_root, true); }
 
         [Test]
+        public void AllTemplateSkillSources_HaveValidEncodingAndFrontmatter()
+        {
+            EmberAISkillInstaller.ValidateTemplateSkillSource(Application.dataPath);
+            string templates = Path.Combine(Application.dataPath, "../Packages/com.ember/Templates~");
+            foreach (string directory in Directory.GetDirectories(templates))
+            {
+                if (File.Exists(Path.Combine(directory, "template.json")))
+                    EmberAISkillInstaller.ValidateTemplateSkillSource(Path.Combine(directory, "Assets"));
+            }
+        }
+
+        [TestCase("\n")]
+        [TestCase("\r\n")]
+        public void DeploymentAndIndependentUpdate_PreserveUtf8BytesAndLocalBackup(string newline)
+        {
+            string path = Path.Combine(SourceRoot(), Skill, "SKILL.md");
+            string text = "---" + newline + "name: " + Skill + newline
+                + "description: 中文编码测试" + newline + "---" + newline + "正文" + newline;
+            byte[] original = new System.Text.UTF8Encoding(false, true).GetBytes(text);
+            File.WriteAllBytes(path, original);
+            var old = Info(); Commit(old, Preview(old));
+            string local = Path.Combine(_project, "Assets", EmberAISkillInstaller.TemplateSourceDirectory, Skill, "SKILL.md");
+            CollectionAssert.AreEqual(original, File.ReadAllBytes(local));
+            CollectionAssert.AreEqual(original, File.ReadAllBytes(Target()));
+            // A legacy BOM/local edit must still require explicit backup, never silent normalization.
+            File.WriteAllText(Target(), text + "local edit", new System.Text.UTF8Encoding(true));
+            byte[] edited = File.ReadAllBytes(Target());
+            var next = Info(version: "1.0.1");
+            var plan = Independent(next, old);
+            Assert.IsTrue(plan.NeedsBackupConfirmation);
+            Assert.Throws<InvalidOperationException>(() => EmberProjectSetup.CommitTemplateSkillUpdate(plan, false));
+            CollectionAssert.AreEqual(edited, File.ReadAllBytes(Target()));
+            EmberProjectSetup.CommitTemplateSkillUpdate(plan, true);
+            CollectionAssert.AreEqual(original, File.ReadAllBytes(Target()));
+            CollectionAssert.AreEqual(original, File.ReadAllBytes(local));
+            Assert.IsTrue(Directory.GetFiles(Path.Combine(_project, ".utmp/ember-ai-skills"), "SKILL.md", SearchOption.AllDirectories)
+                .Any(p => File.ReadAllBytes(p).SequenceEqual(edited)));
+        }
+
+        [Test]
         public void FirstDeployment_Repeat_Update_Switch_PreserveUserContent()
         {
             Write(_project, ".agents/skills/personal/SKILL.md", "personal");

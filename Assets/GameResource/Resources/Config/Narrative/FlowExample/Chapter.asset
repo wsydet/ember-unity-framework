@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f55e888cf7c7b04ebfb825a7cd33326, type: 3}
+  m_Name: Chapter
+  m_EditorClassIdentifier: Game.Narrative.Runtime::Game.Narrative.NarrativeChapterSO
+  _chapterId: c9e0a98e45f74a52967a4f8d75d190f5
+  _displayName: "\u65E5\u7A0B\u5FAA\u73AF\u793A\u4F8B"
+  _displayNameKey: 
+  _assetPrefix: Schedule
+  _storyRevision: 1
+  _entry: {fileID: 11400000, guid: 4a6e6d31b2a7d2842893b54441a3450c, type: 2}
+  _nodes:
+  - {fileID: 11400000, guid: 4a6e6d31b2a7d2842893b54441a3450c, type: 2}
+  - {fileID: 11400000, guid: 109d967d930eab64da4382d88ef64bd7, type: 2}
+  - {fileID: 11400000, guid: 4a799fbbfe21760469f522744f81f349, type: 2}
+  - {fileID: 11400000, guid: 0a52166598cec534ab4cf64f74e15ea9, type: 2}
+  - {fileID: 11400000, guid: 80ed7777464e98b4ab42af8ef20a89d6, type: 2}
+  - {fileID: 11400000, guid: 95bd0d11afa35114196bd68968745714, type: 2}
+  - {fileID: 11400000, guid: 038abba89b1ca904ca164c8333a49065, type: 2}
+  - {fileID: 11400000, guid: 9eed2cf3c7d198141a1ee2f85cca4e1a, type: 2}
+  - {fileID: 11400000, guid: 50d9a9790db3a2a4ebf69b372268d57f, type: 2}
+  - {fileID: 11400000, guid: 38982b0de25fa5141b9ecf0fb253b592, type: 2}
+  - {fileID: 11400000, guid: 34de3d93a00f3924e938ea10aeacc049, type: 2}
+  - {fileID: 11400000, guid: f9b6065c618ff1b408890134266674f2, type: 2}
+  - {fileID: 11400000, guid: 823d6dea836e0814daf961073a3b7d8a, type: 2}
+  - {fileID: 11400000, guid: 2d2655a591176aa4daaaf08a38a456f6, type: 2}
+  - {fileID: 11400000, guid: c2fc5fb6dcf5d6f4b87e16a0e33dd570, type: 2}
+  - {fileID: 11400000, guid: b10619e6e1ffbc54a8e8be81e804291f, type: 2}
+  - {fileID: 11400000, guid: 1c3bcf70c548fcb4492273dfa1d41760, type: 2}
+  - {fileID: 11400000, guid: a6483d85655b45047b09609de3c07843, type: 2}
+  _variables:
+  - _id: month
+    _value:
+      _type: 1
+      _bool: 0
+      _int: 1
+      _string: 
+  - _id: step
+    _value:
+      _type: 1
+      _bool: 0
+      _int: 0
+      _string: 

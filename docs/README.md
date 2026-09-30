@@ -1,8 +1,12 @@
 # Ember 文档索引
 
-> 2026-09-28：当前发布 **0.15.0**，提供通用多语言中心、小说立绘管理与列表显示修复。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0。196 项相关 EditMode 回归通过；完整 PlayMode、外部翻译服务和消费端升级待验证。
+> 历史发布记录（2026-09-28）：**0.15.0**，提供通用多语言中心、小说立绘管理与列表显示修复。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0。196 项相关 EditMode 回归通过；完整 PlayMode、外部翻译服务和消费端升级待验证。
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。版本、迁移与验证边界见 [0.15.0 发布说明](dev/release-0.15.0.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。当前版本、迁移与验证边界见 [0.17.2 发布说明](dev/release-0.17.2.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+
+## 本次模板交付
+
+visual-novel 成对跳转与复合流程已实现并封存；功能版 0.18.0，文档补丁 0.18.1。本次随 [框架 0.17.2](dev/release-0.17.2.md) 交付，模板版本与框架版本独立。用法见 [流程使用说明](../Assets/Game/Documentation/NovelFlow.md)，设计归属、299/299 与最后 15/15 回归证据、封存和发布边界见 [交付记录](dev/visual-novel-flow-nodes.md)。本批没有升级消费项目。
 
 ## 使用框架
 
@@ -57,7 +61,7 @@
 | 文档 | 内容 |
 |---|---|
 | [文档归属与随模板加载](dev/template-documentation.md) | 框架公共文档、基础文档、派生专属文档的存放与保存规则 |
-| [视觉小说模板文档](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/visual-novel/README.md) | 已封存 visual-novel 0.4.0 / preview（M3＋M4），父 base 0.6.4，未发布；包含新游戏揭幕修复。测试证据与剩余人工验收见模板 Implementation.md，M5 未开始 |
+| [视觉小说模板文档](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/visual-novel/README.md) | visual-novel 0.18.1 / preview，父 base 0.7.0；含成对跳转、复合流程、存档格式 9 与独立日程示例；框架发布和消费升级分开执行 |
 | [基础模板文档](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/README.md) | 随 base 及派生模板交付的 Guide 与配置表说明；此链接只读查看已封存内容 |
 | [2.5D 模板文档](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/README.md) | 玩家操作和 SceneUI 业务说明；只读查看已封存内容 |
 | [模板升级体系](dev/template-upgrade-system.md) | 项目中心、schema v2、父子同步、场景合并、事务、消费端边界 |
@@ -86,6 +90,6 @@
 
 第三方包、素材随附说明和许可证保持原始语义；缓存、构建产物和模板 Assets/ParentSnapshot 快照不作为普通文档直接清理。
 
-> 最新验收（2026-09-20）：用户确认观察窗口专项通过、手动验证无问题，M4 功能验收通过。已有全量 XML 为 431/432（13 项 M4 全通过），唯一失败项后续通过为用户确认，未取得新的全量 XML；保存封存与 M3 其他待办保留，M5 未开始。
+> 历史验收（2026-09-20）：用户确认观察窗口专项通过、手动验证无问题，M4 功能验收通过。已有全量 XML 为 431/432（13 项 M4 全通过），唯一失败项后续通过为用户确认，未取得新的全量 XML；保存封存与 M3 其他待办保留，M5 未开始。
 
 > 2026-09-20 增量：新游戏 Loading 已改为等待首屏内容和阅读页完成打开后揭幕；MCP 编译及含读档流程的专项 1/1 通过，人工揭幕效果待确认。详情见 visual-novel 工作副本 Implementation.md 末尾。

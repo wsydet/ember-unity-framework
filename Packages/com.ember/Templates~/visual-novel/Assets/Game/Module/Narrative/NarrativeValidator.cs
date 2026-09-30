@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Ember.Basic;
 
@@ -54,12 +55,16 @@ namespace Game.Narrative
             foreach (NovelNode node in chapter.Nodes)
             {
                 if (node == null) continue;
+                var flowVariables = new Dictionary<string, NovelValue>(StringComparer.Ordinal);
+                var flowDefinition = chapter.Nodes.FirstOrDefault(n => n != null && n.Id == node.ScopeId && n.Kind == NovelNodeKind.FlowStart);
+                if (flowDefinition != null) foreach (var v in flowDefinition.FlowVariables)
+                    if (v != null && !string.IsNullOrWhiteSpace(v.Id)) flowVariables[v.Id] = v.Value;
                 if (!Enum.IsDefined(typeof(NovelNodeKind), node.Kind)) Error("BadNodeKind", "节点类型无效", node.Id);
                 if (node.Kind == NovelNodeKind.ChapterExit && !allowChapterExit) Error("MissingStory", "章节出口必须在剧情会话中运行", node.Id);
                 if (node.Kind == NovelNodeKind.Dialogue || node.Kind == NovelNodeKind.Branch) Target(node.NextId, node.Id);
                 if (node.Kind != NovelNodeKind.Dialogue && node.Commands.Count != 0)
                     Error("BadNodeShape", "只有对话段可保存指令", node.Id);
-                if (node.Kind != NovelNodeKind.Choice && node.Kind != NovelNodeKind.Branch && node.Routes.Count != 0)
+                if (node.Kind != NovelNodeKind.Choice && node.Kind != NovelNodeKind.Branch && node.Kind != NovelNodeKind.FlowCall && node.Routes.Count != 0)
                     Error("BadNodeShape", "此节点不能保存选项或条件分支", node.Id);
                 if (node.Kind == NovelNodeKind.Ending && (string.IsNullOrWhiteSpace(node.EndingId) || !endingIds.Add(node.EndingId)))
                     Error("BadEndingId", "结局 ID 为空或重复", node.Id);
@@ -67,13 +72,13 @@ namespace Game.Narrative
                 foreach (NovelRoute route in node.Routes)
                 {
                     if (route == null) { Error("BadRoute", "分支为空", node.Id); continue; }
-                    if (string.IsNullOrWhiteSpace(route.Id) || !optionIds.Add(route.Id)) Error("BadOptionId", "选项/分支 ID 为空或重复", node.Id, option: route.Id);
+                    if (string.IsNullOrWhiteSpace(route.Id) || !(node.Kind == NovelNodeKind.FlowCall ? true : optionIds.Add(route.Id))) Error("BadOptionId", "选项/分支 ID 为空或重复", node.Id, option: route.Id);
                     if (node.Kind == NovelNodeKind.Choice && string.IsNullOrWhiteSpace(route.Text)) Error("BadOptionText", "选项文字为空", node.Id, option: route.Id);
                     Target(route.TargetId, node.Id, route.Id);
                     if (!Enum.IsDefined(typeof(NovelJunction), route.Condition.Junction)) Error("BadCondition", "条件组合无效", node.Id, option: route.Id);
                     foreach (NovelPredicate p in route.Condition.Predicates)
                     {
-                        var source = p?.Scope == NovelVariableScope.Global ? globals : variables;
+                        var source = p?.Scope == NovelVariableScope.Flow ? flowVariables : p?.Scope == NovelVariableScope.Global ? globals : variables;
                         if (p == null || !Enum.IsDefined(typeof(NovelVariableScope), p.Scope) || string.IsNullOrWhiteSpace(p.VariableId) || source == null || !source.TryGetValue(p.VariableId, out NovelValue v) || v.Type != p.Value.Type)
                             Error("BadCondition", "条件变量未声明或类型不符", node.Id, option: route.Id);
                         else if (!Enum.IsDefined(typeof(NovelComparison), p.Comparison) ||
@@ -115,11 +120,11 @@ namespace Game.Narrative
                     if (c.Kind == NovelCommandKind.WaitActions && (c.WaitActions.Count == 0 ||
                         System.Linq.Enumerable.Any(c.WaitActions, string.IsNullOrWhiteSpace)))
                         Error("BadActionWait", "等待列表不能为空，填写已启动的动作 ID", node.Id, c.CommandId);
-                    string bindingError = NovelTextBindings.Validate(c, variables, globals);
+                    string bindingError = NovelTextBindings.Validate(c, variables, globals, flowVariables);
                     if (bindingError != null) Error("BadTextBinding", bindingError, node.Id, c.CommandId);
-                    string variableError = NovelVariableRules.Validate(c, variables, globals);
+                    string variableError = NovelVariableRules.Validate(c, variables, globals, flowVariables);
                     if (variableError != null) Error("BadVariableOperation", variableError, node.Id, c.CommandId);
-                    var assignments = c.Scope == NovelVariableScope.Global ? globals : variables;
+                    var assignments = c.Scope == NovelVariableScope.Flow ? flowVariables : c.Scope == NovelVariableScope.Global ? globals : variables;
                     if (c.Kind == NovelCommandKind.SetVariable && (!Enum.IsDefined(typeof(NovelVariableScope), c.Scope) || string.IsNullOrWhiteSpace(c.VariableId) ||
                         assignments == null || !assignments.TryGetValue(c.VariableId, out NovelValue v) || v.Type != c.Value.Type))
                         Error("BadAssignment", "赋值变量未声明或类型不符", node.Id, c.CommandId);
@@ -133,7 +138,7 @@ namespace Game.Narrative
                         // 说话人变量只覆盖显示名，不进指纹；但类型必须确定，否则运行期会静默退回角色名。
                         if (!string.IsNullOrWhiteSpace(c.SpeakerVariableId))
                         {
-                            var speakerSource = c.SpeakerVariableScope == NovelVariableScope.Global ? globals : variables;
+                            var speakerSource = c.SpeakerVariableScope == NovelVariableScope.Flow ? flowVariables : c.SpeakerVariableScope == NovelVariableScope.Global ? globals : variables;
                             if (!Enum.IsDefined(typeof(NovelVariableScope), c.SpeakerVariableScope) || speakerSource == null ||
                                 !speakerSource.TryGetValue(c.SpeakerVariableId, out NovelValue speakerValue) ||
                                 speakerValue.Type != NovelValueType.String)
@@ -150,7 +155,7 @@ namespace Game.Narrative
                             Error("BadCustomStep", "自定义节点脚本未在本剧情登记：" + c.CustomStepId, node.Id, c.CommandId);
                         else
                         {
-                            string scriptError = script.Validate(new NovelCustomStepValidation(chapter.Id, node.Id, c.CommandId, variables, globals));
+                            string scriptError = script.Validate(new NovelCustomStepValidation(chapter.Id, node.Id, c.CommandId, variables, globals, flowVariables));
                             if (!string.IsNullOrEmpty(scriptError)) Error("BadCustomStep", scriptError, node.Id, c.CommandId);
                         }
                     }
@@ -166,6 +171,7 @@ namespace Game.Narrative
                         Error("MissingResourceKey", "配表资源键不存在或路径为空", node.Id, c.CommandId, key: c.ResourceKey);
                 }
             }
+            NovelFlowValidation.Validate(chapter, errors);
             return errors.AsReadOnly();
         }
         #endregion
