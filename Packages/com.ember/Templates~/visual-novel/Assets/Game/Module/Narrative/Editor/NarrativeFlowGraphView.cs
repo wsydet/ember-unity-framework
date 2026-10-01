@@ -257,7 +257,7 @@ namespace Game.Narrative.Editor
             if (model && _nodes.TryGetValue(model, out var selected) && selected.style.display == DisplayStyle.None)
             {
                 ViewFlow = model as NarrativeFlowStartSO ?? model.Flow;
-                Rebuild(_chapter, _catalog); SelectModel(model, frame); return;
+                ApplyFlowVisibility();
             }
             if (frame && model) FrameSelection();
         }

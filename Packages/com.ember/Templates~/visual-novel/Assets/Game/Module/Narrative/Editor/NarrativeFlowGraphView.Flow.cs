@@ -49,7 +49,13 @@ namespace Game.Narrative.Editor
             if (flow)
             {
                 e.menu.AppendAction("流程视图/进入 " + flow.name, _ => ShowFlow(flow));
-                e.menu.AppendAction("流程视图/折叠或展开 " + flow.name, _ => { NarrativeGraphModel.SetFlowCollapsed(_chapter, flow, !_collapsedFlows.Contains(flow.NodeId)); Rebuild(_chapter, _catalog); });
+                e.menu.AppendAction("流程视图/折叠或展开 " + flow.name, _ =>
+                {
+                    if (!NarrativeGraphModel.CanEdit(_chapter) || !NarrativeGraphModel.CanEdit(flow)) return;
+                    _edit(() => NarrativeGraphModel.SetFlowCollapsed(_chapter, flow, !_collapsedFlows.Contains(flow.NodeId)));
+                    Rebuild(_chapter, _catalog);
+                }, _ => NarrativeGraphModel.CanEdit(_chapter) && NarrativeGraphModel.CanEdit(flow)
+                    ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
                 e.menu.AppendAction("流程视图/选择整个流程（移动或复制）", _ =>
                 {
                     _building = true; ClearSelection();
@@ -73,8 +79,10 @@ namespace Game.Narrative.Editor
 
         private void LocateFlowNode(NarrativeNodeSO model)
         {
+            if (!model || !_nodes.ContainsKey(model)) return;
             ViewFlow = model as NarrativeFlowStartSO ?? model.Flow;
-            if (model.Flow) NarrativeGraphModel.SetFlowCollapsed(_chapter, model.Flow, false); Rebuild(_chapter, _catalog); SelectModel(model, true); _selected(model);
+            // 独立视图临时显示流程成员，不改变持久化折叠状态或撤销记录。
+            ApplyFlowVisibility(); SelectModel(model, true); _selected(model);
         }
 
         private void ApplyFlowVisibility()
@@ -84,7 +92,9 @@ namespace Game.Narrative.Editor
                 bool visible = ViewFlow ? n.Model.ScopeId == ViewFlow.NodeId :
                     !_collapsedFlows.Contains(n.Model.ScopeId) || n.Model is NarrativeFlowStartSO;
                 n.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
-                if (n.Model is NarrativeFlowStartSO && _collapsedFlows.Contains(n.Model.NodeId)) n.title += "（已折叠）";
+                const string collapsedTitle = "（已折叠）";
+                if (n.title.EndsWith(collapsedTitle)) n.title = n.title.Substring(0, n.title.Length - collapsedTitle.Length);
+                if (!ViewFlow && n.Model is NarrativeFlowStartSO && _collapsedFlows.Contains(n.Model.NodeId)) n.title += collapsedTitle;
             }
             foreach (var edge in edges.ToList())
                 edge.style.display = edge.input.node.style.display == DisplayStyle.None || edge.output.node.style.display == DisplayStyle.None ? DisplayStyle.None : DisplayStyle.Flex;

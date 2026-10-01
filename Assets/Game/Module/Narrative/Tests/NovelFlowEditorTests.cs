@@ -10,9 +10,122 @@ using UnityEngine.UIElements;
 
 namespace Game.Narrative.Tests
 {
+    public sealed class NovelFlowNavigationPlayModeTests
+    {
+        [UnityEngine.TestTools.UnityTearDown]
+        public System.Collections.IEnumerator ExitObservation()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) yield return new UnityEngine.TestTools.ExitPlayMode();
+            NovelPlayModeScenes.DiscardUnsavedScenes();
+        }
+        [UnityEngine.TestTools.UnityTest]
+        public System.Collections.IEnumerator PlayModeReadOnlyMenusNavigateWithoutWrites()
+        {
+            yield return NovelPlayModeScenes.EnterFrameworkScenePlayMode();
+            Assert.IsTrue(EditorApplication.isPlaying);
+            NovelFlowEditorTests.CheckReadOnlyNavigation();
+            yield return NovelPlayModeScenes.ExitIfPlaying();
+        }
+    }
     public sealed class NovelFlowEditorTests
     {
         private string _folder, _layout;
+        private static DropdownMenu FlowMenu(NarrativeFlowGraphView graph)
+        {
+            var menu = new DropdownMenu();
+            using var trigger = MouseDownEvent.GetPooled(new Event { type = EventType.MouseDown });
+            using var populate = ContextualMenuPopulateEvent.GetPooled(trigger, menu, graph, null);
+            typeof(NarrativeFlowGraphView).GetMethod("BuildFlowMenu", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .Invoke(graph, new object[] { populate });
+            menu.PrepareForDisplay(trigger); return menu;
+        }
+        private static void Navigate(DropdownMenu menu, string prefix)
+        {
+            var action = menu.MenuItems().OfType<DropdownMenuAction>().Single(a => a.name.StartsWith(prefix, StringComparison.Ordinal));
+            Assert.AreEqual(DropdownMenuAction.Status.Normal, action.status); action.Execute();
+        }
+        private static void CheckNavigation(NarrativeChapterSO chapter, NarrativeFlowStartSO flow, NarrativeJumpSO jump,
+            NarrativeReceiverSO receiver, NarrativeFlowCallSO call, bool editable)
+        {
+            var host = ScriptableObject.CreateInstance<EditorWindow>(); host.position = new Rect(100, 100, 1000, 700);
+            int edits = 0; NarrativeNodeSO inspected = null;
+            var graph = new NarrativeFlowGraphView(n => inspected = n, a => { edits++; a(); }, (_, _) => { });
+            var layout = NarrativeGraphModel.GetLayout(chapter, false);
+            var assets = chapter.Nodes.Cast<UnityEngine.Object>().Append(chapter).Concat(layout ? new UnityEngine.Object[] { layout } : Array.Empty<UnityEngine.Object>()).ToArray();
+            var json = assets.Select(EditorJsonUtility.ToJson).ToArray(); var dirty = assets.Select(EditorUtility.IsDirty).ToArray();
+            var files = assets.Select(AssetDatabase.GetAssetPath).Where(p => !string.IsNullOrEmpty(p)).Distinct().ToDictionary(p => p, System.IO.File.ReadAllBytes);
+            try
+            {
+                host.rootVisualElement.Add(graph); host.Show(); graph.Rebuild(chapter, null); int builds = graph.BuildCount;
+                Undo.FlushUndoRecordObjects(); int group = Undo.GetCurrentGroup(); string groupName = Undo.GetCurrentGroupName();
+                Node View(NarrativeNodeSO model) => graph.nodes.Single(n => n.viewDataKey == model.NodeId);
+                void Selected(NarrativeNodeSO model)
+                {
+                    Assert.AreEqual(DisplayStyle.Flex, View(model).style.display.value);
+                    Assert.AreEqual(View(model), graph.selection.Single()); Assert.AreEqual(model, inspected);
+                }
+                graph.SelectModel(jump, false); var menu = FlowMenu(graph);
+                var collapse = menu.MenuItems().OfType<DropdownMenuAction>().Single(a => a.name.StartsWith("流程视图/折叠或展开 ", StringComparison.Ordinal));
+                Assert.AreEqual(editable ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled, collapse.status);
+                if (!editable) { collapse.Execute(); Assert.AreEqual(0, edits); }
+                Navigate(menu, "定位接收点/"); Selected(receiver);
+                Navigate(FlowMenu(graph), "全部跳转来源/"); Selected(jump);
+                graph.ShowFlow(null);
+                if (layout) Assert.AreEqual(DisplayStyle.None, View(receiver).style.display.value, "导航不应永久展开流程");
+                graph.SelectModel(call, false); Navigate(FlowMenu(graph), "定位流程开始"); Selected(flow);
+                graph.ShowFlow(null); graph.SelectModel(receiver, true);
+                Assert.AreEqual(DisplayStyle.Flex, View(receiver).style.display.value); Assert.AreEqual(layout ? flow : null, graph.ViewFlow);
+                Assert.AreEqual(builds + 2, graph.BuildCount, "只有显式切换主线视图重建；定位保留节点");
+                Assert.AreEqual(0, edits); Assert.AreEqual(group, Undo.GetCurrentGroup()); Assert.AreEqual(groupName, Undo.GetCurrentGroupName());
+                CollectionAssert.AreEqual(json, assets.Select(EditorJsonUtility.ToJson).ToArray());
+                CollectionAssert.AreEqual(dirty, assets.Select(EditorUtility.IsDirty).ToArray());
+                foreach (var file in files) CollectionAssert.AreEqual(file.Value, System.IO.File.ReadAllBytes(file.Key));
+                Assert.AreEqual(layout, NarrativeGraphModel.GetLayout(chapter, false), "定位不得创建布局");
+            }
+            finally { host.Close(); }
+        }
+        [Test] public void CollapsedFlowNavigationPreservesAssetsAndUndo()
+        {
+            var flow = (NarrativeFlowStartSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.FlowStart);
+            var jump = (NarrativeJumpSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Jump);
+            var receiver = (NarrativeReceiverSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.Receiver);
+            var call = (NarrativeFlowCallSO)NarrativeGraphModel.CreateNode(_chapter, NovelNodeKind.FlowCall);
+            NarrativeGraphModel.AssignFlow(_chapter, jump, flow); NarrativeGraphModel.AssignFlow(_chapter, receiver, flow);
+            NarrativeGraphModel.SetReceiver(_chapter, jump, receiver);
+            using (var data = new SerializedObject(call)) { data.FindProperty("_callee").objectReferenceValue = flow; data.ApplyModifiedPropertiesWithoutUndo(); }
+            NarrativeGraphModel.SetFlowCollapsed(_chapter, flow, true); Undo.FlushUndoRecordObjects(); AssetDatabase.SaveAssets();
+            CheckNavigation(_chapter, flow, jump, receiver, call, true);
+            Undo.PerformUndo(); Assert.IsEmpty(NarrativeGraphModel.GetLayout(_chapter, false).CollapsedFlows);
+        }
+        [Test] public void ReadOnlyMemoryAssetsNavigateWithoutLayoutOrUndo() => CheckReadOnlyNavigation();
+        public static void CheckReadOnlyNavigation()
+        {
+            var chapter = ScriptableObject.CreateInstance<NarrativeChapterSO>(); var flow = ScriptableObject.CreateInstance<NarrativeFlowStartSO>();
+            var jump = ScriptableObject.CreateInstance<NarrativeJumpSO>(); var receiver = ScriptableObject.CreateInstance<NarrativeReceiverSO>();
+            var call = ScriptableObject.CreateInstance<NarrativeFlowCallSO>();
+            try
+            {
+                var nodes = new NarrativeNodeSO[] { flow, jump, receiver, call };
+                foreach (var node in nodes)
+                {
+                    using var data = new SerializedObject(node);
+                    data.FindProperty("_nodeId").stringValue = Guid.NewGuid().ToString("N"); data.FindProperty("_chapterId").stringValue = chapter.ChapterId;
+                    if (node == jump || node == receiver) data.FindProperty("_flow").objectReferenceValue = flow;
+                    data.ApplyModifiedPropertiesWithoutUndo();
+                }
+                using (var data = new SerializedObject(jump)) { data.FindProperty("_receiverId").stringValue = receiver.NodeId; data.ApplyModifiedPropertiesWithoutUndo(); }
+                using (var data = new SerializedObject(call)) { data.FindProperty("_callee").objectReferenceValue = flow; data.ApplyModifiedPropertiesWithoutUndo(); }
+                using (var data = new SerializedObject(chapter))
+                {
+                    var list = data.FindProperty("_nodes"); list.arraySize = nodes.Length;
+                    for (int i = 0; i < nodes.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = nodes[i];
+                    data.ApplyModifiedPropertiesWithoutUndo();
+                }
+                Assert.IsFalse(NarrativeGraphModel.CanEdit(chapter)); CheckNavigation(chapter, flow, jump, receiver, call, false);
+                Assert.Throws<InvalidOperationException>(() => NarrativeGraphModel.SetFlowCollapsed(chapter, flow, true));
+            }
+            finally { foreach (var node in new UnityEngine.Object[] { chapter, flow, jump, receiver, call }) UnityEngine.Object.DestroyImmediate(node); }
+        }
         private NarrativeChapterSO _chapter;
         private sealed class Catalog : INarrativeCatalog
         {

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.17.4",
+  "frameworkTag": "v0.17.4",
+  "status": "release-ready-consumer-validation-pending",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.17.4.json",
+  "coverage": "Ship visual-novel 0.18.3 editor patch in com.ember 0.17.4: locating receivers, jump sources, flow starts and hidden nodes changes only the retained view, selection and focus. Persistent collapse is disabled and callback-guarded for read-only assets and Play Mode. No story/runtime/save-format changes; other templates, compatibility 0.17.0, dependencies and skills unchanged.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.0",
+      "path": "com.moremountains.feel"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.2",
+      "path": "com.sirenix.odin-inspector"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.7.0",
+      "frameworkVersion": "0.17.0",
+      "channel": "stable",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "274ae24260525ab08b7264fc66625b57",
+      "versionedContentHash": "274ae24260525ab08b7264fc66625b57"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.4.0",
+      "frameworkVersion": "0.17.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.7.0",
+      "parentContentHash": "274ae24260525ab08b7264fc66625b57",
+      "contentHash": "0ad733aaf3f71e7f77625ba7f814ddb9",
+      "versionedContentHash": "0ad733aaf3f71e7f77625ba7f814ddb9"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.18.3",
+      "frameworkVersion": "0.17.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.7.0",
+      "parentContentHash": "274ae24260525ab08b7264fc66625b57",
+      "contentHash": "e0279904363d9734d495ed7f75fbed5b",
+      "versionedContentHash": "e0279904363d9734d495ed7f75fbed5b"
+    }
+  ],
+  "validation": "2026-10-01 user confirmed manual Unity compilation without errors. Current Unity Test Framework NUnit report tests-20261001-074611990.xml: 19/19 graph editor and real Play Mode read-only navigation tests passed, zero failures/skips; job 35febb2caab6493e84649b4a13449584. Official SaveTemplate saved 1153 files and patch Bump sealed visual-novel 0.18.3. All actual template/parent hashes and editing identity match, zero template graph issues. Consumer migration, manual offscreen focus visual acceptance, full PlayMode, Player and device builds unverified. Candidate shared-binary integrity (including autocrlf checkouts), font configuration, 11-skill/32-file bundle and whitespace checks passed.",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#ember-v0.11.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.17.4",
+    "skills": [
+      "ember-add-font",
+      "ember-template-conflict-recovery",
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-export-story",
+      "ember-vn-custom-node",
+      "ember-vn-edit-skin"
+    ],
+    "bundleSourceCommit": "f58d4e1f61648fa0193b4066abb31c6b46ea969f",
+    "templateSkillUpdaterVersion": "0.14.4",
+    "templateSkillStateSchemaVersion": 3
+  }
+}
