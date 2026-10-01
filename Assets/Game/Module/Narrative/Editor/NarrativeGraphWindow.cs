@@ -130,6 +130,8 @@ namespace Game.Narrative.Editor
             var maintain = new ToolbarMenu { text = "剧情工具 ▾" };
             maintain.menu.AppendAction("同步章节出口", _ => TryEdit(() => NarrativeStoryModel.SyncExits(_story)), _ => WriteStatus(_story));
             maintain.menu.AppendAction("自动排列章节总览", _ => _storyGraph.AutoArrange(), _ => WriteStatus(_story));
+            maintain.menu.AppendAction("生成所选节点测试存档…", _ => NovelTestSaveWindow.Open(_chapter, _selected, _story),
+                _ => !_overview && _selected ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             global.Add(maintain);
             Button(global, "显示全部", () => { if (_overview) _storyGraph.FrameAll(); else _graph.FrameAll(); });
             rootVisualElement.Add(global);

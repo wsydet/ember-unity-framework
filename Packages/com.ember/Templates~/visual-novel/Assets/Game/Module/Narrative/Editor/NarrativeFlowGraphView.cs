@@ -210,6 +210,13 @@ namespace Game.Narrative.Editor
                 if (selection.Count > 0) e.menu.AppendAction("删除所选", _ => DeleteSelected());
             }
             BuildFlowMenu(e);
+            var saveNode = (e.target as VisualElement)?.GetFirstAncestorOfType<FlowNode>() ?? e.target as FlowNode;
+            saveNode ??= selection.OfType<FlowNode>().FirstOrDefault();
+            if (saveNode != null)
+            {
+                var target = saveNode.Model;
+                e.menu.AppendAction("生成测试存档…", _ => NovelTestSaveWindow.Open(_chapter, target));
+            }
             e.menu.AppendAction("显示全部  A", _ => FrameAll());
             e.menu.AppendAction("聚焦所选  F", _ => FrameSelection());
         }

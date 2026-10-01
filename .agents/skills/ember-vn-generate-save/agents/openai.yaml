@@ -1,0 +1,4 @@
+interface:
+  display_name: "小说节点测试存档"
+  short_description: "按指定节点生成实机定位存档，特殊节点回退到前置普通节点，并支持测试变量调整"
+  default_prompt: "使用 $ember-vn-generate-save 为我要测试的节点生成存档，特殊节点停在前置普通节点。"

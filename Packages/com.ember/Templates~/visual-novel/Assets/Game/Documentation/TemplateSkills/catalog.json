@@ -2,6 +2,14 @@
   "schemaVersion": 2,
   "skills": [
     {
+      "id": "ember-vn-generate-save",
+      "displayName": "小说节点测试存档",
+      "description": "定位指定节点，特殊节点回退到前置普通节点，使用可调整的默认变量生成本机或实机测试存档。",
+      "templateId": "visual-novel",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.19.0"
+    },
+    {
       "id": "ember-vn-import-images",
       "displayName": "视觉小说图片导入与配表",
       "description": "分析指定图片，交互确认类型、角色与用途，再导入资源并完成视觉小说配表。",

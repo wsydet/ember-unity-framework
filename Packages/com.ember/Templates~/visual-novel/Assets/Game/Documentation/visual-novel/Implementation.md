@@ -1896,3 +1896,20 @@ UI 中文简述不符合 EUI 规范；② 除全屏背景外的内容都应放�
 **前 / 中 / 后**的存读档契约（读回输入前的档必须重新询问且不残留名字、输入期间保存被拒且不写盘、
 此时读档要干净关掉输入页、留空写默认名且剧情继续、输入后的档保留名字且不再询问）。
 用例把存档目录换到 `.utmp/name-input-saves/<guid>`，不碰本机存档。**未运行**，只做了编译验证（0 error）。
+
+## 指定节点测试存档与 Skill（2026-10-01）
+
+新增 `NovelTestSaveBuilder/Window/Automation`，从剧情图右键或剧情工具菜单生成普通稳定点存档。
+含自定义步骤的对白及其他特殊节点回溯真实连接，选择前置普通节点；支持多前驱选择、跨章/跳转/流程返回、
+真实调用链与各层变量。默认变量可修改，生成过程不运行剧情或小游戏，画面为空舞台，不重放停留台词之前的指令。
+本机手动槽与独立目录导出均复用正式 `NovelSaveStore`，Schema 保持 9，旧存档恢复契约不变。
+
+模板专属 `$ember-vn-generate-save` 通过同一编辑器 API 搜索、检查候选和生成；不唯一的节点/调用链须选择，
+默认写空槽，已有槽拒绝未经指定的覆盖。技能最低业务版本为 visual-novel 0.19.0。
+
+本轮通过 Unity MCP 完成编译检查及 44 项 EditMode 测试：`NovelTestSaveTests` 12 项、
+`NovelSessionTests.GeneratedPredecessorSaveRestoresAndStartsCustomGameOnlyAfterAdvance` 1 项，
+加上 `NovelCheckpointTests` 与 `NovelFlowTests` 的 31 项回归。覆盖正式写入/回读、变量、合法选项、
+循环有界回溯、调用链返回、JSON 请求默认值、覆盖保护，以及恢复后推进才启动自定义步骤。
+Skill 的 quick_validate 与仓库技能文件头检查通过。测试文件写在 `.utmp`，没有写入玩家真实存档。
+消费项目自定义小游戏、独立构建与设备目录拷贝尚未实机验收；框架 tag 发布与消费端升级另行处理。
