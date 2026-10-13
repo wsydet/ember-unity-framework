@@ -2,6 +2,7 @@
 using Ember.Core;
 using Ember.UI;
 using Game.UI;
+using Game.Input;
 
 namespace Game.State
 {
@@ -20,6 +21,11 @@ namespace Game.State
         // [EmberManaged:end]
         {
             base.OnEnter(args);
+
+            // base 已完成 Global 激活；登记不代表 Ready。未选装 GameInput 时无需输入接线。
+            if (args is EmberStateMachine fsm
+                && EmberModuleCollector.Instance.TryGetModule<GameInputModule>(out var input))
+                input.BindTransitions(fsm, "gameplay");
 
             // 框架就绪后立即创建 GM 调试页（FreePage 常驻，不随 MainPage 切换关闭）
             EUIManager.Instance.ShowTopMost(GamePages.GMPage);

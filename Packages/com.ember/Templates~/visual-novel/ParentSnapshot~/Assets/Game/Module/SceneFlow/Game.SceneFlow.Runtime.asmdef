@@ -1,0 +1,6 @@
+{
+    "name": "Game.SceneFlow.Runtime",
+    "rootNamespace": "Game.SceneFlow",
+    "references": ["Ember.Core.Runtime", "Ember.Basic.Runtime", "UniTask"],
+    "autoReferenced": true
+}

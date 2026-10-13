@@ -2,8 +2,8 @@
 
 > 状态：F0→F5 已由 0.12.0 交付；0.12.1 补充配置表可视化、代码提示和单表导出，消费项目验收待记录
 > 更新日期：2026-09-10
-> 当前框架版本：`com.ember 0.12.1`
-> 当前模板候选：`base 0.6.0 / stable`、`source3d-2p5d 0.3.1 / preview`
+> 历史实施基线：`com.ember 0.12.1`；当时模板为 `base 0.6.0 / stable`、`source3d-2p5d 0.3.1 / preview`。
+> 本文保留设计、Gate 与未执行的消费验收，不是当前待重做计划。现行接口见 [Table 文档](../../Packages/com.ember/Table/Documentation~/table/README.md)，当前版本与交付边界见 [进度](framework-progress.md)。
 > 来源：UnityFarm MVP1 P2 对稳定 ID、作物配置和确定性测试的实际需求
 > 对照参考：Burner 的 CSV → 生成 C# → 每表二进制 → YooAsset Runtime 读取链路（2026-09-09 只读审计）
 

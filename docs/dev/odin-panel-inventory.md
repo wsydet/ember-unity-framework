@@ -1,6 +1,6 @@
 # Odin 面板源码清单
 
-最后扫描：2026-09-07。以下是项目维护的 Odin 使用点，来源为当前源码中的 `Sirenix.OdinInspector` 引用，不代表每一项面板已经实测。第三方包、模板快照和 UniTask 自带编辑器不在此清单内。
+历史扫描：2026-09-07。以下保留当时项目维护的 Odin 使用点，不是当前全量清单，也不代表每一项面板已经实测；后续平台玩家窗口等不在该批扫描中。2.5D 业务项的链接用于只读定位所属模板快照，修改须先由用户切换正确模板并在 Assets 维护；第三方和 UniTask 自带编辑器未纳入该次扫描。
 
 风格规范见 [Odin 使用注意事项](odin-usage-notes.md)。普通纯 C# Manager 没有独立 Unity Inspector，不应仅为“统一面板”添加无效属性。原 `OdinInspectorDemo.cs` 已不存在，参考当前 GameLauncher、EmberBaseSO、EUIBinding 和 EmberSceneMapping。
 

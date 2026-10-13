@@ -57,6 +57,12 @@ namespace Ember.Core
         /// </summary>
         public virtual UniTask PrepareEnterAsync() => UniTask.CompletedTask;
 
+        /// <summary>请求级准备；默认兼容旧无参钩子。PreparedArgs 可携带独立候选，在 OnInit/Reset 后交接给 OnEnter。</summary>
+        public virtual UniTask PrepareEnterAsync(SceneTransitionContext request) => PrepareEnterAsync();
+
+        /// <summary>准备已调用但未开始提交时的清理。包括成功准备后取消；实现必须能清理部分准备结果。</summary>
+        public virtual UniTask AbortPrepareAsync(SceneTransitionContext request) => UniTask.CompletedTask;
+
         /// <summary>进入状态。args 为 TransitionTo 传入的参数。</summary>
         public virtual void OnEnter(object args) { }
 
@@ -151,6 +157,8 @@ namespace Ember.Core
         Push,
         /// <summary>弹出栈顶（Pop）</summary>
         Pop,
+        /// <summary>当前状态内准备并交接资源，不触发状态退出/进入或覆盖栈。</summary>
+        InPlace,
     }
 
     /// <summary>
@@ -165,6 +173,66 @@ namespace Ember.Core
         public string ToScene;
         public TransitionType Type;
         public Action Proceed;
+        public object Args { get; internal set; }
+        public object PreparedArgs { get; set; }
+        public EmberTransitionOperation Operation { get; internal set; }
+        public System.Threading.CancellationToken Cancellation => Operation.Cancellation;
+        public bool CommitStarted => Operation.CommitStarted;
+        public bool IsCommitted { get; internal set; }
+        public bool SkipSceneLoad { get; internal set; }
+        public IReadOnlyList<string> ScenesToRelease { get; internal set; }
+        internal bool PreparationStarted;
+        internal bool PreparationCompleted;
+        public Exception CleanupFailure { get; private set; }
+        private bool _preparationAborted;
+        internal Func<bool> IsCurrent;
+
+        /// <summary>准备只执行一次；Pop 恢复不重新执行目标的进入准备。</summary>
+        public async UniTask PrepareAsync()
+        {
+            ThrowIfObsolete();
+            if (PreparationCompleted) return;
+            if (Type == TransitionType.Pop)
+            {
+                PreparationCompleted = true;
+                Operation.MarkPrepared();
+                return;
+            }
+            if (PreparationStarted) throw new InvalidOperationException("准备仍在执行，不能重复进入。");
+            PreparationStarted = true;
+            if (Type == TransitionType.InPlace)
+                await ((IEmberInPlaceState)ToState).PrepareInPlaceAsync(this);
+            else await ToState.PrepareEnterAsync(this);
+            ThrowIfObsolete();
+            PreparationCompleted = true;
+            Operation.MarkPrepared();
+        }
+
+        /// <summary>在执行准备前由真正的过渡拥有者登记。外层复用遮罩也必须持有本请求的独立凭证。</summary>
+        public EmberTransitionPresentation HoldPresentation() => Operation.HoldPresentation();
+
+        public void ThrowIfObsolete()
+        {
+            Cancellation.ThrowIfCancellationRequested();
+            if (!IsCurrent()) throw new OperationCanceledException("转场请求已失效。", Cancellation);
+        }
+
+        /// <summary>场景卸载前释放未提交候选；重复调用安全，提交开始后不声称能够回滚。</summary>
+        public async UniTask AbortPreparationAsync()
+        {
+            if (_preparationAborted || !PreparationStarted || CommitStarted) return;
+            _preparationAborted = true;
+            try
+            {
+                if (Type == TransitionType.InPlace)
+                    await ((IEmberInPlaceState)ToState).AbortInPlaceAsync(this);
+                else await ToState.AbortPrepareAsync(this);
+            }
+            catch (Exception failure) { ReportCleanupFailure(failure); throw; }
+        }
+
+        public void ReportCleanupFailure(Exception failure)
+            => CleanupFailure = CleanupFailure == null ? failure : new AggregateException(CleanupFailure, failure);
     }
 
     // ============================================================
@@ -201,7 +269,7 @@ namespace Ember.Core
     /// fsm.Pop();
     /// </code>
     /// </summary>
-    public class EmberStateMachine
+    public partial class EmberStateMachine
     {
         private const string TAG = LogTags.CoreStateMachine;
 
@@ -339,193 +407,23 @@ namespace Ember.Core
         /// </summary>
         public void Start<T>(object args = null) where T : EmberGameState
         {
-            if (!TryGetState<T>(out var state))
-            {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
-                return;
-            }
-
+            if (_stopped || _activeTransition != null || _evaluatingGuard || !TryGetState<T>(out var state)) return;
+            _enteredTransition?.InvalidateEntry();
+            _enteredTransition = null;
             _current = state;
-            _current.OnEnter(args);
+            _currentScenePath = state.ScenePath;
+            state.OnEnter(args);
             EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
         }
 
-        // ======== 切换 ========
-
-        /// <summary>
-        /// 统一转场入口：切换到目标状态。
-        /// <para><b>「切换 / 叠加」运行时按场景路径自动判定：</b>
-        /// 目标状态无场景（ScenePath 为空）或与当前同场景 → 叠加（Push 语义：暂停当前、压栈、Pop 返回）；
-        /// 场景不同 → 切换（Exit 当前 → 加载目标场景 → Enter）。</para>
-        /// <para>发生场景切换时，从连接线（<see cref="TransitionDescriptor.QuickSceneLoad"/>）
-        /// 读取 Loading 模式：true = 快速加载（跳过假进度）。</para>
-        /// <param name="args">传递给 OnEnter 的参数</param>
-        /// <param name="skipSceneLoad">跳过场景加载（目标状态的场景已就绪时使用）</param>
-        /// </summary>
+        /// <summary>兼容入口；需要等待失败/取消结果的调用方使用 RequestTransitionTo。</summary>
         public void TransitionTo<T>(object args = null, bool skipSceneLoad = false) where T : EmberGameState
-        {
-            if (!TryGetState<T>(out var next))
-            {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
-                return;
-            }
+            => ObserveTransition(RequestTransitionTo<T>(args, skipSceneLoad)).Forget();
 
-            if (_current != null)
-            {
-                if (_current.GetType() == next.GetType() && !_current.AllowReEnter)
-                {
-                    EmberDebug.LogWarning(TAG,
-                        $"StateMachine: already in state '{typeof(T).Name}' and AllowReEnter is false.");
-                    return;
-                }
-
-                if (!ValidateGuard(_current, typeof(T), "TransitionTo"))
-                    return;
-            }
-
-            // 场景信息
-            var fromScene = _current?.ScenePath ?? "";
-            var toScene = next.ScenePath ?? "";
-
-            // 统一判定：目标无场景或与当前同场景 → 叠加（Push 语义）；场景不同 → 切换（替换 + 场景加载）
-            if (_current != null && (string.IsNullOrEmpty(toScene) || toScene == fromScene))
-            {
-                QuickSceneLoad = false; // 叠加不加载场景，清掉可能残留的快速标记
-                PushInternal(next, args);
-                return;
-            }
-
-            // 生命周期操作（延迟到场景就绪后执行）
-            Action proceed = () =>
-            {
-                _current?.OnExit();
-                Previous = _current;
-                _current = next;
-                _current.OnEnter(args);
-                _currentScenePath = toScene;
-
-                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            };
-
-            // 有钩子、场景不同、且未跳过 → 异步加载
-            if (!skipSceneLoad && OnSceneTransition != null && fromScene != toScene)
-            {
-                // 从状态连接线读取本次转场的 Loading 模式（可视化编辑器同步读取该字段标注连接线）
-                QuickSceneLoad = FindTransitionDescriptor(_current, typeof(T))?.QuickSceneLoad ?? false;
-
-                OnSceneTransition(new SceneTransitionContext
-                {
-                    FromState = _current,
-                    ToState = next,
-                    FromScene = fromScene,
-                    ToScene = toScene,
-                    Type = TransitionType.TransitionTo,
-                    Proceed = proceed,
-                });
-                return;
-            }
-
-            // 无钩子或同场景 → 同步
-            proceed();
-        }
-
-        // ======== 栈式覆盖（Push / Pop） ========
-
-        /// <summary>
-        /// 显式强制覆盖（兼容别名）：将当前状态暂停（OnPause），在其上方覆盖一个新状态。
-        /// 与 <see cref="TransitionTo"/> 的叠加判定路径等价；推荐统一使用 TransitionTo，
-        /// 由状态机按场景路径自动判定切换/叠加。
-        /// </summary>
         public void Push<T>(object args = null) where T : EmberGameState
-        {
-            if (!TryGetState<T>(out var overlay))
-            {
-                EmberDebug.LogError(TAG, $"StateMachine: state '{typeof(T).Name}' is not registered.");
-                return;
-            }
+            => ObserveTransition(RequestPush<T>(args)).Forget();
 
-            if (_current != null && !ValidateGuard(_current, typeof(T), "Push"))
-                return;
-
-            PushInternal(overlay, args);
-        }
-
-        /// <summary>叠加路径：暂停当前状态、压栈、进入覆盖状态。</summary>
-        private void PushInternal(EmberGameState overlay, object args)
-        {
-            var fromScene = _currentScenePath;
-            var toScene = overlay.ScenePath ?? "";
-
-            Action proceed = () =>
-            {
-                _current?.OnPause();
-                _popScenePathStack.Push(_currentScenePath);
-                _overlayStack.Push(_current);
-                Previous = _current;
-                _current = overlay;
-                _current.OnEnter(args);
-                _currentScenePath = toScene;
-
-                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            };
-
-            if (OnSceneTransition != null && fromScene != toScene)
-            {
-                OnSceneTransition(new SceneTransitionContext
-                {
-                    FromState = _current,
-                    ToState = overlay,
-                    FromScene = fromScene,
-                    ToScene = toScene,
-                    Type = TransitionType.Push,
-                    Proceed = proceed,
-                });
-                return;
-            }
-
-            proceed();
-        }
-
-        /// <summary>
-        /// 弹出最上层的覆盖状态，恢复到之前被暂停的状态。
-        /// </summary>
-        public void Pop()
-        {
-            if (_overlayStack.Count == 0)
-            {
-                EmberDebug.LogWarning(TAG, "StateMachine: no overlay state to pop.");
-                return;
-            }
-
-            var fromScene = _currentScenePath;
-            var toScene = _popScenePathStack.Count > 0 ? _popScenePathStack.Peek() : "";
-
-            Action proceed = () =>
-            {
-                _current?.OnExit();
-                _current = _overlayStack.Pop();
-                _currentScenePath = _popScenePathStack.Count > 0 ? _popScenePathStack.Pop() : "";
-                _current?.OnResume();
-
-                EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
-            };
-
-            if (OnSceneTransition != null && fromScene != toScene)
-            {
-                OnSceneTransition(new SceneTransitionContext
-                {
-                    FromState = _current,
-                    ToState = _overlayStack.Peek(),
-                    FromScene = fromScene,
-                    ToScene = toScene,
-                    Type = TransitionType.Pop,
-                    Proceed = proceed,
-                });
-                return;
-            }
-
-            proceed();
-        }
+        public void Pop() => ObserveTransition(RequestPop()).Forget();
 
         // ======== 查询 ========
 

@@ -113,7 +113,7 @@ namespace Ember.UIExtension
         public EUIEventTriggerListener.ObjectVoidDelegate OnDragToDropLongPress;
 
         /// <summary>自定义参数，由调用方自由赋值</summary>
-        public object Parameter;
+        [System.NonSerialized] public object Parameter;
 
         /// <summary>全局拖拽对象引用（静态，同一时间只有一个 DragToDrop 激活）</summary>
         public static object PointDragObject { get; set; }

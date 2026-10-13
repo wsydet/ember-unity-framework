@@ -96,9 +96,15 @@ namespace Ember.UI
         /// </summary>
         public virtual bool IsTransitionReady => true;
 
+        /// <summary>此 Loading 当前承载的请求。进度上限应依据 IsPrepared，不能依据场景文件加载结束。</summary>
+        public Ember.Core.EmberTransitionOperation TransitionOperation { get; internal set; }
+
+        /// <summary>无场景请求的通用 Loading 工作已成功结束；计时器不能替代此结果。</summary>
+        public bool LoadingWorkCompleted { get; internal set; }
+
         /// <summary>
         /// 跳过假进度（快速转场用）。框架/业务在显示 Loading 后置 true：
-        /// Loading 逻辑应据此跳过假进度与进度显示，<see cref="IsTransitionReady"/> 直接以真实加载进度为准。
+        /// Loading 逻辑据此跳过展示计时与进度显示；必要准备边界仍不可跳过。
         /// </summary>
         public bool SkipFakeProgress { get; set; }
 
@@ -231,7 +237,11 @@ namespace Ember.UI
         /// <para><b>约定：</b>所有由面板参数驱动的显示开关（进度条、功能开关等）都遵循
         /// 「先恢复默认（OnResetDefault），再按参数打开（OnInit/OnShow）」两步。</para>
         /// <para><b>在这里做：</b>关闭所有按参数显示的 UI 元素、复位内部状态字段到默认值。</para>
-        public virtual void OnResetDefault() { }
+        public virtual void OnResetDefault()
+        {
+            TransitionOperation = null;
+            LoadingWorkCompleted = false;
+        }
 
         /// <summary>
         /// 初始化业务数据 —— 在 <b>OnBind 之后、OnOpen 之前</b>调用，整个生命周期只调用一次。

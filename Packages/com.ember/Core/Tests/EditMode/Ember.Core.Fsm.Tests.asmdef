@@ -1,0 +1,19 @@
+{
+  "name": "Ember.Core.Fsm.Tests",
+  "rootNamespace": "Ember.Core.Fsm.Tests",
+  "references": [
+    "Ember.Core.Runtime",
+    "Ember.Basic.Runtime",
+    "Ember.Core.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ]
+}

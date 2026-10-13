@@ -357,7 +357,7 @@ namespace Ember.UIExtension
             }
 
             float totalDuration = _staggerInterval * (groupCount - 1) + perBlockDuration;
-            await UniTask.Delay(TimeSpan.FromSeconds(totalDuration), cancellationToken: this.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(totalDuration), ignoreTimeScale: true, cancellationToken: this.GetCancellationTokenOnDestroy());
         }
 
         private void AnimateBlockEnter(BlockEntry entry, Vector2 targetPos, float delay, float duration, bool manualUpdate = false)
@@ -389,7 +389,7 @@ namespace Ember.UIExtension
                 },
                 isEnter ? 1f : 0f,
                 duration
-            ).SetEase(Ease.Linear).SetDelay(delay).SetUpdate(update);
+            ).SetEase(Ease.Linear).SetDelay(delay).SetUpdate(update, isIndependentUpdate: true);
         }
 
         /// <summary>按进度求值 6 条曲线并应用到方块（每帧调用，无 GC）。</summary>

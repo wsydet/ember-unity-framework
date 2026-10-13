@@ -23,7 +23,7 @@ EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage);
 | Overlay / FreePage | `ShowOverlay` / `ShowFreePage`，固定排序值 |
 | Background | `SetBackground` / `SetBackgroundAsync`，单槽位且不拦射线 |
 
-设置页由状态机 Push/Pop 管理，按 [UI 开发参考](../../../../docs/user/UI开发参考.md) 的状态路由打开，避免只关闭页面却未退出状态。
+设置页由游戏流程状态机管理：业务请求 Push 设置状态，由该状态进入钩子打开页面，关闭按钮请求 Pop，由状态退出钩子关闭自己持有的页面。不要只关闭页面却留下暂停中的覆盖状态；等待请求结果及失败处理见[游戏流程转场](../core/game-transitions.md)。
 
 其他入口：`PreloadPage`、`ClosePage(page, returnValue)`、`CloseTopPopup`、`CloseAllPopups`、
 `GetReturnValue`、`HidePageViewOnly` / `ShowPageViewOnly`。预加载完成回调仍需处理，不保证调用瞬间完成。
@@ -47,4 +47,4 @@ UILayer 当前为 Background=0、Normal=1000、Popup=2000、TopMost=25000；实�
 Item 没有独立 Canvas/页面排序，复用宿主的渲染环境；临时隐藏与回池、最终 Dispose 是不同生命周期。
 SceneUI 的气泡就是 Item，见 [SceneUI 接入](../scene-ui/README.md)。
 
-开发仓库还提供 [完整 UI 使用规范](../../../../docs/user/UI开发参考.md) 与 [EUI API 参考](../../../../docs/dev/eui-reference.md)。
+框架开发仓库另有 `docs/user/UI开发参考.md` 与 `docs/dev/eui-reference.md`，只属于仓库维护资料，单独安装 UPM 包时不要求这些文件存在。消费项目以本页、随包源码及 UI 开发中心生成结果为依据。

@@ -1,0 +1,1 @@
+{"name":"Game.PlayerData.Runtime","rootNamespace":"Game.Module","references":["Game.PlayerData.Storage","Ember.Basic.Runtime","Ember.Core.Runtime"],"autoReferenced":true}

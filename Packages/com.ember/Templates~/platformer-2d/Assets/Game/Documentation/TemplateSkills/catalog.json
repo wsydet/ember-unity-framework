@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "skills": [
+    {
+      "id": "ember-platformer-tune-feel",
+      "displayName": "平台玩家手感调整",
+      "description": "发现已有玩家机制，将手感目标转成完整方案候选，并用 Unity 白盒验证。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.2.1"
+    },
+    {
+      "id": "ember-platformer-replace-animation",
+      "displayName": "平台玩家序列帧替换",
+      "description": "按实际玩家状态映射导入序列帧，替换自有方案动画并验证运行表现。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.2.1"
+    },
+    {
+      "id": "ember-platformer-add-state",
+      "displayName": "平台玩家新状态接入",
+      "description": "将已明确的玩家新动作接入真实状态、转换、完整方案和动画，并验证生命周期。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.2.1"
+    }
+  ]
+}

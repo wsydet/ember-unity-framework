@@ -41,7 +41,7 @@ EmberUpdateManager 一处驱动 Update/LateUpdate/FixedUpdate。业务 Module �
 业务更新通常由可选 Module 实现：
 
 ```csharp
-[EmberModule(ModulePhase.Gameplay)]
+[EmberModule(ModulePhase.Gameplay, Enabled = true)]
 public class BattleModule : EmberSingleton<BattleModule>, IEmberModule, IEmberUpdate
 {
     void IEmberModule.OnInit() { }

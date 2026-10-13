@@ -1,0 +1,9 @@
+{
+    "name": "Ember.Scene.Transitions.Tests",
+    "rootNamespace": "Ember.Scene.Tests",
+    "references": ["Ember.Scene.Runtime", "Ember.Core.Runtime", "Ember.Basic.Runtime", "Ember.UI.Runtime", "UniTask"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

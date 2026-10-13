@@ -1,0 +1,9 @@
+{
+    "name": "Game.PlayerData.Storage.Tests",
+    "rootNamespace": "Game.PlayerData.Tests",
+    "references": ["Game.PlayerData.Storage", "Ember.Basic.Runtime"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

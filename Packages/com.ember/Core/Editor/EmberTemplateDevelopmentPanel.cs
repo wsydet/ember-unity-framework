@@ -111,6 +111,12 @@ namespace Ember.Core.Editor
         private static GUIStyle _warningStyle;
         private static GUIStyle _okStyle;
         private static GUIStyle _templateButtonStyle;
+        private static GUIStyle _descriptionStyle;
+
+        private static GUIStyle DescriptionStyle => _descriptionStyle ??= new GUIStyle(EditorStyles.textArea)
+        {
+            wordWrap = true
+        };
 
         private static GUIStyle TemplateButtonStyle => _templateButtonStyle ??= new GUIStyle(GUI.skin.button)
         {
@@ -692,7 +698,10 @@ namespace Ember.Core.Editor
 
             _metaName = EditorGUILayout.TextField("显示名称", _metaName);
             EditorGUILayout.LabelField("描述");
-            _metaDescription = EditorGUILayout.TextArea(_metaDescription, GUILayout.MinHeight(55));
+            // 长描述按可用宽度换行，避免撑宽详情滚动区并把版本按钮挤出视口。
+            _metaDescription = EditorGUILayout.TextArea(
+                _metaDescription, DescriptionStyle, GUILayout.MinWidth(0), GUILayout.MinHeight(55),
+                GUILayout.ExpandWidth(true));
             GUI.enabled = !_context.OperationsBlocked;
             if (GUILayout.Button("应用名称与描述", GUILayout.Width(150)))
                 ApplyMetadata(selected);

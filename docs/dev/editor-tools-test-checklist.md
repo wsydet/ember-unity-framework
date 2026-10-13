@@ -19,8 +19,7 @@
 | I8 | 消息对话框跟随语言 | 切换语言后执行任意操作（批量重命名、代码校验等） | EditorUtility.DisplayDialog 弹出文字跟随当前语言（中/英） | ✅ |
 | I9 | 全局语言持久化 | 切换为英文 → 关闭所有窗口 → 重新打开任意工具 | 工具恢复上次的语言设置（英文），不重置为中文 | ✅ |
 
-> **已知限制**：Odin 属性标签（如 `[LabelText("目标 TMP 字体")]`）是编译时常量，无法运行时切换语言。
-> 这些标签当前固定在中文，后续可考虑用 Odin 的 `$` 动态标签语法逐工具改造。
+> **该批显示限制**：这些工具使用了字面量 LabelText，标签固定中文；不是 Odin 普遍不支持运行时语言切换。若需要切换，可按实际字段采用 `$` 动态解析并验证，不能仅从 C# 特性参数要求常量推导显示内容不能动态变化。
 
 ---
 
@@ -263,7 +262,7 @@
 | Q1 | 清空本地缓存 | Ember → Tool → 清空本地缓存 → 确认 | PlayerPrefs 和 persistentDataPath 已清空，对话框跟随语言 | ✅ |
 | Q2 | 删除空文件夹 | Ember → Tool → 删除项目空文件夹 → 确认 | 空文件夹被删除，.meta 也删了，对话框跟随语言 | ✅ |
 | Q3 | 维护工具名称 | Ember → Tool | 五个维护工具名称：校验代码规范 / 清空本地缓存 / 删除项目空文件夹 / 批量清理脚本未使用引用 / 刷新编辑器标题，与前方面板工具之间有一条横线分隔 | ✅ |
-| Q4 | 清理未使用引用 — Roslyn 语义扫描 | Ember → Tool → 批量清理脚本未使用引用 → 确认 | 使用 Roslyn CS8019 诊断（与 VS Studio 相同），100% 准确，Console 列出被修改的文件及被移除的 using | ⬜ |
+| Q4 | 清理未使用引用 — Roslyn 语义扫描 | Ember → Tool → 批量清理脚本未使用引用 → 确认 | 使用 Roslyn CS8019 诊断；核对实际程序集引用、条件编译与分析上下文，Console 列出被修改的文件及被移除的 using，随后检查 diff | ⬜ |
 | Q5 | 清理未使用引用 — 无冗余 | 代码干净时执行清理 | 弹窗报告 "No unused using directives found"，无文件被修改 | ⬜ |
 | Q6 | 清理未使用引用 — 语法错误文件跳过 | 包含有编译错误的 .cs 文件时执行 | 有语法错误的文件被跳过，在 Console 中报告，不影响其他文件的清理 | ⬜ |
 | Q7 | 清理未使用引用 — System.Linq 保留 | 代码中使用 `.Where()` `.Select()` 等扩展方法但未直接引用 `Enumerable` 类型 | `using System.Linq;` 被 Roslyn 正确识别为必需（语义分析），不被移除 | ⬜ |
@@ -312,7 +311,7 @@
 
 ### 新增
 - **Q4-Q7**: 新增第 4 个维护工具"批量清理脚本未使用引用"（`CleanUnusedScriptReferences`），菜单优先级 380
-  - **v3（当前）**：基于 Roslyn 语义分析（`Microsoft.CodeAnalysis.CSharp`）—— 与 VS Studio "删除未使用的引用" 使用相同的 CS8019 诊断，100% 准确
+  - **v3（该轮实现）**：基于 Roslyn 语义分析（`Microsoft.CodeAnalysis.CSharp`），使用 CS8019 诊断；准确性仍依赖传入的引用和编译上下文，不能由诊断名称推导为全工程零误删保证。
   - 从 Unity 6 安装目录提取的 Roslyn DLL（`DotNetSdk\sdk\8.0.318\DotnetTools\dotnet-format\`），放入 `Editor/Roslyn/`
   - asmdef 添加 `precompiledReferences` 引用 Roslyn DLL + `allowUnsafeCode: true`
   - 全局 MetadataReference 缓存（所有文件共享，只构建一次），进度条 + 可取消

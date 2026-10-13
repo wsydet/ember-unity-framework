@@ -7,11 +7,14 @@ Push/Pop（栈式覆盖）、TransitionDescriptor（可视化编辑器数据源�
 InitState → MainState → GameplayState 构成核心状态管线。状态机同时负责驱动可选业务 Module 的
 Phase 生命周期；框架必要 Manager 只在 Init 阶段统一启动，不随业务状态切换。
 
+请求级准备、取消与失败清理、场景所有权及 Loading 接口迁移见[游戏流程转场](../../../Documentation~/core/game-transitions.md)。
+
 ## 文件清单
 
 | 角色 | 路径 |
 |------|------|
 | 状态基类 + 状态机 | `EmberStateMachine.cs` |
+| 转场请求与执行 | `EmberTransitionOperation.cs`、`EmberStateMachine.Transitions.cs` |
 | 系统初始化状态 | `InitState.cs` |
 | 主界面/大厅状态 | `MainState.cs` |
 | 核心玩法状态 | `GameplayState.cs` |
@@ -36,7 +39,14 @@ Phase 生命周期；框架必要 Manager 只在 Init 阶段统一启动，不�
 | `Current` (属性) | 当前活跃状态 |
 | `Previous` (属性) | 上一个状态 |
 | `RegisteredStates` (属性) | 所有已注册状态的只读集合 |
-| `OnStateChanged` (事件) | 状态变更事件 `(oldState, newState)` |
+| `RequestTransitionTo<T>(args, skipSceneLoad, cancellation)` | 返回单次请求，Completion 包括准备、提交和清理 |
+| `RequestPush<T>(args, cancellation)` / `RequestPop(cancellation)` | 可等待的覆盖与恢复 |
+| `RequestInPlace<T>(args, cancellation)` | 当前状态内的资源交接；须实现 IEmberInPlaceState 并声明自身边，不退出/重入状态或重新激活 Module |
+| `IsTransitioning` / `CancelTransition()` / `StopTransitions()` | 在途查询、取消、永久封闭转场入口 |
+
+状态变更使用 `EmberBroadcastEvent.GameStateChanged` 广播。
+
+请求的 `WhenPrepared`、`WhenRunning`、`WhenInteractive` 分别表示准备、交接及完整遮罩退出的阶段结果；必须检查结果状态与请求有效性。`Completion` 不一定包含业务外层仍持有的遮罩。阶段、原位请求和失败清理契约以[游戏流程转场](../../../Documentation~/core/game-transitions.md)为准。
 
 ### EmberGameState — 状态基类
 
@@ -52,8 +62,11 @@ Phase 生命周期；框架必要 Manager 只在 Init 阶段统一启动，不�
 | `OnUpdate()` | 每帧调用 | 空 |
 | `OnPause()` | 被覆盖时 | 空 |
 | `OnResume()` | 覆盖恢复时 | 空 |
-| `GetTransitions() → TransitionDescriptor[]` | 可流转的目标状态（可视化编辑器边列表） | 空数组 |
-| `GetPushTargets() → TransitionDescriptor[]` | 可 Push 的目标状态 | 空数组 |
+| `PrepareEnterAsync(SceneTransitionContext)` | 本请求进入准备，可提供 PreparedArgs | 调用无参 PrepareEnterAsync |
+| `AbortPrepareAsync(SceneTransitionContext)` | 准备已开始、提交未开始时清理本请求候选 | 空 |
+| `GetEdges() → TransitionDescriptor[]` | 当前声明入口；注册时初始化实例 Edges | 合并两个兼容声明 |
+| `GetTransitions() → TransitionDescriptor[]` | 旧式目标声明，兼容保留 | 空数组 |
+| `GetPushTargets() → TransitionDescriptor[]` | 旧式覆盖目标声明，兼容保留 | 空数组 |
 
 ### 核心状态一览
 
@@ -100,9 +113,11 @@ Phase 生命周期；框架必要 Manager 只在 Init 阶段统一启动，不�
 | `Label` (string, init) | 可视化编辑器中连线上的标签 |
 | `Condition` (string, init) | 条件文字描述（可视化展示用） |
 | `Guard` (Func<bool>, init) | 运行时准入条件，null 无条件 |
+| `QuickSceneLoad` (bool, set) | 发生场景切换时使用快速加载；不改变切换/覆盖语义 |
+| `ReadOnly` (bool, init) | 编辑器禁止修改内置边结构；允许调整 QuickSceneLoad |
 
 ```csharp
-public override TransitionDescriptor[] GetTransitions() => new[] {
+public override TransitionDescriptor[] GetEdges() => new[] {
     new(typeof(MainState), "返回大厅"),
     new(typeof(RaidState), "突袭副本") { Condition = "Lv≥10", Guard = () => level >= 10 },
 };
@@ -112,11 +127,14 @@ public override TransitionDescriptor[] GetTransitions() => new[] {
 
 **启动：** `Start<T>(args)` → 查找状态 → `_current.OnEnter(args)` → Dispatch(GameStateChanged)
 
-**切换：** `TransitionTo<T>(args)` → AllowReEnter检查 → `_current.OnExit()` → 保存Previous → `_current.OnEnter(args)` → Dispatch+OnStateChanged事件
+**切换：** `RequestTransitionTo<T>(args)` → 并发/AllowReEnter/Guard 检查 → Loading 遮挡 → 候选场景加载 → 请求级 PrepareEnterAsync → 旧状态及覆盖栈退出 → 新状态 OnEnter(PreparedArgs) → 状态广播 → 旧场景卸载 → 遮挡关闭 → Completion。无场景或同场景目标沿用覆盖语义。
 
 **Push：** `Push<T>(args)` → `_current.OnPause()` → 压入栈 → `新状态.OnEnter(args)` → 事件广播
 
 **Pop：** `Pop()` → 空栈检查 → `_current.OnExit()` → 栈恢复 → `_current.OnResume()` → 事件广播
+
+Push 同样执行请求级准备；Pop 恢复已有状态，不重新准备。旧 void 入口委托给请求 API 并记录失败，
+不能以调用返回表示切换完成。并发返回 Busy，取消须等待清理；提交开始后不自动回滚业务生命周期。
 
 ## 约束与陷阱
 

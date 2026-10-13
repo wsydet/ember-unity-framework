@@ -2,7 +2,7 @@
 
 > 本文列出 ember-unity-framework 已集成的所有包。使用本框架前请先确认清单，**避免重复导入已有依赖**。
 
-最后核对：2026-09-08；按当前 `manifest.json`、`packages-lock.json` 和 embedded `package.json` 统计，不代表远程最新版本。
+最后核对：2026-10-13；按工作区 `manifest.json`、`packages-lock.json`、7 个 embedded 包及对应 PackageCache 的 `package.json` 统计，不代表远程最新版本。55 项直接依赖，lock 共 70 项（另含 15 项传递依赖）。本次仅同步文档，没有安装或升级包。
 
 ---
 
@@ -17,7 +17,7 @@
 | com.demigiant.dotween | 1.2.815 | 动画引擎，补间动画 | [官网](https://dotween.demigiant.com/) → 手动移入 |
 | com.flyingworm.consolepro | 3.9.81 | 编辑器控制台增强：过滤、搜索、远程日志 | [Asset Store](https://assetstore.unity.com/packages/tools/utilities/console-pro-3) → 手动移入 |
 | com.ryanindiedev.inputdevicedetector | 1.0.0 | 输入设备检测：自动识别鼠标/键盘/手柄切换并触发事件 | [YouTube](https://www.youtube.com/channel/UCSRCf2y6LV8vpKSoXDoU2VQ) → 手动移入 |
-| com.ember | 0.11.5 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成；**内置 UniTask（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）** | 框架自带 → embedded |
+| com.ember | 0.17.5 | Ember 框架（单包合一）：事件/资源/UI/场景/音频/相机/输入 + 状态机 + 编辑器工具 + UI 绑定代码生成；**内置 UniTask（Unity 6000.5 TreeView 泛型修复版，MIT 随包分发）** | 框架自带 → embedded |
 | com.neuecc.unirx | 7.1.0 | 响应式编程框架，用于事件流和异步操作 | manifest 声明 OpenUPM 版本，当前 lock 实际解析为 embedded 副本 |
 
 > 以上包均放在 `Packages/` 下作为 embedded package，随 git 提交，无需额外下载。
@@ -40,10 +40,10 @@ UniRx 在 manifest 中仍声明 `7.1.0`，但本工程存在同名 embedded 包�
 
 | 包名 | 版本/tag | 用途 | 来源 |
 |-------|------|------|------|
-| com.coplaydev.unity-mcp | main（解析提交见 packages-lock） | Unity MCP 编辑器集成 | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) `?path=/MCPForUnity#main` |
+| com.coplaydev.unity-mcp | 声明 v10.3.0；实际包 10.3.0 | Unity MCP 编辑器集成 | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) `?path=/MCPForUnity#v10.3.0`；lock 提交 `aa5fc638d623f56178d50329d9ad8c541a57fe66` |
 | com.sirenix.odin-inspector | odin-v4.0.2 | 编辑器扩展，增强 Inspector 面板 | 私有仓 [ember-thirdparty-upm](https://github.com/wsydet/ember-thirdparty-upm) `?path=/com.sirenix.odin-inspector#odin-v4.0.2`（付费，需 git 凭据 + 正版授权） |
 
-> Odin Inspector 是付费插件，已从 `Assets/Plugins/Sirenix/` 迁出（2026-08），改由私有仓库 git URL 安装。
+> Odin Inspector 实际包版本为 4.0.2，lock 提交 `470c394c8ad61e71ec95bf6e34d2e0dcf1a7e7e9`。它是付费插件，已从 `Assets/Plugins/Sirenix/` 迁出（2026-08），改由私有仓库 git URL 安装。两项 Git 包均核对了当前唯一对应缓存的包声明，不以缓存目录名猜版本。
 > 同仓托管的还有：DOTween（`dotween-v1.2.815`）、Console Pro（`consolepro-v3.9.81`）、RainbowFolders（`rainbow-folders-v2.4.5`）、RainbowHierarchy（`rainbow-hierarchy-v2.6.5`）、InputDeviceDetector（`inputdevicedetector-v1.0.0`）。本项目仍使用上表中的 embedded 副本；消费端安装方式按其 manifest 确认，本清单不推断远程 tag 的发布状态。
 
 ### 1.4 已确定的第三方交付范围
@@ -54,7 +54,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector 和 Feel
 Feel 的当前安装位置仍为 `Assets/ThirdParty/Feel`，供应商版本 **5.4**。第三方仓库已新增 `com.moremountains.feel 5.4.0` 的本地 UPM 封装，4901 个原始文件及根目录 `.meta` 原样保留，未改变当前工程安装方式。
 该封装面向当前 Unity 6000.5 / URP 17.5.0 基线；尚未完成 Unity 安装、编译、Inspector/运行时和原生插件验收，也未创建或推送 Feel tag。
 
-随框架分发的 [0.11.5 消费端依赖声明](../../Packages/com.ember/Dependencies~/README.md)包含当前 55 项直接依赖加 Feel，共 56 项；第三方内容未变化，7 个私有包复用已发布的 `ember-v0.11.1`，MCP 固定到当前 lock 的 commit。该清单独立于本工程 manifest，不改变这里记录的实际安装来源。
+随框架分发的 [0.17.5 消费端依赖声明](../../Packages/com.ember/Dependencies~/README.md)包含 56 项；7 个私有包沿用 `ember-v0.11.1`，MCP 仍固定在该发布基线的 10.1.2 提交，和本工程当前 v10.3.0 不同。发布声明独立于本工程 manifest，本次不回写历史声明，也不改变实际安装来源。
 声明清单不代表升级 `com.ember` 会自动安装或同步这些包，消费端仍须确认后合并清单并配置私有仓库权限；迁移 Feel 时不得同时导入源插件和新包。
 
 ---
@@ -131,7 +131,7 @@ Feel 的当前安装位置仍为 `Assets/ThirdParty/Feel`，供应商版本 **5.
 | Unity Registry | `Window → Package Manager` 搜索安装 | `manifest.json` 自动更新 |
 | OpenUPM | 确认 scope 已在 `manifest.json` 中注册 | `manifest.json` 自动更新 |
 | Asset Store / 官网 .unitypackage | 先检查授权、路径约束、GUID 和程序集边界，再按插件迁移方案处理 | 手动维护 |
-| Git URL | 直接在 `manifest.json` 加 Git URL | `manifest.json` |
+| Git URL | 首次添加使用 Package Manager 的 Git URL 入口；已有 Ember 消费项目升级按 `Ember/UPM Manager` 流程 | 由 Package Manager 维护 manifest/lock |
 
 ### 加完之后
 

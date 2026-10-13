@@ -1,0 +1,9 @@
+{
+    "name": "Game.Input.Tests",
+    "rootNamespace": "Game.Input.Tests",
+    "references": ["Game.Input.Runtime", "Ember.Core.Runtime", "Ember.Basic.Runtime", "Unity.InputSystem", "Unity.InputSystem.TestFramework"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

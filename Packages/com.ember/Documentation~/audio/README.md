@@ -31,7 +31,11 @@ BGM / SFX 播放与音量控制。通过 Unity AudioMixer 实现音量分组，
 | `StopBGM()` | 停止 BGM |
 | `SetBGMVolume(float volume)` | 设置 BGM 音量（0.0～1.0） |
 | `PlaySFX(AudioClip clip, float volumeScale)` | 播放音效。创建临时 AudioSource，播完自动销毁 |
+| `PlayOwnedSFX(AudioClip clip, float volumeScale)` | 返回独立 EmberAudioPlayback；初始音量乘当前 SFX 音量，由调用方管理寿命 |
+| `PlayOwnedVoice(AudioClip clip, float volume)` | 返回独立 EmberAudioPlayback；直接使用给定音量，不乘 SFX 音量 |
 | `SetSFXVolume(float volume)` | 设置 SFX 音量（0.0～1.0） |
+
+`EmberAudioPlayback` 提供 `IsFinished`、`Completed`、`Tick()`、`SetPaused()`、`SetVolume()` 与 `Dispose()`。拥有者须自行 Tick 才会收到一次自然完成通知，并在结束后 Dispose 释放 AudioSource；暂停和主动释放不发送自然完成通知。两个 Owned 入口在未就绪或缺 Clip 时抛出异常，与普通 PlaySFX 的直接返回不同。它们不是全局池化或统一音频分类系统。
 
 ## 主流程
 

@@ -2,7 +2,10 @@
     "name": "Game.Module.Editor",
     "rootNamespace": "Game.Module.Editor",
     "references": [
-        "Ember.Basic.Runtime"
+        "Ember.Basic.Runtime",
+        "Ember.Core.Runtime",
+        "Game.PlayerData.Runtime",
+        "Game.PlayerData.Storage"
     ],
     "includePlatforms": [
         "Editor"

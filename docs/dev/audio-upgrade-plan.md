@@ -1,6 +1,6 @@
 # Audio 模块升级方案
 
-> 状态：待实施设计（2026-09-07 核对）。当前 Audio 仍为 BGM/SFX 基础实现，AudioAgent、AudioCategory、AudioGroupConfig 尚不存在。下文新类型和 API 均为拟议方案；实际使用见 [Audio 模块](../../Packages/com.ember/Documentation~/audio/README.md)。
+> 状态：分类池化设计尚未实施，保留独有取舍（2026-10-13 复核）。AudioAgent、AudioCategory、AudioGroupConfig 仍不存在；现有实现已增加 PlayOwnedSFX / PlayOwnedVoice 和可 Tick/Pause/Dispose 的播放句柄，因此下文旧版“没有 Voice/无法控制单个播放”的背景不能作为当前缺陷。下文分类池、fade、容量策略及新 API 为拟议方案；实际使用见 [Audio 模块](../../Packages/com.ember/Documentation~/audio/README.md)。
 > 状态：📋 待实施
 > 创建：2026-08-05
 > 参考：2026-08-05 对 Burner Audio/AudioMgr 的历史研究；当前工程不包含该外部源码，本轮未重核外部实现。
@@ -9,7 +9,7 @@
 
 ## 一、背景
 
-当前 [EmberAudioManager](../../Packages/com.ember/Audio/Runtime/EmberAudioManager.cs) 已具备基本的 BGM/SFX 播放能力，但存在以下局限：
+2026-08-05 的 [EmberAudioManager](../../Packages/com.ember/Audio/Runtime/EmberAudioManager.cs) 研究基线具备基本的 BGM/SFX 播放能力，下面记录当时提出方案的背景。Owned 播放后来已单独落地；重新启动本计划时必须基于现有句柄与所有权重新评估兼容性，不照表覆盖。
 
 | 问题 | 影响 |
 |------|------|

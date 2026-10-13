@@ -170,14 +170,30 @@ namespace Game.Narrative.Tests
             return backgroundApplied || opaqueBackdrop;
         }
 
-        private EUIBinding Page(string name) => GameLauncher.Instance.UIRoot
-            .GetComponentsInChildren<EUIBinding>(true).FirstOrDefault(x => x.ClassName == name && x.gameObject.activeInHierarchy);
+        // FrameworkScene also contains authoring previews under UI Root/UIPrefabs.
+        // Only pages registered with the runtime engine own live button bindings.
+        private EUIBinding Page(string name) => EUIViewEngine.Instance.ActivePages
+            .FirstOrDefault(page => page.Logic?.GetType().Name == name &&
+                page.GameObject && page.GameObject.activeInHierarchy)?.GameObject.GetComponent<EUIBinding>();
         private Button Button(EUIBinding page, string name) => page.GetComponentsInChildren<Button>(true)
             .First(x => x.name == name || x.name == "m_" + name);
         private bool NovelLoadInProgress => (bool)System.AppDomain.CurrentDomain.GetAssemblies()
             .Select(assembly => assembly.GetType("Game.UI.NovelSaveUI")).First(type => type != null)
             .GetProperty("IsLoading", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
         private NovelSession Session => NarrativeModule.TryGetInstance(out var module) ? module.Session : null;
+        private bool MainMenuReady => GameLauncher.Instance && GameLauncher.Instance.UIRoot &&
+            !GameLauncher.Instance.Fsm.IsTransitioning && !NovelLoadInProgress &&
+            EUIViewEngine.Instance.ActivePages.Any(page => page.Logic?.GetType().Name == "EUIMainPage" && page.IsOpened) &&
+            Page("EUIMainPage") && Button(Page("EUIMainPage"), "Btn_Start").IsInteractable();
+        private IEnumerator ReturnToMenu()
+        {
+            // Dispatching a transition is not completion; the previous request still owns scene cleanup.
+            yield return Wait(() => !GameLauncher.Instance.Fsm.IsTransitioning, "上一转场尚未完成清理");
+            var operation = GameLauncher.Instance.Fsm.RequestTransitionTo<MainState>();
+            yield return Wait(() => operation.Completion.IsCompleted, "返回菜单请求未完成");
+            Assert.AreEqual(EmberTransitionStatus.Completed, operation.Completion.Result.Status,
+                operation.Completion.Result.Error);
+        }
         private IEnumerator Wait(System.Func<bool> ready, string message)
         {
             float deadline = Time.realtimeSinceStartup + 30;
@@ -222,7 +238,7 @@ namespace Game.Narrative.Tests
             {
                 // 与「当前小说是哪一部」解耦：本用例验证模板链路，临时钉住内置样例 LastLight。
                 using var sample = new PinnedSampleStory();
-                yield return Wait(() => GameLauncher.Instance && GameLauncher.Instance.UIRoot && Page("EUIMainPage"), "主菜单未就绪");
+                yield return Wait(() => MainMenuReady, "主菜单未就绪");
                 Assert.IsTrue(EmberModuleCollector.Instance.TryGetModule(out Game.NovelSave.NovelSaveModule saves));
                 string root = System.IO.Path.Combine(".utmp/visual-novel-m3/menu-flow-tests", System.Guid.NewGuid().ToString("N"));
                 var store = new Game.NovelSave.NovelSaveStore(root);
@@ -234,7 +250,12 @@ namespace Game.Narrative.Tests
                 EUIViewEngine.Instance.ResourceProvider = slowEntry;
                 try
                 {
+                    Assert.IsFalse(saves.IsBusy, "新游戏前存档模块不应忙碌");
+                    var main = EUIViewEngine.Instance.ActivePages.Single(p => p.Logic?.GetType().Name == "EUIMainPage" && p.IsOpened);
+                    Assert.AreSame(main.Logic.ControlMap["Btn_Start"], Button(Page("EUIMainPage"), "Btn_Start"),
+                        "按钮查找必须命中实际页面绑定");
                     Button(Page("EUIMainPage"), "Btn_Start").onClick.Invoke();
+                    Assert.IsTrue(NovelLoadInProgress, "开始按钮必须把加载任务交给小说所有者");
                     yield return Wait(() => slowEntry.Pending != null, "未捕获新游戏阅读页加载");
                     var entryCover = EUIViewEngine.Instance.ActivePages.Single(p => p.Logic?.GetType().Name == "EUILoadingPage");
                     for (int frame = 0; frame < 30; frame++)
@@ -265,7 +286,7 @@ namespace Game.Narrative.Tests
                 // Force a real reader load on the next entry so a slow provider can hold it unresolved.
                 var reader = EUIViewEngine.Instance.ActivePages.First(p => p.Logic?.GetType().Name == "EUINovelReaderPage");
                 typeof(EUIPage).GetField("_destroyDelay", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(reader, 0f);
-                GameLauncher.Instance.Fsm.TransitionTo<MainState>();
+                yield return ReturnToMenu();
                 yield return Wait(() => Page("EUIMainPage") && Session == null && !Page("EUILoadingPage"), "未返回菜单");
                 // 两个入口分工不同：「继续游戏」续读最新进度（这里只有快速槽，所以它可见、读档不可见）。
                 Assert.IsTrue(Button(Page("EUIMainPage"), "NovelContinue").gameObject.activeSelf);
@@ -326,7 +347,7 @@ namespace Game.Narrative.Tests
                 yield return Wait(() => Session.Snapshot.PauseReasons.Count == 0, "失败关闭后未恢复输入");
                 yield return Wait(() => !saves.IsBusy, "继续后仍忙碌");
                 Assert.IsTrue(saves.Save(0)); yield return Wait(() => !saves.IsBusy && store.Latest == 0, "手动存档未完成");
-                GameLauncher.Instance.Fsm.TransitionTo<MainState>();
+                yield return ReturnToMenu();
                 yield return Wait(() => Page("EUIMainPage") && Session == null && !Page("EUILoadingPage"), "未返回菜单");
                 // 已经有手动槽 0，所以「继续游戏」与「读取存档」都应可见。
                 Assert.IsTrue(Button(Page("EUIMainPage"), "NovelLoad").gameObject.activeSelf);
@@ -379,7 +400,7 @@ namespace Game.Narrative.Tests
             // 与「当前小说是哪一部」解耦：本用例按 LastLight 的资源路径读指令表并断言它的画面，
             // 所以先把当前小说临时钉到内置样例，结束时还原（见 PinnedSampleStory）。
             using var sample = new PinnedSampleStory();
-            yield return Wait(() => GameLauncher.Instance && GameLauncher.Instance.UIRoot && Page("EUIMainPage"), "主菜单未就绪");
+            yield return Wait(() => MainMenuReady, "主菜单未就绪");
             // M3 自动存档/已读会在真实 Gameplay 中写盘，整合测试必须使用独立数据目录。
             Assert.IsTrue(EmberModuleCollector.Instance.TryGetModule(out Game.NovelSave.NovelSaveModule saves));
             string saveRoot = System.IO.Path.Combine(".utmp/visual-novel-m3/gameplay-tests", System.Guid.NewGuid().ToString("N"));
@@ -397,7 +418,7 @@ namespace Game.Narrative.Tests
                 // 新游戏首屏未就绪时必须保持遮挡；不能等待尚未完成的阅读页加载自行揭幕。
                 Assert.IsNotNull(Page("EUILoadingPage"), "阅读页慢加载期间必须保留遮罩");
                 Assert.IsTrue(NovelLoadInProgress);
-                GameLauncher.Instance.Fsm.TransitionTo<MainState>();
+                yield return ReturnToMenu();
                 yield return Wait(() => abandoned.IsDisposed, "取消会话应先释放小说资源");
                 delayed.Complete();
                 yield return Wait(() => Page("EUIMainPage") && Session == null && !NovelLoadInProgress && !Page("EUILoadingPage"), "取消慢加载后未完成返回菜单");
@@ -412,9 +433,7 @@ namespace Game.Narrative.Tests
             for (int route = 0; route < 2; route++)
             {
                 // 返回主菜单时，结局自动存档可能仍在写入；等待真实按钮恢复可用再发起下一轮。
-                yield return Wait(() => !saves.IsBusy && !NovelLoadInProgress && Page("EUIMainPage") &&
-                    Button(Page("EUIMainPage"), "Btn_Start").interactable &&
-                    EUIViewEngine.Instance.ActivePages.Any(p => p.Logic?.GetType().Name == "EUIMainPage" && p.IsOpened),
+                yield return Wait(() => !saves.IsBusy && MainMenuReady,
                     "主菜单新游戏入口未恢复可用");
                 Button(Page("EUIMainPage"), "Btn_Start").onClick.Invoke();
                 // 开场是自动播放段落：玩家推进被锁住，所以这里等它自己走到稳定点，而不是靠点击补全文字。

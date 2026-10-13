@@ -1,5 +1,7 @@
 # visual-novel 成对跳转与复合流程交付记录
 
+> 模板查阅说明：本文小说文档链接指向 visual-novel 的只读模板快照；维护时由用户加载该模板后编辑 Assets 源。链接可读不表示当前模板已启用小说工具或 Skill，历史发布与验收事实仍按原记录理解。
+
 > 发布衔接（2026-09-30）：本记录的 0.18.0 实现与 0.18.1 文档封存成果随 [框架 0.17.2](release-0.17.2.md) 交付；下文“未发布/不发布”描述各实施阶段当时的范围。消费项目尚未升级。后补选择关联标记由 0.18.2 封存并随框架 0.17.3 交付，见文末追加记录。
 
 日期：2026-09-30。工作目录：正式 Ember 开发仓库；未修改 Call Me Heartless、UnityFarm 或任何消费端 PackageCache。
@@ -16,7 +18,7 @@
 - 编辑器：创建/搜索/Inspector/端口/分区布局、折叠和独立视图、关联定位、来源列表、只读关联线、复制重映射、删除与 Undo/Redo、连续试播和执行路径诊断。
 - 示例：FlowExample，18 个节点，两处调用复用清扫流程，完成统一推进步数，取消返回选择而不推进，月末换月，两个月结束；不使用私有资源，不改变默认启动剧情。
 
-使用说明与消费迁移流程见 [NovelFlow.md](../../Assets/Game/Documentation/NovelFlow.md)。
+使用说明与消费迁移流程见 [NovelFlow.md](../../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/NovelFlow.md)。
 
 ## 验证记录
 
@@ -79,7 +81,7 @@
 
 ## 成对节点选择标记补充（工作副本，未封存）
 
-操作及显示边界统一见 [选择关联标记](../../Assets/Game/Documentation/NovelFlow.md#选择关联标记)。归属仍为模板编辑器改动，不新增运行时契约，不修改存档格式。
+操作及显示边界统一见 [选择关联标记](../../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/NovelFlow.md#选择关联标记)。归属仍为模板编辑器改动，不新增运行时契约，不修改存档格式。
 
 新增 `SelectionHighlightsPairedNodesWithoutChangingSelectionOrAssets`，覆盖双向、多来源、多选取消、重建、重新关联及 Undo、空章节和资产不变。本次 Unity MCP 刷新请求成功，但首次读取 Console 返回 `ping not answered`；按 CLAUDE.md 停止编译验证，未执行测试、未正式 SaveTemplate/Bump。当前正式封存仍为 0.18.1，不能把原 299/299 或 15/15 的结果作为本次验证。后续须手动编译并运行图编辑器相关测试，通过后再走正式模板保存流程。
 

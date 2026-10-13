@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51daac27741b0014db55a4c08f461fe1, type: 3}
+  m_Name: "\u851A\u84DD\u98CE\u683C"
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerFeelProfile
+  _movement: {fileID: 11400000, guid: f71354cd1d230d2419d5778f06b1e1ea, type: 2}
+  _jump: {fileID: 11400000, guid: f7ac773c4f3f47f4ca149502acf26146, type: 2}
+  _input: {fileID: 11400000, guid: 1ec33751050c2384386fb69a8e729519, type: 2}

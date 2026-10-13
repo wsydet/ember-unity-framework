@@ -1,0 +1,15 @@
+{
+    "schemaVersion": 2,
+    "id": "platformer-2d",
+    "displayName": "2D 平台跳跃",
+    "description": "基于 Base 0.8.3 的 2D 平台跳跃模板，提供分层玩家状态机、方案独立配置与冻结捕获、组合规则编辑、能力与效果、序列帧动画、Cinemachine 生命周期适配、统一玩家开发工具及手感白盒；附手感调整、动画替换和新状态接入三个模板专属 Skill。",
+    "version": "0.3.1",
+    "frameworkVersion": "0.18.0",
+    "channel": "preview",
+    "order": 99,
+    "parentId": "base",
+    "parentVersion": "0.8.3",
+    "parentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+    "contentHash": "7da4c5f29ba27f9dedd54b602c9ba5b0",
+    "versionedContentHash": "7da4c5f29ba27f9dedd54b602c9ba5b0"
+}

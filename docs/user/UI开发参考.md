@@ -21,12 +21,12 @@
 **逻辑分模块放置（业务新页面约定）**：
 
 ```text
-Assets/Game/UI/Runtime/<模块>/Page/<页面类名>.cs      ← 页面级 UI
-Assets/Game/UI/Runtime/<模块>/Component/<组件类名>.cs  ← 可复用组件（Tab 项、列表单元等）
+Assets/Game/UI/Runtime/Module/<模块>/Page/<页面类名>.cs      ← 页面级 UI
+Assets/Game/UI/Runtime/Module/<模块>/Component/<组件类名>.cs  ← 可复用组件（Tab 项、列表单元等）
 ```
 
 - 框架演示页面保持现状目录（`Framework/`、`MainScene/` 等）；业务新页面按模块目录写 `classPath`。
-- `classPath` 必须等于逻辑类相对代码根（`Assets/Game/UI/Runtime`）的路径，不带 `.cs`。写错会导致生成到非预期目录（同名类/绑定混乱）。
+- `classPath` 是相对代码根（`Assets/Game/UI/Runtime`）的输出子目录，例如 `Module/Inventory/Page`，不包含类名或 `.cs`；生成器另拼接逻辑类文件名。新业务按[目录规范](../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md)保留 Module 层，旧路径的兼容识别不代表应沿用旧目录。
 - 框架模式的预制体固定生成到 `UI/Common/Prefabs/`。
 - 用户模式支持两种等价写法：`Inventory/Page` → `UI/Module/Inventory/Prefabs/`；若代码本身按 `Module/<模块>` 组织，则 `Module/SceneUI` → `UI/Module/SceneUI/Prefabs/`，不会重复生成 `Module/Module`。
 - 模块配套资源按同级目录整理：`Animator/`、`Atlas/`、`Prefabs/`。
@@ -49,7 +49,8 @@ EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
 | FullScreenPopup | `ShowPopup` | 沿用 Popup 栈与遮罩，并在打开时隐藏下层页面 |
 | TopMost | `ShowTopMost` | 高于所有 Popup（Loading、全局提示） |
 | SubPage | **仅** `ShowSubPage(def, parentPage, ...)` | 经其他入口打开会被拒绝并警告 |
-| FreePage | `ShowTopMost`（按 `PageType.FreePage` 路由） | 在 EUIBinding 面板填写“FreePage 渲染层级”，生成时自动写入 `freePageSortingOrder`；例如 GM 常驻页 |
+| FreePage | `ShowFreePage` | 在 EUIBinding 面板填写“FreePage 渲染层级”，生成时自动写入 `freePageSortingOrder`；例如 GM 常驻页 |
+| Overlay | `ShowOverlay` | 固定 sortingOrder，不参与 MainPage/Popup 栈 |
 | Background | `SetBackground` | 单槽位背景页 |
 
 ### 2.1 MainPage 与状态所有权
@@ -73,7 +74,7 @@ EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
 | `OnPause` / `OnResume` | 被遮挡 / 恢复可见 | 暂停/恢复计时器等 |
 | `OnHide` | 页面隐藏（关闭动画前） | 停止显示相关逻辑 |
 | `OnClose` | 页面关闭 | 持久化输入、释放页面级状态 |
-| `OnDispose` | 销毁/回池（最后一次） | **注销所有事件**、清引用 |
+| `OnDispose` | Logic 最终销毁；Item 普通回池不触发 | 清理对象期订阅与引用；每次借用的订阅另在 OnClose/回池清理 |
 | `OnUpdate` / `OnLateUpdate` | 每帧（仅 `NeedUpdate = true` 时） | Framework 生成页勾选 UIUpdate 后，业务逐帧逻辑写在 `OnUpdateUser` |
 | `OnCustomEnter` / `OnCustomExit` | 普通 UI 选择「自定义代码」时（Loading 方块特殊链路也可启用） | 返回 UniTask，框架等待完成 |
 
@@ -81,7 +82,7 @@ EUIManager.Instance.ShowSubPage(GamePages.SomeTab, parentPage, args);
 - **Framework 页面的 UIUpdate 以 EUIBinding 面板为唯一静态配置源**：勾选「使用 UIUpdate」并重新生成后，`NeedUpdate => true` 与 `OnUpdate()` 驱动入口位于 `[EmberManaged]` 块内；用户只编写块外 `OnUpdateUser()`，不手改 bool 或框架覆写。
 - Business 页面仍是整文件用户所有；需要高级动态开关时，可不勾选面板选项，在业务代码内使用基类的 protected setter。
 - Framework 页面 .cs 固定提供 6 个基础 `XxxUser` 钩子（OnInit/OnOpen/OnShow/OnHide/OnClose/OnDispose）；仅勾选「使用 UIUpdate」时额外生成 `OnUpdateUser`。取消勾选并重新生成时，默认空钩子自动删除；若其中已有用户代码，交互生成会先确认，非交互生成取消本次同步并警告。Popup / FullScreenPopup 勾选「生成遮罩点击钩子」后另生成 `OnClickMaskUser`。
-- 事件清理：`TrackDisposable(...)` 注册的订阅在 `OnDispose` 自动清理；手动 `AddListener` 的必须在 `OnDispose` 对称 `RemoveAllListeners`。
+- 事件清理：`TrackDisposable(...)` 注册的订阅在 `OnDispose` 自动清理；手动 `AddListener` 应对称 `RemoveListener` 自己的回调，不误删其它所有者的监听。Item 借用期监听在 OnClose/回池解除，不能等到最终 Dispose。
 
 ### 3.1 过渡动画统一时序
 
@@ -158,13 +159,13 @@ protected override void OnSafeAreaChanged() { }  // 安全区变化（旋转等�
 
 ## 8. 新增 UI 开发流程
 
-优先使用菜单 `Ember/UI/UI 开发中心`，不再从空 GameObject 手工拼装标准页面。窗口分为「创建 UI / UI 总览 / 模块模板 / 清理与删除」四个页签。
+正式 EUI 使用菜单 `Ember/UI/UI 开发中心` 或其对应创建/生成 API，不从空 GameObject 绕过标准生成流程。窗口分为「创建 UI / UI 总览 / 模块模板 / 清理与删除」四个页签。
 
-1. 在「创建 UI」中先选择 `Page` 或 `Item` 角色，再确定 prefab 名、代码模式与模块归属（`<模块>/Page|Component`）。Page 可继续配置页面名、页面类型、UIUpdate、遮罩、过渡动画及高级代码钩子；Item 生成 prefab、逻辑脚本、Binding 与可选 Settings，不写入 `GamePages`。
+1. 在「创建 UI」中先选择 `Page` 或 `Item` 角色，再确定 prefab 名、代码模式与模块归属（`Module/<模块>/Page|Component`）。Page 可继续配置页面名、页面类型、UIUpdate、遮罩、过渡动画及高级代码钩子；Item 生成 prefab、逻辑脚本、Binding 与可选 Settings，不写入 `GamePages`。
 2. 确认写入预览中的 prefab、逻辑脚本、`.Binding.cs`、可选 Settings 脚本，以及 Page 模式下的 `GamePages` 目标均正确，再点击「创建并在编译后打开 Prefab」。若依赖缺失、名称非法或目标冲突，预检会阻止写入。
 3. Page 会生成标准根 Canvas、CanvasGroup、EUIBinding、页面 `Animator` 容器和嵌套 `EUISafeArea`；CanvasScaler 固定使用 **Scale With Screen Size / 2560×1440 / Match 0.5**。Item 只生成 `RectTransform + CanvasGroup + EUIBinding`，不创建 Canvas、Scaler、Raycaster、页面 Animator 或 SafeArea，由宿主页面/模块实例化到指定父节点。
 4. Page 的 Animator 默认复用 `UI/Common/Animator/EUICommon_Ani.controller`，初始保持禁用，由运行时按页面过渡模式启用；Item 如需动画，在自己的表现子节点上配置，不使用页面过渡驱动。
-5. 所有 UI 都生成 `.cs`、`.Binding.cs` 与可选 Settings，仅 Page 模式生成 `GamePages` 条目。框架 UI 路由到 `Common/Prefabs`；业务 UI 可用 `<模块>/Page|Component`，或用 `Module/<模块>` 显式对齐代码与资源目录，最终都路由到 `Module/<模块>/Prefabs`。首次创建某个业务模块时，还会按 `UI/Module/模板` 的当前目录结构初始化该模块；只新建目录，不复制模板 `.meta` 或其中的文件。
+5. 所有 UI 都生成 `.cs`、`.Binding.cs` 与可选 Settings，仅 Page 模式生成 `GamePages` 条目。框架 UI 路由到 `Common/Prefabs`；新业务 UI 的代码目录统一为 `Module/<模块>/Page|Component`，资源路由到 `Module/<模块>/Prefabs`。生成器兼容旧短路径不代表新代码应省略 Module 层。首次创建某个业务模块时，还会按 `UI/Module/模板` 的当前目录结构初始化该模块；只新建目录，不复制模板 `.meta` 或其中的文件。
 6. 生成脚本后等待 Unity 完成编译；编译成功才自动打开新 prefab。若编译失败，保留产物并提示错误，不继续打开编辑。
 7. 在 Prefab Mode 中补充具体视觉节点与绑定，自动收集后按需重新生成；手写逻辑只改非 `.Binding.cs` 文件，Framework 业务增量写在 `XxxUser` 钩子/自定义 override。
 8. Page 用 `GamePages.Xxx` 打开并完成 Play 验证（禁止手写 prefab 字符串）；Item 由所属页面、列表或业务模块创建并控制，不能直接打开。

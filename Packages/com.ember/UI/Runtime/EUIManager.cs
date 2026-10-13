@@ -61,6 +61,8 @@ namespace Ember.UI
         private bool _initialized;
         private bool _loadingOperation;
         private EUIPage _operationLoadingPage;
+        private List<EmberTransitionPresentation> _loadingPresentations;
+        private bool _loadingCurtainClosing;
 
         #endregion
 
@@ -100,86 +102,8 @@ namespace Ember.UI
             _viewEngine = EUIViewEngine.Instance;
             _initialized = true;
 
-            // 注册场景加载拦截器：有 Loading 页面时自动使用
-            // 流程：Show loading → 5011 事件 → 状态机 LoadScene → 轮询完成 → Proceed → 关 loading
-            Ember.Scene.SceneCoordinator.InterceptSceneLoad = (sceneName, fromScene, onLoaded) =>
-            {
-                // A covered operation owns the existing curtain until its business content is ready.
-                // Use SceneCoordinator's normal load/prepare/proceed path without opening a second page.
-                if (_operationLoadingPage?.IsOpened == true)
-                {
-                    EmberStateMachine.QuickSceneLoad = false;
-                    return false;
-                }
-                if (DefaultLoadingPageDef == null) return false;
-
-                var sceneMgr = Ember.Scene.EmberSceneManager.Instance;
-                if (sceneMgr == null || sceneMgr.IsLoading) return false;
-
-                EUIPage loadingPage = null;
-                var loadDone = false;
-                var closed = false;
-
-                // ── 5011: 渐入完成 → 状态机开始加载场景 ──
-                Action onFadeInComplete = null;
-                onFadeInComplete = () =>
-                {
-                    EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
-                    sceneMgr.LoadSceneAsync(sceneName, () =>
-                    {
-                        if (!string.IsNullOrEmpty(fromScene) && sceneMgr.IsSceneLoaded(fromScene))
-                            sceneMgr.UnloadSceneAsync(fromScene);
-                        loadDone = true;
-                    });
-                };
-                EmberEventBus.Subscribe(EUIEvents.LoadingFadeInComplete, onFadeInComplete);
-
-                // ── 5013: 渐出完成 → 整个过程结束 ──
-                Action onFadeOutComplete = null;
-                onFadeOutComplete = () =>
-                {
-                    EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
-                    closed = true;
-                };
-                EmberEventBus.Subscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
-
-                // 显示 loading 页面
-                ShowTopMost(DefaultLoadingPageDef, onComplete: page => loadingPage = page);
-
-                // 轮询：等 loading 页创建、假进度完成、场景加载完成
-                WrapAsync();
-                async void WrapAsync()
-                {
-                    while (loadingPage == null)
-                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-                    var logic = loadingPage.Logic;
-
-                    // 快速转场（真实加载即就绪，跳过假进度）：由顶层状态机置 EmberStateMachine.QuickSceneLoad = true
-                    if (logic != null && Ember.Core.EmberStateMachine.QuickSceneLoad)
-                        logic.SkipFakeProgress = true;
-                    Ember.Core.EmberStateMachine.QuickSceneLoad = false;
-
-                    while (!loadDone || logic == null || !logic.IsTransitionReady)
-                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-                    // 三者就绪 → 进入目标状态（await PrepareEnterAsync + Proceed），新 UI 在 loading 底下加载
-                    if (onLoaded != null)
-                        await onLoaded();
-
-                    // 等 2 帧让新 UI 完成 ProcessShowQueue + PlayShow
-                    await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-                    await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-                    // 关闭 loading：OnCustomExit 播 5012；进度条与方块过渡都结束后再播 5013。
-                    CloseLoadingPage(loadingPage);
-
-                    while (!closed)
-                        await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-                }
-
-                return true;
-            };
+            // UI owns only the curtain. SceneCoordinator owns load/prepare/commit/unload.
+            Ember.Scene.SceneCoordinator.WrapTransitionAsync = RunSceneTransitionWithLoadingAsync;
 
             EmberEventBus.OnNext(EUIEvents.UIManagerReady);
             EmberDebug.LogInit(TAG, "EUIManager 初始化完成。");
@@ -187,7 +111,10 @@ namespace Ember.UI
 
         void IEmberManager.Destroy()
         {
-            Ember.Scene.SceneCoordinator.InterceptSceneLoad = null;
+            if (_loadingPresentations != null)
+                foreach (var presentation in _loadingPresentations) presentation.Fail("UI Manager 已销毁。");
+            _loadingPresentations = null;
+            Ember.Scene.SceneCoordinator.WrapTransitionAsync = null;
             InvalidateBackgroundRequest();
             _showQueue.Clear();
             _parentPageMap.Clear();
@@ -197,6 +124,7 @@ namespace Ember.UI
             _initialized = false;
             _operationLoadingPage = null;
             _loadingOperation = false;
+            _loadingCurtainClosing = false;
         }
 
         #endregion
@@ -642,16 +570,62 @@ namespace Ember.UI
         /// the page's display mode in OnOpen. Concurrent Loading owners are rejected.
         /// </summary>
         [HasGC]
-        public async UniTask RunWithLoadingAsync(EUIPageDef loadingPageDef, object args,
+        public UniTask RunWithLoadingAsync(EUIPageDef loadingPageDef, object args,
             Func<UniTask> operation, System.Threading.CancellationToken cancellationToken = default)
+            => RunWithLoadingCoreAsync(loadingPageDef, args, operation, cancellationToken, null);
+
+        private async UniTask RunSceneTransitionWithLoadingAsync(SceneTransitionContext request, Func<UniTask> operation)
+        {
+            bool quick = EmberStateMachine.QuickSceneLoad;
+            EmberStateMachine.QuickSceneLoad = false;
+            if (_loadingOperation)
+            {
+                if (_loadingCurtainClosing || _operationLoadingPage?.IsOpened != true || _loadingPresentations == null)
+                    throw new InvalidOperationException("Loading curtain is not accepting scene requests.");
+                BindLoadingRequest(request);
+                await operation();
+                return;
+            }
+            if (DefaultLoadingPageDef == null || (request.Type != TransitionType.InPlace
+                && (request.Type != TransitionType.TransitionTo || request.SkipSceneLoad)))
+            {
+                await operation();
+                return;
+            }
+            await RunWithLoadingCoreAsync(DefaultLoadingPageDef, null, async () =>
+            {
+                BindLoadingRequest(request);
+                var owner = _loadingPresentations;
+                var logic = _operationLoadingPage?.Logic;
+                if (quick && logic != null) logic.SkipFakeProgress = true;
+                await operation();
+                if (logic != null)
+                    await UniTask.WaitUntil(() => !_initialized || _loadingPresentations != owner || logic.IsTransitionReady,
+                        cancellationToken: request.CommitStarted ? default : request.Cancellation);
+            }, request.Cancellation, () => request.CommitStarted);
+        }
+
+        private void BindLoadingRequest(SceneTransitionContext request)
+        {
+            _loadingPresentations.Add(request.HoldPresentation());
+            if (_operationLoadingPage?.Logic != null)
+                _operationLoadingPage.Logic.TransitionOperation = request.Operation;
+        }
+
+        private async UniTask RunWithLoadingCoreAsync(EUIPageDef loadingPageDef, object args,
+            Func<UniTask> operation, System.Threading.CancellationToken cancellationToken, Func<bool> commitStarted)
         {
             if (!_initialized || loadingPageDef == null || operation == null)
                 throw new InvalidOperationException("Loading operation is unavailable.");
             if (_loadingOperation || _context.FindOpenedPage(loadingPageDef) != null)
                 throw new InvalidOperationException("A Loading transition is already active.");
             _loadingOperation = true;
+            _loadingCurtainClosing = false;
+            var presentations = new List<EmberTransitionPresentation>();
+            _loadingPresentations = presentations;
             EUIPage page = null;
             bool opened = false, abandoned = false;
+            bool operationSucceeded = false, curtainClosed = false;
             try
             {
                 ShowTopMost(loadingPageDef, args, result =>
@@ -659,22 +633,39 @@ namespace Ember.UI
                     page = result; opened = true;
                     if (abandoned && result != null) ClosePage(result);
                 });
-                await UniTask.WaitUntil(() => opened, cancellationToken: cancellationToken);
+                await UniTask.WaitUntil(() => opened || _loadingPresentations != presentations, cancellationToken: cancellationToken);
+                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
                 if (page == null) throw new InvalidOperationException("Loading page could not be opened.");
                 _operationLoadingPage = page;
+                  if (page.Logic != null)
+                  {
+                      page.Logic.TransitionOperation = null;
+                      page.Logic.LoadingWorkCompleted = false;
+                  }
                 // Let the fully opaque curtain render before doing potentially expensive main-thread work.
                 await UniTask.NextFrame(cancellationToken: cancellationToken);
+                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
                 await operation();
-                // Destination UI/layout must have a render opportunity before the curtain starts leaving.
-                await UniTask.NextFrame(cancellationToken: cancellationToken);
-                await UniTask.NextFrame(cancellationToken: cancellationToken);
+                // Cancellation after an irreversible state commit cannot undo that commit.
+                  if (page.Logic != null)
+                  {
+                      page.Logic.LoadingWorkCompleted = true;
+                      await UniTask.WaitUntil(() => !_initialized || _loadingPresentations != presentations || page.Logic.IsTransitionReady,
+                          cancellationToken: commitStarted?.Invoke() == true ? default : cancellationToken);
+                  }
+                var afterCommitToken = commitStarted?.Invoke() == true ? default : cancellationToken;
+                await UniTask.NextFrame(cancellationToken: afterCommitToken);
+                await UniTask.NextFrame(cancellationToken: afterCommitToken);
+                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
+                operationSucceeded = true;
             }
             finally
             {
                 abandoned = true;
+                if (_loadingPresentations == presentations) _loadingCurtainClosing = true;
                 try
                 {
-                    if (_initialized && page?.GameObject != null)
+                    if (_initialized && _loadingPresentations == presentations && page?.GameObject != null)
                     {
                         bool closed = false;
                         ClosePageCore(page, null, true, () =>
@@ -682,11 +673,28 @@ namespace Ember.UI
                             closed = true;
                             EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete);
                         });
-                        await UniTask.WaitUntil(() => closed || !_initialized, cancellationToken: cancellationToken);
+                        await UniTask.WaitUntil(() => closed || !_initialized || _loadingPresentations != presentations);
+                        curtainClosed = closed && _initialized && _loadingPresentations == presentations;
                     }
                 }
-                finally { _operationLoadingPage = null; _loadingOperation = false; }
+                finally
+                {
+                    foreach (var presentation in presentations)
+                    {
+                        if (operationSucceeded && curtainClosed) presentation.Complete();
+                        else presentation.Fail("Loading 操作失败或完整退出未完成。");
+                    }
+                    if (_loadingPresentations == presentations)
+                    {
+                        if (page?.Logic != null) page.Logic.TransitionOperation = null;
+                        _loadingPresentations = null;
+                        _operationLoadingPage = null;
+                        _loadingOperation = false;
+                        _loadingCurtainClosing = false;
+                    }
+                }
             }
+            if (!curtainClosed) throw new InvalidOperationException("Loading curtain did not finish closing.");
         }
 
         #endregion

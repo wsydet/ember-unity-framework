@@ -1,6 +1,6 @@
 # Ember 配置表系统实施提示词
 
-复制下面内容到一个新的 Codex 对话中执行。该提示词假定方案已经得到用户确认，目标是按权威计划实施，而不是重新停留在方案讨论。
+本文是配置表系统实施前的历史提示词。F0—F5 已随 0.12.0 交付，后续修订及未执行的消费验收见 [开发记录](table-system-development-plan.md) 和 [Table 文档](../../Packages/com.ember/Table/Documentation~/table/README.md)。保留下面原文供追溯，不应复制后重新实施，也不构成当前保存、Bump 或发布授权。
 
 ---
 

@@ -26,11 +26,11 @@ namespace Game.UI
         [Range(0.5f, 10f)]
         public float fastFillDuration = 1.5f;
 
-        [Tooltip("快充阈值（0.0~1.0）。进度到达此值后：若真实加载完成则平滑收尾，否则在此值等待。")]
+        [Tooltip("进度到达阈值后：本请求全部必要准备成功才平滑收尾，否则在此值等待。")]
         [Range(0.3f, 0.9f)]
         public float fastFillThreshold = 0.6f;
 
-        [Tooltip("收尾时长（秒），真实加载完成后从当前进度平滑过渡到 1.0")]
+        [Tooltip("收尾时长（非缩放秒），全部必要准备成功后平滑过渡到 1.0")]
         [Range(0.3f, 3f)]
         public float tailDuration = 1f;
 

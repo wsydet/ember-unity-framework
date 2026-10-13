@@ -79,6 +79,18 @@ namespace Ember.Resource
             if (string.IsNullOrEmpty(sceneName))
                 return null;
 
+#if UNITY_EDITOR
+            // 明确的资产路径可作为编辑器开发场景；仍把原生句柄交给公共加载/转场流程。
+            // 不按短名称搜索资产，不改发行列表，不在资源后端广播场景事件。
+            if (sceneName.EndsWith(".unity", StringComparison.OrdinalIgnoreCase)
+                && SceneUtility.GetBuildIndexByScenePath(sceneName) < 0)
+            {
+                if (!Application.isPlaying || UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>(sceneName) == null)
+                    return null;
+                return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                    sceneName, new LoadSceneParameters(mode));
+            }
+#endif
             var op = SceneManager.LoadSceneAsync(sceneName, mode);
             if (op == null)
                 EmberDebug.LogError(TAG, $"LoadSceneAsync failed: scene '{sceneName}' not found.");

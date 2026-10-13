@@ -1,6 +1,6 @@
 # Ember Skill 编写与维护
 
-最后核对：2026-09-07。项目 Skill 的真实目录是 `.agents/skills/<name>/SKILL.md`；本工作区 `.claude/skills` 是兼容 junction，修改真实目录即可，不维护两份副本。Git 只跟踪真实技能目录；兼容路径不重复提交。Skill 清单见 [速查表](skills-reference.md)。
+最后核对：2026-10-13。先区分维护源与发现副本：框架公共和开发专用 Skill 的源在 `.agents/skills/<name>/SKILL.md`；模板专属 Skill 的源在当前正确模板的 `Assets/Game/Documentation/TemplateSkills/`，其 `.agents/skills` 文件是正式流程生成的发现副本，不能直接编辑。本工作区 `.claude/skills` 是兼容 junction，不维护两份副本。Skill 清单见 [速查表](skills-reference.md)，所有者与入口约束见[隔离规范](../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md)。
 
 ## 结构与触发
 
@@ -27,7 +27,7 @@ description: 说明该技能解决的任务、何时使用，以及相邻但不�
 
 ## 路径和验证
 
-面向消费项目分发的技能在 `.agents/skills/catalog.json` 登记，声明最低版本和需要的 API 能力。维护源保留在框架仓库，由 `Ember/UPM Manager → AI Skill` 独立安装到消费项目；不要将技能复制进业务模板快照。安装副本与来源记录应一起提交，详细规则见 [AI Skill 独立更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)。
+公共技能在 `.agents/skills/catalog.json`（schema v1）登记最低框架版本和需要的 API 能力，通过 `Ember/UPM Manager → AI Skill` 安装；不复制进业务模板。模板专属技能登记在 Assets 技能源的 schema v2 catalog，声明所属模板、兼容版本及真实业务前置，通过普通模板保存和项目中心正式 Preview/Sync 分发；不能混入公共 catalog、公共 bundle 或全局技能目录。最低版本不代替正式活动身份、派生归属和模块检查。安装副本与来源记录应一起提交，具体见[公共 Skill 更新](../../Packages/com.ember/Documentation~/maintenance/ai-skills.md)和[模板 Skill 更新](../../Packages/com.ember/Documentation~/maintenance/template-ai-skills.md)。本文说明提交组织，不授权自动提交。
 
 - 运行产物放 `.utmp/<skill-name>/`（已被仓库忽略），正式交付物放对应源码或文档目录；不把缓存写进 Skill。
 - 脚本提供 `--help`、明确失败信息，避免固化用户目录或机器上解释器路径。按当前 shell 生成命令，Windows 不套用 Bash 续行/删除命令。

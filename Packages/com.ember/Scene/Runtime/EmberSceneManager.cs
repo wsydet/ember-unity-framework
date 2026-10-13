@@ -29,7 +29,7 @@ namespace Ember.Scene
     /// </code>
     /// </summary>
     [EmberInitOrder(EmberInitOrderAttribute.Scene)]
-    public class EmberSceneManager : EmberSingleton<EmberSceneManager>, IEmberManager
+    public partial class EmberSceneManager : EmberSingleton<EmberSceneManager>, IEmberManager, IEmberTransitionScenes
     {
         private const string TAG = LogTags.SceneManager;
         #region 参数
@@ -103,7 +103,7 @@ namespace Ember.Scene
         /// </summary>
         public void UnloadSceneAsync(string sceneName, Action onComplete = null)
         {
-            if (SceneManager.GetSceneByName(sceneName).isLoaded)
+            if (ResolveScene(sceneName).isLoaded)
             {
                 EmberEventBus.OnNext(EmberBroadcastEvent.SceneUnloading);
 
@@ -155,7 +155,7 @@ namespace Ember.Scene
         /// </summary>
         public async UniTask UnloadSceneSilentlyAsync(string sceneName)
         {
-            if (!SceneManager.GetSceneByName(sceneName).isLoaded)
+            if (!ResolveScene(sceneName).isLoaded)
                 return;
 
             var op = SceneManager.UnloadSceneAsync(sceneName);
@@ -169,7 +169,7 @@ namespace Ember.Scene
         /// </summary>
         public GameObject[] GetSceneRoots(string sceneName)
         {
-            var scene = SceneManager.GetSceneByName(sceneName);
+            var scene = ResolveScene(sceneName);
             return scene.isLoaded ? scene.GetRootGameObjects() : Array.Empty<GameObject>();
         }
 
@@ -203,7 +203,7 @@ namespace Ember.Scene
         public bool IsSceneLoaded(string sceneName)
         {
             if (string.IsNullOrEmpty(sceneName)) return false;
-            return SceneManager.GetSceneByName(sceneName).isLoaded;
+            return ResolveScene(sceneName).isLoaded;
         }
 
         // ======== IEmberManager ========
@@ -230,6 +230,12 @@ namespace Ember.Scene
         // ============================================================
 
         #region 内部方法
+
+        private static UnityEngine.SceneManagement.Scene ResolveScene(string sceneName)
+        {
+            var scene = SceneManager.GetSceneByPath(sceneName);
+            return scene.IsValid() ? scene : SceneManager.GetSceneByName(sceneName);
+        }
 
         private void StartLoad(string sceneName, LoadSceneMode mode, Action onComplete)
         {
@@ -269,7 +275,7 @@ namespace Ember.Scene
             Progress = 0.9f;
 
             // Phase 2: OnBeforeActivate 回调（使用 TCS 桥接回调到 async/await）
-            UnityEngine.SceneManagement.Scene scene = SceneManager.GetSceneByName(sceneName);
+            UnityEngine.SceneManagement.Scene scene = ResolveScene(sceneName);
             if (OnBeforeActivate != null)
             {
                 var tcs = new UniTaskCompletionSource();

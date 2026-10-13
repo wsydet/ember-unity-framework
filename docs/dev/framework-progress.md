@@ -1,5 +1,7 @@
 # Ember Framework 当前状态与后续工作
 
+> 2026-10-13：框架 **0.18.0** 交付 base **0.8.3**、source3d-2p5d **0.5.0**、visual-novel **0.20.0**、platformer-2d **0.3.1**，兼容声明统一 0.18.0。R12.7 与平台网格封存完成；编译、相关回归、正式/白盒流程及模板谱系通过。消费迁移与发行构建待验证。详见[0.18.0 发布说明](release-0.18.0.md)。下文保留各日期的历史语义。
+
 > 2026-10-01：当前框架 **0.17.5**，交付 **visual-novel 0.19.0** 指定节点测试存档与 ember-vn-generate-save。默认变量可调整，特殊节点回退前置普通节点；Unity 编译及 44/44 项回归通过。消费项目跨模板 minor 迁移与实机验收待完成，见 [0.17.5 发布说明](release-0.17.5.md)。
 
 > 2026-10-01：当前框架 **0.17.4**，交付 **visual-novel 0.18.3** 只读导航修复。本轮图编辑器与真实 Play Mode 导航回归 19/19 通过，模板正式保存和封存、实际 hash 与谱系校验通过。消费端更新仍待验收，见 [0.17.4 发布说明](release-0.17.4.md)。
@@ -90,7 +92,9 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 统一纳入私有第�
 Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需业务状态显式接线。
 禁用或尚未装配的 Module 不能通过 `.Instance` 偷偷创建，业务查询使用 Collector。
 
-## 尚未完成的工作
+## 待办与历史验证缺口
+
+下表带版本号的条目保留当时未完成的验证范围，不要求消费项目回退到旧版本，也不代表本轮重跑或重新确认了该缺口。实际继续时先核对当前实现与后续验收记录，再选择目标版本和必要测试。平台 R12 的剩余工作以[交付记录](platformer-delivery.md)为准。
 
 0.13.2：手动触发 Unity 编译并执行 Unity MCP 安装地址回归；在消费端验证未安装时安装、已安装保护、安装后状态刷新及后续连接配置。
 
@@ -109,19 +113,19 @@ Gameplay 的进入/退出驱动 Gameplay Phase。Main 或自定义 Phase 仍需�
 | P1 | Resources 后端真正异步 | 当前 `Resources.Load<T>` 为同步回调包装；Handle 不意味着后台异步或引用计数缓存 |
 | P1 | 输入重绑定实现 | 仅有 `IEmberInputRebindingService` 契约，交互监听、Overrides 持久化由后续服务接入 |
 | P2 | GM ScrollRect 布局复测 | 历史记录中 Viewport 尺寸异常；见 [绑定回归第 6.4 节](uiextension-test-plan.md)，不能把隐藏节点视为修复 |
-| P2 | 通用预制体池、本地化、存储异步 API | SceneUI 已有专用 View 池，通用 GameObject 池与 DataSaver 异步扩展需分别设计 |
+| P2 | 通用预制体池、DataSaver 异步 API | SceneUI 已有专用 View 池；通用 GameObject 池与旧 DataSaver 异步扩展需分别设计，不能把已有 PlayerData 异步存档服务当成这些 API 已完成 |
 | P2 | UI 高级能力 | 通用虚拟列表、Tab/挂件资源生命周期、可等待的页面打开 API、按模块拆分页面注册表；按真实需求推进 |
 | P2 | UI 编辑器增强 | 对尚未激活的 Preview / Bake / Validation 等工具逐项评估，不再按旧迁移文件总数估算完成度 |
 | P2 | 公开分发前的依赖解耦 | 当前 Odin 仍是硬程序集依赖；无 Odin 变体或条件编译方案尚未实施，保留原 UPM 方案中的此项后续工作 |
 | P2 | GM 与引导增强 | GM 快捷操作；Guide 正式美术、状态机测试、更多业务条件；见 [Guide](../../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/guide-module-design.md) |
-| 远期 | 可视化与网络 | 状态流转图、节点编辑器、联网状态同步、YooAsset/Addressables Provider、Wwise；当前无默认实现 |
+| 远期 | 网络与其他后端 | 联网状态同步、YooAsset/Addressables Provider、Wwise；逐项按需求评估。游戏流程图、层级 FSM 蓝图和有限条件编辑已有实现，不能再整体列为未实现 |
 | 预案 | 独立升级器 | [独立升级器方案](independent-updater-package-plan.md) 保留，当前仍使用包内 UPMManager |
 
 UI 的 SubPage 排序、分帧操作预算、挂起操作、CanvasScaler 适配、预加载、加载计时、Profiler、
 订阅追踪、FullScreenPopup、视图显隐、Loading 预制体和过渡动画已有代码，不再作为“从零实现”的待办。
 一般页面的预加载不等于资源引用计数缓存；高级列表、资源后端和池化仍需分别验收。
 
-后续想法保留为需求候选：通用条件、功能解锁、任务系统、图片/纹理管理、2D/3D 与平台模板。
+通用条件表达式、图片资源管理、多语言中心及平台模板已形成各自实现和明确边界，见对应正式文档；不能把有限实现扩张为任意可视化逻辑编程或所有素材工作流已完成。后续需求候选保留功能解锁、任务系统及当前模板之外的玩法组合。
 不直接迁入 Burner 的服务器鉴权、加密协议、内部反射补丁、自研 Tween 或整套重型控件包装。
 
 ## 验证与历史

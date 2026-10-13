@@ -42,7 +42,7 @@ EmberDebug.GlobalOpen = false;           // 全关（Error 除外）
 | `LogError` | 白色 | 红色 | 错误 | ❌（始终输出） |
 | `LogException` | 白色 | 红色 | 异常 | ❌ |
 
-每个方法都有两个重载——带 `Object context` 的参数双击可直接选中 GameObject。
+除 `LogException` 外，上述日志方法都有带 `Object context` 的重载，可关联 Unity 对象。当前 `LogException` 只记录 `ex.Message` 和调用位置，不输出异常对象的完整堆栈；需要完整堆栈时应明确记录 `ex.ToString()`。
 
 ---
 
@@ -199,6 +199,8 @@ public class MyLogUploader : IEmberLogUploader
 `OnLogFileReady` 触发时机：
 - 日志文件轮转（关闭旧文件准备打开新文件时）
 - `EmberFileLog.Stop()` 关闭文件时
+
+轮转通知可能由后台写线程触发，订阅者不能假定处于 Unity 主线程；需要访问 Unity 对象时由业务自行调度。实现 `IEmberLogUploader` 本身不会自动注册上传器，仍需业务接线。
 
 ---
 

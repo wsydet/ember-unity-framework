@@ -1,0 +1,6 @@
+{
+    "name": "Game.Input.Runtime",
+    "rootNamespace": "Game.Input",
+    "references": ["Ember.Core.Runtime", "Ember.Basic.Runtime", "Ember.Input.Runtime", "Unity.InputSystem", "UniTask"],
+    "autoReferenced": true
+}

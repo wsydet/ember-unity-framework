@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98faced68e54f14f878eacac6c16d8a, type: 3}
+  m_Name: LandingTrialJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerJumpFeel
+  _mode: 1
+  _height: 1.699
+  _apexTime: 0.34
+  _launchSpeed: 10
+  _gravityScale: 3
+  _enableShortJump: 1
+  _shortJumpMode: 0
+  _releaseSpeed: 4
+  _minimumHeight: 0.5
+  _releaseMultiplier: 0.6666667
+  _enableApexGravity: 0
+  _apexSpeed: 4
+  _apexMultiplier: 0.75
+  _enableFallGravity: 0
+  _fallMultiplier: 1.5
+  _enableFallLimit: 0
+  _fallLimit: 35
+  _enableEdgeHover: 0
+  _edgeHoverDuration: 0.0625
+  _airJumpSpeed: 10
+  _airJumpHorizontalMode: 0
+  _airJumpHorizontalSpeed: 6.4
+  _wallSlideSpeed: 0.5
+  _wallFastSlideSpeed: 8
+  _wallJumpX: 5.44
+  _wallJumpY: 11.22
+  _wallProtection: 0.1
+  _wallReturnEnabled: 1
+  _wallReturnDuration: 0.1
+  _wallReturnMultiplier: 0.8

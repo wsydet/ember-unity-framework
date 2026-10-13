@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a780c709461a205488a444cba0f6e3ce, type: 3}
+  m_Name: PlayerPowers
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerPowerConfig
+  _abilities:
+  - _definition: {fileID: 11400000, guid: 0d6cd293a23486b42a1f22b161317f04, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: b1fa0db7980c1aa47abf3bbd25a67f4a, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: f8aa243f80f16974ab73855e1f3bc3c3, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: 4f93c3ab4862e6740aa15b73d7b53708, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: e1ecf4f1bedee3c47b5933c18e7faf24, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: fccb337c720a0b34d81d487533d208dc, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: 0982bf4b482d1bb49b175b84623b4989, type: 2}
+    _enabled: 1
+  _skills:
+  - _definition: {fileID: 11400000, guid: 57588185c1ab5cf468199c615490ed4e, type: 2}
+    _enabled: 1
+  - _definition: {fileID: 11400000, guid: cf1b7de13154e6544b26014e4b28d227, type: 2}
+    _enabled: 1

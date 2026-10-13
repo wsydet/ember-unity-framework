@@ -34,8 +34,9 @@ Manager，Manager 不依赖具体业务 Module。完整规则见 [Manager 文档
 | `Manager/` | 管理器接口 + 自动收集器 + 初始化优先级 | [Manager/README.md](../../Core/Runtime/Manager/README.md) |
 | `Service/` | 服务定位器 + 单例基类 + 对象池 | [Service/README.md](../../Core/Runtime/Service/README.md) |
 | `State/` | 游戏状态机 + 核心状态 + 流转描述符 | [State/README.md](../../Core/Runtime/State/README.md) |
+| `Fsm/` | 资产驱动的通用层级状态机，与游戏流程状态机独立 | [层级 FSM 使用与契约](hierarchical-fsm.md) |
 | `Update/` | 统一 Update/LateUpdate/FixedUpdate 驱动 | [Update/README.md](../../Core/Runtime/Update/README.md) |
-| `Basic/Runtime/Debug/` | 日志 + 标签过滤 + SO 配置 | [日志文档](../../../../docs/dev/ember-debug.md) |
+| `Basic/Runtime/Debug/` | 日志 + 标签过滤 + SO 配置 | [日志 API 源码](../../Basic/Runtime/Debug/EmberDebug.cs)、[配置源码](../../Basic/Runtime/Debug/EmberDebugConfigSO.cs) |
 | `Core/Editor/` | 场景映射、项目初始化与模板开发 | [Editor/README.md](../../Core/Editor/README.md) |
 
 ## 📄 根级文件

@@ -47,11 +47,11 @@ namespace Ember.UIExtension
         [Tooltip("长按开始后每隔多久重复触发一次，0 表示只触发一次")]
         private float _longPressRepeatTime = 0.3f;
 
-        [FoldoutGroup("长按设置")]
-        [SerializeField]
-        [LabelText("加速模式")]
-        [Tooltip("长按触发后间隔是否逐渐缩短（加速效果）")]
+        // 仅保留已有资源中的序列化值；当前长按使用固定重复间隔，不提供加速行为。
+#pragma warning disable CS0414
+        [SerializeField, HideInInspector]
         private bool _longPressSpeedUp = true;
+#pragma warning restore CS0414
 
         [FoldoutGroup("拖拽设置")]
         [SerializeField]
@@ -214,7 +214,7 @@ namespace Ember.UIExtension
         public ObjectVoidDelegate onDrop;
 
         /// <summary>自定义参数，由调用方自由赋值</summary>
-        public object Parameter;
+        [System.NonSerialized] public object Parameter;
 
         /// <summary>最近一次事件携带的 PointerEventData</summary>
         public PointerEventData PointerEventData { get; private set; }

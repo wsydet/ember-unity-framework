@@ -1,0 +1,38 @@
+/* R07.1b: restrained graph chrome; behavior and state identity remain code-owned. */
+.fsm-blueprint { background-color: rgb(30,32,35); color: rgb(209,213,218); font-size: 12px; }
+.fsm-blueprint Toolbar { height: 30px; background-color: rgb(39,41,45); border-bottom-width: 1px; border-bottom-color: rgb(20,22,25); }
+.fsm-blueprint ToolbarButton { padding-left: 12px; padding-right: 12px; border-width: 0; background-color: transparent; }
+.fsm-blueprint ToolbarButton:hover { background-color: rgb(57,61,67); }
+.fsm-hierarchy { background-color: rgb(35,37,41); padding-top: 10px; padding-left: 6px; padding-right: 6px; border-right-width: 1px; border-right-color: rgb(20,22,25); }
+.fsm-hierarchy Button { height: 27px; border-width: 0; background-color: transparent; -unity-text-align: middle-left; padding-left: 10px; color: rgb(188,194,202); }
+.fsm-hierarchy Button:hover { background-color: rgb(51,57,66); color: white; }
+.fsm-inspector { background-color: rgb(36,38,42); border-left-width: 1px; border-left-color: rgb(20,22,25); padding: 14px; }
+.fsm-inspector Foldout { margin-top: 10px; margin-bottom: 4px; padding-top: 6px; padding-bottom: 6px; border-top-width: 1px; border-top-color: rgb(58,62,68); }
+.fsm-inspector Button { min-height: 25px; margin-top: 6px; background-color: rgb(48,53,61); border-color: rgb(65,72,82); border-radius: 3px; }
+.fsm-method-note { font-size: 11px; color: rgb(151,161,176); margin-bottom: 8px; }
+.fsm-code .unity-text-input { background-color: rgb(25,27,31); color: rgb(209,221,235); padding: 10px; border-width: 0; }
+.fsm-preview-title { font-size: 12px; color: rgb(207,220,236); margin-bottom: 16px; }
+.fsm-reference { border-radius: 5px; overflow: hidden; }
+.fsm-reference Button { background-color: transparent; border-width: 0; -unity-text-align: middle-left; margin: 0; padding-left: 10px; height: 24px; color: rgb(221,231,245); -unity-font-style: bold; }
+.fsm-reference Button:hover { background-color: rgb(60,69,82); }
+.fsm-reference Label { padding-left: 10px; padding-right: 8px; color: rgb(156,166,181); }
+.fsm-state #title-label { font-size: 14px; -unity-font-style: bold; padding-left: 7px; color: rgb(222,229,237); }
+.fsm-state Button { border-width: 0; background-color: transparent; -unity-text-align: middle-left; font-size: 11px; color: rgb(142,164,188); margin-left: 8px; }
+.fsm-state Button:hover { color: white; background-color: rgb(46,56,68); }
+.fsm-state Label { color: rgb(159,170,184); font-size: 11px; }
+.fsm-blueprint GridBackground {
+    --grid-background-color: rgb(29,31,35);
+    --line-color: rgba(100,110,125,0.13);
+    --thick-line-color: rgba(120,130,145,0.2);
+    --spacing: 16;
+    --thick-lines: 5;
+}
+.fsm-code .unity-text-input { -unity-text-align: upper-left; }
+
+/* Ports carry declaration labels, structures have their own quiet section. */
+.fsm-state .fsm-inlet-label { font-size: 13px; color: rgb(195,209,225); -unity-text-align: middle-left; }
+.fsm-state .fsm-port-row { font-size: 13px; color: rgb(218,226,237); white-space: normal; -unity-text-align: upper-right; padding-top: 2px; overflow: hidden; }
+.fsm-state .fsm-port-row:hover { color: white; background-color: rgba(102,151,197,0.15); }
+.fsm-state .fsm-structure { border-top-width: 1px; border-top-color: rgb(58,65,75); padding-top: 6px; }
+.fsm-state .fsm-structure Label { font-size: 12px; color: rgb(148,162,181); }
+.fsm-state .fsm-structure Button { font-size: 12px; height: 24px; margin-left: 0; }

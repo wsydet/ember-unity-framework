@@ -5,6 +5,8 @@
 跨模板共用的 [业务代码与资源目录规范](../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md)
 常驻包内公共文档。模板文档只补充自身模块、资源及实际迁移状态，不另立一套通用目录规则。
 
+统一隔离规则见[模板专属文档、Skill 与 Tool](../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md#模板专属文档skill-与-tool-的隔离)：归属覆盖维护源、部署/发现和实际操作入口。专属工具统一位于 `Ember/<业务分类>/<工具名>`；三个平台玩家 Skill 均归 platformer-2d，不属于公共技能。
+
 ## 存放约定
 
 | 内容 | 编辑位置 | 加载其他模板时 |
@@ -20,7 +22,7 @@
 
 模板系统管理 `Assets/Game`、`Assets/Resources`、`Assets/Ember/Editor`、`Assets/Settings`、`Assets/GameResource` 五个目录。文档进入 `Assets/Game/Documentation` 即可使用现有机制，无需增加运行时模块或文档加载器。
 
-模板 Skill 同样复用这五个目录的保存、封存和继承机制，项目根目录 `.agents/skills` 只存发现副本。框架级 Skill 随包生成并首次安装，模板自有/继承 Skill 则按正式身份启用；详见 [框架与模板 AI Skill](../../Packages/com.ember/Documentation~/maintenance/template-ai-skills.md)。这是本地未发布能力，验证状态以该文档为准。
+模板 Skill 同样复用这五个目录的保存、封存和继承机制，其项目根目录 `.agents/skills` 条目是发现副本。该目录也可能存在框架技能维护源，须按清单和安装所有权区分，不能整体视作生成目录。框架级 Skill 随包生成并首次安装，模板自有/继承 Skill 则按正式身份启用；详见 [框架与模板 AI Skill](../../Packages/com.ember/Documentation~/maintenance/template-ai-skills.md)。这是本地未发布能力，验证状态以该文档为准。
 
 ## 本次整理范围
 
@@ -47,7 +49,7 @@
 5. 在基础模板和派生模板间切换，核对文档出现、移除、恢复以及相对链接。
 6. 模板随 `com.ember` 发布，交付消费项目时仍需新的框架发布 tag。仅本地保存和 Bump 不等于已经发布。
 
-禁止直接编辑 `Templates~/*/Assets`、`ParentSnapshot~` 或手改 hash。仓库索引可以链接已封存快照供跨模板查阅，快照不是日常编辑位置。
+禁止直接编辑 `Templates~/*/Assets`、`ParentSnapshot~` 或手改 hash。仓库索引及开发记录跨模板查阅时，链接 `Packages/com.ember/Templates~/<template-id>/Assets/...` 的只读已保存快照，避免依赖随加载替换的当前Assets；模板内部仍使用自身/继承文档的相对链接。快照不是日常编辑位置，也不保证已封存：普通保存更新contentHash，只有与versionedContentHash一致才表示当前内容已封存。标明所属模板和保存/封存状态，维护必须由用户加载对应模板后编辑Assets，不能手改快照。
 
 模板内部优先使用相对链接指向同模板或继承的文档，不依赖消费项目不存在的仓库 `docs/`。跨到通用 Package 的说明可给出包内路径；不要把开发仓库特有的相对目录当作所有消费项目都存在。
 

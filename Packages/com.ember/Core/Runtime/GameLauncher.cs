@@ -198,6 +198,7 @@ namespace Ember.Core
             if (!IsInitialized) return;
 
             EmberDebug.LogShutdown(TAG, "GameLauncher: shutting down framework...");
+            Fsm?.StopTransitions();
             EmberModuleCollector.Instance.DestroyAll();   // 业务模块（高层）先销毁
             EmberManagerCollector.Instance.DestroyAll();   // 框架管道（底层）后销毁
             IsInitialized = false;

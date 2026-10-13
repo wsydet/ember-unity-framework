@@ -1,12 +1,18 @@
 # Ember 文档索引
 
+当前框架发布：[0.18.0](dev/release-0.18.0.md)。
+
+平台模板说明见[玩家文档（只读已保存快照）](../Packages/com.ember/Templates~/platformer-2d/Assets/Game/Documentation/platformer-2d/README.md)，R12 进度、实际验证与未执行项见[交付记录](dev/platformer-delivery.md)。模板文档只适用于所属模板及合法派生；下列发布记录保留历史版本语义，不代替当前工作区或消费部署状态。
+
+> 模板查阅说明：本文跨模板链接指向各自只读模板快照；维护时由用户加载对应模板后编辑 Assets 源。快照反映最近普通保存；只有匹配封存hash才代表已封存，链接存在不等于已发布。链接可读不表示当前模板已启用小说工具或 Skill，历史发布与验收事实仍按原记录理解。
+
 > 历史发布记录（2026-09-28）：**0.15.0**，提供通用多语言中心、小说立绘管理与列表显示修复。模板为 base 0.7.0、source3d-2p5d 0.4.0、visual-novel 0.15.0。196 项相关 EditMode 回归通过；完整 PlayMode、外部翻译服务和消费端升级待验证。
 
-从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。当前版本、迁移与验证边界见 [0.17.3 发布说明](dev/release-0.17.3.md)。历史小说实施记录保留在 [工作副本实施记录](../Assets/Game/Documentation/visual-novel/Implementation.md)。
+从 [框架包说明](../Packages/com.ember/README.md) 了解安装与入口，从 [当前进度](dev/framework-progress.md) 了解能力和待办。0.17.3 的历史发布、迁移与验证边界见 [0.17.3 发布说明](dev/release-0.17.3.md)。历史小说实施记录保留在 [小说模板实施记录（只读快照）](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/visual-novel/Implementation.md)。
 
-## 本次模板交付
+## 历史小说模板交付
 
-visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/release-0.17.3.md) 交付。图编辑器本轮 16/16 通过，模板已正式封存；MCP 测试查询超时，手动编译与视觉/消费验收待完成。用法见 [选择关联标记](../Assets/Game/Documentation/NovelFlow.md#选择关联标记)，历史实现、验证及本次封存见 [交付记录](dev/visual-novel-flow-nodes.md)。框架升级与消费端模板迁移分开执行。
+visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/release-0.17.3.md) 交付。图编辑器本轮 16/16 通过，模板已正式封存；MCP 测试查询超时，手动编译与视觉/消费验收待完成。用法见 [选择关联标记](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/NovelFlow.md#选择关联标记)，历史实现、验证及本次封存见 [交付记录](dev/visual-novel-flow-nodes.md)。框架升级与消费端模板迁移分开执行。
 
 ## 使用框架
 
@@ -62,8 +68,8 @@ visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/rel
 |---|---|
 | [文档归属与随模板加载](dev/template-documentation.md) | 框架公共文档、基础文档、派生专属文档的存放与保存规则 |
 | [视觉小说模板文档](../Packages/com.ember/Templates~/visual-novel/Assets/Game/Documentation/visual-novel/README.md) | visual-novel 0.18.1 / preview，父 base 0.7.0；含成对跳转、复合流程、存档格式 9 与独立日程示例；框架发布和消费升级分开执行 |
-| [基础模板文档](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/README.md) | 随 base 及派生模板交付的 Guide 与配置表说明；此链接只读查看已封存内容 |
-| [2.5D 模板文档](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/README.md) | 玩家操作和 SceneUI 业务说明；只读查看已封存内容 |
+| [基础模板文档](../Packages/com.ember/Templates~/base/Assets/Game/Documentation/base/README.md) | 随 base 及派生模板交付的 Guide 与配置表说明；此链接只读查看已保存内容 |
+| [2.5D 模板文档](../Packages/com.ember/Templates~/source3d-2p5d/Assets/Game/Documentation/source3d-2p5d/README.md) | 玩家操作和 SceneUI 业务说明；只读查看已保存内容 |
 | [模板升级体系](dev/template-upgrade-system.md) | 项目中心、schema v2、父子同步、场景合并、事务、消费端边界 |
 | [Core 编辑器](../Packages/com.ember/Core/Editor/README.md) | 当前文件职责与菜单；[兼容入口](../Packages/com.ember/Documentation~/core/README-Editor.md) |
 | [框架测试清单](dev/framework-test-checklist.md) | 当前回归入口，不沿用旧版本通过结论 |
@@ -80,7 +86,9 @@ visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/rel
 | [提交规范](dev/contributing.md) / [Git Hooks](../.githooks/README.md) | 分支、提交粒度和本地检查 |
 | [Skill 速查](dev/skills-reference.md) / [编写指南](dev/skill-writing-guide.md) | 全部项目 Skill，包括文档维护复用入口 |
 | [API 文档模板](dev/api-doc-template.md) | 编写模块说明的参考结构 |
-| [本轮文档维护记录](dev/documentation-maintenance.md) | 逐文件处理结果、删除去向与验证范围 |
+| [平台 R12 交付与文档维护](dev/platformer-delivery.md) | 当前迁移进度、完成事实与剩余验证 |
+| [历史文档维护记录](dev/documentation-maintenance.md) | 2026-09 批次的逐文件处理结果、删除去向与验证范围 |
+| [小说存储接入计划](dev/visual-novel-storage-integration-plan.md) | 尚未实施的公共 PlayerData 接线、旧档只读导入与退出刷新契约 |
 | [Audio 升级预案](dev/audio-upgrade-plan.md) | 未实施的分类、池化和播放代理设计 |
 | [独立升级器预案](dev/independent-updater-package-plan.md) | 触发拆包条件和迁移策略，当前未实施 |
 | [UI 设计取舍](dev/ember-vs-burner-ui-comparison.md) | 当前实现与历史研究的对应关系 |

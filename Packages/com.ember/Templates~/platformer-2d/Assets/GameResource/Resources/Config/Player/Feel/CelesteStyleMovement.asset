@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2a99767ac738c418c413ef4401dfaf, type: 3}
+  m_Name: CelesteStyleMovement
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerMoveFeel
+  _landing:
+    _normalEnabled: 0
+    _normalDuration: 0.08
+    _hardEnabled: 0
+    _hardSpeed: 18
+    _hardDuration: 0.35
+  _rolling:
+    _enabled: 0
+    _speed: 5
+    _duration: 0.3
+  _ledge:
+    _layers:
+      serializedVersion: 2
+      m_Bits: 1
+    _reach: 0.2
+    _verticalReach: 0.4
+    _gripInset: 0.2
+    _skin: 0.02
+    _riseDuration: 0.2
+    _inwardDuration: 0.2
+  _dropThroughSpeed: 4
+  _speed: 7.5
+  _accelerated: 1
+  _acceleration: 90
+  _braking: 110
+  _turning: 140
+  _independentAir: 1
+  _airSpeed: 7.5
+  _airAccelerated: 1
+  _airAcceleration: 65
+  _airBraking: 45
+  _airTurning: 100
+  _enableJumpResponse: 0
+  _jumpResponseDuration: 0.1
+  _groundDash:
+    _duration: 0.16
+    _speedMode: 0
+    _speed: 20
+    _startSpeed: 16
+    _endSpeed: 8
+  _airDash:
+    _duration: 0.16
+    _speedMode: 0
+    _speed: 20
+    _startSpeed: 16
+    _endSpeed: 8

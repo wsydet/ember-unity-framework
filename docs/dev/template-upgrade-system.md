@@ -40,8 +40,7 @@ Unity MCP 155/155 项相关 EditMode 测试通过，Console 无 error；真实�
 
 > 2026-09-23 / 0.14.4：消费端新增独立模板技能更新，专用技能源与发现副本在同一事务更新，业务目录和部署记录保持不变；兼容下限按实际业务版本检查。完整重新部署仍覆盖五个业务目录。详见 [框架与模板 AI Skill](../../Packages/com.ember/Documentation~/maintenance/template-ai-skills.md) 与 [本版验证记录](release-0.14.4.md)。下文旧版本与验收数字保留历史语境。
 
-> 核对日期：2026-09-10；以当前工作区源码为准。
-> 当前已发布框架为 `0.12.1`，父子模板兼容声明保持 `0.12.0`；major.minor 一致，因此两份模板继续兼容本补丁。schema v2、父子同步、场景合并、部署前 GUID 冲突预检与消费端完整模板部署已实现；消费项目安装与运行验收单独记录。
+> 历史核对：2026-09-10，当时框架 `0.12.1`、模板兼容声明 `0.12.0`。下文该日期的版本、hash 与验收结论保留历史语境；当前工作区和平台交付见 [进度](framework-progress.md)、[平台交付记录](platformer-delivery.md)。schema v2、父子同步、场景合并、部署前 GUID 冲突预检与消费端完整模板部署已实现；实际消费项目验收单独记录。
 
 ## 1. 两类升级
 
@@ -81,7 +80,7 @@ Packages/com.ember/Templates~/<id>/
 已知文本格式在计算单文件 hash 前把 CRLF 归一化为 LF，避免 Git URL 包安装受消费端 `core.autocrlf` 影响；二进制文件仍按原始字节计算。包内 `.gitattributes` 同时要求 `Templates~` 保留原始字节，形成传输与运行时两层保护。
 用途是变更检测，不是安全认证。资产文件与 `.meta`、目录 metadata、GUID 唯一性和 Windows 路径大小写冲突都参与校验。
 
-当前模板仍为 `base 0.6.0 / stable` 与 `source3d-2p5d 0.3.1 / preview`，派生父基线为 `base 0.6.0`，内容 Hash、封存 Hash 与 ParentSnapshot 已校验一致；两份模板声明兼容框架 `0.12.0`，按 major.minor 闸门继续兼容 `0.12.1`。消费端验证仍需在实际项目执行。
+2026-09-10 的历史模板为 `base 0.6.0 / stable` 与 `source3d-2p5d 0.3.1 / preview`，派生父基线为 `base 0.6.0`；当时内容 Hash、封存 Hash 与 ParentSnapshot 已校验一致。当前版本必须读取实际 metadata，消费端验证仍需在实际项目执行。
 
 ## 3. 项目中心与正常开发
 

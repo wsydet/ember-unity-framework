@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98faced68e54f14f878eacac6c16d8a, type: 3}
+  m_Name: CelesteStyleJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerJumpFeel
+  _mode: 0
+  _height: 3
+  _apexTime: 0.32
+  _launchSpeed: 10
+  _gravityScale: 3
+  _enableShortJump: 1
+  _shortJumpMode: 0
+  _releaseSpeed: 5
+  _minimumHeight: 0.5
+  _releaseMultiplier: 0.6666667
+  _enableApexGravity: 1
+  _apexSpeed: 3
+  _apexMultiplier: 0.6
+  _enableFallGravity: 1
+  _fallMultiplier: 1.65
+  _enableFallLimit: 1
+  _fallLimit: 28
+  _enableEdgeHover: 0
+  _edgeHoverDuration: 0.0625
+  _headJumpSpeed: 12.528
+  _airJumpSpeed: 17
+  _airJumpHorizontalMode: 0
+  _airJumpHorizontalSpeed: 6.4
+  _wallSlideSpeed: 2
+  _wallFastSlideSpeed: 10
+  _wallJumpX: 8
+  _wallJumpY: 17
+  _wallProtection: 0.1
+  _wallReturnEnabled: 1
+  _wallReturnDuration: 0.1
+  _wallReturnMultiplier: 0.8

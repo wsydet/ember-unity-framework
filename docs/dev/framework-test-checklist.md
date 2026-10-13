@@ -1,8 +1,8 @@
 # 框架回归与发布验收清单
 
-> 当前用于 0.12.1 发布与消费端验收。Unity 编译、EditMode、模板保存/同步、新消费项目安装和 UnityFarm 升级均以本轮实际执行记录为准。
+> 通用回归入口；下列勾选和版本状态保留其原批次历史，不表示当前工作区全部通过或仍在发布0.12.1。当前平台 R12 的范围、证据和未执行项见[平台交付记录](platformer-delivery.md)，其它版本见各发布记录。Unity 编译、EditMode、模板保存/同步、新消费项目安装和 UnityFarm 升级均以对应批次实际记录为准。
 
-本轮状态：0.12.1 增加 Table 可视化、代码提示与安全单表导出；用户报告的 `IReadOnlyList` 编译错误已修复，但本会话没有 Unity MCP，修复后的 Unity 编译和新增 Editor 测试尚待用户确认。`base 0.6.0` 与 `source3d-2p5d 0.3.1` 内容、版本、Hash 和父快照均不变，模板 0.12.0 声明按 major.minor 规则兼容 0.12.1。
+0.12.1历史状态：增加 Table 可视化、代码提示与安全单表导出；该批用户报告的 `IReadOnlyList` 编译错误已修复，当时没有 Unity MCP，修复后的编译和新增测试未在该批确认。`base 0.6.0` 与 `source3d-2p5d 0.3.1` 当时保持不变；这些不是当前活动模板版本。
 > 旧 v0.8.0 临时计划记录过 2026-08-31 的 51 项通过和 Farm 冒烟，属于历史记录，不证明当前新功能通过。
 
 ## 记录方式
@@ -11,10 +11,12 @@
 自动编译只用 Unity MCP；MCP 不可用就记录未验证，按 CLAUDE.md 交给用户手动编译。
 模板变更测试在专用测试模板/消费工程内通过项目中心操作，不手改正式快照、hash 或部署记录模拟成功。
 
-## 当前测试程序集
+## 测试程序集入口（按当前改动选取）
 
 | 程序集 | 源码范围 |
 |---|---|
+| Ember.Core.Fsm.Tests | `Packages/com.ember/Core/Tests`：公共层级FSM、请求位置/有限表达式、蓝图布局与观察 |
+| Game.Player.PlayModeTests | `Assets/Game/Module/Player/Tests`：平台玩家动作、冻结/恢复、效果/动画及相机；仅所属模板装配后适用 |
 | Ember.UI.Tests | `Packages/com.ember/Tests/EditMode`：UI、开发中心、模块目录模板、Core 模板与 UnityYAMLMerge 测试 |
 | Ember.SceneUI.Tests | `Packages/com.ember/SceneUI/Tests/EditMode` |
 | Ember.SceneUI.PlayModeTests | `Packages/com.ember/SceneUI/Tests/PlayMode` |

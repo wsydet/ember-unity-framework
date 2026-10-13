@@ -18,7 +18,7 @@ GameLauncher（框架入口）
    │
    ▼
 InitState ── 发现 Module → 初始化 Manager → 激活 Global Module
-   │          → 加载 MainScene → 等黑幕淡出 → TransitionTo<MainState>
+   │          → 等待可选兜底背景 → 加载 MainScene → 等黑幕淡出 → TransitionTo<MainState>
    │
    ▼
 MainState ── 广播 MainSceneReady → 开屏动画 → 广播 OpeningAnimationEnd
@@ -35,7 +35,7 @@ GameMainState.OnOpeningAnimationEnd ── ShowMainPage(MainMenu)
 | ② 系统初始化 | 发现可选 Module、初始化必备 Manager、激活 Global Module | EmberModuleCollector / EmberManagerCollector |
 | ③ MainScene 加载 | 异步 Additive 加载主场景 | EmberSceneManager |
 | ④ 黑幕淡出 | 黑幕完全消失才切换状态（门槛①） | BootSplash / BootSplashBridge |
-| ⑤ 主界面就绪 | 开屏动画 + 背景页并行，就绪后开首页（门槛②） | MainState / 开屏动画 / EUIManager |
+| ⑤ 主界面就绪 | 播放开屏动画，完成后开首页（门槛②）；背景已提前准备 | MainState / 开屏动画 / EUIManager |
 
 ---
 
@@ -76,6 +76,10 @@ sequenceDiagram
     Init->>Mod: InitPhase(Global)
     Note right of Mod: Global Module 此时才 OnInit 并进入活动状态
     Init->>Init: 广播 CoreReady
+    opt MainState.UseUIBg
+        Init->>Main: await LoadBackgroundAsync()
+        Main->>BG: await SetBackgroundAsync()
+    end
     Init->>FSM: LoadSceneAsync("MainScene")
 
     Note over FSM,Splash: ③ MainScene 异步加载（Additive）
@@ -95,12 +99,7 @@ sequenceDiagram
     FSM->>Main: OnEnter
     Main->>Main: OnMainEnter（注册 Loading 页）+ 订阅 OpeningAnimationEnd
     Main->>Anim: 广播 MainSceneReady
-    par 背景页与开屏动画并行
-        Anim->>BG: SetBackgroundAsync（加载背景页）
-        BG->>BG: 加载 + OpenPage 显示
-    and
-        Anim->>Anim: await PlayOpeningAnimation()
-    end
+    Anim->>Anim: await PlayOpeningAnimation()
     Anim->>Main: 广播 OpeningAnimationEnd
     Main->>MM: OnOpeningAnimationEnd → ShowMainPage(MainMenu)
     MM->>MM: 入队 → 下一帧 ProcessShowQueue → PlayShow
@@ -160,10 +159,11 @@ Manager 的默认初始化顺序如下：
 
 其中两处对启动链至关重要：
 
-- `SceneCoordinator.Init` 注入 `Fsm.OnSceneTransition` 与 `Fsm.LoadSceneAsync` 委托。
-- `EUIManager.Init` 注册 `SceneCoordinator.InterceptSceneLoad`（跨场景 Loading 拦截），并广播 `UIManagerReady`。
+- `SceneCoordinator.Init` 注入可等待的 `Fsm.OnSceneTransitionAsync`，并保留启动预加载用的 `Fsm.LoadSceneAsync` 委托。
+- `EUIManager.Init` 注册 `SceneCoordinator.WrapTransitionAsync`（只包裹 Loading 遮挡），并广播 `UIManagerReady`。
+  正式转场由 SceneCoordinator 统一执行“候选加载 → 请求级准备 → 状态提交 → 旧场景卸载”，详见[游戏流程转场](../../Packages/com.ember/Documentation~/core/game-transitions.md)。
 
-完成 Manager 初始化和 Global Module 激活后广播 `CoreReady`，再调用 `LoadSceneAsync("MainScene")`。
+完成 Manager 初始化和 Global Module 激活后广播 `CoreReady`。`InitState.LoadMainSceneAsync` 先在 `MainState.UseUIBg=true` 时等待 `LoadBackgroundAsync()`，再调用 `LoadSceneAsync("MainScene")`。背景在黑幕揭开前已就绪；复杂场景可由业务覆盖 UseUIBg=false，背景准备不是开屏动画组件的并行任务。
 
 ### ③ MainScene 异步加载
 
@@ -177,7 +177,7 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 
 ### ⑤ 主界面就绪（门槛②）
 
-`MainState.OnEnter` 依次：广播 `SceneLoaded` → `OnMainEnter`（`GameMainState` 在此注册 Loading 页）→ 订阅 `OpeningAnimationEnd` → 广播 `MainSceneReady`。`EUIMainAnimationStarter` 收到后并行执行「背景页加载」与「开屏动画」，两者都完成才广播 `OpeningAnimationEnd`；`MainState` 收到后调用 `OnOpeningAnimationEnd`，`GameMainState` 最终 `ShowMainPage(MainMenu)`。
+`MainState.OnEnter` 依次：广播 `SceneLoaded` → `OnMainEnter`（`GameMainState` 在此注册 Loading 页）→ 订阅 `OpeningAnimationEnd` → 广播 `MainSceneReady`。`EUIMainAnimationStarter` 收到后等待 `PlayOpeningAnimation()`，再广播 `OpeningAnimationEnd`；`MainState` 收到后调用 `OnOpeningAnimationEnd`，`GameMainState` 最终调用 `ShowMainPage(GamePages.EUIMainPage)`。背景不由该动画组件加载。
 
 ---
 
@@ -189,9 +189,9 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 
 > 若业务层未挂 BootSplash（`WaitForFadeOut == null`），跳过等待立即 TransitionTo。
 
-### 门槛② 背景页就绪（SetBackgroundAsync）
+### 门槛② 开屏动画完成（OpeningAnimationEnd）
 
-`EUIMainAnimationStarter` 并行执行「背景页加载」与「开屏动画」，两者都完成才广播 `OpeningAnimationEnd`，保证首页打开时兜底背景已就位，不抢跑穿帮。
+`EUIMainAnimationStarter` 等待开屏动画后才广播 `OpeningAnimationEnd`。兜底背景的独立准备已经发生在 Init 加载 MainScene 前；从其它状态返回 Main 时，则由 `MainState.PrepareEnterAsync()` 等待背景，在 Loading 退出前完成。两条路径都不能将背景加载改为无人等待的 Forget。
 
 ---
 
@@ -239,7 +239,7 @@ MainScene 激活时，场景内的 `EUIMainAnimationStarter.Awake` 执行并订�
 
 2. **`SceneLoadDone` 先于 `onComplete` 回调广播**（`EmberSceneManager.LoadAsync` 末尾顺序），所以黑幕先开始淡出、`InitState` 才 `await`。依赖这个顺序，别改成回调先于事件。
 
-3. **`TransitionTo` 用 `skipSceneLoad: true`**：MainScene 已由 InitState 预加载，切状态时不重复加载场景。
+3. **`TransitionTo` 用 `skipSceneLoad: true`**：MainScene 已由 InitState 预加载，切状态时验证场景已加载并执行请求级准备，不重复加载场景。
 
 4. **开屏动画组件在 MainScene 里**：它的 `Awake` 在场景激活时执行（早于 `SceneLoadDone`），因此 `MainSceneReady` 的订阅一定早于广播，无竞态。
 

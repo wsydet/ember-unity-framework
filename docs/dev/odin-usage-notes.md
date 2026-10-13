@@ -4,151 +4,27 @@
 
 ---
 
-## 一、已知兼容性问题
+## 一、历史观察与排查边界
 
-### 1.1 HorizontalGroup + ShowInInspector 布局错位
+### 水平分组和按钮布局
 
-**现象**：在 `[HorizontalGroup]` 中混入 `[ShowInInspector]` 标注的字段/属性时，
-Inspector 面板出现元素错位、重叠或超出边界。
+历史面板曾在 HorizontalGroup 与 ShowInInspector/计算属性组合、不同尺寸 ButtonGroup、Title 紧邻按钮时出现错位或重叠。未保留能证明插件或引擎根因的最小复现，不能把组合本身列为错误或跨版本禁令。
 
-**排查方向**：检查 Layout/Repaint 控件顺序、属性分组和自定义 Drawer。旧记录怀疑布局阶段不一致，未保留足以确认引擎或 Odin 根因的证据。
+出现问题时先记录 Unity/Odin 版本、面板对象、宽度、皮肤、Layout/Repaint 和完整异常堆栈；检查动态分组路径、同名组意外合并、Drawer、控件顺序和异步状态更新。仅针对可复现问题调整分组、宽度、换行或在下一次 Layout 应用状态，之后实际验证窄窗、停靠、切页、脏状态及 Undo。垂直排列是可选布局，不是兼容性要求。
 
-**影响范围**：
+### 引用限制字段与 Shader 异常
 
-| 组合 | 状态 |
-|------|------|
-| `[HorizontalGroup]` + `public` 字段 | ✅ 正常 |
-| `[HorizontalGroup]` + `[ShowInInspector] private` 字段 | ❌ 可能错位 |
-| `[HorizontalGroup]` + `[ShowInInspector]` 计算属性 | ❌ 容易错位 |
+旧记录在 AssetsOnly/SceneObjectsOnly 空引用绘制时观察到 shader 参数为空的异常。根因未确认，不能认定这些特性不支持空值；保留堆栈并在最小对象复现，不能填入无意义业务默认值掩盖错误。
 
-**解决方案**（按优先级）：
+### 废弃成员
 
-1. **避免混用** —— 不要在 `[HorizontalGroup]` 内使用 `[ShowInInspector]`，
-   将 private 字段改为 `public` 或 `[SerializeField] private`
-2. **拆出计算属性** —— 将 `[ShowInInspector]` 的计算属性移出 `[HorizontalGroup]`，
-   放在独立的一行
-3. **放弃水平布局** —— 如果错位无法修复，改用垂直排列
+历史编译曾对 ListDrawerSettings.Expanded 报 CS0618。维护时根据当前安装程序集的 Obsolete 信息和实际需求选择 ShowFoldout、DefaultExpandedState 等成员；不要机械地把旧 Expanded 值同时映射成两个新属性。是否显示折叠入口、初始展开状态和用户已有状态分别验证。
 
-**示例**：
+## 二、显示与序列化职责
 
-```csharp
-// ❌ 错误 —— ShowInInspector 在 HorizontalGroup 内
-[HorizontalGroup("Stats")]
-[ShowInInspector, MinValue(1), MaxValue(99)]
-private int level = 1;
+`ShowInInspector` 用于展示，不能据此推断字段已持久化；`SerializeField` 改变 Unity 序列化范围，不能作为布局修复的等价替代。计算值、运行观察、public API 和已有序列化字段各自保持职责。改变可见性或字段/属性形式前核对调用方、资产数据、Undo/Redo、脏标记和迁移需求。
 
-[HorizontalGroup("Stats")]
-[ShowInInspector, ReadOnly]
-private string Summary => $"Lv.{level}";
-
-// ✅ 正确 —— 拆分
-[HorizontalGroup("Stats")]
-public int level = 1;
-
-[HorizontalGroup("Stats")]
-public int hp = 500;
-
-// 计算属性单独一行
-[ShowInInspector, ReadOnly]
-private string Summary => $"Lv.{level}  HP:{hp}";
-```
-
-### 1.2 ButtonGroup 按钮布局错位
-
-**现象**：多个按钮使用相同 `[ButtonGroup]` 名称时，不同尺寸的按钮被
-挤在同一行，导致布局错乱。此外不同 section 的按钮如果用了同名 `[ButtonGroup]`，
-Odin 会将它们合并到同一个组渲染。
-
-**解决方案**：
-1. **每个按钮独立一行** —— 不使用 `[ButtonGroup]`
-2. 如果需要水平排列，确保同一组内所有按钮尺寸一致
-3. **不同 section 的按钮不要用同名 ButtonGroup**
-
-```csharp
-// ❌ 错误 —— 同组不同尺寸，或不同 section 同名组
-[ButtonGroup("Actions")]
-[Button("确定", ButtonSizes.Large)]
-private void Confirm() { }
-
-[ButtonGroup("Actions")]
-[Button("取消", ButtonSizes.Small)]  // 尺寸不一致导致错位
-private void Cancel() { }
-
-// ✅ 正确 —— 独立按钮，各占一行
-[Button("确定", ButtonSizes.Large)]
-private void Confirm() { }
-
-[Button("取消")]
-private void Cancel() { }
-private void B() { }
-```
-
-### 1.3 ListDrawerSettings.Expanded 已废弃
-
-**现象**：编译 warning `CS0618: 'ListDrawerSettingsAttribute.Expanded' is obsolete`
-出现在 `[ListDrawerSettings(Expanded = true)]` 上。
-
-**原因**：Odin 4.x 确认 `Expanded` 实际行为一直是控制 `ShowFoldout`，
-命名有歧义。官方标记为废弃并替换为两个独立属性。
-
-**修复**：
-
-```csharp
-// ❌ 旧写法 —— 编译 warning
-[ListDrawerSettings(Expanded = true)]
-
-// ✅ 新写法
-[ListDrawerSettings(ShowFoldout = true, DefaultExpandedState = true)]
-```
-
-| 属性 | 作用 |
-|------|------|
-| `ShowFoldout` | 列表是否显示折叠箭头（false = 完全平铺） |
-| `DefaultExpandedState` | 折叠默认状态（true = 展开，false = 折叠） |
-
-**实际应用示例**：`EmberDebugConfigSO.frameworkEntries` 使用此属性让框架标签默认展开，
-方便查看所有预定义标签。
-
-### 1.4 AssetsOnly / SceneObjectsOnly 空值时可能触发 Shader 异常
-
-**现象**：`[AssetsOnly]` 或 `[SceneObjectsOnly]` 字段未赋值时，
-Odin 渲染对象字段图标时抛出 `ArgumentNullException: Value cannot be null. Parameter name: shader`。
-
-**处理**：先保留堆栈，在最小对象上复现并核对字段、Drawer 和包版本。旧记录不能保证异常自行恢复；不要为消除提示而给业务字段填无意义默认值。
-
----
-
-## 二、推荐实践
-
-### 2.1 优先使用 [SerializeField] 替代 [ShowInInspector]
-
-```csharp
-// 推荐 —— 直接序列化，兼容性最好
-[SerializeField]
-private int level = 1;
-
-// 可用但有兼容风险
-[ShowInInspector]
-private int level = 1;
-```
-
-### 2.2 复杂布局优先用 FoldoutGroup + 垂直排列
-
-`[HorizontalGroup]` 在 Unity 6 下不稳定时，改用 `[FoldoutGroup]` + 垂直排列：
-
-```csharp
-[FoldoutGroup("角色属性")]
-public int level;
-[FoldoutGroup("角色属性")]
-public int hp;
-[FoldoutGroup("角色属性")]
-public int mp;
-```
-
-### 2.3 按钮保持独立
-
-每个 `[Button]` 独立一行，不使用 `[ButtonGroup]`。
-`[ButtonGroup]` 在 Unity 6 + Odin 4.x 下容易导致按钮挤在一起或跨 section 合并。
+布局建议以使用任务为准：常用操作优先，配置与操作分区，诊断折叠但必要错误常显；尺寸、速度、时间等标出单位。ButtonGroup、HorizontalGroup、ShowInInspector 都可以使用，按实际宽度和交互验证。Editor 绘制不触发保存、迁移、应用或重启，Editor/Odin 编辑器 API 不进入运行程序集。
 
 ### 2.4 参考脚本
 
@@ -266,7 +142,7 @@ private const string GROUP = "Scene Mapping";
 
 **规则**：
 - `$` 后面跟**成员名**（字段/属性/常量名），不是成员值
-- 不能和 C# 字符串拼接混用
+- 字面分组路径可使用常量拼接；动态解析时 `$` 后必须仍是成员名，不能拼入该成员的值。
 - 路径分隔用 `/`：`"$GROUP/子组名"`
 
 ### 2.9 InfoBox + VisibleIf —— 条件提示
@@ -295,51 +171,15 @@ public bool IsInitialized { get; private set; }
 private string CurrentState => Fsm?.Current?.Name ?? "—";
 ```
 
-### 2.11 Title + 空行占位 —— 防止分割线与按钮渲染冲突
+### 2.11 Title 与按钮间距的历史处理
 
-**适用场景**：`[Title]` 带有 `horizontalLine: true` 或使用分割线时，下方紧邻的
-`[Button]` 或 `[HorizontalGroup]` 按钮可能与分割线产生渲染冲突（重叠、闪烁、空白行消失）。
-
-**原因**：Odin 的 `[Title]` 分割线和下一个 GUI 元素之间需要至少一个属性行作为缓冲。
-如果第一个元素直接是 `[Button]`（高度较小），分割线可能覆盖按钮区域。
-
-**解决方案**：在 `[Title]` 和按钮之间插入一个空的 `[ShowInInspector, DisplayAsString, HideLabel]` 占位行：
-
-```csharp
-// ✅ 正确 —— Title + 空行 + 按钮
-[BoxGroup("$GROUP/模板", ShowLabel = false)]
-[Title("模板")]
-[ShowInInspector, DisplayAsString, HideLabel]
-private string _templateTitleDummy => "";    // 空行占位，防止分割线与按钮冲突
-
-[BoxGroup("$GROUP/模板")]
-[HorizontalGroup("$GROUP/模板/Buttons")]
-[Button("加载", ButtonSizes.Medium)]
-private void LoadTemplate() { }
-
-// ❌ 错误 —— Title 直接连按钮，可能渲染冲突
-[BoxGroup("$GROUP/模板", ShowLabel = false)]
-[Title("模板")]
-[HorizontalGroup("$GROUP/模板/Buttons")]    // 缺少空行占位
-[Button("加载", ButtonSizes.Medium)]
-private void LoadTemplate() { }
-```
-
-**关键点**：
-- 占位字段返回空字符串 `""`（不是 `null`，null 会显示 "Null"）
-- `[HideLabel]` 隐藏字段标签，`DisplayAsString` 渲染为空行
-- 占位字段和按钮必须在同一个 `BoxGroup` 内
-- **不要因为"空白行不好看"而删除它** —— 它是有功能目的的缓冲区
-
-**实际案例**：
-- `EUIBinding.cs` 的"模板"和"代码生成"两个 section 都使用了此模式
-- 曾因尝试删除空白行导致按钮与 Title 分割线渲染异常
+EUIBinding 的历史面板曾在标题和按钮之间使用返回空字符串的只读展示行缓解重叠。这个局部处理不能证明所有 Title 都需要占位属性，也不能因此禁止删除任何空行。先核对当前源码和实际渲染；需要间距时使用面板已有布局机制，并验证不同宽度、皮肤和重绘。已有占位行的移除也须实际复测，不能仅凭源码认定无用。
 
 ### 2.12 统一 Title 规范
 
 **适用场景**：所有 `[Title]` 使用方式。
 
-**规则**：
+**项目默认风格（不代表 Odin 兼容性限制）**：
 - **统一左对齐** —— 不加 `titleAlignment` 参数，使用默认左对齐
 - **不加横线** —— 不加 `horizontalLine: true`，用 `BoxGroup` 的分隔线替代
 - **双参数形式** —— `[Title("主标题", "副标题")]` 用于需要补充说明的段落头

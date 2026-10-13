@@ -16,7 +16,6 @@
 using Cysharp.Threading.Tasks;
 
 using Ember.Core;
-using Ember.Scene;
 using Ember.UI;
 
 using UnityEngine;
@@ -46,6 +45,7 @@ namespace Game.UI
         private bool _inTailPhase;
         private bool _fakeComplete;
         private bool _fadeInDone; // 渐入完成前不开始计时
+        private EmberTransitionOperation _progressOperation;
 
         #endregion
 
@@ -133,6 +133,8 @@ namespace Game.UI
             _displayProgress = 0f;
             _inTailPhase = false;
             _fakeComplete = false;
+            _fadeInDone = false;
+            _progressOperation = null;
             SkipFakeProgress = false; // 每次打开默认回到假进度模式，快速转场由业务侧显式开启
             SetProgress(0f);
             // 恢复默认：进度条/数字彻底关闭；打开时由 OnShow 按模式决定是否重新激活，
@@ -149,11 +151,11 @@ namespace Game.UI
 
         /// <summary>
         /// 手动设置加载进度（0-1），更新进度条和数字。
-        /// 如果不手动调用，OnUpdate 通过 timer 驱动假进度 0→1，不依赖真实加载进度。
+        /// OnUpdate 平滑展示；必要准备成功前，手动调用也不能显示 100%。
         /// </summary>
         public void SetProgress(float progress)
         {
-            progress = Mathf.Clamp01(progress);
+            progress = Mathf.Clamp(progress, 0f, PreparationSucceeded ? 1f : 0.99f);
 
             if (_settings != null)
             {
@@ -194,13 +196,12 @@ namespace Game.UI
         {
             get
             {
-                // 无假进度（快速转场 / 未勾选进度显示 / 无配置）：真实场景加载完成即就绪
+                // 快速/无显示模式跳过展示计时，但仍要求本次必要准备成功。
                 if (!UseFakeProgress)
                 {
-                    var sceneMgr = EmberSceneManager.Instance;
-                    return sceneMgr == null || !sceneMgr.IsLoading;
+                    return PreparationSucceeded;
                 }
-                return _fakeComplete;
+                return PreparationSucceeded && _fakeComplete;
             }
         }
 
@@ -212,6 +213,9 @@ namespace Game.UI
             !SkipFakeProgress
             && _settings != null
             && (_settings.useProgressBar || _settings.useProgressNumber);
+
+        private bool PreparationSucceeded => TransitionOperation != null
+            ? TransitionOperation.IsPrepared : LoadingWorkCompleted;
 
         /// <summary>隐藏进度条与进度数字（快速转场模式）</summary>
         private void HideProgressVisuals()
@@ -236,8 +240,14 @@ namespace Game.UI
 
         private void UpdateFakeProgress()
         {
+            if (_progressOperation != TransitionOperation)
+            {
+                _progressOperation = TransitionOperation;
+                _fastElapsed = _tailElapsed = _displayProgress = 0f;
+                _inTailPhase = _fakeComplete = false;
+            }
             // 无假进度模式（显式快速转场 / 未勾选任何进度显示 / 无配置）：只隐藏进度显示，
-            // 就绪由 IsTransitionReady 的真实加载判定
+            // 就绪仍由本次请求的必要准备结果判定
             if (!UseFakeProgress)
             {
                 HideProgressVisuals();
@@ -245,17 +255,17 @@ namespace Game.UI
             }
 
             // 渐入完成前不开始计时（进度条在此期间不可见）
-            if (_fakeComplete || !_fadeInDone) return;
+            if (_fakeComplete || (!_fadeInDone && Page?.IsOpened != true)) return;
 
-            var sceneMgr = EmberSceneManager.Instance;
-            bool realDone = sceneMgr != null && !sceneMgr.IsLoading;
+            bool realDone = PreparationSucceeded;
 
             if (!_inTailPhase)
             {
                 // Phase 1: 快充阶段 → 阈值
-                _fastElapsed += Time.deltaTime;
-                float fastT = Mathf.Clamp01(_fastElapsed / _settings.fastFillDuration);
-                _displayProgress = fastT * _settings.fastFillThreshold;
+                _fastElapsed += Time.unscaledDeltaTime;
+                float fastT = _settings.fastFillDuration <= 0f ? 1f : Mathf.Clamp01(_fastElapsed / _settings.fastFillDuration);
+                float threshold = Mathf.Clamp(_settings.fastFillThreshold, 0f, 0.99f);
+                _displayProgress = fastT * threshold;
 
                 if (fastT >= 1f)
                 {
@@ -268,17 +278,17 @@ namespace Game.UI
                     else
                     {
                         // 真实加载未完成 → 卡在阈值等待
-                        _displayProgress = _settings.fastFillThreshold;
+                        _displayProgress = threshold;
                     }
                 }
             }
 
-            if (_inTailPhase)
+            if (_inTailPhase && realDone)
             {
                 // Phase 2: 收尾阶段 → 当前进度平滑到 100%
-                _tailElapsed += Time.deltaTime;
-                float tailT = Mathf.Clamp01(_tailElapsed / _settings.tailDuration);
-                _displayProgress = Mathf.Lerp(_settings.fastFillThreshold, 1f, tailT);
+                _tailElapsed += Time.unscaledDeltaTime;
+                float tailT = _settings.tailDuration <= 0f ? 1f : Mathf.Clamp01(_tailElapsed / _settings.tailDuration);
+                _displayProgress = Mathf.Lerp(Mathf.Clamp(_settings.fastFillThreshold, 0f, 0.99f), 1f, tailT);
 
                 if (tailT >= 1f)
                 {
@@ -312,21 +322,19 @@ namespace Game.UI
         /// </summary>
         public override async UniTask OnCustomEnter()
         {
-            if (_settings == null) return;
-
             // 进度条组渐显
-            if (Cg_Progress == null) return;
-            var duration = _settings.customEnterDuration;
-            if (duration <= 0f) { Cg_Progress.alpha = 1f; return; }
-
-            float elapsed = 0f;
-            while (elapsed < duration)
+            var duration = _settings?.customEnterDuration ?? 0f;
+            if (Cg_Progress != null)
             {
-                elapsed += Time.deltaTime;
-                Cg_Progress.alpha = Mathf.Clamp01(elapsed / duration);
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    elapsed += Time.unscaledDeltaTime;
+                    Cg_Progress.alpha = Mathf.Clamp01(elapsed / duration);
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+                }
+                Cg_Progress.alpha = 1f;
             }
-            Cg_Progress.alpha = 1f;
             _fadeInDone = true;
             EmberEventBus.OnNext(EUIEvents.LoadingFadeInComplete);
         }
@@ -349,7 +357,7 @@ namespace Game.UI
                 var startAlpha = Cg_Progress.alpha;
                 while (elapsed < exitDuration)
                 {
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
                     Cg_Progress.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / exitDuration);
                     await UniTask.Yield(PlayerLoopTiming.Update);
                 }

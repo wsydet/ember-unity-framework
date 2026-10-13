@@ -2,6 +2,10 @@
 using Ember.Core;
 using Ember.UI;
 using Game.UI;
+using System;
+using Cysharp.Threading.Tasks;
+using Game.SceneFlow;
+using UnityEngine.SceneManagement;
 
 namespace Game.State
 {
@@ -16,21 +20,51 @@ namespace Game.State
     /// </summary>
     public class GameGameplayState : GameplayState
     {
+        private GameSceneSession _sceneSession;
+
+        public override async UniTask PrepareEnterAsync(SceneTransitionContext request)
+        {
+            var scene = SceneManager.GetSceneByPath(request.ToScene);
+            if (!scene.IsValid()) scene = SceneManager.GetSceneByName(request.ToScene);
+            var candidate = await GameSceneScope.Require(scene).PrepareAsync(
+                request.Operation.RequestId, request.Args, request.Cancellation);
+            request.PreparedArgs = candidate;
+            candidate.ReleaseOnFailedTransitionAsync(request.Operation).Forget();
+        }
+
+        public override UniTask AbortPrepareAsync(SceneTransitionContext request)
+        {
+            (request.PreparedArgs as GameSceneSession)?.Dispose();
+            return UniTask.CompletedTask;
+        }
+
         // [EmberManaged:begin OnGameplayEnter]
         protected override void OnGameplayEnter(object args)
         // [EmberManaged:end]
         {
             base.OnGameplayEnter(args);
-            EUIManager.Instance.ShowMainPage(GamePages.EUIGamePlayPage);
+            _sceneSession = args as GameSceneSession
+                ?? throw new InvalidOperationException("Gameplay 必须通过请求级场景准备进入。");
+            try
+            {
+                _sceneSession.Start();
+                EUIManager.Instance.ShowMainPage(GamePages.EUIGamePlayPage);
+            }
+            catch { _sceneSession.Dispose(); _sceneSession = null; throw; }
         }
 
         // [EmberManaged:begin OnGameplayExit]
         protected override void OnGameplayExit()
         // [EmberManaged:end]
         {
-            EUIManager.Instance.CloseAllPopups();
-            EUIManager.Instance.ClosePageByDef(GamePages.EUIGamePlayPage);
-            base.OnGameplayExit();
+            try { _sceneSession?.Dispose(); }
+            finally
+            {
+                _sceneSession = null;
+                EUIManager.Instance.CloseAllPopups();
+                EUIManager.Instance.ClosePageByDef(GamePages.EUIGamePlayPage);
+                base.OnGameplayExit();
+            }
         }
     }
 }

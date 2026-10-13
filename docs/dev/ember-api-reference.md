@@ -1,5 +1,9 @@
 # Ember API 速查手册
 
+## 条件编辑器菜单
+
+`Ember.Core.Editor.EmberConditionalMenu.Register(path, visible, execute, enabled, priority)`返回可释放登记；`visible=false`实际移除菜单，`enabled=false`保留入口但阻止执行，执行前再次检查两项条件。`Refresh()`用于身份变更后的显式同步，编辑器同时按一秒间隔和projectChanged刷新。模板业务复用`EmberProjectSetup.IsTemplateActive`作为条件，不以资产残留判断身份。Unity 6内部动态菜单API的反射封装只位于该公共适配；不支持时拒绝登记，不降级为无条件菜单。Unity MCP编译、菜单真实增删及执行复查验证记录见[平台交付记录](platformer-delivery.md)；未实际切换模板或部署消费项目的限制在该记录中单列。
+
 ## 图片资源编辑器（0.16.0）
 
 `Ember.Table.Editor.EmberImageLibraryWindow` 提供源表驱动的三栏图片管理基类；模板通过 `BuiltinSources()` 声明图片表，使用 `FolderAssetPath` 指定编辑器分组资产。`EmberImageSourceAsset` 可登记额外来源，明确 TableId、KeyColumn、ImageColumn、GroupColumns、Sprite 和 ImportFolder；不会按字段名猜测音频或图片。`EmberImageLibraryFolders` 按来源、自动分组和 Key 隔离逻辑目录。面板复用 `EmberTableSourceDocument.Save` 的外部修改检查与烘焙事务，新增图片保存失败时撤回。全部类型仅在 Editor 程序集中。
@@ -194,7 +198,7 @@ void OnReturnToPool();   // 归还到池中时
 ```csharp
 PoolRefCount.EnableCheck = true;              // 开启追踪
 // ... 运行疑似泄漏的逻辑 ...
-Debug.Log(poolRefCount.AllLeakedObjStacks()); // 查看泄漏报告
+EmberDebug.Log(LogTags.Game, poolRefCount.AllLeakedObjStacks()); // 查看泄漏报告
 PoolRefCount.EnableCheck = false;
 poolRefCount.ClearAllStacks();
 ```
@@ -346,7 +350,8 @@ var parts = "a.b.c".SplitToStringViews('.');
 
 // 比较
 if (view == "hello") { ... }
-if (view.Equals("hello", ignoreCase: true)) { ... }
+var insensitive = new StringView("HELLO", ignoreCaseCompare: true);
+if (insensitive.Equals("hello")) { ... }
 
 // 链式子串
 var sub = view.Substring(6, 5);  // "world"
@@ -354,7 +359,7 @@ var sub = view.Substring(6, 5);  // "world"
 
 | 成员 | 签名 |
 |------|------|
-| ctor | `StringView(string str, int start, int length, bool ignoreCase=false, bool calcHash=false)` |
+| ctor | `StringView(string str, int start, int length, bool ignoreCaseCompare=false, bool calcHash=false)`；另有完整字符串重载 |
 | Substring | `StringView Substring(int start, int length, bool calcHash=false)` — 零分配 |
 | Equals | `bool Equals(string other)` / `bool Equals(StringView other)` |
 | == / != | 支持 `StringView==StringView`, `StringView==string`, `string==StringView` |
@@ -415,7 +420,7 @@ StringBuilder 是共享可变对象——只在确定不会被并发访问的单
 
 ```csharp
 var level = GraphicLevelUtils.GetCurrentLevel();
-if (level >= PerformanceLevel.High) { EnableHighQualityEffects(); }
+if (level <= PerformanceLevel.High) { EnableHighQualityEffects(); } // VeryHigh=0、High=1
 ```
 
 | 枚举值 | 说明 |
@@ -439,7 +444,7 @@ if (level >= PerformanceLevel.High) { EnableHighQualityEffects(); }
 
 ```csharp
 DataSaver.Save("settings.json", mySettings);
-if (DataSaver.TryLoad《MySettings》("settings.json", out var data))
+if (DataSaver.TryLoad<MySettings>("settings.json", out var data))
     ApplySettings(data);
 DataSaver.Delete("settings.json");
 bool exists = DataSaver.Exists("settings.json");
@@ -601,7 +606,7 @@ Unity 内置的 `JsonUtility` 只能处理"提前定义好 class 结构"的对�
 ```csharp
 // 对象 ↔ JSON
 string json = JsonMapper.ToJson(myObj);
-MyType obj = JsonMapper.ToObject《MyType》(jsonString);
+MyType obj = JsonMapper.ToObject<MyType>(jsonString);
 
 // 动态解析 —— 不提前定义类，像字典一样访问
 JsonData data = JsonMapper.ToObject(jsonString);
@@ -771,7 +776,7 @@ int fps = GraphicLevelUtils.GetFrameRatePrefs(60);
 | `[AsyncMethodBuilder(typeof(...))]` | `System.Runtime.CompilerServices` | async/await polyfill |
 | `[DisplayFirstElementInHeader]` | `Ember.Basic` | Inspector 中数组 foldout 用第一个子元素的值当标题 |
 
-**EmberInitOrder 预设值**：`Core=100, Resource=200, Audio=300, Input=400, UI=500, Scene=600, Game=700, Default=1000`
+**EmberInitOrder 预设值**：`Core=100, Time=105, Resource=200, Audio=300, Input=400, UI=500, Scene=600, Game=700, Default=1000`
 
 ---
 
@@ -1021,9 +1026,46 @@ public interface IEmberLogUploader
 
 ## 状态机
 
-> 位置: `Packages/com.ember/Core/Runtime/State/`, 命名空间 `Ember.Core`
+本节包含游戏流程状态机与通用层级 FSM；两者的用途和命名空间分别见下文。
+
+### EmberFsm — 通用层级状态机（本地未发布）
+
+位置：`Packages/com.ember/Core/Runtime/Fsm/`；命名空间 `Ember.Core.Fsm`，属于 `Ember.Core.Runtime`。
+完整协议及可创建 SO 的资产驱动示例见 [通用层级状态机](../../Packages/com.ember/Documentation~/core/hierarchical-fsm.md)。
+
+| API | 用途 |
+| --- | --- |
+| `EmberFsmStateDefinition<TContext,TState>` | 共享配置 SO 的具体派生基类，强类型 `CreateState()`，`GetTransitions()` 返回行为代码的原始声明句柄 |
+| `IEmberFsmState<TContext>` / `EmberFsmState<TContext>` | 独立 C# 状态接口与可选便利基类；Initialize、CanEnter、Enter/Exit、Update/FixedUpdate、Pause/Resume、Dispose |
+| `EmberFsmGraph` / `EmberFsmNode` / `EmberFsmTargetBinding` | 图入口、稳定节点 ID、父节点、默认直接子节点及槽到节点绑定 |
+| `graph.Inspect(contextType)` | 无角色读取层级和声明并校验；不调用工厂、生命周期或 Guard |
+| `new EmberFsm<TContext>(graph, context, historyCapacity, redirectLimit)` | 校验与结构快照；首次 Start 按节点独立创建并初始化对象 |
+| `Start()` / `Stop()` / `TryDispose()` / `Dispose()` | 启动、退出保留对象、最终释放；Stop 后可重新 Start，故障或销毁后不可启动 |
+| `EmberFsmTransition<TContext,TState>` | 不可变转换描述与请求句柄，包含目标槽、Guard 与显式分支重入模式 |
+| `activation.Request(handle)` / `fsm.Request(activation, handle)` | 状态/外部主动请求；必须来自仍有效的本次激活，拒绝伪造、过期及未声明请求 |
+| `EmberFsmRequestSite<TContext,TState>` | 声明请求位置ID、阶段、段落、顺序、完整条件、继续策略及预检后的提交动作；声明不触发自动调度 |
+| `activation.Attempt(handle, site)` / `fsm.Attempt(activation, handle, site)` | E01统一尝试；多位置转换必须明确site。返回Result、Matched和ShouldStop，宿主在ShouldStop时结束当前业务执行 |
+| `activation.AttemptGroup(segment, phase)` | 按声明顺序尝试当前段落，复用单次条件求值和继续策略；协议错误中止本轮派发，异常进入Faulted并清理 |
+| `EmberFsmEntryDecision` / `GetRedirectSlots()` | 退出前允许/拒绝/重定向；重定向只允许声明绑定的槽，有循环和次数限制 |
+| `Update(dt)` / `FixedUpdate(dt)` / `Pause()` / `Resume()` | 宿主显式驱动，父到子；成功切换中止本次路径派发；时间只在 Update 累计 |
+| `GetActivePath()` / `CurrentLeafId` / `GetElapsedTime(id)` | 完整活动路径、叶子与本次激活时间 |
+| `Description` / `Diagnostic` / `GetHistory()` / `LastOperation` / `LastFault` | 静态结构、诊断事件、有界历史与故障；关闭诊断不改变状态执行 |
+| `EmberFsmObservation.Capture(fsm)` | 按需复制只读实例状态、路径、各层计时和已采集诊断；有分配，不驱动状态或评估 Guard。Editor 通过 EmberFsmObservationSources 显式适配宿主 |
+| `EmberFsmObservationOrigin.Capture(sourceGraph, capturedGraph)` | 宿主复制配置时按稳定节点 ID 显式关联两侧 Definition 与冻结结构；拒绝结构/声明不等价。来源关联仅供观察，不改变执行 |
+| `EmberFsmObservation.Capture(fsm, origin)` / `MatchesSource(graph, description)` | 保留真实运行描述；同时校验源图身份、源冻结结构及捕获 Definition 身份，支持逐节点配置副本，拒绝错误来源或过期结构 |
+
+同一 SO 可复用于多个节点与宿主，每节点有独立运行对象。所有控制在创建线程执行；
+转换事务、Guard 和声明读取期间拒绝嵌套控制。普通转换保留公共祖先，
+`ReenterTargetBranch` 显式重进目标分支。父节点可以请求自己的声明。
+延迟回调必须捕获 `Enter` 收到的激活凭证，不能到回调时重新获取当前凭证。
+历史基线：2026-10-08 源码复核后通过 Unity MCP 独立复跑 `Ember.Core.Fsm.Tests`，EditMode 测试 52/52 通过，
+无失败或跳过，耗时约 1.44 秒；Console 错误查询为 0 条（Unity 6000.5.4f1）。
+该批验证限于早期内核，不覆盖其后 E01/E02、公共布局或观察契约改动；后续分批结果见 [平台交付记录](platformer-delivery.md)。
+详细记录见[使用文档的验证边界](../../Packages/com.ember/Documentation~/core/hierarchical-fsm.md#测试及本次验证边界)。
 
 ### EmberStateMachine
+
+位置：`Packages/com.ember/Core/Runtime/State/`；命名空间 `Ember.Core`。服务现有游戏启动与流程状态。
 
 ```csharp
 var fsm = new EmberStateMachine();
@@ -1032,18 +1074,15 @@ var fsm = new EmberStateMachine();
 fsm.Register(new InitState());
 fsm.Register(new MainState());
 fsm.Register(new GameplayState());
+fsm.Register(new SettingsState());
 
 // 场景加载委托
 fsm.LoadSceneAsync = (sceneName, onComplete) => {
     EmberSceneManager.Instance.LoadSceneAsync(sceneName, onComplete);
 };
 
-// 场景切换钩子
-fsm.OnSceneTransition = ctx => {
-    if (ctx.FromScene != ctx.ToScene)
-        EmberSceneManager.Instance.TransitionTo(ctx.ToScene, ctx.FromScene, ctx.Proceed);
-    else ctx.Proceed();
-};
+// 正式 GameLauncher 中由 SceneCoordinator.Init 自动设置 OnSceneTransitionAsync。
+// 自定义宿主使用 EmberSceneTransitionRunner.RunAsync 接线，详见通用转场文档。
 
 // 启动
 fsm.Start<InitState>();            // 自动: Init → Main
@@ -1065,7 +1104,34 @@ var state = fsm.GetState<MainState>();
 | `Push<T>(args)` | 覆盖式（暂停当前） |
 | `Pop()` | 恢复上一个 |
 | `Current` / `Previous` | 当前/上一个状态 |
-| `OnStateChanged` | event `Action<EmberGameState, EmberGameState>` |
+| `RequestTransitionTo<T>(args, skipSceneLoad, cancellation)` | 返回请求句柄；等待 Completion 才表示准备、提交、场景及默认 Loading 清理已结束 |
+| `RequestPush<T>(args, cancellation)` / `RequestPop(cancellation)` | 可等待的覆盖/恢复请求 |
+| `IsTransitioning` / `CancelTransition()` / `StopTransitions()` | 查询在途请求、请求取消、永久封闭入口 |
+| `operation.WhenPrepared` / `WhenRunning` / `WhenInteractive` | 请求级准备、运行与完整过渡完成信号；检查结果 Status，复用外层 Loading 时最后一个晚于 Completion（R01.1 已验证） |
+| `operation.IsPrepared` / `IsRunning` / `CanInteract` | 准备历史及当前进入有效性；业务仍须验证会话世代和输入仲裁 |
+| `request.HoldPresentation()` | 自定义完整过渡拥有者在准备前取得独立凭证；真正退出后 Complete，失败 Fail，Dispose 表示放弃 |
+
+正式异步转场协议、失败结果及自定义 Loading 迁移见[游戏流程转场](../../Packages/com.ember/Documentation~/core/game-transitions.md)。
+每台流程机只允许一个在途请求；并发立即返回 Busy。`Start` 仅用于同步启动，不能绕过玩家准备；
+`skipSceneLoad` 仍验证目标场景并执行请求级准备。状态变化通过 `EmberBroadcastEvent.GameStateChanged` 广播。
+
+### Ember.Core.Fsm：有限附加条件（E02）
+
+角色/对象层级 FSM 的实现位于 `Packages/com.ember/Core/Runtime/Fsm/`，与上述游戏流程机分开。
+
+| API | 用途与边界 |
+| --- | --- |
+| `EmberConditionExpression / Node / Parameter` | 原生序列化的有限树：稳定节点 ID、kind、类型化参数、有序子节点；不持久化 CLR 类型、委托或运行宿主 |
+| `EmberConditionCatalog<T>.Compile(expression)` | 登记业务只读叶积木并校验/冻结；内置 true、AND、OR、NOT，最多32层、256节点；编译不查询运行上下文 |
+| `EmberConditionPlan<T>` | 不可变的条件计划、内容身份和描述；AND/OR按子项顺序短路，可记录事实与未求值原因 |
+| `EmberFsmRuleBinding<T> / EmberFsmRulePlan<T>` | 绑定原节点、原声明句柄和原请求位置；构造 FSM 时由可选 `rules:` 参数接入，不改变原请求授权 |
+| `EmberFsmAttemptRecord.BaseAllowed / Conditions` | 区分基础许可、附加树结果和短路；显示消费已有记录，不重新求值 |
+| `EmberFsmObservation.Rules` | 当前实例捕获的规则描述；不引用可变编辑资产，不以同图身份代替规则内容一致性 |
+| `Ember.Core.Editor.EmberConditionEditor.Draw` | Editor-only 序列化树编辑；调用方负责可写权限和 `ApplyModifiedProperties`，保存由显式工作流负责 |
+
+附加条件固定接在原代码许可之后：基础许可一次，成功才求附加树；false为GuardRejected，目标CanEnter仍独立预检。
+它不会自动扫描全图、提交输入/能力/效果，也不是动作持续条件。旧调用方不传 `rules` 时保持原行为。
+玩家适配与方案独占资产属于 platformer 的 Player 业务层；只开放三个已确认Air入口，UPM不依赖Player或Entity。
 
 ### EmberGameState（抽象基类）
 
@@ -1079,8 +1145,10 @@ var state = fsm.GetState<MainState>();
 | `OnEnter(args)` / `OnExit()` | 进入/退出 |
 | `OnUpdate()` | 每帧 |
 | `OnPause()` / `OnResume()` | 暂停/恢复 |
-| `GetTransitions()` | 返回 TransitionDescriptor 数组（编辑器用） |
-| `GetPushTargets()` | 返回 Push 目标（编辑器用） |
+| `PrepareEnterAsync(request)` | 请求级准备；默认调用既有无参重载，PreparedArgs 交给 OnEnter |
+| `AbortPrepareAsync(request)` | 已开始准备但尚未开始提交时释放本请求候选；必须能清理部分准备结果 |
+| `GetEdges()` | 当前统一出边声明；运行校验和编辑器共用 |
+| `GetTransitions()` / `GetPushTargets()` | 旧兼容声明；新状态优先覆写 GetEdges，不重复声明同一出边 |
 
 ### 内置状态
 
@@ -1373,7 +1441,7 @@ handle.Dispose();
 | Succeeded | `bool Succeeded` |
 | Asset | `T Asset` |
 | Error | `string Error` |
-| Completed | `event Action《T》 Completed` |
+| Completed | `event Action<T> Completed` |
 | Cancel | `void Cancel()` |
 | Dispose | `void Dispose()` |
 
@@ -1400,7 +1468,7 @@ _slot.Dispose(); // 取消加载 + 释放当前资源
 
 | 成员 | 签名 |
 |------|------|
-| LoadAsync | `void LoadAsync(string path, Action《T》 onLoaded, bool reapplyIfCurrent=true)` |
+| LoadAsync | `void LoadAsync(string path, Action<T> onLoaded, bool reapplyIfCurrent=true)` |
 | CancelLoading | `void CancelLoading()` |
 | Dispose | `void Dispose()` |
 | CurrentAssetPath | `string CurrentAssetPath` |
@@ -1434,7 +1502,7 @@ handle.Dispose();
 | IsDone | `bool IsDone` |
 | Succeeded | `bool Succeeded` |
 | Error | `string Error` |
-| Completed | `event Action《EmberFileHandle》 Completed` |
+| Completed | `event Action<EmberFileHandle> Completed` |
 | GetBytes | `byte[] GetBytes()` — 防御性拷贝 |
 | GetText | `string GetText()` — UTF-8 懒解析，首次后缓存 |
 | GetFilePath | `string GetFilePath()` — 磁盘路径（非所有 Provider 支持） |
@@ -1613,7 +1681,7 @@ void Dispose();
 框架提供抽象基类，项目实现具体模块：
 
 ```csharp
-[EmberModule(ModulePhase.Gameplay)]
+[EmberModule(ModulePhase.Gameplay, Enabled = true)]
 public sealed class SceneUIModule : EmberSceneUIModuleBase<SceneUIModule>
 {
     protected override void RegisterSceneUIChannels()
@@ -1670,7 +1738,7 @@ event Action<SceneUIChannelKey, string> ChannelUnavailable;
 var mgr = EmberSceneManager.Instance;
 
 // 叠加加载
-mgr.LoadSceneAsync("Battle", () => Debug.Log("done"));
+mgr.LoadSceneAsync("Battle", () => EmberDebug.Log(LogTags.Game, "done"));
 
 // 切换
 mgr.TransitionTo("BattleScene", "MainMenu");
@@ -1776,11 +1844,18 @@ var active = cam.ActiveCamera;
 `UnregisterCamera()`；Awake 激活默认遵守 Lock/Override，只有启用 Force Activation 才执行强制切换。
 玩法模块可以使用 `MainCamera` 做射线换算，但不代管相机注册。
 
+platformer模板的 `Game.PlayerCamera.PlayerCameraParticipant` 是独立场景适配（`Game.PlayerCamera.Runtime`），
+在 `GameSceneScope` 中先于玩家参与者准备/启动，校验已有Camera、Follow、注册器、Brain与通道。
+白盒注册器关闭 Awake 激活；适配器在 `PlayerModule.SessionCommitted` 后将玩家根绑定为Follow/LookAt，
+重置历史构图后通过现有Manager切换。普通移动仍由Cinemachine更新。原位恢复同样发出成功通知，
+失败候选不发出；`SessionReleased` 清除目标并通过注册器注销。通知订阅异常仅报告，不回滚已交接的玩家资源。
+Player运行程序集不依赖Camera/Cinemachine；正式场景未配置适配时保持原行为。不要直接操作Camera Transform代替接线。
+
 ---
 
 ## Editor 工具（Editor-only）
 
-### 模板 AI Skill（本地未发布）
+### 模板 AI Skill
 
 项目中心 `Ember.Core.Editor.EmberProjectSetup` 新增：
 
@@ -1879,8 +1954,8 @@ ProjectLocalPrefs.DeleteAll();
 ```csharp
 public interface IUpdater {
     bool Update();             // 每帧调用，返回 true 表示已失效
-    bool PreOrPostAsyncList;   // 在异步加载列表之前还是之后
-    int Priority;              // 优先级（越小越高）
+    bool PreOrPostAsyncList { get; } // 在异步加载列表之前还是之后
+    int Priority { get; }           // 优先级（越小越高）
 }
 
 public interface IDelayDisposable : IDisposable {
@@ -1946,7 +2021,7 @@ string path = _battleScene;  // 隐式转换
 
 ### 异步业务操作复用 Loading（2026-09-18）
 
-`EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束且经过一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 仍负责场景加载、PrepareEnter、状态进入和旧场景卸载。没有操作持有者时，原有场景 Loading 流程保持原行为。
+`EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束且经过一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 负责候选场景加载、请求级准备、状态进入和旧场景卸载。没有操作持有者时，默认 Loading 使用同一套可等待遮挡流程；取消不会中断遮挡的关闭清理。嵌套转场应等待请求 Completion 并检查结果；转场不自动取消外层自定义业务操作。
 
 ## 通用多语言（0.15.0）
 
@@ -1954,7 +2029,7 @@ string path = _battleScene;  // 隐式转换
 
 Editor 通过 `EmberLocalizationSource` 注册源表、语言列、源语言与输出资产；跨表 Key 必须唯一。源表草稿使用 `EmberTableSourceDocument`，保存检查外部变化并在烘焙失败时回退。详细使用与翻译复核见 [多语言中心](../../Packages/com.ember/Documentation~/manual/localization-center.md)。
 
-## 字体皮肤（本地未发布）
+## 字体皮肤（0.17.0 起）
 
 `Ember.UIExtension.EmberFontSkins.SetSkin(int skinId)` 切换全局皮肤；`Catalog` 优先读取项目配置，
 不存在时使用框架共享预设。`Reload()` 恢复配置中的默认皮肤。切换不写玩家存档。

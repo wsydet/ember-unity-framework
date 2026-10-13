@@ -2,6 +2,14 @@
   "schemaVersion": 2,
   "skills": [
     {
+      "id": "ember-vn-replace-images",
+      "displayName": "视觉小说图片匹配与替换",
+      "description": "匹配项目旧图片，提示差分并通过新旧图对照页面确认，保留路径和 GUID 替换资源。",
+      "templateId": "visual-novel",
+      "minimumFrameworkVersion": "0.14.4",
+      "minimumTemplateVersion": "0.7.0"
+    },
+    {
       "id": "ember-vn-generate-save",
       "displayName": "小说节点测试存档",
       "description": "定位指定节点，特殊节点回退到前置普通节点，使用可调整的默认变量生成本机或实机测试存档。",
