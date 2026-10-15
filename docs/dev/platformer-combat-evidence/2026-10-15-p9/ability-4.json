@@ -1,0 +1,33 @@
+{
+  "job_id": "e819f558689d4963addbee3c8cbcab2b",
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 37.4547401,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SharedAndIndependentAttackAbilitiesSpendOnlyEnabledSegments(False,False)",
+      "state": "Passed",
+      "seconds": 8.5919628
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SharedAndIndependentAttackAbilitiesSpendOnlyEnabledSegments(True,False)",
+      "state": "Passed",
+      "seconds": 10.2986837
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SharedAndIndependentAttackAbilitiesSpendOnlyEnabledSegments(False,True)",
+      "state": "Passed",
+      "seconds": 8.9604664
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SharedAndIndependentAttackAbilitiesSpendOnlyEnabledSegments(True,True)",
+      "state": "Passed",
+      "seconds": 9.2905015
+    }
+  ]
+}

@@ -14,19 +14,25 @@ namespace Game.Player
                 sites: new[] { PlayerRule.Fixed<PlayerLocomotionState>(10, (state, ctx) => ctx.Landing.HardPending, "ctx.Landing.HardPending") });
         public static readonly EmberFsmTransition<PlayerContext, PlayerLocomotionState> Land =
             new("land-pause", "land", description: "没有优先动作时进入普通落地停顿",
-                sites: new[] { PlayerRule.Fixed<PlayerLocomotionState>(30, (state, ctx) => ctx.Landing.NormalPending && !ctx.CanStartJump && !ctx.DropThrough.CanStart && !ctx.Dash.CanStart(true), "ctx.Landing.NormalPending && !ctx.CanStartJump && !ctx.DropThrough.CanStart && !ctx.Dash.CanStart(true)") });
+                sites: new[] { PlayerRule.Fixed<PlayerLocomotionState>(30, (state, ctx) => !ctx.MotionControl.Owns(PlayerMotionChannels.AutomaticTransitions) && ctx.Landing.NormalPending && !ctx.CanStartJump && !ctx.DropThrough.CanStart && !ctx.Dash.CanStart(true), "普通落地需当前动作交回自动转换权") });
         #endregion
         // --------------------------------------------------------
         #region 外部方法
         public override void FixedUpdate(float deltaTime)
         {
+            if (Context.Life != null && Activation.AttemptGroup("life").ShouldStop) return;
+            if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true) return;
             if (Activation.AttemptGroup("decision").ShouldStop) return;
-            if (Context.Landing.IsActive || Context.Rolling.IsActive) return;
+            if (Context.Combat?.Dash?.OpportunityActive == true && Activation.AttemptGroup("dash-combat").ShouldStop) return;
+            if (Context.Combat?.CanOfferEntry == true && Activation.AttemptGroup("combat").ShouldStop) return;
+            if (Context.Landing.IsActive || Context.Rolling.IsActive) { Context.Combat?.Dash?.Cancel(); return; }
             if (Context.Dash.IsActive || Context.Ledge.IsActive) return;
+            Context.Combat?.Dash?.AdvanceResidual(deltaTime);
             float direction = Context.Input.Horizontal;
-            Context.Motor.SetHorizontalVelocity(Context.Feel.CalculateHorizontalSpeed(
-                Context.Motor.Velocity.x, direction, Context.JumpWindow.HasGroundSupport, deltaTime));
-            if (direction != 0) Context.Facing.SetFacing(direction > 0);
+            if (!Context.MotionControl.Owns(PlayerMotionChannels.Horizontal))
+                Context.Motor.SetHorizontalVelocity(Context.Feel.CalculateHorizontalSpeed(
+                    Context.Motor.Velocity.x, direction, Context.JumpWindow.HasGroundSupport, deltaTime));
+            if (direction != 0 && !Context.MotionControl.Owns(PlayerMotionChannels.Facing)) Context.Facing.SetFacing(direction > 0);
         }
         #endregion
     }

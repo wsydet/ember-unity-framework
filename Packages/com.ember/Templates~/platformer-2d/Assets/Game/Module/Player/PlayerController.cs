@@ -51,7 +51,10 @@ namespace Game.Player
         private void Check(EmberFsmResult result)
         {
             if (result != EmberFsmResult.Changed && result != EmberFsmResult.NoChange)
-                throw new InvalidOperationException("玩家 FSM：" + result + "; " + _fsm?.LastFault?.ToString());
+            {
+                var fault = _fsm?.LastFault;
+                throw new InvalidOperationException($"玩家 FSM：{result}; 节点={fault?.FaultNodeId}; 阶段={fault?.Phase}", fault?.Exception);
+            }
         }
 
         private void ValidateConfiguration(PlayerConfig config, string scene, string trialScene = null)
@@ -75,9 +78,12 @@ namespace Game.Player
         private void BindEffects()
         {
             if (_effects == null) return;
+            var explicitTargets = GetComponent<EntityEffectTargets>();
+            if (explicitTargets != null) { _effectBinding = explicitTargets.Bind(_effects); return; }
+            var view = GetComponentInChildren<PlayerAnimationView>(true);
             _effectBinding = new EntityEffectBinding(_effects,
-                GetComponentsInChildren<Collider2D>(true).Where(item => _entity.Owns(item)).ToArray(),
-                GetComponentsInChildren<SpriteRenderer>(true).Where(item => _entity.Owns(item)).ToArray());
+                GetComponentsInChildren<Collider2D>(true).Where(item => _entity.Owns(item) && !item.isTrigger).ToArray(),
+                view != null ? new[] { view.Sprite } : GetComponents<SpriteRenderer>());
         }
 
         private void ApplyCandidate(PlayerRuntimeCandidate candidate)
@@ -237,16 +243,19 @@ namespace Game.Player
             Context.Wall.Observe(dt);
             Context.Ledge.ObserveInput();
             _motor.BeginStep();
+            Context.Correction.BeginStep();
             Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt);
+            Context.Combat?.Dash?.ObserveEnvironment();
             var active = _active;
             try
             {
                 Check(_fsm.FixedUpdate(dt));
                 if (ReferenceEquals(active, _active) && !active.IsDisposed)
                 {
-                    Context.Wall.Apply();
-                    Context.Ledge.Apply(dt);
-                    Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
+                    if (!Context.MotionControl.Owns(PlayerMotionChannels.Wall)) Context.Wall.Apply();
+                    if (!Context.MotionControl.Owns(PlayerMotionChannels.Ledge)) Context.Ledge.Apply(dt);
+                    if (!Context.MotionControl.Owns(PlayerMotionChannels.Vertical)) Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
+                    if (!Context.MotionControl.Owns(PlayerMotionChannels.Correction)) Context.Correction.Apply(dt, CurrentStateId);
                 }
                 _motor.ExecuteStep();
                 if (ReferenceEquals(active, _active) && !active.IsDisposed) active.Animation?.Sync(active.Fsm);

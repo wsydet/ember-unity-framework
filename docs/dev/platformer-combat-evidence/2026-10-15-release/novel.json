@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "id": "visual-novel",
+      "version": "0.20.0",
+      "frameworkVersion": "0.19.0",
+      "contentHash": "19a1f7dcfde65092a6a5cb9fa4ee5120",
+      "versionedContentHash": "19a1f7dcfde65092a6a5cb9fa4ee5120",
+      "status": "Synced",
+      "Error": null,
+      "ChildContentHash": "19a1f7dcfde65092a6a5cb9fa4ee5120",
+      "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+    },
+    "compiler": "codedom"
+  }
+}

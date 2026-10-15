@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "baseHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "framework": "0.19.0",
+      "play": false,
+      "compiling": false,
+      "compilationFailed": false,
+      "options": 1,
+      "optionsEnabled": true,
+      "config": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"PlayerConfig\",\"m_EditorClassIdentifier\":\"Game.Player.Runtime::Game.Player.PlayerConfig\",\"_scheme\":{\"fileID\":11400000,\"guid\":\"a2d7100fc47f54b4282b5be389d735b8\",\"type\":2},\"_graph\":{\"instanceID\":0},\"_powers\":{\"instanceID\":0},\"_enableEffects\":false,\"_inputChannel\":\"\",\"_moveAction\":\"\",\"_jumpAction\":\"\",\"_dashAction\":\"\",\"_scene\":\"GameplayScene\",\"_spawn\":{\"x\":0.0,\"y\":1.0499999523162842},\"_feel\":{\"instanceID\":0}}}",
+      "windows": [],
+      "scenes": [
+        {
+          "name": "FrameworkScene",
+          "dirty": false
+        }
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

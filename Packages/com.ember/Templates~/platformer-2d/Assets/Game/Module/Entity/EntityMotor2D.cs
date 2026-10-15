@@ -17,6 +17,7 @@ namespace Game.Entity
         private Vector2 _command;
         private float _gravityCommand;
         private readonly List<RaycastHit2D> _motionHits = new(8);
+        private readonly List<Collider2D> _correctionShapes = new(4);
         public Vector2 CommandVelocity => _command;
         public Rigidbody2D Body => _body != null ? _body : (_body = GetComponent<Rigidbody2D>());
         public bool IsFrozen => _frozen;
@@ -62,6 +63,26 @@ namespace Game.Entity
         public void BeginStep() { _command = Velocity; _gravityCommand = Body.gravityScale; }
         public void SetHorizontalVelocity(float value) => _command.x = value;
         public void SetVerticalVelocity(float value) => _command.y = value;
+        /// <summary>执行调用方已验证目的空间的短距补正；再次扫掠全部刚体碰撞体，保留速度及重力指令。</summary>
+        public bool TryCorrectPosition(Vector2 offset, float skin)
+        {
+            if (!float.IsFinite(offset.x) || !float.IsFinite(offset.y) || !float.IsFinite(skin) || skin <= 0)
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            if (_frozen || !Body.simulated || offset.sqrMagnitude <= .00000001f) return false;
+            var direction = offset.normalized;
+            Body.GetAttachedColliders(_correctionShapes);
+            Body.Cast(direction, new ContactFilter2D { useTriggers = false }, _motionHits, offset.magnitude + skin);
+            foreach (var hit in _motionHits)
+            {
+                if (hit.rigidbody == Body || Vector2.Dot(hit.normal, direction) >= -.001f) continue;
+                foreach (var shape in _correctionShapes)
+                    if (shape.enabled && !shape.isTrigger && shape.gameObject.activeInHierarchy &&
+                        !Physics2D.GetIgnoreLayerCollision(shape.gameObject.layer, hit.collider.gameObject.layer) &&
+                        !EntityCollisionIgnoreLease2D.IsIgnored(shape, hit.collider)) return false;
+            }
+            Body.position += offset;
+            return true;
+        }
         /// <summary>动作位移转换为本物理步速度；按刚体全部碰撞体扫掠并保留安全间距，不写 Transform。</summary>
         public bool SetSweptDisplacement(Vector2 displacement, float deltaTime, LayerMask layers, float skin, out Vector2 allowed)
         {

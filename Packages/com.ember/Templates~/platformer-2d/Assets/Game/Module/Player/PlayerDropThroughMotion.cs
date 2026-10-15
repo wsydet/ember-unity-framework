@@ -35,6 +35,7 @@ namespace Game.Player
                 if (!IsActive || ability.TryCommit(ability.CreateAttempt()) != EntityUseStatus.Available)
                     throw new InvalidOperationException("下穿资源提交失败。");
                 if (!_context.Input.ConsumeJump()) throw new InvalidOperationException("下穿输入提交失败。");
+                _context.Combat?.Dash?.Cancel();
                 _context.JumpWindow.ClearSupport();
                 _context.VerticalMotion.NotifyJump(); // 清悬停并抑制本次主动离地的悬停。
                 _context.Wall.Cancel();

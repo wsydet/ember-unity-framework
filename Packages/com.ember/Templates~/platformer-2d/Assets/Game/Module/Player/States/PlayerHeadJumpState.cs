@@ -22,6 +22,7 @@ namespace Game.Player
                 ability.TryCommit(ability.CreateAttempt()) != EntityUseStatus.Available)
                 throw new InvalidOperationException("踩头反弹资源提交失败。");
             if (!Context.Input.ConsumeJump()) throw new InvalidOperationException("踩头反弹输入提交失败。");
+            Context.Combat?.Dash?.Cancel();
             Context.HeadJump.Begin(); Context.JumpWindow.Consume(); Context.Wall.Cancel(); Context.VerticalMotion.NotifyJump();
             Context.Motor.SetHorizontalVelocity(Context.Motor.Velocity.x);
             Context.Motor.SetVerticalVelocity(Context.Feel.HeadJumpSpeed);

@@ -1,0 +1,58 @@
+{
+  "job_id": "b1b00cf0c12e4f599c34394f9ae5c739",
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 35.3196994,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackOwnsWallAndLedgeUntilRecoveryFinishes(False)",
+      "state": "Passed",
+      "seconds": 9.1239456
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackOwnsWallAndLedgeUntilRecoveryFinishes(True)",
+      "state": "Passed",
+      "seconds": 9.0989443
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FourthAttackFromPublicConfigurationEntryPlaysAndHits",
+      "state": "Passed",
+      "seconds": 16.3604087
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(0,-1)",
+      "state": "Passed",
+      "seconds": 0.0291151
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(0,1)",
+      "state": "Passed",
+      "seconds": 0.0268132
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(1,-1)",
+      "state": "Passed",
+      "seconds": 0.0540767
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(1,1)",
+      "state": "Passed",
+      "seconds": 0.1468574
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(2,-1)",
+      "state": "Passed",
+      "seconds": 0.0756591
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitGeometryMirrorsOffsetAndShapeInBothDirections(2,1)",
+      "state": "Passed",
+      "seconds": 0.0206926
+    }
+  ]
+}

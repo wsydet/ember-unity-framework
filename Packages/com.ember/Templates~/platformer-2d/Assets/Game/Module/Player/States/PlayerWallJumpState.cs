@@ -23,6 +23,7 @@ namespace Game.Player
             if (!Context.CanStartWallJump || !Context.Abilities.TryGet(ABILITY_ID, out var ability) ||
                 ability.TryCommit(ability.CreateAttempt()) != EntityUseStatus.Available || !Context.Input.ConsumeJump())
                 throw new InvalidOperationException("墙跳进入提交失效。");
+            Context.Combat?.Dash?.Cancel();
             Context.JumpWindow.Consume(); Context.VerticalMotion.NotifyJump();
             Context.Wall.BeginJump(wall);
         }

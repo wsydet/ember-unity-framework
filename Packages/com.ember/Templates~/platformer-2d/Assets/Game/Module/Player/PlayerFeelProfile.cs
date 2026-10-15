@@ -10,12 +10,15 @@ namespace Game.Player
         [SerializeField] private PlayerMoveFeel _movement;
         [SerializeField] private PlayerJumpFeel _jump;
         [SerializeField] private PlayerInputFeel _input;
+        [SerializeField] private PlayerAttackProfile _attack = new();
         #endregion
         // --------------------------------------------------------
         #region 外部方法
         public PlayerMoveFeel Movement => _movement;
         public PlayerJumpFeel Jump => _jump;
         public PlayerInputFeel Input => _input;
+        public PlayerAttackProfile Attack => _attack;
+        internal void SetAttackConfiguration(PlayerAttackProfile attack) => _attack = PlayerCombatData.Copy(attack);
         public void Configure(PlayerMoveFeel movement, PlayerJumpFeel jump, PlayerInputFeel input)
         { _movement = movement; _jump = jump; _input = input; }
         public PlayerFeelRuntime Capture(Vector2 worldGravity)
@@ -23,10 +26,12 @@ namespace Game.Player
             if (_movement == null || _jump == null || _input == null)
                 throw new InvalidOperationException("手感预设缺少移动、跳跃或输入窗口配置。");
             _movement.Validate(); _input.Validate();
+            if (_attack == null) throw new InvalidOperationException("Feel.Attack：配置为空。");
+            _attack.Validate();
             _jump.Resolve(worldGravity, out var launch, out var gravity);
             return new PlayerFeelRuntime(_movement, launch, gravity, _jump.ReleaseSpeed,
                 _jump.EnableShortJump, _input.BufferDuration, _input.CoyoteDuration, worldGravity,
-                _jump.ShortJumpMode, _jump.MinimumHeight, _jump.ReleaseMultiplier, _jump);
+                _jump.ShortJumpMode, _jump.MinimumHeight, _jump.ReleaseMultiplier, _jump, _attack, _input);
         }
         /// <summary>创建未保存的独立预设及三份配置；调用方负责保存资产或销毁全部四个对象。</summary>
         public PlayerFeelProfile CreateIndependentCopy()
@@ -35,6 +40,7 @@ namespace Game.Player
                 throw new InvalidOperationException("不能复制缺少分组配置的预设。");
             var result = Instantiate(this);
             result._movement = Instantiate(_movement); result._jump = Instantiate(_jump); result._input = Instantiate(_input);
+            result._attack = PlayerCombatData.Copy(_attack);
             return result;
         }
         #endregion
@@ -45,6 +51,11 @@ namespace Game.Player
     {
         #region 内部参数
         public float MoveSpeed { get; }
+        public PlayerAttackProfile Attack { get; }
+        public PlayerCorrectionSpec JumpCorrection { get; }
+        public PlayerCorrectionSpec GroundDashCorrection { get; }
+        public PlayerCorrectionSpec AirDashCorrection { get; }
+        public PlayerCorrectionSpec StepCorrection { get; }
         public float DropThroughSpeed { get; }
         public PlayerLedgeSpec Ledge { get; }
         public PlayerLandingSpec Landing { get; }
@@ -72,6 +83,9 @@ namespace Game.Player
         public float MinimumHeight { get; }
         public float ReleaseMultiplier { get; }
         public float BufferDuration { get; }
+        public float AttackBufferDuration { get; }
+        public float CombatDashBufferDuration { get; }
+        public float CombatJumpBufferDuration { get; }
         public float CoyoteDuration { get; }
         public float EstimatedHeight { get; }
         public float EstimatedApexTime { get; }
@@ -99,9 +113,15 @@ namespace Game.Player
         #region 外部方法
         internal PlayerFeelRuntime(PlayerMoveFeel movement, float launch, float gravity, float release, bool shortJump,
             float buffer, float coyote, Vector2 worldGravity, PlayerShortJumpMode shortJumpMode,
-            float minimumHeight, float releaseMultiplier, PlayerJumpFeel jump)
+            float minimumHeight, float releaseMultiplier, PlayerJumpFeel jump, PlayerAttackProfile attack, PlayerInputFeel input)
         {
+            Attack = PlayerCombatData.Copy(attack);
+            AttackBufferDuration = input.AttackBufferDuration;
+            CombatDashBufferDuration = input.CombatDashBufferDuration;
+            CombatJumpBufferDuration = input.CombatJumpBufferDuration;
             WallSlideSpeed = jump.WallSlideSpeed; DropThroughSpeed = movement.DropThroughSpeed;
+            JumpCorrection = movement.JumpCorrection; GroundDashCorrection = movement.GroundDashCorrection;
+            AirDashCorrection = movement.AirDashCorrection; StepCorrection = movement.StepCorrection;
             Ledge = movement.Ledge;
             Landing = movement.Landing;
             Rolling = movement.Rolling; HeadJumpSpeed = jump.HeadJumpSpeed;

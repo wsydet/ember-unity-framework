@@ -13,6 +13,12 @@ namespace Game.Player
         public EntitySensors2D Sensors { get; }
         public EntityFacing2D Facing { get; }
         public PlayerInputAdapter Input { get; }
+        internal PlayerMotionControl MotionControl { get; } = new();
+        internal PlayerCombatMotion Combat { get; set; }
+        internal EntityHitReceiver HitReceiver { get; set; }
+        internal PlayerLifeSession Life { get; set; }
+        public EntityHealth Health => Life?.Health;
+        public bool ShowHealth => Life?.Configuration.Life is { Enabled: true, ShowHealth: true };
         public PlayerJumpWindow JumpWindow { get; }
         public PlayerFeelRuntime Feel { get; }
         public PlayerWallMotion Wall { get; }
@@ -22,6 +28,7 @@ namespace Game.Player
         public PlayerLandingMotion Landing { get; }
         public PlayerRollingMotion Rolling { get; }
         public PlayerHeadJumpMotion HeadJump { get; }
+        public PlayerCollisionCorrection Correction { get; }
         /// <summary>固定步中 Motor 尚未提交刚体速度；所有地面入口共用同一实际速度与输入事实。</summary>
         internal string GroundMotionState
         {
@@ -63,6 +70,6 @@ namespace Game.Player
         internal PlayerContext(Entity2D entity, EntityMotor2D motor, EntitySensors2D sensors,
             EntityFacing2D facing, PlayerInputAdapter input, PlayerJumpWindow jumpWindow, PlayerPowerSession powers,
             EntityEffectContainer effects, PlayerFeelRuntime feel)
-        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); }
+        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); Correction = new PlayerCollisionCorrection(this); }
     }
 }

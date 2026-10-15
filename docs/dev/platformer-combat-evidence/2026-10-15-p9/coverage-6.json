@@ -1,0 +1,43 @@
+{
+  "job_id": "274faf9bac9349f195efa29e1427a1ab",
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 90.9266065,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirAttackLandingCancelsOnlyAirExclusiveSegment(Air)",
+      "state": "Passed",
+      "seconds": 10.150094
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirAttackLandingCancelsOnlyAirExclusiveSegment(Both)",
+      "state": "Passed",
+      "seconds": 11.5615094
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedInterruptionReleasesOnlyItsPromptAndStopIsIdempotent(\"jump\")",
+      "state": "Passed",
+      "seconds": 17.6365794
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedInterruptionReleasesOnlyItsPromptAndStopIsIdempotent(\"hit\")",
+      "state": "Passed",
+      "seconds": 17.2029335
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedInterruptionReleasesOnlyItsPromptAndStopIsIdempotent(\"death\")",
+      "state": "Passed",
+      "seconds": 15.1125888
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedInterruptionReleasesOnlyItsPromptAndStopIsIdempotent(\"stop\")",
+      "state": "Passed",
+      "seconds": 18.8991844
+    }
+  ]
+}

@@ -33,6 +33,11 @@ namespace Game.Player
         [Header("冲刺运动；项目启用与 CD 由 Skill 装配控制")]
         [SerializeField] private PlayerDashSettings _groundDash = new();
         [SerializeField] private PlayerDashSettings _airDash = new();
+        [Header("碰撞补正；默认关闭，不改变原方案")]
+        [SerializeField] private PlayerCorrectionSettings _jumpCorrection = new();
+        [SerializeField] private PlayerCorrectionSettings _groundDashCorrection = new();
+        [SerializeField] private PlayerCorrectionSettings _airDashCorrection = new();
+        [SerializeField] private PlayerCorrectionSettings _stepCorrection = new();
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -45,6 +50,10 @@ namespace Game.Player
         // --------------------------------------------------------
         #region 外部方法
         public float Speed => _speed;
+        internal PlayerCorrectionSpec JumpCorrection => _jumpCorrection?.Capture() ?? default;
+        internal PlayerCorrectionSpec GroundDashCorrection => _groundDashCorrection?.Capture() ?? default;
+        internal PlayerCorrectionSpec AirDashCorrection => _airDashCorrection?.Capture() ?? default;
+        internal PlayerCorrectionSpec StepCorrection => _stepCorrection?.Capture() ?? default;
         internal PlayerLandingSpec Landing => (_landing ?? throw new InvalidOperationException("缺少落地配置。")).Capture();
         internal PlayerRollingSpec Rolling => (_rolling ?? throw new InvalidOperationException("缺少翻滚配置。")).Capture();
         internal PlayerLedgeSpec Ledge => _ledge?.Capture() ?? default;
@@ -64,6 +73,7 @@ namespace Game.Player
         public PlayerDashSettings AirDash => _airDash;
         internal void Validate()
         {
+            _ = JumpCorrection; _ = GroundDashCorrection; _ = AirDashCorrection; _ = StepCorrection;
             _ = Landing;
             _ = Rolling;
             if (_groundDash == null || _airDash == null) throw new InvalidOperationException("缺少地面或空中冲刺运动分组。");

@@ -27,6 +27,7 @@ namespace Game.Player
             ? EmberFsmEntryDecision.Allow : EmberFsmEntryDecision.Redirect("fall");
         public override void FixedUpdate(float deltaTime)
         {
+            if (Context.MotionControl.Owns(PlayerMotionChannels.AutomaticTransitions)) return;
             Activation.AttemptGroup("decision");
         }
         #endregion

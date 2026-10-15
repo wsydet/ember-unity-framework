@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "id": "platformer-2d",
+      "version": "0.4.1",
+      "frameworkVersion": "0.19.0",
+      "contentHash": "373437cccbe9f4ba6e93359da2c8b2fd",
+      "versionedContentHash": "373437cccbe9f4ba6e93359da2c8b2fd",
+      "status": "Synced",
+      "Error": null,
+      "ChildContentHash": "373437cccbe9f4ba6e93359da2c8b2fd",
+      "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "HasConflicts": false,
+      "WillChangeChildContent": false
+    },
+    "compiler": "codedom"
+  }
+}

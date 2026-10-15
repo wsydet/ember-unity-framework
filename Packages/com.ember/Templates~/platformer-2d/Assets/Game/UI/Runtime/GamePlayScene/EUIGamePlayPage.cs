@@ -94,23 +94,27 @@ namespace Game.UI
         private void OnShowUser()
         {
             if (!_playerOperation) ReportPlayer("保存使用槽位 0 · 恢复到本会话存档点，首次保存前恢复初始状态");
+            BindLifeNotice();
         }
 
         /// <summary>用户隐藏钩子：框架 OnHide 结束时调用。</summary>
         private void OnHideUser()
         {
+            UnbindLifeNotice();
             // 页面被隐藏
         }
 
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
+            UnbindLifeNotice();
             // 页面被关闭
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
+            UnbindLifeNotice();
             Btn_Settings?.onClick.RemoveListener(OpenPlayerSettings);
             Btn_Save?.onClick.RemoveListener(SaveProgress);
             Btn_SaveExit?.onClick.RemoveListener(SaveAndExit);

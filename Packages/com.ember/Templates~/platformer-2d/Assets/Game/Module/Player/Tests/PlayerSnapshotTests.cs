@@ -117,10 +117,10 @@ namespace Game.Player.Tests
             Assert.That(codec.Decode(bytes, 1).Status, Is.EqualTo(DecodeStatus.DataVersionUnsupported));
             Assert.That(codec.Decode(bytes, 999).Status, Is.EqualTo(DecodeStatus.DataVersionUnsupported));
             for (int i = 0; i < bytes.Length; i++)
-                Assert.That(codec.Decode(new ReadOnlyMemory<byte>(bytes, 0, i), 2).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
-            Assert.That(codec.Decode(bytes.Concat(new byte[] { 0 }).ToArray(), 2).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
+                Assert.That(codec.Decode(new ReadOnlyMemory<byte>(bytes, 0, i), PlatformerSnapshot.DATA_VERSION).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
+            Assert.That(codec.Decode(bytes.Concat(new byte[] { 0 }).ToArray(), PlatformerSnapshot.DATA_VERSION).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
             var changed = (byte[])bytes.Clone(); changed[0] = 1;
-            Assert.That(codec.Decode(changed, 2).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
+            Assert.That(codec.Decode(changed, PlatformerSnapshot.DATA_VERSION).Status, Is.EqualTo(DecodeStatus.DecodeFailed));
         }
         [Test] public void ResourceRestoreRejectsMissingUnknownDuplicateAndOutOfRangeWithoutMutatingHost()
         {
@@ -146,7 +146,7 @@ namespace Game.Player.Tests
             var snapshot = new PlatformerSnapshot("GameplayScene", Vector2.zero, Vector2.zero, true, EmptySnapshot().Powers, true, effects);
             categories[0] = "changed"; effects[0] = default;
             var codec = new PlatformerSnapshotCodec(); var bytes = codec.Encode(snapshot);
-            using var restored = codec.Decode(bytes.Payload, 2).Progress.RestoreEffects();
+            using var restored = codec.Decode(bytes.Payload, PlatformerSnapshot.DATA_VERSION).Progress.RestoreEffects();
             Assert.That(restored.ProtectsDamage("contact"), Is.True); Assert.That(restored.ProtectsDamage("changed"), Is.False);
             Assert.That(restored.PreventsStagger, Is.True); Assert.That(restored.ExcludedLayers, Is.EqualTo(1 << 8));
             Assert.That(restored.GetAt(0).Kind, Is.EqualTo(EntityEffectKind.Debuff)); Assert.That(restored.GetAt(0).ElapsedSeconds, Is.Zero);

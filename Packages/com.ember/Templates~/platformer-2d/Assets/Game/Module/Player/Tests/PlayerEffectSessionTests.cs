@@ -92,9 +92,13 @@ namespace Game.Player.Tests
             var child = Keep(new GameObject("SeparateEntity")); child.transform.SetParent(controller.transform);
             child.AddComponent<Entity2D>(); var shape = child.AddComponent<BoxCollider2D>();
             var sprite = child.AddComponent<SpriteRenderer>();
+            var slash = Keep(new GameObject("IndependentSlash")); slash.transform.SetParent(controller.transform);
+            var slashSprite = slash.AddComponent<SpriteRenderer>();
+            var hitRange = slash.AddComponent<BoxCollider2D>(); hitRange.isTrigger = true;
             var candidate = await Prepare(module, controller);
             controller.Context.Effects.ApplyIndependent(SessionEffect(), "parent");
             Assert.That(shape.excludeLayers.value, Is.Zero); Assert.That(sprite.color.a, Is.EqualTo(1));
+            Assert.That(hitRange.excludeLayers.value, Is.Zero); Assert.That(slashSprite.color.a, Is.EqualTo(1));
             Assert.That(controller.GetComponent<Collider2D>().excludeLayers.value, Is.EqualTo(1 << 8));
             candidate.Dispose();
         }

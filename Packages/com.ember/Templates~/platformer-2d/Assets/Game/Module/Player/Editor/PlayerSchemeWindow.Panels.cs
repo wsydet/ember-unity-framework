@@ -27,7 +27,7 @@ namespace Game.Player.Editor
         private string _validatedFingerprint;
         private string _configurationIdentity;
         private bool _rebuildPanels;
-        private static readonly string[] Sections = { "方案与保存", "动作与机制", "运动参数", "能力与技能", "效果", "动画", "Prefab 表现与碰撞" };
+        private static readonly string[] Sections = { "方案与保存", "动作与机制", "运动参数", "能力与技能", "效果", "动画", "Prefab 表现与碰撞", "攻击与命中" };
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -170,6 +170,7 @@ namespace Game.Player.Editor
                     if (GUILayout.Button("编辑白盒场景")) Run(PlayerFeelLabWindow.OpenLab);
             }
             _ruler = EditorGUILayout.Toggle("Scene 世界刻度", _ruler);
+            PlayerLabTrail.DrawControls();
             _advanced = EditorGUILayout.Foldout(_advanced, "高级 · 运行诊断 / 旧草稿 / 正式验收", true);
             if (_advanced)
             {
@@ -218,6 +219,7 @@ namespace Game.Player.Editor
                         if (!string.IsNullOrWhiteSpace(_filter)) DrawFilteredPanels();
                         else if (_section == Sections[0]) DrawSchemeHome();
                         else if (_section == Sections[6]) PlayerAppearanceWindow.DrawPanel(_selected != null ? _selected.Feel : null, ref _ruler);
+                        else if (_section == Sections[7]) DrawCombatPanel();
                         else
                         {
                             foreach (var panel in _panels.Where(p => p.Category == _section)) panel.Draw(_filter);
@@ -332,13 +334,15 @@ namespace Game.Player.Editor
             Add(Sections[1], "输入宽限", _selected.Feel?.Input, null, "缓冲与土狼时间各自独立；关闭仍保留数值。");
             Add(Sections[1], "运动机制开关", move, "_accelerated _independentAir _airAccelerated _enableJumpResponse _landing _rolling", "关闭机制保留所有数值；具体速度、时长见“运动参数”。");
             Add(Sections[1], "跳跃与竖直机制开关", jump, "_enableShortJump _enableApexGravity _enableFallGravity _enableFallLimit _enableEdgeHover _enableWallFastSlide _wallReturnEnabled");
+            Add(Sections[1], "碰撞补正（独立开关与参数）", move, "_jumpCorrection _groundDashCorrection _airDashCorrection _stepCorrection", "跳跃向左右补正；空冲向上下补正；地冲和跨台阶只向上且需要前方落脚支撑。按距离由近到远搜索，同距离按方向偏好选择。仅对静止实体障碍启用，路径或空间不足时不补正。");
             Add(Sections[1], "能力动作启用", _selected.Powers, null, "挂边 / 翻越、墙面、二段跳、下穿、反弹及冲刺由 Ability / Skill 装配控制；次数、解锁、CD 见“能力与技能”。");
             Add(Sections[2], "地面水平", move, "_speed _accelerated _acceleration _braking _turning", "渐变关闭时即时响应；速率为零表示该阶段不改变速度。");
             Add(Sections[2], "空中水平", move, "_independentAir _airSpeed _airAccelerated _airAcceleration _airBraking _airTurning _enableJumpResponse _jumpResponseDuration", "独立空中关闭时继承地面；空中值保留但不生效。");
             Add(Sections[2], "普通跳跃与短跳", jump, "_mode _height _apexTime _launchSpeed _gravityScale _enableShortJump _shortJumpMode _releaseSpeed _minimumHeight _releaseMultiplier", "高度/到顶与直接速度/重力互斥；短跳关闭时修正参数不生效。");
-            Add(Sections[2], "顶点 / 下落 / 悬停", jump, "_enableApexGravity _apexSpeed _apexMultiplier _enableFallGravity _fallMultiplier _enableFallLimit _fallLimit _enableEdgeHover _edgeHoverDuration");
+            Add(Sections[2], "顶点 / 下落加速 / 悬停", jump, "_enableApexGravity _apexSpeed _apexMultiplier _enableFallGravity _fallMultiplier _enableFallLimit _fallLimit _enableEdgeHover _edgeHoverDuration", "下落倍率 > 1 加快下降反馈；顶点区间优先，不叠乘。最终下降时间还受顶点范围、限速和落地高度影响。");
             Add(Sections[2], "墙面 / 二段跳 / 反弹", jump, "_headJumpSpeed _airJumpSpeed _airJumpHorizontalMode _airJumpHorizontalSpeed _wallSlideSpeed _enableWallFastSlide _wallFastSlideSpeed _wallJumpX _wallJumpY _wallProtection _wallReturnEnabled _wallReturnDuration _wallReturnMultiplier", "动作启用、解锁和次数见“能力与技能”；关闭动作不会删除运动参数。");
             Add(Sections[2], "地空冲刺", move, "_groundDash _airDash", "启用、解锁及 CD 见“能力与技能”。");
+            Add(Sections[2], "跳跃 / 冲刺 / 台阶补正", move, "_jumpCorrection _groundDashCorrection _airDashCorrection _stepCorrection", "最大距离与搜索步长控制容错范围及精度；所有补正默认关闭。地面补正固定向上，方向偏好仅用于跳跃和空中冲刺。");
             Add(Sections[2], "落地 / 翻滚", move, "_landing _rolling");
             Add(Sections[2], "下穿 / 挂边 / 翻越", move, "_dropThroughSpeed _ledge", "翻越依赖挂边；物理尺寸在 Prefab 中单独编辑。");
             Add(Sections[3], "能力与技能装配", _selected.Powers);

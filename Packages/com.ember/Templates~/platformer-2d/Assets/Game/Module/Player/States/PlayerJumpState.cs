@@ -42,6 +42,7 @@ namespace Game.Player
             // 空中进度只恢复速度；没有本次合法起跳机会就不接续旧跳跃的按键高度控制。
             if (!Context.CanStartJump && Context.Motor.Velocity.y > 0) return;
             if (!Context.Input.ConsumeJump()) throw new InvalidOperationException("进入跳跃时起跳请求已失效。");
+            Context.Combat?.Dash?.Cancel();
             Context.JumpWindow.Consume();
             // 二段跳专用规则：仅本次有效普通起跳补满，恢复上升路径已在上面返回。
             if (Context.Abilities.TryGet(PlayerAirJumpState.ABILITY_ID, out var airJump)) airJump.RefillUses();

@@ -8,9 +8,32 @@ namespace Game.UI
     {
         #region 内部参数
         private bool _playerOperation;
+        private PlayerModule _observedLife;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
+        private void BindLifeNotice()
+        {
+            UnbindLifeNotice();
+            if (!EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player)) return;
+            _observedLife = player; player.DeathAwaitingConfirmation += OnPlayerDeath;
+            player.SessionCommitted += RefreshHealthItem;
+            player.SessionReleased += ReleaseHealthItem;
+            RefreshHealthItem(player.Controller);
+            if (player.Controller != null && player.Controller.Context?.Health?.Current <= 0) OnPlayerDeath(player.Controller);
+        }
+        private void UnbindLifeNotice()
+        {
+            if (_observedLife != null)
+            {
+                _observedLife.DeathAwaitingConfirmation -= OnPlayerDeath;
+                _observedLife.SessionCommitted -= RefreshHealthItem;
+                _observedLife.SessionReleased -= ReleaseHealthItem;
+            }
+            _healthItem?.Dispose(); _healthItem = null; _observedLife = null;
+        }
+        private void OnPlayerDeath(PlayerController player)
+        { if (!_playerOperation) ReportPlayer("角色已死亡。点击「恢复」确认回到当前存档点；世界保持当前状态。"); }
         private void OpenPlayerSettings()
         {
             var flow = GameLauncher.Instance.Fsm;

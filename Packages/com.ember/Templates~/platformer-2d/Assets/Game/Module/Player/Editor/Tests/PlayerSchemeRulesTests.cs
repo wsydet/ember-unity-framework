@@ -20,7 +20,12 @@ namespace Game.Player.Editor.Tests
         { typeof(PlayerSchemeRule).GetField("_condition", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(scheme.Rules.Rules[2], expression); EditorUtility.SetDirty(scheme.Rules); }
         private static EmberConditionExpression False() => new("not", new EmberConditionNode("not", "not", null, "value"), new EmberConditionNode("value", "true"));
         [SetUp] public void Setup() { _folder = "Assets/E02RulesTest_" + Guid.NewGuid().ToString("N"); AssetDatabase.CreateFolder("Assets", Path.GetFileName(_folder)); }
-        [TearDown] public void Cleanup() { Undo.ClearAll(); AssetDatabase.DeleteAsset(_folder); }
+        [TearDown] public void Cleanup()
+        {
+            foreach (var guid in AssetDatabase.FindAssets("", new[] { _folder }))
+                foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath(guid))) Undo.ClearUndo(asset);
+            AssetDatabase.DeleteAsset(_folder);
+        }
         [Test] public void MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset()
         {
             var scheme = Copy("A"); string before = EditorJsonUtility.ToJson(scheme);

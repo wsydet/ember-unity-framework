@@ -1,0 +1,7 @@
+0.000 idle hp=10 pos=(0.00, 0.89, 0.00)
+0.085 move hp=10 pos=(-0.32, 0.89, 0.00)
+0.155 combat.attack.first hp=10 pos=(-0.80, 0.89, 0.00)
+0.473 combat.attack.second hp=10 pos=(-1.08, 0.89, 0.00)
+0.866 combat.attack.third hp=10 pos=(-1.08, 0.89, 0.00)
+1.494 combat.recovery.third hp=10 pos=(-1.08, 0.89, 0.00)
+1.805 idle hp=10 pos=(-1.08, 0.89, 0.00)

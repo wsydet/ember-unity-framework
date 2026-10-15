@@ -1,0 +1,7 @@
+25449|122.9801|combat.attack.first|Slash_0|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+25506|123.0202|combat.attack.first|Slash_1|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+25560|123.06|combat.attack.first|Slash_2|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+25616|123.1003|combat.attack.first|Slash_3|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+25679|123.1403|combat.attack.first|Slash_4|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+25739|123.1801|combat.attack.first|Slash_5|scale=(3.20, 3.20, 1.00)|position=(2.40, 1.09, 0.00)
+end|frames=6|state=idle

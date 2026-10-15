@@ -1,0 +1,1 @@
+hp=10 state=fall pos=(-8.00, 0.95, 0.00) newFsm=True sameActor=True sameScene=True

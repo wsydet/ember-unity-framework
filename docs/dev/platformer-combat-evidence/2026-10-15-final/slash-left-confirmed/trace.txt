@@ -1,0 +1,8 @@
+before-attack|facing=False
+4184|22.64023|combat.attack.first|Slash_0|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+4239|22.68026|combat.attack.first|Slash_1|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+4301|22.72009|combat.attack.first|Slash_2|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+4371|22.76067|combat.attack.first|Slash_3|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+4442|22.80027|combat.attack.first|Slash_4|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+4458|22.84002|combat.attack.first|Slash_5|scale=(-3.20, 3.20, 1.00)|position=(-3.47, 1.09, 0.00)
+end|frames=6|state=idle

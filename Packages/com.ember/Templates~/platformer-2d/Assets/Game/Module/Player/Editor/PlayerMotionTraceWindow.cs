@@ -37,6 +37,7 @@ namespace Game.Player.Editor
                 EditorGUILayout.HelpBox($"最近普通 Jump 状态片段：观测上升 {trace.JumpRise:F3}u，峰值时刻 +{trace.JumpPeakTime:F3}s，片段持续 {trace.JumpDuration:F3}s；" +
                     (trace.JumpComplete ? "已切至 " + trace.JumpEndState : "记录中") + "。这是片段观测，碰顶/短跳/取消会截断，不能视为完整自由跳跃高度。", MessageType.None);
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
+            DrawPath(trace);
             DrawCurve(trace, "水平提交速度 u/s", x => x.Velocity.x, Color.cyan);
             DrawCurve(trace, "竖直提交速度 u/s", x => x.Velocity.y, Color.green);
             DrawCurve(trace, "提交重力倍率", x => x.Gravity, new Color(1, .7f, .2f));
@@ -48,6 +49,31 @@ namespace Game.Player.Editor
         #endregion
         // --------------------------------------------------------
         #region 内部方法
+        private static void DrawPath(PlayerMotionTrace trace)
+        {
+            EditorGUILayout.LabelField("运动轨迹 X–Y / u（等比例，青色起点 → 橙色终点）", EditorStyles.boldLabel);
+            var rect = GUILayoutUtility.GetRect(100, 230, GUILayout.ExpandWidth(true));
+            EditorGUI.DrawRect(rect, new Color(.09f, .10f, .12f));
+            if (trace.Count < 2) { GUI.Label(rect, "等待物理样本"); return; }
+            Vector2 min = trace[0].Position, max = min;
+            for (int i = 1; i < trace.Count; i++) { min = Vector2.Min(min, trace[i].Position); max = Vector2.Max(max, trace[i].Position); }
+            var plot = new Rect(rect.x + 12, rect.y + 10, Mathf.Max(1, rect.width - 24), rect.height - 40);
+            float scale = Mathf.Min(plot.width / Mathf.Max(1, max.x - min.x), plot.height / Mathf.Max(1, max.y - min.y));
+            Vector2 center = (min + max) * .5f;
+            Vector3 Point(Vector2 p) => new(plot.center.x + (p.x - center.x) * scale, plot.center.y - (p.y - center.y) * scale);
+            GUI.Label(new Rect(rect.x + 8, rect.yMax - 25, rect.width - 16, 22), $"X {min.x:F2}…{max.x:F2}   Y {min.y:F2}…{max.y:F2}   {trace[0].Time:F2}…{trace[trace.Count - 1].Time:F2}s");
+            if (Event.current.type != EventType.Repaint) return;
+            Handles.BeginGUI(); var old = Handles.color;
+            for (int i = 1; i < trace.Count; i++)
+            {
+                Handles.color = Color.Lerp(Color.cyan, new Color(1, .65f, .15f), (float)i / (trace.Count - 1));
+                Handles.DrawLine(Point(trace[i - 1].Position), Point(trace[i].Position));
+            }
+            Handles.color = Color.cyan; Handles.DrawSolidDisc(Point(trace[0].Position), Vector3.forward, 3);
+            Handles.color = new Color(1, .65f, .15f); Handles.DrawSolidDisc(Point(trace[trace.Count - 1].Position), Vector3.forward, 3);
+            Handles.color = old; Handles.EndGUI();
+        }
+
         private static void DrawCurve(PlayerMotionTrace trace, string title, Func<PlayerMotionTrace.Sample, float> value, Color color)
         {
             EditorGUILayout.LabelField(title, EditorStyles.boldLabel);

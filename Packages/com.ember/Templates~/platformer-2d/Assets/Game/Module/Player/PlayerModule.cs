@@ -18,9 +18,12 @@ namespace Game.Player
         #region 内部参数
         public const string CONFIG_PATH = "Config/Player/PlayerConfig";
         private PlayerConfig _config;
+        private IPlatformerSnapshotMigration _snapshotMigration;
         private Vector2 _initialVelocity;
         private PreparedPlayerSession _session;
+        private PlayerHitScene _hits;
         private GameInputRequest _inputRequest, _pauseInput;
+        private GameInputRequest _deathInput;
         private CancellationTokenSource _preparation;
         private long _request;
         private readonly HashSet<PlayerPauseRequest> _pauses = new();
@@ -43,6 +46,7 @@ namespace Game.Player
         public event Action<PlayerController> SessionCommitted;
         /// <summary>会话所有权释放时通知；失败候选和旧候选清理不会发出此通知。</summary>
         public event Action<PlayerController> SessionReleased;
+        public event Action<PlayerController> DeathAwaitingConfirmation;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -85,8 +89,19 @@ namespace Game.Player
                     _session.Data.State == SaveServiceState.Faulted)
                     throw new InvalidOperationException("玩家运行依赖失效。");
                 if (State != PlayerSessionState.Running) return;
-                if (physics) Controller.FixedTick(Time.fixedDeltaTime);
+                if (physics)
+                {
+                    _hits ??= new PlayerHitScene(Controller.gameObject.scene, Controller.Context);
+                    _hits.Step(() => Controller.FixedTick(Time.fixedDeltaTime), Time.fixedDeltaTime);
+                }
                 else Controller.Tick(Time.deltaTime);
+                if (Controller.Context.Life is { DeathCommitted: true } life && _deathInput == null)
+                {
+                    _deathInput = _session.Input.Service.Request(_session, 50,
+                        new GameInputRule(_session.Config.Channel, GameInputPermission.Deny));
+                    if (life.Configuration.Life.Death == PlayerDeathMode.Custom) life.CustomDeath.OnDeath(this, Controller);
+                    else NotifySession(DeathAwaitingConfirmation, Controller);
+                }
             }
             catch (Exception error)
             {
@@ -128,6 +143,8 @@ namespace Game.Player
                 throw;
             }
             finally { nextInput?.Dispose(); }
+            _hits?.Bind(candidate.Controller.Context);
+            _deathInput?.Dispose(); _deathInput = null;
             NotifySession(SessionCommitted, candidate.Controller);
         }
 
@@ -135,7 +152,7 @@ namespace Game.Player
         {
             if (entry.Snapshot != null) return entry.Snapshot;
             if (!entry.Slot.HasValue) throw new ArgumentException("恢复必须指定槽位或完整快照。");
-            var read = await candidate.Data.ReadAsync(entry.Slot.Value, new PlatformerSnapshotCodec(), candidate.Cancellation).Completion;
+            var read = await candidate.Data.ReadAsync(entry.Slot.Value, new PlatformerSnapshotCodec(_snapshotMigration), candidate.Cancellation).Completion;
             await UniTask.SwitchToMainThread();
             CheckDependencies(candidate);
             if (!read.Succeeded) throw new InvalidOperationException("读取完整进度失败：" + read.Status + "; " + read.Error);
@@ -160,6 +177,17 @@ namespace Game.Player
                 throw new ArgumentException("新游戏初始速度必须为有限值。", nameof(initialVelocity));
             _config = config;
             _initialVelocity = initialVelocity;
+        }
+        public void SetSnapshotMigrationForNextInit(IPlatformerSnapshotMigration migration)
+        {
+            if (IsActive || HasSession) throw new InvalidOperationException("迁移器只能在模块激活前显式装配。");
+            _snapshotMigration = migration;
+        }
+        public void ResetCombatActors()
+        {
+            if (_session == null || State is not (PlayerSessionState.Running or PlayerSessionState.Paused))
+                throw new InvalidOperationException("没有可重置的活动战斗场景。");
+            _hits?.ResetActors();
         }
 
         void IEmberModule.OnInit() { LoadConfig(); IsActive = true; State = PlayerSessionState.Ready; LastError = null; }
@@ -305,9 +333,11 @@ namespace Game.Player
         /// <summary>恢复本会话初始/已提交的实际快照，不通过槽位重读替代目标。</summary>
         public EmberTransitionOperation Recover(EmberStateMachine flow, CancellationToken cancellation = default)
         {
-            if (!IsActive || _session == null || IsTrial || _exiting || !flow.Is<GameplayState>())
+            if (!IsActive || _session == null || IsTrial || _exiting || flow.IsTransitioning || !flow.Is<GameplayState>())
                 throw new InvalidOperationException("当前会话不能恢复。");
-            return flow.RequestInPlace<GameplayState>(PlayerEntryRequest.FromSnapshot(RecoveryTarget, RecoverySlot), cancellation);
+            var snapshot = Controller.Context.Life is { IsDead: true } life
+                ? life.RecoverySnapshot(RecoveryTarget, _session.Config.Spawn) : RecoveryTarget;
+            return flow.RequestInPlace<GameplayState>(PlayerEntryRequest.FromSnapshot(snapshot, RecoverySlot), cancellation);
         }
 
         /// <summary>在当前世界读取指定槽位；与内存恢复共用公共事务、候选校验和应用链。</summary>
@@ -373,6 +403,8 @@ namespace Game.Player
         public void StopSession()
         {
             var session = _session; _session = null;
+            _hits?.Dispose(); _hits = null;
+            _deathInput?.Dispose(); _deathInput = null;
             if (session != null) NotifySession(SessionReleased, session.Controller);
             _inputRequest?.Dispose(); _inputRequest = null;
             _pauseInput?.Dispose(); _pauseInput = null;

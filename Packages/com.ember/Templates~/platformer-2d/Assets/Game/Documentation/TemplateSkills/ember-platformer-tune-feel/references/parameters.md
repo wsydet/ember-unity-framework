@@ -50,6 +50,24 @@ Input 的 `_enableJumpBuffer/_jumpBufferDuration`、`_enableCoyote/_coyoteDurati
 
 基础高度/到顶模式由源码换算 `launch=2h/t`、`gravityScale=(2h/t²)/(-Physics2D.gravity.y)`。直接模式基础估算 `t=v/g`、`h=v²/(2g)`，g 是向下重力加速度正值。都未计短跳、顶点/下落重力、悬停、限速、碰撞和离散步；EstimatedHeight/EstimatedApexTime 名称中的 Estimated 必须保留。完整滞空不能把 JumpDuration 翻倍当实测。
 
+面板中的“下落加速／重力修正”就是 `_enableFallGravity/_fallMultiplier`。倍率大于 1 加快下降，1 不修正，小于 1 减缓下降；有效顶点区间优先，下落限速仍在最后生效，不保证所有落地高度下下降时间都短于上升时间。
+
+## 碰撞补正
+
+Movement 内 `_jumpCorrection`、`_groundDashCorrection`、`_airDashCorrection`、`_stepCorrection` 分别控制跳跃顶角、地面冲刺、空中冲刺和普通移动跨台阶。每组 `_enabled` 默认 false；启用后参数冻结到会话。不开新状态，不复制能力资源。
+
+| 组内字段 | 单位 / 边界 | 作用 |
+|---|---|---|
+| `_maximumDistance` | u，>0 | 沿补正轴的最大距离 |
+| `_increment` | u，>0；最大距离 / 步长 ≤64 | 从近到远搜索，最终一级覆盖最大距离 |
+| `_lookAhead` | u，≥0 | 至少检查此距离，实际检查不小于本步前进距离 |
+| `_skin` | u，>0 且小于最大距离 | 路径与目的空间安全间隙 |
+| `_direction` | 右/上优先、左/下优先、仅正向、仅负向、输入优先 | 同距离候选顺序；只用于跳跃和空冲，地冲及跨台阶固定向上 |
+| `_obstacleLayers` | 非空 LayerMask | 可触发补正的障碍；其他碰撞层仍参加安全检查 |
+| `_supportDistance` | u，>0 | 地冲及跨台阶验证本步前进后的落脚支撑距离 |
+
+跳跃补正覆盖普通跳、空中跳、墙跳和踩头反弹的上升阶段。单物理步最多补正一次，保留原速度、重力和动作资源。目的空间采用全部刚体实体碰撞体的保守包围盒，位移路径扫掠全部碰撞体；只对静止且未使用 Effector 的实体障碍触发，移动或单向平台不会触发补正。保守空间检查可能拒绝凹形/复杂几何中实际可走的间隙，不能承诺任意形状绕障。
+
 ## 可选动作
 
 | 动作 | 数值位置/范围 | 必须同时核对 |

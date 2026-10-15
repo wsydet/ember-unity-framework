@@ -8,6 +8,36 @@ namespace Game.Player.Editor
 {
     public static class PlayerBuiltinSchemes
     {
+        /// <summary>模板编辑中的增量内置登记；保留既有登记和默认方案，不重建资源。</summary>
+        public static void RegisterAdditional(PlayerScheme scheme)
+        {
+            PlayerEditorAccess.Require();
+            if (EditorApplication.isPlayingOrWillChangePlaymode || !Ember.Core.Editor.EmberProjectSetup.IsEmbeddedPackage() ||
+                Ember.Core.Editor.EmberProjectSetup.GetEditingTemplate() == null)
+                throw new InvalidOperationException("新增内置方案登记只允许在模板编辑的非Play状态执行。");
+            PlayerSchemeWorkflow.Validate(scheme); PlayerSchemeOwnership.RequireWritable(scheme);
+            string path = AssetDatabase.GetAssetPath(scheme);
+            if (!path.StartsWith("Assets/GameResource/Resources/Config/Player/BuiltinSchemes/", StringComparison.Ordinal))
+                throw new InvalidOperationException("内置方案必须位于模板内置方案目录。");
+            var ids = AssetDatabase.FindAssets("t:PlayerSchemeLibrary");
+            if (ids.Length != 1) throw new InvalidOperationException("需要唯一既有方案登记。");
+            var library = AssetDatabase.LoadAssetAtPath<PlayerSchemeLibrary>(AssetDatabase.GUIDToAssetPath(ids[0]));
+            if (EditorUtility.IsDirty(library) || library.builtins.Contains(scheme))
+                throw new InvalidOperationException("归属登记存在草稿或方案已登记。");
+            var resources = new HashSet<UnityEngine.Object> { scheme, scheme.Graph, scheme.Animation.Controller };
+            foreach (var slot in scheme.Animation.Slots)
+                foreach (var item in new UnityEngine.Object[] { slot.Key, slot.Clip, slot.MovingRecoveryClip })
+                    if (item != null) resources.Add(item);
+            foreach (var segment in scheme.Feel.Attack.Segments)
+                foreach (var frame in segment.Visual.Frames) resources.Add(frame);
+            foreach (var resource in resources)
+                foreach (var item in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(resource)))
+                    if (EditorUtility.IsDirty(item)) throw new InvalidOperationException("先显式保存待登记资源草稿：" + item.name);
+            Undo.RecordObject(library, "登记新增内置方案");
+            library.builtins = library.builtins.Concat(new[] { scheme }).ToArray();
+            library.sharedArt = library.sharedArt.Concat(resources.Where(r => r != scheme)).Distinct().ToArray();
+            PlayerSchemeSaveProtection.SaveRegistration(library); PlayerSchemeOwnership.Reload();
+        }
         public static void Install()
         {
             if (PlayerSchemeOwnership.Builtins.Count != 0) throw new InvalidOperationException("内置方案已安装，不重复生成或覆盖。");

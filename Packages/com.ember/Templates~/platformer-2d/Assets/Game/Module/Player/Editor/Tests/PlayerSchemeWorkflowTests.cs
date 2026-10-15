@@ -21,18 +21,24 @@ namespace Game.Player.Editor.Tests
             PlayerSchemeWorkflow.Copy(source ?? First, _folder + "/" + name + ".asset", blank);
         [SetUp] public void Setup()
         {
-            Assert.That(PlayerSchemeOwnership.Builtins.Count, Is.EqualTo(2));
+            Assert.That(PlayerSchemeOwnership.Builtins.Count, Is.EqualTo(3));
             _folder = "Assets/SchemeWorkflowTest_" + Guid.NewGuid().ToString("N");
             AssetDatabase.CreateFolder("Assets", Path.GetFileName(_folder));
         }
-        [TearDown] public void Cleanup() { Undo.ClearAll(); if (_folder != null) AssetDatabase.DeleteAsset(_folder); }
+        [TearDown] public void Cleanup()
+        {
+            if (_folder == null) return;
+            foreach (var guid in AssetDatabase.FindAssets("", new[] { _folder }))
+                foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath(guid))) Undo.ClearUndo(asset);
+            AssetDatabase.DeleteAsset(_folder);
+        }
 
         [Test] public void BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph()
         {
             var original = Resources.Load<PlayerConfig>(PlayerModule.CONFIG_PATH).Scheme;
             Assert.That(First.name, Is.EqualTo("空洞骑士风格")); Assert.That(Second.name, Is.EqualTo("蔚蓝风格"));
             int i = 0;
-            foreach (var scheme in PlayerSchemeOwnership.Builtins)
+            foreach (var scheme in PlayerSchemeOwnership.Builtins.Take(2))
             {
                 PlayerSchemeWorkflow.Validate(scheme);
                 var style = Resources.Load<PlayerFeelProfile>("Config/Player/Feel/" + (i++ == 0 ? "HollowKnightStyle" : "CelesteStyle") + "Profile");
@@ -45,6 +51,20 @@ namespace Game.Player.Editor.Tests
                 Assert.That(PlayerSchemeOwnership.IsReadOnly(scheme.Animation.Controller), Is.True);
                 Assert.That(scheme.Animation.Slots.All(s => PlayerSchemeOwnership.IsReadOnly(s.Key) && PlayerSchemeOwnership.IsReadOnly(s.Clip)), Is.True);
             }
+        }
+        [Test] public void CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation()
+        {
+            var scheme = PlayerSchemeOwnership.Builtins.Single(s => s.name == "通用攻击模板1");
+            PlayerSchemeWorkflow.Validate(scheme);
+            Assert.That(scheme.Graph, Is.Not.SameAs(First.Graph));
+            Assert.That(scheme.Animation.Controller, Is.Not.SameAs(First.Animation.Controller));
+            Assert.That(scheme.Feel.Attack.Segments.Count, Is.EqualTo(3));
+            Assert.That(scheme.Feel.Attack.Segments.All(s => s.Windows.Count > 0 && s.Visual.Enabled && s.Visual.Frames.Count == 6), Is.True);
+            Assert.That(scheme.Life.Enabled && scheme.Reactions.Enabled && scheme.EnableEffects, Is.True);
+            Assert.That(PlayerSchemeOwnership.IsReadOnly(scheme.Graph), Is.True);
+            Assert.That(PlayerSchemeOwnership.IsReadOnly(scheme.Animation.Controller), Is.True);
+            Assert.That(PlayerSchemeWorkflow.Configuration(scheme).Values.All(PlayerSchemeOwnership.IsReadOnly), Is.True);
+            Assert.That(Resources.Load<PlayerConfig>(PlayerModule.CONFIG_PATH).Scheme, Is.Not.SameAs(scheme));
         }
         [Test] public void CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt()
         {

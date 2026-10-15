@@ -1,0 +1,583 @@
+{
+  "job_id": "88172f1550494ccbb21117549fc0b3b0",
+  "summary": {
+    "total": 114,
+    "passed": 114,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 161.3746389,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Input.Tests.GameInputTests.BundledDefaultConfigurationLoadsAndKeepsGameplayClosed",
+      "state": "Passed",
+      "seconds": 0.0484938
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ClosingMenuDoesNotReleaseCutsceneOrRestoreHistoricalMode",
+      "state": "Passed",
+      "seconds": 0.0209169
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ConfigurationIsFrozenForRunningService",
+      "state": "Passed",
+      "seconds": 0.0480321
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ContinuousInputRecoversHeldValueWhileTriggerDoesNot",
+      "state": "Passed",
+      "seconds": 0.006376
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.DefaultsApplyIndependentlyAndGameplayStartsClosed",
+      "state": "Passed",
+      "seconds": 0.005134
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.DisableClearsUnconsumedPressImmediately",
+      "state": "Passed",
+      "seconds": 0.005294
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.EqualPriorityDenyWinsRegardlessOfArrival(True)",
+      "state": "Passed",
+      "seconds": 0.0061998
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.EqualPriorityDenyWinsRegardlessOfArrival(False)",
+      "state": "Passed",
+      "seconds": 0.0047526
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.HeldAcrossResumeCannotTriggerOrStartChargeUntilReleasedAndPressed",
+      "state": "Passed",
+      "seconds": 0.0054651
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.HeldReleaseAndRepressDuringFirstResumedUpdateRequiresAndAcceptsNewPress",
+      "state": "Passed",
+      "seconds": 0.0053327
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.HighestExplicitRequestWinsAndUnchangedDoesNotMaskIt",
+      "state": "Passed",
+      "seconds": 0.0050306
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.IndependentReadersDoNotConsumeEachOthersPress",
+      "state": "Passed",
+      "seconds": 0.0056394
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.InvalidConfigurationDoesNotDisableExistingMaps",
+      "state": "Passed",
+      "seconds": 0.0051464
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.MenuOnlyPressAndReleaseIsNeverBuffered",
+      "state": "Passed",
+      "seconds": 0.0055905
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ModuleConfigurationFailureCompletesReadinessWithExplicitFailure",
+      "state": "Passed",
+      "seconds": 0.0063949
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ModuleInitializationIsExplicitAndResetCannotReviveOldRequests",
+      "state": "Passed",
+      "seconds": 0.007547
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.NotificationsOnlyFireForEffectiveChangesAndCanReleaseOtherRequests",
+      "state": "Passed",
+      "seconds": 0.0054409
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.PressAndReleaseInOneInputUpdateStillProducesOnePress",
+      "state": "Passed",
+      "seconds": 0.0058205
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ReaderCreatedWhileHeldAlsoRequiresReleaseAndRepress",
+      "state": "Passed",
+      "seconds": 0.0051661
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.ReleaseOwnerOnlyReleasesThatReferenceAndHandlesBecomeInvalid",
+      "state": "Passed",
+      "seconds": 0.0053689
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.RequestSnapshotsRulesAndValidatesUpdateBeforeChangingExistingRequest",
+      "state": "Passed",
+      "seconds": 0.0051604
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.StopClosesChannelsClearsReadersAndInvalidatesOldHandles",
+      "state": "Passed",
+      "seconds": 0.0053589
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.StopInsideAvailabilityNotificationCannotReenableAnotherChannel",
+      "state": "Passed",
+      "seconds": 0.0051269
+    },
+    {
+      "name": "Game.Input.Tests.GameInputTests.TriggerIsConsumedOnceAndSurvivesUntilConsumerTick",
+      "state": "Passed",
+      "seconds": 0.0058546
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.ExplicitEmptyMigrationDoesNotFallbackAndSurvivesAssetReload",
+      "state": "Passed",
+      "seconds": 1.3949125
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.InvalidEffectsAndOccupiedPathFailWithoutChangingSourceOrCreatingPartialFiles",
+      "state": "Passed",
+      "seconds": 0.5727099
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.LegacyFieldsAreHiddenAndOnlyRuntimeInjectionFeedsCreateState",
+      "state": "Passed",
+      "seconds": 0.5765987
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.MigrationClonesMutableEffectsPreservesSharingAndBusinessValues",
+      "state": "Passed",
+      "seconds": 1.2588507
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.RepeatedMigrationPreservesEditsAndUndoRedoPreservesCreatedConfiguration",
+      "state": "Passed",
+      "seconds": 1.3805929
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerAnimationEditorTests.AnimatedVisualFitChangesOnlyFacingOuterTransformAndSupportsUndo",
+      "state": "Passed",
+      "seconds": 0.0857778
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerAnimationEditorTests.AnimationAssetsReloadWithStableBindingsAndGraphIdentity",
+      "state": "Passed",
+      "seconds": 4.2084799
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerAppearanceTests.FitUsesSpriteBoundsAndPivotWithoutChangingPhysicsAndSupportsUndo",
+      "state": "Passed",
+      "seconds": 0.1145521
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatConfigurationTests.ExistingMovementSchemesKeepCombatDisabledAndInputCaptureIsFrozen",
+      "state": "Passed",
+      "seconds": 0.0069301
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatConfigurationTests.FrozenNestedGeometryAndPayloadRemainIndependent",
+      "state": "Passed",
+      "seconds": 0.001708
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatConfigurationTests.InvalidPolygonAndMissingAbilityHaveLocatedErrors",
+      "state": "Passed",
+      "seconds": 0.0003326
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatConfigurationTests.OptionalUninstalledAbilityIsValidButDanglingComboIsRejected",
+      "state": "Passed",
+      "seconds": 0.0004872
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatConfigurationTests.RecapturePreservesFrozenLifeAndRejectsMissingSourceGroups",
+      "state": "Passed",
+      "seconds": 0.0004697
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests.CandidateOwnsOnlyCombatNodesAndDetectsComboDivergence",
+      "state": "Passed",
+      "seconds": 0.0047008
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests.OptionalRecoveryClipResolvesIdleButAttackClipIsRequired",
+      "state": "Passed",
+      "seconds": 0.0033412
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatRequestTests.AttackSpeedScalesOnlyActionClockAndCrossesShortWindows",
+      "state": "Passed",
+      "seconds": 0.0003355
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatRequestTests.IntentAndDeadlineDoNotRefreshAcrossNaturalContinuation",
+      "state": "Passed",
+      "seconds": 0.0001968
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatRequestTests.OrdinaryPressNeverBecomesDelayedAndOpportunityEndsFirst",
+      "state": "Passed",
+      "seconds": 0.0003187
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatRequestTests.RejectionKeepsRequestsButCommitClearsAllOldActionRequestsOnce",
+      "state": "Passed",
+      "seconds": 0.0002429
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerCombatRequestTests.ZeroBufferHasOneDecisionAndClearDoesNotResetGameClock",
+      "state": "Passed",
+      "seconds": 0.0001512
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.DashGroup_TrialFreezesNestedValuesAndUndoUsesActualMovementAsset",
+      "state": "Passed",
+      "seconds": 1.9992824
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.ExplicitSaveWritesSelectedAssetsAndRejectsInvalidConfiguration",
+      "state": "Passed",
+      "seconds": 2.263619
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.IncompleteTrialRequestIsRejectedWithoutFallbackToDefaults",
+      "state": "Passed",
+      "seconds": 1.6980888
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.PresetComparisonIncludesNestedParametersAndRestorePreservesIdentityAndUndo",
+      "state": "Passed",
+      "seconds": 3.3556373
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.PresetCopyCreatesFourIndependentAssetsAndRefusesOverwrite",
+      "state": "Passed",
+      "seconds": 3.3024405
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.TrialSnapshotFreezesUnsavedValuesWithoutWritingOrMutatingAssets",
+      "state": "Passed",
+      "seconds": 1.8655943
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerFeelParameterTests.UndoRedoEditsActualAssetButKeepsCapturedRuntimeImmutable",
+      "state": "Passed",
+      "seconds": 2.4574983
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.AllFormalNodesHaveAvailabilityWithoutChangingGraphOrResources",
+      "state": "Passed",
+      "seconds": 0.0030636
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.AvailabilitySeparatesAssetToggleFromCapturedFeelAndSupportsUndo",
+      "state": "Passed",
+      "seconds": 0.1631336
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.GraphAndNewDefinitionsReloadWithStableIdsAndBindings",
+      "state": "Passed",
+      "seconds": 0.578752
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(0)",
+      "state": "Passed",
+      "seconds": 0.0180065
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(1)",
+      "state": "Passed",
+      "seconds": 0.0090014
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(2)",
+      "state": "Passed",
+      "seconds": 0.0118299
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeStageApplySupportsUndoRedoAndRejectsChangedSource",
+      "state": "Passed",
+      "seconds": 1.2834852
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerLabTrailTests.TrailExpiresByPhysicsTimeAndHandlesRingWrapAndEmptyTrace",
+      "state": "Passed",
+      "seconds": 0.0032165
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerLabTrailTests.TrailUsesRecordedWorldPositionsAndClearDoesNotEraseMeasurements",
+      "state": "Passed",
+      "seconds": 0.0006549
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.ConversionRejectsNonEquivalentBindingWithoutChangingTarget",
+      "state": "Passed",
+      "seconds": 2.6787334
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources",
+      "state": "Passed",
+      "seconds": 3.6497525
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite",
+      "state": "Passed",
+      "seconds": 1.7144846
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationFailureDoesNotBreakRuntimeCapture",
+      "state": "Passed",
+      "seconds": 0.0042241
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationRetainsCaptureAcrossEditsUndoAndRecovery",
+      "state": "Passed",
+      "seconds": 1.7114632
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph",
+      "state": "Passed",
+      "seconds": 3.4775317
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery",
+      "state": "Passed",
+      "seconds": 1.693504
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback",
+      "state": "Passed",
+      "seconds": 2.607367
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset",
+      "state": "Passed",
+      "seconds": 3.3711366
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.RestoreLegacyAndConfiguredModesIsUndoable",
+      "state": "Passed",
+      "seconds": 2.3483263
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo",
+      "state": "Passed",
+      "seconds": 2.0499165
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit",
+      "state": "Passed",
+      "seconds": 1.2286917
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation",
+      "state": "Passed",
+      "seconds": 8.7031493
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowDraftSurvivesCloseAndRejectsChangedSource",
+      "state": "Passed",
+      "seconds": 6.4337484
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.DefinitionDependenciesAreCopiedOnceAndRemainIndependent",
+      "state": "Passed",
+      "seconds": 8.8954891
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ExistingDestinationRejectsWithoutCreatingPartialAssets",
+      "state": "Passed",
+      "seconds": 0.8749591
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload",
+      "state": "Passed",
+      "seconds": 15.4280686
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(0)",
+      "state": "Passed",
+      "seconds": 5.2404921
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(2)",
+      "state": "Passed",
+      "seconds": 5.788448
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload",
+      "state": "Passed",
+      "seconds": 12.121756
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload",
+      "state": "Passed",
+      "seconds": 9.1941282
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo",
+      "state": "Passed",
+      "seconds": 4.5392281
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes",
+      "state": "Passed",
+      "seconds": 1.4245151
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly",
+      "state": "Passed",
+      "seconds": 1.3209656
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankRejectsImmobileReferenceWithoutCreatingPartialAsset",
+      "state": "Passed",
+      "seconds": 1.31317
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph",
+      "state": "Passed",
+      "seconds": 0.7797344
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation",
+      "state": "Passed",
+      "seconds": 0.7165609
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected",
+      "state": "Passed",
+      "seconds": 1.7082854
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt",
+      "state": "Passed",
+      "seconds": 2.0708969
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo",
+      "state": "Passed",
+      "seconds": 1.9291854
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping",
+      "state": "Passed",
+      "seconds": 1.0264632
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite",
+      "state": "Passed",
+      "seconds": 1.9940035
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable",
+      "state": "Passed",
+      "seconds": 1.8946765
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries",
+      "state": "Passed",
+      "seconds": 1.3683685
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration",
+      "state": "Passed",
+      "seconds": 2.8817489
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites",
+      "state": "Passed",
+      "seconds": 2.9400627
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable",
+      "state": "Passed",
+      "seconds": 0.7614133
+    },
+    {
+      "name": "Game.Player.Editor.Tests.PlayerToolWindowTests.LegacyEntrypointsShareOneWindowAndKeepSelectionAcrossTabs",
+      "state": "Passed",
+      "seconds": 0.016512
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.ActiveConfigIsFrozenAndInjectionCannotHotReplaceIt",
+      "state": "Passed",
+      "seconds": 0.0572604
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.CodecRejectsMissingFieldsBadTypesAndVersionMismatchInsteadOfDefaulting",
+      "state": "Passed",
+      "seconds": 0.0023298
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.ConstructionAndConfigurationDoNotActivateOrTouchDisk",
+      "state": "Passed",
+      "seconds": 0.0019346
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.DestroyDoesNotCreateSaveFromDefaultsAndNewGameObjectsAreIndependent",
+      "state": "Passed",
+      "seconds": 0.0263792
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.ExplicitSnapshotAndIndependentReadsReplaceCachedSaveBehavior",
+      "state": "Passed",
+      "seconds": 0.1213448
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.FailureSurvivesResetUntilAcknowledgedAndOldTicketCannotResumeNewService",
+      "state": "Passed",
+      "seconds": 0.0772845
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.InvalidConfigCompletesReadinessWithoutDefaultFallback(\"missing\")",
+      "state": "Passed",
+      "seconds": 0.0015511
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.InvalidConfigCompletesReadinessWithoutDefaultFallback(\"traversal\")",
+      "state": "Passed",
+      "seconds": 0.0002435
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.InvalidConfigCompletesReadinessWithoutDefaultFallback(\"duplicates\")",
+      "state": "Passed",
+      "seconds": 0.0004381
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.InvalidConfigCompletesReadinessWithoutDefaultFallback(\"capacity\")",
+      "state": "Passed",
+      "seconds": 0.0004097
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.OldImplicitApiIsRemovedAndExplicitNormalExitWaitsForDrain",
+      "state": "Passed",
+      "seconds": 0.0663842
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.OnInitSelfLoadsRealDefaultAssetAndOnlyPreparesIndex",
+      "state": "Passed",
+      "seconds": 0.0766478
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.PrepareFailurePreservesBrokenIndexAndDoesNotCreateProgress",
+      "state": "Passed",
+      "seconds": 0.0307835
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.ReentryWaitsForOldWriterAndRetainsItsUnacknowledgedCancelledResult",
+      "state": "Passed",
+      "seconds": 0.1064291
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataModuleTests.StopDuringPrepareSettlesOldReadinessAndLateCompletionCannotReviveIt",
+      "state": "Passed",
+      "seconds": 0.0771905
+    },
+    {
+      "name": "Game.PlayerData.Tests.PlayerDataUnityContextTests.UnityMainThreadCanPrepareSaveReadDrainAndStopWithoutBlocking",
+      "state": "Passed",
+      "seconds": 0.3012585
+    }
+  ]
+}

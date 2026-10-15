@@ -1,0 +1,896 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8364754605674623579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d4072f58c5baf42b5beebb1be0d319, type: 3}
+  m_Name: PlayerLedgeClimb
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerLedgeClimbStateDefinition
+--- !u!114 &-7519194121020425299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978aca2c9e2e6c243bef922f90e7dbe5, type: 3}
+  m_Name: PlayerGround
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerGroundStateDefinition
+--- !u!114 &-7390095806805989305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420165bc7af50484c81b47df331ca03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAttackStateDefinition
+--- !u!114 &-6642822539479322374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de30ec309f8101a42b53eaebe890fec0, type: 3}
+  m_Name: PlayerFall
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerFallStateDefinition
+--- !u!114 &-5970766142023575891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82f7691a077b60499cb418965160ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDashAttackRouteDefinition
+  _segments:
+  - first
+  - second
+  - third
+--- !u!114 &-5165766531764419112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51bf6985e9cb66443be28b236b63d0c3, type: 3}
+  m_Name: PlayerDropThrough
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDropThroughStateDefinition
+--- !u!114 &-4369406805398758339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7dbd0e169640646a0f6091ec9af452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDashRecoveryStateDefinition
+--- !u!114 &-3447284992140233452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83760c68b6ac08449088b3579600641, type: 3}
+  m_Name: PlayerLand
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerLandStateDefinition
+--- !u!114 &-3056592117668391030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7822ac240e5b65249aea060e7f95ad23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDelayedAttackStateDefinition
+--- !u!114 &-2240589270958561144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0689785f0ecdfef42a4c601d6267cc42, type: 3}
+  m_Name: PlayerHardLand
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerHardLandStateDefinition
+--- !u!114 &-1855241599786821194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cc5caf53bb96045908ac3f47b0f85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAttackRecoveryStateDefinition
+--- !u!114 &-1828966817290110199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055796912e3b5f44aa8ac7e9f2187e74, type: 3}
+  m_Name: PlayerAirJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAirJumpStateDefinition
+--- !u!114 &-551044871394318892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5278b913b451375458f5f42ae6939e58, type: 3}
+  m_Name: PlayerDecelerate
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDecelerateStateDefinition
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed63b088269f4e0e970aec5acde29e91, type: 3}
+  m_Name: GeneralAttack1Graph
+  m_EditorClassIdentifier: Ember.Core.Runtime::Ember.Core.Fsm.EmberFsmGraph
+  _entryId: basic-drive
+  _nodes:
+  - _id: basic-drive
+    _displayName: Locomotion
+    _definition: {fileID: 4955725026460830863}
+    _parentId: 
+    _defaultChildId: air
+    _bindings:
+    - _slot: land
+      _targetId: land
+    - _slot: hard-land
+      _targetId: hard-land
+    - _slot: rolling
+      _targetId: rolling
+    - _slot: combat-ground
+      _targetId: combat.attack.first
+    - _slot: combat-air
+      _targetId: fall
+    - _slot: combat-dash-ground
+      _targetId: ground-dash
+    - _slot: combat-dash-air
+      _targetId: air-dash
+    - _slot: combat-jump
+      _targetId: jump
+    - _slot: combat-air-jump
+      _targetId: air-jump
+    - _slot: combat-route
+      _targetId: combat.dash-route
+    - _slot: life-hit
+      _targetId: life.hit
+    - _slot: life-death
+      _targetId: life.dead
+  - _id: ground
+    _displayName: Ground
+    _definition: {fileID: -7519194121020425299}
+    _parentId: basic-drive
+    _defaultChildId: idle
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: idle
+    _displayName: Idle
+    _definition: {fileID: 8242683617339814411}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: move
+      _targetId: move
+    - _slot: accelerate
+      _targetId: accelerate
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: move
+    _displayName: Move
+    _definition: {fileID: 2643400288415572066}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: accelerate
+      _targetId: accelerate
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: air
+    _displayName: Air
+    _definition: {fileID: 3620577362368647246}
+    _parentId: basic-drive
+    _defaultChildId: fall
+    _bindings:
+    - _slot: head-jump
+      _targetId: head-jump
+    - _slot: ledge-hang
+      _targetId: ledge-hang
+    - _slot: ground
+      _targetId: ground
+    - _slot: jump
+      _targetId: jump
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: wall-jump
+      _targetId: wall-jump
+    - _slot: wall-slide
+      _targetId: wall-slide
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: head-jump
+    _displayName: HeadJump
+    _definition: {fileID: 8479742783085641330}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: wall-jump
+    _displayName: WallJump
+    _definition: {fileID: 8447405611199723849}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: wall-slide
+    _displayName: WallSlide
+    _definition: {fileID: 819822741189979808}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: air-jump
+    _displayName: AirJump
+    _definition: {fileID: -1828966817290110199}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: jump
+    _displayName: Jump
+    _definition: {fileID: 2708845148180853886}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: fall
+    _displayName: Fall
+    _definition: {fileID: -6642822539479322374}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: rising
+      _targetId: jump
+  - _id: drop-through
+    _displayName: DropThrough
+    _definition: {fileID: -5165766531764419112}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: ledge-hang
+    _displayName: LedgeHang
+    _definition: {fileID: 7152454399602430867}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ledge-climb
+      _targetId: ledge-climb
+    - _slot: fall
+      _targetId: fall
+  - _id: ledge-climb
+    _displayName: LedgeClimb
+    _definition: {fileID: -8364754605674623579}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: rolling
+    _displayName: Rolling
+    _definition: {fileID: 4116169344039735965}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: land
+    _displayName: Land
+    _definition: {fileID: -3447284992140233452}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: hard-land
+    _displayName: HardLand
+    _definition: {fileID: -2240589270958561144}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: ground-dash
+    _displayName: GroundDash
+    _definition: {fileID: 406398176072723213}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: combat.dash-recovery
+    - _slot: fall
+      _targetId: combat.dash-recovery
+  - _id: air-dash
+    _displayName: AirDash
+    _definition: {fileID: 6799395237254439401}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: combat.dash-recovery
+    - _slot: fall
+      _targetId: combat.dash-recovery
+  - _id: accelerate
+    _displayName: Accelerate
+    _definition: {fileID: 786031889407944999}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: move
+      _targetId: move
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: decelerate
+    _displayName: Decelerate
+    _definition: {fileID: -551044871394318892}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: move
+      _targetId: move
+    - _slot: accelerate
+      _targetId: accelerate
+  - _id: combat.attack.first
+    _displayName: first Attack
+    _definition: {fileID: -7390095806805989305}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: combat.recovery.first
+    - _slot: normal
+      _targetId: combat.attack.second
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.recovery.first
+    _displayName: first Recovery
+    _definition: {fileID: -1855241599786821194}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: ground
+    - _slot: normal
+      _targetId: combat.attack.second
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.attack.second
+    _displayName: second Attack
+    _definition: {fileID: -7390095806805989305}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: combat.recovery.second
+    - _slot: normal
+      _targetId: combat.attack.third
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.recovery.second
+    _displayName: second Recovery
+    _definition: {fileID: -1855241599786821194}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: ground
+    - _slot: normal
+      _targetId: combat.attack.third
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.attack.third
+    _displayName: third Attack
+    _definition: {fileID: -7390095806805989305}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: combat.recovery.third
+    - _slot: normal
+      _targetId: ground
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.recovery.third
+    _displayName: third Recovery
+    _definition: {fileID: -1855241599786821194}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: finish
+      _targetId: ground
+    - _slot: normal
+      _targetId: ground
+    - _slot: delayed
+      _targetId: ground
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: restart-ground
+      _targetId: combat.attack.first
+    - _slot: restart-air
+      _targetId: fall
+  - _id: combat.dash-route
+    _displayName: "\u51B2\u523A\u653B\u51FB\u8DEF\u7531"
+    _definition: {fileID: -5970766142023575891}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: attack:first
+      _targetId: combat.attack.first
+    - _slot: attack:second
+      _targetId: combat.attack.second
+    - _slot: attack:third
+      _targetId: combat.attack.third
+  - _id: combat.dash-recovery
+    _displayName: "\u51B2\u523A\u6536\u5C3E"
+    _definition: {fileID: -4369406805398758339}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: life.hit
+    _displayName: "\u53D7\u51FB"
+    _definition: {fileID: 5253830582415563566}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: life.dead
+    _displayName: "\u6B7B\u4EA1\u786E\u8BA4"
+    _definition: {fileID: 4515189654377840395}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings: []
+--- !u!114 &406398176072723213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5838a861c0f6db4a8769f21eab9ea9a, type: 3}
+  m_Name: PlayerGroundDash
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerGroundDashStateDefinition
+  _actionEffect: {fileID: 0}
+  _tailEffect: {fileID: 0}
+--- !u!114 &786031889407944999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f0dd0bb6f1e4349928b7a61a1555f0, type: 3}
+  m_Name: PlayerAccelerate
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAccelerateStateDefinition
+--- !u!114 &819822741189979808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2e700515818604a8a68d19213ce327, type: 3}
+  m_Name: PlayerWallSlide
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerWallSlideStateDefinition
+--- !u!114 &2296793168663536658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cc5caf53bb96045908ac3f47b0f85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAttackRecoveryStateDefinition
+--- !u!114 &2643400288415572066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c69808f52b3cc47b31f2054abb30e7, type: 3}
+  m_Name: PlayerMove
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerMoveStateDefinition
+--- !u!114 &2708845148180853886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052fae1ecb01f6743b5c63fd04679ef3, type: 3}
+  m_Name: PlayerJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerJumpStateDefinition
+--- !u!114 &3620577362368647246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a649612267762e46a5dbed60597a22b, type: 3}
+  m_Name: PlayerAir
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAirStateDefinition
+--- !u!114 &4116169344039735965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4a958469ca6c642bbbb1a5da8dd4db, type: 3}
+  m_Name: PlayerRolling
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerRollingStateDefinition
+--- !u!114 &4252664875528834226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420165bc7af50484c81b47df331ca03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAttackStateDefinition
+--- !u!114 &4515189654377840395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d09129ea58bcb4986a85471c73bed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDeathStateDefinition
+--- !u!114 &4955725026460830863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af4ecb35fa6f66419d993daf39148b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerLifeDashLocomotionStateDefinition
+--- !u!114 &5025256754865072659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a1bbc7f8f502e4f830ef899f61fc95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerCombatLocomotionStateDefinition
+--- !u!114 &5253830582415563566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4105d5c91d2d44aa4e4ea104e2d5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerHitStateDefinition
+--- !u!114 &6499337221172751474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505e0da67764b874599dc421a806fb43, type: 3}
+  m_Name: PlayerLocomotion
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerLocomotionStateDefinition
+--- !u!114 &6799395237254439401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c44447452fb58418b16a7eb71bc4d3, type: 3}
+  m_Name: PlayerAirDash
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAirDashStateDefinition
+  _actionEffect: {fileID: 0}
+  _tailEffect: {fileID: 0}
+--- !u!114 &6930449019372137305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34feebc95c862e6468ebce52d806f3c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDashCombatLocomotionStateDefinition
+--- !u!114 &7152454399602430867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4769aeade103694ea63b75f4c6276e3, type: 3}
+  m_Name: PlayerLedgeHang
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerLedgeHangStateDefinition
+--- !u!114 &8200416531467187629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d44cc1876555547ad790070b8cb6f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerDelayedRecoveryStateDefinition
+--- !u!114 &8242683617339814411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a4b6845029cad42a4860c092ef1823, type: 3}
+  m_Name: PlayerIdle
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerIdleStateDefinition
+--- !u!114 &8447405611199723849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aeaa5c295bf42e41bfc702184b02b5f, type: 3}
+  m_Name: PlayerWallJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerWallJumpStateDefinition
+--- !u!114 &8479742783085641330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde67a0d24eaa434495a1ab67fb9b584, type: 3}
+  m_Name: PlayerHeadJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerHeadJumpStateDefinition

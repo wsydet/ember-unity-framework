@@ -16,6 +16,19 @@ namespace Game.Player
         #region 外部方法
         public RuntimeAnimatorController Controller => _controller;
         public IReadOnlyList<PlayerAnimationSlot> Slots => _slots;
+        internal AnimationClip ResolveClip(PlayerAnimationSlot slot, EmberFsmGraph graph)
+        {
+            if (slot.Clip != null) return slot.Clip;
+            foreach (var node in graph.Nodes)
+                if (node.Id == slot.NodeId && (node.Definition is IPlayerLifeNodeDefinition || node.Definition is IPlayerCombatNodeDefinition definition &&
+                    definition.Role is PlayerCombatNodeRole.Recovery or PlayerCombatNodeRole.Route or PlayerCombatNodeRole.DashRecovery))
+                {
+                    foreach (var fallback in _slots)
+                        if (fallback != null && fallback.NodeId == "idle" && fallback.Clip != null) return fallback.Clip;
+                    throw new InvalidOperationException("收刀动画缺省且没有有效 Idle 回退：" + slot.NodeId);
+                }
+            throw new InvalidOperationException("必需动画 Clip 缺失：" + slot.NodeId);
+        }
         internal void Validate(EmberFsmGraph graph)
         {
             if (_controller == null || graph == null || _slots == null)
@@ -28,23 +41,33 @@ namespace Game.Player
             {
                 if (slot == null || string.IsNullOrWhiteSpace(slot.NodeId) || !ids.Add(slot.NodeId))
                     throw new InvalidOperationException("动画映射存在空或重复节点 ID。");
-                if (slot.Key == null || slot.Clip == null || !keys.Add(slot.Key) || !available.Contains(slot.Key))
+                var clip = ResolveClip(slot, graph);
+                if (slot.MovingRecoveryClip != null)
+                {
+                    bool recovery = false;
+                    foreach (var node in graph.Nodes)
+                        if (node.Id == slot.NodeId && node.Definition is IPlayerCombatNodeDefinition definition &&
+                            definition.Role == PlayerCombatNodeRole.Recovery) recovery = true;
+                    if (!recovery || slot.MovingRecoveryClip.legacy || slot.MovingRecoveryClip.events.Length != 0)
+                        throw new InvalidOperationException("专用移动收刀片段仅允许用于收刀节点且不能包含事件：" + slot.NodeId);
+                }
+                if (slot.Key == null || !keys.Add(slot.Key) || !available.Contains(slot.Key))
                     throw new InvalidOperationException("动画映射缺少片段、覆盖键重复或 Controller 不包含该键：" + slot.NodeId);
                 if (string.IsNullOrWhiteSpace(slot.State) || !states.Add(slot.State) ||
                     !float.IsFinite(slot.Speed) || slot.Speed <= 0 || !float.IsFinite(slot.BlendSeconds) || slot.BlendSeconds < 0)
                     throw new InvalidOperationException("动画状态目标或播放参数无效：" + slot.NodeId);
-                if (slot.Clip.legacy || slot.Clip.events.Length != 0 || slot.Key.legacy || slot.Key.events.Length != 0)
+                if (clip.legacy || clip.events.Length != 0 || slot.Key.legacy || slot.Key.events.Length != 0)
                     throw new InvalidOperationException("玩家视觉片段不能使用 Legacy 或 AnimationEvent：" + slot.NodeId);
             }
             if (ids.Count != graph.Nodes.Count) throw new InvalidOperationException("动画映射必须与全部图节点一一对应。");
             foreach (var node in graph.Nodes)
                 if (!ids.Contains(node.Id)) throw new InvalidOperationException("动画映射缺少节点：" + node.Id);
 #if UNITY_EDITOR
-            ValidateEditorContent();
+            ValidateEditorContent(graph);
 #endif
         }
 #if UNITY_EDITOR
-        private void ValidateEditorContent()
+        private void ValidateEditorContent(EmberFsmGraph graph)
         {
             var controller = _controller as UnityEditor.Animations.AnimatorController;
             if (controller == null || controller.layers.Length != 1 || controller.parameters.Length != 0)
@@ -63,8 +86,9 @@ namespace Game.Player
                         child.state.speed == 1 && !child.state.speedParameterActive && !child.state.timeParameterActive;
                 }
                 if (!found) throw new InvalidOperationException("动画目标必须直接引用独占键且无自动转换/回调：" + slot.NodeId);
-                foreach (var clip in new[] { slot.Key, slot.Clip })
+                foreach (var clip in new[] { slot.Key, ResolveClip(slot, graph), slot.MovingRecoveryClip })
                 {
+                    if (clip == null) continue;
                     foreach (var curve in UnityEditor.AnimationUtility.GetCurveBindings(clip))
                         if (!ValidVisualPath(curve.path) || curve.type != typeof(Transform) ||
                             !(curve.propertyName.StartsWith("m_LocalPosition.", StringComparison.Ordinal) ||
@@ -94,6 +118,8 @@ namespace Game.Player
         [Tooltip("Controller 中该节点独占的原始片段引用；不是按名称查找。")]
         [SerializeField] private AnimationClip _key;
         [SerializeField] private AnimationClip _clip;
+        [Tooltip("仅收刀节点：移动时使用的可选片段；缺省复用普通移动表现。")]
+        [SerializeField] private AnimationClip _movingRecoveryClip;
         [SerializeField, Min(.01f)] private float _speed = 1;
         [SerializeField, Min(0)] private float _blendSeconds;
         #endregion
@@ -102,6 +128,7 @@ namespace Game.Player
         public string State => _state;
         public AnimationClip Key => _key;
         public AnimationClip Clip => _clip;
+        public AnimationClip MovingRecoveryClip => _movingRecoveryClip;
         public float Speed => _speed;
         public float BlendSeconds => _blendSeconds;
         #endregion

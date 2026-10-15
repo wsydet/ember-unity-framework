@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    /// <summary>v2 完整不可变快照。R04.1 先独立验收，R04.2 替换正式入口的旧 PlatformerProgress。</summary>
+    /// <summary>v3 完整不可变快照，显式记录生命装配与当前HP；不保存临时动作进度。</summary>
     public sealed class PlatformerSnapshot
     {
         #region 内部参数
-        public const int DATA_VERSION = 2;
+        public const int DATA_VERSION = 3;
+        public PlatformerLifeRecord Life { get; }
         private readonly EntityTimedEffectSnapshot[] _effects;
         public string Scene { get; }
         public Vector2 Position { get; }
@@ -33,7 +34,7 @@ namespace Game.Player
         // --------------------------------------------------------
         #region 外部方法
         public PlatformerSnapshot(string scene, Vector2 position, Vector2 velocity, bool facesRight,
-            EntityPowerSnapshot powers, bool effectsInstalled, EntityTimedEffectSnapshot[] effects)
+            EntityPowerSnapshot powers, bool effectsInstalled, EntityTimedEffectSnapshot[] effects, PlatformerLifeRecord life = default)
         {
             if (string.IsNullOrWhiteSpace(scene) || scene.Length > 128 ||
                 !float.IsFinite(position.x) || !float.IsFinite(position.y) || !float.IsFinite(velocity.x) || !float.IsFinite(velocity.y))
@@ -43,6 +44,7 @@ namespace Game.Player
                 throw new ArgumentException("效果装配或条目数量无效。");
             Scene = scene; Position = position; Velocity = velocity; FacesRight = facesRight;
             Powers = powers; EffectsInstalled = effectsInstalled;
+            Life = life;
             _effects = (EntityTimedEffectSnapshot[])effects.Clone();
             ValidatePowers();
             foreach (var record in _effects)
@@ -65,6 +67,12 @@ namespace Game.Player
         public static PlatformerSnapshot Capture(string scene, PlayerContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context.Life?.IsDead == true || context.Life?.Reaction is { IsActive: true } || context.Life?.Reaction?.HasPending == true)
+                throw new InvalidOperationException("受击或死亡期间不能保存；请完成恢复后重试。");
+            if (context.Combat is { IsActive: true } combat && (!combat.IsRecovery || !combat.Finished))
+                throw new InvalidOperationException("攻击本体或有效收刀机会不能保存；请等待逻辑动作结束。");
+            if (context.Combat?.Dash?.HasResidualMotion == true || context.Combat?.Dash?.OpportunityActive == true)
+                throw new InvalidOperationException("冲刺接续或剩余惯性期间不能保存。");
             if (context.Landing.IsActive) throw new InvalidOperationException("落地停顿期间不能保存；请在动作结束后重试。");
             if (context.HeadJump.IsActive) throw new InvalidOperationException("踩头反弹上升动作期间不能保存；请在动作结束后重试。");
             if (context.Rolling.IsActive) throw new InvalidOperationException("翻滚期间不能保存；请在动作结束后重试。");
@@ -73,8 +81,22 @@ namespace Game.Player
             if (context.DropThrough.IsActive) throw new InvalidOperationException("下穿碰撞豁免期间不能保存；请完全离开平台后重试。");
             var effects = context.Effects?.CaptureRestorableTimed() ?? Array.Empty<EntityTimedEffectSnapshot>();
             return new PlatformerSnapshot(scene, context.Motor.Position, context.Motor.Velocity, context.Facing.FacesRight,
-                context.Powers.Capture(), context.Effects != null, effects);
+                context.Powers.Capture(), context.Effects != null, effects,
+                new PlatformerLifeRecord(context.Health != null, context.Health?.Current ?? 0));
         }
+        public PlatformerSnapshot WithRecovery(Vector2 position, float health)
+            => new(Scene, position, Velocity, FacesRight, Powers, EffectsInstalled, _effects, new PlatformerLifeRecord(Life.Installed, health));
         #endregion
+    }
+
+    public readonly struct PlatformerLifeRecord
+    {
+        public bool Installed { get; }
+        public float Health { get; }
+        public PlatformerLifeRecord(bool installed, float health)
+        {
+            if (!float.IsFinite(health) || health < 0 || !installed && health != 0) throw new ArgumentException("生命快照装配或HP无效。");
+            Installed = installed; Health = health;
+        }
     }
 }

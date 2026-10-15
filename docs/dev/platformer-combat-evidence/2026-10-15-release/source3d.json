@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "id": "source3d-2p5d",
+      "version": "0.5.0",
+      "frameworkVersion": "0.19.0",
+      "contentHash": "89e49f1c8c620812a15b181a0a049180",
+      "versionedContentHash": "89e49f1c8c620812a15b181a0a049180",
+      "status": "Synced",
+      "Error": null,
+      "ChildContentHash": "89e49f1c8c620812a15b181a0a049180",
+      "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+    },
+    "compiler": "codedom"
+  }
+}

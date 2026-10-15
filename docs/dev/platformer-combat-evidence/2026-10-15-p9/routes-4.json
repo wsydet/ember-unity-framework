@@ -1,0 +1,33 @@
+{
+  "job_id": "d0d0404835a34d0e857d4ef00052ac93",
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 60.2860562,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledTargetIsRejectedByEveryCombatRouteWithoutSpending(\"entry\")",
+      "state": "Passed",
+      "seconds": 15.2074657
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledTargetIsRejectedByEveryCombatRouteWithoutSpending(\"normal\")",
+      "state": "Passed",
+      "seconds": 16.1003162
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledTargetIsRejectedByEveryCombatRouteWithoutSpending(\"delayed\")",
+      "state": "Passed",
+      "seconds": 15.9634013
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledTargetIsRejectedByEveryCombatRouteWithoutSpending(\"dash\")",
+      "state": "Passed",
+      "seconds": 12.728403
+    }
+  ]
+}

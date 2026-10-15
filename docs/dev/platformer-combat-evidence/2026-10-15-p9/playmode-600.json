@@ -1,0 +1,3013 @@
+{
+  "job_id": "eee9afff723641de8f4594ed4c228df5",
+  "summary": {
+    "total": 600,
+    "passed": 600,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 793.6514071,
+    "resultState": "Passed"
+  },
+  "tests": [
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.AllRemovalPathsUpdateOneRevisionAndInvalidateViews(Timed)",
+      "state": "Passed",
+      "seconds": 0.0034035
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.AllRemovalPathsUpdateOneRevisionAndInvalidateViews(Owned)",
+      "state": "Passed",
+      "seconds": 0.0001439
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.AllRemovalPathsUpdateOneRevisionAndInvalidateViews(OwnedThenTimed)",
+      "state": "Passed",
+      "seconds": 0.0000591
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.FrozenSnapshotsPreserveIndependentSourcesAndExcludeOwnedOrTail",
+      "state": "Passed",
+      "seconds": 0.0019876
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.ImmediateRevokeDoesNotInventTailOnInterruption",
+      "state": "Passed",
+      "seconds": 0.0002212
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.InvalidConfigurationAndSourceDoNotPartiallyApply",
+      "state": "Passed",
+      "seconds": 0.0009743
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.OwnerAndApplierAreSeparate_OnlyRequestedApplicationIsRemoved",
+      "state": "Passed",
+      "seconds": 0.0002805
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.PauseAndQueriesDoNotAdvanceTimeOrRevision",
+      "state": "Passed",
+      "seconds": 0.0002833
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.RuntimeDoesNotFollowSharedConfigMutation",
+      "state": "Passed",
+      "seconds": 0.0002819
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.SameDefinitionAndSourceStillHaveIndependentApplications",
+      "state": "Passed",
+      "seconds": 0.0005662
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.SharedSoHostsAndOldHandlesCannotAffectEachOther",
+      "state": "Passed",
+      "seconds": 0.0004509
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TailCanBeExplicitlyRevokedByItsOwnHandle",
+      "state": "Passed",
+      "seconds": 0.0001756
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TailStartsAtExplicitActionEnd_RepeatEndDoesNotRestartIt",
+      "state": "Passed",
+      "seconds": 0.0002057
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TimedApplicationIgnoresActionEnd_ButCanBeRevoked",
+      "state": "Passed",
+      "seconds": 0.000219
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TimeValidationIsAtomic(0.0f)",
+      "state": "Passed",
+      "seconds": 0.0006854
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TimeValidationIsAtomic(-1.0f)",
+      "state": "Passed",
+      "seconds": 0.0001704
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TimeValidationIsAtomic(float.NaN)",
+      "state": "Passed",
+      "seconds": 0.0000626
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.TimeValidationIsAtomic(float.PositiveInfinity)",
+      "state": "Passed",
+      "seconds": 0.000055
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectContainerTests.ZeroDurationIsImmediateAndDisposeIsIdempotent",
+      "state": "Passed",
+      "seconds": 0.000303
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.BindingAndHostCleanupDoNotAffectAnotherHostOrLeaveSubscriptions",
+      "state": "Passed",
+      "seconds": 0.0052799
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.CollisionFilterChangesRealPhysicsAndRestoresContact",
+      "state": "Passed",
+      "seconds": 0.0393689
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.EqualPriorityComparesActualFrameAlphaAndPauseDoesNotAnimate",
+      "state": "Passed",
+      "seconds": 0.0006641
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.EveryRemovalPathImmediatelyRestoresOutputs(\"expire\")",
+      "state": "Passed",
+      "seconds": 0.0013418
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.EveryRemovalPathImmediatelyRestoresOutputs(\"handle\")",
+      "state": "Passed",
+      "seconds": 0.0001348
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.EveryRemovalPathImmediatelyRestoresOutputs(\"dispel\")",
+      "state": "Passed",
+      "seconds": 0.0000939
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.EveryRemovalPathImmediatelyRestoresOutputs(\"dispose\")",
+      "state": "Passed",
+      "seconds": 0.0000987
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.HighestAppearancePriorityDoesNotSuppressOtherRules",
+      "state": "Passed",
+      "seconds": 0.0006169
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.NotificationsObserveCommittedResultAndRejectReentrantMutation",
+      "state": "Passed",
+      "seconds": 0.0004718
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.ParametersAreFrozenAndInvalidValuesDoNotPartiallyApply",
+      "state": "Passed",
+      "seconds": 0.0005613
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.ProtectionKindsAreIndependentAndCombineEverySource",
+      "state": "Passed",
+      "seconds": 0.0003292
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.RemovingOneCollisionSourcePreservesOtherSourcesAndBaseline",
+      "state": "Passed",
+      "seconds": 0.0003186
+    },
+    {
+      "name": "Game.Entity.Tests.EntityEffectRulesTests.RepeatedProtectionDoesNotRefreshOrAddStrength",
+      "state": "Passed",
+      "seconds": 0.0002435
+    },
+    {
+      "name": "Game.Entity.Tests.EntityHitBatchTests.DamageModesAndExplicitNonLethalPolicyAreIndependentOfReaction",
+      "state": "Passed",
+      "seconds": 0.0006839
+    },
+    {
+      "name": "Game.Entity.Tests.EntityHitBatchTests.NewProtectionStopsNextHitButNotCurrentReactionAndDoesNotRefreshOnReject",
+      "state": "Passed",
+      "seconds": 0.0014113
+    },
+    {
+      "name": "Game.Entity.Tests.EntityHitBatchTests.ReactionWithoutHealthIsAcceptedAndReplacementInvalidatesOldTarget",
+      "state": "Passed",
+      "seconds": 0.000543
+    },
+    {
+      "name": "Game.Entity.Tests.EntityHitBatchTests.StableBatchAllowsTradeAndDeadTargetRejectsLaterCandidates",
+      "state": "Passed",
+      "seconds": 0.0014416
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.CandidateInvalidatesOnMovementDisableDestroyAndBodyTypeChange",
+      "state": "Passed",
+      "seconds": 0.0225637
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.ClimbUsesVerticalThenHorizontalSweepsAndDetectsNewBlock",
+      "state": "Passed",
+      "seconds": 0.1052366
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.HeadBlockRejectsHangWhileClimbOnlyBlockAllowsHang",
+      "state": "Passed",
+      "seconds": 0.0013994
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.InvalidQueriesAndCommandsDoNotChangeBody",
+      "state": "Passed",
+      "seconds": 0.0007009
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.NarrowTopAllowsHangButCannotSupportClimbDestination",
+      "state": "Passed",
+      "seconds": 0.0004042
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.OffsetActorAndAdditionalColliderParticipateInClearance",
+      "state": "Passed",
+      "seconds": 0.0594364
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.PauseRejectsMovementAndResumeCanUseFreshCommand",
+      "state": "Passed",
+      "seconds": 0.0010321
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.PolygonUsesActualNearTopInsteadOfHighestBoundsPoint",
+      "state": "Passed",
+      "seconds": 0.0013913
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.RealCornerQueryIsReadOnlyAndSupportsBothDirections(1)",
+      "state": "Passed",
+      "seconds": 0.0092948
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.RealCornerQueryIsReadOnlyAndSupportsBothDirections(-1)",
+      "state": "Passed",
+      "seconds": 0.0004241
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.SweptMotionMovesThroughPhysicsAndStopsBeforeObstacle",
+      "state": "Passed",
+      "seconds": 0.0108747
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.TallWallHasNoReachableTopAndDistantWallIsNotGrabbable",
+      "state": "Passed",
+      "seconds": 0.0008529
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.UnsupportedPlatformsAreRejected(\"trigger\")",
+      "state": "Passed",
+      "seconds": 0.0089222
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.UnsupportedPlatformsAreRejected(\"one-way\")",
+      "state": "Passed",
+      "seconds": 0.0024812
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.UnsupportedPlatformsAreRejected(\"kinematic\")",
+      "state": "Passed",
+      "seconds": 0.0002427
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.UnsupportedPlatformsAreRejected(\"dynamic\")",
+      "state": "Passed",
+      "seconds": 0.0089216
+    },
+    {
+      "name": "Game.Entity.Tests.EntityLedgeTests.ZeroDisplacementHoldsAndOrdinaryCommandsRestoreControl",
+      "state": "Passed",
+      "seconds": 0.0111272
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.FallingOntoOneWayIsRealSupportButSolidGroundIsNotOneWay",
+      "state": "Passed",
+      "seconds": 0.0617979
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.InvalidAcquisitionCannotAlterValidPair",
+      "state": "Passed",
+      "seconds": 0.0013978
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.MotorPauseAndResumeReapplyKeepsLeaseAndPosition",
+      "state": "Passed",
+      "seconds": 0.0128554
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.NestedOwnersAndReversedPairPreserveOriginalIgnore(False)",
+      "state": "Passed",
+      "seconds": 0.0107685
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.NestedOwnersAndReversedPairPreserveOriginalIgnore(True)",
+      "state": "Passed",
+      "seconds": 0.0003732
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.OtherPlatformStillCatchesExcludedActor",
+      "state": "Passed",
+      "seconds": 0.0009315
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.PairExclusionDropsOnlyOwnerAndRestoresLandingAfterRelease",
+      "state": "Passed",
+      "seconds": 0.0012296
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.ReenabledColliderReappliesWithoutSecondOwnerAndDestroyedTargetDisposes",
+      "state": "Passed",
+      "seconds": 0.011273
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.RisingThroughPlatformNeverReportsGroundOrWalls",
+      "state": "Passed",
+      "seconds": 0.0116547
+    },
+    {
+      "name": "Game.Entity.Tests.EntityOneWayPlatformTests.SensorsRespectExistingPairIgnoreWithoutLease",
+      "state": "Passed",
+      "seconds": 0.0092015
+    },
+    {
+      "name": "Game.Entity.Tests.EntityPowerHostTests.DestroyedHostCannotAffectRecreatedHost_IndependentDataSurvives",
+      "state": "Passed",
+      "seconds": 0.0028025
+    },
+    {
+      "name": "Game.Entity.Tests.EntityPowerHostTests.PhaseOpeningDoesNotBypassResourcesEnvironmentOrProhibition",
+      "state": "Passed",
+      "seconds": 0.0008402
+    },
+    {
+      "name": "Game.Entity.Tests.EntityPowerHostTests.RuntimeAssemblyHasNoPlayerInputStorageOrFsmDependency",
+      "state": "Passed",
+      "seconds": 0.0002662
+    },
+    {
+      "name": "Game.Entity.Tests.EntityPowerHostTests.TwoHostsHaveIndependentOpeningClockResourcesAndAttempts",
+      "state": "Passed",
+      "seconds": 0.000348
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.ExplicitEmptyNeverReadsLegacyAndCaptureReleaseDoesNotDestroySource",
+      "state": "Passed",
+      "seconds": 0.0216482
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"missing\")",
+      "state": "Passed",
+      "seconds": 0.0016407
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"version\")",
+      "state": "Passed",
+      "seconds": 0.0001657
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"duplicate\")",
+      "state": "Passed",
+      "seconds": 0.000117
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"unknown\")",
+      "state": "Passed",
+      "seconds": 0.0000845
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"unsupported\")",
+      "state": "Passed",
+      "seconds": 0.0000844
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"incomplete\")",
+      "state": "Passed",
+      "seconds": 0.000085
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.InvalidWiringIsRejectedBeforeRuntime(\"lifetime\")",
+      "state": "Passed",
+      "seconds": 0.0001178
+    },
+    {
+      "name": "Game.Player.Tests.PlayerActionEffectCaptureTests.SharedDefinitionIsCapturedPerNodeAndSharedEffectsStaySharedOnlyWithinCapture",
+      "state": "Passed",
+      "seconds": 0.0112996
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(True,False,True,False,False,\"dash\")",
+      "state": "Passed",
+      "seconds": 0.0072625
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(False,False,True,False,False,\"jump\")",
+      "state": "Passed",
+      "seconds": 0.0074352
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(False,False,False,False,False,\"attack\")",
+      "state": "Passed",
+      "seconds": 0.0064967
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(True,True,False,False,False,\"attack\")",
+      "state": "Passed",
+      "seconds": 0.0064318
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(True,True,True,True,False,\"attack\")",
+      "state": "Passed",
+      "seconds": 0.0063299
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.ActualFsmContinuesAfterClosedGateOrEntryRejectionAndCommitsOnlyWinner(True,True,True,True,True,\"move\")",
+      "state": "Passed",
+      "seconds": 0.0064577
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.CombatDashBuffersButMovementDashDoesNotAndHoldNeverRefreshes",
+      "state": "Passed",
+      "seconds": 0.0067996
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatInputTests.CommittingOneActionClearsPeersAndUnavailableChannelClearsPending",
+      "state": "Passed",
+      "seconds": 0.0061278
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatPhysicsBaselineTests.AutomaticPhysicsAtTenMillisecondsOneTwentyFps",
+      "state": "Passed",
+      "seconds": 0.0979103
+    },
+    {
+      "name": "Game.Player.Tests.PlayerCombatPhysicsBaselineTests.AutomaticPhysicsAtTwentyMillisecondsThirtyFps",
+      "state": "Passed",
+      "seconds": 0.1546574
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.AcceptedFullSnapshotIsFrozenWhileHostKeepsRunning",
+      "state": "Passed",
+      "seconds": 0.2193994
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.AnimationSaveLoadAndRecoveryUseFrozenMapsAndReleaseOldOverrides",
+      "state": "Passed",
+      "seconds": 0.3339388
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Camera_DestroyedPlayerClearsReferences",
+      "state": "Passed",
+      "seconds": 0.18387
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Camera_FailedPlayerCandidateDoesNotBind",
+      "state": "Passed",
+      "seconds": 0.2650588
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Camera_InvalidWiringRejectsBeforePlayerPreparation",
+      "state": "Passed",
+      "seconds": 0.0686595
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Camera_PrepareCommitRecoveryAndRelease",
+      "state": "Passed",
+      "seconds": 0.1648408
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Camera_WrongOrderRejectedDuringPreparation",
+      "state": "Passed",
+      "seconds": 0.1634587
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CancelDisableAndOldHandlesCannotLeakEffectsIntoNewSession",
+      "state": "Passed",
+      "seconds": 0.145148
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CancelledCandidate_CannotStart",
+      "state": "Passed",
+      "seconds": 0.1363956
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CancelledCandidateAndDisabledCharacterReleaseResources",
+      "state": "Passed",
+      "seconds": 0.1648211
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CancelledExit_KeepsSessionAndRestoresTime",
+      "state": "Passed",
+      "seconds": 0.1716783
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CandidateStateFailureRestoresOldHostAndEffectBaseline",
+      "state": "Passed",
+      "seconds": 0.1557336
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Codec_RejectsTruncatedUnknownAndNonFinite",
+      "state": "Passed",
+      "seconds": 0.1167839
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CompleteSnapshotRoundTripKeepsResourcesAndIndependentTimers",
+      "state": "Passed",
+      "seconds": 0.0853363
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.CustomDeathHandlerRunsOnceOutsideFsmAndUsesSameRecoveryTransaction",
+      "state": "Passed",
+      "seconds": 8.8726478
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DashTailSurvivesPublicSaveLoadAndDeathRecovery",
+      "state": "Passed",
+      "seconds": 0.2294379
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DeathModuleClosesOnlyGameplayAndScopeRecoveryKeepsWorldAndSavedHealth",
+      "state": "Passed",
+      "seconds": 11.4940236
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DeathRecoverEntryRejectsRepeatedRequestAndCommitsThroughFsm",
+      "state": "Passed",
+      "seconds": 8.9229974
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DestroyedCharacter_ClosesSessionAndRestoresWorldTime",
+      "state": "Passed",
+      "seconds": 0.1476151
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DestroyingHostReleasesBothCurrentAndUncommittedCandidate",
+      "state": "Passed",
+      "seconds": 0.1478614
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DevelopmentGameplay_UsesNormalSaveReadAndRecoveryWithActualScene",
+      "state": "Passed",
+      "seconds": 0.2936458
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DisablingControllerDuringCandidateEnterDoesNotResurrectOldHost",
+      "state": "Passed",
+      "seconds": 0.0888886
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.DropPublicSaveRejectsAndRecoveryReleasesLease",
+      "state": "Passed",
+      "seconds": 0.5576648
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.EffectBindingExcludesNestedEntityObjects",
+      "state": "Passed",
+      "seconds": 0.1427639
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.EffectsUseOnlyRunningModuleClockAndWholePause",
+      "state": "Passed",
+      "seconds": 0.1625106
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.EmptyInstalledEffectsSaveAndLoadV2",
+      "state": "Passed",
+      "seconds": 0.3407607
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.EmptySnapshotPreservesOptionalContainer(False)",
+      "state": "Passed",
+      "seconds": 0.1069916
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.EmptySnapshotPreservesOptionalContainer(True)",
+      "state": "Passed",
+      "seconds": 0.0461703
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ExitFailures_ReleaseOnlyTheirOwnPause",
+      "state": "Passed",
+      "seconds": 0.1729123
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ExitSave_PausesBeforeAsyncCommit_AndPreservesCapturedVelocity",
+      "state": "Passed",
+      "seconds": 0.3507568
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ExitWithoutNewSave_PausesDuringPendingDrain_AndCancellationRestoresPlay",
+      "state": "Passed",
+      "seconds": 0.1765753
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ExplicitSave_DoesNotPauseWorld_AndRestoresIndependentData",
+      "state": "Passed",
+      "seconds": 0.1860499
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FailedExitSave_KeepsPlayableSession",
+      "state": "Passed",
+      "seconds": 0.1550405
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FormalPrefab_SaveExitReenter_AndSeparateInstances",
+      "state": "Passed",
+      "seconds": 0.3966037
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FormalSaveFreezesSnapshotAndUpdatesTargetBeforeCompletion",
+      "state": "Passed",
+      "seconds": 0.1628952
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FrozenAssemblyReleasedOnCandidateCancelAndStop",
+      "state": "Passed",
+      "seconds": 0.1559745
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FullCodecRejectsCorruptionAndUnsupportedVersions",
+      "state": "Passed",
+      "seconds": 0.0452495
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.FullPowersAndTimedEffectsRoundTripThroughPublicRecovery",
+      "state": "Passed",
+      "seconds": 0.3448884
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.HeadJumpPublicSavePauseAndRecoveryDoNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.2550775
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.InvalidSnapshotCandidateKeepsCurrentResourcesAndAllowsRetry",
+      "state": "Passed",
+      "seconds": 0.0739584
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.LandingPublicSavePauseAndRecoveryDoNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.7281177
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.LedgePublicSavePauseAndRecoveryDoNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.2264376
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.MissingSlot_DoesNotStartDefaultOrChangeLastSaved",
+      "state": "Passed",
+      "seconds": 0.1408726
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ModuleIsTheOnlyDriver_InputThenPhysics",
+      "state": "Passed",
+      "seconds": 0.129272
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ModuleReplacementCancellationKeepsOldSessionAndAllowsRetry",
+      "state": "Passed",
+      "seconds": 0.1302933
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ModuleReplacementCannotCommitWithoutPauseOrAfterReset",
+      "state": "Passed",
+      "seconds": 0.139876
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ModuleReplacementRejectsOldSessionAfterAnotherHandoff",
+      "state": "Passed",
+      "seconds": 0.0901632
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ModuleReplacementTransfersProgressAndPreservesNestedPause",
+      "state": "Passed",
+      "seconds": 0.1302376
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NestedPause_RestoresVelocity_AndRequiresFreshJump",
+      "state": "Passed",
+      "seconds": 0.1394586
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NewGameVelocityOverride_DoesNotReplaceLoadedVelocity",
+      "state": "Passed",
+      "seconds": 0.2571701
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NewHostCapturesEditsWithoutChangingExistingHostOrProgressCompatibility",
+      "state": "Passed",
+      "seconds": 0.3800138
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NewInputGeneration_RejectsPreparedCandidate",
+      "state": "Passed",
+      "seconds": 0.1398101
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NonemptyPowersAllowExitWithoutNewSave",
+      "state": "Passed",
+      "seconds": 0.1608959
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.NonemptyPowersSaveAndLoadV2",
+      "state": "Passed",
+      "seconds": 0.2979063
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.OldSessionSaveCompletionCannotReplaceNewSessionTarget",
+      "state": "Passed",
+      "seconds": 0.1498382
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.OwnedAndTimingTailAreRejectedWithoutTouchingSession",
+      "state": "Passed",
+      "seconds": 0.1439405
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PlayerScopeReplacementDiscardKeepsCurrentResult",
+      "state": "Passed",
+      "seconds": 0.0789449
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PlayerScopeReplacementPreservesWorldAndReleasesLatestSession",
+      "state": "Passed",
+      "seconds": 0.1319179
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PlayerScopeReplacementStartFailureKeepsCurrentPlayableSession",
+      "state": "Passed",
+      "seconds": 0.1357715
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PowersPreparedNotRunning_ResetHandoffAndWholePauseUseOneDriver",
+      "state": "Passed",
+      "seconds": 0.1522101
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Preparation_DoesNotRunOrOpenInput_AndSurvivesReset",
+      "state": "Passed",
+      "seconds": 0.1330658
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PublicReadAndRecoveryShareChainAndKeepActualLoadedSnapshot",
+      "state": "Passed",
+      "seconds": 0.2115938
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PublicRecoveryUsesFrozenInitialSnapshotAndPreservesGameplay",
+      "state": "Passed",
+      "seconds": 0.1502792
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PublicRecoveryWaitsForPreparationAndPresentationAndCancelsCleanly",
+      "state": "Passed",
+      "seconds": 0.6245207
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.PublicV1ReadFailsWithoutReplacingSessionOrTarget",
+      "state": "Passed",
+      "seconds": 0.2173322
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryClosedSessionAndForeignTicketsCannotAffectReplacementSession",
+      "state": "Passed",
+      "seconds": 0.0912591
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryCommittedStorageResultUsesAcceptedSnapshotWhilePlayerRuns",
+      "state": "Passed",
+      "seconds": 0.1665711
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryEntryKeepsInitialSnapshotAfterConfigurationAndResourceChanges",
+      "state": "Passed",
+      "seconds": 0.0475535
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryFailuresNeverReplaceLastCommittedTarget",
+      "state": "Passed",
+      "seconds": 0.0951089
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryLateOlderSuccessCannotReplaceNewerSuccessButCanFollowNewerFailure",
+      "state": "Passed",
+      "seconds": 0.0471869
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryLoadedEntryKeepsActualSnapshotInsteadOfResolvingSlotAgain",
+      "state": "Passed",
+      "seconds": 0.1033368
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryPreservesAnExistingWholePause",
+      "state": "Passed",
+      "seconds": 0.1518836
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryRebuildsRuntimeAndClearsOldTriggerInput",
+      "state": "Passed",
+      "seconds": 0.1481225
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryRejectedStorageRequestRetainsEntryTarget",
+      "state": "Passed",
+      "seconds": 0.0784481
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryRejectsInvalidTrackingWithoutChangingTarget",
+      "state": "Passed",
+      "seconds": 0.1010535
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryRejectsStoppedSessionWithoutRestartingIt",
+      "state": "Passed",
+      "seconds": 0.0952139
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RecoveryResultMustMatchRequestEpochAndSlotAndIsConsumedOnce",
+      "state": "Passed",
+      "seconds": 0.09549
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ResourceRestoreRejectsMissingUnknownDuplicateAndOutOfRangeWithoutMutatingHost",
+      "state": "Passed",
+      "seconds": 0.05462
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RestoredGroundBaselinePreservesUsesThenNewLandingRefills",
+      "state": "Passed",
+      "seconds": 0.1334653
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.RollingPublicSavePauseAndRecoveryDoNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.7691227
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SameGraph_SeparateContextsAndFsmInstances",
+      "state": "Passed",
+      "seconds": 0.1672834
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SaveAndExit_WaitsForCommitBeforeStateExit",
+      "state": "Passed",
+      "seconds": 0.1850499
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SchemeActionEffectsRemainFrozenAcrossSaveLoadRecoverAndNewHostUsesEdits",
+      "state": "Passed",
+      "seconds": 0.3075196
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SchemeRecoveryUsesFrozenAssemblyAndPreservesSavedResources",
+      "state": "Passed",
+      "seconds": 0.2625544
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ScopePlayer_DestroyedPlayerReleasesWholeScope",
+      "state": "Passed",
+      "seconds": 0.0901338
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ScopePlayer_LaterParticipantStartFailureReleasesTransferredPlayer",
+      "state": "Passed",
+      "seconds": 0.1310883
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ScopePlayer_OldResultCannotReleaseReplacementSession",
+      "state": "Passed",
+      "seconds": 0.158006
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ScopePlayer_PreparesBeforeModuleActivation_AndSurvivesReset",
+      "state": "Passed",
+      "seconds": 0.1372442
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.ScopePlayer_ReadFailureDoesNotLeavePreparedPlayer",
+      "state": "Passed",
+      "seconds": 0.1708919
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.Sensors_ExcludeOwnChild_AndFindRealFloor",
+      "state": "Passed",
+      "seconds": 0.130579
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SnapshotCandidatePreparationAndDiscardLeaveOldHostUntouched",
+      "state": "Passed",
+      "seconds": 0.1294152
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SnapshotCanStartFreshControllerWithFormalGraphAndNoStaleInput",
+      "state": "Passed",
+      "seconds": 0.1308026
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SnapshotDefensivelyCopiesArraysAndRestoresPlainEffectParameters",
+      "state": "Passed",
+      "seconds": 0.0466103
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SnapshotEntryGuardUsesRestoredPositionInsteadOfOldGroundCache",
+      "state": "Passed",
+      "seconds": 0.2203595
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SnapshotHandoffRequiresWholePauseAndRestoresIndependentResources",
+      "state": "Passed",
+      "seconds": 0.1303833
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.SupersededPreparation_CannotStartOrStopNewSession",
+      "state": "Passed",
+      "seconds": 0.1525737
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.TrialInitialConditionsRejectMissingSceneOrInvalidVectors",
+      "state": "Passed",
+      "seconds": 0.0435492
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.TrialRejectsFormalSaveLoadRecoverAndExitWithoutPausing",
+      "state": "Passed",
+      "seconds": 0.1502496
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.TrialRejectsWrongSceneAndCancelledPreparationWithoutStarting",
+      "state": "Passed",
+      "seconds": 0.1406207
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.TrialUsesExplicitSceneAndFrozenInitialConditionsWithoutChangingConfig",
+      "state": "Passed",
+      "seconds": 0.1313394
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.V1ReadRejectedWithoutChangingFilesOrCurrentSession",
+      "state": "Passed",
+      "seconds": 0.1729046
+    },
+    {
+      "name": "Game.Player.Tests.PlayerFoundationTests.WholePause_LastOwnerRestoresOriginalScale_AndStaleOwnerIsHarmless",
+      "state": "Passed",
+      "seconds": 0.1622295
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.CooldownBoundaryDoesNotRetainFloatingPointResidue",
+      "state": "Passed",
+      "seconds": 0.0111091
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.CooldownUsesSuppliedSeconds_ZeroTimeDoesNotAdvance_QueriesDoNotRestartIt",
+      "state": "Passed",
+      "seconds": 0.0004595
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.DisabledLockedAndTemporaryRestrictionsRemainIndependent",
+      "state": "Passed",
+      "seconds": 0.0008202
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.DisposedResultsCannotMutateNewSession_ProgressOutlivesRuntime",
+      "state": "Passed",
+      "seconds": 0.0006136
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.DuplicateOrMissingDefinitionFailsEvenWhenDisabled",
+      "state": "Passed",
+      "seconds": 0.0003299
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.EmptyConfigurationDoesNotInventMechanics",
+      "state": "Passed",
+      "seconds": 0.000273
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.ExplicitGroundRefillIsCappedAndDoesNotClearCooldownOrUnlock",
+      "state": "Passed",
+      "seconds": 0.0003237
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidCooldownFailsPreparation(-1.0f)",
+      "state": "Passed",
+      "seconds": 0.0009044
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidCooldownFailsPreparation(float.NaN)",
+      "state": "Passed",
+      "seconds": 0.0001281
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidCooldownFailsPreparation(float.PositiveInfinity)",
+      "state": "Passed",
+      "seconds": 0.0000822
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidStableIdFailsPreparation(\"\")",
+      "state": "Passed",
+      "seconds": 0.0006497
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidStableIdFailsPreparation(\" fixture.air\")",
+      "state": "Passed",
+      "seconds": 0.0001104
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidStableIdFailsPreparation(\"fixture.air \")",
+      "state": "Passed",
+      "seconds": 0.0000748
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.InvalidTimeRejectedBeforeAnyResourceAdvances",
+      "state": "Passed",
+      "seconds": 0.000514
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.QueryAndRejectedAttemptsNeverConsume_AndCommitIsOncePerAttempt",
+      "state": "Passed",
+      "seconds": 0.0006317
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.SharedSoDoesNotShareProgressResourcesOrAttemptIdentity",
+      "state": "Passed",
+      "seconds": 0.0003606
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.SkillCanCombineCountAndCooldown_UnlockingDoesNotRefillEither",
+      "state": "Passed",
+      "seconds": 0.0002557
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.SoChangesAfterPreparationCannotChangeExistingRuntime",
+      "state": "Passed",
+      "seconds": 0.00027
+    },
+    {
+      "name": "Game.Player.Tests.PlayerPowerResourceTests.ZeroCooldownAndUnlimitedUsesStillRequireDifferentAttempts",
+      "state": "Passed",
+      "seconds": 0.000331
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirDashActualPhysicsKeepsHeightAndMovesHorizontally",
+      "state": "Passed",
+      "seconds": 0.0219822
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirDashTailRestoresGravityAndInertiaOutlivesOpportunity",
+      "state": "Passed",
+      "seconds": 11.5163411
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpCommitsOnce_HoldAndReleaseDoNotRetriggerOrShorten",
+      "state": "Passed",
+      "seconds": 0.0746112
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpDisabledOrLockedRejectsWithoutSpending(False,True)",
+      "state": "Passed",
+      "seconds": 0.0212505
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpDisabledOrLockedRejectsWithoutSpending(True,False)",
+      "state": "Passed",
+      "seconds": 0.0170162
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpHorizontalPolicyIsEntryOnly(PreserveVelocity,3.0f)",
+      "state": "Passed",
+      "seconds": 0.0236879
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpHorizontalPolicyIsEntryOnly(FacingSpeed,-6.4f)",
+      "state": "Passed",
+      "seconds": 0.0687939
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpRefillsOnlyOnActualNormalJump_NotLandingOrUpwardProbe",
+      "state": "Passed",
+      "seconds": 0.0226415
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpRejectsOldEmptyAssemblyAndInvalidEnabledParameters",
+      "state": "Passed",
+      "seconds": 0.0210163
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpResourcesAndCapturedParametersAreIsolatedPerHost",
+      "state": "Passed",
+      "seconds": 0.0224832
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirJumpRestoreAscendingPreservesSpentUsesAndDoesNotReapplyImpulse",
+      "state": "Passed",
+      "seconds": 0.0298011
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirPress_DoesNotDoubleJumpOrRemainBufferedAfterLanding",
+      "state": "Passed",
+      "seconds": 0.0786949
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirSelectionAndLanding_UseCurrentSupportWithActualPhysics(False)",
+      "state": "Passed",
+      "seconds": 0.0222954
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AirSelectionAndLanding_UseCurrentSupportWithActualPhysics(True)",
+      "state": "Passed",
+      "seconds": 0.0228323
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_AllNodesHaveIndependentKeysIncludingDisabledActions",
+      "state": "Passed",
+      "seconds": 0.027345
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_ClipDurationDoesNotChangeJumpMotionOrExit(0.05f)",
+      "state": "Passed",
+      "seconds": 0.0325351
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_ClipDurationDoesNotChangeJumpMotionOrExit(5.0f)",
+      "state": "Passed",
+      "seconds": 0.0268725
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_DashLengthDoesNotChangeResourceCostOrExit(0.05f)",
+      "state": "Passed",
+      "seconds": 0.0308939
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_DashLengthDoesNotChangeResourceCostOrExit(5.0f)",
+      "state": "Passed",
+      "seconds": 0.0762582
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_FacingAndEffectAlphaAreNotAnimated",
+      "state": "Passed",
+      "seconds": 0.0218724
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"missing\")",
+      "state": "Passed",
+      "seconds": 0.0194597
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"duplicate-id\")",
+      "state": "Passed",
+      "seconds": 0.0172077
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"duplicate-key\")",
+      "state": "Passed",
+      "seconds": 0.0224927
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"missing-key\")",
+      "state": "Passed",
+      "seconds": 0.0723214
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"missing-clip\")",
+      "state": "Passed",
+      "seconds": 0.0176162
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"state\")",
+      "state": "Passed",
+      "seconds": 0.0167566
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"speed\")",
+      "state": "Passed",
+      "seconds": 0.0164996
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"event\")",
+      "state": "Passed",
+      "seconds": 0.0191909
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"alpha\")",
+      "state": "Passed",
+      "seconds": 0.0228707
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_InvalidMappingOrGameplayCurveIsRejected(\"root\")",
+      "state": "Passed",
+      "seconds": 0.0669964
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_PauseFreezesAndStopReleasesOnlyOwnOverride",
+      "state": "Passed",
+      "seconds": 0.0238783
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_RestoreStartsActualStateAtZeroAndCancelPreservesOldBinding",
+      "state": "Passed",
+      "seconds": 0.0252197
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_StableLeafDoesNotReplayAndSameLeafReentryDoes",
+      "state": "Passed",
+      "seconds": 0.0206523
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Animation_TwoHostsUseIndependentOverridesAndFrozenMaps",
+      "state": "Passed",
+      "seconds": 0.0377159
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackAndReactionCaptureRejectsTemporaryStateAndLateReactionInputCanResume",
+      "state": "Passed",
+      "seconds": 14.6613264
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackAnimationSpeedPauseAndRecoveryMovementVariantKeepLogicalClock",
+      "state": "Passed",
+      "seconds": 10.948971
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackDisabledKeepsIndependentGraphPlayableAsMovement",
+      "state": "Passed",
+      "seconds": 10.2791106
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackJumpWaitsForGateThenConsumesOnceAndReleasesControl",
+      "state": "Passed",
+      "seconds": 9.6062973
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.AttackVisualUsesFrozenLogicalClockAndIsIndependentOfBodyFlash",
+      "state": "Passed",
+      "seconds": 9.2824451
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferedLanding_CommitsJumpInTheDetectionStep(False,4)",
+      "state": "Passed",
+      "seconds": 0.1787405
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferedLanding_CommitsJumpInTheDetectionStep(True,10)",
+      "state": "Passed",
+      "seconds": 0.0853189
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferedLandingNormalJumpRefillsBeforeLeavingWithoutGroundEnter",
+      "state": "Passed",
+      "seconds": 0.0251913
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferedLandingRefillsBeforeDirectJump_UpwardNearFloorDoesNotRefill",
+      "state": "Passed",
+      "seconds": 0.0282481
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+      "state": "Passed",
+      "seconds": 0.0858019
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+      "state": "Passed",
+      "seconds": 0.0391393
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CeilingContact_EndsAscentAndAllowsLanding",
+      "state": "Passed",
+      "seconds": 0.0307165
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CharacterResourcesAreIsolated_StoppedResourcesCannotReachNewCharacter",
+      "state": "Passed",
+      "seconds": 0.0743544
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ClimbWithoutHang_RejectsPreparationWithoutAutoEnabling",
+      "state": "Passed",
+      "seconds": 0.02156
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ClosedDelayedAbilityChoosesOrdinaryAndOpeningDoesNotExtendThisRecovery",
+      "state": "Passed",
+      "seconds": 19.3141205
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CompleteSchemeWorkflowRunsRealMoveJumpFallAndKeepsCapturedHostsIndependent(\"HollowKnightStyle\",False)",
+      "state": "Passed",
+      "seconds": 3.118019
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CompleteSchemeWorkflowRunsRealMoveJumpFallAndKeepsCapturedHostsIndependent(\"CelesteStyle\",False)",
+      "state": "Passed",
+      "seconds": 2.1313671
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CompleteSchemeWorkflowRunsRealMoveJumpFallAndKeepsCapturedHostsIndependent(\"CelesteStyle\",True)",
+      "state": "Passed",
+      "seconds": 3.078052
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ConsumedGroundOpportunity_CannotBecomeADoubleJump_WhenStillNearFloor",
+      "state": "Passed",
+      "seconds": 0.0728524
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashBypassesEdgeButNotTallWall(False)",
+      "state": "Passed",
+      "seconds": 0.0219472
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashBypassesEdgeButNotTallWall(True)",
+      "state": "Passed",
+      "seconds": 0.0184415
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashRequiresEnabledObstacleLayerAndSolidTarget(True)",
+      "state": "Passed",
+      "seconds": 0.02454
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashRequiresEnabledObstacleLayerAndSolidTarget(False)",
+      "state": "Passed",
+      "seconds": 0.0697681
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashRespectsDirectionRestriction(PositiveOnly,False)",
+      "state": "Passed",
+      "seconds": 0.0199245
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_AirDashRespectsDirectionRestriction(NegativeOnly,True)",
+      "state": "Passed",
+      "seconds": 0.0180169
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_ConfigurationIsValidatedAndFrozen",
+      "state": "Passed",
+      "seconds": 0.0195968
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_GroundMovementAndDashClimbSmallStep(False)",
+      "state": "Passed",
+      "seconds": 0.0742326
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_GroundMovementAndDashClimbSmallStep(True)",
+      "state": "Passed",
+      "seconds": 0.0203728
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_JumpClearsSmallCeilingEdgeWithoutChangingLaunch(False)",
+      "state": "Passed",
+      "seconds": 0.0192247
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_JumpClearsSmallCeilingEdgeWithoutChangingLaunch(True)",
+      "state": "Passed",
+      "seconds": 0.017659
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_ObstacleLayerDoesNotHideBlockedCorrectionPath",
+      "state": "Passed",
+      "seconds": 0.0239991
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CornerCorrection_RejectsBlockedSideAndDoesNotRunWhilePaused",
+      "state": "Passed",
+      "seconds": 0.0712357
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.CoyoteJumpHasPriorityAndRefillsAirJump",
+      "state": "Passed",
+      "seconds": 0.0186725
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashAfterWallProtectionClearsReturnWindow",
+      "state": "Passed",
+      "seconds": 0.025182
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashBodyAndTailUseSameEnvironmentFallback(False)",
+      "state": "Passed",
+      "seconds": 11.5542168
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashBodyAndTailUseSameEnvironmentFallback(True)",
+      "state": "Passed",
+      "seconds": 12.5483243
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(True)",
+      "state": "Passed",
+      "seconds": 0.0243162
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(False)",
+      "state": "Passed",
+      "seconds": 0.022166
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashCooldownRejectsNewPress_WithoutConsumingResources",
+      "state": "Passed",
+      "seconds": 0.0200419
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashDisabledOrLocked_PrecheckDoesNotConsume(False,True)",
+      "state": "Passed",
+      "seconds": 0.0791606
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashDisabledOrLocked_PrecheckDoesNotConsume(True,False)",
+      "state": "Passed",
+      "seconds": 0.0294016
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashDoesNotRefillAirJump_AndHeldCooldownDoesNotRetry",
+      "state": "Passed",
+      "seconds": 0.0266891
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffectPreparationRejectsWrongLifetimeOrMissingContainer",
+      "state": "Passed",
+      "seconds": 0.0273582
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_InterruptNeverCreatesTailOrRemovesOtherSource(\"wall\")",
+      "state": "Passed",
+      "seconds": 0.0231806
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_InterruptNeverCreatesTailOrRemovesOtherSource(\"land\")",
+      "state": "Passed",
+      "seconds": 0.022004
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_InterruptNeverCreatesTailOrRemovesOtherSource(\"ground-lost\")",
+      "state": "Passed",
+      "seconds": 0.0235725
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_InterruptNeverCreatesTailOrRemovesOtherSource(\"stop\")",
+      "state": "Passed",
+      "seconds": 0.0449737
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_NormalEndReleasesOwnedAndCreatesSeparateTimed(True)",
+      "state": "Passed",
+      "seconds": 0.0228978
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashEffects_NormalEndReleasesOwnedAndCreatesSeparateTimed(False)",
+      "state": "Passed",
+      "seconds": 0.0215613
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashForwardWallInterrupts_BackWallDoesNot",
+      "state": "Passed",
+      "seconds": 0.0241685
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashFromSpecialRecoveryCarriesOnlyNormalNext",
+      "state": "Passed",
+      "seconds": 24.1884858
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashGroundBoundaryInterrupts_NoAutomaticOtherDash(True)",
+      "state": "Passed",
+      "seconds": 0.0252977
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashGroundBoundaryInterrupts_NoAutomaticOtherDash(False)",
+      "state": "Passed",
+      "seconds": 0.0180911
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashInput_ChannelPauseClearsPendingAndRequiresReleaseBeforeNewPress",
+      "state": "Passed",
+      "seconds": 0.0316709
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashInput_HeldRejectedPressDoesNotRepeatAfterFirstPhysicsDecision",
+      "state": "Passed",
+      "seconds": 0.1019198
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashInput_ShortPressSurvivesUpdatesAndConsumesOnceIndependentlyOfJump",
+      "state": "Passed",
+      "seconds": 0.0196881
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashLinearSpeedAndFacingFallback_UsesSeconds",
+      "state": "Passed",
+      "seconds": 0.0257015
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashMotion_CaptureFreezesSeparateGroundAndAirSettingsAndUsesSeconds",
+      "state": "Passed",
+      "seconds": 0.1019717
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashMotion_RejectsInvalidConfigurationBeforeRuntime(\"_duration\",0.0f)",
+      "state": "Passed",
+      "seconds": 0.0208388
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashMotion_RejectsInvalidConfigurationBeforeRuntime(\"_speed\",-1.0f)",
+      "state": "Passed",
+      "seconds": 0.0236638
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashMotion_RejectsInvalidConfigurationBeforeRuntime(\"_startSpeed\",float.NaN)",
+      "state": "Passed",
+      "seconds": 0.0825628
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashMotion_RejectsInvalidConfigurationBeforeRuntime(\"_endSpeed\",float.PositiveInfinity)",
+      "state": "Passed",
+      "seconds": 0.0190271
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashNewPressUsesConfiguredModeAndWaitsForGate(False,\"second\")",
+      "state": "Passed",
+      "seconds": 16.0203035
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashNewPressUsesConfiguredModeAndWaitsForGate(True,\"third\")",
+      "state": "Passed",
+      "seconds": 12.1337301
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashPauseFreezesActionAndCooldown_StopReleasesAction",
+      "state": "Passed",
+      "seconds": 0.0852734
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashRetainsOnlyExistingJumpBufferUntilFinished",
+      "state": "Passed",
+      "seconds": 0.0240833
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashSaveRejectsWhileActive_CompletedSnapshotRestoresResourcesNotAction",
+      "state": "Passed",
+      "seconds": 0.0250606
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashTailPauseAndRestoreKeepRemainingWithoutActionOrDuplicate",
+      "state": "Passed",
+      "seconds": 0.0330769
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DashTailPreservesUnexpiredLatePressWithoutRefreshingIt",
+      "state": "Passed",
+      "seconds": 16.1278237
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DeathCommitsOnceAndDisabledReactionStillTakesDamage",
+      "state": "Passed",
+      "seconds": 12.313983
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DedicatedRecoveryMovementAndClipCompletionOnlyChangeVisuals",
+      "state": "Passed",
+      "seconds": 8.6485462
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedPromptDependencyAndRecaptureAreExplicit",
+      "state": "Passed",
+      "seconds": 0.0745609
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedRecoveryStartsImmediatelyAndPromptTracksDynamicEligibility",
+      "state": "Passed",
+      "seconds": 11.3959216
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedToggleRetainsTopologyAndControlsRuntimeSelection(False)",
+      "state": "Passed",
+      "seconds": 12.0453272
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DelayedToggleRetainsTopologyAndControlsRuntimeSelection(True)",
+      "state": "Passed",
+      "seconds": 9.903987
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DifferentProfiles_CopyParameters_AndSharedDefinitionCreatesOneStatePerNode",
+      "state": "Passed",
+      "seconds": 0.0698737
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DirectModeIgnoresInactiveHeightAndKeepsExistingMotion",
+      "state": "Passed",
+      "seconds": 0.0199051
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+      "state": "Passed",
+      "seconds": 0.0213839
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+      "state": "Passed",
+      "seconds": 0.0197296
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledShortJumpLaunchesFullSpeedForHeldAndReleasedPress(False)",
+      "state": "Passed",
+      "seconds": 0.0239069
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledShortJumpLaunchesFullSpeedForHeldAndReleasedPress(True)",
+      "state": "Passed",
+      "seconds": 0.0691948
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DisabledVerticalRules_KeepBaseline_AndEnabledValuesAreCapturedAndValidated",
+      "state": "Passed",
+      "seconds": 0.030178
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropBlocksJumpDashAndSaveUntilFullyClear_ThenLandsOnOtherPlatform",
+      "state": "Passed",
+      "seconds": 0.023702
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropCommitsOnce_ClearsJumpAndHover_PreservesHorizontal_NoAirRefill",
+      "state": "Passed",
+      "seconds": 0.0197992
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropDestroyedTargetReleasesAndSnapshotRestoreDoesNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.0247682
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropDisabledOrLockedFallsBackToNormalJump(False,True)",
+      "state": "Passed",
+      "seconds": 0.0190598
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropDisabledOrLockedFallsBackToNormalJump(True,False)",
+      "state": "Passed",
+      "seconds": 0.0300273
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropDoesNotUseOldBufferedJump",
+      "state": "Passed",
+      "seconds": 0.0203388
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropOnSolidGroundFallsBack_AndDownAloneDoesNothing",
+      "state": "Passed",
+      "seconds": 0.0282589
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropPauseResumeAndStopReleaseExactPair",
+      "state": "Passed",
+      "seconds": 0.0687008
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropRejectsInvalidEnabledSpeed(0)",
+      "state": "Passed",
+      "seconds": 0.0191895
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropRejectsInvalidEnabledSpeed(-1)",
+      "state": "Passed",
+      "seconds": 0.0182629
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DropRejectsInvalidEnabledSpeed(float.NaN)",
+      "state": "Passed",
+      "seconds": 0.0169509
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.DummyMovesThroughMotorAndResetInvalidatesQueuedHitsEffectsAndReaction",
+      "state": "Passed",
+      "seconds": 7.2517605
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.E02AirJumpRejectionKeepsInputAndUsesThenCommitsExactlyOnce",
+      "state": "Passed",
+      "seconds": 0.0750922
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.E02HangRefusalContinuesToWallSlideWithoutHangConsumption",
+      "state": "Passed",
+      "seconds": 0.0228773
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.E02SchemeSaveReloadCaptureAndRetainPreserveSessionRules",
+      "state": "Passed",
+      "seconds": 2.4814557
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.E02WallSlideThresholdOnlyRestrictsEntryAndDifferentHostsKeepFrozenPlans",
+      "state": "Passed",
+      "seconds": 0.0683637
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EarlyRecoveryPressUsesNormalThirdAndNeverDelayedTarget",
+      "state": "Passed",
+      "seconds": 15.6035553
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EdgeHover_IsIndependentOfCoyoteAndDoesNotEndWhenDirectionReleased(False)",
+      "state": "Passed",
+      "seconds": 0.0216027
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EdgeHover_IsIndependentOfCoyoteAndDoesNotEndWhenDirectionReleased(True)",
+      "state": "Passed",
+      "seconds": 0.0159473
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EdgeHover_JumpAndLandingCancel_PauseFreezes_AndAirborneStartDoesNotGrantHover",
+      "state": "Passed",
+      "seconds": 0.0269747
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EffectsSurviveRealGraphStateChangesAndRemainHostLocal",
+      "state": "Passed",
+      "seconds": 0.0195604
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.EntryRejection_DoesNotConsumeJumpOrApplyImpulse",
+      "state": "Passed",
+      "seconds": 0.027515
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ExhaustedDelayedAbilityStillSelectsSpecialAndBufferedRequestCanUseRefill",
+      "state": "Passed",
+      "seconds": 11.6624355
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ExplicitMotionControlBlocksParentJumpHorizontalAndFacingUntilReleased",
+      "state": "Passed",
+      "seconds": 0.0735818
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ExplicitSelfLinkReentersAttackWithFreshClockAndDirection",
+      "state": "Passed",
+      "seconds": 6.7537273
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ExplicitV2MigrationPreservesResourcesAndStillValidatesCandidateHealth",
+      "state": "Passed",
+      "seconds": 10.5677948
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalCombatAssetsDealDamageShowSlashAndResetDummy",
+      "state": "Passed",
+      "seconds": 0.098137
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalLedgeDisabledOrLockedHasNoCost(False,True)",
+      "state": "Passed",
+      "seconds": 0.0205654
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalLedgeDisabledOrLockedHasNoCost(True,False)",
+      "state": "Passed",
+      "seconds": 0.0236025
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalLedgeJumpAndDashTakePriorityWithoutHangCost(False)",
+      "state": "Passed",
+      "seconds": 0.0178888
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalLedgeJumpAndDashTakePriorityWithoutHangCost(True)",
+      "state": "Passed",
+      "seconds": 0.0165438
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.FormalLedgePrecedesSlideAndDoesNotRefillAirJump",
+      "state": "Passed",
+      "seconds": 0.0186661
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Gravity_DrivesApexFallAndLanding_WithoutHeldRepeat",
+      "state": "Passed",
+      "seconds": 0.0184468
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundAccelerationBrakingAndTurning_UseDistinctRatesAndReachTarget",
+      "state": "Passed",
+      "seconds": 0.0252116
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundJump_ShortCircuitsOldAndNewChildren_AndLaunchesOnce",
+      "state": "Passed",
+      "seconds": 0.0655978
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(0.0f,0.0f,\"idle\",0.0f)",
+      "state": "Passed",
+      "seconds": 0.0208675
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(0.0f,2.0f,\"decelerate\",1.8f)",
+      "state": "Passed",
+      "seconds": 0.0173925
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(0.5f,4.0f,\"decelerate\",3.8f)",
+      "state": "Passed",
+      "seconds": 0.0171779
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(0.5f,1.0f,\"accelerate\",1.4f)",
+      "state": "Passed",
+      "seconds": 0.0217499
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(0.5f,2.5f,\"move\",2.5f)",
+      "state": "Passed",
+      "seconds": 0.0708264
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_AnalogTargetsUseSameStepFacts(-0.5f,1.0f,\"decelerate\",-0.2f)",
+      "state": "Passed",
+      "seconds": 0.0176366
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,False)",
+      "state": "Passed",
+      "seconds": 0.0178992
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,False)",
+      "state": "Passed",
+      "seconds": 0.0180712
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,True)",
+      "state": "Passed",
+      "seconds": 0.0213378
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,True)",
+      "state": "Passed",
+      "seconds": 0.0650446
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DisabledDefaultEntryRedirectsWithoutLoop(\"accelerate\")",
+      "state": "Passed",
+      "seconds": 0.0182162
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DisabledDefaultEntryRedirectsWithoutLoop(\"decelerate\")",
+      "state": "Passed",
+      "seconds": 0.0165936
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DropBeatsJumpAndDash(False)",
+      "state": "Passed",
+      "seconds": 0.0183877
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_DropBeatsJumpAndDash(True)",
+      "state": "Passed",
+      "seconds": 0.0219146
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_InstantGroundSkipsNewStates_EvenWithAirGradual(False)",
+      "state": "Passed",
+      "seconds": 0.0185828
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_InstantGroundSkipsNewStates_EvenWithAirGradual(True)",
+      "state": "Passed",
+      "seconds": 0.0184561
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_JumpInterruptsBothStages(False)",
+      "state": "Passed",
+      "seconds": 0.0211583
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_JumpInterruptsBothStages(True)",
+      "state": "Passed",
+      "seconds": 0.0241201
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_LandingRetainsVelocityAndSelectsBraking",
+      "state": "Passed",
+      "seconds": 0.0741669
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_LostSupportImmediatelyReturnsToAir(False)",
+      "state": "Passed",
+      "seconds": 0.0219276
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_LostSupportImmediatelyReturnsToAir(True)",
+      "state": "Passed",
+      "seconds": 0.0210442
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_ReleaseRepressReverse_PreserveNumericMotionAndParents",
+      "state": "Passed",
+      "seconds": 0.0311198
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+      "state": "Passed",
+      "seconds": 0.0740137
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_ZeroRateNeverBecomesInstant(\"_acceleration\",0.0f,True,\"accelerate\")",
+      "state": "Passed",
+      "seconds": 0.0224652
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_ZeroRateNeverBecomesInstant(\"_braking\",2.0f,False,\"decelerate\")",
+      "state": "Passed",
+      "seconds": 0.0207382
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundPhases_ZeroRateNeverBecomesInstant(\"_turning\",-2.0f,True,\"decelerate\")",
+      "state": "Passed",
+      "seconds": 0.0257845
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.GroundSupportFactUsesEdgesAndDoesNotInventAirResources",
+      "state": "Passed",
+      "seconds": 0.0694991
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HardLandingOrRollingInterruptsTail(True,\"hard-land\")",
+      "state": "Passed",
+      "seconds": 13.6606807
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HardLandingOrRollingInterruptsTail(False,\"rolling\")",
+      "state": "Passed",
+      "seconds": 9.7793541
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpConsumesOncePreservesHorizontalAndNoShortJumpOrRefill",
+      "state": "Passed",
+      "seconds": 0.0683732
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpDisabledOrLockedDoesNotConsume(False,True)",
+      "state": "Passed",
+      "seconds": 0.0191276
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpDisabledOrLockedDoesNotConsume(True,False)",
+      "state": "Passed",
+      "seconds": 0.01788
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpPauseAndStopClearPerPlayerState",
+      "state": "Passed",
+      "seconds": 0.0188066
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpRequiresInputAndDoesNotTriggerLateInsideRegion",
+      "state": "Passed",
+      "seconds": 0.0251651
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadJumpTakesPriorityOverAirJumpWithoutConsumingItsResource",
+      "state": "Passed",
+      "seconds": 0.0687697
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadProbeRearmsOnlyAfterLeavingAndIsIndependentPerHost",
+      "state": "Passed",
+      "seconds": 0.0211623
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadProbeRejectsSideBelowAndInitialOverlapButSweepsFastDescent",
+      "state": "Passed",
+      "seconds": 0.019385
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeadTargetMovementOrDynamicBodyInvalidatesCandidate",
+      "state": "Passed",
+      "seconds": 0.0204674
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HealthHudUsesGeneratedBindingAndFrozenIndependentSwitches(False,False)",
+      "state": "Passed",
+      "seconds": 7.5928542
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HealthHudUsesGeneratedBindingAndFrozenIndependentSwitches(True,False)",
+      "state": "Passed",
+      "seconds": 12.5110226
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HealthHudUsesGeneratedBindingAndFrozenIndependentSwitches(True,True)",
+      "state": "Passed",
+      "seconds": 12.2598806
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HeightAndTimeResolveBaseMotionAndIgnoreInactiveDirectFields",
+      "state": "Passed",
+      "seconds": 0.0759838
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HitFiltersSelfFriendlyAndLayerWithoutRecordingExcludedTarget",
+      "state": "Passed",
+      "seconds": 0.0213644
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HitPreemptsAttackAndLandingKeepsRemainingStun",
+      "state": "Passed",
+      "seconds": 12.9064011
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.HorizontalConfiguration_ValidatesActiveValuesAndSupportsZeroAcceleration",
+      "state": "Passed",
+      "seconds": 0.0733572
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.IdleMove_PreserveParents_AndApplyFacingAndSpeed",
+      "state": "Passed",
+      "seconds": 0.0218589
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.IndependentAirControl_UsesOwnRatesAndCapturedConfiguration",
+      "state": "Passed",
+      "seconds": 0.0207254
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.InputDisableOrPause_EndsOldHeightControl_WithoutClippingRestoredVelocity(False)",
+      "state": "Passed",
+      "seconds": 0.0402537
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.InputDisableOrPause_EndsOldHeightControl_WithoutClippingRestoredVelocity(True)",
+      "state": "Passed",
+      "seconds": 0.083572
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.InternalControllerPause_FreezesCoyoteTime_AndClearsBufferedInput",
+      "state": "Passed",
+      "seconds": 0.0355061
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.JumpResponseWindow_FreezesDuringPauseAndDoesNotStartForRestoredAscent",
+      "state": "Passed",
+      "seconds": 0.0683672
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.JumpResponseWindow_OverridesOnlyWithInputAndEndsAtBoundary",
+      "state": "Passed",
+      "seconds": 0.1330548
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.JumpWinsSameStep_NoDashCost(True)",
+      "state": "Passed",
+      "seconds": 0.0692347
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.JumpWinsSameStep_NoDashCost(False)",
+      "state": "Passed",
+      "seconds": 0.0196232
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+      "state": "Passed",
+      "seconds": 0.0180735
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(False)",
+      "state": "Passed",
+      "seconds": 0.0200085
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(True)",
+      "state": "Passed",
+      "seconds": 0.025791
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingEnabledWithMissingStateRejectsPreparation",
+      "state": "Passed",
+      "seconds": 0.0684504
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingLostSupportImmediatelyFalls",
+      "state": "Passed",
+      "seconds": 0.0196236
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingNormalCancelsButHardDoesNotExtendJumpBuffer(False)",
+      "state": "Passed",
+      "seconds": 0.018944
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingNormalCancelsButHardDoesNotExtendJumpBuffer(True)",
+      "state": "Passed",
+      "seconds": 0.0204375
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingOnlyNormalPauseAllowsDashOrDrop(False,False)",
+      "state": "Passed",
+      "seconds": 0.0696428
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingOnlyNormalPauseAllowsDashOrDrop(False,True)",
+      "state": "Passed",
+      "seconds": 0.0199317
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingOnlyNormalPauseAllowsDashOrDrop(True,False)",
+      "state": "Passed",
+      "seconds": 0.0191763
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingOnlyNormalPauseAllowsDashOrDrop(True,True)",
+      "state": "Passed",
+      "seconds": 0.0205771
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingPauseFreezesAndStopClears",
+      "state": "Passed",
+      "seconds": 0.0253115
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingRequiresContactAndUsesLastStepRatherThanMaximumSpeed",
+      "state": "Passed",
+      "seconds": 0.0745544
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingRulesHaveIndependentEnableFlags(False,False,\"idle\")",
+      "state": "Passed",
+      "seconds": 0.0229212
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingRulesHaveIndependentEnableFlags(False,True,\"hard-land\")",
+      "state": "Passed",
+      "seconds": 0.0196559
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingRulesHaveIndependentEnableFlags(True,False,\"land\")",
+      "state": "Passed",
+      "seconds": 0.0235688
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingSettingsAreFrozenPerSessionAndPlayersDoNotShareTimer",
+      "state": "Passed",
+      "seconds": 0.0766221
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingSpawnOnGroundDoesNotPause",
+      "state": "Passed",
+      "seconds": 0.0227685
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingStopsHorizontalAndSaveUntilExpiry(False)",
+      "state": "Passed",
+      "seconds": 0.044084
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingStopsHorizontalAndSaveUntilExpiry(True)",
+      "state": "Passed",
+      "seconds": 0.0817085
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LandingWithDirection_EntersMoveWithoutAnIdleFrame",
+      "state": "Passed",
+      "seconds": 0.0240917
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LeavingEdge_AfterCoyoteExpires_RejectsJump",
+      "state": "Passed",
+      "seconds": 0.0225655
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeBlockedClimbRemainsHangingWithoutConsuming",
+      "state": "Passed",
+      "seconds": 0.0352662
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeClimbUsesIndependentAbilityAndCompletesWithoutTeleport(True)",
+      "state": "Passed",
+      "seconds": 0.025317
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeClimbUsesIndependentAbilityAndCompletesWithoutTeleport(False)",
+      "state": "Passed",
+      "seconds": 0.0310167
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeDisabledDoesNotGrab",
+      "state": "Passed",
+      "seconds": 0.0254343
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeHangCommitsOnceHoldsWithoutDirectionAndRejectsSave",
+      "state": "Passed",
+      "seconds": 0.0813598
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeLockedClimbStaysHangingWithoutCost",
+      "state": "Passed",
+      "seconds": 0.0199557
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeMovementConfigurationIsFrozenPerSession",
+      "state": "Passed",
+      "seconds": 0.0181011
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeNewObstacleInterruptsClimbFromSafePosition",
+      "state": "Passed",
+      "seconds": 0.0199896
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgePauseFreezesClimbAndStopClearsOwnership",
+      "state": "Passed",
+      "seconds": 0.0257545
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeRejectsInvalidEnabledDuration(0)",
+      "state": "Passed",
+      "seconds": 0.0235321
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeRejectsInvalidEnabledDuration(-1)",
+      "state": "Passed",
+      "seconds": 0.0225519
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeRejectsInvalidEnabledDuration(float.NaN)",
+      "state": "Passed",
+      "seconds": 0.0225843
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeReleaseRequiresReleaseOfTowardInputBeforeRegrab",
+      "state": "Passed",
+      "seconds": 0.0256224
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeRisingDoesNotGrabOrConsume",
+      "state": "Passed",
+      "seconds": 0.0765343
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LedgeTargetLossExitsAndRestoreDoesNotResumeAction",
+      "state": "Passed",
+      "seconds": 0.0278525
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LifeInterruptClearsDashBodyAndTail(False,False)",
+      "state": "Passed",
+      "seconds": 12.8492888
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LifeInterruptClearsDashBodyAndTail(False,True)",
+      "state": "Passed",
+      "seconds": 14.4965482
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LifeInterruptClearsDashBodyAndTail(True,False)",
+      "state": "Passed",
+      "seconds": 12.9189244
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LifeInterruptClearsDashBodyAndTail(True,True)",
+      "state": "Passed",
+      "seconds": 12.890539
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.LifeSnapshotPreservesSavedHealthWhileDeathCandidateAppliesFrozenRecoveryPolicy",
+      "state": "Passed",
+      "seconds": 12.4534835
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MinimumHeightShortJump_LatchesReleaseAndDoesNotCutOnPauseOrApex",
+      "state": "Passed",
+      "seconds": 0.068833
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MinimumHeightShortJump_WaitsForHeightAndCutsOnlyOnce(False)",
+      "state": "Passed",
+      "seconds": 0.019678
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MinimumHeightShortJump_WaitsForHeightAndCutsOnlyOnce(True)",
+      "state": "Passed",
+      "seconds": 0.0176514
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MinimumHeightZero_ReleasedBufferCutsAtLaunchAndInvalidActiveValuesReject",
+      "state": "Passed",
+      "seconds": 0.0170602
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MissingCustomLifeProvidersRejectWithoutChangingCurrentSession",
+      "state": "Passed",
+      "seconds": 12.6162342
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MissingGroupAndInvalidActiveValuesRejectPreparation",
+      "state": "Passed",
+      "seconds": 0.076679
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MotionTraceRecordsOncePerPhysicsStepAndReadsHaveNoEffects",
+      "state": "Passed",
+      "seconds": 0.0242494
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.MotionTraceRingIsBoundedAndIndependentAcrossHosts",
+      "state": "Passed",
+      "seconds": 0.0360478
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitShapesSweepAcrossCompleteShortWindowAndDeduplicateEntity(0)",
+      "state": "Passed",
+      "seconds": 0.0770359
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitShapesSweepAcrossCompleteShortWindowAndDeduplicateEntity(1)",
+      "state": "Passed",
+      "seconds": 0.0204249
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NativeHitShapesSweepAcrossCompleteShortWindowAndDeduplicateEntity(2)",
+      "state": "Passed",
+      "seconds": 0.0243248
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NaturalDashTailAllowsFreshAttackWhileMovementPreservesNext",
+      "state": "Passed",
+      "seconds": 17.014931
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(0,True)",
+      "state": "Passed",
+      "seconds": 0.0309782
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(3,True)",
+      "state": "Passed",
+      "seconds": 0.0322912
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+      "state": "Passed",
+      "seconds": 0.0811853
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+      "state": "Passed",
+      "seconds": 0.0289523
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NormalJumpWinsAtGround_AndWallJumpNeverRefillsAirUses",
+      "state": "Passed",
+      "seconds": 0.0228542
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NormalLandingKeepsTailRemainingAndJumpBreaksOldNext",
+      "state": "Passed",
+      "seconds": 11.9055409
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.NormalRequestCannotCrossIntoDelayedWindowAndExpiredDelayedRequestCannotRevive",
+      "state": "Passed",
+      "seconds": 17.2934102
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.OptionalAttackAbilityNotInstalledRejectsActionWithoutBreakingMovement",
+      "state": "Passed",
+      "seconds": 12.8970289
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PauseAndInputDeny_ClearPendingJump_RequireFreshPressAfterResume",
+      "state": "Passed",
+      "seconds": 0.0879769
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PowersSurviveStateTransitions_ContinuousSupportDoesNotRefillSpentUses",
+      "state": "Passed",
+      "seconds": 0.0236122
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PresetMeasuresRealJumpAndShortJumpWithFormalAssembly(\"Base\")",
+      "state": "Passed",
+      "seconds": 0.035856
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PresetMeasuresRealJumpAndShortJumpWithFormalAssembly(\"LegacyReference\")",
+      "state": "Passed",
+      "seconds": 0.1151429
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PresetMeasuresRealJumpAndShortJumpWithFormalAssembly(\"HollowKnightStyle\")",
+      "state": "Passed",
+      "seconds": 0.0591032
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.PresetMeasuresRealJumpAndShortJumpWithFormalAssembly(\"CelesteStyle\")",
+      "state": "Passed",
+      "seconds": 0.1112134
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ProfileCopyOwnsAllMutableGroupsAndDoesNotChangeCapturedRuntime",
+      "state": "Passed",
+      "seconds": 0.0238171
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ReactionPriorityReplacesVelocityWithoutAddingImpulseAndProtectionKeepsFirstReaction",
+      "state": "Passed",
+      "seconds": 19.2888416
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ReactionProtectionDoesNotGrantDamageImmunityAndPauseFreezesStun",
+      "state": "Passed",
+      "seconds": 17.9443371
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RealAttackCollectsIntoSceneBatchAndReplacementPreservesDummyHealth",
+      "state": "Passed",
+      "seconds": 12.2719361
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RealPhysics_HeldJumpReachesHigherThanReleasedJump",
+      "state": "Passed",
+      "seconds": 0.0842715
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RecoveryPolicyBuildsCandidateWithoutMutatingDeadPlayer(Full,10)",
+      "state": "Passed",
+      "seconds": 12.9204635
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RecoveryPolicyBuildsCandidateWithoutMutatingDeadPlayer(Fixed,4)",
+      "state": "Passed",
+      "seconds": 17.4734879
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RecoveryPolicyBuildsCandidateWithoutMutatingDeadPlayer(Ratio,5)",
+      "state": "Passed",
+      "seconds": 14.9648607
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RecoveryPolicyBuildsCandidateWithoutMutatingDeadPlayer(Saved,7)",
+      "state": "Passed",
+      "seconds": 17.384206
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RedashFromTailConsumesNewRequestAndDropsOldNext",
+      "state": "Passed",
+      "seconds": 11.3315315
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ReleaseCut_NeverAddsUpwardSpeed_AndRunsOnlyOnce",
+      "state": "Passed",
+      "seconds": 0.071299
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ResourceTimeAdvancesOnlyInRenderDriver_NotPhysicsOrDiagnostics",
+      "state": "Passed",
+      "seconds": 0.0199634
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RestoreAirborneVelocity_SelectsBranchWithoutNewImpulse(4,\"jump\")",
+      "state": "Passed",
+      "seconds": 0.0209938
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RestoreAirborneVelocity_SelectsBranchWithoutNewImpulse(8,\"jump\")",
+      "state": "Passed",
+      "seconds": 0.0175146
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RestoreAirborneVelocity_SelectsBranchWithoutNewImpulse(-4,\"fall\")",
+      "state": "Passed",
+      "seconds": 0.0249481
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RestoredAirborneCharacter_DoesNotInheritAnotherCharactersCoyoteTime",
+      "state": "Passed",
+      "seconds": 0.0747056
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingCanBeCancelledByValidActions(\"jump\")",
+      "state": "Passed",
+      "seconds": 0.0369247
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingCanBeCancelledByValidActions(\"ground-dash\")",
+      "state": "Passed",
+      "seconds": 0.0393789
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingCanBeCancelledByValidActions(\"drop-through\")",
+      "state": "Passed",
+      "seconds": 0.1035179
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingDoesNotOverrideHardLandingOrTriggerOnSpawn",
+      "state": "Passed",
+      "seconds": 0.0881482
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingEnabledRequiresCorrespondingState",
+      "state": "Passed",
+      "seconds": 0.1798786
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingExpiresOnceAndClampsExitSpeed",
+      "state": "Passed",
+      "seconds": 0.0885934
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingInvalidConfigurationRejects(0,0.3f)",
+      "state": "Passed",
+      "seconds": 0.0370247
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingInvalidConfigurationRejects(5,0)",
+      "state": "Passed",
+      "seconds": 0.072115
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingInvalidConfigurationRejects(float.NaN,0.3f)",
+      "state": "Passed",
+      "seconds": 0.021263
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingLocksEntryDirectionAndIgnoresReleaseOrReverse(D,1)",
+      "state": "Passed",
+      "seconds": 0.023438
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingLocksEntryDirectionAndIgnoresReleaseOrReverse(A,-1)",
+      "state": "Passed",
+      "seconds": 0.0309552
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingOptionalEntryUsesHorizontalInputAndOverridesNormalPause(False,True,\"land\")",
+      "state": "Passed",
+      "seconds": 0.0299204
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingOptionalEntryUsesHorizontalInputAndOverridesNormalPause(True,False,\"land\")",
+      "state": "Passed",
+      "seconds": 0.0182159
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingOptionalEntryUsesHorizontalInputAndOverridesNormalPause(True,True,\"rolling\")",
+      "state": "Passed",
+      "seconds": 0.0185316
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingPauseAndStopCleanUpWithoutSharingSessionParameters",
+      "state": "Passed",
+      "seconds": 0.0253835
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingWallStopsAndLostSupportFalls",
+      "state": "Passed",
+      "seconds": 0.0780527
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingYieldsToActionsOnContactStep(\"jump\")",
+      "state": "Passed",
+      "seconds": 0.0235037
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingYieldsToActionsOnContactStep(\"ground-dash\")",
+      "state": "Passed",
+      "seconds": 0.0200875
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RollingYieldsToActionsOnContactStep(\"drop-through\")",
+      "state": "Passed",
+      "seconds": 0.0443977
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RuleExternalNormalLandingCannotBypassPendingJump",
+      "state": "Passed",
+      "seconds": 0.075749
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RuleFormalGraphHasCompleteSitesWithoutChangingTransitionIdentity",
+      "state": "Passed",
+      "seconds": 0.0257699
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RuleRejectedAirLandingRetainsWallWindow",
+      "state": "Passed",
+      "seconds": 0.0235832
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RuleRejectedLedgeReleaseDoesNotConsumeOrBlockGrip",
+      "state": "Passed",
+      "seconds": 0.0351242
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.RuleRejectedRollingWallFinishDoesNotSetExitFlag",
+      "state": "Passed",
+      "seconds": 0.0811173
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SchemeEffectsMatchExplicitLegacyFixtureForSameDashInput(True)",
+      "state": "Passed",
+      "seconds": 0.0309176
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SchemeEffectsMatchExplicitLegacyFixtureForSameDashInput(False)",
+      "state": "Passed",
+      "seconds": 0.0324358
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ShapeKeyframeChangesKeepLedgerWhileNewWindowAndAttackResetIt",
+      "state": "Passed",
+      "seconds": 0.0721482
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SharedGraph_CreatesIndependentStateObjectsAndActivationPaths",
+      "state": "Passed",
+      "seconds": 0.025118
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ShortTapWithinOneInputUpdate_SurvivesMultipleRenderSamples_AndLaunchesShort",
+      "state": "Passed",
+      "seconds": 0.0212861
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_NewLeaf_CompleteBindingAnimationPauseExitAndDisabledFallback(False)",
+      "state": "Passed",
+      "seconds": 4.7653617
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_NewLeaf_CompleteBindingAnimationPauseExitAndDisabledFallback(True)",
+      "state": "Passed",
+      "seconds": 4.3204669
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_NewLeaf_ParentJumpInterruptsAndStopReleasesVisual",
+      "state": "Passed",
+      "seconds": 4.3601183
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_NewLeaf_TwoHostsKeepTimersAndOverridesIndependent",
+      "state": "Passed",
+      "seconds": 5.3627301
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_PartialFrames_ImportReloadPlaybackPreservesOtherSlotsAndPhysics(False)",
+      "state": "Passed",
+      "seconds": 5.4570033
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.Skill_PartialFrames_ImportReloadPlaybackPreservesOtherSlotsAndPhysics(True)",
+      "state": "Passed",
+      "seconds": 4.6519978
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.StationaryMoveCancelBreaksChainAndGroundAttackCannotContinueInAir",
+      "state": "Passed",
+      "seconds": 11.2296809
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.SuccessiveDashTailsExpireIndependently_AndOtherHostIsIsolated",
+      "state": "Passed",
+      "seconds": 0.0760841
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.TerminalSpeed_ClampsExistingAndNextPhysicsStepVelocity_AndReleasesOnJump",
+      "state": "Passed",
+      "seconds": 0.0216107
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ThreeHitEarlyLinksLockFacingAndLastRecoveryRequiresFreshPress",
+      "state": "Passed",
+      "seconds": 10.0452721
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.TimingDiagnosticsAreReadOnlyAndConfigurationChangesRequireNewRuntime",
+      "state": "Passed",
+      "seconds": 0.0865216
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.TrapUsesIndependentContactIntervalAndReceiverProtection",
+      "state": "Passed",
+      "seconds": 11.3137056
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.TwoRealPlayersTradeLethalHitsAndDoNotShareHealthOrReactions",
+      "state": "Passed",
+      "seconds": 13.2148407
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.UnavailableNextDoesNotFallbackAndAirTailReversesSmoothly",
+      "state": "Passed",
+      "seconds": 16.1012118
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(1.0f,0.75f)",
+      "state": "Passed",
+      "seconds": 0.022842
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-1.0f,0.75f)",
+      "state": "Passed",
+      "seconds": 0.023167
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(4.0f,0.75f)",
+      "state": "Passed",
+      "seconds": 0.0210715
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-5.0f,1.5f)",
+      "state": "Passed",
+      "seconds": 0.0278305
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(5.0f,1.0f)",
+      "state": "Passed",
+      "seconds": 0.0782954
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.VerticalInput_SamplesDirection_AndClearsWithoutConsumingJump",
+      "state": "Passed",
+      "seconds": 0.0215528
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallAbilities_DisabledOrLockedFallBackToAirJump(False,True)",
+      "state": "Passed",
+      "seconds": 0.0204487
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallAbilities_DisabledOrLockedFallBackToAirJump(True,False)",
+      "state": "Passed",
+      "seconds": 0.0262999
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallFastSlide_DisabledFallsBackAndSessionRemainsFrozen",
+      "state": "Passed",
+      "seconds": 0.0762978
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallInterruptedDashDoesNotCreateNaturalTail",
+      "state": "Passed",
+      "seconds": 14.0270169
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallJump_BeatsAirJump_UsesWallNotFacing_AndProtectsHorizontal",
+      "state": "Passed",
+      "seconds": 0.0749177
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallJump_RestoreKeepsResourcesAndVelocityWithoutWindowOrImpulse",
+      "state": "Passed",
+      "seconds": 0.0231533
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallJump_ReturnTriggersOnce_EndsAndDoesNotShortJump",
+      "state": "Passed",
+      "seconds": 0.0234614
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallReturnDisabledRestoresNormalAirControlAfterProtection",
+      "state": "Passed",
+      "seconds": 0.0258149
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSensors_BothSidesHaveRealNormals_AndClearAfterLeaving",
+      "state": "Passed",
+      "seconds": 0.0831542
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSensors_FloorCeilingAndOverlapAreNotWalls",
+      "state": "Passed",
+      "seconds": 0.0194056
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSensors_IgnoreOwnShapesTriggersAndExcludedLayers",
+      "state": "Passed",
+      "seconds": 0.0185389
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSensors_RejectInvalidProbeConfiguration",
+      "state": "Passed",
+      "seconds": 0.0187077
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSensors_SelectNearest_AndClearWhenShapeDisabled",
+      "state": "Passed",
+      "seconds": 0.0239927
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSlide_AscendingAndLostWallDoNotStick",
+      "state": "Passed",
+      "seconds": 0.0685988
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSlide_CornerLossAndLandingBufferHaveValidExit",
+      "state": "Passed",
+      "seconds": 0.0181502
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSlide_RequiresTowardInput_QuickSlideAndReleaseRestoreGravity",
+      "state": "Passed",
+      "seconds": 0.0179665
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallSlideNoDirectionDashesAway_ProtectionRejectsAndReturnWindowClears",
+      "state": "Passed",
+      "seconds": 0.0189085
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WallWindow_PauseDoesNotAdvance_AndHostsAreIndependent",
+      "state": "Passed",
+      "seconds": 0.0181599
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WindowRetryPolicyUsesAcceptedResultAndIgnoresBodyContactExclusion(False,10)",
+      "state": "Passed",
+      "seconds": 0.0684911
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.WindowRetryPolicyUsesAcceptedResultAndIgnoresBodyContactExclusion(True,9)",
+      "state": "Passed",
+      "seconds": 0.0306493
+    },
+    {
+      "name": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+      "state": "Passed",
+      "seconds": 0.027565
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameLoadingProgressTests.GenericWorkAndManualProgressCannotReach100Early",
+      "state": "Passed",
+      "seconds": 0.0067641
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameLoadingProgressTests.ProgressAndCustomFadeCompleteAtZeroTimeScale",
+      "state": "Passed",
+      "seconds": 0.272542
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameLoadingProgressTests.QuickPathStillRequiresSuccessfulWorkAndHidesProgress",
+      "state": "Passed",
+      "seconds": 0.0006795
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameLoadingProgressTests.SlowBusinessPreparationHoldsBelow100EvenWhenSceneIsIdle",
+      "state": "Passed",
+      "seconds": 0.1111926
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.CancellationDisposesLateResult_WithoutStarting",
+      "state": "Passed",
+      "seconds": 0.0466589
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.CleanupFailureDoesNotSkipOtherResultsOrKeepScopeBusy",
+      "state": "Passed",
+      "seconds": 0.0294394
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.DestroyParticipantStopsOwnedSession",
+      "state": "Passed",
+      "seconds": 0.0804683
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.EmptyScopeWorksWithoutPlayerOrInputModule",
+      "state": "Passed",
+      "seconds": 0.0319109
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.GroupAliasAndCyclesFailBeforeAnyPrepare",
+      "state": "Passed",
+      "seconds": 0.0116761
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.GroupOwnsChildWithoutScopeDrivingItTwice",
+      "state": "Passed",
+      "seconds": 0.0291844
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.InvalidReferencesFailBeforePreparingAnyone",
+      "state": "Passed",
+      "seconds": 0.0023089
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.OldCleanupFailureKeepsNewResultOwnedAndDoesNotDisposeOldAgain",
+      "state": "Passed",
+      "seconds": 0.0873359
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.PartialFailureDisposesEarlierResults_AllowsRetry",
+      "state": "Passed",
+      "seconds": 0.033191
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.PrepareDoesNotStart_ExplicitStartOnce_DisposeInReverse",
+      "state": "Passed",
+      "seconds": 0.032511
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementCancellationRetainsOwnershipUntilLateCandidateIsCleaned",
+      "state": "Passed",
+      "seconds": 0.0864205
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementCannotReuseAnyOwnedResult",
+      "state": "Passed",
+      "seconds": 0.0283002
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementDisposeFailureStillReleasesRequestSlot",
+      "state": "Passed",
+      "seconds": 0.0286233
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementFailureOrAbandonKeepsOldResultAndAllowsRetry",
+      "state": "Passed",
+      "seconds": 0.0864389
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementPreservesWorldAndDisposesOldOnlyAfterNewStarts",
+      "state": "Passed",
+      "seconds": 0.0318635
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementRejectsNestedAndForeignParticipantsAndNonRunningSession",
+      "state": "Passed",
+      "seconds": 0.0294529
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementStartFailureRetainsOldAndCleansCandidateOnce",
+      "state": "Passed",
+      "seconds": 0.03321
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.RequireRejectsMissingOrMultipleScopes",
+      "state": "Passed",
+      "seconds": 0.0013549
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeDisabledDuringPrepare_HoldsOwnershipUntilLateCleanup",
+      "state": "Passed",
+      "seconds": 0.0787631
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeDisableDuringReplacementWaitsForLateCleanupBeforeReclaim",
+      "state": "Passed",
+      "seconds": 0.0294856
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeLossInsideCandidateStartDoesNotInstallOrLeakCandidate",
+      "state": "Passed",
+      "seconds": 0.0341238
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.SlowPreparationBlocksReady_AndRejectsOverlap",
+      "state": "Passed",
+      "seconds": 0.0845291
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.StartFailureCleansStartedAndUnstartedResults",
+      "state": "Passed",
+      "seconds": 0.0296915
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameSceneScopeTests.TwoScopesCannotOwnSameParticipant",
+      "state": "Passed",
+      "seconds": 0.0296032
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.CommitFailureStaysClosedUntilLaterSuccess",
+      "state": "Passed",
+      "seconds": 0.132151
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.LateOldCurtainDoesNotUnlockNewRequest",
+      "state": "Passed",
+      "seconds": 0.1071564
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.OuterCompletionWaitsForCurtainAndPreservesOtherOwner",
+      "state": "Passed",
+      "seconds": 0.0421985
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.OuterFailureDoesNotUnlockAndStoppedServiceStaysStopped",
+      "state": "Passed",
+      "seconds": 0.0916539
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.PreparationFailureRestoresOldSessionOnly",
+      "state": "Passed",
+      "seconds": 0.0338786
+    },
+    {
+      "name": "Game.SceneFlow.Tests.GameTransitionInputTests.SlowPreparationCannotOperateOrStart",
+      "state": "Passed",
+      "seconds": 0.0407514
+    }
+  ]
+}

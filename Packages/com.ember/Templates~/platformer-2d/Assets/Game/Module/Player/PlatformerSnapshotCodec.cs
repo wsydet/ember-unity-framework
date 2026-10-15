@@ -7,12 +7,14 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    /// <summary>项目业务 v2 格式。拒绝 v1，不迁移/补值；通用存储外壳和数据类型 ID 不变。</summary>
+    /// <summary>项目业务 v3 格式。旧版本默认明确拒绝，业务可显式注入迁移器。</summary>
     public sealed class PlatformerSnapshotCodec : IProgressCodec<PlatformerSnapshot>
     {
         #region 内部参数
         private const int MAX_BYTES = 1024 * 1024;
         public string DataTypeId => "ember.platformer2d.progress";
+        private readonly IPlatformerSnapshotMigration _migration;
+        public PlatformerSnapshotCodec(IPlatformerSnapshotMigration migration = null) => _migration = migration;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -67,6 +69,7 @@ namespace Game.Player
                 writer.Write(PlatformerSnapshot.DATA_VERSION); writer.Write(snapshot.Scene);
                 writer.Write(snapshot.Position.x); writer.Write(snapshot.Position.y);
                 writer.Write(snapshot.Velocity.x); writer.Write(snapshot.Velocity.y); writer.Write(snapshot.FacesRight);
+                writer.Write(snapshot.Life.Installed); writer.Write(snapshot.Life.Health);
                 WritePowers(writer, snapshot.Powers, false); WritePowers(writer, snapshot.Powers, true);
                 writer.Write(snapshot.EffectsInstalled); writer.Write(snapshot.EffectCount);
                 for (int i = 0; i < snapshot.EffectCount; i++)
@@ -86,9 +89,10 @@ namespace Game.Player
         }
         public DecodeResult<PlatformerSnapshot> Decode(ReadOnlyMemory<byte> payload, int dataVersion)
         {
+            if (_migration != null) return _migration.Migrate(payload, dataVersion);
             if (dataVersion != PlatformerSnapshot.DATA_VERSION)
                 return new DecodeResult<PlatformerSnapshot>(DecodeStatus.DataVersionUnsupported,
-                    error: "只支持完整进度 v2；旧 v1 不自动迁移或补值，原文件保留。");
+                    error: "只支持完整进度 v3；旧档请重新开始或显式迁移版本及能力装配集合，原文件保留，不自动补满血。");
             try
             {
                 if (payload.Length > MAX_BYTES) throw new InvalidDataException("完整快照超过 1 MiB。");
@@ -98,6 +102,7 @@ namespace Game.Player
                 string scene = ReadText(reader, 128);
                 var position = new Vector2(reader.ReadSingle(), reader.ReadSingle());
                 var velocity = new Vector2(reader.ReadSingle(), reader.ReadSingle()); bool facing = ReadBool(reader);
+                var life = new PlatformerLifeRecord(ReadBool(reader), reader.ReadSingle());
                 var powers = new EntityPowerSnapshot(ReadPowers(reader), ReadPowers(reader));
                 bool installed = ReadBool(reader);
                 var effects = new EntityTimedEffectSnapshot[ReadCount(reader, 4096)];
@@ -115,10 +120,13 @@ namespace Game.Player
                 }
                 if (stream.Position != stream.Length) throw new InvalidDataException("完整快照包含多余数据。");
                 return new DecodeResult<PlatformerSnapshot>(DecodeStatus.Decoded,
-                    new PlatformerSnapshot(scene, position, velocity, facing, powers, installed, effects));
+                    new PlatformerSnapshot(scene, position, velocity, facing, powers, installed, effects, life));
             }
             catch (Exception error) { return new DecodeResult<PlatformerSnapshot>(DecodeStatus.DecodeFailed, error: error.Message); }
         }
         #endregion
     }
+    /// <summary>迁移需由业务显式处理版本与目标能力装配集合；返回值仍经过完整候选准备校验。</summary>
+    public interface IPlatformerSnapshotMigration
+    { DecodeResult<PlatformerSnapshot> Migrate(ReadOnlyMemory<byte> payload, int dataVersion); }
 }

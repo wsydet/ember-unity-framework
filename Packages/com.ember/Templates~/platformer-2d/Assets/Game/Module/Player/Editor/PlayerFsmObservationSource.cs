@@ -14,6 +14,20 @@ namespace Game.Player.Editor
         public static string Metrics(PlayerContext context)
         {
             var result = new StringBuilder();
+            result.Append($"运动控制 {context.MotionControl.Observation}\n");
+            var combat = context.Combat;
+            if (combat != null)
+            {
+                result.Append($"攻击 {combat.Segment?.Id ?? "无"} · 活动 {combat.IsActive} · 时间 {combat.Progress:F3}s · 收刀 {combat.IsRecovery} / 特殊 {combat.IsDelayedRecovery}\n");
+                if (combat.IsActive)
+                    result.Append($"开放 冲刺 {combat.Gate(PlayerCombatButton.Dash)} / 跳跃 {combat.Gate(PlayerCombatButton.Jump)} / 攻击 {combat.Gate(PlayerCombatButton.Attack)} · 下一刀 {combat.Next} · 停顿目标 {combat.Delayed}\n");
+                if (combat.Dash != null)
+                    result.Append($"冲刺续接 {combat.Dash.Target} · 收尾时间 {combat.Dash.TailTime:F3} · 惯性 {combat.Dash.HasResidualMotion}\n");
+                if (combat.Hits != null) result.Append(combat.Hits.Observation + "\n");
+            }
+            foreach (PlayerCombatButton button in System.Enum.GetValues(typeof(PlayerCombatButton)))
+                result.Append(context.Input.Combat.Observe(button) + "\n");
+            result.Append($"HP {context.Health?.Current.ToString() ?? "未装配"} · 死亡 {context.Life?.IsDead} · 硬直 {context.Life?.Reaction?.Remaining:F3}s\n");
             result.Append($"速度 {context.Motor.Velocity} u/s · 当前有效重力倍率 {context.VerticalMotion.EffectiveGravityScale:F3} · 加速度 {Physics2D.gravity.y * context.VerticalMotion.EffectiveGravityScale:F3} u/s²");
             result.Append($"\n输入缓冲 {context.Input.BufferRemaining:F3}s / {context.Feel.BufferDuration:F3}s · 离地宽限 {context.JumpWindow.CoyoteRemaining:F3}s / {context.Feel.CoyoteDuration:F3}s · 悬停 {context.VerticalMotion.HoverRemaining:F3}s");
             result.Append($"\n墙面 左 {context.Sensors.LeftWall?.name ?? "无"} / 右 {context.Sensors.RightWall?.name ?? "无"} · 向下输入 {context.Input.Vertical:F2} · 墙滑 {context.Wall.Sliding} · 离墙保护 {context.Wall.ProtectionRemaining:F3}s · 回墙窗口 {context.Wall.ReturnRemaining:F3}s · 回墙中 {context.Wall.Returning}");

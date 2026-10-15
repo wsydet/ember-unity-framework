@@ -28,7 +28,7 @@ namespace Game.Player.Editor
             ["_apexTime"] = "基础到顶时间 (s)", ["_launchSpeed"] = "起跳速度 (u/s)", ["_gravityScale"] = "基础重力倍率",
             ["_enableShortJump"] = "启用短跳", ["_shortJumpMode"] = "短跳策略", ["_releaseSpeed"] = "松键上升限速 (u/s)",
             ["_minimumHeight"] = "短跳最低高度 (u)", ["_releaseMultiplier"] = "松键速度倍率", ["_enableApexGravity"] = "启用顶点重力",
-            ["_apexSpeed"] = "顶点速度阈值 (u/s)", ["_apexMultiplier"] = "顶点重力倍率", ["_enableFallGravity"] = "启用下落重力",
+            ["_apexSpeed"] = "顶点速度阈值 (u/s)", ["_apexMultiplier"] = "顶点重力倍率", ["_enableFallGravity"] = "启用下落加速／重力修正",
             ["_fallMultiplier"] = "下落重力倍率", ["_enableFallLimit"] = "启用下落限速", ["_fallLimit"] = "下落限速 (u/s)",
             ["_enableEdgeHover"] = "启用离地悬停", ["_edgeHoverDuration"] = "悬停时长 (s)", ["_headJumpSpeed"] = "踩头反弹速度 (u/s)",
             ["_airJumpSpeed"] = "二段跳速度 (u/s)", ["_airJumpHorizontalMode"] = "二段跳水平策略", ["_airJumpHorizontalSpeed"] = "二段跳水平速度 (u/s)",
@@ -55,7 +55,12 @@ namespace Game.Player.Editor
             ["_endSpeed"] = "结束速度 (u/s)", ["_kind"] = "效果分类",
             ["m_Size"] = "碰撞尺寸 (u)", ["m_Offset"] = "碰撞偏移 (u)", ["_groundDistance"] = "地面探测距离 (u)",
             ["_wallDistance"] = "墙面探测距离 (u)", ["m_LocalPosition"] = "表现偏移 (u)", ["m_LocalScale"] = "表现缩放倍率",
-            ["m_Sprite"] = "精灵图", ["m_Color"] = "表现颜色"
+            ["m_Sprite"] = "精灵图", ["m_Color"] = "表现颜色",
+            ["_jumpCorrection"] = "跳跃顶角补正", ["_groundDashCorrection"] = "地面冲刺补正",
+            ["_airDashCorrection"] = "空中冲刺补正", ["_stepCorrection"] = "普通移动跨小台阶",
+            ["_maximumDistance"] = "最大补正距离 (u)", ["_increment"] = "搜索步长 (u)",
+            ["_lookAhead"] = "前方探测距离 (u)",
+            ["_direction"] = "补正方向偏好", ["_obstacleLayers"] = "可补正障碍层", ["_supportDistance"] = "落脚支撑探测 (u)"
         };
         #endregion
         // --------------------------------------------------------
@@ -77,6 +82,7 @@ namespace Game.Player.Editor
         private string Label(SerializedProperty property) => FieldLabel(property, _asset);
         internal static string FieldLabel(SerializedProperty property, UnityEngine.Object asset)
         {
+            if (asset is PlayerMoveFeel && property.name == "_enabled" && property.propertyPath.Contains("Correction.")) return "启用本组补正";
             if (asset is PlayerAnimationProfile && property.name == "_speed") return "播放速度倍率";
             if (property.propertyType == SerializedPropertyType.ArraySize) return "元素数量";
             if (property.propertyPath.Contains(".Array.data["))
@@ -101,9 +107,16 @@ namespace Game.Player.Editor
             if (_asset is PlayerMoveFeel)
             {
                 if (new[] { "_acceleration", "_braking", "_turning" }.Contains(field) && Off("_accelerated")) return "地面渐变关闭；当前即时响应";
-                if (field.StartsWith("_air", StringComparison.Ordinal) && Off("_independentAir")) return "独立空中关闭；继承地面设置";
+                if (new[] { "_airSpeed", "_airAccelerated", "_airAcceleration", "_airBraking", "_airTurning" }.Contains(field) && Off("_independentAir")) return "独立空中关闭；继承地面设置";
                 if (new[] { "_airAcceleration", "_airBraking", "_airTurning" }.Contains(field) && Off("_airAccelerated")) return "空中渐变关闭；当前即时响应";
                 if (field == "_jumpResponseDuration" && Off("_enableJumpResponse")) return "起跳响应关闭";
+                foreach (string correction in new[] { "_jumpCorrection", "_groundDashCorrection", "_airDashCorrection", "_stepCorrection" })
+                {
+                    if (!field.StartsWith(correction + ".", StringComparison.Ordinal)) continue;
+                    if (property.name != "_enabled" && Off(correction + "._enabled")) return "该组碰撞补正关闭";
+                    if (property.name == "_direction" && (correction == "_groundDashCorrection" || correction == "_stepCorrection")) return "地面补正固定向上";
+                    if (property.name == "_supportDistance" && (correction == "_jumpCorrection" || correction == "_airDashCorrection")) return "空中补正无需地面支撑";
+                }
                 if (field.StartsWith("_rolling.") && field != "_rolling._enabled" && Off("_rolling._enabled")) return "翻滚关闭";
                 if (field.StartsWith("_landing._normal") && field != "_landing._normalEnabled" && Off("_landing._normalEnabled")) return "普通落地停顿关闭";
                 if (field.StartsWith("_landing._hard") && field != "_landing._hardEnabled" && Off("_landing._hardEnabled")) return "重落地关闭";

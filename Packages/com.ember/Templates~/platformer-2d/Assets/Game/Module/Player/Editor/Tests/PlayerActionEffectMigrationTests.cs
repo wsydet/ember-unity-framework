@@ -40,7 +40,10 @@ namespace Game.Player.Editor.Tests
         }
         [TearDown] public void Teardown()
         {
-            Undo.ClearAll(); AssetDatabase.DeleteAsset(_folder);
+            foreach (var guid in AssetDatabase.FindAssets("", new[] { _folder }))
+                foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath(guid))) Undo.ClearUndo(asset);
+            foreach (var item in _memory) if (item != null) Undo.ClearUndo(item);
+            AssetDatabase.DeleteAsset(_folder);
             foreach (var item in _memory) if (item != null) UnityEngine.Object.DestroyImmediate(item);
             _memory.Clear();
         }

@@ -67,6 +67,7 @@ namespace Game.Player
         internal void BeginHang()
         {
             if (!TryCandidate(out var candidate)) throw new InvalidOperationException("挂边入口已失效。");
+            _context.Combat?.Dash?.Cancel();
             Commit(PlayerLedgeHangState.ABILITY_ID);
             _candidate = candidate; IsActive = true; IsClimbing = false; Failed = false; Completed = false; Elapsed = 0;
             _context.Wall.Cancel(); _context.JumpWindow.ClearSupport(); _context.VerticalMotion.NotifyJump();

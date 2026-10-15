@@ -24,6 +24,8 @@ namespace Game.Player
         internal EmberFsmGraph SourceGraph { get; private set; }
         internal EmberFsmObservationOrigin ObservationOrigin { get; private set; }
         internal PlayerFeelRuntime CapturedFeel { get; private set; }
+        internal PlayerCombatConfiguration CapturedCombat { get; private set; }
+        internal string CapturedAttackAction { get; private set; }
         internal PlayerAnimationProfile CapturedAnimation { get; private set; }
         internal EmberFsmRulePlan<PlayerContext> CapturedRules { get; private set; }
 #if UNITY_EDITOR
@@ -36,6 +38,10 @@ namespace Game.Player
             SourceGraph = source.Graph;
             ObservationOrigin = EmberFsmObservationOrigin.Capture(source.Graph, graph);
             CapturedFeel = feel.Capture(Physics2D.gravity);
+            CapturedCombat = source.Scheme == null && source.CapturedCombat != null
+                ? new PlayerCombatConfiguration(source.CapturedCombat, CapturedFeel.Attack)
+                : new PlayerCombatConfiguration(source.Scheme, CapturedFeel.Attack);
+            CapturedAttackAction = source.Scheme != null ? source.Scheme.AttackAction : source.CapturedAttackAction;
             CapturedAnimation = animation;
             CapturedRules = rules;
 #if UNITY_EDITOR

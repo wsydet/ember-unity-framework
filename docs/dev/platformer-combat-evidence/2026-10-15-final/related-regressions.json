@@ -1,0 +1,61 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "cb2de3571aff49a6ae7a896d69876f01",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792056603960,
+      "finished_unix_ms": 1792056611723,
+      "last_update_unix_ms": 1792056611723,
+      "progress": {
+        "completed": 2,
+        "total": 2,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792056611665,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerFoundationTests.DisablingControllerDuringCandidateEnterDoesNotResurrectOldHost",
+        "last_finished_unix_ms": 1792056611712,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.1380329,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CandidateStateFailureRestoresOldHostAndEffectBaseline",
+            "fullName": "Game.Player.Tests.PlayerFoundationTests.CandidateStateFailureRestoresOldHostAndEffectBaseline",
+            "state": "Passed",
+            "durationSeconds": 0.052711,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n"
+          },
+          {
+            "name": "DisablingControllerDuringCandidateEnterDoesNotResurrectOldHost",
+            "fullName": "Game.Player.Tests.PlayerFoundationTests.DisablingControllerDuringCandidateEnterDoesNotResurrectOldHost",
+            "state": "Passed",
+            "durationSeconds": 0.0468607,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

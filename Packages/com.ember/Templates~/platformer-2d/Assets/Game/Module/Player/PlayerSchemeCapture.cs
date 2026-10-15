@@ -31,6 +31,7 @@ namespace Game.Player
             Dictionary<string, PlayerActionEffectSlot> slots)
         {
             var source = node.Definition;
+            if (source is PlayerDashAttackRouteDefinition) return (EmberFsmStateDefinition)Copy(source);
             // 仅历史纯逻辑夹具允许显式注入运行字段；绝不读取旧序列化字段。
             if (source is PlayerGroundDashStateDefinition ground)
             {
@@ -85,6 +86,7 @@ namespace Game.Player
                 if (animation != null) animation.Validate(graph);
                 var rules = source.Scheme != null ? PlayerSchemeRules.Capture(source.Scheme) : source.CapturedRules;
                 Config.SetCapturedAssembly(source, graph, powers, feel, animation, rules);
+                Config.CapturedCombat.Graph.Validate(graph, Config.CapturedFeel.Attack, Config.CapturedCombat.Combo);
             }
             catch { Dispose(); throw; }
         }

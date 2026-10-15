@@ -40,6 +40,7 @@ namespace Game.Player
         #region 外部方法
         public override void FixedUpdate(float deltaTime)
         {
+            if (Context.MotionControl.Owns(PlayerMotionChannels.AutomaticTransitions)) return;
             Activation.AttemptGroup("decision");
         }
         #endregion

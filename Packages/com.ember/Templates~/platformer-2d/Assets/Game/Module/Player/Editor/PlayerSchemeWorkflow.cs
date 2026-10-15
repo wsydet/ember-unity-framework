@@ -97,10 +97,18 @@ namespace Game.Player.Editor
         public static void Validate(PlayerScheme scheme)
         {
             if (scheme == null || scheme.Graph == null || scheme.Feel == null || scheme.Powers == null || scheme.Animation == null || scheme.ActionEffects == null)
-                throw new InvalidOperationException("完整方案缺少图、Feel、Powers、Animation 或动作效果配置。");
+                throw new InvalidOperationException("完整方案引用缺失：" + (scheme == null ? "Scheme" :
+                    string.Join(", ", new[] { scheme.Graph == null ? "Graph" : null, scheme.Feel == null ? "Feel" : null,
+                        scheme.Powers == null ? "Powers" : null, scheme.Animation == null ? "Animation" : null,
+                        scheme.ActionEffects == null ? "ActionEffects" : null }.Where(s => s != null))));
             if (!scheme.Graph.Inspect(typeof(PlayerContext)).IsValid) throw new InvalidOperationException("基础图声明无效。");
             PlayerSchemeRuleWorkflow.ValidateOwnership(scheme);
             var feel = scheme.Feel.Capture(Physics2D.gravity);
+            _ = new PlayerCombatConfiguration(scheme, feel.Attack);
+            if (scheme.CombatGraph == null) throw new InvalidOperationException("Scheme.CombatGraph：节点归属清单为空。");
+            scheme.CombatGraph.Validate(scheme.Graph, feel.Attack, scheme.Combo);
+            if (feel.Attack.Enabled && string.IsNullOrWhiteSpace(scheme.AttackAction))
+                throw new InvalidOperationException("Scheme.AttackAction：攻击开启时必须指定输入。");
             scheme.Animation.Validate(scheme.Graph); scheme.ActionEffects.Validate(scheme.Graph);
             using var powers = PlayerPowerSession.CreateNewGame(scheme.Powers);
             var config = ScriptableObject.CreateInstance<PlayerConfig>();
@@ -139,9 +147,11 @@ namespace Game.Player.Editor
                     else
                     { PlayerSchemeRuleWorkflow.Assign(result, neutral, false); map.Add(neutral, neutral); }
                     Bool(result, "_enableEffects");
+                    Bool(result.Feel, "_attack._enabled");
                     Bool(result.Feel.Movement, "_accelerated", "_independentAir", "_airAccelerated", "_enableJumpResponse", "_landing._normalEnabled", "_landing._hardEnabled", "_rolling._enabled");
                     Bool(result.Feel.Jump, "_enableShortJump", "_enableApexGravity", "_enableFallGravity", "_enableFallLimit", "_enableEdgeHover", "_enableWallFastSlide", "_wallReturnEnabled");
                     Bool(result.Feel.Input, "_enableJumpBuffer", "_enableCoyote");
+                    Bool(result.Feel.Movement, "_jumpCorrection._enabled", "_groundDashCorrection._enabled", "_airDashCorrection._enabled", "_stepCorrection._enabled");
                     using var powers = new SerializedObject(result.Powers);
                     foreach (var name in new[] { "_abilities", "_skills" })
                     { var slots = powers.FindProperty(name); for (int i = 0; i < slots.arraySize; i++) slots.GetArrayElementAtIndex(i).FindPropertyRelative("_enabled").boolValue = false; }
@@ -199,7 +209,7 @@ namespace Game.Player.Editor
             PlayerEditorAccess.Require();
             if (target == null || !AssetDatabase.Contains(target)) throw new InvalidOperationException("请选择已保存的自定义方案。");
             Validate(reference); PlayerSchemeOwnership.RequireWritable(target);
-            if (target.Graph != reference.Graph) throw new InvalidOperationException("参考恢复要求同一基础图，不改变图身份。");
+            PlayerSchemeStructureWorkflow.RequireCompatible(target, reference);
             string path = AssetDatabase.GetAssetPath(target);
             var destination = Configuration(target); var source = Configuration(reference);
             var previousRules = target.Rules;
@@ -223,8 +233,15 @@ namespace Game.Player.Editor
                     if (item is PlayerSchemeRules) Undo.RegisterCreatedObjectUndo(item, "恢复规则配置子资产");
                 }
                 Undo.RegisterCompleteObjectUndo(destination.Values.Cast<Object>().ToArray(), "恢复完整方案参考参数");
+                var references = new Dictionary<Object, Object>(map)
+                {
+                    [reference.Graph] = target.Graph,
+                    [reference.Animation.Controller] = target.Animation.Controller
+                };
+                foreach (var slot in reference.Animation.Slots)
+                    references[slot.Key] = target.Animation.Slots.First(s => s.NodeId == slot.NodeId).Key;
                 foreach (var pair in map)
-                { string name = pair.Value.name; EditorUtility.CopySerialized(pair.Key, pair.Value); pair.Value.name = name; pair.Value.hideFlags = HideFlags.None; Remap(pair.Value, map); EditorUtility.SetDirty(pair.Value); }
+                { string name = pair.Value.name; EditorUtility.CopySerialized(pair.Key, pair.Value); pair.Value.name = name; pair.Value.hideFlags = HideFlags.None; Remap(pair.Value, references); EditorUtility.SetDirty(pair.Value); }
                 Validate(target);
                 if (previousRules != null && target.Rules != previousRules) Undo.DestroyObjectImmediate(previousRules);
                 Undo.CollapseUndoOperations(group);

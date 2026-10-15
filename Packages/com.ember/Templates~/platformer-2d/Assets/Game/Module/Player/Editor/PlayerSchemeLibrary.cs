@@ -60,17 +60,82 @@ namespace Game.Player.Editor
         }
         public static void RequireWritable(UnityEngine.Object asset)
         { if (IsReadOnly(asset)) throw new InvalidOperationException("内置方案或共享素材只读，请先创建自有副本：" + asset.name); }
+        /// <summary>模板作者显式保存已登记内置方案；不改变消费端只读归属或项目默认。</summary>
+        public static void SaveBuiltinAuthoring(PlayerScheme scheme) => PlayerSchemeSaveProtection.SaveBuiltinAuthoring(scheme);
         internal static void Reload() { Invalidate(); ProtectInspectors(); }
         #endregion
     }
 
     internal sealed class PlayerSchemeSaveProtection : AssetModificationProcessor
     {
-        private static string[] OnWillSaveAssets(string[] paths) => paths.Where(path =>
-            !PlayerSchemeOwnership.IsReadOnly(AssetDatabase.LoadMainAssetAtPath(path))).ToArray();
-        private static bool IsOpenForEdit(string assetPath, out string message, StatusQueryOptions options)
+        private static string _registrationPath;
+
+        internal static void SaveBuiltinAuthoring(PlayerScheme scheme)
         {
-            bool locked = PlayerSchemeOwnership.IsReadOnly(AssetDatabase.LoadMainAssetAtPath(assetPath));
+            PlayerEditorAccess.Require();
+            if (EditorApplication.isPlayingOrWillChangePlaymode ||
+                !Ember.Core.Editor.EmberProjectSetup.IsEmbeddedPackage() ||
+                Ember.Core.Editor.EmberProjectSetup.GetEditingTemplate() == null ||
+                !PlayerSchemeOwnership.Builtins.Contains(scheme) || _registrationPath != null)
+                throw new InvalidOperationException("内置保存仅允许模板作者在非Play状态显式执行，且不能重入。");
+            PlayerSchemeWorkflow.Validate(scheme);
+            string path = AssetDatabase.GetAssetPath(scheme);
+            var assets = PlayerSchemeWorkflow.Configuration(scheme).Values;
+            if (assets.Any(asset => AssetDatabase.GetAssetPath(asset) != path))
+                throw new InvalidOperationException("内置配置必须保存在同一方案资产中，不能连带写入共享配置。");
+            var objects = AssetDatabase.LoadAllAssetsAtPath(path);
+            var flags = objects.Select(asset => asset.hideFlags).ToArray();
+            try
+            {
+                _registrationPath = path;
+                for (int i = 0; i < objects.Length; i++) objects[i].hideFlags &= ~HideFlags.NotEditable;
+                EditorUtility.SetDirty(scheme);
+                AssetDatabase.SaveAssetIfDirty(scheme);
+                if (objects.Any(EditorUtility.IsDirty))
+                    throw new InvalidOperationException("内置方案未成功保存；保留内存草稿。");
+            }
+            finally
+            {
+                for (int i = 0; i < objects.Length; i++) objects[i].hideFlags = flags[i];
+                _registrationPath = null;
+            }
+        }
+
+        internal static void SaveRegistration(PlayerSchemeLibrary library)
+        {
+            PlayerEditorAccess.Require();
+            if (EditorApplication.isPlayingOrWillChangePlaymode ||
+                !Ember.Core.Editor.EmberProjectSetup.IsEmbeddedPackage() ||
+                Ember.Core.Editor.EmberProjectSetup.GetEditingTemplate() == null)
+                throw new InvalidOperationException("归属登记保存只允许在模板编辑的非Play状态执行。");
+            var ids = AssetDatabase.FindAssets("t:PlayerSchemeLibrary");
+            string path = AssetDatabase.GetAssetPath(library);
+            if (library == null || ids.Length != 1 || AssetDatabase.GUIDToAssetPath(ids[0]) != path ||
+                _registrationPath != null)
+                throw new InvalidOperationException("归属登记必须唯一且不能重入保存。");
+            foreach (var scheme in library.builtins) PlayerSchemeWorkflow.Validate(scheme);
+            var flags = library.hideFlags;
+            try
+            {
+                _registrationPath = path;
+                library.hideFlags = flags & ~HideFlags.NotEditable;
+                EditorUtility.SetDirty(library);
+                AssetDatabase.SaveAssetIfDirty(library);
+                if (EditorUtility.IsDirty(library))
+                    throw new InvalidOperationException("归属登记未成功保存；保留内存草稿，请检查保存限制。");
+            }
+            finally
+            {
+                library.hideFlags = flags;
+                _registrationPath = null;
+            }
+        }
+
+        private static string[] OnWillSaveAssets(string[] paths) => paths.Where(path =>
+            path == _registrationPath || !PlayerSchemeOwnership.IsReadOnly(AssetDatabase.LoadMainAssetAtPath(path))).ToArray();
+        private static bool IsOpenForEdit(string assetPath, out string message)
+        {
+            bool locked = assetPath != _registrationPath && PlayerSchemeOwnership.IsReadOnly(AssetDatabase.LoadMainAssetAtPath(assetPath));
             message = locked ? "内置方案及共享素材只读，请先创建自有副本。" : "";
             return !locked;
         }

@@ -7,7 +7,8 @@
             "actions": [
                 { "name": "Direction", "type": "Value", "id": "c6bd982e-df6b-46e6-a42f-94fd906f3323", "expectedControlType": "Vector2", "processors": "", "interactions": "", "initialStateCheck": true },
                 { "name": "Primary", "type": "Button", "id": "de6c7286-bcc2-4116-a9aa-4a59bdc057ca", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true },
-                { "name": "Dash", "type": "Button", "id": "81250ea5-1397-43ea-b7ab-e3f9ba60b0ec", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true }
+                { "name": "Dash", "type": "Button", "id": "81250ea5-1397-43ea-b7ab-e3f9ba60b0ec", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true },
+                { "name": "Attack", "type": "Button", "id": "9210bf0c-5d83-4bae-9c22-8bc27c820a0d", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
             ],
             "bindings": [
                 { "name": "WASD", "id": "ea048736-c53a-46a6-a6a8-15e678cccbac", "path": "2DVector", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": true, "isPartOfComposite": false },
@@ -19,7 +20,9 @@
                 { "name": "", "id": "b8b7e897-d078-48ef-b694-e154b4ebd21f", "path": "<Keyboard>/space", "interactions": "", "processors": "", "groups": "", "action": "Primary", "isComposite": false, "isPartOfComposite": false },
                 { "name": "", "id": "e1329424-5797-4390-8c17-982c61c8b0b9", "path": "<Gamepad>/buttonSouth", "interactions": "", "processors": "", "groups": "", "action": "Primary", "isComposite": false, "isPartOfComposite": false },
                 { "name": "", "id": "dd1d64c4-19fb-43d8-b123-01884055d946", "path": "<Keyboard>/leftShift", "interactions": "", "processors": "", "groups": "", "action": "Dash", "isComposite": false, "isPartOfComposite": false },
-                { "name": "", "id": "5834b9b5-5d0a-4774-82fa-e257f2caa937", "path": "<Gamepad>/rightShoulder", "interactions": "", "processors": "", "groups": "", "action": "Dash", "isComposite": false, "isPartOfComposite": false }
+                { "name": "", "id": "5834b9b5-5d0a-4774-82fa-e257f2caa937", "path": "<Gamepad>/rightShoulder", "interactions": "", "processors": "", "groups": "", "action": "Dash", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "e251a2d4-390a-4357-890d-9ae6022fcb23", "path": "<Keyboard>/j", "interactions": "", "processors": "", "groups": "", "action": "Attack", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "16f93744-77b7-4d14-b7bc-d8ff8327b43b", "path": "<Gamepad>/buttonWest", "interactions": "", "processors": "", "groups": "", "action": "Attack", "isComposite": false, "isPartOfComposite": false }
             ]
         },
         {

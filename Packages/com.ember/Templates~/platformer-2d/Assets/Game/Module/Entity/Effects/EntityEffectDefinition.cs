@@ -57,9 +57,14 @@ namespace Game.Entity
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        internal EntityEffectSpec(string id, EntityEffectKind kind, EntityEffectLifetime lifetime,
+        public EntityEffectSpec(string id, EntityEffectKind kind, EntityEffectLifetime lifetime,
             float duration, EntityEffectRules rules, EntityEffectAppearance appearance)
-        { Id = id; Kind = kind; Lifetime = lifetime; Duration = duration; Rules = rules; Appearance = appearance; }
+        {
+            if (string.IsNullOrWhiteSpace(id) || id != id.Trim() || rules == null || !float.IsFinite(duration) || duration < 0 ||
+                !Enum.IsDefined(typeof(EntityEffectKind), kind) || !Enum.IsDefined(typeof(EntityEffectLifetime), lifetime))
+                throw new ArgumentException("效果捕获值无效。");
+            Id = id; Kind = kind; Lifetime = lifetime; Duration = duration; Rules = rules; Appearance = appearance;
+        }
         #endregion
     }
 }

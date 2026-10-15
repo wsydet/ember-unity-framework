@@ -26,6 +26,7 @@ namespace Game.Player
             if (ability.TryCommit(ability.CreateAttempt()) != EntityUseStatus.Available)
                 throw new InvalidOperationException("二段跳资源提交失败。");
             if (!Context.Input.ConsumeJump()) throw new InvalidOperationException("二段跳输入提交失败。");
+            Context.Combat?.Dash?.Cancel();
             Context.JumpWindow.Consume();
             Context.Wall.Cancel();
             Context.VerticalMotion.NotifyJump();

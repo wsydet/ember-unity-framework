@@ -49,12 +49,16 @@ namespace Game.Player
                 : _context.Facing.FacesRight ? 1 : -1;
             IsGroundDash = ground; _spec = ground ? _context.Feel.GroundDash : _context.Feel.AirDash;
             Elapsed = 0; EndReason = PlayerDashEndReason.None; IsActive = true;
+            _context.Combat?.Dash?.Begin();
             _context.Wall.Cancel(); _context.VerticalMotion.NotifyJump();
             _context.Facing.SetFacing(Direction > 0);
             Apply();
         }
         internal bool Advance(float deltaTime)
         {
+            // 在墙面中断判定前尝试有限补正，成功后 Sensors 已刷新；不额外消费冲刺次数或重置计时。
+            if (Elapsed + deltaTime < _spec.Duration - .000001f)
+                _context.Correction.TryDash(deltaTime, _spec.SpeedAt(Elapsed + deltaTime));
             // 环境中断优先于到期，边界同帧不生成正常结束语义。
             if (Direction > 0 ? _context.Sensors.RightWall != null : _context.Sensors.LeftWall != null)
                 EndReason = PlayerDashEndReason.Wall;
@@ -74,6 +78,7 @@ namespace Game.Player
             if (EndReason == PlayerDashEndReason.None) EndReason = PlayerDashEndReason.Interrupted;
             IsActive = false;
             _context.VerticalMotion.NotifyJump(); // 冲刺离地不继承自然离地悬停。
+            if (_context.Combat?.Dash?.EndDash(IsGroundDash, EndReason) == true) return;
             float limit = _context.JumpWindow.HasGroundSupport ? _context.Feel.MoveSpeed : _context.Feel.EffectiveAirSpeed;
             _context.Motor.SetHorizontalVelocity(Mathf.Clamp(_context.Motor.Velocity.x, -limit, limit));
             _context.Motor.SetVerticalVelocity(0);

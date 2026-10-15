@@ -1,0 +1,34 @@
+[
+  {
+    "Path": "Packages/manifest.json",
+    "Matches": true
+  },
+  {
+    "Path": "Packages/packages-lock.json",
+    "Matches": true
+  },
+  {
+    "Path": "Packages/com.ember/package.json",
+    "Matches": true
+  },
+  {
+    "Path": "Packages/com.ember/Templates~/platformer-2d/template.json",
+    "Matches": true
+  },
+  {
+    "Path": "Assets/Editor/EmberEditingTemplate.json",
+    "Matches": true
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerConfig.asset",
+    "Matches": true
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/通用攻击模板1.asset",
+    "Matches": true
+  },
+  {
+    "Path": "ProjectSettings/EditorSettings.asset",
+    "Matches": true
+  }
+]

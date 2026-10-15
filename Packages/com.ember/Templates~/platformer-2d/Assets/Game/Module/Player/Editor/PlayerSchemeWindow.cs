@@ -56,12 +56,15 @@ namespace Game.Player.Editor
                 }
                 _initialized = true;
             }
+            RestoreCombatDraft();
             EditorApplication.delayCall += IntegrateLegacyWindows;
             UpdateRulerSubscription();
         }
         private void OnDisable()
         {
             CacheDraft();
+            if (_combatDraft != null) DestroyImmediate(_combatDraft);
+            _combatDraft = null;
             EditorApplication.delayCall -= IntegrateLegacyWindows;
             SceneView.duringSceneGui -= DrawRuler; _rulerSubscribed = false;
             DisposePanels();

@@ -167,7 +167,7 @@ namespace Game.Player.Tests
                 host.Ready = new UniTaskCompletionSource(); var old = module.Controller.Context;
                 var operation = module.Recover(flow);
                 Assert.That(operation.IsPrepared, Is.False); Assert.That(Time.timeScale, Is.Zero);
-                Assert.That((await module.Recover(flow).Completion).Status, Is.EqualTo(EmberTransitionStatus.Busy));
+                Assert.Throws<InvalidOperationException>(() => module.Recover(flow));
                 operation.Cancel(); host.Ready.TrySetResult();
                 Assert.That((await operation.Completion).Status, Is.EqualTo(EmberTransitionStatus.Cancelled));
                 Assert.That(module.Controller.Context, Is.SameAs(old)); Assert.That(Time.timeScale, Is.EqualTo(1));

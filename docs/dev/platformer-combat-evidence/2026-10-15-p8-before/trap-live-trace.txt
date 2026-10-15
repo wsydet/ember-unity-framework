@@ -1,0 +1,6 @@
+0.000 hp=10 state=fall pos=(-8.00, 0.95, 0.00)
+0.084 hp=8 state=life.hit pos=(-8.00, 0.96, 0.00)
+0.795 hp=6 state=idle pos=(-8.00, 0.89, 0.00)
+1.569 hp=4 state=idle pos=(-8.00, 0.89, 0.00)
+2.416 hp=2 state=life.hit pos=(-8.00, 0.92, 0.00)
+3.132 hp=0 state=idle pos=(-8.00, 0.89, 0.00)

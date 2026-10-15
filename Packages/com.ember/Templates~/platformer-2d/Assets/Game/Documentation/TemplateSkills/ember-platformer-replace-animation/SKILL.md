@@ -17,6 +17,8 @@ description: 为 Ember 平台玩家导入序列帧或 spritesheet，按真实状
 
 ## 接入与验收
 
+已有攻击的帧、Clip、刀光素材和表现映射由本技能替换；新增招式/连接交给 `ember-platformer-add-attack`。保持命中几何、窗口和逻辑时长，速度与冻结动作时钟同步；刀光独立于身体闪烁，不能以换图改变伤害。
+
 按 [动画接入协议](references/integration.md) 使用 Unity 资产、导入与动画 API。内置方案先 `PlayerSchemeWorkflow.Copy` 完整独立复制，已有自定义按用户意图修改或另存并检查共享引用。保持基础图、稳定节点 ID、原动画键和未替换内容；不重跑一次性 `PlayerAnimationAssets.Install`。
 
 沿用 Visual → Animation → Sprite。动画只写 Sprite 子树的 Sprite 引用或局部姿态，不写玩家根、碰撞/传感器、朝向外层或效果 alpha，不使用 AnimationEvent 驱动玩法。图片尺寸不自动改变物理尺寸；视觉比例有意调整时说明对象和依据。

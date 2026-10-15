@@ -2,6 +2,14 @@
   "schemaVersion": 2,
   "skills": [
     {
+      "id": "ember-platformer-add-attack",
+      "displayName": "平台玩家攻击接入",
+      "description": "通过完整候选事务新增攻击、连招、动画和命中窗口，并验证实际战斗。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.18.0",
+      "minimumTemplateVersion": "0.3.1"
+    },
+    {
       "id": "ember-platformer-tune-feel",
       "displayName": "平台玩家手感调整",
       "description": "发现已有玩家机制，将手感目标转成完整方案候选，并用 Unity 白盒验证。",

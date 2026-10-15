@@ -1,0 +1,10 @@
+{
+  "job_id": "b3b24dd64544476faef44f0246128b43",
+  "mode": "EditMode",
+  "status": "succeeded",
+  "summary": {"total": 2, "passed": 2, "failed": 0, "skipped": 0, "durationSeconds": 5.7387787},
+  "results": [
+    {"fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes", "state": "Passed", "durationSeconds": 2.724318},
+    {"fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation", "state": "Passed", "durationSeconds": 1.7512347}
+  ]
+}

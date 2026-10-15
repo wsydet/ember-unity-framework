@@ -64,7 +64,15 @@ namespace Game.Player.Editor
             SessionState.EraseBool(Key + "Restart");
             bool acceptance = PlayerEditorAccess.Available && SessionState.GetBool(Key + "AcceptanceNext", false);
             SessionState.EraseBool(Key + "AcceptanceNext");
+            string acceptanceScheme = SessionState.GetString(Key + "AcceptanceSchemeNext", "");
+            SessionState.EraseString(Key + "AcceptanceSchemeNext");
             var request = new Request { whitebox = PlayerEditorAccess.Available && UseWhitebox && !acceptance, acceptance = acceptance };
+            if (acceptance && !string.IsNullOrEmpty(acceptanceScheme))
+            {
+                var scheme = AssetDatabase.LoadAssetAtPath<PlayerScheme>(AssetDatabase.GUIDToAssetPath(acceptanceScheme));
+                PlayerSchemeWorkflow.Validate(scheme);
+                request.schemeGuid = acceptanceScheme;
+            }
             if (request.whitebox)
             {
                 if (AssetDatabase.LoadAssetAtPath<SceneAsset>(LAB_PATH) == null) throw new InvalidOperationException("缺少白盒场景。");
@@ -103,7 +111,7 @@ namespace Game.Player.Editor
                 if (string.IsNullOrEmpty(root) || !Path.GetFullPath(root).StartsWith(parent, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException("开发库根目录无效，禁止回退真实库。");
                 _data.SetConfigurationForNextInit(Own(UnityEngine.Object.Instantiate(config)), root);
-                if (request.whitebox)
+                if (request.whitebox || request.acceptance && !string.IsNullOrEmpty(request.schemeGuid))
                 {
                     if (!modules.TryGetModule<PlayerModule>(out _player)) throw new InvalidOperationException("未装配玩家模块。");
                     var source = Resources.Load<PlayerConfig>(PlayerModule.CONFIG_PATH);
@@ -112,14 +120,17 @@ namespace Game.Player.Editor
                     if (scheme == null) throw new InvalidOperationException("本次选定方案已失效，禁止回退项目默认。");
                     var runtime = Own(UnityEngine.Object.Instantiate(source));
                     PlayerSchemeConversion.SelectScheme(runtime, scheme, false);
-                    runtime.Configure(runtime.Graph, request.position);
-                    using (var serialized = new SerializedObject(runtime))
+                    if (request.whitebox)
                     {
-                        serialized.FindProperty("_scene").stringValue = PlayerLabEditorBridge.SceneName;
-                        serialized.ApplyModifiedPropertiesWithoutUndo();
+                        runtime.Configure(runtime.Graph, request.position);
+                        using (var serialized = new SerializedObject(runtime))
+                        {
+                            serialized.FindProperty("_scene").stringValue = PlayerLabEditorBridge.SceneName;
+                            serialized.ApplyModifiedPropertiesWithoutUndo();
+                        }
+                        PlayerLabEditorBridge.GameplayScenePath = LAB_PATH;
                     }
                     _player.SetConfigurationForNextInit(runtime, request.velocity);
-                    PlayerLabEditorBridge.GameplayScenePath = LAB_PATH;
                 }
                 _lifetime = new CancellationTokenSource(); _generation++; _prepared = true;
                 Status = "环境已冻结；正常 Main → Gameplay 流程，存取位于本次独立开发库。";
@@ -239,7 +250,20 @@ namespace Game.Player.Editor
         {
             PlayerEditorAccess.Require();
             if (_cleaning || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请等待本次播放及清理完成。");
+            SessionState.EraseString(Key + "AcceptanceSchemeNext");
             SessionState.SetBool(Key + "AcceptanceNext", formalAcceptance);
+            EditorApplication.isPlaying = true;
+        }
+        /// <summary>本次正式场景验收使用指定方案与隔离存档，不修改默认方案或白盒偏好。</summary>
+        public static void PlayFormalWithScheme(PlayerScheme scheme)
+        {
+            PlayerEditorAccess.Require(); PlayerSchemeWorkflow.Validate(scheme);
+            if (_cleaning || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("请等待本次播放及清理完成。");
+            string guid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(scheme));
+            if (string.IsNullOrEmpty(guid)) throw new InvalidOperationException("正式验收方案必须为已保存资产。");
+            SessionState.SetString(Key + "AcceptanceSchemeNext", guid);
+            SessionState.SetBool(Key + "AcceptanceNext", true);
             EditorApplication.isPlaying = true;
         }
         public static void Restart()

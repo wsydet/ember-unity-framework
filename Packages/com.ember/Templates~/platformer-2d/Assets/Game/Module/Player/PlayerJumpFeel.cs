@@ -26,7 +26,7 @@ namespace Game.Player
         [SerializeField, Min(0), Tooltip("空中竖直速度绝对值不超过此值时使用顶点重力，世界单位/秒。")] private float _apexSpeed = 4;
         [SerializeField, Range(.01f, 1), Tooltip("顶点区间优先使用此基础重力倍率，不与下落倍率相乘。")] private float _apexMultiplier = .75f;
         [SerializeField] private bool _enableFallGravity;
-        [SerializeField, Min(.01f), Tooltip("空中下降且不处于有效顶点区间时的基础重力倍率。")] private float _fallMultiplier = 1.5f;
+        [SerializeField, Min(.01f), Tooltip("下降且离开顶点区间后生效：大于1加快下落，1保持基础重力，小于1减缓下落。顶点区间优先，两种倍率不叠乘；下落限速仍生效。")] private float _fallMultiplier = 1.5f;
         [SerializeField] private bool _enableFallLimit;
         [SerializeField, Min(.01f), Tooltip("最大向下速度，世界单位/秒；结算时包含本物理步重力增量。")] private float _fallLimit = 35;
         [SerializeField] private bool _enableEdgeHover;

@@ -39,6 +39,7 @@ namespace Game.Player.Tests
                 .With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s");
             map.AddAction("Primary", InputActionType.Button, "<Keyboard>/space");
             map.AddAction("Dash", InputActionType.Button, "<Keyboard>/leftShift");
+            map.AddAction("Attack", InputActionType.Button, "<Keyboard>/j");
             var inputConfig = Keep(ScriptableObject.CreateInstance<GameInputConfig>());
             inputConfig.Configure(actions, new GameInputChannelConfig("gameplay", "Gameplay"));
             _input = new GameInputService(inputConfig, actions);

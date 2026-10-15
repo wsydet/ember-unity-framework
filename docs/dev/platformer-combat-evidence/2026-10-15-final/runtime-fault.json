@@ -1,0 +1,52 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "022b3bd2ba51491c900c6e728f833c2e",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792056303895,
+      "finished_unix_ms": 1792056312473,
+      "last_update_unix_ms": 1792056312473,
+      "progress": {
+        "completed": 1,
+        "total": 1,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792056311867,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerFoundationTests.CombatRuntimeFaultReleasesActiveAttackAndModuleSession",
+        "last_finished_unix_ms": 1792056312439,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.63431,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CombatRuntimeFaultReleasesActiveAttackAndModuleSession",
+            "fullName": "Game.Player.Tests.PlayerFoundationTests.CombatRuntimeFaultReleasesActiveAttackAndModuleSession",
+            "state": "Passed",
+            "durationSeconds": 0.5681548,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n<color=#CC6699><b>[Game.Player]</b></color> <color=#FFFFFF>System.InvalidOperationException: 玩家 FSM：Faulted; 节点=combat.attack.first; 阶段=FixedUpdate ---> System.InvalidOperationException: S03-runtime-combat-fault\r\n  at Game.Player.Tests.PlayerFoundationTests+CombatFaultState.FixedUpdate (System.Single dt) [0x00000] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerCombatRuntimeFaultTests.cs:84 \r\n  at Ember.Core.Fsm.EmberFsm`1[TContext].Dispatch (System.Single delta, System.Boolean physics) [0x000df] in .\\Packages\\com.ember\\Core\\Runtime\\Fsm\\EmberFsm.cs:303 \r\n   --- End of inner exception stack trace ---\r\n  at Game.Player.PlayerController.Check (Ember.Core.Fsm.EmberFsmResult result) [0x0001a] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerController.cs:56 \r\n  at Game.Player.PlayerController.FixedTick (System.Single dt) [0x0010e] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerController.cs:252 \r\n  at Game.Player.PlayerModule.<Drive>b__60_0 () [0x00000] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerModule.cs:95 \r\n  at Game.Player.PlayerHitScene.Step (System.Action collectPlayer, System.Single dt) [0x000e5] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerHitScene.cs:157 \r\n  at Game.Player.PlayerModule.Drive (System.Boolean physics) [0x000cf] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerModule.cs:95 </color>\n<color=#888888><i>(at C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\PlayerModule.cs:109)</i></color>\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

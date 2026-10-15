@@ -12,15 +12,18 @@
 
 从 FrameworkScene 正常 Play → Main → 新游戏/继续进入 Gameplay。白盒通过开发设置选择，复用正式玩家和驱动；每次 Play 使用独立开发库，不直接运行白盒场景绕过准备。当前编辑方案、下次白盒方案、项目默认和运行冻结方案是不同对象，编辑不追溯改变当前会话。
 
-基础移动/跳跃/下落、地空水平控制、二段跳、墙面、水平冲刺、下穿、挂边翻越、落地/翻滚和踩头已有实现。当前图21节点，数量不是扩展限制；图身份、配置来源和布局不得因调参被重建。完整战斗、移动平台挂边、精确动作存档及任意无代码动作编辑不属于现有范围。
+基础移动/跳跃/下落、地空水平控制、二段跳、墙面、水平冲刺、下穿、挂边翻越、落地/翻滚和踩头已有实现。基础移动图为21节点，数量不是扩展限制；图身份、配置来源和布局不得因调参被重建。攻击、命中、生命与恢复见[战斗工作流](PlayerCombat.md)。两套移动方案仍为21节点，独立“通用攻击模板1”为31节点。移动平台挂边、精确动作存档及任意无代码动作编辑不属于现有范围。
+
+下落加速通过下落重力倍率配置，顶点区间优先。碰撞补正提供默认关闭的跳跃顶角、地冲、空冲和普通移动跨台阶配置；白盒提供真实位置尾迹与 X–Y 运动轨迹图，入口及限制见[玩家工作流](PlayerWorkflow.md)。
 
 ## 模板专属 Skill
 
 - [手感调整](../TemplateSkills/ember-platformer-tune-feel/SKILL.md)
 - [序列帧替换](../TemplateSkills/ember-platformer-replace-animation/SKILL.md)
 - [新状态接入](../TemplateSkills/ember-platformer-add-state/SKILL.md)
+- [攻击接入](../TemplateSkills/ember-platformer-add-attack/SKILL.md)
 
-三个 Skill 的唯一维护源在 `Assets/Game/Documentation/TemplateSkills/`，schema v2清单归属本模板；通过正式模板预览/同步维护发现副本，不进入框架公共技能清单或个人全局目录。执行前检查正式模板身份、兼容条件和真实模块/API；只发现 Skill 不代表所需业务已部署。
+四个 Skill 的唯一维护源在 `Assets/Game/Documentation/TemplateSkills/`，schema v2清单归属本模板；通过正式模板预览/同步维护发现副本，不进入框架公共技能清单或个人全局目录。执行前检查正式模板身份、兼容条件和真实模块/API；只发现 Skill 不代表所需业务已部署。
 
 ## 维护边界
 
