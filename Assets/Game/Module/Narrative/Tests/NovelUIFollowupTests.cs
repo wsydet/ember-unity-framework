@@ -64,7 +64,13 @@ namespace Game.Narrative.Tests
                 var type = owner.GetNestedType("RestoreLoadingRequest", BindingFlags.NonPublic);
                 var request = Activator.CreateInstance(type, PrivateInstance, null, new object[] { showProgress }, null);
                 type.GetProperty("Progress", PrivateInstance).SetValue(request, .45f);
+                var progressGroup = (CanvasGroup)page.Logic.ControlMap["Cg_Progress"];
+                var groups = progressGroup.GetComponentsInParent<CanvasGroup>(true);
+                for (int i = 0; i < groups.Length; i++) groups[i].blocksRaycasts = i % 2 == 0;
+                var raycastValues = groups.Select(group => group.blocksRaycasts).ToArray();
                 page.Logic.OnOpen(request);
+                Assert.IsTrue(groups.All(group => group.blocksRaycasts), "Restore must block underlying slots.");
+                Assert.IsFalse(page.Logic.IsTransitionReady, "A loaded scene alone cannot complete the owned task.");
                 var logic = page.Logic.GetType();
                 logic.GetMethod("HideProgressVisuals", PrivateInstance).Invoke(page.Logic, null);
                 logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
@@ -73,7 +79,18 @@ namespace Game.Narrative.Tests
                 Assert.AreEqual(showProgress, bar.gameObject.activeSelf);
                 Assert.AreEqual(showProgress, number.gameObject.activeSelf);
                 if (showProgress) { Assert.AreEqual(.45f, bar.fillAmount); Assert.AreEqual("45%", number.text); }
+                type.GetProperty("Progress", PrivateInstance).SetValue(request, 1f);
+                logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
+                Assert.IsFalse(page.Logic.IsTransitionReady);
+                if (showProgress) { Assert.AreEqual(.99f, bar.fillAmount); Assert.AreEqual("99%", number.text); }
+                typeof(EUILogic).GetProperty(nameof(EUILogic.LoadingWorkCompleted)).SetValue(page.Logic, true);
+                logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
+                Assert.IsTrue(page.Logic.IsTransitionReady);
+                if (showProgress) { Assert.AreEqual(1f, bar.fillAmount); Assert.AreEqual("100%", number.text); }
+                else { Assert.IsFalse(bar.gameObject.activeSelf); Assert.IsFalse(number.gameObject.activeSelf); }
                 page.Logic.OnClose();
+                CollectionAssert.AreEqual(raycastValues, groups.Select(group => group.blocksRaycasts).ToArray(),
+                    "Closing the restore curtain must restore each ancestor's original raycast state.");
             }
             finally { page.Logic?.OnDispose(); UnityEngine.Object.DestroyImmediate(root); }
         }
