@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>视觉小说图片统一导入</title>
+<style>
+body{font:16px system-ui;background:#161a21;color:#ecedf0;margin:24px auto;max-width:1100px;padding:0 16px}article{background:#252b35;padding:20px;border-radius:12px;margin:20px 0}img{max-width:240px;max-height:240px;object-fit:contain;background:repeating-conic-gradient(#ddd 0% 25%,#aaa 0% 50%) 0/20px 20px}input,select,button{font:inherit;padding:8px;margin:5px;border-radius:6px}input{max-width:200px}label{display:inline-block}button{cursor:pointer}button:disabled{cursor:default;opacity:.5}.pair{display:flex;gap:20px;flex-wrap:wrap}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#10141b;padding:15px}small{display:block;overflow-wrap:anywhere;color:#c0c8d6}.warning{color:#ffd98b}footer{position:sticky;bottom:0;padding:12px;background:#161a21;border-top:1px solid #657083}#status{white-space:pre-wrap}
+</style>
+<h1>视觉小说图片统一导入</h1>
+<p>逐图核对新增用途或旧图对应关系，预览整个计划后只需确认一次。未确认前不会修改业务资源。</p>
+<p id="status" role="status"></p><main id="items"></main>
+<h2>完整计划</h2><pre id="plan">尚未预览</pre>
+<footer><button id="draft">保存草稿</button><button id="preview">预览全部</button><button id="confirm" disabled>确认全部</button><button id="cancel">取消本批</button></footer>
+<script>
+let state, choices, review=null;
+const $=id=>document.getElementById(id);
+const el=(tag,text)=>{let n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n};
+async function api(action,payload){const r=await fetch(action,payload?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}:{});const data=await r.json();if(!r.ok)throw Error(data.error);return data}
+function invalidate(){review=null;$('confirm').disabled=true;$('plan').textContent='选择已变化，请重新预览。'}
+function select(options,value,change){const n=el('select');for(const [v,t] of options){const o=el('option',t);o.value=v;n.append(o)}n.value=value??'';n.onchange=()=>{change(n.value);invalidate()};return n}
+function input(c,key,label,parent){const wrap=el('label',label+' '),n=el('input');n.value=c[key]||'';n.oninput=()=>{c[key]=n.value;invalidate()};wrap.append(n);parent.append(wrap)}
+function render(){
+ $('items').replaceChildren();
+ state.items.forEach((item,i)=>{
+  const c=choices[i],card=el('article');card.append(el('h2',`${i+1}. ${item.source.split(/[\\/]/).pop()}`),el('small',item.source));
+  const pair=el('div');pair.className='pair';const src=el('img');src.src=`image/${i}`;src.alt='用户提供的图片';pair.append(src);card.append(pair);
+  card.append(select([['skip','跳过 / 待核对'],['import','新增素材'],['replace','替换旧图']],c.route,v=>{c.route=v;c.acknowledged=false;render()}));
+  if(c.route==='import'){
+   card.append(select([['portrait','立绘'],['background','背景'],['other','其他用途']],c.kind||'portrait',v=>{c.kind=v;render()}));c.kind=c.kind||'portrait';
+   const fields=el('div');input(c,'story','剧情',fields);input(c,'variant','表情 / 变体',fields);input(c,'resourceId','资源 ID（可留空）',fields);
+   if(c.kind==='portrait'){input(c,'characterId','角色 ID',fields);input(c,'displayName','新角色显示名',fields);const names=state.characters.map(x=>`${x.id}（${x.displayName}）`).join('、');fields.append(el('small','已有角色：'+names));if(!item.info.alpha){const w=el('p','此图没有透明像素，请核对是否原样作为立绘导入。');w.className='warning';fields.append(w)}}
+   else input(c,'scene','场景 / 素材名称',fields);
+   if(c.kind==='other'){c.otherUse=c.otherUse||'Other';fields.append(select(['TitleUI','CG','Icon','Mask','Other'].map(x=>[x,x]),c.otherUse,v=>c.otherUse=v));fields.append(el('small','其他用途只复制资源，不自动接入 UI 或 CG 播放。'))}
+   fields.append(select([['block','遇到冲突阻断'],['reuse','同内容且绑定一致时复用']],c.conflict||'block',v=>c.conflict=v));card.append(fields);
+  }
+  if(c.route==='replace'){
+   card.append(select([['','请选择旧图'],...item.candidates.map((x,j)=>[String(j),x.target])],c.candidate==null?'':String(c.candidate),v=>{c.candidate=v===''?null:Number(v);c.acknowledged=false;render()}));
+   const old=item.candidates[c.candidate];
+   if(old){const pic=el('img');pic.src=`image/${i}/${c.candidate}`;pic.alt='候选旧图';pair.append(pic);card.append(el('p',old.reason),el('small',old.target));
+    const w=el('p',[...old.warnings,old.blocked].filter(Boolean).join('\n'));w.className='warning';card.append(w,el('pre','已知引用：\n'+old.references.join('\n')));
+    const ack=el('input');ack.type='checkbox';ack.checked=c.acknowledged===true;ack.onchange=()=>{c.acknowledged=ack.checked;invalidate()};const label=el('label','已核对差分及全部引用影响 ');label.prepend(ack);card.append(label);
+   }else card.append(el('p','没有选定旧图。未找到可靠对应时请改为跳过或新增。'));
+  }
+  $('items').append(card);
+ });
+}
+async function run(action){try{const r=await api(action,{choices,reviewHash:review});if(action==='preview'){$('plan').textContent=JSON.stringify(r.plan,null,2);review=r.reviewHash;$('confirm').disabled=!state.ready}else if(action==='confirm'||action==='cancel'){state.state=r.status;document.querySelectorAll('button,input,select').forEach(x=>x.disabled=true)}$('status').textContent=action==='confirm'?'已确认全部计划，请返回聊天继续执行。':action==='cancel'?'已取消本批，未授权导入。':action==='draft'?'草稿已保存。':'已生成完整计划，请核对后确认。'}catch(e){$('status').textContent=e.message;invalidate()}}
+for(const k of ['draft','preview','confirm','cancel'])$(k).onclick=()=>run(k);
+api('manifest').then(data=>{state=data;choices=data.choices;render();if(!state.ready)$('status').textContent='Unity MCP 前置检查未通过，仅可保存草稿和预览。';if(state.state!=='pending'){document.querySelectorAll('button,input,select').forEach(x=>x.disabled=true);$('status').textContent='本批已结束：'+state.state}}).catch(e=>$('status').textContent=e.message);
+</script></html>

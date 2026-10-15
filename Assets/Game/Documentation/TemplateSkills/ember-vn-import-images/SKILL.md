@@ -15,6 +15,8 @@ description: 为 Ember 视觉小说项目导入用户指定的图片。查看图
 
 ## 本地交互确认页面
 
+统一编排例外：由同级 `ember-vn-sync-images` 调用时，读取该技能并通过其统一 `verify`，以已确认回执的 `plan.imports` 作为本技能授权计划；不再启动本节页面或要求独立 decision。首次业务写入前统一核对全批指纹与三项技能身份，之后按本技能执行和验证规则处理新增组。不得伪造本技能独立 confirmed 回执。单独调用仍遵守下面的页面确认流程。
+
 必须先读并执行 [确认服务操作说明](references/confirmation-workflow.md)。本技能随附 `scripts/confirmation.py` 和 `assets/confirmation.html`，用本机回环 HTTP 服务生成页面，并把草稿/确认/取消写入本批 `.utmp/vn-image-import/<批次>/`。不得用静态图片总览或 `request_user_input_async` 代替此页面；工具调用成功不等于页面已打开，更不等于用户确认。
 
 1. 扫描指定范围、实际查看图片、读取真实角色表与表定义。AI 建议可写入 suggestions JSON；没有建议的图片默认跳过。所有预填均为草稿，不能当成用户决定。
