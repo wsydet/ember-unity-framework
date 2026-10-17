@@ -63,6 +63,7 @@ namespace Game.Player
                 if (_previous != null && !ReferenceEquals(_participant._prepared, _previous))
                     throw new InvalidOperationException("原玩家场景结果已经改变。");
                 _player.StartSession(_candidate);
+                _candidate.Controller.GetComponent<PlayerCheckpointRecovery>()?.InitializeEntryBaseline();
                 _participant._prepared = this;
                 _previous = null;
                 _started = true;

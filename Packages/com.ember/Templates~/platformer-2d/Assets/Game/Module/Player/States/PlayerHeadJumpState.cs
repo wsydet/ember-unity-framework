@@ -24,7 +24,7 @@ namespace Game.Player
             if (!Context.Input.ConsumeJump()) throw new InvalidOperationException("踩头反弹输入提交失败。");
             Context.Combat?.Dash?.Cancel();
             Context.HeadJump.Begin(); Context.JumpWindow.Consume(); Context.Wall.Cancel(); Context.VerticalMotion.NotifyJump();
-            Context.Motor.SetHorizontalVelocity(Context.Motor.Velocity.x);
+            Context.Motor.SetHorizontalVelocity(Context.ExternalMotion.SelfVelocity.x);
             Context.Motor.SetVerticalVelocity(Context.Feel.HeadJumpSpeed);
         }
         public override void FixedUpdate(float deltaTime) {

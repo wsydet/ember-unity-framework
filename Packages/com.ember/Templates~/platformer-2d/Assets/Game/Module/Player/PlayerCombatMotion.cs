@@ -141,7 +141,7 @@ namespace Game.Player
             float horizontal = 0;
             if (Segment.Motion == PlayerAttackMotion.Moving)
             {
-                horizontal = Mathf.MoveTowards(_context.Motor.Velocity.x, _context.Input.Horizontal * Segment.MoveSpeed, Segment.Acceleration * dt);
+                horizontal = Mathf.MoveTowards(_context.ExternalMotion.SelfVelocity.x, _context.Input.Horizontal * Segment.MoveSpeed, Segment.Acceleration * dt);
                 if (IsRecovery && _context.Input.Horizontal != 0) _context.Facing.SetFacing(_context.Input.Horizontal > 0);
             }
             _context.Motor.SetHorizontalVelocity(horizontal);

@@ -26,6 +26,7 @@ namespace Game.Player
         private GameInputRequest _deathInput;
         private CancellationTokenSource _preparation;
         private long _request;
+        private long _crossSceneRequest;
         private readonly HashSet<PlayerPauseRequest> _pauses = new();
         private float _previousTimeScale;
         private bool _exiting;
@@ -60,7 +61,7 @@ namespace Game.Player
         private void CheckDependencies(PreparedPlayerSession candidate)
         {
             candidate.Cancellation.ThrowIfCancellationRequested();
-            if (candidate.Request != _request || candidate.Disposed || candidate.Controller == null || !candidate.Controller.isActiveAndEnabled)
+            if (candidate.Request != (candidate.CrossScene ? _crossSceneRequest : _request) || candidate.Disposed || candidate.Controller == null || !candidate.Controller.isActiveAndEnabled)
                 throw new OperationCanceledException("玩家候选已失效。");
             if (candidate.Input.State != GameInputServiceState.Ready || candidate.Input.Epoch != candidate.InputEpoch ||
                 candidate.Data.State != SaveServiceState.Ready || candidate.Data.ServiceEpoch != candidate.DataEpoch)
@@ -203,17 +204,23 @@ namespace Game.Player
         public async UniTask<PreparedPlayerSession> PrepareAsync(PlayerController controller, PlayerEntryRequest entry,
             GameInputModule input, PlayerDataModule data, CancellationToken cancellation)
         {
-            if (HasSession) throw new InvalidOperationException("已有玩家会话，不能覆盖活动角色。");
-            if (input == null || data == null || controller == null || entry == null)
+            bool crossScene = HasSession && entry?.LevelCapture != null && controller != null && Controller.gameObject.scene != controller.gameObject.scene;
+            if (HasSession && !crossScene) throw new InvalidOperationException("已有玩家会话，不能覆盖活动角色。");
+            if (input == null || data == null || controller == null || entry == null || entry.IsDisposed)
                 throw new ArgumentException("角色、进入请求或依赖未登记。");
-            _preparation?.Cancel(); _preparation?.Dispose();
-            _preparation = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
-            var candidate = new PreparedPlayerSession { Owner = this, Request = ++_request, Controller = controller,
+            if (!crossScene)
+            {
+                _preparation?.Cancel(); _preparation?.Dispose();
+                _preparation = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
+            }
+            _crossSceneRequest++;
+            var candidate = new PreparedPlayerSession { Owner = this, Request = crossScene ? _crossSceneRequest : ++_request, Controller = controller,
                 Input = input, Data = data, InputEpoch = input.Epoch, DataEpoch = data.ServiceEpoch,
-                Cancellation = _preparation.Token, Config = LoadConfig(), SourceSlot = entry.Slot, IsTrial = entry.Trial != null };
+                Cancellation = crossScene ? cancellation : _preparation.Token, Config = entry.LevelCapture?.Config ?? LoadConfig(),
+                CrossScene = crossScene, SourceSlot = entry.Slot, IsTrial = entry.Trial != null };
             try
             {
-                candidate.SchemeCapture = new PlayerSchemeCapture(candidate.Config);
+                candidate.SchemeCapture = entry.LevelCapture?.Retain() ?? new PlayerSchemeCapture(candidate.Config);
                 candidate.Config = candidate.SchemeCapture.Config;
                 candidate.InputChannel = candidate.Config.Channel;
                 var inputReady = await input.WhenReady.AsUniTask().AttachExternalCancellation(candidate.Cancellation);
@@ -346,6 +353,15 @@ namespace Game.Player
             if (!IsActive || _session == null || IsTrial || _exiting || !flow.Is<GameplayState>())
                 throw new InvalidOperationException("当前会话不能读档。");
             return flow.RequestInPlace<GameplayState>(PlayerEntryRequest.FromSlot(slot), cancellation);
+        }
+
+        /// <summary>恢复已经验证的同场景检查点；继续使用 SceneScope 原位交接和相机通知。</summary>
+        public EmberTransitionOperation RestoreCheckpoint(EmberStateMachine flow, PlatformerSnapshot checkpoint, CancellationToken cancellation = default)
+        {
+            if (!IsActive || _session == null || IsTrial || _exiting || flow.IsTransitioning || !flow.Is<GameplayState>() ||
+                checkpoint == null || checkpoint.Scene != _session.Config.Scene)
+                throw new InvalidOperationException("检查点与当前玩法会话不匹配。");
+            return flow.RequestInPlace<GameplayState>(PlayerEntryRequest.FromSnapshot(checkpoint), cancellation);
         }
 
         /// <summary>整体暂停等待保存/Drain；saveSlot=null 不新增保存。失败或取消仅释放本次暂停，保留其他拥有者。</summary>

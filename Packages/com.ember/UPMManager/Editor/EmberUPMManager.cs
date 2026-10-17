@@ -33,10 +33,13 @@ namespace Ember.UPMManager.Editor
         private const string PackageName = "com.ember";
 
         private const string OdinUrl =
-            "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2";
+            "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.3";
 
         private const string DotweenUrl =
             "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.demigiant.dotween#dotween-v1.2.815";
+
+        private const string UniRxUrl =
+            "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.neuecc.unirx#unirx-v7.1.1";
 
         /// <summary>未来扩展包（预留区，Phase 2/3 规划）</summary>
         private static readonly (string name, string desc)[] PlannedPackages =
@@ -149,6 +152,14 @@ namespace Ember.UPMManager.Editor
                 "https://odininspector.com/",
                 "Inspector 增强，框架部分类型使用其属性");
 
+            // ---- UniRx ----
+            DrawDependencyRow(
+                "UniRx（团队补丁）",
+                GetPackageVersion("com.neuecc.unirx") != null || IsAssemblyLoaded("UniRx"),
+                UniRxUrl,
+                "https://github.com/neuecc/UniRx",
+                "响应式事件流；团队版本包含 Unity 6.5 与关闭域重载修正");
+
             // ---- DOTween ----
             DrawDependencyRow(
                 "DOTween（免费，禁止再分发）",
@@ -165,6 +176,13 @@ namespace Ember.UPMManager.Editor
                 EditorGUILayout.HelpBox(_optionalPackagesError, MessageType.Warning);
             foreach (var package in EmberUPMOptionalPackages.All)
                 DrawOptionalDependencyRow(package);
+
+            GUILayout.Space(8);
+            EditorGUILayout.LabelField("团队兼容性补丁", EditorStyles.boldLabel);
+            DrawTeamPatch("com.sirenix.odin-inspector", "Odin", "4.0.3", OdinUrl);
+            DrawTeamPatch("com.neuecc.unirx", "UniRx", "7.1.1", UniRxUrl);
+            DrawTeamPatch("com.moremountains.feel", "Feel", "5.4.1",
+                "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#feel-v5.4.1");
 
             GUILayout.Space(8);
             EditorGUILayout.LabelField("可选扩展包（未来）", EditorStyles.boldLabel);
@@ -697,6 +715,27 @@ namespace Ember.UPMManager.Editor
         {
             var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
             return info?.version;
+        }
+
+        private void DrawTeamPatch(string name, string label, string targetVersion, string url)
+        {
+            var package = UnityEditor.PackageManager.PackageInfo.FindForAssetPath("Packages/" + name);
+            if (package == null) return;
+            if (package.source == UnityEditor.PackageManager.PackageSource.Embedded)
+            {
+                EditorGUILayout.LabelField(label, "内嵌维护副本；先保护修改并迁出，再切换发布包。");
+                return;
+            }
+            if (!Version.TryParse(package.version, out var installed) ||
+                !Version.TryParse(targetVersion, out var target) || installed > target) return;
+            bool local = package.source == UnityEditor.PackageManager.PackageSource.Local;
+            if (installed == target && !local) return;
+            using (new EditorGUI.DisabledScope(_checking || _installing || EmberUPMUpgradeTracker.IsActive ||
+                       EditorApplication.isCompiling || EditorApplication.isUpdating))
+            {
+                if (GUILayout.Button($"{label} {package.version} → 团队发布版 {targetVersion}"))
+                    InstallPackage(url, label);
+            }
         }
 
         private void InstallPackage(string url, string label)

@@ -78,9 +78,9 @@ namespace Game.Player
                 if (Context.Feel.ShortJumpMode == PlayerShortJumpMode.MinimumHeightVelocityReduction)
                 {
                     if (Context.Motor.Position.y - _launchHeight < Context.Feel.MinimumHeight) return;
-                    Context.Motor.SetVerticalVelocity(Context.Motor.Velocity.y * Context.Feel.ReleaseMultiplier);
+                    Context.Motor.SetVerticalVelocity(Context.ExternalMotion.SelfVelocity.y * Context.Feel.ReleaseMultiplier);
                 }
-                else Context.Motor.SetVerticalVelocity(UnityEngine.Mathf.Min(Context.Motor.Velocity.y, _releaseSpeed));
+                else Context.Motor.SetVerticalVelocity(UnityEngine.Mathf.Min(Context.ExternalMotion.SelfVelocity.y, _releaseSpeed));
                 _heightControl = false;
             }
         }

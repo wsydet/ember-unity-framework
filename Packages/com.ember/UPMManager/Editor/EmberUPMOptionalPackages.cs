@@ -49,7 +49,7 @@ namespace Ember.UPMManager.Editor
             new("com.ryanindiedev.inputdevicedetector", "InputDeviceDetector", "InputDeviceDetection.InputDeviceDetector",
                 "键鼠与手柄输入设备识别", "1.0.0", "inputdevicedetector-v1.0.0"),
             new("com.moremountains.feel", "Feel", "MoreMountains.Feedbacks.MMF_Player",
-                "反馈、动效与振动工具", "5.4.0", "ember-v0.11.1")
+                "反馈、动效与振动工具", "5.4.1", "feel-v5.4.1")
         };
 
         internal static Dictionary<string, State> Capture()

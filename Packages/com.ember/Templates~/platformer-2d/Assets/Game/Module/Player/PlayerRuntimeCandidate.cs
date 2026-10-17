@@ -139,6 +139,7 @@ namespace Game.Player
             // Controller 在状态回调返回后再次释放；生命周期回调不能重入 FSM 的事务。
             if (Fsm != null && Fsm.TryDispose() == EmberFsmResult.Reentrant) return;
             _released = true;
+            Context?.ExternalMotion.Dispose();
             Animation?.Dispose();
 #if UNITY_EDITOR
             Context?.MotionTrace.Clear();

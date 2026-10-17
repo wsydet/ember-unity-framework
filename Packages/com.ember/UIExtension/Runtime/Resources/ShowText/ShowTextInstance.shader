@@ -78,15 +78,19 @@ Shader "Burner/UI/ShowTextInstance"
                     float4 timeValue = UNITY_ACCESS_INSTANCED_PROP(Props, _beginTime);
 
                     float time = _Time.y - timeValue.x;
-                    int rx = ((int)v.texcoord.x) / 4;
-                    int ry = ((int)v.texcoord.x) % 4;
+                    // Bias negative values before shifting to preserve signed division's truncation toward zero.
+                    int vertexIndex = (int)v.texcoord.x;
+                    int rx = (vertexIndex + ((vertexIndex >> 31) & 3)) >> 2;
+                    int ry = vertexIndex - rx * 4;
                     int code = c[ry][rx];
 
                     //计算uv
                     float cx = code % _textArg.w;
                     float cy = code / _textArg.w;
-                    float4 textUV = tex2Dlod(_TextTex, float4((int)v.texcoord.y / 2 + cx * 2, cy, 0, 0)  * _textArg.z);
-                    float2 uv = lerp(textUV.xy, textUV.zw, (int)v.texcoord.y % 2);
+                    int corner = (int)v.texcoord.y;
+                    int halfCorner = (corner + ((corner >> 31) & 1)) >> 1;
+                    float4 textUV = tex2Dlod(_TextTex, float4(halfCorner + cx * 2, cy, 0, 0)  * _textArg.z);
+                    float2 uv = lerp(textUV.xy, textUV.zw, corner - halfCorner * 2);
 
                     //计算位置
                     int frame = time * _textArg.x;
@@ -95,10 +99,11 @@ Shader "Burner/UI/ShowTextInstance"
                     float vis = step(frame, timeValue.z);//当前帧的可见性
 
                     int anix = v.texcoord.x * 4 + v.texcoord.y;
-                    int row = frame / 16;
-                    int col = frame % 16;
-                    int newRow = (frame + 1) / 16;
-                    int newCol = (frame + 1) % 16;
+                    int row = (frame + ((frame >> 31) & 15)) >> 4;
+                    int col = frame - row * 16;
+                    int nextFrame = frame + 1;
+                    int newRow = (nextFrame + ((nextFrame >> 31) & 15)) >> 4;
+                    int newCol = nextFrame - newRow * 16;
                     float4 p0 = tex2Dlod(_TextAniTex, float4(anix + col * 64, row, 0, 0) * _textAniArg);
                     float4 p1 = tex2Dlod(_TextAniTex, float4(anix + newCol * 64, newRow, 0, 0) * _textAniArg);
                     float4 tp = (p0 + (p1 - p0) * dt);

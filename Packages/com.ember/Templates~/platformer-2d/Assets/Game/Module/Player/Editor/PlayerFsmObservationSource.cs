@@ -15,6 +15,7 @@ namespace Game.Player.Editor
         {
             var result = new StringBuilder();
             result.Append($"运动控制 {context.MotionControl.Observation}\n");
+            result.Append(context.ExternalMotion.Describe()).Append('\n');
             var combat = context.Combat;
             if (combat != null)
             {

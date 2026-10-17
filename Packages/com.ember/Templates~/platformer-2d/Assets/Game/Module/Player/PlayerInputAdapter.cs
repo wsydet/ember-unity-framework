@@ -13,13 +13,14 @@ namespace Game.Player
         private readonly GameInputButton _dash;
         private readonly GameInputButton _attack;
         private bool _jumpRequested, _dashRequested;
+        private bool _externallySuppressed;
         internal PlayerCombatRequests Combat { get; }
         private readonly float _bufferDuration;
         private float _bufferRemaining;
         public float BufferRemaining => _bufferRemaining;
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
-        public bool JumpHeld => _jump.IsHeld;
+        public bool JumpHeld => !_externallySuppressed && _jump.IsHeld;
         public bool JumpRequested
         {
             get => Combat?.InCombat == true ? Combat.TryGet(PlayerCombatButton.Jump, out _) : _jumpRequested;
@@ -43,6 +44,7 @@ namespace Game.Player
         { if (!channel.IsAvailable) Clear(); }
         private void CapturePress()
         {
+            if (_externallySuppressed) return;
             if (!_jump.ConsumePress()) return;
             JumpRequested = true; FreshJumpRequested = true;
             _bufferRemaining = _bufferDuration;
@@ -51,12 +53,14 @@ namespace Game.Player
         }
         private void CaptureDashPress()
         {
+            if (_externallySuppressed) return;
             if (_dash == null || !_dash.ConsumePress()) return;
             DashRequested = true; DashPressVersion++;
             if (Combat?.InCombat == true) Combat.Press(PlayerCombatButton.Dash, DashPressVersion);
         }
         private void CaptureAttackPress()
         {
+            if (_externallySuppressed) return;
             if (_attack == null || !_attack.ConsumePress()) return;
             AttackPressVersion++; Combat.Press(PlayerCombatButton.Attack, AttackPressVersion);
         }
@@ -94,6 +98,7 @@ namespace Game.Player
         }
         public void Sample()
         {
+            if (_externallySuppressed) { Clear(); return; }
             var direction = _channel.ReadContinuous<Vector2>(_move);
             Horizontal = Mathf.Clamp(direction.x, -1, 1);
             Vertical = Mathf.Clamp(direction.y, -1, 1);
@@ -157,6 +162,12 @@ namespace Game.Player
             Horizontal = 0; Vertical = 0; JumpRequested = false; FreshJumpRequested = false; _bufferRemaining = 0;
             DashRequested = false;
             ClearVersion++; _jump.ClearPending(); _dash?.ClearPending(); _attack?.ClearPending(); Combat?.Clear();
+        }
+        internal void SetExternalSuppression(bool suppressed)
+        {
+            if (_externallySuppressed == suppressed) return;
+            _externallySuppressed = suppressed;
+            Clear();
         }
         public void Dispose() { _channel.AvailabilityChanged -= OnAvailability; _jump.Dispose(); _dash?.Dispose(); _attack?.Dispose(); Clear(); Combat?.End(); }
         #endregion

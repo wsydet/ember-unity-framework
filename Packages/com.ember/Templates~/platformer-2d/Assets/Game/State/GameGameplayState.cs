@@ -23,10 +23,29 @@ namespace Game.State
     {
         private PlayerPauseRequest _overlayPause;
         private GameSceneSession _sceneSession;
+        private string _requestedScene;
+        public override bool AllowReEnter => _requestedScene != null;
 #if UNITY_EDITOR
-        public override string ScenePath => PlayerLabEditorBridge.Active
-            ? PlayerLabEditorBridge.GameplayScenePath : base.ScenePath;
+        public override string ScenePath => _requestedScene ?? (PlayerLabEditorBridge.Active
+            ? PlayerLabEditorBridge.GameplayScenePath : base.ScenePath);
+#else
+        public override string ScenePath => _requestedScene ?? base.ScenePath;
 #endif
+
+        /// <summary>跨关请求只在同步读取目标 ScenePath 时开放重入；配置已由 ForLevel 冻结。</summary>
+        public EmberTransitionOperation EnterLevel(EmberStateMachine flow, PlayerEntryRequest entry,
+            System.Threading.CancellationToken cancellation = default)
+        {
+            if (flow == null || flow.GetState<GameplayState>() != this || flow.IsTransitioning ||
+                entry == null || entry.IsDisposed || string.IsNullOrWhiteSpace(entry.LevelId) || string.IsNullOrWhiteSpace(entry.ScenePath))
+                throw new InvalidOperationException("关卡入口需要当前注册状态、空闲转场和冻结的关卡请求。");
+            if (EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) && player.HasSession &&
+                player.Controller.gameObject.scene.name == System.IO.Path.GetFileNameWithoutExtension(entry.ScenePath))
+                throw new InvalidOperationException("同场景续玩使用 RestoreCheckpoint；跨关入口不能隐式创建覆盖层。");
+            _requestedScene = entry.ScenePath;
+            try { return flow.RequestTransitionTo<GameplayState>(entry, cancellation: cancellation); }
+            finally { _requestedScene = null; }
+        }
 
         public override TransitionDescriptor[] GetEdges()
         {

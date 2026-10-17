@@ -37,7 +37,7 @@ namespace Game.Player
             if (!IsActive) return;
             IsActive = false; Remaining = 0;
             float limit = _context.JumpWindow.HasGroundSupport ? _context.Feel.MoveSpeed : _context.Feel.EffectiveAirSpeed;
-            _context.Motor.SetHorizontalVelocity(_wallStopped ? 0 : Mathf.Clamp(_context.Motor.Velocity.x, -limit, limit));
+            _context.Motor.SetHorizontalVelocity(_wallStopped ? 0 : Mathf.Clamp(_context.ExternalMotion.SelfVelocity.x, -limit, limit));
             if (!_context.JumpWindow.HasGroundSupport) _context.VerticalMotion.NotifyJump();
         }
         #endregion

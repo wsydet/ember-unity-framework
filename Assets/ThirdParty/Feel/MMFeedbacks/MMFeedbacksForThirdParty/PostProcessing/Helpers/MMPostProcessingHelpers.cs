@@ -36,7 +36,14 @@ namespace MoreMountains.FeedbacksForThirdParty
 			PostProcessVolume volume = (PostProcessVolume)Object.FindAnyObjectByType(typeof(PostProcessVolume));
 			if (volume == null)
 			{
-				GameObject postProcessingObject = GameObject.Instantiate(Resources.Load<GameObject>("MMDefaultPostProcessingVolume"));
+				// This setup tool is Editor-only; optional PostProcessing templates must not enter Player Resources.
+				string templatePath = AssetDatabase.GUIDToAssetPath("948e90df3bdde44068685e4ebecfcc25");
+				GameObject template = AssetDatabase.LoadAssetAtPath<GameObject>(templatePath);
+				if (template == null)
+				{
+					throw new System.InvalidOperationException("The default PostProcessing volume template is missing.");
+				}
+				GameObject postProcessingObject = GameObject.Instantiate(template);
 				volume = postProcessingObject.GetComponent<PostProcessVolume>();
 				additions += "Added a PostProcessingVolume to the scene. ";
 			}

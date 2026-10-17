@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.20.0",
+  "frameworkTag": "v0.20.0",
+  "status": "Release; clean consumer validation is user-owned.",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.20.0.json",
+  "coverage": "交付platformer-2d公共外部运动/交互锁、平移支撑、弹射、检查点及世界复位、关卡入口/区域/组合保存、塌陷平台；复用相机生命周期。修正框架Editor场景校验和发行字段/Shader警告。UPM Manager接入三方补丁Odin4.0.3、Feel5.4.1、UniRx7.1.1。未实现Windward专属业务；T08未触发。",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.1",
+      "path": "com.moremountains.feel",
+      "tag": "feel-v5.4.1"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.3",
+      "path": "com.sirenix.odin-inspector",
+      "tag": "odin-v4.0.3"
+    },
+    {
+      "name": "com.neuecc.unirx",
+      "path": "com.neuecc.unirx",
+      "version": "7.1.1",
+      "tag": "unirx-v7.1.1"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.8.3",
+      "frameworkVersion": "0.20.0",
+      "channel": "stable",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "versionedContentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+    },
+    {
+      "id": "platformer-2d",
+      "version": "0.5.0",
+      "frameworkVersion": "0.20.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.8.3",
+      "parentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "contentHash": "b0d2b8954453f5eefeb8f094854c24eb",
+      "versionedContentHash": "b0d2b8954453f5eefeb8f094854c24eb"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.5.0",
+      "frameworkVersion": "0.20.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.8.3",
+      "parentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "contentHash": "89e49f1c8c620812a15b181a0a049180",
+      "versionedContentHash": "89e49f1c8c620812a15b181a0a049180"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.20.1",
+      "frameworkVersion": "0.20.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.8.3",
+      "parentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+      "contentHash": "3836ccbfe60bda104a07e8ab15ff555c",
+      "versionedContentHash": "3836ccbfe60bda104a07e8ab15ff555c"
+    }
+  ],
+  "validation": "公共能力完整回归564/564（收尾保护前），收尾专项108/108及29/29；两关正式链路42条断言；最近Windows64 Mono CleanBuildCache发行构建0错误0警告0 Assert，两进程保存16/16、续玩19/19；UniRx关闭域重载三轮Play通过；UPM检测9/9通过。没有在最后一轮重复整个564项回归。新项目创建/消费验证由用户负责，未验收；IL2CPP/其他平台/产品玩法未验收。封存和发布检查结果见当版发布说明。 Project center 2026-10-17 16:24:13: 0 errors, 11 test-state scene warnings, 0 differences; sealed hashes and parent lineage valid. Editor scriptCompilationFailed=false.",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#feel-v5.4.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.20.0",
+    "skills": [
+      "ember-add-font",
+      "ember-template-conflict-recovery",
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-platformer-add-attack",
+      "ember-platformer-add-state",
+      "ember-platformer-replace-animation",
+      "ember-platformer-tune-feel",
+      "ember-vn-custom-node",
+      "ember-vn-edit-skin",
+      "ember-vn-export-story",
+      "ember-vn-generate-save",
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-replace-images"
+    ],
+    "bundleSourceCommit": "f58d4e1f61648fa0193b4066abb31c6b46ea969f",
+    "templateSkillUpdaterVersion": "0.14.4",
+    "templateSkillStateSchemaVersion": 3
+  },
+  "thirdPartyTagNote": "Default baseline for unchanged packages; per-package tag takes precedence."
+}

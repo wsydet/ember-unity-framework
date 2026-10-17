@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-17",
+  "kind": "third-party-patch-overlay",
+  "frameworkRelease": false,
+  "dependencies": {
+    "com.sirenix.odin-inspector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.3",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#feel-v5.4.1",
+    "com.neuecc.unirx": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.neuecc.unirx#unirx-v7.1.1"
+  }
+}

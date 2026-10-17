@@ -1,0 +1,7 @@
+# 本地维护记录
+
+2026-10-17：本工程实际解析本目录为 Embedded UniRx 7.1.0，文件受框架仓库Git管理，并非PackageCache。MainThreadDispatcher的两处单对象查找改用FindAnyObjectByType；集合查找在Unity 6000.5及以后使用无排序参数的FindObjectsByType，较早Unity 6使用SortMode.None重载。保留默认活动对象范围；单例候选不再依赖InstanceID排序，CullAll仍逐个清理全部非当前实例。6000.5已同时废弃FindFirstObjectByType、GetInstanceID及排序查找接口，不能拿这些接口替代旧API后声称警告已修复。
+
+没有升级版本或发布OpenUPM包；其他消费项目仅安装注册表7.1.0不会自动获得本地修正。许可证及供应商内容保留。
+
+2026-10-17：修正关闭域重载的Editor播放生命周期。ScenePlaybackDetector不再依赖DidReloadScripts与全局EditorPrefs标记才能进入播放状态；主线程更新volatile状态供工作线程读取。MainThreadDispatcher在仅Editor的SubsystemRegistration中重置上一轮单例、初始化及退出标记，并在场景Awake前设置播放状态。默认清理模式及公开调用方式保持不变。Unity6000.5.4f1关闭域重载、开启场景重载的连续三轮Play已验证初始化、运行时工作线程Post、重复实例清理、销毁重建与退出。完整证据及发行回归见仓库docs/dev/mountain-rebuild/10-unirx-play-lifecycle.md。未验证关闭场景重载、播放中脚本重编译或旧Unity版本。

@@ -57,7 +57,7 @@ namespace Game.Player
         internal void BeginDeath()
         {
             if (DeathCommitted || !IsDead) throw new InvalidOperationException("死亡状态只能提交一次。");
-            DeathCommitted = true; ClearAction(); Reaction?.Clear();
+            DeathCommitted = true; _context.ExternalMotion.Clear(); ClearAction(); Reaction?.Clear();
             _context.MotionControl.Take(this, PlayerMotionChannels.Horizontal | PlayerMotionChannels.Facing |
                 PlayerMotionChannels.AutomaticTransitions | PlayerMotionChannels.Wall | PlayerMotionChannels.Ledge |
                 PlayerMotionChannels.Vertical | PlayerMotionChannels.Correction);

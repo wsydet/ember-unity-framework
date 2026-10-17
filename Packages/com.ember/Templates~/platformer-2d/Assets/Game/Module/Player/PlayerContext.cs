@@ -13,6 +13,8 @@ namespace Game.Player
         public EntitySensors2D Sensors { get; }
         public EntityFacing2D Facing { get; }
         public PlayerInputAdapter Input { get; }
+        public PlayerExternalMotion ExternalMotion { get; }
+        public PlayerSupportMotion Support { get; }
         internal PlayerMotionControl MotionControl { get; } = new();
         internal PlayerCombatMotion Combat { get; set; }
         internal EntityHitReceiver HitReceiver { get; set; }
@@ -38,7 +40,7 @@ namespace Game.Player
                 if (!Feel.Accelerated) return direction == 0 ? "idle" : "move";
                 const float tolerance = .0001f;
                 float target = UnityEngine.Mathf.Clamp(direction, -1, 1) * Feel.MoveSpeed;
-                float speed = Motor.Velocity.x;
+                float speed = ExternalMotion.SelfVelocity.x;
                 if (target == 0) return UnityEngine.Mathf.Abs(speed) <= tolerance ? "idle" : "decelerate";
                 if (UnityEngine.Mathf.Abs(speed - target) <= tolerance) return "move";
                 if (speed * target < 0 || UnityEngine.Mathf.Abs(speed) > UnityEngine.Mathf.Abs(target)) return "decelerate";
@@ -70,6 +72,6 @@ namespace Game.Player
         internal PlayerContext(Entity2D entity, EntityMotor2D motor, EntitySensors2D sensors,
             EntityFacing2D facing, PlayerInputAdapter input, PlayerJumpWindow jumpWindow, PlayerPowerSession powers,
             EntityEffectContainer effects, PlayerFeelRuntime feel)
-        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); Correction = new PlayerCollisionCorrection(this); }
+        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; Support = new PlayerSupportMotion(this); ExternalMotion = new PlayerExternalMotion(this); VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); Correction = new PlayerCollisionCorrection(this); }
     }
 }

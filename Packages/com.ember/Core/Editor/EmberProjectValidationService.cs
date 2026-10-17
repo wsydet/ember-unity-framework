@@ -336,7 +336,11 @@ namespace Ember.Core.Editor
                 report.Add(EmberValidationSeverity.Error, "场景配置", "场景映射未指定框架场景。", MappingPath);
             foreach (var entry in mapping.entries ?? new List<StateSceneEntry>())
             {
-                string sceneName = entry?.sceneField.SceneName;
+                // 名称缓存未序列化，域重载后可能为空；校验应读取已绑定资产的真实路径。
+                string scenePath = entry?.sceneField.EditorScenePath;
+                string sceneName = !string.IsNullOrEmpty(scenePath)
+                    ? Path.GetFileNameWithoutExtension(scenePath)
+                    : entry?.sceneField.SceneName;
                 if (string.IsNullOrEmpty(sceneName))
                     report.Add(EmberValidationSeverity.Warning, "场景配置", $"{entry?.stateName} 未关联场景。", MappingPath,
                         "若该状态不需要场景，可保留为空。");

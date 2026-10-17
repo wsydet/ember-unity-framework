@@ -97,7 +97,7 @@ Shader "Burner/Plaque"
 					o.uv.y = 1.0 - o.uv.y;
 				}
 
-				o.pos = TransformObjectToHClip(vertex);
+				o.pos = TransformObjectToHClip(vertex.xyz);
 				o.color = UNITY_ACCESS_INSTANCED_PROP(Props, _Colors);
 				
 				return o;

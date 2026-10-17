@@ -31,7 +31,7 @@ namespace Game.Player
             float direction = Context.Input.Horizontal;
             if (!Context.MotionControl.Owns(PlayerMotionChannels.Horizontal))
                 Context.Motor.SetHorizontalVelocity(Context.Feel.CalculateHorizontalSpeed(
-                    Context.Motor.Velocity.x, direction, Context.JumpWindow.HasGroundSupport, deltaTime));
+                    Context.ExternalMotion.SelfVelocity.x, direction, Context.JumpWindow.HasGroundSupport, deltaTime));
             if (direction != 0 && !Context.MotionControl.Owns(PlayerMotionChannels.Facing)) Context.Facing.SetFacing(direction > 0);
         }
         #endregion

@@ -59,7 +59,7 @@ namespace Game.Player
             if (reason != PlayerDashEndReason.Completed) { Cancel(); return false; }
             InTail = true; _tailTime = 0; _inertia = !ground;
             _context.Input.Combat.Continue(PlayerAttackIntent.DashAttack, _context.Feel.Attack.Dash.Duration, _context.Feel.Attack.Dash.Duration);
-            if (!ground) _context.Motor.SetHorizontalVelocity(_context.Motor.Velocity.x * _context.Feel.Attack.Dash.AirVelocityRatio);
+            if (!ground) _context.Motor.SetHorizontalVelocity(_context.ExternalMotion.SelfVelocity.x * _context.Feel.Attack.Dash.AirVelocityRatio);
             _context.MotionControl.Take(this, PlayerMotionChannels.Horizontal | PlayerMotionChannels.AutomaticTransitions |
                 PlayerMotionChannels.Wall | PlayerMotionChannels.Ledge | PlayerMotionChannels.Correction);
             return true;
@@ -68,7 +68,7 @@ namespace Game.Player
         internal void AdvanceResidual(float dt) { if (_inertia && !InTail) ApplyMotion(dt); }
         private void ApplyMotion(float dt)
         {
-            float speed = _context.Motor.Velocity.x, direction = _context.Input.Horizontal;
+            float speed = _context.ExternalMotion.SelfVelocity.x, direction = _context.Input.Horizontal;
             bool wall = speed > 0 ? _context.Sensors.RightWall != null : speed < 0 && _context.Sensors.LeftWall != null;
             if (wall) { _context.Motor.SetHorizontalVelocity(0); _inertia = false; if (!InTail) _context.MotionControl.Release(this); return; }
             float limit = _context.JumpWindow.HasGroundSupport ? _context.Feel.MoveSpeed : _context.Feel.EffectiveAirSpeed;

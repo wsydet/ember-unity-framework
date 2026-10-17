@@ -29,12 +29,14 @@ namespace Ember.UIExtension
 
         #region 编辑器面板参数
 
+#if UNITY_EDITOR
         [FoldoutGroup("$GROUP", Expanded = true)]
         [BoxGroup("$GROUP/预设", ShowLabel = false)]
         [Title("预设", "选一个预设自动填充进入/退出排布和动画类型。选「自定义」后手动微调。")]
         [OnValueChanged("ApplyPreset")]
         [ValueDropdown("GetPresetItems")]
         [SerializeField] private EUIBlockPreset _preset = EUIBlockPreset.SideWipe;
+#endif
 
         [BoxGroup("$GROUP/方块外观", ShowLabel = false)]
         [Title("方块外观")]
@@ -52,11 +54,13 @@ namespace Ember.UIExtension
         [ShowIf("_useBlockTexture")]
         [SerializeField] private Texture2D _blockTexture;
 
+#if UNITY_EDITOR
         [BoxGroup("$GROUP/方块外观")]
         [Tooltip("方块动画曲线预设。选一个自动填充下方 6 条曲线；选「自定义」后手动微调。")]
         [OnValueChanged("ApplyCurvePreset")]
         [ValueDropdown("GetCurvePresetItems")]
         [SerializeField] private EUIBlockCurvePreset _curvePreset = EUIBlockCurvePreset.GrowSmooth;
+#endif
 
         [BoxGroup("$GROUP/方块外观")]
         [InlineProperty]

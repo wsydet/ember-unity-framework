@@ -21,6 +21,7 @@ namespace Game.Player
         private PlayerPowerSession _powers => Context?.Powers;
         private EntityEffectContainer _effects => Context?.Effects;
         private EntityEffectBinding _effectBinding;
+        private bool _interactionHeld;
         public PlayerContext Context => _active?.Context;
         internal PlatformerSnapshot EntrySnapshot => _active?.Snapshot;
         public bool IsRunning => _fsm?.Status == EmberFsmStatus.Running;
@@ -88,6 +89,7 @@ namespace Game.Player
 
         private void ApplyCandidate(PlayerRuntimeCandidate candidate)
         {
+            _interactionHeld = false;
             _active = candidate;
             candidate.Animation?.Bind();
             _sensors.Bind(_entity);
@@ -222,6 +224,9 @@ namespace Game.Player
             if (!IsRunning) return;
             _powers.Tick(dt);
             _effects?.Tick(dt);
+            Context.ExternalMotion.Prune();
+            if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true) Context.ExternalMotion.Clear();
+            if (UpdateInteractionHold()) return;
             Context.Input.Sample();
             var active = _active;
             try { Check(active.Fsm.Update(dt)); }
@@ -232,10 +237,14 @@ namespace Game.Player
         public void FixedTick(float dt)
         {
             if (!IsRunning) return;
+            Context.ExternalMotion.BeginStep();
+            if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true) Context.ExternalMotion.Clear();
+            if (UpdateInteractionHold()) { Context.ExternalMotion.EndStep(dt); return; }
 #if UNITY_EDITOR
             var observedPosition = _motor.Position;
 #endif
             _sensors.Sample();
+            if (Context.Life?.IsDead != true && Context.Life?.Reaction?.IsActive != true) Context.Support.Observe(dt);
             Context.Landing.Observe();
             if (Context.JumpWindow.Observe(_sensors.IsGrounded, _motor.Velocity.y, dt))
                 _powers.RefillGroundUses(); // 先更新资源，保证落地缓冲直接跳也能观察到补充。
@@ -243,6 +252,8 @@ namespace Game.Player
             Context.Wall.Observe(dt);
             Context.Ledge.ObserveInput();
             _motor.BeginStep();
+            _motor.SetHorizontalVelocity(Context.ExternalMotion.SelfVelocity.x);
+            _motor.SetVerticalVelocity(Context.ExternalMotion.SelfVelocity.y);
             Context.Correction.BeginStep();
             Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt);
             Context.Combat?.Dash?.ObserveEnvironment();
@@ -257,6 +268,7 @@ namespace Game.Player
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Vertical)) Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Correction)) Context.Correction.Apply(dt, CurrentStateId);
                 }
+                if (ReferenceEquals(active, _active) && !active.IsDisposed) Context.ExternalMotion.Compose();
                 _motor.ExecuteStep();
                 if (ReferenceEquals(active, _active) && !active.IsDisposed) active.Animation?.Sync(active.Fsm);
                 if (ReferenceEquals(active, _active) && !active.IsDisposed) Context.Landing.RecordStep();
@@ -269,6 +281,7 @@ namespace Game.Player
             finally
             {
                 Context?.Input.EndPhysicsStep(dt);
+                Context?.ExternalMotion.EndStep(dt);
                 if (active.IsDisposed) active.Release();
             }
         }
@@ -283,8 +296,32 @@ namespace Game.Player
         internal void Resume()
         {
             if (_fsm?.Status != EmberFsmStatus.Paused) return;
-            Context.Input.Clear(); Check(_fsm.Resume()); _motor.Resume(); Context.DropThrough.Reapply();
+            Context.Input.Clear(); Check(_fsm.Resume());
+            if (!_interactionHeld) _motor.Resume();
+            Context.DropThrough.Reapply();
             _active.Animation?.Pause(false);
+        }
+
+        private bool UpdateInteractionHold()
+        {
+            if (Context.ExternalMotion.IsInteractionLocked)
+            {
+                if (!_interactionHeld)
+                {
+                    _motor.Freeze();
+                    _motor.Apply(_motor.Position, Vector2.zero, Context.Feel.GravityScale);
+                    _interactionHeld = true;
+                }
+                Context.Input.Clear();
+                return true;
+            }
+            if (_interactionHeld)
+            {
+                _interactionHeld = false;
+                _motor.Resume();
+                Context.Input.Clear();
+            }
+            return false;
         }
 
         public PlatformerSnapshot Capture(string scene)

@@ -65,8 +65,17 @@ namespace Game.Player
         /// <summary>主线程同一逻辑时点采集，无 await；先检查全部有效效果，拒绝时不改变任何运行对象。</summary>
         [HasGC]
         public static PlatformerSnapshot Capture(string scene, PlayerContext context)
+            => CaptureCore(scene, context, false);
+
+        internal static PlatformerSnapshot CaptureForInteraction(string scene, PlayerContext context)
+            => CaptureCore(scene, context, true);
+
+        private static PlatformerSnapshot CaptureCore(string scene, PlayerContext context, bool interaction)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
+            context.ExternalMotion.Prune();
+            if (!interaction && context.ExternalMotion.HasTransientMotion)
+                throw new InvalidOperationException("外部运动/交互期间不能采集瞬时玩家快照；请使用合法检查点基线组合保存。");
             if (context.Life?.IsDead == true || context.Life?.Reaction is { IsActive: true } || context.Life?.Reaction?.HasPending == true)
                 throw new InvalidOperationException("受击或死亡期间不能保存；请完成恢复后重试。");
             if (context.Combat is { IsActive: true } combat && (!combat.IsRecovery || !combat.Finished))

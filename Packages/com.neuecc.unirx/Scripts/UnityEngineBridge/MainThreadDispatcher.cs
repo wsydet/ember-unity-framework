@@ -408,6 +408,20 @@ namespace UniRx
         static bool initialized;
         static bool isQuitting = false;
 
+#if UNITY_EDITOR && UNITY_2019_3_OR_NEWER
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetEditorPlaySession()
+        {
+            // Domain reload can be disabled. Do not carry the previous session's
+            // destroyed singleton or quit guard into the next scene's Awake.
+            instance = null;
+            initialized = false;
+            isQuitting = false;
+            mainThreadToken = null;
+            ScenePlaybackDetector.IsPlaying = true;
+        }
+#endif
+
         public static string InstanceName
         {
             get
@@ -449,7 +463,7 @@ namespace UniRx
 
                 try
                 {
-                    dispatcher = GameObject.FindObjectOfType<MainThreadDispatcher>();
+                    dispatcher = GameObject.FindAnyObjectByType<MainThreadDispatcher>();
                 }
                 catch
                 {
@@ -577,7 +591,11 @@ namespace UniRx
 
         public static void CullAllExcessDispatchers()
         {
-            var dispatchers = GameObject.FindObjectsOfType<MainThreadDispatcher>();
+#if UNITY_6000_5_OR_NEWER
+            var dispatchers = GameObject.FindObjectsByType<MainThreadDispatcher>();
+#else
+            var dispatchers = GameObject.FindObjectsByType<MainThreadDispatcher>(FindObjectsSortMode.None);
+#endif
             for (int i = 0; i < dispatchers.Length; i++)
             {
                 DestroyDispatcher(dispatchers[i]);
@@ -588,7 +606,7 @@ namespace UniRx
         {
             if (instance == this)
             {
-                instance = GameObject.FindObjectOfType<MainThreadDispatcher>();
+                instance = GameObject.FindAnyObjectByType<MainThreadDispatcher>();
                 initialized = instance != null;
 
                 /*

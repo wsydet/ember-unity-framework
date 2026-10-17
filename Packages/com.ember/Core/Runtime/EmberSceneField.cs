@@ -35,12 +35,14 @@ namespace Ember.Core
     {
         #region 编辑器面板参数
 
+#if UNITY_EDITOR
         [HorizontalGroup("Scene"/*, Width = 0.7f*/)]
         [HideLabel]
         [AssetsOnly]
         [Tooltip("拖入 .unity 场景文件")]
         [SerializeField]
         private UnityEngine.Object _sceneAsset;
+#endif
 
         //[HorizontalGroup("Scene", Width = 0.3f)]
         //[HideLabel]
@@ -65,7 +67,9 @@ namespace Ember.Core
         /// <summary>从场景名字符串构造（用于代码生成）。</summary>
         public EmberSceneField(string sceneName)
         {
+#if UNITY_EDITOR
             _sceneAsset = null;
+#endif
             _sceneName = sceneName;
         }
 

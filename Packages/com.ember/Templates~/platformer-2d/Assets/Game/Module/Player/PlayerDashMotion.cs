@@ -80,7 +80,7 @@ namespace Game.Player
             _context.VerticalMotion.NotifyJump(); // 冲刺离地不继承自然离地悬停。
             if (_context.Combat?.Dash?.EndDash(IsGroundDash, EndReason) == true) return;
             float limit = _context.JumpWindow.HasGroundSupport ? _context.Feel.MoveSpeed : _context.Feel.EffectiveAirSpeed;
-            _context.Motor.SetHorizontalVelocity(Mathf.Clamp(_context.Motor.Velocity.x, -limit, limit));
+            _context.Motor.SetHorizontalVelocity(Mathf.Clamp(_context.ExternalMotion.SelfVelocity.x, -limit, limit));
             _context.Motor.SetVerticalVelocity(0);
         }
         #endregion

@@ -150,7 +150,7 @@ Shader "UI/NodeBlurEffect"
 	fixed4 frag_DownSmpl(VertexOutput_DownSmpl i) : SV_Target
 	{
 		//【7.1】定义一个临时的颜色值
-		fixed4 color = (0,0,0,0);
+		fixed4 color = fixed4(0,0,0,0);
  
 		//【7.2】四个相邻像素点处的纹理值相加
 		color += tex2D(_MainTex, i.uv20);
