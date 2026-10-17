@@ -1,5 +1,7 @@
 # Windward 公共能力实施记录
 
+2026-10-18 补充：Windward S2 暴露的 T01 项目动作接管缺口由[动作契约维护记录](12-t01-action-contract.md)承接。以下 2026-10-17 记录保留为历史，不能据此认定已接通 Windward 的挥旗 FSM 或 S2 验收通过。
+
 日期：2026-10-17。范围为 Ember/platformer-2d 公共能力；未创建Windward、未修改只读Mountain，未收入旗面、风合成表、蒲公英倍率、贴纸或关卡业务。
 
 ## 当前出口

@@ -1,0 +1,36 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "910f7c5443d64bf7a374e51b4edc82df",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792261947044,
+      "finished_unix_ms": 1792261981524,
+      "last_update_unix_ms": 1792261981524,
+      "progress": {
+        "completed": 77,
+        "total": 77,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792261981458,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.Support_WindAddsOnceAndDisableDropsReference",
+        "last_finished_unix_ms": 1792261981479,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.ActionContract_IndependentSchemeCopyReloadAndAnimationObserveActualFsm(True)",
+            "message": "System.Reflection.TargetInvocationException : Exception has been thrown by the target of an invocation.\r\n  ----> System.InvalidOperationException : CombatGraph：冲刺路由、收尾和根声明归属不完整。"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

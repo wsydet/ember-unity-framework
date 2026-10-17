@@ -1,0 +1,23 @@
+PASS Editor playing
+PASS isolated storage: C:\Users\wuyu\My\ember-unity-framework\Library\PlayerFormalAcceptance\30cd1daa8010437ab40a426cc20ec877
+PASS FrameworkScene boot reached Main
+PASS Main -> Gameplay formal transition
+PASS formal module discovered
+PASS formal scene scope prepared and started player
+Before input: state=idle, position=(0.00, 0.89), keyboardEnabled=True, focus=True
+Input: mode=ProcessEventsInDynamicUpdate, channel=True, action=True
+Keyboard pressed=True, actionValue=1
+PASS real Input System jump: from=0.8899999, now=1.842788, state=jump, pressVersion=1
+PASS baseline ReplaceVelocity: y 1.819243 -> 1.701523, gravity=3, state=fall, composed=(0.00, 0.00)
+PASS existing ForcedRise zero Y remains rejected
+PASS real project FSM entered
+PASS hover y 1.701523 -> 1.701523, gravity=0, composed=(0.00, 0.00)
+PASS Animator matches actual action FSM
+PASS global pause retains action and position
+PASS launch rejection preserves action
+PASS accepted launch exits before notification
+PASS accepted launch physically rises
+PASS delayed old callback cannot release new action
+PASS active action rejects immediate snapshot
+PASS formal scene exit releases action and module
+RESULT PASSED

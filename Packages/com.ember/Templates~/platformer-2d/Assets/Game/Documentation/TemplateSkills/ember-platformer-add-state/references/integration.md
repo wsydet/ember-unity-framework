@@ -22,7 +22,7 @@
 
 选定唯一参数所有者；运动值放现有Feel分组或有明确归属的新配置，次数/开放/CD按需要使用Powers，动作效果来自方案ActionEffects。不能同时从Definition和方案读取同一效果。补齐依赖校验、工具定位、复制/比较/保存/只读保护，新参数关闭时行为回退明确。
 
-重点核对`PlayerSchemeCapture.CaptureDefinition`：目前仅特殊处理地空冲刺效果，其他Definition按无可变参数的声明对象复用。**新增Definition序列化参数不会自动获得冻结A保证。** 若放入可变配置，必须显式捕获成只读有效值并接入恢复候选、完整复制与生命周期；涉及既有所有权边界先确认，不靠浅克隆或运行中读取源SO应付。
+重点核对`PlayerSchemeCapture.CaptureDefinition`：项目参数 Definition 应实现 `IPlayerConfigurationCapture`，在私有副本的回调中用 `PlayerConfigurationCapture.Capture` 递归捕获可变 SO 依赖，并由 CreateState 复制有效值。未实现接口的 Definition 仍按无可变参数声明复用，新增字段不会自动深拷贝。详见 [项目动作契约](../../../platformer-2d/ProjectActions.md) 及独立消费程序集例子；恢复候选沿用冻结 A，完整复制、非法配置和生命周期都必须验证。
 
 `PlayerRuntimeCandidate`构造独立Context、Powers、Effects、FSM与Animation，准备期间不绑定运行物理/表现；成功交接后才由PlayerModule唯一驱动。新服务清理接入失败准备、释放、停止路径；不能给Controller再加Update/FixedUpdate。
 

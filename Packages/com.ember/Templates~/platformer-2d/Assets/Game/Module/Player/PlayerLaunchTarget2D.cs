@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    /// <summary>可选玩家弹射适配。原有内部互斥动作拒绝接管；项目动作通过接受事件释放自己的会话。</summary>
+    /// <summary>可选玩家弹射适配。原有内部互斥动作拒绝接管；项目动作先合法退出，再登记运动并发接受通知。</summary>
     [DisallowMultipleComponent, RequireComponent(typeof(PlayerController))]
     public sealed class PlayerLaunchTarget2D : MonoBehaviour, ILaunchTarget2D
     {
@@ -26,12 +26,16 @@ namespace Game.Player
             if (!isActiveAndEnabled || owner == null || !owner.isActiveAndEnabled || !player.IsRunning ||
                 string.IsNullOrWhiteSpace(request.SourceId) || player.Context.Life?.IsDead == true) return LaunchResult2D.Inactive;
             var context = player.Context;
-            if (context.ExternalMotion.IsInteractionLocked || context.MotionControl.Owns((PlayerMotionChannels)127) ||
+            if (context.ExternalMotion.IsInteractionLocked || !context.Actions.IsActive && context.MotionControl.Owns((PlayerMotionChannels)127) ||
                 context.Dash.IsActive || context.Ledge.IsActive || context.Rolling.IsActive || context.Landing.IsActive ||
                 context.DropThrough.IsActive || context.HeadJump.IsActive || context.Life?.Reaction?.IsActive == true ||
                 context.Combat?.IsActive == true) return LaunchResult2D.Busy;
-            if (request.Interrupt == LaunchInterrupt2D.RejectWhileBusy && context.ExternalMotion.HasTransientMotion)
+            if (request.Interrupt == LaunchInterrupt2D.RejectWhileBusy && (context.ExternalMotion.HasTransientMotion || context.Actions.IsActive))
                 return LaunchResult2D.Busy;
+            if (!context.Actions.InterruptLaunch()) return LaunchResult2D.Busy;
+            // 退出回调可能禁用宿主；不能向失效或被替换的会话登记弹射。
+            if (!player.IsRunning || !ReferenceEquals(player.Context, context) || owner == null || !owner.isActiveAndEnabled)
+                return LaunchResult2D.Inactive;
             context.ExternalMotion.Clear();
             _lease = context.ExternalMotion.Register(owner, new PlayerExternalMotionRequest(request.SourceId,
                 request.Mode == LaunchMode2D.InitialVelocity ? PlayerExternalMotionMode.InitialVelocity : PlayerExternalMotionMode.ForcedRise,

@@ -44,8 +44,8 @@ namespace Game.Player
             _motor = GetComponent<EntityMotor2D>();
             _motor.Freeze(); // 只冻结候选，绝不从 Awake 启动会话。
         }
-        private void OnDisable() { Stop(); Invalidated?.Invoke(this); }
-        private void OnDestroy() { Stop(); Invalidated = null; }
+        private void OnDisable() { Context?.Actions.MarkEnd(PlayerActionEndReason.Disabled); Stop(); Invalidated?.Invoke(this); }
+        private void OnDestroy() { Context?.Actions.MarkEnd(PlayerActionEndReason.Destroyed); Stop(); Invalidated = null; }
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -222,6 +222,9 @@ namespace Game.Player
         public void Tick(float dt)
         {
             if (!IsRunning) return;
+            if (!Context.Actions.Prune()) { Stop(); return; }
+            if (!IsRunning) return;
+            MarkLifeActionEnd();
             _powers.Tick(dt);
             _effects?.Tick(dt);
             Context.ExternalMotion.Prune();
@@ -237,6 +240,9 @@ namespace Game.Player
         public void FixedTick(float dt)
         {
             if (!IsRunning) return;
+            if (!Context.Actions.Prune()) { Stop(); return; }
+            if (!IsRunning) return;
+            MarkLifeActionEnd();
             Context.ExternalMotion.BeginStep();
             if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true) Context.ExternalMotion.Clear();
             if (UpdateInteractionHold()) { Context.ExternalMotion.EndStep(dt); return; }
@@ -263,6 +269,7 @@ namespace Game.Player
                 Check(_fsm.FixedUpdate(dt));
                 if (ReferenceEquals(active, _active) && !active.IsDisposed)
                 {
+                    Context.Actions.Apply();
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Wall)) Context.Wall.Apply();
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Ledge)) Context.Ledge.Apply(dt);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Vertical)) Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
@@ -322,6 +329,13 @@ namespace Game.Player
                 Context.Input.Clear();
             }
             return false;
+        }
+
+        private void MarkLifeActionEnd()
+        {
+            if (Context.Life?.IsDead == true) Context.Actions.MarkEnd(PlayerActionEndReason.Death);
+            else if (Context.Life?.Reaction?.IsActive == true || Context.Life?.Reaction?.HasPending == true)
+                Context.Actions.MarkEnd(PlayerActionEndReason.Reaction);
         }
 
         public PlatformerSnapshot Capture(string scene)

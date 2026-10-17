@@ -1,0 +1,11 @@
+PASS Editor playing
+PASS isolated storage: C:\Users\wuyu\My\ember-unity-framework\Library\PlayerFormalAcceptance\425dc9888b2c453bb436028b56d253f2
+PASS FrameworkScene boot reached Main
+PASS Main -> Gameplay formal transition
+PASS formal module discovered
+PASS formal scene scope prepared and started player
+FAIL real Input System jump
+System.InvalidOperationException: real Input System jump
+  at MCPDynamicCode+<Execute>c__async0+<Execute>c__AnonStorey1.<>m__0 (System.Boolean ok, System.String message) [0x0002d] in <18b42814ddd64ea0bf5e3e2568ceca62>:0
+  at MCPDynamicCode.<Execute>m__0 () [0x003b6] in <18b42814ddd64ea0bf5e3e2568ceca62>:0
+RESULT FAILED

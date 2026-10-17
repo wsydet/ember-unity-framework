@@ -25,12 +25,19 @@ namespace Game.Player
             var copy = UnityEngine.Object.Instantiate(source);
             copy.hideFlags = HideFlags.DontSave;
             _copies.Add(source, copy);
+            if (copy is IPlayerConfigurationCapture extension)
+            {
+                var capture = new PlayerConfigurationCapture(Copy);
+                try { extension.CapturePlayerConfiguration(capture); }
+                finally { capture.Close(); }
+            }
             return copy;
         }
         private EmberFsmStateDefinition CaptureDefinition(EmberFsmNode node,
             Dictionary<string, PlayerActionEffectSlot> slots)
         {
             var source = node.Definition;
+            if (source is IPlayerConfigurationCapture) return (EmberFsmStateDefinition)Copy(source);
             if (source is PlayerDashAttackRouteDefinition) return (EmberFsmStateDefinition)Copy(source);
             // 仅历史纯逻辑夹具允许显式注入运行字段；绝不读取旧序列化字段。
             if (source is PlayerGroundDashStateDefinition ground)

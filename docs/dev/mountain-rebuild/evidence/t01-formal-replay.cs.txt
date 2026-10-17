@@ -1,0 +1,95 @@
+System.Action run = async () =>
+{
+    var evidence = new System.Text.StringBuilder();
+    UnityEngine.InputSystem.Keyboard keyboard = null;
+    var originalSettings = UnityEngine.InputSystem.InputSystem.settings;
+    var testSettings = UnityEngine.Object.Instantiate(originalSettings);
+    testSettings.backgroundBehavior = UnityEngine.InputSystem.InputSettings.BackgroundBehavior.IgnoreFocus;
+    testSettings.editorInputBehaviorInPlayMode = UnityEngine.InputSystem.InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+    UnityEngine.InputSystem.InputSystem.settings = testSettings;
+    System.Action<bool,string> check = (ok, message) => { evidence.AppendLine((ok ? "PASS " : "FAIL ") + message); if (!ok) throw new System.InvalidOperationException(message); };
+    try
+    {
+        check(UnityEditor.EditorApplication.isPlaying, "Editor playing");
+        check(Game.Player.Editor.PlayerFormalAcceptance.StorageRoot.Contains("Library"), "isolated storage: " + Game.Player.Editor.PlayerFormalAcceptance.StorageRoot);
+        var flow = Ember.Core.GameLauncher.Instance.Fsm;
+        for (int i=0;i<200 && !flow.Is<Ember.Core.MainState>();i++) await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.05),ignoreTimeScale:true);
+        check(flow.Is<Ember.Core.MainState>(), "FrameworkScene boot reached Main");
+        var transition = await flow.RequestTransitionTo<Ember.Core.GameplayState>().WhenInteractive;
+        check(transition.Status == Ember.Core.EmberTransitionStatus.Completed, "Main -> Gameplay formal transition");
+        Game.Player.PlayerModule module;
+        check(Ember.Core.EmberModuleCollector.Instance.TryGetModule<Game.Player.PlayerModule>(out module), "formal module discovered");
+        var player = module.Controller;
+        check(player != null && player.IsRunning, "formal scene scope prepared and started player");
+        keyboard = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Keyboard>();
+        var inputHost = Ember.Core.GameLauncher.Instance.InputHost.GetComponent<UnityEngine.InputSystem.PlayerInput>();
+        UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(keyboard, inputHost.user);
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(1.5));
+        var probe = player.gameObject.AddComponent<ActionContractConsumer.ActionContractProbe>();
+        evidence.AppendLine("Before input: state=" + player.CurrentStateId + ", position=" + player.Context.Motor.Position + ", keyboardEnabled=" + keyboard.enabled + ", focus=" + UnityEngine.Application.isFocused);
+        UnityEngine.InputSystem.InputSystem.EnableDevice(keyboard);
+        var inputChannel = Game.Input.GameInputModule.Instance.Service.GetChannel("gameplay");
+        evidence.AppendLine("Input: mode=" + testSettings.updateMode + ", channel=" + inputChannel.IsAvailable + ", action=" + inputChannel.GetAction("Primary").enabled);
+        float ground = player.Context.Motor.Position.y;
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(keyboard, new UnityEngine.InputSystem.LowLevel.KeyboardState(UnityEngine.InputSystem.Key.Space));
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.12));
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(keyboard, new UnityEngine.InputSystem.LowLevel.KeyboardState());
+        evidence.AppendLine("Keyboard pressed=" + keyboard.spaceKey.isPressed + ", actionValue=" + inputChannel.GetAction("Primary").ReadValue<float>());
+        check(player.Context.Motor.Position.y > ground + .1f, "real Input System jump: from=" + ground + ", now=" + player.Context.Motor.Position.y + ", state=" + player.CurrentStateId + ", pressVersion=" + player.Context.Input.JumpPressVersion);
+        var replacement = player.Context.ExternalMotion.Register(probe,new Game.Player.PlayerExternalMotionRequest("T01-existing-replace",Game.Player.PlayerExternalMotionMode.ReplaceVelocity,UnityEngine.Vector2.zero,priority:100,lockInput:true));
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.04));
+        float before = player.Context.Motor.Position.y;
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.2));
+        float after = player.Context.Motor.Position.y;
+        check(after < before, "baseline ReplaceVelocity: y " + before + " -> " + after + ", gravity=" + player.Context.Motor.Body.gravityScale + ", state=" + player.CurrentStateId + ", composed=" + player.Context.ExternalMotion.ComposedVelocity);
+        replacement.Dispose();
+        bool rejected = false;
+        try { new Game.Player.PlayerExternalMotionRequest("zero-rise",Game.Player.PlayerExternalMotionMode.ForcedRise,UnityEngine.Vector2.zero,.2f); }
+        catch (System.ArgumentException) { rejected = true; }
+        check(rejected,"existing ForcedRise zero Y remains rejected");
+        probe.Requested = true;
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.06));
+        check(player.CurrentStateId == "project-probe" && probe.Lease.IsActive,"real project FSM entered");
+        before = player.Context.Motor.Position.y;
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.2));
+        after = player.Context.Motor.Position.y;
+        check(UnityEngine.Mathf.Abs(after-before)<.0001f && player.Context.Motor.Body.gravityScale == 0,"hover y " + before + " -> " + after + ", gravity=0, composed=" + player.Context.ExternalMotion.ComposedVelocity);
+        var animator = player.GetComponentInChildren<UnityEngine.Animator>();
+        check(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.project-probe"),"Animator matches actual action FSM");
+        var old = probe.Lease;
+        using (module.Pause())
+        {
+            await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.15),ignoreTimeScale:true);
+            check(old.IsActive && UnityEngine.Mathf.Abs(player.Context.Motor.Position.y-after)<.0001f,"global pause retains action and position");
+        }
+        var target = player.GetComponent<Game.Player.PlayerLaunchTarget2D>() ?? player.gameObject.AddComponent<Game.Player.PlayerLaunchTarget2D>();
+        check(target.TryLaunch(probe,new Game.Entity.LaunchRequest2D("reject",UnityEngine.Vector2.up*8,interrupt:Game.Entity.LaunchInterrupt2D.RejectWhileBusy)) == Game.Entity.LaunchResult2D.Busy && old.IsActive,"launch rejection preserves action");
+        bool notifiedAfterExit = false;
+        target.Accepted += r => notifiedAfterExit = !old.IsActive && player.CurrentStateId != "project-probe";
+        check(target.TryLaunch(probe,new Game.Entity.LaunchRequest2D("accept",UnityEngine.Vector2.up*8)) == Game.Entity.LaunchResult2D.Accepted && notifiedAfterExit,"accepted launch exits before notification");
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.06));
+        check(player.Context.Motor.Velocity.y>0,"accepted launch physically rises");
+        probe.Requested=true;
+        await Cysharp.Threading.Tasks.UniTask.Delay(System.TimeSpan.FromSeconds(.06));
+        var current = probe.Lease;
+        old.Dispose();
+        check(current.IsActive && !object.ReferenceEquals(current,old),"delayed old callback cannot release new action");
+        bool snapshotRejected = false;
+        try { player.Capture(player.gameObject.scene.name); } catch(System.InvalidOperationException) { snapshotRejected=true; }
+        check(snapshotRejected,"active action rejects immediate snapshot");
+        var exit = await flow.RequestTransitionTo<Ember.Core.MainState>().WhenInteractive;
+        check(exit.Status == Ember.Core.EmberTransitionStatus.Completed && !current.IsActive && !module.HasSession,"formal scene exit releases action and module");
+        evidence.AppendLine("RESULT PASSED");
+    }
+    catch (System.Exception error) { evidence.AppendLine(error.ToString()); evidence.AppendLine("RESULT FAILED"); }
+    finally
+    {
+        if (keyboard != null && keyboard.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(keyboard);
+        UnityEngine.InputSystem.InputSystem.settings = originalSettings;
+        UnityEngine.Object.Destroy(testSettings);
+        System.IO.File.WriteAllText(".utmp/t01-action-contract/formal-run.txt",evidence.ToString());
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+};
+run();
+return "Formal action acceptance started; evidence .utmp/t01-action-contract/formal-run.txt";

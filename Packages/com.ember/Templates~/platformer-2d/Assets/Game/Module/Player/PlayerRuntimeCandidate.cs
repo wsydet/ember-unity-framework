@@ -109,6 +109,7 @@ namespace Game.Player
                 }
                 Context.FrozenActionEffects = effectDescription.ToString();
                 Fsm = new EmberFsm<PlayerContext>(config.Graph, Context, rules: config.CapturedRules);
+                Context.Actions.Bind(Fsm);
                 var view = controller.GetComponentInChildren<PlayerAnimationView>(true);
                 if (view != null || config.Animation != null)
                 {
@@ -119,6 +120,7 @@ namespace Game.Player
             }
             catch
             {
+                Context?.Actions.Close(PlayerActionEndReason.PreparationFailed);
                 Animation?.Dispose();
                 Fsm?.TryDispose();
                 try { adapter?.Dispose(); }
@@ -136,6 +138,7 @@ namespace Game.Player
         {
             IsDisposed = true;
             if (_released) return;
+            Context?.Actions.Close(PlayerActionEndReason.SessionEnded);
             // Controller 在状态回调返回后再次释放；生命周期回调不能重入 FSM 的事务。
             if (Fsm != null && Fsm.TryDispose() == EmberFsmResult.Reentrant) return;
             _released = true;

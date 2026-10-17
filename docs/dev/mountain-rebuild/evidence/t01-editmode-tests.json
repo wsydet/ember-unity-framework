@@ -1,0 +1,376 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "370a3349d71a4867b27cba623712b0d1",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792262264182,
+      "finished_unix_ms": 1792262479202,
+      "last_update_unix_ms": 1792262479202,
+      "progress": {
+        "completed": 37,
+        "total": 37,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792262475999,
+        "last_finished_test_full_name": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable",
+        "last_finished_unix_ms": 1792262477754,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 37,
+          "passed": 37,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 212.7591552,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "ConversionRejectsNonEquivalentBindingWithoutChangingTarget",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.ConversionRejectsNonEquivalentBindingWithoutChangingTarget",
+            "state": "Passed",
+            "durationSeconds": 2.1669955,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources",
+            "state": "Passed",
+            "durationSeconds": 2.161592,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeConversionTests.InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite",
+            "state": "Passed",
+            "durationSeconds": 2.054085,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ObservationFailureDoesNotBreakRuntimeCapture",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationFailureDoesNotBreakRuntimeCapture",
+            "state": "Passed",
+            "durationSeconds": 0.0049113,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ObservationRetainsCaptureAcrossEditsUndoAndRecovery",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationRetainsCaptureAcrossEditsUndoAndRecovery",
+            "state": "Passed",
+            "durationSeconds": 1.6935275,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph",
+            "state": "Passed",
+            "durationSeconds": 4.164194,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery",
+            "state": "Passed",
+            "durationSeconds": 2.7477148,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback",
+            "state": "Passed",
+            "durationSeconds": 1.9834198,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset",
+            "state": "Passed",
+            "durationSeconds": 1.6422974,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RestoreLegacyAndConfiguredModesIsUndoable",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.RestoreLegacyAndConfiguredModesIsUndoable",
+            "state": "Passed",
+            "durationSeconds": 2.5942632,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo",
+            "state": "Passed",
+            "durationSeconds": 2.3144098,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeRulesTests.UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit",
+            "state": "Passed",
+            "durationSeconds": 2.0574082,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation",
+            "state": "Passed",
+            "durationSeconds": 13.8462664,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CombatWindowDraftSurvivesCloseAndRejectsChangedSource",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowDraftSurvivesCloseAndRejectsChangedSource",
+            "state": "Passed",
+            "durationSeconds": 10.9870466,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DefinitionDependenciesAreCopiedOnceAndRemainIndependent",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.DefinitionDependenciesAreCopiedOnceAndRemainIndependent",
+            "state": "Passed",
+            "durationSeconds": 17.8825668,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExistingDestinationRejectsWithoutCreatingPartialAssets",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ExistingDestinationRejectsWithoutCreatingPartialAssets",
+            "state": "Passed",
+            "durationSeconds": 1.3736864,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload",
+            "state": "Passed",
+            "durationSeconds": 31.3664255,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IndependentCopyPreservesIdsBindingsAndOwnsStructure(0)",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(0)",
+            "state": "Passed",
+            "durationSeconds": 11.1150528,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IndependentCopyPreservesIdsBindingsAndOwnsStructure(2)",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(2)",
+            "state": "Passed",
+            "durationSeconds": 13.1261013,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload",
+            "state": "Passed",
+            "durationSeconds": 21.7548941,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload",
+            "state": "Passed",
+            "durationSeconds": 19.5607986,
+            "message": null,
+            "stackTrace": null,
+            "output": "The legacy Animation Clip \"life.hit Key\" cannot be used in the State \"life_hit\". Legacy AnimationClips are not allowed in Animator Controllers.\r\n"
+          },
+          {
+            "name": "ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo",
+            "state": "Passed",
+            "durationSeconds": 9.9797011,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes",
+            "state": "Passed",
+            "durationSeconds": 2.5247689,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly",
+            "state": "Passed",
+            "durationSeconds": 1.9040815,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlankRejectsImmobileReferenceWithoutCreatingPartialAsset",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankRejectsImmobileReferenceWithoutCreatingPartialAsset",
+            "state": "Passed",
+            "durationSeconds": 1.6499136,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph",
+            "state": "Passed",
+            "durationSeconds": 1.0158866,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation",
+            "state": "Passed",
+            "durationSeconds": 0.9591396,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected",
+            "state": "Passed",
+            "durationSeconds": 1.8537849,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt",
+            "state": "Passed",
+            "durationSeconds": 2.9818574,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo",
+            "state": "Passed",
+            "durationSeconds": 2.3676025,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping",
+            "state": "Passed",
+            "durationSeconds": 1.419172,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite",
+            "state": "Passed",
+            "durationSeconds": 2.6388785,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable",
+            "state": "Passed",
+            "durationSeconds": 2.7328757,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries",
+            "state": "Passed",
+            "durationSeconds": 2.1795113,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration",
+            "state": "Passed",
+            "durationSeconds": 4.6399809,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites",
+            "state": "Passed",
+            "durationSeconds": 4.3528826,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable",
+            "fullName": "Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable",
+            "state": "Passed",
+            "durationSeconds": 1.7541818,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

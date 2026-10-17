@@ -14,6 +14,7 @@ namespace Game.Player
         public EntityFacing2D Facing { get; }
         public PlayerInputAdapter Input { get; }
         public PlayerExternalMotion ExternalMotion { get; }
+        public PlayerActionSession Actions { get; }
         public PlayerSupportMotion Support { get; }
         internal PlayerMotionControl MotionControl { get; } = new();
         internal PlayerCombatMotion Combat { get; set; }
@@ -72,6 +73,6 @@ namespace Game.Player
         internal PlayerContext(Entity2D entity, EntityMotor2D motor, EntitySensors2D sensors,
             EntityFacing2D facing, PlayerInputAdapter input, PlayerJumpWindow jumpWindow, PlayerPowerSession powers,
             EntityEffectContainer effects, PlayerFeelRuntime feel)
-        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; Support = new PlayerSupportMotion(this); ExternalMotion = new PlayerExternalMotion(this); VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); Correction = new PlayerCollisionCorrection(this); }
+        { Entity = entity; Motor = motor; Sensors = sensors; Facing = facing; Input = input; JumpWindow = jumpWindow; Powers = powers; Effects = effects; Feel = feel; Support = new PlayerSupportMotion(this); ExternalMotion = new PlayerExternalMotion(this); Actions = new PlayerActionSession(this); VerticalMotion = new PlayerVerticalMotion(feel); Wall = new PlayerWallMotion(this); Dash = new PlayerDashMotion(this); DropThrough = new PlayerDropThroughMotion(this); Ledge = new PlayerLedgeMotion(this); Landing = new PlayerLandingMotion(this); Rolling = new PlayerRollingMotion(this); HeadJump = new PlayerHeadJumpMotion(this); Correction = new PlayerCollisionCorrection(this); }
     }
 }

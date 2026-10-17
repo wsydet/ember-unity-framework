@@ -1,0 +1,47 @@
+if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) throw new System.InvalidOperationException("Edit mode required");
+string folder = "Assets/T01ActionAcceptance";
+if (UnityEditor.AssetDatabase.IsValidFolder(folder)) throw new System.InvalidOperationException("Fixture already exists");
+UnityEditor.AssetDatabase.CreateFolder("Assets", "T01ActionAcceptance");
+var source = UnityEngine.Resources.Load<Game.Player.PlayerConfig>(Game.Player.PlayerModule.CONFIG_PATH).Scheme;
+var scheme = Game.Player.Editor.PlayerSchemeStructureWorkflow.CopyIndependent(source, folder + "/Scheme.asset", folder + "/Graph.asset", folder + "/Animator.controller");
+var graph = scheme.Graph;
+var oldRoot = System.Linq.Enumerable.First(graph.Nodes, n => n.Id == graph.EntryId);
+var root = UnityEngine.ScriptableObject.CreateInstance<ActionContractConsumer.ActionProbeRoot>();
+root.BaseDefinition = oldRoot.Definition;
+var definition = UnityEngine.ScriptableObject.CreateInstance<ActionContractConsumer.ActionProbeDefinition>();
+var settings = UnityEngine.ScriptableObject.CreateInstance<ActionContractConsumer.ActionProbeSettings>();
+settings.Duration = 60; definition.Settings = settings;
+UnityEditor.AssetDatabase.AddObjectToAsset(root, graph);
+UnityEditor.AssetDatabase.AddObjectToAsset(definition, graph);
+UnityEditor.AssetDatabase.AddObjectToAsset(settings, graph);
+var nodes = new System.Collections.Generic.List<Ember.Core.Fsm.EmberFsmNode>();
+foreach (var n in graph.Nodes)
+{
+    if (n.Id != graph.EntryId) { nodes.Add(n); continue; }
+    var bindings = new System.Collections.Generic.List<Ember.Core.Fsm.EmberFsmTargetBinding>(n.Bindings);
+    bindings.Add(new Ember.Core.Fsm.EmberFsmTargetBinding("project-probe", "project-probe"));
+    nodes.Add(new Ember.Core.Fsm.EmberFsmNode(n.Id,n.DisplayName,root,n.ParentId,n.DefaultChildId,bindings.ToArray()));
+}
+nodes.Add(new Ember.Core.Fsm.EmberFsmNode("project-probe","T01 isolated probe",definition,graph.EntryId,null,new Ember.Core.Fsm.EmberFsmTargetBinding("return","air")));
+graph.Configure(graph.EntryId,nodes.ToArray());
+var profile = scheme.Animation;
+var controller = (UnityEditor.Animations.AnimatorController)profile.Controller;
+var key = UnityEngine.Object.Instantiate(profile.Slots[0].Clip);
+key.name = "T01ActionKey"; UnityEditor.AssetDatabase.CreateAsset(key,folder + "/ActionKey.anim");
+controller.layers[0].stateMachine.AddState("project-probe").motion = key;
+using (var data = new UnityEditor.SerializedObject(profile))
+{
+    var slots = data.FindProperty("_slots"); slots.arraySize++;
+    var slot = slots.GetArrayElementAtIndex(slots.arraySize - 1);
+    slot.FindPropertyRelative("_nodeId").stringValue = "project-probe";
+    slot.FindPropertyRelative("_state").stringValue = "Base Layer.project-probe";
+    slot.FindPropertyRelative("_key").objectReferenceValue = key;
+    slot.FindPropertyRelative("_clip").objectReferenceValue = key;
+    slot.FindPropertyRelative("_speed").floatValue = 1;
+    slot.FindPropertyRelative("_blendSeconds").floatValue = 0;
+    data.ApplyModifiedPropertiesWithoutUndo();
+}
+UnityEditor.EditorUtility.SetDirty(graph); UnityEditor.EditorUtility.SetDirty(controller);
+UnityEditor.AssetDatabase.SaveAssetIfDirty(graph); UnityEditor.AssetDatabase.SaveAssetIfDirty(controller); UnityEditor.AssetDatabase.SaveAssetIfDirty(profile);
+Game.Player.Editor.PlayerSchemeWorkflow.Validate(scheme);
+return "Created isolated formal fixture; default scheme unchanged: " + UnityEditor.AssetDatabase.GetAssetPath(scheme);

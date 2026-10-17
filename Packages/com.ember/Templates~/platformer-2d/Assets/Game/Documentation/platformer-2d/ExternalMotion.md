@@ -24,9 +24,9 @@ source.Dispose();
 
 `duration` 单位秒，0表示显式释放（ForcedRise 不允许0）。`lockInput` 屏蔽该玩家 Adapter 的移动/跳跃/冲刺/攻击，并在切换时清理缓存；不修改输入 Manager 的全局 Action Map。产品新增的输入动作应遵守 `IsInteractionLocked` 和自己的会话门控。
 
-内部互斥运动/生命流程优先，外部速度在其占用期间暂不参与，但来源时长继续消耗。该版本没有公开任意 FSM 状态打断接口，不能宣称已经完成弹射打断挥旗。环境叠加采用简单向量和；产品需要的强弱风合成表应先在产品侧算好，再提交一个合成来源。
+内部互斥运动/生命流程优先，外部速度在其占用期间暂不参与，但来源时长继续消耗。platformer-2d 0.6.0 提供[项目动作接管契约](ProjectActions.md)，由真实 FSM 动作声明出口，弹射先合法退出再 Accepted；未接入该契约的项目动作不会自动获得打断能力。ReplaceVelocity 不接管重力，空中零速度/零重力应走动作契约。环境叠加采用简单向量和；产品需要的强弱风合成表应先在产品侧算好，再提交一个合成来源。
 
-唯一固定步写入链为：清理失效来源 → 探测/支撑/落地事实 → Motor.BeginStep（扣除上一环境贡献）→ FSM → Wall/Ledge/Vertical/Correction → ExternalMotion.Compose → Motor.ExecuteStep → 来源按秒计时。Motor 本身未增加 MonoBehaviour 更新入口，`Motor.Velocity` 继续表示物理实际速度；计算自身运动的入口使用 `ExternalMotion.SelfVelocity`。
+唯一固定步写入链为：清理失效来源 → 探测/支撑/落地事实 → Motor.BeginStep（扣除上一环境贡献）→ FSM → Actions.Apply → 未占用的 Wall/Ledge/Vertical/Correction → ExternalMotion.Compose → Motor.ExecuteStep → 来源按秒计时。Motor 本身未增加 MonoBehaviour 更新入口，`Motor.Velocity` 继续表示物理实际速度；计算自身运动的入口使用 `ExternalMotion.SelfVelocity`。
 
 ```csharp
 // 已由项目判断交互资格；必须是稳定地面且无暂态动作。

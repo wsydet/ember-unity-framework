@@ -170,7 +170,10 @@ namespace Game.Player
                 if (request.Mode == PlayerExternalMotionMode.ForcedRise &&
                     (rise == null || request.Priority >= rise.Request.Priority)) rise = source;
             }
-            bool internalAction = _context.MotionControl.Owns((PlayerMotionChannels)127) ||
+            bool projectAction = _context.Actions.IsActive;
+            bool ownsHorizontal = projectAction && _context.MotionControl.Owns(PlayerMotionChannels.Horizontal);
+            bool ownsVertical = projectAction && _context.MotionControl.Owns(PlayerMotionChannels.Vertical);
+            bool internalAction = !projectAction && _context.MotionControl.Owns((PlayerMotionChannels)127) ||
                 _context.Dash.IsActive || _context.Ledge.IsActive || _context.Rolling.IsActive ||
                 _context.Landing.IsActive || _context.Wall.Sliding;
             if (_context.Life?.IsDead == true || _context.Life?.Reaction?.IsActive == true || internalAction)
@@ -181,18 +184,29 @@ namespace Game.Player
             }
             else
             {
-                if (stopVertical) velocity.y = 0;
+                if (stopVertical && !ownsVertical) velocity.y = 0;
                 OverrideReason = replacement?.Request.SourceId ?? "自身速度 + 附加来源";
-                if (replacement != null) velocity = replacement.Request.Velocity;
+                if (replacement != null)
+                {
+                    if (!ownsHorizontal) velocity.x = replacement.Request.Velocity.x;
+                    if (!ownsVertical) velocity.y = replacement.Request.Velocity.y;
+                }
                 if (rise != null)
                 {
-                    _lastRise = rise;
-                    velocity = rise.Request.Velocity;
-                    _context.Motor.SetGravityScale(0);
+                    if (!ownsHorizontal) velocity.x = rise.Request.Velocity.x;
+                    if (!ownsVertical)
+                    {
+                        _lastRise = rise;
+                        velocity.y = rise.Request.Velocity.y;
+                        _context.Motor.SetGravityScale(0);
+                    }
                     OverrideReason = rise.Request.SourceId;
                 }
                 // 替换速度成为新的基础；只有环境项在下步扣除，不反复累积。
                 _lastContribution = EnvironmentVelocity + _context.Support.Velocity;
+                if (ownsHorizontal) { EnvironmentVelocity = new Vector2(0, EnvironmentVelocity.y); _lastContribution.x = 0; }
+                if (ownsVertical) { EnvironmentVelocity = new Vector2(EnvironmentVelocity.x, 0); _lastContribution.y = 0; }
+                if (ownsHorizontal || ownsVertical) OverrideReason += " · 项目动作按轴优先";
                 velocity += _lastContribution;
             }
             if (!float.IsFinite(velocity.x) || !float.IsFinite(velocity.y))

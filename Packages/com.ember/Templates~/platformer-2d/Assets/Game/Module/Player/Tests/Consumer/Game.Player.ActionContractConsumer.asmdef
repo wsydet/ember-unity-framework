@@ -1,0 +1,6 @@
+{
+  "name": "Game.Player.ActionContractConsumer",
+  "references": ["Game.Player.Runtime", "Game.Entity.Runtime", "Ember.Core.Runtime", "Ember.Basic.Runtime"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

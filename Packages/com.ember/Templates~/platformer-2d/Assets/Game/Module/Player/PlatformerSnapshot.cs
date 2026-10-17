@@ -73,6 +73,8 @@ namespace Game.Player
         private static PlatformerSnapshot CaptureCore(string scene, PlayerContext context, bool interaction)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context.Actions.IsActive)
+                throw new InvalidOperationException("项目动作期间不能采集瞬时快照；请使用合法检查点基线组合保存。");
             context.ExternalMotion.Prune();
             if (!interaction && context.ExternalMotion.HasTransientMotion)
                 throw new InvalidOperationException("外部运动/交互期间不能采集瞬时玩家快照；请使用合法检查点基线组合保存。");

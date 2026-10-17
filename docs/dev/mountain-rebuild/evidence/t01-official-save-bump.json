@@ -1,0 +1,34 @@
+{
+  "save": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "files": 1418,
+        "template": "{\"schemaVersion\":2,\"id\":\"platformer-2d\",\"displayName\":\"2D 平台跳跃\",\"description\":\"基于 base 0.8.3 的 2D 平台跳跃模板：分层玩家状态机、独立完整方案与冻结、能力/效果/动画、Cinemachine 适配及统一玩家工具和白盒。内置通用攻击模板1，包含三连击、命中、受击、无敌与死亡恢复；提供手感调整、动画替换、新状态和新增攻击四项模板专属 Skill。T03 剩余身份与跨模板草稿验收留待真实项目。\",\"version\":\"0.5.0\",\"frameworkVersion\":\"0.20.0\",\"channel\":\"preview\",\"order\":99,\"parentId\":\"base\",\"parentVersion\":\"0.8.3\",\"parentContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"contentHash\":\"3c18689d3f9099062436d8eb107b2c7e\",\"versionedContentHash\":\"b0d2b8954453f5eefeb8f094854c24eb\"}"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "bump": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": "{\"schemaVersion\":2,\"id\":\"platformer-2d\",\"displayName\":\"2D 平台跳跃\",\"description\":\"基于 base 0.8.3 的 2D 平台跳跃模板：分层玩家状态机、独立完整方案与冻结、能力/效果/动画、Cinemachine 适配及统一玩家工具和白盒。内置通用攻击模板1，包含三连击、命中、受击、无敌与死亡恢复；提供手感调整、动画替换、新状态和新增攻击四项模板专属 Skill。T03 剩余身份与跨模板草稿验收留待真实项目。\",\"version\":\"0.6.0\",\"frameworkVersion\":\"0.20.0\",\"channel\":\"preview\",\"order\":99,\"parentId\":\"base\",\"parentVersion\":\"0.8.3\",\"parentContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"contentHash\":\"3c18689d3f9099062436d8eb107b2c7e\",\"versionedContentHash\":\"3c18689d3f9099062436d8eb107b2c7e\"}",
+      "compiler": "codedom"
+    }
+  },
+  "validation": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "report": "项目校验 · 2026-10-18 03:02:13\r\n基准：编辑副本 platformer-2d v0.6.0 → 当前模板 v0.6.0\r\n错误 0 · 警告 0 · 差异 0\r\n[Passed] 模板存储：模板内容、元数据和父级状态正常。\r\n[Passed] 内容差异：磁盘文件与所列基准一致。\r\n[Passed] 资源元数据：业务目录资源/.meta 配对与 GUID 检查完成。\r\n[Passed] 配置表：Schema、源数据、引用和全部生成物一致。\r\n[Information] UI 生成链路：已检查 7 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。\r\nAssets/GameResource/Resources/UI\r\n建议：需要修复时进入 UI 开发中心或打开对应 Prefab。\r\n",
+        "editing": "{\"templateId\":\"platformer-2d\",\"templateVersion\":\"0.6.0\",\"contentHash\":\"3c18689d3f9099062436d8eb107b2c7e\",\"loadedAt\":\"2026-10-18 03:01:53\"}",
+        "dirty": false,
+        "fixtureExists": false
+      },
+      "compiler": "codedom"
+    }
+  }
+}

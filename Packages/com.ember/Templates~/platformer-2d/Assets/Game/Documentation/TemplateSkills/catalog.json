@@ -31,7 +31,7 @@
       "description": "将已明确的玩家新动作接入真实状态、转换、完整方案和动画，并验证生命周期。",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
-      "minimumTemplateVersion": "0.2.1"
+      "minimumTemplateVersion": "0.6.0"
     }
   ]
 }
