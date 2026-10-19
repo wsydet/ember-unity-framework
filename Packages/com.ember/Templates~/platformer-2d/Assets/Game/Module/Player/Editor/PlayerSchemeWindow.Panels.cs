@@ -338,6 +338,7 @@ namespace Game.Player.Editor
             Add(Sections[1], "能力动作启用", _selected.Powers, null, "挂边 / 翻越、墙面、二段跳、下穿、反弹及冲刺由 Ability / Skill 装配控制；次数、解锁、CD 见“能力与技能”。");
             Add(Sections[2], "地面水平", move, "_speed _accelerated _acceleration _braking _turning", "渐变关闭时即时响应；速率为零表示该阶段不改变速度。");
             Add(Sections[2], "空中水平", move, "_independentAir _airSpeed _airAccelerated _airAcceleration _airBraking _airTurning _enableJumpResponse _jumpResponseDuration", "独立空中关闭时继承地面；空中值保留但不生效。");
+            Add(Sections[2], "普通跳独立竖直策略", jump, "_ordinaryJump", "默认关闭。仅合法普通起跳启用，持续至落地；动作接管取消。共享参数继续用于其他自由飞行。");
             Add(Sections[2], "普通跳跃与短跳", jump, "_mode _height _apexTime _launchSpeed _gravityScale _enableShortJump _shortJumpMode _releaseSpeed _minimumHeight _releaseMultiplier", "高度/到顶与直接速度/重力互斥；短跳关闭时修正参数不生效。");
             Add(Sections[2], "顶点 / 下落加速 / 悬停", jump, "_enableApexGravity _apexSpeed _apexMultiplier _enableFallGravity _fallMultiplier _enableFallLimit _fallLimit _enableEdgeHover _edgeHoverDuration", "下落倍率 > 1 加快下降反馈；顶点区间优先，不叠乘。最终下降时间还受顶点范围、限速和落地高度影响。");
             Add(Sections[2], "墙面 / 二段跳 / 反弹", jump, "_headJumpSpeed _airJumpSpeed _airJumpHorizontalMode _airJumpHorizontalSpeed _wallSlideSpeed _enableWallFastSlide _wallFastSlideSpeed _wallJumpX _wallJumpY _wallProtection _wallReturnEnabled _wallReturnDuration _wallReturnMultiplier", "动作启用、解锁和次数见“能力与技能”；关闭动作不会删除运动参数。");

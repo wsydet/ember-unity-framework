@@ -149,7 +149,7 @@ namespace Game.Player.Editor
                     Bool(result, "_enableEffects");
                     Bool(result.Feel, "_attack._enabled");
                     Bool(result.Feel.Movement, "_accelerated", "_independentAir", "_airAccelerated", "_enableJumpResponse", "_landing._normalEnabled", "_landing._hardEnabled", "_rolling._enabled");
-                    Bool(result.Feel.Jump, "_enableShortJump", "_enableApexGravity", "_enableFallGravity", "_enableFallLimit", "_enableEdgeHover", "_enableWallFastSlide", "_wallReturnEnabled");
+                    Bool(result.Feel.Jump, "_ordinaryJump._enabled", "_enableShortJump", "_enableApexGravity", "_enableFallGravity", "_enableFallLimit", "_enableEdgeHover", "_enableWallFastSlide", "_wallReturnEnabled");
                     Bool(result.Feel.Input, "_enableJumpBuffer", "_enableCoyote");
                     Bool(result.Feel.Movement, "_jumpCorrection._enabled", "_groundDashCorrection._enabled", "_airDashCorrection._enabled", "_stepCorrection._enabled");
                     using var powers = new SerializedObject(result.Powers);

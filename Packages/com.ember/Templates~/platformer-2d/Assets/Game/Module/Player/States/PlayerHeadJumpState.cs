@@ -23,7 +23,7 @@ namespace Game.Player
                 throw new InvalidOperationException("踩头反弹资源提交失败。");
             if (!Context.Input.ConsumeJump()) throw new InvalidOperationException("踩头反弹输入提交失败。");
             Context.Combat?.Dash?.Cancel();
-            Context.HeadJump.Begin(); Context.JumpWindow.Consume(); Context.Wall.Cancel(); Context.VerticalMotion.NotifyJump();
+            Context.HeadJump.Begin(); Context.JumpWindow.Consume(); Context.Wall.Cancel(); Context.VerticalMotion.NotifyJump(PlayerFlightOrigin.HeadJump);
             Context.Motor.SetHorizontalVelocity(Context.ExternalMotion.SelfVelocity.x);
             Context.Motor.SetVerticalVelocity(Context.Feel.HeadJumpSpeed);
         }

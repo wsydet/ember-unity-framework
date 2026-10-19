@@ -50,6 +50,7 @@ namespace Game.Player
     public sealed class PlayerFeelRuntime
     {
         #region 内部参数
+        public PlayerOrdinaryJumpSpec OrdinaryJump { get; }
         public float MoveSpeed { get; }
         public PlayerAttackProfile Attack { get; }
         public PlayerCorrectionSpec JumpCorrection { get; }
@@ -116,6 +117,7 @@ namespace Game.Player
             float minimumHeight, float releaseMultiplier, PlayerJumpFeel jump, PlayerAttackProfile attack, PlayerInputFeel input)
         {
             Attack = PlayerCombatData.Copy(attack);
+            OrdinaryJump = jump.OrdinaryJump;
             AttackBufferDuration = input.AttackBufferDuration;
             CombatDashBufferDuration = input.CombatDashBufferDuration;
             CombatJumpBufferDuration = input.CombatJumpBufferDuration;

@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-19",
+  "project": "ember-unity-framework",
+  "unityInstance": "ember-unity-framework@b23e9b768e85ed30",
+  "unityVersion": "6000.5.4f1",
+  "currentPackageVersion": "0.20.2",
+  "currentStoredTemplateVersion": "0.7.0",
+  "baselinePlayMode": {
+    "passed": 594,
+    "failed": 0,
+    "skipped": 0,
+    "beforeChanges": true
+  },
+  "postChangeCompilation": "PASS",
+  "blockingQuery": null,
+  "blockingError": null,
+  "handling": "Stopped Unity validation according to repository unity-validation.md; no fallback compiler, log polling, BatchMode or dotnet used.",
+  "newPlayModeCasesWritten": 35,
+  "newEditModeCasesWritten": 1,
+  "newTestsExecuted": true,
+  "postChangeRegressionExecuted": true,
+  "templateSaved": true,
+  "templateBumped": true,
+  "packageBumped": true,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "staticChecks": {
+    "sourceHashFiles": 18,
+    "documentLinks": "PASS",
+    "sharedFontConfiguration": "PASS",
+    "sharedBinaryAndCleanCheckout": "PASS using workspace Temp directory",
+    "genericSkillGeneratorCheck": "BLOCKED by pre-existing .agents/skills changes",
+    "bundleRawSha256": "PASS 32 files; bundle unchanged"
+  },
+  "windwardModified": false,
+  "windwardEditorUsed": false,
+  "windwardS2": "NOT_PASSED",
+  "firstSpecialRun": {
+    "status": "failed",
+    "reportedFailures": 7,
+    "completed": 35,
+    "detailedResultUnavailable": true,
+    "testCorrectionsApplied": true,
+    "total": 35,
+    "correctionsRetested": false,
+    "jobId": "cb835c99451e435881c728e20990d89d"
+  },
+  "latestRetry": {
+    "jobId": "948efffd48dd4aec9ceb783d6fa4d7ad",
+    "releaseBlockedByValidation": true,
+    "correctionsRetested": false,
+    "initTimeoutMs": 120000,
+    "status": "failed",
+    "releaseAuthorized": true,
+    "completed": 0
+  },
+  "editModeLatest": {
+    "jobId": "42f123ff865841e8825d32017157ee06",
+    "finalResult": "UNKNOWN",
+    "lastConfirmedCompleted": 27,
+    "total": 75,
+    "reportedFailures": 0
+  },
+  "finalResults": {
+    "templateHash": "8198525b8d263ba6fb9c489571171e70",
+    "playMode": {
+      "passed": 629,
+      "jobId": "6e91cf7220d2414784cc0a19ff56748b",
+      "skipped": 0,
+      "failed": 0
+    },
+    "special": {
+      "passed": 35,
+      "jobId": "8608bd4c076d42968be5e84c12332ee8",
+      "failed": 0
+    },
+    "editMode": {
+      "passed": 75,
+      "jobId": "42f123ff865841e8825d32017157ee06",
+      "failed": 0
+    }
+  }
+}

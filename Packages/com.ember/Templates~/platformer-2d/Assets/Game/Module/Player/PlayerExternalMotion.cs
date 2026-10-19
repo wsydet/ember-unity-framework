@@ -67,6 +67,15 @@ namespace Game.Player
         private bool _disposed;
         private bool _stopVertical;
         public int SourceCount => _sources.Count;
+        internal bool HasVerticalOverride
+        {
+            get
+            {
+                foreach (var source in _sources)
+                    if (source.IsActive && source.Request.Mode != PlayerExternalMotionMode.AddVelocity) return true;
+                return false;
+            }
+        }
         public bool HasTransientMotion => _sources.Count != 0 || _lastContribution != Vector2.zero || _context.Support.HasTransientMotion;
         public bool IsInteractionLocked { get; private set; }
         public Vector2 EnvironmentVelocity { get; private set; }
@@ -126,6 +135,8 @@ namespace Game.Player
                 PlatformerSnapshot.CaptureForInteraction(_context.Entity.gameObject.scene.name, _context);
             }
             var lease = new PlayerExternalMotionLease(this, owner, request);
+            if (request.Mode != PlayerExternalMotionMode.AddVelocity)
+                _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
             _sources.Add(lease);
             RefreshInput();
             return lease;

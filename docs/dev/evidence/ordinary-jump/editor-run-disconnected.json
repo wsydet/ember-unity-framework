@@ -1,0 +1,12 @@
+{
+  "jobId": "42f123ff865841e8825d32017157ee06",
+  "mode": "EditMode",
+  "assembly": "Game.Player.Editor.Tests",
+  "lastConfirmedCompleted": 27,
+  "total": 75,
+  "reportedFailuresAtLastProgress": [],
+  "result": "UNKNOWN",
+  "error": "Unity plugin session 544e2fa4-10bc-4011-a4dc-da15428b999b disconnected while awaiting command_result",
+  "diagnosis": "Editor was idle, not compiling, Console had no errors or warnings; clear_stuck found no running job. EditMode successfully started, so failure is not confined to PlayMode initialization. Connection dropped during test result query. Root cause not established.",
+  "releaseBlocked": true
+}

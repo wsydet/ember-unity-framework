@@ -15,6 +15,7 @@ namespace Game.Player
         #region 内部参数
         private object _owner;
         private PlayerMotionChannels _channels;
+        internal Action Taking;
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -22,6 +23,8 @@ namespace Game.Player
         internal string Observation => $"{_owner?.GetType().Name ?? "普通移动"} · {_channels}";
         internal void Take(object owner, PlayerMotionChannels channels)
         {
+            if (owner == null) throw new ArgumentNullException(nameof(owner));
+            Taking?.Invoke();
             _owner = owner ?? throw new ArgumentNullException(nameof(owner)); _channels = channels;
         }
         internal void Release(object owner)

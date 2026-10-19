@@ -24,7 +24,7 @@ namespace Game.Player
                 ability.TryCommit(ability.CreateAttempt()) != EntityUseStatus.Available || !Context.Input.ConsumeJump())
                 throw new InvalidOperationException("墙跳进入提交失效。");
             Context.Combat?.Dash?.Cancel();
-            Context.JumpWindow.Consume(); Context.VerticalMotion.NotifyJump();
+            Context.JumpWindow.Consume(); Context.VerticalMotion.NotifyJump(PlayerFlightOrigin.WallJump);
             Context.Wall.BeginJump(wall);
         }
         public override void FixedUpdate(float deltaTime)

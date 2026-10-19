@@ -261,7 +261,8 @@ namespace Game.Player
             _motor.SetHorizontalVelocity(Context.ExternalMotion.SelfVelocity.x);
             _motor.SetVerticalVelocity(Context.ExternalMotion.SelfVelocity.y);
             Context.Correction.BeginStep();
-            Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt);
+            Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt,
+                _sensors.Ground != null && _sensors.Shape.IsTouching(_sensors.Ground));
             Context.Combat?.Dash?.ObserveEnvironment();
             var active = _active;
             try
@@ -270,6 +271,8 @@ namespace Game.Player
                 if (ReferenceEquals(active, _active) && !active.IsDisposed)
                 {
                     Context.Actions.Apply();
+                    if (Context.ExternalMotion.HasVerticalOverride)
+                        Context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Wall)) Context.Wall.Apply();
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Ledge)) Context.Ledge.Apply(dt);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Vertical)) Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
@@ -297,6 +300,7 @@ namespace Game.Player
         internal void Pause()
         {
             if (!IsRunning) return;
+            Context.VerticalMotion.PauseOrdinary();
             _motor.Freeze(); Context.Input.Clear(); Check(_fsm.Pause());
             _active.Animation?.Pause(true);
         }
@@ -333,6 +337,8 @@ namespace Game.Player
 
         private void MarkLifeActionEnd()
         {
+            if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true || Context.Life?.Reaction?.HasPending == true)
+                Context.VerticalMotion.CancelOrdinary();
             if (Context.Life?.IsDead == true) Context.Actions.MarkEnd(PlayerActionEndReason.Death);
             else if (Context.Life?.Reaction?.IsActive == true || Context.Life?.Reaction?.HasPending == true)
                 Context.Actions.MarkEnd(PlayerActionEndReason.Reaction);

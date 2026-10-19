@@ -29,7 +29,7 @@ namespace Game.Player
             Context.Combat?.Dash?.Cancel();
             Context.JumpWindow.Consume();
             Context.Wall.Cancel();
-            Context.VerticalMotion.NotifyJump();
+            Context.VerticalMotion.NotifyJump(PlayerFlightOrigin.AirJump);
             Context.Motor.SetVerticalVelocity(Context.Feel.AirJumpSpeed);
             Context.Motor.SetHorizontalVelocity(Context.Feel.AirJumpHorizontalMode == PlayerAirJumpHorizontalMode.FacingSpeed
                 ? (Context.Facing.FacesRight ? 1 : -1) * Context.Feel.AirJumpHorizontalSpeed : Context.ExternalMotion.SelfVelocity.x);

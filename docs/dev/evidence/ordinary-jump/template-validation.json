@@ -1,0 +1,20 @@
+{
+  "scan": "项目校验 · 2026-10-19 11:08:18\r\n基准：编辑副本 platformer-2d v0.7.0 → 当前模板 v0.7.0\r\n错误 0 · 警告 0 · 差异 0\r\n[Passed] 模板存储：模板内容、元数据和父级状态正常。\r\n[Passed] 内容差异：磁盘文件与所列基准一致。\r\n[Passed] 资源元数据：业务目录资源/.meta 配对与 GUID 检查完成。\r\n[Passed] 配置表：Schema、源数据、引用和全部生成物一致。\r\n[Information] UI 生成链路：已检查 7 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。\r\nAssets/GameResource/Resources/UI\r\n建议：需要修复时进入 UI 开发中心或打开对应 Prefab。\r\n",
+  "compare": "项目校验 · 2026-10-19 11:08:23\r\n基准：当前项目 → 2D 平台跳跃 v0.7.0（按模板保存规则）\r\n错误 0 · 警告 0 · 差异 0\r\n[Passed] 内容差异：磁盘文件与所列基准一致。\r\n",
+  "graph": [],
+  "parent": {
+    "TemplateId": "platformer-2d",
+    "ParentId": "base",
+    "Status": 1,
+    "Error": null,
+    "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+    "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+    "ChildContentHash": "8198525b8d263ba6fb9c489571171e70",
+    "IsEligible": false,
+    "HasConflicts": false,
+    "HasUnresolvedConflicts": false,
+    "CanApply": false,
+    "HasSemanticMerges": false,
+    "WillChangeChildContent": false
+  }
+}

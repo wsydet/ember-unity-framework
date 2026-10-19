@@ -47,7 +47,14 @@ namespace Game.Player
             // 二段跳专用规则：仅本次有效普通起跳补满，恢复上升路径已在上面返回。
             if (Context.Abilities.TryGet(PlayerAirJumpState.ABILITY_ID, out var airJump)) airJump.RefillUses();
             Context.Wall.Cancel();
-            Context.VerticalMotion.NotifyJump();
+            Context.VerticalMotion.BeginOrdinary(Context.Input);
+            if (Context.Feel.OrdinaryJump.Enabled)
+            {
+                Context.Motor.SetVerticalVelocity(Context.Feel.OrdinaryJump.LaunchSpeed);
+                _responseRemaining = Context.Feel.JumpResponseDuration;
+                ApplyJumpResponse();
+                return;
+            }
             _launchPressVersion = Context.Input.JumpPressVersion;
             _launchClearVersion = Context.Input.ClearVersion;
             _launchHeight = Context.Motor.Position.y;
