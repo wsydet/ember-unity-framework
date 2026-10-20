@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Retrieved 1 log entries.\",\"data\":[\"<color=#CC6699><b>[Game.Player]</b></color> <color=#FFFFFF>System.InvalidOperationException: 玩家 FSM：Faulted; 节点=combat.attack.first; 阶段=FixedUpdate ---> System.InvalidOperationException: S03-runtime-combat-fault\"]}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Retrieved 1 log entries.",
+    "data": [
+      "<color=#CC6699><b>[Game.Player]</b></color> <color=#FFFFFF>System.InvalidOperationException: 玩家 FSM：Faulted; 节点=combat.attack.first; 阶段=FixedUpdate ---> System.InvalidOperationException: S03-runtime-combat-fault"
+    ]
+  },
+  "isError": false
+}

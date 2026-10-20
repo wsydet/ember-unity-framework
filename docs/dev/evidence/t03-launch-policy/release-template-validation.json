@@ -1,0 +1,123 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"error\":null,\"data\":{\"result\":{\"validation\":{\"Issues\":[{\"Severity\":0,\"Category\":\"模板存储\",\"Message\":\"模板内容、元数据和父级状态正常。\",\"AssetPath\":null,\"Suggestion\":null},{\"Severity\":0,\"Category\":\"内容差异\",\"Message\":\"磁盘文件与所列基准一致。\",\"AssetPath\":null,\"Suggestion\":null},{\"Severity\":0,\"Category\":\"资源元数据\",\"Message\":\"业务目录资源/.meta 配对与 GUID 检查完成。\",\"AssetPath\":null,\"Suggestion\":null},{\"Severity\":0,\"Category\":\"配置表\",\"Message\":\"Schema、源数据、引用和全部生成物一致。\",\"AssetPath\":null,\"Suggestion\":null},{\"Severity\":1,\"Category\":\"UI 生成链路\",\"Message\":\"已检查 7 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。\",\"AssetPath\":\"Assets/GameResource/Resources/UI\",\"Suggestion\":\"需要修复时进入 UI 开发中心或打开对应 Prefab。\"}],\"CheckedAt\":\"2026-10-20T14:36:09.8877284+08:00\",\"TemplateId\":\"platformer-2d\",\"Baseline\":\"编辑副本 platformer-2d v0.9.0 → 当前模板 v0.9.0\",\"ProjectFingerprint\":\"f640fe07081a1958665c2ed9194196ea\",\"ComparisonCompleted\":true,\"IsEditingTemplate\":true,\"ErrorCount\":0,\"WarningCount\":0,\"DifferenceCount\":0},\"templates\":[{\"id\":\"base\",\"version\":\"0.8.3\",\"contentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"sealedHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"actualHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"parentId\":\"\",\"parentVersion\":\"\",\"parentHash\":\"\",\"actualParentHash\":\"\"},{\"id\":\"platformer-2d\",\"version\":\"0.9.0\",\"contentHash\":\"f640fe07081a1958665c2ed9194196ea\",\"sealedHash\":\"f640fe07081a1958665c2ed9194196ea\",\"actualHash\":\"f640fe07081a1958665c2ed9194196ea\",\"parentId\":\"base\",\"parentVersion\":\"0.8.3\",\"parentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"actualParentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\"},{\"id\":\"source3d-2p5d\",\"version\":\"0.5.0\",\"contentHash\":\"89e49f1c8c620812a15b181a0a049180\",\"sealedHash\":\"89e49f1c8c620812a15b181a0a049180\",\"actualHash\":\"89e49f1c8c620812a15b181a0a049180\",\"parentId\":\"base\",\"parentVersion\":\"0.8.3\",\"parentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"actualParentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\"},{\"id\":\"visual-novel\",\"version\":\"0.20.1\",\"contentHash\":\"3836ccbfe60bda104a07e8ab15ff555c\",\"sealedHash\":\"3836ccbfe60bda104a07e8ab15ff555c\",\"actualHash\":\"3836ccbfe60bda104a07e8ab15ff555c\",\"parentId\":\"base\",\"parentVersion\":\"0.8.3\",\"parentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"actualParentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\"}],\"graph\":[],\"editing\":{\"templateId\":\"platformer-2d\",\"templateVersion\":\"0.9.0\",\"contentHash\":\"f640fe07081a1958665c2ed9194196ea\",\"loadedAt\":\"2026-10-20 14:35:37\"},\"framework\":\"0.20.3\",\"compiling\":false},\"compiler\":\"codedom\"},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "error": null,
+    "data": {
+      "result": {
+        "validation": {
+          "Issues": [
+            {
+              "Severity": 0,
+              "Category": "模板存储",
+              "Message": "模板内容、元数据和父级状态正常。",
+              "AssetPath": null,
+              "Suggestion": null
+            },
+            {
+              "Severity": 0,
+              "Category": "内容差异",
+              "Message": "磁盘文件与所列基准一致。",
+              "AssetPath": null,
+              "Suggestion": null
+            },
+            {
+              "Severity": 0,
+              "Category": "资源元数据",
+              "Message": "业务目录资源/.meta 配对与 GUID 检查完成。",
+              "AssetPath": null,
+              "Suggestion": null
+            },
+            {
+              "Severity": 0,
+              "Category": "配置表",
+              "Message": "Schema、源数据、引用和全部生成物一致。",
+              "AssetPath": null,
+              "Suggestion": null
+            },
+            {
+              "Severity": 1,
+              "Category": "UI 生成链路",
+              "Message": "已检查 7 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。",
+              "AssetPath": "Assets/GameResource/Resources/UI",
+              "Suggestion": "需要修复时进入 UI 开发中心或打开对应 Prefab。"
+            }
+          ],
+          "CheckedAt": "2026-10-20T14:36:09.8877284+08:00",
+          "TemplateId": "platformer-2d",
+          "Baseline": "编辑副本 platformer-2d v0.9.0 → 当前模板 v0.9.0",
+          "ProjectFingerprint": "f640fe07081a1958665c2ed9194196ea",
+          "ComparisonCompleted": true,
+          "IsEditingTemplate": true,
+          "ErrorCount": 0,
+          "WarningCount": 0,
+          "DifferenceCount": 0
+        },
+        "templates": [
+          {
+            "id": "base",
+            "version": "0.8.3",
+            "contentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "sealedHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "actualHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "parentId": "",
+            "parentVersion": "",
+            "parentHash": "",
+            "actualParentHash": ""
+          },
+          {
+            "id": "platformer-2d",
+            "version": "0.9.0",
+            "contentHash": "f640fe07081a1958665c2ed9194196ea",
+            "sealedHash": "f640fe07081a1958665c2ed9194196ea",
+            "actualHash": "f640fe07081a1958665c2ed9194196ea",
+            "parentId": "base",
+            "parentVersion": "0.8.3",
+            "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+          },
+          {
+            "id": "source3d-2p5d",
+            "version": "0.5.0",
+            "contentHash": "89e49f1c8c620812a15b181a0a049180",
+            "sealedHash": "89e49f1c8c620812a15b181a0a049180",
+            "actualHash": "89e49f1c8c620812a15b181a0a049180",
+            "parentId": "base",
+            "parentVersion": "0.8.3",
+            "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+          },
+          {
+            "id": "visual-novel",
+            "version": "0.20.1",
+            "contentHash": "3836ccbfe60bda104a07e8ab15ff555c",
+            "sealedHash": "3836ccbfe60bda104a07e8ab15ff555c",
+            "actualHash": "3836ccbfe60bda104a07e8ab15ff555c",
+            "parentId": "base",
+            "parentVersion": "0.8.3",
+            "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+            "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+          }
+        ],
+        "graph": [],
+        "editing": {
+          "templateId": "platformer-2d",
+          "templateVersion": "0.9.0",
+          "contentHash": "f640fe07081a1958665c2ed9194196ea",
+          "loadedAt": "2026-10-20 14:35:37"
+        },
+        "framework": "0.20.3",
+        "compiling": false
+      },
+      "compiler": "codedom"
+    },
+    "hint": null
+  },
+  "isError": false
+}

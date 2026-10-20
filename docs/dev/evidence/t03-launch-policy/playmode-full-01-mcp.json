@@ -1,0 +1,51 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"f4b4df0de1dd4ecfbc6647841c71eb1c\",\"status\":\"succeeded\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792475206965,\"finished_unix_ms\":1792477120897,\"last_update_unix_ms\":1792477120897,\"progress\":{\"completed\":679,\"total\":679,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792477120692,\"last_finished_test_full_name\":\"Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote\",\"last_finished_unix_ms\":1792477120707,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"PlayMode\",\"summary\":{\"total\":679,\"passed\":679,\"failed\":0,\"skipped\":0,\"durationSeconds\":1906.5617683,\"resultState\":\"Passed\"},\"results\":[]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "f4b4df0de1dd4ecfbc6647841c71eb1c",
+        "status": "succeeded",
+        "mode": "PlayMode",
+        "started_unix_ms": 1792475206965,
+        "finished_unix_ms": 1792477120897,
+        "last_update_unix_ms": 1792477120897,
+        "progress": {
+          "completed": 679,
+          "total": 679,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1792477120692,
+          "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+          "last_finished_unix_ms": 1792477120707,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "PlayMode",
+          "summary": {
+            "total": 679,
+            "passed": 679,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 1906.5617683,
+            "resultState": "Passed"
+          },
+          "results": []
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

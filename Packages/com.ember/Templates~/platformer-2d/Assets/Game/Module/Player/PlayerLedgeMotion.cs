@@ -56,7 +56,8 @@ namespace Game.Player
         internal bool TryCandidate(out EntityLedgeProbe2D.Candidate candidate)
         {
             candidate = default;
-            if (IsActive || _context.DropThrough.IsActive || _context.Dash.IsActive || _context.JumpWindow.HasGroundSupport ||
+            if (_context.ExternalMotion.PreservesHorizontalDuringRise ||
+                IsActive || _context.DropThrough.IsActive || _context.Dash.IsActive || _context.JumpWindow.HasGroundSupport ||
                 _context.Motor.Velocity.y > 0 || _context.Wall.ProtectionRemaining > 0 || _context.Input.Horizontal == 0 ||
                 _context.Abilities.Query(PlayerLedgeHangState.ABILITY_ID) != EntityUseStatus.Available) return false;
             if (!_probe.TryFind(_context.Input.Horizontal > 0 ? 1 : -1, _spec.Layers, _spec.Reach,

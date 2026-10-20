@@ -11,7 +11,10 @@ namespace Game.Entity
         private Behaviour _owner;
         private float _remaining;
         private LaunchEnd2D _end;
+        private LaunchHorizontal2D _horizontal;
         public bool IsLaunching { get; private set; }
+        public bool AllowsHorizontalControl => IsLaunching && _horizontal == LaunchHorizontal2D.PreserveControl &&
+            _owner != null && _owner.isActiveAndEnabled && _support != null && _support.IsAvailable;
         #endregion
         // --------------------------------------------------------
         #region 生命周期
@@ -36,15 +39,25 @@ namespace Game.Entity
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        /// <summary>载具原有水平驱动（含风）提交自身计算的X；竖直弹射期间不重发弹射请求。</summary>
+        public bool TrySetHorizontalVelocity(float velocity)
+        {
+            if (!AllowsHorizontalControl || !float.IsFinite(velocity)) return false;
+            _support.SetVelocity(new Vector2(velocity, _support.Velocity.y));
+            return true;
+        }
+
         public LaunchResult2D TryLaunch(Behaviour owner, LaunchRequest2D request)
         {
             _support ??= GetComponent<EntityTranslationSupport2D>();
             if (!isActiveAndEnabled || !_support.IsAvailable || owner == null || !owner.isActiveAndEnabled ||
                 string.IsNullOrWhiteSpace(request.SourceId)) return LaunchResult2D.Inactive;
             if (IsLaunching && request.Interrupt == LaunchInterrupt2D.RejectWhileBusy) return LaunchResult2D.Busy;
-            Finish(); _support.SetVelocity(request.Velocity);
+            Finish();
+            _support.SetVelocity(request.Horizontal == LaunchHorizontal2D.PreserveControl
+                ? new Vector2(_support.Velocity.x, request.Velocity.y) : request.Velocity);
             IsLaunching = request.Mode == LaunchMode2D.ConstantRise;
-            _remaining = request.Duration; _owner = owner; _end = request.End;
+            _remaining = request.Duration; _owner = owner; _end = request.End; _horizontal = request.Horizontal;
             return LaunchResult2D.Accepted;
         }
         #endregion

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="76" result="Passed" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.9634034">
+  <test-suite type="TestSuite" id="1956" name="ember-unity-framework" fullname="ember-unity-framework" runstate="Runnable" testcasecount="781" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.963403" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="2829" name="Game.Player.Editor.Tests.dll" fullname="C:/Users/wuyu/My/ember-unity-framework/Library/ScriptAssemblies/Game.Player.Editor.Tests.dll" runstate="Runnable" testcasecount="76" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.931245" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="160048" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="2830" name="Game" fullname="Game" runstate="Runnable" testcasecount="76" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.926658" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="2831" name="Player" fullname="Game.Player" runstate="Runnable" testcasecount="76" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.820448" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="2832" name="Editor" fullname="Game.Player.Editor" runstate="Runnable" testcasecount="76" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.719650" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="2833" name="Tests" fullname="Game.Player.Editor.Tests" runstate="Runnable" testcasecount="76" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:26:59Z" duration="427.684549" total="76" passed="76" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="2733" name="PlayerActionEffectMigrationTests" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:20:02Z" duration="11.520925" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2737" name="ExplicitEmptyMigrationDoesNotFallbackAndSurvivesAssetReload" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.ExplicitEmptyMigrationDoesNotFallbackAndSurvivesAssetReload" methodname="ExplicitEmptyMigrationDoesNotFallbackAndSurvivesAssetReload" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" seed="1848307472" result="Passed" start-time="2026-10-20 06:19:51Z" end-time="2026-10-20 06:19:53Z" duration="2.110215" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2736" name="InvalidEffectsAndOccupiedPathFailWithoutChangingSourceOrCreatingPartialFiles" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.InvalidEffectsAndOccupiedPathFailWithoutChangingSourceOrCreatingPartialFiles" methodname="InvalidEffectsAndOccupiedPathFailWithoutChangingSourceOrCreatingPartialFiles" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" seed="955852096" result="Passed" start-time="2026-10-20 06:19:53Z" end-time="2026-10-20 06:19:54Z" duration="0.910798" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2738" name="LegacyFieldsAreHiddenAndOnlyRuntimeInjectionFeedsCreateState" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.LegacyFieldsAreHiddenAndOnlyRuntimeInjectionFeedsCreateState" methodname="LegacyFieldsAreHiddenAndOnlyRuntimeInjectionFeedsCreateState" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" seed="1091595141" result="Passed" start-time="2026-10-20 06:19:54Z" end-time="2026-10-20 06:19:55Z" duration="1.173954" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2734" name="MigrationClonesMutableEffectsPreservesSharingAndBusinessValues" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.MigrationClonesMutableEffectsPreservesSharingAndBusinessValues" methodname="MigrationClonesMutableEffectsPreservesSharingAndBusinessValues" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" seed="1181569505" result="Passed" start-time="2026-10-20 06:19:55Z" end-time="2026-10-20 06:19:59Z" duration="3.484783" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2735" name="RepeatedMigrationPreservesEditsAndUndoRedoPreservesCreatedConfiguration" fullname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests.RepeatedMigrationPreservesEditsAndUndoRedoPreservesCreatedConfiguration" methodname="RepeatedMigrationPreservesEditsAndUndoRedoPreservesCreatedConfiguration" classname="Game.Player.Editor.Tests.PlayerActionEffectMigrationTests" runstate="Runnable" seed="1520417907" result="Passed" start-time="2026-10-20 06:19:59Z" end-time="2026-10-20 06:20:02Z" duration="3.727133" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2739" name="PlayerAnimationEditorTests" fullname="Game.Player.Editor.Tests.PlayerAnimationEditorTests" classname="Game.Player.Editor.Tests.PlayerAnimationEditorTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 06:20:02Z" end-time="2026-10-20 06:20:12Z" duration="9.777697" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2741" name="AnimatedVisualFitChangesOnlyFacingOuterTransformAndSupportsUndo" fullname="Game.Player.Editor.Tests.PlayerAnimationEditorTests.AnimatedVisualFitChangesOnlyFacingOuterTransformAndSupportsUndo" methodname="AnimatedVisualFitChangesOnlyFacingOuterTransformAndSupportsUndo" classname="Game.Player.Editor.Tests.PlayerAnimationEditorTests" runstate="Runnable" seed="1312973794" result="Passed" start-time="2026-10-20 06:20:04Z" end-time="2026-10-20 06:20:04Z" duration="0.059614" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2740" name="AnimationAssetsReloadWithStableBindingsAndGraphIdentity" fullname="Game.Player.Editor.Tests.PlayerAnimationEditorTests.AnimationAssetsReloadWithStableBindingsAndGraphIdentity" methodname="AnimationAssetsReloadWithStableBindingsAndGraphIdentity" classname="Game.Player.Editor.Tests.PlayerAnimationEditorTests" runstate="Runnable" seed="376552056" result="Passed" start-time="2026-10-20 06:20:04Z" end-time="2026-10-20 06:20:12Z" duration="7.967380" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2742" name="PlayerAppearanceTests" fullname="Game.Player.Editor.Tests.PlayerAppearanceTests" classname="Game.Player.Editor.Tests.PlayerAppearanceTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-20 06:20:12Z" end-time="2026-10-20 06:20:13Z" duration="0.319074" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2743" name="FitUsesSpriteBoundsAndPivotWithoutChangingPhysicsAndSupportsUndo" fullname="Game.Player.Editor.Tests.PlayerAppearanceTests.FitUsesSpriteBoundsAndPivotWithoutChangingPhysicsAndSupportsUndo" methodname="FitUsesSpriteBoundsAndPivotWithoutChangingPhysicsAndSupportsUndo" classname="Game.Player.Editor.Tests.PlayerAppearanceTests" runstate="Runnable" seed="624727571" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.036782" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2744" name="PlayerCombatConfigurationTests" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.032967" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2749" name="ExistingMovementSchemesKeepCombatDisabledAndInputCaptureIsFrozen" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests.ExistingMovementSchemesKeepCombatDisabledAndInputCaptureIsFrozen" methodname="ExistingMovementSchemesKeepCombatDisabledAndInputCaptureIsFrozen" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" seed="1581691003" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.012042" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2745" name="FrozenNestedGeometryAndPayloadRemainIndependent" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests.FrozenNestedGeometryAndPayloadRemainIndependent" methodname="FrozenNestedGeometryAndPayloadRemainIndependent" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" seed="1357793082" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.004800" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2746" name="InvalidPolygonAndMissingAbilityHaveLocatedErrors" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests.InvalidPolygonAndMissingAbilityHaveLocatedErrors" methodname="InvalidPolygonAndMissingAbilityHaveLocatedErrors" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" seed="253795418" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.001087" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2747" name="OptionalUninstalledAbilityIsValidButDanglingComboIsRejected" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests.OptionalUninstalledAbilityIsValidButDanglingComboIsRejected" methodname="OptionalUninstalledAbilityIsValidButDanglingComboIsRejected" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" seed="681117982" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.001731" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2748" name="RecapturePreservesFrozenLifeAndRejectsMissingSourceGroups" fullname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests.RecapturePreservesFrozenLifeAndRejectsMissingSourceGroups" methodname="RecapturePreservesFrozenLifeAndRejectsMissingSourceGroups" classname="Game.Player.Editor.Tests.PlayerCombatConfigurationTests" runstate="Runnable" seed="569789501" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.001137" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2750" name="PlayerCombatGraphBuilderTests" fullname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests" classname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.024275" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2752" name="CandidateOwnsOnlyCombatNodesAndDetectsComboDivergence" fullname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests.CandidateOwnsOnlyCombatNodesAndDetectsComboDivergence" methodname="CandidateOwnsOnlyCombatNodesAndDetectsComboDivergence" classname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests" runstate="Runnable" seed="677583962" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.013280" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2751" name="OptionalRecoveryClipResolvesIdleButAttackClipIsRequired" fullname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests.OptionalRecoveryClipResolvesIdleButAttackClipIsRequired" methodname="OptionalRecoveryClipResolvesIdleButAttackClipIsRequired" classname="Game.Player.Editor.Tests.PlayerCombatGraphBuilderTests" runstate="Runnable" seed="642356207" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.007465" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2753" name="PlayerCombatRequestTests" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.087077" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2758" name="AttackSpeedScalesOnlyActionClockAndCrossesShortWindows" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests.AttackSpeedScalesOnlyActionClockAndCrossesShortWindows" methodname="AttackSpeedScalesOnlyActionClockAndCrossesShortWindows" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" seed="789556189" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.000890" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2754" name="IntentAndDeadlineDoNotRefreshAcrossNaturalContinuation" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests.IntentAndDeadlineDoNotRefreshAcrossNaturalContinuation" methodname="IntentAndDeadlineDoNotRefreshAcrossNaturalContinuation" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" seed="81128243" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.000597" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2755" name="OrdinaryPressNeverBecomesDelayedAndOpportunityEndsFirst" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests.OrdinaryPressNeverBecomesDelayedAndOpportunityEndsFirst" methodname="OrdinaryPressNeverBecomesDelayedAndOpportunityEndsFirst" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" seed="314106889" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.000815" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2756" name="RejectionKeepsRequestsButCommitClearsAllOldActionRequestsOnce" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests.RejectionKeepsRequestsButCommitClearsAllOldActionRequestsOnce" methodname="RejectionKeepsRequestsButCommitClearsAllOldActionRequestsOnce" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" seed="1491447790" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.000637" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2757" name="ZeroBufferHasOneDecisionAndClearDoesNotResetGameClock" fullname="Game.Player.Editor.Tests.PlayerCombatRequestTests.ZeroBufferHasOneDecisionAndClearDoesNotResetGameClock" methodname="ZeroBufferHasOneDecisionAndClearDoesNotResetGameClock" classname="Game.Player.Editor.Tests.PlayerCombatRequestTests" runstate="Runnable" seed="2018415019" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:13Z" duration="0.000388" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2759" name="PlayerFeelParameterTests" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:21:01Z" duration="48.749851" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2762" name="DashGroup_TrialFreezesNestedValuesAndUndoUsesActualMovementAsset" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.DashGroup_TrialFreezesNestedValuesAndUndoUsesActualMovementAsset" methodname="DashGroup_TrialFreezesNestedValuesAndUndoUsesActualMovementAsset" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="267592302" result="Passed" start-time="2026-10-20 06:20:13Z" end-time="2026-10-20 06:20:21Z" duration="8.058058" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2765" name="ExplicitSaveWritesSelectedAssetsAndRejectsInvalidConfiguration" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.ExplicitSaveWritesSelectedAssetsAndRejectsInvalidConfiguration" methodname="ExplicitSaveWritesSelectedAssetsAndRejectsInvalidConfiguration" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="1821148828" result="Passed" start-time="2026-10-20 06:20:21Z" end-time="2026-10-20 06:20:25Z" duration="4.474611" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2766" name="IncompleteTrialRequestIsRejectedWithoutFallbackToDefaults" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.IncompleteTrialRequestIsRejectedWithoutFallbackToDefaults" methodname="IncompleteTrialRequestIsRejectedWithoutFallbackToDefaults" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="1464534451" result="Passed" start-time="2026-10-20 06:20:25Z" end-time="2026-10-20 06:20:30Z" duration="4.552289" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2761" name="PresetComparisonIncludesNestedParametersAndRestorePreservesIdentityAndUndo" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.PresetComparisonIncludesNestedParametersAndRestorePreservesIdentityAndUndo" methodname="PresetComparisonIncludesNestedParametersAndRestorePreservesIdentityAndUndo" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="270376015" result="Passed" start-time="2026-10-20 06:20:30Z" end-time="2026-10-20 06:20:37Z" duration="7.458686" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2760" name="PresetCopyCreatesFourIndependentAssetsAndRefusesOverwrite" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.PresetCopyCreatesFourIndependentAssetsAndRefusesOverwrite" methodname="PresetCopyCreatesFourIndependentAssetsAndRefusesOverwrite" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="1545236006" result="Passed" start-time="2026-10-20 06:20:37Z" end-time="2026-10-20 06:20:48Z" duration="10.965203" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2764" name="TrialSnapshotFreezesUnsavedValuesWithoutWritingOrMutatingAssets" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.TrialSnapshotFreezesUnsavedValuesWithoutWritingOrMutatingAssets" methodname="TrialSnapshotFreezesUnsavedValuesWithoutWritingOrMutatingAssets" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="2055399487" result="Passed" start-time="2026-10-20 06:20:48Z" end-time="2026-10-20 06:20:56Z" duration="8.117006" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2763" name="UndoRedoEditsActualAssetButKeepsCapturedRuntimeImmutable" fullname="Game.Player.Editor.Tests.PlayerFeelParameterTests.UndoRedoEditsActualAssetButKeepsCapturedRuntimeImmutable" methodname="UndoRedoEditsActualAssetButKeepsCapturedRuntimeImmutable" classname="Game.Player.Editor.Tests.PlayerFeelParameterTests" runstate="Runnable" seed="495133027" result="Passed" start-time="2026-10-20 06:20:56Z" end-time="2026-10-20 06:21:01Z" duration="5.116090" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2767" name="PlayerGroundPhaseEditorTests" fullname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests" classname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 06:21:01Z" end-time="2026-10-20 06:21:03Z" duration="1.562264" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2769" name="AllFormalNodesHaveAvailabilityWithoutChangingGraphOrResources" fullname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.AllFormalNodesHaveAvailabilityWithoutChangingGraphOrResources" methodname="AllFormalNodesHaveAvailabilityWithoutChangingGraphOrResources" classname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests" runstate="Runnable" seed="53394033" result="Passed" start-time="2026-10-20 06:21:02Z" end-time="2026-10-20 06:21:02Z" duration="0.033380" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2768" name="AvailabilitySeparatesAssetToggleFromCapturedFeelAndSupportsUndo" fullname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.AvailabilitySeparatesAssetToggleFromCapturedFeelAndSupportsUndo" methodname="AvailabilitySeparatesAssetToggleFromCapturedFeelAndSupportsUndo" classname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests" runstate="Runnable" seed="1526166601" result="Passed" start-time="2026-10-20 06:21:02Z" end-time="2026-10-20 06:21:02Z" duration="0.032680" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2770" name="GraphAndNewDefinitionsReloadWithStableIdsAndBindings" fullname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests.GraphAndNewDefinitionsReloadWithStableIdsAndBindings" methodname="GraphAndNewDefinitionsReloadWithStableIdsAndBindings" classname="Game.Player.Editor.Tests.PlayerGroundPhaseEditorTests" runstate="Runnable" seed="1197856228" result="Passed" start-time="2026-10-20 06:21:02Z" end-time="2026-10-20 06:21:03Z" duration="0.987462" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2771" name="PlayerHitShapeEditorTests" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:06Z" duration="3.136409" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-suite type="ParameterizedMethod" id="2776" name="NativeColliderEditRoundTripsWithoutTouchingMainScene" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:03Z" duration="0.114341" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="2773" name="NativeColliderEditRoundTripsWithoutTouchingMainScene(0)" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(0)" methodname="NativeColliderEditRoundTripsWithoutTouchingMainScene" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" seed="838987435" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:03Z" duration="0.032876" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                  <test-case id="2774" name="NativeColliderEditRoundTripsWithoutTouchingMainScene(1)" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(1)" methodname="NativeColliderEditRoundTripsWithoutTouchingMainScene" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" seed="158419649" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:03Z" duration="0.031523" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                  <test-case id="2775" name="NativeColliderEditRoundTripsWithoutTouchingMainScene(2)" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeColliderEditRoundTripsWithoutTouchingMainScene(2)" methodname="NativeColliderEditRoundTripsWithoutTouchingMainScene" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" seed="2137599604" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:03Z" duration="0.033445" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                </test-suite>
+                <test-case id="2772" name="NativeStageApplySupportsUndoRedoAndRejectsChangedSource" fullname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests.NativeStageApplySupportsUndoRedoAndRejectsChangedSource" methodname="NativeStageApplySupportsUndoRedoAndRejectsChangedSource" classname="Game.Player.Editor.Tests.PlayerHitShapeEditorTests" runstate="Runnable" seed="781991887" result="Passed" start-time="2026-10-20 06:21:03Z" end-time="2026-10-20 06:21:06Z" duration="2.980811" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2777" name="PlayerLabTrailTests" fullname="Game.Player.Editor.Tests.PlayerLabTrailTests" classname="Game.Player.Editor.Tests.PlayerLabTrailTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 06:21:06Z" end-time="2026-10-20 06:21:07Z" duration="0.341618" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2779" name="TrailExpiresByPhysicsTimeAndHandlesRingWrapAndEmptyTrace" fullname="Game.Player.Editor.Tests.PlayerLabTrailTests.TrailExpiresByPhysicsTimeAndHandlesRingWrapAndEmptyTrace" methodname="TrailExpiresByPhysicsTimeAndHandlesRingWrapAndEmptyTrace" classname="Game.Player.Editor.Tests.PlayerLabTrailTests" runstate="Runnable" seed="1016111663" result="Passed" start-time="2026-10-20 06:21:07Z" end-time="2026-10-20 06:21:07Z" duration="0.012268" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2778" name="TrailUsesRecordedWorldPositionsAndClearDoesNotEraseMeasurements" fullname="Game.Player.Editor.Tests.PlayerLabTrailTests.TrailUsesRecordedWorldPositionsAndClearDoesNotEraseMeasurements" methodname="TrailUsesRecordedWorldPositionsAndClearDoesNotEraseMeasurements" classname="Game.Player.Editor.Tests.PlayerLabTrailTests" runstate="Runnable" seed="1407632309" result="Passed" start-time="2026-10-20 06:21:07Z" end-time="2026-10-20 06:21:07Z" duration="0.002686" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2780" name="PlayerOrdinaryJumpWorkflowTests" fullname="Game.Player.Editor.Tests.PlayerOrdinaryJumpWorkflowTests" classname="Game.Player.Editor.Tests.PlayerOrdinaryJumpWorkflowTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-20 06:21:07Z" end-time="2026-10-20 06:21:19Z" duration="12.258958" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2781" name="OrdinaryJump_CopyValidateCompareSaveAndFreezeUseFormalSchemeWorkflow" fullname="Game.Player.Editor.Tests.PlayerOrdinaryJumpWorkflowTests.OrdinaryJump_CopyValidateCompareSaveAndFreezeUseFormalSchemeWorkflow" methodname="OrdinaryJump_CopyValidateCompareSaveAndFreezeUseFormalSchemeWorkflow" classname="Game.Player.Editor.Tests.PlayerOrdinaryJumpWorkflowTests" runstate="Runnable" seed="419475204" result="Passed" start-time="2026-10-20 06:21:07Z" end-time="2026-10-20 06:21:19Z" duration="12.230217" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2782" name="PlayerSchemeConversionTests" fullname="Game.Player.Editor.Tests.PlayerSchemeConversionTests" classname="Game.Player.Editor.Tests.PlayerSchemeConversionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 06:21:19Z" end-time="2026-10-20 06:21:32Z" duration="12.915871" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2785" name="ConversionRejectsNonEquivalentBindingWithoutChangingTarget" fullname="Game.Player.Editor.Tests.PlayerSchemeConversionTests.ConversionRejectsNonEquivalentBindingWithoutChangingTarget" methodname="ConversionRejectsNonEquivalentBindingWithoutChangingTarget" classname="Game.Player.Editor.Tests.PlayerSchemeConversionTests" runstate="Runnable" seed="336643627" result="Passed" start-time="2026-10-20 06:21:20Z" end-time="2026-10-20 06:21:23Z" duration="3.870032" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2783" name="ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources" fullname="Game.Player.Editor.Tests.PlayerSchemeConversionTests.ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources" methodname="ExplicitConversionPreservesIdentityAndEnvironmentAndClearsLegacySources" classname="Game.Player.Editor.Tests.PlayerSchemeConversionTests" runstate="Runnable" seed="1223521139" result="Passed" start-time="2026-10-20 06:21:23Z" end-time="2026-10-20 06:21:28Z" duration="4.898383" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2784" name="InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite" fullname="Game.Player.Editor.Tests.PlayerSchemeConversionTests.InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite" methodname="InvalidSchemeDoesNotFallBackToLegacyAndConversionRefusesOverwrite" classname="Game.Player.Editor.Tests.PlayerSchemeConversionTests" runstate="Runnable" seed="1981584654" result="Passed" start-time="2026-10-20 06:21:28Z" end-time="2026-10-20 06:21:32Z" duration="3.377686" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2786" name="PlayerSchemeObservationTests" fullname="Game.Player.Editor.Tests.PlayerSchemeObservationTests" classname="Game.Player.Editor.Tests.PlayerSchemeObservationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 06:21:32Z" end-time="2026-10-20 06:21:35Z" duration="3.759680" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2788" name="ObservationFailureDoesNotBreakRuntimeCapture" fullname="Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationFailureDoesNotBreakRuntimeCapture" methodname="ObservationFailureDoesNotBreakRuntimeCapture" classname="Game.Player.Editor.Tests.PlayerSchemeObservationTests" runstate="Runnable" seed="1181299294" result="Passed" start-time="2026-10-20 06:21:32Z" end-time="2026-10-20 06:21:32Z" duration="0.017672" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2787" name="ObservationRetainsCaptureAcrossEditsUndoAndRecovery" fullname="Game.Player.Editor.Tests.PlayerSchemeObservationTests.ObservationRetainsCaptureAcrossEditsUndoAndRecovery" methodname="ObservationRetainsCaptureAcrossEditsUndoAndRecovery" classname="Game.Player.Editor.Tests.PlayerSchemeObservationTests" runstate="Runnable" seed="1227347714" result="Passed" start-time="2026-10-20 06:21:32Z" end-time="2026-10-20 06:21:35Z" duration="3.367487" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2789" name="PlayerSchemeRulesTests" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-20 06:21:35Z" end-time="2026-10-20 06:21:57Z" duration="21.744847" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2791" name="CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph" methodname="CopyCompareBlankAndReloadRespectRulesWithoutCopyingGraph" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="1988078305" result="Passed" start-time="2026-10-20 06:21:36Z" end-time="2026-10-20 06:21:41Z" duration="5.439645" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2795" name="FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery" methodname="FrozenPlanSurvivesLaterAssetChangesAndDescriptionsDoNotQuery" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="294758743" result="Passed" start-time="2026-10-20 06:21:41Z" end-time="2026-10-20 06:21:43Z" duration="2.224385" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2793" name="InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback" methodname="InvalidModeVersionOwnershipAndMissingConfiguredAssetNeverFallback" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="1451420853" result="Passed" start-time="2026-10-20 06:21:43Z" end-time="2026-10-20 06:21:47Z" duration="3.427773" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2790" name="MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset" methodname="MigrationIsExplicitEquivalentAndUndoRedoRestoresOwnedAsset" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="2038748382" result="Passed" start-time="2026-10-20 06:21:47Z" end-time="2026-10-20 06:21:49Z" duration="2.267022" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2792" name="RestoreLegacyAndConfiguredModesIsUndoable" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.RestoreLegacyAndConfiguredModesIsUndoable" methodname="RestoreLegacyAndConfiguredModesIsUndoable" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="1058580342" result="Passed" start-time="2026-10-20 06:21:49Z" end-time="2026-10-20 06:21:52Z" duration="3.459602" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2796" name="SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo" methodname="SerializedTreeWrappingPreservesChildrenAndSupportsUndoRedo" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="1843663899" result="Passed" start-time="2026-10-20 06:21:52Z" end-time="2026-10-20 06:21:55Z" duration="2.676894" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2794" name="UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit" fullname="Game.Player.Editor.Tests.PlayerSchemeRulesTests.UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit" methodname="UnknownPowerAndOutOfRangeInputAreInvalidEvenIfBranchWouldShortCircuit" classname="Game.Player.Editor.Tests.PlayerSchemeRulesTests" runstate="Runnable" seed="2033156745" result="Passed" start-time="2026-10-20 06:21:55Z" end-time="2026-10-20 06:21:57Z" duration="2.058497" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2797" name="PlayerSchemeStructureWorkflowTests" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-20 06:21:57Z" end-time="2026-10-20 06:25:47Z" duration="229.436906" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2802" name="CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation" methodname="CombatWindowAddsFourthWithClipAndRejectsInvalidDraftWithoutMutation" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="865874426" result="Passed" start-time="2026-10-20 06:21:57Z" end-time="2026-10-20 06:22:22Z" duration="24.940866" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2801" name="CombatWindowDraftSurvivesCloseAndRejectsChangedSource" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.CombatWindowDraftSurvivesCloseAndRejectsChangedSource" methodname="CombatWindowDraftSurvivesCloseAndRejectsChangedSource" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="1907805189" result="Passed" start-time="2026-10-20 06:22:22Z" end-time="2026-10-20 06:22:41Z" duration="18.396708" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2807" name="DefinitionDependenciesAreCopiedOnceAndRemainIndependent" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.DefinitionDependenciesAreCopiedOnceAndRemainIndependent" methodname="DefinitionDependenciesAreCopiedOnceAndRemainIndependent" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="1309847584" result="Passed" start-time="2026-10-20 06:22:41Z" end-time="2026-10-20 06:23:12Z" duration="30.895037" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2803" name="ExistingDestinationRejectsWithoutCreatingPartialAssets" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ExistingDestinationRejectsWithoutCreatingPartialAssets" methodname="ExistingDestinationRejectsWithoutCreatingPartialAssets" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="164270272" result="Passed" start-time="2026-10-20 06:23:12Z" end-time="2026-10-20 06:23:15Z" duration="2.971152" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2805" name="FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload" methodname="FourthAttackPreservesLifeDashAndDelayedToggleAcrossUndoRedoReload" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="1771941404" result="Passed" start-time="2026-10-20 06:23:15Z" end-time="2026-10-20 06:23:55Z" duration="40.779174" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="2800" name="IndependentCopyPreservesIdsBindingsAndOwnsStructure" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 06:23:55Z" end-time="2026-10-20 06:24:32Z" duration="36.379923" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="2798" name="IndependentCopyPreservesIdsBindingsAndOwnsStructure(0)" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(0)" methodname="IndependentCopyPreservesIdsBindingsAndOwnsStructure" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="721388952" result="Passed" start-time="2026-10-20 06:23:56Z" end-time="2026-10-20 06:24:12Z" duration="15.896625" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                  <test-case id="2799" name="IndependentCopyPreservesIdsBindingsAndOwnsStructure(2)" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.IndependentCopyPreservesIdsBindingsAndOwnsStructure(2)" methodname="IndependentCopyPreservesIdsBindingsAndOwnsStructure" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="2034139714" result="Passed" start-time="2026-10-20 06:24:12Z" end-time="2026-10-20 06:24:32Z" duration="19.789659" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                </test-suite>
+                <test-case id="2806" name="JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload" methodname="JointCombatCommitRejectsMissingClipThenSupportsUndoRedoAndReload" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="1680442790" result="Passed" start-time="2026-10-20 06:24:32Z" end-time="2026-10-20 06:24:58Z" duration="26.268758" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2804" name="LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload" methodname="LifeJointCommitRejectsInvalidAnimationAndSupportsUndoRedoReload" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="1242983278" result="Passed" start-time="2026-10-20 06:24:58Z" end-time="2026-10-20 06:25:23Z" duration="24.998741" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[The legacy Animation Clip "life.hit Key" cannot be used in the State "life_hit". Legacy AnimationClips are not allowed in Animator Controllers.
+]]></output>
+                </test-case>
+                <test-case id="2808" name="ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo" methodname="ParameterRestoreKeepsIndependentStructureAndSupportsUndoRedo" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="419992301" result="Passed" start-time="2026-10-20 06:25:23Z" end-time="2026-10-20 06:25:42Z" duration="18.934363" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2809" name="SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes" fullname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests.SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes" methodname="SavedLayoutCopiesWithoutOverwritingOrPlacingNewNodes" classname="Game.Player.Editor.Tests.PlayerSchemeStructureWorkflowTests" runstate="Runnable" seed="584036174" result="Passed" start-time="2026-10-20 06:25:42Z" end-time="2026-10-20 06:25:47Z" duration="4.583130" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2810" name="PlayerSchemeWorkflowTests" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-10-20 06:25:47Z" end-time="2026-10-20 06:26:53Z" duration="65.940545" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2815" name="BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly" methodname="BlankDisablesExtrasAndKeepsCompleteValidBasicAndAnimationAssembly" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1081782417" result="Passed" start-time="2026-10-20 06:25:47Z" end-time="2026-10-20 06:25:50Z" duration="3.269773" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2816" name="BlankRejectsImmobileReferenceWithoutCreatingPartialAsset" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BlankRejectsImmobileReferenceWithoutCreatingPartialAsset" methodname="BlankRejectsImmobileReferenceWithoutCreatingPartialAsset" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1353885084" result="Passed" start-time="2026-10-20 06:25:50Z" end-time="2026-10-20 06:25:55Z" duration="5.064683" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2811" name="BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph" methodname="BuiltinsKeepTraceableStyleValuesCurrentAssemblyAndSharedGraph" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="458564936" result="Passed" start-time="2026-10-20 06:25:55Z" end-time="2026-10-20 06:26:00Z" duration="4.383476" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2812" name="CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation" methodname="CombatBuiltinHasIndependentStructureAndCompleteThreeHitPresentation" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="333011015" result="Passed" start-time="2026-10-20 06:26:00Z" end-time="2026-10-20 06:26:02Z" duration="1.877871" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2823" name="CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected" methodname="CompatibleProgressPreservesValuesWhileDisabledAndResourceMismatchIsRejected" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="165886589" result="Passed" start-time="2026-10-20 06:26:02Z" end-time="2026-10-20 06:26:05Z" duration="3.084325" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2813" name="CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt" methodname="CopiesOwnAllMutableConfigurationAndRetainStableIdsAndArt" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1254952266" result="Passed" start-time="2026-10-20 06:26:05Z" end-time="2026-10-20 06:26:10Z" duration="5.081807" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2817" name="FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo" methodname="FullRestorePreservesAssetIdentityDoesNotSaveAndSupportsUndoRedo" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="2135081330" result="Passed" start-time="2026-10-20 06:26:10Z" end-time="2026-10-20 06:26:17Z" duration="7.123688" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2822" name="IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping" methodname="IndependentArtCopyDoesNotChangeBuiltinOrAutomaticallyReplaceMapping" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1039307974" result="Passed" start-time="2026-10-20 06:26:17Z" end-time="2026-10-20 06:26:19Z" duration="2.252517" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2821" name="InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite" methodname="InvalidDependenciesAndOccupiedDestinationsFailWithoutOverwrite" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="451243587" result="Passed" start-time="2026-10-20 06:26:19Z" end-time="2026-10-20 06:26:25Z" duration="5.472375" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2820" name="LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable" methodname="LegacyCopiesAndReferenceRestoreFromBuiltinRemainEditable" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="610546048" result="Passed" start-time="2026-10-20 06:26:25Z" end-time="2026-10-20 06:26:32Z" duration="7.579773" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2819" name="ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries" methodname="ReadOnlyPolicyCoversCompleteLegacyMigrationAndSavePipelineEntries" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="901887896" result="Passed" start-time="2026-10-20 06:26:32Z" end-time="2026-10-20 06:26:35Z" duration="2.670881" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2818" name="RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration" methodname="RestoreCanAddSharedEffectsAndUndoRedoRetainsNewConfiguration" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1382018137" result="Passed" start-time="2026-10-20 06:26:35Z" end-time="2026-10-20 06:26:41Z" duration="6.009448" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2814" name="SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites" methodname="SharedEffectsCopyOnceWithinEachSchemeWithoutCrossSchemeWrites" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1576328268" result="Passed" start-time="2026-10-20 06:26:41Z" end-time="2026-10-20 06:26:51Z" duration="9.726792" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2824" name="TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable" fullname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests.TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable" methodname="TrialSelectionDoesNotChangeProjectDefaultAndDefaultChangeIsUndoable" classname="Game.Player.Editor.Tests.PlayerSchemeWorkflowTests" runstate="Runnable" seed="1546641316" result="Passed" start-time="2026-10-20 06:26:51Z" end-time="2026-10-20 06:26:53Z" duration="1.935909" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2825" name="PlayerToolWindowTests" fullname="Game.Player.Editor.Tests.PlayerToolWindowTests" classname="Game.Player.Editor.Tests.PlayerToolWindowTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-20 06:26:53Z" end-time="2026-10-20 06:26:54Z" duration="1.011313" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2826" name="LegacyEntrypointsShareOneWindowAndKeepSelectionAcrossTabs" fullname="Game.Player.Editor.Tests.PlayerToolWindowTests.LegacyEntrypointsShareOneWindowAndKeepSelectionAcrossTabs" methodname="LegacyEntrypointsShareOneWindowAndKeepSelectionAcrossTabs" classname="Game.Player.Editor.Tests.PlayerToolWindowTests" runstate="Runnable" seed="2121345122" result="Passed" start-time="2026-10-20 06:26:53Z" end-time="2026-10-20 06:26:54Z" duration="0.208747" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="2827" name="PlayerWallFlightWorkflowTests" fullname="Game.Player.Editor.Tests.PlayerWallFlightWorkflowTests" classname="Game.Player.Editor.Tests.PlayerWallFlightWorkflowTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-20 06:26:54Z" end-time="2026-10-20 06:26:59Z" duration="5.057440" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2828" name="WallFlight_CopyValidateCompareSaveFreezeAndDefaults" fullname="Game.Player.Editor.Tests.PlayerWallFlightWorkflowTests.WallFlight_CopyValidateCompareSaveFreezeAndDefaults" methodname="WallFlight_CopyValidateCompareSaveFreezeAndDefaults" classname="Game.Player.Editor.Tests.PlayerWallFlightWorkflowTests" runstate="Runnable" seed="1817490520" result="Passed" start-time="2026-10-20 06:26:54Z" end-time="2026-10-20 06:26:59Z" duration="5.030178" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[Saving results to: C:\Users\wuyu\My\ember-unity-framework\docs\dev\evidence\t03-launch-policy\editor-full-01.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

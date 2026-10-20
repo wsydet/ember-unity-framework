@@ -1,0 +1,237 @@
+{
+  "date": "2026-10-20",
+  "status": "unity-validated-assets-not-sealed",
+  "frameworkBaseline": "0.20.3",
+  "templateBaseline": "0.8.0",
+  "baselineContentHash": "003c4429f265bbcd8d377bf375c2c15c",
+  "templateSaved": false,
+  "templateBumped": false,
+  "tests": {
+    "special": "27/27 passed",
+    "playMode": "679/679 passed (includes 27 special cases)",
+    "editMode": "76/76 passed",
+    "skipped": 0,
+    "firstSpecialFailures": 6,
+    "finalRuntimeChangedAfterTests": false
+  },
+  "reconnectAttempt": {
+    "date": "2026-10-20",
+    "instance": "ember-unity-framework@b23e9b768e85ed30",
+    "session": "a603420c-3619-48d3-a022-3cd2851a7740",
+    "initialTestRunning": false,
+    "refreshTriggered": true,
+    "compileRequested": true,
+    "compileStartedUnixMs": 1792474454431,
+    "lastSuccessfulCompilationState": "compiling",
+    "error": "Unity session not ready for 'get_editor_state' (ping not answered); please retry",
+    "compilationVerified": false,
+    "testsStarted": false,
+    "runtimeOrTestCodeChanged": false
+  },
+  "files": [
+    {
+      "path": "Assets/Game/Module/Entity/LaunchRequest2D.cs",
+      "sha256": "0fddcd6576a6fa79c02ddb5af84cde522f8da3304c297250109337df0061c7be",
+      "beforeSha256": "15721114c10b97f8a2b0037e31a433c4ede06e32fe9fad305cdddaeb14bdd62c"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchZone2D.cs",
+      "sha256": "e3d3891e477b29241b207ab433f39d657dd363d03f45b1e6464a4bc060d12f95",
+      "beforeSha256": "52ddf0608723013b34621d1702afcc54fbc6dd334f80bced3fdda5a148f539b1"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+      "sha256": "d7d935da35502ea2b028ebfcf660e51e60c1ec2916e3497d6c52824f3b7975cb",
+      "beforeSha256": "db53fc7a14781dc8876c1d05c2d0eb505d251b1a1a17c5ee685846bbf64277a1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerExternalMotion.cs",
+      "sha256": "040b3d9bed6bd22e4c2374e1c41688e22403be941a3377e3335a423efe759f6a",
+      "beforeSha256": "b5ac231e5717b4b04294fe54166db3caf08205c7fa6abf595dd98ca8d51f93e8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLaunchTarget2D.cs",
+      "sha256": "2c17b070314a5fd160a4fe86ff2546d6a7890bd7c5679beebd05c764dd62c7d8",
+      "beforeSha256": "8bcb02078574e033ad9f8de9ab55ddade3b67a389a5b6e0c6957b3d3dedf98ee"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerWallMotion.cs",
+      "sha256": "d02c0d78790f18dc1b6041960be39e16a521d6c5e8a0a557d999ecab2569eb1b",
+      "beforeSha256": "3c37f6acd9e31b066c137a836686297caec816d75343189f6807e9afd6674771"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerInputAdapter.cs",
+      "sha256": "a1bf07a614258e7f667d42eb7d68c99ec71747de79663b116dada50f14033f0c",
+      "beforeSha256": "6c2114337769c878eb9d2472a9d84a7d1e9c2ccdd07bab0b91a730583862f5d0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerContext.cs",
+      "sha256": "8e1be04c1aec0e522020b6257f0ab7bebc5f5f3d4c3fc4d7e87439217910c3aa",
+      "beforeSha256": "732c9210136a4f208a21d0319bb082b36b0d8a06d5ecc2bcaf5e5bc222a2fbbc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLedgeMotion.cs",
+      "sha256": "6881a739cbc17345df68b1995cf4cb4ad0142ff9edb37d4ab7a7f808dc0098d0",
+      "beforeSha256": "cf71ff7835039b942ecb4085079b36c4cf55c67abb627471549d2d7cb087a234"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchPolicyTests.cs",
+      "sha256": "8bf2465be0681ba2a1fbec4370deae3b9eea5454c4beafab904fe86f5c3bd040",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchPolicyTests.cs.meta",
+      "sha256": "5e814b604f412d88e6b90b472607f0254c82cc86c3235b4ee6dee095909c770c",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Documentation/platformer-2d/launch-policy.md",
+      "sha256": "cee56bba03aae013c22a4588356cf27c7612adab22129d98a960c523da501290",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Documentation/platformer-2d/launch-policy.md.meta",
+      "sha256": "137b6a6dcb38f22b09e49c90412ed2224921ad209fce77fbdb33260525eaa7f6",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Documentation/platformer-2d/README.md",
+      "sha256": "2b8381fd534699215825ae1fcbae38fe138a150e247e5b77a26f6fdac53b8631",
+      "beforeSha256": "e2941f0cd3a38bd9814ca3fb45971fc64e5b3a8a339b2ff34cb1c534048d39ac"
+    },
+    {
+      "path": "Assets/Game/Documentation/platformer-2d/CheckpointIntegration.md",
+      "sha256": "68f9455b258e72a1cf456c9ccd519ad2dec1f35e2cc0f22fb4ed8a114f8e495f",
+      "beforeSha256": "706ffa9c96ff18c3e6473ca9eb32cb3e12778d256315c95bde1db90720bc5446"
+    },
+    {
+      "path": "Assets/Game/Documentation/platformer-2d/ExternalMotion.md",
+      "sha256": "08f28e7cb20ee3c47237fe72dce98bcea71f9b9b361ced85c8c4955c41b83d59",
+      "beforeSha256": "8b4d92d9adfd02f343aef488b1a13079c0a600f0bf938d3f9c3ecffa78954d6d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLifeSession.cs",
+      "sha256": "e44a71718254de7bf3189de6cfdb1e5d45067b24f7ccd3feefe5a7b935d7ad4f",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerTestEvidenceRecorder.cs",
+      "sha256": "d8f5a19ba6b57bbc99c2b89c61a7043fbb174d588f79c629b5dfd0d982c6f52b",
+      "beforeSha256": null
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerTestEvidenceRecorder.cs.meta",
+      "sha256": "55efcbfa205a41bcdf3ab6272b3a257b263b32b6e5c0adc49009f8f6524c6610",
+      "beforeSha256": null
+    },
+    {
+      "path": "docs/dev/t03-launch-policy-20261020.md",
+      "sha256": "c8da7d8faf76eba0368d57fd350d249b247b2de66736e211149214eb39aefde2",
+      "beforeSha256": null
+    }
+  ],
+  "finalValidation": {
+    "instance": "ember-unity-framework@b23e9b768e85ed30",
+    "unityVersion": "6000.5.4f1",
+    "compilationVerified": true,
+    "isCompiling": false,
+    "isPlaying": false,
+    "testsRunning": false,
+    "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+    "sceneDirty": false,
+    "expectedConsoleError": "S03-runtime-combat-fault (LogAssert.Expect)",
+    "unexpectedConsoleErrors": 0,
+    "playModeJob": "f4b4df0de1dd4ecfbc6647841c71eb1c",
+    "editModeJob": "2720ee72cb01455a9de8d47836d6b001",
+    "reconnectAuthorized": true,
+    "templateSaved": false,
+    "templateBumped": false,
+    "committed": false,
+    "pushed": false,
+    "published": false,
+    "windwardUpgraded": false
+  },
+  "hashNotes": "File SHA256 evidence only; not a formal template contentHash. Null beforeSha256 means no recorded pre-change hash, not necessarily a newly created file. reconnectAttempt preserves the earlier incomplete attempt.",
+  "evidence": [
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/editor-full-01-mcp.json",
+      "sha256": "a9ffb597114f5f8f28f26992627e8a567d9b8a93ce96e92aaf483404d29f3e20",
+      "bytes": 2340
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/editor-full-01.xml",
+      "sha256": "06d25828ae091f05dbbe0102ed0669910bfbca5ab205a0d76f4cf5804fe13824",
+      "bytes": 70250
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/final-console-mcp.json",
+      "sha256": "73225edf9fd89c044b180456ae3efd54acb6a7d6a7bffe0141f6359e2af4d69f",
+      "bytes": 742
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/final-editor-state-mcp.json",
+      "sha256": "80b43f840e3c00fa161127d41204b9a127997642d3cb3154f631f8653fc42dba",
+      "bytes": 2372
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/playmode-full-01-mcp.json",
+      "sha256": "b53c54718078665b9b4296d1b7f8ad005a94395cd74929e3eb75f812d1a0acb6",
+      "bytes": 2328
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/playmode-full-01.xml",
+      "sha256": "be4c093aef7f023d5cb0830df8d3c45f22d34ea1600c2b18450a40f5f975b100",
+      "bytes": 710909
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/release-bundle-validation.json",
+      "sha256": "a938e5526d0410bbdc3adb233c8f24e3fae682c037db13ac74397fc4fb439743",
+      "bytes": 1857
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/release-editor-state.json",
+      "sha256": "1b339bbe18597a74084df4fc3eee236cf61242eab94ef86b6f8543d9175f38ba",
+      "bytes": 973
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/release-template-validation.json",
+      "sha256": "f934f78c37588b0d8c669e85406a560f3d5076d90fb1b01904c26ac3391f3cf5",
+      "bytes": 7342
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/special-01-mcp.json",
+      "sha256": "b5dd0e83e29b73c12faf5c586fb0d97fe10f803bc933f7e8b3634acb939186eb",
+      "bytes": 4231
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/special-02-mcp.json",
+      "sha256": "524536703fbb4c385844694279b60a48ff7eb0b420c07b96d55f1d3dae6e6bbd",
+      "bytes": 64883
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/special-02.xml",
+      "sha256": "f47ce1f81f1160bf894684f6cab2a5f0f6dade87bcd74105e6aab88a0c084f7c",
+      "bytes": 45416
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/special-03-mcp.json",
+      "sha256": "2276fb2131a0b5791f97f1a0c1cfdfa7bcb2a72b3c428fdd2d853fb1af6776fa",
+      "bytes": 2296
+    },
+    {
+      "path": "docs/dev/evidence/t03-launch-policy/special-03.xml",
+      "sha256": "92e91398f89e6f4d1da58ca95983529a54fce3fe737d052da391e41910e6d7c2",
+      "bytes": 48216
+    }
+  ],
+  "releasePreparation": {
+    "frameworkVersion": "0.20.4",
+    "templateVersion": "0.9.0",
+    "templateSaved": true,
+    "templateBumped": true,
+    "contentHash": "f640fe07081a1958665c2ed9194196ea",
+    "runtimeAndTestSourceHashesUnchanged": true,
+    "verifiedCsFiles": 12,
+    "note": "Previous finalValidation records pre-release validation state; release outcome is documented in release-0.20.4.md and the immutable Git tag."
+  }
+}

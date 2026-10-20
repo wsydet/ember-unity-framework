@@ -18,17 +18,21 @@ namespace Game.Player
         public string SourceId { get; }
         public bool StopVerticalOnEnd { get; }
         public PlayerFlightSpec Flight { get; }
+        public bool PreserveHorizontalControl { get; }
 
         public PlayerExternalMotionRequest(string sourceId, PlayerExternalMotionMode mode, Vector2 velocity,
-            float duration = 0, int priority = 0, bool lockInput = false, bool stopVerticalOnEnd = false, PlayerFlightSpec flight = default)
+            float duration = 0, int priority = 0, bool lockInput = false, bool stopVerticalOnEnd = false, PlayerFlightSpec flight = default,
+            bool preserveHorizontalControl = false)
         {
             if (string.IsNullOrWhiteSpace(sourceId) || !Enum.IsDefined(typeof(PlayerExternalMotionMode), mode) ||
                 !float.IsFinite(velocity.x) || !float.IsFinite(velocity.y) || !float.IsFinite(duration) || duration < 0 ||
+                preserveHorizontalControl && mode != PlayerExternalMotionMode.ForcedRise ||
                 mode == PlayerExternalMotionMode.ForcedRise && (duration <= 0 || velocity.y <= 0))
                 throw new ArgumentException("外部运动需要来源ID、有限速度和合法时长；强制上升必须有正速度和有限正时长。");
             SourceId = sourceId; Mode = mode; Velocity = velocity; Duration = duration;
             Priority = priority; LockInput = lockInput || mode == PlayerExternalMotionMode.InteractionLock;
             StopVerticalOnEnd = stopVerticalOnEnd; Flight = flight;
+            PreserveHorizontalControl = preserveHorizontalControl;
             flight.ValidateWorld(Physics2D.gravity);
             if (flight.Enabled && mode != PlayerExternalMotionMode.InitialVelocity)
                 throw new ArgumentException("单次飞行策略仅适用于 InitialVelocity 发射。");
@@ -72,6 +76,15 @@ namespace Game.Player
         private bool _disposed;
         private bool _stopVertical;
         public int SourceCount => _sources.Count;
+        internal bool PreservesHorizontalDuringRise
+        {
+            get
+            {
+                foreach (var source in _sources)
+                    if (source.IsActive && source.Request.PreserveHorizontalControl) return true;
+                return false;
+            }
+        }
         internal bool HasVerticalOverride
         {
             get
@@ -81,7 +94,8 @@ namespace Game.Player
                 return false;
             }
         }
-        public bool HasTransientMotion => _sources.Count != 0 || _lastContribution != Vector2.zero || _context.Support.HasTransientMotion;
+        public bool HasTransientMotion => _sources.Count != 0 || _stopVertical ||
+            _lastContribution != Vector2.zero || _context.Support.HasTransientMotion;
         public bool IsInteractionLocked { get; private set; }
         public Vector2 EnvironmentVelocity { get; private set; }
         public Vector2 SelfVelocity => RemoveContribution();
@@ -111,14 +125,15 @@ namespace Game.Player
         }
         private void RefreshInput()
         {
-            bool locked = false;
+            bool locked = false, horizontalLocked = false;
             IsInteractionLocked = false;
             foreach (var source in _sources)
             {
                 locked |= source.Request.LockInput;
+                horizontalLocked |= source.Request.LockInput && !source.Request.PreserveHorizontalControl;
                 IsInteractionLocked |= source.Request.Mode == PlayerExternalMotionMode.InteractionLock;
             }
-            _context.Input.SetExternalSuppression(locked);
+            _context.Input.SetExternalSuppression(locked, locked && !horizontalLocked);
         }
         #endregion
         // --------------------------------------------------------
@@ -217,7 +232,7 @@ namespace Game.Player
                 }
                 if (rise != null)
                 {
-                    if (!ownsHorizontal) velocity.x = rise.Request.Velocity.x;
+                    if (!ownsHorizontal && !rise.Request.PreserveHorizontalControl) velocity.x = rise.Request.Velocity.x;
                     if (!ownsVertical)
                     {
                         _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
@@ -269,6 +284,19 @@ namespace Game.Player
             foreach (var source in _sources)
                 result.Append($"\n{source.Request.SourceId} · {source.Request.Mode} · priority={source.Request.Priority} · remaining={source.Remaining} · owner={source.Owner}");
             return result.ToString();
+        }
+
+        /// <summary>竖直弹射只替换运动接管，保留环境凭证、上一合成贡献与承载离台语义。</summary>
+        internal void ClearOverridesForLaunch()
+        {
+            for (int i = _sources.Count - 1; i >= 0; i--)
+            {
+                if (_sources[i].Request.Mode == PlayerExternalMotionMode.AddVelocity) continue;
+                _sources[i].Session = null;
+                _sources.RemoveAt(i);
+            }
+            _lastRise = null; _stopVertical = false;
+            RefreshInput();
         }
 
         internal void Clear()

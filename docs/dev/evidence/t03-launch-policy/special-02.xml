@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="25" result="Passed" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.2402212">
+  <test-suite type="TestSuite" id="1951" name="ember-unity-framework" fullname="ember-unity-framework" runstate="Runnable" testcasecount="795" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.240221" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1903" name="Game.Player.PlayModeTests.dll" fullname="C:/Users/wuyu/My/ember-unity-framework/Library/ScriptAssemblies/Game.Player.PlayModeTests.dll" runstate="Runnable" testcasecount="677" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.211001" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="160048" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1904" name="Game" fullname="Game" runstate="Runnable" testcasecount="677" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.193390" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1905" name="Player" fullname="Game.Player" runstate="Runnable" testcasecount="677" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.178118" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1906" name="Tests" fullname="Game.Player.Tests" runstate="Runnable" testcasecount="677" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.165420" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1225" name="PlayerStateTests" fullname="Game.Player.Tests.PlayerStateTests" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="528" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:47Z" duration="42.150931" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1592" name="LaunchPolicy_CarrierExpiryUsesRealFixedUpdates" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_CarrierExpiryUsesRealFixedUpdates" methodname="LaunchPolicy_CarrierExpiryUsesRealFixedUpdates" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="2120423420" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:05Z" duration="0.132975" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1583" name="LaunchPolicy_CarrierKeepsHorizontalDriverAndRejectsInvalidOwner" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_CarrierKeepsHorizontalDriverAndRejectsInvalidOwner" methodname="LaunchPolicy_CarrierKeepsHorizontalDriverAndRejectsInvalidOwner" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="2101746808" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:05Z" duration="0.017568" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1588" name="LaunchPolicy_CeilingAndHostExitReleaseControl" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_CeilingAndHostExitReleaseControl" methodname="LaunchPolicy_CeilingAndHostExitReleaseControl" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1879373050" result="Passed" start-time="2026-10-20 05:43:05Z" end-time="2026-10-20 05:43:06Z" duration="0.084348" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1591" name="LaunchPolicy_DeathAndReactionClearVerticalPolicy" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_DeathAndReactionClearVerticalPolicy" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 05:43:06Z" end-time="2026-10-20 05:43:44Z" duration="38.868515" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1589" name="LaunchPolicy_DeathAndReactionClearVerticalPolicy(False)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_DeathAndReactionClearVerticalPolicy(False)" methodname="LaunchPolicy_DeathAndReactionClearVerticalPolicy" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="245699258" result="Passed" start-time="2026-10-20 05:43:06Z" end-time="2026-10-20 05:43:25Z" duration="19.158788" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1590" name="LaunchPolicy_DeathAndReactionClearVerticalPolicy(True)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_DeathAndReactionClearVerticalPolicy(True)" methodname="LaunchPolicy_DeathAndReactionClearVerticalPolicy" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="849141804" result="Passed" start-time="2026-10-20 05:43:25Z" end-time="2026-10-20 05:43:44Z" duration="19.701019" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1587" name="LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 05:43:44Z" end-time="2026-10-20 05:43:45Z" duration="0.086534" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1585" name="LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide(-1)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide(-1)" methodname="LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="476548645" result="Passed" start-time="2026-10-20 05:43:44Z" end-time="2026-10-20 05:43:44Z" duration="0.058811" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1586" name="LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide(1)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide(1)" methodname="LaunchPolicy_FirstFallingStepTowardWallDoesNotEnterSlide" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1975858557" result="Passed" start-time="2026-10-20 05:43:44Z" end-time="2026-10-20 05:43:45Z" duration="0.015691" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1573" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.187729" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1565" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,False,20)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,False,20)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1831385727" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.024523" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=-1 release=False wind=0 t=0.02 x=-8.8 y=20
+P02 sign=-1 release=False wind=0 t=0.04 x=-7.60000038 y=20
+P02 sign=-1 release=False wind=0 t=0.06 x=-6.40000057 y=20
+P02 sign=-1 release=False wind=0 t=0.08 x=-5.200001 y=20
+P02 sign=-1 release=False wind=0 t=0.099999994 x=-4.000001 y=20
+P02 sign=-1 release=False wind=0 t=0.12 x=-2.80000114 y=20
+P02 sign=-1 release=False wind=0 t=0.14 x=-1.60000122 y=20
+P02 sign=-1 release=False wind=0 t=0.16 x=-0.4000013 y=20
+P02 sign=-1 release=False wind=0 t=0.179999992 x=0.799998641 y=20
+P02 sign=-1 release=False wind=0 t=0.199999988 x=1.59999859 y=20
+P02 sign=-1 release=False wind=0 t=0.22 x=2.39999866 y=20
+P02 sign=-1 release=False wind=3 t=0.02 x=-5.8 y=20
+P02 sign=-1 release=False wind=3 t=0.04 x=-4.60000038 y=20
+P02 sign=-1 release=False wind=3 t=0.06 x=-3.40000057 y=20
+P02 sign=-1 release=False wind=3 t=0.08 x=-2.20000076 y=20
+P02 sign=-1 release=False wind=3 t=0.099999994 x=-1.000001 y=20
+P02 sign=-1 release=False wind=3 t=0.12 x=0.199998856 y=20
+P02 sign=-1 release=False wind=3 t=0.14 x=1.39999878 y=20
+P02 sign=-1 release=False wind=3 t=0.16 x=2.59999871 y=20
+P02 sign=-1 release=False wind=3 t=0.179999992 x=3.79999876 y=20
+P02 sign=-1 release=False wind=3 t=0.199999988 x=4.59999847 y=20
+P02 sign=-1 release=False wind=3 t=0.22 x=5.39999866 y=20
+P02 sign=-1 release=False wind=-3 t=0.02 x=-11.8 y=20
+P02 sign=-1 release=False wind=-3 t=0.04 x=-10.6 y=20
+P02 sign=-1 release=False wind=-3 t=0.06 x=-9.400001 y=20
+P02 sign=-1 release=False wind=-3 t=0.08 x=-8.200001 y=20
+P02 sign=-1 release=False wind=-3 t=0.099999994 x=-7.000001 y=20
+P02 sign=-1 release=False wind=-3 t=0.12 x=-5.800001 y=20
+P02 sign=-1 release=False wind=-3 t=0.14 x=-4.60000134 y=20
+P02 sign=-1 release=False wind=-3 t=0.16 x=-3.40000153 y=20
+P02 sign=-1 release=False wind=-3 t=0.179999992 x=-2.20000172 y=20
+P02 sign=-1 release=False wind=-3 t=0.199999988 x=-1.40000176 y=20
+P02 sign=-1 release=False wind=-3 t=0.22 x=-0.6000018 y=20
+P02 sign=-1 release=False wind=-2 t=0.02 x=-10.8 y=20
+P02 sign=-1 release=False wind=-2 t=0.04 x=-9.6 y=20
+P02 sign=-1 release=False wind=-2 t=0.06 x=-8.400001 y=20
+P02 sign=-1 release=False wind=-2 t=0.08 x=-7.200001 y=20
+P02 sign=-1 release=False wind=-2 t=0.099999994 x=-6.000001 y=20
+P02 sign=-1 release=False wind=-2 t=0.12 x=-4.800001 y=20
+P02 sign=-1 release=False wind=-2 t=0.14 x=-3.60000134 y=20
+P02 sign=-1 release=False wind=-2 t=0.16 x=-2.40000153 y=20
+P02 sign=-1 release=False wind=-2 t=0.179999992 x=-1.2000016 y=20
+P02 sign=-1 release=False wind=-2 t=0.199999988 x=-0.400001645 y=20
+P02 sign=-1 release=False wind=-2 t=0.22 x=0.3999982 y=20
+]]></output>
+                </test-case>
+                <test-case id="1566" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,False,20)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,False,20)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="2138186921" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.020198" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=1 release=False wind=0 t=0.02 x=8.8 y=20
+P02 sign=1 release=False wind=0 t=0.04 x=7.60000038 y=20
+P02 sign=1 release=False wind=0 t=0.06 x=6.40000057 y=20
+P02 sign=1 release=False wind=0 t=0.08 x=5.200001 y=20
+P02 sign=1 release=False wind=0 t=0.099999994 x=4.000001 y=20
+P02 sign=1 release=False wind=0 t=0.12 x=2.80000114 y=20
+P02 sign=1 release=False wind=0 t=0.14 x=1.60000122 y=20
+P02 sign=1 release=False wind=0 t=0.16 x=0.4000013 y=20
+P02 sign=1 release=False wind=0 t=0.179999992 x=-0.799998641 y=20
+P02 sign=1 release=False wind=0 t=0.199999988 x=-1.59999859 y=20
+P02 sign=1 release=False wind=0 t=0.22 x=-2.39999866 y=20
+P02 sign=1 release=False wind=3 t=0.02 x=11.8 y=20
+P02 sign=1 release=False wind=3 t=0.04 x=10.6 y=20
+P02 sign=1 release=False wind=3 t=0.06 x=9.400001 y=20
+P02 sign=1 release=False wind=3 t=0.08 x=8.200001 y=20
+P02 sign=1 release=False wind=3 t=0.099999994 x=7.000001 y=20
+P02 sign=1 release=False wind=3 t=0.12 x=5.800001 y=20
+P02 sign=1 release=False wind=3 t=0.14 x=4.60000134 y=20
+P02 sign=1 release=False wind=3 t=0.16 x=3.40000153 y=20
+P02 sign=1 release=False wind=3 t=0.179999992 x=2.20000172 y=20
+P02 sign=1 release=False wind=3 t=0.199999988 x=1.40000176 y=20
+P02 sign=1 release=False wind=3 t=0.22 x=0.6000018 y=20
+P02 sign=1 release=False wind=-3 t=0.02 x=5.8 y=20
+P02 sign=1 release=False wind=-3 t=0.04 x=4.60000038 y=20
+P02 sign=1 release=False wind=-3 t=0.06 x=3.40000057 y=20
+P02 sign=1 release=False wind=-3 t=0.08 x=2.20000076 y=20
+P02 sign=1 release=False wind=-3 t=0.099999994 x=1.000001 y=20
+P02 sign=1 release=False wind=-3 t=0.12 x=-0.199998856 y=20
+P02 sign=1 release=False wind=-3 t=0.14 x=-1.39999878 y=20
+P02 sign=1 release=False wind=-3 t=0.16 x=-2.59999871 y=20
+P02 sign=1 release=False wind=-3 t=0.179999992 x=-3.79999876 y=20
+P02 sign=1 release=False wind=-3 t=0.199999988 x=-4.59999847 y=20
+P02 sign=1 release=False wind=-3 t=0.22 x=-5.39999866 y=20
+P02 sign=1 release=False wind=-2 t=0.02 x=6.8 y=20
+P02 sign=1 release=False wind=-2 t=0.04 x=5.60000038 y=20
+P02 sign=1 release=False wind=-2 t=0.06 x=4.40000057 y=20
+P02 sign=1 release=False wind=-2 t=0.08 x=3.20000076 y=20
+P02 sign=1 release=False wind=-2 t=0.099999994 x=2.000001 y=20
+P02 sign=1 release=False wind=-2 t=0.12 x=0.800001144 y=20
+P02 sign=1 release=False wind=-2 t=0.14 x=-0.399998784 y=20
+P02 sign=1 release=False wind=-2 t=0.16 x=-1.59999871 y=20
+P02 sign=1 release=False wind=-2 t=0.179999992 x=-2.79999876 y=20
+P02 sign=1 release=False wind=-2 t=0.199999988 x=-3.59999871 y=20
+P02 sign=1 release=False wind=-2 t=0.22 x=-4.39999866 y=20
+]]></output>
+                </test-case>
+                <test-case id="1567" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,True,20)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,True,20)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1205189186" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.020420" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=-1 release=True wind=0 t=0.02 x=-9.6 y=20
+P02 sign=-1 release=True wind=0 t=0.04 x=-9.200001 y=20
+P02 sign=-1 release=True wind=0 t=0.06 x=-8.800001 y=20
+P02 sign=-1 release=True wind=0 t=0.08 x=-8.400002 y=20
+P02 sign=-1 release=True wind=0 t=0.099999994 x=-8.000002 y=20
+P02 sign=-1 release=True wind=0 t=0.12 x=-7.600002 y=20
+P02 sign=-1 release=True wind=0 t=0.14 x=-7.20000172 y=20
+P02 sign=-1 release=True wind=0 t=0.16 x=-6.80000162 y=20
+P02 sign=-1 release=True wind=0 t=0.179999992 x=-6.40000153 y=20
+P02 sign=-1 release=True wind=0 t=0.199999988 x=-6.00000143 y=20
+P02 sign=-1 release=True wind=0 t=0.22 x=-5.60000134 y=20
+P02 sign=-1 release=True wind=3 t=0.02 x=-6.60000038 y=20
+P02 sign=-1 release=True wind=3 t=0.04 x=-6.200001 y=20
+P02 sign=-1 release=True wind=3 t=0.06 x=-5.800001 y=20
+P02 sign=-1 release=True wind=3 t=0.08 x=-5.40000153 y=20
+P02 sign=-1 release=True wind=3 t=0.099999994 x=-5.000002 y=20
+P02 sign=-1 release=True wind=3 t=0.12 x=-4.600002 y=20
+P02 sign=-1 release=True wind=3 t=0.14 x=-4.20000172 y=20
+P02 sign=-1 release=True wind=3 t=0.16 x=-3.80000162 y=20
+P02 sign=-1 release=True wind=3 t=0.179999992 x=-3.40000153 y=20
+P02 sign=-1 release=True wind=3 t=0.199999988 x=-3.00000143 y=20
+P02 sign=-1 release=True wind=3 t=0.22 x=-2.60000134 y=20
+P02 sign=-1 release=True wind=-3 t=0.02 x=-12.6 y=20
+P02 sign=-1 release=True wind=-3 t=0.04 x=-12.2000008 y=20
+P02 sign=-1 release=True wind=-3 t=0.06 x=-11.8000011 y=20
+P02 sign=-1 release=True wind=-3 t=0.08 x=-11.4000015 y=20
+P02 sign=-1 release=True wind=-3 t=0.099999994 x=-11.0000019 y=20
+P02 sign=-1 release=True wind=-3 t=0.12 x=-10.6000023 y=20
+P02 sign=-1 release=True wind=-3 t=0.14 x=-10.2000027 y=20
+P02 sign=-1 release=True wind=-3 t=0.16 x=-9.800003 y=20
+P02 sign=-1 release=True wind=-3 t=0.179999992 x=-9.400003 y=20
+P02 sign=-1 release=True wind=-3 t=0.199999988 x=-9.000004 y=20
+P02 sign=-1 release=True wind=-3 t=0.22 x=-8.600004 y=20
+P02 sign=-1 release=True wind=-2 t=0.02 x=-11.6 y=20
+P02 sign=-1 release=True wind=-2 t=0.04 x=-11.2000008 y=20
+P02 sign=-1 release=True wind=-2 t=0.06 x=-10.8000011 y=20
+P02 sign=-1 release=True wind=-2 t=0.08 x=-10.4000015 y=20
+P02 sign=-1 release=True wind=-2 t=0.099999994 x=-10.0000019 y=20
+P02 sign=-1 release=True wind=-2 t=0.12 x=-9.600002 y=20
+P02 sign=-1 release=True wind=-2 t=0.14 x=-9.200003 y=20
+P02 sign=-1 release=True wind=-2 t=0.16 x=-8.800003 y=20
+P02 sign=-1 release=True wind=-2 t=0.179999992 x=-8.400003 y=20
+P02 sign=-1 release=True wind=-2 t=0.199999988 x=-8.000004 y=20
+P02 sign=-1 release=True wind=-2 t=0.22 x=-7.60000372 y=20
+]]></output>
+                </test-case>
+                <test-case id="1568" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,True,20)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,True,20)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1384338445" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.019659" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=1 release=True wind=0 t=0.02 x=9.6 y=20
+P02 sign=1 release=True wind=0 t=0.04 x=9.200001 y=20
+P02 sign=1 release=True wind=0 t=0.06 x=8.800001 y=20
+P02 sign=1 release=True wind=0 t=0.08 x=8.400002 y=20
+P02 sign=1 release=True wind=0 t=0.099999994 x=8.000002 y=20
+P02 sign=1 release=True wind=0 t=0.12 x=7.600002 y=20
+P02 sign=1 release=True wind=0 t=0.14 x=7.20000172 y=20
+P02 sign=1 release=True wind=0 t=0.16 x=6.80000162 y=20
+P02 sign=1 release=True wind=0 t=0.179999992 x=6.40000153 y=20
+P02 sign=1 release=True wind=0 t=0.199999988 x=6.00000143 y=20
+P02 sign=1 release=True wind=0 t=0.22 x=5.60000134 y=20
+P02 sign=1 release=True wind=3 t=0.02 x=12.6 y=20
+P02 sign=1 release=True wind=3 t=0.04 x=12.2000008 y=20
+P02 sign=1 release=True wind=3 t=0.06 x=11.8000011 y=20
+P02 sign=1 release=True wind=3 t=0.08 x=11.4000015 y=20
+P02 sign=1 release=True wind=3 t=0.099999994 x=11.0000019 y=20
+P02 sign=1 release=True wind=3 t=0.12 x=10.6000023 y=20
+P02 sign=1 release=True wind=3 t=0.14 x=10.2000027 y=20
+P02 sign=1 release=True wind=3 t=0.16 x=9.800003 y=20
+P02 sign=1 release=True wind=3 t=0.179999992 x=9.400003 y=20
+P02 sign=1 release=True wind=3 t=0.199999988 x=9.000004 y=20
+P02 sign=1 release=True wind=3 t=0.22 x=8.600004 y=20
+P02 sign=1 release=True wind=-3 t=0.02 x=6.60000038 y=20
+P02 sign=1 release=True wind=-3 t=0.04 x=6.200001 y=20
+P02 sign=1 release=True wind=-3 t=0.06 x=5.800001 y=20
+P02 sign=1 release=True wind=-3 t=0.08 x=5.40000153 y=20
+P02 sign=1 release=True wind=-3 t=0.099999994 x=5.000002 y=20
+P02 sign=1 release=True wind=-3 t=0.12 x=4.600002 y=20
+P02 sign=1 release=True wind=-3 t=0.14 x=4.20000172 y=20
+P02 sign=1 release=True wind=-3 t=0.16 x=3.80000162 y=20
+P02 sign=1 release=True wind=-3 t=0.179999992 x=3.40000153 y=20
+P02 sign=1 release=True wind=-3 t=0.199999988 x=3.00000143 y=20
+P02 sign=1 release=True wind=-3 t=0.22 x=2.60000134 y=20
+P02 sign=1 release=True wind=-2 t=0.02 x=7.60000038 y=20
+P02 sign=1 release=True wind=-2 t=0.04 x=7.200001 y=20
+P02 sign=1 release=True wind=-2 t=0.06 x=6.800001 y=20
+P02 sign=1 release=True wind=-2 t=0.08 x=6.40000153 y=20
+P02 sign=1 release=True wind=-2 t=0.099999994 x=6.000002 y=20
+P02 sign=1 release=True wind=-2 t=0.12 x=5.600002 y=20
+P02 sign=1 release=True wind=-2 t=0.14 x=5.20000172 y=20
+P02 sign=1 release=True wind=-2 t=0.16 x=4.80000162 y=20
+P02 sign=1 release=True wind=-2 t=0.179999992 x=4.40000153 y=20
+P02 sign=1 release=True wind=-2 t=0.199999988 x=4.00000143 y=20
+P02 sign=1 release=True wind=-2 t=0.22 x=3.60000134 y=20
+]]></output>
+                </test-case>
+                <test-case id="1569" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,False,15)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,False,15)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1795615267" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.023960" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=-1 release=False wind=0 t=0.02 x=-8.8 y=15
+P02 sign=-1 release=False wind=0 t=0.04 x=-7.60000038 y=15
+P02 sign=-1 release=False wind=0 t=0.06 x=-6.40000057 y=15
+P02 sign=-1 release=False wind=0 t=0.08 x=-5.200001 y=15
+P02 sign=-1 release=False wind=0 t=0.099999994 x=-4.000001 y=15
+P02 sign=-1 release=False wind=0 t=0.12 x=-2.80000114 y=15
+P02 sign=-1 release=False wind=0 t=0.14 x=-1.60000122 y=15
+P02 sign=-1 release=False wind=0 t=0.16 x=-0.4000013 y=15
+P02 sign=-1 release=False wind=0 t=0.179999992 x=0.799998641 y=15
+P02 sign=-1 release=False wind=0 t=0.199999988 x=1.59999859 y=15
+P02 sign=-1 release=False wind=0 t=0.22 x=2.39999866 y=15
+P02 sign=-1 release=False wind=3 t=0.02 x=-5.8 y=15
+P02 sign=-1 release=False wind=3 t=0.04 x=-4.60000038 y=15
+P02 sign=-1 release=False wind=3 t=0.06 x=-3.40000057 y=15
+P02 sign=-1 release=False wind=3 t=0.08 x=-2.20000076 y=15
+P02 sign=-1 release=False wind=3 t=0.099999994 x=-1.000001 y=15
+P02 sign=-1 release=False wind=3 t=0.12 x=0.199998856 y=15
+P02 sign=-1 release=False wind=3 t=0.14 x=1.39999878 y=15
+P02 sign=-1 release=False wind=3 t=0.16 x=2.59999871 y=15
+P02 sign=-1 release=False wind=3 t=0.179999992 x=3.79999876 y=15
+P02 sign=-1 release=False wind=3 t=0.199999988 x=4.59999847 y=15
+P02 sign=-1 release=False wind=3 t=0.22 x=5.39999866 y=15
+P02 sign=-1 release=False wind=-3 t=0.02 x=-11.8 y=15
+P02 sign=-1 release=False wind=-3 t=0.04 x=-10.6 y=15
+P02 sign=-1 release=False wind=-3 t=0.06 x=-9.400001 y=15
+P02 sign=-1 release=False wind=-3 t=0.08 x=-8.200001 y=15
+P02 sign=-1 release=False wind=-3 t=0.099999994 x=-7.000001 y=15
+P02 sign=-1 release=False wind=-3 t=0.12 x=-5.800001 y=15
+P02 sign=-1 release=False wind=-3 t=0.14 x=-4.60000134 y=15
+P02 sign=-1 release=False wind=-3 t=0.16 x=-3.40000153 y=15
+P02 sign=-1 release=False wind=-3 t=0.179999992 x=-2.20000172 y=15
+P02 sign=-1 release=False wind=-3 t=0.199999988 x=-1.40000176 y=15
+P02 sign=-1 release=False wind=-3 t=0.22 x=-0.6000018 y=15
+P02 sign=-1 release=False wind=-2 t=0.02 x=-10.8 y=15
+P02 sign=-1 release=False wind=-2 t=0.04 x=-9.6 y=15
+P02 sign=-1 release=False wind=-2 t=0.06 x=-8.400001 y=15
+P02 sign=-1 release=False wind=-2 t=0.08 x=-7.200001 y=15
+P02 sign=-1 release=False wind=-2 t=0.099999994 x=-6.000001 y=15
+P02 sign=-1 release=False wind=-2 t=0.12 x=-4.800001 y=15
+P02 sign=-1 release=False wind=-2 t=0.14 x=-3.60000134 y=15
+P02 sign=-1 release=False wind=-2 t=0.16 x=-2.40000153 y=15
+P02 sign=-1 release=False wind=-2 t=0.179999992 x=-1.2000016 y=15
+P02 sign=-1 release=False wind=-2 t=0.199999988 x=-0.400001645 y=15
+P02 sign=-1 release=False wind=-2 t=0.22 x=0.3999982 y=15
+]]></output>
+                </test-case>
+                <test-case id="1570" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,False,15)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,False,15)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1307944961" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.024638" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=1 release=False wind=0 t=0.02 x=8.8 y=15
+P02 sign=1 release=False wind=0 t=0.04 x=7.60000038 y=15
+P02 sign=1 release=False wind=0 t=0.06 x=6.40000057 y=15
+P02 sign=1 release=False wind=0 t=0.08 x=5.200001 y=15
+P02 sign=1 release=False wind=0 t=0.099999994 x=4.000001 y=15
+P02 sign=1 release=False wind=0 t=0.12 x=2.80000114 y=15
+P02 sign=1 release=False wind=0 t=0.14 x=1.60000122 y=15
+P02 sign=1 release=False wind=0 t=0.16 x=0.4000013 y=15
+P02 sign=1 release=False wind=0 t=0.179999992 x=-0.799998641 y=15
+P02 sign=1 release=False wind=0 t=0.199999988 x=-1.59999859 y=15
+P02 sign=1 release=False wind=0 t=0.22 x=-2.39999866 y=15
+P02 sign=1 release=False wind=3 t=0.02 x=11.8 y=15
+P02 sign=1 release=False wind=3 t=0.04 x=10.6 y=15
+P02 sign=1 release=False wind=3 t=0.06 x=9.400001 y=15
+P02 sign=1 release=False wind=3 t=0.08 x=8.200001 y=15
+P02 sign=1 release=False wind=3 t=0.099999994 x=7.000001 y=15
+P02 sign=1 release=False wind=3 t=0.12 x=5.800001 y=15
+P02 sign=1 release=False wind=3 t=0.14 x=4.60000134 y=15
+P02 sign=1 release=False wind=3 t=0.16 x=3.40000153 y=15
+P02 sign=1 release=False wind=3 t=0.179999992 x=2.20000172 y=15
+P02 sign=1 release=False wind=3 t=0.199999988 x=1.40000176 y=15
+P02 sign=1 release=False wind=3 t=0.22 x=0.6000018 y=15
+P02 sign=1 release=False wind=-3 t=0.02 x=5.8 y=15
+P02 sign=1 release=False wind=-3 t=0.04 x=4.60000038 y=15
+P02 sign=1 release=False wind=-3 t=0.06 x=3.40000057 y=15
+P02 sign=1 release=False wind=-3 t=0.08 x=2.20000076 y=15
+P02 sign=1 release=False wind=-3 t=0.099999994 x=1.000001 y=15
+P02 sign=1 release=False wind=-3 t=0.12 x=-0.199998856 y=15
+P02 sign=1 release=False wind=-3 t=0.14 x=-1.39999878 y=15
+P02 sign=1 release=False wind=-3 t=0.16 x=-2.59999871 y=15
+P02 sign=1 release=False wind=-3 t=0.179999992 x=-3.79999876 y=15
+P02 sign=1 release=False wind=-3 t=0.199999988 x=-4.59999847 y=15
+P02 sign=1 release=False wind=-3 t=0.22 x=-5.39999866 y=15
+P02 sign=1 release=False wind=-2 t=0.02 x=6.8 y=15
+P02 sign=1 release=False wind=-2 t=0.04 x=5.60000038 y=15
+P02 sign=1 release=False wind=-2 t=0.06 x=4.40000057 y=15
+P02 sign=1 release=False wind=-2 t=0.08 x=3.20000076 y=15
+P02 sign=1 release=False wind=-2 t=0.099999994 x=2.000001 y=15
+P02 sign=1 release=False wind=-2 t=0.12 x=0.800001144 y=15
+P02 sign=1 release=False wind=-2 t=0.14 x=-0.399998784 y=15
+P02 sign=1 release=False wind=-2 t=0.16 x=-1.59999871 y=15
+P02 sign=1 release=False wind=-2 t=0.179999992 x=-2.79999876 y=15
+P02 sign=1 release=False wind=-2 t=0.199999988 x=-3.59999871 y=15
+P02 sign=1 release=False wind=-2 t=0.22 x=-4.39999866 y=15
+]]></output>
+                </test-case>
+                <test-case id="1571" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,True,15)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(-1,True,15)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="2092583929" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.023004" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=-1 release=True wind=0 t=0.02 x=-9.6 y=15
+P02 sign=-1 release=True wind=0 t=0.04 x=-9.200001 y=15
+P02 sign=-1 release=True wind=0 t=0.06 x=-8.800001 y=15
+P02 sign=-1 release=True wind=0 t=0.08 x=-8.400002 y=15
+P02 sign=-1 release=True wind=0 t=0.099999994 x=-8.000002 y=15
+P02 sign=-1 release=True wind=0 t=0.12 x=-7.600002 y=15
+P02 sign=-1 release=True wind=0 t=0.14 x=-7.20000172 y=15
+P02 sign=-1 release=True wind=0 t=0.16 x=-6.80000162 y=15
+P02 sign=-1 release=True wind=0 t=0.179999992 x=-6.40000153 y=15
+P02 sign=-1 release=True wind=0 t=0.199999988 x=-6.00000143 y=15
+P02 sign=-1 release=True wind=0 t=0.22 x=-5.60000134 y=15
+P02 sign=-1 release=True wind=3 t=0.02 x=-6.60000038 y=15
+P02 sign=-1 release=True wind=3 t=0.04 x=-6.200001 y=15
+P02 sign=-1 release=True wind=3 t=0.06 x=-5.800001 y=15
+P02 sign=-1 release=True wind=3 t=0.08 x=-5.40000153 y=15
+P02 sign=-1 release=True wind=3 t=0.099999994 x=-5.000002 y=15
+P02 sign=-1 release=True wind=3 t=0.12 x=-4.600002 y=15
+P02 sign=-1 release=True wind=3 t=0.14 x=-4.20000172 y=15
+P02 sign=-1 release=True wind=3 t=0.16 x=-3.80000162 y=15
+P02 sign=-1 release=True wind=3 t=0.179999992 x=-3.40000153 y=15
+P02 sign=-1 release=True wind=3 t=0.199999988 x=-3.00000143 y=15
+P02 sign=-1 release=True wind=3 t=0.22 x=-2.60000134 y=15
+P02 sign=-1 release=True wind=-3 t=0.02 x=-12.6 y=15
+P02 sign=-1 release=True wind=-3 t=0.04 x=-12.2000008 y=15
+P02 sign=-1 release=True wind=-3 t=0.06 x=-11.8000011 y=15
+P02 sign=-1 release=True wind=-3 t=0.08 x=-11.4000015 y=15
+P02 sign=-1 release=True wind=-3 t=0.099999994 x=-11.0000019 y=15
+P02 sign=-1 release=True wind=-3 t=0.12 x=-10.6000023 y=15
+P02 sign=-1 release=True wind=-3 t=0.14 x=-10.2000027 y=15
+P02 sign=-1 release=True wind=-3 t=0.16 x=-9.800003 y=15
+P02 sign=-1 release=True wind=-3 t=0.179999992 x=-9.400003 y=15
+P02 sign=-1 release=True wind=-3 t=0.199999988 x=-9.000004 y=15
+P02 sign=-1 release=True wind=-3 t=0.22 x=-8.600004 y=15
+P02 sign=-1 release=True wind=-2 t=0.02 x=-11.6 y=15
+P02 sign=-1 release=True wind=-2 t=0.04 x=-11.2000008 y=15
+P02 sign=-1 release=True wind=-2 t=0.06 x=-10.8000011 y=15
+P02 sign=-1 release=True wind=-2 t=0.08 x=-10.4000015 y=15
+P02 sign=-1 release=True wind=-2 t=0.099999994 x=-10.0000019 y=15
+P02 sign=-1 release=True wind=-2 t=0.12 x=-9.600002 y=15
+P02 sign=-1 release=True wind=-2 t=0.14 x=-9.200003 y=15
+P02 sign=-1 release=True wind=-2 t=0.16 x=-8.800003 y=15
+P02 sign=-1 release=True wind=-2 t=0.179999992 x=-8.400003 y=15
+P02 sign=-1 release=True wind=-2 t=0.199999988 x=-8.000004 y=15
+P02 sign=-1 release=True wind=-2 t=0.22 x=-7.60000372 y=15
+]]></output>
+                </test-case>
+                <test-case id="1572" name="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,True,15)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind(1,True,15)" methodname="LaunchPolicy_HorizontalCurveMatchesOrdinaryAirWithWind" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="547003583" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.023060" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P02 sign=1 release=True wind=0 t=0.02 x=9.6 y=15
+P02 sign=1 release=True wind=0 t=0.04 x=9.200001 y=15
+P02 sign=1 release=True wind=0 t=0.06 x=8.800001 y=15
+P02 sign=1 release=True wind=0 t=0.08 x=8.400002 y=15
+P02 sign=1 release=True wind=0 t=0.099999994 x=8.000002 y=15
+P02 sign=1 release=True wind=0 t=0.12 x=7.600002 y=15
+P02 sign=1 release=True wind=0 t=0.14 x=7.20000172 y=15
+P02 sign=1 release=True wind=0 t=0.16 x=6.80000162 y=15
+P02 sign=1 release=True wind=0 t=0.179999992 x=6.40000153 y=15
+P02 sign=1 release=True wind=0 t=0.199999988 x=6.00000143 y=15
+P02 sign=1 release=True wind=0 t=0.22 x=5.60000134 y=15
+P02 sign=1 release=True wind=3 t=0.02 x=12.6 y=15
+P02 sign=1 release=True wind=3 t=0.04 x=12.2000008 y=15
+P02 sign=1 release=True wind=3 t=0.06 x=11.8000011 y=15
+P02 sign=1 release=True wind=3 t=0.08 x=11.4000015 y=15
+P02 sign=1 release=True wind=3 t=0.099999994 x=11.0000019 y=15
+P02 sign=1 release=True wind=3 t=0.12 x=10.6000023 y=15
+P02 sign=1 release=True wind=3 t=0.14 x=10.2000027 y=15
+P02 sign=1 release=True wind=3 t=0.16 x=9.800003 y=15
+P02 sign=1 release=True wind=3 t=0.179999992 x=9.400003 y=15
+P02 sign=1 release=True wind=3 t=0.199999988 x=9.000004 y=15
+P02 sign=1 release=True wind=3 t=0.22 x=8.600004 y=15
+P02 sign=1 release=True wind=-3 t=0.02 x=6.60000038 y=15
+P02 sign=1 release=True wind=-3 t=0.04 x=6.200001 y=15
+P02 sign=1 release=True wind=-3 t=0.06 x=5.800001 y=15
+P02 sign=1 release=True wind=-3 t=0.08 x=5.40000153 y=15
+P02 sign=1 release=True wind=-3 t=0.099999994 x=5.000002 y=15
+P02 sign=1 release=True wind=-3 t=0.12 x=4.600002 y=15
+P02 sign=1 release=True wind=-3 t=0.14 x=4.20000172 y=15
+P02 sign=1 release=True wind=-3 t=0.16 x=3.80000162 y=15
+P02 sign=1 release=True wind=-3 t=0.179999992 x=3.40000153 y=15
+P02 sign=1 release=True wind=-3 t=0.199999988 x=3.00000143 y=15
+P02 sign=1 release=True wind=-3 t=0.22 x=2.60000134 y=15
+P02 sign=1 release=True wind=-2 t=0.02 x=7.60000038 y=15
+P02 sign=1 release=True wind=-2 t=0.04 x=7.200001 y=15
+P02 sign=1 release=True wind=-2 t=0.06 x=6.800001 y=15
+P02 sign=1 release=True wind=-2 t=0.08 x=6.40000153 y=15
+P02 sign=1 release=True wind=-2 t=0.099999994 x=6.000002 y=15
+P02 sign=1 release=True wind=-2 t=0.12 x=5.600002 y=15
+P02 sign=1 release=True wind=-2 t=0.14 x=5.20000172 y=15
+P02 sign=1 release=True wind=-2 t=0.16 x=4.80000162 y=15
+P02 sign=1 release=True wind=-2 t=0.179999992 x=4.40000153 y=15
+P02 sign=1 release=True wind=-2 t=0.199999988 x=4.00000143 y=15
+P02 sign=1 release=True wind=-2 t=0.22 x=3.60000134 y=15
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1581" name="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.068956" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1577" name="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(-1,False)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(-1,False)" methodname="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1531603032" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.021201" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1578" name="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(1,False)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(1,False)" methodname="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="568121669" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.016062" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1579" name="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(-1,True)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(-1,True)" methodname="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1188641909" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.013404" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1580" name="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(1,True)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump(1,True)" methodname="LaunchPolicy_RefreshBeforeAcceptedThenRealWallJump" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1525862257" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.013253" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1582" name="LaunchPolicy_RejectionReplacementAndOwnerCleanup" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RejectionReplacementAndOwnerCleanup" methodname="LaunchPolicy_RejectionReplacementAndOwnerCleanup" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="982918967" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:45Z" duration="0.018105" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1593" name="LaunchPolicy_RenderRateAndPhysicsStepMatrix" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_RenderRateAndPhysicsStepMatrix" methodname="LaunchPolicy_RenderRateAndPhysicsStepMatrix" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1631116092" result="Passed" start-time="2026-10-20 05:43:45Z" end-time="2026-10-20 05:43:47Z" duration="2.482220" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[P02 render requested=30 observedMeanFPS=29.9444675 fixedStep=0.02 frames=12 steps=20
+P02 render requested=30 observedMeanFPS=30.0777855 fixedStep=0.0166666675 frames=13 steps=24
+P02 render requested=120 observedMeanFPS=127.296173 fixedStep=0.02 frames=52 steps=20
+P02 render requested=120 observedMeanFPS=119.699875 fixedStep=0.0166666675 frames=48 steps=24
+P02 render requested=240 observedMeanFPS=233.8765 fixedStep=0.02 frames=94 steps=20
+P02 render requested=240 observedMeanFPS=229.192825 fixedStep=0.0166666675 frames=92 steps=24
+]]></output>
+              </test-case>
+              <test-case id="1584" name="LaunchPolicy_SameStepOrderAndActionInputDoNotLeak" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_SameStepOrderAndActionInputDoNotLeak" methodname="LaunchPolicy_SameStepOrderAndActionInputDoNotLeak" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1275908562" result="Passed" start-time="2026-10-20 05:43:47Z" end-time="2026-10-20 05:43:47Z" duration="0.042513" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1576" name="LaunchPolicy_SupportDepartureAndWindComposeOnce" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_SupportDepartureAndWindComposeOnce" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 05:43:47Z" end-time="2026-10-20 05:43:47Z" duration="0.107166" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1574" name="LaunchPolicy_SupportDepartureAndWindComposeOnce(ContinueVelocity)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_SupportDepartureAndWindComposeOnce(ContinueVelocity)" methodname="LaunchPolicy_SupportDepartureAndWindComposeOnce" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1577318351" result="Passed" start-time="2026-10-20 05:43:47Z" end-time="2026-10-20 05:43:47Z" duration="0.083036" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1575" name="LaunchPolicy_SupportDepartureAndWindComposeOnce(StopVertical)" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_SupportDepartureAndWindComposeOnce(StopVertical)" methodname="LaunchPolicy_SupportDepartureAndWindComposeOnce" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="720373871" result="Passed" start-time="2026-10-20 05:43:47Z" end-time="2026-10-20 05:43:47Z" duration="0.015300" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1564" name="LaunchPolicy_ValidationAndDefaults" fullname="Game.Player.Tests.PlayerStateTests.LaunchPolicy_ValidationAndDefaults" methodname="LaunchPolicy_ValidationAndDefaults" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1372955383" result="Passed" start-time="2026-10-20 05:43:47Z" end-time="2026-10-20 05:43:47Z" duration="0.013141" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\wuyu\My\ember-unity-framework\docs\dev\evidence\t03-launch-policy\special-02.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

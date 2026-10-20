@@ -1,4 +1,4 @@
-﻿# 公共机关、检查点与关卡接入
+# 公共机关、检查点与关卡接入
 
 维护源为活动 Assets 的 Player、Entity 与 Game.State；不是框架 Manager。保存/版本/发布和测试作业的准确状态见开发仓库公共能力实施记录。本文所有命名均对应实际源码。
 
@@ -11,6 +11,8 @@ Context.Support.Velocity 与 ExternalMotion.EnvironmentVelocity 分开统计，�
 上升平台通过 ConstrainForRider 按玩家主碰撞体头顶净空限速。宿主不得在玩家固定步之后再次覆盖平台速度；恢复运动由宿主下次发令决定。旋转承载、多驱动器争抢、复杂多形状乘员不属于本轮保证范围。风施加于平台还是玩家由项目分别提交，不含任何产品风速公式。
 
 ## 弹射（T03）
+
+可选竖直保持/水平控制与接受时墙跳资格刷新见[弹射策略](launch-policy.md)；该扩展已通过 Player 回归，随 0.9.0 交付，以下无选项调用仍保持原默认行为。
 
 公共协议为 Game.Entity.ILaunchTarget2D.TryLaunch(Behaviour, LaunchRequest2D)。玩家添加 PlayerLaunchTarget2D，平移载具添加 TranslationSupportLaunchTarget2D。LaunchZone2D 使用触发器按目标去重，冷却按游戏秒数，支持多碰撞体目标。
 

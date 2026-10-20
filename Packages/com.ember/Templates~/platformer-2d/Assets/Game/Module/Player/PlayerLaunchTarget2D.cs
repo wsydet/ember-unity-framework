@@ -34,13 +34,20 @@ namespace Game.Player
                 return LaunchResult2D.Busy;
             if (!context.Actions.InterruptLaunch()) return LaunchResult2D.Busy;
             // 退出回调可能禁用宿主；不能向失效或被替换的会话登记弹射。
-            if (!player.IsRunning || !ReferenceEquals(player.Context, context) || owner == null || !owner.isActiveAndEnabled)
+            if (!isActiveAndEnabled || !player.IsRunning || !ReferenceEquals(player.Context, context) ||
+                context.Life?.IsDead == true || owner == null || !owner.isActiveAndEnabled)
                 return LaunchResult2D.Inactive;
-            context.ExternalMotion.Clear();
+            bool preserveHorizontal = request.Horizontal == LaunchHorizontal2D.PreserveControl;
+            if (preserveHorizontal) context.ExternalMotion.ClearOverridesForLaunch();
+            else context.ExternalMotion.Clear();
             _lease = context.ExternalMotion.Register(owner, new PlayerExternalMotionRequest(request.SourceId,
                 request.Mode == LaunchMode2D.InitialVelocity ? PlayerExternalMotionMode.InitialVelocity : PlayerExternalMotionMode.ForcedRise,
                 request.Velocity, request.Duration, lockInput: request.Mode == LaunchMode2D.ConstantRise,
-                stopVerticalOnEnd: request.End == LaunchEnd2D.StopVertical));
+                stopVerticalOnEnd: request.End == LaunchEnd2D.StopVertical,
+                preserveHorizontalControl: preserveHorizontal));
+            // 登记已成功；资格先于同步 Accepted 回调可见。拒绝路径不会到达这里。
+            if (request.WallQualification == LaunchWallQualification2D.RefreshFirstVertical)
+                context.Wall.RefreshFirstVertical();
             if (Accepted != null)
                 foreach (Action<LaunchRequest2D> callback in Accepted.GetInvocationList())
                     try { callback(request); }

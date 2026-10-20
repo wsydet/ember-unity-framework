@@ -1,0 +1,29 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"error\":null,\"data\":{\"result\":{\"framework\":\"0.20.4\",\"compiling\":false,\"playing\":false,\"editing\":{\"templateId\":\"platformer-2d\",\"templateVersion\":\"0.9.0\",\"contentHash\":\"f640fe07081a1958665c2ed9194196ea\",\"loadedAt\":\"2026-10-20 14:35:37\"}},\"compiler\":\"codedom\"},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "error": null,
+    "data": {
+      "result": {
+        "framework": "0.20.4",
+        "compiling": false,
+        "playing": false,
+        "editing": {
+          "templateId": "platformer-2d",
+          "templateVersion": "0.9.0",
+          "contentHash": "f640fe07081a1958665c2ed9194196ea",
+          "loadedAt": "2026-10-20 14:35:37"
+        }
+      },
+      "compiler": "codedom"
+    },
+    "hint": null
+  },
+  "isError": false
+}

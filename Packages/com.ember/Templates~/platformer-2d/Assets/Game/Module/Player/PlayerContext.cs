@@ -54,7 +54,8 @@ namespace Game.Player
         public bool CanStartWallJump => !Ledge.IsActive && !DropThrough.IsActive && Input.JumpRequested && !JumpWindow.CanJump && !JumpWindow.HasGroundSupport
             && Wall.ProtectionRemaining <= 0 && ContactWall != 0
             && Abilities.Query(PlayerWallJumpState.ABILITY_ID) == EntityUseStatus.Available;
-        public bool CanContinueWallSlide => !Ledge.IsActive && !DropThrough.IsActive && !JumpWindow.HasGroundSupport && Motor.Velocity.y <= 0
+        public bool CanContinueWallSlide => !ExternalMotion.PreservesHorizontalDuringRise &&
+            !Ledge.IsActive && !DropThrough.IsActive && !JumpWindow.HasGroundSupport && Motor.Velocity.y <= 0
             && Wall.ProtectionRemaining <= 0 && ContactWall != 0 && Input.Horizontal * ContactWall > 0
             && Abilities.TryGet(PlayerWallSlideState.ABILITY_ID, out var slide) && slide.IsEnabled && slide.IsOpen;
         public bool CanStartWallSlide => !Wall.Sliding && CanContinueWallSlide

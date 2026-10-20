@@ -4,6 +4,8 @@
 
 ## 外部运动入口
 
+新增可选 `preserveHorizontalControl`（仅 ForcedRise）及其通用弹射接线见[弹射策略](launch-policy.md)。本页历史验证数字不覆盖该扩展，其本轮回归结果见弹射策略说明。
+
 每个运行会话的 `player.Context.ExternalMotion` 独立登记来源。调用在 Unity 主线程执行，owner 必须是启用的 `Behaviour`；返回 `PlayerExternalMotionLease`，调用方在退出范围、禁用、销毁或交互关闭时 Dispose。会话还会在下一次玩家更新前剔除失效 owner，死亡和会话释放使全部旧凭证失效。
 
 ```csharp

@@ -21,6 +21,7 @@ namespace Game.Player
         // --------------------------------------------------------
         #region 外部方法
         internal PlayerWallMotion(PlayerContext context) => _context = context;
+        internal void RefreshFirstVertical() => VerticalAvailable = true;
         internal void BeginJump(int wall)
         {
             Cancel(); OriginWall = wall;

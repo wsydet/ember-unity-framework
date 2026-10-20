@@ -16,6 +16,8 @@ namespace Game.Entity
         [SerializeField, Min(0)] private float _cooldown = .2f;
         [SerializeField] private LaunchEnd2D _end;
         [SerializeField] private LaunchInterrupt2D _interrupt = LaunchInterrupt2D.ReplaceExternalMotion;
+        [SerializeField] private LaunchHorizontal2D _horizontal;
+        [SerializeField] private LaunchWallQualification2D _wallQualification;
         #endregion
         // --------------------------------------------------------
         #region 内部参数
@@ -42,7 +44,8 @@ namespace Game.Entity
                 if (component is not ILaunchTarget2D target) continue;
                 double now = Time.timeAsDouble;
                 if (_accepted.TryGetValue(component, out var previous) && now - previous <= Math.Max(_cooldown, .000001f)) return false;
-                var request = new LaunchRequest2D(_sourceId, _velocity, _mode, _duration, _end, _interrupt);
+                var request = new LaunchRequest2D(_sourceId, _velocity, _mode, _duration, _end, _interrupt,
+                    _horizontal, _wallQualification);
                 if (target.TryLaunch(this, request) != LaunchResult2D.Accepted) return false;
                 _accepted[component] = now;
                 if (Launched != null)

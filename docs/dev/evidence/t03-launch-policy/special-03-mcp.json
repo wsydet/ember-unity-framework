@@ -1,0 +1,51 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"3ed305b2d0c64c5b868d7f6610e94d08\",\"status\":\"succeeded\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792475117599,\"finished_unix_ms\":1792475182400,\"last_update_unix_ms\":1792475182400,\"progress\":{\"completed\":27,\"total\":27,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792475182179,\"last_finished_test_full_name\":\"Game.Player.Tests.PlayerStateTests.LaunchPolicy_ZoneConfigurationIsCopiedAtAcceptance\",\"last_finished_unix_ms\":1792475182202,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"PlayMode\",\"summary\":{\"total\":27,\"passed\":27,\"failed\":0,\"skipped\":0,\"durationSeconds\":56.5419205,\"resultState\":\"Passed\"},\"results\":[]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "3ed305b2d0c64c5b868d7f6610e94d08",
+        "status": "succeeded",
+        "mode": "PlayMode",
+        "started_unix_ms": 1792475117599,
+        "finished_unix_ms": 1792475182400,
+        "last_update_unix_ms": 1792475182400,
+        "progress": {
+          "completed": 27,
+          "total": 27,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": 1792475182179,
+          "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.LaunchPolicy_ZoneConfigurationIsCopiedAtAcceptance",
+          "last_finished_unix_ms": 1792475182202,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "PlayMode",
+          "summary": {
+            "total": 27,
+            "passed": 27,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 56.5419205,
+            "resultState": "Passed"
+          },
+          "results": []
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

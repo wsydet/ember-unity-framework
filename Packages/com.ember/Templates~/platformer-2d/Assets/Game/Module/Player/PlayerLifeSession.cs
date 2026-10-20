@@ -47,6 +47,8 @@ namespace Game.Player
         }
         internal void BeginReaction()
         {
+            // 在受击提交的同一步释放弹射凭证，不能等下一个 Tick 才清理输入锁和来源。
+            _context.ExternalMotion.Clear();
             ClearAction(); Reaction.Begin(_context.Motor);
             _context.Input.BeginReactionBuffer();
             _context.Motor.SetGravityScale(_context.Feel.GravityScale);
