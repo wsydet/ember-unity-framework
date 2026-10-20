@@ -1,0 +1,13 @@
+{
+  "operation": "execute_code: read framework version after one PackageManager.Client.Resolve",
+  "packageJsonVersion": "0.20.5",
+  "cachedVersionBeforeResolve": "0.20.4",
+  "result": {
+    "success": false,
+    "message": null,
+    "data": null
+  },
+  "action": "Stopped automatic Unity queries and requested manual compile/reconnect under repository rules.",
+  "completedBeforeFailure": "Editor76/76, final related79/79, formal SaveTemplate1456 files, minor Bump0.10.0, all template hashes and parent snapshots validated",
+  "templateHash": "58d152503e6f95494434f095a8df6ef4"
+}

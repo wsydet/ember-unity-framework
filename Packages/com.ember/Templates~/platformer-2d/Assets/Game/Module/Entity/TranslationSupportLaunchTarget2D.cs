@@ -52,6 +52,8 @@ namespace Game.Entity
             _support ??= GetComponent<EntityTranslationSupport2D>();
             if (!isActiveAndEnabled || !_support.IsAvailable || owner == null || !owner.isActiveAndEnabled ||
                 string.IsNullOrWhiteSpace(request.SourceId)) return LaunchResult2D.Inactive;
+            // 载具没有玩家自由飞行积分器，拒绝不支持的策略，不能接受后静默丢失。
+            if (request.Tail.Enabled) return LaunchResult2D.UnsupportedPolicy;
             if (IsLaunching && request.Interrupt == LaunchInterrupt2D.RejectWhileBusy) return LaunchResult2D.Busy;
             Finish();
             _support.SetVelocity(request.Horizontal == LaunchHorizontal2D.PreserveControl

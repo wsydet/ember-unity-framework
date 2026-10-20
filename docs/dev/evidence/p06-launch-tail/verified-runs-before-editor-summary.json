@@ -1,0 +1,396 @@
+{
+  "input": "synthetic keyboard",
+  "physics": "Unity local PhysicsScene2D",
+  "warning": "Target FPS is not measured FPS. These are maintenance fixtures, not product acceptance.",
+  "runs": [
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/baseline-player-01.xml",
+      "result": "Passed",
+      "total": 530,
+      "passed": 530,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 1600.5582277,
+      "failures": [],
+      "actualFrameRates": [],
+      "holdTailTransitions": []
+    },
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/baseline-protected-01.xml",
+      "result": "Passed",
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.5983234,
+      "failures": [],
+      "actualFrameRates": [],
+      "holdTailTransitions": []
+    },
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/implementation-first-01.xml",
+      "result": "Passed",
+      "total": 44,
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 44.2203814,
+      "failures": [],
+      "actualFrameRates": [
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 30.0000668,
+          "fixedStep": 0.02,
+          "frames": 37,
+          "seconds": 1.23333061
+        },
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 29.999939,
+          "fixedStep": 0.0166666675,
+          "frames": 37,
+          "seconds": 1.23333585
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 119.312958,
+          "fixedStep": 0.02,
+          "frames": 146,
+          "seconds": 1.22367263
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 109.269226,
+          "fixedStep": 0.0166666675,
+          "frames": 135,
+          "seconds": 1.23548055
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 217.122559,
+          "fixedStep": 0.02,
+          "frames": 265,
+          "seconds": 1.22050881
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 222.54007,
+          "fixedStep": 0.0166666675,
+          "frames": 275,
+          "seconds": 1.23573256
+        }
+      ],
+      "holdTailTransitions": [
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        }
+      ]
+    },
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/regression-player-01.xml",
+      "result": "Failed(Child)",
+      "total": 573,
+      "passed": 572,
+      "failed": 1,
+      "skipped": 0,
+      "durationSeconds": 1649.2018343,
+      "failures": [
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.ActionContract_OwnerDisableOrDestroyEndsExactlyOnce(True)",
+          "message": "TearDown : Unhandled log message: '[Error] [Package Manager Window] Error fetching package list.\nEMFILE: too many open files, open 'C:\\Users\\wuyu\\AppData\\Local\\Unity\\cache\\upm\\db\\index-v5\\21\\28\\88d76cc6c28d4aa428ef01affa7c5c504b539749b6e85f488bc91c7ace05''. Use UnityEngine.TestTools.LogAssert.Expect",
+          "stackTrace": "UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()\n\n"
+        }
+      ],
+      "actualFrameRates": [
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 30.149334,
+          "fixedStep": 0.02,
+          "frames": 37,
+          "seconds": 1.22722447
+        },
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 29.9558563,
+          "fixedStep": 0.0166666675,
+          "frames": 38,
+          "seconds": 1.26853323
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 122.572937,
+          "fixedStep": 0.02,
+          "frames": 150,
+          "seconds": 1.2237612
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 110.702759,
+          "fixedStep": 0.0166666675,
+          "frames": 137,
+          "seconds": 1.23754823
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 237.199966,
+          "fixedStep": 0.02,
+          "frames": 290,
+          "seconds": 1.22259712
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 231.591263,
+          "fixedStep": 0.0166666675,
+          "frames": 286,
+          "seconds": 1.23493433
+        }
+      ],
+      "holdTailTransitions": [
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        }
+      ]
+    },
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/collision-first-01.xml",
+      "result": "Failed(Child)",
+      "total": 6,
+      "passed": 4,
+      "failed": 2,
+      "skipped": 0,
+      "durationSeconds": 0.3401561,
+      "failures": [
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(False,-3)",
+          "message": "  反向风扣除后的正自身速度不能掩盖真实碰顶\n  Expected: False\n  But was:  True\n",
+          "stackTrace": "at Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult (System.Boolean side, System.Single wind) [0x0015d] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerLaunchTailCollisionTests.cs:24\n"
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(True,-3)",
+          "message": "  反向风扣除后的正自身速度不能掩盖真实碰顶\n  Expected: False\n  But was:  True\n",
+          "stackTrace": "at Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult (System.Boolean side, System.Single wind) [0x0015d] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerLaunchTailCollisionTests.cs:24\n"
+        }
+      ],
+      "actualFrameRates": [],
+      "holdTailTransitions": []
+    },
+    {
+      "file": "docs/dev/evidence/p06-launch-tail/final-related-01.xml",
+      "result": "Passed",
+      "total": 79,
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 95.0317192,
+      "failures": [],
+      "actualFrameRates": [
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 30.0632477,
+          "fixedStep": 0.02,
+          "frames": 37,
+          "seconds": 1.23073864
+        },
+        {
+          "targetFPS": 30,
+          "actualMeanFPS": 29.97913,
+          "fixedStep": 0.0166666675,
+          "frames": 38,
+          "seconds": 1.26754844
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 122.540215,
+          "fixedStep": 0.02,
+          "frames": 150,
+          "seconds": 1.224088
+        },
+        {
+          "targetFPS": 120,
+          "actualMeanFPS": 79.02146,
+          "fixedStep": 0.0166666675,
+          "frames": 115,
+          "seconds": 1.45530081
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 234.90303,
+          "fixedStep": 0.02,
+          "frames": 287,
+          "seconds": 1.22178078
+        },
+        {
+          "targetFPS": 240,
+          "actualMeanFPS": 238.70784,
+          "fixedStep": 0.0166666675,
+          "frames": 295,
+          "seconds": 1.23582029
+        }
+      ],
+      "holdTailTransitions": [
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=False dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=False dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-1.100000, 12.400000) self=(-5.000000, 20.000000) world=(-5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=-1 held=True dt=0.02 t=1.22 hold=False p=(-1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(False,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.22 hold=True p=(1.100000, 12.400000) self=(5.000000, 20.000000) world=(5.000000, 20.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=0.24 hold=False p=(1.100000, 12.752000) self=(0.000000, 17.600000) world=(0.000000, 17.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=False sign=1 held=True dt=0.02 t=1.22 hold=False p=(1.100000, 0.883815) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 61
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=False dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,False)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=False dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,-1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.22 hold=True p=(-4.400000, 10.200000) self=(-20.000000, 10.000000) world=(-20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.24 hold=False p=(-4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=-1 held=True dt=0.02 t=0.979999959 hold=False p=(-4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        },
+        {
+          "test": "Game.Player.Tests.PlayerStateTests.LaunchTail_FullPhysicsTrajectory(True,1,True)",
+          "finalHold": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.22 hold=True p=(4.400000, 10.200000) self=(20.000000, 10.000000) world=(20.000000, 10.000000) gravity=0",
+          "firstTail": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.24 hold=False p=(4.400000, 10.352000) self=(0.000000, 7.600000) world=(0.000000, 7.600000) gravity=12.2324152",
+          "lastSample": "P06 input=synthetic-keyboard side=True sign=1 held=True dt=0.02 t=0.979999959 hold=False p=(4.400000, 0.866773) self=(0.000000, 0.000000) world=(0.000000, 0.000000) gravity=3",
+          "sampleCount": 49
+        }
+      ]
+    }
+  ]
+}

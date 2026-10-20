@@ -1,0 +1,5 @@
+PASS workspace: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved
+PASS workspace: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license
+PASS Git :: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved
+PASS Git :: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license
+Static configuration only: execute SharedFontAtlasPlayModeTests and visually accept SceneUI in Unity.

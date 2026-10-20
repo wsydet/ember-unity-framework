@@ -1,0 +1,13 @@
+{
+  "operation": "execute_code: final version/compilation observation after user confirmed manual recovery",
+  "result": {
+    "success": false,
+    "message": null,
+    "data": null
+  },
+  "action": "Stopped Unity automatic queries. Did not retry or replace Unity validation with logs, BatchMode or dotnet.",
+  "releaseDecision": "Proceed with authorized Git release: source compiled and passed final79 plus Editor76 before metadata-only package version change; formal SaveTemplate/Bump and actual template/parent validation succeeded; no known C# errors, unsealed templates or pending inheritance synchronization. PackageInfo version after Resolve remains unconfirmed.",
+  "packageJsonVersion": "0.20.5",
+  "templateVersion": "0.10.0",
+  "templateHash": "58d152503e6f95494434f095a8df6ef4"
+}

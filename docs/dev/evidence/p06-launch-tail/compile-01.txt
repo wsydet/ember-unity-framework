@@ -1,0 +1,5 @@
+首次实现导入后，scope=scripts 仅请求脚本编译，未导入新增脚本资产。Unity MCP Console 返回：
+Assets\Game\Module\Entity\LaunchRequest2D.cs(26,16): error CS0246: The type or namespace name 'LaunchTailSpec2D' could not be found (are you missing a using directive or an assembly reference?)
+Assets\Game\Module\Entity\LaunchRequest2D.cs(39,13): error CS0246: The type or namespace name 'LaunchTailSpec2D' could not be found (are you missing a using directive or an assembly reference?)
+Assets\Game\Module\Entity\LaunchZone2D.cs(21,34): error CS0246: The type or namespace name 'LaunchTailSpec2D' could not be found (are you missing a using directive or an assembly reference?)
+诊断：新 LaunchTailSpec2D.cs 已在 Assets，但本次 scripts 刷新尚未将该类型纳入编译；随后正式全资产刷新完成导入，Console 编译错误清零且执行探针成功加载该类型。保留上述首次诊断。

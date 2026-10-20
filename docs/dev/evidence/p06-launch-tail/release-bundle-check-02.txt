@@ -1,0 +1,78 @@
+ConvertFrom-Json : Invalid object passed in, ':' or '}' expected. (206): {
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "id": "ember-add-font",
+      "displayName": "Ember 娣诲姞瀛椾綋",
+      "description": "瀵煎叆瀛椾綋骞舵壒閲忚ˉ榻愬瓧浣撶毊鑲ゃ€丳refab銆佸満鏅拰杩愯鏃?UI 鐨勪娇鐢ㄦ槧灏勶紝閫傜敤浜庢墍鏈夋ā鏉裤€?,
+      "minimumFrameworkVersion": "0.17.0"
+    },
+    {
+      "id": "ember-template-conflict-recovery",
+      "displayName": "Ember 妯℃澘鍐茬獊鎭㈠",
+      "description": "淇濇姢澶ч噺鏈湴淇敼锛屽垎鎵瑰悎骞舵ā鏉垮啿绐侊紝鏀寔鍏ㄩ噺閮ㄧ讲鍓嶅浠藉拰閮ㄧ讲鍚庢仮澶嶃€?,
+      "minimumFrameworkVersion": "0.14.5"
+    },
+    {
+      "id": "ember-eui-build",
+      "displayName": "Ember EUI 鍒朵綔",
+      "description": "閫氳繃 UI 寮€鍙戜腑蹇冨垱寤烘寮?Prefab銆佺敓鎴愮粦瀹氬苟瀹屾垚鐢ㄦ埛閫昏緫鎺ョ嚎銆?,
+      "minimumFrameworkVersion": "0.13.0",
+      "requiredCapability": "eui-regenerate-v1"
+    },
+    {
+      "id": "ember-commit-review",
+      "displayName": "Ember 鎻愪氦瀹℃煡",
+      "description": "瀹℃煡褰撳墠椤圭洰鐨勫凡鏆傚瓨銆佹湭鏆傚瓨鍙婃湭璺熻釜鏂囦欢锛屾寜椤圭洰瑙勮寖鏁寸悊鎻愪氦寤鸿銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-region-organizer",
+      "displayName": "Ember 浠ｇ爜鍒嗗潡",
+      "description": "鎸夐」鐩害瀹氭暣鐞嗘寚瀹?C# 鑴氭湰鐨?region锛屼繚鐣欏垵濮嬪寲椤哄簭涓庢潯浠剁紪璇戣竟鐣屻€?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-solution-design",
+      "displayName": "Ember 鏂规璇勪及",
+      "description": "璋冪爺椤圭洰鐜扮姸骞舵瘮杈冨疄鐜版柟妗堬紝鏄庣‘涓氬姟銆佹鏋朵笌妯℃澘鐨勬敼鍔ㄥ綊灞炲拰楠岃瘉璺緞銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-package-scan",
+      "displayName": "Ember 鍖呮竻鍗曞悓姝?,
+      "description": "鏍稿 Unity 椤圭洰鐨勪緷璧栧０鏄庝笌瑙ｆ瀽缁撴灉锛岀敓鎴愭垨鍚屾椤圭洰鑷繁鐨勫寘娓呭崟鏂囨。銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-generate-doc",
+      "displayName": "Ember API 鏂囨。",
+      "description": "渚濇嵁瀹為檯婧愮爜涓庣▼搴忛泦杈圭晫锛屼负鎸囧畾涓氬姟妯″潡鐢熸垚鎴栫淮鎶ゅ彲鐢ㄧ殑 API 鏂囨。銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-odin-inspector",
+      "displayName": "Ember Odin 闈㈡澘妫€鏌?,
+      "description": "妫€鏌ユ寚瀹氳剼鏈殑 Odin 甯冨眬涓庡簭鍒楀寲闂锛屾寜褰撳墠鐗堟湰璇佹嵁鎻愬嚭淇寤鸿銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-doc-maintenance",
+      "displayName": "Ember 鏂囨。缁存姢",
+      "description": "瀹¤骞剁淮鎶ら」鐩嚜鏈夋枃妗ｏ紝妫€鏌ラ摼鎺ャ€佸悎骞堕噸澶嶅唴瀹瑰苟淇濇姢渚濊禆鍖呭拰鍘嗗彶璧勬枡銆?,
+      "minimumFrameworkVersion": "0.13.0"
+    },
+    {
+      "id": "ember-odin-capture-style",
+      "displayName": "Ember Odin 椋庢牸璁板綍",
+      "description": "浠庡凡璁ゅ彲鐨?Odin 闈㈡澘鎻愬彇鍙鐢ㄦā寮忥紝璁板綍鍒伴」鐩枃妗ｅ苟淇濈暀閫傜敤鐗堟湰涓庤瘉鎹€?,
+      "minimumFrameworkVersion": "0.13.0"
+    }
+  ]
+}
+At C:\Users\wuyu\My\ember-unity-framework\scripts\build-ai-skill-bundle.ps1:6 char:83
++ ... alPath (Join-Path $sourceRoot 'catalog.json') -Raw | ConvertFrom-Json
++                                                          ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [ConvertFrom-Json], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.ConvertFromJsonCommand
+ 

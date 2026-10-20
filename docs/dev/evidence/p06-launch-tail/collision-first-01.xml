@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Failed(Child)" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.3401561">
+  <test-suite type="TestSuite" id="2012" name="ember-unity-framework" fullname="ember-unity-framework" runstate="Runnable" testcasecount="847" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.340156" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1964" name="Game.Player.PlayModeTests.dll" fullname="C:/Users/wuyu/My/ember-unity-framework/Library/ScriptAssemblies/Game.Player.PlayModeTests.dll" runstate="Runnable" testcasecount="729" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.309442" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="33172" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1965" name="Game" fullname="Game" runstate="Runnable" testcasecount="729" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.294289" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1966" name="Player" fullname="Game.Player" runstate="Runnable" testcasecount="729" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.278329" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1967" name="Tests" fullname="Game.Player.Tests" runstate="Runnable" testcasecount="729" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.264852" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1226" name="PlayerStateTests" fullname="Game.Player.Tests.PlayerStateTests" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="579" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.251475" total="6" passed="4" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="ParameterizedMethod" id="1601" name="LaunchTailCollision_CeilingWithWindHandsOffActualResult" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.184273" total="4" passed="2" failed="2" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1597" name="LaunchTailCollision_CeilingWithWindHandsOffActualResult(False,-3)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(False,-3)" methodname="LaunchTailCollision_CeilingWithWindHandsOffActualResult" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="289390259" result="Failed" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:18Z" duration="0.110223" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  反向风扣除后的正自身速度不能掩盖真实碰顶
+  Expected: False
+  But was:  True
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult (System.Boolean side, System.Single wind) [0x0015d] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerLaunchTailCollisionTests.cs:24
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[P06 ceiling side=False wind=-3 i=0 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=1 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=2 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=3 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=4 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=5 hold=True self=20 world=17
+P06 ceiling side=False wind=-3 i=6 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=7 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=8 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=9 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=10 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=11 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=12 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=13 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=14 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=15 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=16 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=17 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=18 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=19 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=20 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=21 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=22 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=23 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=24 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=25 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=26 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=27 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=28 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=29 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=30 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=31 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=32 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=33 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=34 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=35 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=36 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=37 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=38 hold=True self=3 world=0
+P06 ceiling side=False wind=-3 i=39 hold=True self=3 world=0
+]]></output>
+                </test-case>
+                <test-case id="1598" name="LaunchTailCollision_CeilingWithWindHandsOffActualResult(False,3)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(False,3)" methodname="LaunchTailCollision_CeilingWithWindHandsOffActualResult" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="844323510" result="Passed" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:18Z" duration="0.024352" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P06 ceiling side=False wind=3 i=0 hold=True self=20 world=23
+P06 ceiling side=False wind=3 i=1 hold=True self=20 world=23
+P06 ceiling side=False wind=3 i=2 hold=True self=20 world=23
+P06 ceiling side=False wind=3 i=3 hold=True self=20 world=23
+P06 ceiling side=False wind=3 i=4 hold=True self=20 world=23
+P06 ceiling side=False wind=3 i=5 hold=True self=0 world=0
+P06 ceiling side=False wind=3 i=6 hold=False self=0 world=0
+]]></output>
+                </test-case>
+                <test-case id="1599" name="LaunchTailCollision_CeilingWithWindHandsOffActualResult(True,-3)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(True,-3)" methodname="LaunchTailCollision_CeilingWithWindHandsOffActualResult" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1724622321" result="Failed" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:18Z" duration="0.018323" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  反向风扣除后的正自身速度不能掩盖真实碰顶
+  Expected: False
+  But was:  True
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult (System.Boolean side, System.Single wind) [0x0015d] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerLaunchTailCollisionTests.cs:24
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[P06 ceiling side=True wind=-3 i=0 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=1 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=2 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=3 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=4 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=5 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=6 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=7 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=8 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=9 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=10 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=11 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=12 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=13 hold=True self=10 world=7
+P06 ceiling side=True wind=-3 i=14 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=15 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=16 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=17 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=18 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=19 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=20 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=21 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=22 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=23 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=24 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=25 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=26 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=27 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=28 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=29 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=30 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=31 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=32 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=33 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=34 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=35 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=36 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=37 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=38 hold=True self=3 world=0
+P06 ceiling side=True wind=-3 i=39 hold=True self=3 world=0
+]]></output>
+                </test-case>
+                <test-case id="1600" name="LaunchTailCollision_CeilingWithWindHandsOffActualResult(True,3)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_CeilingWithWindHandsOffActualResult(True,3)" methodname="LaunchTailCollision_CeilingWithWindHandsOffActualResult" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="218542560" result="Passed" start-time="2026-10-20 11:20:18Z" end-time="2026-10-20 11:20:19Z" duration="0.014503" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[P06 ceiling side=True wind=3 i=0 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=1 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=2 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=3 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=4 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=5 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=6 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=7 hold=True self=10 world=13
+P06 ceiling side=True wind=3 i=8 hold=True self=0 world=0
+P06 ceiling side=True wind=3 i=9 hold=False self=0 world=0
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1604" name="LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 11:20:19Z" end-time="2026-10-20 11:20:19Z" duration="0.036625" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1602" name="LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold(False)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold(False)" methodname="LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1214751777" result="Passed" start-time="2026-10-20 11:20:19Z" end-time="2026-10-20 11:20:19Z" duration="0.014712" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1603" name="LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold(True)" fullname="Game.Player.Tests.PlayerStateTests.LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold(True)" methodname="LaunchTailCollision_OpposingWindWithoutCeilingDoesNotEndHold" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1243971356" result="Passed" start-time="2026-10-20 11:20:19Z" end-time="2026-10-20 11:20:19Z" duration="0.015289" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[Saving results to: C:\Users\wuyu\My\ember-unity-framework\docs\dev\evidence\p06-launch-tail\collision-first-01.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

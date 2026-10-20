@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Game.Entity;
 using UnityEngine;
 
 namespace Game.Player
@@ -19,10 +20,11 @@ namespace Game.Player
         public bool StopVerticalOnEnd { get; }
         public PlayerFlightSpec Flight { get; }
         public bool PreserveHorizontalControl { get; }
+        public LaunchTailSpec2D LaunchTail { get; }
 
         public PlayerExternalMotionRequest(string sourceId, PlayerExternalMotionMode mode, Vector2 velocity,
             float duration = 0, int priority = 0, bool lockInput = false, bool stopVerticalOnEnd = false, PlayerFlightSpec flight = default,
-            bool preserveHorizontalControl = false)
+            bool preserveHorizontalControl = false, LaunchTailSpec2D launchTail = default)
         {
             if (string.IsNullOrWhiteSpace(sourceId) || !Enum.IsDefined(typeof(PlayerExternalMotionMode), mode) ||
                 !float.IsFinite(velocity.x) || !float.IsFinite(velocity.y) || !float.IsFinite(duration) || duration < 0 ||
@@ -36,6 +38,10 @@ namespace Game.Player
             flight.ValidateWorld(Physics2D.gravity);
             if (flight.Enabled && mode != PlayerExternalMotionMode.InitialVelocity)
                 throw new ArgumentException("单次飞行策略仅适用于 InitialVelocity 发射。");
+            launchTail.ValidateWorld(Physics2D.gravity);
+            if (launchTail.Enabled && (mode != PlayerExternalMotionMode.ForcedRise || stopVerticalOnEnd))
+                throw new ArgumentException("弹射尾段仅适用于不在结束时停速的 ForcedRise。");
+            LaunchTail = launchTail;
         }
     }
 
@@ -48,6 +54,7 @@ namespace Game.Player
         internal readonly PlayerExternalMotionRequest Request;
         internal float Remaining;
         public PlayerFlightLease Flight { get; internal set; }
+        public PlayerLaunchTailLease LaunchTail { get; internal set; }
         public bool IsActive => Session != null && Owner != null && Owner.isActiveAndEnabled;
         public float RemainingSeconds => Remaining;
         #endregion
@@ -60,6 +67,7 @@ namespace Game.Player
             var session = Session;
             Session = null;
             session?.Remove(this);
+            LaunchTail?.Dispose();
         }
         #endregion
     }
@@ -135,6 +143,34 @@ namespace Game.Player
             }
             _context.Input.SetExternalSuppression(locked, locked && !horizontalLocked);
         }
+
+        private void HandoffLaunchTail(PlayerExternalMotionLease source)
+        {
+            if (!source.Request.LaunchTail.Enabled || !ReferenceEquals(source, _lastRise) ||
+                source.Owner == null || !source.Owner.isActiveAndEnabled ||
+                _context.Life?.IsDead == true || _context.Life?.Reaction?.IsActive == true ||
+                _context.Life?.Reaction?.HasPending == true) return;
+            source.LaunchTail = _context.VerticalMotion.BeginLaunchTail(source.Owner, _context.Input,
+                source.Request.SourceId, source.Request.LaunchTail);
+        }
+
+        private bool LaunchTailRiseBlocked()
+        {
+            if (SelfVelocity.y <= 0) return true;
+            // 向下风在碰顶后扣除时，自身Y可能仍为正；真实顶面接触也必须结束保持。
+            // 仅世界合速度下降不等于碰顶，不能用反向风提前取消保持。
+            var actual = _context.Motor.Velocity;
+            _context.Motor.Body.GetContacts(_contacts);
+            foreach (var contact in _contacts)
+            {
+                if (contact.normal.y >= -.00001f) continue;
+                var obstacle = _context.Entity.Owns(contact.collider) ? contact.otherCollider : contact.collider;
+                var surface = obstacle != null && obstacle.attachedRigidbody != null
+                    ? obstacle.attachedRigidbody.linearVelocity : Vector2.zero;
+                if (Vector2.Dot(actual - surface, contact.normal) <= .00001f) return true;
+            }
+            return false;
+        }
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -147,6 +183,7 @@ namespace Game.Player
             if (owner == null || !owner.isActiveAndEnabled) throw new ArgumentException("外部运动所有者必须启用。", nameof(owner));
             if (string.IsNullOrWhiteSpace(request.SourceId)) throw new ArgumentException("不能登记默认请求。", nameof(request));
             if (_context.Life?.IsDead == true) throw new InvalidOperationException("死亡玩家不接受外部运动。");
+            request.LaunchTail.ValidateWorld(Physics2D.gravity);
             if (request.Mode == PlayerExternalMotionMode.InteractionLock && !IsInteractionLocked)
             {
                 // 不把任意动作冻结后再复活；编辑只能从合法地面姿态进入。
@@ -182,7 +219,15 @@ namespace Game.Player
         internal void BeginStep()
         {
             Prune();
-            if (_lastRise?.IsActive == true && _context.Motor.Velocity.y <= 0) _lastRise.Dispose();
+            if (_lastRise?.IsActive == true &&
+                (_lastRise.Request.LaunchTail.Enabled ? LaunchTailRiseBlocked() : _context.Motor.Velocity.y <= 0))
+            {
+                var source = _lastRise;
+                HandoffLaunchTail(source);
+                // 碰顶只结束保持，不重发请求速度；尾段在本步使用物理解算后的自身速度。
+                source.Session = null;
+                Remove(source);
+            }
             _lastRise = null;
         }
 
@@ -272,6 +317,7 @@ namespace Game.Player
                 if (source.Request.Duration == 0) continue;
                 source.Remaining = Mathf.Max(0, source.Remaining - dt);
                 if (source.Remaining > .000001f) continue;
+                HandoffLaunchTail(source);
                 _stopVertical |= source.Request.StopVerticalOnEnd;
                 source.Session = null; _sources.RemoveAt(i);
             }
@@ -289,6 +335,7 @@ namespace Game.Player
         /// <summary>竖直弹射只替换运动接管，保留环境凭证、上一合成贡献与承载离台语义。</summary>
         internal void ClearOverridesForLaunch()
         {
+            _context.VerticalMotion.ClearLaunchTail();
             for (int i = _sources.Count - 1; i >= 0; i--)
             {
                 if (_sources[i].Request.Mode == PlayerExternalMotionMode.AddVelocity) continue;
@@ -301,6 +348,7 @@ namespace Game.Player
 
         internal void Clear()
         {
+            _context.VerticalMotion.ClearLaunchTail();
             foreach (var source in _sources) source.Session = null;
             _sources.Clear(); _lastContribution = Vector2.zero; _lastRise = null;
             _stopVertical = false;

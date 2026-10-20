@@ -1,0 +1,191 @@
+{
+  "before": "docs/dev/evidence/p06-launch-tail/baseline-protected-01.xml",
+  "after": "docs/dev/evidence/p06-launch-tail/implementation-first-01.xml",
+  "fixedStep": 0.02,
+  "input": "synthetic keyboard",
+  "tolerance": 1e-05,
+  "passed": true,
+  "scenarios": [
+    {
+      "scenario": "air-auto-wind",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "air-inertia",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "ground-auto",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "ground-flag-window",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "ground-inertia",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "legacy-side",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "legacy-up-continue",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "legacy-up-stop",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "ordinary-long",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "ordinary-short",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "wall-convert",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "wall-first",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "wall-outward",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "wall-repeat",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    },
+    {
+      "scenario": "wall-slide",
+      "samples": 200,
+      "maxAbsoluteDeltaPositionXYVelocityXYGravity": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stateQualificationOriginIdentical": true
+    }
+  ],
+  "boundary": "Maintenance contract fixtures, not Windward product acceptance."
+}

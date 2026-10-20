@@ -1,0 +1,7 @@
+PowerShell 7.6.5 execution: & ./scripts/build-ai-skill-bundle.ps1 -Check
+Terminal returned exit code 1. The terminating exception bypassed the redirected file; copied here from the tool's terminal result:
+Exception: C:\Users\wuyu\My\ember-unity-framework\scripts\build-ai-skill-bundle.ps1:11
+Commit generic skill source changes before generating a traceable release bundle.
+
+Existing template skill discovery changes are unrelated to P06. No unrelated files were committed or removed to satisfy this check.
+Follow-up verification is recorded in release-bundle-validation.json.

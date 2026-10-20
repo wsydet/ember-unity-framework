@@ -15,8 +15,9 @@ namespace Game.Player
         private PlayerFlightLease _flight;
         private ulong _flightGeneration;
         public PlayerFlightLease Flight => _flight;
+        public PlayerLaunchTailLease LaunchTail { get; private set; }
         public bool WallActive { get; private set; }
-        public bool HasFlightPolicy => OrdinaryActive || WallActive || _flight != null;
+        public bool HasFlightPolicy => OrdinaryActive || WallActive || _flight != null || LaunchTail != null;
         internal bool HoldingJump => (OrdinaryActive || WallActive) && _holding;
         private ulong _pressVersion, _clearVersion;
         private float _elapsed;
@@ -112,6 +113,7 @@ namespace Game.Player
 
         internal void CancelOrdinary(PlayerFlightOrigin origin = PlayerFlightOrigin.Action)
         {
+            ClearLaunchTail();
             ClearFlight();
             CancelJumpHold();
             Origin = origin;
@@ -131,11 +133,39 @@ namespace Game.Player
             return _flight;
         }
         internal void PruneFlight()
-        { if (_flight != null && !_flight.IsActive) ClearFlight(); }
+        {
+            if (_flight != null && !_flight.IsActive) ClearFlight();
+            if (LaunchTail != null && !LaunchTail.IsActive) ClearLaunchTail();
+        }
         internal void ReleaseFlight(PlayerFlightLease lease)
         { if (ReferenceEquals(_flight, lease)) ClearFlight(); }
         private void ClearFlight()
         { if (_flight != null) _flight.Session = null; _flight = null; }
+
+        internal PlayerLaunchTailLease BeginLaunchTail(Behaviour owner, PlayerInputAdapter input,
+            string sourceId, LaunchTailSpec2D spec)
+        {
+            spec.ValidateWorld(Physics2D.gravity);
+            CancelOrdinary(PlayerFlightOrigin.External);
+            HoverRemaining = 0;
+            LaunchTail = new PlayerLaunchTailLease(this, owner, input, sourceId, ++_flightGeneration, spec);
+            return LaunchTail;
+        }
+        internal void ReleaseLaunchTail(PlayerLaunchTailLease lease)
+        { if (ReferenceEquals(LaunchTail, lease)) ClearLaunchTail(); }
+        internal void ClearLaunchTail()
+        { if (LaunchTail != null) LaunchTail.Session = null; LaunchTail = null; }
+
+        private void ApplyLaunchTail(EntityMotor2D motor, float worldGravityY, float dt)
+        {
+            float velocity = motor.CommandVelocity.y;
+            float acceleration = LaunchTail.Acceleration(velocity);
+            float limit = LaunchTail.Spec.FallLimit;
+            velocity = Mathf.Max(velocity, -limit);
+            float gravity = acceleration / -worldGravityY;
+            if (dt > 0) gravity = Mathf.Min(gravity, Mathf.Max(0, (velocity + limit) / (-worldGravityY * dt)));
+            motor.SetVerticalVelocity(velocity); motor.SetGravityScale(gravity); EffectiveGravityScale = gravity;
+        }
 
         internal void PauseOrdinary()
         {
@@ -158,6 +188,11 @@ namespace Game.Player
 
         internal void Apply(EntityMotor2D motor, float worldGravityY, float dt)
         {
+            if (LaunchTail != null)
+            {
+                ApplyLaunchTail(motor, worldGravityY, dt);
+                return;
+            }
             float velocity = motor.CommandVelocity.y;
             float gravity = _feel.GravityScale;
             if (OrdinaryActive || WallActive)

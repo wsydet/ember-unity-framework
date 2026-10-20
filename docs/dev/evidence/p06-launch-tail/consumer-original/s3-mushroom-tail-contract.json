@@ -1,0 +1,14 @@
+{
+  "forcedRiseWithFlight": "单次飞行策略仅适用于 InitialVelocity 发射。",
+  "launchRequestProperties": [
+    "SourceId",
+    "Velocity",
+    "Mode",
+    "Duration",
+    "End",
+    "Interrupt",
+    "Horizontal",
+    "WallQualification"
+  ],
+  "playing": false
+}

@@ -1,0 +1,3347 @@
+{
+  "passed": true,
+  "baseline": "0.20.4 / platformer-2d 0.9.0, captured before implementation",
+  "changedExistingFiles": [
+    {
+      "path": "Assets/Game/Module/Player/PlayerExternalMotion.cs",
+      "beforeSHA256": "040b3d9bed6bd22e4c2374e1c41688e22403be941a3377e3335a423efe759f6a",
+      "afterSHA256": "77e86be2edc74924312b34c66d1100b6069672bea1427396d90a039b2f941583",
+      "intentional": true
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLaunchTarget2D.cs",
+      "beforeSHA256": "2c17b070314a5fd160a4fe86ff2546d6a7890bd7c5679beebd05c764dd62c7d8",
+      "afterSHA256": "ce785966e28bfed0ebafa9ce0544c30c2f61af38b9408cd33218dcdba4bf263c",
+      "intentional": true
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerVerticalMotion.cs",
+      "beforeSHA256": "eeef2f78f51bfe9de76fe095a1fcbc7bb2d179e39fe7a4285f48bd5ff583330a",
+      "afterSHA256": "f663331c4e65f35d33a9920646fe59361c80c5a89eab983b539753625850da33",
+      "intentional": true
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchRequest2D.cs",
+      "beforeSHA256": "0fddcd6576a6fa79c02ddb5af84cde522f8da3304c297250109337df0061c7be",
+      "afterSHA256": "e04dce3bee577c4a5a76a883cec09609760d097357957d800aa785ce56e5197d",
+      "intentional": true
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchZone2D.cs",
+      "beforeSHA256": "e3d3891e477b29241b207ab433f39d657dd363d03f45b1e6464a4bc060d12f95",
+      "afterSHA256": "2173078c3b9c8f0c6e43e3c79942240a4df0d058155b6ab8aee5ef89b2b3e0ad",
+      "intentional": true
+    },
+    {
+      "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+      "beforeSHA256": "d7d935da35502ea2b028ebfcf660e51e60c1ec2916e3497d6c52824f3b7975cb",
+      "afterSHA256": "02b738e43798608361968c3a6a3f0c7c55f6db05b580b238df962d2dcdf7b261",
+      "intentional": true
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "Assets/Game/Module/Entity/LaunchTailSpec2D.cs",
+      "sha256": "feae45ae121012946d8fa247ea44849487d5e76d4312927640e355c3161ef259"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchTailSpec2D.cs.meta",
+      "sha256": "c0680d8d47c04884c7b393f00c6be220cd3c5362310f2a532970318c34a9d7d9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLaunchTailLease.cs",
+      "sha256": "623773659a3ee9fd8d4efd95f8985ca4e299653cdb92beb9ea4913d2424fe517"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLaunchTailLease.cs.meta",
+      "sha256": "07843672b2087669655f0a6400e7ec264d9cb63a9375a7afcb7893cfb36dd46e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailCollisionTests.cs",
+      "sha256": "bc590901cd0f27bfd52de57e50be0baebe52061fb0eb3d1972c62c67dad7c22d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailCollisionTests.cs.meta",
+      "sha256": "1023ef3f55d5f7ce65eb791c94c955cf89779baf5e9f6ca189a6d7df3620f12f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailCompatibilityTests.cs",
+      "sha256": "c9b42c678d799881c9282cf4797d9c33d375d9733b986c2c02fae1fc8a5c5bf1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailCompatibilityTests.cs.meta",
+      "sha256": "24980c6f7506f9eaf517f4c9e615a6e8b6f83f82cd6e0b977c6e2d98c9a9697e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailSessionTests.cs",
+      "sha256": "fd3cf762c17af9dae4674343311bb80610b04a85fa08fe400d95a491ba27646a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailSessionTests.cs.meta",
+      "sha256": "5b1648922800b60ca365b111bbb7f087b12d7a9941bfa968cc77ecb4c75fcb81"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailTests.cs",
+      "sha256": "5a0de9abaad07f11f9adbf885d1935cec902d27ed14940a1006d416ec4367659"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTailTests.cs.meta",
+      "sha256": "d3ea89dc1f4c3eb4ac0e69b4b3d3ce3216577cb622b2b9514ee151974fd7703b"
+    }
+  ],
+  "unchangedExistingFiles": [
+    {
+      "path": "Assets/Game/Module/Player/AssemblyInfo.cs",
+      "sha256": "00d8a4c52e7488d20662b1da6e3dd3a3d381d22f61eb428ba81abd21d392f768"
+    },
+    {
+      "path": "Assets/Game/Module/Player/AssemblyInfo.cs.meta",
+      "sha256": "b1e1ed260e6b61d2c45c311b4728a176b0f5d9c80730c0dfd6d92db3958b9587"
+    },
+    {
+      "path": "Assets/Game/Module/Player/CheckpointProgress.cs",
+      "sha256": "288697d96c5e875d2f62632cb919d72f3783a96704b8b22e2ee035ade46fd6ca"
+    },
+    {
+      "path": "Assets/Game/Module/Player/CheckpointProgress.cs.meta",
+      "sha256": "bd58bcdba9a53b0ba1a1cea31c4024e6161f81c011c706b71f69347aeab20204"
+    },
+    {
+      "path": "Assets/Game/Module/Player/CheckpointSaveSession.cs",
+      "sha256": "64326f95e2da57333f99779f0ca836e4ea788288dd8193eaf8370817f22e22e9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/CheckpointSaveSession.cs.meta",
+      "sha256": "032fd1966b88b5845edcebb8ae899463b83855f5ca3ae065c8a536c195f9d152"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Development.meta",
+      "sha256": "d6e2e6bdd4f4d46609bca3a6268ffdbff81756ff338b89935c4ad984366ea848"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor.meta",
+      "sha256": "d51752d1e4a55cdc94319f3eb3f9deea8fcf42cc51b3b94642a0c3f7af54d640"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef",
+      "sha256": "b989d3da2c979fe3035a7d8f25edc61e7c20985b839fbfc38e14e74054306030"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef.meta",
+      "sha256": "39c3ac08f909001cb5080853e2ad7124e922bf396e7bfbe9c756f37d84fcd9d6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/IPlayerConfigurationCapture.cs",
+      "sha256": "904135344b102cf411c12c84a85b86c9c100cc815cb045d94ca3f61c6f85da50"
+    },
+    {
+      "path": "Assets/Game/Module/Player/IPlayerConfigurationCapture.cs.meta",
+      "sha256": "687bdfdbe452e7db192e90574ad4d0c4f854938860b5488ab8847fda548bf442"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerProgress.cs",
+      "sha256": "9878db50815725fa12b7e55a40b56819b9741f2a8e409214fce364de3fbc678d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerProgress.cs.meta",
+      "sha256": "e2681ff841bb158017fc09c37f962a816b3f6de568ec367dc82c44817844f2ef"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerSnapshot.cs",
+      "sha256": "2fa62024d3eb8bf1b6fb017b5da44dc63600a7b88cb4d76f380cf130cf0bc3fd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerSnapshot.cs.meta",
+      "sha256": "1fe98f9b6505e29c019be515b0824ad97bc1091139cbca803a22ef2840548a74"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerSnapshotCodec.cs",
+      "sha256": "778229030dcc813ad9de4f08b6dfb2a955fc0ac58707280087541b466bd91612"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlatformerSnapshotCodec.cs.meta",
+      "sha256": "52991687535681b450e4443d42e923c7ccbc99d29a03520a9a60f1eb4662e429"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionClock.cs",
+      "sha256": "6fbfc8234dbf195ad7f328bf49696b1baabce8a973920601b700f0ef34ebe7be"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionClock.cs.meta",
+      "sha256": "82f53e50105539ed7deef2adc896dd02a8076dbd6c647b0efe5dfa2b499ec3b2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionEffects.cs",
+      "sha256": "eec6cec9d1ebbc6c066b45295c1598725fce87a02534cf8ec2b1cb34e6d3011b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionEffects.cs.meta",
+      "sha256": "919c626b0485c953023b0a9e836dc49e5071133c3af375b60a711267b1f3abad"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionState.cs",
+      "sha256": "a13236f224a42c69d0cbe15cfda4df4f2e13dd491bcf624254f4fbeadd04da56"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerActionState.cs.meta",
+      "sha256": "739592f62d7179c94096126eb6541065b179a5126e37a72f84c9eefe5b3b8b02"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationProfile.cs",
+      "sha256": "54060b6998ee2a3c924c6e235a3f41b34d3887dea8b1df3a088d1cff1c4ca0e2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationProfile.cs.meta",
+      "sha256": "77dd2e825a2cafaa696214c9119f34409cbaabc2a88f9ae6013f92e5d276380c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationSession.cs",
+      "sha256": "91cc5845b1ea003c0ba9c0b920e319488397b71b96c17a7647fe9699257b0d0e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationSession.cs.meta",
+      "sha256": "9e7692f82419368c989267a6d522c4420dae5d868f564423058e5d87d45b49ca"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationView.cs",
+      "sha256": "d34fe08b4f40cfdb746d3b54c62ab619d90d0a7c8b002bd6f5caa5672675076d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAnimationView.cs.meta",
+      "sha256": "8335f2437cf944cd24ed5458f2d65223869707d1e29bedb5762de4ab1e85a6c6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackHitSession.cs",
+      "sha256": "d65774b63b8f47b1aa22dddd9a8653cd25d092a004cf2ee0e9384a21c394da9e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackHitSession.cs.meta",
+      "sha256": "9b1c008934e4f943757723599df16e224b6bf461b659abac45062907955cd249"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackProfile.cs",
+      "sha256": "debd2e8074a259b5daa6fb574d3cf4055adc1a5e504db1920050914208077cff"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackProfile.cs.meta",
+      "sha256": "0864b89a040bfe22dc82383121de882a2a8b1028d2628751a1d8589799e9cbf9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackVisual.cs",
+      "sha256": "153794b45be848f1c52f3665d40db1488ea91344c63f6b6590b9a78b32809081"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerAttackVisual.cs.meta",
+      "sha256": "a9e3e6dcc3d530c45b8d36f0dca18798ee22fed849cd59a56fbd5f4f614f2348"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerBasicStateDefinition.cs",
+      "sha256": "fd70bec196849753002450f2b92c8731cfa8d35e811ca9b92e3b6f7ecd817d74"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerBasicStateDefinition.cs.meta",
+      "sha256": "59bb10b85cc52caf37d73e7880b85e3c6ad90ff4cb014b9a1886e28a3f0377d9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCheckpointRecovery.cs",
+      "sha256": "107a77c5afdf42a859fab8669e226c2bb4054aea42616a0c5df8e8226b7920de"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCheckpointRecovery.cs.meta",
+      "sha256": "6851fd605b83a7c7a637c2b5dad93daac286a98d23688243637910f3c8d41cff"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCheckpointZone2D.cs",
+      "sha256": "aa90e972bb95d95f8491b8972c368abb1cc18aa6642cbaf97aea6737d5fd444f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCheckpointZone2D.cs.meta",
+      "sha256": "0742bb1c31bb29d912ecf4023edaf7aab16be20ed632d5291fb9b2aaa3124274"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCollisionCorrection.cs",
+      "sha256": "2b300ef62e5555e5d2a6355c62c121cf9370767b235c71af8ad770fc798c5c1f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCollisionCorrection.cs.meta",
+      "sha256": "7b1674e3b61887e8262f1aec267c1802d4510405e1e3de8ce3e953afd247ed0f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatConfiguration.cs",
+      "sha256": "6345f2d6d411cca22e794f3f3dcc931ceb4fe117c83275321b57248c1fea5651"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatConfiguration.cs.meta",
+      "sha256": "62a9238dfea11bb2ef74c4b7e1a5ccd8a1023fdbec10730afe068c51f057bba6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatDashMotion.cs",
+      "sha256": "f796f4313b7b51eefceda939d9a7a930f4ca690e7e874c2f0841abfba2953e22"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatDashMotion.cs.meta",
+      "sha256": "5f0759b00d3886a6bded8406f549b8cc5f0a55c98b2f4f3cabce6376700e9261"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatGraphMap.cs",
+      "sha256": "dfcd772207746496ab454d6690afa1627959b9295a72468b9de2be13675104a8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatGraphMap.cs.meta",
+      "sha256": "5f1ef3b1b1792a0c67d74edf701506733b668bdff6204d4ff9f50ff81649512e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatMotion.cs",
+      "sha256": "b4968320c9a784d19027d13d0db7ed502886884f1c3a16b318fd4bcc60dff215"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatMotion.cs.meta",
+      "sha256": "c3110444b8a431b141e1bd2780d9f4ff39f77b200d6e63e78eeb44eba4bdac27"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatRequests.cs",
+      "sha256": "98e6db99dfa52d6298fc091eac82c7d4741c5e61e58790816f392fe2b31f4ec4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCombatRequests.cs.meta",
+      "sha256": "51c9a87971bf0482570d58cd2ec1cd593db527751835beda2f9e225c1195d213"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerConfig.cs",
+      "sha256": "7d064baaf52b40aac58d8a5be2e653bd5101f74107ae8b5e498fedd1c2de489b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerConfig.cs.meta",
+      "sha256": "9f32cdb452dd9657a1bef10327444f67d611bbbffdf75177ad195f769e3685c7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerConstantVelocitySource.cs",
+      "sha256": "8bbb3463a65aecc3f646358a585e661b146f226839edf44a516c98bd2bc93467"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerConstantVelocitySource.cs.meta",
+      "sha256": "f3ad8baff6768785790d09b141ca191618a1b284a2b3088599699306957aa699"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerContext.cs",
+      "sha256": "8e1be04c1aec0e522020b6257f0ab7bebc5f5f3d4c3fc4d7e87439217910c3aa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerContext.cs.meta",
+      "sha256": "2506e1b2390359f14f16a67eb3f3f796881378c28a310c11592b08a471edec59"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerController.cs",
+      "sha256": "6b2e4a4d0a8646cba840cf6a4f7fe3e007d69761f6a43277ab68d1655a112d8b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerController.cs.meta",
+      "sha256": "83539a506afa2232719a334e6004a225f9354e44da65e32a5854037331cb8211"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCorrectionSettings.cs",
+      "sha256": "1a688b9390f8034749ea78c9263e295790469f73aa595a7a3f7a6c5aaa30d8ee"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerCorrectionSettings.cs.meta",
+      "sha256": "5f9835352f05d69c0cb28cffed0787eac374f81f91f4994f18a19b27a5b8a4bf"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashEffects.cs",
+      "sha256": "1247be527a7809ea2763dcf1a4ae791b2c158e7750fe558c94741b89bee4f3c8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashEffects.cs.meta",
+      "sha256": "942eeeccad9f06ee229ecac20ffd9f3ce24e480417cd44e739151860d5b732c3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashMotion.cs",
+      "sha256": "bc02569e4ec0010592cb21abc2545ef18a9f8fc28f80d392e3bcc7dd45a0dafb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashMotion.cs.meta",
+      "sha256": "4deff0cd892b41061980b6fd7d61fdd0a5a680a9ee1d3fd1716df77e2acaa73a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashMotionSpec.cs",
+      "sha256": "5e26b56c08999f26b1d943ea860daa1680fb84b39f267cb365354388e1a29fd6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDashMotionSpec.cs.meta",
+      "sha256": "cf15201233904c1ea5da86cf09b2194d006a8ac20efa554bf59661a785fda2a7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDropThroughMotion.cs",
+      "sha256": "c5539f814f8a7e210fe517781b5f89aec42beeda2c1dff80caa54d58081595c7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerDropThroughMotion.cs.meta",
+      "sha256": "7efbd7ef492caed47d98518c05a689e7291b51bb356cb5a1f7f506a092d136d0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerExitResult.cs",
+      "sha256": "3d1aa1370cf1f573128abf88508bbeb72082e028ec9abf753817cbc7cce46cb8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerExitResult.cs.meta",
+      "sha256": "7b49dd2c2469167036ecd2138fca88708a1d935d8354cf3a765606a6c8f5f822"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerExternalMotion.cs.meta",
+      "sha256": "783546108d00c932e56877475a58fdbd0f1b59701add3ecd64ac7feb8abe3d2c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerFeelProfile.cs",
+      "sha256": "f3721257fd1d0b188440acbbff419430ea37531e8347a8c1dfbd465d32409c09"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerFeelProfile.cs.meta",
+      "sha256": "7ae6a5bf44408d656f42612724d07b3a3118957e9cdda7674c74792547b95363"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerFlightSpec.cs",
+      "sha256": "fdc7e50fd4c89eeb85341bb59d8198103c9764b91c91c16e785d294d16d80c2b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerFlightSpec.cs.meta",
+      "sha256": "6e4ae84966148b5c771df8a5f0d43ae42d55adcb012f61a3a50a8686369039f9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHeadJumpMotion.cs",
+      "sha256": "34069daa6463382636d675a32eb4eb1e2455d492d2435c592aa43c082795c2fe"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHeadJumpMotion.cs.meta",
+      "sha256": "be47b305b43d47324276a11073af8c8e563c17466de804a84565395159fd06f3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitQuery.cs",
+      "sha256": "1b203f6056fc2ecb2cdcf92eb94f2a577d1ac94b851271ec68416d38eac71c44"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitQuery.cs.meta",
+      "sha256": "9d9882f06552c338aff1818c9d30489030743af013585d48c7a2d59027e1ebe9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitScene.cs",
+      "sha256": "775da369ac5b1655d8d9fb7040122670e49cea4a770f83e1b9f691c98753e9da"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitScene.cs.meta",
+      "sha256": "2e41417aa382cec1a0adec114acf7b6b74ccef604838ef0f785a6f7a2ed20fa1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitWindow.cs",
+      "sha256": "357eb425e4176cfc88bf5623288db95f2662d85dfc99dd0d2c585a4ce686e338"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerHitWindow.cs.meta",
+      "sha256": "2bf7c93607e66c42df3e1fddcc8b94548d53ec4a4c58667781380c21f1933b40"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerInputAdapter.cs",
+      "sha256": "a1bf07a614258e7f667d42eb7d68c99ec71747de79663b116dada50f14033f0c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerInputAdapter.cs.meta",
+      "sha256": "ef6c15363e82d0c2e8f66d721b7da1904f1ca46ee144bef3b2f8938847058128"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerInputFeel.cs",
+      "sha256": "35daafe4623a6f755ae9236f2516536c9d105ed4e99155455d9c5167526b749d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerInputFeel.cs.meta",
+      "sha256": "7645c43e236c1ad8c5402e99493ca1dadffd3c24a6d43bd92329da42ac10240e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerJumpFeel.cs",
+      "sha256": "72d120d7e1dd6d06ae6f3e657f8ca34479974f3ebff0c66e5778d2b903c77242"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerJumpFeel.cs.meta",
+      "sha256": "80a998103feabee1fdb09f5a2addba8ad3ca872d20bc2b77fb38b4fa40216f6b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerJumpWindow.cs",
+      "sha256": "cd4f7b0c94b2da57ebee097951738fc2c07c7bee08383e183820f28dfbcd3d7b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerJumpWindow.cs.meta",
+      "sha256": "95930c8b9a909c1493d65901150a2fa8f3e6ec334add5d8ea0d61173118033fe"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLabEditorBridge.cs",
+      "sha256": "ddc2c5d8bcf1c52ece18d64cb6bb2d40dc8c138f4746f448fa10acb8a9cbc87d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLabEditorBridge.cs.meta",
+      "sha256": "05825b396cac7a64a52a9ee2e53c9a9c7382733aac7199cc6141fc8955bb3363"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLandingMotion.cs",
+      "sha256": "b6c7b7aca944d019622599124fe603b12ad7642729e24951ca14573d30e3e603"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLandingMotion.cs.meta",
+      "sha256": "c30452bd771996c5ef1a51f30ffa155c229ff4d39fd29d69bd464047441241b1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLandingSettings.cs",
+      "sha256": "75e6d4dd02e24ff6734fdc4f2c74ed341938e688e147486f7a7cae371679c840"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLandingSettings.cs.meta",
+      "sha256": "a69a5937beccd6116535a5856ec05603a4bbf1c7141cc8f6f7b8bcc77cddc2f4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLaunchTarget2D.cs.meta",
+      "sha256": "250b787609fd31b3118c8b75e8e085a6b7b18fb096424c56a76a06219c70c9c1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLedgeMotion.cs",
+      "sha256": "6881a739cbc17345df68b1995cf4cb4ad0142ff9edb37d4ab7a7f808dc0098d0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLedgeMotion.cs.meta",
+      "sha256": "3bb59a7a79393e8233488256afb25d8fe38a332cdf81c5e52ef1431de68ea0d7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLedgeSettings.cs",
+      "sha256": "be68d2c6f9ba56d2bf77dbcffffcc73d322bf3a500582272800a1da00393a20f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLedgeSettings.cs.meta",
+      "sha256": "a310385433ee45fa1dc3b168d081e9411b2b28b2cfe99f8b988671cbd7b62d89"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLevelDefinition.cs",
+      "sha256": "436532e8538f278bdd483a6e6a0e4b82e7e53826c19c5224f2511dab9820e063"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLevelDefinition.cs.meta",
+      "sha256": "29773e1f671ab1a1eb25c183fc4ab142aeae313d189db744feac5fbdd95a7266"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLifePolicies.cs",
+      "sha256": "49c7addf0c76dd54622bf958123b8d2acfe145c962c010aff9098d4c53c3ca9b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLifePolicies.cs.meta",
+      "sha256": "8e64b73ac26a1cd33dcd8961bbf906a0a368f8a2b38032bec3524b5632d27363"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLifeSession.cs",
+      "sha256": "e44a71718254de7bf3189de6cfdb1e5d45067b24f7ccd3feefe5a7b935d7ad4f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerLifeSession.cs.meta",
+      "sha256": "6397704f9723a459ebed657b3aa12e5823b5c1f7147ce1500476b9637a637e00"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerModule.cs",
+      "sha256": "e43cc85c41d6efa5d34979af33bed1a2547932c51c4df93714267a1a0da8ada2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerModule.cs.meta",
+      "sha256": "86da4d9f2bd6f3a2888a41d281e701b1840d66a5f34e8ea4527d2ae68fd91e7d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMotionControl.cs",
+      "sha256": "105e4cd6b00f7d39347a79686360a053afc0684b2f2f2a7d44c8a03e2850402f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMotionControl.cs.meta",
+      "sha256": "b787021f5e1e1db47750b64fc1d34a6ab850a1a264ebd67f74df69e2a9346f86"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMotionTrace.cs",
+      "sha256": "7b06402b1b358f9c0ae68b2f8274fda4bbe4aa51b9817df3d35069b258f1fa69"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMotionTrace.cs.meta",
+      "sha256": "c2834ffde1c26d7af36b6c9b05c51df809ac3f5344d6dbcb002b894641ae26df"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMoveFeel.cs",
+      "sha256": "92433c0d9d25ce0f3b1206e1746f43d024b2307ee9a5023ad7c0a60115911de5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerMoveFeel.cs.meta",
+      "sha256": "89913cfe9e82da24af682451f09b9cef4f506213a58c59ec5f2ee6beaa069946"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerOrdinaryJumpSpec.cs",
+      "sha256": "dc8cd0d0faabe89cab73f6b8590fe7bcb580906b251df273091c0785ffd1dc92"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerOrdinaryJumpSpec.cs.meta",
+      "sha256": "424a745aab6d3c7672ba02ec3eb2eaf4c1efa260c2a5d59ecaeb77161809155f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryHazard2D.cs",
+      "sha256": "d2d75da4e1b60cdbd8e6039f29613e8a82f46f8d234ad9d2c517cf26fd91bdf8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryHazard2D.cs.meta",
+      "sha256": "58f96ce9b8e0258e358937a25f71a5057ea4de243533bc492a7538d58f0c9a47"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryLedger.cs",
+      "sha256": "583274fb993cd694e3d131007b7c727e19e561554526edb3456194c0ad99c20b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryLedger.cs.meta",
+      "sha256": "44e3518dbcdb5da1138c51f8f7a53b9ca9fc70b802ca9c38c07cbd2dc3e1fbe9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryTransition.cs",
+      "sha256": "e62301b946a240aae649630dd9a9049031e43116928d4d2955ddee1f194c2c3a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRecoveryTransition.cs.meta",
+      "sha256": "d0642e8c5ff550924a6a6f6772a6d016a76bcbef10f1f710db5103e2b6c748fc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRegionTracker2D.cs",
+      "sha256": "65aaaf5c3a7c2975675a2af56529fffac220ad791fd9fc49db03d60aa015e759"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRegionTracker2D.cs.meta",
+      "sha256": "c6ecb63d806a1a5c053d708ee7f13f6e754fbe451c2c8475e171ea24b4df4cb9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRollingMotion.cs",
+      "sha256": "928115d73b520d1210c560924ed5d8512ce7b76bcf2f3320d3774a9ebfd5eb51"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRollingMotion.cs.meta",
+      "sha256": "dd33e520a484099b42d8f73d98553878480567c89bd1085cb3ff21914d326236"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRollingSettings.cs",
+      "sha256": "fa67425a03cc578112dbc22f8252afc2a2f87e4ab2fe16212f92fb2d0eb405c9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRollingSettings.cs.meta",
+      "sha256": "a23e929bc22e6126b8b4a4ae54df47185bcf2fa46012dad6b52107eb9c7638cb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRuleConditions.cs",
+      "sha256": "f193a19d7e3da46eaaa94ad32115e3858c416af83c6ee2706c5047bcffaa10e6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRuleConditions.cs.meta",
+      "sha256": "285da3edc1a1b60ef8416be36cb8eeb6d51636fc6c4358165508d79fe0a77dae"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRuntimeCandidate.cs",
+      "sha256": "35ba7333fe6102fbbe5f8ff7d9b27793e653ca5c44817665cb43672c2ac2d4b2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerRuntimeCandidate.cs.meta",
+      "sha256": "79fa99302b8c96cd09871f1275f0705688bc9dbd84a2b0c11837e94fca7b5d26"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSaveOperation.cs",
+      "sha256": "7fb48f9c51dd0a201cc1d0510bbf1cc4ed1db904be45055135e663cb45d6cb52"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSaveOperation.cs.meta",
+      "sha256": "11f3bcd958cfbb6c7ac732541e03c52f46b9fca1e9094e4a5ec695c3711766ba"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSceneParticipant.cs",
+      "sha256": "1c611075f3e8acc8831d314dab976f8d322319aacb0e1da1b474dbc32e4d502f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSceneParticipant.cs.meta",
+      "sha256": "ed851a3703070cf714c823af430472afd01e1231f2848f54cc7f95672aaf5f14"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerScheme.cs",
+      "sha256": "d28bd9730c53f4b6ad240311b9490d2305030ad1d5fb8321f685f0629c68a3a2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerScheme.cs.meta",
+      "sha256": "c927bd71297b9f10269f2a4af99aa4f4243db86beb574b0a4033144b6b369e0c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeCapture.cs",
+      "sha256": "025c101584f38a461875607e700ec405ae833ced1e6f5324ede09944755acf23"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeCapture.cs.meta",
+      "sha256": "f24dc268e3bba7a459d89832069b7f1d1ffcde167bc2ea6092890fe39408c15c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeObservation.cs",
+      "sha256": "86416cc18f828be88d5e5cd984565ce9c6f04a4c4ceda36886c8c1e09d948a27"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeObservation.cs.meta",
+      "sha256": "48a678521d8bd5b66859d496a5b91073e13e8dd84a0352a0d8674713ad552697"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeRules.cs",
+      "sha256": "11f1d0b52f1a07a211d99eabdb282ee29054c847c16b787e5158e8db6e1159b0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeRules.cs.meta",
+      "sha256": "2a29fda7b4de9c1abde5e9c73496f86907008060815ff8db385bab16c63b8f66"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeValidation.cs",
+      "sha256": "fb89a199daec92fa9c8e45a864833a90dce03f985808d70f2f80138f7860829a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSchemeValidation.cs.meta",
+      "sha256": "fabcec398c49b9b3de76effda6d3f2bef7c91cc4ea99fac78d7c948d838079a5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSessionContracts.cs",
+      "sha256": "e8f131a04d03b29d3a4926fb5858c88cf74a40eadfd22e5f6ac236e9df72520a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSessionContracts.cs.meta",
+      "sha256": "721420b6f8b1256f89206ebcc7b42e697fc60d4f03f4268528e2662801cc1028"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSupportMotion.cs",
+      "sha256": "8f10ac55a6760f8e3a4d75dec3f6409e0d6aee1d47a879bd3fefe766223b85a5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerSupportMotion.cs.meta",
+      "sha256": "90255145f6221eef8fa04044f4e20ffda6d4159389bf8e8506911bcfdbc71d7b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerTrialStart.cs",
+      "sha256": "67c8c6e7dd7dcfd5b74aa5b6fb462b6d04815ef88342fd6fa4bc9cdba54253c6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerTrialStart.cs.meta",
+      "sha256": "3c61cc219a48c6ed70e339755f83b59397fa0afc36f684ac6c8953d11b141d59"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerVerticalMotion.cs.meta",
+      "sha256": "5b12ba3bcfc7c871eec3e194f79d8ed5a3b6fb52579115d0d1632acbced24a52"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerWallJumpSpec.cs",
+      "sha256": "ebf538de5dd491d4be2097de8b7f5f7befef0f3e32689cfd0ea106874f458f5a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerWallJumpSpec.cs.meta",
+      "sha256": "5a196cb850984d8e4072469da4fb398d44e926d6f2b9254e01793ddbcc9e5c3a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerWallMotion.cs",
+      "sha256": "d02c0d78790f18dc1b6041960be39e16a521d6c5e8a0a557d999ecab2569eb1b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/PlayerWallMotion.cs.meta",
+      "sha256": "63854b239b32f8f5150734cc5dfd532e3a2f3d2e5b94661b2ade2f2223324679"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers.meta",
+      "sha256": "b33a14b94857f3f0d536fa28abc6db47a8d356388bcf01d6801b2f9a5e74be06"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States.meta",
+      "sha256": "a863b374a139e0dbdc0c240a97c764a57ae6a7e2824cdf39f97ffc1886340633"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests.meta",
+      "sha256": "c31bff88b938242fe52874b9d4ee2a1e3c425ef472cf394881a97d48ce915ba7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Development/PlayerCheckpointAcceptanceParticipant.cs",
+      "sha256": "62e8323675a95350565f450b4123934a80fe0a72269d4b2d5fe92f14e1749ee7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Development/PlayerCheckpointAcceptanceParticipant.cs.meta",
+      "sha256": "b568d4f03728308dd8318803ac68513ceb922dce880c459c4acc27d7a45dd127"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/AssemblyInfo.cs",
+      "sha256": "2cb932fc7336901d236c46b131735380481391b2638c0a78fcbf9e5cdda6a3b7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/AssemblyInfo.cs.meta",
+      "sha256": "77ae01115079e43906b479e80169258fcb5f346aadf49c20464c45f427b4b0c7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef",
+      "sha256": "720634cf4b9c4c9473a042fc46904d5bba830897425e88c11dcbcf2bcd1ad942"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef.meta",
+      "sha256": "eecfe9e4d274cd9cce9289c5417cf6eb154f5468223292ea85509baff21e66b1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerActionEffectInspectors.cs",
+      "sha256": "0bda8a48210559e7c6209e3497e0041080a0ad07fc19d9464b6cbf0736f49bb5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerActionEffectInspectors.cs.meta",
+      "sha256": "62e996fec34a0dae167b04e2e45bd33746740bde12dad3b2dc375744eba43104"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerActionEffectMigration.cs",
+      "sha256": "c05cea7cd7b2c67746c35c86be33275848c36b93da00579d824879177af19284"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerActionEffectMigration.cs.meta",
+      "sha256": "4f3447a195cedf0ada1419ff8aed29d61372a5c01baa4fcc0718f7a06dcb1384"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerAnimationAssets.cs",
+      "sha256": "8e2072125604b85115ab409dcbf957f053385f9b070624a9a51be8680662edd2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerAnimationAssets.cs.meta",
+      "sha256": "c16aad98a9251ef405d6937028ba3299c3b1147b9ca4826d464f58a260797889"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerAppearanceWindow.cs",
+      "sha256": "d2d1ca4c5094ae134debb35cdb437e0044e0060bca0943b6e6ab566027383dba"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerAppearanceWindow.cs.meta",
+      "sha256": "32dfd02d72ff4a6851baff6ec44aa39c58504e8c10d9ce49662f5f26742e87ea"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerBuiltinSchemes.cs",
+      "sha256": "6d510bf05c1d8bf915d1cc788ea02f9a1dec960688f62d975ca9ef465fd531fa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerBuiltinSchemes.cs.meta",
+      "sha256": "0dcb0babccbbd1bf39bed68880459458ce3d0927ac9d5b201baeb4443d7265fa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatExampleWorkflow.cs",
+      "sha256": "4f1fd3f66377774d103b15bf15426c025149408fb4af7414de5ef7838439eba1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatExampleWorkflow.cs.meta",
+      "sha256": "77ae5dd7fcfda0eaa94d0bdefc1df42e6545f42d943de5cb4547b6911e5d628d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatGraphBuilder.cs",
+      "sha256": "3480ae2d39af1ee570fd9a17f088c6abe4f645a5b16df0b2ad5058e299a515d5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatGraphBuilder.cs.meta",
+      "sha256": "89b33fd87db1ead827ec216d59d9f30363323ef3724a76ae02fcd2188a5cf530"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatStructureTransaction.cs",
+      "sha256": "c23914ebc9e4726935c04a0daa89784af026dd4c91570f715055463e1a1711b5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerCombatStructureTransaction.cs.meta",
+      "sha256": "b2636ee7d6b1d596bbb6fb98943780aa39bfbe82312ab8f4e7997d789d7810b3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerConfigInspector.cs",
+      "sha256": "30c0530399afc7e0d38e3429080c683dd02d3981a1e817a5c91ced63b7cb75b5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerConfigInspector.cs.meta",
+      "sha256": "065a04ba4982f2a2692bccb614d55fdbce5c53e56257e24798c1d9d92e9cb4c5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerDevelopmentEnvironment.cs",
+      "sha256": "0ac15c4c077f083ae74c3083665bf8374b0dabd0de555a577ff23f4169be7871"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerDevelopmentEnvironment.cs.meta",
+      "sha256": "a9557dff1d5540da3ef4ac51f4ba666dd53763ce98b266fdd972654bcd3e54b5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs",
+      "sha256": "7390bba9eef75626781b7113597f81399854e1543ad66268e549ab3c66d44b1b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs.meta",
+      "sha256": "4fa4c5c13e540840e31025ff361249bf6c3a48650654a0546b720c81dbc72361"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelLabWindow.cs",
+      "sha256": "43afeca417e460ff84810a7b8ec695e6a51f33db1e37af523bec67b41e004f5f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelLabWindow.cs.meta",
+      "sha256": "c5e2460514f98a7f0379a8aece2e815770aa6054352f63760502414318ecb1ec"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelPresetWindow.cs",
+      "sha256": "d6145c1ff77c2ce5b0071cd719fa25d7b754c9eb333d4e4b27546c9403312d7d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelPresetWindow.cs.meta",
+      "sha256": "a276b717dbe40c79d9cd5ae08e339c5b2bfd1b00968521ade699eea88b8767c7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelTrialSnapshot.cs",
+      "sha256": "aa6336bd13083dd95c618bf64fa3f4c5483ce6466bf87ce506dfabb23b09d948"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFeelTrialSnapshot.cs.meta",
+      "sha256": "b14995ecbb50da492001ccfe194fe5104b110e734db774928890fd548e7064d9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFormalAcceptance.cs",
+      "sha256": "e1ffd49fbde09dd58cdffd7cce577482d8defb807bc414b13e26c0afd0a72785"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFormalAcceptance.cs.meta",
+      "sha256": "23de6c031072f20649436c7106e12f3476a5d7d16876444d0a9f7a47013c38d8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFoundationAssets.cs",
+      "sha256": "bb6a77b60c471ed02fabd0f0e68e2abe446fd9e2199086cc7b8b2be8b5c3cb9a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFoundationAssets.cs.meta",
+      "sha256": "78862b788f27f2ba04b95694e2a54fd651d99d38c36b861d3f5a1062bd212f51"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs",
+      "sha256": "0fb4cf56e7430e17ea3355af409a36e94e626df15bd101a99a4000f677fd2a09"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs.meta",
+      "sha256": "36c95ade2c4f0f244621b55ba6dc7a85a28097a7b92a565e6c49eaa973e97b6e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFsmParameterEditor.cs",
+      "sha256": "7907d85877b2a89f39253236c5d56259004734ad3a57671bc8ad464e8b158576"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerFsmParameterEditor.cs.meta",
+      "sha256": "7eebed3037abde19a22499c3a123c8499a2ec408f0a14215430b51695a3168f5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerHitShapePreview.cs",
+      "sha256": "c59659cb925b4921c4b545ecf8a1fb698ab93c943ba472ee6555911d3375a237"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerHitShapePreview.cs.meta",
+      "sha256": "47178906f0178ca705feec3e434d7e0cd2e8d23bc3a0b4c772cb217ae53869e2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerLabTrail.cs",
+      "sha256": "b4c9fd8a5f95b3e5f8e9066a662477cf0efcd7910e2cc1216895b6ab88021c8a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerLabTrail.cs.meta",
+      "sha256": "ff2a54cf43b1eeaa6868724729361936b2423caaae68c7816da2babc014342e4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerMotionTraceWindow.cs",
+      "sha256": "4b2d06474b21a4c99b80b133f04c0d13c618dae1a58585adad45a7d69bb35afb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerMotionTraceWindow.cs.meta",
+      "sha256": "0b0a1aacaf43f9f50c72212fad204dd827ed6f617672f038a72f16d4ab452f35"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeAssetInspectors.cs",
+      "sha256": "7f7506fe4c2ce94ffd9c5c96a816c5eb4c98cfdb348d3e524e15a8e19d431a50"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeAssetInspectors.cs.meta",
+      "sha256": "91d89e8913a9200b015d3c5c89572ede7811d77f2dd0bd9c75f8a023bf07d7de"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeConversion.cs",
+      "sha256": "117f1042261ea68ed490be0133253a4cd5b59da83b9ab71c5d1882e132184051"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeConversion.cs.meta",
+      "sha256": "80511df6e66c85f06230a996f38f44fddb2a2104ac333cf64d339fa375b5a93a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeLibrary.cs",
+      "sha256": "047150ee287b20c3937ad9574626897d5a567b64867761cb9c092c0d164ee5c0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeLibrary.cs.meta",
+      "sha256": "e1d6461cae513affff05b52eb7ade0a8183fc8e48282aa175f7ed24291d39dd3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeObservationEditor.cs",
+      "sha256": "65a70527e3a4efcf5ed30f46d2682af1e6861d1017dadc50c3e28c042931a8a5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeObservationEditor.cs.meta",
+      "sha256": "1d69cd29b80f081a6539bc34a3426ebea8dbae68971a02226f42147d891f5654"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemePanel.cs",
+      "sha256": "332031e7523f7caf1ec1d991c925b48bacfb0daa351bf38455e26677211397af"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemePanel.cs.meta",
+      "sha256": "c627cc5fd277ba88e99b10617f9800ac23f1219846712af1ab9b252acd7eb6d1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeRuleEditor.cs",
+      "sha256": "f641a380adf9fae256eecfd97a401aec7c0d585a99b0b4d61e49d746f4528c28"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeRuleEditor.cs.meta",
+      "sha256": "38f349ef411e0b8c4d9f05473b5ce11d3d157bf0f444dae3fb421dc4340a148b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeRuleWorkflow.cs",
+      "sha256": "f02757f070cebb58878fc925ef84a66c6e18118779382a69aecead887ba7c4d6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeRuleWorkflow.cs.meta",
+      "sha256": "0e512132435ee4b6228c5b52216431e5fe6bd1fe963165d87f4901c0fec0a1cb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeStructureWorkflow.cs",
+      "sha256": "cb25cdb692ecb714a6e012111d819f65980979df239ad7eec287d910363dcfee"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeStructureWorkflow.cs.meta",
+      "sha256": "22f765ce57d79fe05b234a46205643b7f1af1addded71266eb5ceadfb36b2aaa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Combat.cs",
+      "sha256": "f6b896b6723cd7cd4b90561475b72465c8b2229340cdd17ef493ce627b5825de"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Combat.cs.meta",
+      "sha256": "a355a867c1cd8fd88c4a0cb62839769acf6f86e6ed3c8f31f65414575dc372fa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.cs",
+      "sha256": "ec7f7b12d5cdd65675fc0c55482a54332c6ebecabed02df235b1442c3b596a69"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.cs.meta",
+      "sha256": "47613ba31f5fe4a8580721a0bb9b6e7f8a2b99111b165ddf01b447f76286c671"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Draft.cs",
+      "sha256": "a5302f299ec19de4a1478a55abd8c23bb7baa3857a129d99855373669d1e328b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Draft.cs.meta",
+      "sha256": "54c3abfea013225342ac64a358adbc7d513ec38a54015101620015081faf69b8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Panels.cs",
+      "sha256": "5cec761d98c52bfff200f60e7098aaa02c63ee063789a5e74e09b8ba73b70941"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWindow.Panels.cs.meta",
+      "sha256": "3c251bca49c9b6ffa9e9ff8f92d1f8348b4718128defc827859fbd0f38ece1e2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs",
+      "sha256": "44035fdc7833f87d5d63b5c2f7b21bb8d176b8d3aa91ee73cf197bbcf57675f6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs.meta",
+      "sha256": "e4e0c3f9fda2313c75320211b5f854c158fe0335df556c147f8e3376a68a467a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerStateAssets.cs",
+      "sha256": "70509cf59e1df690dc0409187c17303382324e3795961c1f11513ba5ed1f0fa9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerStateAssets.cs.meta",
+      "sha256": "cc104602821048af4282f756f64622d1e2ab71b96f8bc2bc3b6d764e2a500a1d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerStateAvailability.cs",
+      "sha256": "370fc3b9f35932aa0eb1477aca00e276a2c4a37911911fe9e9c5d9b2f45cd469"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/PlayerStateAvailability.cs.meta",
+      "sha256": "f1ef531ed63e734a06fa1b980c8e3df9844894757696da0ce5c5e23f9b17f726"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests.meta",
+      "sha256": "90280372b45ebf3b178f2a5c87599b15ced39e5f739a65a30cc8a7b0c729e8ca"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerAbilityDefinition.cs",
+      "sha256": "5a41ad55469d23c867f9d5962b3ef1b3dd994bd78d438380537865fb1e073f90"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerAbilityDefinition.cs.meta",
+      "sha256": "bed59465e591948cce2843748546aba9f680285734dc6e38833d04586a34c40d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerConfig.cs",
+      "sha256": "5cd15c3a27890af028935154cd61295296da4e11748ea5e0959f9d6d6201afc8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerConfig.cs.meta",
+      "sha256": "718c6695733f41fc51f6e73dfa6309fe48f059efb2729bddd51d3967bf5b2993"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerContracts.cs",
+      "sha256": "607ff782f5f894337e9381a262f4688f3be55841b25d2cf065aed4750f5589e8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerContracts.cs.meta",
+      "sha256": "71f09ef8195991f7e5ec13ba970f040023147d23cca84f0cbfbd0a418ba23826"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerSession.cs",
+      "sha256": "8154ae4a62bb961a48cb283e3b7daafdf94c4d79df9d6438fac361440d956a88"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerPowerSession.cs.meta",
+      "sha256": "680b981384f98ff19af2e7c3030c242ed1e589ac1d2630bb95d5a09a66607de4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerSkillDefinition.cs",
+      "sha256": "a44551c898892f99e0c30c4cbf24525438d5776350f21517ef8e3df908c66999"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/PlayerSkillDefinition.cs.meta",
+      "sha256": "2331d91b45a185399464d9e1d6fbb27869a5dfb76f2938aaa582cc435d789102"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/README.md",
+      "sha256": "633f743c5c1b1ad656a8118304c2240655844149413e3a419c94af7d9545f7e7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Powers/README.md.meta",
+      "sha256": "c21b02e988672d0476a6e1a17d31cae07df08a3f3fdb709aaef5a3411b892750"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAccelerateState.cs",
+      "sha256": "1128049816220df0decfa557ae73eed3a27755b4ddb77569ed31c27fec912900"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAccelerateState.cs.meta",
+      "sha256": "da581f19b6304387b3e5a1bfd65e1ffdb37269cf094821179f4170596abf3494"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAccelerateStateDefinition.cs",
+      "sha256": "9c89b40161ca82b729e3a63ba1fcda06121c917e58cabe167284cdb8d3a587dc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAccelerateStateDefinition.cs.meta",
+      "sha256": "2af68de4c594e1474d5122112c4e995e0604ad0021409b30950209353c42967f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirDashState.cs",
+      "sha256": "00e3a01d961b3e6f3128d169a92a52267b8a70b381f2268d34b003cdc40c784b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirDashState.cs.meta",
+      "sha256": "cde97ffefe597e9b4a3f91df0229c41eea70e612364f040418a40c249d2de0de"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirDashStateDefinition.cs",
+      "sha256": "0229cafc2fe427eafa8c6fdb995bce012b76d81d011e26feb2dd5b40bd0cc874"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirDashStateDefinition.cs.meta",
+      "sha256": "2ce1c1224e9b7dc5a68b4956e8851e37d2eea0294372c2cf32d73a575e123e10"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirJumpState.cs",
+      "sha256": "3389bafd555b0593c91e24ded951507e7ed5facf32ae4f5af11aa2978ee61ce1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirJumpState.cs.meta",
+      "sha256": "188ffda7584cc1018a35259c045da36da4a4efbbf57112e64aa84abc82b951e8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirJumpStateDefinition.cs",
+      "sha256": "7730ce2dc6b45c0d54b339723a493ddab8941370c415a755604e64dce8c4ae5e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirJumpStateDefinition.cs.meta",
+      "sha256": "a56db433e8e9e0608269fc27bc3f5f2cb0983e6b6a7b56ed5cafd5c4da183ff1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirState.cs",
+      "sha256": "0a714f3089c9ecabb996befd6f50c1f0cfad2f892d165ea013a0bdc907c79f78"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirState.cs.meta",
+      "sha256": "9d1b43a2bd6386dce81a68179615db08cc4418e424da347b5d2713fefaad837f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirStateDefinition.cs",
+      "sha256": "5b6290491850087f6ef06317f17b3d3a68af1d758273848c0e10ac6fe2b97ee6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAirStateDefinition.cs.meta",
+      "sha256": "69d41df1b6016358e7bf27371baf844b031f7b0d16607f447b7749a5ec08bc95"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAttackRecoveryStateDefinition.cs",
+      "sha256": "2781ce1fe8c79b6b1167ae1b1e4f96b0e924a845b58c4c15d0828143b7dfcf40"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAttackRecoveryStateDefinition.cs.meta",
+      "sha256": "d34b31aabb8666cda30a6dc8839a4c980413fe5a515ba7f32eb56a561722f613"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAttackStateDefinition.cs",
+      "sha256": "3033beca7dde16a880b1f20ffbfe5d6dd9826eae6eaca867842474a9549c692e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerAttackStateDefinition.cs.meta",
+      "sha256": "9dbfe278a5fe501691558f2b8eca51def7f878d197b209a6dd64c18eeec3a6ec"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerCombatLocomotionStateDefinition.cs",
+      "sha256": "266ca3b60593706361ffb190c4ffbb71db6e6ccfb166d6393c5d80cd8fb497be"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerCombatLocomotionStateDefinition.cs.meta",
+      "sha256": "31aa77fc57c482ebda4d84ff1fa280d699738cebdbc1ed491bed864a2940d4ab"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerCombatTransitions.cs",
+      "sha256": "cc7e79cfc58415874f02625db06faa1492532636f596275e1c14586c953d6ecb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerCombatTransitions.cs.meta",
+      "sha256": "b90ef78a097a1303777ae0fd827f5fdfd97d6baa632937bb009531960f69b99b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashAttackRouteDefinition.cs",
+      "sha256": "5e8dfedd34f2dbea772820006d0022d8cf0ca377b7dcfd87d59ddc5c154055db"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashAttackRouteDefinition.cs.meta",
+      "sha256": "62ecd6ef1900ab1a1e7e02d051b14f2ee4b5b81f7da4f578ea4a6423d4763b16"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashCombatLocomotionStateDefinition.cs",
+      "sha256": "051f84ec45695d7179f9ab93e077197fe9e687b066b4bbb88931df86978a6e7d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashCombatLocomotionStateDefinition.cs.meta",
+      "sha256": "c417cde72858186ef75c1059ab18f88fe59a73f703909d9d6cd0255905edb611"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashRecoveryStateDefinition.cs",
+      "sha256": "15356e5da267269bc8b1d4fbb991c80daa6c5b36f757db4266255221e681e5f6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDashRecoveryStateDefinition.cs.meta",
+      "sha256": "974250ff092fd8229fd145215d9f922ea4fe842dde2eb1a83202b50e89a95e85"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDeathStateDefinition.cs",
+      "sha256": "66e2918e815d66b360b2122856fa6f67153af0764eef48ba6c1f1bcd168d1268"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDeathStateDefinition.cs.meta",
+      "sha256": "6a7c93e077279482c4daaae74964c8135cd76f6cf6bdbc2ab8f6f0da90413ff7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDecelerateState.cs",
+      "sha256": "f5d421c48d792fb51c4c6c19fbd0db5208d1c8f9cecd6e4d9cd91d56e3750fe2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDecelerateState.cs.meta",
+      "sha256": "a254263c5502ed8232f9d06dcec2795e7b4db7bb6c34e55ae6187b96c3487d45"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDecelerateStateDefinition.cs",
+      "sha256": "d56d1784b4c643a46c3f9c4495412d5d7b5428d7882e9dc6ffa92e8111fad1d1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDecelerateStateDefinition.cs.meta",
+      "sha256": "d937dd741902bd32aecdefea534e9a6430d5a750e47dd3e22c4639f1a02c40b9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDelayedAttackStateDefinition.cs",
+      "sha256": "4a27e28850dd8abf4d4bdf3e9d90fd3608f30b7cb3cc8c5eb11a790bfcb22482"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDelayedAttackStateDefinition.cs.meta",
+      "sha256": "4699d518ce7ad552971efe2b2bf185400fcd595613ae6eb75a3ada0ce15a7252"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDelayedRecoveryStateDefinition.cs",
+      "sha256": "0935d59c04bc0a8cadcd5ec7547ef9362d4964d4e0312a94e50bba5d3dcbf302"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDelayedRecoveryStateDefinition.cs.meta",
+      "sha256": "9ae7d6e11d4a623c343f2fd6022557dec2ee1246ea47dc5955a6a61e0935a38e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDropThroughState.cs",
+      "sha256": "719bb0d3a86e9476008a36d8fb7d3be7d6daf78c89d6c82d743813c18dee9b55"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDropThroughState.cs.meta",
+      "sha256": "04c57f11384ed05ff532961b92f95956af61c9c9a2cfb4db251d902e88a49d42"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDropThroughStateDefinition.cs",
+      "sha256": "62c177f580fa96920da745052c32e9458ddf1a0de4e5b5970e53c44088d38996"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerDropThroughStateDefinition.cs.meta",
+      "sha256": "c001604f93e590e39fa3df9737ffbd3be8225d9407256c25eb7907a40efdc247"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerFallState.cs",
+      "sha256": "b386c6d8655891a88b25f18ef960334797655e9f0651383b0249d8f0a3c17c04"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerFallState.cs.meta",
+      "sha256": "fcb098429c23c6471c34ce6c115b1d973cc141e75890936a1270cb58275943f1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerFallStateDefinition.cs",
+      "sha256": "b7d79fd2229eb96db5280f16ed40610c6d3b446ab2c56eb5a2bf548d784b1870"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerFallStateDefinition.cs.meta",
+      "sha256": "b0b954b837b720c0fd421ef0985512f2eacf2410da2e7f36039668caf823436f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundDashState.cs",
+      "sha256": "80bce2a753b911ce309ec777b524d5b1f1ec5a1586104820a8f8f719d0ae62fb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundDashState.cs.meta",
+      "sha256": "88f275b5042c4347368b2ee386ff67af9c63aa619650a5ec7bbd9151696959a4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundDashStateDefinition.cs",
+      "sha256": "9f452d54abf3317557ba6810d1c933adf76c3c28fd3da4a08ef1e963678ff9e4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundDashStateDefinition.cs.meta",
+      "sha256": "326ade68ab5a492322b267be007713c1984905892ed1559d3ecd00d35ca97a96"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundState.cs",
+      "sha256": "bf3e63d87fcc36d6bb98bf3b7bf37693bb80ba08d8ee338e64b90e0b8bc5813a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundState.cs.meta",
+      "sha256": "1cf8246c72108dc846125906d4cf3883c27ce2fd44f562057475228a4c3723da"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundStateDefinition.cs",
+      "sha256": "decc8ca084f3a4e317a209ffc044bbbc0480678f2349594f5e3db160166d3471"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerGroundStateDefinition.cs.meta",
+      "sha256": "2295ac449cc1bbfaecd5e391dce3748fcd784028d106afa124c6a7a412f28f96"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHardLandStateDefinition.cs",
+      "sha256": "65fe6dd9ca361816ea799b87c1cf60d90bf829a7023a98d2895a79461624a272"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHardLandStateDefinition.cs.meta",
+      "sha256": "ce2c9b62799353ab4e4058b5d4884f7fda8ec0b2ee1c14e1b7c2f70349d393a3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHeadJumpState.cs",
+      "sha256": "b92d5f967d7b197997eb6800f57a03274d7a320bc4a74b6f095776bfc1ce37fb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHeadJumpState.cs.meta",
+      "sha256": "b4357ee4c8b36418ed6eafd9cca103bb16f19e0aa7c7947d4644688b11963ade"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHeadJumpStateDefinition.cs",
+      "sha256": "e36ff219b568607c276dede724a6774083af68e2099886407c124a4b9330dd3c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHeadJumpStateDefinition.cs.meta",
+      "sha256": "55438ce4708542901bf6a82fc55285d713fd65cb56a5c9f4e1582cbfe9ff6274"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHitStateDefinition.cs",
+      "sha256": "28b26d437063906692dd2919b13d0dc276d6c13250517e6e602594393252c982"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerHitStateDefinition.cs.meta",
+      "sha256": "30c0e95fccd0c50e19898b6f512d6f8ba0d2f182e9e8f2a740544c52b6ef131e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerIdleState.cs",
+      "sha256": "aaf2864df86a86a42717d4b9e8a7454beb2ac9792cd269477fa045324a0bf5ef"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerIdleState.cs.meta",
+      "sha256": "f2f8c307e9da6237335fd8b853b21673b21e1c3254d67d62e4f580afae845a14"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerIdleStateDefinition.cs",
+      "sha256": "a8c7c0ee0150e0413af3418e5123c062a582d9c944d9c77f31d250ab8f477f12"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerIdleStateDefinition.cs.meta",
+      "sha256": "e13f0265d05720202039ae2a0c3c163a3643b54c5e108bef66f0ce89d6b427cc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerJumpState.cs",
+      "sha256": "a7be19bb2a4dcf04fe650eb5d80f892c8864aa4bfc8732510b9e9ee0d860a9c8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerJumpState.cs.meta",
+      "sha256": "8a0195f65da77cf01cfa3cf7ca796beaa7fe5c439dc4b13f93662cb0edb59a70"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerJumpStateDefinition.cs",
+      "sha256": "d869fefd20e0a70a4d63654e97bec4173ffe47df0174851d5d89f38dd6492fb1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerJumpStateDefinition.cs.meta",
+      "sha256": "e0748e23ae8ded98b27a842075e140e4db19b437e312318d3005ea86695b76a7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLandingState.cs",
+      "sha256": "3786a70f7f209887dd7a490d54fc809fb0cfb7a7b868e11843a60df5ad115c53"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLandingState.cs.meta",
+      "sha256": "89b6a742fa9dadee876ea73cf28835f25460e58a479d659b7767494a2675716e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLandStateDefinition.cs",
+      "sha256": "c28f5dd71c21bd5e1791d2d39138cf92e7b5ac32665ccbd6170bb9190798e301"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLandStateDefinition.cs.meta",
+      "sha256": "a93d29e10b8075cfc77bf21534d521511b1665851f32830ab95ef5eb9ff66f6f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeClimbState.cs",
+      "sha256": "217862caea763a1d4008c0953d789083b3747113f4d6411b0d374518984550d0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeClimbState.cs.meta",
+      "sha256": "6be43894d2abba6ddcce7719d6595a94facb802fb81552169b981ebce0c0bee3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeClimbStateDefinition.cs",
+      "sha256": "9a2e5b0c402957daf48088635da2af590e942f5f5a1168bed22692b0e802a9b9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeClimbStateDefinition.cs.meta",
+      "sha256": "4f14e9b3ed92fcb02e18663071b65857663cefdbee534c7514ca5ebd4e13ab70"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeHangState.cs",
+      "sha256": "5a1be84221007809503cbb970db436ee8ebe7e453984939e1a8e1200a4a5e565"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeHangState.cs.meta",
+      "sha256": "e14d46c1356a9d004a792101153c95e7340cd16de1ac004a8570a9b314110588"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeHangStateDefinition.cs",
+      "sha256": "68e9fa147af72960a9187b78bb8675a9c00de6e03dc3eb4781a895c661079f9d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLedgeHangStateDefinition.cs.meta",
+      "sha256": "654aaaecc0dec3f7ab864cd63522e30eec8bf19cc3a7f582b761e2f0e81e23cd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeCombatLocomotionStateDefinition.cs",
+      "sha256": "e3fe4659ee0887d3a659f2a2464e257deffd8ea07a0749b64516a9c80c092842"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeCombatLocomotionStateDefinition.cs.meta",
+      "sha256": "8a7199d3ac8c2caaa67363ebd2541f7efa916fcf9bdb748acbb6e3586e4defc3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeDashLocomotionStateDefinition.cs",
+      "sha256": "9daa008c92733f2c32f14914a0bfab209cdf8769c67f1952df28dcca3a6d103c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeDashLocomotionStateDefinition.cs.meta",
+      "sha256": "f038ba568e79f636d1c575a9a8e05a11dd7d2852b94cebce0f424ad5d59129de"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeLocomotionStateDefinition.cs",
+      "sha256": "7ce877d932b1cd633e3170b355c24a083a9f1fbcc4aca540afc953e430096294"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeLocomotionStateDefinition.cs.meta",
+      "sha256": "aa359bc6e2d674e38f14ececcd8803cdbeee0ae23d560ffc6ef6680f7106d750"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeTransitions.cs",
+      "sha256": "293e25aab18261496df028526f8d4b074128ab1a35809abdbe4e9374e6018aa7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLifeTransitions.cs.meta",
+      "sha256": "993c36b18ed077cb1593d896c69f1ed4ed1d11c368907d9e81840ad58de05796"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLocomotionState.cs",
+      "sha256": "296f0653ebabe87e6e360ccb73d96a88bf6ec1ff78f4a2fb1fc8b1901ca105d5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLocomotionState.cs.meta",
+      "sha256": "32687b5d7b74fe2ac00c3454e770698e9733ae52041ee8970c0c6c8f3946cc8f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLocomotionStateDefinition.cs",
+      "sha256": "5d239e7509d49e23e1c8aa1a6d75ea70033760ceb68209659a4f41df9687cc81"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerLocomotionStateDefinition.cs.meta",
+      "sha256": "542d8ff0f0dba310af27b848a168d17ae700898019af90cd351f1b6d27aea654"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerMoveState.cs",
+      "sha256": "3a43b9281dbd7d565fd9ac27678b6ec69b3ffcec727daeaf0fab4ac48bfd2ee0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerMoveState.cs.meta",
+      "sha256": "41cd9e21f7ef6f48bf602708141b7d2b846679b6eb7a19c870a8152ad344fb75"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerMoveStateDefinition.cs",
+      "sha256": "3f3c5622143c790cdaca6e6d17c873e8251ceeb29ec3630b3ec31a2bca688864"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerMoveStateDefinition.cs.meta",
+      "sha256": "f8bc522ba244ad86c2339743202f090750bf500ef5ea73a2ad630fe4975fc88f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRollingState.cs",
+      "sha256": "eeea6d27a83ca1a55e9de5217aa7f9a5bd56a9dc849376938ddda9bc152d7cc0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRollingState.cs.meta",
+      "sha256": "bc13977dcf744ad3f3122980057fc31e90d03bda504db21277b72336947cc242"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRollingStateDefinition.cs",
+      "sha256": "525ded80e677f3dbd210655f0a78890e363d0b1ae19342cb941ba57707e62908"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRollingStateDefinition.cs.meta",
+      "sha256": "c0689215db9420f977bd59c80ab12fde976214801b43f3376eaee1d1e299f342"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRule.cs",
+      "sha256": "2a5be40f9293afa0eeef55535d078e2b50b2d5da3207799e7f58b098d229aef2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerRule.cs.meta",
+      "sha256": "03d31f13571868d410b29f3c10c73ca644c87b1c774fd81ffdadc5e1756535f8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallJumpState.cs",
+      "sha256": "38a9cfa1533a0b0053c93ed824c52303759208a42f59b3043bd06584d5b42924"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallJumpState.cs.meta",
+      "sha256": "b2f55b233478d8c9af87d443620b71c7134df4d58eaf60b6ba509fbb7a91244b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallJumpStateDefinition.cs",
+      "sha256": "cbd9dc32be44e9f79acc28c5c55e6c7da7bcba0097fa4f27162cb8d61389829d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallJumpStateDefinition.cs.meta",
+      "sha256": "cdff5a5de28cf1f395d086b23e958346ef9f3441020c3252c0e29321b68ce430"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallSlideState.cs",
+      "sha256": "a7bbad03428f8b3b351f6cb2fb0e11a42b61d326bb84669c91c377ff88bd29b8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallSlideState.cs.meta",
+      "sha256": "1d13957dcadf50a1465992db1f3150b4fa75be5a5c09ad0be182f4c0fa3727c3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallSlideStateDefinition.cs",
+      "sha256": "ea303e655b2e5b4629a9a3f5b672e73d06a57feccc562e5615304a9a13ee1d27"
+    },
+    {
+      "path": "Assets/Game/Module/Player/States/PlayerWallSlideStateDefinition.cs.meta",
+      "sha256": "ef383b6f22a06eb09efb8b5c405d67a2578e64d638660fdb0d8e8f3b6e35a5c7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/CheckpointIntegrationTests.cs",
+      "sha256": "481b54726be0314e0dc7cd1cd754ff6804bc801a5c96793769926034019c0cf4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/CheckpointIntegrationTests.cs.meta",
+      "sha256": "f53eec06fa57ec46f62e7a6284df44e736a028ecec8416bb007ccbd55dd33849"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/CollapsingPlatformTests.cs",
+      "sha256": "db324d53c7fb96dc1c63348d9e0c924353e162bb53ca341f65c0a3c661e7b5bf"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/CollapsingPlatformTests.cs.meta",
+      "sha256": "46da5dac687ddaf212b7016e54c0bd9a0359f5244456e7ac556520c249b33f74"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer.meta",
+      "sha256": "94f6cdaf0d4533eec2ecf7f7093eed217eeb377d18db2d27c85f10df88a6235e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures.meta",
+      "sha256": "15853a0cd0ce527d5ec51a8a545f7879645fbb1902075c92e3335549ce1050a4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef",
+      "sha256": "aea776e8ed98e6f74fc44798e152964b9b2024124f9dbd90f558b6953a416899"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef.meta",
+      "sha256": "f1f7d33c465170cfb44690c7926f8199f685103d9f4f876d1a7f777abbd30deb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractAnimationTests.cs",
+      "sha256": "18c8f9543617e24be439486b5bac8efa8078e90373645643fe9450e56dfa931a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractAnimationTests.cs.meta",
+      "sha256": "324b4f179e9fa4b944891caf452ce0be36eb13a0e04c2e997aad1e55fd40b1f7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractSessionTests.cs",
+      "sha256": "37cff5d3a5450a23138e3fe2ec6bf100f24ef61b47ae14ab0ae27253c4c2f1fc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractSessionTests.cs.meta",
+      "sha256": "3d81499e538ba672ad124ad56912c032a2131b1aa95d1a48d54ead622ac1438f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractTests.cs",
+      "sha256": "f0f419eeda405d61b89bc859742ddc45ef705acb6d5830f9f960740673949487"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionContractTests.cs.meta",
+      "sha256": "ba33b1406b8379ea39215f1062e63d240be3cb474153fb716214f069b0d2db02"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectBehaviorTests.cs",
+      "sha256": "79efd80532551cb95042c1570c407353e8b967381852844f6fe64f8265d6fad9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectBehaviorTests.cs.meta",
+      "sha256": "15b7ad1026461379917b386376f54c481a54e96f19d3a48694d0a5b1789f7af6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectCaptureTests.cs",
+      "sha256": "07b13767a34ffc7fefc0795e5ed9b4073f02441097df9295bdca2c94d1cb9522"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectCaptureTests.cs.meta",
+      "sha256": "1847ffd215507050843e2877d0d8a6e29ab42a0fd6ad49f1d57bb4ebae251d50"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectRecoveryTests.cs",
+      "sha256": "035b8296668204774cc01febbc94a867061fce93759f4a3dfea239adca07a4ff"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerActionEffectRecoveryTests.cs.meta",
+      "sha256": "1f53c1945e3b0ebfc6c348d8df636dd8f423e9c221389ce352745ea97a5499e3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAirJumpTests.cs",
+      "sha256": "2c4abd2ca2355755d2e5a425bc00e5cc0e3b78f3293460da5d5157cf0c2e5ffc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAirJumpTests.cs.meta",
+      "sha256": "dfe954285d365863652df5ca41617a2ea2ded48cecec356602708f2fe2757172"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAnimationRecoveryTests.cs",
+      "sha256": "145651a9b5ff0640a947e9e695010581fdeea76b852134646b43e855dcd2d5c4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAnimationRecoveryTests.cs.meta",
+      "sha256": "572c27c1f903161d597042e99dab494b3b9cc39139c81c9a503c1e6246e14acd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAnimationTests.cs",
+      "sha256": "83b1b40993843a51b8a5ee4ce18fb9d605a2e253843dc015613357e60e6911b5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerAnimationTests.cs.meta",
+      "sha256": "430d7eed52b99ef27f933d54757d3cac39e4cc96a59aca1de056e1a68e42ea78"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCameraLifecycleTests.cs",
+      "sha256": "eb34f1f1cd9fffb577239bbe2b4d67045d68f38598bce1d0edfc72d3e114a055"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCameraLifecycleTests.cs.meta",
+      "sha256": "513b44c9437815a4b08e8387566adea0bf52981dab00872affa1a20e37997eeb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCollisionCorrectionTests.cs",
+      "sha256": "47673b00d35a9bb52785b74e62504a73377c020974ecafb55625d5b5a63fe58d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCollisionCorrectionTests.cs.meta",
+      "sha256": "ea6f014e5b153dc19c03ebb3778b06428fbc87c11f235eb70465fbb6d87c7dc2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatArbitrationProbe.cs",
+      "sha256": "667c0bdd99d91e67578d5fbe6dc6e9effc0e7d0018023f96e03dac294b599984"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatArbitrationProbe.cs.meta",
+      "sha256": "674f9516ed36d587595a0e91ad860adc9f5e9fc67c584fdb2e31037601fd55c1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatDashTests.cs",
+      "sha256": "c956d1cb9d3f9aabbc98f2220697ce1531417c77e0626b6ecaa9273ff3c84234"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatDashTests.cs.meta",
+      "sha256": "b0f6f445484e1a909a3a155bc280e6ec938ba515953df00491cc6a623b5df637"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatFeelFixTests.cs",
+      "sha256": "feeef10bf96bb069245b216d065fe17c1a26bd37b54afac5b025bdfb15638249"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatFeelFixTests.cs.meta",
+      "sha256": "4580628a16e99f86e723598c8094b057c188e9ae8d4e962d49ea3c0412bbf5b2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatInputTests.cs",
+      "sha256": "04ee5f688d84d6ba1bb1d897b9a82ab797a403b7b5904b5315a0c0539c528338"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatInputTests.cs.meta",
+      "sha256": "68f8e09de359c2da7df68eef9f2ecdb23131a946e156e5e64a6430776eb37eeb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatPhysicsBaselineTests.cs",
+      "sha256": "6585da58b7f64553730a1ce01f217ab1d0791f9c38497bb5ac30a4ed9ab693ad"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatPhysicsBaselineTests.cs.meta",
+      "sha256": "0245dc254544bddbfb57f0fd29395163486d16bbdb246481d90501855ada5e7c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatRuntimeFaultTests.cs",
+      "sha256": "1915bd05ee78b587b7801d1d7aa83f1acd31c4bbb3ef35e4a1275c179fb4246e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCombatRuntimeFaultTests.cs.meta",
+      "sha256": "1f5975824fdb9d889afafedb922cd677e0533ae6dc98cce55461506c9fa33c98"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCompleteSchemeWorkflowTests.cs",
+      "sha256": "8ee23494acdaf72ca527a34d543188e5726f6d8b7a75892e50e8b7923cd69117"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerCompleteSchemeWorkflowTests.cs.meta",
+      "sha256": "69687e4faa5a424f757f720f852a3c56d1012d13d5a77ddffb36add3bc68fa28"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashActionTests.cs",
+      "sha256": "3e8d4b5c166c113df437e36f5fc57f1c1745d26c492a5e973ba72dcdbee12048"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashActionTests.cs.meta",
+      "sha256": "24889d96943cd2bd6eff98daf334b05f71eac4c4a5c4773e0ed5acca708aa51d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashEffectTestAssets.cs",
+      "sha256": "1f5dd9076a3d4ec7cf996c5c30a55a31dec80fe2781fbd2a273906babaaf0ba2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashEffectTestAssets.cs.meta",
+      "sha256": "8d081df541bb5b4eefddc30e82e37f6b23bcc2e269586764bc808e61b67db58f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashEffectTests.cs",
+      "sha256": "da9e6f1963f791acae1e9a9f60595fa6bee3c3f5abc70ceae3bbb3d8b0fe2df8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashEffectTests.cs.meta",
+      "sha256": "3925f8801ab702182030a68656f6ef4757a77c1c05b01fa5bb33ec515b5d4c96"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashFoundationTests.cs",
+      "sha256": "cb665895292520eb1e756ab125afc23e072a69b9b37dcab04ce36bbfe9ea0f64"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashFoundationTests.cs.meta",
+      "sha256": "675ad8ce88a48f657d3b18367dfc18c173b6355a613d9951e1535b1307167d2d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashRecoveryTests.cs",
+      "sha256": "c7ded0ac352e61d85164bbac4ef96d8fc6fdae741c23084b5ce7358ff63deb82"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDashRecoveryTests.cs.meta",
+      "sha256": "4b31b1417755422e6a30b0609c9e2c503a4e54c1dba50fbabb5666aa6845ae9d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDelayedAttackTests.cs",
+      "sha256": "59efd12f690d0290f5849d2d32e20e7402133fd64f6abba113b50edef34ef09b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDelayedAttackTests.cs.meta",
+      "sha256": "4091bd1fc47cff23aea2e28f9bf1d2d8a9e1577b6303bebf3fc487d702b4175e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDropThroughRecoveryTests.cs",
+      "sha256": "6bbafa7a0ac2a65724dd5652e5790645cd8b24698c386181bb969b2c22f623a3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDropThroughRecoveryTests.cs.meta",
+      "sha256": "ab5834a9e3faed5eea90520a2ce6fa37f41a0770927908b7a55a1eb88e892e4d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDropThroughTests.cs",
+      "sha256": "f176cce0e93b6095a5eb03a5258717261b20ee79bc594ddb33409e12609dc6e0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerDropThroughTests.cs.meta",
+      "sha256": "2efb76fcc72edf0e4ed030d8ace4c9f6e1ca14cea04b0f5af25f77a6efeb81a4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerEffectSessionTests.cs",
+      "sha256": "1727c25ec7caf0afacf3b602a0de00b9eca9800aa4deffc6c8b168eea02f9230"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerEffectSessionTests.cs.meta",
+      "sha256": "e31e73a28b08f19f431982476a265602cb96269aac935c5b8c9b4063bc799c17"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerEffectStateTests.cs",
+      "sha256": "9f425236f1b69e85afc1eb239a58961918e6fd0e8808c2bf91a29b9036f3df43"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerEffectStateTests.cs.meta",
+      "sha256": "b135924f77841c94d3fabe4d52de83926c60c85829bb3b95702014f4260789f6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerExternalMotionTests.cs",
+      "sha256": "3e78e9b32949e559592e2230f31fdee9f14daaed6c11f98e442f02b3aa874654"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerExternalMotionTests.cs.meta",
+      "sha256": "72cb655c68fe6cb272f7e29174883b6a60b0248623ee7501dda02406c4aa3234"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerFormalRecoveryTests.cs",
+      "sha256": "27b8ea31bed73415bc8bd1b74e04d3c9765ed399530affdf571b95c161b16ca7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerFormalRecoveryTests.cs.meta",
+      "sha256": "4a4268e710a554759b727c79651561c007bf08d2e2adfaf054794c378efe475a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerFoundationTests.cs",
+      "sha256": "f85f5cbbbe271e2b815679cc6ef8d16cefe83086e4c070621891dbb0bde2a3a3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerFoundationTests.cs.meta",
+      "sha256": "0dd2e9f0bca5c6c842739f3c0e0e69d450b13f6d17ccb586f2da692572465b3b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerGroundPhaseTests.cs",
+      "sha256": "3e508dd0f7385bb6eeda20d269d0327ce6cda8e43cc3037ce9aca8907184eb81"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerGroundPhaseTests.cs.meta",
+      "sha256": "2bbac82affe999ba6a535a39e2fbf2c68ba9bed08ba94388d2db666406c44aa5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHeadJumpRecoveryTests.cs",
+      "sha256": "e3854fa4728996c0e4d50069d5715b34283bc392a66eea2facd555cced4653b4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHeadJumpRecoveryTests.cs.meta",
+      "sha256": "cb77ba28cf7bc3e601be98754e73349e6727381d5191abfd9ea3f030f904a10b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHeadJumpTests.cs",
+      "sha256": "de9aa16d45786d1fd8546c0e26f3efdb0ba66a45458fc429f7ae959bf9ee43a4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHeadJumpTests.cs.meta",
+      "sha256": "beb20750ee28b04d7f741dfb2aca0680518b83ff66ff21705b991584c3def723"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHealthHudTests.cs",
+      "sha256": "4cf6235d184979d4186423735db098cd218b81eef3fb57d87b7a63b708a8ac00"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHealthHudTests.cs.meta",
+      "sha256": "3950080ee7d3627a07b1b154701377f21eb0a5ee5e5347ed4f59d1d15b05d89c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHitDetectionTests.cs",
+      "sha256": "691ef8cb4fdf2218ce54f051a51fddf3ef2c0b07f0c75a95ce0c95362eb8c979"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerHitDetectionTests.cs.meta",
+      "sha256": "e33c52eca06abead19a49caa65626f5c9f91ded5e72caa07e34be18cd5390a47"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerJumpRuleTests.cs",
+      "sha256": "db41bcd2206406007f8d9fdd3d1af7a7afee563aeace04995dcaf6264a27518a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerJumpRuleTests.cs.meta",
+      "sha256": "cfcea84366751b09c212fe976a502e76336599f5528c83818007f08ad21081f0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLandingRecoveryTests.cs",
+      "sha256": "224eb7083923e83323247db294921c2f71d6c002b6db04d9b9343171bbe4c138"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLandingRecoveryTests.cs.meta",
+      "sha256": "89c896809dfdfeaacc0a9e39127ee62155c7870f7339f4a37cfb494d3352053f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLandingTests.cs",
+      "sha256": "18526e4a39ac348d02254cc24a34b7e28cb50692b86dce262c050c5be5be7810"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLandingTests.cs.meta",
+      "sha256": "8caa42a912ccf2b08d3d32b5f90de91eb75e24cea052d385cd73f4b42a9e0b93"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchPolicyTests.cs",
+      "sha256": "8bf2465be0681ba2a1fbec4370deae3b9eea5454c4beafab904fe86f5c3bd040"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchPolicyTests.cs.meta",
+      "sha256": "5e814b604f412d88e6b90b472607f0254c82cc86c3235b4ee6dee095909c770c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTests.cs",
+      "sha256": "c80b924982561fedfed49a26eb549827cec4eeb25fa0f4207b8c7239e9de2c2e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLaunchTests.cs.meta",
+      "sha256": "a2ad07ccafc59b0bcff85f60307d8a5cef3e056a7230397ee104f8a8ac618b4c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLedgeRecoveryTests.cs",
+      "sha256": "33a4eba9c66fd004f96d4ee17aa984e9b6e1754a1fdc7b308baccdd1e1c904aa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLedgeRecoveryTests.cs.meta",
+      "sha256": "8c32ee35143ed51710ba857128473567b200d61f2fadc19329898c832935f3a6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLedgeTests.cs",
+      "sha256": "ec7cd4d56f43292e53188d1456bbbcfbae234f4c7736c938b603ac49a4103806"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLedgeTests.cs.meta",
+      "sha256": "ee7d62a905d63527ac4f84a9fd462c2baab4757a097959e843ef063321480fae"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLifeModuleTests.cs",
+      "sha256": "4764d8687b4c0c6b29f2c8e24dcd0b9a7ef7f5c6d54f20125c35743dbf2d283f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerLifeModuleTests.cs.meta",
+      "sha256": "fc3c2edffbcfec94da4ad5c9344fb0ca54d4207d5f8bc6a60d9072a025bc95fa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerMotionTraceTests.cs",
+      "sha256": "6c4541cff4ae14eb3213945d74874861bb018710241024f40cf75daf6899542d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerMotionTraceTests.cs.meta",
+      "sha256": "1fbce86e67601695b5aa88537f96c20884bbeaa27f7afc3e0bc57e4194eb5238"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerOrdinaryJumpTests.cs",
+      "sha256": "42dba41541a52afafc10a40b495d49c23e124015447efc429c352e6689f64509"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerOrdinaryJumpTests.cs.meta",
+      "sha256": "c7cb9f8e332879c98faeb7ae3a6281607159174acbe4111a87f6f9ce463eaf8b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerResourceTests.cs",
+      "sha256": "50673fc5983496b24ce8965467f15807db74e8f6e85c775acb77788ec8d24a1a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerResourceTests.cs.meta",
+      "sha256": "8fa1b0b51c06ce2189f5eb24ad372bada9f023873a39ee98dd5e989078fddc0b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerSessionTests.cs",
+      "sha256": "425143274d7dab08d7d9ea11bd1766af87b7890fa34257f485cf05a655968cfb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerSessionTests.cs.meta",
+      "sha256": "b34c790e26f9715c5d9c8fd81a1dd57ca8acc2a511c2b5dda316e69f81cd1259"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerStateTests.cs",
+      "sha256": "a689abbdcab6a8777c153835ce2232a698061394d7d24ddc72b865db9d2cae0e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerStateTests.cs.meta",
+      "sha256": "19b6e34ddaa9072b6c10e8ff44162e2e9e2ac09b4bfd72c985f5fffd0c17ed5f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerTestAssets.cs",
+      "sha256": "f4525725b3c9959c658dfa77d92b77565b18f6ed80caacd8e8d31bc1212f8eb7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPowerTestAssets.cs.meta",
+      "sha256": "5d094a3eca8063b584adb6da50a57772d99381af096b524d9f02328514d637e1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPresetAcceptanceTests.cs",
+      "sha256": "e73a8fc5be7386251f436c6cf8e0a9c891a2110ee573489d7b28a01255d959cd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPresetAcceptanceTests.cs.meta",
+      "sha256": "35f757522b1f3e3cdb6ca4672ecbe483e70d562816429438c4a03155f30c42bd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPublicPhysicsTests.cs",
+      "sha256": "02fc3759adac9282dc80a6872edb1f9575018bc64b0763b2516f5398142b0894"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerPublicPhysicsTests.cs.meta",
+      "sha256": "95e69152f4e7ad51e9742cd28089b6a0a0260101b0e84a07d98bb3dfa48bb773"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerReactionTests.cs",
+      "sha256": "41c18ebb40d4dffb42be24e46b6b99058a0bad4a297c8d2fd8e71e8c9a51b8ae"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerReactionTests.cs.meta",
+      "sha256": "442844bed6acc2c69c8525c7f5072ee066987ac80b56f79acca3b67b29c30cf1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRecoveryLedgerTests.cs",
+      "sha256": "fdd51a389aa3efa9286043c51857e5953a69d73c4ae217bb7c85b39cac95bf81"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRecoveryLedgerTests.cs.meta",
+      "sha256": "fa704944f93bde391f26ebaa0f86e5934f3374746d4f3baf21f91ea3df04238d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRollingRecoveryTests.cs",
+      "sha256": "4acdca642b4dea1dd7c210139ea9857ccc629859c242750ea215244fec4c33ea"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRollingRecoveryTests.cs.meta",
+      "sha256": "85b696ba6b2c6edfafd222d4d105f8463dc062d73d52745b3cc854aa7091eae1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRollingTests.cs",
+      "sha256": "819e12a3a9a7fc64ebf84dfc8967bb209d290e35fd5338f988d830857ffab81f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRollingTests.cs.meta",
+      "sha256": "9b5aba23f309f1dc5e3d6f013b71d7f4649193f1e01c3974733f95722513b9bd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuleConditionBehaviorTests.cs",
+      "sha256": "0a06de6167933711abb8f540d966d4d089ffc41f83b73d0ce205f05cc125989e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuleConditionBehaviorTests.cs.meta",
+      "sha256": "7904366e6046ba514ca2f5365ff73e47dad31b9da6154e280a8dbdef9c61f78a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuleTests.cs",
+      "sha256": "daa2987b1a0e9ba8a35c171972e487b63b0fb273078952ea29f2bf28f429a8f1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuleTests.cs.meta",
+      "sha256": "611676c6cb1d9e97509dd350c5298ad1501456499e59f02f102198fc2352f8bb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuntimeCandidateTests.cs",
+      "sha256": "0cdf73c50cdc22484871f6b30be33c9b7991512ecddbfcab31d05ff9ed9d8577"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerRuntimeCandidateTests.cs.meta",
+      "sha256": "3806db12fedcfc988b7b22d7d06a0657709b0282a4aa41ce9d9467dc158e351d"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSceneScopeTests.cs",
+      "sha256": "81bb8cac7a94c5133a1a5c3cfb3adde1176402f5812298cac342290f9e7da2be"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSceneScopeTests.cs.meta",
+      "sha256": "546d7f7ef04707dd1b87f08230161c698c8dabb0e5fd70c63a5af4a1c2af3e82"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSchemeSessionTests.cs",
+      "sha256": "c06d2c285ff8ed6520b14e6cac6e7a09caf69a37ed6b1544a3bc1f8b1334a8f8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSchemeSessionTests.cs.meta",
+      "sha256": "f7fc0444bf311751af8cd56df420660a1c6b26d4d2d69d631a2d772b8f86d8bd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSessionIntegrationTests.cs",
+      "sha256": "d203de44681898e20a6f0a52cb28a36fd5f850e99b71ec901ae784073ff74d32"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSessionIntegrationTests.cs.meta",
+      "sha256": "e09876906711852579cf948d71346c8431d5303345d852488a5e40f1de1d02df"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSessionReplacementTests.cs",
+      "sha256": "65cb4c79443e3b5d5f91d7cdcedbc3f20f24e2a85905f7158cae0b272ebea347"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSessionReplacementTests.cs.meta",
+      "sha256": "066c45f49b0dc25f4af9f927fc59fc952d20c6d95b8708f6ac7a7c90208552f3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSkillAcceptanceTests.cs",
+      "sha256": "f910bb90ce2e4d31356aaba38c804e8fd18e3a754347ff6d2cb7c0d6efbe4bd9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSkillAcceptanceTests.cs.meta",
+      "sha256": "fff597e87267572c0073e36d16339a3a69299fdc94ce0e3e75b2a69fbf3f791c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSkillProbeDefinition.cs",
+      "sha256": "432c102399e36777688b320b8802ef06a23986f888ec0f50f78ae12ded751ce6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSkillProbeDefinition.cs.meta",
+      "sha256": "1fcf391b51fc10631aa322a177ff6009ad8045c2102b5800a076559d9718a951"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSnapshotTests.cs",
+      "sha256": "016a4b5d619401f89b45174ced45bd3bac4bf7e141fda29ea874d1f600a04ce2"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSnapshotTests.cs.meta",
+      "sha256": "dca335ed9b0bcb181960d8225c0b842bcb66ab08f7a6d071cf367cd108d2e584"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerStateTests.cs",
+      "sha256": "644158de39fd9a35403e9a727a694394ebdd820cf5b511684386e2609ea166ff"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerStateTests.cs.meta",
+      "sha256": "34467b26bf7cd2c264dd1c5f51e209a8139d4268689553dac689cf669c9fefe8"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSupportTests.cs",
+      "sha256": "efe186155b2ddace2a70b1aa8c9ad79fbbe44b43a27c06211afa1d6616b63baa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerSupportTests.cs.meta",
+      "sha256": "b4e87967276c0842f73eccde19093bc29992b129bc57b6531d891222d9630f34"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerThreeHitTests.cs",
+      "sha256": "bd9ec3cfe5f7c171e08d60c8bdad79a40ae3d323ae079b8f4605ba77c459db8b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerThreeHitTests.cs.meta",
+      "sha256": "a3254e438a2310a3501d9602900135393cc149b98275220c4366a397b878d173"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerTrialSessionTests.cs",
+      "sha256": "c71442ba8d470630db1f40a818b6c69a5adb634a0d5916a63bdccbed8c1405d1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerTrialSessionTests.cs.meta",
+      "sha256": "5c54e9c1ab4502af3fd613ce885d2a6c8ae8f933b27719dcfa40046108ed65b7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerUnifiedPauseTests.cs",
+      "sha256": "ad7112ff9c7409715c585cf9f8f0b77b735e39f576153292dddb7c3ef27a4bda"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerUnifiedPauseTests.cs.meta",
+      "sha256": "d81eb30144f276b70c260720542ff23ab7919fd4696c58a96a0ba9b8336b69b9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerVerticalMotionTests.cs",
+      "sha256": "a0097298f6f799ed36ae9f23c95005c3d6a36850093626bf8a5107ef49dc17d7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerVerticalMotionTests.cs.meta",
+      "sha256": "7c0ffed5fc7be380c377247ee7589b7767c0214a5dceba5bf4fdc59e30ab2e45"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallActionTests.cs",
+      "sha256": "f00a4f67e9fb113a1c3ed1297f3c4540d7fe89bbac2e95f1f201af6e3b5555d0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallActionTests.cs.meta",
+      "sha256": "822f533dcec4439bbdff4871aac3f79e439742e414cae12474a206d7ba89ab2e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallFlightContractTests.cs",
+      "sha256": "aed6cbd9b17b0e05d7129f3d5d3e0bcd2f9b654a282010cc8d0cb7c6b824bfae"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallFlightContractTests.cs.meta",
+      "sha256": "cfbed238a8cf8d7ae4efebe0b0837c340847710d4952523696a118f3e11c6dcc"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallSensorTests.cs",
+      "sha256": "15e56b7f1f1bcbf077cc47f6b6124d97955153bfdabbe35794ad6c3064472e02"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/PlayerWallSensorTests.cs.meta",
+      "sha256": "9b37e40c55ebcf0c77fcd938afcd338ced0aaa8f5669c94bfb1884e256691475"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionContractProbe.cs",
+      "sha256": "1fb432fcd65c64f9b06b904be11a0c96ada8cde50c31ff36f8f2c754003e51fa"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionContractProbe.cs.meta",
+      "sha256": "ebeed6fe276e2d13e7dfb3e308d07ca44d5692a5c14f16e029dc98eb2bcf5edb"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeDefinition.cs",
+      "sha256": "19da8459dd3c56948c5ed54b2b59a5370f79dfa43d0f9b2d7f74d28115c905a6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeDefinition.cs.meta",
+      "sha256": "060aa96a6cf1aa2700531ba6fc7da0c2b40697a9c505ec06553c4bedfac71266"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeRoot.cs",
+      "sha256": "370fe8d5d7ef541c5adfeb1cbd67f15c77dc597527e783a4e8b0bad8e3acb6bd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeRoot.cs.meta",
+      "sha256": "b084413ed352392a34a34ef2d9b0fa22256e6cc3f01156a1de72aec05de7aae9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeSettings.cs",
+      "sha256": "cd70cce46b34205cf4099e7a844d5459d1ee0ada3ad4cc06675aaa10f5f7b6d9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/ActionProbeSettings.cs.meta",
+      "sha256": "a6ac6d81e347437c3cbcefacc32dfe5ff4ac1309a4f708d07dc86805e9a1dc71"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/Game.Player.ActionContractConsumer.asmdef",
+      "sha256": "fdb1e466ae5f0fb4e724d8aded442f02ed71d412422c02feb155204afe4193b9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Consumer/Game.Player.ActionContractConsumer.asmdef.meta",
+      "sha256": "d5db318a73fab57d5dd7dc957f25f16e83c62fe125dc7f98b37781aed100c2d7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers.meta",
+      "sha256": "04981626b35df1397fb24e1edb10f8295ab538d8473fea6bfa7a35ec1a614ac6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourceAbility.asset",
+      "sha256": "c231ad144cd2a98a68ddc8a6b18bb61e156dad79a15c8c6459c95c7a5324fb25"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourceAbility.asset.meta",
+      "sha256": "13f160914bed1d9c3036e09e4ae3000a7c10915f8640c045f43090ab43e04916"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourcePowers.asset",
+      "sha256": "eeb4d3579f1cc21cec21ba6cf0bd34cb52309c369270b782e3e73006958c3ee5"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourcePowers.asset.meta",
+      "sha256": "b30ef92aedecd3537c75023b3d685bc680b5b848a94cea57472763646f38171a"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourceSkill.asset",
+      "sha256": "ab45ab7dc9fa8d93285285d3341328dae5709dff76f6aeb56a233f9b52f84491"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Tests/Fixtures/Powers/ResourceSkill.asset.meta",
+      "sha256": "a2db0dbe4e0d40ddfa462797eb465de93945b7968aa31acc232c9595b42a6d95"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/CombatGraphFixtureDefinition.cs",
+      "sha256": "c5e35bc62a595deff522475ed1759de6a4ddb21f73c2925a3a31e774ff820be3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/CombatGraphFixtureDefinition.cs.meta",
+      "sha256": "4c3686eebaf52f6e1e0156536686d8d4fc0042c74d8aca66311aeda6c80be6a4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef",
+      "sha256": "bddd2ed355377bd69eec20757d82e71d573dc805e62f7709471e4d27b61f63b7"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef.meta",
+      "sha256": "4da7805800eb9c4c3a9b666f48ac976191b0929159d7a1a001673c9db6a748b4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerActionEffectMigrationTests.cs",
+      "sha256": "ccb76fd727244245ed4af3cc59de218d9f2a4655b3c75425de72bf674d8afff1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerActionEffectMigrationTests.cs.meta",
+      "sha256": "c463c1fb4615c62c3311bb6f71c187a088b439181965143f871083567f0fa6be"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerAnimationEditorTests.cs",
+      "sha256": "220234777d749777e679dab11fda4c45b771cb2e308279a628dd939f3e0c2ad9"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerAnimationEditorTests.cs.meta",
+      "sha256": "c7ae362262b4575819ebfd2ae0a7eed6c855a44695a404706339975c6f04be68"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerAppearanceTests.cs",
+      "sha256": "f8e554a204f8d00de69c3672d535200e721c268ace8508a0e39eadddec638149"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerAppearanceTests.cs.meta",
+      "sha256": "8435c6ce897128d314a0d81c0a58f8cc85181471ca90b5986d6ae92313a2271f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatConfigurationTests.cs",
+      "sha256": "86669f419e61f207f4dd9fecbdff674db34a472fa1888566c14fb5065ef99731"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatConfigurationTests.cs.meta",
+      "sha256": "dbf2a946d8ceb66b0308ef920d3daa8eaada91b48af62280c4601e8cd336769b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatGraphBuilderTests.cs",
+      "sha256": "5893449b29a88218c8b21bf85076c3cf27a4f7e1209f4c101b6d2b45e8ee4453"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatGraphBuilderTests.cs.meta",
+      "sha256": "f31f0296a6189033861f2f1b429ba28ba01f12696eba2063c37ff0107c494962"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatRequestTests.cs",
+      "sha256": "a817417ac38f6b6121998f52041a44c311bbd0276fd8af3916a99d1984506cef"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerCombatRequestTests.cs.meta",
+      "sha256": "e3975d035134acd093533b1e06a002589614b2508d656ed28650d6891478eec0"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerFeelParameterTests.cs",
+      "sha256": "9f84ad1a603db67be4ab9bc7ecfa0334dd05e005b526fa629724481a5470a528"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerFeelParameterTests.cs.meta",
+      "sha256": "c5638342bca63109a1de704daf8ee4fa4e6032bc1a6be680f83e44326b056a4c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerGroundPhaseEditorTests.cs",
+      "sha256": "919daba0cd39d3c7b893ad995d2d2f0971a0042c3e50fb55bb122ab91e085e0f"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerGroundPhaseEditorTests.cs.meta",
+      "sha256": "345454d60ded52f1822e51db7520e0e30a650538fd6aae285ff27bee6e117100"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerHitShapeEditorTests.cs",
+      "sha256": "b1196230cbdd7acf5b27bdc22a5194fe4eee6fe50e842885cb9f3873fa2dbdcd"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerHitShapeEditorTests.cs.meta",
+      "sha256": "d3bd9b0a52434b85eb2f06494f4089233e9a10fe357719c7edf0ceb41a191c40"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerLabTrailTests.cs",
+      "sha256": "fe2a4fe6490f1a5d88545f925d5c2fee7c8fb04d43c794dbe53bcb314c06b114"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerLabTrailTests.cs.meta",
+      "sha256": "a4dfbcb3ca9a5fc522821924740816ad5c3e9f3b7a181ea1e3c3adb94e06fbf1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerOrdinaryJumpWorkflowTests.cs",
+      "sha256": "e3a6e1e5668dfc01707c2d77b7336f9c76235bf1cd199e48cb1a5c593415b830"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerOrdinaryJumpWorkflowTests.cs.meta",
+      "sha256": "89b4ce114c8c3f8c2fe6226696533ae5f4c28eb5bea464e30fab7b765322aec3"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeConversionTests.cs",
+      "sha256": "8e8e9cef168b7aae93fb0f4e23c29c284488c311da53f6b0ed458b93326b0b1e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeConversionTests.cs.meta",
+      "sha256": "57c5f24077dca964c3fac380679d38f95d52bba7b60a0885aea2374de9c5afb4"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeObservationTests.cs",
+      "sha256": "e2ca6788098655aefc2a57356c5b080ecd2bbc8ac4f6ff801231d8e5430a2712"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeObservationTests.cs.meta",
+      "sha256": "c3fd11e896f3dd9c6b66bde1fd2df126a3fe47c6fee740e8fba2dc543abecc49"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeRulesTests.cs",
+      "sha256": "32a97d5a8b9fb54cdef1238e1cb97bd954bd3c7d0a13277b6a155b2692d43629"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeRulesTests.cs.meta",
+      "sha256": "57b12474a1881b4483ff3d7b7de724042435c97cc77855930631d12d988d16c6"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeStructureWorkflowTests.cs",
+      "sha256": "623c8f4ff024e7b393501ac4e527173113d338d2d34b8585d124138c3a82f457"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeStructureWorkflowTests.cs.meta",
+      "sha256": "c036dc87b8112cd8a918ff3eef178887394c075371d1e7f29f873d6f80a58c6c"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeWorkflowTests.cs",
+      "sha256": "2186bf7f45669a7b88b88fb47c5f30612bc9d2b184bd09a8369bf8eaf2f79980"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeWorkflowTests.cs.meta",
+      "sha256": "dbeb8377ebdd52eba6fa39a8dabb0e4052411beef9f8a91034cd92f60f20e757"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerTestEvidenceRecorder.cs",
+      "sha256": "d8f5a19ba6b57bbc99c2b89c61a7043fbb174d588f79c629b5dfd0d982c6f52b"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerTestEvidenceRecorder.cs.meta",
+      "sha256": "55efcbfa205a41bcdf3ab6272b3a257b263b32b6e5c0adc49009f8f6524c6610"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerToolWindowTests.cs",
+      "sha256": "0afe06fa96a7aef417bb9f2547432fa8aebd0d0c99044fc41c8c2617f30fc9d1"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerToolWindowTests.cs.meta",
+      "sha256": "6b2982e5edbc99fc5cc42eec7c3a5ef5f8b380c7bd2f526be87ec94882108381"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerWallFlightWorkflowTests.cs",
+      "sha256": "0134587210bd0987077c9dd8a619273c16fba8bd41726a211e2de9a12638483e"
+    },
+    {
+      "path": "Assets/Game/Module/Player/Editor/Tests/PlayerWallFlightWorkflowTests.cs.meta",
+      "sha256": "2163dba7115bfc330fb87d511069ae5ec4930785e7ea60d286709d0b68cb3874"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/CollapsingPlatform2D.cs",
+      "sha256": "a8f51dd9348e6e8230a2131badb3ee7eb2636906a115061976541807c947bef4"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/CollapsingPlatform2D.cs.meta",
+      "sha256": "3307b3373122be93095a60efc0e4ed5f9c1df5cad6b59f663ba53dc2577cff92"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects.meta",
+      "sha256": "90a33c9139212cc2d1450acf93823a81752849facf2f2e8752c5795c239c5890"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Entity2D.cs",
+      "sha256": "58ad1c9d722b27e1631f52d45dc0f7ba4ff4580f4f95480a532debd5baf87096"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Entity2D.cs.meta",
+      "sha256": "842d506dcd06b1a5be6f8021bdc8c7f5b2945448b1083d9af315e8b078e2db96"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityCollisionIgnoreLease2D.cs",
+      "sha256": "c844abc54341cb4658a65c67aebc7bb918ac351b9c4dee7856c5e3cf9980ceba"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityCollisionIgnoreLease2D.cs.meta",
+      "sha256": "68ff7b531d98061f44b5cc18f4a72f575d71d7c29e7b6bfe948e3fb115264886"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityContactTrap.cs",
+      "sha256": "fa02d913544a82ff2135b9ff6cf257f3f7b456c440de3d6be6404dac8160a2c9"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityContactTrap.cs.meta",
+      "sha256": "8290a4bc413559844489af7a9f4e354ab2d9b553755a77f6451ea21cc824ce16"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityFacing2D.cs",
+      "sha256": "4f65cec068db58ed34087e87ab7c37fe9b07b9f7737b7169ad3e25d45630e98f"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityFacing2D.cs.meta",
+      "sha256": "2789d1710c725c2b5043316e7df16a7c067438844b203bdcd27680adc5e26038"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHeadProbe2D.cs",
+      "sha256": "12722e48be7495f492f2ed62a55d7f0882f28af1652a42244a8c5fbb7a4760fd"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHeadProbe2D.cs.meta",
+      "sha256": "36ca5ff2f6fbd3846a2abe684f066f3f2b0802e7ff23f751647b9b6a71c1e08a"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHeadTarget2D.cs",
+      "sha256": "0719f577fd217e28ddc251d52c3e2623644cd83669d7987f049fc75692c94e62"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHeadTarget2D.cs.meta",
+      "sha256": "ac6b082114522248b62f0ff38c3799c871e84ae84846620fec7ebcf23841ba7e"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHealth.cs",
+      "sha256": "622d51a017d0c313d9d8bfb7b28703bdbfd675ecf906a6d7e52eaf8676289204"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHealth.cs.meta",
+      "sha256": "68c1a7d65bd503e5f708687da6c360d253d2ebeedd23032b4ceb541507281a76"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitActor.cs",
+      "sha256": "d3995e733f68ce6d8219e9c27596e27fca43d6a9755a80663a564927874a703f"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitActor.cs.meta",
+      "sha256": "79c8804fbf24a16b915adc50f107fc53bef8aeb297ec87c7a5d754638b759975"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitBatch.cs",
+      "sha256": "ffa0e93c875777b08e104d20f64d401a431b741fd8ffdbe521fe70a48729095e"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitBatch.cs.meta",
+      "sha256": "01aa27e2c2d3235da69a279c6d108a70619988645552980df4e070aa665def1d"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitContracts.cs",
+      "sha256": "500aad1105cbd574f940292b040e801740cd85e6abc7e8d384c58b3e42b13f08"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitContracts.cs.meta",
+      "sha256": "6c0fd97d0a5b3f55d2a077e29190572934a35e6e8ed3f538ebf40127c5ef48d9"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitPayload.cs",
+      "sha256": "09ba2db3938e983320ef8d5614a238a5407e64d8df6cc5fc51ebd0b63b720cf2"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityHitPayload.cs.meta",
+      "sha256": "b55a0ef3bc6d71145fed3f981be8db4fbea26e80e11f2883f8fe6de802658f1a"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityLedgeProbe2D.cs",
+      "sha256": "54581a725ae94d259a92ecf4504deca9e295cde6e53667a792d3fb3f67786372"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityLedgeProbe2D.cs.meta",
+      "sha256": "5e0087423e6a6a68a1d0d1d269070550b4121e546c36e5f2de41d2ea6da960a9"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+      "sha256": "636b6c68a7d87b012f601c2b637d9cbd8bc3646d4d116a289f235622135b59db"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityMotor2D.cs.meta",
+      "sha256": "d4380f0d627c4a0506670d01a2e6f812f7d85caecccdba87407f4d507eb33142"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityReactionMotion.cs",
+      "sha256": "751b806bcbedff32f8654d796b14aa8ba16277a64c42fd8749774c338d948ed6"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityReactionMotion.cs.meta",
+      "sha256": "b6c789dc3f6d5713b706bcfa1d6423f3285780b556c99b83aa0ae4635a5665fd"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityRegion2D.cs",
+      "sha256": "3711a3265ffecf89c5734a66f2f63316e7efd909082819bb444364d5588b08d3"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityRegion2D.cs.meta",
+      "sha256": "20a324a8202145acb768176e3f3a07c842a2cecffdf3dc65246c79e0d5b32a37"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntitySensors2D.cs",
+      "sha256": "af6fa734b1315e14be331d6b2d97a5d6b926d2f817e923ec8f54a5cc5a5471ac"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntitySensors2D.cs.meta",
+      "sha256": "4025cd64ed644ffe565c6b861df1ccc7ffdd5268855e46d62bf316aaca6ea8e0"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityTranslationSupport2D.cs",
+      "sha256": "77740becbdc830693f5254b272fa9294b4ad3bb9aa36d2f298350581bdb4dca5"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/EntityTranslationSupport2D.cs.meta",
+      "sha256": "5616e6d8e08957d8628d2277fcb233714569d6bf14bfa5cc8d38da2fcec83868"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef",
+      "sha256": "e1e266208897ecbb319d7358e18954e518dbfed8ddb981a1a0f4685055c55fef"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef.meta",
+      "sha256": "992292215b1f47c3c67afe969f634385312b7f167b92244941e1504019c340ad"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchRequest2D.cs.meta",
+      "sha256": "4c16029eea5e6f51dfc6b915b5a1557693f270a7dd10f615dc31f5e704c23b42"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/LaunchZone2D.cs.meta",
+      "sha256": "c84e19299d4a36f3a4615d8eb75f5dcad220ad1c8a566ef88244389bd8d17f46"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers.meta",
+      "sha256": "53f60461f705daa8afb7da1cc7fe2301257d58385c42732f2d28ca11b6f130c8"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests.meta",
+      "sha256": "b618bdf86de74b15eebe665108a75651af298e2cdf672c17f4f4394d03306e05"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs.meta",
+      "sha256": "5797e37af5b9144d1a2136d1188f184bbf062e03cd81ad2025e1944e927a9ab4"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/TranslationSupportReset2D.cs",
+      "sha256": "df692eae22951f85983e32500e2dd89db2e97665d5def408eee0a38e91cc350d"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/TranslationSupportReset2D.cs.meta",
+      "sha256": "da943d7542e23bffa4f075274bd978fb4a0d0afbf4674d8a144e3ef00c956c69"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/WorldResetScope2D.cs",
+      "sha256": "7c2a45ca0f5af54634ced3e056d33bcbd7a6145158f6b70e6d0cd225d400d47e"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/WorldResetScope2D.cs.meta",
+      "sha256": "dd6977de50abb4fcae230798767ec1dadca8dd0d3a7a8bbc0d722da87ffd27f4"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs",
+      "sha256": "541729b64f31f4554e5d7f41d4af7fc1f45ca9579fe39cb0f9a2d744a4dd0904"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs.meta",
+      "sha256": "6b97ed67f0a8c4c081dc4f637de8a2ebfa0ebc2692770494606e0e6df4f60e15"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs",
+      "sha256": "af4e9b1ef8896655dd299fd6af20fb928d6b355557e2196f169e264cc20e0696"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs.meta",
+      "sha256": "decdfdff6958cad03900bded3a4f3ae851ddcedf6fdfdb651c6092e71e981d04"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs",
+      "sha256": "98f68826f499cbb7efddea0947c9d468e9334173d825756b2ed0774515935af3"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs.meta",
+      "sha256": "e09447193d4fb58d0d8703085100cdd8a52fa4e2bbea0d09fbbe9cb1f8d283c2"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs",
+      "sha256": "96b3421f5128e6e4cdc385cdbd486fe122bb2daa395145381feae72bd3261c97"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs.meta",
+      "sha256": "a0cb88a89e9b7ef3ae1b7bb8a4242d6f6b7ccae1a8c311d1a89f88df2da04405"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs",
+      "sha256": "8c0cdb81de2674625783ea557789d938077b89041312b1a9eb79256377fabb30"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs.meta",
+      "sha256": "4793a018fbc2c3302690e04a5a154818c42cb665d2bf4608d0fb698b826de2a9"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs",
+      "sha256": "b44df4b1af5b1fc31710ab9d7ad8f39d053b6f35bab09e34eb2c4c19cb40cacb"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs.meta",
+      "sha256": "4a0d9413e4718bfc2d9c67e5611c7f4807e918a0d57b3ba04cb265d142275e4e"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/README.md",
+      "sha256": "a896c1b545147a407d11a281618c87e26830030dce74d24a72601b57e72a8a79"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Effects/README.md.meta",
+      "sha256": "797539f13f4227101fb0ca42d04aa3f487ae1e4dd43af4e49d2fa4ac5f3d088d"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs",
+      "sha256": "8ba5135e4630d2ab715c24f6ffe10f0f6cf14ea42b84a2d7da0cb906bfafcf1f"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs.meta",
+      "sha256": "c45709661439a5e1128a67c7966cc9cd3c293c71e296d07156d5b49c50a37ace"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs",
+      "sha256": "869df97a43e5f5127f22b0cdb5be70a44aca88794c6c81b5838b85bb26befb56"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs.meta",
+      "sha256": "8984a53ff9dfcbda55d18e453c4cc6bf129681a5be95b3e61abfeb0b5eea7b67"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs",
+      "sha256": "0a9e20d3b15bc9eb6bfeb3b7263c497699124e101689e9de53b3238418489fb7"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs.meta",
+      "sha256": "d3b3cab9c3b2ae9df0ee279d0d57009f6052318b4ae18b1a34a3bfdb911f3697"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs",
+      "sha256": "f3dfee28a4269bc544db61f8e543143834fdbfb3655169226bba44064a3689b0"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs.meta",
+      "sha256": "ae6d30b52652f4175fa251b5e255fbb61f35002b308055f10df5d180d22a2465"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs",
+      "sha256": "bc8df39d17b35618f06bf73543f10005833cb5886c447e582b0000328499c7f2"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs.meta",
+      "sha256": "29455eff84cb014fd2faf3b59485f0e30fcf6d0f1c4ecd6628d44d2d4ef68d67"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs",
+      "sha256": "2d776e5ab2c01615f0748d0451e3d1ff8f06a94b4688a378b277d125e97e699f"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs.meta",
+      "sha256": "866799725d226c3497a539650188a9bfe91824d868a1ada36ee16dde43eedc70"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs",
+      "sha256": "c9a7c082672c781d493f774bc6cf83c7009770d0a46a23f001d64d4bbf087e68"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs.meta",
+      "sha256": "442d21e34b698368daca49b230a989045f9c8e674d51ccd9689f30c3ff5db336"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/README.md",
+      "sha256": "aa65e24d059983fb6f70eac6d0f0de189e0eb4767b60faf47fc35c2bcf19fd43"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Powers/README.md.meta",
+      "sha256": "65ee42b8531a21a70890856f51d8e50efbf7d162b2ae03998c9204c528ca10e2"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs",
+      "sha256": "e0eca5d1099d178a1155a9346c925328c8c4746b1051d3b9542e34765f53c6c8"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs.meta",
+      "sha256": "ae5b85114ead1b4cc87f8f7cab8cf6d456767ef40f3af6676bbcbee4d965e5cc"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs",
+      "sha256": "e8637684a24d4bf3f652224cd3c292a755538b5979930671961ae35df2e2f46c"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs.meta",
+      "sha256": "bce84c16b35062b2a50eb69fd614d0dcd93921a562ace7935dd5e6b62249306a"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs",
+      "sha256": "291b0afff1cb1b75936123bd11a2e96c5485b4a22264e63d5ad8b430d3d09d00"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs.meta",
+      "sha256": "89bc9a1365b9f6bde6b4cdf36a24e543801406f26bf6f22731739e94da6c47c8"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityLedgeTests.cs",
+      "sha256": "9316dcbebe827b55ca201599510fac865614f4f5be0c14af7ebbe114113991de"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityLedgeTests.cs.meta",
+      "sha256": "282e393750525f497fe144a2a2c193c5f38afb27193453fad21ea5ee3db3ffc6"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityOneWayPlatformTests.cs",
+      "sha256": "4224278b0ceb63792c1143c2bc61b66e2bb32211dee5755009a33774dd0c4d0f"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityOneWayPlatformTests.cs.meta",
+      "sha256": "7a2ec795d661e7675256b86f6a8fb809abec3e81ce6ace87d45bba0900a0c943"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs",
+      "sha256": "b470cc32609c9baad9b790a50a07a174735ed5c58b315df150cfc448c927199d"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs.meta",
+      "sha256": "07a19ed3cf0a27361354dad91183b3888a5d0e7b3a26414e6f95d2ebfd1ad45b"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures.meta",
+      "sha256": "dcb1d9cdab15aaf86f9f6a9f974811306230b4b6507293ab5b1d76351f397a71"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef",
+      "sha256": "38f97eb62c858fa9d2c559c3ff642fc5187df148a4786c09efdc9106a41ebe04"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef.meta",
+      "sha256": "6e6734ccf86a8da7b58422d69588eeb3c9e6cd39c265cb963e8366cd2ace663c"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects.meta",
+      "sha256": "3907dcc4a86e5ef45d58bd3716184813fc88e36ebc73c2c5748fed5db6c576ab"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Owned.asset",
+      "sha256": "0de0f3b7bb09ef423a069259d969858cb62cda22e4f447392bbe8ecb6e0c260a"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Owned.asset.meta",
+      "sha256": "6fa677c505656e71693363c691c30ca22bc28c9cc36f3a8afd2d7c435e27b062"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/OwnedThenTimed.asset",
+      "sha256": "a3e35d18e7647d813e36e7b319a79a91cd2966360e4fcd4efacf03f866386473"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/OwnedThenTimed.asset.meta",
+      "sha256": "0ed8d17209214d694bce69f7fccd6b0e53d623163479e982ad10f8abdee455dd"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/PassThrough.asset",
+      "sha256": "2be991854916c25f468933753763d9fd5df2d1cae442c3af15d2828b64386ec4"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/PassThrough.asset.meta",
+      "sha256": "188cc8645e8d0f53a2767816ebe574234ae7463c0f1d3c71439973baab438270"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Protection.asset",
+      "sha256": "245d6be278001e10af87fe1066c235f3860d25aa4b2c7e1625c7032d925fa1e4"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Protection.asset.meta",
+      "sha256": "2d95a2dbf7ece5321a37b8ad6e7f6c8ce0387b416c450039407ac408d3529a00"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Timed.asset",
+      "sha256": "f12afdd9bd37cfb4725d5558ce330715d12f68313e184bffd88021dd3b4ee006"
+    },
+    {
+      "path": "Assets/Game/Module/Entity/Tests/Fixtures/Effects/Timed.asset.meta",
+      "sha256": "d7733d144064757754a29c5a3c0eac870a3158efaac99ef1182fd3405e44986b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/AirDashSkill.asset",
+      "sha256": "25cb9cb1d3d2c1705a1f6157e747896268767dc895a47efbdc0834a9dda76a33"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/AirDashSkill.asset.meta",
+      "sha256": "9ff5cab0aab6d0673952175d7fe59eea0bf8df01537a94d60a7313bde14cf051"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/AirJumpAbility.asset",
+      "sha256": "53dd24496e4f35128980d66696e8eb988fc549b76a7c91018a3fad354c9322f6"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/AirJumpAbility.asset.meta",
+      "sha256": "993be6741c9e423b4b42e95bf3f4b0d315aec4eafc09a89c23c3fe7040b6d533"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes.meta",
+      "sha256": "b17a7938fe3b3f256cd9a2d19f18a1fa3b0b9366902f257d464bc19e027351cb"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/DropThroughAbility.asset",
+      "sha256": "239cf93a77d3c6bf7f90330e8b82f9a395e0d088b0684c1e90817ab8c06e8a7e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/DropThroughAbility.asset.meta",
+      "sha256": "4b6248b611e7dd6d4377a41ba988572c3dcfb1461055b60b0dea044ce1d47cfe"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel.meta",
+      "sha256": "23cdeaec60e0012268b427fa6df37ac3da0edf3551576f6099bcac56e2233421"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/GeneralAttack1Graph.asset",
+      "sha256": "874fbdf2d2573d88412f1403852ebd6b46c632cb4fc0429c0e9d9e5714cd7495"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/GeneralAttack1Graph.asset.meta",
+      "sha256": "cad2168fc436d7568ef912f28b0951a9152afc20777f33c872ec2596180e9a2f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/GroundDashSkill.asset",
+      "sha256": "d24cbf945385869c328324f71a9089e86e351bf906b55e3ee75286b7703f81c9"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/GroundDashSkill.asset.meta",
+      "sha256": "89050339795db1d0b83c3132150c9cd70a46c156761c152f232731c454c27fab"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/HeadJumpAbility.asset",
+      "sha256": "dba8090387a73fd7800d3dc26925b8d31398ffa52a6b15897ad311011792c726"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/HeadJumpAbility.asset.meta",
+      "sha256": "024bd47df229c0837826667a0c5c2b5c02e6d804124d77c8a46193a57527c041"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/LedgeClimbAbility.asset",
+      "sha256": "153d305f52ee17a489d1e5e5786bdc26d2576b0c673ce9a0157e66989d635394"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/LedgeClimbAbility.asset.meta",
+      "sha256": "d59632d788582b1a5d5a2c0eb4a967948778656f0384e563f3297b94c2227160"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/LedgeHangAbility.asset",
+      "sha256": "eac986ce06f701321d9e85c24b68658474123aabedc57932b320cef90721117f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/LedgeHangAbility.asset.meta",
+      "sha256": "786701ccee3cbf95510db7ce4ed8034a8ece87e837c39020a1ff195bb9ab84fd"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerAnimation.asset",
+      "sha256": "003545325117576e14e96b9939181c178350779301862243cd311ced6d0ffbd5"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerAnimation.asset.meta",
+      "sha256": "4a825cc9709627a0bac944763234f1a15c9832c02187a767de1e2de75ab44685"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerBasicState.asset",
+      "sha256": "7ef28757eaa669390bd1e0d870062f8dc387cb83323bda052601bff28b73276b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerBasicState.asset.meta",
+      "sha256": "18f4977564bfd1bdebf73b3341e970de5190d4472bc4f161514b6260e448b84a"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerConfig.asset",
+      "sha256": "0672e248fe5a7e27a23cfd9c9185c81c75734f376e06db33e1c558e3a6009953"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerConfig.asset.meta",
+      "sha256": "e1eecf29c9c1344937043514f3589d5f43e9173d7749b55b0c07abd75287b50c"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerDefaultActionEffects.asset",
+      "sha256": "4d4e972c68196d9b64ae1175a65a5296b19ac316792e559e75f643580c086b4e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerDefaultActionEffects.asset.meta",
+      "sha256": "cd1c2d20558653fd2ff5a3c89e06f5c833e90a970691c37381e80f9e815c1764"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerDefaultScheme.asset",
+      "sha256": "c7f0d6967e8137e789ea22a4811705bbd9895ca60e876ac6d15f9e928e6006c7"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerDefaultScheme.asset.meta",
+      "sha256": "7fe3ca3fb7d898d3cbd3fa36800b1d47f73499a2ebd0b36b48f4cdd59432a902"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset",
+      "sha256": "8adc64b5f0830d2439b627f975b750b8936d81524b59d3823b7b66a7af491a18"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset.meta",
+      "sha256": "f010b6ea6ab0be9c69f7d6f8f30c1434cece974e53fc64c3ea4a492e65f58462"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset",
+      "sha256": "e741e628910bc34cee21b7b0cad3bcd70a968f96a8cdd6c19798a5f006a21482"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset.meta",
+      "sha256": "af35d8dd31ff8daa6b4df674aa661146912afa6880f85660b5babeeb73c00376"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States.meta",
+      "sha256": "48d14a23b2b79accf6623418c50c5a0bfd1e3fdf92b9a0bd937453332a72af1f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/WallJumpAbility.asset",
+      "sha256": "795a705e29777bcee2331a7d978cffde080d004ac96862632683a530ee2427ad"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/WallJumpAbility.asset.meta",
+      "sha256": "e736775473cbc376b97475d55dbcf42f336ea066821947049d0ac8da794493c3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/WallSlideAbility.asset",
+      "sha256": "208ca19d295674cc152b9ada17d4db038cca5d65b43f1372f8debb2f64b6c18f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/WallSlideAbility.asset.meta",
+      "sha256": "2e13dcdba9ef7fd54a47a1a7c0b0bbb52b9d75ccd64f28d50067b0b5e0af3fac"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/通用攻击模板1-体验调校.asset",
+      "sha256": "147e2b86e7d650f403ed34f122e4dc49a6031328d6e56c529a831bacc2c49d55"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/通用攻击模板1-体验调校.asset.meta",
+      "sha256": "2f5aa48a83dcdee528c32d61d20d8fef42a9f2c2f891726aa3114c0d851b9c10"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/空洞骑士风格.asset",
+      "sha256": "7d1ac83e3c7607d5d3ec7934502cfdeec600647af7e00661842ee207f9c73994"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/空洞骑士风格.asset.meta",
+      "sha256": "df78dbf0007cc972236aa259b056381953eac35fd4ef1c510517220fc82a838e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/蔚蓝风格.asset",
+      "sha256": "898dd0870702911d8c01fd2c69cf07a02489662838cb3970f63a8fec8b5a5e30"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/蔚蓝风格.asset.meta",
+      "sha256": "2893b6df2b0d3043b7b5750750d64eb7616ba6c7b25786d908d62ee37116a192"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/通用攻击模板1.asset",
+      "sha256": "f9632c87b3c0667489705b61160e33771949ba71550d4e752af99d797a41d86f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/BuiltinSchemes/通用攻击模板1.asset.meta",
+      "sha256": "112842e19dcedda2935c68ba9b6f0355f3267fb21fd0b22626f59386d95c6f31"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseInput.asset",
+      "sha256": "7105c2768ea8c34aaefaa6ce01eae9433df281b7a6c43851e05884f95232ffff"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseInput.asset.meta",
+      "sha256": "19e767f1989f00239241f26c72b84850de18f879f94c086237acbdb5520a8ef8"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseJump.asset",
+      "sha256": "d5f733c06a36934463d17c8729b2a88945f6ad60d3cb4ac47f8ea18de2cfa2c1"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseJump.asset.meta",
+      "sha256": "5d12b15a684e70d532e30410a328c1a369f68955b6a90b20a915ea73ca4b091e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseMovement.asset",
+      "sha256": "01ec710c0fac42a9e66062d2d3e93591f49fbbd0cb41fe846e887a94bb6ceab4"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseMovement.asset.meta",
+      "sha256": "a63ee7496a4ff2547b486c0b3981155922f77114f7d0fc364e0ea87173aaae70"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseProfile.asset",
+      "sha256": "a5cce18a5a69ce12bc29735a2258080effa954c32de15bea9e74410815af87bd"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/BaseProfile.asset.meta",
+      "sha256": "c839b8c94e9f16f66960615f1d7f878b60ab70287bc3e0e4bff114308f9189b3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleInput.asset",
+      "sha256": "f140f23fb6cc81183e66fddabd2fa5a3fefec06d3d113b17d01abd615e4cfdc8"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleInput.asset.meta",
+      "sha256": "b170f1537bf63cf472d752ab3d2dac3c7cce5d77303317b1bd0725d0c7f6c900"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleJump.asset",
+      "sha256": "a89631b4f7c2678f6b649e55239b05372c6b16be063fff74307cc53eb63cdcb5"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleJump.asset.meta",
+      "sha256": "16d5ba9dc031eaed3efc5e95198439f621c489e6f808a53af8103795b372636c"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleMovement.asset",
+      "sha256": "1407298c79a67f04a8142a8bf2418cbd22df3c2c46b585ccafc884c482ddfd5a"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleMovement.asset.meta",
+      "sha256": "1c2711782fe509aa0af35bbdfb34f98eda7bf0732ef6d60f7293120c5891cc56"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleProfile.asset",
+      "sha256": "f8385a9acc357db465ea60f01fcb98f3d0ac1d44ab645fa52fd70ddf137e337b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/CelesteStyleProfile.asset.meta",
+      "sha256": "7d1ae169efa5533777de3bcee2ba0d09258e51b82b83508cf415779bef55eb18"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleInput.asset",
+      "sha256": "ef9e09f21e59ace08c76830bec11dfbedfb8b3f3caeb846ac4564593e84b4ae3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleInput.asset.meta",
+      "sha256": "9ac7dfca212e9c8cc5afe70c112f27aa117040a4d65d96fb700d5c27ad64b47b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleJump.asset",
+      "sha256": "5493c724f399651227431e44b83603b7ee319d15951037e7fae25c952dc741b4"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleJump.asset.meta",
+      "sha256": "5098c88dc09f9c41034bd0ea25d664dec9ba2e92801979d55d996d218560199f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleMovement.asset",
+      "sha256": "8ad44fe04ddf41d087f4e3b018ea3d14f3975923c7ef64b5a66e0a501edc9b17"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleMovement.asset.meta",
+      "sha256": "2a4fa039a8fa1cdeb7f651422466cf82bdcda67c4982dd6f3a4c3538797e4faf"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleProfile.asset",
+      "sha256": "b55ad41ccb70d3324d14bd5a06f9228de1574c2a1c11a1dd60bad7ae69e9cb72"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/HollowKnightStyleProfile.asset.meta",
+      "sha256": "3038559a778022e977ddac82afba8162c827b7a7d2dd51cf07ff4c44a3a298eb"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceInput.asset",
+      "sha256": "8be22ee261b62d81457c29fbd695f6a1edb7dbe60a00be1ce06f774e7483127f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceInput.asset.meta",
+      "sha256": "fe8e93ceae222c0eeaa663cef9860f73d603c769c0697393b1908a6b69a3b1b4"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceJump.asset",
+      "sha256": "9c117d3bf6b40dc1ddad9ee8e64611ae7527a138cd4f87e60c3c57507b89468e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceJump.asset.meta",
+      "sha256": "315f195791e5cbfa941ab418c3bafac9629fd0dad96c790c9e9fcb3a48cc8d2a"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceMovement.asset",
+      "sha256": "8838b88c6481bb2147c157cb96e4284449e708d0f6b7e40c1d0fe5873b033d99"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceMovement.asset.meta",
+      "sha256": "363ff55062383459a5f984393b0a756fc1839eb5a2c52a75eeec17d7bbae044a"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceProfile.asset",
+      "sha256": "b40e6855f1eac7277fce84581c5a7817e6ce052d7b08da2220f4f87e8bde01b6"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/LegacyReferenceProfile.asset.meta",
+      "sha256": "13003b7c9c973ef5eb997b2f62e21fd5938b79893f768c3c00025c2ec0063250"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/README.md",
+      "sha256": "aaf46c27dc1218e5ee12ceb2ba405858809e443cc410a050dee3a5ed0bc58e66"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/Feel/README.md.meta",
+      "sha256": "c6977c9e27ef44663b7d329ac6ab92719b08782462733baf352410b38905570f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAccelerate.asset",
+      "sha256": "bbb0f99828b8429666014e6603df5bac3312c5dfe88e4d259deb89dd443a5cf9"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAccelerate.asset.meta",
+      "sha256": "581245ca1bc77f3dff644753515d192327a125a31ec6495f8bbf02328a25d901"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAir.asset",
+      "sha256": "71850ddcdb96b857cc4e331574dd944d4e20032d11d6101b0d5cdd6427165494"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAir.asset.meta",
+      "sha256": "4c6aaa172f5dc58b4b0e1027685a8d480d1c898d0342433b2ecd736ef5280a01"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAirDash.asset",
+      "sha256": "a1a56e28246adcd67c556fb27beac53530309f4c1c9f03b355a81dc67bf84f51"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAirDash.asset.meta",
+      "sha256": "6ac486a7c600517d525c2c335d7fa96047a28ab252d44aad43cb387c8429f59c"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAirJump.asset",
+      "sha256": "47bce26a876ca7507f35a560b9b569a46a1c23d629148ffc976360434887f7f2"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerAirJump.asset.meta",
+      "sha256": "b085297aa17f00be5e8068819e5a7f536ae72e0daf89363e2b62babe849c5842"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerDecelerate.asset",
+      "sha256": "027f90d3d1555e38ebb33c06f7f1821116c7fcabeabf9e1c9bbd3b169c487a28"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerDecelerate.asset.meta",
+      "sha256": "cc6204732040e3b9d531e7a72c49c8dc83a34a950e336c2c68f2304b4bb318b0"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerDropThrough.asset",
+      "sha256": "dcb545310fb13e14ad6eac8eb78e116c19f128f887aa64a9a3236ce1e8b78870"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerDropThrough.asset.meta",
+      "sha256": "1fa44b00a7710fcea817c356bbf4ea2b5fbb9dfbabaaacd68f8dfe2ef8e67532"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerFall.asset",
+      "sha256": "e910bc11e9da2871e76637f069a857d37ea9cc720a0421e0d7d3e8776f34faa0"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerFall.asset.meta",
+      "sha256": "1b2b785d571b240a803026284cbc034ec760d2941eebe4db17a6166a4ab3b964"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerGround.asset",
+      "sha256": "de68cf267e16e5c5f92e2f6ccfc19678a60ba6b6042fb2017e58773e96b01d22"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerGround.asset.meta",
+      "sha256": "fe84556bcc442d9541e0439c5fbee4ca589d64774903a97451300320f1e7b757"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerGroundDash.asset",
+      "sha256": "754fa81ca8476d58623c287a44c38c1232af74d122f3d9bf71cb3c9eed7872b7"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerGroundDash.asset.meta",
+      "sha256": "2005ffae6ab4a819a06d87fe40001941dce98581f93701e2b0599241c408b010"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerHardLand.asset",
+      "sha256": "5a9869c3c80327bbc1b540aeff3dc5b90cfc8f38c0c4f221a83f642875079db1"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerHardLand.asset.meta",
+      "sha256": "77ebf5e2a59df81e013f592c210b3dfa2a165359ec93d828050e6b4278652962"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerHeadJump.asset",
+      "sha256": "e2e5988aa58b60097cd1df91680bf9aab8c3c12174dd4ffd52933a135d8f503c"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerHeadJump.asset.meta",
+      "sha256": "574d34eb0462729115c8c8f54d372ed662f6cce982e48024da8d49b46c09e434"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerIdle.asset",
+      "sha256": "3bb56c929f6d71a7b1d40491ad3f1116f10d243510863a9287c8220d991eba5e"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerIdle.asset.meta",
+      "sha256": "0b465a3ed177d8a27f92bc53f9774fcc73d305d17afbf36ec570c7bcb9605242"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerJump.asset",
+      "sha256": "1f3e2f669b2df7e070617675f0db56d0344b05d1159d47e5c460453593d193d1"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerJump.asset.meta",
+      "sha256": "8e44922b7147bc725c523f1e935968d84716ecccbf0cdabcd2b43ac6b635e114"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLand.asset",
+      "sha256": "3322d199a0c438059d27ce83722c50d722f89475fd98e6b243a1e634fd84c149"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLand.asset.meta",
+      "sha256": "471091f2e117528134aca2399ed381a5b7792db743208fde031516fef1e9eb8f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLedgeClimb.asset",
+      "sha256": "de9ea8d3304e8413d392e94babf1b93112444e0d33efa0b40f6303d79a195eb3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLedgeClimb.asset.meta",
+      "sha256": "593554eec8e0e60491c61967e6374303513bfee24f5ef9a05fc7d44eeb5421c7"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLedgeHang.asset",
+      "sha256": "a3c717b5d8946beb6075f568bc269d0cfb427b337e501f023913f23221c01a30"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLedgeHang.asset.meta",
+      "sha256": "6d404d15453457da92f3d38ad756a8f610d45590013aeda3bb98285ee80415b5"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLocomotion.asset",
+      "sha256": "ec3debb2b5e5820903848371c2d408427429f5e67b177be16d6adcf741439eeb"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerLocomotion.asset.meta",
+      "sha256": "6be13f6ac737f7a4329ccf1726904a348e830c22a4c0769d78153c9f10ea8da7"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerMove.asset",
+      "sha256": "f0f2bbff1d764fd0e9c005a3298c2919e0365082e9de5049e16ed624076bab91"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerMove.asset.meta",
+      "sha256": "77d4ba658cf8402d5b9d9a60df3c21e27c36855803c94daddc5abd5f1cd88bca"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerRolling.asset",
+      "sha256": "eb64e29fcf89b3c960469de0b31ba5c34eb216ff8c8504481543f9476088a08b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerRolling.asset.meta",
+      "sha256": "89f0307a698290af7fe3afc6eac223be728072d70009d29409d3ceae39c36531"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerWallJump.asset",
+      "sha256": "5bb62a399b54ec9b2d97be13bc58d92f0b0616cdabb8b9a22ad875f62bf45cac"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerWallJump.asset.meta",
+      "sha256": "64876dc22f0eeb5f883f62d3bb7a2feafa52a2170bc4385fa24238889222606f"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerWallSlide.asset",
+      "sha256": "7217b52906b8c8db6e50445e7f6fe50cd8699334b2446a88747af9e29596012a"
+    },
+    {
+      "path": "Assets/GameResource/Resources/Config/Player/States/PlayerWallSlide.asset.meta",
+      "sha256": "a4d56def1e7f097325ea6a48e4a1d3d38149e6b062367560b7320ba09616812d"
+    }
+  ],
+  "scope": "Player/Entity and Player configuration. Shared feel/configuration files and controller remain byte-identical."
+}

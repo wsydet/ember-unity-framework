@@ -1,0 +1,52 @@
+Failed to find real location of C:\Users\wuyu\AppData\Local\Programs\Python\Python314\python.exe
+Traceback (most recent call last):
+  File "C:\Users\wuyu\My\ember-unity-framework\scripts\check-shared-binaries.py", line 129, in main
+    shutil.copyfile(index if index.is_absolute() else ROOT/index, env['GIT_INDEX_FILE'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 315, in copyfile
+    with open(dst, 'wb') as fdst:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\wuyu\\AppData\\Local\\Packages\\sandbox.{b08b310b-f35b-4a1b-b298-941872f370b4}\\AC\\Temp\\ember-binary-check-uxmcik03\\index'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 707, in _rmtree_unsafe
+    os.rmdir(path)
+    ~~~~~~~~^^^^^^
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\wuyu\\AppData\\Local\\Packages\\sandbox.{b08b310b-f35b-4a1b-b298-941872f370b4}\\AC\\Temp\\ember-binary-check-uxmcik03'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\wuyu\My\ember-unity-framework\scripts\check-shared-binaries.py", line 157, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\wuyu\My\ember-unity-framework\scripts\check-shared-binaries.py", line 125, in main
+    with tempfile.TemporaryDirectory(prefix='ember-binary-check-') as tmp:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 971, in __exit__
+    self.cleanup()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 711, in _rmtree_unsafe
+    onexc(os.rmdir, path, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wuyu\AppData\Local\Programs\Python\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\wuyu\\AppData\\Local\\Packages\\sandbox.{b08b310b-f35b-4a1b-b298-941872f370b4}\\AC\\Temp\\ember-binary-check-uxmcik03'

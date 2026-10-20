@@ -1,0 +1,61 @@
+{
+  "status": "P06 REPRODUCED; not fixed; these are launch-tail rhythm failures, not trigger failures",
+  "legacyFixedStep": 0.016666668,
+  "legacyFields": {
+    "airAccY": 2.0,
+    "airSlowAccY": 1.0,
+    "airSlowSpeedY": 5.0,
+    "airDownMaxSpeedY": -20.0
+  },
+  "legacyRule": "Forced slow permission during isMashJump and until speedY < -5 afterwards; |speedY|<=5 uses 1/step, otherwise 2/step, terminal -20. After leaving latch, slow permission follows JumpHeld.",
+  "observations": [
+    {
+      "trace": "s3-mushroom-20261020-095531-source-shape-side--1.tsv",
+      "sha256": "5541d7eb49414df3506946d709946820fc684cefa2fcfa6b7abf5afdc223aeb4",
+      "samples": 7,
+      "measuredDeceleration": 29.429999999999996,
+      "legacyHighSpeedDeceleration": 119.99999040000077,
+      "legacyRhythmMatches": false
+    },
+    {
+      "trace": "s3-mushroom-20261020-095531-source-shape-side-1.tsv",
+      "sha256": "94c405253b088e2961f09a01fac3e06be055519dc6bd501d68ea40063a8ac1f1",
+      "samples": 7,
+      "measuredDeceleration": 29.429999999999996,
+      "legacyHighSpeedDeceleration": 119.99999040000077,
+      "legacyRhythmMatches": false
+    },
+    {
+      "trace": "s3-mushroom-20261020-095531-source-shape-up--1.tsv",
+      "sha256": "7760bf56b31138dbb6bc81e7e3eea2f2c0addec7d8e92495f1160288c2540394",
+      "samples": 7,
+      "measuredDeceleration": 29.429999999999993,
+      "legacyHighSpeedDeceleration": 119.99999040000077,
+      "legacyRhythmMatches": false
+    },
+    {
+      "trace": "s3-mushroom-20261020-095531-source-shape-up-1.tsv",
+      "sha256": "e4bb0a509548c3ee9e58756c2c6fa62c22b571bb95cfc108ea8ebfa030dd458a",
+      "samples": 7,
+      "measuredDeceleration": 29.429999999999993,
+      "legacyHighSpeedDeceleration": 119.99999040000077,
+      "legacyRhythmMatches": false
+    }
+  ],
+  "sources": [
+    {
+      "path": "Assets/Script/PlayerControl.cs",
+      "sha256": "30f30133cfe0e4fba01a4634ec5211b045b66a4512e022b871bc479e47b8fbc1"
+    },
+    {
+      "path": "Assets/Prefab/Player.prefab",
+      "sha256": "1682983fe92544d85fb16ecd74179604921f98ad262c0355cc1bbb2118938172"
+    },
+    {
+      "path": "ProjectSettings/TimeManager.asset",
+      "sha256": "8fa4333ac4e99d3c522b512e4f9ec78d73401504ac0efaece4aeaafa0e45dfff"
+    }
+  ],
+  "boundary": "Old values derived from source, not a new run of Mountain; current values are live Unity traces.",
+  "protected": "Do not alter shared gravity or approved ordinary/wall/flag-jump configuration."
+}

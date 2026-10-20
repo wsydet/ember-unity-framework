@@ -1,0 +1,16 @@
+{
+  "operation": "get_test_job",
+  "job_id": "2e03214d67ab438ab4afd0b727c4e259",
+  "assembly": "Game.Player.Editor.Tests",
+  "expectedEvidence": "docs/dev/evidence/p06-launch-tail/editor-01.xml",
+  "result": {
+    "success": false,
+    "message": null,
+    "error": "Unity plugin session 4a28993c-e111-4de6-9c67-6e678b6539ac disconnected while awaiting command_result",
+    "data": null,
+    "hint": "retry"
+  },
+  "action": "Stopped automatic Unity queries under repository unity-validation.md. Requested manual compilation and connection recovery.",
+  "testOutcome": "unknown; expected XML absent at immediate filesystem inspection",
+  "releaseState": "SaveTemplate, Bump, commit, tag and push not performed"
+}
