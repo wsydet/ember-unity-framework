@@ -1,0 +1,34 @@
+{
+  "Assets\\Game\\Module\\Player\\PlayerWallJumpSpec.cs": {
+    "sha256": "ebf538de5dd491d4be2097de8b7f5f7befef0f3e32689cfd0ea106874f458f5a",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerFlightSpec.cs": {
+    "sha256": "fdc7e50fd4c89eeb85341bb59d8198103c9764b91c91c16e785d294d16d80c2b",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerActionState.cs": {
+    "sha256": "a13236f224a42c69d0cbe15cfda4df4f2e13dd491bcf624254f4fbeadd04da56",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerVerticalMotion.cs": {
+    "sha256": "eeef2f78f51bfe9de76fe095a1fcbc7bb2d179e39fe7a4285f48bd5ff583330a",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerExternalMotion.cs": {
+    "sha256": "b5ac231e5717b4b04294fe54166db3caf08205c7fa6abf595dd98ca8d51f93e8",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerWallMotion.cs": {
+    "sha256": "3c37f6acd9e31b066c137a836686297caec816d75343189f6807e9afd6674771",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerJumpFeel.cs": {
+    "sha256": "72d120d7e1dd6d06ae6f3e657f8ca34479974f3ebff0c66e5778d2b903c77242",
+    "savedEqual": true
+  },
+  "Assets\\Game\\Module\\Player\\PlayerController.cs": {
+    "sha256": "6b2e4a4d0a8646cba840cf6a4f7fe3e007d69761f6a43277ab68d1655a112d8b",
+    "savedEqual": true
+  }
+}

@@ -24,7 +24,7 @@ namespace Game.Player
         internal void Take(object owner, PlayerMotionChannels channels)
         {
             if (owner == null) throw new ArgumentNullException(nameof(owner));
-            Taking?.Invoke();
+            if (!ReferenceEquals(_owner, owner)) Taking?.Invoke();
             _owner = owner ?? throw new ArgumentNullException(nameof(owner)); _channels = channels;
         }
         internal void Release(object owner)

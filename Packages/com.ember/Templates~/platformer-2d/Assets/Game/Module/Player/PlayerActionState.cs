@@ -28,6 +28,11 @@ namespace Game.Player
         internal bool HasOwner;
         internal float? Horizontal, Vertical, Gravity;
         internal bool HoldVertical = true;
+        internal bool NewVertical;
+        internal PlayerFlightSpec PendingFlight;
+        internal string PendingSource;
+        internal Behaviour FlightOwner;
+        public PlayerFlightLease Flight { get; internal set; }
         internal bool? Facing;
         public PlayerActionChannels Channels { get; internal set; }
         public PlayerActionEndReason EndReason { get; internal set; } = PlayerActionEndReason.Transition;
@@ -60,7 +65,17 @@ namespace Game.Player
             if (!float.IsFinite(velocity)) throw new ArgumentOutOfRangeException(nameof(velocity));
             if (!float.IsFinite(gravityScale) || gravityScale < 0) throw new ArgumentOutOfRangeException(nameof(gravityScale));
             if (!IsActive || (Channels & PlayerActionChannels.Vertical) == 0) return false;
-            Vertical = velocity; Gravity = gravityScale; HoldVertical = holdVelocity; return true;
+            Vertical = velocity; Gravity = gravityScale; HoldVertical = holdVelocity;
+            NewVertical = true; PendingFlight = default; PendingSource = null; FlightOwner = null; return true;
+        }
+        /// <summary>提交一次纵向发射并绑定下降策略；owner 寿命独立于动作，释放 Vertical 或结束动作后策略继续。</summary>
+        public bool LaunchVertical(float velocity, float gravityScale, Behaviour owner, string sourceId, PlayerFlightSpec flight)
+        {
+            flight.ValidateWorld(Physics2D.gravity);
+            if (owner == null || !owner.isActiveAndEnabled || string.IsNullOrWhiteSpace(sourceId))
+                throw new ArgumentException("飞行必须指定启用的所有者和来源 ID。");
+            if (!SetVertical(velocity, gravityScale, false)) return false;
+            PendingFlight = flight; PendingSource = sourceId; FlightOwner = owner; return true;
         }
         public bool SetFacing(bool facesRight)
         {
@@ -112,6 +127,8 @@ namespace Game.Player
             if (!IsCurrent(lease)) return false;
             if ((channels & ~PlayerActionChannels.All) != 0) throw new ArgumentOutOfRangeException(nameof(channels));
             lease.Channels &= ~channels;
+            if ((channels & PlayerActionChannels.Vertical) != 0)
+            { lease.NewVertical = false; lease.Vertical = null; lease.PendingFlight = default; }
             _context.MotionControl.Take(lease, (PlayerMotionChannels)lease.Channels);
             return true;
         }
@@ -153,6 +170,15 @@ namespace Game.Player
                 _context.Motor.SetHorizontalVelocity(lease.Horizontal.Value);
             if ((lease.Channels & PlayerActionChannels.Vertical) != 0)
             {
+                if (lease.NewVertical && lease.Vertical.HasValue)
+                {
+                    if (lease.PendingFlight.Enabled && (lease.FlightOwner == null || !lease.FlightOwner.isActiveAndEnabled))
+                    { lease.Vertical = null; lease.NewVertical = false; return; }
+                    _context.Wall.Cancel();
+                    lease.Flight = _context.VerticalMotion.BeginFlight(lease.FlightOwner, _context.Input,
+                        lease.PendingSource, lease.PendingFlight, PlayerFlightOrigin.Action);
+                    lease.NewVertical = false;
+                }
                 if (lease.Vertical.HasValue) _context.Motor.SetVerticalVelocity(lease.Vertical.Value);
                 if (!lease.HoldVertical) lease.Vertical = null;
                 if (lease.Gravity.HasValue) _context.Motor.SetGravityScale(lease.Gravity.Value);

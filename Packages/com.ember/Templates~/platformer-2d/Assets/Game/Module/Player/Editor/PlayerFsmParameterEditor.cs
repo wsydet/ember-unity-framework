@@ -16,7 +16,7 @@ namespace Game.Player.Editor
         private static readonly Dictionary<string, bool> Folds = new();
         private static readonly string[] MovementFields = { "_speed", "_accelerated", "_acceleration", "_braking", "_turning", "_independentAir", "_airSpeed", "_airAccelerated", "_airAcceleration", "_airBraking", "_airTurning", "_enableJumpResponse", "_jumpResponseDuration" };
         private static readonly string[] JumpFields = { "_mode", "_height", "_apexTime", "_launchSpeed", "_gravityScale", "_enableShortJump", "_shortJumpMode", "_releaseSpeed", "_minimumHeight", "_releaseMultiplier", "_enableApexGravity", "_apexSpeed", "_apexMultiplier", "_enableFallGravity", "_fallMultiplier", "_enableFallLimit", "_fallLimit", "_enableEdgeHover", "_edgeHoverDuration", "_airJumpSpeed", "_airJumpHorizontalMode", "_airJumpHorizontalSpeed" };
-        private static readonly string[] WallFields = { "_wallSlideSpeed", "_enableWallFastSlide", "_wallFastSlideSpeed", "_wallJumpX", "_wallJumpY", "_wallProtection", "_wallReturnEnabled", "_wallReturnDuration", "_wallReturnMultiplier" };
+        private static readonly string[] WallFields = { "_wallJump", "_wallSlideSpeed", "_enableWallFastSlide", "_wallFastSlideSpeed", "_wallJumpX", "_wallJumpY", "_wallProtection", "_wallReturnEnabled", "_wallReturnDuration", "_wallReturnMultiplier" };
         private static readonly string[] InputFields = { "_enableJumpBuffer", "_jumpBufferDuration", "_enableCoyote", "_coyoteDuration" };
         #endregion
         // --------------------------------------------------------

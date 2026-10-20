@@ -9,14 +9,22 @@ namespace Game.Player
         #region 内部参数
         private readonly PlayerFeelRuntime _feel;
         private float? _overrideGravity;
-        internal void OverrideGravity(float gravity) { if (OrdinaryActive) CancelOrdinary(); _overrideGravity = gravity; }
+        internal void OverrideGravity(float gravity) { if (HasFlightPolicy) CancelOrdinary(); _overrideGravity = gravity; }
         private PlayerInputAdapter _ordinaryInput;
+        private PlayerOrdinaryJumpSpec _jumpSpec;
+        private PlayerFlightLease _flight;
+        private ulong _flightGeneration;
+        public PlayerFlightLease Flight => _flight;
+        public bool WallActive { get; private set; }
+        public bool HasFlightPolicy => OrdinaryActive || WallActive || _flight != null;
+        internal bool HoldingJump => (OrdinaryActive || WallActive) && _holding;
         private ulong _pressVersion, _clearVersion;
         private float _elapsed;
         private bool _released, _cutApplied, _holding;
         public PlayerFlightOrigin Origin { get; private set; }
         public bool OrdinaryActive { get; private set; }
-        public float OrdinaryElapsed => _elapsed;
+        public float OrdinaryElapsed => OrdinaryActive ? _elapsed : 0;
+        public float WallElapsed => WallActive ? _elapsed : 0;
         private bool _supported;
         private bool _suppressLeave;
         private bool _jumpThisStep;
@@ -27,7 +35,7 @@ namespace Game.Player
         #region 内部方法
         private void ApplyOrdinary(ref float velocity, ref float gravity, float worldGravityY, float dt)
         {
-            var spec = _feel.OrdinaryJump;
+            var spec = _jumpSpec;
             if (_ordinaryInput.ClearVersion != _clearVersion) PauseOrdinary();
             if (!_ordinaryInput.JumpHeld || _ordinaryInput.JumpPressVersion != _pressVersion) _released = true;
             float holdUntil = _released ? spec.MinimumHold : spec.MaximumHold;
@@ -60,9 +68,10 @@ namespace Game.Player
 
         internal void Observe(bool supported, float verticalSpeed, float dt, bool groundContact = true)
         {
+            PruneFlight();
             if (supported && groundContact) CancelOrdinary(PlayerFlightOrigin.Natural);
             // 实际物理解算已停止上升（包括碰顶），不得用恒速保持重新向顶推动。
-            if (OrdinaryActive && verticalSpeed <= 0) { _holding = false; _cutApplied = true; }
+            if ((OrdinaryActive || WallActive) && verticalSpeed <= 0) { _holding = false; _cutApplied = true; }
             _overrideGravity = null;
             _jumpThisStep = false;
             HoverRemaining = Mathf.Max(0, HoverRemaining - dt);
@@ -84,16 +93,49 @@ namespace Game.Player
         {
             NotifyJump(PlayerFlightOrigin.OrdinaryJump);
             if (!_feel.OrdinaryJump.Enabled) return;
-            OrdinaryActive = true; _ordinaryInput = input;
+            OrdinaryActive = true; _jumpSpec = _feel.OrdinaryJump; StartHold(input);
+        }
+
+        internal void BeginWall(PlayerInputAdapter input)
+        {
+            NotifyJump(PlayerFlightOrigin.WallJump);
+            if (!_feel.WallJump.Enabled) return;
+            WallActive = true; _jumpSpec = _feel.WallJump.Vertical; StartHold(input);
+        }
+
+        private void StartHold(PlayerInputAdapter input)
+        {
+            _ordinaryInput = input;
             _pressVersion = input.JumpPressVersion; _clearVersion = input.ClearVersion;
             _released = !input.JumpHeld; _cutApplied = false; _holding = true; _elapsed = 0;
         }
 
         internal void CancelOrdinary(PlayerFlightOrigin origin = PlayerFlightOrigin.Action)
         {
-            OrdinaryActive = false; _ordinaryInput = null; _holding = false; _elapsed = 0;
+            ClearFlight();
+            CancelJumpHold();
             Origin = origin;
         }
+
+        internal void CancelJumpHold()
+        {
+            OrdinaryActive = false; WallActive = false; _ordinaryInput = null; _holding = false; _elapsed = 0;
+        }
+
+        internal PlayerFlightLease BeginFlight(Behaviour owner, PlayerInputAdapter input, string sourceId, PlayerFlightSpec spec, PlayerFlightOrigin origin)
+        {
+            spec.ValidateWorld(Physics2D.gravity);
+            if (!spec.Enabled) { CancelOrdinary(origin); return null; }
+            NotifyJump(origin);
+            _flight = new PlayerFlightLease(this, owner, input, sourceId, ++_flightGeneration, spec);
+            return _flight;
+        }
+        internal void PruneFlight()
+        { if (_flight != null && !_flight.IsActive) ClearFlight(); }
+        internal void ReleaseFlight(PlayerFlightLease lease)
+        { if (ReferenceEquals(_flight, lease)) ClearFlight(); }
+        private void ClearFlight()
+        { if (_flight != null) _flight.Session = null; _flight = null; }
 
         internal void PauseOrdinary()
         {
@@ -101,11 +143,24 @@ namespace Game.Player
             _released = true; _holding = false; _cutApplied = true;
         }
 
+        internal void ApplyOwnedFlight(EntityMotor2D motor, float worldGravityY, float dt)
+        {
+            if (_flight == null || motor.CommandVelocity.y > 0) return;
+            float velocity = motor.CommandVelocity.y;
+            var spec = _flight.Spec;
+            bool held = _flight.Input.ClearVersion == _flight.ClearVersion && _flight.Input.JumpHeld;
+            float gravity = (spec.HeldSlowFall && held && -velocity <= spec.HeldSpeed
+                ? spec.HeldAcceleration : spec.FallAcceleration) / -worldGravityY;
+            velocity = Mathf.Max(velocity, -spec.FallLimit);
+            if (dt > 0) gravity = Mathf.Min(gravity, Mathf.Max(0, (velocity + spec.FallLimit) / (-worldGravityY * dt)));
+            motor.SetVerticalVelocity(velocity); motor.SetGravityScale(gravity); EffectiveGravityScale = gravity;
+        }
+
         internal void Apply(EntityMotor2D motor, float worldGravityY, float dt)
         {
             float velocity = motor.CommandVelocity.y;
             float gravity = _feel.GravityScale;
-            if (OrdinaryActive)
+            if (OrdinaryActive || WallActive)
             {
                 ApplyOrdinary(ref velocity, ref gravity, worldGravityY, dt);
                 motor.SetVerticalVelocity(velocity); motor.SetGravityScale(gravity);
@@ -126,11 +181,20 @@ namespace Game.Player
             if (_overrideGravity.HasValue) gravity = _overrideGravity.Value;
             // 限速最后结算：先纠正已有超速，再限制本步重力可增加的下降速度。
             // 不手动积分位置；Unity 继续负责实际物理与碰撞。
-            if (_feel.FallLimitEnabled)
+            bool flightFall = _flight != null && velocity <= 0 && !_overrideGravity.HasValue;
+            float limit = flightFall ? _flight.Spec.FallLimit : _feel.FallLimit;
+            if (flightFall)
             {
-                velocity = Mathf.Max(velocity, -_feel.FallLimit);
+                var spec = _flight.Spec;
+                bool held = _flight.Input.ClearVersion == _flight.ClearVersion && _flight.Input.JumpHeld;
+                gravity = (spec.HeldSlowFall && held && -velocity <= spec.HeldSpeed
+                    ? spec.HeldAcceleration : spec.FallAcceleration) / -worldGravityY;
+            }
+            if (flightFall || _feel.FallLimitEnabled)
+            {
+                velocity = Mathf.Max(velocity, -limit);
                 if (dt > 0 && worldGravityY < 0)
-                    gravity = Mathf.Min(gravity, Mathf.Max(0, (velocity + _feel.FallLimit) / (-worldGravityY * dt)));
+                    gravity = Mathf.Min(gravity, Mathf.Max(0, (velocity + limit) / (-worldGravityY * dt)));
             }
             motor.SetVerticalVelocity(velocity);
             motor.SetGravityScale(gravity);

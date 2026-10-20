@@ -1,0 +1,194 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "e239bcb957ac4478a25b316d7b86285c",
+    "status": "succeeded",
+    "mode": "PlayMode",
+    "started_unix_ms": 1792459256449,
+    "finished_unix_ms": 1792459292124,
+    "last_update_unix_ms": 1792459292124,
+    "progress": {
+      "completed": 17,
+      "total": 17,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1792459292052,
+      "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_NewActionOldActionAndOwnerDestroy",
+      "last_finished_unix_ms": 1792459292081,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "PlayMode",
+      "summary": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 27.9749419,
+        "resultState": "Passed"
+      },
+      "results": [
+        {
+          "name": "ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(AddVelocity)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(AddVelocity)",
+          "state": "Passed",
+          "durationSeconds": 0.1109674,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(ReplaceVelocity)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(ReplaceVelocity)",
+          "state": "Passed",
+          "durationSeconds": 0.0127591,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(ForcedRise)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.ActionContract_ExternalMotionReturnsOnlyOnReleasedAxes(ForcedRise)",
+          "state": "Passed",
+          "durationSeconds": 0.0139284,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ActionContract_VerticalImpulseUsesRealGravityWithoutProjectCompensation(8.0f)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.ActionContract_VerticalImpulseUsesRealGravityWithoutProjectCompensation(8.0f)",
+          "state": "Passed",
+          "durationSeconds": 0.013746,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ActionContract_VerticalImpulseUsesRealGravityWithoutProjectCompensation(-8.0f)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.ActionContract_VerticalImpulseUsesRealGravityWithoutProjectCompensation(-8.0f)",
+          "state": "Passed",
+          "durationSeconds": 0.0108338,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(14.0f)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(14.0f)",
+          "state": "Passed",
+          "durationSeconds": 0.0450414,
+          "message": null,
+          "stackTrace": null,
+          "output": "TRACE\t0\t0.08\t1.156456\r\nTRACE\t0.02\t0.179999992\t1.412912\r\nTRACE\t0.04\t0.279999971\t1.657596\r\nTRACE\t0.06\t0.379999965\t1.89050794\r\nTRACE\t0.08\t0.479999959\t2.11164784\r\nTRACE\t0.099999994\t0.5799999\t2.32101583\r\nTRACE\t0.12\t0.679999948\t2.518612\r\nTRACE\t0.14\t0.78\t2.70443583\r\nTRACE\t0.16\t0.88\t2.87848783\r\nTRACE\t0.179999992\t0.98\t3.04076767\r\nTRACE\t0.199999988\t1.08\t3.1912756\r\nTRACE\t0.22\t1.18000007\t3.33001161\r\nTRACE\t0.24\t1.28000009\t3.45697546\r\nTRACE\t0.26\t1.38000011\t3.5721674\r\nTRACE\t0.28\t1.48000014\t3.67558742\r\nTRACE\t0.299999982\t1.58000016\t3.76723528\r\nTRACE\t0.32\t1.68000019\t3.84711123\r\nTRACE\t0.34\t1.78000021\t3.91521525\r\nTRACE\t0.359999985\t1.88000023\t3.97154713\r\nTRACE\t0.38\t1.98000026\t4.016107\r\nTRACE\t0.399999976\t2.08000016\t4.048895\r\nTRACE\t0.42\t2.18\t4.069911\r\nTRACE\t0.44\t2.28\t4.079155\r\nTRACE\t0.459999979\t2.37999988\t4.076627\r\nTRACE\t0.48\t2.47999978\t4.062327\r\nTRACE\t0.5\t2.57999969\t4.036255\r\nTRACE\t0.52\t2.67999959\t3.998411\r\nTRACE\t0.539999962\t2.77999949\t3.94879484\r\nTRACE\t0.56\t2.8799994\t3.88740683\r\nTRACE\t0.58\t2.9799993\t3.814247\r\nTRACE\t0.599999964\t3.07999921\t3.7293148\r\nTRACE\t0.62\t3.179999\t3.6326108\r\nTRACE\t0.64\t3.279999\t3.52413487\r\nTRACE\t0.659999967\t3.379999\t3.4038868\r\nTRACE\t0.68\t3.47999883\t3.2718668\r\nTRACE\t0.7\t3.57999873\t3.12807465\r\nTRACE\t0.719999969\t3.67999864\t2.97251058\r\nTRACE\t0.74\t3.77999854\t2.80517459\r\nTRACE\t0.76\t3.87999845\t2.62606645\r\nTRACE\t0.78\t3.97999835\t2.43518639\r\nTRACE\t0.799999952\t4.07999849\t2.23253441\r\nTRACE\t0.82\t4.1799984\t2.01811028\r\nTRACE\t0.84\t4.2799983\t1.79191422\r\nTRACE\t0.859999955\t4.379998\t1.55394614\r\nTRACE\t0.88\t4.479998\t1.30420613\r\nTRACE\t0.9\t4.579998\t1.04269409\r\nTRACE\t0.919999957\t4.679998\t0.76941\r\nTRACE\t0.94\t4.779998\t0.858388066\r\nspecial launch=14 samples=48; entire x/y trajectory equal within 1e-5\r\n"
+        },
+        {
+          "name": "OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(10.0f)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(10.0f)",
+          "state": "Passed",
+          "durationSeconds": 0.0145199,
+          "message": null,
+          "stackTrace": null,
+          "output": "TRACE\t0\t0.08\t1.076456\r\nTRACE\t0.02\t0.179999992\t1.25291193\r\nTRACE\t0.04\t0.279999971\t1.41759586\r\nTRACE\t0.06\t0.379999965\t1.57050788\r\nTRACE\t0.08\t0.479999959\t1.71164787\r\nTRACE\t0.099999994\t0.5799999\t1.84101582\r\nTRACE\t0.12\t0.679999948\t1.95861185\r\nTRACE\t0.14\t0.78\t2.06443572\r\nTRACE\t0.16\t0.88\t2.1584878\r\nTRACE\t0.179999992\t0.98\t2.24076772\r\nTRACE\t0.199999988\t1.08\t2.31127572\r\nTRACE\t0.22\t1.18000007\t2.37001181\r\nTRACE\t0.24\t1.28000009\t2.41697574\r\nTRACE\t0.26\t1.38000011\t2.45216775\r\nTRACE\t0.28\t1.48000014\t2.47558784\r\nTRACE\t0.299999982\t1.58000016\t2.48723578\r\nTRACE\t0.32\t1.68000019\t2.48711181\r\nTRACE\t0.34\t1.78000021\t2.47521567\r\nTRACE\t0.359999985\t1.88000023\t2.45154762\r\nTRACE\t0.38\t1.98000026\t2.41610765\r\nTRACE\t0.399999976\t2.08000016\t2.36889553\r\nTRACE\t0.42\t2.18\t2.30991149\r\nTRACE\t0.44\t2.28\t2.23915553\r\nTRACE\t0.459999979\t2.37999988\t2.15662742\r\nTRACE\t0.48\t2.47999978\t2.06232738\r\nTRACE\t0.5\t2.57999969\t1.95625532\r\nTRACE\t0.52\t2.67999959\t1.83841133\r\nTRACE\t0.539999962\t2.77999949\t1.70879531\r\nTRACE\t0.56\t2.8799994\t1.56740725\r\nTRACE\t0.58\t2.9799993\t1.41424727\r\nTRACE\t0.599999964\t3.07999921\t1.24931526\r\nTRACE\t0.62\t3.179999\t1.07261121\r\nTRACE\t0.64\t3.279999\t0.8841352\r\nTRACE\t0.659999967\t3.379999\t0.8862465\r\nspecial launch=10 samples=34; entire x/y trajectory equal within 1e-5\r\n"
+        },
+        {
+          "name": "OrdinaryRhythm_ExternalLaunchInterruptsOrdinaryAndOldLeaseCannotAffectNextJump",
+          "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalLaunchInterruptsOrdinaryAndOldLeaseCannotAffectNextJump",
+          "state": "Passed",
+          "durationSeconds": 0.0147107,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"air-auto\",True)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"air-auto\",True)",
+          "state": "Passed",
+          "durationSeconds": 0.0170199,
+          "message": null,
+          "stackTrace": null,
+          "output": "SYNTHETIC air-auto t=0.08 p=(0.000000, 4.223420) v=(0.000000, 11.057000) state=jump\r\nSYNTHETIC air-auto t=0.099999994 p=(0.000000, 4.432787) v=(0.000000, 10.468400) state=jump\r\nSYNTHETIC air-auto t=0.12 p=(0.000000, 4.630383) v=(0.000000, 9.879799) state=jump\r\nSYNTHETIC air-auto t=0.14 p=(0.000000, 4.816207) v=(0.000000, 9.291199) state=jump\r\nSYNTHETIC air-auto t=0.16 p=(0.000000, 4.990259) v=(0.000000, 8.702599) state=jump\r\nSYNTHETIC air-auto t=0.179999992 p=(0.000000, 5.152539) v=(0.000000, 8.113998) state=jump\r\nSYNTHETIC air-auto t=0.199999988 p=(0.000000, 5.303047) v=(0.000000, 7.525398) state=jump\r\nSYNTHETIC air-auto t=0.22 p=(0.000000, 5.441783) v=(0.000000, 6.936798) state=jump\r\nSYNTHETIC air-auto t=0.24 p=(0.000000, 5.568747) v=(0.000000, 6.348198) state=jump\r\nSYNTHETIC air-auto t=0.26 p=(0.000000, 5.683939) v=(0.000000, 5.759598) state=jump\r\nSYNTHETIC air-auto t=0.28 p=(0.000000, 5.787359) v=(0.000000, 5.170998) state=jump\r\nSYNTHETIC air-auto t=0.299999982 p=(0.000000, 5.879007) v=(0.000000, 4.582397) state=jump\r\nSYNTHETIC air-auto t=0.32 p=(0.000000, 5.958883) v=(0.000000, 3.993798) state=jump\r\nSYNTHETIC air-auto t=0.34 p=(0.000000, 6.026987) v=(0.000000, 3.405198) state=jump\r\nSYNTHETIC air-auto t=0.359999985 p=(0.000000, 6.083319) v=(0.000000, 2.816598) state=jump\r\nSYNTHETIC air-auto t=0.38 p=(0.000000, 6.127879) v=(0.000000, 2.227998) state=jump\r\nSYNTHETIC air-auto t=0.399999976 p=(0.000000, 6.160666) v=(0.000000, 1.639398) state=jump\r\nSYNTHETIC air-auto t=0.42 p=(0.000000, 6.181683) v=(0.000000, 1.050798) state=jump\r\nSYNTHETIC air-auto t=0.44 p=(0.000000, 6.190927) v=(0.000000, 0.462198) state=jump\r\nSYNTHETIC air-auto t=0.459999979 p=(0.000000, 6.188398) v=(0.000000, -0.126402) state=jump\r\nSYNTHETIC air-auto t=0.48 p=(0.000000, 6.137870) v=(0.000000, -2.526402) state=fall\r\nSYNTHETIC air-auto t=0.5 p=(0.000000, 6.039342) v=(0.000000, -4.926402) state=fall\r\nSYNTHETIC air-auto t=0.52 p=(0.000000, 5.892814) v=(0.000000, -7.326402) state=fall\r\nSYNTHETIC air-auto t=0.539999962 p=(0.000000, 5.698286) v=(0.000000, -9.726401) state=fall\r\nSYNTHETIC air-auto t=0.56 p=(0.000000, 5.455758) v=(0.000000, -12.126400) state=fall\r\nSYNTHETIC air-auto t=0.58 p=(0.000000, 5.165230) v=(0.000000, -14.526400) state=fall\r\nSYNTHETIC air-auto t=0.599999964 p=(0.000000, 4.826702) v=(0.000000, -16.926400) state=fall\r\nSYNTHETIC air-auto t=0.62 p=(0.000000, 4.440174) v=(0.000000, -19.326400) state=fall\r\nSYNTHETIC air-auto t=0.64 p=(0.000000, 4.040174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.659999967 p=(0.000000, 3.640174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.68 p=(0.000000, 3.240174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.7 p=(0.000000, 2.840174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.719999969 p=(0.000000, 2.440174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.74 p=(0.000000, 2.040174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.76 p=(0.000000, 1.640174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.78 p=(0.000000, 1.240174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.799999952 p=(0.000000, 0.840174) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC air-auto t=0.82 p=(0.000000, 0.876938) v=(0.000000, 0.000000) state=idle\r\nSYNTHETIC air-auto t=0.84 p=(0.000000, 0.884650) v=(0.000000, 0.000000) state=idle\r\n"
+        },
+        {
+          "name": "WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"ground-auto\",True)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"ground-auto\",True)",
+          "state": "Passed",
+          "durationSeconds": 0.0118777,
+          "message": null,
+          "stackTrace": null,
+          "output": "SYNTHETIC ground-auto t=0.08 p=(0.000000, 2.123420) v=(0.000000, 11.057000) state=jump\r\nSYNTHETIC ground-auto t=0.099999994 p=(0.000000, 2.332788) v=(0.000000, 10.468400) state=jump\r\nSYNTHETIC ground-auto t=0.12 p=(0.000000, 2.530384) v=(0.000000, 9.879799) state=jump\r\nSYNTHETIC ground-auto t=0.14 p=(0.000000, 2.716208) v=(0.000000, 9.291199) state=jump\r\nSYNTHETIC ground-auto t=0.16 p=(0.000000, 2.890260) v=(0.000000, 8.702599) state=jump\r\nSYNTHETIC ground-auto t=0.179999992 p=(0.000000, 3.052540) v=(0.000000, 8.113998) state=jump\r\nSYNTHETIC ground-auto t=0.199999988 p=(0.000000, 3.203048) v=(0.000000, 7.525398) state=jump\r\nSYNTHETIC ground-auto t=0.22 p=(0.000000, 3.341784) v=(0.000000, 6.936798) state=jump\r\nSYNTHETIC ground-auto t=0.24 p=(0.000000, 3.468748) v=(0.000000, 6.348198) state=jump\r\nSYNTHETIC ground-auto t=0.26 p=(0.000000, 3.583940) v=(0.000000, 5.759598) state=jump\r\nSYNTHETIC ground-auto t=0.28 p=(0.000000, 3.687360) v=(0.000000, 5.170998) state=jump\r\nSYNTHETIC ground-auto t=0.299999982 p=(0.000000, 3.779007) v=(0.000000, 4.582397) state=jump\r\nSYNTHETIC ground-auto t=0.32 p=(0.000000, 3.858883) v=(0.000000, 3.993798) state=jump\r\nSYNTHETIC ground-auto t=0.34 p=(0.000000, 3.926987) v=(0.000000, 3.405198) state=jump\r\nSYNTHETIC ground-auto t=0.359999985 p=(0.000000, 3.983319) v=(0.000000, 2.816598) state=jump\r\nSYNTHETIC ground-auto t=0.38 p=(0.000000, 4.027879) v=(0.000000, 2.227998) state=jump\r\nSYNTHETIC ground-auto t=0.399999976 p=(0.000000, 4.060667) v=(0.000000, 1.639398) state=jump\r\nSYNTHETIC ground-auto t=0.42 p=(0.000000, 4.081683) v=(0.000000, 1.050798) state=jump\r\nSYNTHETIC ground-auto t=0.44 p=(0.000000, 4.090927) v=(0.000000, 0.462198) state=jump\r\nSYNTHETIC ground-auto t=0.459999979 p=(0.000000, 4.088399) v=(0.000000, -0.126402) state=jump\r\nSYNTHETIC ground-auto t=0.48 p=(0.000000, 4.037871) v=(0.000000, -2.526402) state=fall\r\nSYNTHETIC ground-auto t=0.5 p=(0.000000, 3.939343) v=(0.000000, -4.926402) state=fall\r\nSYNTHETIC ground-auto t=0.52 p=(0.000000, 3.792815) v=(0.000000, -7.326402) state=fall\r\nSYNTHETIC ground-auto t=0.539999962 p=(0.000000, 3.598287) v=(0.000000, -9.726401) state=fall\r\nSYNTHETIC ground-auto t=0.56 p=(0.000000, 3.355759) v=(0.000000, -12.126400) state=fall\r\nSYNTHETIC ground-auto t=0.58 p=(0.000000, 3.065231) v=(0.000000, -14.526400) state=fall\r\nSYNTHETIC ground-auto t=0.599999964 p=(0.000000, 2.726703) v=(0.000000, -16.926400) state=fall\r\nSYNTHETIC ground-auto t=0.62 p=(0.000000, 2.340175) v=(0.000000, -19.326400) state=fall\r\nSYNTHETIC ground-auto t=0.64 p=(0.000000, 1.940175) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC ground-auto t=0.659999967 p=(0.000000, 1.540175) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC ground-auto t=0.68 p=(0.000000, 1.140175) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC ground-auto t=0.7 p=(0.000000, 0.740175) v=(0.000000, -20.000000) state=fall\r\nSYNTHETIC ground-auto t=0.719999969 p=(0.000000, 0.850724) v=(0.000000, 0.000000) state=idle\r\nSYNTHETIC ground-auto t=0.74 p=(0.000000, 0.879704) v=(0.000000, 0.000000) state=idle\r\n"
+        },
+        {
+          "name": "WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"ground-flag-jump\",False)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlight_ActionExitPreservesSelectedDescentAndAscent(\"ground-flag-jump\",False)",
+          "state": "Passed",
+          "durationSeconds": 0.0136541,
+          "message": null,
+          "stackTrace": null,
+          "output": "SYNTHETIC ground-flag-jump t=0.08 p=(0.000000, 2.123420) v=(0.000000, 11.057000) state=jump\r\nSYNTHETIC ground-flag-jump t=0.099999994 p=(0.000000, 2.332788) v=(0.000000, 10.468400) state=jump\r\nSYNTHETIC ground-flag-jump t=0.12 p=(0.000000, 2.530384) v=(0.000000, 9.879799) state=jump\r\nSYNTHETIC ground-flag-jump t=0.14 p=(0.000000, 2.716208) v=(0.000000, 9.291199) state=jump\r\nSYNTHETIC ground-flag-jump t=0.16 p=(0.000000, 2.890260) v=(0.000000, 8.702599) state=jump\r\nSYNTHETIC ground-flag-jump t=0.179999992 p=(0.000000, 3.052540) v=(0.000000, 8.113998) state=jump\r\nSYNTHETIC ground-flag-jump t=0.199999988 p=(0.000000, 3.203048) v=(0.000000, 7.525398) state=jump\r\nSYNTHETIC ground-flag-jump t=0.22 p=(0.000000, 3.341784) v=(0.000000, 6.936798) state=jump\r\nSYNTHETIC ground-flag-jump t=0.24 p=(0.000000, 3.468748) v=(0.000000, 6.348198) state=jump\r\nSYNTHETIC ground-flag-jump t=0.26 p=(0.000000, 3.583940) v=(0.000000, 5.759598) state=jump\r\nSYNTHETIC ground-flag-jump t=0.28 p=(0.000000, 3.687360) v=(0.000000, 5.170998) state=jump\r\nSYNTHETIC ground-flag-jump t=0.299999982 p=(0.000000, 3.779007) v=(0.000000, 4.582397) state=jump\r\nSYNTHETIC ground-flag-jump t=0.32 p=(0.000000, 3.858883) v=(0.000000, 3.993798) state=jump\r\nSYNTHETIC ground-flag-jump t=0.34 p=(0.000000, 3.926987) v=(0.000000, 3.405198) state=jump\r\nSYNTHETIC ground-flag-jump t=0.359999985 p=(0.000000, 3.983319) v=(0.000000, 2.816598) state=jump\r\nSYNTHETIC ground-flag-jump t=0.38 p=(0.000000, 4.027879) v=(0.000000, 2.227998) state=jump\r\nSYNTHETIC ground-flag-jump t=0.399999976 p=(0.000000, 4.060667) v=(0.000000, 1.639398) state=jump\r\nSYNTHETIC ground-flag-jump t=0.42 p=(0.000000, 4.081683) v=(0.000000, 1.050798) state=jump\r\nSYNTHETIC ground-flag-jump t=0.44 p=(0.000000, 4.090927) v=(0.000000, 0.462198) state=jump\r\nSYNTHETIC ground-flag-jump t=0.459999979 p=(0.000000, 4.088399) v=(0.000000, -0.126402) state=jump\r\nSYNTHETIC ground-flag-jump t=0.48 p=(0.000000, 4.074099) v=(0.000000, -0.715002) state=fall\r\nSYNTHETIC ground-flag-jump t=0.5 p=(0.000000, 4.048027) v=(0.000000, -1.303602) state=fall\r\nSYNTHETIC ground-flag-jump t=0.52 p=(0.000000, 4.010183) v=(0.000000, -1.892202) state=fall\r\nSYNTHETIC ground-flag-jump t=0.539999962 p=(0.000000, 3.960567) v=(0.000000, -2.480802) state=fall\r\nSYNTHETIC ground-flag-jump t=0.56 p=(0.000000, 3.899179) v=(0.000000, -3.069402) state=fall\r\nSYNTHETIC ground-flag-jump t=0.58 p=(0.000000, 3.826019) v=(0.000000, -3.658002) state=fall\r\nSYNTHETIC ground-flag-jump t=0.599999964 p=(0.000000, 3.741087) v=(0.000000, -4.246602) state=fall\r\nSYNTHETIC ground-flag-jump t=0.62 p=(0.000000, 3.644383) v=(0.000000, -4.835202) state=fall\r\nSYNTHETIC ground-flag-jump t=0.64 p=(0.000000, 3.535907) v=(0.000000, -5.423802) state=fall\r\nSYNTHETIC ground-flag-jump t=0.659999967 p=(0.000000, 3.415659) v=(0.000000, -6.012402) state=fall\r\nSYNTHETIC ground-flag-jump t=0.68 p=(0.000000, 3.283639) v=(0.000000, -6.601002) state=fall\r\nSYNTHETIC ground-flag-jump t=0.7 p=(0.000000, 3.139847) v=(0.000000, -7.189602) state=fall\r\nSYNTHETIC ground-flag-jump t=0.719999969 p=(0.000000, 2.984282) v=(0.000000, -7.778203) state=fall\r\nSYNTHETIC ground-flag-jump t=0.74 p=(0.000000, 2.816947) v=(0.000000, -8.366802) state=fall\r\nSYNTHETIC ground-flag-jump t=0.76 p=(0.000000, 2.637838) v=(0.000000, -8.955402) state=fall\r\nSYNTHETIC ground-flag-jump t=0.78 p=(0.000000, 2.446958) v=(0.000000, -9.544003) state=fall\r\nSYNTHETIC ground-flag-jump t=0.799999952 p=(0.000000, 2.244306) v=(0.000000, -10.132600) state=fall\r\nSYNTHETIC ground-flag-jump t=0.82 p=(0.000000, 2.029882) v=(0.000000, -10.721200) state=fall\r\nSYNTHETIC ground-flag-jump t=0.84 p=(0.000000, 1.803686) v=(0.000000, -11.309800) state=fall\r\nSYNTHETIC ground-flag-jump t=0.859999955 p=(0.000000, 1.565718) v=(0.000000, -11.898400) state=fall\r\nSYNTHETIC ground-flag-jump t=0.88 p=(0.000000, 1.315978) v=(0.000000, -12.487000) state=fall\r\nSYNTHETIC ground-flag-jump t=0.9 p=(0.000000, 1.054466) v=(0.000000, -13.075600) state=fall\r\nSYNTHETIC ground-flag-jump t=0.919999957 p=(0.000000, 0.781182) v=(0.000000, -13.664200) state=fall\r\nSYNTHETIC ground-flag-jump t=0.94 p=(0.000000, 0.861474) v=(0.000000, 0.000000) state=idle\r\n"
+        },
+        {
+          "name": "WallFlightBoundary_HeldFallPauseWallAndOrdinaryIsolation",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_HeldFallPauseWallAndOrdinaryIsolation",
+          "state": "Passed",
+          "durationSeconds": 0.0188904,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlightBoundary_ImmediateDownwardLaunchUsesPolicyBeforeEnvironment",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_ImmediateDownwardLaunchUsesPolicyBeforeEnvironment",
+          "state": "Passed",
+          "durationSeconds": 0.0127805,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlightBoundary_LateReverseDoesNotConvertAndLosesWallNormally",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_LateReverseDoesNotConvertAndLosesWallNormally",
+          "state": "Passed",
+          "durationSeconds": 0.0120731,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlightBoundary_LifeAndHostClear(False)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_LifeAndHostClear(False)",
+          "state": "Passed",
+          "durationSeconds": 13.9929164,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlightBoundary_LifeAndHostClear(True)",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_LifeAndHostClear(True)",
+          "state": "Passed",
+          "durationSeconds": 13.4425877,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "WallFlightBoundary_NewActionOldActionAndOwnerDestroy",
+          "fullName": "Game.Player.Tests.PlayerStateTests.WallFlightBoundary_NewActionOldActionAndOwnerDestroy",
+          "state": "Passed",
+          "durationSeconds": 0.0286095,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        }
+      ]
+    }
+  },
+  "hint": null
+}

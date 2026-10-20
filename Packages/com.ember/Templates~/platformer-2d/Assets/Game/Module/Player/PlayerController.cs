@@ -228,6 +228,7 @@ namespace Game.Player
             _powers.Tick(dt);
             _effects?.Tick(dt);
             Context.ExternalMotion.Prune();
+            Context.VerticalMotion.PruneFlight();
             if (Context.Life?.IsDead == true || Context.Life?.Reaction?.IsActive == true) Context.ExternalMotion.Clear();
             if (UpdateInteractionHold()) return;
             Context.Input.Sample();
@@ -272,13 +273,14 @@ namespace Game.Player
                 {
                     Context.Actions.Apply();
                     if (Context.ExternalMotion.HasVerticalOverride)
-                        Context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
+                        Context.VerticalMotion.CancelJumpHold();
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Wall)) Context.Wall.Apply();
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Ledge)) Context.Ledge.Apply(dt);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Vertical)) Context.VerticalMotion.Apply(_motor, UnityEngine.Physics2D.gravity.y, dt);
+                    else Context.VerticalMotion.ApplyOwnedFlight(_motor, UnityEngine.Physics2D.gravity.y, dt);
                     if (!Context.MotionControl.Owns(PlayerMotionChannels.Correction)) Context.Correction.Apply(dt, CurrentStateId);
                 }
-                if (ReferenceEquals(active, _active) && !active.IsDisposed) Context.ExternalMotion.Compose();
+                if (ReferenceEquals(active, _active) && !active.IsDisposed) Context.ExternalMotion.Compose(dt);
                 _motor.ExecuteStep();
                 if (ReferenceEquals(active, _active) && !active.IsDisposed) active.Animation?.Sync(active.Fsm);
                 if (ReferenceEquals(active, _active) && !active.IsDisposed) Context.Landing.RecordStep();

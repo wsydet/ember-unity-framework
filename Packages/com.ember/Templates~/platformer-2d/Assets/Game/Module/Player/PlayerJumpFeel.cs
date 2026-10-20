@@ -12,6 +12,7 @@ namespace Game.Player
     {
         #region 编辑器面板参数
         [SerializeField, Tooltip("默认关闭。开启后仅合法普通起跳使用此策略；原字段继续控制其他自由飞行。")] private PlayerOrdinaryJumpSpec _ordinaryJump;
+        [SerializeField] private PlayerWallJumpSpec _wallJump;
         [SerializeField] private PlayerJumpParameterMode _mode = PlayerJumpParameterMode.Direct;
         [SerializeField, Min(.01f), Tooltip("基础高度，世界单位；未计入短跳等修正和离散物理。")] private float _height = 1.699f;
         [SerializeField, Min(.01f), Tooltip("基础到顶时间，游戏秒。")] private float _apexTime = .34f;
@@ -52,6 +53,8 @@ namespace Game.Player
         // --------------------------------------------------------
         #region 外部方法
         public PlayerOrdinaryJumpSpec OrdinaryJump => _ordinaryJump;
+        public PlayerWallJumpSpec WallJump => _wallJump;
+        public void ConfigureWallJump(PlayerWallJumpSpec spec) { spec.Validate(); _wallJump = spec; }
         /// <summary>配置下一次运行捕获的普通跳策略；不修改已冻结会话。</summary>
         public void ConfigureOrdinaryJump(PlayerOrdinaryJumpSpec spec) { spec.Validate(); _ordinaryJump = spec; }
         public float WallSlideSpeed => _wallSlideSpeed;
@@ -84,6 +87,10 @@ namespace Game.Player
         internal void Resolve(Vector2 worldGravity, out float launchSpeed, out float gravityScale)
         {
             _ordinaryJump.Validate();
+            _wallJump.Validate();
+            if (_wallJump.Enabled && (worldGravity.x != 0 || !float.IsFinite(worldGravity.y) || worldGravity.y >= 0 ||
+                !float.IsFinite(_wallJump.Vertical.RiseGravity / -worldGravity.y) || !float.IsFinite(_wallJump.Vertical.FallGravity / -worldGravity.y)))
+                throw new InvalidOperationException("墙跳策略需要纯竖直向下重力及有限倍率。");
             if (_ordinaryJump.Enabled && (!float.IsFinite(worldGravity.y) || worldGravity.y >= 0 || worldGravity.x != 0 ||
                 !float.IsFinite(_ordinaryJump.RiseGravity / -worldGravity.y) || !float.IsFinite(_ordinaryJump.FallGravity / -worldGravity.y)))
                 throw new InvalidOperationException("普通跳独立策略需要纯竖直向下的世界重力及有限倍率。");

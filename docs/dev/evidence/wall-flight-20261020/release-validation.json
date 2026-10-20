@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "report": "项目校验 · 2026-10-20 10:02:20\r\n基准：编辑副本 platformer-2d v0.8.0 → 当前模板 v0.8.0\r\n错误 0 · 警告 0 · 差异 0\r\n[Passed] 模板存储：模板内容、元数据和父级状态正常。\r\n[Passed] 内容差异：磁盘文件与所列基准一致。\r\n[Passed] 资源元数据：业务目录资源/.meta 配对与 GUID 检查完成。\r\n[Passed] 配置表：Schema、源数据、引用和全部生成物一致。\r\n[Information] UI 生成链路：已检查 7 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。\r\nAssets/GameResource/Resources/UI\r\n建议：需要修复时进入 UI 开发中心或打开对应 Prefab。\r\n",
+      "ErrorCount": 0,
+      "WarningCount": 0,
+      "DifferenceCount": 0,
+      "ComparisonCompleted": true,
+      "framework": "0.20.2",
+      "editing": {
+        "templateId": "platformer-2d",
+        "templateVersion": "0.8.0",
+        "contentHash": "003c4429f265bbcd8d377bf375c2c15c",
+        "loadedAt": "2026-10-20 09:24:45"
+      },
+      "graph": [],
+      "sync": {
+        "Status": 1,
+        "Error": null,
+        "ChildContentHash": "003c4429f265bbcd8d377bf375c2c15c",
+        "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+        "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+        "CanApply": false,
+        "HasConflicts": false,
+        "WillChangeChildContent": false
+      }
+    },
+    "compiler": "codedom"
+  }
+}

@@ -341,6 +341,7 @@ namespace Game.Player.Editor
             Add(Sections[2], "普通跳独立竖直策略", jump, "_ordinaryJump", "默认关闭。仅合法普通起跳启用，持续至落地；动作接管取消。共享参数继续用于其他自由飞行。");
             Add(Sections[2], "普通跳跃与短跳", jump, "_mode _height _apexTime _launchSpeed _gravityScale _enableShortJump _shortJumpMode _releaseSpeed _minimumHeight _releaseMultiplier", "高度/到顶与直接速度/重力互斥；短跳关闭时修正参数不生效。");
             Add(Sections[2], "顶点 / 下落加速 / 悬停", jump, "_enableApexGravity _apexSpeed _apexMultiplier _enableFallGravity _fallMultiplier _enableFallLimit _fallLimit _enableEdgeHover _edgeHoverDuration", "下落倍率 > 1 加快下降反馈；顶点区间优先，不叠乘。最终下降时间还受顶点范围、限速和落地高度影响。");
+            Add(Sections[2], "墙跳独立分支与运动", jump, "_wallJump", "默认关闭。启用后墙跳使用独立分支、保持与超速控制；共享墙跳保护/折返仅供旧模式。所有时长为秒。");
             Add(Sections[2], "墙面 / 二段跳 / 反弹", jump, "_headJumpSpeed _airJumpSpeed _airJumpHorizontalMode _airJumpHorizontalSpeed _wallSlideSpeed _enableWallFastSlide _wallFastSlideSpeed _wallJumpX _wallJumpY _wallProtection _wallReturnEnabled _wallReturnDuration _wallReturnMultiplier", "动作启用、解锁和次数见“能力与技能”；关闭动作不会删除运动参数。");
             Add(Sections[2], "地空冲刺", move, "_groundDash _airDash", "启用、解锁及 CD 见“能力与技能”。");
             Add(Sections[2], "跳跃 / 冲刺 / 台阶补正", move, "_jumpCorrection _groundDashCorrection _airDashCorrection _stepCorrection", "最大距离与搜索步长控制容错范围及精度；所有补正默认关闭。地面补正固定向上，方向偏好仅用于跳跃和空中冲刺。");

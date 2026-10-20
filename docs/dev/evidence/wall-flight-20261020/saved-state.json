@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "count": 1436,
+      "version": "0.7.0",
+      "contentHash": "003c4429f265bbcd8d377bf375c2c15c",
+      "versionedContentHash": "8198525b8d263ba6fb9c489571171e70",
+      "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+      "sceneDirty": false,
+      "playing": false,
+      "compiling": false
+    },
+    "compiler": "codedom"
+  }
+}

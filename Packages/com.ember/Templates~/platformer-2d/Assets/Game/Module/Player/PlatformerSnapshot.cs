@@ -73,8 +73,8 @@ namespace Game.Player
         private static PlatformerSnapshot CaptureCore(string scene, PlayerContext context, bool interaction)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
-            if (context.VerticalMotion.OrdinaryActive)
-                throw new InvalidOperationException("普通跳独立竖直策略期间不能采集瞬时快照；请使用合法检查点基线组合保存。");
+            if (context.VerticalMotion.HasFlightPolicy || context.Feel.WallJump.Enabled && !context.JumpWindow.HasGroundSupport)
+                throw new InvalidOperationException("独立飞行策略或墙跳资格在空中期间不能采集瞬时快照；请使用合法检查点基线组合保存。");
             if (context.Actions.IsActive)
                 throw new InvalidOperationException("项目动作期间不能采集瞬时快照；请使用合法检查点基线组合保存。");
             context.ExternalMotion.Prune();

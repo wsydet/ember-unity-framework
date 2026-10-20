@@ -17,9 +17,10 @@ namespace Game.Player
         public bool LockInput { get; }
         public string SourceId { get; }
         public bool StopVerticalOnEnd { get; }
+        public PlayerFlightSpec Flight { get; }
 
         public PlayerExternalMotionRequest(string sourceId, PlayerExternalMotionMode mode, Vector2 velocity,
-            float duration = 0, int priority = 0, bool lockInput = false, bool stopVerticalOnEnd = false)
+            float duration = 0, int priority = 0, bool lockInput = false, bool stopVerticalOnEnd = false, PlayerFlightSpec flight = default)
         {
             if (string.IsNullOrWhiteSpace(sourceId) || !Enum.IsDefined(typeof(PlayerExternalMotionMode), mode) ||
                 !float.IsFinite(velocity.x) || !float.IsFinite(velocity.y) || !float.IsFinite(duration) || duration < 0 ||
@@ -27,7 +28,10 @@ namespace Game.Player
                 throw new ArgumentException("外部运动需要来源ID、有限速度和合法时长；强制上升必须有正速度和有限正时长。");
             SourceId = sourceId; Mode = mode; Velocity = velocity; Duration = duration;
             Priority = priority; LockInput = lockInput || mode == PlayerExternalMotionMode.InteractionLock;
-            StopVerticalOnEnd = stopVerticalOnEnd;
+            StopVerticalOnEnd = stopVerticalOnEnd; Flight = flight;
+            flight.ValidateWorld(Physics2D.gravity);
+            if (flight.Enabled && mode != PlayerExternalMotionMode.InitialVelocity)
+                throw new ArgumentException("单次飞行策略仅适用于 InitialVelocity 发射。");
         }
     }
 
@@ -39,6 +43,7 @@ namespace Game.Player
         internal readonly Behaviour Owner;
         internal readonly PlayerExternalMotionRequest Request;
         internal float Remaining;
+        public PlayerFlightLease Flight { get; internal set; }
         public bool IsActive => Session != null && Owner != null && Owner.isActiveAndEnabled;
         public float RemainingSeconds => Remaining;
         #endregion
@@ -136,7 +141,7 @@ namespace Game.Player
             }
             var lease = new PlayerExternalMotionLease(this, owner, request);
             if (request.Mode != PlayerExternalMotionMode.AddVelocity)
-                _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
+            { _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External); _context.Wall.Cancel(); }
             _sources.Add(lease);
             RefreshInput();
             return lease;
@@ -166,7 +171,7 @@ namespace Game.Player
             _lastRise = null;
         }
 
-        internal void Compose()
+        internal void Compose(float dt)
         {
             EnvironmentVelocity = Vector2.zero;
             var velocity = _context.Motor.CommandVelocity;
@@ -200,18 +205,33 @@ namespace Game.Player
                 if (replacement != null)
                 {
                     if (!ownsHorizontal) velocity.x = replacement.Request.Velocity.x;
-                    if (!ownsVertical) velocity.y = replacement.Request.Velocity.y;
+                    if (!ownsVertical)
+                    {
+                        velocity.y = replacement.Request.Velocity.y;
+                        if (replacement.Request.Mode != PlayerExternalMotionMode.InitialVelocity)
+                            _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
+                        if (replacement.Request.Mode == PlayerExternalMotionMode.InitialVelocity)
+                            replacement.Flight = _context.VerticalMotion.BeginFlight(replacement.Owner, _context.Input,
+                                replacement.Request.SourceId, replacement.Request.Flight, PlayerFlightOrigin.External);
+                    }
                 }
                 if (rise != null)
                 {
                     if (!ownsHorizontal) velocity.x = rise.Request.Velocity.x;
                     if (!ownsVertical)
                     {
+                        _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
                         _lastRise = rise;
                         velocity.y = rise.Request.Velocity.y;
                         _context.Motor.SetGravityScale(0);
                     }
                     OverrideReason = rise.Request.SourceId;
+                }
+                if (!ownsVertical && replacement?.Request.Mode == PlayerExternalMotionMode.InitialVelocity && replacement.Flight != null)
+                {
+                    _context.Motor.SetVerticalVelocity(velocity.y);
+                    _context.VerticalMotion.ApplyOwnedFlight(_context.Motor, Physics2D.gravity.y, dt);
+                    velocity.y = _context.Motor.CommandVelocity.y;
                 }
                 // 替换速度成为新的基础；只有环境项在下步扣除，不反复累积。
                 _lastContribution = EnvironmentVelocity + _context.Support.Velocity;

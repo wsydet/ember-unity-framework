@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "framework": "0.20.3",
+      "unity": "6000.5.4f1",
+      "version": "0.8.0",
+      "contentHash": "003c4429f265bbcd8d377bf375c2c15c",
+      "versionedContentHash": "003c4429f265bbcd8d377bf375c2c15c",
+      "compiling": false,
+      "sceneDirty": false
+    },
+    "compiler": "codedom"
+  }
+}
