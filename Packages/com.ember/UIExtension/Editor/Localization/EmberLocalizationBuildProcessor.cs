@@ -13,7 +13,7 @@ namespace Ember.UIExtension.Editor
         {
             foreach (var source in EmberLocalizationEditorService.Sources())
                 EmberLocalizationEditorService.Save(source,
-                    EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(source.Source)));
+                    EmberTableSourceDocument.Load(source.SourcePath));
         }
     }
 }

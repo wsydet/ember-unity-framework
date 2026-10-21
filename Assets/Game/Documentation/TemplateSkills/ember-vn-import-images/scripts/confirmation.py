@@ -40,6 +40,45 @@ def no_links(path):
     return path
 
 
+def resolve_table_paths(project, overrides=None):
+    """Use the same shared relative-path configuration as EmberTableSourceFiles."""
+    project = no_links(project)
+    config_path = project / 'ProjectSettings/EmberTableSources.json'
+    config = json.loads(config_path.read_text(encoding='utf-8-sig')) if config_path.exists() else {}
+    bindings = {}
+    for binding in config.get('bindings', []):
+        if binding['tableId'] in bindings:
+            raise ValueError('重复源表映射: ' + binding['tableId'])
+        bindings[binding['tableId']] = binding['path']
+
+    def relative(value):
+        value = str(value).replace('\\', '/')
+        if not value or Path(value).is_absolute() or ':' in value:
+            raise ValueError('源表路径必须相对 Unity 根目录: ' + value)
+        return no_links(project / value)
+
+    roots = [project / 'Assets'] + [relative(p) for p in config.get('allowedRoots', [])]
+    if any(p == project or p == Path(p.anchor) for p in roots):
+        raise ValueError('允许根目录不能是工程根目录或磁盘根目录')
+    result = {}
+    for key in TABLES:
+        table_id = 'novel_' + key
+        default = str(config.get('defaultRoot', 'Assets/GameResource/TableSources')).rstrip('/\\') + '/' + table_id + '.etable.csv'
+        mapped = bindings.get(table_id)
+        explicit = (overrides or {}).get(key)
+        if mapped and explicit and relative(mapped) != relative(explicit):
+            raise ValueError('技能映射与项目共享映射冲突: ' + table_id)
+        path = relative(mapped or explicit or default)
+        if path.suffix.lower() not in {'.csv', '.tsv'} or not any(path.is_relative_to(p) for p in roots):
+            raise ValueError('源表越出允许目录或类型不合法: ' + str(path))
+        if not path.is_file():
+            raise ValueError('源表缺失，禁止回退旧 CSV: ' + str(path))
+        result[key] = path
+    if len(set(result.values())) != len(result):
+        raise ValueError('多个 Table ID 绑定了同一源文件')
+    return result
+
+
 def segment(value):
     value = str(value).strip()
     if (not value or len(value) > 100 or re.search(r'[<>:"/\\|?*\x00-\x1f]', value)
@@ -60,16 +99,12 @@ class Batch:
         self.project, self.source, self.work = map(no_links, (project, source, work))
         if not self.work.is_relative_to(self.project / '.utmp/vn-image-import'):
             raise ValueError('批次目录必须位于项目 .utmp/vn-image-import 下')
-        self.tables = {key: no_links(self.project / (table_paths or {}).get(
-            key, f'Assets/GameResource/TableSources/novel_{key}.etable.csv')) for key in TABLES}
-        for path in self.tables.values():
-            if not path.is_relative_to(self.project):
-                raise ValueError('表路径必须在项目内')
+        self.tables = resolve_table_paths(self.project, table_paths)
         self.ready = ready
         self.rows = {}
         for key, path in self.tables.items():
             with path.open(encoding='utf-8-sig', newline='') as stream:
-                reader = csv.DictReader(stream)
+                reader = csv.DictReader(stream, delimiter='\t' if path.suffix.lower() == '.tsv' else ',')
                 if reader.fieldnames != TABLES[key]:
                     raise ValueError(f'{path}: 表结构不匹配，需适配映射后重试')
                 self.rows[key] = list(reader)
@@ -100,7 +135,7 @@ class Batch:
     def snapshot(self):
         # Include complete resource namespace, definitions and source tables, so collisions,
         # existing references and mapping edits invalidate review even before submission.
-        paths = self.scan() + list(self.tables.values())
+        paths = self.scan() + list(self.tables.values()) + [self.project / 'ProjectSettings/EmberTableSources.json']
         roots = [self.project / 'Assets/Game/Table/Definitions']
         roots += [p for p in (self.project / 'Assets').rglob('*')
                   if p.is_dir() and p.name.casefold() == 'resources']

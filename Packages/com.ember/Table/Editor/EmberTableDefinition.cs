@@ -34,6 +34,7 @@ namespace Ember.Table.Editor
 
         [SerializeField] private string _tableId;
         [SerializeField] private TextAsset _source;
+        [SerializeField] private string _externalSourcePath;
         [SerializeField] private MonoScript _rowScript;
         [SerializeField] private bool _required = true;
         [SerializeField] private EmberTableUnknownColumnPolicy _unknownColumnPolicy =
@@ -52,6 +53,9 @@ namespace Ember.Table.Editor
 
         public string TableId => _tableId;
         public TextAsset Source => _source;
+        public string ExternalSourcePath => _externalSourcePath;
+        public bool HasSource => !string.IsNullOrWhiteSpace(_externalSourcePath) || _source || EmberTableSourceFiles.HasBinding(_tableId);
+        public string SourcePath => EmberTableSourceFiles.BindingPath(_source, _externalSourcePath, _tableId);
         public MonoScript RowScript => _rowScript;
         public Type RowType => _rowScript ? _rowScript.GetClass() : null;
         public bool Required => _required;

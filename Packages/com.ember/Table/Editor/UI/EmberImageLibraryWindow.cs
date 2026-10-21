@@ -39,6 +39,7 @@ namespace Ember.Table.Editor
         private OdinMenuTree _tree;
         private Branch _pendingBranch;
         private bool _rebuild = true;
+        private double _nextSourceCheck;
         private string _message;
         private MessageType _messageType;
         private Vector2 _gridScroll, _detailScroll;
@@ -71,6 +72,18 @@ namespace Ember.Table.Editor
             EditorApplication.projectChanged -= OnProjectChanged;
             foreach (var texture in _previews.Values) if (texture) DestroyImmediate(texture);
             _previews.Clear();
+        }
+        private void OnInspectorUpdate()
+        {
+            if (!EditingEnabled || EditorApplication.timeSinceStartup < _nextSourceCheck) return;
+            _nextSourceCheck = EditorApplication.timeSinceStartup + 1;
+            Run(() =>
+            {
+                if (!_sessions.Any(s => s.Document.IsStale)) return;
+                if (_sessions.Any(s => s.Document.Dirty) || _pending.Count > 0)
+                    throw new InvalidOperationException("源表已被外部修改；已保留图片编辑草稿，请先合并后重新加载。");
+                LoadSources();
+            });
         }
         private void OnGUI()
         {
@@ -140,11 +153,11 @@ namespace Ember.Table.Editor
             foreach (var source in sources.Where(s => s != null).GroupBy(s => s.Identity).Select(g => g.First()))
             {
                 var definition = definitions.FirstOrDefault(d => d.TableId == source.TableId);
-                if (!definition || !definition.Source) { warnings.Add("未找到图片表：" + source.TableId); continue; }
+                if (!definition || !definition.HasSource) { warnings.Add("未找到图片表：" + source.TableId); continue; }
                 try
                 {
                     var document = sessions.FirstOrDefault(s => s.Definition == definition)?.Document
-                        ?? EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(definition.Source));
+                        ?? EmberTableSourceDocument.Load(definition.SourcePath);
                     source.Validate(document);
                     sessions.Add(new Session { Source = source, Definition = definition, Document = document });
                 }
@@ -323,7 +336,7 @@ namespace Ember.Table.Editor
                 DrawFolders(row);
                 EditorGUILayout.Space();
                 if (GUILayout.Button("保存当前表并更新运行数据", GUILayout.Height(30))) Run(() => SaveTable(Active));
-                if (GUILayout.Button("定位来源表")) EditorGUIUtility.PingObject(Active.Definition.Source);
+                if (GUILayout.Button("定位来源表")) EditorUtility.RevealInFinder(EmberTableSourceFiles.Resolve(Active.Definition.SourcePath));
             }
             EditorGUILayout.EndScrollView();
         }
@@ -340,11 +353,11 @@ namespace Ember.Table.Editor
             string target = member?.GetCustomAttribute<EmberTableReferenceAttribute>()?.TargetTableId;
             var definition = string.IsNullOrEmpty(target) ? null : EmberTablePipeline.FindAllDefinitions().FirstOrDefault(d => d.TableId == target);
             string[] values = Array.Empty<string>();
-            if (definition && definition.Source)
+            if (definition && definition.HasSource)
             {
                 var keyMember = definition.RowType?.GetMembers().FirstOrDefault(m => m.IsDefined(typeof(EmberTableKeyAttribute), false));
                 string keyColumn = keyMember?.GetCustomAttribute<EmberTableColumnAttribute>()?.Name ?? "id";
-                var document = EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(definition.Source));
+                var document = EmberTableSourceDocument.Load(definition.SourcePath);
                 values = document.Rows.Select(r => document.Get(r, keyColumn)).ToArray();
             }
             return _choices[id] = values;

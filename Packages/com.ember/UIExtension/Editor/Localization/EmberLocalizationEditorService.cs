@@ -25,7 +25,7 @@ namespace Ember.UIExtension.Editor
             var existing = Sources().FirstOrDefault(s => s.TableId == id);
             if (existing)
             {
-                if (AssetDatabase.GetAssetPath(existing.Source) != path)
+                if (!EmberTableSourceFiles.SameFile(existing.SourcePath, path))
                     throw new InvalidOperationException("表标识已被其他源文件使用：" + id);
                 return existing;
             }
@@ -35,18 +35,25 @@ namespace Ember.UIExtension.Editor
             AssetDatabase.Refresh();
             var source = ScriptableObject.CreateInstance<EmberLocalizationSource>();
             source.TableId = id; source.DisplayName = label;
-            source.Source = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-            if (!source.Source) { UnityEngine.Object.DestroyImmediate(source); throw new InvalidOperationException("找不到 UTF-8 CSV/TSV 源表：" + path); }
+            EmberTableSourceFiles.ReadBytes(path);
+            source.Source = path.StartsWith("Assets/", StringComparison.Ordinal) ? AssetDatabase.LoadAssetAtPath<TextAsset>(path) : null;
+            if (!source.Source) source.ExternalSourcePath = path;
             source.Definition = definition;
             AssetDatabase.CreateAsset(source, REGISTRATION_ROOT + "/" + id + ".asset");
             return source;
         }
         public static EmberLocalizationSource InitializeCommon()
         {
-            const string path = "Assets/GameResource/TableSources/common_ui_text.etable.csv";
-            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
-            if (!File.Exists(path)) File.WriteAllText(path,
-                "key,zh_Hans,zh_Hant,ja,en\ncommon.confirm,确定,確定,確認,Confirm\ncommon.cancel,取消,取消,キャンセル,Cancel\n");
+            var existing = Sources().SingleOrDefault(s => s.TableId == "common_ui_text");
+            if (existing) { Save(existing, EmberTableSourceDocument.Load(existing.SourcePath)); return existing; }
+            string path = EmberTableSourceFiles.PathForTable("common_ui_text", "common_ui_text.etable.csv");
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(EmberTableSourceFiles.Resolve(path)));
+            if (!File.Exists(EmberTableSourceFiles.Resolve(path)))
+            {
+                string text = "key,zh_Hans,zh_Hant,ja,en\ncommon.confirm,确定,確定,確認,Confirm\ncommon.cancel,取消,取消,キャンセル,Cancel\n";
+                if (path.EndsWith(".tsv", StringComparison.OrdinalIgnoreCase)) text = text.Replace(',', '\t');
+                EmberTableSourceFiles.WriteBytes(path, System.Text.Encoding.UTF8.GetBytes(text));
+            }
             AssetDatabase.Refresh();
             var source = Register("common_ui_text", "公共 UI 文案", path);
             Save(source, EmberTableSourceDocument.Load(path));
@@ -54,7 +61,7 @@ namespace Ember.UIExtension.Editor
         }
         public static void Validate(EmberLocalizationSource source, EmberTableSourceDocument document)
         {
-            if (!source || !source.Source || document == null || document.Path != AssetDatabase.GetAssetPath(source.Source))
+            if (!source || document == null || !EmberTableSourceFiles.SameFile(document.Path, source.SourcePath))
                 throw new InvalidOperationException("草稿与所选源表不匹配。");
             if (string.IsNullOrWhiteSpace(source.TableId) || source.TableId.Any(c => !char.IsLetterOrDigit(c) && c != '_'))
                 throw new InvalidOperationException("表标识仅允许字母、数字和下划线。");
@@ -72,12 +79,12 @@ namespace Ember.UIExtension.Editor
             {
                 if (other.TableId == source.TableId) throw new InvalidOperationException("重复表标识：" + source.TableId);
                 if (source.Output && other.Output == source.Output) throw new InvalidOperationException("两个源表不能共用同一个运行产物。");
-                if (!other.Source) throw new InvalidOperationException("源表缺失：" + other.DisplayName);
-                var data = EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(other.Source));
+                if (EmberTableSourceFiles.SameFile(source.SourcePath, other.SourcePath)) throw new InvalidOperationException("重复源表绑定：" + other.DisplayName);
+                var data = EmberTableSourceDocument.Load(other.SourcePath);
                 if (data.Rows.Any(r => keys.Contains(data.Get(r, other.KeyColumn))))
                     throw new InvalidOperationException("与「" + other.DisplayName + "」存在同名 Key，请使用模块前缀区分。");
             }
-            if (source.Definition && source.Definition.Source != source.Source)
+            if (source.Definition && !EmberTableSourceFiles.SameFile(source.Definition.SourcePath, source.SourcePath))
                 throw new InvalidOperationException("注册源表与配表 Definition 的源文件不一致。");
             if (!source.Output && File.Exists(OUTPUT_ROOT + "/" + source.TableId + ".asset"))
                 throw new InvalidOperationException("产物路径已存在，请先在注册资产中绑定正确产物。");
@@ -99,7 +106,7 @@ namespace Ember.UIExtension.Editor
             string outputJson = previousOutput ? EditorJsonUtility.ToJson(previousOutput) : null;
             string original = document.Original;
             string binaryPath = source.Definition ? source.Definition.RuntimeOutputPath : null;
-            byte[] previousSource = File.ReadAllBytes(document.Path);
+            byte[] previousSource = EmberTableSourceFiles.ReadBytes(document.Path);
             byte[] previousBinary = binaryPath != null && File.Exists(binaryPath) ? File.ReadAllBytes(binaryPath) : null;
             bool committed = false;
             try
@@ -126,7 +133,7 @@ namespace Ember.UIExtension.Editor
             {
                 if (committed)
                 {
-                    File.WriteAllBytes(document.Path, previousSource);
+                    EmberTableSourceFiles.WriteBytes(document.Path, previousSource);
                     if (binaryPath != null)
                     {
                         if (previousBinary != null) File.WriteAllBytes(binaryPath, previousBinary);
@@ -135,7 +142,7 @@ namespace Ember.UIExtension.Editor
                     if (previousOutput) { EditorJsonUtility.FromJsonOverwrite(outputJson, previousOutput); EditorUtility.SetDirty(previousOutput); }
                     else AssetDatabase.DeleteAsset(outputPath);
                     EditorJsonUtility.FromJsonOverwrite(sourceJson, source); EditorUtility.SetDirty(source);
-                    AssetDatabase.SaveAssets(); AssetDatabase.Refresh(); document.Original = original;
+                    AssetDatabase.SaveAssets(); AssetDatabase.Refresh(); document.Original = original; document.OriginalBytes = previousSource;
                 }
                 throw;
             }

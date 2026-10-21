@@ -65,6 +65,8 @@ namespace Ember.Table.Editor
             EditorApplication.projectChanged -= RefreshCatalog;
         }
 
+        private void OnFocus() { RefreshCatalog(); }
+
         private void OnGUI()
         {
             DrawMainToolbar();
@@ -203,7 +205,8 @@ namespace Ember.Table.Editor
                 DrawValue("Definition", AssetDatabase.GetAssetPath(_selected));
                 DrawValue("Row 类型", _selected.RowType?.FullName ?? "未指定");
                 DrawValue("加载策略", _selected.Required ? "Required（失败阻止整批切换）" : "Optional（失败时省略）");
-                DrawValue("源文件", _selected.Source ? AssetDatabase.GetAssetPath(_selected.Source) : "未指定");
+                try { DrawValue("源文件", _selected.HasSource ? _selected.SourcePath : "未指定"); }
+                catch (Exception ex) { DrawValue("源文件", ex.Message); }
                 DrawValue("Runtime 产物", _selected.RuntimeOutputPath);
                 DrawValue("Resources 路径", _selected.GetLogicalResourcePath() ?? "无效");
                 if (_selectedSchema != null)
@@ -535,8 +538,8 @@ namespace Ember.Table.Editor
 
         private void OpenSource()
         {
-            if (!_selected || !_selected.Source) return;
-            EditorUtility.OpenWithDefaultApp(AssetDatabase.GetAssetPath(_selected.Source));
+            if (!_selected || !_selected.HasSource) return;
+            EditorUtility.OpenWithDefaultApp(EmberTableSourceFiles.Resolve(_selected.SourcePath));
         }
 
         private void CreateProjectScaffold()

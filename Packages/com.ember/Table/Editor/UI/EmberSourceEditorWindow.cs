@@ -19,6 +19,7 @@ namespace Ember.Table.Editor
         protected string Message;
         private Vector2 _listScroll, _detailScroll;
         private bool _drag;
+        private double _nextSourceCheck;
         private GUIStyle _rowStyle;
         protected virtual string KeyColumn => "key";
         protected EmberTableSourceDocument.Row Current => Document != null && Selected >= 0 && Selected < Document.Rows.Count ? Document.Rows[Selected] : null;
@@ -39,6 +40,17 @@ namespace Ember.Table.Editor
         {
             Undo.undoRedoPerformed -= Repaint;
             EditorApplication.projectChanged -= ProjectChanged;
+        }
+        private void OnInspectorUpdate()
+        {
+            if (Document == null || EditorApplication.timeSinceStartup < _nextSourceCheck) return;
+            _nextSourceCheck = EditorApplication.timeSinceStartup + 1;
+            Run(() =>
+            {
+                if (!Document.IsStale) return;
+                if (Document.Dirty) Message = "源表已被外部修改；草稿已保留，保存将被拒绝，请合并后重新加载。";
+                else LoadDocument(Document.Path);
+            });
         }
         protected virtual void OnGUI()
         {

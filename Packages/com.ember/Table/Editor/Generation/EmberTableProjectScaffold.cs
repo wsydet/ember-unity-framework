@@ -80,6 +80,8 @@ namespace Ember.Table.Editor
 
                     for (int i = 0; i < SupplementalFiles.Length; i++)
                     {
+                        if (SupplementalFiles[i].Key.StartsWith("Assets/GameResource/TableSources/", StringComparison.Ordinal)
+                            && EmberTableSourceFiles.ReadConfiguration().defaultRoot != "Assets/GameResource/TableSources") continue;
                         string fullPath = ToFullPath(SupplementalFiles[i].Key);
                         if (File.Exists(fullPath)) continue;
                         WriteNewFile(fullPath, Utf8(SupplementalFiles[i].Value));

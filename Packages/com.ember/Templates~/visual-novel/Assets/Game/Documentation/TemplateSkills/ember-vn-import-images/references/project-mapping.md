@@ -17,7 +17,7 @@ CSV 中 `resourcePath` 去掉 `Assets/GameResource/Resources/` 和文件扩展�
 
 ## 源表与列
 
-当前源文件在 `Assets/GameResource/TableSources/`，扩展名是 **`.etable.csv`**。表定义在 `Assets/Game/Table/Definitions/`；如果项目改过源路径，读取 Definition 的 Source 引用解析实际文件，不另建一份同名 CSV。
+当前源文件在 `Assets/GameResource/TableSources/`，扩展名是 **`.etable.csv`**。表定义在 `Assets/Game/Table/Definitions/`；如果项目改过源路径，读取 Definition.SourcePath 和共享 Table ID 映射解析实际文件，不另建一份同名 CSV。
 
 | 源文件 | 精确列名 | 规则 |
 | --- | --- | --- |
@@ -38,3 +38,6 @@ CSV 中 `resourcePath` 去掉 `Assets/GameResource/Resources/` 和文件扩展�
 - 每次查看结果的 `Succeeded`、`Diagnostics`；调用成功返回不代表烘焙成功。多次 BakeCurrent 不是一个批次事务，需保留本批备份并在失败时恢复已产生的输出。
 
 源表、生成代码、bytes 和产物 manifest 的具体位置以定义和生成预览为准。验收时用 `Resources.Load<UnityEngine.Sprite>(resourcePath)` 确认可加载，并卸载本次临时加载的资源引用；表数据的剧情使用可以在流程编辑器重新校验/下拉中检查，无需改剧情。
+
+
+外部源表：上述 Assets 路径只表示旧项目默认值。实际路径以 `ProjectSettings/EmberTableSources.json` 的 `bindings` 及 `definition.SourcePath` 为准；默认根由 `defaultRoot` 指定。图片确认脚本自动读取配置；请勿在旧目录创建第二份 CSV。仅允许已配置根目录内的 CSV/TSV，绝对路径和链接路径被拒绝。

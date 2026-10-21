@@ -127,3 +127,5 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
 - **编辑期不改写文本**：组件带 `ExecuteAlways`，为保住正式 Prefab 的所见即所得，只有运行期才写入译文；
   编辑期预览看 Inspector 的多语言区或小说流程面板。
 - Key 留空、配表未装配或查不到条目时都显示原文，行为与普通 TMP 完全一致，所以可以逐个控件慢慢迁移。
+
+外部源表：上述 Assets 路径只表示旧项目默认值。实际路径以 `ProjectSettings/EmberTableSources.json` 的 `bindings` 及 `definition.SourcePath` 为准；默认根由 `defaultRoot` 指定。图片确认脚本自动读取配置；请勿在旧目录创建第二份 CSV。仅允许已配置根目录内的 CSV/TSV，绝对路径和链接路径被拒绝。

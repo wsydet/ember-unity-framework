@@ -42,3 +42,17 @@ description: 为 Ember 视觉小说项目导入用户指定的图片。查看图
 检查角色外键、资源 ID 唯一性、每个 Resources 路径加载到 Sprite、表校验与烘焙结果。只导入资源，不擅自把图片插入现有剧情节点、不改默认剧情、不清存档。Unity 自动刷新、编译和测试只通过 MCP，遵守项目的失败停止规则。
 
 结果逐图报告：导入/复用/跳过/失败，角色与表键、落盘路径、烘焙结果和备份位置。区分静态检查、Unity 资源加载和实际画面验收；未烘焙不能称为配表完成。模板作者的源修改留在 Assets，通过正式 SaveTemplate → Bump 才能随模板交付，不直接写包内快照或 hash。AI 客户端部署技能后可能需要新会话；每次执行仍重新检查模板身份。
+
+
+## Unity 工程外唯一源表（框架 0.21.0 起）
+
+先读取 Unity 根目录下 `ProjectSettings/EmberTableSources.json`。`allowedRoots` 限定 CSV/TSV 访问范围；
+`bindings` 的 `tableId/path` 是跨配表、多语言与 Python 工具的共享定位依据。路径相对 Unity 根目录，
+例如 `../Design/TableSources/novel_content_text.etable.csv`；不得保存本机绝对路径。
+通过 `definition.SourcePath`、`source.SourcePath`、`EmberTableSourceFiles.ReadBytes/WriteBytes` 和
+`EmberTableSourceDocument.Load/Save` 操作实际源表，不再从 `Definition.Source` 获取外部文件。
+使用资产级 ExternalSourcePath 的项目，应先将经核对的相同绑定登记到共享配置；两处不一致时停止。
+图片确认脚本复用 import-images 中 `resolve_table_paths`；支持 TSV、允许根目录和配置变化后的确认失效。
+外部源表不调用 AssetDatabase.ImportAsset；新增的图片、运行时 .bytes/.asset 仍在原 Assets 目录。
+源表缺失、越界、链接路径、重复映射或冲突时停止，不在旧目录补建 CSV，也不靠复制、联接或符号链接导表。
+确认后写入前再次核对配置、源表字节与批次指纹，保留原有确认和回滚语义。

@@ -15,9 +15,9 @@ namespace Game.Narrative.Editor
             {
                 var definition = EmberTablePipeline.FindAllDefinitions().First(d => d.TableId == id);
                 var source = EmberLocalizationEditorService.Register(id, id == "novel_ui_text" ? "小说 UI 文案" : "小说剧情文案",
-                    AssetDatabase.GetAssetPath(definition.Source), definition);
+                    definition.SourcePath, definition);
                 source.TranslationContext = id == "novel_ui_text" ? "游戏界面文案，保持简洁，保留变量。" : "视觉小说对白与角色名称；遵循人物称呼和前后台词语境。";
-                EmberLocalizationEditorService.Save(source, EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(source.Source)));
+                EmberLocalizationEditorService.Save(source, EmberTableSourceDocument.Load(source.SourcePath));
             }
         }
         #endregion

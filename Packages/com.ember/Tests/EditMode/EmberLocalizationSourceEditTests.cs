@@ -72,7 +72,7 @@ namespace Ember.UI.Tests
         public void DuplicateAcrossRegisteredTablesDoesNotWriteSource()
         {
             var other = EmberLocalizationEditorService.Sources().First(s => s != _source);
-            var otherDocument = EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(other.Source));
+            var otherDocument = EmberTableSourceDocument.Load(other.SourcePath);
             var document = EmberTableSourceDocument.Load(_path);
             document.Rows[0].Values[0] = otherDocument.Get(otherDocument.Rows[0], other.KeyColumn);
             string original = File.ReadAllText(_path);
@@ -98,6 +98,40 @@ namespace Ember.UI.Tests
                 Assert.AreEqual("未保存草稿", restored.Rows[0].Values[1]);
             }
             finally { UnityEngine.Object.DestroyImmediate(window); }
+        }
+
+        [Test]
+        public void ExternalSourceUsesSharedMappingPreservesReviewsAndBuildsRuntimeAsset()
+        {
+            const string root = ".utmp/localization 外部";
+            string configPath = EmberTableSourceFiles.CONFIG_PATH;
+            byte[] config = File.Exists(configPath) ? File.ReadAllBytes(configPath) : null;
+            var settings = EmberTableSourceFiles.ReadConfiguration();
+            try
+            {
+                settings.allowedRoots = (settings.allowedRoots ?? Array.Empty<string>()).Concat(new[] { root }).ToArray();
+                settings.bindings = (settings.bindings ?? Array.Empty<EmberTableSourceFiles.Binding>()).Concat(new[] {
+                    new EmberTableSourceFiles.Binding { tableId = _id, path = root + "/" + _id + ".tsv" }
+                }).ToArray();
+                Directory.CreateDirectory(root);
+                File.WriteAllText(configPath, JsonUtility.ToJson(settings));
+                string path = _source.SourcePath;
+                File.WriteAllText(path, "key\tzh_Hans\tzh_Hant\tja\ten\n" + _id + ".hello\t你好\t\t\tHello\n");
+                var document = EmberTableSourceDocument.Load(path);
+                EmberLocalizationEditorService.Save(_source, document);
+                document.Rows[0].Values[1] = "外部更新";
+                EmberLocalizationEditorService.Save(_source, document);
+                Assert.That(_source.Reviews[0].Pending, Is.True);
+                Assert.That(_source.Output.Entries[0].Values[0], Is.EqualTo("外部更新"));
+                Assert.That(File.ReadAllText(_path), Does.Contain("你好"));
+                Assert.That(EmberLocalizationEditorService.Register(_id, "测试文案", path), Is.SameAs(_source));
+            }
+            finally
+            {
+                if (config == null) File.Delete(configPath); else File.WriteAllBytes(configPath, config);
+                string file = root + "/" + _id + ".tsv";
+                if (File.Exists(file)) File.Delete(file);
+            }
         }
     }
 }

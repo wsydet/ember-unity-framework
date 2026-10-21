@@ -88,3 +88,6 @@ if (EmberModuleCollector.TryGetInstance(out var moduleCollector)
 ## 限制
 
 首版不支持数组、List、Dictionary、嵌套对象、多态、UnityEngine.Object、公式、`.xlsx`、运行时 CSV、压缩或加密。Runtime 不验证跨表引用；该错误必须在 Editor 烘焙前消除。Resources 默认后端仍是同步 `Resources.Load<TextAsset>`，大型或远程表应由未来独立 Provider/格式版本扩展。
+
+
+Unity 工程外唯一源表、共享配置、迁移与恢复：[外部 CSV/TSV 源表](external-sources.md)。

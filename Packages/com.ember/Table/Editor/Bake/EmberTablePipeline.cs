@@ -123,6 +123,8 @@ namespace Ember.Table.Editor
             {
                 new EmberTableArtifactContent(definition.RuntimeOutputPath, artifact.FileBytes),
             };
+            if (!SourcesUnchanged(validation.Tables, diagnostics))
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
             bool success = EmberTableArtifactBatch.TryCommitOwned(
                 contents,
                 out IReadOnlyList<EmberTableArtifactAction> actions,
@@ -136,6 +138,14 @@ namespace Ember.Table.Editor
             out string reason)
         {
             reason = null;
+            try
+            {
+                if (table.SourceFileSnapshot != null &&
+                    (!EmberTableSourceFiles.SameFile(table.SourcePathAtValidation, table.Definition.SourcePath)
+                    || !BytesEqual(table.SourceFileSnapshot, EmberTableSourceFiles.ReadBytes(table.Definition.SourcePath))))
+                { reason = "Source changed after validation; refresh and validate again."; return false; }
+            }
+            catch (Exception ex) { reason = ex.Message; return false; }
             if (!EmberTableBaker.TryBake(table, out EmberTableBakeArtifact baked, out EmberTableDiagnostic diagnostic))
             {
                 reason = diagnostic.ToString();
@@ -179,6 +189,9 @@ namespace Ember.Table.Editor
             }
             contents.AddRange(EmberTableCodeGenerator.Generate(validation.Tables));
 
+            if (!SourcesUnchanged(validation.Tables, diagnostics))
+                return new EmberTablePipelineResult(false, diagnostics, Array.Empty<EmberTableArtifactAction>());
+
             IReadOnlyList<EmberTableArtifactAction> actions;
             EmberTableDiagnostic batchDiagnostic;
             bool success = commit
@@ -186,6 +199,26 @@ namespace Ember.Table.Editor
                 : EmberTableArtifactBatch.TryPreview(contents, out actions, out batchDiagnostic);
             if (!success && batchDiagnostic != null) diagnostics.Add(batchDiagnostic);
             return new EmberTablePipelineResult(success, diagnostics, actions);
+        }
+
+        private static bool SourcesUnchanged(IReadOnlyList<EmberTableValidatedData> tables, List<EmberTableDiagnostic> diagnostics)
+        {
+            foreach (var table in tables)
+            {
+                try
+                {
+                    if (table.SourceFileSnapshot == null || (EmberTableSourceFiles.SameFile(table.SourcePathAtValidation, table.Definition.SourcePath)
+                        && BytesEqual(table.SourceFileSnapshot, EmberTableSourceFiles.ReadBytes(table.Definition.SourcePath)))) continue;
+                    throw new InvalidOperationException("源表在校验后发生变化，请重新导出。");
+                }
+                catch (Exception ex)
+                {
+                    diagnostics.Add(new EmberTableDiagnostic(EmberTableDiagnosticSeverity.Error, EmberTableErrorCode.CsvSyntax,
+                        ex.Message, table.Definition.TableId, table.SourcePathAtValidation));
+                    return false;
+                }
+            }
+            return true;
         }
 
         private static bool BytesEqual(byte[] left, byte[] right)

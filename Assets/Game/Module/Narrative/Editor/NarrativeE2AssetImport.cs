@@ -30,7 +30,6 @@ namespace Game.Narrative.Editor
                 {
                     string output = "Assets/GameResource/Resources/Config/Tables/" + pair.Item1 + ".bytes";
                     if (File.Exists(output) && Encoding.UTF8.GetString(File.ReadAllBytes(output)).Contains(pair.Item2)) continue;
-                    AssetDatabase.ImportAsset("Assets/GameResource/TableSources/" + pair.Item1 + ".etable.csv", ImportAssetOptions.ForceUpdate);
                     var definition = EmberTablePipeline.FindAllDefinitions().Single(d => d.TableId == pair.Item1);
                     var result = EmberTablePipeline.BakeCurrent(definition);
                     if (!result.Succeeded) throw new InvalidOperationException("E2 配表导出失败：" + pair.Item1);

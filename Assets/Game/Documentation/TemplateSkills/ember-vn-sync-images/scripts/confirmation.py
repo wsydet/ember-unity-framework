@@ -53,14 +53,11 @@ class Batch:
         self.importer = imp.Batch.__new__(imp.Batch)
         child = self.importer
         child.project, child.source, child.files = self.project, self.source, self.files
-        child.tables = {key: rep.path_of(self.project / (self.tables or {}).get(
-            key, f'Assets/GameResource/TableSources/novel_{key}.etable.csv')) for key in imp.TABLES}
+        child.tables = imp.resolve_table_paths(self.project, self.tables)
         child.rows = {}
         for key, path in child.tables.items():
-            if not path.is_relative_to(self.project):
-                raise ValueError('表路径越界')
             with path.open(encoding='utf-8-sig', newline='') as stream:
-                reader = imp.csv.DictReader(stream)
+                reader = imp.csv.DictReader(stream, delimiter='\t' if path.suffix.lower() == '.tsv' else ',')
                 if reader.fieldnames != imp.TABLES[key]:
                     raise ValueError('需适配实际表结构: ' + str(path))
                 child.rows[key] = list(reader)

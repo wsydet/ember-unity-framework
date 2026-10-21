@@ -70,3 +70,6 @@ stdout 和批次 `session.json` 都有实际 `url`。Codex 用 `open_in_codex` �
 ```
 
 该测试只用系统临时目录，验证取消/未确认零资产写入、确认回读、指纹失效与离线草稿。还需在浏览器实际验收打开、图片加载、批量和逐图修改、预览、提交和取消；自动化点击不得针对真实待导入批次。
+
+
+外部源表：上述 Assets 路径只表示旧项目默认值。实际路径以 `ProjectSettings/EmberTableSources.json` 的 `bindings` 及 `definition.SourcePath` 为准；默认根由 `defaultRoot` 指定。图片确认脚本自动读取配置；请勿在旧目录创建第二份 CSV。仅允许已配置根目录内的 CSV/TSV，绝对路径和链接路径被拒绝。

@@ -19,6 +19,8 @@ namespace Ember.Table.Editor
         public IReadOnlyList<EmberDelimitedCell[]> SourceCells { get; }
         public byte[] SourceHashBytes { get; }
         public string SourceHash { get; }
+        public byte[] SourceFileSnapshot { get; internal set; }
+        public string SourcePathAtValidation { get; internal set; }
 
         public EmberTableValidatedData(
             EmberTableDefinition definition,
@@ -82,10 +84,22 @@ namespace Ember.Table.Editor
                     continue;
                 }
 
-                if (TryValidateDefinition(definition, diagnostics, out EmberTableValidatedData data))
-                    tables.Add(data);
+                try
+                {
+                    if (TryValidateDefinition(definition, diagnostics, out EmberTableValidatedData data))
+                        tables.Add(data);
+                }
+                catch (Exception ex)
+                {
+                    diagnostics.Add(Error(definition.TableId, definitionPath, EmberTableErrorCode.CsvSyntax, ex.Message));
+                }
             }
 
+            var sourcePaths = new HashSet<string>(ApplicationPathComparer());
+            foreach (var table in tables)
+                if (!sourcePaths.Add(EmberTableSourceFiles.Resolve(table.Definition.SourcePath)))
+                    diagnostics.Add(Error(table.Definition.TableId, table.Definition.SourcePath, EmberTableErrorCode.CsvSyntax,
+                        "Multiple Definitions bind the same source file."));
             ValidateReferences(tables, diagnostics);
             bool success = diagnostics.All(item => item.Severity != EmberTableDiagnosticSeverity.Error);
             return new EmberTableValidationResult(success, diagnostics, tables);
@@ -115,6 +129,9 @@ namespace Ember.Table.Editor
             return EmberTableBinaryFormat.ComputeSha256(writer.ToArray());
         }
 
+        private static StringComparer ApplicationPathComparer() => System.IO.Path.DirectorySeparatorChar == '\\'
+            ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
+
         private static bool TryValidateDefinition(
             EmberTableDefinition definition,
             List<EmberTableDiagnostic> diagnostics,
@@ -129,7 +146,7 @@ namespace Ember.Table.Editor
                 diagnostics.Add(Error(definition.TableId, definitionPath, EmberTableErrorCode.InvalidLength, "Definition limits are invalid."));
             if (!TryValidateOutputPath(definition.RuntimeOutputPath, out string pathError))
                 diagnostics.Add(Error(definition.TableId, definitionPath, EmberTableErrorCode.OutputPathInvalid, pathError));
-            if (!definition.Source)
+            if (!definition.HasSource)
                 diagnostics.Add(Error(definition.TableId, definitionPath, EmberTableErrorCode.CsvSyntax, "Definition has no CSV/TSV source."));
 
             EmberTableSchema schema = null;
@@ -143,21 +160,22 @@ namespace Ember.Table.Editor
             else
                 ValidateIndexes(definition, schema, definitionPath, diagnostics);
 
-            if (CountErrors(diagnostics) != errorsBefore || !definition.Source || schema == null)
+            if (CountErrors(diagnostics) != errorsBefore || !definition.HasSource || schema == null)
                 return false;
 
-            string sourcePath = AssetDatabase.GetAssetPath(definition.Source);
+            string sourcePath = definition.SourcePath;
             char delimiter;
-            if (sourcePath.EndsWith(".etable.csv", StringComparison.OrdinalIgnoreCase)) delimiter = ',';
-            else if (sourcePath.EndsWith(".etable.tsv", StringComparison.OrdinalIgnoreCase)) delimiter = '\t';
+            if (sourcePath.EndsWith(".csv", StringComparison.OrdinalIgnoreCase)) delimiter = ',';
+            else if (sourcePath.EndsWith(".tsv", StringComparison.OrdinalIgnoreCase)) delimiter = '\t';
             else
             {
-                diagnostics.Add(Error(definition.TableId, sourcePath, EmberTableErrorCode.CsvSyntax, "Source extension must be .etable.csv or .etable.tsv."));
+                diagnostics.Add(Error(definition.TableId, sourcePath, EmberTableErrorCode.CsvSyntax, "Source extension must be .csv or .tsv."));
                 return false;
             }
 
+            byte[] sourceBytes = EmberTableSourceFiles.ReadBytes(sourcePath);
             if (!EmberDelimitedTextParser.TryParse(
-                    definition.Source.bytes,
+                    sourceBytes,
                     delimiter,
                     sourcePath,
                     out EmberDelimitedDocument document,
@@ -314,7 +332,8 @@ namespace Ember.Table.Editor
                 return false;
 
             byte[] sourceHash = ComputeSourceHash(matrix);
-            data = new EmberTableValidatedData(definition, schema, rows, rowCells, sourceHash);
+            data = new EmberTableValidatedData(definition, schema, rows, rowCells, sourceHash)
+            { SourceFileSnapshot = sourceBytes, SourcePathAtValidation = sourcePath };
             return true;
         }
 
@@ -335,7 +354,7 @@ namespace Ember.Table.Editor
             for (int tableIndex = 0; tableIndex < tables.Count; tableIndex++)
             {
                 EmberTableValidatedData table = tables[tableIndex];
-                string sourcePath = AssetDatabase.GetAssetPath(table.Definition.Source);
+                string sourcePath = table.Definition.SourcePath;
                 for (int columnIndex = 0; columnIndex < table.Schema.Columns.Count; columnIndex++)
                 {
                     EmberTableColumnSchema column = table.Schema.Columns[columnIndex];

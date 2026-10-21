@@ -6,7 +6,7 @@
       "displayName": "视觉小说图片分类与统一导入",
       "description": "分类新增素材与旧图新版本，一次确认后分别调用新增导入和保留引用替换技能。",
       "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.4",
+      "minimumFrameworkVersion": "0.21.0",
       "minimumTemplateVersion": "0.7.0"
     },
     {
@@ -30,7 +30,7 @@
       "displayName": "视觉小说图片导入与配表",
       "description": "分析指定图片，交互确认类型、角色与用途，再导入资源并完成视觉小说配表。",
       "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.0",
+      "minimumFrameworkVersion": "0.21.0",
       "minimumTemplateVersion": "0.7.0"
     },
     {
@@ -38,7 +38,7 @@
       "displayName": "飞书剧情导入",
       "description": "检查飞书 CLI，按指定范围读取策划表格并保真导入视觉小说剧情。",
       "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.0",
+      "minimumFrameworkVersion": "0.21.0",
       "minimumTemplateVersion": "0.10.0"
     },
     {

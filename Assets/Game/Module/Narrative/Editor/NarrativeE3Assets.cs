@@ -26,7 +26,6 @@ namespace Game.Narrative.Editor
                 string output = "Assets/GameResource/Resources/Config/Tables/novel_audio.bytes";
                 if (File.Exists(output) && Encoding.UTF8.GetString(File.ReadAllBytes(output)).Contains("lastlight_rooftop_wind") &&
                     Encoding.UTF8.GetString(File.ReadAllBytes(output)).Contains("lastlight_evening")) return;
-                AssetDatabase.ImportAsset("Assets/GameResource/TableSources/novel_audio.etable.csv", ImportAssetOptions.ForceUpdate);
                 var definition = EmberTablePipeline.FindAllDefinitions().Single(d => d.TableId == "novel_audio");
                 if (!EmberTablePipeline.BakeCurrent(definition).Succeeded) throw new InvalidOperationException("novel_audio 配表中心导出失败");
             }

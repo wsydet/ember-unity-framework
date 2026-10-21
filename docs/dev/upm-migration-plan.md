@@ -1,6 +1,6 @@
 # UPM 包交付与维护
 
-当前发布：Ember **0.20.5**，platformer-2d **0.10.0**；默认关闭的弹射完整尾段契约及验证边界见 [发布说明](release-0.20.5.md)。Windward P06产品复验及S3未签收，P01/P04保留。下文历史记录保留原版本。
+当前发布：Ember **0.21.0**，visual-novel **0.21.2**；Unity 工程外唯一 CSV/TSV 源表及模板/技能接线见 [发布说明](release-0.21.0.md)。消费端实际编译、迁移和发行构建待用户验证；此前平台产品待办保持原状态。下文历史记录保留原版本。
 
 > 2026-10-15：框架 **0.19.2** 文档补丁：模板保存与 Bump 必须通过项目中心，禁止直接修改快照及 metadata 代替正式操作。模板、运行时代码、公共技能及依赖不变。见[0.19.2 发布说明](release-0.19.2.md)。
 
@@ -51,7 +51,7 @@
 > 2026-09-23：已发布流程推进至 **0.14.3 / visual-novel 0.7.2**，修复消费项目布局菜单身份判断；验证及定制工程迁移步骤见 [0.14.3 发布说明](release-0.14.3.md)。以下旧版本段落保留历史语境。
 
 > 更新：2026-09-17。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为 **0.20.4**；历史版本验收不替代当前消费项目验证。
+> 当前发布版本为 **0.21.0**；历史版本验收不替代当前消费项目验证。
 
 ## 目录与依赖
 
@@ -80,7 +80,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.20.4`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.20.4.json`，不覆盖消费项目其他依赖。
+3. 添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.0`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.21.0.json`，不覆盖消费项目其他依赖。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。

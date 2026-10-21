@@ -13,6 +13,7 @@ namespace Ember.UIExtension.Editor
         public string DisplayName;
         public string TableId;
         public TextAsset Source;
+        public string ExternalSourcePath;
         public EmberTableDefinition Definition;
         public string KeyColumn = "key";
         public string SourceLanguage = "zh_Hans";
@@ -23,6 +24,7 @@ namespace Ember.UIExtension.Editor
         #endregion
         // --------------------------------------------------------
         #region 内部参数
+        public string SourcePath => EmberTableSourceFiles.BindingPath(Source, ExternalSourcePath, TableId);
         [Serializable] public sealed class Review
         {
             public string Key;

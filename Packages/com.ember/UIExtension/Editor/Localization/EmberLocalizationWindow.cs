@@ -15,6 +15,7 @@ namespace Ember.UIExtension.Editor
         [SerializeField] private bool _missingOnly, _pendingOnly, _translation, _onlyEmpty = true, _register;
         [SerializeField] private string _endpoint = "", _model = "", _context = "", _tableId = "", _label = "";
         [SerializeField] private TextAsset _newSource;
+        [SerializeField] private string _externalPath = "";
         [SerializeField] private int _sourceIndex, _targetMask = -1;
         #endregion
         // --------------------------------------------------------
@@ -67,18 +68,19 @@ namespace Ember.UIExtension.Editor
             if (_register)
             {
                 _newSource = (TextAsset)EditorGUILayout.ObjectField("CSV / TSV", _newSource, typeof(TextAsset), false);
+                _externalPath = EditorGUILayout.TextField("外部相对路径（优先）", _externalPath);
                 _tableId = EditorGUILayout.TextField("唯一表标识", _tableId);
                 _label = EditorGUILayout.TextField("显示名称", _label);
                 if (GUILayout.Button("注册并打开") && CanSwitch()) Run(() =>
                 {
-                    Select(EmberLocalizationEditorService.Register(_tableId, _label, AssetDatabase.GetAssetPath(_newSource)));
+                    Select(EmberLocalizationEditorService.Register(_tableId, _label, string.IsNullOrWhiteSpace(_externalPath) ? AssetDatabase.GetAssetPath(_newSource) : _externalPath));
                     _sources = EmberLocalizationEditorService.Sources(); _register = false;
                 });
             }
         }
         private void Select(EmberLocalizationSource source)
         {
-            var document = EmberTableSourceDocument.Load(AssetDatabase.GetAssetPath(source.Source));
+            var document = EmberTableSourceDocument.Load(source.SourcePath);
             if (document.Column(source.KeyColumn) < 0 || source.Languages.Any(l => document.Column(l) < 0))
                 throw new InvalidOperationException("源表与注册配置的列不匹配，请检查表配置。");
             CancelTranslation(); _suggestions = null; _source = source; Document = document;

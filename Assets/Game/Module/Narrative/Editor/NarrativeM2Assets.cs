@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using Ember.Table.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -56,13 +57,13 @@ namespace Game.Narrative.Editor
             NarrativeEditorAvailability.RequireEnabled();
             if (EditorApplication.isPlayingOrWillChangePlaymode || !NarrativeGraphModel.IsTemplateActive()) throw new InvalidOperationException("仅在 visual-novel 编辑模式制作");
             AudioFile("quiet_afternoon",true); AudioFile("choice_chime",false);
-            const string sources="Assets/GameResource/TableSources/";
             // M1 表为空。只在没有数据行时填入本阶段已确认的占位映射。
             void Table(string name,string body)
             {
-                string path=sources+name+".etable.csv";
-                if(File.ReadAllLines(path).Count(l=>!string.IsNullOrWhiteSpace(l))>1) return;
-                File.WriteAllText(path,body,new System.Text.UTF8Encoding(false)); AssetDatabase.ImportAsset(path);
+                string path=EmberTableSourceFiles.PathForTable(name, name+".etable.csv");
+                if(EmberTableSourceFiles.ReadText(path).Split('\n').Count(l=>!string.IsNullOrWhiteSpace(l))>1) return;
+                if(path.EndsWith(".tsv",StringComparison.OrdinalIgnoreCase)) body=body.Replace(',', '\t');
+                EmberTableSourceFiles.WriteBytes(path,System.Text.Encoding.UTF8.GetBytes(body));
             }
             Table("novel_backgrounds","id,resourcePath\ncampus,"+RESOURCE+"Backgrounds/rooftop_dusk\nevening,"+RESOURCE+"Backgrounds/rooftop_dusk\n");
             Table("novel_portraits","id,characterId,expression,resourcePath\nalice_neutral,alice,neutral,"+RESOURCE+"Portraits/lin_evening\nalice_smile,alice,smile,"+RESOURCE+"Portraits/lin_evening\nlin_neutral,lin,neutral,"+RESOURCE+"Portraits/zhou_evening\n");

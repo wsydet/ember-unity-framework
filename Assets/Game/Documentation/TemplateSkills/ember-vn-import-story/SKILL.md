@@ -100,3 +100,17 @@ ovel_content_text 里都有行、zh_Hans 与资产原文逐字一致、其余语
 章节卡 Say 支持 TextReveal（Default/Typewriter/Fade/Instant）、TextFadeDuration、TitleExitDuration、TextSpeedMultiplier、TextEase。默认章节卡文字渐显，其他正文为打字机；点击未完成文字先补全，再次点击等待章节卡渐隐结束才推进。进入/退出时长 0–30 秒，速度倍率 0.05–20；暂停冻结，已读快进收束。不要用附加 Wait 或 Cover 重复模拟已经由章节卡自身管理的退出渐隐。
 
 导入时仅把来源明确指定的常用组合映射为二级步骤，不额外润色。预览同时展示组合名称、颜色、插入锚点和展开后的实际命令/等待；映射清单增加组 ID 与基础命令 ID 的对应关系。重新导入保留既有组边界、ID 及本地调整；源改动触及组内部时逐项三方比较。标题效果参数作为结构化元数据，不写进台词。
+
+
+## Unity 工程外唯一源表（框架 0.21.0 起）
+
+先读取 Unity 根目录下 `ProjectSettings/EmberTableSources.json`。`allowedRoots` 限定 CSV/TSV 访问范围；
+`bindings` 的 `tableId/path` 是跨配表、多语言与 Python 工具的共享定位依据。路径相对 Unity 根目录，
+例如 `../Design/TableSources/novel_content_text.etable.csv`；不得保存本机绝对路径。
+通过 `definition.SourcePath`、`source.SourcePath`、`EmberTableSourceFiles.ReadBytes/WriteBytes` 和
+`EmberTableSourceDocument.Load/Save` 操作实际源表，不再从 `Definition.Source` 获取外部文件。
+使用资产级 ExternalSourcePath 的项目，应先将经核对的相同绑定登记到共享配置；两处不一致时停止。
+图片确认脚本复用 import-images 中 `resolve_table_paths`；支持 TSV、允许根目录和配置变化后的确认失效。
+外部源表不调用 AssetDatabase.ImportAsset；新增的图片、运行时 .bytes/.asset 仍在原 Assets 目录。
+源表缺失、越界、链接路径、重复映射或冲突时停止，不在旧目录补建 CSV，也不靠复制、联接或符号链接导表。
+确认后写入前再次核对配置、源表字节与批次指纹，保留原有确认和回滚语义。

@@ -2040,3 +2040,15 @@ Editor 通过 `EmberLocalizationSource` 注册源表、语言列、源语言与�
 编辑器入口 `Ember/Tool/字体皮肤` 管理配置、生成项目枚举和切换默认皮肤，
 `EmberFontSkinMigration.ConvertPrefabs` 迁移项目 UI 并由 EUI 中心重新生成绑定。
 详见 [字体皮肤](../../Packages/com.ember/Documentation~/manual/font-skins.md)。
+
+
+## Unity 工程外源表（0.21.0）
+
+Editor 公共入口 `Ember.Table.Editor.EmberTableSourceFiles` 读取共享
+`ProjectSettings/EmberTableSources.json`（allowedRoots/defaultRoot/bindings）。
+`EmberTableDefinition.SourcePath` 与 `EmberLocalizationSource.SourcePath` 替代从 TextAsset 获取源路径；
+`ReadBytes/ReadText/WriteBytes` 复用目录边界，`PathForTable` 用于模板初始化。
+编辑使用 `EmberTableSourceDocument.Load/Save`，保留原始字节冲突检测、草稿及烘焙失败恢复。
+旧 Source 字段保留；共享映射/外部绑定生效时缺失不回退旧文件。
+配置、迁移与 API 示例见 [外部源表](../../Packages/com.ember/Table/Documentation~/table/external-sources.md)，
+实际验证边界见 [本次交付记录](external-table-sources-delivery.md)。

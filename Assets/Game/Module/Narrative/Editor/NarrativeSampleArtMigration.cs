@@ -25,11 +25,10 @@ namespace Game.Narrative.Editor
             {
                 foreach (string id in new[] { "novel_backgrounds", "novel_portraits" })
                 {
-                    string source = "Assets/GameResource/TableSources/" + id + ".etable.csv";
-                    if (File.ReadAllText(source).Contains("Atlas/M1Sample/"))
-                        throw new InvalidOperationException("源表仍引用旧图片：" + source);
-                    AssetDatabase.ImportAsset(source, ImportAssetOptions.ForceUpdate);
                     var definition = EmberTablePipeline.FindAllDefinitions().Single(d => d.TableId == id);
+                    string source = definition.SourcePath;
+                    if (EmberTableSourceFiles.ReadText(source).Contains("Atlas/M1Sample/"))
+                        throw new InvalidOperationException("源表仍引用旧图片：" + source);
                     var result = EmberTablePipeline.BakeCurrent(definition);
                     if (!result.Succeeded) throw new InvalidOperationException(string.Join("\n", result.Diagnostics));
                     if (Encoding.UTF8.GetString(File.ReadAllBytes(definition.RuntimeOutputPath)).Contains("Atlas/M1Sample/"))
