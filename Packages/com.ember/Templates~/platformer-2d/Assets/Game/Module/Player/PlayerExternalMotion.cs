@@ -121,6 +121,7 @@ namespace Game.Player
             _context.Motor.Body.GetContacts(_contacts);
             foreach (var contact in _contacts)
             {
+                if (!contact.enabled) continue; // 单向表面被 Effector 禁用的接触不代表真实阻挡。
                 var normal = contact.normal;
                 var obstacle = _context.Entity.Owns(contact.collider) ? contact.otherCollider : contact.collider;
                 var surfaceVelocity = obstacle != null && obstacle.attachedRigidbody != null
@@ -163,6 +164,7 @@ namespace Game.Player
             _context.Motor.Body.GetContacts(_contacts);
             foreach (var contact in _contacts)
             {
+                if (!contact.enabled) continue;
                 if (contact.normal.y >= -.00001f) continue;
                 var obstacle = _context.Entity.Owns(contact.collider) ? contact.otherCollider : contact.collider;
                 var surface = obstacle != null && obstacle.attachedRigidbody != null

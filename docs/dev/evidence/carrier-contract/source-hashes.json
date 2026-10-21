@@ -1,0 +1,34 @@
+[
+  {
+    "path": "Assets/Game/Module/Entity/EntityTranslationSupport2D.cs",
+    "sha256": "774004d560510bbaf7f2643fbb1d7df4129fcd982a85ef47a9e2224f8fc2fbdd"
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+    "sha256": "5fa67722c285acd372b67535e863ed4d41d6e80f6667ea615ae698df6cd258aa"
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportSweep2D.cs",
+    "sha256": "173a32bc1d21dd4f6d578ef42dce54229f4225472c8fa6abcd6e8625f0b21de9"
+  },
+  {
+    "path": "Assets/Game/Module/Player/PlayerSupportMotion.cs",
+    "sha256": "81b5827b8ae7742b3a7411a6f643933e6e6ce110a60e069056a3637ce05630f1"
+  },
+  {
+    "path": "Assets/Game/Module/Player/Tests/PlayerCarrierContractTests.cs",
+    "sha256": "62ae4ce8a5095e0432bd8ad9bf12132962947a7477badea8e280d0b9f80ac05c"
+  },
+  {
+    "path": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+    "sha256": "636b6c68a7d87b012f601c2b637d9cbd8bc3646d4d116a289f235622135b59db"
+  },
+  {
+    "path": "Packages/com.ember/package.json",
+    "sha256": "ada5118fc740cea37255dda1cde978c29804e6ce62fcd13ebe19423486e4fc6b"
+  },
+  {
+    "path": "Packages/com.ember/Templates~/platformer-2d/template.json",
+    "sha256": "ffcce5aab353efbc67b47e7044f999eea9fe9dc1bc5ad426ab57d955418c94cc"
+  }
+]

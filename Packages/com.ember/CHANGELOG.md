@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1] - 2026-10-21
+
+- 交付已正式保存并封存的 platformer-2d 0.11.0：可选载具自身扫掠保留切向运动，默认关闭，不改变 EntityMotor2D 整向量动作扫掠语义。
+- 弹射到期/结束、宿主水平驱动、载具自身碰撞及乘员净空在本步支撑观察前完成；PreserveControl 保留受约束 Y，修复单向平台 disabled contact 导致的支撑重复合成。
+- 正式 PlayerModule P04 原行为复现及修复后 8 组采样通过；最终定向 114/114 与交叉 49/49，通过结果及未验证项见 docs/dev/carrier-contract-delivery.md。原 821 项结果保留，未重跑全套。
+- 第三方依赖、公共技能、其他模板内容不变。Windward/Mountain 保持只读；框架侧修复交付不代替 Windward P01/P04 消费验收。
+
 ## [0.21.0] - 2026-10-21
 
 - 新增 Unity 工程外 CSV/TSV 唯一源表支持：相对路径共享配置、允许根目录与 Table ID 映射，兼容旧 TextAsset 序列化字段。

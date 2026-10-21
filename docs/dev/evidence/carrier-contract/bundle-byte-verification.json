@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "f58d4e1f61648fa0193b4066abb31c6b46ea969f",
+  "verifiedBundleFiles": 32,
+  "allTargetBytesMatchManifest": true,
+  "sourceCommitAndCandidateTextEqual": true,
+  "onlyLineEndingDifferences": [
+    "ember-doc-maintenance/scripts/audit_docs.py",
+    "ember-eui-build/agents/openai.yaml",
+    "ember-eui-build/assets/EmberEuiSkillAdapter.cs",
+    "ember-eui-build/references/editor-api.md",
+    "ember-eui-build/SKILL.md"
+  ]
+}

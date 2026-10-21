@@ -1,0 +1,16 @@
+2026-10-21T20:43:12.7212211+08:00
+PASSED p04-current-baseline
+PASS isolated formal storage root
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-current-baseline--1-StopVertical-roofFalse-None
+OBS p04-current-baseline--1-StopVertical-roofFalse-None mismatch=1 expiryAllowed=0.00000 expirySupport=20.00000 expiryCommand=20.00000 targetFPS=120 actualFPS=109.94 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS P04 CURRENT BASELINE REPRODUCED (diagnostic only) p04-current-baseline--1-StopVertical-roofFalse-None
+PASS formal return Main releases session and scene p04-current-baseline--1-StopVertical-roofFalse-None
+PASS support contribution cleared on exit p04-current-baseline--1-StopVertical-roofFalse-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-current-baseline-1-StopVertical-roofFalse-None
+OBS p04-current-baseline-1-StopVertical-roofFalse-None mismatch=1 expiryAllowed=0.00000 expirySupport=20.00000 expiryCommand=20.00000 targetFPS=120 actualFPS=103.29 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS P04 CURRENT BASELINE REPRODUCED (diagnostic only) p04-current-baseline-1-StopVertical-roofFalse-None
+PASS formal return Main releases session and scene p04-current-baseline-1-StopVertical-roofFalse-None
+PASS support contribution cleared on exit p04-current-baseline-1-StopVertical-roofFalse-None
+CLEANUP restored input filter, synthetic device and render settings

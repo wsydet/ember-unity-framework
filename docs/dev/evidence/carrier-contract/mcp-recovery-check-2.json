@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "instanceCount": 1,
+  "editorStateSucceeded": true,
+  "editorState": {
+    "playing": true,
+    "changingPlayMode": true,
+    "compiling": false,
+    "phase": "running_tests",
+    "jobId": "de09f55c68c84c9a8d413d3c52053519",
+    "readyForTools": false,
+    "blockingReasons": ["running_tests", "stale_status"]
+  },
+  "firstJobQuery": {
+    "success": true,
+    "status": "running",
+    "completed": 382,
+    "total": 821,
+    "reportedFailures": [],
+    "currentTest": "Game.Player.Tests.PlayerStateTests.DelayedInterruptionReleasesOnlyItsPromptAndStopIsIdempotent(\"jump\")",
+    "stuckSuspected": false
+  },
+  "nextJobQuery": {
+    "waitTimeout": 0,
+    "success": false,
+    "error": "Unity plugin session 0521ac58-6499-491d-b0a6-11ec9ddffb6c disconnected while awaiting command_result",
+    "hint": "retry"
+  },
+  "decision": "Editor responded briefly, then plugin disconnected during the ongoing regression run. Stop automatic validation under repository unity-validation.md. No retry, alternate compilation, process/log polling, or test interruption.",
+  "fullRegressionOutcome": "unknown; 382 completed is only an intermediate snapshot, not 382 passes or full acceptance",
+  "newRuntimeChanges": false,
+  "newTestsStarted": false,
+  "p04FormalReproductionCompleted": false,
+  "templateSaved": false,
+  "templateBumped": false,
+  "consumerProjectsModified": false,
+  "published": false
+}

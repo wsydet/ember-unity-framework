@@ -1,0 +1,1 @@
+2026-10-21 Framework Unity MCP execute_code baseline attempt in Edit Mode failed before creation: InvalidOperationException SceneManager.CreateScene with LocalPhysicsMode.Physics2D is Play Mode only. No physics evidence from this attempt. Corrective action: run isolated scene probe in Play Mode.

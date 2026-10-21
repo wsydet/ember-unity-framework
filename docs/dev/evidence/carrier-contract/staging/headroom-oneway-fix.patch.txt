@@ -1,0 +1,5 @@
+Pending patch, not applied or validated. First run CarrierCross_RiderPassesSourceOneWayFromBelow and preserve its actual result.
+
+1. Change TranslationSupportSweep2D.Blocks from private to internal, so support headroom can use the same trigger/layer/pair/one-way query rules.
+2. In EntityTranslationSupport2D.ConstrainForRider's hit loop, preserve Owns and downward-headroom-normal checks, then require _sweep.Blocks(rider, hit, Vector2.up, skin). Do not treat a PlatformEffector2D underside as a ceiling during upward crossing.
+3. Rerun the failed source case, existing headroom cases, Carrier_/CarrierCross_, Support_, LaunchPolicy_ and LaunchTail_ tests as appropriate. Do not infer a pass from this patch plan.

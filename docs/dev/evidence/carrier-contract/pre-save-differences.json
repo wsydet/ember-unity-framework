@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "changed",
+    "path": "Game/Module/Entity/EntityTranslationSupport2D.cs"
+  },
+  {
+    "kind": "changed",
+    "path": "Game/Module/Entity/TranslationSupportLaunchTarget2D.cs"
+  },
+  {
+    "kind": "added",
+    "path": "Game/Module/Entity/TranslationSupportSweep2D.cs"
+  },
+  {
+    "kind": "added",
+    "path": "Game/Module/Entity/TranslationSupportSweep2D.cs.meta"
+  },
+  {
+    "kind": "changed",
+    "path": "Game/Module/Player/PlayerSupportMotion.cs"
+  },
+  {
+    "kind": "added",
+    "path": "Game/Module/Player/Tests/PlayerCarrierContractTests.cs"
+  },
+  {
+    "kind": "added",
+    "path": "Game/Module/Player/Tests/PlayerCarrierContractTests.cs.meta"
+  }
+]

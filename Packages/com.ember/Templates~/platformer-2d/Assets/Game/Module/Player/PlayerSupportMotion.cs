@@ -28,7 +28,9 @@ namespace Game.Player
             var ground = _context.Sensors.Ground;
             var next = ground != null ? ground.GetComponentInParent<EntityTranslationSupport2D>() : null;
             if (next != null && (!next.IsAvailable || !next.Owns(ground) ||
-                _context.Motor.Velocity.y > next.Velocity.y + .1f || _context.DropThrough.IsActive)) next = null;
+                (_source == next && validPrevious
+                    ? _context.Motor.Velocity.y - _lastVelocity.y > .1f
+                    : _context.Motor.Velocity.y > next.Velocity.y + .1f) || _context.DropThrough.IsActive)) next = null;
             if (_source != null && !validPrevious)
             {
                 // 禁用、瞬移或旋转不产生离开惯性。本步也不重取同一失效支撑。
@@ -44,6 +46,7 @@ namespace Game.Player
                 };
             if (next != null || _context.Sensors.IsGrounded && _context.Motor.Velocity.y <= 0)
                 _inherited = Vector2.zero;
+            if (_source != null && _source != next) _source.ReleaseRider(_context.Sensors.Shape);
             _source = next;
             if (_source != null)
             {
@@ -54,7 +57,10 @@ namespace Game.Player
             Velocity = _source != null ? _lastVelocity : _inherited;
         }
         internal void Clear()
-        { _source = null; _lastVelocity = _inherited = Velocity = Vector2.zero; }
+        {
+            if (_source != null) _source.ReleaseRider(_context.Sensors.Shape);
+            _source = null; _lastVelocity = _inherited = Velocity = Vector2.zero;
+        }
         #endregion
     }
 }

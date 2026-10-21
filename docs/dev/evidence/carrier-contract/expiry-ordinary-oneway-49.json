@@ -1,0 +1,476 @@
+{
+  "job_id": "a4f46a0503d8487290af5e5d7cf43c35",
+  "status": "succeeded",
+  "mode": "PlayMode",
+  "started_unix_ms": 1792587311158,
+  "finished_unix_ms": 1792587360679,
+  "last_update_unix_ms": 1792587360679,
+  "progress": {
+    "completed": 49,
+    "total": 49,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1792587360609,
+    "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_WallJumpFullTrajectoryUnchanged",
+    "last_finished_unix_ms": 1792587360629,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "blocked_reason": null,
+    "failures_so_far": [],
+    "failures_capped": false
+  },
+  "error": null,
+  "result": {
+    "mode": "PlayMode",
+    "summary": {
+      "total": 49,
+      "passed": 49,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 46.6286173,
+      "resultState": "Passed"
+    },
+    "results": [
+      {
+        "name": "FallingOntoOneWayIsRealSupportButSolidGroundIsNotOneWay",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.FallingOntoOneWayIsRealSupportButSolidGroundIsNotOneWay",
+        "state": "Passed",
+        "durationSeconds": 0.022227,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "InvalidAcquisitionCannotAlterValidPair",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.InvalidAcquisitionCannotAlterValidPair",
+        "state": "Passed",
+        "durationSeconds": 0.0085463,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "MotorPauseAndResumeReapplyKeepsLeaseAndPosition",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.MotorPauseAndResumeReapplyKeepsLeaseAndPosition",
+        "state": "Passed",
+        "durationSeconds": 0.012945,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "NestedOwnersAndReversedPairPreserveOriginalIgnore(False)",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.NestedOwnersAndReversedPairPreserveOriginalIgnore(False)",
+        "state": "Passed",
+        "durationSeconds": 0.0061815,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "NestedOwnersAndReversedPairPreserveOriginalIgnore(True)",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.NestedOwnersAndReversedPairPreserveOriginalIgnore(True)",
+        "state": "Passed",
+        "durationSeconds": 0.0057634,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OtherPlatformStillCatchesExcludedActor",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.OtherPlatformStillCatchesExcludedActor",
+        "state": "Passed",
+        "durationSeconds": 0.0054016,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "PairExclusionDropsOnlyOwnerAndRestoresLandingAfterRelease",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.PairExclusionDropsOnlyOwnerAndRestoresLandingAfterRelease",
+        "state": "Passed",
+        "durationSeconds": 0.0049456,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "ReenabledColliderReappliesWithoutSecondOwnerAndDestroyedTargetDisposes",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.ReenabledColliderReappliesWithoutSecondOwnerAndDestroyedTargetDisposes",
+        "state": "Passed",
+        "durationSeconds": 0.004909,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "RisingThroughPlatformNeverReportsGroundOrWalls",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.RisingThroughPlatformNeverReportsGroundOrWalls",
+        "state": "Passed",
+        "durationSeconds": 0.0047611,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "SensorsRespectExistingPairIgnoreWithoutLease",
+        "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.SensorsRespectExistingPairIgnoreWithoutLease",
+        "state": "Passed",
+        "durationSeconds": 0.0005843,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "CarrierExpiryCross_OwnRoofAndRiderClearanceAtExpiry(StopVertical)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.CarrierExpiryCross_OwnRoofAndRiderClearanceAtExpiry(StopVertical)",
+        "state": "Passed",
+        "durationSeconds": 0.0812294,
+        "message": null,
+        "stackTrace": null,
+        "output": "expiry-roof step=1 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=2 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=3 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=4 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=5 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=6 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=7 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=8 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=9 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=10 end=StopVertical allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=11 end=StopVertical allowed=(0.00000, 0.00000) support=(0.00000, 0.00000) command=(0.00000, 0.00000)\r\n"
+      },
+      {
+        "name": "CarrierExpiryCross_OwnRoofAndRiderClearanceAtExpiry(ContinueVelocity)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.CarrierExpiryCross_OwnRoofAndRiderClearanceAtExpiry(ContinueVelocity)",
+        "state": "Passed",
+        "durationSeconds": 0.0135002,
+        "message": null,
+        "stackTrace": null,
+        "output": "expiry-roof step=1 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=2 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=3 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=4 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=5 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=6 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=7 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=8 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=9 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=10 end=ContinueVelocity allowed=(0.00000, 20.00000) support=(0.00000, 20.00000) command=(0.00000, 20.00000)\r\nexpiry-roof step=11 end=ContinueVelocity allowed=(0.00000, 8.69396) support=(0.00000, 8.69396) command=(0.00000, 8.69396)\r\n"
+      },
+      {
+        "name": "CarrierExpiryCross_ReplacementAndCurrentOwnerLossBeforeRiderCommit(False)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.CarrierExpiryCross_ReplacementAndCurrentOwnerLossBeforeRiderCommit(False)",
+        "state": "Passed",
+        "durationSeconds": 0.0129602,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "CarrierExpiryCross_ReplacementAndCurrentOwnerLossBeforeRiderCommit(True)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.CarrierExpiryCross_ReplacementAndCurrentOwnerLossBeforeRiderCommit(True)",
+        "state": "Passed",
+        "durationSeconds": 0.011324,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ActionInterruptPauseSnapshotAndFrozenSource",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ActionInterruptPauseSnapshotAndFrozenSource",
+        "state": "Passed",
+        "durationSeconds": 0.0359985,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ApexHoldGateDoesNotChangeFallOutsideApex(True)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ApexHoldGateDoesNotChangeFallOutsideApex(True)",
+        "state": "Passed",
+        "durationSeconds": 0.0130218,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ApexHoldGateDoesNotChangeFallOutsideApex(False)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ApexHoldGateDoesNotChangeFallOutsideApex(False)",
+        "state": "Passed",
+        "durationSeconds": 0.0122824,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_CeilingEndsHoldWithoutRestart",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_CeilingEndsHoldWithoutRestart",
+        "state": "Passed",
+        "durationSeconds": 0.0122854,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(14.0f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(14.0f)",
+        "state": "Passed",
+        "durationSeconds": 0.0198835,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0\t0.08\t1.156456\r\nTRACE\t0.02\t0.179999992\t1.412912\r\nTRACE\t0.04\t0.279999971\t1.657596\r\nTRACE\t0.06\t0.379999965\t1.89050794\r\nTRACE\t0.08\t0.479999959\t2.11164784\r\nTRACE\t0.099999994\t0.5799999\t2.32101583\r\nTRACE\t0.12\t0.679999948\t2.518612\r\nTRACE\t0.14\t0.78\t2.70443583\r\nTRACE\t0.16\t0.88\t2.87848783\r\nTRACE\t0.179999992\t0.98\t3.04076767\r\nTRACE\t0.199999988\t1.08\t3.1912756\r\nTRACE\t0.22\t1.18000007\t3.33001161\r\nTRACE\t0.24\t1.28000009\t3.45697546\r\nTRACE\t0.26\t1.38000011\t3.5721674\r\nTRACE\t0.28\t1.48000014\t3.67558742\r\nTRACE\t0.299999982\t1.58000016\t3.76723528\r\nTRACE\t0.32\t1.68000019\t3.84711123\r\nTRACE\t0.34\t1.78000021\t3.91521525\r\nTRACE\t0.359999985\t1.88000023\t3.97154713\r\nTRACE\t0.38\t1.98000026\t4.016107\r\nTRACE\t0.399999976\t2.08000016\t4.048895\r\nTRACE\t0.42\t2.18\t4.069911\r\nTRACE\t0.44\t2.28\t4.079155\r\nTRACE\t0.459999979\t2.37999988\t4.076627\r\nTRACE\t0.48\t2.47999978\t4.062327\r\nTRACE\t0.5\t2.57999969\t4.036255\r\nTRACE\t0.52\t2.67999959\t3.998411\r\nTRACE\t0.539999962\t2.77999949\t3.94879484\r\nTRACE\t0.56\t2.8799994\t3.88740683\r\nTRACE\t0.58\t2.9799993\t3.814247\r\nTRACE\t0.599999964\t3.07999921\t3.7293148\r\nTRACE\t0.62\t3.179999\t3.6326108\r\nTRACE\t0.64\t3.279999\t3.52413487\r\nTRACE\t0.659999967\t3.379999\t3.4038868\r\nTRACE\t0.68\t3.47999883\t3.2718668\r\nTRACE\t0.7\t3.57999873\t3.12807465\r\nTRACE\t0.719999969\t3.67999864\t2.97251058\r\nTRACE\t0.74\t3.77999854\t2.80517459\r\nTRACE\t0.76\t3.87999845\t2.62606645\r\nTRACE\t0.78\t3.97999835\t2.43518639\r\nTRACE\t0.799999952\t4.07999849\t2.23253441\r\nTRACE\t0.82\t4.1799984\t2.01811028\r\nTRACE\t0.84\t4.2799983\t1.79191422\r\nTRACE\t0.859999955\t4.379998\t1.55394614\r\nTRACE\t0.88\t4.479998\t1.30420613\r\nTRACE\t0.9\t4.579998\t1.04269409\r\nTRACE\t0.919999957\t4.679998\t0.76941\r\nTRACE\t0.94\t4.779998\t0.858388066\r\nspecial launch=14 samples=48; entire x/y trajectory equal within 1e-5\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(10.0f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalFlagAndReboundFullTrajectoryUnchanged(10.0f)",
+        "state": "Passed",
+        "durationSeconds": 0.0148414,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0\t0.08\t1.076456\r\nTRACE\t0.02\t0.179999992\t1.25291193\r\nTRACE\t0.04\t0.279999971\t1.41759586\r\nTRACE\t0.06\t0.379999965\t1.57050788\r\nTRACE\t0.08\t0.479999959\t1.71164787\r\nTRACE\t0.099999994\t0.5799999\t1.84101582\r\nTRACE\t0.12\t0.679999948\t1.95861185\r\nTRACE\t0.14\t0.78\t2.06443572\r\nTRACE\t0.16\t0.88\t2.1584878\r\nTRACE\t0.179999992\t0.98\t2.24076772\r\nTRACE\t0.199999988\t1.08\t2.31127572\r\nTRACE\t0.22\t1.18000007\t2.37001181\r\nTRACE\t0.24\t1.28000009\t2.41697574\r\nTRACE\t0.26\t1.38000011\t2.45216775\r\nTRACE\t0.28\t1.48000014\t2.47558784\r\nTRACE\t0.299999982\t1.58000016\t2.48723578\r\nTRACE\t0.32\t1.68000019\t2.48711181\r\nTRACE\t0.34\t1.78000021\t2.47521567\r\nTRACE\t0.359999985\t1.88000023\t2.45154762\r\nTRACE\t0.38\t1.98000026\t2.41610765\r\nTRACE\t0.399999976\t2.08000016\t2.36889553\r\nTRACE\t0.42\t2.18\t2.30991149\r\nTRACE\t0.44\t2.28\t2.23915553\r\nTRACE\t0.459999979\t2.37999988\t2.15662742\r\nTRACE\t0.48\t2.47999978\t2.06232738\r\nTRACE\t0.5\t2.57999969\t1.95625532\r\nTRACE\t0.52\t2.67999959\t1.83841133\r\nTRACE\t0.539999962\t2.77999949\t1.70879531\r\nTRACE\t0.56\t2.8799994\t1.56740725\r\nTRACE\t0.58\t2.9799993\t1.41424727\r\nTRACE\t0.599999964\t3.07999921\t1.24931526\r\nTRACE\t0.62\t3.179999\t1.07261121\r\nTRACE\t0.64\t3.279999\t0.8841352\r\nTRACE\t0.659999967\t3.379999\t0.8862465\r\nspecial launch=10 samples=34; entire x/y trajectory equal within 1e-5\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_ExternalLaunchInterruptsOrdinaryAndOldLeaseCannotAffectNextJump",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ExternalLaunchInterruptsOrdinaryAndOldLeaseCannotAffectNextJump",
+        "state": "Passed",
+        "durationSeconds": 0.012905,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.04f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.04f)",
+        "state": "Passed",
+        "durationSeconds": 0.0156655,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.01\t0\t1.02999973\t0\t14\tjump\r\nTRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.03\t0\t1.3099997\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.049999997\t0\t1.57799971\t0\t12.8\tjump\r\nTRACE\t0.0599999949\t0\t1.69399977\t0\t11.6\tjump\r\nTRACE\t0.06999999\t0\t1.79799974\t0\t10.4000006\tjump\r\nTRACE\t0.07999999\t0\t1.88999975\t0\t9.200001\tjump\r\nTRACE\t0.08999999\t0\t1.96999979\t0\t8.000001\tjump\r\nTRACE\t0.09999999\t0\t2.03799987\t0\t6.800001\tjump\r\nTRACE\t0.109999985\t0\t2.09399986\t0\t5.60000134\tjump\r\nTRACE\t0.119999982\t0\t2.13799977\t0\t4.40000153\tjump\r\nTRACE\t0.12999998\t0\t2.16999984\t0\t3.20000172\tjump\r\nTRACE\t0.139999986\t0\t2.18999982\t0\t2.000002\tjump\r\nTRACE\t0.149999991\t0\t2.198\t0\t0.800002\tjump\r\nTRACE\t0.16\t0\t2.194\t0\t-0.39999795\tjump\r\nTRACE\t0.17\t0\t2.178\t0\t-1.59999788\tfall\r\nTRACE\t0.18\t0\t2.15\t0\t-2.79999781\tfall\r\nTRACE\t0.190000013\t0\t2.11000013\t0\t-3.99999762\tfall\r\nTRACE\t0.200000018\t0\t2.058\t0\t-5.19999743\tfall\r\nTRACE\t0.210000023\t0\t1.99400008\t0\t-6.399997\tfall\r\nTRACE\t0.220000029\t0\t1.9180001\t0\t-7.599997\tfall\r\nTRACE\t0.230000034\t0\t1.83000016\t0\t-8.799997\tfall\r\nTRACE\t0.240000039\t0\t1.73000014\t0\t-9.999997\tfall\r\nTRACE\t0.25000003\t0\t1.61800015\t0\t-11.1999969\tfall\r\nTRACE\t0.26000002\t0\t1.4940002\t0\t-12.3999968\tfall\r\nTRACE\t0.27\t0\t1.35800028\t0\t-13.5999966\tfall\r\nTRACE\t0.28\t0\t1.21000028\t0\t-14.7999964\tfall\r\nTRACE\t0.29\t0\t1.05000031\t0\t-15.9999962\tfall\r\nTRACE\t0.299999982\t0\t0.8780004\t0\t-17.1999969\tfall\r\nTRACE\t0.309999973\t0\t0.8850849\t0\t0\tidle\r\nordinary dt=0.01 hold=0.04 height=1.30800021 rise=0.149999991 fall=0.159999982 air=0.309999973\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.04f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.04f)",
+        "state": "Passed",
+        "durationSeconds": 0.0146934,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.06\t0\t1.68199968\t0\t11.6\tjump\r\nTRACE\t0.08\t0\t1.8659997\t0\t9.200001\tjump\r\nTRACE\t0.099999994\t0\t2.00199962\t0\t6.800001\tjump\r\nTRACE\t0.11999999\t0\t2.08999968\t0\t4.40000153\tjump\r\nTRACE\t0.139999986\t0\t2.12999964\t0\t2.00000167\tjump\r\nTRACE\t0.159999982\t0\t2.12199974\t0\t-0.3999982\tjump\r\nTRACE\t0.179999977\t0\t2.06599975\t0\t-2.799998\tfall\r\nTRACE\t0.199999973\t0\t1.96199977\t0\t-5.199998\tfall\r\nTRACE\t0.219999969\t0\t1.80999982\t0\t-7.59999752\tfall\r\nTRACE\t0.239999965\t0\t1.6099999\t0\t-9.999997\tfall\r\nTRACE\t0.259999961\t0\t1.362\t0\t-12.3999968\tfall\r\nTRACE\t0.279999971\t0\t1.0660001\t0\t-14.7999964\tfall\r\nTRACE\t0.299999982\t0\t0.7220002\t0\t-17.1999969\tfall\r\nTRACE\t0.32\t0\t0.845959842\t0\t0\tidle\r\nordinary dt=0.02 hold=0.04 height=1.23999989 rise=0.139999986 fall=0.18 air=0.32\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.04f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.04f)",
+        "state": "Passed",
+        "durationSeconds": 0.0133261,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.03333333\t0\t1.35666633\t0\t14\tjump\r\nTRACE\t0.06666666\t0\t1.823333\t0\t14\tjump\r\nTRACE\t0.099999994\t0\t2.15666628\t0\t10\tjump\r\nTRACE\t0.133333325\t0\t2.35666633\t0\t6\tjump\r\nTRACE\t0.166666657\t0\t2.423333\t0\t2.00000024\tjump\r\nTRACE\t0.199999988\t0\t2.35666633\t0\t-1.99999952\tjump\r\nTRACE\t0.233333319\t0\t2.15666628\t0\t-5.999999\tfall\r\nTRACE\t0.266666651\t0\t1.823333\t0\t-9.999999\tfall\r\nTRACE\t0.299999982\t0\t1.35666645\t0\t-13.999999\tfall\r\nTRACE\t0.3333333\t0\t0.756666541\t0\t-17.9999981\tfall\r\nTRACE\t0.366666645\t0\t0.8550474\t0\t0\tidle\r\nordinary dt=0.03333333 hold=0.04 height=1.53333318 rise=0.166666657 fall=0.199999988 air=0.366666645\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.12f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.12f)",
+        "state": "Passed",
+        "durationSeconds": 0.0147511,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.01\t0\t1.02999973\t0\t14\tjump\r\nTRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.03\t0\t1.3099997\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.049999997\t0\t1.58999968\t0\t14\tjump\r\nTRACE\t0.0599999949\t0\t1.72999966\t0\t14\tjump\r\nTRACE\t0.06999999\t0\t1.86999965\t0\t14\tjump\r\nTRACE\t0.07999999\t0\t2.00999975\t0\t14\tjump\r\nTRACE\t0.08999999\t0\t2.14999986\t0\t14\tjump\r\nTRACE\t0.09999999\t0\t2.29\t0\t14\tjump\r\nTRACE\t0.109999985\t0\t2.43\t0\t14\tjump\r\nTRACE\t0.119999982\t0\t2.57000017\t0\t14\tjump\r\nTRACE\t0.12999998\t0\t2.71000028\t0\t14\tjump\r\nTRACE\t0.139999986\t0\t2.8380003\t0\t12.8\tjump\r\nTRACE\t0.149999991\t0\t2.95400023\t0\t11.6\tjump\r\nTRACE\t0.16\t0\t3.05800033\t0\t10.4000006\tjump\r\nTRACE\t0.17\t0\t3.15000033\t0\t9.200001\tjump\r\nTRACE\t0.18\t0\t3.23000026\t0\t8.000001\tjump\r\nTRACE\t0.190000013\t0\t3.29800034\t0\t6.800001\tjump\r\nTRACE\t0.200000018\t0\t3.35400033\t0\t5.60000134\tjump\r\nTRACE\t0.210000023\t0\t3.39800024\t0\t4.40000153\tjump\r\nTRACE\t0.220000029\t0\t3.43000031\t0\t3.20000172\tjump\r\nTRACE\t0.230000034\t0\t3.45000029\t0\t2.000002\tjump\r\nTRACE\t0.240000039\t0\t3.45800042\t0\t0.800002\tjump\r\nTRACE\t0.25000003\t0\t3.45400047\t0\t-0.39999795\tjump\r\nTRACE\t0.26000002\t0\t3.43800044\t0\t-1.59999788\tfall\r\nTRACE\t0.27\t0\t3.41000056\t0\t-2.79999781\tfall\r\nTRACE\t0.28\t0\t3.3700006\t0\t-3.99999762\tfall\r\nTRACE\t0.29\t0\t3.31800056\t0\t-5.19999743\tfall\r\nTRACE\t0.299999982\t0\t3.25400066\t0\t-6.399997\tfall\r\nTRACE\t0.309999973\t0\t3.17800069\t0\t-7.599997\tfall\r\nTRACE\t0.319999963\t0\t3.09000063\t0\t-8.799997\tfall\r\nTRACE\t0.329999954\t0\t2.99000072\t0\t-9.999997\tfall\r\nTRACE\t0.339999944\t0\t2.87800074\t0\t-11.1999969\tfall\r\nTRACE\t0.349999934\t0\t2.75400066\t0\t-12.3999968\tfall\r\nTRACE\t0.359999925\t0\t2.61800075\t0\t-13.5999966\tfall\r\nTRACE\t0.369999915\t0\t2.47000074\t0\t-14.7999964\tfall\r\nTRACE\t0.3799999\t0\t2.310001\t0\t-15.9999962\tfall\r\nTRACE\t0.3899999\t0\t2.138001\t0\t-17.1999969\tfall\r\nTRACE\t0.3999999\t0\t1.954001\t0\t-18.3999977\tfall\r\nTRACE\t0.409999877\t0\t1.758001\t0\t-19.5999985\tfall\r\nTRACE\t0.419999868\t0\t1.558001\t0\t-20\tfall\r\nTRACE\t0.429999858\t0\t1.358001\t0\t-20\tfall\r\nTRACE\t0.439999849\t0\t1.158001\t0\t-20\tfall\r\nTRACE\t0.449999839\t0\t0.958000958\t0\t-20\tfall\r\nTRACE\t0.45999983\t0\t0.75800097\t0\t-20\tfall\r\nTRACE\t0.46999982\t0\t0.8553972\t0\t0\tidle\r\nordinary dt=0.01 hold=0.12 height=2.56800079 rise=0.240000039 fall=0.229999781 air=0.46999982\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.12f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.12f)",
+        "state": "Passed",
+        "durationSeconds": 0.0173498,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.06\t0\t1.72999966\t0\t14\tjump\r\nTRACE\t0.08\t0\t2.00999975\t0\t14\tjump\r\nTRACE\t0.099999994\t0\t2.28999972\t0\t14\tjump\r\nTRACE\t0.11999999\t0\t2.56999969\t0\t14\tjump\r\nTRACE\t0.139999986\t0\t2.84999967\t0\t14\tjump\r\nTRACE\t0.159999982\t0\t3.08199978\t0\t11.6\tjump\r\nTRACE\t0.179999977\t0\t3.26599979\t0\t9.200001\tjump\r\nTRACE\t0.199999973\t0\t3.40199971\t0\t6.800001\tjump\r\nTRACE\t0.219999969\t0\t3.48999977\t0\t4.40000153\tjump\r\nTRACE\t0.239999965\t0\t3.52999973\t0\t2.00000167\tjump\r\nTRACE\t0.259999961\t0\t3.52199984\t0\t-0.3999982\tjump\r\nTRACE\t0.279999971\t0\t3.46599984\t0\t-2.799998\tfall\r\nTRACE\t0.299999982\t0\t3.362\t0\t-5.199998\tfall\r\nTRACE\t0.32\t0\t3.21\t0\t-7.59999752\tfall\r\nTRACE\t0.34\t0\t3.01\t0\t-9.999997\tfall\r\nTRACE\t0.36\t0\t2.762\t0\t-12.3999968\tfall\r\nTRACE\t0.380000025\t0\t2.466\t0\t-14.7999964\tfall\r\nTRACE\t0.400000036\t0\t2.12200022\t0\t-17.1999969\tfall\r\nTRACE\t0.420000046\t0\t1.73000026\t0\t-19.5999966\tfall\r\nTRACE\t0.440000057\t0\t1.33000028\t0\t-20\tfall\r\nTRACE\t0.460000068\t0\t0.9300003\t0\t-20\tfall\r\nTRACE\t0.480000079\t0\t0.5300003\t0\t-20\tidle\r\nTRACE\t0.50000006\t0\t0.79562825\t0\t0\tidle\r\nordinary dt=0.02 hold=0.12 height=2.63999987 rise=0.239999965 fall=0.2600001 air=0.50000006\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.12f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.12f)",
+        "state": "Passed",
+        "durationSeconds": 0.0156373,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.03333333\t0\t1.35666633\t0\t14\tjump\r\nTRACE\t0.06666666\t0\t1.823333\t0\t14\tjump\r\nTRACE\t0.099999994\t0\t2.28999972\t0\t14\tjump\r\nTRACE\t0.133333325\t0\t2.75666642\t0\t14\tjump\r\nTRACE\t0.166666657\t0\t3.08999968\t0\t10\tjump\r\nTRACE\t0.199999988\t0\t3.28999972\t0\t6\tjump\r\nTRACE\t0.233333319\t0\t3.35666633\t0\t2.00000024\tjump\r\nTRACE\t0.266666651\t0\t3.28999972\t0\t-1.99999952\tjump\r\nTRACE\t0.299999982\t0\t3.08999968\t0\t-5.999999\tfall\r\nTRACE\t0.3333333\t0\t2.75666642\t0\t-9.999999\tfall\r\nTRACE\t0.366666645\t0\t2.28999972\t0\t-13.999999\tfall\r\nTRACE\t0.399999976\t0\t1.68999982\t0\t-17.9999981\tfall\r\nTRACE\t0.4333333\t0\t1.02333319\t0\t-20\tfall\r\nTRACE\t0.466666639\t0\t0.356666565\t0\t-20\tfall\r\nTRACE\t0.49999997\t0\t0.750189841\t0\t0\tidle\r\nordinary dt=0.03333333 hold=0.12 height=2.4666667 rise=0.233333319 fall=0.266666651 air=0.49999997\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.6f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.01f,0.6f)",
+        "state": "Passed",
+        "durationSeconds": 0.0137495,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.01\t0\t1.02999973\t0\t14\tjump\r\nTRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.03\t0\t1.3099997\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.049999997\t0\t1.58999968\t0\t14\tjump\r\nTRACE\t0.0599999949\t0\t1.72999966\t0\t14\tjump\r\nTRACE\t0.06999999\t0\t1.86999965\t0\t14\tjump\r\nTRACE\t0.07999999\t0\t2.00999975\t0\t14\tjump\r\nTRACE\t0.08999999\t0\t2.14999986\t0\t14\tjump\r\nTRACE\t0.09999999\t0\t2.29\t0\t14\tjump\r\nTRACE\t0.109999985\t0\t2.43\t0\t14\tjump\r\nTRACE\t0.119999982\t0\t2.57000017\t0\t14\tjump\r\nTRACE\t0.12999998\t0\t2.71000028\t0\t14\tjump\r\nTRACE\t0.139999986\t0\t2.85000038\t0\t14\tjump\r\nTRACE\t0.149999991\t0\t2.99000049\t0\t14\tjump\r\nTRACE\t0.16\t0\t3.13000059\t0\t14\tjump\r\nTRACE\t0.17\t0\t3.2700007\t0\t14\tjump\r\nTRACE\t0.18\t0\t3.4100008\t0\t14\tjump\r\nTRACE\t0.190000013\t0\t3.550001\t0\t14\tjump\r\nTRACE\t0.200000018\t0\t3.690001\t0\t13.999999\tjump\r\nTRACE\t0.210000023\t0\t3.818001\t0\t12.7999992\tjump\r\nTRACE\t0.220000029\t0\t3.934001\t0\t11.5999994\tjump\r\nTRACE\t0.230000034\t0\t4.038001\t0\t10.4\tjump\r\nTRACE\t0.240000039\t0\t4.130001\t0\t9.2\tjump\r\nTRACE\t0.25000003\t0\t4.210001\t0\t8\tjump\r\nTRACE\t0.26000002\t0\t4.278001\t0\t6.8\tjump\r\nTRACE\t0.27\t0\t4.334001\t0\t5.60000038\tjump\r\nTRACE\t0.28\t0\t4.378001\t0\t4.40000057\tjump\r\nTRACE\t0.29\t0\t4.41600132\t0\t3.80000067\tjump\r\nTRACE\t0.299999982\t0\t4.44800138\t0\t3.20000076\tjump\r\nTRACE\t0.309999973\t0\t4.47400141\t0\t2.60000086\tjump\r\nTRACE\t0.319999963\t0\t4.49400139\t0\t2.000001\tjump\r\nTRACE\t0.329999954\t0\t4.50800133\t0\t1.400001\tjump\r\nTRACE\t0.339999944\t0\t4.516001\t0\t0.8000011\tjump\r\nTRACE\t0.349999934\t0\t4.518001\t0\t0.200001121\tjump\r\nTRACE\t0.359999925\t0\t4.514001\t0\t-0.399998844\tjump\r\nTRACE\t0.369999915\t0\t4.504001\t0\t-0.9999988\tfall\r\nTRACE\t0.3799999\t0\t4.48800135\t0\t-1.59999871\tfall\r\nTRACE\t0.3899999\t0\t4.46600151\t0\t-2.19999862\tfall\r\nTRACE\t0.3999999\t0\t4.43800163\t0\t-2.79999852\tfall\r\nTRACE\t0.409999877\t0\t4.40400171\t0\t-3.39999843\tfall\r\nTRACE\t0.419999868\t0\t4.36400175\t0\t-3.99999833\tfall\r\nTRACE\t0.429999858\t0\t4.31800175\t0\t-4.59999847\tfall\r\nTRACE\t0.439999849\t0\t4.2660017\t0\t-5.19999838\tfall\r\nTRACE\t0.449999839\t0\t4.20200157\t0\t-6.399998\tfall\r\nTRACE\t0.45999983\t0\t4.12600136\t0\t-7.599998\tfall\r\nTRACE\t0.46999982\t0\t4.03800154\t0\t-8.799998\tfall\r\nTRACE\t0.4799998\t0\t3.93800163\t0\t-9.999998\tfall\r\nTRACE\t0.4899998\t0\t3.82600164\t0\t-11.1999979\tfall\r\nTRACE\t0.4999998\t0\t3.70200157\t0\t-12.3999977\tfall\r\nTRACE\t0.5099998\t0\t3.56600165\t0\t-13.5999975\tfall\r\nTRACE\t0.5199998\t0\t3.41800165\t0\t-14.7999973\tfall\r\nTRACE\t0.5299998\t0\t3.2580018\t0\t-15.9999971\tfall\r\nTRACE\t0.5399998\t0\t3.08600187\t0\t-17.1999969\tfall\r\nTRACE\t0.5499998\t0\t2.90200186\t0\t-18.3999977\tfall\r\nTRACE\t0.559999764\t0\t2.70600176\t0\t-19.5999985\tfall\r\nTRACE\t0.569999754\t0\t2.50600171\t0\t-20\tfall\r\nTRACE\t0.579999745\t0\t2.30600166\t0\t-20\tfall\r\nTRACE\t0.589999735\t0\t2.10600162\t0\t-20\tfall\r\nTRACE\t0.5999997\t0\t1.90600157\t0\t-20\tfall\r\nTRACE\t0.6099997\t0\t1.70600152\t0\t-20\tfall\r\nTRACE\t0.6199997\t0\t1.50600147\t0\t-20\tfall\r\nTRACE\t0.6299997\t0\t1.30600142\t0\t-20\tfall\r\nTRACE\t0.6399997\t0\t1.10600138\t0\t-20\tfall\r\nTRACE\t0.6499997\t0\t0.9060014\t0\t-20\tfall\r\nTRACE\t0.659999669\t0\t0.7060014\t0\t-20\tidle\r\nTRACE\t0.669999659\t0\t0.8417659\t0\t0\tidle\r\nordinary dt=0.01 hold=0.6 height=3.62800121 rise=0.349999934 fall=0.319999725 air=0.669999659\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.6f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.02f,0.6f)",
+        "state": "Passed",
+        "durationSeconds": 0.013089,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.02\t0\t1.16999972\t0\t14\tjump\r\nTRACE\t0.04\t0\t1.44999969\t0\t14\tjump\r\nTRACE\t0.06\t0\t1.72999966\t0\t14\tjump\r\nTRACE\t0.08\t0\t2.00999975\t0\t14\tjump\r\nTRACE\t0.099999994\t0\t2.28999972\t0\t14\tjump\r\nTRACE\t0.11999999\t0\t2.56999969\t0\t14\tjump\r\nTRACE\t0.139999986\t0\t2.84999967\t0\t14\tjump\r\nTRACE\t0.159999982\t0\t3.12999964\t0\t14\tjump\r\nTRACE\t0.179999977\t0\t3.40999961\t0\t14\tjump\r\nTRACE\t0.199999973\t0\t3.68999958\t0\t14\tjump\r\nTRACE\t0.219999969\t0\t3.92199969\t0\t11.6000042\tjump\r\nTRACE\t0.239999965\t0\t4.106\t0\t9.200005\tjump\r\nTRACE\t0.259999961\t0\t4.242\t0\t6.800005\tjump\r\nTRACE\t0.279999971\t0\t4.3300004\t0\t4.40000534\tjump\r\nTRACE\t0.299999982\t0\t4.39400053\t0\t3.20000553\tjump\r\nTRACE\t0.32\t0\t4.43400049\t0\t2.00000572\tjump\r\nTRACE\t0.34\t0\t4.450001\t0\t0.8000058\tjump\r\nTRACE\t0.36\t0\t4.442001\t0\t-0.399994135\tjump\r\nTRACE\t0.380000025\t0\t4.410001\t0\t-1.59999406\tfall\r\nTRACE\t0.400000036\t0\t4.354001\t0\t-2.799994\tfall\r\nTRACE\t0.420000046\t0\t4.274001\t0\t-3.9999938\tfall\r\nTRACE\t0.440000057\t0\t4.170001\t0\t-5.19999361\tfall\r\nTRACE\t0.460000068\t0\t4.018001\t0\t-7.59999371\tfall\r\nTRACE\t0.480000079\t0\t3.81800127\t0\t-9.999993\tfall\r\nTRACE\t0.50000006\t0\t3.57000136\t0\t-12.3999929\tfall\r\nTRACE\t0.520000041\t0\t3.2740016\t0\t-14.7999926\tfall\r\nTRACE\t0.54\t0\t2.93000174\t0\t-17.1999931\tfall\r\nTRACE\t0.56\t0\t2.538002\t0\t-19.5999928\tfall\r\nTRACE\t0.58\t0\t2.138002\t0\t-20\tfall\r\nTRACE\t0.599999964\t0\t1.738002\t0\t-20\tfall\r\nTRACE\t0.619999945\t0\t1.338002\t0\t-20\tfall\r\nTRACE\t0.6399999\t0\t0.938002\t0\t-20\tfall\r\nTRACE\t0.6599999\t0\t0.538002\t0\t-20\tidle\r\nTRACE\t0.6799999\t0\t0.7977258\t0\t0\tidle\r\nordinary dt=0.02 hold=0.6 height=3.560001 rise=0.34 fall=0.339999884 air=0.6799999\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.6f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_FullFlightUsesIndependentPolicy(0.03333333f,0.6f)",
+        "state": "Passed",
+        "durationSeconds": 0.0122369,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0.03333333\t0\t1.35666633\t0\t14\tjump\r\nTRACE\t0.06666666\t0\t1.823333\t0\t14\tjump\r\nTRACE\t0.099999994\t0\t2.28999972\t0\t14\tjump\r\nTRACE\t0.133333325\t0\t2.75666642\t0\t14\tjump\r\nTRACE\t0.166666657\t0\t3.22333312\t0\t14\tjump\r\nTRACE\t0.199999988\t0\t3.68999982\t0\t14\tjump\r\nTRACE\t0.233333319\t0\t4.023333\t0\t10.0000019\tjump\r\nTRACE\t0.266666651\t0\t4.22333336\t0\t6.000002\tjump\r\nTRACE\t0.299999982\t0\t4.29\t0\t2.00000215\tjump\r\nTRACE\t0.3333333\t0\t4.29\t0\t2.2649765E-06\tjump\r\nTRACE\t0.366666645\t0\t4.22333336\t0\t-1.99999762\tjump\r\nTRACE\t0.399999976\t0\t4.09\t0\t-3.99999762\tfall\r\nTRACE\t0.4333333\t0\t3.89000034\t0\t-5.99999762\tfall\r\nTRACE\t0.466666639\t0\t3.556667\t0\t-9.999997\tfall\r\nTRACE\t0.49999997\t0\t3.09000063\t0\t-13.9999971\tfall\r\nTRACE\t0.5333333\t0\t2.49000072\t0\t-17.9999962\tfall\r\nTRACE\t0.5666666\t0\t1.8233341\t0\t-20\tfall\r\nTRACE\t0.5999999\t0\t1.15666747\t0\t-20\tfall\r\nTRACE\t0.6333332\t0\t0.490000844\t0\t-20\tfall\r\nTRACE\t0.6666665\t0\t0.78514266\t0\t0\tidle\r\nordinary dt=0.03333333 hold=0.6 height=3.4 rise=0.299999982 fall=0.366666526 air=0.6666665\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_GroundAndAirMovementPhysicsUnchanged(False)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_GroundAndAirMovementPhysicsUnchanged(False)",
+        "state": "Passed",
+        "durationSeconds": 0.0183311,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_GroundAndAirMovementPhysicsUnchanged(True)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_GroundAndAirMovementPhysicsUnchanged(True)",
+        "state": "Passed",
+        "durationSeconds": 0.0153324,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_HorizontalAccelerationBrakingTurningUnchanged",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_HorizontalAccelerationBrakingTurningUnchanged",
+        "state": "Passed",
+        "durationSeconds": 0.0110082,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_InvalidValuesRejectedAndValueCopyIndependent",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_InvalidValuesRejectedAndValueCopyIndependent",
+        "state": "Passed",
+        "durationSeconds": 0.012469,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_OrdinaryToWallJumpAndWallTopClearPolicy",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_OrdinaryToWallJumpAndWallTopClearPolicy",
+        "state": "Passed",
+        "durationSeconds": 0.0151107,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ReactionAndDeathCancelPolicy(False)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReactionAndDeathCancelPolicy(False)",
+        "state": "Passed",
+        "durationSeconds": 20.8714785,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ReactionAndDeathCancelPolicy(True)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReactionAndDeathCancelPolicy(True)",
+        "state": "Passed",
+        "durationSeconds": 22.0268515,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_RealRenderFramesAndFixedStepMatrix",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RealRenderFramesAndFixedStepMatrix",
+        "state": "Passed",
+        "durationSeconds": 2.8220852,
+        "message": null,
+        "stackTrace": null,
+        "output": "render requested=30 observedMeanFPS=29.9283943 dt=0.02 frames=14 air=0.440000057 peakY=2.968228\r\nrender requested=30 observedMeanFPS=29.99068 dt=0.0166666675 frames=14 air=0.4333335 peakY=2.988228\r\nrender requested=60 observedMeanFPS=62.33477 dt=0.02 frames=28 air=0.440000057 peakY=2.968228\r\nrender requested=60 observedMeanFPS=59.8744278 dt=0.0166666675 frames=29 air=0.466666847 peakY=3.22156143\r\nrender requested=144 observedMeanFPS=145.416641 dt=0.02 frames=64 air=0.440000057 peakY=2.968228\r\nrender requested=144 observedMeanFPS=143.2913 dt=0.0166666675 frames=67 air=0.466666847 peakY=3.22156143\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(EndHold,0.0f,14.0f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(EndHold,0.0f,14.0f)",
+        "state": "Passed",
+        "durationSeconds": 0.0152088,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(LimitSpeed,5.0f,5.0f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(LimitSpeed,5.0f,5.0f)",
+        "state": "Passed",
+        "durationSeconds": 0.0157245,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(MultiplySpeed,0.5f,7.0f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(MultiplySpeed,0.5f,7.0f)",
+        "state": "Passed",
+        "durationSeconds": 0.0136416,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(30)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(30)",
+        "state": "Passed",
+        "durationSeconds": 0.0151983,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(60)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(60)",
+        "state": "Passed",
+        "durationSeconds": 0.0181166,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(144)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RenderSamplingDoesNotAdvanceHoldTimer(144)",
+        "state": "Passed",
+        "durationSeconds": 0.0148576,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.04f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.04f)",
+        "state": "Passed",
+        "durationSeconds": 0.0188621,
+        "message": null,
+        "stackTrace": null,
+        "output": "AB enabled=True hold=0.04 height=1.24 rise=0.139999986 fall=0.18 air=0.32\r\nAB enabled=False hold=0.04 height=1.59743142 rise=0.299999982 fall=0.359999925 air=0.6599999\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.12f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.12f)",
+        "state": "Passed",
+        "durationSeconds": 0.016743,
+        "message": null,
+        "stackTrace": null,
+        "output": "AB enabled=True hold=0.12 height=2.64 rise=0.239999965 fall=0.240000114 air=0.480000079\r\nAB enabled=False hold=0.12 height=2.86313152 rise=0.400000036 fall=0.459999681 air=0.8599997\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.6f)",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_RetainedAndIndependentCandidateAB(0.6f)",
+        "state": "Passed",
+        "durationSeconds": 0.0168045,
+        "message": null,
+        "stackTrace": null,
+        "output": "AB enabled=True hold=0.6 height=3.560001 rise=0.34 fall=0.3199999 air=0.6599999\r\nAB enabled=False hold=0.6 height=3.98002768 rise=0.520000041 fall=0.539999545 air=1.05999959\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_SharedGravityBaselineReproducesSpecialRegression",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_SharedGravityBaselineReproducesSpecialRegression",
+        "state": "Passed",
+        "durationSeconds": 0.0181883,
+        "message": null,
+        "stackTrace": null,
+        "output": "shared-baseline gravity=3 launch=14 height=3.190927 airSteps=48\r\nshared-baseline gravity=6.1162076 launch=14 height=1.49600029 airSteps=21\r\n"
+      },
+      {
+        "name": "OrdinaryRhythm_WallJumpFullTrajectoryUnchanged",
+        "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_WallJumpFullTrajectoryUnchanged",
+        "state": "Passed",
+        "durationSeconds": 0.0196252,
+        "message": null,
+        "stackTrace": null,
+        "output": "TRACE\t0\t-0.2176\t5.413484\r\nTRACE\t0.02\t-0.3264\t5.602568\r\nTRACE\t0.04\t-0.4352\t5.77988\r\nTRACE\t0.06\t-0.544\t5.94542027\r\nTRACE\t0.08\t-0.544\t6.09918833\r\nTRACE\t0.099999994\t-0.544\t6.241184\r\nTRACE\t0.12\t-0.544\t6.371408\r\nTRACE\t0.14\t-0.544\t6.48986\r\nTRACE\t0.16\t-0.544\t6.59654\r\nTRACE\t0.179999992\t-0.544\t6.69144773\r\nTRACE\t0.199999988\t-0.544\t6.774584\r\nTRACE\t0.22\t-0.544\t6.84594774\r\nTRACE\t0.24\t-0.544\t6.90553951\r\nTRACE\t0.26\t-0.544\t6.9533596\r\nTRACE\t0.28\t-0.544\t6.98940754\r\nTRACE\t0.299999982\t-0.544\t7.01368332\r\nTRACE\t0.32\t-0.544\t7.02618742\r\nTRACE\t0.34\t-0.544\t7.02691936\r\nTRACE\t0.359999985\t-0.544\t7.015879\r\nTRACE\t0.38\t-0.544\t6.99306726\r\nTRACE\t0.399999976\t-0.544\t6.958483\r\nTRACE\t0.42\t-0.544\t6.912127\r\nTRACE\t0.44\t-0.544\t6.853999\r\nTRACE\t0.459999979\t-0.544\t6.784099\r\nTRACE\t0.48\t-0.544\t6.702427\r\nTRACE\t0.5\t-0.544\t6.608983\r\nTRACE\t0.52\t-0.544\t6.503767\r\nTRACE\t0.539999962\t-0.544\t6.386779\r\nTRACE\t0.56\t-0.544\t6.258019\r\nTRACE\t0.58\t-0.544\t6.117487\r\nTRACE\t0.599999964\t-0.544\t5.965183\r\nTRACE\t0.62\t-0.544\t5.801107\r\nTRACE\t0.64\t-0.544\t5.625259\r\nTRACE\t0.659999967\t-0.544\t5.43763876\r\nTRACE\t0.68\t-0.544\t5.238247\r\nTRACE\t0.7\t-0.544\t5.027083\r\nTRACE\t0.719999969\t-0.544\t4.804147\r\nTRACE\t0.74\t-0.544\t4.569439\r\nTRACE\t0.76\t-0.544\t4.322959\r\nTRACE\t0.78\t-0.544\t4.064707\r\nTRACE\t0.799999952\t-0.544\t3.79468274\r\nTRACE\t0.82\t-0.544\t3.51288676\r\nTRACE\t0.84\t-0.544\t3.21931863\r\nTRACE\t0.859999955\t-0.544\t2.91397858\r\nTRACE\t0.88\t-0.544\t2.59686661\r\nTRACE\t0.9\t-0.544\t2.26798248\r\nTRACE\t0.919999957\t-0.544\t1.92732644\r\nTRACE\t0.94\t-0.544\t1.57489836\r\nTRACE\t0.96\t-0.544\t1.21069825\r\nTRACE\t0.979999959\t-0.544\t0.834726155\r\nTRACE\t1\t-0.544\t0.875510335\r\n"
+      }
+    ]
+  }
+}

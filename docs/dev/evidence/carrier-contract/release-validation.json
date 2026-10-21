@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-21",
+  "framework": "0.21.1",
+  "unity": "6000.5.4f1",
+  "projectRoot": "C:\\Users\\wuyu\\My\\ember-unity-framework",
+  "mcpCompileRequested": true,
+  "mcpReadyAfterDomainReload": true,
+  "consoleErrors": 0,
+  "packageInfoVersion": "0.21.1",
+  "template": "0.11.0",
+  "contentHash": "48deb2fc08b00e1c7ee279890b289dad",
+  "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+  "graphIssues": 0,
+  "editingRecordMatches": true,
+  "full821Rerun": false,
+  "productsModified": false,
+  "sharedBinariesCandidate": "PASS including autocrlf false/true clean checkout",
+  "sharedFontCandidate": "PASS",
+  "bundleCheck": "Builder refused dirty original skills; clean HEAD worktree has five existing LF/CRLF fingerprint differences. All 32 bundle targets match manifest bytes and sourceCommit/candidate source text, verified without binary normalization; see bundle-byte-verification.json. No bundle regenerated."
+}

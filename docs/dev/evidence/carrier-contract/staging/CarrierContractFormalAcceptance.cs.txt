@@ -1,0 +1,219 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Cysharp.Threading.Tasks;
+using Ember.Core;
+using Ember.Core.Editor;
+using Ember.Input;
+using Game.Entity;
+using Game.Player;
+using Game.Player.Editor;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
+namespace Game.State.Editor
+{
+    /// <summary>真实启动器与唯一PlayerModule的载具专项；不手动驱动Player、刚体或物理模拟。</summary>
+    [InitializeOnLoad]
+    public static class CarrierContractFormalAcceptance
+    {
+        #region 内部参数
+        private const string KEY = "Ember.CarrierContract.Formal";
+        private const string ROOT = "docs/dev/evidence/carrier-contract";
+        private const string LEVEL = "Assets/Game/Development/LevelAcceptance/LevelA.unity";
+        private static readonly List<string> Evidence = new();
+        public static string Status { get; private set; } = "Idle";
+        #endregion
+        // --------------------------------------------------------
+        #region 内部方法
+        static CarrierContractFormalAcceptance()
+        {
+            EditorApplication.playModeStateChanged += state =>
+            {
+                if (state != PlayModeStateChange.EnteredPlayMode || !SessionState.GetBool(KEY + ".armed", false)) return;
+                SessionState.EraseBool(KEY + ".armed"); Run().Forget();
+            };
+        }
+        private static void Require()
+        {
+            if (!EmberProjectSetup.IsTemplateActive("platformer-2d") ||
+                typeof(PlayerModule).GetCustomAttribute<EmberModuleAttribute>()?.Enabled != true)
+                throw new InvalidOperationException("载具验收仅用于启用Player模块的platformer模板。");
+        }
+        private static void Check(bool condition, string message)
+        {
+            if (!condition) throw new InvalidOperationException(message);
+            Evidence.Add("PASS " + message);
+        }
+        private static async UniTask Wait(Func<bool> predicate, string description, float timeout = 15)
+        {
+            double until = Time.realtimeSinceStartupAsDouble + timeout;
+            while (!predicate())
+            {
+                if (!EditorApplication.isPlaying) throw new OperationCanceledException("Play ended");
+                if (Time.realtimeSinceStartupAsDouble > until) throw new TimeoutException(description);
+                await UniTask.Yield();
+            }
+        }
+        private static BoxCollider2D Obstacle(Scene scene, string name, Vector2 position, Vector2 size)
+        {
+            var go = new GameObject(name); SceneManager.MoveGameObjectToScene(go, scene);
+            go.transform.position = position; var shape = go.AddComponent<BoxCollider2D>(); shape.size = size; return shape;
+        }
+        private static async UniTask<PlayerController> Enter()
+        {
+            var flow = GameLauncher.Instance.Fsm;
+            var config = AssetDatabase.LoadAssetAtPath<PlayerConfig>("Assets/Game/Development/LevelAcceptance/ConfigA.asset");
+            using var entry = PlayerEntryRequest.ForLevel("carrier-probe", LEVEL, config);
+            var result = await ((GameGameplayState)flow.GetState<GameplayState>()).EnterLevel(flow, entry).Completion;
+            Check(result.Status == EmberTransitionStatus.Completed, "formal Main -> carrier whitebox: " + result.Status);
+            var p = PlayerModule.Instance.Controller;
+            await Wait(() => p != null && p.Context.Sensors.IsGrounded, "initial ground");
+            return p;
+        }
+        private static CarrierContractProbeDriver MakeCarrier(PlayerController p, Keyboard keyboard, bool repaired,
+            SupportDepartureVelocity departure)
+        {
+            var shape = Obstacle(p.gameObject.scene, "Carrier contract fixture",
+                new Vector2(p.Context.Motor.Position.x, p.Context.Sensors.Shape.bounds.min.y + .5f), new Vector2(12, .5f));
+            var go = shape.gameObject; go.layer = p.Context.Sensors.Ground.gameObject.layer;
+            var body = go.AddComponent<Rigidbody2D>(); body.bodyType = RigidbodyType2D.Kinematic;
+            body.gravityScale = 0; body.freezeRotation = true; body.useFullKinematicContacts = true;
+            var support = go.AddComponent<EntityTranslationSupport2D>();
+            using (var data = new SerializedObject(support))
+            {
+                data.FindProperty("_departure").enumValueIndex = (int)departure;
+                var constrained = data.FindProperty("_constrainMotion");
+                if (repaired && constrained == null) throw new InvalidOperationException("Missing repaired collision contract");
+                if (constrained != null) constrained.boolValue = repaired;
+                data.ApplyModifiedPropertiesWithoutUndo();
+            }
+            var driver = go.AddComponent<CarrierContractProbeDriver>();
+            driver.Support = support; driver.Launch = go.AddComponent<TranslationSupportLaunchTarget2D>();
+            driver.Keyboard = keyboard;
+            Physics2D.SyncTransforms(); return driver;
+        }
+        private static async UniTask Probe(Keyboard keyboard, string prefix, bool repaired, int sign,
+            LaunchEnd2D end, bool roof, SupportDepartureVelocity departure)
+        {
+            var p = await Enter();
+            string name = $"{prefix}-{sign}-{end}-roof{roof}-{departure}";
+            CarrierContractProbeSampler sampler = null;
+            double start = 0; int frames = 0;
+            try
+            {
+                var driver = MakeCarrier(p, keyboard, repaired, departure);
+                driver.JumpHeld = true;
+                await Wait(() => p.Context.Motor.Velocity.y > 3, "real synthetic keyboard jump");
+                driver.JumpHeld = false;
+                await Wait(() => p.Context.Support.Source == driver.Support && Mathf.Abs(p.Context.Motor.Velocity.y) < .1f,
+                    "real landing on carrier");
+                Check(true, "real keyboard boarded " + name);
+                BoxCollider2D ceiling = null;
+                if (roof) ceiling = Obstacle(p.gameObject.scene, "Carrier rider ceiling",
+                    new Vector2(p.Context.Motor.Position.x, p.Context.Sensors.Shape.bounds.max.y + 1.25f), new Vector2(30, .5f));
+                Physics2D.SyncTransforms();
+                sampler = driver.gameObject.AddComponent<CarrierContractProbeSampler>();
+                sampler.Driver = driver; sampler.Player = p;
+                driver.Desired = new Vector2(sign * 2, 0); driver.Drive = driver.HorizontalOnly = true;
+                driver.Arm(driver, new LaunchRequest2D(name, Vector2.up * 20, LaunchMode2D.ConstantRise,
+                    13f / 60, end, horizontal: LaunchHorizontal2D.PreserveControl));
+                sampler.Capture = true; start = Time.realtimeSinceStartupAsDouble; frames = Time.frameCount;
+                await Wait(() => sampler.Samples.Count >= 22, "22 real fixed samples", 12);
+                sampler.Capture = false;
+                int mismatches = sampler.Samples.Count(s => s.Riding && Mathf.Abs(s.Allowed.y - s.Support.y) > .01f);
+                var expiry = sampler.Samples.First(s => s.Step == 11);
+                Evidence.Add(FormattableString.Invariant($"OBS {name} mismatch={mismatches} expiryAllowed={expiry.Allowed.y:F5} expirySupport={expiry.Support.y:F5} expiryCommand={expiry.Command.y:F5} targetFPS={Application.targetFrameRate} actualFPS={(Time.frameCount-frames)/(Time.realtimeSinceStartupAsDouble-start):F2} dt={Time.fixedDeltaTime:R} input=synthetic-keyboard soleFixedDriver=PlayerModule"));
+                if (!repaired)
+                {
+                    Check(mismatches > 0, "P04 CURRENT BASELINE REPRODUCED (diagnostic only) " + name);
+                }
+                else
+                {
+                    Check(mismatches == 0, "all same-step carrier/support Y agree " + name);
+                    Check(!expiry.Launching, "launch ended by step11 " + name);
+                    if (!roof)
+                    {
+                        Check(Mathf.Abs(expiry.Allowed.y - (end == LaunchEnd2D.StopVertical ? 0 : 20)) < .01f,
+                            "expiry policy " + name);
+                        Check(Mathf.Abs(expiry.Command.y - expiry.Allowed.y) < .01f, "expiry Motor command " + name);
+                    }
+                    if (ceiling != null)
+                    {
+                        Check(p.Context.Sensors.Shape.bounds.max.y <= ceiling.bounds.min.y + .04f, "rider below roof " + name);
+                        Check(sampler.Samples.Any(s => s.Step < 9 && s.Allowed.y <= .01f), "headroom before expiry " + name);
+                    }
+                }
+            }
+            finally
+            {
+                if (sampler != null)
+                {
+                    File.WriteAllLines(Path.Combine(ROOT, name + ".tsv"),
+                        new[] { CarrierContractProbeSampler.HEADER }.Concat(sampler.Samples.Select(s => s.ToString())));
+                    sampler.Driver.JumpHeld = sampler.Driver.Drive = sampler.Capture = false;
+                }
+                var oldSupport = p.Context.Support;
+                var scene = p.gameObject.scene;
+                var result = await PlayerModule.Instance.ExitToMenuAsync(GameLauncher.Instance.Fsm, null);
+                Check(result.Status == PlayerExitStatus.Completed && !PlayerModule.Instance.HasSession && !scene.isLoaded,
+                    "formal return Main releases session and scene " + name);
+                Check(!oldSupport.HasTransientMotion, "support contribution cleared on exit " + name);
+            }
+        }
+        private static async UniTaskVoid Run()
+        {
+            bool repaired = SessionState.GetBool(KEY + ".repaired", true);
+            string prefix = SessionState.GetString(KEY + ".prefix", "formal");
+            int oldRate = Application.targetFrameRate, oldVsync = QualitySettings.vSyncCount;
+            bool oldBackground = Application.runInBackground;
+            var oldBehavior = InputSystem.settings.backgroundBehavior;
+            Keyboard keyboard = null; InputActionAsset actions = null;
+            UnityEngine.InputSystem.Utilities.ReadOnlyArray<InputDevice>? devices = null;
+            Evidence.Clear(); Status = "Running " + prefix; Directory.CreateDirectory(ROOT);
+            try
+            {
+                await Wait(() => GameLauncher.IsValid && GameLauncher.Instance.Fsm != null &&
+                    GameLauncher.Instance.Fsm.Is<MainState>() && !GameLauncher.Instance.Fsm.IsTransitioning, "formal boot Main", 45);
+                Check(!string.IsNullOrEmpty(PlayerFormalAcceptance.StorageRoot), "isolated formal storage root");
+                Application.targetFrameRate = 120; QualitySettings.vSyncCount = 0; Application.runInBackground = true;
+                InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+                keyboard = InputSystem.AddDevice<Keyboard>(); actions = EmberInputManager.Instance.ActionAsset;
+                devices = actions.devices; actions.devices = new InputDevice[] { keyboard };
+                foreach (int sign in new[] { -1, 1 })
+                foreach (var end in repaired ? new[] { LaunchEnd2D.StopVertical, LaunchEnd2D.ContinueVelocity } : new[] { LaunchEnd2D.StopVertical })
+                foreach (bool roof in repaired ? new[] { false, true } : new[] { false })
+                    await Probe(keyboard, prefix, repaired, sign, end, roof, SupportDepartureVelocity.None);
+                Status = "PASSED " + prefix;
+            }
+            catch (Exception error) { Status = "FAILED " + prefix; Evidence.Add(error.ToString()); }
+            finally
+            {
+                if (actions != null) actions.devices = devices;
+                if (keyboard != null) InputSystem.RemoveDevice(keyboard);
+                InputSystem.settings.backgroundBehavior = oldBehavior;
+                Application.targetFrameRate = oldRate; QualitySettings.vSyncCount = oldVsync; Application.runInBackground = oldBackground;
+                Evidence.Add("CLEANUP restored input filter, synthetic device and render settings");
+                File.WriteAllLines(Path.Combine(ROOT, prefix + "-report.txt"), new[] { DateTime.Now.ToString("O"), Status }.Concat(Evidence));
+            }
+        }
+        #endregion
+        // --------------------------------------------------------
+        #region 外部方法
+        public static void Launch(string prefix, bool repaired)
+        {
+            Require();
+            if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Exit Play before formal launch");
+            if (SceneManager.GetActiveScene().path != "Assets/Game/Scenes/FrameworkScene.unity")
+                throw new InvalidOperationException("Launch from FrameworkScene");
+            PlayerLevelAcceptance.CreateScenes();
+            SessionState.SetBool(KEY + ".repaired", repaired); SessionState.SetString(KEY + ".prefix", prefix);
+            SessionState.SetBool(KEY + ".armed", true); PlayerFormalAcceptance.Launch();
+        }
+        #endregion
+    }
+}

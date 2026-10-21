@@ -1,0 +1,53 @@
+#if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
+using Game.Entity;
+using Game.Player;
+using UnityEngine;
+
+namespace Game.State
+{
+    /// <summary>玩家提交后的只读固定步采样；实际速度来自相邻步位置差。</summary>
+    [DefaultExecutionOrder(1000)]
+    public sealed class CarrierContractProbeSampler : MonoBehaviour
+    {
+        #region 内部参数
+        public readonly struct Sample
+        {
+            public readonly float Time;
+            public readonly int Step;
+            public readonly Vector2 Target, Allowed, Actual, Position, PlayerPosition, Support, Command;
+            public readonly bool Riding, Launching;
+            public Sample(CarrierContractProbeDriver driver, PlayerController player, Vector2 actual)
+            {
+                Time = UnityEngine.Time.fixedTime; Step = driver.Steps;
+                Target = driver.Submitted; Allowed = driver.Support.Velocity; Actual = actual;
+                Position = driver.Support.Body.position; PlayerPosition = player.Context.Motor.Position;
+                Support = player.Context.Support.Velocity; Command = player.Context.Motor.CommandVelocity;
+                Riding = player.Context.Support.Source == driver.Support; Launching = driver.Launch.IsLaunching;
+            }
+            public override string ToString() => FormattableString.Invariant(
+                $"{Time:F5}\t{Step}\t{Target.x:F5}\t{Target.y:F5}\t{Allowed.x:F5}\t{Allowed.y:F5}\t{Actual.x:F5}\t{Actual.y:F5}\t{Position.x:F5}\t{Position.y:F5}\t{PlayerPosition.x:F5}\t{PlayerPosition.y:F5}\t{Support.x:F5}\t{Support.y:F5}\t{Command.x:F5}\t{Command.y:F5}\t{Riding}\t{Launching}");
+        }
+        public CarrierContractProbeDriver Driver { get; set; }
+        public PlayerController Player { get; set; }
+        public bool Capture { get; set; }
+        public List<Sample> Samples { get; } = new();
+        private Vector2 _previous;
+        private bool _hasPrevious;
+        public const string HEADER = "fixedTime\tstep\ttargetX\ttargetY\tallowedX\tallowedY\tpreviousStepActualX\tpreviousStepActualY\tplatformX\tplatformY\tplayerX\tplayerY\tsupportX\tsupportY\tcommandX\tcommandY\triding\tlaunching";
+        #endregion
+        // --------------------------------------------------------
+        #region 生命周期
+        private void FixedUpdate()
+        {
+            if (Driver == null || Driver.Support == null || Player == null || Player.Context == null) return;
+            var position = Driver.Support.Body.position;
+            var actual = _hasPrevious ? (position - _previous) / Time.fixedDeltaTime : Vector2.zero;
+            _previous = position; _hasPrevious = true;
+            if (Capture) Samples.Add(new Sample(Driver, Player, actual));
+        }
+        #endregion
+    }
+}
+#endif

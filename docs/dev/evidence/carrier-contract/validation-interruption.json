@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-21",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "unity": "6000.5.4f1",
+  "completedJob": "7a8e3d2b72674b42a226d9d5fb62039f",
+  "completedSummary": {"passed":25,"failed":0,"skipped":0,"mode":"PlayMode","scope":"Carrier_ isolated physics tests"},
+  "interruptedJob": "de09f55c68c84c9a8d413d3c52053519",
+  "requestedAssemblies": ["Game.Player.PlayModeTests", "Game.Entity.Tests"],
+  "operation": "get_test_job(wait_timeout=45,include_failed_tests=true)",
+  "response": {"success":false,"error":"TimeoutError","hint":"retry"},
+  "decision": "Repository unity-validation.md requires stopping on timeout; no retry or alternate compiler/log polling. Full run result unknown, not a pass or a reported test failure.",
+  "initialCompileIssue": "CS0246 TranslationSupportSweep2D not imported by scripts-only refresh; force assets refresh imported the new file. Subsequent 25 tests compiled and passed.",
+  "formalPlayerModuleRenderRun": "not performed",
+  "templateSave": "not performed",
+  "templateBump": "not performed",
+  "commitPushRelease": "not performed"
+}

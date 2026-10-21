@@ -1,0 +1,32 @@
+[
+  {
+    "path": "Assets/Game/Module/Entity/EntityTranslationSupport2D.cs",
+    "sha256": "c6a90419ca33cc7efc7332c89ebce4f32ca597c4c3bbc31f9f473f709f48e06b",
+    "matchesSealed": true
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+    "sha256": "5fa67722c285acd372b67535e863ed4d41d6e80f6667ea615ae698df6cd258aa",
+    "matchesSealed": true
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportSweep2D.cs",
+    "sha256": "cadf7acaadadf09bdcddac218a7f9ba33bc6c9af68cc6cd6846ad840b1b9843e",
+    "matchesSealed": true
+  },
+  {
+    "path": "Assets/Game/Module/Player/PlayerSupportMotion.cs",
+    "sha256": "81b5827b8ae7742b3a7411a6f643933e6e6ce110a60e069056a3637ce05630f1",
+    "matchesSealed": true
+  },
+  {
+    "path": "Assets/Game/Module/Player/PlayerExternalMotion.cs",
+    "sha256": "92b8ae42ca8137753e8880a4d50bc226964a92738be897573eabcd0c2d77bf2e",
+    "matchesSealed": true
+  },
+  {
+    "path": "Assets/Game/Documentation/platformer-2d/carrier-motion-contract.md",
+    "sha256": "b16ae386175f3bb52f55b603f6273aeb9d859f4b5c32da18691dc5aaabbeb8b6",
+    "matchesSealed": true
+  }
+]

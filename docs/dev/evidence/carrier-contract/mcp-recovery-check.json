@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-21",
+  "requestedAction": "Resume P04 reproduction, formal PlayerModule validation, full regression, then formal template save and bump",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "instanceListed": true,
+  "instanceSelectionSucceeded": true,
+  "firstEditorStateResponse": {
+    "success": false,
+    "message": null,
+    "error": "Unity session not ready for 'get_editor_state' (ping not answered); please retry",
+    "data": null,
+    "hint": "retry"
+  },
+  "customToolsCatalogAvailable": true,
+  "interpretation": "Server discovery works, but editor readiness is not restored. Catalog availability is not proof of an editor connection.",
+  "decision": "Stop automatic validation after the first failed editor-state query, as required by unity-validation.md. No retries, alternate compiler, log polling, or process polling.",
+  "previousFullRegressionResult": "unknown",
+  "newRuntimeChanges": false,
+  "newTestsExecuted": false,
+  "templateSaved": false,
+  "templateBumped": false,
+  "consumerProjectsModified": false,
+  "published": false
+}

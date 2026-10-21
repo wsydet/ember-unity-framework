@@ -1,0 +1,34 @@
+[
+  {
+    "path": "Assets/Game/Module/Entity/EntityTranslationSupport2D.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Assets/Game/Module/Entity/TranslationSupportSweep2D.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Assets/Game/Module/Player/PlayerSupportMotion.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Assets/Game/Module/Player/Tests/PlayerCarrierContractTests.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Packages/com.ember/package.json",
+    "matchesTestedDraft": true
+  },
+  {
+    "path": "Packages/com.ember/Templates~/platformer-2d/template.json",
+    "matchesTestedDraft": true
+  }
+]

@@ -18,12 +18,12 @@ namespace Game.Entity
         #endregion
         // --------------------------------------------------------
         #region 生命周期
-        private void FixedUpdate()
+        internal void AdvanceStep(float dt)
         {
             if (!IsLaunching) return;
             if (_owner == null || !_owner.isActiveAndEnabled || !_support.IsAvailable || _support.Velocity.y <= 0)
             { Finish(); return; }
-            _remaining -= Time.fixedDeltaTime;
+            _remaining -= dt;
             if (_remaining <= .000001f) Finish();
         }
         private void OnDisable() => Finish();
@@ -39,6 +39,8 @@ namespace Game.Entity
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        /// <summary>取消当前所有权；瞬移/复位/停用使用，结束策略仍生效。</summary>
+        public void CancelLaunch() => Finish();
         /// <summary>载具原有水平驱动（含风）提交自身计算的X；竖直弹射期间不重发弹射请求。</summary>
         public bool TrySetHorizontalVelocity(float velocity)
         {

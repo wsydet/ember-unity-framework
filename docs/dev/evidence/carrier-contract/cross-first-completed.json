@@ -1,0 +1,28 @@
+{
+  "job_id": "4fea13b2dd3c4601bd5376373412100a",
+  "status": "failed",
+  "mode": "PlayMode",
+  "started_unix_ms": 1792586640362,
+  "finished_unix_ms": 1792586649318,
+  "last_update_unix_ms": 1792586649318,
+  "progress": {
+    "completed": 16,
+    "total": 16,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1792586649255,
+    "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.CarrierCross_RiderPassesSourceOneWayFromBelow",
+    "last_finished_unix_ms": 1792586649273,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "blocked_reason": null,
+    "failures_so_far": [
+      {
+        "full_name": "Game.Player.Tests.PlayerStateTests.CarrierCross_RiderPassesSourceOneWayFromBelow",
+        "message": "  Expected: 20\r\n  But was:  18.0232277f\r\n"
+      }
+    ],
+    "failures_capped": false
+  },
+  "error": null,
+  "result": null
+}

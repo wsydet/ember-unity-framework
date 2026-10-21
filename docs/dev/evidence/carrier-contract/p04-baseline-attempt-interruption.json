@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-21",
+  "existingRegression": {"jobId":"de09f55c68c84c9a8d413d3c52053519","status":"succeeded","passed":821,"failed":0,"skipped":0,"durationSeconds":2022.9230684,"restarted":false},
+  "baselinePreparation": "Three original runtime sources temporarily restored in project Assets from stored template0.10.0; byte hashes matched. New carrier test temporarily excluded; formal probe sources imported.",
+  "refreshResponse": {"success":true,"refreshTriggered":true,"compileRequested":true,"resultingState":"idle"},
+  "firstConsoleQueryResponse": {"success":false,"error":"Unity session not ready for 'read_console' (ping not answered); please retry"},
+  "baselineCompiled": "unconfirmed",
+  "baselinePlayExecuted": false,
+  "decision": "Stop automatic validation under unity-validation.md. Restore tested draft immediately; withdraw unverified probe .cs files to staging outside Assets.",
+  "restorationEvidence": "post-baseline-attempt-restoration.json",
+  "probeDrafts": "staging/*.cs.txt; not compiled or executed",
+  "p04CurrentFormalReproduction": "not completed",
+  "templateSaved": false,
+  "templateBumped": false,
+  "published": false,
+  "windwardAndMountainModified": false
+}

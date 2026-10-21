@@ -1,0 +1,14 @@
+[
+  {
+    "path": "Game/Module/Entity/EntityTranslationSupport2D.cs",
+    "matchesStored": true
+  },
+  {
+    "path": "Game/Module/Entity/TranslationSupportLaunchTarget2D.cs",
+    "matchesStored": true
+  },
+  {
+    "path": "Game/Module/Player/PlayerSupportMotion.cs",
+    "matchesStored": true
+  }
+]

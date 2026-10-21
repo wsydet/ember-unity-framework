@@ -1,0 +1,76 @@
+2026-10-21T20:57:20.3160375+08:00
+PASSED p04-repaired-formal
+PASS isolated formal storage root
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal--1-StopVertical-roofFalse-None
+OBS p04-repaired-formal--1-StopVertical-roofFalse-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=118.19 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS launch ended by step11 p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS expiry policy p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS expiry Motor command p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS formal return Main releases session and scene p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS support contribution cleared on exit p04-repaired-formal--1-StopVertical-roofFalse-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal--1-StopVertical-roofTrue-None
+OBS p04-repaired-formal--1-StopVertical-roofTrue-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=118.82 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS launch ended by step11 p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS rider below roof p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS headroom before expiry p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS formal return Main releases session and scene p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS support contribution cleared on exit p04-repaired-formal--1-StopVertical-roofTrue-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+OBS p04-repaired-formal--1-ContinueVelocity-roofFalse-None mismatch=0 expiryAllowed=20.00000 expirySupport=20.00000 expiryCommand=20.00000 targetFPS=120 actualFPS=118.44 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS launch ended by step11 p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS expiry policy p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS expiry Motor command p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS formal return Main releases session and scene p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS support contribution cleared on exit p04-repaired-formal--1-ContinueVelocity-roofFalse-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+OBS p04-repaired-formal--1-ContinueVelocity-roofTrue-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=116.48 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS launch ended by step11 p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS rider below roof p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS headroom before expiry p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS formal return Main releases session and scene p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS support contribution cleared on exit p04-repaired-formal--1-ContinueVelocity-roofTrue-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal-1-StopVertical-roofFalse-None
+OBS p04-repaired-formal-1-StopVertical-roofFalse-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=118.57 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS launch ended by step11 p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS expiry policy p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS expiry Motor command p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS formal return Main releases session and scene p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS support contribution cleared on exit p04-repaired-formal-1-StopVertical-roofFalse-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal-1-StopVertical-roofTrue-None
+OBS p04-repaired-formal-1-StopVertical-roofTrue-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=117.98 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS launch ended by step11 p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS rider below roof p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS headroom before expiry p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS formal return Main releases session and scene p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS support contribution cleared on exit p04-repaired-formal-1-StopVertical-roofTrue-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+OBS p04-repaired-formal-1-ContinueVelocity-roofFalse-None mismatch=0 expiryAllowed=20.00000 expirySupport=20.00000 expiryCommand=20.00000 targetFPS=120 actualFPS=90.82 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS launch ended by step11 p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS expiry policy p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS expiry Motor command p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS formal return Main releases session and scene p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS support contribution cleared on exit p04-repaired-formal-1-ContinueVelocity-roofFalse-None
+PASS formal Main -> carrier whitebox: Completed
+PASS real keyboard boarded p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+OBS p04-repaired-formal-1-ContinueVelocity-roofTrue-None mismatch=0 expiryAllowed=0.00000 expirySupport=0.00000 expiryCommand=0.00000 targetFPS=120 actualFPS=97.56 dt=0.0199999921 input=synthetic-keyboard soleFixedDriver=PlayerModule
+PASS all same-step carrier/support Y agree p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+PASS launch ended by step11 p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+PASS rider below roof p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+PASS headroom before expiry p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+PASS formal return Main releases session and scene p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+PASS support contribution cleared on exit p04-repaired-formal-1-ContinueVelocity-roofTrue-None
+CLEANUP restored input filter, synthetic device and render settings
