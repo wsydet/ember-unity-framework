@@ -18,6 +18,7 @@ namespace Game.Entity
         private float _gravityCommand;
         private readonly List<RaycastHit2D> _motionHits = new(8);
         private readonly List<Collider2D> _correctionShapes = new(4);
+        /// <summary>本步待提交速度；ExecuteStep 后为最后提交值，不包含随后 Unity 重力积分与碰撞解算。BeginStep 会重置为当时刚体速度。</summary>
         public Vector2 CommandVelocity => _command;
         public Rigidbody2D Body => _body != null ? _body : (_body = GetComponent<Rigidbody2D>());
         public bool IsFrozen => _frozen;

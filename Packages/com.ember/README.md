@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.21.1**（platformer-2d 0.11.0 载具碰撞与本步支撑结算）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.21.2**（platformer-2d 0.11.1 承载下降减速提交修复）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.1"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.2"
 }
 ```
 

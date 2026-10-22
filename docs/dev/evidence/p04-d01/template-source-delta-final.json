@@ -1,0 +1,30 @@
+[
+  {
+    "path": "Game\\Documentation\\platformer-2d\\carrier-motion-contract.md",
+    "status": "changed"
+  },
+  {
+    "path": "Game\\Module\\Entity\\EntityMotor2D.cs",
+    "status": "changed"
+  },
+  {
+    "path": "Game\\Module\\Player\\PlayerExternalMotion.cs",
+    "status": "changed"
+  },
+  {
+    "path": "Game\\Module\\Player\\Tests\\PlayerCarrierDescentCrossTests.cs",
+    "status": "new"
+  },
+  {
+    "path": "Game\\Module\\Player\\Tests\\PlayerCarrierDescentCrossTests.cs.meta",
+    "status": "new"
+  },
+  {
+    "path": "Game\\Module\\Player\\Tests\\PlayerCarrierDescentTests.cs",
+    "status": "new"
+  },
+  {
+    "path": "Game\\Module\\Player\\Tests\\PlayerCarrierDescentTests.cs.meta",
+    "status": "new"
+  }
+]

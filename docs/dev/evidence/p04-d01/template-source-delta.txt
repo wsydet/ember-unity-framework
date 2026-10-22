@@ -1,0 +1,7 @@
+changed Game\Documentation\platformer-2d\carrier-motion-contract.md
+changed Game\Module\Entity\EntityMotor2D.cs
+changed Game\Module\Player\PlayerExternalMotion.cs
+new Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs
+new Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs.meta
+new Game\Module\Player\Tests\PlayerCarrierDescentTests.cs
+new Game\Module\Player\Tests\PlayerCarrierDescentTests.cs.meta

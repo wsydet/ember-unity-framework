@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="17" result="Failed(Child)" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.1589376">
+  <test-suite type="TestSuite" id="2134" name="ember-unity-framework" fullname="ember-unity-framework" runstate="Runnable" testcasecount="957" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.158938" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="2086" name="Game.Player.PlayModeTests.dll" fullname="C:/Users/wuyu/My/ember-unity-framework/Library/ScriptAssemblies/Game.Player.PlayModeTests.dll" runstate="Runnable" testcasecount="839" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.142354" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="78204" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="2087" name="Game" fullname="Game" runstate="Runnable" testcasecount="839" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.130835" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="2088" name="Player" fullname="Game.Player" runstate="Runnable" testcasecount="839" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.113250" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="2089" name="Tests" fullname="Game.Player.Tests" runstate="Runnable" testcasecount="839" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.099018" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1226" name="PlayerStateTests" fullname="Game.Player.Tests.PlayerStateTests" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="689" result="Failed" site="Child" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="6.087995" total="17" passed="13" failed="4" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1353" name="CarrierDescent_ActualRenderRateMatrix" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_ActualRenderRateMatrix" methodname="CarrierDescent_ActualRenderRateMatrix" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="736501331" result="Passed" start-time="2026-10-22 02:37:16Z" end-time="2026-10-22 02:37:22Z" duration="5.807445" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[D01-render rate=30 dt=0.02 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=30 dt=0.02 trough=-6.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=30 dt=0.02 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=30 dt=0.02 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=30 dt=0.02 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=30 dt=0.02 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=30 dt=0.02 trough=-6.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=30 dt=0.02 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=30 dt=0.02 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=30 dt=0.02 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-6.4 step=22 allowed=-6.40000057 command=-6.40000057 postBody=-6.40000057 dy=-0.128000259 platformDy=-0.128000259
+D01-render rate=30 dt=0.02 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=30 actualMeanFPS=25.9925747 dt=0.02 trough=-6.4 frames=15 steps=25 driver=render-paced-isolated-physics
+D01-render rate=30 dt=0.02 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=30 dt=0.02 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=30 dt=0.02 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=30 dt=0.02 trough=-4.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=30 dt=0.02 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=30 dt=0.02 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=30 dt=0.02 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=30 dt=0.02 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=30 dt=0.02 trough=-4.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=30 dt=0.02 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=30 dt=0.02 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=30 dt=0.02 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.0880003 platformDy=-0.0880003
+D01-render rate=30 dt=0.02 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=30 dt=0.02 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=30 actualMeanFPS=27.3416138 dt=0.02 trough=-4.4 frames=14 steps=25 driver=render-paced-isolated-physics
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=22 allowed=-6.4 command=-6.4 postBody=-6.4 dy=-0.106666565 platformDy=-0.106666565
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=30 actualMeanFPS=30.72611 dt=0.0166666675 trough=-6.4 frames=13 steps=25 driver=render-paced-isolated-physics
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.07333374 platformDy=-0.07333374
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=30 dt=0.0166666675 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=30 actualMeanFPS=25.85527 dt=0.0166666675 trough=-4.4 frames=11 steps=25 driver=render-paced-isolated-physics
+D01-render rate=120 dt=0.02 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=120 dt=0.02 trough=-6.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=120 dt=0.02 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=120 dt=0.02 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=120 dt=0.02 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=120 dt=0.02 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=120 dt=0.02 trough=-6.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=120 dt=0.02 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=120 dt=0.02 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=120 dt=0.02 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-6.4 step=22 allowed=-6.40000057 command=-6.40000057 postBody=-6.40000057 dy=-0.128000259 platformDy=-0.128000259
+D01-render rate=120 dt=0.02 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=120 actualMeanFPS=119.460869 dt=0.02 trough=-6.4 frames=60 steps=25 driver=render-paced-isolated-physics
+D01-render rate=120 dt=0.02 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=120 dt=0.02 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=120 dt=0.02 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=120 dt=0.02 trough=-4.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=120 dt=0.02 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=120 dt=0.02 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=120 dt=0.02 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=120 dt=0.02 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=120 dt=0.02 trough=-4.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=120 dt=0.02 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=120 dt=0.02 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=120 dt=0.02 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.0880003 platformDy=-0.0880003
+D01-render rate=120 dt=0.02 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=120 dt=0.02 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=120 actualMeanFPS=98.45548 dt=0.02 trough=-4.4 frames=58 steps=25 driver=render-paced-isolated-physics
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=22 allowed=-6.4 command=-6.4 postBody=-6.4 dy=-0.106666565 platformDy=-0.106666565
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=120 actualMeanFPS=114.059158 dt=0.0166666675 trough=-6.4 frames=48 steps=25 driver=render-paced-isolated-physics
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.07333374 platformDy=-0.07333374
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=120 dt=0.0166666675 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=120 actualMeanFPS=118.084618 dt=0.0166666675 trough=-4.4 frames=50 steps=25 driver=render-paced-isolated-physics
+D01-render rate=240 dt=0.02 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=240 dt=0.02 trough=-6.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=240 dt=0.02 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=240 dt=0.02 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=240 dt=0.02 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=240 dt=0.02 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=240 dt=0.02 trough=-6.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=240 dt=0.02 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=240 dt=0.02 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=240 dt=0.02 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-6.4 step=22 allowed=-6.40000057 command=-6.40000057 postBody=-6.40000057 dy=-0.128000259 platformDy=-0.128000259
+D01-render rate=240 dt=0.02 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=240 actualMeanFPS=215.79538 dt=0.02 trough=-6.4 frames=108 steps=25 driver=render-paced-isolated-physics
+D01-render rate=240 dt=0.02 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.400408268 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.4002614 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.400167465 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.400107384 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.40006876 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.4000435 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.400028229 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.400017738 platformDy=0.4000001
+D01-render rate=240 dt=0.02 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.400011063 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.400007248 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.4000044 platformDy=0.399999619
+D01-render rate=240 dt=0.02 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.3520031 platformDy=0.352000237
+D01-render rate=240 dt=0.02 trough=-4.4 step=13 allowed=15.2 command=15.2 postBody=15.2 dy=0.3040018 platformDy=0.3039999
+D01-render rate=240 dt=0.02 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.256001472 platformDy=0.255999565
+D01-render rate=240 dt=0.02 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183
+D01-render rate=240 dt=0.02 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847
+D01-render rate=240 dt=0.02 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465
+D01-render rate=240 dt=0.02 trough=-4.4 step=18 allowed=3.19999957 command=3.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013
+D01-render rate=240 dt=0.02 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.015999794 platformDy=0.015999794
+D01-render rate=240 dt=0.02 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588
+D01-render rate=240 dt=0.02 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.0880003 platformDy=-0.0880003
+D01-render rate=240 dt=0.02 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render rate=240 dt=0.02 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.07999992 platformDy=-0.07999992
+D01-render requested=240 actualMeanFPS=190.759567 dt=0.02 trough=-4.4 frames=96 steps=25 driver=render-paced-isolated-physics
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=22 allowed=-6.4 command=-6.4 postBody=-6.4 dy=-0.106666565 platformDy=-0.106666565
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-6.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=240 actualMeanFPS=167.289536 dt=0.0166666675 trough=-6.4 frames=70 steps=25 driver=render-paced-isolated-physics
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=1 allowed=20 command=20 postBody=20 dy=0.333741665 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=2 allowed=20 command=20 postBody=20 dy=0.3335948 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=3 allowed=20 command=20 postBody=20 dy=0.333500862 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=4 allowed=20 command=20 postBody=20 dy=0.333440781 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=5 allowed=20 command=20 postBody=20 dy=0.333402157 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=6 allowed=20 command=20 postBody=20 dy=0.333376884 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=7 allowed=20 command=20 postBody=20 dy=0.333360672 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=8 allowed=20 command=20 postBody=20 dy=0.3333521 platformDy=0.3333335
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=9 allowed=20 command=20 postBody=20 dy=0.33334446 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=10 allowed=20 command=20 postBody=20 dy=0.333340645 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=11 allowed=20 command=20 postBody=20 dy=0.333337784 platformDy=0.333333015
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=12 allowed=17.6 command=17.6 postBody=17.6 dy=0.2933359 platformDy=0.293333054
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=13 allowed=15.1999989 command=15.1999989 postBody=15.1999989 dy=0.253335 platformDy=0.2533331
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=14 allowed=12.7999992 command=12.7999992 postBody=12.7999992 dy=0.213335037 platformDy=0.21333313
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=15 allowed=10.4 command=10.4 postBody=10.4 dy=0.173333168 platformDy=0.173333168
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=16 allowed=7.999999 command=7.999999 postBody=7.999999 dy=0.1333332 platformDy=0.1333332
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=17 allowed=5.59999943 command=5.59999943 postBody=5.59999943 dy=0.0933332443 platformDy=0.0933332443
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=18 allowed=3.19999933 command=3.19999933 postBody=3.19999933 dy=0.0533332825 platformDy=0.0533332825
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=19 allowed=0.799999237 command=0.799999237 postBody=0.799999237 dy=0.0133333206 platformDy=0.0133333206
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=20 allowed=-1.60000086 command=-1.60000086 postBody=-1.60000086 dy=-0.0266666412 platformDy=-0.0266666412
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=21 allowed=-4.000001 command=-4.000001 postBody=-4.000001 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=22 allowed=-4.4 command=-4.4 postBody=-4.4 dy=-0.07333374 platformDy=-0.07333374
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=23 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=24 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render rate=240 dt=0.0166666675 trough=-4.4 step=25 allowed=-4 command=-4 postBody=-4 dy=-0.0666666 platformDy=-0.0666666
+D01-render requested=240 actualMeanFPS=191.564331 dt=0.0166666675 trough=-4.4 frames=80 steps=25 driver=render-paced-isolated-physics
+]]></output>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1370" name="CarrierDescent_LifecycleCross" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" testcasecount="16" result="Failed" site="Child" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.258400" total="16" passed="12" failed="4" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1354" name="CarrierDescent_LifecycleCross(-6.4f,&quot;jump&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;jump&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="852073019" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.027133" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=jump trough=-6.4 support=-4 command=6 postBody=5.4114 dy=0.108228207 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1355" name="CarrierDescent_LifecycleCross(-6.4f,&quot;disable&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;disable&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1088980939" result="Failed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.018667" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  old carrier Y must not remain as self motion
+  Expected: 0 +/- 0.00100000005f
+  But was:  -6.40000057f
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross (System.Single trough, System.String boundary) [0x004a7] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs:115
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=disable trough=-6.4 support=0 command=-6.40000057 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1356" name="CarrierDescent_LifecycleCross(-6.4f,&quot;teleport&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;teleport&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="214510974" result="Failed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.014486" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  old carrier Y must not remain as self motion
+  Expected: 0 +/- 0.00100000005f
+  But was:  -2.40000057f
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross (System.Single trough, System.String boundary) [0x004a7] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs:115
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=teleport trough=-6.4 support=0 command=-2.40000057 postBody=-2.98860049 dy=-0.0597720146 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1357" name="CarrierDescent_LifecycleCross(-6.4f,&quot;replace&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;replace&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1888617041" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.012982" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=replace trough=-6.4 support=-4 command=-4 postBody=-4 dy=-0.0798325539 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1358" name="CarrierDescent_LifecycleCross(-6.4f,&quot;owner&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;owner&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1195866331" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.017643" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=owner trough=-6.4 support=-4 command=-6 postBody=-4 dy=-0.0798325539 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1359" name="CarrierDescent_LifecycleCross(-6.4f,&quot;floor&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;floor&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1042312904" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.015784" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=floor trough=-6.4 support=0 command=0 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1360" name="CarrierDescent_LifecycleCross(-6.4f,&quot;roof&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;roof&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1183449214" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.013106" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=roof trough=-6.4 support=0 command=0 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1361" name="CarrierDescent_LifecycleCross(-6.4f,&quot;stop&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-6.4f,&quot;stop&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="182449020" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.014042" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -6.40000) allowed=(0.00000, -6.40000) actual=(0.00000, -6.39999) position=(0.00000, 4.79200) support=(0.00, -6.40) command=(0.00, -6.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+]]></output>
+                </test-case>
+                <test-case id="1362" name="CarrierDescent_LifecycleCross(-4.4f,&quot;jump&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;jump&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="973917909" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.013817" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=jump trough=-4.4 support=-4 command=6 postBody=5.4114 dy=0.108228207 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1363" name="CarrierDescent_LifecycleCross(-4.4f,&quot;disable&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;disable&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1992650625" result="Failed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.013927" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  old carrier Y must not remain as self motion
+  Expected: 0 +/- 0.00100000005f
+  But was:  -4.4000001f
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross (System.Single trough, System.String boundary) [0x004a7] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs:115
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=disable trough=-4.4 support=0 command=-4.4 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1364" name="CarrierDescent_LifecycleCross(-4.4f,&quot;teleport&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;teleport&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1863084965" result="Failed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.014101" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  old carrier Y must not remain as self motion
+  Expected: 0 +/- 0.00100000005f
+  But was:  -0.400000095f
+]]></message>
+                    <stack-trace><![CDATA[at Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross (System.Single trough, System.String boundary) [0x004a7] in C:\Users\wuyu\My\ember-unity-framework\Assets\Game\Module\Player\Tests\PlayerCarrierDescentCrossTests.cs:115
+]]></stack-trace>
+                  </failure>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=teleport trough=-4.4 support=0 command=-0.4000001 postBody=-0.9886001 dy=-0.0197720528 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1365" name="CarrierDescent_LifecycleCross(-4.4f,&quot;replace&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;replace&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1393144143" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.012607" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=replace trough=-4.4 support=-4 command=-4 postBody=-4 dy=-0.0798325539 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1366" name="CarrierDescent_LifecycleCross(-4.4f,&quot;owner&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;owner&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="929407608" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.012830" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=owner trough=-4.4 support=-4 command=-6 postBody=-4 dy=-0.0798325539 platformDy=-0.07999992
+]]></output>
+                </test-case>
+                <test-case id="1367" name="CarrierDescent_LifecycleCross(-4.4f,&quot;floor&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;floor&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1591533672" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.013386" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=floor trough=-4.4 support=0 command=0 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1368" name="CarrierDescent_LifecycleCross(-4.4f,&quot;roof&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;roof&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1432317429" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.013533" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+D01-cross boundary=roof trough=-4.4 support=0 command=0 postBody=0 dy=0.000167369843 platformDy=0
+]]></output>
+                </test-case>
+                <test-case id="1369" name="CarrierDescent_LifecycleCross(-4.4f,&quot;stop&quot;)" fullname="Game.Player.Tests.PlayerStateTests.CarrierDescent_LifecycleCross(-4.4f,&quot;stop&quot;)" methodname="CarrierDescent_LifecycleCross" classname="Game.Player.Tests.PlayerStateTests" runstate="Runnable" seed="1970364019" result="Passed" start-time="2026-10-22 02:37:22Z" end-time="2026-10-22 02:37:22Z" duration="0.020633" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[carrier target=(0.00000, -4.00000) allowed=(0.00000, -4.00000) actual=(0.00000, -4.00000) position=(0.00000, 4.92000) support=(0.00, -4.00) command=(0.00, -4.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+carrier target=(0.00000, -4.40000) allowed=(0.00000, -4.40000) actual=(0.00000, -4.39999) position=(0.00000, 4.83200) support=(0.00, -4.40) command=(0.00, -4.40) dt=0.02 input=scripted-public-api fps=N/A-synchronous
+<b><color=#2EA3FF>MCP-FOR-UNITY</color></b>: [TestRunnerNoThrottle] Restored Interaction Mode after test run.
+Saving results to: C:/Users/wuyu/AppData/LocalLow/DefaultCompany/ember-unity-framework\TestResults.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

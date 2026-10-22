@@ -1,0 +1,18 @@
+[
+  {
+    "file": "before-fix-results.xml",
+    "total": 48,
+    "rawPassed": "0",
+    "rawFailed": "48",
+    "traceAllStepsMatchAllowedPlusWind": 0,
+    "traceRecoveryStepMatchesAllowedPlusWind": 0
+  },
+  {
+    "file": "candidate-results.xml",
+    "total": 48,
+    "rawPassed": "40",
+    "rawFailed": "8",
+    "traceAllStepsMatchAllowedPlusWind": 48,
+    "traceRecoveryStepMatchesAllowedPlusWind": 48
+  }
+]

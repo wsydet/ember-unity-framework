@@ -48,6 +48,26 @@ private void FixedUpdate()
 
 `PrepareStep(dt)`由支撑FixedUpdate自动调用。它公开供隔离物理测试或完全显式的模拟宿主使用，没有步ID去重；正式产品不得在自动FixedUpdate之外再调用，避免重复计时。
 
+## 下降减速与观测阶段（P04-D01）
+
+持续承载支持下降后减速与钳回限速，包括 `-6.4 → -4` 和 `-4.4 → -4`。不能通过删除速度低谷规避。扣除上一物理步外部贡献时，应使用该步支撑表面速度；当前宿主已发出的新速度只参与本步合成，不能用于裁剪旧贡献。
+
+无自身竖直运动、无竖直环境贡献和动作接管时，本步最终提交Y应等于当前允许承载Y。有风或动作贡献时应按组合结果验收，不要求提交等于支撑。提交不一致与真实位移不一致分别报告。
+
+| 值 | 采样点与语义 |
+| --- | --- |
+| 宿主目标 | 宿主发令时；`TargetVelocity` 仅反映 PrepareStep 自身扫掠前目标 |
+| 允许／玩家支撑速度 | 玩家 Support.Observe 与乘员净空收窄结束后；同拍观察 |
+| CommandVelocity | Compose、ExecuteStep 后、Unity物理前的最后指令；BeginStep 会重置，物理解算不会回写此字段 |
+| Motor.Velocity／Body.linearVelocity | 当刻刚体速度；ExecuteStep后立即读仍是提交值，物理后才包含重力与接触解算 |
+| 真实位移 | 同一物理步前后 Rigidbody2D.position 差；同时记录平台位移与脚底间距，不以插值Transform代替 |
+
+正式产品的物理后采样应在下一固定步宿主改写平台速度之前进行，并用步号配对上一提交。LateUpdate 不能分开同一渲染帧内的多个物理步。隔离测试使用 `PrepareStep → Tick/FixedTick → 提交快照 → 隔离PhysicsScene2D.Simulate → 物理后快照`，只用于测试，不能加入产品驱动。现有 MotionTrace.Record 位于物理前，不作为物理后观测入口。
+
+测试入口 `PlayerStateTests.Carrier_DescentRecoverySeparatesSubmissionAndPhysics` 记录每步提交、物理后刚体、双方位移与间距，分别判断提交和运动。同步测试FPS为N/A；真实帧率需另外记录实际均值。维护侧通过不代表产品或S3签收。
+
+`CarrierDescent_ActualRenderRateMatrix` 在真实渲染帧下运行隔离物理矩阵，覆盖两种低谷、目标30/120/240与两种物理步，报告实际平均FPS；它不是产品PlayerModule或机关的端到端运行。`CarrierDescent_LifecycleCross` 覆盖两种低谷后的跳离、停用、瞬移、替换、owner/旧凭证清理、落地、撞顶与停止。停用或瞬移改变当前Revision，但不能改变上一拍扣除所用的物理表面快照；这不延续旧支撑权属。
+
 ## 到期、替换与清理
 
 - dt=.02、保持13/60秒时，第11次支撑阶段推进到期。StopVertical先清本步Y，再供玩家观察；ContinueVelocity只结束弹射所有权，保留当前已允许速度。

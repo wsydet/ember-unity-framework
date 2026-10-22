@@ -1,0 +1,74 @@
+{
+  "run": {
+    "id": "2",
+    "testcasecount": "839",
+    "result": "Passed",
+    "total": "839",
+    "passed": "839",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-22 02:38:20Z",
+    "end-time": "2026-10-22 03:12:15Z",
+    "duration": "2034.835902"
+  },
+  "groups": {
+    "D01-48": {
+      "total": 48,
+      "failed": 0
+    },
+    "D01-lifecycle": {
+      "total": 16,
+      "failed": 0
+    },
+    "D01-render": {
+      "total": 1,
+      "failed": 0
+    },
+    "P04-expiry-step11": {
+      "total": 4,
+      "failed": 0
+    },
+    "P02-horizontal": {
+      "total": 8,
+      "failed": 0
+    },
+    "P03-wall-qualification": {
+      "total": 4,
+      "failed": 0
+    },
+    "P06-tail": {
+      "total": 50,
+      "failed": 0
+    },
+    "ordinary-rhythm": {
+      "total": 35,
+      "failed": 0
+    },
+    "flag-rebound-trajectory": {
+      "total": 2,
+      "failed": 0
+    },
+    "wall-flight": {
+      "total": 23,
+      "failed": 0
+    }
+  },
+  "descentRenderRates": [
+    "D01-render requested=30 actualMeanFPS=31.0725327 dt=0.02 trough=-6.4 frames=16 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=30 actualMeanFPS=30.4324265 dt=0.02 trough=-4.4 frames=16 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=30 actualMeanFPS=29.9223671 dt=0.0166666675 trough=-6.4 frames=13 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=30 actualMeanFPS=29.9526958 dt=0.0166666675 trough=-4.4 frames=13 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=120 actualMeanFPS=126.336586 dt=0.02 trough=-6.4 frames=64 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=120 actualMeanFPS=112.977043 dt=0.02 trough=-4.4 frames=57 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=120 actualMeanFPS=90.6834 dt=0.0166666675 trough=-6.4 frames=38 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=120 actualMeanFPS=121.558777 dt=0.0166666675 trough=-4.4 frames=51 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=240 actualMeanFPS=229.584686 dt=0.02 trough=-6.4 frames=115 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=240 actualMeanFPS=190.953491 dt=0.02 trough=-4.4 frames=96 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=240 actualMeanFPS=169.150238 dt=0.0166666675 trough=-6.4 frames=71 steps=25 driver=render-paced-isolated-physics",
+    "D01-render requested=240 actualMeanFPS=165.481033 dt=0.0166666675 trough=-4.4 frames=69 steps=25 driver=render-paced-isolated-physics"
+  ]
+}

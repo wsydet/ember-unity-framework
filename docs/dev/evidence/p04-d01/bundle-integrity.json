@@ -1,0 +1,165 @@
+{
+  "sourceCommit": "f58d4e1f61648fa0193b4066abb31c6b46ea969f",
+  "files": [
+    {
+      "path": "catalog.json",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-add-font/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-add-font/references/font-wiring.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-add-font/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-commit-review/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-commit-review/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-doc-maintenance/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-doc-maintenance/scripts/audit_docs.py",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-doc-maintenance/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-eui-build/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-eui-build/assets/EmberEuiSkillAdapter.cs",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-eui-build/references/editor-api.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-eui-build/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-generate-doc/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-generate-doc/references/api-documentation.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-generate-doc/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-odin-capture-style/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-odin-capture-style/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-odin-inspector/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-odin-inspector/references/inspector-review.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-odin-inspector/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-package-scan/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-package-scan/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-region-organizer/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-region-organizer/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-solution-design/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-solution-design/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-template-conflict-recovery/agents/openai.yaml",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-template-conflict-recovery/references/large-project-recovery.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-template-conflict-recovery/scripts/recovery_snapshot.py",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-template-conflict-recovery/scripts/test_recovery_snapshot.py",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    },
+    {
+      "path": "ember-template-conflict-recovery/SKILL.md",
+      "bundleHashVerified": true,
+      "sourceEqualIgnoringTextNewlines": true
+    }
+  ]
+}

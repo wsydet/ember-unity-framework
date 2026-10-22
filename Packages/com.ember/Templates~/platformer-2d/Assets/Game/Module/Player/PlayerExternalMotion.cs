@@ -79,6 +79,8 @@ namespace Game.Player
         private readonly PlayerContext _context;
         private readonly List<PlayerExternalMotionLease> _sources = new();
         private Vector2 _lastContribution;
+        private EntityTranslationSupport2D _lastSupport;
+        private Vector2 _lastSupportVelocity;
         private readonly List<ContactPoint2D> _contacts = new(8);
         private PlayerExternalMotionLease _lastRise;
         private bool _disposed;
@@ -126,6 +128,11 @@ namespace Game.Player
                 var obstacle = _context.Entity.Owns(contact.collider) ? contact.otherCollider : contact.collider;
                 var surfaceVelocity = obstacle != null && obstacle.attachedRigidbody != null
                     ? obstacle.attachedRigidbody.linearVelocity : Vector2.zero;
+                // actual 与 contribution 均属于上一次物理步。宿主已提交本拍速度时，
+                // 不能用新表面速度裁剪旧贡献，否则下降减速会留下旧支撑的负向残差。
+                // 本拍失效或瞬移也不能改变上一拍已经解算过的表面速度。
+                if (_lastSupport != null && _lastSupport.Owns(obstacle))
+                    surfaceVelocity = _lastSupportVelocity;
                 float inward = Vector2.Dot(contribution - surfaceVelocity, normal);
                 if (inward < 0 && Vector2.Dot(actual - surfaceVelocity, normal) <= .00001f)
                     contribution -= inward * normal;
@@ -305,6 +312,8 @@ namespace Game.Player
             if (!float.IsFinite(velocity.x) || !float.IsFinite(velocity.y))
                 throw new InvalidOperationException("外部来源合成速度溢出，拒绝提交物理指令。");
             ComposedVelocity = velocity;
+            _lastSupport = _lastContribution != Vector2.zero ? _context.Support.Source : null;
+            _lastSupportVelocity = _lastSupport != null ? _context.Support.Velocity : Vector2.zero;
             _context.Motor.SetHorizontalVelocity(velocity.x);
             _context.Motor.SetVerticalVelocity(velocity.y);
         }
@@ -353,6 +362,7 @@ namespace Game.Player
             _context.VerticalMotion.ClearLaunchTail();
             foreach (var source in _sources) source.Session = null;
             _sources.Clear(); _lastContribution = Vector2.zero; _lastRise = null;
+            _lastSupport = null; _lastSupportVelocity = Vector2.zero;
             _stopVertical = false;
             _context.Support.Clear();
             EnvironmentVelocity = Vector2.zero;

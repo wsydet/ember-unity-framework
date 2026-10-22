@@ -1,0 +1,6 @@
+2026-10-22 发布前静态检查（不替代Unity验证）
+
+共享二进制：scripts/check-shared-binaries.py --revision HEAD 通过；Python临时目录改至仓库.tmp/p04-d01，未改校验器。
+共享字体策略：scripts/check-shared-font-config.py --revision HEAD 通过（工作区及Git基线）。
+通用技能：原工作区有模板技能切换状态，构建器按脏源保护拒绝。隔离目录从HEAD提取源、bundle和原脚本；32个bundle文件原始字节逐一符合manifest，源与bundle文本相等（允许文本换行差异），见bundle-integrity.json。仅在隔离目录匹配原bundle文本换行，临时index刷新后确认通用源Git blob无变化，原build-ai-skill-bundle.ps1 -Check通过：11技能、32文件。主index、原源及bundle未修改、未重生成。
+正式封存后对暂存候选运行共享二进制 --revision : --checkout（autocrlf=false/true）与字体 --revision :，全部通过。MCP再次重算模板hash=22dd884949be5e2697a2606d5da00c46，Synced、graphIssues=0。发布声明与原依赖一致，模板版本/hash封存声明通过。代码/文档diff --check通过；原始XML保留Unity堆栈行尾空格，不为格式检查改写证据。
