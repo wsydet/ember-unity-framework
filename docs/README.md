@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-当前框架发布：[0.18.0](dev/release-0.18.0.md)。
+当前框架发布：[0.21.3](dev/release-0.21.3.md)：项目公共规则入口自动同步，模板版本不变。
 
 平台模板说明见[玩家文档（只读已保存快照）](../Packages/com.ember/Templates~/platformer-2d/Assets/Game/Documentation/platformer-2d/README.md)，R12 进度、实际验证与未执行项见[交付记录](dev/platformer-delivery.md)。模板文档只适用于所属模板及合法派生；下列发布记录保留历史版本语义，不代替当前工作区或消费部署状态。
 
@@ -20,6 +20,7 @@ visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/rel
 |---|---|
 | [多语言中心](../Packages/com.ember/Documentation~/manual/localization-center.md) | 通用文案编辑、语言切换与辅助翻译 |
 | [项目规则](../CLAUDE.md) | 架构、编码、Unity 验证与模板维护约束 |
+| [所有模板通用的测试与 MCP 规则](../Packages/com.ember/Documentation~/maintenance/unity-validation.md) | 部分测试、全量/长时间测试授权、每隔 30 秒重连最多 10 次；消费项目入口见[包说明](../Packages/com.ember/README.md#消费项目公共规则所有模板) |
 | [业务代码与资源目录规范](../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md) | Game/Module、Game/UI/Runtime/Module、GameResource 的模块归属；Runtime 必需，UI 必须通过 UI 中心生成；专用 Atlas 与 Common 规则 |
 | [UI 开发参考](user/UI开发参考.md) | 页面、Item、Binding、状态路由和代码生成 |
 | [Package 清单](user/package-inventory.md) | 实际依赖、来源与版本 |

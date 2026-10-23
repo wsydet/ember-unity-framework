@@ -95,6 +95,15 @@ namespace Ember.UPMManager.Editor
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 EditorGUILayout.LabelField("AI Skill · 独立安装与更新", EditorStyles.boldLabel);
+                string rulesStatus = SessionState.GetString(EmberProjectRulesSync.STATUS_KEY, "");
+                if (!string.IsNullOrEmpty(rulesStatus))
+                    EditorGUILayout.HelpBox(rulesStatus, SessionState.GetBool(EmberProjectRulesSync.ERROR_KEY, false)
+                        ? MessageType.Warning : MessageType.Info);
+                using (new EditorGUI.DisabledScope(EditorApplication.isCompiling || EditorApplication.isUpdating
+                    || EditorApplication.isPlayingOrWillChangePlaymode))
+                {
+                    if (GUILayout.Button("重新同步项目公共规则入口")) SyncProjectRules();
+                }
                 EditorGUILayout.LabelField("通用技能 · 模板专属技能随固定模板版本，由项目中心预览与同步。", EditorStyles.wordWrappedMiniLabel);
                 string bootstrap = SessionState.GetString("Ember.AISkills.BootstrapStatus", "");
                 if (!string.IsNullOrEmpty(bootstrap)) EditorGUILayout.HelpBox(bootstrap

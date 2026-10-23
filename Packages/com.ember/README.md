@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.21.2**（platformer-2d 0.11.1 承载下降减速提交修复）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.21.3**（项目公共规则入口自动同步补丁，模板版本不变）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.2"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.3"
 }
 ```
 
@@ -24,7 +24,19 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.21.1 manifest 基线](Dependencies~/manifest-0.21.1.json)。本次更新不增加第三方依赖，沿用 0.20.0 的逐包标签（Odin/Feel/UniRx 使用各自补丁标签）；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.21.3 manifest 基线](Dependencies~/manifest-0.21.3.json)。本次更新不增加第三方依赖，沿用 0.20.0 的逐包标签（Odin/Feel/UniRx 使用各自补丁标签）；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+
+## 消费项目公共规则（所有模板）
+
+[项目测试与 Unity 编译验证规范](Documentation~/maintenance/unity-validation.md) 随框架包交付，适用于任意模板及未部署模板的项目。默认仅运行新增或相关部分测试；全量重测或预计耗时较长需要用户明确授权。MCP 断连后每隔 30 秒重试，最多 10 次，全部失败后停止并请用户确认 MCP 状态。
+
+安装或升级到包含本功能的框架版本并完成 Unity 编辑器编译/域重载后，框架自动同步项目根目录的 `AGENTS.md` 和 `CLAUDE.md`，无需手动补入口。不存在时创建；已存在时追加或更新 `<!-- EMBER:PROJECT-RULES:BEGIN -->` 与 `<!-- EMBER:PROJECT-RULES:END -->` 之间的受管区块。区块外的自定义规则原样保留，自定义规则请写在区块外。
+
+入口链接使用 UPM 实际解析的包位置，兼容 PackageCache、embedded 包和外部本地包。每次编辑器初始化都会核对入口，包位置变化会更新链接，内容相同时不写文件。同步独立于技能 bundle 和模板部署，不写 `Assets/Game` 或模板快照，切换模板不移除入口。框架开发仓库继续维护自己的入口，自动同步会跳过。
+
+文件编码与原有内容保留（无 BOM 时按严格 UTF-8 读取，支持 UTF-8/UTF-16/UTF-32 BOM）；遇到标记损坏/重复、不支持的编码、只读文件或符号链接时保留文件并报告失败。可在 `Ember/UPM Manager` 的 AI Skill 区域查看同步状态，修复问题后点击“重新同步项目公共规则入口”。已打开的 AI 会话可能缓存旧规则，需要重新加载会话才能发现新入口。未打开 Unity 或编译未完成时，同步尚未执行。
+
+本地未发布修改不会更新旧 tag；消费项目需要升级到包含本实现的框架版本，无需重新部署模板。
 
 ## 能力与文档
 

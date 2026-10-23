@@ -1,0 +1,87 @@
+{
+  "unityVersion": "6000.5.4f1",
+  "result": "Passed",
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "skipped": 0,
+  "startTimeUtc": "2026-10-23 02:55:23Z",
+  "endTimeUtc": "2026-10-23 02:55:24Z",
+  "source": "Unity TestResults.xml exported by the MCP-started EditMode run",
+  "mcpJobId": "52a159eb6c4e42a49e5d932efde9616e",
+  "mcpTrackingNote": "Job tracking reported initialization timeout; the same run completed and its Unity XML reports all 18 cases passed.",
+  "tests": [
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"missing-end\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"duplicate\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"reversed\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"inline\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.FrameworkSourceProject_IsNotAutomaticallyModified",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Install_AppendsWithoutChangingCustomRulesWithNoTrailingNewline",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Install_CreatesBothRootEntrypointsWithoutTemplate",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.InvalidEncoding_PreservesOriginalBytes",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.MissingPublicDocument_DoesNotCreateDanglingEntrypoints",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.ReadOnlyFile_IsPreservedAndLeavesNoTemporaryFiles",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Reload_AndTemplateReplacement_DoNotRewriteOrDuplicateEntrypoints",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf8\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf8-bom\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf16\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf16-be\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf32\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf32-be\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_UpdatesResolvedPackagePathEvenWhenVersionIsUnchanged",
+      "result": "Passed"
+    }
+  ]
+}

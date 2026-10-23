@@ -20,6 +20,8 @@ UPM Manager 保持无 Core/Odin 程序集依赖。Core.Editor 引用 UPMManager.
 
 ## 框架随包分发
 
+项目根目录公共规则入口与技能安装分别同步：框架初始化时自动维护 `AGENTS.md` / `CLAUDE.md` 的 Ember 受管区块，区块外自定义规则保留。此操作不依赖 bundle 是否存在、技能是否已安装或当前模板身份，也不受技能的单会话版本缓存限制。包路径变动后更新规则链接；相同内容不重复写入。状态和重试入口在 UPM Manager 的 AI Skill 区域，详情见[消费项目公共规则](../../README.md#消费项目公共规则所有模板)。
+
 框架维护者修改 `.agents/skills` 并提交技能源后，运行：
 
 ```powershell

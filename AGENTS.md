@@ -1,5 +1,9 @@
 # Ember 仓库代理规则
 
+## 项目测试与 Unity MCP（强制）
+
+需要测试或进行 Unity 验证前，完整阅读 [项目测试与 Unity 编译验证规范](Packages/com.ember/Documentation~/maintenance/unity-validation.md)。该公共规则适用于所有模板：默认只运行新增或相关部分用例，全量重测或预计耗时较长须获用户明确授权；MCP 断连后每隔 30 秒重试，最多 10 次，全部失败后停止并请用户确认 MCP 状态。
+
 ## UnityFarm 改动分流（强制）
 
 在处理从 UnityFarm 发现、验证或提出的任何改动前，必须先完整阅读
