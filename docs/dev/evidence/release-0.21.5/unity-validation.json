@@ -1,0 +1,100 @@
+{
+  "templateValidation": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"framework\":\"0.21.5\",\"templates\":[{\"id\":\"base\",\"version\":\"0.8.3\",\"frameworkVersion\":\"0.21.0\",\"contentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"versionedContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"actualHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"valid\":true,\"error\":null,\"status\":\"Root\",\"Error\":null,\"SnapshotContentHash\":null,\"ParentContentHash\":null,\"ChildContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"HasConflicts\":false,\"WillChangeChildContent\":false},{\"id\":\"platformer-2d\",\"version\":\"0.11.2\",\"frameworkVersion\":\"0.21.0\",\"contentHash\":\"986ceff5bf74695b8c82a33347a48d7d\",\"versionedContentHash\":\"986ceff5bf74695b8c82a33347a48d7d\",\"actualHash\":\"986ceff5bf74695b8c82a33347a48d7d\",\"valid\":true,\"error\":null,\"status\":\"Synced\",\"Error\":null,\"SnapshotContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ParentContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ChildContentHash\":\"986ceff5bf74695b8c82a33347a48d7d\",\"HasConflicts\":false,\"WillChangeChildContent\":false},{\"id\":\"source3d-2p5d\",\"version\":\"0.5.0\",\"frameworkVersion\":\"0.21.0\",\"contentHash\":\"89e49f1c8c620812a15b181a0a049180\",\"versionedContentHash\":\"89e49f1c8c620812a15b181a0a049180\",\"actualHash\":\"89e49f1c8c620812a15b181a0a049180\",\"valid\":true,\"error\":null,\"status\":\"Synced\",\"Error\":null,\"SnapshotContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ParentContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ChildContentHash\":\"89e49f1c8c620812a15b181a0a049180\",\"HasConflicts\":false,\"WillChangeChildContent\":false},{\"id\":\"visual-novel\",\"version\":\"0.21.2\",\"frameworkVersion\":\"0.21.0\",\"contentHash\":\"56cba1d73472bba8f1fa4baa293466f0\",\"versionedContentHash\":\"56cba1d73472bba8f1fa4baa293466f0\",\"actualHash\":\"56cba1d73472bba8f1fa4baa293466f0\",\"valid\":true,\"error\":null,\"status\":\"Synced\",\"Error\":null,\"SnapshotContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ParentContentHash\":\"1270ce6dfcae3c01d050c09ecfd60337\",\"ChildContentHash\":\"56cba1d73472bba8f1fa4baa293466f0\",\"HasConflicts\":false,\"WillChangeChildContent\":false}],\"graphIssues\":[],\"editing\":{\"templateId\":\"platformer-2d\",\"templateVersion\":\"0.11.2\",\"contentHash\":\"986ceff5bf74695b8c82a33347a48d7d\",\"loadedAt\":\"2026-10-24 02:39:00\"},\"playerMvid\":\"6a464912-5218-4752-a2b0-edefe6f05392\"},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "framework": "0.21.5",
+          "templates": [
+            {
+              "id": "base",
+              "version": "0.8.3",
+              "frameworkVersion": "0.21.0",
+              "contentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "versionedContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "actualHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "valid": true,
+              "error": null,
+              "status": "Root",
+              "Error": null,
+              "SnapshotContentHash": null,
+              "ParentContentHash": null,
+              "ChildContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "HasConflicts": false,
+              "WillChangeChildContent": false
+            },
+            {
+              "id": "platformer-2d",
+              "version": "0.11.2",
+              "frameworkVersion": "0.21.0",
+              "contentHash": "986ceff5bf74695b8c82a33347a48d7d",
+              "versionedContentHash": "986ceff5bf74695b8c82a33347a48d7d",
+              "actualHash": "986ceff5bf74695b8c82a33347a48d7d",
+              "valid": true,
+              "error": null,
+              "status": "Synced",
+              "Error": null,
+              "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ChildContentHash": "986ceff5bf74695b8c82a33347a48d7d",
+              "HasConflicts": false,
+              "WillChangeChildContent": false
+            },
+            {
+              "id": "source3d-2p5d",
+              "version": "0.5.0",
+              "frameworkVersion": "0.21.0",
+              "contentHash": "89e49f1c8c620812a15b181a0a049180",
+              "versionedContentHash": "89e49f1c8c620812a15b181a0a049180",
+              "actualHash": "89e49f1c8c620812a15b181a0a049180",
+              "valid": true,
+              "error": null,
+              "status": "Synced",
+              "Error": null,
+              "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ChildContentHash": "89e49f1c8c620812a15b181a0a049180",
+              "HasConflicts": false,
+              "WillChangeChildContent": false
+            },
+            {
+              "id": "visual-novel",
+              "version": "0.21.2",
+              "frameworkVersion": "0.21.0",
+              "contentHash": "56cba1d73472bba8f1fa4baa293466f0",
+              "versionedContentHash": "56cba1d73472bba8f1fa4baa293466f0",
+              "actualHash": "56cba1d73472bba8f1fa4baa293466f0",
+              "valid": true,
+              "error": null,
+              "status": "Synced",
+              "Error": null,
+              "SnapshotContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ParentContentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+              "ChildContentHash": "56cba1d73472bba8f1fa4baa293466f0",
+              "HasConflicts": false,
+              "WillChangeChildContent": false
+            }
+          ],
+          "graphIssues": [],
+          "editing": {
+            "templateId": "platformer-2d",
+            "templateVersion": "0.11.2",
+            "contentHash": "986ceff5bf74695b8c82a33347a48d7d",
+            "loadedAt": "2026-10-24 02:39:00"
+          },
+          "playerMvid": "6a464912-5218-4752-a2b0-edefe6f05392"
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  },
+  "editorState": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1792781432224,\\\"sequence\\\":5,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":\\\"Assets/InitTestScene91994344-33a9-459f-a523-54fa60e86c15.unity\\\",\\\"guid\\\":\\\"595eddbef6396484484b0abe29a171f7\\\",\\\"name\\\":\\\"InitTestScene91994344-33a9-459f-a523-54fa60e86c15\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1792781339345,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1792781027221,\\\"last_compile_finished_unix_ms\\\":1792781030532,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1792781051102},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":null,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":null,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":null,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":null},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":536,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}"
+}

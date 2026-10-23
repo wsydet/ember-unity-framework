@@ -194,6 +194,7 @@ namespace Game.Player.Tests
             Assert.That(player.CurrentStateId, Is.EqualTo("fall"));
             Assert.That(player.Context.Motor.Velocity.x, Is.EqualTo(1.8f).Within(.0001));
             Assert.That(Power(player).RemainingUses, Is.EqualTo(1));
+            _scene.GetPhysicsScene2D().Simulate(Step); // 恢复刚体后先产生真实接触，不能以 Cast 冒充落地。
             Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo("decelerate"));
             Assert.That(player.Context.Motor.Velocity.x, Is.EqualTo(1.6f).Within(.0001));

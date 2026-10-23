@@ -1,6 +1,6 @@
 # Ember 消费端依赖声明
 
-当前发布基线为 **0.21.4**：[发布声明](release-0.21.4.json)、[完整 manifest](manifest-0.21.4.json)。Unity 开发基线为 **6000.5.4f1**。
+当前发布：Ember **0.21.5**，交付已封存的 **platformer-2d 0.11.2** 地面支撑修复。其他模板与第三方依赖不变；Windward接入及原台面人工复验待完成。
 
 ## 清单范围
 
@@ -10,7 +10,7 @@
 
 **所有消费端框架升级必须通过 `Ember/UPM Manager`。** 不得手改 manifest 的 URL/版本或 packages-lock 的提交 hash；无法操作升级器时，由用户在 Unity 中执行。升级后核对实际包版本并完成编译。
 
-本次交付 Loading／遮幕解耦、MCP 显式升级入口与公共规则，无需重新部署模板；同场景恢复的业务时序须按[Loading 接入契约](../Documentation~/ui/loading-sessions.md)单独接线验收。框架升级不会更新已部署 Assets。模板沿用 base 0.8.3、source3d-2p5d 0.5.0、visual-novel 0.21.2 与 platformer-2d 0.11.1；平台0.11.0→0.11.1按三方补丁预览保护定制，跨 minor 升级须先保护定制内容再迁移；仅更新 Skill 不会安装实现代码。详见[改动回流规则](../Documentation~/maintenance/unityfarm-change-routing.md)。
+0.21.5候选包含 platformer-2d **0.11.2** 地面支撑修复；正式发布后，先升级框架，再对平台0.11.1→0.11.2按三方补丁预览保护定制。框架升级不会更新已部署 Assets，仅更新 Skill 不会安装实现代码。base 0.8.3、source3d-2p5d 0.5.0、visual-novel 0.21.2不变。其他历史版本和跨minor迁移按[改动回流规则](../Documentation~/maintenance/unityfarm-change-routing.md)处理。
 
 ## 首次安装与依赖配置
 
@@ -26,10 +26,10 @@
 
 ## 模板声明与验证
 
-沿用 base **0.8.3**、source3d-2p5d **0.5.0**、visual-novel **0.21.2** 和 platformer-2d **0.11.1**。同 major.minor 的框架补丁保留兼容声明 **0.21.0**；本轮未保存或 Bump 模板。四个模板实际内容、封存 hash、父快照与谱系已由 Unity MCP 只读核对一致。
+本地候选封存 platformer-2d **0.11.2**，内容与封存 hash 均为 `986ceff5bf74695b8c82a33347a48d7d`。base **0.8.3**、source3d-2p5d **0.5.0**、visual-novel **0.21.2**和父快照不变。同 major.minor 的框架补丁保留兼容声明 **0.21.0**。封存前已通过 MCP 核对平台实际内容、父快照和同步计划；全部模板的发布前核验状态见当版说明。
 
-本轮相关代码96个不同用例通过，发布前主动编译与域重载确认，Console无错误/警告。未全量重测，消费项目接入与发行构建待验收；专属字典仍在 Assets 维护源，未进入本版封存模板。详见[发布说明](../../../docs/dev/release-0.21.4.md)。
+修复阶段76项相关回归通过，最后8组真实渲染帧率专项复测通过，保留实际FPS和失败记录；此次仅封存与准备版本，复用同内容证据，未全量重测。平台术语字典已纳入0.11.2。Windward接入、首台人工复验和发行构建待验收；发布准备编译状态见[0.21.5说明](../../../docs/dev/release-0.21.5.md)。
 
 ## 发布顺序
 
-按 `package.json → CHANGELOG → release/manifest → commit → annotated tag → push` 发布 `v0.21.4`。框架技能来源对齐此 tag，共 11 项，内容与 sourceCommit 保持不变。
+本次完成 `package.json → CHANGELOG → release/manifest` 本地准备；后续发布需完成必要验证，再按 `commit → annotated tag → push` 发布 `v0.21.5`。当前未提交或创建tag。框架通用技能共11项，内容与既有bundle sourceCommit保持不变。

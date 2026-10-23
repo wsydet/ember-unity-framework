@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.21.4**（Loading／遮幕解耦、MCP 显式升级入口及公共规则补丁，模板版本不变）。开发基线使用 Unity `6000.5.4f1`：
+当前发布：Ember **0.21.5**，交付已封存的 **platformer-2d 0.11.2** 地面支撑修复。其他模板与第三方依赖不变；Windward接入及原台面人工复验待完成。
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.4"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.5"
 }
 ```
 
@@ -24,7 +24,9 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.21.4 manifest 基线](Dependencies~/manifest-0.21.4.json)。本次将可选 Unity MCP 更新至官方 10.3.0 标签，其余第三方依赖不变（Odin/Feel/UniRx 使用各自补丁标签）；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md)；已发布安装基线为 [0.21.4 manifest](Dependencies~/manifest-0.21.4.json)，本地候选为 [0.21.5 manifest](Dependencies~/manifest-0.21.5.json)。候选只改变框架tag，保留0.21.4的MCP 10.3.0及其他依赖声明；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+
+0.21.5 正式发布后，已有 platformer-2d 0.11.1 项目需先通过 UPM Manager 更新框架，再对0.11.2进行模板三方补丁预览，保护定制。包升级不会自动修复已部署的 Player/Entity 源码，详见[本版准备说明](../../docs/dev/release-0.21.5.md)。
 
 ## Unity MCP 的安装与更新
 

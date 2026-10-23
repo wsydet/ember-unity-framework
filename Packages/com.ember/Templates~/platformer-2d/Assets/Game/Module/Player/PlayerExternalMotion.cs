@@ -277,6 +277,7 @@ namespace Game.Player
                     if (!ownsVertical)
                     {
                         velocity.y = replacement.Request.Velocity.y;
+                        if (velocity.y > 0) _context.JumpWindow.Consume();
                         if (replacement.Request.Mode != PlayerExternalMotionMode.InitialVelocity)
                             _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
                         if (replacement.Request.Mode == PlayerExternalMotionMode.InitialVelocity)
@@ -292,6 +293,7 @@ namespace Game.Player
                         _context.VerticalMotion.CancelOrdinary(PlayerFlightOrigin.External);
                         _lastRise = rise;
                         velocity.y = rise.Request.Velocity.y;
+                        _context.JumpWindow.Consume();
                         _context.Motor.SetGravityScale(0);
                     }
                     OverrideReason = rise.Request.SourceId;

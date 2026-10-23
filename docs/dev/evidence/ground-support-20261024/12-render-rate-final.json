@@ -1,0 +1,56 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "6c37d83f5a6248bcaec511188d6a62cf",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792780716693,
+      "finished_unix_ms": 1792780730499,
+      "last_update_unix_ms": 1792780730499,
+      "progress": {
+        "completed": 1,
+        "total": 1,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+        "last_finished_unix_ms": 1792780730462,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 3.4983608,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "state": "Passed",
+            "durationSeconds": 3.4272376,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\ntarget=120 actualMeanFPS=97.24076 frames=39 seconds=0.4010664 direction=1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=117.578156 frames=48 seconds=0.4082391 direction=1 braking=True jumps=1\r\ntarget=120 actualMeanFPS=114.661964 frames=46 seconds=0.401179254 direction=-1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=118.51667 frames=48 seconds=0.405006319 direction=-1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=28.3472481 frames=12 seconds=0.423321515 direction=1 braking=False jumps=1\r\ntarget=30 actualMeanFPS=29.8725548 frames=13 seconds=0.435182065 direction=1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=18.824934 frames=8 seconds=0.4249683 direction=-1 braking=False jumps=1\r\ntarget=30 actualMeanFPS=29.9983139 frames=13 seconds=0.4333577 direction=-1 braking=True jumps=1\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -214,7 +214,9 @@ namespace Game.Player
             {
                 // 建立恢复位置的支撑基线，不把加载在地面当作一次新落地补满资源。
                 _sensors.Sample();
-                Context.JumpWindow.Observe(_sensors.IsGrounded, _motor.Velocity.y, 0);
+                if (_sensors.IsGrounded && _motor.Velocity.y <= 0)
+                    Context.JumpWindow.PreserveRestoredGroundBaseline();
+                Context.JumpWindow.Observe(Context.Support.ResolveContact(_sensors.GroundContact), 0, _sensors.IsGrounded);
                 Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, 0);
             }
         }
@@ -251,10 +253,11 @@ namespace Game.Player
             var observedPosition = _motor.Position;
 #endif
             _sensors.Sample();
+            if (Context.JumpWindow.Observe(Context.Support.ResolveContact(_sensors.GroundContact), dt,
+                _sensors.IsGrounded, Context.Ledge.IsActive || Context.DropThrough.IsActive))
+                _powers.RefillGroundUses(); // 统一支撑边沿，仅真实接触取得时补充一次。
             if (Context.Life?.IsDead != true && Context.Life?.Reaction?.IsActive != true) Context.Support.Observe(dt);
             Context.Landing.Observe();
-            if (Context.JumpWindow.Observe(_sensors.IsGrounded, _motor.Velocity.y, dt))
-                _powers.RefillGroundUses(); // 先更新资源，保证落地缓冲直接跳也能观察到补充。
             Context.HeadJump.Observe();
             Context.Wall.Observe(dt);
             Context.Ledge.ObserveInput();
@@ -262,8 +265,7 @@ namespace Game.Player
             _motor.SetHorizontalVelocity(Context.ExternalMotion.SelfVelocity.x);
             _motor.SetVerticalVelocity(Context.ExternalMotion.SelfVelocity.y);
             Context.Correction.BeginStep();
-            Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt,
-                _sensors.Ground != null && _sensors.Shape.IsTouching(_sensors.Ground));
+            Context.VerticalMotion.Observe(Context.JumpWindow.HasGroundSupport, _motor.Velocity.y, dt);
             Context.Combat?.Dash?.ObserveEnvironment();
             var active = _active;
             try

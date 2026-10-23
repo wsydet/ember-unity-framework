@@ -1,0 +1,185 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "1be80d6d84dd42ed99836138d1ef47f7",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792779863538,
+      "finished_unix_ms": 1792779871446,
+      "last_update_unix_ms": 1792779871446,
+      "progress": {
+        "completed": 13,
+        "total": 13,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+        "last_finished_unix_ms": 1792779871426,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"idle\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"idle\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 13,
+          "passed": 8,
+          "failed": 5,
+          "skipped": 0,
+          "durationSeconds": 0.2892815,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "state": "Failed",
+            "durationSeconds": 0.0233596,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary (System.Int32 elapsedSteps, System.Boolean expectedJump) [0x000a3] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:340\r\n",
+            "output": ""
+          },
+          {
+            "name": "BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "state": "Failed",
+            "durationSeconds": 0.0166818,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"idle\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary (System.Int32 elapsedSteps, System.Boolean expectedJump) [0x000a3] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:340\r\n",
+            "output": ""
+          },
+          {
+            "name": "DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0163311,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0186442,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "state": "Failed",
+            "durationSeconds": 0.0163308,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"idle\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding () [0x0011f] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:251\r\n",
+            "output": ""
+          },
+          {
+            "name": "DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+            "state": "Passed",
+            "durationSeconds": 0.0153204,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0173288,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,False)",
+            "state": "Passed",
+            "durationSeconds": 0.01528,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0149132,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0144002,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "state": "Failed",
+            "durationSeconds": 0.0162206,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState () [0x00098] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:493\r\n",
+            "output": ""
+          },
+          {
+            "name": "NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "state": "Failed",
+            "durationSeconds": 0.0138666,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"jump\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps () [0x000bf] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:381\r\n",
+            "output": ""
+          },
+          {
+            "name": "ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+            "state": "Passed",
+            "durationSeconds": 0.0215144,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

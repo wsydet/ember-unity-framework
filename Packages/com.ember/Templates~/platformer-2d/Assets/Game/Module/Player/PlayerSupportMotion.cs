@@ -20,17 +20,18 @@ namespace Game.Player
         // --------------------------------------------------------
         #region 外部方法
         internal PlayerSupportMotion(PlayerContext context) => _context = context;
+        // 接触与角色速度来自上一物理步；不能与宿主本步尚未模拟的新速度比较。
+        internal EntityGroundContact2D ResolveContact(EntityGroundContact2D contact)
+            => contact.HasContact && _source != null && _source.Owns(contact.Collider)
+                ? contact.WithSurfaceVelocity(_lastVelocity) : contact;
         internal void Observe(float dt)
         {
             bool validPrevious = _source != null && _source.IsAvailable && _source.Revision == _revision &&
                 Mathf.Abs(Mathf.DeltaAngle(_rotation, _source.Body.rotation)) < .01f &&
                 Vector2.Distance(_position, _source.Body.position) <= Mathf.Max(_source.TeleportDistance, _lastVelocity.magnitude * dt * 3);
-            var ground = _context.Sensors.Ground;
+            var ground = _context.JumpWindow.HasGroundSupport ? _context.JumpWindow.Contact.Collider : null;
             var next = ground != null ? ground.GetComponentInParent<EntityTranslationSupport2D>() : null;
-            if (next != null && (!next.IsAvailable || !next.Owns(ground) ||
-                (_source == next && validPrevious
-                    ? _context.Motor.Velocity.y - _lastVelocity.y > .1f
-                    : _context.Motor.Velocity.y > next.Velocity.y + .1f) || _context.DropThrough.IsActive)) next = null;
+            if (next != null && (!next.IsAvailable || !next.Owns(ground) || _context.DropThrough.IsActive)) next = null;
             if (_source != null && !validPrevious)
             {
                 // 禁用、瞬移或旋转不产生离开惯性。本步也不重取同一失效支撑。
@@ -44,7 +45,7 @@ namespace Game.Player
                     SupportDepartureVelocity.Full => _lastVelocity,
                     _ => Vector2.zero
                 };
-            if (next != null || _context.Sensors.IsGrounded && _context.Motor.Velocity.y <= 0)
+            if (next != null || _context.JumpWindow.HasGroundSupport)
                 _inherited = Vector2.zero;
             if (_source != null && _source != next) _source.ReleaseRider(_context.Sensors.Shape);
             _source = next;

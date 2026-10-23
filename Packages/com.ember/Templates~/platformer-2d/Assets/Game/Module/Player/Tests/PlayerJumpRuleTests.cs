@@ -247,7 +247,7 @@ namespace Game.Player.Tests
             var air = Character(new Vector2(2, 5)); Keys(Key.Space); Decide(air);
             Assert.That(air.Context.Input.BufferRemaining, Is.Zero);
             Assert.That(air.Context.Input.JumpRequested, Is.False);
-            Place(air, new Vector2(2, .9f), -1); Decide(air);
+            SettleGroundContact(air, 2); Decide(air);
             Assert.That(air.CurrentStateId, Is.EqualTo("idle"));
         }
 
@@ -260,7 +260,7 @@ namespace Game.Player.Tests
             Assert.That(player.CurrentStateId, Is.EqualTo("fall"));
             Assert.That(player.Context.JumpWindow.CoyoteRemaining, Is.Zero);
             Assert.That(player.Context.Input.BufferRemaining, Is.GreaterThan(0));
-            Place(player, new Vector2(0, .9f), -1); Decide(player);
+            SettleGroundContact(player); Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo("jump"));
             Assert.That(player.Context.Input.ConsumeJump(), Is.False);
         }
@@ -306,6 +306,18 @@ namespace Game.Player.Tests
             body.linearVelocity = new Vector2(0, verticalSpeed);
             Physics2D.SyncTransforms();
         }
+        // 只推进隔离物理，不推进输入窗口；用于测试“下一次决策时已真实落地”的时间边界。
+        private void SettleGroundContact(PlayerController player, float x = 0)
+        {
+            Place(player, new Vector2(x, .9f), -1);
+            // 传送后的 broadphase/contact cache 可能要到下一拍才建立；不把位置已写入当作接触完成。
+            for (int i = 0; i < 5; i++)
+            {
+                _scene.GetPhysicsScene2D().Simulate(Step);
+                if (player.Context.Sensors.Shape.IsTouchingLayers(1)) break;
+            }
+            Assert.That(player.Context.Sensors.Shape.IsTouchingLayers(1), Is.True);
+        }
 
         [TestCase(false, 4)]
         [TestCase(true, 10)]
@@ -336,7 +348,7 @@ namespace Game.Player.Tests
             var player = Character(new Vector2(0, 5)); Keys(Key.Space); player.Tick(Step); Keys();
             for (int i = 0; i < elapsedSteps; i++) player.FixedTick(Step);
             Assert.That(player.Context.Input.JumpRequested, Is.EqualTo(expectedJump));
-            Place(player, new Vector2(0, 0.9f), -1); Decide(player);
+            SettleGroundContact(player); Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo(expectedJump ? "jump" : "idle"));
         }
 
@@ -365,7 +377,7 @@ namespace Game.Player.Tests
             Place(edge, new Vector2(14, 1), -1); Keys(Key.Space); Decide(edge);
             Assert.That(edge.CurrentStateId, Is.EqualTo("fall"));
             Assert.That(edge.Context.Input.JumpRequested, Is.False);
-            Place(edge, new Vector2(2, 0.9f), -1); Decide(edge);
+            SettleGroundContact(edge, 2); Decide(edge);
             Assert.That(edge.CurrentStateId, Is.EqualTo("idle"));
         }
 
@@ -377,7 +389,7 @@ namespace Game.Player.Tests
             Keys(); Keys(Key.Space); Decide(player);
             for (int i = 0; i < 4; i++) Decide(player);
             Assert.That(player.Context.Input.JumpRequested, Is.True);
-            Place(player, new Vector2(0, 0.9f), -1); Decide(player);
+            SettleGroundContact(player); Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo("jump"));
             Land(player); Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo("idle"));
@@ -488,8 +500,9 @@ namespace Game.Player.Tests
             var player = Character(); Land(player); Keys(Key.Space); Decide(player);
             var oldJump = Fsm(player).GetActivation("jump");
             var air = Fsm(player).GetActivation("air");
-            // 模拟两次决策之间完成运动并落地，叶状态尚未来得及从 Jump 切到 Fall。
-            Place(player, new Vector2(0, 0.9f), 0); Keys(); Keys(Key.Space); Decide(player);
+            // 先确认起跳已离开真实接触，再模拟决策间落地；叶状态仍未经过 Fall。
+            _scene.GetPhysicsScene2D().Simulate(Step); Decide(player);
+            SettleGroundContact(player); Keys(); Keys(Key.Space); Decide(player);
             Assert.That(player.CurrentStateId, Is.EqualTo("jump"));
             Assert.That(Fsm(player).GetActivation("jump"), Is.Not.EqualTo(oldJump));
             Assert.That(Fsm(player).GetActivation("air"), Is.EqualTo(air));

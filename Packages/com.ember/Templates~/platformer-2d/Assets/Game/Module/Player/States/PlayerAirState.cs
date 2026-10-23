@@ -21,8 +21,8 @@ namespace Game.Player
             new("air-dash", "air-dash", description: "无地面支撑时消费冲刺请求及空中技能资源",
                 sites: new[] { PlayerRule.Fixed<PlayerAirState>(70, (state, ctx) => ctx.Dash.CanStart(false), "ctx.Dash.CanStart(false)") });
         public static readonly EmberFsmTransition<PlayerContext, PlayerAirState> Land =
-            new("land", "ground", description: "非上升且检测到地面，返回地面分支",
-                sites: new[] { PlayerRule.Fixed<PlayerAirState>(80, (state, ctx) => ctx.Sensors.IsGrounded && ctx.Motor.Velocity.y <= 0, "ctx.Sensors.IsGrounded && ctx.Motor.Velocity.y <= 0", stopOnMatch: true, commit: (state, ctx) => ctx.Wall.Cancel(), commitDescription: "最终预检通过后取消墙窗口，随后 Exit/Enter；拒绝不取消") });
+            new("land", "ground", description: "统一接触支撑有效，返回地面分支",
+                sites: new[] { PlayerRule.Fixed<PlayerAirState>(80, (state, ctx) => ctx.JumpWindow.HasGroundSupport, "ctx.JumpWindow.HasGroundSupport", stopOnMatch: true, commit: (state, ctx) => ctx.Wall.Cancel(), commitDescription: "最终预检通过后取消墙窗口，随后 Exit/Enter；拒绝不取消") });
         public static readonly EmberFsmTransition<PlayerContext, PlayerAirState> Jump =
             new("buffer-or-coyote-jump", "jump", description: "离地宽限起跳，或本步落地时立即消费缓冲", mode: EmberFsmTransitionMode.ReenterTargetBranch,
                 sites: new[] { PlayerRule.Fixed<PlayerAirState>(20, (state, ctx) => ctx.CanStartJump, "ctx.CanStartJump") });

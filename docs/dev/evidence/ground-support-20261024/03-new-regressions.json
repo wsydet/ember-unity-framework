@@ -1,0 +1,110 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "cb48341fc41844199a50dd914fda1ea8",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792779246359,
+      "finished_unix_ms": 1792779260671,
+      "last_update_unix_ms": 1792779260671,
+      "progress": {
+        "completed": 7,
+        "total": 7,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.GroundSupport_SpentResourcesStaySpentAcrossSlopeAndConsumedContact",
+        "last_finished_unix_ms": 1792779260635,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 3.7572013,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "GroundSupport_ContactWindowSeparatesNoiseSlopeLaunchAndCoyote",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ContactWindowSeparatesNoiseSlopeLaunchAndCoyote",
+            "state": "Passed",
+            "durationSeconds": 0.082639,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\n"
+          },
+          {
+            "name": "GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(InitialVelocity)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(InitialVelocity)",
+            "state": "Passed",
+            "durationSeconds": 0.0915466,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(ForcedRise)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(ForcedRise)",
+            "state": "Passed",
+            "durationSeconds": 0.0180633,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "state": "Passed",
+            "durationSeconds": 3.3422022,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\ntarget=120 actualMeanFPS=116.060143 frames=47 seconds=0.40496245 direction=1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=117.368126 frames=47 seconds=0.400449425 direction=1 braking=True jumps=1\r\ntarget=120 actualMeanFPS=116.609108 frames=47 seconds=0.403056 direction=-1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=121.54689 frames=49 seconds=0.4031366 direction=-1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=28.2320271 frames=12 seconds=0.4250492 direction=1 braking=False jumps=1\r\ntarget=30 actualMeanFPS=16.6626549 frames=7 seconds=0.4201011 direction=1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=29.79055 frames=12 seconds=0.4028123 direction=-1 braking=False jumps=1\r\ntarget=30 actualMeanFPS=30.0314541 frames=13 seconds=0.432879478 direction=-1 braking=True jumps=1\r\n"
+          },
+          {
+            "name": "GroundSupport_PrecisionSlopeRetainsOpportunityAcrossMovementPhases",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionSlopeRetainsOpportunityAcrossMovementPhases",
+            "state": "Passed",
+            "durationSeconds": 0.0218951,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(19.9999714, -1);(19.9999714, 0);(-20, -0.0006093);(-19.9999714, -1)\r\n0\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n1\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n2\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n3\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n4\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n5\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n6\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n7\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n8\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n9\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n10\t(1.199982, 1.82986259E-05)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n11\t(1.999973, 3.04579735E-05)\tContact\t(-1.5232511E-05, 1)\t1.98861763E-08\r\n12\t(2.799964, 4.26769257E-05)\tContact\t(-1.5232511E-05, 1)\t-6.6382E-09\r\n13\t(3.59995484, 5.48362732E-05)\tContact\t(-1.5232511E-05, 1)\t2.64438853E-08\r\n14\t(4.39994574, 6.699562E-05)\tContact\t(-1.5232511E-05, 1)\t-7.867557E-11\r\n15\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-2.6601235E-08\r\n16\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n17\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n18\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n19\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n20\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n21\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n22\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n23\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n24\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n25\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n26\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n27\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n28\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n29\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n30\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n31\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n32\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n33\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n34\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n35\t(3.99998188, 6.0915947E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n36\t(2.99997282, 4.57167625E-05)\tContact\t(-1.5232511E-05, 1)\t-1.38211576E-08\r\n37\t(1.99996388, 3.04579735E-05)\tContact\t(-1.5232511E-05, 1)\t1.9643462E-08\r\n38\t(0.999954939, 1.52587891E-05)\tContact\t(-1.5232511E-05, 1)\t-6.498379E-09\r\n39\t(-8.965623E-06, 0)\tContact\t(-1.5232511E-05, 1)\t2.69644236E-08\r\n40\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.36568951E-10\r\n41\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n42\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n43\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n44\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n45\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n46\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n47\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n48\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n49\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n50\t(-0.800017834, -1.21593475E-05)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n51\t(-1.60002673, -2.43783E-05)\tContact\t(-1.5232511E-05, 1)\t2.6932943E-08\r\n52\t(-2.40003586, -3.65376472E-05)\tContact\t(-1.5232511E-05, 1)\t-5.87494675E-09\r\n53\t(-3.20004487, -4.87566E-05)\tContact\t(-1.5232511E-05, 1)\t2.092544E-08\r\n54\t(-4.000054, -6.0915947E-05)\tContact\t(-1.5232511E-05, 1)\t-1.18806351E-08\r\n55\t(-4.80006266, -7.31349E-05)\tContact\t(-1.5232511E-05, 1)\t1.49179353E-08\r\n56\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.78917716E-08\r\n57\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n58\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n59\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n60\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n61\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n62\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n63\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n64\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n65\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n66\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n67\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n68\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n69\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n70\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n71\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n72\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n73\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n74\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n75\t(-3.80001831, -5.787611E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n76\t(-2.60002756, -3.95774841E-05)\tContact\t(-1.5232511E-05, 1)\t7.710761E-09\r\n77\t(-1.40003657, -2.13384628E-05)\tContact\t(-1.5232511E-05, 1)\t2.746438E-08\r\n78\t(-0.200045615, -3.03983688E-06)\tContact\t(-1.5232511E-05, 1)\t-1.239028E-08\r\n79\t(0.9999454, 1.52587891E-05)\tContact\t(-1.5232511E-05, 1)\t7.36016048E-09\r\n80\t(1.79993641, 2.74181366E-05)\tContact\t(-1.5232511E-05, 1)\t2.71096923E-08\r\n81\t(2.59992743, 3.95774841E-05)\tContact\t(-1.5232511E-05, 1)\t5.85316962E-10\r\n82\t(3.39991832, 5.17964363E-05)\tContact\t(-1.5232511E-05, 1)\t-2.59390589E-08\r\n83\t(4.199909, 6.39557838E-05)\tContact\t(-1.5232511E-05, 1)\t7.14302573E-09\r\n84\t(4.99990034, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.93795344E-08\r\n85\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.36989184E-08\r\n86\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n87\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n88\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n89\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n90\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n91\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n92\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n93\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n94\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n95\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n96\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n97\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n98\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n99\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n"
+          },
+          {
+            "name": "GroundSupport_ProbeWithoutContactCannotLandOrRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ProbeWithoutContactCannotLandOrRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0201819,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_SpentResourcesStaySpentAcrossSlopeAndConsumedContact",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_SpentResourcesStaySpentAcrossSlopeAndConsumedContact",
+            "state": "Passed",
+            "durationSeconds": 0.0156704,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(19.9999714, -1);(19.9999714, 0);(-20, -0.0006093);(-19.9999714, -1)\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "e2c4d941669949f7ad057a2fc898c3d9",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792779308223,
+      "finished_unix_ms": 1792779316932,
+      "last_update_unix_ms": 1792779316932,
+      "progress": {
+        "completed": 28,
+        "total": 28,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.Support_WindAddsOnceAndDisableDropsReference",
+        "last_finished_unix_ms": 1792779316910,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.LandingLostSupportImmediatelyFalls",
+            "message": "  Expected string length 4 but was 9. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"hard-land\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.LeavingEdge_AfterCoyoteExpires_RejectsJump",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"jump\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"jump\"\r\n  -----------^\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 28,
+          "passed": 25,
+          "failed": 3,
+          "skipped": 0,
+          "durationSeconds": 0.8419837,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "BufferedLandingRefillsBeforeDirectJump_UpwardNearFloorDoesNotRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferedLandingRefillsBeforeDirectJump_UpwardNearFloorDoesNotRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0725233,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(None)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(None)",
+            "state": "Passed",
+            "durationSeconds": 0.0244333,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(Horizontal)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(Horizontal)",
+            "state": "Passed",
+            "durationSeconds": 0.0162824,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(Full)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(Full)",
+            "state": "Passed",
+            "durationSeconds": 0.0186564,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_RiderPassesSourceOneWayFromBelow",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_RiderPassesSourceOneWayFromBelow",
+            "state": "Passed",
+            "durationSeconds": 0.0380793,
+            "message": null,
+            "stackTrace": null,
+            "output": "oneway i=0 carrier=(0.04000, 5.40000) allowed=(2.00000, 20.00000) player=(0.04000, 6.53970) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=1 carrier=(0.08000, 5.80000) allowed=(2.00000, 20.00000) player=(0.08000, 6.93981) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=2 carrier=(0.12000, 6.20000) allowed=(2.00000, 20.00000) player=(0.12000, 7.33988) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=3 carrier=(0.16000, 6.60000) allowed=(2.00000, 20.00000) player=(0.16000, 7.73992) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=4 carrier=(0.20000, 7.00000) allowed=(2.00000, 20.00000) player=(0.20000, 8.13995) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=5 carrier=(0.24000, 7.40000) allowed=(2.00000, 20.00000) player=(0.24000, 8.53997) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=6 carrier=(0.28000, 7.80000) allowed=(2.00000, 20.00000) player=(0.28000, 8.93998) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=7 carrier=(0.32000, 8.20000) allowed=(2.00000, 20.00000) player=(0.32000, 9.33999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=8 carrier=(0.36000, 8.60000) allowed=(2.00000, 20.00000) player=(0.36000, 9.73999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=9 carrier=(0.40000, 9.00000) allowed=(2.00000, 20.00000) player=(0.40000, 10.13999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=10 carrier=(0.44000, 9.40000) allowed=(2.00000, 20.00000) player=(0.44000, 10.54000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=11 carrier=(0.48000, 9.80000) allowed=(2.00000, 20.00000) player=(0.48000, 10.94000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=12 carrier=(0.52000, 10.20000) allowed=(2.00000, 20.00000) player=(0.52000, 11.34000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=13 carrier=(0.56000, 10.60000) allowed=(2.00000, 20.00000) player=(0.56000, 11.74000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=14 carrier=(0.60000, 11.00000) allowed=(2.00000, 20.00000) player=(0.60000, 12.14000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\n"
+          },
+          {
+            "name": "ConsumedGroundOpportunity_CannotBecomeADoubleJump_WhenStillNearFloor",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ConsumedGroundOpportunity_CannotBecomeADoubleJump_WhenStillNearFloor",
+            "state": "Passed",
+            "durationSeconds": 0.0193642,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DropCommitsOnce_ClearsJumpAndHover_PreservesHorizontal_NoAirRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DropCommitsOnce_ClearsJumpAndHover_PreservesHorizontal_NoAirRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0233449,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExternalMotion_ForcedRiseExpiresAndUsesSeconds",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ExternalMotion_ForcedRiseExpiresAndUsesSeconds",
+            "state": "Passed",
+            "durationSeconds": 0.0161329,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Gravity_DrivesApexFallAndLanding_WithoutHeldRepeat",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Gravity_DrivesApexFallAndLanding_WithoutHeldRepeat",
+            "state": "Passed",
+            "durationSeconds": 0.0171399,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundJump_ShortCircuitsOldAndNewChildren_AndLaunchesOnce",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundJump_ShortCircuitsOldAndNewChildren_AndLaunchesOnce",
+            "state": "Passed",
+            "durationSeconds": 0.0174901,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+            "state": "Passed",
+            "durationSeconds": 0.0187669,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0220669,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0768468,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingLostSupportImmediatelyFalls",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingLostSupportImmediatelyFalls",
+            "state": "Failed",
+            "durationSeconds": 0.0294336,
+            "message": "  Expected string length 4 but was 9. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"hard-land\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.LandingLostSupportImmediatelyFalls () [0x0006d] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerLandingTests.cs:66\r\n",
+            "output": ""
+          },
+          {
+            "name": "LandingRequiresContactAndUsesLastStepRatherThanMaximumSpeed",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingRequiresContactAndUsesLastStepRatherThanMaximumSpeed",
+            "state": "Passed",
+            "durationSeconds": 0.0165369,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingSpawnOnGroundDoesNotPause",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingSpawnOnGroundDoesNotPause",
+            "state": "Passed",
+            "durationSeconds": 0.0152266,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LeavingEdge_AfterCoyoteExpires_RejectsJump",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LeavingEdge_AfterCoyoteExpires_RejectsJump",
+            "state": "Failed",
+            "durationSeconds": 0.0173338,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"jump\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.LeavingEdge_AfterCoyoteExpires_RejectsJump () [0x00081] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerStateTests.cs:189\r\n",
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(0,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(0,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0152284,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(3,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(3,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0376499,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+            "state": "Failed",
+            "durationSeconds": 0.0712841,
+            "message": "  String lengths are both 4. Strings differ at index 0.\r\n  Expected: \"fall\"\r\n  But was:  \"jump\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow (System.Int32 priorAirSteps, System.Boolean expectedJump) [0x00065] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:352\r\n",
+            "output": ""
+          },
+          {
+            "name": "PowersSurviveStateTransitions_ContinuousSupportDoesNotRefillSpentUses",
+            "fullName": "Game.Player.Tests.PlayerStateTests.PowersSurviveStateTransitions_ContinuousSupportDoesNotRefillSpentUses",
+            "state": "Passed",
+            "durationSeconds": 0.0144639,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_JumpInheritsOnceAndStopClearsOwnership",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_JumpInheritsOnceAndStopClearsOwnership",
+            "state": "Passed",
+            "durationSeconds": 0.0140635,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_OneWayDropDoesNotRetainCarrier",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_OneWayDropDoesNotRetainCarrier",
+            "state": "Passed",
+            "durationSeconds": 0.018536,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TeleportDoesNotCarryPlayerToResetPosition",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TeleportDoesNotCarryPlayerToResetPosition",
+            "state": "Passed",
+            "durationSeconds": 0.0259944,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(2,0)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(2,0)",
+            "state": "Passed",
+            "durationSeconds": 0.0162912,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(0,2)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(0,2)",
+            "state": "Passed",
+            "durationSeconds": 0.0156667,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(0,-2)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(0,-2)",
+            "state": "Passed",
+            "durationSeconds": 0.0163243,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_WindAddsOnceAndDisableDropsReference",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_WindAddsOnceAndDisableDropsReference",
+            "state": "Passed",
+            "durationSeconds": 0.0149979,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

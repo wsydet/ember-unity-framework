@@ -1,0 +1,461 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "fb2b8778f76c476c8667745391ff4578",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792779601714,
+      "finished_unix_ms": 1792779614361,
+      "last_update_unix_ms": 1792779614361,
+      "progress": {
+        "completed": 45,
+        "total": 45,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.Support_WindAddsOnceAndDisableDropsReference",
+        "last_finished_unix_ms": 1792779614308,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+            "message": "  Expected string length 10 but was 4. Strings differ at index 0.\r\n  Expected: \"decelerate\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "message": "  Expected: greater than 1.08988178f\r\n  But was:  1.04252696f\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 45,
+          "passed": 43,
+          "failed": 2,
+          "skipped": 0,
+          "durationSeconds": 2.1621907,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "FallingOntoOneWayIsRealSupportButSolidGroundIsNotOneWay",
+            "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.FallingOntoOneWayIsRealSupportButSolidGroundIsNotOneWay",
+            "state": "Passed",
+            "durationSeconds": 0.0257016,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RisingThroughPlatformNeverReportsGroundOrWalls",
+            "fullName": "Game.Entity.Tests.EntityOneWayPlatformTests.RisingThroughPlatformNeverReportsGroundOrWalls",
+            "state": "Passed",
+            "durationSeconds": 0.0122999,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BufferedLanding_CommitsJumpInTheDetectionStep(False,4)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferedLanding_CommitsJumpInTheDetectionStep(False,4)",
+            "state": "Passed",
+            "durationSeconds": 0.1560446,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BufferedLanding_CommitsJumpInTheDetectionStep(True,10)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferedLanding_CommitsJumpInTheDetectionStep(True,10)",
+            "state": "Passed",
+            "durationSeconds": 0.0219702,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BufferedLandingRefillsBeforeDirectJump_UpwardNearFloorDoesNotRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferedLandingRefillsBeforeDirectJump_UpwardNearFloorDoesNotRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0183494,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(None)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(None)",
+            "state": "Passed",
+            "durationSeconds": 0.0276945,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(Horizontal)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(Horizontal)",
+            "state": "Passed",
+            "durationSeconds": 0.0171049,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_DepartureModesUseLastAllowedVelocity(Full)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_DepartureModesUseLastAllowedVelocity(Full)",
+            "state": "Passed",
+            "durationSeconds": 0.0186838,
+            "message": null,
+            "stackTrace": null,
+            "output": "carrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.04000, 5.04000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.08000, 5.08000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\ncarrier target=(2.00000, 2.00000) allowed=(2.00000, 2.00000) actual=(2.00000, 2.00000) position=(0.12000, 5.12000) support=(2.00, 2.00) command=(2.00, 2.00) dt=0.02 input=scripted-public-api fps=N/A-synchronous\r\n"
+          },
+          {
+            "name": "CarrierCross_RiderPassesSourceOneWayFromBelow",
+            "fullName": "Game.Player.Tests.PlayerStateTests.CarrierCross_RiderPassesSourceOneWayFromBelow",
+            "state": "Passed",
+            "durationSeconds": 0.0510958,
+            "message": null,
+            "stackTrace": null,
+            "output": "oneway i=0 carrier=(0.04000, 5.40000) allowed=(2.00000, 20.00000) player=(0.04000, 6.53970) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=1 carrier=(0.08000, 5.80000) allowed=(2.00000, 20.00000) player=(0.08000, 6.93981) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=2 carrier=(0.12000, 6.20000) allowed=(2.00000, 20.00000) player=(0.12000, 7.33988) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=3 carrier=(0.16000, 6.60000) allowed=(2.00000, 20.00000) player=(0.16000, 7.73992) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=4 carrier=(0.20000, 7.00000) allowed=(2.00000, 20.00000) player=(0.20000, 8.13995) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=5 carrier=(0.24000, 7.40000) allowed=(2.00000, 20.00000) player=(0.24000, 8.53997) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=6 carrier=(0.28000, 7.80000) allowed=(2.00000, 20.00000) player=(0.28000, 8.93998) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=7 carrier=(0.32000, 8.20000) allowed=(2.00000, 20.00000) player=(0.32000, 9.33999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=8 carrier=(0.36000, 8.60000) allowed=(2.00000, 20.00000) player=(0.36000, 9.73999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=9 carrier=(0.40000, 9.00000) allowed=(2.00000, 20.00000) player=(0.40000, 10.13999) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=10 carrier=(0.44000, 9.40000) allowed=(2.00000, 20.00000) player=(0.44000, 10.54000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=11 carrier=(0.48000, 9.80000) allowed=(2.00000, 20.00000) player=(0.48000, 10.94000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=12 carrier=(0.52000, 10.20000) allowed=(2.00000, 20.00000) player=(0.52000, 11.34000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=13 carrier=(0.56000, 10.60000) allowed=(2.00000, 20.00000) player=(0.56000, 11.74000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\noneway i=14 carrier=(0.60000, 11.00000) allowed=(2.00000, 20.00000) player=(0.60000, 12.14000) actual=(2.00000, 20.00000) source=Translation support (Game.Entity.EntityTranslationSupport2D) ground=Translation support (UnityEngine.BoxCollider2D) contribution=(2.00000, 20.00000)\r\n"
+          },
+          {
+            "name": "ConsumedGroundOpportunity_CannotBecomeADoubleJump_WhenStillNearFloor",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ConsumedGroundOpportunity_CannotBecomeADoubleJump_WhenStillNearFloor",
+            "state": "Passed",
+            "durationSeconds": 0.1769124,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DropCommitsOnce_ClearsJumpAndHover_PreservesHorizontal_NoAirRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DropCommitsOnce_ClearsJumpAndHover_PreservesHorizontal_NoAirRefill",
+            "state": "Passed",
+            "durationSeconds": 0.2003676,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExternalMotion_ForcedRiseExpiresAndUsesSeconds",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ExternalMotion_ForcedRiseExpiresAndUsesSeconds",
+            "state": "Passed",
+            "durationSeconds": 0.0667134,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Gravity_DrivesApexFallAndLanding_WithoutHeldRepeat",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Gravity_DrivesApexFallAndLanding_WithoutHeldRepeat",
+            "state": "Passed",
+            "durationSeconds": 0.0183642,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundJump_ShortCircuitsOldAndNewChildren_AndLaunchesOnce",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundJump_ShortCircuitsOldAndNewChildren_AndLaunchesOnce",
+            "state": "Passed",
+            "durationSeconds": 0.0206265,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources",
+            "state": "Failed",
+            "durationSeconds": 0.0284334,
+            "message": "  Expected string length 10 but was 4. Strings differ at index 0.\r\n  Expected: \"decelerate\"\r\n  But was:  \"fall\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.GroundPhases_SnapshotRestoreDoesNotResetHorizontalVelocityOrResources () [0x00135] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerGroundPhaseTests.cs:198\r\n",
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_CarrierDescentUsesPreviousSolvedSurfaceVelocity(False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_CarrierDescentUsesPreviousSolvedSurfaceVelocity(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0247478,
+            "message": null,
+            "stackTrace": null,
+            "output": "D01 step=1 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400167465 platformDy=0.4000001 gap=0.0147027969 same=True fps=N/A-isolated-physics\r\nD01 step=2 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400107384 platformDy=0.4000001 gap=0.0148100853 same=True fps=N/A-isolated-physics\r\nD01 step=3 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.40006876 platformDy=0.4000001 gap=0.01487875 same=True fps=N/A-isolated-physics\r\nD01 step=4 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400043964 platformDy=0.4000001 gap=0.0149230957 same=True fps=N/A-isolated-physics\r\nD01 step=5 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400027752 platformDy=0.4000001 gap=0.0149502754 same=True fps=N/A-isolated-physics\r\nD01 step=6 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400017738 platformDy=0.4000001 gap=0.0149679184 same=True fps=N/A-isolated-physics\r\nD01 step=7 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400012016 platformDy=0.4000001 gap=0.0149793625 same=True fps=N/A-isolated-physics\r\nD01 step=8 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400007248 platformDy=0.4000001 gap=0.0149869919 same=True fps=N/A-isolated-physics\r\nD01 step=9 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.4000044 platformDy=0.399999619 gap=0.01499176 same=True fps=N/A-isolated-physics\r\nD01 step=10 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.40000248 platformDy=0.399999619 gap=0.0149946213 same=True fps=N/A-isolated-physics\r\nD01 step=11 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400001526 platformDy=0.399999619 gap=0.0149965286 same=True fps=N/A-isolated-physics\r\nD01 step=12 dt=0.02 allowed=17.6 support=17.6 command=16.6 submittedBody=16.6 postBody=17.6 dy=0.352002144 platformDy=0.352000237 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=13 dt=0.02 allowed=15.2 support=15.2 command=14.2 submittedBody=14.2 postBody=15.2 dy=0.3039999 platformDy=0.3039999 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=14 dt=0.02 allowed=12.7999992 support=12.7999992 command=11.7999992 submittedBody=11.7999992 postBody=12.7999992 dy=0.255999565 platformDy=0.255999565 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=15 dt=0.02 allowed=10.4 support=10.4 command=9.4 submittedBody=9.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=16 dt=0.02 allowed=7.999999 support=7.999999 command=6.999999 submittedBody=6.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=17 dt=0.02 allowed=5.59999943 support=5.59999943 command=4.59999943 submittedBody=4.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=18 dt=0.02 allowed=3.19999957 support=3.19999957 command=2.19999957 submittedBody=2.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=19 dt=0.02 allowed=0.799999237 support=0.799999237 command=-0.200000763 submittedBody=-0.200000763 postBody=0.7999992 dy=0.015999794 platformDy=0.015999794 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=20 dt=0.02 allowed=-1.60000086 support=-1.60000086 command=-2.60000086 submittedBody=-2.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=21 dt=0.02 allowed=-4.000001 support=-4.000001 command=-5.000001 submittedBody=-5.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=22 dt=0.02 allowed=-6.40000057 support=-6.40000057 command=-7.40000057 submittedBody=-7.40000057 postBody=-6.40000057 dy=-0.128000259 platformDy=-0.128000259 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=23 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=24 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=25 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\n"
+          },
+          {
+            "name": "GroundSupport_CarrierDescentUsesPreviousSolvedSurfaceVelocity(True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_CarrierDescentUsesPreviousSolvedSurfaceVelocity(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0219345,
+            "message": null,
+            "stackTrace": null,
+            "output": "D01 step=1 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400167465 platformDy=0.4000001 gap=0.0147027969 same=True fps=N/A-isolated-physics\r\nD01 step=2 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400107384 platformDy=0.4000001 gap=0.0148100853 same=True fps=N/A-isolated-physics\r\nD01 step=3 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.40006876 platformDy=0.4000001 gap=0.01487875 same=True fps=N/A-isolated-physics\r\nD01 step=4 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400043964 platformDy=0.4000001 gap=0.0149230957 same=True fps=N/A-isolated-physics\r\nD01 step=5 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400027752 platformDy=0.4000001 gap=0.0149502754 same=True fps=N/A-isolated-physics\r\nD01 step=6 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400017738 platformDy=0.4000001 gap=0.0149679184 same=True fps=N/A-isolated-physics\r\nD01 step=7 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400012016 platformDy=0.4000001 gap=0.0149793625 same=True fps=N/A-isolated-physics\r\nD01 step=8 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400007248 platformDy=0.4000001 gap=0.0149869919 same=True fps=N/A-isolated-physics\r\nD01 step=9 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.4000044 platformDy=0.399999619 gap=0.01499176 same=True fps=N/A-isolated-physics\r\nD01 step=10 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.40000248 platformDy=0.399999619 gap=0.0149946213 same=True fps=N/A-isolated-physics\r\nD01 step=11 dt=0.02 allowed=20 support=20 command=19 submittedBody=19 postBody=20 dy=0.400001526 platformDy=0.399999619 gap=0.0149965286 same=True fps=N/A-isolated-physics\r\nD01 step=12 dt=0.02 allowed=17.6 support=17.6 command=16.6 submittedBody=16.6 postBody=17.6 dy=0.352002144 platformDy=0.352000237 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=13 dt=0.02 allowed=15.2 support=15.2 command=14.2 submittedBody=14.2 postBody=15.2 dy=0.3039999 platformDy=0.3039999 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=14 dt=0.02 allowed=12.7999992 support=12.7999992 command=11.7999992 submittedBody=11.7999992 postBody=12.7999992 dy=0.255999565 platformDy=0.255999565 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=15 dt=0.02 allowed=10.4 support=10.4 command=9.4 submittedBody=9.4 postBody=10.4 dy=0.208000183 platformDy=0.208000183 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=16 dt=0.02 allowed=7.999999 support=7.999999 command=6.999999 submittedBody=6.999999 postBody=7.999999 dy=0.159999847 platformDy=0.159999847 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=17 dt=0.02 allowed=5.59999943 support=5.59999943 command=4.59999943 submittedBody=4.59999943 postBody=5.59999943 dy=0.112000465 platformDy=0.112000465 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=18 dt=0.02 allowed=3.19999957 support=3.19999957 command=2.19999957 submittedBody=2.19999957 postBody=3.19999957 dy=0.06400013 platformDy=0.06400013 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=19 dt=0.02 allowed=0.799999237 support=0.799999237 command=-0.200000763 submittedBody=-0.200000763 postBody=0.7999992 dy=0.015999794 platformDy=0.015999794 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=20 dt=0.02 allowed=-1.60000086 support=-1.60000086 command=-2.60000086 submittedBody=-2.60000086 postBody=-1.60000086 dy=-0.031999588 platformDy=-0.031999588 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=21 dt=0.02 allowed=-4.000001 support=-4.000001 command=-5.000001 submittedBody=-5.000001 postBody=-4.000001 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=22 dt=0.02 allowed=-6.40000057 support=-6.40000057 command=-7.40000057 submittedBody=-7.40000057 postBody=-6.40000057 dy=-0.128000259 platformDy=-0.128000259 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=23 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=24 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\nD01 step=25 dt=0.02 allowed=-4 support=-4 command=-5 submittedBody=-5 postBody=-4 dy=-0.07999992 platformDy=-0.07999992 gap=0.014998436 same=True fps=N/A-isolated-physics\r\n"
+          },
+          {
+            "name": "GroundSupport_ContactWindowSeparatesNoiseSlopeLaunchAndCoyote",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ContactWindowSeparatesNoiseSlopeLaunchAndCoyote",
+            "state": "Passed",
+            "durationSeconds": 0.0214928,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\n"
+          },
+          {
+            "name": "GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(InitialVelocity)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(InitialVelocity)",
+            "state": "Passed",
+            "durationSeconds": 0.0146392,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(ForcedRise)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ExplicitLaunchBelowToleranceStillConsumes(ForcedRise)",
+            "state": "Passed",
+            "durationSeconds": 0.0347413,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_PhysicalEdgeDepartureExpiresWithoutNewGround",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PhysicalEdgeDepartureExpiresWithoutNewGround",
+            "state": "Passed",
+            "durationSeconds": 0.0333148,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\n"
+          },
+          {
+            "name": "GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "state": "Failed",
+            "durationSeconds": 0.4567644,
+            "message": "  Expected: greater than 1.08988178f\r\n  But was:  1.04252696f\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests+<GroundSupport_PrecisionPlatformRenderRateJumpMatrix>d__183.MoveNext () [0x0049c] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerGroundSupportTests.cs:209\r\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1405238725ab\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r\n",
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\n"
+          },
+          {
+            "name": "GroundSupport_PrecisionSlopeRetainsOpportunityAcrossMovementPhases",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionSlopeRetainsOpportunityAcrossMovementPhases",
+            "state": "Passed",
+            "durationSeconds": 0.0230727,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(19.9999714, -1);(19.9999714, 0);(-20, -0.0006093);(-19.9999714, -1)\r\n0\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n1\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n2\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n3\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n4\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n5\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n6\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n7\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n8\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n9\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n10\t(1.199982, 1.82986259E-05)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n11\t(1.999973, 3.04579735E-05)\tContact\t(-1.5232511E-05, 1)\t1.98861763E-08\r\n12\t(2.799964, 4.26769257E-05)\tContact\t(-1.5232511E-05, 1)\t-6.6382E-09\r\n13\t(3.59995484, 5.48362732E-05)\tContact\t(-1.5232511E-05, 1)\t2.64438853E-08\r\n14\t(4.39994574, 6.699562E-05)\tContact\t(-1.5232511E-05, 1)\t-7.867557E-11\r\n15\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-2.6601235E-08\r\n16\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n17\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n18\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n19\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n20\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n21\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n22\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n23\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n24\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n25\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n26\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n27\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n28\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n29\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n30\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n31\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n32\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n33\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n34\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n35\t(3.99998188, 6.0915947E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n36\t(2.99997282, 4.57167625E-05)\tContact\t(-1.5232511E-05, 1)\t-1.38211576E-08\r\n37\t(1.99996388, 3.04579735E-05)\tContact\t(-1.5232511E-05, 1)\t1.9643462E-08\r\n38\t(0.999954939, 1.52587891E-05)\tContact\t(-1.5232511E-05, 1)\t-6.498379E-09\r\n39\t(-8.965623E-06, 0)\tContact\t(-1.5232511E-05, 1)\t2.69644236E-08\r\n40\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.36568951E-10\r\n41\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n42\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n43\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n44\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n45\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n46\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n47\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n48\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n49\t(-8.965856E-06, 0)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n50\t(-0.800017834, -1.21593475E-05)\tContact\t(-1.5232511E-05, 1)\t1.365725E-10\r\n51\t(-1.60002673, -2.43783E-05)\tContact\t(-1.5232511E-05, 1)\t2.6932943E-08\r\n52\t(-2.40003586, -3.65376472E-05)\tContact\t(-1.5232511E-05, 1)\t-5.87494675E-09\r\n53\t(-3.20004487, -4.87566E-05)\tContact\t(-1.5232511E-05, 1)\t2.092544E-08\r\n54\t(-4.000054, -6.0915947E-05)\tContact\t(-1.5232511E-05, 1)\t-1.18806351E-08\r\n55\t(-4.80006266, -7.31349E-05)\tContact\t(-1.5232511E-05, 1)\t1.49179353E-08\r\n56\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.78917716E-08\r\n57\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n58\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n59\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n60\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n61\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n62\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n63\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n64\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n65\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n66\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n67\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n68\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n69\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n70\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n71\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n72\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n73\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n74\t(-5.000009, -7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n75\t(-3.80001831, -5.787611E-05)\tContact\t(-1.5232511E-05, 1)\t-1.20428574E-08\r\n76\t(-2.60002756, -3.95774841E-05)\tContact\t(-1.5232511E-05, 1)\t7.710761E-09\r\n77\t(-1.40003657, -2.13384628E-05)\tContact\t(-1.5232511E-05, 1)\t2.746438E-08\r\n78\t(-0.200045615, -3.03983688E-06)\tContact\t(-1.5232511E-05, 1)\t-1.239028E-08\r\n79\t(0.9999454, 1.52587891E-05)\tContact\t(-1.5232511E-05, 1)\t7.36016048E-09\r\n80\t(1.79993641, 2.74181366E-05)\tContact\t(-1.5232511E-05, 1)\t2.71096923E-08\r\n81\t(2.59992743, 3.95774841E-05)\tContact\t(-1.5232511E-05, 1)\t5.85316962E-10\r\n82\t(3.39991832, 5.17964363E-05)\tContact\t(-1.5232511E-05, 1)\t-2.59390589E-08\r\n83\t(4.199909, 6.39557838E-05)\tContact\t(-1.5232511E-05, 1)\t7.14302573E-09\r\n84\t(4.99990034, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t-1.93795344E-08\r\n85\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.36989184E-08\r\n86\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n87\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n88\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n89\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n90\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n91\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n92\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n93\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n94\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n95\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n96\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n97\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n98\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\n99\t(4.999991, 7.6174736E-05)\tContact\t(-1.5232511E-05, 1)\t1.23188677E-08\r\npositiveSamples=50; legacyRejectedSamples=49\r\n"
+          },
+          {
+            "name": "GroundSupport_ProbeWithoutContactCannotLandOrRefill",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_ProbeWithoutContactCannotLandOrRefill",
+            "state": "Passed",
+            "durationSeconds": 0.0199831,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundSupport_SpentResourcesStaySpentAcrossSlopeAndConsumedContact",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_SpentResourcesStaySpentAcrossSlopeAndConsumedContact",
+            "state": "Passed",
+            "durationSeconds": 0.1331917,
+            "message": null,
+            "stackTrace": null,
+            "output": "composite=(19.9999714, -1);(19.9999714, 0);(-20, -0.0006093);(-19.9999714, -1)\r\n"
+          },
+          {
+            "name": "LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0137896,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingContactStepPrioritizesHardPauseOverJumpButNormalYields(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0144953,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingLostSupportImmediatelyFalls",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingLostSupportImmediatelyFalls",
+            "state": "Passed",
+            "durationSeconds": 0.0215648,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingRequiresContactAndUsesLastStepRatherThanMaximumSpeed",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingRequiresContactAndUsesLastStepRatherThanMaximumSpeed",
+            "state": "Passed",
+            "durationSeconds": 0.0157197,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingSpawnOnGroundDoesNotPause",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingSpawnOnGroundDoesNotPause",
+            "state": "Passed",
+            "durationSeconds": 0.0141905,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LeavingEdge_AfterCoyoteExpires_RejectsJump",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LeavingEdge_AfterCoyoteExpires_RejectsJump",
+            "state": "Passed",
+            "durationSeconds": 0.015036,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(0,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(0,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0190694,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(3,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(3,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0154489,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NaturalEdgeDeparture_AllowsOnlyTheCoyoteWindow(4,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0177143,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(EndHold,0.0f,14.0f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(EndHold,0.0f,14.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0165741,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(LimitSpeed,5.0f,5.0f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(LimitSpeed,5.0f,5.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0156157,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(MultiplySpeed,0.5f,7.0f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.OrdinaryRhythm_ReleasedBufferedInputAndReleaseModes(MultiplySpeed,0.5f,7.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0155106,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PowersSurviveStateTransitions_ContinuousSupportDoesNotRefillSpentUses",
+            "fullName": "Game.Player.Tests.PlayerStateTests.PowersSurviveStateTransitions_ContinuousSupportDoesNotRefillSpentUses",
+            "state": "Passed",
+            "durationSeconds": 0.0169479,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_JumpInheritsOnceAndStopClearsOwnership",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_JumpInheritsOnceAndStopClearsOwnership",
+            "state": "Passed",
+            "durationSeconds": 0.0165531,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_OneWayDropDoesNotRetainCarrier",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_OneWayDropDoesNotRetainCarrier",
+            "state": "Passed",
+            "durationSeconds": 0.0162739,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TeleportDoesNotCarryPlayerToResetPosition",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TeleportDoesNotCarryPlayerToResetPosition",
+            "state": "Passed",
+            "durationSeconds": 0.015911,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(2,0)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(2,0)",
+            "state": "Passed",
+            "durationSeconds": 0.0169738,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(0,2)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(0,2)",
+            "state": "Passed",
+            "durationSeconds": 0.0187107,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_TranslatesWithoutDoubleCounting(0,-2)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_TranslatesWithoutDoubleCounting(0,-2)",
+            "state": "Passed",
+            "durationSeconds": 0.014175,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Support_WindAddsOnceAndDisableDropsReference",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Support_WindAddsOnceAndDisableDropsReference",
+            "state": "Passed",
+            "durationSeconds": 0.015793,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,45 @@
+ADDED Game\Documentation\platformer-2d\glossary.md
+ADDED Game\Documentation\platformer-2d\glossary.md.meta
+ADDED Game\Documentation\platformer-2d\ground-support-contract.md
+ADDED Game\Documentation\platformer-2d\ground-support-contract.md.meta
+CHANGED Game\Documentation\platformer-2d\README.md
+ADDED Game\Module\Entity\EntityGroundContact2D.cs
+ADDED Game\Module\Entity\EntityGroundContact2D.cs.meta
+CHANGED Game\Module\Entity\EntitySensors2D.cs
+CHANGED Game\Module\Player\PlayerActionState.cs
+CHANGED Game\Module\Player\PlayerController.cs
+CHANGED Game\Module\Player\PlayerExternalMotion.cs
+CHANGED Game\Module\Player\PlayerJumpWindow.cs
+CHANGED Game\Module\Player\PlayerLandingMotion.cs
+CHANGED Game\Module\Player\PlayerSupportMotion.cs
+CHANGED Game\Module\Player\Editor\PlayerFsmObservationSource.cs
+CHANGED Game\Module\Player\States\PlayerAirState.cs
+CHANGED Game\Module\Player\States\PlayerGroundState.cs
+CHANGED Game\Module\Player\Tests\PlayerAnimationTests.cs
+CHANGED Game\Module\Player\Tests\PlayerGroundPhaseTests.cs
+ADDED Game\Module\Player\Tests\PlayerGroundSupportTests.cs
+ADDED Game\Module\Player\Tests\PlayerGroundSupportTests.cs.meta
+CHANGED Game\Module\Player\Tests\PlayerJumpRuleTests.cs
+CHANGED Game\Module\Player\Tests\PlayerRuntimeCandidateTests.cs
+CHANGED Game\Module\Player\Tests\PlayerStateTests.cs
+CHANGED Game\Module\Player\Tests\PlayerVerticalMotionTests.cs
+ADDED Ember\Editor.meta
+ADDED Editor\EmberDeployedTemplates.json
+ADDED Editor\EmberDeployedTemplates.json.meta
+ADDED Editor\EmberEditingTemplate.json
+ADDED Editor\EmberEditingTemplate.json.meta
+{
+    "schemaVersion": 2,
+    "id": "base",
+    "displayName": "基础模板",
+    "description": "Ember 框架基础演示：完整状态继承 + 演示 UI（GM 页/主菜单/设置/游戏内）+ 演示模块（流送/全局灯光/存档/红点）+ 4 个完整场景。用户只需在状态钩子函数中填写业务代码。 内置跨模板公共 UI 多语言源表与注册，使用框架多语言中心编辑和翻译。",
+    "version": "0.8.3",
+    "frameworkVersion": "0.21.0",
+    "channel": "stable",
+    "order": 1,
+    "parentId": "",
+    "parentVersion": "",
+    "parentContentHash": "",
+    "contentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+    "versionedContentHash": "1270ce6dfcae3c01d050c09ecfd60337"
+}

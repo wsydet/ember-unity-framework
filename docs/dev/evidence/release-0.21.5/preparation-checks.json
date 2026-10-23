@@ -1,0 +1,47 @@
+{
+  "preparedVersion": "0.21.5",
+  "templateVersion": "0.11.2",
+  "templateHash": "986ceff5bf74695b8c82a33347a48d7d",
+  "remotePublishedVersion": "0.21.4",
+  "remoteCommit": "d86c999e8182f7da1fafda8728066ee8f395ea2a",
+  "targetTagExists": false,
+  "indexEmpty": true,
+  "gitCommitOrPushPerformed": false,
+  "dependencyCount": 56,
+  "changedDependencyKeys": [
+    "com.ember"
+  ],
+  "sharedBinaries": {
+    "standardCommand": "python scripts/check-shared-binaries.py --revision : --checkout",
+    "firstAttempt": "sandbox temp directory PermissionError",
+    "retest": "same script with tempfile.tempdir inside repository .utmp/release-0.21.5 passed",
+    "cleanCheckoutAutocrlf": [
+      false,
+      true
+    ]
+  },
+  "sharedFonts": "static workspace and Git index checks passed; no rendering claim",
+  "bundle": {
+    "standardCheck": "blocked by existing unrelated template skill changes under .agents/skills",
+    "supplementalVerification": "11 catalog skills, 32 bundle exact SHA256 hashes; current/HEAD/recorded source commit text identical",
+    "lineEndingOnlyDifferences": [
+      "ember-doc-maintenance/scripts/audit_docs.py",
+      "ember-eui-build/agents/openai.yaml",
+      "ember-eui-build/references/editor-api.md",
+      "ember-eui-build/SKILL.md"
+    ],
+    "sourceCommit": "ebba92e3892d8407c73c4a3ce6d06a4bc99329e2",
+    "rebuilt": false
+  },
+  "unity": {
+    "reconnectedOnRetry": 5,
+    "compileFinishedUnixMs": 1792781030532,
+    "domainReloadFinishedUnixMs": 1792781051102,
+    "csharpCompileErrorsObserved": 0,
+    "mcpConnectionLogs": 7,
+    "templateGraphIssues": 0
+  },
+  "diffCheck": "passed",
+  "brokenNewDocumentLinks": 0,
+  "scope": "local preparation only; no Windward writes, upgrade or deployment"
+}

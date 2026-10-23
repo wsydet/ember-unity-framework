@@ -1,0 +1,297 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "390bcb5212f94d01b95dc15c11c1af0d",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792780095219,
+      "finished_unix_ms": 1792780106411,
+      "last_update_unix_ms": 1792780106411,
+      "progress": {
+        "completed": 21,
+        "total": 21,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+        "last_finished_unix_ms": 1792780106365,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.Animation_StableLeafDoesNotReplayAndSameLeafReentryDoes",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.EdgeHover_JumpAndLandingCancel_PauseFreezes_AndAirborneStartDoesNotGrantHover",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.TerminalSpeed_ClampsExistingAndNextPhysicsStepVelocity_AndReleasesOnJump",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(1.0f,0.75f)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-1.0f,0.75f)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(4.0f,0.75f)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-5.0f,1.5f)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(5.0f,1.0f)",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          },
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+            "message": "  Expected: True\r\n  But was:  False\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 21,
+          "passed": 6,
+          "failed": 15,
+          "skipped": 0,
+          "durationSeconds": 0.6753562,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "Animation_StableLeafDoesNotReplayAndSameLeafReentryDoes",
+            "fullName": "Game.Player.Tests.PlayerStateTests.Animation_StableLeafDoesNotReplayAndSameLeafReentryDoes",
+            "state": "Failed",
+            "durationSeconds": 0.1984277,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.Animation_StableLeafDoesNotReplayAndSameLeafReentryDoes () [0x000ad] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerAnimationTests.cs:96\r\n",
+            "output": ""
+          },
+          {
+            "name": "BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(5,True)",
+            "state": "Failed",
+            "durationSeconds": 0.0174878,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary (System.Int32 elapsedSteps, System.Boolean expectedJump) [0x00081] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:346\r\n",
+            "output": ""
+          },
+          {
+            "name": "BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary(6,False)",
+            "state": "Failed",
+            "durationSeconds": 0.0195922,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.BufferExpiry_UsesElapsedPhysicsTime_AndHasAnExactBoundary (System.Int32 elapsedSteps, System.Boolean expectedJump) [0x00081] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:346\r\n",
+            "output": ""
+          },
+          {
+            "name": "DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0297198,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DashCommitsOnce_LocksDirection_ReleaseDoesNotEnd(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0169941,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding",
+            "state": "Failed",
+            "durationSeconds": 0.0149873,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.DisabledBufferKeepsImmediatePressButDoesNotQueueLanding () [0x000fd] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:250\r\n",
+            "output": ""
+          },
+          {
+            "name": "DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+            "fullName": "Game.Player.Tests.PlayerStateTests.DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer",
+            "state": "Failed",
+            "durationSeconds": 0.0165059,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.DisabledCoyoteDoesNotDisableGroundJumpOrInputBuffer () [0x000d2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:263\r\n",
+            "output": ""
+          },
+          {
+            "name": "EdgeHover_JumpAndLandingCancel_PauseFreezes_AndAirborneStartDoesNotGrantHover",
+            "fullName": "Game.Player.Tests.PlayerStateTests.EdgeHover_JumpAndLandingCancel_PauseFreezes_AndAirborneStartDoesNotGrantHover",
+            "state": "Failed",
+            "durationSeconds": 0.0160145,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.EdgeHover_JumpAndLandingCancel_PauseFreezes_AndAirborneStartDoesNotGrantHover () [0x00151] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:74\r\n",
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0179306,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,False)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,False)",
+            "state": "Passed",
+            "durationSeconds": 0.0175554,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(False,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0152265,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,True)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundPhases_DashOrJumpPriorityDoesNotDuplicateCommit(True,True)",
+            "state": "Passed",
+            "durationSeconds": 0.0153351,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "fullName": "Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState",
+            "state": "Failed",
+            "durationSeconds": 0.0165512,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.LandingBuffer_ReentersJumpEvenIfPhysicsSkippedTheFallState () [0x0007c] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:500\r\n",
+            "output": ""
+          },
+          {
+            "name": "NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "fullName": "Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps",
+            "state": "Failed",
+            "durationSeconds": 0.0153073,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.NewPress_RefreshesOneBuffer_WithoutQueuingMultipleJumps () [0x0009d] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:387\r\n",
+            "output": ""
+          },
+          {
+            "name": "TerminalSpeed_ClampsExistingAndNextPhysicsStepVelocity_AndReleasesOnJump",
+            "fullName": "Game.Player.Tests.PlayerStateTests.TerminalSpeed_ClampsExistingAndNextPhysicsStepVelocity_AndReleasesOnJump",
+            "state": "Failed",
+            "durationSeconds": 0.0170417,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.TerminalSpeed_ClampsExistingAndNextPhysicsStepVelocity_AndReleasesOnJump () [0x00137] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:37\r\n",
+            "output": ""
+          },
+          {
+            "name": "VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(1.0f,0.75f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(1.0f,0.75f)",
+            "state": "Failed",
+            "durationSeconds": 0.0199345,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection (System.Single speed, System.Single multiplier) [0x000c2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:19\r\n",
+            "output": ""
+          },
+          {
+            "name": "VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-1.0f,0.75f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-1.0f,0.75f)",
+            "state": "Failed",
+            "durationSeconds": 0.0210781,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection (System.Single speed, System.Single multiplier) [0x000c2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:19\r\n",
+            "output": ""
+          },
+          {
+            "name": "VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(4.0f,0.75f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(4.0f,0.75f)",
+            "state": "Failed",
+            "durationSeconds": 0.0187981,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection (System.Single speed, System.Single multiplier) [0x000c2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:19\r\n",
+            "output": ""
+          },
+          {
+            "name": "VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-5.0f,1.5f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(-5.0f,1.5f)",
+            "state": "Failed",
+            "durationSeconds": 0.0145801,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection (System.Single speed, System.Single multiplier) [0x000c2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:19\r\n",
+            "output": ""
+          },
+          {
+            "name": "VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(5.0f,1.0f)",
+            "fullName": "Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection(5.0f,1.0f)",
+            "state": "Failed",
+            "durationSeconds": 0.015198,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.VerticalGravity_ApexHasPriorityAndDoesNotDependOnDirection (System.Single speed, System.Single multiplier) [0x000c2] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerVerticalMotionTests.cs:19\r\n",
+            "output": ""
+          },
+          {
+            "name": "ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+            "fullName": "Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote",
+            "state": "Failed",
+            "durationSeconds": 0.0176885,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests.SettleGroundContact (Game.Player.PlayerController player, System.Single x) [0x00030] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:314\r\nat Game.Player.Tests.PlayerStateTests.ZeroWindows_AllowImmediateGroundPress_ButNoAirBufferOrCoyote () [0x0015e] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerJumpRuleTests.cs:375\r\n",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

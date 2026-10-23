@@ -16,14 +16,14 @@ namespace Game.Player
                 sites: new[] { PlayerRule.Fixed<PlayerGroundState>(40, (state, ctx) => ctx.Dash.CanStart(false), "ctx.Dash.CanStart(false)") });
         public static readonly EmberFsmTransition<PlayerContext, PlayerGroundState> LeaveGround =
             new("leave-ground", "fall", description: "失去地面支撑，进入下落",
-                sites: new[] { PlayerRule.Fixed<PlayerGroundState>(50, (state, ctx) => !ctx.Sensors.IsGrounded, "!ctx.Sensors.IsGrounded", stopOnMatch: true) });
+                sites: new[] { PlayerRule.Fixed<PlayerGroundState>(50, (state, ctx) => !ctx.JumpWindow.HasGroundSupport, "!ctx.JumpWindow.HasGroundSupport", stopOnMatch: true) });
         public static readonly EmberFsmTransition<PlayerContext, PlayerGroundState> Jump =
             new("jump", "jump", description: "消费有效输入与地面/离地宽限机会，进入跳跃",
                 sites: new[] { PlayerRule.Fixed<PlayerGroundState>(20, (state, ctx) => ctx.CanStartJump, "ctx.CanStartJump") });
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public override EmberFsmEntryDecision CanEnter() => Context.Sensors.IsGrounded && Context.Motor.Velocity.y <= 0
+        public override EmberFsmEntryDecision CanEnter() => Context.JumpWindow.HasGroundSupport
             ? EmberFsmEntryDecision.Allow : EmberFsmEntryDecision.Redirect("fall");
         public override void FixedUpdate(float deltaTime)
         {

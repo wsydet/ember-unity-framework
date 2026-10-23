@@ -21,6 +21,9 @@ namespace Game.Entity
         #region 内部参数
         private Entity2D _entity;
         private readonly List<RaycastHit2D> _hits = new(8);
+        private readonly List<ContactPoint2D> _contacts = new(8);
+        /// <summary>真实物理接触；IsGrounded/Ground 仍保留探测距离的几何语义。</summary>
+        public EntityGroundContact2D GroundContact { get; private set; }
         public bool IsGrounded { get; private set; }
         public Collider2D Ground { get; private set; }
         /// <summary>实际接触并提供支撑的单向平台；不是单纯 Cast 穿过的表面。</summary>
@@ -93,11 +96,27 @@ namespace Game.Entity
             Ground = null;
             OneWayGround = null;
             IsGrounded = false;
+            GroundContact = default;
             LeftWall = null; RightWall = null;
             LeftWallNormal = Vector2.zero; RightWallNormal = Vector2.zero;
             if (_shape == null || !_shape.enabled || !_shape.gameObject.activeInHierarchy) return;
             var filter = new ContactFilter2D { useTriggers = false };
             filter.SetLayerMask(_groundLayers);
+            _shape.GetContacts(filter, _contacts);
+            foreach (var contact in _contacts)
+            {
+                var other = _entity.Owns(contact.collider) ? contact.otherCollider : contact.collider;
+                if (!contact.enabled || !Detectable(other) || contact.normal.y < _minimumGroundNormal) continue;
+                // GetContacts 是上一物理步缓存。瞬移后 SyncTransforms 不会重算它，先排除已远离的旧接触。
+                var distance = _shape.Distance(other);
+                if (!distance.isValid || distance.distance > _groundDistance) continue;
+                if (GroundContact.HasContact && contact.normal.y <= GroundContact.Normal.y) continue;
+                var actor = _shape.attachedRigidbody;
+                var surface = other.attachedRigidbody;
+                GroundContact = new EntityGroundContact2D(other, contact.point, contact.normal,
+                    actor != null ? actor.GetPointVelocity(contact.point) : Vector2.zero,
+                    surface != null ? surface.GetPointVelocity(contact.point) : Vector2.zero);
+            }
             _shape.Cast(Vector2.down, filter, _hits, _groundDistance, true);
             foreach (var hit in _hits)
             {
@@ -106,6 +125,12 @@ namespace Game.Entity
                 if (OneWayEffector(Ground) != null) OneWayGround = Ground;
                 IsGrounded = true;
                 break;
+            }
+            if (GroundContact.HasContact)
+            {
+                Ground = GroundContact.Collider;
+                IsGrounded = true;
+                OneWayGround = OneWayEffector(Ground) != null ? Ground : null;
             }
             LeftWall = SampleWall(Vector2.left, out var leftNormal);
             RightWall = SampleWall(Vector2.right, out var rightNormal);

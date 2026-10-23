@@ -197,10 +197,15 @@ namespace Game.Player.Tests
             {
                 var candidate = player.PrepareSnapshot(new object(), _config, snapshot, _input.Service);
                 player.CommitSnapshot(candidate, session);
-                Assert.That(player.Context.JumpWindow.HasGroundSupport, Is.True);
+                Assert.That(player.Context.JumpWindow.HasGroundSupport, Is.False, "同步恢复没有物理步，尚未建立真实接触");
                 Assert.That(player.CurrentStateId, Is.EqualTo("fall"), "正式图初始仍从 Air/Fall 进入");
             }
             player.Context.Abilities.TryGet("test.air", out var restored);
+            for (int i = 0; i < 10 && !player.Context.JumpWindow.HasGroundSupport; i++)
+            {
+                await UniTask.WaitForFixedUpdate(); player.FixedTick(.02f);
+                Assert.That(restored.RemainingUses, Is.EqualTo(1), "首次接触延续恢复基线，不补资源");
+            }
             player.FixedTick(.02f); Assert.That(restored.RemainingUses, Is.EqualTo(1));
             Assert.That(player.CurrentStateId, Is.EqualTo("idle"));
             var body = player.GetComponent<Rigidbody2D>(); body.position = new Vector2(0, 4);
@@ -208,6 +213,8 @@ namespace Game.Player.Tests
             Assert.That(player.Context.JumpWindow.HasGroundSupport, Is.False);
             body.position = new Vector2(0, .9f); player.transform.position = body.position;
             body.linearVelocity = Vector2.zero; Physics2D.SyncTransforms(); player.FixedTick(.02f);
+            for (int i = 0; i < 10 && !player.Context.JumpWindow.HasGroundSupport; i++)
+            { await UniTask.WaitForFixedUpdate(); player.FixedTick(.02f); }
             Assert.That(restored.RemainingUses, Is.EqualTo(2));
         }
 

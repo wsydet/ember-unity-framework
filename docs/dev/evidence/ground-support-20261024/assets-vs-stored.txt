@@ -1,0 +1,15 @@
+ADDED Game\Documentation\platformer-2d\glossary.md
+ADDED Game\Documentation\platformer-2d\glossary.md.meta
+CHANGED Game\Documentation\platformer-2d\README.md
+ADDED Game\Module\Entity\EntityGroundContact2D.cs
+ADDED Game\Module\Entity\EntityGroundContact2D.cs.meta
+CHANGED Game\Module\Entity\EntitySensors2D.cs
+CHANGED Game\Module\Player\PlayerActionState.cs
+CHANGED Game\Module\Player\PlayerController.cs
+CHANGED Game\Module\Player\PlayerExternalMotion.cs
+CHANGED Game\Module\Player\PlayerJumpWindow.cs
+CHANGED Game\Module\Player\PlayerLandingMotion.cs
+CHANGED Game\Module\Player\PlayerSupportMotion.cs
+ADDED Game\Module\Player\Tests\PlayerGroundSupportTests.cs
+ADDED Game\Module\Player\Tests\PlayerGroundSupportTests.cs.meta
+CHANGED Game\Module\Player\Tests\PlayerStateTests.cs

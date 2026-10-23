@@ -179,7 +179,11 @@ namespace Game.Player
                         lease.PendingSource, lease.PendingFlight, PlayerFlightOrigin.Action);
                     lease.NewVertical = false;
                 }
-                if (lease.Vertical.HasValue) _context.Motor.SetVerticalVelocity(lease.Vertical.Value);
+                if (lease.Vertical.HasValue)
+                {
+                    _context.Motor.SetVerticalVelocity(lease.Vertical.Value);
+                    if (lease.Vertical.Value > 0) _context.JumpWindow.Consume();
+                }
                 if (!lease.HoldVertical) lease.Vertical = null;
                 if (lease.Gravity.HasValue) _context.Motor.SetGravityScale(lease.Gravity.Value);
             }

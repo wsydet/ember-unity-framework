@@ -16,7 +16,7 @@ namespace Game.Player.Tests
             Assert.That(player.Context.Motor.Body.gravityScale, Is.EqualTo(3 * multiplier));
             Keys(Key.D); Decide(player);
             Assert.That(player.Context.Motor.Body.gravityScale, Is.EqualTo(3 * multiplier));
-            Place(player, new Vector2(0, .9f), -1); Decide(player);
+            SettleGroundContact(player); Decide(player);
             Assert.That(player.Context.Motor.Body.gravityScale, Is.EqualTo(3), "落地必须恢复基础重力");
         }
 
@@ -34,7 +34,7 @@ namespace Game.Player.Tests
             Assert.That(player.Context.Motor.Velocity.y, Is.EqualTo(-3).Within(.00001));
             Place(player, new Vector2(14, 10), -20); Simulate(player);
             Assert.That(player.Context.Motor.Velocity.y, Is.EqualTo(-3).Within(.00001));
-            Place(player, new Vector2(0, .9f), -1); Keys(Key.Space); Decide(player);
+            SettleGroundContact(player); Keys(Key.Space); Decide(player);
             Assert.That(player.Context.Motor.Velocity.y, Is.EqualTo(10));
             Assert.That(player.Context.Motor.Body.gravityScale, Is.EqualTo(3));
         }
@@ -70,10 +70,11 @@ namespace Game.Player.Tests
             Assert.That(player.Context.Motor.Velocity.y, Is.EqualTo(10));
             Simulate(player);
             Assert.That(player.Context.VerticalMotion.HoverRemaining, Is.Zero, "主动起跳不能触发悬停");
-            Keys(); Place(player, new Vector2(0, .9f), -1); Decide(player);
+            Decide(player); // 采样已经完成的离地物理步。
+            Keys(); SettleGroundContact(player); Decide(player);
             Place(player, new Vector2(14, 2), -1); Decide(player);
             Assert.That(player.Context.VerticalMotion.HoverRemaining, Is.GreaterThan(0));
-            Place(player, new Vector2(0, .9f), -1); Decide(player);
+            SettleGroundContact(player); Decide(player);
             Assert.That(player.Context.VerticalMotion.HoverRemaining, Is.Zero);
             Assert.That(player.Context.Motor.Body.gravityScale, Is.EqualTo(3));
             player.Stop();

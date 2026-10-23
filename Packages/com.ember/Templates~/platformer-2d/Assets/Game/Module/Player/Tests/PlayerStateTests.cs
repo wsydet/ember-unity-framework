@@ -107,7 +107,8 @@ namespace Game.Player.Tests
             for (int i = 0; i < 150; i++)
             {
                 Simulate(player);
-                if (player.CurrentStateId == "idle" || player.CurrentStateId == "move") return;
+                if (player.Context.JumpWindow.HasGroundSupport &&
+                    (player.CurrentStateId == "idle" || player.CurrentStateId == "move")) return;
             }
             Assert.Fail("玩家没有在 3 秒内落地，当前状态：" + player.CurrentStateId);
         }

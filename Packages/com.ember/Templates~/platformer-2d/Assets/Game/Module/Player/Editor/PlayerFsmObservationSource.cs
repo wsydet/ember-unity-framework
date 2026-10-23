@@ -16,6 +16,8 @@ namespace Game.Player.Editor
             var result = new StringBuilder();
             result.Append($"运动控制 {context.MotionControl.Observation}\n");
             result.Append(context.ExternalMotion.Describe()).Append('\n');
+            var support = context.JumpWindow;
+            result.Append($"支撑 {support.HasGroundSupport} · 原因 {support.SupportReason} · 接触 {support.Contact.Collider?.name ?? "无"} · 法线 {support.Contact.Normal.ToString("R")} · 相对分离 {support.Contact.SeparationSpeed:R} u/s · 等待离开 {support.AwaitingSeparation}\n");
             var combat = context.Combat;
             if (combat != null)
             {

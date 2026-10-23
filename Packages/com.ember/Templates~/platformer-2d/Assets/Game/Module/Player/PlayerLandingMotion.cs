@@ -8,7 +8,7 @@ namespace Game.Player
         #region 内部参数
         private readonly PlayerContext _context;
         private bool _airborne;
-        private float _stepVelocity;
+        private Vector2 _stepVelocity;
         public bool IsActive { get; private set; }
         public bool IsHard { get; private set; }
         public float Remaining { get; private set; }
@@ -23,16 +23,17 @@ namespace Game.Player
         internal void Observe()
         {
             var sensors = _context.Sensors;
-            // 探地距离用于既有起跳宽限；落地事件必须等到真实碰撞支撑。
+            // 探地仅用于区分出生附近的微小沉降；落地消费统一真实支撑。
             // 出生/恢复时已在探地范围内的微小沉降不构成一次空中落地。
-            bool supported = sensors.IsGrounded && sensors.Ground != null &&
-                sensors.Shape.IsTouching(sensors.Ground) && _context.Motor.Velocity.y <= 0;
-            Pending = _airborne && supported && _stepVelocity < 0 && !_context.Ledge.IsActive && !_context.DropThrough.IsActive;
-            if (Pending) ImpactSpeed = -_stepVelocity;
+            bool supported = _context.JumpWindow.HasGroundSupport;
+            var contact = _context.JumpWindow.Contact;
+            float impact = -Vector2.Dot(_stepVelocity - contact.SurfaceVelocity, contact.Normal);
+            Pending = _airborne && supported && impact > 0 && !_context.Ledge.IsActive && !_context.DropThrough.IsActive;
+            if (Pending) ImpactSpeed = impact;
             if (supported) _airborne = false;
             else if (!sensors.IsGrounded) _airborne = true;
         }
-        internal void RecordStep() => _stepVelocity = _context.Motor.Velocity.y;
+        internal void RecordStep() => _stepVelocity = _context.Motor.Velocity;
         internal void Begin(bool hard)
         {
             IsActive = true; IsHard = hard; Pending = false;

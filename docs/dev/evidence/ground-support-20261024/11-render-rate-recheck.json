@@ -1,0 +1,61 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "303a3acd0430497f88b9b193496cdf44",
+      "status": "failed",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792780552178,
+      "finished_unix_ms": 1792780563710,
+      "last_update_unix_ms": 1792780563710,
+      "progress": {
+        "completed": 1,
+        "total": 1,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+        "last_finished_unix_ms": 1792780563694,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "message": "  Expected string length 10 but was 4. Strings differ at index 0.\r\n  Expected: \"decelerate\"\r\n  But was:  \"move\"\r\n  -----------^\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0,
+          "durationSeconds": 3.2322838,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "fullName": "Game.Player.Tests.PlayerStateTests.GroundSupport_PrecisionPlatformRenderRateJumpMatrix",
+            "state": "Failed",
+            "durationSeconds": 3.1844927,
+            "message": "  Expected string length 10 but was 4. Strings differ at index 0.\r\n  Expected: \"decelerate\"\r\n  But was:  \"move\"\r\n  -----------^\r\n",
+            "stackTrace": "at Game.Player.Tests.PlayerStateTests+<GroundSupport_PrecisionPlatformRenderRateJumpMatrix>d__183.MoveNext () [0x00293] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Tests\\PlayerGroundSupportTests.cs:187\r\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1405238725ab\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r\n",
+            "output": "composite=(0.999970734, -1);(0.999970734, 0);(-1, -5.83E-05);(-0.999970734, -1)\r\ntarget=120 actualMeanFPS=119.587425 frames=48 seconds=0.40138 direction=1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=120.350548 frames=49 seconds=0.40714398 direction=1 braking=True jumps=1\r\ntarget=120 actualMeanFPS=119.141579 frames=48 seconds=0.402882 direction=-1 braking=False jumps=1\r\ntarget=120 actualMeanFPS=118.82196 frames=48 seconds=0.403965741 direction=-1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=28.20225 frames=12 seconds=0.425497979 direction=1 braking=False jumps=1\r\ntarget=30 actualMeanFPS=29.98375 frames=13 seconds=0.43356818 direction=1 braking=True jumps=1\r\ntarget=30 actualMeanFPS=29.9944744 frames=12 seconds=0.400073677 direction=-1 braking=False jumps=1\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -92,7 +92,8 @@ namespace Game.Player.Tests
             Keys(Key.Space); Decide(player);
             Assert.That(session.NodeId, Is.EqualTo("jump"));
             Assert.That(session.PlayCount, Is.EqualTo(before + 1));
-            Place(player, new Vector2(0, .9f), 0); Keys(); Keys(Key.Space); Decide(player);
+            _scene.GetPhysicsScene2D().Simulate(Step); Decide(player);
+            SettleGroundContact(player); Keys(); Keys(Key.Space); Decide(player);
             Assert.That(session.NodeId, Is.EqualTo("jump"));
             Assert.That(session.PlayCount, Is.EqualTo(before + 2));
         }
