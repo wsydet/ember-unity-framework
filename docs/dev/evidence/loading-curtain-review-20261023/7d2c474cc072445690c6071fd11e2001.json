@@ -1,0 +1,205 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "7d2c474cc072445690c6071fd11e2001",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792755142213,
+      "finished_unix_ms": 1792755149309,
+      "last_update_unix_ms": 1792755149309,
+      "progress": {
+        "completed": 18,
+        "total": 18,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_UpdatesResolvedPackagePathEvenWhenVersionIsUnchanged",
+        "last_finished_unix_ms": 1792755149189,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 18,
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.9411155,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"missing-end\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"missing-end\")",
+            "state": "Passed",
+            "durationSeconds": 0.0261816,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"duplicate\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"duplicate\")",
+            "state": "Passed",
+            "durationSeconds": 0.0095102,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"reversed\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"reversed\")",
+            "state": "Passed",
+            "durationSeconds": 0.0072718,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"inline\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.DamagedMarkers_PreserveEntireFileAndStillSyncOtherEntry(\"inline\")",
+            "state": "Passed",
+            "durationSeconds": 0.0104054,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FrameworkSourceProject_IsNotAutomaticallyModified",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.FrameworkSourceProject_IsNotAutomaticallyModified",
+            "state": "Passed",
+            "durationSeconds": 0.010678,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Install_AppendsWithoutChangingCustomRulesWithNoTrailingNewline",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Install_AppendsWithoutChangingCustomRulesWithNoTrailingNewline",
+            "state": "Passed",
+            "durationSeconds": 0.0146808,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Install_CreatesBothRootEntrypointsWithoutTemplate",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Install_CreatesBothRootEntrypointsWithoutTemplate",
+            "state": "Passed",
+            "durationSeconds": 0.0098905,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidEncoding_PreservesOriginalBytes",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.InvalidEncoding_PreservesOriginalBytes",
+            "state": "Passed",
+            "durationSeconds": 0.0124056,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingPublicDocument_DoesNotCreateDanglingEntrypoints",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.MissingPublicDocument_DoesNotCreateDanglingEntrypoints",
+            "state": "Passed",
+            "durationSeconds": 0.0054612,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReadOnlyFile_IsPreservedAndLeavesNoTemporaryFiles",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.ReadOnlyFile_IsPreservedAndLeavesNoTemporaryFiles",
+            "state": "Passed",
+            "durationSeconds": 0.0101116,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Reload_AndTemplateReplacement_DoNotRewriteOrDuplicateEntrypoints",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Reload_AndTemplateReplacement_DoNotRewriteOrDuplicateEntrypoints",
+            "state": "Passed",
+            "durationSeconds": 0.0171406,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf8\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf8\")",
+            "state": "Passed",
+            "durationSeconds": 0.0141238,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf8-bom\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf8-bom\")",
+            "state": "Passed",
+            "durationSeconds": 0.011558,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf16\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf16\")",
+            "state": "Passed",
+            "durationSeconds": 0.0149825,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf16-be\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf16-be\")",
+            "state": "Passed",
+            "durationSeconds": 0.0134843,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf32\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf32\")",
+            "state": "Passed",
+            "durationSeconds": 0.0156125,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_PreservesCustomContentAndEncoding(\"utf32-be\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_PreservesCustomContentAndEncoding(\"utf32-be\")",
+            "state": "Passed",
+            "durationSeconds": 0.0117122,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_UpdatesResolvedPackagePathEvenWhenVersionIsUnchanged",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_UpdatesResolvedPackagePathEvenWhenVersionIsUnchanged",
+            "state": "Passed",
+            "durationSeconds": 0.0198833,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

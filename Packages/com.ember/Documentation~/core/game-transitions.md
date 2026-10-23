@@ -152,6 +152,9 @@ catch (Exception error)
 Loading 不负责暂停世界、物理、玩家 FSM 或音频。若项目冻结游戏时间，页面动画及进度应使用合适的
 非缩放时间；暂停所有权与恢复由业务层显式协调。存档也不隐式冻结时间。
 
+需要业务显式决定揭幕时，使用 [Loading 会话公开契约](../ui/loading-sessions.md)。外层 Covered 后再发起请求，
+内层 Completion 允许恢复事务释放内部暂停，外层 Reveal 完成后才结算 WhenInteractive；不能在揭幕许可逻辑中先等 WhenInteractive。
+
 ## 验证范围
 
 原转场实现的历史验证，Unity 6000.5.4f1，通过 Unity MCP 执行：

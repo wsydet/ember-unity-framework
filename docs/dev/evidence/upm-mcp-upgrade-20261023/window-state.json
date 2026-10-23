@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "unity": "6000.5.4f1",
+      "package": "10.3.0",
+      "source": "Git",
+      "packageId": "com.coplaydev.unity-mcp@https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0",
+      "status": {
+        "Text": "已安装 v10.3.0（UPM · Git）；框架推荐 v10.3.0（已达推荐版本）",
+        "Installed": true,
+        "CanInstall": false,
+        "CanUpgrade": false
+      },
+      "compiling": false,
+      "updating": false
+    },
+    "compiler": "codedom"
+  }
+}

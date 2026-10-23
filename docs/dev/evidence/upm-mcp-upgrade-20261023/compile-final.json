@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "compiling": false,
+      "updating": false,
+      "mvid": "5a61a5f0-f15e-4ad5-8567-f85c071574a5",
+      "manifestCheck": true,
+      "captureApi": [
+        "UnityEngine.Color[] ReadScreenPixel(UnityEngine.Vector2, Int32, Int32)"
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

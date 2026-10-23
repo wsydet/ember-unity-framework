@@ -1,0 +1,24 @@
+Ember 0.21.4 candidate checks — 2026-10-23
+
+PASS git diff --cached --check.
+PASS python scripts/check-shared-binaries.py --revision : --checkout:
+  4 bundled TrueType fonts: expected length, SHA256 and font internals match.
+  Clean checkout core.autocrlf=false and core.autocrlf=true both passed.
+PASS python scripts/check-shared-font-config.py --revision ::
+  Dynamic/multi-atlas configuration, source/GUID/material references, symbol fallback and license match.
+PASS official scripts/build-ai-skill-bundle.ps1 -Check in clean sparse checkout:
+  11 generic skills, 32 files, manifest and actual bundle bytes match.
+  Generic sources and AISkills~ have no staged changes; bundle sourceCommit remains ebba92e3892d8407c73c4a3ce6d06a4bc99329e2.
+
+Scope review:
+  No Assets, ProjectSettings, template snapshots/metadata, generic skill source or SharedAssets changes staged.
+  Development manifest/lock stage only the authorized MCP update; unrelated local Odin override stays unstaged.
+  New release/manifest 0.21.4 only change framework reference and optional MCP source; old release files remain unchanged.
+  All 4 templates verified in Unity: actual content = sealed hash; parent snapshots match; graph issues = 0.
+
+First execution limitations and recovery:
+  Windows PowerShell execution policy blocked the bump script; PowerShell 7 with process-only ExecutionPolicy Bypass ran its Check and write steps successfully.
+  Binary check initially could not write sandbox TEMP; retried with TEMP/TMP scoped to repository .utmp and passed.
+  Local bundle-check clone initially hit sandbox MSYS NtCreateDirectoryObject access denial; approved elevated local clone/check passed. No user files deleted or unrelated skills committed to work around the dirty tree.
+
+These static checks do not replace Unity runtime, Windward acceptance or player build validation.

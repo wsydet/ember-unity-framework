@@ -1,0 +1,128 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "08b53a70e41940fa84e9c75562f8698f",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792755698733,
+      "finished_unix_ms": 1792755707918,
+      "last_update_unix_ms": 1792755707918,
+      "progress": {
+        "completed": 9,
+        "total": 9,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory",
+        "last_finished_unix_ms": 1792755707756,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 9,
+          "passed": 9,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.8183948,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-folders\",\"rainbow-folders-v2.4.5\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-folders\",\"rainbow-folders-v2.4.5\")",
+            "state": "Passed",
+            "durationSeconds": 0.0159721,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-hierarchy\",\"rainbow-hierarchy-v2.6.5\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-hierarchy\",\"rainbow-hierarchy-v2.6.5\")",
+            "state": "Passed",
+            "durationSeconds": 0.000268,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.ryanindiedev.inputdevicedetector\",\"inputdevicedetector-v1.0.0\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.ryanindiedev.inputdevicedetector\",\"inputdevicedetector-v1.0.0\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001593,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.flyingworm.consolepro\",\"consolepro-v3.9.81\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.flyingworm.consolepro\",\"consolepro-v3.9.81\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001338,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingPackage_WithAnAlreadyLoadedPluginTypeDoesNotOfferDuplicateInstall",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.MissingPackage_WithAnAlreadyLoadedPluginTypeDoesNotOfferDuplicateInstall",
+            "state": "Passed",
+            "durationSeconds": 0.0023137,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PackageRegistration_RequestsRefreshWithoutChangingTheCurrentLayoutSnapshot",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.PackageRegistration_RequestsRefreshWithoutChangingTheCurrentLayoutSnapshot",
+            "state": "Passed",
+            "durationSeconds": 0.0054845,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RegisteredPackage_ReportsActualVersionAndBlocksReplacingIt",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.RegisteredPackage_ReportsActualVersionAndBlocksReplacingIt",
+            "state": "Passed",
+            "durationSeconds": 0.0006334,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UncompiledAssets_AreNotMisreportedAsMissingOrSuccessfullyInstalled",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.UncompiledAssets_AreNotMisreportedAsMissingOrSuccessfullyInstalled",
+            "state": "Passed",
+            "durationSeconds": 0.0004919,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory",
+            "state": "Passed",
+            "durationSeconds": 0.0017297,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

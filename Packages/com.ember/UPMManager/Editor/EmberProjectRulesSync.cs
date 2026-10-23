@@ -27,12 +27,16 @@ namespace Ember.UPMManager.Editor
                 + Path.DirectorySeparatorChar;
             var target = new Uri(Path.GetFullPath(Path.Combine(packageRoot, RULES_PATH)));
             string link = new Uri(root).MakeRelativeUri(target).ToString();
+            string glossary = new Uri(root).MakeRelativeUri(new Uri(Path.GetFullPath(
+                Path.Combine(packageRoot, "Documentation~/maintenance/glossary.md")))).ToString();
             return string.Join(newline, new[]
             {
                 BEGIN,
                 "## Ember 项目公共规则（自动同步）",
                 "",
                 "需要测试或进行 Unity 验证前，必须完整阅读并遵守[项目测试与 Unity 编译验证规范](<" + link + ">)。",
+                "代码修改完成后必须主动通过 Unity MCP 请求重编译，确认本轮编译/域重载完成后读取 Console；不能以刷新请求成功代替编译完成。",
+                "理解简化用语先读[通用术语字典](<" + glossary + ">)，再按正式活动模板读取 Assets/Game/Documentation/<template-id>/glossary.md（若存在）；字典不扩展操作授权。",
                 "规则适用于所有模板和未部署模板的项目。包路径变化后由框架重新同步；链接暂不可用时，通过 UPM 定位当前 com.ember 包中的 `" + RULES_PATH + "`。",
                 "此区块由 Ember 管理，安装、升级和编辑器重载时更新。项目自定义规则请写在区块外；保留已有自定义规则，不以此区块覆盖它们。",
                 END

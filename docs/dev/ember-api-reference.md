@@ -2021,7 +2021,13 @@ string path = _battleScene;  // 隐式转换
 
 ### 异步业务操作复用 Loading（2026-09-18）
 
-`EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束且经过一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 负责候选场景加载、请求级准备、状态进入和旧场景卸载。没有操作持有者时，默认 Loading 使用同一套可等待遮挡流程；取消不会中断遮挡的关闭清理。嵌套转场应等待请求 Completion 并检查结果；转场不自动取消外层自定义业务操作。
+`EUIManager.RunWithLoadingAsync(EUIPageDef loadingPageDef, object args, Func<UniTask> operation, CancellationToken cancellationToken = default)` 在 Loading 进入动画结束、跨过 EndOfFrame 渲染屏障及下一帧后执行 operation；operation 应等待目标内容真正就绪，不能只派发状态切换后立即返回。成功后留出渲染帧并播放退出动画，失败也在 finally 中关闭遮挡。并发 Loading 所有者会被拒绝。使用方传入生命周期取消令牌并负责业务事务取消；页面在 OnOpen 根据 args 设置显示模式。操作持有的遮挡会被跨场景流程复用，SceneCoordinator 负责候选场景加载、请求级准备、状态进入和旧场景卸载。没有操作持有者时，默认 Loading 使用同一套可等待遮挡流程；取消不会中断遮挡的关闭清理。嵌套转场应等待请求 Completion 并检查结果；转场不自动取消外层自定义业务操作。
+
+### 可显式控制的 Loading 会话（工作区新增，尚未发布）
+
+`BeginCurtain(pageDef, args, options, cancellationToken)` 返回 `EUICurtainSession`；`CoverAsync` 是等待 `Covered` 后返回的便利入口。独立于场景，Covered 后保持，业务显式 `RevealAsync`，重复揭幕共享结果。`SetPaused` 控制受控方块时钟，内部 timeScale=0 不影响默认非缩放播放；Dispose/Cancel 只释放本句柄。`EUICurtainOptions` 支持分别进入/退出时长、可选缩放时间、初始暂停、在 Init 前跳过假进度以及跳过 Custom 动画槽。
+
+场景适配在 `EUIManager.SceneLoading.cs` 中登记展示凭证；通用会话不认识场景阶段。复用外部会话时内层 Completion 不等外层揭幕，WhenInteractive 等实际拥有者成功结束。生命周期、失败策略、素材覆盖约束和 Windward 示例见 [Loading 会话契约](../../Packages/com.ember/Documentation~/ui/loading-sessions.md)。
 
 ## 通用多语言（0.15.0）
 

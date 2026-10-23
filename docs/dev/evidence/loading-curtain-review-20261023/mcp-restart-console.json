@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "message": "Retrieved 3 log entries.",
+  "data": [
+    {
+      "type": "Warning",
+      "message": "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Receive loop error: The remote party closed the WebSocket connection without completing the close handshake.",
+      "file": "./Library/PackageCache/com.coplaydev.unity-mcp@da7b9ae4aeeb/Editor/Helpers/McpLog.cs",
+      "line": 45,
+      "stackTrace": null
+    },
+    {
+      "type": "Warning",
+      "message": "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Connection closed: The remote party closed the WebSocket connection without completing the close handshake.",
+      "file": "./Library/PackageCache/com.coplaydev.unity-mcp@da7b9ae4aeeb/Editor/Helpers/McpLog.cs",
+      "line": 45,
+      "stackTrace": null
+    },
+    {
+      "type": "Error",
+      "message": "<b><color=#cc3333>MCP-FOR-UNITY</color></b>: [WebSocket] Connection failed. Check that the server URL is correct, the server is running, and your API key (if required) is valid. (Detail: Unable to connect to the remote server)",
+      "file": "./Library/PackageCache/com.coplaydev.unity-mcp@da7b9ae4aeeb/Editor/Helpers/McpLog.cs",
+      "line": 50,
+      "stackTrace": null
+    }
+  ]
+}

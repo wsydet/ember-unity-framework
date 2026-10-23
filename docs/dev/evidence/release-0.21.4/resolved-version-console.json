@@ -1,0 +1,22 @@
+{
+  "editor": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "version": "0.21.4",
+        "compiling": false,
+        "updating": false,
+        "uiMvid": "9a7c18dc-4d43-4345-8970-1eef3ebc99a4",
+        "upmMvid": "5a61a5f0-f15e-4ad5-8567-f85c071574a5",
+        "utc": "2026-10-23T12:12:15.7682713Z"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  }
+}

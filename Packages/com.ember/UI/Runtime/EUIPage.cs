@@ -94,6 +94,7 @@ namespace Ember.UI
         private readonly RectTransform _rectTransform;
         private Animator _animator;
         private bool _disposed;
+        private EUICurtainSession _curtainSession;
 
         private PageState _state = PageState.Unloaded;
         private EUIPageDef _pageDef;
@@ -114,6 +115,8 @@ namespace Ember.UI
         private bool HasTransition => _usePresetFade || _useTransitionBlock || _useAnimator || _useCustomTransition;
         private bool ShouldBlockRaycasts => _pageDef?.PageType != PageType.Background;
         private bool CanCompleteTransition => !_disposed && _gameObject != null && _canvasGroup != null;
+        internal bool IsDisposed => _disposed;
+        private bool UseCustomTransition => _useCustomTransition && _curtainSession?.SkipCustomTransition != true;
 
         // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
         private Action _onShowComplete;
@@ -297,6 +300,13 @@ namespace Ember.UI
         /// <inheritdoc />
         public void Init(object args)
         {
+            if (args is EUICurtainOpenArgs curtainArgs)
+            {
+                _curtainSession = curtainArgs.Session;
+                _curtainSession.PageAttached?.Invoke(this);
+                args = curtainArgs.Args;
+            }
+            else _curtainSession = null;
             // Loaded = 预加载过的页面：真正打开时补跑完整 Init（OnInit/OnOpen/OnReset 延后到这里）
             if (_state != PageState.Unloaded && _state != PageState.Closed && _state != PageState.Loaded)
             {
@@ -328,6 +338,7 @@ namespace Ember.UI
                 try { _logic.BroadcastResetDefault(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResetDefault '{Name}': {ex}"); }
 
+                if (_curtainSession != null) _logic.SkipFakeProgress = _curtainSession.SkipFakeProgress;
                 try { _logic.BroadcastInit(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnInit '{Name}': {ex}"); }
 
@@ -431,6 +442,13 @@ namespace Ember.UI
         /// <inheritdoc />
         public void OnReopen(object args)
         {
+            if (args is EUICurtainOpenArgs curtainArgs)
+            {
+                _curtainSession = curtainArgs.Session;
+                _curtainSession.PageAttached?.Invoke(this);
+                args = curtainArgs.Args;
+            }
+            else _curtainSession = null;
             // 已显示（或视图隐藏）页面再次 Show：纯数据刷新，不重放 Init/Open/Show 动画（对标 Burner 可见分支 OnReopen）
             if (_state == PageState.Opened || _state == PageState.Paused || _state == PageState.ViewHidden)
             {
@@ -524,7 +542,7 @@ namespace Ember.UI
         /// <inheritdoc />
         public void Cleanup()
         {
-            if (_state == PageState.Unloaded) return;
+            if (_state == PageState.Unloaded && _logic == null) return;
             Profiler.BeginSample("EUIPage.Cleanup");
             _state = PageState.Unloaded;
 
@@ -553,7 +571,7 @@ namespace Ember.UI
             }
             _subPages.Clear();
 
-            _gameObject.SetActive(false);
+            if (_gameObject != null) _gameObject.SetActive(false);
             Profiler.EndSample();
         }
 
@@ -702,13 +720,20 @@ namespace Ember.UI
         {
             try
             {
+                if (_curtainSession?.IsReleased == true) return;
                 if (_useTransitionBlock)
                 {
                     // Loading 专用特殊链路：保持原时序（方块扫入 → Custom Enter）。
-                    await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
+                    if (_curtainSession != null && _gameObject.GetComponentInChildren<IEUIControlledTransitionEffect>() is { } controlled)
+                    {
+                        _canvasGroup.alpha = 1f;
+                        await controlled.PlayEnterAsync(_curtainSession.Playback, _curtainSession.EnterDuration);
+                    }
+                    else
+                        await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
                     // await 期间页面可能被销毁或释放，不能再进入下一段业务动画。
                     if (!CanCompleteTransition) return;
-                    if (_useCustomTransition)
+                    if (UseCustomTransition)
                         await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
                 }
                 else if (_usePresetFade)
@@ -719,17 +744,18 @@ namespace Ember.UI
                 {
                     await PlayAnimatorTransitionAsync(true);
                 }
-                else if (_useCustomTransition)
+                else if (UseCustomTransition)
                 {
                     await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
                 }
             }
-            catch (OperationCanceledException) when (!CanCompleteTransition)
+            catch (OperationCanceledException) when (!CanCompleteTransition || _curtainSession?.IsReleased == true)
             {
                 // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
             }
             catch (Exception ex)
             {
+                if (_curtainSession != null) _curtainSession.AnimationError = ex;
                 EmberDebug.LogError(TAG, $"页面 '{Name}' 打开过渡异常，已强制完成: {ex}");
             }
             finally
@@ -794,14 +820,18 @@ namespace Ember.UI
         {
             try
             {
+                if (_curtainSession?.IsReleased == true) return;
                 if (_useTransitionBlock)
                 {
                     // Loading 专用特殊链路：保持原时序（Custom Exit → 方块扫出）。
-                    if (_useCustomTransition)
+                    if (UseCustomTransition)
                         await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
                     // Custom Exit 可以在页面销毁后正常结束，此时不再解析方块组件。
                     if (!CanCompleteTransition) return;
-                    await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
+                    if (_curtainSession != null && _gameObject.GetComponentInChildren<IEUIControlledTransitionEffect>() is { } controlled)
+                        await controlled.PlayExitAsync(_curtainSession.Playback, _curtainSession.ExitDuration);
+                    else
+                        await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
                 }
                 else if (_usePresetFade)
                 {
@@ -811,17 +841,18 @@ namespace Ember.UI
                 {
                     await PlayAnimatorTransitionAsync(false);
                 }
-                else if (_useCustomTransition)
+                else if (UseCustomTransition)
                 {
                     await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
                 }
             }
-            catch (OperationCanceledException) when (!CanCompleteTransition)
+            catch (OperationCanceledException) when (!CanCompleteTransition || _curtainSession?.IsReleased == true)
             {
                 // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
             }
             catch (Exception ex)
             {
+                if (_curtainSession != null) _curtainSession.AnimationError = ex;
                 EmberDebug.LogError(TAG, $"页面 '{Name}' 关闭过渡异常，已强制完成: {ex}");
             }
             finally
@@ -1208,6 +1239,9 @@ namespace Ember.UI
         private void MarkDisposed()
         {
             _disposed = true;
+            _state = PageState.Closed;
+            _curtainSession?.Dispose();
+            _curtainSession = null;
             _onShowComplete = null;
             _showArgs = null;
             _onHideComplete = null;

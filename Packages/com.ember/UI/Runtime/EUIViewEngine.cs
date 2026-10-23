@@ -216,9 +216,12 @@ namespace Ember.UI
             if (!_activePages.Contains(page))
                 _activePages.Add(page);
 
+            var curtain = (args as EUICurtainOpenArgs)?.Session;
+            curtain?.PageAttached?.Invoke(page);
             // Phase 1: Init
             EnqueuePageOperation(() =>
             {
+                if (curtain?.IsReleased == true) return;
                 ((IEUIView)page).Init(args);
 
                 // 注入完成回调：动画真正结束时由 CompleteShow() 触发
@@ -234,6 +237,7 @@ namespace Ember.UI
                 // Phase 2: PlayShow
                 EnqueuePageOperation(() =>
                 {
+                    if (curtain?.IsReleased == true) return;
                     ((IEUIView)page).PlayShow();
                     // NotifyOpened + 日志 + onComplete 现在在 EUIPage.CompleteShow() 中触发
                     // 不再使用 _nextFrameCallbacks（之前这里动画未完成就播报，是个 bug）
@@ -248,6 +252,14 @@ namespace Ember.UI
         public void ClosePage(EUIPage page, Action onComplete = null)
         {
             ClosePageInternal(page, onComplete);
+        }
+
+        internal void AbortCurtainPage(EUIPage page)
+        {
+            _activePages.Remove(page);
+            if (!string.IsNullOrEmpty(page.PrefabPath)) _closingPages.Remove(page.PrefabPath);
+            try { ((IEUIView)page).Cleanup(); }
+            finally { page.ForceDispose(); _sortDirty = true; }
         }
 
         internal void ClosePageInternal(EUIPage page, Action onComplete = null, Action onTransitionComplete = null)
@@ -291,7 +303,7 @@ namespace Ember.UI
                 // Cleanup + 销毁调度
                 _nextFrameCallbacks.Enqueue(() =>
                 {
-                    if (page != null)
+                    if (page != null && !page.IsDisposed)
                     {
                         ((IEUIView)page).Cleanup();
                         _activePages.Remove(page);
@@ -331,6 +343,7 @@ namespace Ember.UI
 
             EnqueuePageOperation(() =>
             {
+                if (page.IsDisposed) return;
                 ((IEUIView)page).PlayHide();
                 // NotifyClosed + 日志现在在 EUIPage.CompleteHide() 中触发
                 // Cleanup + Destroy 由上面的 SetHideCallback → _nextFrameCallbacks 调度

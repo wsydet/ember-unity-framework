@@ -1,0 +1,19 @@
+{
+  "Packages/com.ember/Scene/Tests/PlayMode/Ember.Scene.Transitions.PlayModeTests.asmdef": "9145c6918c38a4f915d52463983e242b4d7cad7ee91911eb4befe0bdbf681677",
+  "Packages/com.ember/Scene/Tests/PlayMode/EmberLoadingProgressContractTests.cs": "61ea31a0fc5292b09dbb05f402e89ecc7f40bbad6cbb3b1f8d80c828f5c04db7",
+  "Packages/com.ember/Scene/Tests/PlayMode/EmberTransitionLoadingTests.cs": "7f2a34371bf5de1e7bec9fcf659c55328c211d41b92cd41ad61fe3fb20465783",
+  "Packages/com.ember/Tests/EditMode/EUITransitionBlockPreviewTests.cs": "97f0241add6c6d3f4f11b71d9ee23f68befb46f2fad0a9e9b29fb6ff1dbee704",
+  "Packages/com.ember/UI/Runtime/EUICurtainSession.cs": "810c0c452c3f83a70f64a8b89fdc5b0acf91fafb2428991c85104209e961830e",
+  "Packages/com.ember/UI/Runtime/EUIManager.Curtain.cs": "6e9305a11ffb6e390562f693474986108a2c738a67334374ef1765646025deac",
+  "Packages/com.ember/UI/Runtime/EUIManager.SceneLoading.cs": "b1b6a0f5c7b22d76f22fdbf1d6fdf79969b60118876ae6e9ac5fd56f7d1fdefb",
+  "Packages/com.ember/UI/Runtime/EUIManager.cs": "55f41ec0a019e07764e103600e5c48a41a6c6e4a4c6a6838261525104eb37c3b",
+  "Packages/com.ember/UI/Runtime/EUIPage.cs": "1e751e3c9161aa5dab06ef9d3b1437b03533292957d44bf4f90b13ad95719395",
+  "Packages/com.ember/UI/Runtime/EUITransitionPlayback.cs": "316bd2cda9186fd7ba49918393902a715f6a5ed1b0a5b6f9e36686c1a6fabd39",
+  "Packages/com.ember/UI/Runtime/EUIViewEngine.cs": "289910acddc3558ffca00c3867cb2625f32854b7e047bff7468131cab809d7c9",
+  "Packages/com.ember/UIExtension/Runtime/Components/EUITransitionBlock.cs": "b8a4b74c377ef81377fabd25009dc0b2f6340357e72146e5106a6afb120ec932",
+  "Packages/com.ember/UPMManager/Editor/EmberProjectRulesSync.cs": "62dc548b4f9ebaba188079266dc871d519fba5e6064b08a25403bc60f72f3e11",
+  "Packages/com.ember/UPMManager/Editor/EmberUPMManager.cs": "d5285029558e75e2d80902980d38a6dffd135aaac2051d7246ba18dd52d6cc54",
+  "Packages/com.ember/UPMManager/Editor/EmberUPMOptionalPackages.cs": "69d37c5fbb9ce73233a5223e80dc5bb66277ad85bfeb4a31d86cabc94fde1270",
+  "Packages/com.ember/UPMManager/Tests/Editor/EmberProjectRulesSyncEditTests.cs": "633b6ada9228232dbe93218cf47d34eba6d8110760e6856010425c258685dd0a",
+  "Packages/com.ember/UPMManager/Tests/Editor/EmberUPMOptionalPackagesEditTests.cs": "bfba9660e6571c2be8a80e00d06143bb127c88f8a19c9635d59fabe17437b50b"
+}

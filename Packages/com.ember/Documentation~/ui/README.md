@@ -28,6 +28,9 @@ EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage);
 其他入口：`PreloadPage`、`ClosePage(page, returnValue)`、`CloseTopPopup`、`CloseAllPopups`、
 `GetReturnValue`、`HidePageViewOnly` / `ShowPageViewOnly`。预加载完成回调仍需处理，不保证调用瞬间完成。
 
+Loading 可独立于场景使用：`BeginCurtain` / `CoverAsync` 取得会话，覆盖后保持，业务显式 `RevealAsync`。
+默认场景 Loading 是该接口的适配调用方。暂停、取消、完成阶段及 Windward 接入见 [Loading 会话](loading-sessions.md)。
+
 `EUIPageDef` 构造参数为 `prefabPath, layer, pageType`，可选 `overlaySortingOrder`、`freePageSortingOrder`。
 UILayer 当前为 Background=0、Normal=1000、Popup=2000、TopMost=25000；实际栈排序由 PageContext 管理。
 

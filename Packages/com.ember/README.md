@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布版本为 **0.21.3**（项目公共规则入口自动同步补丁，模板版本不变）。开发基线使用 Unity `6000.5.4f1`：
+当前发布版本为 **0.21.4**（Loading／遮幕解耦、MCP 显式升级入口及公共规则补丁，模板版本不变）。开发基线使用 Unity `6000.5.4f1`：
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.3"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.21.4"
 }
 ```
 
@@ -24,9 +24,24 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.21.3 manifest 基线](Dependencies~/manifest-0.21.3.json)。本次更新不增加第三方依赖，沿用 0.20.0 的逐包标签（Odin/Feel/UniRx 使用各自补丁标签）；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+完整工程的 56 项直接依赖见随包 [消费端依赖声明](Dependencies~/README.md) 和 [0.21.4 manifest 基线](Dependencies~/manifest-0.21.4.json)。本次将可选 Unity MCP 更新至官方 10.3.0 标签，其余第三方依赖不变（Odin/Feel/UniRx 使用各自补丁标签）；首次安装时按包名合并清单，保留自己的其他依赖，不能覆盖整份项目 manifest。
+
+## Unity MCP 的安装与更新
+
+0.21.4 的可选包目录指向官方 Unity MCP **10.3.0**：
+`https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0`。
+它来自 CoplayDev 官方仓库，不属于团队 `ember-thirdparty-upm`，也不在 `com.ember/package.json` 的必装 dependencies 中。
+
+- 新项目在 UPM Manager 的可选包入口按需安装；已有项目升级至 Ember 0.21.4 后获得此入口。旧版 0.21.3 的安装目录保持原样。
+- 已安装 MCP 的项目升级 Ember **不会自动替换 MCP**。在 `Ember > UPM Manager > 可选第三方包` 查看实际安装版本与框架推荐版本。官方 Git 来源的旧稳定版会显示“升级到推荐 v10.3.0”，点击后通过 Unity UPM 更新到上述固定标签；相同版本不重装，较新版本不降级。推荐版本由框架随包目录维护，不代表联网查询的最新版本。
+- 一键升级仅接受官方 HTTPS 仓库 `/MCPForUnity` 的默认分支（无 ref / `main`）或 `vX.Y.Z` 标签，且必须是项目直接依赖。本地、内嵌、Registry、Assets 导入、分叉仓库、自定义分支、固定提交及间接依赖保留原来源，需自行在 Unity Package Manager 管理；未知或预发布版本不猜测升级顺序。点击时重新核对实际注册包和磁盘 manifest，来源不一致、重复或无法安全识别的声明会拒绝操作。未解析但已在 manifest 声明的 MCP 也不会被“安装”覆盖。
+- 升级复用现有 UPM 安装流程，解析期间禁用操作，失败显示 UPM 错误；注册事件、窗口重新获得焦点或“刷新安装状态”会重新读取实际版本。UPM 请求完成仅表示解析请求结束，请等待 Unity 导入、编译和域重载完成，再确认插件版本及连接。升级可能暂时中断 MCP 连接，按[公共重连规则](Documentation~/maintenance/unity-validation.md#unity-mcp-断连恢复)恢复；该入口不修改服务器来源、端口或客户端配置。
+- Unity 插件和 Python 服务端分别确认版本。若 MCP 设置中的服务器来源覆盖仍固定旧版，需要显式更新至 `mcpforunityserver==10.3.0` 并通过官方服务管理重启。服务器设置和端口可能被同机多个项目共享；服务端更新不等于这些项目的 Unity 插件已更新。
+- 历史 Dependencies~/manifest-0.21.3.json 是已发布基线，不用当前开发状态改写它。不要替换消费项目的整份 manifest，也不要在 PackageCache 修改源码。
 
 ## 消费项目公共规则（所有模板）
+
+对话用语见[通用术语字典](Documentation~/maintenance/glossary.md)，玩法词汇按正式活动模板读取其 Assets 文档。代码修改后必须主动请求 Unity 重编译，确认本轮编译/域重载完成后读取 Console，再进行验证。
 
 [项目测试与 Unity 编译验证规范](Documentation~/maintenance/unity-validation.md) 随框架包交付，适用于任意模板及未部署模板的项目。默认仅运行新增或相关部分测试；全量重测或预计耗时较长需要用户明确授权。MCP 断连后每隔 30 秒重试，最多 10 次，全部失败后停止并请用户确认 MCP 状态。
 

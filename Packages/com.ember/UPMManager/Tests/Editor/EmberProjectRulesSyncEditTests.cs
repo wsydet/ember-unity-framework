@@ -66,6 +66,8 @@ namespace Ember.UPMManager.Editor.Tests
                 StringAssert.Contains(EmberProjectRulesSync.BEGIN, text);
                 StringAssert.Contains("Library/PackageCache/com.ember@old/" + EmberProjectRulesSync.RULES_PATH, text);
                 StringAssert.Contains("必须完整阅读并遵守", text);
+                StringAssert.Contains("主动通过 Unity MCP 请求重编译", text);
+                StringAssert.Contains("Library/PackageCache/com.ember@old/Documentation~/maintenance/glossary.md", text);
             }
             Assert.IsFalse(Directory.Exists(Path.Combine(_project, "Assets")));
         }

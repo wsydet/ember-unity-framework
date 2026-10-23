@@ -29,7 +29,7 @@ namespace Ember.UI
     /// </code>
     /// </summary>
     [EmberInitOrder(EmberInitOrderAttribute.UI + 1)]
-    public class EUIManager : EmberSingleton<EUIManager>, IEmberManager, IEmberUpdate
+    public partial class EUIManager : EmberSingleton<EUIManager>, IEmberManager, IEmberUpdate
     {
         private const string TAG = LogTags.UIManager;
 
@@ -59,10 +59,6 @@ namespace Ember.UI
         private int _backgroundRequestVersion;
 
         private bool _initialized;
-        private bool _loadingOperation;
-        private EUIPage _operationLoadingPage;
-        private List<EmberTransitionPresentation> _loadingPresentations;
-        private bool _loadingCurtainClosing;
 
         #endregion
 
@@ -111,9 +107,7 @@ namespace Ember.UI
 
         void IEmberManager.Destroy()
         {
-            if (_loadingPresentations != null)
-                foreach (var presentation in _loadingPresentations) presentation.Fail("UI Manager 已销毁。");
-            _loadingPresentations = null;
+            _curtainSession?.Dispose();
             Ember.Scene.SceneCoordinator.WrapTransitionAsync = null;
             InvalidateBackgroundRequest();
             _showQueue.Clear();
@@ -122,9 +116,6 @@ namespace Ember.UI
             _closeRequestedPages.Clear();
             _preloadedPages.Clear();
             _initialized = false;
-            _operationLoadingPage = null;
-            _loadingOperation = false;
-            _loadingCurtainClosing = false;
         }
 
         #endregion
@@ -365,6 +356,11 @@ namespace Ember.UI
         /// </summary>
         public void ClosePage(EUIPage page, object returnValue = null)
         {
+            if (page != null && page == _curtainPage && _curtainSession != null)
+            {
+                _curtainSession.Cancel();
+                return;
+            }
             ClosePageCore(page, returnValue, true);
         }
 
@@ -376,7 +372,7 @@ namespace Ember.UI
             EUIPage page,
             object returnValue,
             bool restoreUnderlying,
-            Action onPageTransitionComplete = null)
+            Action onPageTransitionComplete = null, Action onPageClosed = null)
         {
             if (page == null) return;
             if (!_closeRequestedPages.Add(page)) return;
@@ -437,7 +433,7 @@ namespace Ember.UI
 
             _viewEngine.ClosePageInternal(
                 page,
-                onComplete: () => _closeRequestedPages.Remove(page),
+                onComplete: () => { _closeRequestedPages.Remove(page); onPageClosed?.Invoke(); },
                 onTransitionComplete: () =>
                 {
                     if (hidePopupMask)
@@ -453,16 +449,6 @@ namespace Ember.UI
 
                     onPageTransitionComplete?.Invoke();
                 });
-        }
-
-        private void CloseLoadingPage(EUIPage loadingPage)
-        {
-            ClosePageCore(
-                loadingPage,
-                returnValue: null,
-                restoreUnderlying: true,
-                onPageTransitionComplete: () =>
-                    EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete));
         }
 
         /// <summary>
@@ -533,34 +519,15 @@ namespace Ember.UI
         /// </summary>
         public async Cysharp.Threading.Tasks.UniTask RunLoadingPage(EUIPageDef loadingPageDef)
         {
-            EUIPage loadingPage = null;
-            var closed = false;
-
-            Action onFadeOutComplete = null;
-            onFadeOutComplete = () =>
+            var curtain = await CoverAsync(loadingPageDef);
+            try
             {
-                EmberEventBus.Unsubscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
-                closed = true;
-            };
-            EmberEventBus.Subscribe(EUIEvents.LoadingFadeOutComplete, onFadeOutComplete);
-
-            ShowTopMost(loadingPageDef, onComplete: page => loadingPage = page);
-
-            // 等待 loading 页面创建完成
-            while (loadingPage == null)
-                await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-            // 轮询假进度完成
-            var logic = loadingPage.Logic;
-            while (logic == null || !logic.IsTransitionReady)
-                await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
-
-            // OnCustomExit 先隐藏进度条，之后还会播放方块扫出；全部结束后才广播 Complete。
-            CloseLoadingPage(loadingPage);
-
-            // 等待渐出完成
-            while (!closed)
-                await Cysharp.Threading.Tasks.UniTask.Yield(Cysharp.Threading.Tasks.PlayerLoopTiming.Update);
+                var logic = _curtainPage.Logic;
+                if (logic == null) throw new InvalidOperationException("Loading page has no readiness presenter.");
+                await UniTask.WaitUntil(() => curtain.IsReleased || logic.IsTransitionReady);
+                await curtain.RevealAsync();
+            }
+            finally { curtain.Dispose(); }
         }
 
         /// <summary>
@@ -574,127 +541,27 @@ namespace Ember.UI
             Func<UniTask> operation, System.Threading.CancellationToken cancellationToken = default)
             => RunWithLoadingCoreAsync(loadingPageDef, args, operation, cancellationToken, null);
 
-        private async UniTask RunSceneTransitionWithLoadingAsync(SceneTransitionContext request, Func<UniTask> operation)
-        {
-            bool quick = EmberStateMachine.QuickSceneLoad;
-            EmberStateMachine.QuickSceneLoad = false;
-            if (_loadingOperation)
-            {
-                if (_loadingCurtainClosing || _operationLoadingPage?.IsOpened != true || _loadingPresentations == null)
-                    throw new InvalidOperationException("Loading curtain is not accepting scene requests.");
-                BindLoadingRequest(request);
-                await operation();
-                return;
-            }
-            if (DefaultLoadingPageDef == null || (request.Type != TransitionType.InPlace
-                && (request.Type != TransitionType.TransitionTo || request.SkipSceneLoad)))
-            {
-                await operation();
-                return;
-            }
-            await RunWithLoadingCoreAsync(DefaultLoadingPageDef, null, async () =>
-            {
-                BindLoadingRequest(request);
-                var owner = _loadingPresentations;
-                var logic = _operationLoadingPage?.Logic;
-                if (quick && logic != null) logic.SkipFakeProgress = true;
-                await operation();
-                if (logic != null)
-                    await UniTask.WaitUntil(() => !_initialized || _loadingPresentations != owner || logic.IsTransitionReady,
-                        cancellationToken: request.CommitStarted ? default : request.Cancellation);
-            }, request.Cancellation, () => request.CommitStarted);
-        }
-
-        private void BindLoadingRequest(SceneTransitionContext request)
-        {
-            _loadingPresentations.Add(request.HoldPresentation());
-            if (_operationLoadingPage?.Logic != null)
-                _operationLoadingPage.Logic.TransitionOperation = request.Operation;
-        }
-
         private async UniTask RunWithLoadingCoreAsync(EUIPageDef loadingPageDef, object args,
-            Func<UniTask> operation, System.Threading.CancellationToken cancellationToken, Func<bool> commitStarted)
+            Func<UniTask> operation, System.Threading.CancellationToken cancellationToken, Func<bool> commitStarted,
+            EUICurtainOptions options = null)
         {
-            if (!_initialized || loadingPageDef == null || operation == null)
-                throw new InvalidOperationException("Loading operation is unavailable.");
-            if (_loadingOperation || _context.FindOpenedPage(loadingPageDef) != null)
-                throw new InvalidOperationException("A Loading transition is already active.");
-            _loadingOperation = true;
-            _loadingCurtainClosing = false;
-            var presentations = new List<EmberTransitionPresentation>();
-            _loadingPresentations = presentations;
-            EUIPage page = null;
-            bool opened = false, abandoned = false;
-            bool operationSucceeded = false, curtainClosed = false;
+            if (operation == null) throw new ArgumentNullException(nameof(operation));
+            var curtain = await CoverAsync(loadingPageDef, args, options, cancellationToken);
             try
             {
-                ShowTopMost(loadingPageDef, args, result =>
-                {
-                    page = result; opened = true;
-                    if (abandoned && result != null) ClosePage(result);
-                });
-                await UniTask.WaitUntil(() => opened || _loadingPresentations != presentations, cancellationToken: cancellationToken);
-                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
-                if (page == null) throw new InvalidOperationException("Loading page could not be opened.");
-                _operationLoadingPage = page;
-                  if (page.Logic != null)
-                  {
-                      page.Logic.TransitionOperation = null;
-                      page.Logic.LoadingWorkCompleted = false;
-                  }
-                // Let the fully opaque curtain render before doing potentially expensive main-thread work.
-                await UniTask.NextFrame(cancellationToken: cancellationToken);
-                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
                 await operation();
-                // Cancellation after an irreversible state commit cannot undo that commit.
-                  if (page.Logic != null)
-                  {
-                      page.Logic.LoadingWorkCompleted = true;
-                      await UniTask.WaitUntil(() => !_initialized || _loadingPresentations != presentations || page.Logic.IsTransitionReady,
-                          cancellationToken: commitStarted?.Invoke() == true ? default : cancellationToken);
-                  }
-                var afterCommitToken = commitStarted?.Invoke() == true ? default : cancellationToken;
-                await UniTask.NextFrame(cancellationToken: afterCommitToken);
-                await UniTask.NextFrame(cancellationToken: afterCommitToken);
-                if (_loadingPresentations != presentations) throw new InvalidOperationException("Loading owner expired.");
-                operationSucceeded = true;
-            }
-            finally
-            {
-                abandoned = true;
-                if (_loadingPresentations == presentations) _loadingCurtainClosing = true;
-                try
+                if (curtain.IsReleased) throw new InvalidOperationException("Loading owner expired.");
+                var token = commitStarted?.Invoke() == true ? default : cancellationToken;
+                if (_curtainPage?.Logic != null)
                 {
-                    if (_initialized && _loadingPresentations == presentations && page?.GameObject != null)
-                    {
-                        bool closed = false;
-                        ClosePageCore(page, null, true, () =>
-                        {
-                            closed = true;
-                            EmberEventBus.OnNext(EUIEvents.LoadingFadeOutComplete);
-                        });
-                        await UniTask.WaitUntil(() => closed || !_initialized || _loadingPresentations != presentations);
-                        curtainClosed = closed && _initialized && _loadingPresentations == presentations;
-                    }
+                    var logic = _curtainPage.Logic;
+                    logic.LoadingWorkCompleted = true;
+                    await UniTask.WaitUntil(() => curtain.IsReleased || logic.IsTransitionReady, cancellationToken: token);
                 }
-                finally
-                {
-                    foreach (var presentation in presentations)
-                    {
-                        if (operationSucceeded && curtainClosed) presentation.Complete();
-                        else presentation.Fail("Loading 操作失败或完整退出未完成。");
-                    }
-                    if (_loadingPresentations == presentations)
-                    {
-                        if (page?.Logic != null) page.Logic.TransitionOperation = null;
-                        _loadingPresentations = null;
-                        _operationLoadingPage = null;
-                        _loadingOperation = false;
-                        _loadingCurtainClosing = false;
-                    }
-                }
+                await UniTask.NextFrame(cancellationToken: token);
+                await curtain.RevealAsync(token);
             }
-            if (!curtainClosed) throw new InvalidOperationException("Loading curtain did not finish closing.");
+            finally { curtain.Dispose(); }
         }
 
         #endregion
@@ -727,73 +594,98 @@ namespace Ember.UI
             if (_showQueue.Count == 0 || _isProcessingQueue) return;
 
             _isProcessingQueue = true;
-            while (_showQueue.Count > 0)
+            try
             {
-                var req = _showQueue.Dequeue();
-                ProcessShowRequest(req);
+                while (_showQueue.Count > 0)
+                {
+                    var req = _showQueue.Dequeue();
+                    try { ProcessShowRequest(req); }
+                    catch (Exception error)
+                    {
+                        if (req.Args is EUICurtainOpenArgs curtain) curtain.Session.Fail(error);
+                        else throw;
+                    }
+                }
             }
-            _isProcessingQueue = false;
+            finally { _isProcessingQueue = false; }
         }
 
         private void ProcessShowRequest(ShowRequest req)
         {
             if (req.IsCurrent != null && !req.IsCurrent()) return;
             Profiler.BeginSample("EUIManager.ProcessShowRequest");
-            var pageDef = req.EUIPageDef;
-
-            // 已显示（含视图隐藏）页面再次 Show：走数据刷新路径（对标 Burner 可见分支 OnReopen），不再开新实例
-            var openedPage = _context.FindOpenedPage(pageDef);
-            if (openedPage != null)
+            try
             {
-                EmberDebug.Log(TAG, $"页面已显示，刷新数据: {pageDef.PrefabPath}");
-                _viewEngine.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
-                Profiler.EndSample();
-                return;
-            }
+                var pageDef = req.EUIPageDef;
 
-            // 优先使用预加载页面（对标 Burner GamePage Preload 机制）
-            if (_preloadedPages.TryGetValue(pageDef.PrefabPath, out var preloadedPage))
-            {
-                _preloadedPages.Remove(pageDef.PrefabPath);
-                EmberDebug.Log(TAG, $"复用预加载页面: {pageDef.PrefabPath}");
-                RouteAndOpenPage(preloadedPage, pageDef, req, true);
-                Profiler.EndSample();
-                return;
-            }
-
-            // 其次复用延迟销毁中的页面（对标 Burner GamePage 复用逻辑）
-            var reusablePage = _viewEngine.FindReusablePage(pageDef.PrefabPath);
-            if (reusablePage != null)
-            {
-                RouteAndOpenPage(reusablePage, pageDef, req);
-                Profiler.EndSample();
-                return;
-            }
-
-            EUIObserver.NotifyLoadStarted(pageDef);
-            var provider = _viewEngine.ResourceProvider;
-            provider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
-            {
-                // A departed owner must not route a late page over the replacement screen.
-                if (req.IsCurrent != null && !req.IsCurrent())
+                // 已显示（含视图隐藏）页面再次 Show：走数据刷新路径（对标 Burner 可见分支 OnReopen），不再开新实例
+                var openedPage = _context.FindOpenedPage(pageDef);
+                if (openedPage != null)
                 {
-                    provider.Release(pageDef.PrefabPath);
-                    return;
-                }
-                if (prefab == null)
-                {
-                    EmberDebug.LogError(TAG, $"无法加载预制体: {pageDef.PrefabPath}");
-                    req.OnComplete?.Invoke(null);
+                    EmberDebug.Log(TAG, $"页面已显示，刷新数据: {pageDef.PrefabPath}");
+                    _viewEngine.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
+
                     return;
                 }
 
-                var instance = UnityEngine.Object.Instantiate(prefab);
-                instance.name = prefab.name;
+                // 优先使用预加载页面（对标 Burner GamePage Preload 机制）
+                if (_preloadedPages.TryGetValue(pageDef.PrefabPath, out var preloadedPage))
+                {
+                    _preloadedPages.Remove(pageDef.PrefabPath);
+                    EmberDebug.Log(TAG, $"复用预加载页面: {pageDef.PrefabPath}");
+                    RouteAndOpenPage(preloadedPage, pageDef, req, true);
 
-                var page = new EUIPage(instance);
-                RouteAndOpenPage(page, pageDef, req);
-            });
-            Profiler.EndSample();
+                    return;
+                }
+
+                // 其次复用延迟销毁中的页面（对标 Burner GamePage 复用逻辑）
+                var reusablePage = _viewEngine.FindReusablePage(pageDef.PrefabPath);
+                if (reusablePage != null)
+                {
+                    RouteAndOpenPage(reusablePage, pageDef, req);
+
+                    return;
+                }
+
+                EUIObserver.NotifyLoadStarted(pageDef);
+                var provider = _viewEngine.ResourceProvider;
+                bool callbackReceived = false;
+                provider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
+                {
+                    // One acquisition owns one completion. A duplicate callback must not route another page
+                    // or release a resource reference belonging to a later acquisition of the same path.
+                    if (callbackReceived) return;
+                    callbackReceived = true;
+                    try
+                    {
+                        // A departed owner must not route a late page over the replacement screen.
+                        if (req.IsCurrent != null && !req.IsCurrent())
+                        {
+                            provider.Release(pageDef.PrefabPath);
+                            return;
+                        }
+                        if (prefab == null)
+                        {
+                            EmberDebug.LogError(TAG, $"无法加载预制体: {pageDef.PrefabPath}");
+                            req.OnComplete?.Invoke(null);
+                            return;
+                        }
+
+                        var instance = UnityEngine.Object.Instantiate(prefab);
+                        instance.name = prefab.name;
+
+                        var page = new EUIPage(instance);
+                        RouteAndOpenPage(page, pageDef, req);
+                    }
+                    catch (Exception error)
+                    {
+                        if (req.Args is EUICurtainOpenArgs curtain) curtain.Session.Fail(error);
+                        else throw;
+                    }
+                });
+
+            }
+            finally { Profiler.EndSample(); }
         }
 
         /// <summary>
@@ -803,68 +695,81 @@ namespace Ember.UI
         private void RouteAndOpenPage(EUIPage page, EUIPageDef pageDef, ShowRequest req, bool alreadyRouted = false)
         {
             Profiler.BeginSample("EUIManager.RouteAndOpenPage");
-            // 扩展点：允许 uiextension 等外部包配置 Logic（CreateLogic 内部防重，重复调用安全）
-            OnPageCreated?.Invoke(page);
-
-            if (!alreadyRouted)
+            try
             {
-                // 提前绑定定义：路由分发的 switch（如 FreePage 的 AddFreePage）需要在 OpenPage 之前读取 EUIPageDef
+                var curtain = (req.Args as EUICurtainOpenArgs)?.Session;
                 page.EUIPageDef = pageDef;
-
-                switch (pageDef.PageType)
+                curtain?.PageAttached?.Invoke(page);
+                // 扩展点：允许 uiextension 等外部包配置 Logic（CreateLogic 内部防重，重复调用安全）
+                OnPageCreated?.Invoke(page);
+                if (curtain?.IsReleased == true)
                 {
-                case PageType.MainPage:
-                    _context.PushMainPage(page);
-                    break;
+                    // The extension may have cancelled before routing/initialization.
 
-                case PageType.Popup:
-                case PageType.FullScreenPopup:
-                    _context.AddPopup(page);
-                    ShowBgMaskForPopup(page);
-                    break;
+                    return;
+                }
 
-                case PageType.TopMost:
-                    _context.AddTopMost(page);
-                    break;
+                if (!alreadyRouted)
+                {
+                    // 提前绑定定义：路由分发的 switch（如 FreePage 的 AddFreePage）需要在 OpenPage 之前读取 EUIPageDef
+                    page.EUIPageDef = pageDef;
 
-                case PageType.SubPage:
+                    switch (pageDef.PageType)
                     {
-                        var parent = req.ParentPage;
-                        if (parent != null)
-                        {
-                            parent.RegisterSubPage(page);
-                            _parentPageMap[page] = parent;
+                    case PageType.MainPage:
+                        _context.PushMainPage(page);
+                        break;
 
-                            // 设置 SubPage 排序（对标 Burner SubPageOrderGrowStep=50）
-                            // 必须在 OpenPage 之前设置，因为 OpenPage 只设置 overrideSorting=true，
-                            // 不覆盖 sortingOrder 的具体值
-                            var sortingOrder = parent.GetNextSubPageSortingOrder();
-                            var canvas = page.Canvas;
-                            if (canvas)
-                                canvas.sortingOrder = sortingOrder;
+                    case PageType.Popup:
+                    case PageType.FullScreenPopup:
+                        _context.AddPopup(page);
+                        ShowBgMaskForPopup(page);
+                        break;
+
+                    case PageType.TopMost:
+                        _context.AddTopMost(page);
+                        break;
+
+                    case PageType.SubPage:
+                        {
+                            var parent = req.ParentPage;
+                            if (parent != null)
+                            {
+                                parent.RegisterSubPage(page);
+                                _parentPageMap[page] = parent;
+
+                                // 设置 SubPage 排序（对标 Burner SubPageOrderGrowStep=50）
+                                // 必须在 OpenPage 之前设置，因为 OpenPage 只设置 overrideSorting=true，
+                                // 不覆盖 sortingOrder 的具体值
+                                var sortingOrder = parent.GetNextSubPageSortingOrder();
+                                var canvas = page.Canvas;
+                                if (canvas)
+                                    canvas.sortingOrder = sortingOrder;
+                            }
+                            break;
                         }
+
+                    case PageType.Overlay:
+                        _context.AddOverlay(page);
+                        break;
+
+                    case PageType.FreePage:
+                        _context.AddFreePage(page);
+                        break;
+
+                    case PageType.Background:
+                        _context.SetBackground(page);
                         break;
                     }
-
-                case PageType.Overlay:
-                    _context.AddOverlay(page);
-                    break;
-
-                case PageType.FreePage:
-                    _context.AddFreePage(page);
-                    break;
-
-                case PageType.Background:
-                    _context.SetBackground(page);
-                    break;
                 }
-            }
 
-            _viewEngine.OpenPage(page, pageDef, req.Args, () =>
-            {
-                req.OnComplete?.Invoke(page);
-            });
-            Profiler.EndSample();
+                _viewEngine.OpenPage(page, pageDef, req.Args, () =>
+                {
+                    req.OnComplete?.Invoke(page);
+                });
+
+            }
+            finally { Profiler.EndSample(); }
         }
 
         /// <summary>

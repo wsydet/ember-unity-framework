@@ -1,0 +1,79 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "f19bcf367d5447ac8e1b8d0a7ebc162c",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792755187486,
+      "finished_unix_ms": 1792755194092,
+      "last_update_unix_ms": 1792755194092,
+      "progress": {
+        "completed": 4,
+        "total": 4,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EUITransitionBlockPreviewTests.PublicPreview_WithoutAwake_RepeatsAndCleansPool",
+        "last_finished_unix_ms": 1792755194057,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.8813626,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "FormalLoadingPrefabContents_PublicPreviewInitializesAndUnloads",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.FormalLoadingPrefabContents_PublicPreviewInitializesAndUnloads",
+            "state": "Passed",
+            "durationSeconds": 0.0379695,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n"
+          },
+          {
+            "name": "HorizontalBands_RenderFormalPrefabParametersAndSaveEvidence",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.HorizontalBands_RenderFormalPrefabParametersAndSaveEvidence",
+            "state": "Passed",
+            "durationSeconds": 0.2297423,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n"
+          },
+          {
+            "name": "InspectorButtons_RepeatAndRemovePreviewTweens",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.InspectorButtons_RepeatAndRemovePreviewTweens",
+            "state": "Passed",
+            "durationSeconds": 0.0586896,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n"
+          },
+          {
+            "name": "PublicPreview_WithoutAwake_RepeatsAndCleansPool",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.PublicPreview_WithoutAwake_RepeatsAndCleansPool",
+            "state": "Passed",
+            "durationSeconds": 0.0516934,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：21×13 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:642)</i></color>\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

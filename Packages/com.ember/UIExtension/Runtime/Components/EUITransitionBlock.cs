@@ -23,7 +23,7 @@ namespace Ember.UIExtension
     /// 方块过渡动画组件，实现 <see cref="IEUITransitionEffect"/> 接口。
     /// 选中该子物体可在 Inspector 中配置所有参数并预览动画。
     /// </summary>
-    public class EUITransitionBlock : MonoBehaviour, IEUITransitionEffect, IEUITransitionHandler
+    public class EUITransitionBlock : MonoBehaviour, IEUIControlledTransitionEffect, IEUITransitionHandler
     {
         private const string GROUP = "L1: 方块过渡";
 
@@ -153,6 +153,10 @@ namespace Ember.UIExtension
         [SerializeField] private float _transitionDuration = 0.8f;
 
         [BoxGroup("$GROUP/动画参数")]
+        [Tooltip("退出时长；负值沿用原过渡时长，兼容已有 Prefab。")]
+        [SerializeField] private float _exitDuration = -1f;
+
+        [BoxGroup("$GROUP/动画参数")]
         [Tooltip("方块组间错开间隔（秒）")]
         [Range(0f, 0.1f)]
         [SerializeField] private float _staggerInterval = 0.03f;
@@ -165,6 +169,7 @@ namespace Ember.UIExtension
 
         private readonly List<BlockEntry> _pool = new();
         private int _activeCount;
+        private int _animationVersion;
 
         private RectTransform _containerRect;
         private Vector2Int _gridSize;
@@ -204,7 +209,12 @@ namespace Ember.UIExtension
         private void OnDestroy()
         {
             KillAllTweens();
+#if UNITY_EDITOR
+            if (!Application.isPlaying) DestroyPooledBlocks();
+#endif
         }
+
+        private void OnDisable() => HideAllImmediate();
 
         #endregion
 
@@ -219,7 +229,7 @@ namespace Ember.UIExtension
         {
             var groups = GetOrder(true);
             if (groups == null || groups.Count == 0) return;
-            await PlayTransitionAsync(groups, true, duration);
+            await PlayTransitionAsync(groups, true, duration, new EUITransitionPlayback());
         }
 
         [HasGC]
@@ -227,8 +237,16 @@ namespace Ember.UIExtension
         {
             var groups = GetOrder(false);
             if (groups == null || groups.Count == 0) return;
-            await PlayTransitionAsync(groups, false, duration);
+            await PlayTransitionAsync(groups, false, duration, new EUITransitionPlayback());
         }
+
+        [HasGC]
+        public UniTask PlayEnterAsync(EUITransitionPlayback playback, float duration = -1f)
+            => PlayTransitionAsync(GetOrder(true), true, duration, playback);
+
+        [HasGC]
+        public UniTask PlayExitAsync(EUITransitionPlayback playback, float duration = -1f)
+            => PlayTransitionAsync(GetOrder(false), false, duration, playback);
 
         [NoGC]
         public void HideAllImmediate()
@@ -321,47 +339,50 @@ namespace Ember.UIExtension
         }
 
         [HasGC]
-        private async UniTask PlayTransitionAsync(List<List<Vector2Int>> groups, bool isEnter, float duration)
+        private async UniTask PlayTransitionAsync(List<List<Vector2Int>> groups, bool isEnter, float duration,
+            EUITransitionPlayback playback)
         {
+            if (playback == null) throw new ArgumentNullException(nameof(playback));
+            playback.Cancellation.ThrowIfCancellationRequested();
             EnsureGrid();
-
-            float dur = duration > 0f ? duration : _transitionDuration;
-
-            int totalNeeded = 0;
-            foreach (var g in groups) totalNeeded += g.Count;
-            EnsurePoolSize(totalNeeded);
-
-            int groupCount = groups.Count;
-            float perBlockDuration = Mathf.Max(0.05f, dur - _staggerInterval * (groupCount - 1));
-
             KillAllTweens();
-            _activeCount = 0;
-
-            for (int gi = 0; gi < groupCount; gi++)
+            int version = _animationVersion;
+            float dur = duration >= 0f ? duration : !isEnter && _exitDuration >= 0f ? _exitDuration : _transitionDuration;
+            int totalNeeded = 0;
+            foreach (var group in groups) totalNeeded += group.Count;
+            EnsurePoolSize(totalNeeded);
+            _activeCount = totalNeeded;
+            float stagger = groups.Count > 1 ? Mathf.Min(_staggerInterval, dur / groups.Count) : 0f;
+            float perBlock = Mathf.Max(0f, dur - stagger * (groups.Count - 1));
+            float elapsed = 0f;
+            try
             {
-                var group = groups[gi];
-                float groupDelay = gi * _staggerInterval;
-
-                for (int bi = 0; bi < group.Count; bi++)
+                while (true)
                 {
-                    var gridPos = group[bi];
-                    var entry = _pool[_activeCount++];
-                    entry.Raw.gameObject.SetActive(true);
-                    ApplyBlockVisual(entry, gridPos.x, gridPos.y);
-
-                    Vector2 targetPos = GetBlockAnchoredPosition(gridPos.x, gridPos.y);
-                    entry.Rect.anchoredPosition = targetPos;
-                    entry.Rect.sizeDelta = new Vector2(_blockSize, _blockSize);
-
-                    if (isEnter)
-                        AnimateBlockEnter(entry, targetPos, groupDelay, perBlockDuration);
-                    else
-                        AnimateBlockExit(entry, targetPos, groupDelay, perBlockDuration);
+                    playback.Cancellation.ThrowIfCancellationRequested();
+                    if (this == null || version != _animationVersion || !isActiveAndEnabled)
+                        throw new OperationCanceledException("Transition animation owner expired.");
+                    int index = 0;
+                    for (int gi = 0; gi < groups.Count; gi++)
+                    foreach (var gridPos in groups[gi])
+                    {
+                        var entry = _pool[index++];
+                        entry.Raw.gameObject.SetActive(true);
+                        ApplyBlockVisual(entry, gridPos.x, gridPos.y);
+                        entry.Rect.sizeDelta = new Vector2(_blockSize, _blockSize);
+                        float t = perBlock <= 0f ? 1f : Mathf.Clamp01((elapsed - gi * stagger) / perBlock);
+                        ApplyCurves(entry.Rect, entry.Raw, GetBlockAnchoredPosition(gridPos.x, gridPos.y), isEnter ? t : 1f - t);
+                    }
+                    if (elapsed >= dur) break;
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+                    elapsed = Mathf.Min(dur, elapsed + playback.DeltaTime);
                 }
             }
-
-            float totalDuration = _staggerInterval * (groupCount - 1) + perBlockDuration;
-            await UniTask.Delay(TimeSpan.FromSeconds(totalDuration), ignoreTimeScale: true, cancellationToken: this.GetCancellationTokenOnDestroy());
+            catch
+            {
+                if (this != null && version == _animationVersion) HideAllImmediate();
+                throw;
+            }
         }
 
         private void AnimateBlockEnter(BlockEntry entry, Vector2 targetPos, float delay, float duration, bool manualUpdate = false)
@@ -393,7 +414,7 @@ namespace Ember.UIExtension
                 },
                 isEnter ? 1f : 0f,
                 duration
-            ).SetEase(Ease.Linear).SetDelay(delay).SetUpdate(update, isIndependentUpdate: true);
+            ).SetTarget(rect).SetEase(Ease.Linear).SetDelay(delay).SetUpdate(update, isIndependentUpdate: true);
         }
 
         /// <summary>按进度求值 6 条曲线并应用到方块（每帧调用，无 GC）。</summary>
@@ -431,6 +452,12 @@ namespace Ember.UIExtension
         [NoGC]
         private void EnsureGrid()
         {
+            if (_containerRect == null)
+            {
+                _containerRect = GetComponent<RectTransform>();
+                if (_containerRect == null) throw new InvalidOperationException("Transition block requires a RectTransform.");
+                _gridDirty = true;
+            }
             if (!_gridDirty) return;
             _gridDirty = false;
 
@@ -579,6 +606,7 @@ namespace Ember.UIExtension
         [NoGC]
         private void KillAllTweens()
         {
+            _animationVersion++;
             DOTween.Kill(transform);
             // 方块 tween 的目标是子物体上的 RectTransform / Image，需逐个清理，否则 DOTween.Kill(transform) 杀不到。
             for (int i = 0; i < _pool.Count; i++)
@@ -669,7 +697,7 @@ namespace Ember.UIExtension
         [PropertyOrder(93)]
         [BoxGroup("$GROUP/预览")]
         [Button("■ 停止", ButtonSizes.Medium), GUIColor(0.7f, 0.3f, 0.3f)]
-        private void EditorPreviewStop()
+        public void EditorPreviewStop()
         {
             KillAllTweens();
             DestroyPooledBlocks();
@@ -818,6 +846,7 @@ namespace Ember.UIExtension
 
         public void EditorPlayEnterPreview()
         {
+            EditorInitialize();
             var groups = GetOrder(true);
             if (groups == null || groups.Count == 0) return;
             EditorPlayPreview(groups, true);
@@ -825,6 +854,7 @@ namespace Ember.UIExtension
 
         public void EditorPlayExitPreview()
         {
+            EditorInitialize();
             var groups = GetOrder(false);
             if (groups == null || groups.Count == 0) return;
             EditorPlayPreview(groups, false);
@@ -840,7 +870,7 @@ namespace Ember.UIExtension
             EnsurePoolSize(totalNeeded);
 
             int groupCount = groups.Count;
-            float perBlockDuration = Mathf.Max(0.05f, _transitionDuration - _staggerInterval * (groupCount - 1));
+            float perBlockDuration = Mathf.Max(0.05f, (isEnter || _exitDuration < 0f ? _transitionDuration : _exitDuration) - _staggerInterval * (groupCount - 1));
 
             KillAllTweens();
             _activeCount = 0;

@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "requested": "2026-10-23T12:05:02.4238389Z",
+      "finished": "2026-10-23T12:05:07.441654Z",
+      "beforeReload": "2026-10-23T12:05:07.7193791Z",
+      "now": "2026-10-23T12:05:50.9483616Z",
+      "compiling": false,
+      "updating": false,
+      "ui": "9a7c18dc-4d43-4345-8970-1eef3ebc99a4",
+      "upm": "5a61a5f0-f15e-4ad5-8567-f85c071574a5"
+    },
+    "compiler": "codedom"
+  }
+}

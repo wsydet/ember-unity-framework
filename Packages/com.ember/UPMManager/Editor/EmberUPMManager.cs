@@ -654,7 +654,7 @@ namespace Ember.UPMManager.Editor
                 var style = new GUIStyle(EditorStyles.wordWrappedLabel)
                 {
                     fontStyle = FontStyle.Bold,
-                    normal = { textColor = state.Installed ? new Color(0.25f, 0.75f, 0.4f) : new Color(0.95f, 0.65f, 0.25f) }
+                    normal = { textColor = state.Installed && !state.CanUpgrade ? new Color(0.25f, 0.75f, 0.4f) : new Color(0.95f, 0.65f, 0.25f) }
                 };
                 EditorGUILayout.LabelField(state.Text, style);
                 EditorGUILayout.LabelField(package.Description, EditorStyles.wordWrappedMiniLabel);
@@ -663,16 +663,39 @@ namespace Ember.UPMManager.Editor
                 {
                     bool busy = _checking || _installing || EmberUPMUpgradeTracker.IsActive
                         || EditorApplication.isCompiling || EditorApplication.isUpdating || _optionalPackagesDirty;
-                    using (new EditorGUI.DisabledScope(busy || !state.CanInstall))
+                    using (new EditorGUI.DisabledScope(busy || !(state.CanInstall || state.CanUpgrade)))
                     {
-                        string button = state.Installed ? "已安装" : state.CanInstall ? "安装 v" + package.Version : "等待状态确认";
+                        string button = state.CanUpgrade ? "升级到推荐 v" + package.Version
+                            : state.Installed ? "已安装" : state.CanInstall ? "安装 v" + package.Version : "等待状态确认";
                         if (GUILayout.Button(new GUIContent(button, package.InstallUrl), GUILayout.Width(160)))
-                            InstallOptionalPackage(package);
+                        {
+                            if (state.CanUpgrade) UpgradeOptionalPackage(package);
+                            else InstallOptionalPackage(package);
+                        }
                     }
                     if (GUILayout.Button("复制安装地址", GUILayout.Width(110)))
                         EditorGUIUtility.systemCopyBuffer = package.InstallUrl;
                 }
             }
+        }
+
+        private void UpgradeOptionalPackage(EmberUPMOptionalPackages.Definition package)
+        {
+            if (_checking || _installing || EmberUPMUpgradeTracker.IsActive
+                || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
+            try
+            {
+                string manifest = File.ReadAllText(Path.Combine(Application.dataPath, "../Packages/manifest.json"));
+                if (!EmberUPMOptionalPackages.TryUpgrade(package,
+                        UnityEditor.PackageManager.PackageInfo.GetAllRegisteredPackages(), manifest,
+                        url => InstallPackage(url, package.Label + " → v" + package.Version), out var error))
+                    EditorUtility.DisplayDialog("未执行升级", error, "确定");
+            }
+            catch (Exception ex)
+            {
+                EditorUtility.DisplayDialog("升级请求失败", ex.Message, "确定");
+            }
+            RequestOptionalPackageRefresh();
         }
 
         private void InstallOptionalPackage(EmberUPMOptionalPackages.Definition package)
@@ -687,6 +710,17 @@ namespace Ember.UPMManager.Editor
                 {
                     RequestOptionalPackageRefresh();
                     return;
+                }
+                if (package.Name == "com.coplaydev.unity-mcp")
+                {
+                    string manifest = File.ReadAllText(Path.Combine(Application.dataPath, "../Packages/manifest.json"));
+                    if (!EmberUPMOptionalPackages.TryReadManifestDependency(package, manifest, out var declared)
+                        || declared != null)
+                    {
+                        EditorUtility.DisplayDialog("未执行安装", "manifest 已声明 MCP 或无法安全确认来源；请等待 UPM 解析完成并刷新。", "确定");
+                        RequestOptionalPackageRefresh();
+                        return;
+                    }
                 }
                 InstallPackage(package.InstallUrl, package.Label);
             }

@@ -1,0 +1,57 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "templates": [
+        {
+          "id": "base",
+          "version": "0.8.3",
+          "hash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "sealedHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "actualHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "parent": "",
+          "parentHash": "",
+          "actualParentHash": null,
+          "sync": "Root"
+        },
+        {
+          "id": "platformer-2d",
+          "version": "0.11.1",
+          "hash": "22dd884949be5e2697a2606d5da00c46",
+          "sealedHash": "22dd884949be5e2697a2606d5da00c46",
+          "actualHash": "22dd884949be5e2697a2606d5da00c46",
+          "parent": "base",
+          "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "sync": "Synced"
+        },
+        {
+          "id": "source3d-2p5d",
+          "version": "0.5.0",
+          "hash": "89e49f1c8c620812a15b181a0a049180",
+          "sealedHash": "89e49f1c8c620812a15b181a0a049180",
+          "actualHash": "89e49f1c8c620812a15b181a0a049180",
+          "parent": "base",
+          "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "sync": "Synced"
+        },
+        {
+          "id": "visual-novel",
+          "version": "0.21.2",
+          "hash": "56cba1d73472bba8f1fa4baa293466f0",
+          "sealedHash": "56cba1d73472bba8f1fa4baa293466f0",
+          "actualHash": "56cba1d73472bba8f1fa4baa293466f0",
+          "parent": "base",
+          "parentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "actualParentHash": "1270ce6dfcae3c01d050c09ecfd60337",
+          "sync": "Synced"
+        }
+      ],
+      "graphIssues": 0,
+      "editing": "{\"templateId\":\"platformer-2d\",\"templateVersion\":\"0.11.1\",\"contentHash\":\"22dd884949be5e2697a2606d5da00c46\",\"loadedAt\":\"2026-10-22 11:13:33\"}"
+    },
+    "compiler": "codedom"
+  }
+}

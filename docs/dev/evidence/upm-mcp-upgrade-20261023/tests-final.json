@@ -1,0 +1,425 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "b5ee8668d668483a8a407858b9301b1d",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792756572645,
+      "finished_unix_ms": 1792756582031,
+      "last_update_unix_ms": 1792756582031,
+      "progress": {
+        "completed": 42,
+        "total": 42,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0\")",
+        "last_finished_unix_ms": 1792756581724,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 42,
+          "passed": 42,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.2782404,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-folders\",\"rainbow-folders-v2.4.5\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-folders\",\"rainbow-folders-v2.4.5\")",
+            "state": "Passed",
+            "durationSeconds": 0.0107693,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-hierarchy\",\"rainbow-hierarchy-v2.6.5\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.borodar.rainbow-hierarchy\",\"rainbow-hierarchy-v2.6.5\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001059,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.ryanindiedev.inputdevicedetector\",\"inputdevicedetector-v1.0.0\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.ryanindiedev.inputdevicedetector\",\"inputdevicedetector-v1.0.0\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000261,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InstallAddress_UsesThePackageSpecificPublishedTag(\"com.flyingworm.consolepro\",\"consolepro-v3.9.81\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.InstallAddress_UsesThePackageSpecificPublishedTag(\"com.flyingworm.consolepro\",\"consolepro-v3.9.81\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000188,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Manifest_EscapedDuplicateOrMalformedDeclarationsAreNotGuessed",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Manifest_EscapedDuplicateOrMalformedDeclarationsAreNotGuessed",
+            "state": "Passed",
+            "durationSeconds": 0.0075049,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.2.0\",True,\"有推荐更新\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.2.0\",True,\"有推荐更新\")",
+            "state": "Passed",
+            "durationSeconds": 0.0038167,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"9.9.0\",True,\"有推荐更新\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"9.9.0\",True,\"有推荐更新\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001404,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.3.0\",False,\"已达推荐版本\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.3.0\",False,\"已达推荐版本\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000759,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.10.0\",False,\"不降级\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.10.0\",False,\"不降级\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000988,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"11.0.0\",False,\"不降级\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"11.0.0\",False,\"不降级\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000628,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.3.0-pre.1\",False,\"人工确认\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.3.0-pre.1\",False,\"人工确认\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000619,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"unknown\",False,\"人工确认\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"unknown\",False,\"人工确认\")",
+            "state": "Passed",
+            "durationSeconds": 0.000058,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.2\",False,\"人工确认\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(\"10.2\",False,\"人工确认\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000641,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_ComparesResolvedVersionWithoutDowngrading(null,False,\"人工确认\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_ComparesResolvedVersionWithoutDowngrading(null,False,\"人工确认\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000528,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"\",True)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"\",True)",
+            "state": "Passed",
+            "durationSeconds": 0.0005489,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"#main\",True)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"#main\",True)",
+            "state": "Passed",
+            "durationSeconds": 0.0000587,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"#v10.2.0\",True)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"#v10.2.0\",True)",
+            "state": "Passed",
+            "durationSeconds": 0.000055,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"#v10.2.0-custom\",False)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"#v10.2.0-custom\",False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000398,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"#my-patch\",False)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"#my-patch\",False)",
+            "state": "Passed",
+            "durationSeconds": 0.000032,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_CustomRefsRequireManualManagement(\"#aa5fc638d623f56178d50329d9ad8c541a57fe66\",False)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_CustomRefsRequireManualManagement(\"#aa5fc638d623f56178d50329d9ad8c541a57fe66\",False)",
+            "state": "Passed",
+            "durationSeconds": 0.0000318,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_IndirectDependencyDoesNotBecomeADirectOverride",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_IndirectDependencyDoesNotBecomeADirectOverride",
+            "state": "Passed",
+            "durationSeconds": 0.0001705,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_LocalAndCustomSourcesRemainProtected(Local)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_LocalAndCustomSourcesRemainProtected(Local)",
+            "state": "Passed",
+            "durationSeconds": 0.0011496,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_LocalAndCustomSourcesRemainProtected(Embedded)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_LocalAndCustomSourcesRemainProtected(Embedded)",
+            "state": "Passed",
+            "durationSeconds": 0.0001485,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_LocalAndCustomSourcesRemainProtected(Registry)",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_LocalAndCustomSourcesRemainProtected(Registry)",
+            "state": "Passed",
+            "durationSeconds": 0.0001275,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/someone/unity-mcp.git?path=/MCPForUnity#v10.2.0\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/someone/unity-mcp.git?path=/MCPForUnity#v10.2.0\")",
+            "state": "Passed",
+            "durationSeconds": 0.0006144,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com.evil.test/CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com.evil.test/CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000768,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/CoplayDev/unity-mcp.git?path=/Custom\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/CoplayDev/unity-mcp.git?path=/Custom\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000521,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity&custom=true\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity&custom=true\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000399,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://user@github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"https://user@github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "state": "Passed",
+            "durationSeconds": 0.0000653,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"file:../unity-mcp\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"file:../unity-mcp\")",
+            "state": "Passed",
+            "durationSeconds": 0.0012051,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Mcp_UnmanagedAddressesNeverOfferUpgrade(\"git@github.com:CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Mcp_UnmanagedAddressesNeverOfferUpgrade(\"git@github.com:CoplayDev/unity-mcp.git?path=/MCPForUnity\")",
+            "state": "Passed",
+            "durationSeconds": 0.000397,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingPackage_WithAnAlreadyLoadedPluginTypeDoesNotOfferDuplicateInstall",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.MissingPackage_WithAnAlreadyLoadedPluginTypeDoesNotOfferDuplicateInstall",
+            "state": "Passed",
+            "durationSeconds": 0.001874,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PackageRegistration_RequestsRefreshWithoutChangingTheCurrentLayoutSnapshot",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.PackageRegistration_RequestsRefreshWithoutChangingTheCurrentLayoutSnapshot",
+            "state": "Passed",
+            "durationSeconds": 0.0063611,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RegisteredPackage_ReportsActualVersionAndBlocksReplacingIt",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.RegisteredPackage_ReportsActualVersionAndBlocksReplacingIt",
+            "state": "Passed",
+            "durationSeconds": 0.000586,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UncompiledAssets_AreNotMisreportedAsMissingOrSuccessfullyInstalled",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.UncompiledAssets_AreNotMisreportedAsMissingOrSuccessfullyInstalled",
+            "state": "Passed",
+            "durationSeconds": 0.0003816,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.UnityMcp_UsesItsOfficialRepositoryAndPinnedPackageDirectory",
+            "state": "Passed",
+            "durationSeconds": 0.0008199,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_MissingAmbiguousOrUnresolvedEvidenceCannotDispatch",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_MissingAmbiguousOrUnresolvedEvidenceCannotDispatch",
+            "state": "Passed",
+            "durationSeconds": 0.000893,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_RevalidatesAndDispatchesOnlyThePinnedRecommendedUrl",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_RevalidatesAndDispatchesOnlyThePinnedRecommendedUrl",
+            "state": "Passed",
+            "durationSeconds": 0.0006415,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"file:../local-mcp\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"file:../local-mcp\")",
+            "state": "Passed",
+            "durationSeconds": 0.0015115,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/someone/unity-mcp.git?path=/MCPForUnity#main\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/someone/unity-mcp.git?path=/MCPForUnity#main\")",
+            "state": "Passed",
+            "durationSeconds": 0.0006485,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#my-patch\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#my-patch\")",
+            "state": "Passed",
+            "durationSeconds": 0.0003632,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0\")",
+            "fullName": "Ember.UPMManager.Editor.Tests.EmberUPMOptionalPackagesEditTests.Upgrade_StaleResolvedStateCannotReplaceAChangedManifest(\"https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0\")",
+            "state": "Passed",
+            "durationSeconds": 0.000612,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}
