@@ -1,0 +1,56 @@
+﻿#if UNITY_EDITOR
+using Game.Entity;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+
+namespace Game.State
+{
+    /// <summary>维护白盒的产品宿主替身；仅发平台指令与合成输入，不驱动Player或物理。</summary>
+    [DefaultExecutionOrder(-1000)]
+    public sealed class CarrierContractProbeDriver : MonoBehaviour
+    {
+        #region 内部参数
+        public EntityTranslationSupport2D Support { get; set; }
+        public TranslationSupportLaunchTarget2D Launch { get; set; }
+        public Keyboard Keyboard { get; set; }
+        public bool JumpHeld { get; set; }
+        public bool Drive { get; set; }
+        public bool HorizontalOnly { get; set; }
+        public Vector2 Desired { get; set; }
+        public Vector2 Submitted { get; private set; }
+        public float SubmittedAt { get; private set; }
+        public int Steps { get; private set; }
+        public bool Armed { get; private set; }
+        public Behaviour LaunchOwner { get; private set; }
+        private LaunchRequest2D _request;
+        #endregion
+        // --------------------------------------------------------
+        #region 生命周期
+        private void Update()
+        {
+            if (Keyboard == null) return;
+            InputSystem.QueueStateEvent(Keyboard, JumpHeld ? new KeyboardState(Key.Space) : new KeyboardState());
+        }
+        private void FixedUpdate()
+        {
+            if (Armed)
+            {
+                Armed = false; Steps = 0;
+                if (Launch.TryLaunch(LaunchOwner, _request) != LaunchResult2D.Accepted)
+                    throw new System.InvalidOperationException("Carrier probe launch rejected");
+            }
+            if (!Drive || !Support.IsAvailable) return;
+            if (HorizontalOnly) Launch.TrySetHorizontalVelocity(Desired.x);
+            else Support.SetVelocity(Desired);
+            Submitted = Support.Velocity; SubmittedAt = Time.fixedTime; Steps++;
+        }
+        #endregion
+        // --------------------------------------------------------
+        #region 外部方法
+        public void Arm(Behaviour owner, LaunchRequest2D request)
+        { LaunchOwner = owner; _request = request; Armed = true; }
+        #endregion
+    }
+}
+#endif

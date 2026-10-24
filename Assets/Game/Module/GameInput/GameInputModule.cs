@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 namespace Game.Input
 {
     /// <summary>base 的可选 Global 模块。登记、活动与 Ready 分别查询，不在构造时访问 Manager。</summary>
-    [EmberModule(ModulePhase.Global, Enabled = false)]
+    [EmberModule(ModulePhase.Global, Enabled = true)]
     public sealed class GameInputModule : EmberSingleton<GameInputModule>, IEmberModule
     {
         #region 内部参数

@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIMainPanel
  * page name    : EUIMainPage
- * update time  : 2026/9/29 14:51:54
+ * update time  : 2026/10/8 21:32:52
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,39 +15,24 @@ namespace Game.UI
     public partial class EUIMainPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/Center/MenuButtons/m_Btn_Start
+        /// Animator/EUISafeArea/Center/m_Btn_Start
         /// </summary>
         private Button Btn_Start;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/MenuButtons/m_Btn_Settings
+        /// Animator/EUISafeArea/Center/m_Btn_Settings
         /// </summary>
         private Button Btn_Settings;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/MenuButtons/NovelContinue
+        /// Animator/EUISafeArea/Center/m_Btn_Continue
         /// </summary>
-        private UnityEngine.UI.Button NovelContinue;
+        private Button Btn_Continue;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/MenuButtons/NovelLoad
+        /// Animator/EUISafeArea/Center/m_Txt_Status
         /// </summary>
-        private UnityEngine.UI.Button NovelLoad;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/NovelMessage
-        /// </summary>
-        private TMPro.TextMeshProUGUI NovelMessage;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/MenuButtons/NovelQuit
-        /// </summary>
-        private UnityEngine.UI.Button NovelQuit;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/TitleText
-        /// </summary>
-        private TMP_Text NovelTitle;
+        private TMPro.TextMeshProUGUI Txt_Status;
 
 
 
@@ -56,11 +41,8 @@ namespace Game.UI
         base.OnBind();
             Btn_Start = ControlMap["Btn_Start"] as Button;
             Btn_Settings = ControlMap["Btn_Settings"] as Button;
-            NovelContinue = ControlMap["NovelContinue"] as UnityEngine.UI.Button;
-            NovelLoad = ControlMap["NovelLoad"] as UnityEngine.UI.Button;
-            NovelMessage = ControlMap["NovelMessage"] as TMPro.TextMeshProUGUI;
-            NovelQuit = ControlMap["NovelQuit"] as UnityEngine.UI.Button;
-            NovelTitle = ControlMap["NovelTitle"] as TMP_Text;
+            Btn_Continue = ControlMap["Btn_Continue"] as Button;
+            Txt_Status = ControlMap["Txt_Status"] as TMPro.TextMeshProUGUI;
 
     }
 }

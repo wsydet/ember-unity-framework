@@ -69,8 +69,20 @@ namespace Game.UI
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
         {
-            // 在此初始化业务数据和事件绑定
+            Btn_Back.onClick.RemoveAllListeners();
+            Btn_Back.onClick.AddListener(BackToMenu);
+            // 页面可缓存复用；替换生成区的匿名监听，确保重入后仍只有一个业务入口。
+            Btn_Settings.onClick.RemoveAllListeners();
+            Btn_Settings.onClick.AddListener(OpenPlayerSettings);
+            Btn_Save.onClick.RemoveListener(SaveProgress);
+            Btn_SaveExit.onClick.RemoveListener(SaveAndExit);
+            Btn_Respawn.onClick.RemoveListener(Respawn);
+            Btn_Save.onClick.AddListener(SaveProgress);
+            Btn_SaveExit.onClick.AddListener(SaveAndExit);
+            Btn_Respawn.onClick.AddListener(Respawn);
         }
+
+        private void BackToMenu() => Exit(null);
 
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
@@ -81,25 +93,32 @@ namespace Game.UI
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
         private void OnShowUser()
         {
-            // 页面变为可见
+            if (!_playerOperation) ReportPlayer("保存使用槽位 0 · 恢复到本会话存档点，首次保存前恢复初始状态");
+            BindLifeNotice();
         }
 
         /// <summary>用户隐藏钩子：框架 OnHide 结束时调用。</summary>
         private void OnHideUser()
         {
+            UnbindLifeNotice();
             // 页面被隐藏
         }
 
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
+            UnbindLifeNotice();
             // 页面被关闭
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            // 清理事件与引用
+            UnbindLifeNotice();
+            Btn_Settings?.onClick.RemoveListener(OpenPlayerSettings);
+            Btn_Save?.onClick.RemoveListener(SaveProgress);
+            Btn_SaveExit?.onClick.RemoveListener(SaveAndExit);
+            Btn_Respawn?.onClick.RemoveListener(Respawn);
         }
     }
 }

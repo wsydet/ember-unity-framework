@@ -2,6 +2,7 @@
 using Ember.Core;
 using Ember.UI;
 using Game.UI;
+using Game.Player;
 
 namespace Game.State
 {
@@ -17,11 +18,14 @@ namespace Game.State
     /// </summary>
     public class GameSettingsState : SettingsState
     {
+        private PlayerPauseRequest _worldPause;
 
         // [EmberManaged:begin OnSettingsEnter]
         protected override void OnSettingsEnter(object args)
         // [EmberManaged:end]
         {
+            if (EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) && player.HasSession)
+                _worldPause = player.Pause();
             EUIManager.Instance.ShowPopup(GamePages.EUISettingPage, args);
         }
 
@@ -29,6 +33,7 @@ namespace Game.State
         protected override void OnSettingsExit()
         // [EmberManaged:end]
         {
+            _worldPause?.Dispose(); _worldPause = null;
             // Pop 时 EUIManager 会自动关闭当前 MainPage 上方的所有 Popup
             EUIManager.Instance.CloseAllPopups();
         }

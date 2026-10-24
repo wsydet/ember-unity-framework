@@ -329,12 +329,10 @@ namespace Game.UI
                 float elapsed = 0f;
                 while (elapsed < duration)
                 {
-                    if (Cg_Progress == null) return;
                     elapsed += Time.unscaledDeltaTime;
                     Cg_Progress.alpha = Mathf.Clamp01(elapsed / duration);
                     await UniTask.Yield(PlayerLoopTiming.Update);
                 }
-                if (Cg_Progress == null) return;
                 Cg_Progress.alpha = 1f;
             }
             _fadeInDone = true;
@@ -359,7 +357,6 @@ namespace Game.UI
                 var startAlpha = Cg_Progress.alpha;
                 while (elapsed < exitDuration)
                 {
-                    if (Cg_Progress == null) return;
                     elapsed += Time.unscaledDeltaTime;
                     Cg_Progress.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / exitDuration);
                     await UniTask.Yield(PlayerLoopTiming.Update);
@@ -373,9 +370,6 @@ namespace Game.UI
         // [EmberManaged:end]
 
         // ── 用户级生命周期（块外用户区，永不触碰）──
-        private CanvasGroup[] _restoreRaycastGroups;
-        private bool[] _restoreRaycastValues;
-        private NovelSaveUI.RestoreLoadingRequest _novelLoading;
 
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
@@ -386,27 +380,13 @@ namespace Game.UI
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            _novelLoading = param as NovelSaveUI.RestoreLoadingRequest;
-            if (_novelLoading != null)
-            {
-                SkipFakeProgress = true;
-                HideProgressVisuals();
-                // The existing Animator group permits click-through for ordinary scene transitions.
-                // During restore, keep its real bound progress ancestors blocking the underlying slots.
-                _restoreRaycastGroups = Cg_Progress.GetComponentsInParent<CanvasGroup>(true);
-                _restoreRaycastValues = new bool[_restoreRaycastGroups.Length];
-                for (int i = 0; i < _restoreRaycastGroups.Length; i++)
-                {
-                    _restoreRaycastValues[i] = _restoreRaycastGroups[i].blocksRaycasts;
-                    _restoreRaycastGroups[i].blocksRaycasts = true;
-                }
-            }
+            // 页面被打开，处理传入参数
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
         private void OnShowUser()
         {
-            RefreshNovelLoadingProgress();
+            // 页面变为可见
         }
 
         /// <summary>用户隐藏钩子：框架 OnHide 结束时调用。</summary>
@@ -418,28 +398,13 @@ namespace Game.UI
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
-            _novelLoading = null;
-            if (_restoreRaycastGroups == null) return;
-            for (int i = 0; i < _restoreRaycastGroups.Length; i++)
-                if (_restoreRaycastGroups[i]) _restoreRaycastGroups[i].blocksRaycasts = _restoreRaycastValues[i];
-            _restoreRaycastGroups = null; _restoreRaycastValues = null;
+            // 页面被关闭
         }
 
         /// <summary>用户逐帧更新钩子：框架 OnUpdate 结束时调用。</summary>
         private void OnUpdateUser()
         {
-            RefreshNovelLoadingProgress();
-            if (_restoreRaycastGroups != null && Ember.Input.EmberInputManager.Instance.IsPressed("Novel/Menu"))
-                NovelSaveUI.CancelLoad();
-        }
-
-        private void RefreshNovelLoadingProgress()
-        {
-            if (_novelLoading?.ShowProgress != true) return;
-            // Keep the loading owner's actual readiness contract; only opt the new-game UI into progress.
-            float progress = Mathf.Clamp(_novelLoading.Progress, 0f, PreparationSucceeded ? 1f : 0.99f);
-            SetProgress(progress);
-            if (Txt_ProgressNum != null) Txt_ProgressNum.text = $"{Mathf.RoundToInt(progress * 100f)}%";
+            // 在此编写逐帧业务逻辑
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>

@@ -7,7 +7,7 @@ using Ember.Core;
 using Game.Module;
 using NUnit.Framework;
 using UnityEngine.TestTools;
-using ProgressModel = Game.Module.PlayerData;
+using ProgressModel = Game.Player.PlatformerProgress;
 
 namespace Game.PlayerData.Tests
 {
@@ -34,7 +34,7 @@ namespace Game.PlayerData.Tests
 
         private sealed class ObservedCodec : IProgressCodec<ProgressModel>
         {
-            private readonly PlayerDataCodec _codec = new();
+            private readonly Game.Player.PlatformerProgressCodec _codec = new();
             internal int EncodeThread;
             internal int DecodeThread;
             public string DataTypeId => _codec.DataTypeId;
@@ -59,12 +59,12 @@ namespace Game.PlayerData.Tests
             yield return Wait(_module.WhenReady);
             Assert.That(_module.WhenReady.Result.Succeeded, Is.True);
             var codec = new ObservedCodec();
-            var saved = _module.SaveAsync(0, new ProgressModel { level = 4, coins = 12 }, new SaveSummary("unity"), codec);
+            var saved = _module.SaveAsync(0, new ProgressModel { Scene = "GameplayScene", X = 12 }, new SaveSummary("unity"), codec);
             yield return Wait(saved.Completion);
             Assert.That(saved.Completion.Result.Succeeded, Is.True);
             var loaded = _module.ReadAsync(0, codec);
             yield return Wait(loaded.Completion);
-            Assert.That(loaded.Completion.Result.Progress.coins, Is.EqualTo(12));
+            Assert.That(loaded.Completion.Result.Progress.X, Is.EqualTo(12));
             Assert.That(codec.EncodeThread, Is.EqualTo(owner));
             Assert.That(codec.DecodeThread, Is.EqualTo(owner));
             var drain = _module.DrainAsync(_module.BeginDrain());

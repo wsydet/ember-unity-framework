@@ -1,0 +1,21 @@
+{
+  "name": "Game.Player.Editor",
+  "rootNamespace": "Game.Player.Editor",
+  "references": [
+    "Game.Player.Runtime",
+    "Game.Entity.Runtime",
+    "Game.Input.Runtime",
+    "Game.PlayerData.Runtime",
+    "Game.PlayerData.Storage",
+    "Ember.Core.Runtime",
+    "Ember.Basic.Runtime",
+    "Unity.InputSystem",
+    "Unity.Cinemachine",
+    "UniTask",
+    "Ember.Core.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

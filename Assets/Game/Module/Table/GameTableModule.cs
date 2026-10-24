@@ -8,8 +8,8 @@ using Game.Table.Generated;
 
 namespace Game.Module
 {
-    /// <summary>项目级 Resource → Table Engine 薄接线；visual-novel 为小说配置显式启用。</summary>
-    [EmberModule(ModulePhase.Global, Enabled = true)]
+    /// <summary>项目级 Resource → Table Engine 薄接线；默认关闭，按产品需要启用。</summary>
+    [EmberModule(ModulePhase.Global, Enabled = false)]
     public sealed partial class GameTableModule : EmberTableModuleBase<GameTableModule>
     {
         protected override IEmberTableCatalog CreateTableCatalog()

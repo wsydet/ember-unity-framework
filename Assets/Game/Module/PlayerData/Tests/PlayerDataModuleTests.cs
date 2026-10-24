@@ -127,7 +127,8 @@ namespace Game.PlayerData.Tests
             Assert.That(Save(1).Completion.Result.Status, Is.EqualTo(SaveStatus.NotReady));
             Assert.That(Read().Status, Is.EqualTo(ReadStatus.NotReady));
             Assert.That(Directory.Exists(_root), Is.False);
-            Assert.That(typeof(PlayerDataModule).GetCustomAttribute<EmberModuleAttribute>().Enabled, Is.False);
+            // platformer-2d 的装配选择；base 模板保留禁用。
+            Assert.That(typeof(PlayerDataModule).GetCustomAttribute<EmberModuleAttribute>().Enabled, Is.True);
         }
 
         [Test]
@@ -141,9 +142,12 @@ namespace Game.PlayerData.Tests
             Assert.That(_module.GetSlots().Slots.Select(slot => slot.SlotId), Is.EqualTo(new[] { 0, 1, 2 }));
             Assert.That(_module.LastSuccessfulSaveSlot, Is.Null);
             Assert.That(Directory.GetFiles(options.RootDirectory).Select(Path.GetFileName), Is.EquivalentTo(new[] { ".writer.lock" }));
-            Assert.That(Read().Status, Is.EqualTo(ReadStatus.NotFound));
-            Assert.That(Await(Save(7, 2).Completion).Succeeded, Is.True);
-            Assert.That(Read(2).Progress.coins, Is.EqualTo(7));
+            // 默认资产属于当前平台模板，必须使用它的完整类型；其余测试仍注入 base 示例夹具。
+            var codec = new Game.Player.PlatformerProgressCodec();
+            Assert.That(Await(_module.ReadAsync(0, codec).Completion).Status, Is.EqualTo(ReadStatus.NotFound));
+            var snapshot = new Game.Player.PlatformerProgress { Scene = "GameplayScene", X = 7 };
+            Assert.That(Await(_module.SaveAsync(2, snapshot, new SaveSummary("test"), codec).Completion).Succeeded, Is.True);
+            Assert.That(Await(_module.ReadAsync(2, codec).Completion).Progress.X, Is.EqualTo(7));
         }
 
         [TestCase("missing")]

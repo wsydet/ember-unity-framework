@@ -1,0 +1,20 @@
+{
+  "name": "Game.Player.Editor.Tests",
+  "references": [
+    "Game.Player.Editor",
+    "Game.Player.Runtime",
+    "Game.Entity.Runtime",
+    "Ember.Basic.Runtime",
+    "Ember.Core.Editor",
+    "Ember.Core.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ]
+}

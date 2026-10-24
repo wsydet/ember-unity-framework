@@ -1,0 +1,504 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8706749818254692027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a7f5097b3a50d4abab13c69b75e496, type: 3}
+  m_Name: PlayerDefaultActionEffects
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerActionEffects
+  _version: 1
+  _slots:
+  - _nodeId: ground-dash
+    _actionEffect: {fileID: 0}
+    _tailEffect: {fileID: 0}
+  - _nodeId: air-dash
+    _actionEffect: {fileID: 0}
+    _tailEffect: {fileID: 0}
+--- !u!114 &-5275380181605265427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: LedgeClimbAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: ledge-climb
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &-3738143422253652306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a780c709461a205488a444cba0f6e3ce, type: 3}
+  m_Name: PlayerPowers
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerPowerConfig
+  _abilities:
+  - _definition: {fileID: -419693744118029490}
+    _enabled: 1
+  - _definition: {fileID: -117859319044245727}
+    _enabled: 1
+  - _definition: {fileID: 6631368262073114750}
+    _enabled: 1
+  - _definition: {fileID: 3541123214153481227}
+    _enabled: 1
+  - _definition: {fileID: 4195578268903921611}
+    _enabled: 1
+  - _definition: {fileID: -5275380181605265427}
+    _enabled: 1
+  - _definition: {fileID: 1620171343191031320}
+    _enabled: 1
+  _skills:
+  - _definition: {fileID: 9196930025021349064}
+    _enabled: 1
+  - _definition: {fileID: 2109514858043663969}
+    _enabled: 1
+--- !u!114 &-419693744118029490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: AirJumpAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: air-jump
+  _defaultOpen: 1
+  _limitedUses: 1
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &-117859319044245727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: WallSlideAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: wall-slide
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308ee4fa52b40a849a19eb2b54f857e2, type: 3}
+  m_Name: "\u851A\u84DD\u98CE\u683C"
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerScheme
+  _graph: {fileID: 11400000, guid: a545c004d0aa61f4a85aae967fa1d423, type: 2}
+  _feel: {fileID: 7304419195409526397}
+  _powers: {fileID: -3738143422253652306}
+  _animation: {fileID: 1399013363884463135}
+  _actionEffects: {fileID: -8706749818254692027}
+  _enableEffects: 0
+  _inputChannel: gameplay
+  _moveAction: Direction
+  _jumpAction: Primary
+  _dashAction: Dash
+--- !u!114 &633038728365372670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2a99767ac738c418c413ef4401dfaf, type: 3}
+  m_Name: CelesteStyleMovement
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerMoveFeel
+  _landing:
+    _normalEnabled: 0
+    _normalDuration: 0.08
+    _hardEnabled: 0
+    _hardSpeed: 18
+    _hardDuration: 0.35
+  _rolling:
+    _enabled: 0
+    _speed: 5
+    _duration: 0.3
+  _ledge:
+    _layers:
+      serializedVersion: 2
+      m_Bits: 1
+    _reach: 0.2
+    _verticalReach: 0.4
+    _gripInset: 0.2
+    _skin: 0.02
+    _riseDuration: 0.2
+    _inwardDuration: 0.2
+  _dropThroughSpeed: 4
+  _speed: 7.5
+  _accelerated: 1
+  _acceleration: 90
+  _braking: 110
+  _turning: 140
+  _independentAir: 1
+  _airSpeed: 7.5
+  _airAccelerated: 1
+  _airAcceleration: 65
+  _airBraking: 45
+  _airTurning: 100
+  _enableJumpResponse: 0
+  _jumpResponseDuration: 0.1
+  _groundDash:
+    _duration: 0.16
+    _speedMode: 0
+    _speed: 20
+    _startSpeed: 16
+    _endSpeed: 8
+  _airDash:
+    _duration: 0.16
+    _speedMode: 0
+    _speed: 20
+    _startSpeed: 16
+    _endSpeed: 8
+--- !u!114 &1399013363884463135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d658a575188744bb1b7add76e63c07, type: 3}
+  m_Name: PlayerAnimation
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAnimationProfile
+  _controller: {fileID: 9100000, guid: bfa4e938e9f2ca542bc2ed088d634435, type: 2}
+  _slots:
+  - _nodeId: basic-drive
+    _state: Base Layer.basic-drive
+    _key: {fileID: 7400000, guid: c0b20f00a8ea91b4288ef11486786825, type: 2}
+    _clip: {fileID: 7400000, guid: c0b20f00a8ea91b4288ef11486786825, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: ground
+    _state: Base Layer.ground
+    _key: {fileID: 7400000, guid: f1dbd50562c4ba7468f110d1a3eb076c, type: 2}
+    _clip: {fileID: 7400000, guid: f1dbd50562c4ba7468f110d1a3eb076c, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: idle
+    _state: Base Layer.idle
+    _key: {fileID: 7400000, guid: eb1d2a62a934f3d4088c184c22412d87, type: 2}
+    _clip: {fileID: 7400000, guid: eb1d2a62a934f3d4088c184c22412d87, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: move
+    _state: Base Layer.move
+    _key: {fileID: 7400000, guid: ddedec63665db474ab735e78833123d1, type: 2}
+    _clip: {fileID: 7400000, guid: ddedec63665db474ab735e78833123d1, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: air
+    _state: Base Layer.air
+    _key: {fileID: 7400000, guid: 966b78734e2e1464a9d0f8616f7935f5, type: 2}
+    _clip: {fileID: 7400000, guid: 966b78734e2e1464a9d0f8616f7935f5, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: head-jump
+    _state: Base Layer.head-jump
+    _key: {fileID: 7400000, guid: b8b9060008612284eb574c96bf00349e, type: 2}
+    _clip: {fileID: 7400000, guid: b8b9060008612284eb574c96bf00349e, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: wall-jump
+    _state: Base Layer.wall-jump
+    _key: {fileID: 7400000, guid: 30b9ac45134683648bbae44a94793da2, type: 2}
+    _clip: {fileID: 7400000, guid: 30b9ac45134683648bbae44a94793da2, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: wall-slide
+    _state: Base Layer.wall-slide
+    _key: {fileID: 7400000, guid: 0a053a8989f6d71409a7583192d30a95, type: 2}
+    _clip: {fileID: 7400000, guid: 0a053a8989f6d71409a7583192d30a95, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: air-jump
+    _state: Base Layer.air-jump
+    _key: {fileID: 7400000, guid: f167e3e1627e8b9498a9d96d3773eb16, type: 2}
+    _clip: {fileID: 7400000, guid: f167e3e1627e8b9498a9d96d3773eb16, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: jump
+    _state: Base Layer.jump
+    _key: {fileID: 7400000, guid: 0f3195fcf3c1e9246806cf3b0fef2cd7, type: 2}
+    _clip: {fileID: 7400000, guid: 0f3195fcf3c1e9246806cf3b0fef2cd7, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: fall
+    _state: Base Layer.fall
+    _key: {fileID: 7400000, guid: 4110a1a8a255c014fbb3cff5ac3b68f2, type: 2}
+    _clip: {fileID: 7400000, guid: 4110a1a8a255c014fbb3cff5ac3b68f2, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: drop-through
+    _state: Base Layer.drop-through
+    _key: {fileID: 7400000, guid: 2bb54791d11421e44ac14eac26a94879, type: 2}
+    _clip: {fileID: 7400000, guid: 2bb54791d11421e44ac14eac26a94879, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: ledge-hang
+    _state: Base Layer.ledge-hang
+    _key: {fileID: 7400000, guid: b136bdf500298d64aa8c106657cbfeaf, type: 2}
+    _clip: {fileID: 7400000, guid: b136bdf500298d64aa8c106657cbfeaf, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: ledge-climb
+    _state: Base Layer.ledge-climb
+    _key: {fileID: 7400000, guid: 5dfb38390d83bab49816588afea7129a, type: 2}
+    _clip: {fileID: 7400000, guid: 5dfb38390d83bab49816588afea7129a, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: rolling
+    _state: Base Layer.rolling
+    _key: {fileID: 7400000, guid: a50812cdc04c3a24cb7d52f4f2231594, type: 2}
+    _clip: {fileID: 7400000, guid: a50812cdc04c3a24cb7d52f4f2231594, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: land
+    _state: Base Layer.land
+    _key: {fileID: 7400000, guid: 150067bc477264d42ab9bd8186d0514f, type: 2}
+    _clip: {fileID: 7400000, guid: 150067bc477264d42ab9bd8186d0514f, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: hard-land
+    _state: Base Layer.hard-land
+    _key: {fileID: 7400000, guid: 2b6143290f43232448c2ef56b0bf807f, type: 2}
+    _clip: {fileID: 7400000, guid: 2b6143290f43232448c2ef56b0bf807f, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: ground-dash
+    _state: Base Layer.ground-dash
+    _key: {fileID: 7400000, guid: 3cdfa56097b852545bcfce212cc0faa0, type: 2}
+    _clip: {fileID: 7400000, guid: 3cdfa56097b852545bcfce212cc0faa0, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: air-dash
+    _state: Base Layer.air-dash
+    _key: {fileID: 7400000, guid: b0cadfb9d9e13774db63942e7cb241c8, type: 2}
+    _clip: {fileID: 7400000, guid: b0cadfb9d9e13774db63942e7cb241c8, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: accelerate
+    _state: Base Layer.accelerate
+    _key: {fileID: 7400000, guid: 7b73bd9d0afdfff45bd0adbc2e1bd3fa, type: 2}
+    _clip: {fileID: 7400000, guid: 7b73bd9d0afdfff45bd0adbc2e1bd3fa, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+  - _nodeId: decelerate
+    _state: Base Layer.decelerate
+    _key: {fileID: 7400000, guid: eb19b7a2786d42145ac99a525d66410c, type: 2}
+    _clip: {fileID: 7400000, guid: eb19b7a2786d42145ac99a525d66410c, type: 2}
+    _speed: 1
+    _blendSeconds: 0
+--- !u!114 &1620171343191031320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: HeadJumpAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: head-jump
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &2109514858043663969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fb84edf700b804bbf25d74f1d3dac2, type: 3}
+  m_Name: AirDashSkill
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerSkillDefinition
+  _id: air-dash
+  _defaultOpen: 1
+  _cooldownSeconds: 0.5
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &3505029387291367323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5612c58b87ffa4694aba67813eda1b, type: 3}
+  m_Name: CelesteStyleInput
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerInputFeel
+  _enableJumpBuffer: 1
+  _jumpBufferDuration: 0.14
+  _enableCoyote: 1
+  _coyoteDuration: 0.12
+--- !u!114 &3541123214153481227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: DropThroughAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: drop-through
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &4147220283370051518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98faced68e54f14f878eacac6c16d8a, type: 3}
+  m_Name: CelesteStyleJump
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerJumpFeel
+  _mode: 0
+  _height: 3
+  _apexTime: 0.32
+  _launchSpeed: 10
+  _gravityScale: 3
+  _enableShortJump: 1
+  _shortJumpMode: 0
+  _releaseSpeed: 5
+  _minimumHeight: 0.5
+  _releaseMultiplier: 0.6666667
+  _enableApexGravity: 1
+  _apexSpeed: 3
+  _apexMultiplier: 0.6
+  _enableFallGravity: 1
+  _fallMultiplier: 1.65
+  _enableFallLimit: 1
+  _fallLimit: 28
+  _enableEdgeHover: 0
+  _edgeHoverDuration: 0.0625
+  _headJumpSpeed: 12.528
+  _airJumpSpeed: 17
+  _airJumpHorizontalMode: 0
+  _airJumpHorizontalSpeed: 6.4
+  _wallSlideSpeed: 2
+  _enableWallFastSlide: 1
+  _wallFastSlideSpeed: 10
+  _wallJumpX: 8
+  _wallJumpY: 17
+  _wallProtection: 0.1
+  _wallReturnEnabled: 1
+  _wallReturnDuration: 0.1
+  _wallReturnMultiplier: 0.8
+--- !u!114 &4195578268903921611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: LedgeHangAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: ledge-hang
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &6631368262073114750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afb24c51bbd624183fecf2ee4058bb, type: 3}
+  m_Name: WallJumpAbility
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerAbilityDefinition
+  _id: wall-jump
+  _defaultOpen: 1
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0
+--- !u!114 &7304419195409526397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51daac27741b0014db55a4c08f461fe1, type: 3}
+  m_Name: "\u851A\u84DD\u98CE\u683C"
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerFeelProfile
+  _movement: {fileID: 633038728365372670}
+  _jump: {fileID: 4147220283370051518}
+  _input: {fileID: 3505029387291367323}
+--- !u!114 &9196930025021349064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fb84edf700b804bbf25d74f1d3dac2, type: 3}
+  m_Name: GroundDashSkill
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerSkillDefinition
+  _id: ground-dash
+  _defaultOpen: 1
+  _cooldownSeconds: 0.5
+  _limitedUses: 0
+  _maximumUses: 1
+  _refillOnGroundSupport: 0

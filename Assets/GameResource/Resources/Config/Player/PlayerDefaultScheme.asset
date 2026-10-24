@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308ee4fa52b40a849a19eb2b54f857e2, type: 3}
+  m_Name: PlayerDefaultScheme
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerScheme
+  _graph: {fileID: 11400000, guid: a545c004d0aa61f4a85aae967fa1d423, type: 2}
+  _feel: {fileID: 11400000, guid: bf9c47ae726c0fe4ba923c7efec2654b, type: 2}
+  _powers: {fileID: 11400000, guid: cc1899bbe74cf1a40b3fb0b0fd1a8a94, type: 2}
+  _animation: {fileID: 11400000, guid: 770fbc778cec4574fac8639b1b9f40f7, type: 2}
+  _actionEffects: {fileID: 11400000, guid: 183bf8f8b7041684a96fb76bda6dcf71, type: 2}
+  _enableEffects: 0
+  _inputChannel: gameplay
+  _moveAction: Direction
+  _jumpAction: Primary
+  _dashAction: Dash

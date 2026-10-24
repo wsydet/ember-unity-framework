@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a7f5097b3a50d4abab13c69b75e496, type: 3}
+  m_Name: PlayerDefaultActionEffects
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerActionEffects
+  _version: 1
+  _slots:
+  - _nodeId: ground-dash
+    _actionEffect: {fileID: 0}
+    _tailEffect: {fileID: 0}
+  - _nodeId: air-dash
+    _actionEffect: {fileID: 0}
+    _tailEffect: {fileID: 0}

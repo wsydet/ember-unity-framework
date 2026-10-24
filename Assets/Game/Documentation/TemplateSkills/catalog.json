@@ -2,76 +2,36 @@
   "schemaVersion": 2,
   "skills": [
     {
-      "id": "ember-vn-sync-images",
-      "displayName": "视觉小说图片分类与统一导入",
-      "description": "分类新增素材与旧图新版本，一次确认后分别调用新增导入和保留引用替换技能。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.21.0",
-      "minimumTemplateVersion": "0.7.0"
+      "id": "ember-platformer-add-attack",
+      "displayName": "平台玩家攻击接入",
+      "description": "通过完整候选事务新增攻击、连招、动画和命中窗口，并验证实际战斗。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.18.0",
+      "minimumTemplateVersion": "0.3.1"
     },
     {
-      "id": "ember-vn-replace-images",
-      "displayName": "视觉小说图片匹配与替换",
-      "description": "匹配项目旧图片，提示差分并通过新旧图对照页面确认，保留路径和 GUID 替换资源。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.4",
-      "minimumTemplateVersion": "0.7.0"
-    },
-    {
-      "id": "ember-vn-generate-save",
-      "displayName": "小说节点测试存档",
-      "description": "定位指定节点，特殊节点回退到前置普通节点，使用可调整的默认变量生成本机或实机测试存档。",
-      "templateId": "visual-novel",
+      "id": "ember-platformer-tune-feel",
+      "displayName": "平台玩家手感调整",
+      "description": "发现已有玩家机制，将手感目标转成完整方案候选，并用 Unity 白盒验证。",
+      "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
-      "minimumTemplateVersion": "0.19.0"
+      "minimumTemplateVersion": "0.2.1"
     },
     {
-      "id": "ember-vn-import-images",
-      "displayName": "视觉小说图片导入与配表",
-      "description": "分析指定图片，交互确认类型、角色与用途，再导入资源并完成视觉小说配表。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.21.0",
-      "minimumTemplateVersion": "0.7.0"
+      "id": "ember-platformer-replace-animation",
+      "displayName": "平台玩家序列帧替换",
+      "description": "按实际玩家状态映射导入序列帧，替换自有方案动画并验证运行表现。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.2.1"
     },
     {
-      "id": "ember-vn-import-story",
-      "displayName": "飞书剧情导入",
-      "description": "检查飞书 CLI，按指定范围读取策划表格并保真导入视觉小说剧情。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.21.0",
-      "minimumTemplateVersion": "0.10.0"
-    },
-    {
-      "id": "ember-vn-polish-presentation",
-      "displayName": "剧情演出优化",
-      "description": "使用项目已有演出能力，在保持剧情文本和分支逻辑的前提下优化表现。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.0",
-      "minimumTemplateVersion": "0.8.0"
-    },
-    {
-      "id": "ember-vn-export-story",
-      "displayName": "剧情流程回写飞书",
-      "description": "将实际剧情与演出流程导出到指定飞书表格的新页，保留所有原页。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.0",
-      "minimumTemplateVersion": "0.10.0"
-    },
-    {
-      "id": "ember-vn-custom-node",
-      "displayName": "自定义节点方案与实施",
-      "description": "把框架没有内置的剧情行为归到三级阶梯并出方案，经本地方案确认页面确认后按已实现的自定义节点扩展点落地。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.12",
-      "minimumTemplateVersion": "0.12.0"
-    },
-    {
-      "id": "ember-vn-edit-skin",
-      "displayName": "视觉小说 UI 皮肤制作",
-      "description": "创建独立皮肤，替换占位图片并校正显示效果。",
-      "templateId": "visual-novel",
-      "minimumFrameworkVersion": "0.14.10",
-      "minimumTemplateVersion": "0.14.0"
+      "id": "ember-platformer-add-state",
+      "displayName": "平台玩家新状态接入",
+      "description": "将已明确的玩家新动作接入真实状态、转换、完整方案和动画，并验证生命周期。",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.17.0",
+      "minimumTemplateVersion": "0.6.0"
     }
   ]
 }

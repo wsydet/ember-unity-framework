@@ -76,37 +76,13 @@ namespace Game.UI
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
         {
-            InitScreenPreferences();
-            InitLanguagePreferences();
-            NovelTextSpeed.onValueChanged.AddListener(SaveNovelPreferences);
-            NovelAutoInterval.onValueChanged.AddListener(SaveNovelPreferences);
-            NovelBgmVolume.onValueChanged.AddListener(SaveNovelPreferences);
-            NovelSfxVolume.onValueChanged.AddListener(SaveNovelPreferences);
-            NovelVoiceVolume.onValueChanged.AddListener(SaveNovelPreferences);
+            // 在此初始化业务数据和事件绑定
         }
 
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            _novelSettingsPause?.Dispose();
-            if (EmberModuleCollector.Instance.TryGetModule(out Game.Narrative.NarrativeModule narrative))
-                _novelSettingsPause = narrative.Session?.AcquirePause("Settings");
-            _novelPreferences = NovelSaveUI.Module;
-            var a = _novelPreferences?.Account;
-            if (a != null)
-            {
-                NovelTextSpeed.SetValueWithoutNotify(a.TextSpeed); NovelAutoInterval.SetValueWithoutNotify(a.AutoInterval);
-                NovelBgmVolume.SetValueWithoutNotify(a.BgmVolume); NovelSfxVolume.SetValueWithoutNotify(a.SfxVolume); NovelVoiceVolume.SetValueWithoutNotify(a.VoiceVolume);
-                _novelPreferences.Changed += RefreshNovelPreferences;
-            }
-            foreach (var slider in new[] { NovelTextSpeed, NovelAutoInterval, NovelBgmVolume, NovelSfxVolume, NovelVoiceVolume }) slider.interactable = a != null;
-            RefreshNovelPreferences();
-            RefreshLanguagePreferences();
-            // 当前场景提示由生成区用源语言写死，这里按当前语言重写一遍（控件当前未启用，行为与之前一致）。
-            Txt_NowScene.text = Game.Narrative.NovelLocalization.Runtime(
-                param is SettingsContext sceneContext && sceneContext == SettingsContext.Gameplay
-                    ? "ui.setting.CurrentScene.Gameplay" : "ui.setting.CurrentScene.Main",
-                Txt_NowScene.text);
+            // 页面被打开，处理传入参数
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
@@ -124,48 +100,13 @@ namespace Game.UI
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
-            ReleaseNovelPreferences();
+            // 页面被关闭
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            ReleaseNovelPreferences();
-            ReleaseLanguagePreferences();
-            DisposeScreenPreferences();
-            NovelTextSpeed.onValueChanged.RemoveListener(SaveNovelPreferences); NovelAutoInterval.onValueChanged.RemoveListener(SaveNovelPreferences);
-            NovelBgmVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelSfxVolume.onValueChanged.RemoveListener(SaveNovelPreferences); NovelVoiceVolume.onValueChanged.RemoveListener(SaveNovelPreferences);
-        }
-        private System.IDisposable _novelSettingsPause;
-        private Game.NovelSave.NovelSaveModule _novelPreferences;
-        private void ReleaseNovelPreferences()
-        {
-            _novelSettingsPause?.Dispose(); _novelSettingsPause = null;
-            if (_novelPreferences != null) _novelPreferences.Changed -= RefreshNovelPreferences;
-            _novelPreferences = null;
-        }
-        private void SaveNovelPreferences(float value)
-        {
-            _novelPreferences?.SavePreferences(NovelTextSpeed.value, NovelAutoInterval.value, NovelBgmVolume.value, NovelSfxVolume.value, NovelVoiceVolume.value);
-            RefreshNovelPreferences();
-        }
-        private void RefreshNovelPreferences()
-        {
-            RefreshScreenPreferences();
-            NovelTextSpeedValue.text = $"{NovelTextSpeed.value:0} {Game.Narrative.NovelLocalization.Runtime("ui.setting.TextSpeed.Unit", "字/秒")}";
-            NovelAutoIntervalValue.text = $"{NovelAutoInterval.value:0.0} {Game.Narrative.NovelLocalization.Runtime("ui.setting.AutoInterval.Unit", "秒")}";
-            NovelBgmVolumeValue.text = $"{NovelBgmVolume.value:P0}";
-            NovelSfxVolumeValue.text = $"{NovelSfxVolume.value:P0}";
-            NovelVoiceVolumeValue.text = $"{NovelVoiceVolume.value:P0}";
-            string EffectLabel(float value) => UnityEngine.Mathf.RoundToInt(value) switch
-            {
-                1 => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Reduced", "减弱"),
-                2 => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Off", "关闭"),
-                _ => Game.Narrative.NovelLocalization.Runtime("ui.setting.Effect.Normal", "正常")
-            };
-            NovelShakePreferenceValue.text = EffectLabel(NovelShakePreference.value);
-            NovelFlashPreferenceValue.text = EffectLabel(NovelFlashPreference.value);
-            NovelPreferenceStatus.text = _novelPreferences?.Message ?? string.Empty;
+            // 清理事件与引用
         }
     }
 }

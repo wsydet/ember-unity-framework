@@ -11,9 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37d25c780926ccd4f9dff6842138b072, type: 3}
   m_Name: PlayerDataConfig
-  m_EditorClassIdentifier:
-  _directoryName: BaseProgress
-  _dataTypeId: ember.base.progress
+  m_EditorClassIdentifier: 
+  _directoryName: Platformer2D
+  _dataTypeId: ember.platformer2d.progress
   _slotIds: 000000000100000002000000
   _queueCapacity: 16
   _maxPayloadBytes: 4194304

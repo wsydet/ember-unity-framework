@@ -2,17 +2,9 @@
     "name": "Game.UI.Editor",
     "rootNamespace": "Game.UI.Editor",
     "references": [
-        "Ember.Table.Editor",
         "Ember.UI.Runtime",
         "Ember.Core.Runtime",
-        "Ember.Core.Editor",
-        "Ember.Basic.Runtime",
-        "Ember.UIExtension.Runtime",
-        "Ember.UIExtension.Editor",
-        "Unity.TextMeshPro",
-        "UnityEngine.UI",
-        "Game.Narrative.Runtime", "Game.NovelSave.Runtime",
-        "Ember.Table.Runtime", "Game.Table.Runtime"
+        "Ember.Basic.Runtime"
     ],
     "includePlatforms": [
         "Editor"

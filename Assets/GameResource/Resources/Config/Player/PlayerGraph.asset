@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed63b088269f4e0e970aec5acde29e91, type: 3}
+  m_Name: PlayerGraph
+  m_EditorClassIdentifier: Ember.Core.Runtime::Ember.Core.Fsm.EmberFsmGraph
+  _entryId: basic-drive
+  _nodes:
+  - _id: basic-drive
+    _displayName: Locomotion
+    _definition: {fileID: 11400000, guid: 56003db6b2ee3ba4cb2266a6f57ea62b, type: 2}
+    _parentId: 
+    _defaultChildId: air
+    _bindings:
+    - _slot: land
+      _targetId: land
+    - _slot: hard-land
+      _targetId: hard-land
+    - _slot: rolling
+      _targetId: rolling
+  - _id: ground
+    _displayName: Ground
+    _definition: {fileID: 11400000, guid: d03fac9a23531264dade61175f9b2682, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: idle
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: idle
+    _displayName: Idle
+    _definition: {fileID: 11400000, guid: 755102349385dd64e8c9b978b343e5c4, type: 2}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: move
+      _targetId: move
+    - _slot: accelerate
+      _targetId: accelerate
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: move
+    _displayName: Move
+    _definition: {fileID: 11400000, guid: e7e464e8453988a46a18dd623c19fcaa, type: 2}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: accelerate
+      _targetId: accelerate
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: air
+    _displayName: Air
+    _definition: {fileID: 11400000, guid: 947a39944e4d09c48b78ee431b0363dd, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: fall
+    _bindings:
+    - _slot: head-jump
+      _targetId: head-jump
+    - _slot: ledge-hang
+      _targetId: ledge-hang
+    - _slot: ground
+      _targetId: ground
+    - _slot: jump
+      _targetId: jump
+    - _slot: air-jump
+      _targetId: air-jump
+    - _slot: wall-jump
+      _targetId: wall-jump
+    - _slot: wall-slide
+      _targetId: wall-slide
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: air-dash
+      _targetId: air-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: head-jump
+    _displayName: HeadJump
+    _definition: {fileID: 11400000, guid: ade5d1bab9d38034a97399f40b7ba270, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: wall-jump
+    _displayName: WallJump
+    _definition: {fileID: 11400000, guid: 9b494de7aafaebc40b9e7bd943c37af3, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: wall-slide
+    _displayName: WallSlide
+    _definition: {fileID: 11400000, guid: 540e2d22c55bbe74aa309edfea58c767, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: air-jump
+    _displayName: AirJump
+    _definition: {fileID: 11400000, guid: 81c17d8dc513b93419d00ab0d7302c02, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: jump
+    _displayName: Jump
+    _definition: {fileID: 11400000, guid: d84b23fed3d591b43a573e323efdde09, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: fall
+    _displayName: Fall
+    _definition: {fileID: 11400000, guid: ee0391415a2ba3a47a2fa8adfe003ac1, type: 2}
+    _parentId: air
+    _defaultChildId: 
+    _bindings:
+    - _slot: rising
+      _targetId: jump
+  - _id: drop-through
+    _displayName: DropThrough
+    _definition: {fileID: 11400000, guid: 5e30ae0003a303643afea2b3c206f6e1, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: ledge-hang
+    _displayName: LedgeHang
+    _definition: {fileID: 11400000, guid: 0f59b9b8ac04c7141b1851fe685b17eb, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ledge-climb
+      _targetId: ledge-climb
+    - _slot: fall
+      _targetId: fall
+  - _id: ledge-climb
+    _displayName: LedgeClimb
+    _definition: {fileID: 11400000, guid: a2fd3e814df946648a4855a42fe6dba4, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: fall
+      _targetId: fall
+  - _id: rolling
+    _displayName: Rolling
+    _definition: {fileID: 11400000, guid: 5684a082e2d36724594b042e26a1e7f9, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: land
+    _displayName: Land
+    _definition: {fileID: 11400000, guid: 84661f9afc4b54143b28d5f7884de589, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+    - _slot: jump
+      _targetId: jump
+    - _slot: ground-dash
+      _targetId: ground-dash
+    - _slot: drop-through
+      _targetId: drop-through
+  - _id: hard-land
+    _displayName: HardLand
+    _definition: {fileID: 11400000, guid: 9e7d16e50a687ce418e0ae570c7bf2c3, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: ground-dash
+    _displayName: GroundDash
+    _definition: {fileID: 11400000, guid: 70e1ca06856f079488c80b5df8e03e06, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: air-dash
+    _displayName: AirDash
+    _definition: {fileID: 11400000, guid: d748cc429acbcb143a8aad3c2093ed59, type: 2}
+    _parentId: basic-drive
+    _defaultChildId: 
+    _bindings:
+    - _slot: ground
+      _targetId: ground
+    - _slot: fall
+      _targetId: fall
+  - _id: accelerate
+    _displayName: Accelerate
+    _definition: {fileID: 11400000, guid: f3e7370a7823f6f49bbeabba08597eed, type: 2}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: move
+      _targetId: move
+    - _slot: decelerate
+      _targetId: decelerate
+  - _id: decelerate
+    _displayName: Decelerate
+    _definition: {fileID: 11400000, guid: a39fbfaaae5b2634d80100446665e946, type: 2}
+    _parentId: ground
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+    - _slot: move
+      _targetId: move
+    - _slot: accelerate
+      _targetId: accelerate

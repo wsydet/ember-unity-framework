@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Game.Module
 {
     /// <summary>base 可选 Global 存档模块。初始化只准备服务，读取、快照保存和正常退出由业务显式调用。</summary>
-    [EmberModule(ModulePhase.Global, Enabled = false)]
+    [EmberModule(ModulePhase.Global, Enabled = true)]
     public sealed class PlayerDataModule : EmberSingleton<PlayerDataModule>, IEmberModule
     {
         #region 内部参数

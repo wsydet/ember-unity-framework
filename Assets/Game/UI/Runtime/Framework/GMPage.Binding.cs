@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : GMPanel
  * page name    : GMPage
- * update time  : 2026/9/29 15:01:19
+ * update time  : 2026/8/31 20:50:54
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,67 +15,67 @@ namespace Game.UI
     public partial class GMPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// Animator/EUISafeArea/TopRight/m_Btn_GM
+        /// m_Btn_GM
         /// </summary>
         private Button Btn_GM;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM
+        /// m_Panel_GM
         /// </summary>
         private Component Panel_GM;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Time/m_Pgb_TimeScale
+        /// m_Panel_GM/Infos/Time/m_Pgb_TimeScale
         /// </summary>
         private Slider Pgb_TimeScale;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Time/m_Txt_TimeScale
+        /// m_Panel_GM/Infos/Time/m_Txt_TimeScale
         /// </summary>
         private TMP_Text Txt_TimeScale;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/顶层状态/m_Txt_GameState
+        /// m_Panel_GM/Infos/顶层状态/m_Txt_GameState
         /// </summary>
         private TMP_Text Txt_GameState;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/开关/m_Tgl_Test
+        /// m_Panel_GM/Infos/开关/m_Tgl_Test
         /// </summary>
         private Toggle Tgl_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/ScrollRect/m_Scr_Test
+        /// m_Panel_GM/Infos/ScrollRect/m_Scr_Test
         /// </summary>
         private ScrollRect Scr_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Image/m_Img_Test
+        /// m_Panel_GM/Infos/Image/m_Img_Test
         /// </summary>
         private Image Img_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/RawIamge/m_Raw_Test
+        /// m_Panel_GM/Infos/RawIamge/m_Raw_Test
         /// </summary>
         private RawImage Raw_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Buttons/m_EUIBtn_Exit
+        /// m_Panel_GM/Buttons/m_EUIBtn_Exit
         /// </summary>
         private Ember.UIExtension.EUIButtonEx EUIBtn_Exit;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUITgl_Test
+        /// m_Panel_GM/m_EUITgl_Test
         /// </summary>
         private Ember.UIExtension.EUIToggleEx EUITgl_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUIImg_Test
+        /// m_Panel_GM/m_EUIImg_Test
         /// </summary>
         private Ember.UIExtension.EUIImageEx EUIImg_Test;
 
         /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/m_Img_Circle
+        /// m_Panel_GM/m_Img_Circle
         /// </summary>
         private Ember.UIExtension.EUICircleImage Img_Circle;
 

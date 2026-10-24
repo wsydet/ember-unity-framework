@@ -19,23 +19,5 @@ namespace Game.UI
     {
         // TODO: 在此处继续添加（用户页面注册区）
 
-        /// <summary>视觉小说阅读主页面</summary>
-        public static readonly EUIPageDef EUINovelReaderPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReaderPage.prefab", UILayer.Normal, PageType.MainPage);
-
-        /// <summary>EUINovelSavePage 页面</summary>
-        public static readonly EUIPageDef EUINovelSavePage = new("Assets/GameResource/Resources/UI/Module/NovelSave/Prefabs/EUINovelSavePage.prefab", UILayer.Popup, PageType.Popup);
-
-        /// <summary>EUINovelHistoryPage 页面</summary>
-        public static readonly EUIPageDef EUINovelHistoryPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelHistoryPage.prefab", UILayer.Popup, PageType.Popup);
-
-        /// <summary>EUINovelFontPage 页面</summary>
-        public static readonly EUIPageDef EUINovelFontPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelFontPage.prefab", UILayer.Popup, PageType.Popup);
-
-        /// <summary>EUINovelReadingMenuPage 页面</summary>
-        public static readonly EUIPageDef EUINovelReadingMenuPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReadingMenuPage.prefab", UILayer.Popup, PageType.Popup);
-
-        /// <summary>EUINovelNameInputPage 页面</summary>
-        public static readonly EUIPageDef EUINovelNameInputPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelNameInputPage.prefab", UILayer.Popup, PageType.Popup);
-
     }
 }
