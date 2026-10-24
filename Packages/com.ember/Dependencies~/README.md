@@ -1,6 +1,6 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.21.5**，交付已封存的 **platformer-2d 0.11.2** 地面支撑修复。其他模板与第三方依赖不变；Windward接入及原台面人工复验待完成。
+当前发布：Ember **0.21.6**，修复 Play 脚本重载后的框架会话退出，提供生命周期和同步所有权中止契约。模板与第三方依赖不变；业务异步所有权适配及 Windward 消费验证待完成。
 
 ## 清单范围
 
@@ -32,4 +32,4 @@
 
 ## 发布顺序
 
-本次完成 `package.json → CHANGELOG → release/manifest` 本地准备；后续发布需完成必要验证，再按 `commit → annotated tag → push` 发布 `v0.21.5`。当前未提交或创建tag。框架通用技能共11项，内容与既有bundle sourceCommit保持不变。
+本版按 package.json、CHANGELOG、release/manifest、提交与 annotated tag 对齐发布 v0.21.6。生命周期修复和验证边界见 [0.21.6 发布说明](../../../docs/dev/release-0.21.6.md)。模板、通用技能和依赖沿用既有内容。

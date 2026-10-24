@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "frameworkVersion": "0.21.6",
   "frameworkTag": "v0.21.6",
-  "status": "Local candidate; consumer async ownership adaptation pending",
+  "status": "Release; consumer async ownership adaptation and Windward validation pending",
   "unityBaseline": "6000.5.4f1",
   "manifest": "manifest-0.21.6.json",
   "coverage": "Ember 0.21.6: Play script reload terminates the current framework session and exits Play. Adds a single session readiness/cancellation/stop-reason contract and explicit synchronous ownership abort registration. No template, Windward, save format or dependency change.",
