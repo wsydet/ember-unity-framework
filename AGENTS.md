@@ -4,7 +4,7 @@
 
 理解简化用语时先读[通用术语字典](Packages/com.ember/Documentation~/maintenance/glossary.md)，再按真实活动模板读取 `Assets/Game/Documentation/<template-id>/glossary.md`（若存在）。代码修改完成后必须主动通过 Unity MCP 请求重编译并确认本轮编译/域重载完成；详情见下方公共规则。
 
-需要测试或进行 Unity 验证前，完整阅读 [项目测试与 Unity 编译验证规范](Packages/com.ember/Documentation~/maintenance/unity-validation.md)。该公共规则适用于所有模板：默认只运行新增或相关部分用例，全量重测或预计耗时较长须获用户明确授权；MCP 断连后每隔 30 秒重试，最多 10 次，全部失败后停止并请用户确认 MCP 状态。
+需要测试或进行 Unity 验证前，完整阅读 [项目测试与 Unity 编译验证规范](Packages/com.ember/Documentation~/maintenance/unity-validation.md)。该公共规则适用于所有模板：默认只运行新增或相关部分用例，全量重测或预计耗时较长须获用户明确授权；MCP 断连时先检查待编译改动并尝试触发编译，无法送达则立即提示用户手动触发编译，不盲目重复结果不明的请求；随后每隔 30 秒重试，最多 10 次，全部失败后停止并请用户确认 MCP 状态。
 
 ## UnityFarm 改动分流（强制）
 
