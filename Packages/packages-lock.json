@@ -74,11 +74,11 @@
       }
     },
     "com.sirenix.odin-inspector": {
-      "version": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.2",
+      "version": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.sirenix.odin-inspector#odin-v4.0.3",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "470c394c8ad61e71ec95bf6e34d2e0dcf1a7e7e9"
+      "hash": "69866096b109520f9c3ff1bb9c1ce1e901ab19ac"
     },
     "com.unity.ai.navigation": {
       "version": "2.0.13",
