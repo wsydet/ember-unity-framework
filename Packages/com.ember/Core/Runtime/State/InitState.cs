@@ -48,6 +48,7 @@ namespace Ember.Core
             EmberModuleCollector.Instance.DiscoverModules();
             EmberManagerCollector.Instance.InitializeAll();
             EmberModuleCollector.Instance.InitPhase(ModulePhase.Global);
+            GameLauncher.Active?.Lifetime?.MarkReady();
             EmberEventBus.OnNext(EmberBroadcastEvent.CoreReady);
 
             EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: framework ready. Loading MainScene...");
@@ -64,26 +65,31 @@ namespace Ember.Core
         /// </summary>
         private async UniTask LoadMainSceneAsync(EmberStateMachine fsm)
         {
+            var lifetime = GameLauncher.Active?.Lifetime;
+            if (lifetime == null || !lifetime.IsReady) return;
             // 简单模式：先加载兜底背景页，保证 BootSplash 渐出（黑幕揭开）时背景已在底层，避免穿帮。
             var main = fsm.GetState<MainState>();
             if (main != null && main.UseUIBg)
                 await main.LoadBackgroundAsync();
 
+            if (!lifetime.IsReady) return;
             // 加载 MainScene
             var sceneLoaded = new UniTaskCompletionSource();
             if (fsm.LoadSceneAsync != null)
                 fsm.LoadSceneAsync("MainScene", () => sceneLoaded.TrySetResult());
             else
                 sceneLoaded.TrySetResult();
-            await sceneLoaded.Task;
+            await sceneLoaded.Task.AttachExternalCancellation(lifetime.Cancellation);
+            if (!lifetime.IsReady) return;
 
             // 串行时序：等 BootSplash 完全淡出（黑幕消失）后才 TransitionTo，
             // 保证开屏动画 / MainUI 进入动画在 BootSplash 消失之后才开始。
             // 若业务层未挂 BootSplash（桥接为 null），则跳过等待立即 TransitionTo。
             if (EmberBootSplashBridge.WaitForFadeOut != null)
-                await EmberBootSplashBridge.WaitForFadeOut();
+                await EmberBootSplashBridge.WaitForFadeOut().AttachExternalCancellation(lifetime.Cancellation);
 
             EmberDebug.LogInit(LogTags.CoreStateMachine, "InitState: transitioning to Main...");
+            if (!lifetime.IsReady) return;
             fsm.TransitionTo<MainState>(skipSceneLoad: true);
         }
     }

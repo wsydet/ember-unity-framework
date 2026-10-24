@@ -1,0 +1,11 @@
+before reload: play=True
+async cleanup started
+after stop request: play=True
+after reload: play=True
+delayCall: play=True
+before reload: play=True
+locked inside before reload
+async cleanup started
+after stop request: play=True
+after reload: play=True
+delayCall: play=True

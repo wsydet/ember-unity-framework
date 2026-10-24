@@ -1,0 +1,92 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"c12500df33c1486ca290e1e7c9a114d0\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1792829724764,\"finished_unix_ms\":1792829733238,\"last_update_unix_ms\":1792829733238,\"progress\":{\"completed\":4,\"total\":4,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners\",\"last_finished_unix_ms\":1792829732994,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":4,\"passed\":4,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.7017628,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberLifetimeTests.BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes\",\"state\":\"Passed\",\"durationSeconds\":0.0163649,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InitializationCanStopBeforeReady\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberLifetimeTests.InitializationCanStopBeforeReady\",\"state\":\"Passed\",\"durationSeconds\":0.0011156,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberLifetimeTests.StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce\",\"state\":\"Passed\",\"durationSeconds\":0.0018392,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners\",\"state\":\"Passed\",\"durationSeconds\":0.002273,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "c12500df33c1486ca290e1e7c9a114d0",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1792829724764,
+        "finished_unix_ms": 1792829733238,
+        "last_update_unix_ms": 1792829733238,
+        "progress": {
+          "completed": 4,
+          "total": 4,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+          "last_finished_unix_ms": 1792829732994,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 4,
+            "passed": 4,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 0.7017628,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+              "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+              "state": "Passed",
+              "durationSeconds": 0.0163649,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InitializationCanStopBeforeReady",
+              "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.InitializationCanStopBeforeReady",
+              "state": "Passed",
+              "durationSeconds": 0.0011156,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+              "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+              "state": "Passed",
+              "durationSeconds": 0.0018392,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+              "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+              "state": "Passed",
+              "durationSeconds": 0.002273,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

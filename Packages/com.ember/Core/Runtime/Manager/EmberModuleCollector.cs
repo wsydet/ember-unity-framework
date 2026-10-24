@@ -130,6 +130,9 @@ namespace Ember.Core
                 catch (Exception ex)
                 {
                     EmberDebug.LogError(TAG, $"Error initializing module {entry.Name}: {ex.Message}");
+                    try { entry.Module.OnDestroy(); }
+                    catch (Exception cleanup) { EmberDebug.LogError(TAG, cleanup.ToString()); }
+                    throw;
                 }
             }
         }
@@ -160,8 +163,7 @@ namespace Ember.Core
         /// </summary>
         public void DestroyAll()
         {
-            EnsureScanned();
-
+            var failures = new List<Exception>();
             for (int i = _all.Count - 1; i >= 0; i--)
             {
                 var entry = _all[i];
@@ -169,7 +171,7 @@ namespace Ember.Core
 
                 EmberDebug.LogCleanup(TAG, $"Destroying module: {entry.Name}");
                 try { entry.Module.OnDestroy(); }
-                catch (Exception ex) { EmberDebug.LogError(TAG, $"Error destroying module {entry.Name}: {ex.Message}"); }
+                catch (Exception ex) { failures.Add(ex); EmberDebug.LogError(TAG, $"Error destroying module {entry.Name}: {ex.Message}"); }
 
                 entry.IsActive = false;
             }
@@ -177,6 +179,7 @@ namespace Ember.Core
             _phaseMap.Clear();
             _all.Clear();
             _scanned = false;
+            if (failures.Count != 0) throw new AggregateException(failures);
         }
 
         #endregion

@@ -74,12 +74,16 @@ namespace Ember.Core
         [Title("运行时状态")]
         /// <summary>游戏状态机实例。</summary>
         [ShowInInspector, ReadOnly]
-        public EmberStateMachine Fsm { get; private set; }
+        [field: NonSerialized] public EmberStateMachine Fsm { get; private set; }
 
         [BoxGroup(ODIN_GROUP + "/运行时")]
         /// <summary>启动器是否已完成初始化。</summary>
         [ShowInInspector, ReadOnly, LabelText("已初始化")]
-        public bool IsInitialized { get; private set; }
+        public bool IsInitialized => Lifetime != null && Lifetime.IsReady && Fsm != null;
+
+        /// <summary>当前会话；跨脚本重载不会恢复。</summary>
+        [field: NonSerialized] public EmberLifetime Lifetime { get; private set; }
+        internal static GameLauncher Active { get; private set; }
 
         [BoxGroup(ODIN_GROUP + "/运行时")]
         /// <summary>当前活跃的状态名。</summary>
@@ -106,6 +110,9 @@ namespace Ember.Core
         /// <inheritdoc />
         protected override void OnBootAwake()
         {
+            Active = this;
+            Lifetime = new EmberLifetime();
+            _isQuitting = false;
             EmberQuitCurtain.Reset();  // 同域重进 Play Mode 时清掉上一次的封屏标记
             EmberDebug.LoadConfig();  // 自动同步 SO 配置到 EmberFileLog
             EmberFileLog.Start();     // 启动后台写线程
@@ -124,8 +131,13 @@ namespace Ember.Core
         protected override void OnBootStart()
         {
             // InitState.OnEnter → InitializeAll → CoreReady → TransitionTo<MainState>
-            Fsm.Start<InitState>(args: Fsm);
-            IsInitialized = true;
+            try { Fsm.Start<InitState>(args: Fsm); }
+            catch (Exception failure)
+            {
+                EmberDebug.LogError(TAG, failure.ToString());
+                ShutdownFramework(EmberStopReason.InitializationFailed);
+                return;
+            }
             EmberDebug.LogInit(TAG, "GameLauncher: InitState complete, ticking...");
         }
 
@@ -143,7 +155,9 @@ namespace Ember.Core
             if (!IsInitialized) return;
 
             EmberEventBus.FlushPostQueue();  // 消费上一帧 PostNext 的延迟事件
+            if (!IsInitialized) return;
             EmberUpdateManager.Instance.DoUpdate();
+            if (!IsInitialized) return;
             Fsm.Current?.OnUpdate();
         }
 
@@ -193,19 +207,31 @@ namespace Ember.Core
         /// 最后停止文件日志并重置初始化标志。
         /// 编辑器退出 Play Mode 和游戏代码调用 Quit() 共用此方法。
         /// </summary>
-        private void ShutdownFramework()
+        internal void ShutdownFramework(EmberStopReason reason = EmberStopReason.Quit)
         {
-            if (!IsInitialized) return;
-
-            EmberDebug.LogShutdown(TAG, "GameLauncher: shutting down framework...");
-            Fsm?.StopTransitions();
-            EmberModuleCollector.Instance.DestroyAll();   // 业务模块（高层）先销毁
-            EmberManagerCollector.Instance.DestroyAll();   // 框架管道（底层）后销毁
-            IsInitialized = false;
-            EmberFileLog.Stop();
-            EmberDebug.LogShutdown(TAG, "GameLauncher: framework shutdown complete.");
+            if (Lifetime == null || !Lifetime.BeginStop(reason)) return;
+            bool success = true;
+            try
+            {
+                Fsm?.StopTransitions();
+                EmberEventBus.OnNext(EmberBroadcastEvent.CoreShutdown);
+            }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            success &= Lifetime.AbortOwners();
+            try { if (EmberModuleCollector.TryGetInstance(out var modules)) modules.DestroyAll(); }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            try { if (EmberManagerCollector.TryGetInstance(out var managers)) managers.DestroyAll(); }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            finally
+            {
+                Fsm = null;
+                EmberEventBus.ClearAllSubscribers();
+                EmberBootSplashBridge.WaitForFadeOut = null;
+                EmberFileLog.Stop();
+                Lifetime.FinishStop(success);
+                if (Active == this) Active = null;
+            }
         }
-
         #endregion
 
         // ============================================================

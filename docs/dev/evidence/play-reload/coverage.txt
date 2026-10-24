@@ -1,0 +1,1 @@
+Ember 0.21.6: Play script reload terminates the current framework session and exits Play. Adds a single session readiness/cancellation/stop-reason contract and explicit synchronous ownership abort registration. No template, Windward, save format or dependency change.

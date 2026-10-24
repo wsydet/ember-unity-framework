@@ -1,0 +1,3 @@
+before: ready=True, fsm=True
+shutdown: ready=False, reason=ScriptReload
+background completed and file released before reload

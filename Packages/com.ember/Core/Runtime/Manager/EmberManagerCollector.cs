@@ -64,6 +64,7 @@ namespace Ember.Core
         /// </summary>
         public void DestroyAll()
         {
+            var failures = new List<Exception>();
             // 逆序销毁（先初始化的后销毁）
             for (int i = _managers.Count - 1; i >= 0; i--)
             {
@@ -74,11 +75,13 @@ namespace Ember.Core
                 catch (Exception ex)
                 {
                     EmberDebug.LogError(TAG, $"Error destroying manager {_managers[i].GetType().Name}: {ex.Message}");
+                    failures.Add(ex);
                 }
             }
 
             _managers.Clear();
             _initialized = false;
+            if (failures.Count != 0) throw new AggregateException(failures);
         }
 
         #endregion
@@ -141,6 +144,7 @@ namespace Ember.Core
                 catch (Exception ex)
                 {
                     EmberDebug.LogError(TAG, $"Error initializing manager {mgr.GetType().Name}: {ex.Message}");
+                    throw;
                 }
             }
         }

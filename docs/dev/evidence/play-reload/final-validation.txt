@@ -1,0 +1,3 @@
+Final compilation: Unity 6000.5.4f1, installed embedded package 0.21.6, runtime MVID 6328f157-b8e9-44fc-8bbf-566d53c51edc, compiling/updating=false, Console errors=0. Final four focused tests passed (final-tests.json).
+Font configuration check passed. Skill bundle strict check reported source byte mismatch; separate verification of all 32 files found bundle bytes match manifest hashes and working source, recorded sourceCommit ebba92e3892d8407c73c4a3ce6d06a4bc99329e2, and bundled content differ only by CRLF/LF. No skill files changed.
+Candidate index shared-binary check with --checkout passed for core.autocrlf=false and true. Final 0.21.6 direct reload passed (versioned-reload.json), background owner completed before unload; Console only expected shutdown diagnostic.
