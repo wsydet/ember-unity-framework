@@ -1,0 +1,12 @@
+2026-10-24T09:38:49.0564421Z domain=fca43eb20a49467692a8e12c14ad45f7 stage=ExitingEditMode play=False compiling=False
+2026-10-24T09:38:49.5876607Z domain=fca43eb20a49467692a8e12c14ad45f7 stage=beforeAssemblyReload play=False compiling=False
+2026-10-24T09:38:49.5897389Z domain=fca43eb20a49467692a8e12c14ad45f7 stage=oldDomainAsyncStarted play=False compiling=False
+2026-10-24T09:38:55.9984915Z domain=e022c4dd13a44c12aa8f8a40d223c046 stage=afterAssemblyReload play=False compiling=False
+2026-10-24T09:39:08.5871489Z domain=e022c4dd13a44c12aa8f8a40d223c046 stage=EnteredPlayMode play=True compiling=False
+2026-10-24T09:39:09.7368341Z domain=e022c4dd13a44c12aa8f8a40d223c046 stage=newDomainDelayCall play=True compiling=False
+2026-10-24T09:39:16.3274977Z domain=e022c4dd13a44c12aa8f8a40d223c046 stage=beforeAssemblyReload play=True compiling=False
+2026-10-24T09:39:16.3295403Z domain=e022c4dd13a44c12aa8f8a40d223c046 stage=oldDomainAsyncStarted play=True compiling=False
+2026-10-24T09:39:21.7448016Z domain=86903ba1f84a4598830101d8827a5d38 stage=afterAssemblyReload play=True compiling=False
+2026-10-24T09:39:26.0607526Z domain=86903ba1f84a4598830101d8827a5d38 stage=ExitingPlayMode play=True compiling=False
+2026-10-24T09:39:26.2235113Z domain=86903ba1f84a4598830101d8827a5d38 stage=newDomainDelayCall play=True compiling=False
+2026-10-24T09:39:33.1993601Z domain=86903ba1f84a4598830101d8827a5d38 stage=EnteredEditMode play=False compiling=False

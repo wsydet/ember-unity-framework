@@ -1,0 +1,74 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "a456b3a981774ff796295b9a838063e4",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1792835218019,
+      "finished_unix_ms": 1792835228717,
+      "last_update_unix_ms": 1792835228717,
+      "progress": {
+        "completed": 2,
+        "total": 2,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+        "last_finished_unix_ms": 1792835228530,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Ember.Scene.Tests.EmberSceneTransitionTests.StopInsideExit_DoesNotEnterOrPublishNextState",
+            "message": "  Expected: CommitFailed\r\n  But was:  CleanupFailed\r\n"
+          },
+          {
+            "full_name": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "message": "  Ownership must terminate without pumping the Unity context.\r\n  Expected: True\r\n  But was:  False\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 2,
+          "passed": 0,
+          "failed": 2,
+          "skipped": 0,
+          "durationSeconds": 2.9802544,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "StopInsideExit_DoesNotEnterOrPublishNextState",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopInsideExit_DoesNotEnterOrPublishNextState",
+            "state": "Failed",
+            "durationSeconds": 0.3207048,
+            "message": "  Expected: CommitFailed\r\n  But was:  CleanupFailed\r\n",
+            "stackTrace": "at Ember.Scene.Tests.EmberSceneTransitionTests.StopInsideExit_DoesNotEnterOrPublishNextState () [0x000a8] in .\\Packages\\com.ember\\Scene\\Tests\\EditMode\\EmberSceneTransitionTests.cs:42\r\nat UnityEngine.TestTools.TestRunner.TestTaskWrapper+<Execute>d__2.MoveNext () [0x00063] in .\\Library\\PackageCache\\com.unity.test-framework@1405238725ab\\UnityEngine.TestRunner\\TestRunner\\TestTaskWrapper.cs:31\r\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1405238725ab\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r\n",
+            "output": ""
+          },
+          {
+            "name": "StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "state": "Failed",
+            "durationSeconds": 1.6556558,
+            "message": "  Ownership must terminate without pumping the Unity context.\r\n  Expected: True\r\n  But was:  False\r\n",
+            "stackTrace": "at Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext () [0x000de] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\PlayerData\\Storage\\Tests\\ProgressStorageServiceTests.cs:186\r\n",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "bafb99bb2e5341fa8d4287f18b7b5127",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792836351933,
+      "finished_unix_ms": 1792836365022,
+      "last_update_unix_ms": 1792836365022,
+      "progress": {
+        "completed": 28,
+        "total": 28,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.Scene.Tests.EmberTransitionLoadingTests.ThrowingCancellationAndEffectCleanup_StillReleasesPageAndTasks",
+        "last_finished_unix_ms": 1792836364985,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 28,
+          "passed": 28,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 4.2165685,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CancelInPageCreated_DoesNotRouteOrLeakUninitializedLogic",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.CancelInPageCreated_DoesNotRouteOrLeakUninitializedLogic",
+            "state": "Passed",
+            "durationSeconds": 0.0519306,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n"
+          },
+          {
+            "name": "CancelledPreparation_ClosesCurtainDespiteCancelledToken",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.CancelledPreparation_ClosesCurtainDespiteCancelledToken",
+            "state": "Passed",
+            "durationSeconds": 0.1234845,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.8ms total=0.9ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "DuplicateAndLateResourceCallbacks_CannotRouteSecondPage",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.DuplicateAndLateResourceCallbacks_CannotRouteSecondPage",
+            "state": "Passed",
+            "durationSeconds": 0.059181,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ExternalClose_SettlesOwnerInsteadOfLeavingCoveredHandle",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ExternalClose_SettlesOwnerInsteadOfLeavingCoveredHandle",
+            "state": "Passed",
+            "durationSeconds": 0.0383068,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "ExternalViewEngineClose_SettlesOwnerWithoutWaitingForDelayedDestroy",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ExternalViewEngineClose_SettlesOwnerWithoutWaitingForDelayedDestroy",
+            "state": "Passed",
+            "durationSeconds": 0.0482128,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "InPlace_UsesDefaultCurtainAndRetainsWorld",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.InPlace_UsesDefaultCurtainAndRetainsWorld",
+            "state": "Passed",
+            "durationSeconds": 0.0550824,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ManualCurtain_DestroyedViewSettlesRevealAndOwner",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ManualCurtain_DestroyedViewSettlesRevealAndOwner",
+            "state": "Passed",
+            "durationSeconds": 0.0438036,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "ManualCurtain_DisposeDuringOpenSettlesWaitAndReleasesOwnership",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ManualCurtain_DisposeDuringOpenSettlesWaitAndReleasesOwnership",
+            "state": "Passed",
+            "durationSeconds": 0.0416304,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n"
+          },
+          {
+            "name": "ManualCurtain_HoldsWithoutSceneUntilExplicitReveal",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ManualCurtain_HoldsWithoutSceneUntilExplicitReveal",
+            "state": "Passed",
+            "durationSeconds": 0.0600854,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ManualCurtain_InPlaceInternalPauseFinishesBeforeReveal",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ManualCurtain_InPlaceInternalPauseFinishesBeforeReveal",
+            "state": "Passed",
+            "durationSeconds": 0.0511823,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "OldOwnerLateCompletionCannotCloseReplacementCurtain",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.OldOwnerLateCompletionCannotCloseReplacementCurtain",
+            "state": "Passed",
+            "durationSeconds": 0.069657,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: Replacement init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "OuterCurtain_InnerCompletionDoesNotGrantInteraction",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.OuterCurtain_InnerCompletionDoesNotGrantInteraction",
+            "state": "Passed",
+            "durationSeconds": 0.054941,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "OuterCurtain_OuterFailureDoesNotGrantInteraction",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.OuterCurtain_OuterFailureDoesNotGrantInteraction",
+            "state": "Passed",
+            "durationSeconds": 0.045816,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "OuterCurtain_SkipSceneLoadStillWaitsForOwner",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.OuterCurtain_SkipSceneLoadStillWaitsForOwner",
+            "state": "Passed",
+            "durationSeconds": 0.0428709,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "PreparationFailure_ClosesRealCurtainAndRetainsOldScene",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.PreparationFailure_ClosesRealCurtainAndRetainsOldScene",
+            "state": "Passed",
+            "durationSeconds": 0.0329857,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "RealBlocks_CancelDuringPausedEnterSettlesAndCleans",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RealBlocks_CancelDuringPausedEnterSettlesAndCleans",
+            "state": "Passed",
+            "durationSeconds": 0.0726715,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n"
+          },
+          {
+            "name": "RealBlocks_CancelRevealIgnoresPauseAndReleases",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RealBlocks_CancelRevealIgnoresPauseAndReleases",
+            "state": "Passed",
+            "durationSeconds": 0.0903294,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=49.4ms total=49.4ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "RealBlocks_DestroyDuringEnterSettlesCovered",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RealBlocks_DestroyDuringEnterSettlesCovered",
+            "state": "Passed",
+            "durationSeconds": 0.0463446,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n"
+          },
+          {
+            "name": "RealBlocks_ScaledClockIsExplicitOptIn",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RealBlocks_ScaledClockIsExplicitOptIn",
+            "state": "Passed",
+            "durationSeconds": 0.1828343,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=109.6ms total=109.6ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "RealBlocks_UserPauseFreezesBothDirections_DespiteInternalPause",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RealBlocks_UserPauseFreezesBothDirections_DespiteInternalPause",
+            "state": "Passed",
+            "durationSeconds": 0.853521,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=451.7ms total=451.7ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "RebirthTiming_CommitThenReveal_ControlsRemainOwnedByBusiness",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.RebirthTiming_CommitThenReveal_ControlsRemainOwnedByBusiness",
+            "state": "Passed",
+            "durationSeconds": 1.8148994,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=750.2ms total=750.2ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ResourceException_SettlesCoverAndDoesNotPoisonQueue",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ResourceException_SettlesCoverAndDoesNotPoisonQueue",
+            "state": "Passed",
+            "durationSeconds": 0.0462594,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "SessionOptions_AppliedBeforeInit_AndSkipCustomTimers",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.SessionOptions_AppliedBeforeInit_AndSkipCustomTimers",
+            "state": "Passed",
+            "durationSeconds": 0.0408886,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.2ms show=0.7ms total=0.9ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ShutdownUnderOuterCurtain_FailsPendingInteraction",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ShutdownUnderOuterCurtain_FailsPendingInteraction",
+            "state": "Passed",
+            "durationSeconds": 0.0409834,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "SlowPreparation_ExposesPendingBoundaryToLoading",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.SlowPreparation_ExposesPendingBoundaryToLoading",
+            "state": "Passed",
+            "durationSeconds": 0.0483501,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "StopDuringPreparationReleasesCurtainBeforeManagersAreDestroyed",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.StopDuringPreparationReleasesCurtainBeforeManagersAreDestroyed",
+            "state": "Passed",
+            "durationSeconds": 0.0309851,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "Success_CompletionIncludesCurtainClose",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.Success_CompletionIncludesCurtainClose",
+            "state": "Passed",
+            "durationSeconds": 0.0424533,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.0ms total=0.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:950)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#999999>页面已关闭: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:293)</i></color>\r\n"
+          },
+          {
+            "name": "ThrowingCancellationAndEffectCleanup_StillReleasesPageAndTasks",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.ThrowingCancellationAndEffectCleanup_StillReleasesPageAndTasks",
+            "state": "Passed",
+            "durationSeconds": 0.0325512,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=0.4ms total=0.4ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

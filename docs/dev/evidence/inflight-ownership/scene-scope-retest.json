@@ -1,0 +1,281 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "af032e196d814488b135107f31e424b2",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792836051418,
+      "finished_unix_ms": 1792836059626,
+      "last_update_unix_ms": 1792836059626,
+      "progress": {
+        "completed": 26,
+        "total": 26,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.SceneFlow.Tests.GameSceneScopeTests.TwoScopesCannotOwnSameParticipant",
+        "last_finished_unix_ms": 1792836059609,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 26,
+          "passed": 26,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.4642449,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CancellationDisposesLateResult_WithoutStarting",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.CancellationDisposesLateResult_WithoutStarting",
+            "state": "Passed",
+            "durationSeconds": 0.0274055,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CleanupFailureDoesNotSkipOtherResultsOrKeepScopeBusy",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.CleanupFailureDoesNotSkipOtherResultsOrKeepScopeBusy",
+            "state": "Passed",
+            "durationSeconds": 0.0196978,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DestroyParticipantStopsOwnedSession",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.DestroyParticipantStopsOwnedSession",
+            "state": "Passed",
+            "durationSeconds": 0.0158224,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EmptyScopeWorksWithoutPlayerOrInputModule",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.EmptyScopeWorksWithoutPlayerOrInputModule",
+            "state": "Passed",
+            "durationSeconds": 0.0192388,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FailedLateCleanupFaultsStopCompletion",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.FailedLateCleanupFaultsStopCompletion",
+            "state": "Passed",
+            "durationSeconds": 0.0197611,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroupAliasAndCyclesFailBeforeAnyPrepare",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.GroupAliasAndCyclesFailBeforeAnyPrepare",
+            "state": "Passed",
+            "durationSeconds": 0.0077323,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GroupOwnsChildWithoutScopeDrivingItTwice",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.GroupOwnsChildWithoutScopeDrivingItTwice",
+            "state": "Passed",
+            "durationSeconds": 0.0221692,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidReferencesFailBeforePreparingAnyone",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.InvalidReferencesFailBeforePreparingAnyone",
+            "state": "Passed",
+            "durationSeconds": 0.002727,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OldCleanupFailureKeepsNewResultOwnedAndDoesNotDisposeOldAgain",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.OldCleanupFailureKeepsNewResultOwnedAndDoesNotDisposeOldAgain",
+            "state": "Passed",
+            "durationSeconds": 0.0189254,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PartialFailureDisposesEarlierResults_AllowsRetry",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.PartialFailureDisposesEarlierResults_AllowsRetry",
+            "state": "Passed",
+            "durationSeconds": 0.0172006,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PrepareDoesNotStart_ExplicitStartOnce_DisposeInReverse",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.PrepareDoesNotStart_ExplicitStartOnce_DisposeInReverse",
+            "state": "Passed",
+            "durationSeconds": 0.0184065,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementCancellationRetainsOwnershipUntilLateCandidateIsCleaned",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementCancellationRetainsOwnershipUntilLateCandidateIsCleaned",
+            "state": "Passed",
+            "durationSeconds": 0.0185264,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementCannotReuseAnyOwnedResult",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementCannotReuseAnyOwnedResult",
+            "state": "Passed",
+            "durationSeconds": 0.0180566,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementDisposeFailureStillReleasesRequestSlot",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementDisposeFailureStillReleasesRequestSlot",
+            "state": "Passed",
+            "durationSeconds": 0.0182443,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementFailureOrAbandonKeepsOldResultAndAllowsRetry",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementFailureOrAbandonKeepsOldResultAndAllowsRetry",
+            "state": "Passed",
+            "durationSeconds": 0.0151244,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementPreservesWorldAndDisposesOldOnlyAfterNewStarts",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementPreservesWorldAndDisposesOldOnlyAfterNewStarts",
+            "state": "Passed",
+            "durationSeconds": 0.016785,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementRejectsNestedAndForeignParticipantsAndNonRunningSession",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementRejectsNestedAndForeignParticipantsAndNonRunningSession",
+            "state": "Passed",
+            "durationSeconds": 0.0163527,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementStartFailureRetainsOldAndCleansCandidateOnce",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ReplacementStartFailureRetainsOldAndCleansCandidateOnce",
+            "state": "Passed",
+            "durationSeconds": 0.0150818,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RequireRejectsMissingOrMultipleScopes",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.RequireRejectsMissingOrMultipleScopes",
+            "state": "Passed",
+            "durationSeconds": 0.0011861,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ScopeDisabledDuringPrepare_HoldsOwnershipUntilLateCleanup",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeDisabledDuringPrepare_HoldsOwnershipUntilLateCleanup",
+            "state": "Passed",
+            "durationSeconds": 0.0167385,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ScopeDisableDuringReplacementWaitsForLateCleanupBeforeReclaim",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeDisableDuringReplacementWaitsForLateCleanupBeforeReclaim",
+            "state": "Passed",
+            "durationSeconds": 0.0177577,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ScopeLossInsideCandidateStartDoesNotInstallOrLeakCandidate",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeLossInsideCandidateStartDoesNotInstallOrLeakCandidate",
+            "state": "Passed",
+            "durationSeconds": 0.0151503,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SlowPreparationBlocksReady_AndRejectsOverlap",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.SlowPreparationBlocksReady_AndRejectsOverlap",
+            "state": "Passed",
+            "durationSeconds": 0.0153202,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartFailureCleansStartedAndUnstartedResults",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.StartFailureCleansStartedAndUnstartedResults",
+            "state": "Passed",
+            "durationSeconds": 0.0193891,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopWaitsForLatePreparationAndDoesNotStartIt",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.StopWaitsForLatePreparationAndDoesNotStartIt",
+            "state": "Passed",
+            "durationSeconds": 0.0168668,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TwoScopesCannotOwnSameParticipant",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.TwoScopesCannotOwnSameParticipant",
+            "state": "Passed",
+            "durationSeconds": 0.0149138,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

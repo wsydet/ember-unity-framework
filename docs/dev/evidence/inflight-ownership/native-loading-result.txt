@@ -1,0 +1,2 @@
+2026-10-24T10:08:25.2335262Z load-barrier-reached lifetime=Ready
+2026-10-24T10:08:33.5972057Z transition=Cancelled commit=False interact=False state=GameMainState

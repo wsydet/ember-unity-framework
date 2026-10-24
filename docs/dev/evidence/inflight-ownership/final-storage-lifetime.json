@@ -1,0 +1,110 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "7dd2b72d8a18400db8ecd5c4bed6b438",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792836622201,
+      "finished_unix_ms": 1792836630870,
+      "last_update_unix_ms": 1792836630870,
+      "progress": {
+        "completed": 7,
+        "total": 7,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+        "last_finished_unix_ms": 1792836630709,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.7929571,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "AsyncOwnersStartOnceAndCompletionWaitsForEveryOwnerEvenAfterFailure",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.AsyncOwnersStartOnceAndCompletionWaitsForEveryOwnerEvenAfterFailure",
+            "state": "Passed",
+            "durationSeconds": 0.439739,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+            "state": "Passed",
+            "durationSeconds": 0.0073137,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InitializationCanStopBeforeReady",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.InitializationCanStopBeforeReady",
+            "state": "Passed",
+            "durationSeconds": 0.00095,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+            "state": "Passed",
+            "durationSeconds": 0.001518,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+            "state": "Passed",
+            "durationSeconds": 0.0036612,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.1423282,
+            "message": null,
+            "stackTrace": null,
+            "output": "2026-10-24T10:10:30.5911146Z committed-before-publication 421926647c9049cbb993e6a35e4cd0bb.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;a21a97f9cb724663aa94c7a43d22c2f5.progress=C0DB6C93A979443427CFB092C7CB73C8C93143315F3A84458839623A01E3D525;index.json=14ED2F5BFF38E96C7E05AA25F97AA33765E7E196C4E620C67162FC5008959989;index.json.bak=AD61DE531F9063455941D6FE21B5A33A9485849C3141A776C16C726DEC46D08F\r\n2026-10-24T10:10:30.6002563Z committed-ownership-released 421926647c9049cbb993e6a35e4cd0bb.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;a21a97f9cb724663aa94c7a43d22c2f5.progress=C0DB6C93A979443427CFB092C7CB73C8C93143315F3A84458839623A01E3D525;index.json=14ED2F5BFF38E96C7E05AA25F97AA33765E7E196C4E620C67162FC5008959989;index.json.bak=AD61DE531F9063455941D6FE21B5A33A9485849C3141A776C16C726DEC46D08F\r\n"
+          },
+          {
+            "name": "StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.100937,
+            "message": null,
+            "stackTrace": null,
+            "output": "2026-10-24T10:10:30.6362194Z before-blocked-write 891d5709bdef416eaac09cd219a17e98.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;index.json=99A1349B6FFFFBB01B0CA9677B73D4EAFA80EE80484F6E702B16C3D115F81962\r\n2026-10-24T10:10:30.6825174Z wait-timeout: IO blocked; ownership retained\r\n2026-10-24T10:10:30.6945874Z cancelled-ownership-released 891d5709bdef416eaac09cd219a17e98.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;index.json=99A1349B6FFFFBB01B0CA9677B73D4EAFA80EE80484F6E702B16C3D115F81962\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

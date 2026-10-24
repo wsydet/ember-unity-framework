@@ -214,6 +214,12 @@ namespace Ember.Scene
         /// </summary>
         void IEmberManager.Init()
         {
+            _transitionGeneration++;
+            _transitionRetired = false;
+            _transitionLoad = null;
+            IsLoading = false;
+            Progress = 0;
+            CurrentScene = null;
             EmberDebug.LogInit(TAG, "EmberSceneManager initialized.");
         }
 
@@ -239,6 +245,7 @@ namespace Ember.Scene
 
         private void StartLoad(string sceneName, LoadSceneMode mode, Action onComplete)
         {
+            if (_transitionRetired) return;
             IsLoading = true;
             Progress = 0f;
             CurrentScene = sceneName;
@@ -256,6 +263,7 @@ namespace Ember.Scene
             // allowSceneActivation = false 时加载停在 0.9，
             // 触发 OnBeforeActivate 后再激活
             op.allowSceneActivation = false;
+            _transitionLoad = op;
 
             // 使用 UniTask 异步驱动加载流程（比协程性能更优）
             LoadAsync(op, sceneName, onComplete).Forget();
@@ -263,38 +271,38 @@ namespace Ember.Scene
 
         private async UniTask LoadAsync(AsyncOperation op, string sceneName, Action onComplete)
         {
+            long generation = _transitionGeneration;
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneLoadStart);
 
             // Phase 1: 等待加载到 0.9，更新真实进度
-            while (op.progress < 0.9f)
+            while (op.progress < 0.9f && !IsRetired(generation))
             {
                 Progress = op.progress;
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
-            Progress = 0.9f;
+            if (!IsRetired(generation)) Progress = 0.9f;
 
             // Phase 2: OnBeforeActivate 回调（使用 TCS 桥接回调到 async/await）
             UnityEngine.SceneManagement.Scene scene = ResolveScene(sceneName);
-            if (OnBeforeActivate != null)
+            if (!IsRetired(generation) && OnBeforeActivate != null)
             {
                 var tcs = new UniTaskCompletionSource();
                 OnBeforeActivate.Invoke(scene, () =>
                 {
-                    op.allowSceneActivation = true;
                     tcs.TrySetResult();
                 });
-                await tcs.Task;
+                while (!tcs.Task.Status.IsCompleted() && !IsRetired(generation))
+                    await UniTask.Yield(PlayerLoopTiming.Update);
             }
-            else
-            {
-                op.allowSceneActivation = true;
-            }
+            op.allowSceneActivation = true;
 
             // Phase 3: 等待场景激活完成
             while (!op.isDone)
                 await UniTask.Yield(PlayerLoopTiming.Update);
 
+            if (IsRetired(generation)) return;
+            _transitionLoad = null;
             Progress = 1f;
 
             IsLoading = false;
@@ -317,6 +325,7 @@ namespace Ember.Scene
         /// </summary>
         private void DestroyInternal()
         {
+            RetireTransitions();
             EmberEventBus.OnNext(EmberBroadcastEvent.SceneUnloading);
         }
 

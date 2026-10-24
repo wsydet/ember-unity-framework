@@ -17,6 +17,7 @@ namespace Game.Input
         private GameInputConfig _configuration;
         private InputActionAsset _preparedActions;
         private IDisposable _shutdownSubscription;
+        private IDisposable _lifetimeAbort;
         private GameTransitionInputGate _transitionGate;
         private bool _hasOverride;
         public GameInputServiceState State { get; private set; }
@@ -46,6 +47,8 @@ namespace Game.Input
             _transitionGate = null;
             _shutdownSubscription?.Dispose();
             _shutdownSubscription = null;
+            _lifetimeAbort?.Dispose();
+            _lifetimeAbort = null;
             WhenReady = Task.FromResult(new GameInputPrepareResult(Epoch, GameInputPrepareStatus.Stopped));
         }
         #endregion
@@ -78,6 +81,7 @@ namespace Game.Input
         void IEmberModule.OnInit()
         {
             if (State == GameInputServiceState.Ready || State == GameInputServiceState.Preparing) return;
+            _lifetimeAbort = GameLauncher.CurrentLifetime?.RegisterAbort(Stop);
             State = GameInputServiceState.Preparing;
             Epoch++;
             var config = _hasOverride ? _configuration : Resources.Load<GameInputConfig>(CONFIG_PATH);

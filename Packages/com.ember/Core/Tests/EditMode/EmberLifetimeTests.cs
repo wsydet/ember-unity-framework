@@ -9,6 +9,27 @@ namespace Ember.Core.Fsm.Tests
     public sealed class EmberLifetimeTests
     {
         [Test]
+        public async Task AsyncOwnersStartOnceAndCompletionWaitsForEveryOwnerEvenAfterFailure()
+        {
+            var lifetime = new EmberLifetime();
+            var gate = new TaskCompletionSource<bool>();
+            int starts = 0;
+            lifetime.RegisterStopOwner(() => { starts++; return gate.Task; });
+            lifetime.RegisterStopOwner(() => Task.FromException(new InvalidOperationException("owner failed")));
+            lifetime.BeginStop(EmberStopReason.ScriptReload);
+            lifetime.AbortOwners(false);
+            var stop = lifetime.WhenOwnersStopped;
+            lifetime.StartStopOwners();
+            Assert.That(lifetime.WhenOwnersStopped, Is.SameAs(stop));
+            Assert.That(starts, Is.EqualTo(1));
+            Assert.That(stop.IsCompleted, Is.False);
+            gate.SetResult(true);
+            try { await stop; Assert.Fail("Failure lost"); } catch (InvalidOperationException) { }
+            Assert.That(stop.IsFaulted, Is.True);
+            lifetime.FinishStop(false);
+        }
+
+        [Test]
         public void StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce()
         {
             var lifetime = new EmberLifetime();

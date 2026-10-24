@@ -34,6 +34,67 @@ namespace Ember.Scene.Tests
         }
 
         [Test]
+        public void SceneManagerReinitializationRetiresOldGenerationOnly()
+        {
+            var scenes = new EmberSceneManager();
+            var manager = (IEmberManager)scenes;
+            var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+            var generation = typeof(EmberSceneManager).GetField("_transitionGeneration", flags);
+            var retired = typeof(EmberSceneManager).GetMethod("IsRetired", flags);
+            manager.Init();
+            long previous = (long)generation.GetValue(scenes);
+            manager.Destroy();
+            manager.Init();
+            Assert.That(retired.Invoke(scenes, new object[] { previous }), Is.True);
+            Assert.That(retired.Invoke(scenes, new object[] { generation.GetValue(scenes) }), Is.False);
+            Assert.DoesNotThrow(() => scenes.UnloadForTransitionAsync("missing-reentry-test-scene").GetAwaiter().GetResult());
+            manager.Destroy();
+        }
+
+        [Test]
+        public async Task StopWaitsForLoadAndOnlyReleasesAcquiredScene()
+        {
+            _scenes.LoadGate = new UniTaskCompletionSource();
+            _scenes.UnloadGate = new UniTaskCompletionSource();
+            var request = _fsm.RequestTransitionTo<NextState>();
+            var stop = _fsm.StopTransitionsAsync();
+            Assert.That(_fsm.StopTransitionsAsync(), Is.SameAs(stop));
+            Assert.That(stop.IsCompleted, Is.False);
+            _scenes.LoadGate.TrySetResult();
+            Assert.That(stop.IsCompleted, Is.False);
+            Assert.That(_trace, Does.Not.Contain("enter:next"));
+            _scenes.UnloadGate.TrySetResult();
+            Assert.That((await stop).Status, Is.EqualTo(EmberTransitionStatus.Cancelled));
+            Assert.That(stop, Is.SameAs(request.Completion));
+            CollectionAssert.AreEquivalent(new[] { "old" }, _scenes.Loaded);
+        }
+
+        [Test]
+        public async Task StopAfterCommitWaitsForUnloadWithoutRewritingCommit()
+        {
+            _scenes.UnloadGate = new UniTaskCompletionSource();
+            var request = _fsm.RequestTransitionTo<NextState>();
+            var stop = _fsm.StopTransitionsAsync();
+            Assert.That(stop.IsCompleted, Is.False);
+            Assert.That(request.CanInteract, Is.False);
+            _scenes.UnloadGate.TrySetResult();
+            Assert.That((await stop).Status, Is.EqualTo(EmberTransitionStatus.Completed));
+            Assert.That((await stop).CommitStarted, Is.True);
+            CollectionAssert.AreEquivalent(new[] { "next" }, _scenes.Loaded);
+        }
+
+        [Test]
+        public async Task StopInsideExit_DoesNotEnterOrPublishNextState()
+        {
+            _old.Exit = () => _fsm.StopTransitions();
+            var result = await _fsm.RequestTransitionTo<NextState>().Completion;
+            Assert.That(result.CommitStarted, Is.True);
+            Assert.That(result.Status, Is.EqualTo(EmberTransitionStatus.CommitFailed));
+            Assert.That(_trace, Does.Not.Contain("enter:next"));
+            CollectionAssert.AreEquivalent(new[] { "old", "next" }, _scenes.Loaded);
+        }
+
+        [Test]
         public async Task Success_PreservesOldSceneThroughPrepareAndEnter_ThenUnloads()
         {
             _next.Prepare = context =>
@@ -447,6 +508,7 @@ namespace Ember.Scene.Tests
             protected abstract string Key { get; }
             public Func<SceneTransitionContext, UniTask> Prepare;
             public Action<object> Enter;
+            public Action Exit;
             public object Args;
             public bool AbortError;
             protected TestState(List<string> trace) { Trace = trace; }
@@ -457,7 +519,7 @@ namespace Ember.Scene.Tests
             public override UniTask AbortPrepareAsync(SceneTransitionContext request)
             { Trace.Add("abort:" + Key); if (AbortError) throw new InvalidOperationException("abort"); return UniTask.CompletedTask; }
             public override void OnEnter(object args) { Args = args; Trace.Add("enter:" + Key); Enter?.Invoke(args); }
-            public override void OnExit() => Trace.Add("exit:" + Key);
+            public override void OnExit() { Trace.Add("exit:" + Key); Exit?.Invoke(); }
             public override void OnPause() => Trace.Add("pause:" + Key);
             public override void OnResume() => Trace.Add("resume:" + Key);
         }

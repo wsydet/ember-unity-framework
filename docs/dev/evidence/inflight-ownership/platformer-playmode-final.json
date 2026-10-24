@@ -1,0 +1,83 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "1f8a296a2d1042f989a11f6263f23231",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792837532956,
+      "finished_unix_ms": 1792837543946,
+      "last_update_unix_ms": 1792837543946,
+      "progress": {
+        "completed": 4,
+        "total": 4,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.SceneFlow.Tests.GameSceneScopeTests.StopWaitsForLatePreparationAndDoesNotStartIt",
+        "last_finished_unix_ms": 1792837543923,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.3138986,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "StopDuringPreparationReleasesCurtainBeforeManagersAreDestroyed",
+            "fullName": "Ember.Scene.Tests.EmberTransitionLoadingTests.StopDuringPreparationReleasesCurtainBeforeManagersAreDestroyed",
+            "state": "Passed",
+            "durationSeconds": 0.1249533,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>EUIManager 初始化完成。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:109)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>复用预加载页面: test/curtain</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIManager.cs:649)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#a7f57a>页面加载完成: TestCurtain init=0.0ms show=1.0ms total=1.0ms</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:804)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIPage.cs:810)</i></color>\r\n<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#ae82f9>页面已打开: EUIPageDef(test/curtain, layer=25000, type=TopMost)</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UI\\Runtime\\EUIViewEngine.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "FailedLateCleanupFaultsStopCompletion",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.FailedLateCleanupFaultsStopCompletion",
+            "state": "Passed",
+            "durationSeconds": 0.0352105,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ScopeDisableDuringReplacementWaitsForLateCleanupBeforeReclaim",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.ScopeDisableDuringReplacementWaitsForLateCleanupBeforeReclaim",
+            "state": "Passed",
+            "durationSeconds": 0.0331264,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopWaitsForLatePreparationAndDoesNotStartIt",
+            "fullName": "Game.SceneFlow.Tests.GameSceneScopeTests.StopWaitsForLatePreparationAndDoesNotStartIt",
+            "state": "Passed",
+            "durationSeconds": 0.0243008,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -58,6 +58,29 @@ namespace Ember.Scene.Tests
         }
 
         [UnityTest]
+        public IEnumerator StopDuringPreparationReleasesCurtainBeforeManagersAreDestroyed()
+        {
+            var scenes = new Scenes();
+            var gate = new UniTaskCompletionSource();
+            bool preparing = false;
+            var fsm = Build(scenes, context => { preparing = true; return gate.Task; });
+            var operation = fsm.RequestTransitionTo<Destination>();
+            for (int i = 0; i < 150 && !preparing; i++) { Pump(); yield return null; }
+            Assert.That(preparing, Is.True);
+            var stop = fsm.StopTransitionsAsync();
+            typeof(EUIManager).GetMethod("StopSessionPresentation", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(_ui, null);
+            Assert.That(_page.IsOpened, Is.False);
+            Assert.That(stop.IsCompleted, Is.False);
+            gate.TrySetResult();
+            // The business update loop is stopped: cleanup must not require Pump().
+            for (int i = 0; i < 150 && !stop.IsCompleted; i++) yield return null;
+            Assert.That(stop.IsCompleted, Is.True);
+            Assert.That(operation.CanInteract, Is.False);
+            Assert.That(scenes.OldLoaded, Is.True);
+            Assert.That(scenes.NewLoaded, Is.False);
+        }
+
+        [UnityTest]
         public IEnumerator PreparationFailure_ClosesRealCurtainAndRetainsOldScene()
         {
             var scenes = new Scenes();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Ember.Basic;
 using Ember.Core;
@@ -22,6 +23,11 @@ namespace Game.SceneFlow
         private bool _released;
         private bool _disposing;
         private GameSceneReplacement _replacement;
+        private readonly TaskCompletionSource<bool> _releaseCompletion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private IDisposable _lifetimeRegistration;
+        private Exception _releaseFailure;
+        /// <summary>实际释放完准备、替换及所有占用后完成；清理异常通过此任务报告。不能在主线程同步等待。</summary>
+        public Task WhenReleased => _releaseCompletion.Task;
         public bool IsPrepared { get; private set; }
         public bool IsRunning { get; private set; }
         public bool IsDisposed { get; private set; }
@@ -37,6 +43,7 @@ namespace Game.SceneFlow
             _scope = scope; _drivers = drivers; _participants = participants;
             _cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
             _context = new GameScenePreparationContext(requestId, scope.gameObject.scene, args, _cancellation.Token);
+            _lifetimeRegistration = GameLauncher.CurrentLifetime?.RegisterStopOwner(StopAsync);
         }
 
         private void Validate()
@@ -57,6 +64,9 @@ namespace Game.SceneFlow
                 if (!ReferenceEquals(_participants[i], null)) _participants[i].Release(this);
             if (_scope != null) _scope.Release(this);
             _cancellation.Dispose();
+            _lifetimeRegistration?.Dispose();
+            if (_releaseFailure == null) _releaseCompletion.TrySetResult(true);
+            else _releaseCompletion.TrySetException(_releaseFailure);
         }
 
         internal async UniTask PrepareAsync()
@@ -71,7 +81,12 @@ namespace Game.SceneFlow
                     var prepared = await participant.PrepareAsync(_context);
                     if (prepared == null) throw new InvalidOperationException("参与者未返回准备结果：" + participant.name);
                     // Dispose 可在等待期间发生；迟到结果必须释放，不得遗漏或启动。
-                    if (IsDisposed) { prepared.Dispose(); throw new OperationCanceledException("准备结果迟到。"); }
+                    if (IsDisposed)
+                    {
+                        try { prepared.Dispose(); }
+                        catch (Exception error) { _releaseFailure = error; throw; }
+                        throw new OperationCanceledException("准备结果迟到。");
+                    }
                     _results.Add(prepared);
                     Validate();
                 }
@@ -142,6 +157,9 @@ namespace Game.SceneFlow
             if (IsDisposed) ReleaseClaims();
         }
 
+        internal void RecordReleaseFailure(Exception error)
+            => _releaseFailure = _releaseFailure == null ? error : new AggregateException(_releaseFailure, error);
+
         /// <summary>由 Gameplay Module 激活后的状态钩子调用，只允许启动一次。</summary>
         public void Start()
         {
@@ -172,8 +190,16 @@ namespace Game.SceneFlow
                 try { _results[i].Dispose(); } catch (Exception error) { errors.Add(error); }
             _results.Clear();
             _disposing = false;
+            if (errors.Count != 0) _releaseFailure = new AggregateException("场景结果清理失败。", errors);
             ReleaseClaims();
             if (errors.Count != 0) throw new AggregateException("场景结果清理失败。", errors);
+        }
+
+        /// <summary>取消准备并等待迟到结果与占用释放；重复调用共享同一完成任务。</summary>
+        public Task StopAsync()
+        {
+            DisposeSafely();
+            return WhenReleased;
         }
 
         internal void DisposeSafely()

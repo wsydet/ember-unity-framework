@@ -79,6 +79,36 @@ namespace Game.SceneFlow.Tests
                 .SetValue(scope, participants);
 
         [Test]
+        public async Task StopWaitsForLatePreparationAndDoesNotStartIt()
+        {
+            var gate = new UniTaskCompletionSource<IGameScenePreparedParticipant>();
+            var probe = Probe("late"); probe.Prepare = _ => gate.Task;
+            Configure(_scope, probe);
+            var pending = _scope.PrepareAsync(1, null, CancellationToken.None).AsTask();
+            var stop = _scope.StopAsync();
+            Assert.That(_scope.StopAsync(), Is.SameAs(stop));
+            Assert.That(stop.IsCompleted, Is.False);
+            gate.TrySetResult(new Result(_trace, "late"));
+            try { await pending; Assert.Fail("Disposed candidate returned"); } catch (OperationCanceledException) { }
+            await stop;
+            CollectionAssert.AreEqual(new[] { "dispose:late" }, _trace);
+        }
+
+        [Test]
+        public async Task FailedLateCleanupFaultsStopCompletion()
+        {
+            var gate = new UniTaskCompletionSource<IGameScenePreparedParticipant>();
+            var probe = Probe("late"); probe.Prepare = _ => gate.Task;
+            Configure(_scope, probe);
+            var pending = _scope.PrepareAsync(1, null, CancellationToken.None).AsTask();
+            var stop = _scope.StopAsync();
+            gate.TrySetResult(new Result(_trace, "late") { FailDispose = true });
+            try { await pending; Assert.Fail("Cleanup failure lost"); } catch (InvalidOperationException) { }
+            try { await stop; Assert.Fail("Stop falsely succeeded"); } catch (InvalidOperationException) { }
+            Assert.That(stop.IsFaulted, Is.True);
+        }
+
+        [Test]
         public async Task PrepareDoesNotStart_ExplicitStartOnce_DisposeInReverse()
         {
             Configure(_scope, Probe("a"), Probe("b"));

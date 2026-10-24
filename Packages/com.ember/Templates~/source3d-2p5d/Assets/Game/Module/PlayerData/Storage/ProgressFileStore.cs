@@ -218,9 +218,9 @@ namespace Game.PlayerData
             lock (_gate)
             {
                 if (_disposed) return;
-                _disposed = true;
                 _ownership?.Dispose();
                 _ownership = null;
+                _disposed = true;
                 Publish(SaveServiceState.Stopped);
             }
         }

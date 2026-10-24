@@ -25,6 +25,7 @@ namespace Game.Module
         private SaveServiceState _state;
         private TaskCompletionSource<PrepareResult> _preparing;
         private Task _stopped = Task.CompletedTask;
+        private IDisposable _lifetimeRegistration;
         internal ProgressFileIO FilesForNextInit { get; set; }
         public long ServiceEpoch { get; private set; } = ProgressIdentity.NextEpoch();
         public SaveServiceState State => _state == SaveServiceState.Ready ? _service.State : _state;
@@ -88,6 +89,8 @@ namespace Game.Module
         void IEmberModule.OnInit()
         {
             if (_state != SaveServiceState.Uninitialized && _state != SaveServiceState.Stopped) return;
+            _lifetimeRegistration?.Dispose();
+            _lifetimeRegistration = GameLauncher.CurrentLifetime?.RegisterStopOwner(StopAsync, backgroundIndependent: true);
             ServiceEpoch = ProgressIdentity.NextEpoch();
             _state = SaveServiceState.Preparing;
             _preparing = new TaskCompletionSource<PrepareResult>(TaskCreationOptions.RunContinuationsAsynchronously);

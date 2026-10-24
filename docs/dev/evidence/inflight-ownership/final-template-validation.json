@@ -1,0 +1,19 @@
+{
+  "validation": "Unity MCP execute_code; formal TryValidateTemplateAssets and ValidateTemplateGraph",
+  "unity": "6000.5.4f1",
+  "framework": "0.22.0",
+  "storageAssemblyMvid": "b1093c57-9424-4faa-bbe9-af6092e7450b",
+  "compiling": false,
+  "consoleErrorsAndWarnings": 0,
+  "graphIssues": [],
+  "editingStale": false,
+  "templates": [
+    {"id":"base","version":"0.8.4","hash":"936dcb1d411afefcacd961cbad1d1d0d","valid":true,"metadataMatch":true,"sync":"Root"},
+    {"id":"platformer-2d","version":"0.11.3","hash":"638e948a428eaa1d1f256e67d414776a","valid":true,"metadataMatch":true,"sync":"Synced"},
+    {"id":"source3d-2p5d","version":"0.5.1","hash":"794e8087bb607fad24a945bc3aec9822","valid":true,"metadataMatch":true,"sync":"Synced"},
+    {"id":"visual-novel","version":"0.21.3","hash":"12db20a4559c0707a50371c153c4aac9","valid":true,"metadataMatch":true,"sync":"Synced"}
+  ],
+  "allDerivedParentVersions": "0.8.4",
+  "allDerivedActualParentSnapshotHashes": "936dcb1d411afefcacd961cbad1d1d0d",
+  "allFrameworkCompatibilityDeclarations": "0.22.0"
+}

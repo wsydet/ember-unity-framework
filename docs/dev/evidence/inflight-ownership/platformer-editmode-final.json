@@ -1,0 +1,101 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "bc4063b301c040cdb92ed1679b1eb25b",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792837501079,
+      "finished_unix_ms": 1792837511024,
+      "last_update_unix_ms": 1792837511024,
+      "progress": {
+        "completed": 6,
+        "total": 6,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.PlayerData.Tests.PlayerDataModuleTests.StopDuringPrepareSettlesOldReadinessAndLateCompletionCannotReviveIt",
+        "last_finished_unix_ms": 1792837510870,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.8370981,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "ModuleInitializationIsExplicitAndResetCannotReviveOldRequests",
+            "fullName": "Game.Input.Tests.GameInputTests.ModuleInitializationIsExplicitAndResetCannotReviveOldRequests",
+            "state": "Passed",
+            "durationSeconds": 0.0986349,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n<color=#40D966><b>[EmberCore.EventBus]</b></color> <color=#ae82f9>Subscribe: key=6002, handler=Stop</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\Event\\EmberEventBus.cs:86)</i></color>\r\n"
+          },
+          {
+            "name": "CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.1957607,
+            "message": null,
+            "stackTrace": null,
+            "output": "2026-10-24T10:25:09.9112899Z committed-before-publication 371a2fcd897443278b58df049fba1f63.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;8849fa83d6214a258a7110605e56af6a.progress=C0DB6C93A979443427CFB092C7CB73C8C93143315F3A84458839623A01E3D525;index.json=F9DE21327BC446B30C06BAC1F111F5DC06755C7896A2BD6148A9114EAA62F558;index.json.bak=B607C5B9AE9DECCCC2886E0E6CF6D214DC77625081AF6181B3B0AE383270C3EB\r\n2026-10-24T10:25:09.9257911Z committed-ownership-released 371a2fcd897443278b58df049fba1f63.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;8849fa83d6214a258a7110605e56af6a.progress=C0DB6C93A979443427CFB092C7CB73C8C93143315F3A84458839623A01E3D525;index.json=F9DE21327BC446B30C06BAC1F111F5DC06755C7896A2BD6148A9114EAA62F558;index.json.bak=B607C5B9AE9DECCCC2886E0E6CF6D214DC77625081AF6181B3B0AE383270C3EB\r\n"
+          },
+          {
+            "name": "FailedIoStillSettlesAndReleasesWithoutOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.FailedIoStillSettlesAndReleasesWithoutOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.098494,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.194397,
+            "message": null,
+            "stackTrace": null,
+            "output": "2026-10-24T10:25:10.0786955Z before-blocked-write 5bf37e8046ef403cbc4461286e640315.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;index.json=4CB3745A035612B73D781954A077B14967350B3A43C9AF14BC35C683BDC7C47D\r\n2026-10-24T10:25:10.1244328Z wait-timeout: IO blocked; ownership retained\r\n2026-10-24T10:25:10.2035520Z cancelled-ownership-released 5bf37e8046ef403cbc4461286e640315.progress=16E212814754D9DD1A41C12D4AB5FBE173E5EC0718B0396F319E9D2ED735AE35;index.json=4CB3745A035612B73D781954A077B14967350B3A43C9AF14BC35C683BDC7C47D\r\n"
+          },
+          {
+            "name": "ReentryWaitsForOldWriterAndRetainsItsUnacknowledgedCancelledResult",
+            "fullName": "Game.PlayerData.Tests.PlayerDataModuleTests.ReentryWaitsForOldWriterAndRetainsItsUnacknowledgedCancelledResult",
+            "state": "Passed",
+            "durationSeconds": 0.1419582,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopDuringPrepareSettlesOldReadinessAndLateCompletionCannotReviveIt",
+            "fullName": "Game.PlayerData.Tests.PlayerDataModuleTests.StopDuringPrepareSettlesOldReadinessAndLateCompletionCannotReviveIt",
+            "state": "Passed",
+            "durationSeconds": 0.0590274,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

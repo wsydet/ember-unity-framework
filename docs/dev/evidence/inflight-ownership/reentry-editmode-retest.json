@@ -1,0 +1,83 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "b7e21f3f73fd487e91e36811b712aec0",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792838009763,
+      "finished_unix_ms": 1792838018347,
+      "last_update_unix_ms": 1792838018347,
+      "progress": {
+        "completed": 4,
+        "total": 4,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.Scene.Tests.EmberSceneTransitionTests.StopWaitsForLoadAndOnlyReleasesAcquiredScene",
+        "last_finished_unix_ms": 1792838017926,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.0332737,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "SceneManagerReinitializationRetiresOldGenerationOnly",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.SceneManagerReinitializationRetiresOldGenerationOnly",
+            "state": "Passed",
+            "durationSeconds": 0.0244417,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#A680D9><b>[EmberScene.Manager]</b></color> <color=#a7f57a>EmberSceneManager initialized.</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Scene\\Runtime\\EmberSceneManager.cs:223)</i></color>\r\n<color=#A680D9><b>[EmberScene.Manager]</b></color> <color=#a7f57a>EmberSceneManager initialized.</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Scene\\Runtime\\EmberSceneManager.cs:223)</i></color>\r\n"
+          },
+          {
+            "name": "StopAfterCommitWaitsForUnloadWithoutRewritingCommit",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopAfterCommitWaitsForUnloadWithoutRewritingCommit",
+            "state": "Passed",
+            "durationSeconds": 0.0684446,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopInsideExit_DoesNotEnterOrPublishNextState",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopInsideExit_DoesNotEnterOrPublishNextState",
+            "state": "Passed",
+            "durationSeconds": 0.1999858,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopWaitsForLoadAndOnlyReleasesAcquiredScene",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopWaitsForLoadAndOnlyReleasesAcquiredScene",
+            "state": "Passed",
+            "durationSeconds": 0.2984477,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

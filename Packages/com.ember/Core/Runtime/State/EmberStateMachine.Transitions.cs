@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Ember.Basic;
 
@@ -13,6 +14,7 @@ namespace Ember.Core
         private EmberTransitionOperation _enteredTransition;
         private bool _stopped;
         private bool _evaluatingGuard;
+        private Task<EmberTransitionResult> _transitionStop;
         /// <summary>正式桥接：必须等待准备、提交和场景清理，异常由请求结果承接。</summary>
         public Func<SceneTransitionContext, UniTask> OnSceneTransitionAsync;
         public bool IsTransitioning => _activeTransition != null;
@@ -93,8 +95,13 @@ namespace Ember.Core
                     break;
                 case TransitionType.TransitionTo:
                     _current?.OnExit();
+                    ThrowIfStoppedDuringCommit();
                     // Leaving while an overlay is active also releases its paused owners.
-                    while (_overlayStack.Count > 0) _overlayStack.Pop()?.OnExit();
+                    while (_overlayStack.Count > 0)
+                    {
+                        _overlayStack.Pop()?.OnExit();
+                        ThrowIfStoppedDuringCommit();
+                    }
                     _popScenePathStack.Clear();
                     Previous = _current;
                     _current = context.ToState;
@@ -103,6 +110,7 @@ namespace Ember.Core
                     break;
                 case TransitionType.Push:
                     _current?.OnPause();
+                    ThrowIfStoppedDuringCommit();
                     _overlayStack.Push(_current);
                     _popScenePathStack.Push(_currentScenePath);
                     Previous = _current;
@@ -113,6 +121,7 @@ namespace Ember.Core
                     break;
                 case TransitionType.Pop:
                     _current?.OnExit();
+                    ThrowIfStoppedDuringCommit();
                     Previous = _current;
                     _current = _overlayStack.Pop();
                     _currentScenePath = _popScenePathStack.Pop();
@@ -120,10 +129,16 @@ namespace Ember.Core
                     break;
             }
             context.IsCommitted = true;
+            ThrowIfStoppedDuringCommit();
             EmberEventBus.OnNext(EmberBroadcastEvent.GameStateChanged);
             // Shutdown from a lifecycle callback must never publish an actionable entry.
             if (_stopped) throw new OperationCanceledException("状态机在提交期间停止。");
             context.Operation.MarkRunning();
+        }
+
+        private void ThrowIfStoppedDuringCommit()
+        {
+            if (_stopped) throw new OperationCanceledException("状态机在提交期间停止。");
         }
 
         private async UniTask RunTransitionAsync(SceneTransitionContext context)
@@ -164,7 +179,7 @@ namespace Ember.Core
                 status = context.CommitStarted
                     ? (context.IsCommitted ? EmberTransitionStatus.CleanupFailed : EmberTransitionStatus.CommitFailed)
                     : EmberTransitionStatus.Cancelled;
-                error = failure.Message;
+                error = failure.ToString();
             }
             catch (Exception failure)
             {
@@ -241,9 +256,17 @@ namespace Ember.Core
         /// <summary>框架销毁前封闭入口并使迟到请求失效。正常离开应先等待自己的转场/保存结果。</summary>
         public void StopTransitions()
         {
+            _transitionStop ??= _activeTransition?.Completion ?? Task.FromResult<EmberTransitionResult>(null);
             _stopped = true;
             _enteredTransition?.InvalidateEntry();
             _activeTransition?.Cancel();
+        }
+
+        /// <summary>封闭入口并等待本次事务清理。无活动请求时结果为 null；不得在 Unity 主线程同步等待。</summary>
+        public Task<EmberTransitionResult> StopTransitionsAsync()
+        {
+            StopTransitions();
+            return _transitionStop;
         }
         #endregion
     }

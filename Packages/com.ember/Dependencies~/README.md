@@ -1,6 +1,6 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.21.6**，修复 Play 脚本重载后的框架会话退出，提供生命周期和同步所有权中止契约。模板与第三方依赖不变；业务异步所有权适配及 Windward 消费验证待完成。
+当前发布：Ember **0.22.0**，补齐存储与转场异步停止协议、编译重载收束和正式模板接线。Unity 6000.5.4f1 增量验证与边界见当版发布说明；Windward 未升级或部署，消费适配仍须独立验收。
 
 ## 清单范围
 
@@ -32,4 +32,4 @@
 
 ## 发布顺序
 
-本版按 package.json、CHANGELOG、release/manifest、提交与 annotated tag 对齐发布 v0.21.6。生命周期修复和验证边界见 [0.21.6 发布说明](../../../docs/dev/release-0.21.6.md)。模板、通用技能和依赖沿用既有内容。
+本版按 package.json、CHANGELOG、release/manifest、提交与 annotated tag 对齐发布 v0.22.0。停止协议和验证边界见 [0.22.0 发布说明](../../../docs/dev/release-0.22.0.md)。四个模板均同步新停止协议；通用技能和第三方依赖保持原版。

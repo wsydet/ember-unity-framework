@@ -1,0 +1,75 @@
+{
+  "first": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "state": "Game.State.GameMainState",
+        "transitioning": false,
+        "storage": "Ready",
+        "lastSave": null
+      },
+      "compiler": "codedom"
+    }
+  },
+  "second": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "state": "Game.State.GameMainState",
+        "transitioning": false,
+        "lifetime": "Ready",
+        "storage": "Ready",
+        "lastSave": null,
+        "domainReloadDisabled": true
+      },
+      "compiler": "codedom"
+    }
+  },
+  "stopRequested": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "status": "WaitingForActivation",
+        "lifetime": "Stopping",
+        "owners": "RanToCompletion"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "stopCompleted": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "active": false,
+        "state": "released"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  },
+  "before": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {},
+      "compiler": "codedom"
+    }
+  },
+  "after": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {},
+      "compiler": "codedom"
+    }
+  },
+  "note": "Two complete Play sessions after reentry fix. Stable EditMode was confirmed before second Play. No persisted save files before or after (lock file excluded); storage Ready on second entry demonstrates ownership reacquisition. Existing-save preservation verified separately in isolated barrier tests."
+}

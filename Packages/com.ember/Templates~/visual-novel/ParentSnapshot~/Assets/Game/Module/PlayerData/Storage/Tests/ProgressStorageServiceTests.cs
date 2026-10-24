@@ -52,6 +52,15 @@ namespace Game.PlayerData.Tests
 
         private void Ready() => Assert.That(Await(_service.PrepareAsync()).Status, Is.EqualTo(PrepareStatus.Ready));
 
+        private void Evidence(string stage)
+        {
+            using var hash = System.Security.Cryptography.SHA256.Create();
+            var files = Directory.GetFiles(_root, "*", SearchOption.AllDirectories)
+                .Where(path => !path.EndsWith(".lock", StringComparison.OrdinalIgnoreCase)).OrderBy(path => path)
+                .Select(path => Path.GetFileName(path) + "=" + BitConverter.ToString(hash.ComputeHash(File.ReadAllBytes(path))).Replace("-", ""));
+            TestContext.WriteLine(DateTime.UtcNow.ToString("O") + " " + stage + " " + string.Join(";", files));
+        }
+
         private void BlockNextWrite()
         {
             _files.Release.Reset(); _files.Entered.Reset();
@@ -139,6 +148,55 @@ namespace Game.PlayerData.Tests
 
         // --------------------------------------------------------
         #region 外部方法
+        /// <summary>仅供编辑器重载取证显式调用；隔离临时目录，不访问产品存档。</summary>
+        public static string ArmReloadEvidence(Func<Func<Task>, IDisposable> register, bool afterCommit, string evidencePath)
+        {
+            var test = new ProgressStorageServiceTests();
+            test.SetUp();
+            try
+            {
+                test.Ready(); test.Await(test.Save("baseline").Completion);
+                test._files.CommitHappened = false;
+                if (!afterCommit) test.BlockNextWrite();
+                var save = test.Save("candidate");
+                if (afterCommit) test.WaitUntil(() => test._files.CommitHappened && test._context.PendingCount != 0);
+                else test.WaitForWrite();
+                Action<string> record = stage =>
+                {
+                    using var hash = System.Security.Cryptography.SHA256.Create();
+                    var index = File.ReadAllBytes(Path.Combine(test._root, "index.json"));
+                    File.AppendAllText(evidencePath, DateTime.UtcNow.ToString("O") + " " + stage +
+                        " indexSHA256=" + BitConverter.ToString(hash.ComputeHash(index)).Replace("-", "") + "\n");
+                };
+                record("armed afterCommit=" + afterCommit + " root=" + test._root);
+                register(() =>
+                {
+                    record("stop-requested");
+                    var stop = test._service.BeginStopOwnership();
+                    return Task.Run(async () =>
+                    {
+                        if (!afterCommit)
+                        {
+                            await Task.Delay(500).ConfigureAwait(false);
+                            using (var contender = new ProgressFileStore(test._options))
+                                if (contender.Prepare(new ProgressRequestContext(3, null, 3)).Succeeded)
+                                    throw new InvalidOperationException("Lock released before IO terminated");
+                            record("blocked-IO-lock-retained");
+                            test._files.Release.Set();
+                        }
+                        await stop.WhenOwnershipReleased.ConfigureAwait(false);
+                        record("ownership-released result=" + save.Completion.Result.Status);
+                        using var reopened = new ProgressFileStore(test._options);
+                        if (!reopened.Prepare(new ProgressRequestContext(4, null, 4)).Succeeded)
+                            throw new InvalidOperationException("Cannot reacquire released directory");
+                        record("directory-reacquired");
+                    });
+                });
+                return test._root;
+            }
+            finally { SynchronizationContext.SetSynchronizationContext(test._previousContext); }
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -169,6 +227,60 @@ namespace Game.PlayerData.Tests
                 SynchronizationContext.SetSynchronizationContext(_previousContext);
                 _files.Entered.Dispose(); _files.Release.Dispose();
             }
+        }
+
+        [Test]
+        public void CommittedStopSettlesAllMilestonesWithoutOwnerContext()
+        {
+            Ready(); Await(Save("old").Completion);
+            _files.CommitHappened = false;
+            var save = Save("new");
+            WaitUntil(() => _files.CommitHappened && _context.PendingCount != 0);
+            var committedBytes = File.ReadAllBytes(Path.Combine(_root, "index.json"));
+            Evidence("committed-before-publication");
+            var stop = _service.BeginStopOwnership();
+            Assert.That(stop.WhenOwnershipReleased.Wait(1500), Is.True);
+            Assert.That(stop.WhenIoTerminated.IsCompleted, Is.True);
+            Assert.That(stop.WhenResultsSettled.Result.Single().SaveStatus, Is.EqualTo(SaveStatus.Committed));
+            Assert.That(save.Completion.Result.Status, Is.EqualTo(SaveStatus.Committed));
+            CollectionAssert.AreEqual(committedBytes, File.ReadAllBytes(Path.Combine(_root, "index.json")));
+            Assert.That(_service.BeginStopOwnership(), Is.SameAs(stop));
+            Evidence("committed-ownership-released");
+        }
+
+        [Test]
+        public void FailedIoStillSettlesAndReleasesWithoutOwnerContext()
+        {
+            Ready(); Await(Save("old").Completion);
+            _files.FailIndexWrite = true;
+            var save = Save("failure");
+            WaitUntil(() => _context.PendingCount != 0);
+            var stop = _service.BeginStopOwnership();
+            Assert.That(stop.WhenOwnershipReleased.Wait(1500), Is.True);
+            Assert.That(save.Completion.Result.Status, Is.EqualTo(SaveStatus.WriteFailed));
+            Assert.That(stop.IsOwnershipReleased, Is.True);
+        }
+
+        [Test]
+        public void StopOwnershipCompletesWithoutPumpingOwnerContext()
+        {
+            Ready(); Await(Save("old").Completion);
+            Evidence("before-blocked-write");
+            var before = File.ReadAllBytes(Path.Combine(_root, "index.json"));
+            BlockNextWrite();
+            var active = Save("cancelled"); WaitForWrite();
+            var stop = _service.StopAsync();
+            Assert.That(stop.Wait(30), Is.False);
+            TestContext.WriteLine(DateTime.UtcNow.ToString("O") + " wait-timeout: IO blocked; ownership retained");
+            using (var contender = new ProgressFileStore(_options))
+                Assert.That(contender.Prepare(new ProgressRequestContext(1, null, 1)).Succeeded, Is.False);
+            _files.Release.Set();
+            Assert.That(stop.Wait(1500), Is.True, "Ownership must terminate without pumping the Unity context.");
+            Evidence("cancelled-ownership-released");
+            Assert.That(active.Completion.Result.Status, Is.EqualTo(SaveStatus.Cancelled));
+            CollectionAssert.AreEqual(before, File.ReadAllBytes(Path.Combine(_root, "index.json")));
+            using var reopened = new ProgressFileStore(_options);
+            Assert.That(reopened.Prepare(new ProgressRequestContext(2, null, 2)).Succeeded, Is.True);
         }
 
         [Test]

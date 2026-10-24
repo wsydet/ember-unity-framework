@@ -1,0 +1,110 @@
+[
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/GameInput/GameInputModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/PlayerData/PlayerDataModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageService.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageStop.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/SceneFlow/GameSceneSession.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "platformer-2d",
+    "file": "Game/Module/SceneFlow/GameSceneScope.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/GameInput/GameInputModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/PlayerData/PlayerDataModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageService.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageStop.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/SceneFlow/GameSceneSession.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "source3d-2p5d",
+    "file": "Game/Module/SceneFlow/GameSceneScope.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/GameInput/GameInputModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/PlayerData/PlayerDataModule.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageService.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/PlayerData/Storage/ProgressStorageStop.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/SceneFlow/GameSceneSession.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  },
+  {
+    "template": "visual-novel",
+    "file": "Game/Module/SceneFlow/GameSceneScope.cs",
+    "matchesBaseOrEnabledOverride": true,
+    "parentSnapshotMatchesBase": true
+  }
+]

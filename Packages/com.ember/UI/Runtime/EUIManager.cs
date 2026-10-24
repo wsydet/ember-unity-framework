@@ -59,6 +59,8 @@ namespace Ember.UI
         private int _backgroundRequestVersion;
 
         private bool _initialized;
+        private bool _sessionStopped;
+        private IDisposable _lifetimeAbort;
 
         #endregion
 
@@ -97,6 +99,8 @@ namespace Ember.UI
 
             _viewEngine = EUIViewEngine.Instance;
             _initialized = true;
+            _sessionStopped = false;
+            _lifetimeAbort = GameLauncher.CurrentLifetime?.RegisterAbort(StopSessionPresentation);
 
             // UI owns only the curtain. SceneCoordinator owns load/prepare/commit/unload.
             Ember.Scene.SceneCoordinator.WrapTransitionAsync = RunSceneTransitionWithLoadingAsync;
@@ -107,7 +111,8 @@ namespace Ember.UI
 
         void IEmberManager.Destroy()
         {
-            _curtainSession?.Dispose();
+            StopSessionPresentation();
+            _lifetimeAbort?.Dispose();
             Ember.Scene.SceneCoordinator.WrapTransitionAsync = null;
             InvalidateBackgroundRequest();
             _showQueue.Clear();
@@ -116,6 +121,14 @@ namespace Ember.UI
             _closeRequestedPages.Clear();
             _preloadedPages.Clear();
             _initialized = false;
+        }
+
+        private void StopSessionPresentation()
+        {
+            _sessionStopped = true;
+            _curtainSession?.Dispose();
+            InvalidateBackgroundRequest();
+            _showQueue.Clear();
         }
 
         #endregion
@@ -572,6 +585,7 @@ namespace Ember.UI
 
         private void EnqueueShow(EUIPageDef pageDef, object args, Action<EUIPage> onComplete, EUIPage parentPage = null, Func<bool> isCurrent = null)
         {
+            if (_sessionStopped) throw new OperationCanceledException("UI 会话已停止。");
             // SubPage 必须经 ShowSubPage 带父页面打开（对标 Burner：禁止全局入口打开 SubPage），否则会成为无归属的孤儿页
             if (pageDef != null && pageDef.PageType == PageType.SubPage && parentPage == null)
             {
@@ -659,7 +673,7 @@ namespace Ember.UI
                     try
                     {
                         // A departed owner must not route a late page over the replacement screen.
-                        if (req.IsCurrent != null && !req.IsCurrent())
+                        if (_sessionStopped || !_initialized || (req.IsCurrent != null && !req.IsCurrent()))
                         {
                             provider.Release(pageDef.PrefabPath);
                             return;

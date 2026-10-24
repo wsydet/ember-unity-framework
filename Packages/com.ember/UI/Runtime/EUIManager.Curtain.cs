@@ -119,7 +119,7 @@ namespace Ember.UI
             EUICurtainOptions options = null, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (!_initialized || pageDef == null) throw new InvalidOperationException("Curtain is unavailable.");
+            if (!_initialized || _sessionStopped || pageDef == null) throw new InvalidOperationException("Curtain is unavailable.");
             if (pageDef.PageType != PageType.TopMost) throw new ArgumentException("Curtains require a TopMost page.", nameof(pageDef));
             if (_curtainSession != null || _context.FindOpenedPage(pageDef) != null)
                 throw new InvalidOperationException("A curtain is already active.");

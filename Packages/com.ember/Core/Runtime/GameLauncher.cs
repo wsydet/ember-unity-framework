@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using System.Threading.Tasks;
 using UnityEngine;
 using Ember.Basic;
 
@@ -84,6 +85,9 @@ namespace Ember.Core
         /// <summary>当前会话；跨脚本重载不会恢复。</summary>
         [field: NonSerialized] public EmberLifetime Lifetime { get; private set; }
         internal static GameLauncher Active { get; private set; }
+        /// <summary>只查询现有会话，不创建启动器。</summary>
+        public static EmberLifetime CurrentLifetime => Active != null ? Active.Lifetime : null;
+        private Task _shutdownTask;
 
         [BoxGroup(ODIN_GROUP + "/运行时")]
         /// <summary>当前活跃的状态名。</summary>
@@ -218,6 +222,12 @@ namespace Ember.Core
             }
             catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
             success &= Lifetime.AbortOwners();
+            // Forced teardown cannot claim that Unity-context cleanup has completed.
+            if (!Lifetime.WhenOwnersStopped.IsCompleted || Lifetime.WhenOwnersStopped.IsFaulted || Fsm?.IsTransitioning == true)
+            {
+                success = false;
+                EmberDebug.LogWarning(TAG, "同步停止仍有异步所有权未确认；Unity 场景由退出接管，不能将此状态视为清理完成。");
+            }
             try { if (EmberModuleCollector.TryGetInstance(out var modules)) modules.DestroyAll(); }
             catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
             try { if (EmberManagerCollector.TryGetInstance(out var managers)) managers.DestroyAll(); }
@@ -262,8 +272,58 @@ namespace Ember.Core
             EmberDebug.LogShutdown(TAG, $"GameLauncher: quit requested (exit branch: {ApplicationQuitUtil.DescribeBranch()}).");
 
             EmberQuitCurtain.Show();       // ① 封屏：3D 主相机纯黑 + UI 不透明遮罩（同帧生效）
-            ShutdownFramework();           // ② 框架清理：日志落盘 + 逆序销毁（此时销毁页面已无穿帮风险）
-            ApplicationQuitUtil.Quit();    // ③ 退出应用 / 停止编辑器 Play Mode
+            _ = QuitAfterStopAsync();
+        }
+
+        private async Task QuitAfterStopAsync()
+        {
+            try { await ShutdownFrameworkAsync(); ApplicationQuitUtil.Quit(); }
+            catch (Exception error) { EmberDebug.LogError(TAG, error.ToString()); }
+        }
+
+        /// <summary>正常停止入口；先撤销资格，等待转场及已登记所有者，再销毁 Module/Manager。不自动保存。</summary>
+        public Task ShutdownFrameworkAsync(EmberStopReason reason = EmberStopReason.Quit)
+        {
+            if (_shutdownTask != null) return _shutdownTask;
+            if (Lifetime == null) return Task.CompletedTask;
+            if (!Lifetime.BeginStop(reason))
+                return Lifetime.State == EmberLifetimeState.Stopped ? Task.CompletedTask
+                    : Task.FromException(new InvalidOperationException("同步停止未确认异步所有权，不能报告停止成功。"));
+            var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _shutdownTask = completion.Task;
+            _ = ShutdownCoreAsync(completion);
+            return _shutdownTask;
+        }
+
+        private async Task ShutdownCoreAsync(TaskCompletionSource<bool> completion)
+        {
+            bool success = true;
+            var transitions = Fsm?.StopTransitionsAsync();
+            try { EmberEventBus.OnNext(EmberBroadcastEvent.CoreShutdown); }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            success &= Lifetime.AbortOwners(false);
+            try
+            {
+                // Await both even when one faults; never destroy managers while another owner is running.
+                await Task.WhenAll(transitions ?? Task.CompletedTask, Lifetime.WhenOwnersStopped);
+                if (transitions != null && transitions.Result != null &&
+                    (transitions.Result.Status == EmberTransitionStatus.CleanupFailed ||
+                     transitions.Result.Status == EmberTransitionStatus.CommitFailed))
+                    success = false;
+            }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            try { if (EmberModuleCollector.TryGetInstance(out var modules)) modules.DestroyAll(); }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            try { if (EmberManagerCollector.TryGetInstance(out var managers)) managers.DestroyAll(); }
+            catch (Exception error) { success = false; EmberDebug.LogError(TAG, error.ToString()); }
+            Fsm = null;
+            EmberEventBus.ClearAllSubscribers();
+            EmberBootSplashBridge.WaitForFadeOut = null;
+            EmberFileLog.Stop();
+            Lifetime.FinishStop(success);
+            if (Active == this) Active = null;
+            if (success) completion.TrySetResult(true);
+            else completion.TrySetException(new InvalidOperationException("框架停止存在所有权清理失败。"));
         }
 
         /// <summary>

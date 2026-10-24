@@ -8,7 +8,8 @@ namespace Game.PlayerData
 {
     /// <summary>
     /// 单个槽位库的异步服务，由模块持有。请求及 codec 在创建线程执行，后台只执行文件后端。
-    /// 创建和调用入口需要主线程 SynchronizationContext；不得同步阻塞等待 Completion 或 StopAsync。
+    /// 常规入口需要创建线程的 SynchronizationContext。BeginStopOwnership 在创建线程封闭请求，
+    /// 返回的停止凭证由后台独立完成；仅此凭证允许有界同步等待。
     /// </summary>
     public sealed class ProgressStorageService
     {
@@ -23,17 +24,20 @@ namespace Game.PlayerData
         private readonly CancellationTokenSource _lifetime = new();
         private readonly TaskCompletionSource<PrepareResult> _ready = new(TaskCreationOptions.RunContinuationsAsynchronously);
         private Task _pump = Task.CompletedTask;
+        private Task _activeIo = Task.CompletedTask;
+        private Task<PrepareResult> _prepareIo;
+        private Work _activeWork;
+        private ProgressStorageStop _ownershipStop;
         private Task _stop;
         private bool _pumping;
         private bool _insideCodec;
-        private bool _preparationStarted;
         private long _lastRequest;
         private SaveServiceState _state = SaveServiceState.Uninitialized;
         private DrainTicket _drain;
         public long ServiceEpoch { get; }
         public Task<PrepareResult> WhenReady => _ready.Task;
         public SaveServiceState State { get { CheckOwner(); return _state; } }
-        public int OutstandingCount { get { CheckOwner(); return _pending.Count; } }
+        public int OutstandingCount { get { CheckOwner(); return _ownershipStop?.IsOwnershipReleased == true ? 0 : _pending.Count; } }
         public int UnacknowledgedSaveCount { get { CheckOwner(); return _writes.Count; } }
         #endregion
 
@@ -77,9 +81,17 @@ namespace Game.PlayerData
 
         private async Task PrepareCore(ProgressRequestContext context, CancellationToken cancellation)
         {
-            using var linked = CancellationTokenSource.CreateLinkedTokenSource(cancellation, _lifetime.Token);
+            var linked = CancellationTokenSource.CreateLinkedTokenSource(cancellation, _lifetime.Token);
+            _prepareIo = Task.Run(() =>
+            {
+                using (linked)
+                {
+                    try { return _store.Prepare(context, linked.Token); }
+                    catch (Exception error) { return new PrepareResult(context, PrepareStatus.IoFailed, error.ToString()); }
+                }
+            });
             PrepareResult result;
-            try { result = await Task.Run(() => _store.Prepare(context, linked.Token)); }
+            try { result = await _prepareIo; }
             catch (Exception error) { result = new PrepareResult(context, PrepareStatus.IoFailed, error.ToString()); }
             if (_state != SaveServiceState.Stopped) _state = result.Succeeded ? SaveServiceState.Ready : SaveServiceState.Faulted;
             else result = new PrepareResult(context, PrepareStatus.Stopped, "服务在准备期间停止。");
@@ -101,20 +113,28 @@ namespace Game.PlayerData
                 while (_queue.Count != 0)
                 {
                     var work = _queue.Dequeue();
+                    _activeWork = work;
                     try
                     {
-                        await Task.Run(() => work.ExecuteIO(_store));
+                        _activeIo = Task.Run(() => work.ExecuteIO(_store));
+                        await _activeIo;
+                        if (_state == SaveServiceState.Stopped) return;
                         // 解码始终回到创建线程；停止/取消时丢弃迟到字节，不触发业务 codec。
                         _insideCodec = true;
                         try { work.Complete(); }
                         finally { _insideCodec = false; }
                     }
-                    catch (Exception error) { work.Fail(error); }
+                    catch (Exception error) { if (_state != SaveServiceState.Stopped) work.Fail(error); }
                     finally
                     {
-                        _pending.Remove(work.Context.RequestId);
-                        work.Dispose();
+                        if (_state != SaveServiceState.Stopped)
+                        {
+                            _pending.Remove(work.Context.RequestId);
+                            work.Dispose();
+                            _activeWork = null;
+                        }
                     }
+                    if (_state == SaveServiceState.Stopped) return;
                     if (_state != SaveServiceState.Stopped && _store.Catalog.State == SaveServiceState.Faulted)
                         _state = SaveServiceState.Faulted;
                 }
@@ -131,19 +151,52 @@ namespace Game.PlayerData
                 ticket.Watermark, completed, pending);
         }
 
-        private async Task StopCore()
+        private void StopCore()
         {
+            // Publish the immutable stop handle before cancellation can reenter this service.
+            _ownershipStop = new ProgressStorageStop();
+            _stop = _ownershipStop.WhenOwnershipReleased;
             _state = SaveServiceState.Stopped;
             _drain?.Invalidated.TrySetResult(true);
             _drain = null;
+            var pending = _pending.Values.ToArray();
+            var active = _activeWork;
+            var activeIo = _activeIo;
+            var prepareIo = _prepareIo;
+            _queue.Clear();
             _lifetime.Cancel();
-            if (!_ready.Task.IsCompleted && !_preparationStarted)
+            if (!_ready.Task.IsCompleted)
                 _ready.TrySetResult(new PrepareResult(Request(), PrepareStatus.Stopped));
-            await _ready.Task;
-            await _pump;
-            // 等待活跃 I/O 后才释放目录所有权。已提交的保存仍保留真实终态。
-            await Task.Run(() => _store.Dispose());
-            _lifetime.Dispose();
+            _ = Task.Run(async () =>
+            {
+                Exception ioFailure = null;
+                if (prepareIo != null) await prepareIo.ConfigureAwait(false);
+                try { await activeIo.ConfigureAwait(false); }
+                catch (Exception error) { ioFailure = error; }
+                _ownershipStop.IoTerminated();
+                try
+                {
+                    foreach (var work in pending)
+                    {
+                        try
+                        {
+                            if (ReferenceEquals(work, active) && ioFailure != null) work.Fail(ioFailure);
+                            else
+                            {
+                                if (!ReferenceEquals(work, active)) work.ExecuteIO(_store);
+                                // Reads are cancelled: Complete cannot invoke their codec.
+                                work.Complete();
+                            }
+                        }
+                        finally { work.Dispose(); }
+                    }
+                    _ownershipStop.ResultsSettled(pending.Select(work => work.Report.Task.Result).ToArray());
+                    _store.Dispose();
+                    _ownershipStop.OwnershipReleased();
+                }
+                catch (Exception error) { _ownershipStop.Fail(error); }
+                finally { _lifetime.Dispose(); }
+            });
         }
 
         private abstract class Work : IDisposable
@@ -225,7 +278,6 @@ namespace Game.PlayerData
         {
             CheckControl();
             if (_state != SaveServiceState.Uninitialized) return _ready.Task;
-            _preparationStarted = true;
             _state = SaveServiceState.Preparing;
             _ = PrepareCore(Request(), cancellation);
             return _ready.Task;
@@ -337,8 +389,16 @@ namespace Game.PlayerData
         /// <summary>关闭入口并取消尚可取消的工作；等待完成后才释放目录，不发起任何额外保存。</summary>
         public Task StopAsync()
         {
-            CheckControl();
-            return _stop ??= StopCore();
+            return BeginStopOwnership().WhenOwnershipReleased;
+        }
+
+        /// <summary>控制线程同步封闭入口；返回的三个后台完成信号均不依赖 Unity 续体。等待超时不释放目录。</summary>
+        public ProgressStorageStop BeginStopOwnership()
+        {
+            CheckOwner();
+            if (_insideCodec) throw new InvalidOperationException("codec 执行期间不能停止存储服务。");
+            if (_ownershipStop == null) StopCore();
+            return _ownershipStop;
         }
 
         /// <summary>返回已完成但未确认的保存结果，用于模块跨世代保留，不持有业务进度。</summary>

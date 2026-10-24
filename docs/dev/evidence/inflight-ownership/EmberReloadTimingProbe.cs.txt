@@ -1,0 +1,62 @@
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using UnityEditor;
+using UnityEditor.Compilation;
+
+namespace Ember.Core.Editor
+{
+    /// <summary>显式启用的重载边界探针；默认不执行，不参与产品生命周期。</summary>
+    [InitializeOnLoad]
+    internal static class EmberReloadTimingProbe
+    {
+        private const string KEY = "Ember.OwnershipTimingProbe";
+        private static readonly string Domain = Guid.NewGuid().ToString("N");
+
+        static EmberReloadTimingProbe()
+        {
+            CompilationPipeline.compilationStarted += _ => Record("compilationStarted");
+            CompilationPipeline.compilationFinished += _ => Record("compilationFinished");
+            AssemblyReloadEvents.beforeAssemblyReload += BeforeReload;
+            AssemblyReloadEvents.afterAssemblyReload += () => Record("afterAssemblyReload");
+            EditorApplication.playModeStateChanged += state => Record(state.ToString());
+            EditorApplication.delayCall += () => Record("newDomainDelayCall");
+        }
+
+        private static void Record(string stage)
+        {
+            var run = SessionState.GetString(KEY, "");
+            if (string.IsNullOrEmpty(run)) return;
+            Directory.CreateDirectory("docs/dev/evidence/inflight-ownership");
+            File.AppendAllText("docs/dev/evidence/inflight-ownership/" + run + ".txt",
+                DateTime.UtcNow.ToString("O") + " domain=" + Domain + " stage=" + stage
+                + " play=" + EditorApplication.isPlaying + " compiling=" + EditorApplication.isCompiling + "\n");
+        }
+
+        private static void BeforeReload()
+        {
+            Record("beforeAssemblyReload");
+            if (!string.IsNullOrEmpty(SessionState.GetString(KEY, ""))) _ = ObserveAsync();
+        }
+
+        private static async Task ObserveAsync()
+        {
+            Record("oldDomainAsyncStarted");
+            await Task.Delay(100);
+            Record("oldDomainAsyncCompleted");
+        }
+
+        internal static void ArmDrain()
+        {
+            GameLauncher.CurrentLifetime.RegisterStopOwner(DrainAsync);
+            Record("drainOwnerRegistered");
+        }
+
+        private static async Task DrainAsync()
+        {
+            Record("drainStarted");
+            await Task.Delay(500);
+            Record("drainCompletedOnUnityContext");
+        }
+    }
+}

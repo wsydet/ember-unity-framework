@@ -1,0 +1,56 @@
+{
+  "warning": {
+    "success": true,
+    "message": "Retrieved 1 log entries.",
+    "data": [
+      {
+        "type": "Warning",
+        "message": "<color=#40D966><b>[EmberCore.StateMachine]</b></color> <color=#FFFFFF>转场 #1：CleanupFailed；The operation was canceled.</color>",
+        "file": "./Packages/com.ember/Core/Runtime/State/EmberStateMachine.Transitions.cs",
+        "line": 207,
+        "stackTrace": "<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\State\\EmberStateMachine.Transitions.cs:207)</i></color>\nUnityEngine.Debug:LogWarning (object)\nEmber.Basic.EmberDebug:LogWarning (string,string,string,int)\nEmber.Core.EmberStateMachine/<ObserveTransition>d__15:MoveNext () (at ./Packages/com.ember/Core/Runtime/State/EmberStateMachine.Transitions.cs:207)\nEmber.Core.EmberStateMachine:ObserveTransition (Ember.Core.EmberTransitionOperation)\nEmber.Core.EmberStateMachine:TransitionTo<Ember.Core.MainState> (object,bool) (at ./Packages/com.ember/Core/Runtime/State/EmberStateMachine.cs:421)\nEmber.Core.InitState/<LoadMainSceneAsync>d__10:MoveNext () (at ./Packages/com.ember/Core/Runtime/State/InitState.cs:93)\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Ember.Core.InitState/<LoadMainSceneAsync>d__10>:Run () (at ./Packages/com.ember/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:189)\nCysharp.Threading.Tasks.AwaiterActions:Continuation (object) (at ./Packages/com.ember/UniTask/Runtime/UniTask.cs:25)\nCysharp.Threading.Tasks.UniTaskCompletionSourceCore`1<Cysharp.Threading.Tasks.AsyncUnit>:TrySetResult (Cysharp.Threading.Tasks.AsyncUnit) (at ./Packages/com.ember/UniTask/Runtime/UniTaskCompletionSource.cs:139)\nCysharp.Threading.Tasks.UniTaskExtensions/AttachExternalCancellationSource/<RunTask>d__5:MoveNext () (at ./Packages/com.ember/UniTask/Runtime/UniTaskExtensions.cs:260)\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTaskVoid`1<Cysharp.Threading.Tasks.UniTaskExtensions/AttachExternalCancellationSource/<RunTask>d__5>:Run () (at ./Packages/com.ember/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:104)\nCysharp.Threading.Tasks.AwaiterActions:Continuation (object) (at ./Packages/com.ember/UniTask/Runtime/UniTask.cs:25)\nCysharp.Threading.Tasks.UniTaskCompletionSource:TrySignalCompletion (Cysharp.Threading.Tasks.UniTaskStatus) (at ./Packages/com.ember/UniTask/Runtime/UniTaskCompletionSource.cs:721)\nCysharp.Threading.Tasks.UniTaskCompletionSource:TrySetResult () (at ./Packages/com.ember/UniTask/Runtime/UniTaskCompletionSource.cs:612)\nGame.UI.EUIBootSplash/<OnFirstLoadDone>d__7:MoveNext () (at Assets/Game/UI/EUIBootSplash.cs:126)\nSystem.Runtime.CompilerServices.AsyncMethodBuilderCore/MoveNextRunner:Run ()\nCysharp.Threading.Tasks.AwaiterActions:Continuation (object) (at ./Packages/com.ember/UniTask/Runtime/UniTask.cs:25)\nCysharp.Threading.Tasks.UniTaskCompletionSourceCore`1<Cysharp.Threading.Tasks.AsyncUnit>:TrySetResult (Cysharp.Threading.Tasks.AsyncUnit) (at ./Packages/com.ember/UniTask/Runtime/UniTaskCompletionSource.cs:139)\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Game.UI.EUIBootSplash/<FadeOutAsync>d__8>:SetResult () (at ./Packages/com.ember/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:204)\nGame.UI.EUIBootSplash/<FadeOutAsync>d__8:MoveNext () (at Assets/Game/UI/EUIBootSplash.cs:151)\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Game.UI.EUIBootSplash/<FadeOutAsync>d__8>:Run () (at ./Packages/com.ember/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:189)\nCysharp.Threading.Tasks.Internal.ContinuationQueue:RunCore () (at ./Packages/com.ember/UniTask/Runtime/Internal/ContinuationQueue.cs:194)\nCysharp.Threading.Tasks.Internal.ContinuationQueue:Update () (at ./Packages/com.ember/UniTask/Runtime/Internal/ContinuationQueue.cs:159)\nCysharp.Threading.Tasks.Internal.ContinuationQueue:Run () (at ./Packages/com.ember/UniTask/Runtime/Internal/ContinuationQueue.cs:118)\n"
+      }
+    ]
+  },
+  "diagnostic": {
+    "success": true,
+    "message": "Retrieved 1 log entries.",
+    "data": [
+      {
+        "type": "Warning",
+        "message": "<color=#40D966><b>[EmberCore.StateMachine]</b></color> <color=#FFFFFF>转场 #1：CleanupFailed；System.OperationCanceledException: The operation was canceled.",
+        "file": "./Packages/com.ember/Core/Runtime/State/EmberStateMachine.Transitions.cs",
+        "line": 207,
+        "stackTrace": null
+      }
+    ]
+  },
+  "rapidDriverFailure": {
+    "success": true,
+    "message": "Retrieved 3 log entries.",
+    "data": [
+      {
+        "type": "Error",
+        "message": "<color=#40D966><b>[EmberCore.GameLauncher]</b></color> <color=#FFFFFF>System.InvalidOperationException: 本次 Play 缺少已冻结的开发环境设置。",
+        "file": "./Packages/com.ember/Core/Runtime/GameLauncher.cs",
+        "line": 141,
+        "stackTrace": "  at Game.Player.Editor.PlayerDevelopmentEnvironment.Prepare () [0x0025f] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\Module\\Player\\Editor\\PlayerDevelopmentEnvironment.cs:142 \n  at Game.State.GameInitState.OnEnter (System.Object args) [0x00000] in C:\\Users\\wuyu\\My\\ember-unity-framework\\Assets\\Game\\State\\GameInitState.cs:26 \n  at Ember.Core.EmberStateMachine.Start[T] (System.Object args) [0x0004e] in .\\Packages\\com.ember\\Core\\Runtime\\State\\EmberStateMachine.cs:415 \n  at Ember.Core.GameLauncher.OnBootStart () [0x00000] in .\\Packages\\com.ember\\Core\\Runtime\\GameLauncher.cs:138 </color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Runtime\\GameLauncher.cs:141)</i></color>\nUnityEngine.Debug:LogError (object)\nEmber.Basic.EmberDebug:LogError (string,string,string,int)\nEmber.Core.GameLauncher:OnBootStart () (at ./Packages/com.ember/Core/Runtime/GameLauncher.cs:141)\nEmber.Core.EmberBootBase`1<Ember.Core.GameLauncher>:Start () (at ./Packages/com.ember/Core/Runtime/EmberBootBase.cs:53)\n"
+      },
+      {
+        "type": "Assert",
+        "message": "Tried to enter EditModeScope while already in EditModeScope",
+        "file": "",
+        "line": 0,
+        "stackTrace": "UnityEditor.EditorApplication:Internal_EnterEditModeLifecycleScope ()\n"
+      },
+      {
+        "type": "Error",
+        "message": "Lifecycle ERROR : could not enter scope 'EditMode' as it is already active.",
+        "file": "",
+        "line": 0,
+        "stackTrace": "UnityEngine.DomainReloadLifecycleController/ScriptingCoreDebugForIl2AndMonoCpp:LogError (string)\nUnity.Scripting.Debug:LogError (string)\nUnity.Scripting.LifecycleManagement.DebugLifecycle:ReportError (string,bool)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker:PrepareTryEnterScope<Unity.Scripting.LifecycleManagement.LifecycleScope> (Unity.Scripting.LifecycleManagement.LifecycleScope)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker:TryEnterScope (Unity.Scripting.LifecycleManagement.LifecycleScope)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker/ScopeTransitionRequest:Transition (Unity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker:ExecuteTransitions (bool)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker:CreateScopeTransitionRequest (Unity.Scripting.LifecycleManagement.LifecycleScope,Unity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker/ScopeTransitionType,bool)\nUnity.Scripting.LifecycleManagement.ActiveLifecycleScopesTracker:RequestEnterScope (Unity.Scripting.LifecycleManagement.LifecycleScope)\nUnity.Scripting.LifecycleManagement.LifecycleController/<>c__DisplayClass36_0`1<UnityEditor.Scripting.LifecycleManagement.EditModeScope>:<EnterScope>b__0 ()\nUnity.Scripting.LifecycleManagement.LifecycleController:ExecuteOnMainThread (string,string,System.Action)\nUnity.Scripting.LifecycleManagement.LifecycleController:EnterScope<UnityEditor.Scripting.LifecycleManagement.EditModeScope> ()\nUnityEditor.EditorApplication:Internal_EnterEditModeLifecycleScope ()\n"
+      }
+    ]
+  },
+  "note": "Re-entry smoke exposed retired scene manager reused with domain reload disabled. Rapid stop/play without awaiting EditMode also produced a separate editor lifecycle error; corrected driver must await stable EditMode."
+}

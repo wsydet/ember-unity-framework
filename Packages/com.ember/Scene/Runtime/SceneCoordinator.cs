@@ -20,10 +20,11 @@ namespace Ember.Scene
         #region 内部方法
         private UniTask HandleSceneTransitionAsync(SceneTransitionContext request)
         {
+            var runner = _runner;
             // Even a quick/skip/overlay request may share an outer curtain.
             if (WrapTransitionAsync != null)
-                return WrapTransitionAsync(request, () => _runner.RunAsync(request));
-            return _runner.RunAsync(request);
+                return WrapTransitionAsync(request, () => runner.RunAsync(request));
+            return runner.RunAsync(request);
         }
         #endregion
 

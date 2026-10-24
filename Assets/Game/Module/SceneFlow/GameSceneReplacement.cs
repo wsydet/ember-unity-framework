@@ -67,7 +67,7 @@ namespace Game.SceneFlow
                 IsDisposed = true;
                 var candidate = _candidate; _candidate = null;
                 try { candidate?.Dispose(); }
-                catch (Exception cleanup) { throw new AggregateException(failure, cleanup); }
+                catch (Exception cleanup) { _session.RecordReleaseFailure(cleanup); throw new AggregateException(failure, cleanup); }
                 throw;
             }
             finally { _preparing = false; if (IsDisposed) Release(); }
@@ -114,6 +114,7 @@ namespace Game.SceneFlow
             finally
             {
                 try { candidate?.Dispose(); }
+                catch (Exception cleanup) { _session.RecordReleaseFailure(cleanup); throw; }
                 finally { Release(); }
             }
         }

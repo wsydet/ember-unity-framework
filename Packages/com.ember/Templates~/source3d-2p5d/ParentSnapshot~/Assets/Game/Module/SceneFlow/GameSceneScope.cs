@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Ember.Basic;
 using UnityEngine;
@@ -44,6 +45,9 @@ namespace Game.SceneFlow
 
         // --------------------------------------------------------
         #region 外部方法
+        /// <summary>同步封闭当前候选，异步等待准备及替换的迟到结果释放。不得在主线程同步等待。</summary>
+        public Task StopAsync() => _session?.StopAsync() ?? Task.CompletedTask;
+
         /// <summary>单次准备串行汇总。任何失败均清理已返回结果；不把取消后迟到的结果交接给新会话。</summary>
         public async UniTask<GameSceneSession> PrepareAsync(long requestId, object args, CancellationToken cancellation)
         {

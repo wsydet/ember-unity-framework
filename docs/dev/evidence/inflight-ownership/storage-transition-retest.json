@@ -1,0 +1,596 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "29a42f6400b14ce4970e043f041002ff",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792836015813,
+      "finished_unix_ms": 1792836038558,
+      "last_update_unix_ms": 1792836038558,
+      "progress": {
+        "completed": 61,
+        "total": 61,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.PlayerData.Tests.ProgressStorageServiceTests.UncertainCommitFaultsServiceAndQueuedWriteCannotOverwriteUnknownIndex",
+        "last_finished_unix_ms": 1792836038343,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 61,
+          "passed": 61,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 15.5266356,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.BackgroundOwnerEndsBeforeExclusiveFileIsReleasedWithoutChangingSavedBytes",
+            "state": "Passed",
+            "durationSeconds": 0.0256024,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InitializationCanStopBeforeReady",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.InitializationCanStopBeforeReady",
+            "state": "Passed",
+            "durationSeconds": 0.00223,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.StopRevokesReadinessBeforeCancellationAndAbortsInReverseOrderOnce",
+            "state": "Passed",
+            "durationSeconds": 0.0023307,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+            "fullName": "Ember.Core.Fsm.Tests.EmberLifetimeTests.UnregisteredOwnerIsNotAbortedAndStoppedSessionRejectsNewOwners",
+            "state": "Passed",
+            "durationSeconds": 0.0039754,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AbortFailure_StillUnloadsOwnedCandidate_AndReportsCleanupFailure",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.AbortFailure_StillUnloadsOwnedCandidate_AndReportsCleanupFailure",
+            "state": "Passed",
+            "durationSeconds": 0.3233672,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CancelDuringLoad_WaitsForUncancellableSceneThenReleasesIt",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.CancelDuringLoad_WaitsForUncancellableSceneThenReleasesIt",
+            "state": "Passed",
+            "durationSeconds": 0.3261705,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CancelDuringPrepare_WaitsForLateResult_RejectsConcurrentRequest_ThenAllowsRetry",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.CancelDuringPrepare_WaitsForLateResult_RejectsConcurrentRequest_ThenAllowsRetry",
+            "state": "Passed",
+            "durationSeconds": 0.323963,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CancelInsideEnter_ReportsActualCommit",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.CancelInsideEnter_ReportsActualCommit",
+            "state": "Passed",
+            "durationSeconds": 0.3225675,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CleanupFailure_IsReportedAndDoesNotClaimCancellationSuccess",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.CleanupFailure_IsReportedAndDoesNotClaimCancellationSuccess",
+            "state": "Passed",
+            "durationSeconds": 0.324613,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Completion_WaitsForOldSceneCleanup",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.Completion_WaitsForOldSceneCleanup",
+            "state": "Passed",
+            "durationSeconds": 0.3195809,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DuplicateProceed_DoesNotDoubleEnter",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.DuplicateProceed_DoesNotDoubleEnter",
+            "state": "Passed",
+            "durationSeconds": 0.4872234,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EnterFailure_IsCommitFailure_NotRollback_AndRetainsBothScenes",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EnterFailure_IsCommitFailure_NotRollback_AndRetainsBothScenes",
+            "state": "Passed",
+            "durationSeconds": 0.3274424,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_AbandonedCurtainCannotUnlock",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_AbandonedCurtainCannotUnlock",
+            "state": "Passed",
+            "durationSeconds": 0.3368166,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_BusyRequestSettlesWithoutAffectingAcceptedRequest",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_BusyRequestSettlesWithoutAffectingAcceptedRequest",
+            "state": "Passed",
+            "durationSeconds": 0.3216636,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_CancelledLatePreparationNeverReportsReady",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_CancelledLatePreparationNeverReportsReady",
+            "state": "Passed",
+            "durationSeconds": 0.3216258,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_CleanupFailureDoesNotReportInteractive",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_CleanupFailureDoesNotReportInteractive",
+            "state": "Passed",
+            "durationSeconds": 0.3226189,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_ExternalCurtainFailurePreservesTransactionResult",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_ExternalCurtainFailurePreservesTransactionResult",
+            "state": "Passed",
+            "durationSeconds": 0.3215092,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_NewCommitInvalidatesOldUnfinishedCurtain",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_NewCommitInvalidatesOldUnfinishedCurtain",
+            "state": "Passed",
+            "durationSeconds": 0.3206579,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_PreparationFailureSettlesAllWaiters",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_PreparationFailureSettlesAllWaiters",
+            "state": "Passed",
+            "durationSeconds": 0.3218722,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_QuickAndPopStillPublishAllBoundaries",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_QuickAndPopStillPublishAllBoundaries",
+            "state": "Passed",
+            "durationSeconds": 0.3207285,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_RejectDuplicateOrLatePresentationOwner",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_RejectDuplicateOrLatePresentationOwner",
+            "state": "Passed",
+            "durationSeconds": 0.322863,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_ShutdownInvalidatesPendingAndCompletedEntries",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_ShutdownInvalidatesPendingAndCompletedEntries",
+            "state": "Passed",
+            "durationSeconds": 0.3209012,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_ShutdownSettlesPendingCurtain",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_ShutdownSettlesPendingCurtain",
+            "state": "Passed",
+            "durationSeconds": 0.322188,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_SlowPreparationAndCurtainRemainSeparate",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_SlowPreparationAndCurtainRemainSeparate",
+            "state": "Passed",
+            "durationSeconds": 0.3212526,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EntryBoundaries_StartFailureDoesNotReportRunningOrInteractive",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.EntryBoundaries_StartFailureDoesNotReportRunningOrInteractive",
+            "state": "Passed",
+            "durationSeconds": 0.3182202,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExistingTargetScene_IsNotOwnedOrUnloadedOnFailure",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.ExistingTargetScene_IsNotOwnedOrUnloadedOnFailure",
+            "state": "Passed",
+            "durationSeconds": 0.4359987,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExitFromOverlay_ReleasesUnderlyingState",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.ExitFromOverlay_ReleasesUnderlyingState",
+            "state": "Passed",
+            "durationSeconds": 0.3148255,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingScene_ReportsFailureWithoutCallingPrepareOrExit",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.MissingScene_ReportsFailureWithoutCallingPrepareOrExit",
+            "state": "Passed",
+            "durationSeconds": 0.3230095,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OverlayPauseAndResume_PreserveBackingScene",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.OverlayPauseAndResume_PreserveBackingScene",
+            "state": "Passed",
+            "durationSeconds": 0.3205329,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PreCancelledRequest_DoesNotLoadOrPrepare",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.PreCancelledRequest_DoesNotLoadOrPrepare",
+            "state": "Passed",
+            "durationSeconds": 0.322966,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PreparationFailure_AbortsBeforeUnloadingCandidate_LeavesOldState",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.PreparationFailure_AbortsBeforeUnloadingCandidate_LeavesOldState",
+            "state": "Passed",
+            "durationSeconds": 0.3212323,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SceneOverlayReplacement_UnloadsBothRetiredScenes",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.SceneOverlayReplacement_UnloadsBothRetiredScenes",
+            "state": "Passed",
+            "durationSeconds": 0.3218105,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Shutdown_InvalidatesDelayedProceed",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.Shutdown_InvalidatesDelayedProceed",
+            "state": "Passed",
+            "durationSeconds": 0.3220504,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SkipSceneLoad_RequiresLoadedScene_AndStillPrepares",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.SkipSceneLoad_RequiresLoadedScene_AndStillPrepares",
+            "state": "Passed",
+            "durationSeconds": 0.3233109,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopAfterCommitWaitsForUnloadWithoutRewritingCommit",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopAfterCommitWaitsForUnloadWithoutRewritingCommit",
+            "state": "Passed",
+            "durationSeconds": 0.3217949,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopInsideExit_DoesNotEnterOrPublishNextState",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopInsideExit_DoesNotEnterOrPublishNextState",
+            "state": "Passed",
+            "durationSeconds": 0.320663,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopWaitsForLoadAndOnlyReleasesAcquiredScene",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.StopWaitsForLoadAndOnlyReleasesAcquiredScene",
+            "state": "Passed",
+            "durationSeconds": 0.3284608,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Success_PreservesOldSceneThroughPrepareAndEnter_ThenUnloads",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.Success_PreservesOldSceneThroughPrepareAndEnter_ThenUnloads",
+            "state": "Passed",
+            "durationSeconds": 0.3153811,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SynchronousLegacyEntry_UsesExistingPreparationOverride",
+            "fullName": "Ember.Scene.Tests.EmberSceneTransitionTests.SynchronousLegacyEntry_UsesExistingPreparationOverride",
+            "state": "Passed",
+            "durationSeconds": 0.3238106,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ActiveWriteCancellationBeforeCommitPreservesOldProgress",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.ActiveWriteCancellationBeforeCommitPreservesOldProgress",
+            "state": "Passed",
+            "durationSeconds": 0.1267055,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CancellationInsideCommitKeepsCommittedTerminalAndDrainRecord",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.CancellationInsideCommitKeepsCommittedTerminalAndDrainRecord",
+            "state": "Passed",
+            "durationSeconds": 0.1216347,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CancelledLateReadSkipsCodecAndDoesNotChangeLatestSave",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.CancelledLateReadSkipsCodecAndDoesNotChangeLatestSave",
+            "state": "Passed",
+            "durationSeconds": 0.0878464,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.CommittedStopSettlesAllMilestonesWithoutOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.1151347,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DrainClosesEntranceAndWaitCancellationDoesNotCancelAcceptedSave",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.DrainClosesEntranceAndWaitCancellationDoesNotCancelAcceptedSave",
+            "state": "Passed",
+            "durationSeconds": 0.0966892,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DrainRetainsHistoricalFailuresUntilAcknowledgedAndDoesNotMutateOldResults",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.DrainRetainsHistoricalFailuresUntilAcknowledgedAndDoesNotMutateOldResults",
+            "state": "Passed",
+            "durationSeconds": 0.1082325,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FailedIoStillSettlesAndReleasesWithoutOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.FailedIoStillSettlesAndReleasesWithoutOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.1084487,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FullQueueRejectsBeforeEncodingAndCapacityIncludesActiveRequest",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.FullQueueRejectsBeforeEncodingAndCapacityIncludesActiveRequest",
+            "state": "Passed",
+            "durationSeconds": 0.1349583,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidOwnerThreadAndCodecReentryCannotAdmitHiddenRequests",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.InvalidOwnerThreadAndCodecReentryCannotAdmitHiddenRequests",
+            "state": "Passed",
+            "durationSeconds": 0.0592972,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NewGenerationRejectsOldDrainTicketAndOldAcknowledgements",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.NewGenerationRejectsOldDrainTicketAndOldAcknowledgements",
+            "state": "Passed",
+            "durationSeconds": 0.1402293,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PendingAcknowledgementCannotEraseFutureFailureAndRejectedSavesAreReported",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.PendingAcknowledgementCannotEraseFutureFailureAndRejectedSavesAreReported",
+            "state": "Passed",
+            "durationSeconds": 0.073407,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PreCancelledAndQueuedCancelledWritesDoNotChangeSlots",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.PreCancelledAndQueuedCancelledWritesDoNotChangeSlots",
+            "state": "Passed",
+            "durationSeconds": 0.1065003,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PreparationIsExplicitAndRejectedRequestsHaveAwaitableCorrelatedResults",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.PreparationIsExplicitAndRejectedRequestsHaveAwaitableCorrelatedResults",
+            "state": "Passed",
+            "durationSeconds": 0.0452481,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReadAfterFailedWriteSeesOldDataAndDrainWaitsForReadCompletion",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.ReadAfterFailedWriteSeesOldDataAndDrainWaitsForReadCompletion",
+            "state": "Passed",
+            "durationSeconds": 0.1249179,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ResumeInvalidatesOldTicketAndItsPendingWaitWithoutCancellingIo",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.ResumeInvalidatesOldTicketAndItsPendingWaitWithoutCancellingIo",
+            "state": "Passed",
+            "durationSeconds": 0.089931,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SameAndCrossSlotRequestsExecuteInAcceptanceOrderWithoutLosingIndexEntries",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.SameAndCrossSlotRequestsExecuteInAcceptanceOrderWithoutLosingIndexEntries",
+            "state": "Passed",
+            "durationSeconds": 0.1866218,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SnapshotIsFrozenBeforeReturningHandleAndCodecNeverRunsOnIoThread",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.SnapshotIsFrozenBeforeReturningHandleAndCodecNeverRunsOnIoThread",
+            "state": "Passed",
+            "durationSeconds": 0.0909619,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopAfterCommitBeforeOwnerContinuationPreservesActualSuccess",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopAfterCommitBeforeOwnerContinuationPreservesActualSuccess",
+            "state": "Passed",
+            "durationSeconds": 0.079195,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopBeforePrepareCompletesReadinessWithoutTouchingDisk",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopBeforePrepareCompletesReadinessWithoutTouchingDisk",
+            "state": "Passed",
+            "durationSeconds": 0.0113414,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopOwnershipCompletesWithoutPumpingOwnerContext",
+            "state": "Passed",
+            "durationSeconds": 0.145423,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StopWaitsForIoOwnershipAndCompletesQueuedRequestsWithoutDecoding",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.StopWaitsForIoOwnershipAndCompletesQueuedRequestsWithoutDecoding",
+            "state": "Passed",
+            "durationSeconds": 0.051512,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UncertainCommitFaultsServiceAndQueuedWriteCannotOverwriteUnknownIndex",
+            "fullName": "Game.PlayerData.Tests.ProgressStorageServiceTests.UncertainCommitFaultsServiceAndQueuedWriteCannotOverwriteUnknownIndex",
+            "state": "Passed",
+            "durationSeconds": 0.189521,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}
