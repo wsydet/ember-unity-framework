@@ -10,7 +10,7 @@
 | platformer-2d | 正式维护源为 `Assets/Game`；正式Save/Bump封存0.13.0，共1948文件 |
 | 内容与封存指纹 | `ff217ca17005f39519049c46a83c138b`；实际磁盘hash一致，见[发行模板校验](evidence/release-template-validation.json) |
 | 父模板 | base 0.10.0，内容不变；所有模板通过正式父级同步兼容0.24.0，保留已有子模板GUID |
-| 发布 | 用户已授权正式发布；发行目标为远端annotated tag `v0.24.0`，以远端tag及发布回执确认交付；没有修改Windward或PackageCache |
+| 发布 | 本报告随正式发行 `v0.24.0` 交付：[发行源码](https://github.com/wsydet/ember-unity-framework/tree/v0.24.0)。没有修改Windward或PackageCache；消费适配仍未验证 |
 
 
 实施契约只读来源：`C:\Users\wuyu\My\Windward\docs\design\editor\framework-level-authoring-request.md` 1.2。配套消费适配文档只读参考。使用现有LaunchZone2D、检查点及Player正式生命周期，没有新增二段跳、恢复点或造风玩法。
@@ -95,6 +95,8 @@
 | F20 | 通过 | [四基础尺寸实际碰撞](evidence/resource-roundtrip-result.md)、自定义尺寸重复更新、[22项回归](evidence/editmode-delivery.json)涵盖世界尺寸、缩放、非方格、Pivot/Anchor/PPU和不兼容拒绝 |
 
 最终只运行EmberLevelAuthoringTests相关22项，22通过、0失败，约3.55秒；没有运行全项目测试。最终Windows构建27.72秒、237.34MB、0错误0警告；实际Player使用显式独立测试根。
+
+发布检查：候选代码提交 `4cfb4e6eabb6a601bb01653e31eb60e5633b0fa4` 的共享二进制/字体静态检查通过，二进制分别在core.autocrlf=true/false检出通过。干净候选worktree执行正式bundle检查，11个通用Skill、33文件通过；四类关卡Skill属于模板分发。0.24.0加载后编译/导入/编译失败/Play状态均为false，四类Skill执行闸门均为null。主工作区bundle检查曾因未跟踪的模板发现副本拒绝，未删除副本或将其混入通用bundle，而在干净检出复核通过。封存过程Console有已有空Editor程序集提示，不将其混称为构建警告；上述最终构建仍为零警告。
 
 [交付时Unity状态](evidence/delivery-state.json)记录最终程序集MVID：非编译/非导入、无编译失败、非Play、无活跃试玩、FrameworkScene、全局四场景及零构建诊断；同期Console为0错误0警告。EditorSettings和EditorBuildSettings测试差异已清零。
 
