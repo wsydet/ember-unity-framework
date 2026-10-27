@@ -1,0 +1,67 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"processId\":50460,\"application\":\"C:/Program Files/Unity/Hub/Editor/6000.5.4f1/Editor/Unity.exe\",\"project\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\",\"profile\":\"Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset\",\"global\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/GameplayScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/MainScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/SettingsScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"enabled\":false}],\"effective\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"enabled\":false}],\"originalGlobal\":\"1|Assets/Game/Scenes/FrameworkScene.unity\\n1|Assets/Game/Scenes/GameplayScene.unity\\n1|Assets/Game/Scenes/MainScene.unity\\n1|Assets/Game/Scenes/SettingsScene.unity\",\"optionsEnabled\":true,\"options\":1,\"scenes\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"isActive\":true,\"isLoaded\":true}],\"files\":1948,\"contentHash\":\"6fbf10212b14a59aefc38e53733b16f1\",\"versionedContentHash\":\"cf9f81aa956920aca4b4e081f63cad6d\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "processId": 50460,
+        "application": "C:/Program Files/Unity/Hub/Editor/6000.5.4f1/Editor/Unity.exe",
+        "project": "C:\\Users\\wuyu\\My\\ember-unity-framework",
+        "profile": "Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset",
+        "global": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/GameplayScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/MainScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/SettingsScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+            "enabled": false
+          }
+        ],
+        "effective": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+            "enabled": false
+          }
+        ],
+        "originalGlobal": "1|Assets/Game/Scenes/FrameworkScene.unity\n1|Assets/Game/Scenes/GameplayScene.unity\n1|Assets/Game/Scenes/MainScene.unity\n1|Assets/Game/Scenes/SettingsScene.unity",
+        "optionsEnabled": true,
+        "options": 1,
+        "scenes": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "isActive": true,
+            "isLoaded": true
+          }
+        ],
+        "files": 1948,
+        "contentHash": "6fbf10212b14a59aefc38e53733b16f1",
+        "versionedContentHash": "cf9f81aa956920aca4b4e081f63cad6d"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

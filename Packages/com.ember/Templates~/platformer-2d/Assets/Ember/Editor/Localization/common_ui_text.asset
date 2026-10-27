@@ -15,6 +15,7 @@ MonoBehaviour:
   DisplayName: "\u516C\u5171 UI \u6587\u6848"
   TableId: common_ui_text
   Source: {fileID: 4900000, guid: d0a4b0385b328bc4ab71882a50a28929, type: 3}
+  ExternalSourcePath: 
   Definition: {fileID: 0}
   KeyColumn: key
   SourceLanguage: zh_Hans

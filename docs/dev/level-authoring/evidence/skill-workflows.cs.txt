@@ -1,0 +1,44 @@
+var ids=new[]{"ember-level-add-terrain","ember-level-add-mechanism","ember-level-add-background","ember-level-add-decoration"};
+foreach(var id in ids){var reason=Ember.Core.Editor.EmberProjectSetup.GetTemplateSkillExecutionBlockReason(id);if(!string.IsNullOrEmpty(reason))throw new Exception(id+": "+reason);}
+string root="Assets/Game/Development/LevelAuthoring/Acceptance";
+var adapter=Ember.LevelAuthoring.Editor.EmberLevelAdapters.Get("platformer-2d.level");
+var source=adapter.Discover().First(l=>l.id=="sample.authoring");
+var level=adapter.Discover().FirstOrDefault(l=>l.ScenePath==root+"/SkillWorkflow.unity") ?? adapter.Create(root,"SkillWorkflow",source);
+var original=AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.EmberTerrainTile>(Game.State.Editor.PlatformerLevelSamples.ROOT+"/Solid.asset");
+var tile=Ember.LevelAuthoring.Editor.EmberLevelAssetService.Upsert<Ember.LevelAuthoring.EmberTerrainTile>(root+"/SkillTerrain.asset",t=>t.Configure("skill.terrain","skill.group",original.CellSize,original.Anchor,original.Physics,original.Fallback,Color.white,original.Rules));
+string tileGuid=AssetDatabase.AssetPathToGUID(root+"/SkillTerrain.asset");
+Ember.LevelAuthoring.Editor.EmberLevelAssetService.Upsert<Ember.LevelAuthoring.EmberTerrainTile>(root+"/SkillTerrain.asset",t=>t.Configure("skill.terrain","skill.group",original.CellSize,original.Anchor,original.Physics,original.Fallback,new Color(.8f,.9f,.7f),original.Rules,2));
+var preset=Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveSize(root+"/SkillSize.asset","skill.size",new Vector2(4,1),Vector2Int.zero,tile);
+Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveSize(root+"/SkillSize.asset","skill.size",new Vector2(6,1),Vector2Int.zero,tile);
+string launchPath=root+"/SkillLaunch.prefab";
+var prefabRoot=PrefabUtility.LoadPrefabContents(AssetDatabase.LoadAssetAtPath<GameObject>(launchPath)!=null?launchPath:Game.State.Editor.PlatformerLevelSamples.ROOT+"/LaunchPad.prefab");
+try{prefabRoot.GetComponent<Game.Entity.LaunchZone2D>().Configure(new Game.Entity.LaunchRequest2D("skill.launch",new Vector2(0,8)),.3f);PrefabUtility.SaveAsPrefabAsset(prefabRoot,launchPath);}finally{PrefabUtility.UnloadPrefabContents(prefabRoot);}
+string launchGuid=AssetDatabase.AssetPathToGUID(launchPath);
+prefabRoot=PrefabUtility.LoadPrefabContents(launchPath);
+try{prefabRoot.GetComponent<Game.Entity.LaunchZone2D>().Configure(new Game.Entity.LaunchRequest2D("skill.launch",new Vector2(0,10)),.5f);PrefabUtility.SaveAsPrefabAsset(prefabRoot,launchPath);}finally{PrefabUtility.UnloadPrefabContents(prefabRoot);}
+var prefab=AssetDatabase.LoadAssetAtPath<GameObject>(launchPath);
+for(int i=0;i<4;i++){int k=i;string id="skill.material."+i;for(int pass=0;pass<2;pass++)Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveMaterial(root+"/SkillMaterial"+i+".asset",id,m=>m.Configure(id,"Skill "+ids[k],(Ember.LevelAuthoring.Editor.EmberLevelMaterialKind)k,k==1?prefab:null,k>1?original.Fallback:null,k==0?preset:null,k==1?"platformer-2d.mechanism":"",true,true,true,k==1));}
+if(tileGuid!=AssetDatabase.AssetPathToGUID(root+"/SkillTerrain.asset")||launchGuid!=AssetDatabase.AssetPathToGUID(launchPath))throw new Exception("GUID changed");
+var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene(level.ScenePath,UnityEditor.SceneManagement.OpenSceneMode.Additive);
+try{
+ if(!scene.GetRootGameObjects().Any(g=>g.name=="Skill scaled grid")){
+ var grid=new GameObject("Skill scaled grid",typeof(Grid));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(grid,scene);grid.GetComponent<Grid>().cellSize=new Vector3(.5f,.5f,1);grid.transform.localScale=new Vector3(2,.5f,1);grid.transform.position=new Vector3(-10,5,0);
+ var go=new GameObject("Skill tiles",typeof(UnityEngine.Tilemaps.Tilemap),typeof(UnityEngine.Tilemaps.TilemapRenderer),typeof(UnityEngine.Tilemaps.TilemapCollider2D));go.transform.SetParent(grid.transform,false);var map=go.GetComponent<UnityEngine.Tilemaps.Tilemap>();
+ Ember.LevelAuthoring.Editor.EmberTerrainEditing.Stamp(map,Vector3Int.zero,preset);Physics2D.SyncTransforms();var bounds=go.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>().bounds;if(Vector2.Distance(bounds.size,preset.Size)>.001f)throw new Exception("scaled collision mismatch "+bounds.size);
+ Ember.LevelAuthoring.Editor.EmberTerrainEditing.Paint(map,new BoundsInt(2,1,0,1,1,1),tile,true);Undo.PerformUndo();Undo.PerformRedo();Undo.PerformUndo();
+ var mechanism=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Place(AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.Editor.EmberLevelMaterial>(root+"/SkillMaterial1.asset"),scene,new Vector3(-4,.25f,0),Quaternion.identity,Vector3.one);mechanism.name="Skill launch";
+ var bg=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Place(AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.Editor.EmberLevelMaterial>(root+"/SkillMaterial2.asset"),scene,new Vector3(0,3,2),Quaternion.identity,Vector3.one);bg.name="Skill background";
+ Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.ConfigureRenderer(bg.GetComponent<SpriteRenderer>(),new Color(.1f,.15f,.3f),0,-90,new Vector2(40,20),true);
+ var layer=Undo.AddComponent<Ember.LevelAuthoring.EmberParallaxLayer>(bg);layer.Configure(null,new Vector2(.2f,.1f),bg.transform.position);
+ var presentation=scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Game.LevelAuthoring.PlatformerLevelPresentation>(true)).Single();
+ var recovery=scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Game.Player.PlayerCheckpointRecovery>(true)).Single();
+ presentation.Configure(recovery,scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Ember.LevelAuthoring.EmberParallaxLayer>(true)).ToArray());EditorUtility.SetDirty(presentation);
+ var decor=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Place(AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.Editor.EmberLevelMaterial>(root+"/SkillMaterial3.asset"),scene,new Vector3(-7,2,0),Quaternion.Euler(0,0,15),new Vector3(-2,2,1));decor.name="Skill decoration";
+ Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.ConfigureRenderer(decor.GetComponent<SpriteRenderer>(),Color.magenta,0,-2,Vector2.one,false);
+ var duplicate=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Duplicate(decor);Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Delete(duplicate);Undo.PerformUndo();Undo.PerformRedo();
+ if(decor.GetComponent<Collider2D>()!=null)throw new Exception("unexpected decoration collision");
+ UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+ }
+}finally{UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true);}
+var errors=adapter.Validate(level,null).Where(d=>d.Severity==Ember.LevelAuthoring.Editor.EmberLevelSeverity.Error).ToArray();if(errors.Length>0)throw new Exception(string.Join(";",errors.Select(d=>d.Message)));
+return new{level=level.ScenePath,id=level.id,tileGuid,launchGuid,skills=ids,resourceChecks="new/update + stable identity + scaled collision + undo + save/reopen preflight passed"};

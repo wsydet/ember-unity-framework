@@ -1,0 +1,6 @@
+{
+  "name": "Ember.LevelAuthoring.Runtime",
+  "rootNamespace": "Ember.LevelAuthoring",
+  "references": ["Ember.Basic.Runtime", "Unity.Collections"],
+  "autoReferenced": true
+}

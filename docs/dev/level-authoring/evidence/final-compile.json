@@ -1,0 +1,30 @@
+{
+  "compilation": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"failed\":false,\"compiling\":false,\"updating\":false,\"editorMvid\":\"7ff424d7-a198-43e9-922d-0acdfe8fba02\",\"failureApi\":true,\"playing\":false,\"trialActive\":false,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"options\":\"DisableDomainReload\"},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "failed": false,
+          "compiling": false,
+          "updating": false,
+          "editorMvid": "7ff424d7-a198-43e9-922d-0acdfe8fba02",
+          "failureApi": true,
+          "playing": false,
+          "trialActive": false,
+          "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+          "options": "DisableDomainReload"
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  },
+  "consoleNote": "最终查询包含本次辅助EditorSettings序列化调用产生的You may not pass in objects that are already persistent；不是C#编译错误。辅助调用未成功，随后按测试前值恢复该设置文件；原始差异已清零。最后C#编译scriptCompilationFailed=false，新ReportFailure API与程序集MVID已核对。"
+}

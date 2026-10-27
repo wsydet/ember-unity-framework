@@ -1,0 +1,31 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"profile\":\"Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset\",\"effective\":[\"Assets/Game/Scenes/FrameworkScene.unity:True\",\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity:False\"],\"global\":[\"Assets/Game/Scenes/FrameworkScene.unity:True\",\"Assets/Game/Scenes/GameplayScene.unity:True\",\"Assets/Game/Scenes/MainScene.unity:True\",\"Assets/Game/Scenes/SettingsScene.unity:True\",\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity:False\"],\"unchanged\":true},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "profile": "Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset",
+        "effective": [
+          "Assets/Game/Scenes/FrameworkScene.unity:True",
+          "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity:False"
+        ],
+        "global": [
+          "Assets/Game/Scenes/FrameworkScene.unity:True",
+          "Assets/Game/Scenes/GameplayScene.unity:True",
+          "Assets/Game/Scenes/MainScene.unity:True",
+          "Assets/Game/Scenes/SettingsScene.unity:True",
+          "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity:False"
+        ],
+        "unchanged": true
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

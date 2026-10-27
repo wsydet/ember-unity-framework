@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e9a06cbc67a1d45b82acab4d68d3ab, type: 3}
+  m_Name: NewLevelLevel
+  m_EditorClassIdentifier: Game.LevelAuthoring.Runtime::Game.LevelAuthoring.PlatformerAuthoringLevel
+  _id: 88dfd01c6bec4b7584fdf7d84974b9ec
+  _sceneGuid: b76d068af710a3a4aaa2ca1832dc8b5d
+  _config: {fileID: 11400000, guid: f1e8a70dbad1755498065885d97cf915, type: 2}

@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"ready\":true,\"scene\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"position\":\"(-4.00, 0.89, 0.00)\",\"grounded\":true,\"storage\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\671023725dec41bf8dda64f9bd253e54\",\"checkpoint\":\"entry\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "ready": true,
+        "scene": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+        "position": "(-4.00, 0.89, 0.00)",
+        "grounded": true,
+        "storage": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\671023725dec41bf8dda64f9bd253e54",
+        "checkpoint": "entry"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

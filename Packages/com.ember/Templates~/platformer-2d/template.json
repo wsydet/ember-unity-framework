@@ -2,14 +2,14 @@
     "schemaVersion": 2,
     "id": "platformer-2d",
     "displayName": "2D 平台跳跃",
-    "description": "基于 base 0.8.3 的 2D 平台跳跃模板：分层玩家状态机、独立完整方案与冻结、能力/效果/动画、Cinemachine 适配及统一玩家工具和白盒。内置通用攻击模板1，包含三连击、命中、受击、无敌与死亡恢复；提供手感调整、动画替换、新状态和新增攻击四项模板专属 Skill。T03 剩余身份与跨模板草稿验收留待真实项目。 新增可选载具自身切向碰撞与本步承载/弹射到期顺序契约。",
-    "version": "0.12.1",
-    "frameworkVersion": "0.23.0",
+    "description": "基于 base 0.8.3 的 2D 平台跳跃模板：分层玩家状态机、独立完整方案与冻结、能力/效果/动画、Cinemachine 适配及统一玩家工具和白盒。内置通用攻击模板1，包含三连击、命中、受击、无敌与死亡恢复；提供手感调整、动画替换、新状态和新增攻击四项模板专属 Skill。T03 剩余身份与跨模板草稿验收留待真实项目。 新增可选载具自身切向碰撞与本步承载/弹射到期顺序契约。 新增2D关卡工作台、多尺寸白盒、地形连接、背景装饰及四类制作Skill，正式生命周期隔离试玩与场景发行登记。",
+    "version": "0.13.0",
+    "frameworkVersion": "0.24.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
     "parentVersion": "0.10.0",
     "parentContentHash": "61cbe49aa797b1604f293b9756674566",
-    "contentHash": "cf9f81aa956920aca4b4e081f63cad6d",
-    "versionedContentHash": "cf9f81aa956920aca4b4e081f63cad6d"
+    "contentHash": "ff217ca17005f39519049c46a83c138b",
+    "versionedContentHash": "ff217ca17005f39519049c46a83c138b"
 }

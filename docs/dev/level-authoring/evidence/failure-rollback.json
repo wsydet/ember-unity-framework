@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":[\"preflight failure: no session or BeginTrial\",\"partial preparation: cleanup requested, scene setup restored, error retained\",\"object association failure: atomic rollback; failed unlink retains object\"],\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        "preflight failure: no session or BeginTrial",
+        "partial preparation: cleanup requested, scene setup restored, error retained",
+        "object association failure: atomic rollback; failed unlink retains object"
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

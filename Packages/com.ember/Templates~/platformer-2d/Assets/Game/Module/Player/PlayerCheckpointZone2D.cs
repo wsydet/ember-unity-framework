@@ -24,5 +24,14 @@ namespace Game.Player
         }
 
         #endregion
+
+        #region 外部方法
+        public string CheckpointId => _checkpointId;
+        public void Configure(string checkpointId)
+        {
+            if (string.IsNullOrWhiteSpace(checkpointId)) throw new System.ArgumentException("检查点需要稳定ID。");
+            _checkpointId = checkpointId;
+        }
+        #endregion
     }
 }

@@ -1,0 +1,23 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playing\":false,\"active\":false,\"error\":\"开发库存储初始化失败，已中止播放：IoFailed\",\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\b4f08926b397441793ca4b8e1884fb1f\",\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "playing": false,
+        "active": false,
+        "error": "开发库存储初始化失败，已中止播放：IoFailed",
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\b4f08926b397441793ca4b8e1884fb1f",
+        "scene": "Assets/Game/Scenes/FrameworkScene.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

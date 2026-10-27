@@ -43,7 +43,10 @@
         "com.neuecc.unirx": "7.1.0",
         "com.unity.cinemachine": "3.1.7",
         "com.unity.inputsystem": "1.19.0",
-        "com.unity.ugui": "2.5.0"
+        "com.unity.ugui": "2.5.0",
+        "com.unity.modules.tilemap": "1.0.0",
+        "com.unity.collections": "6.5.0",
+        "com.unity.modules.physics2d": "1.0.0"
       }
     },
     "com.flyingworm.consolepro": {
@@ -111,7 +114,7 @@
     },
     "com.unity.collections": {
       "version": "6.5.0",
-      "depth": 2,
+      "depth": 1,
       "source": "builtin",
       "dependencies": {
         "com.unity.burst": "1.8.25",
@@ -169,7 +172,7 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.6",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -256,7 +259,7 @@
     },
     "com.unity.test-framework.performance": {
       "version": "3.5.0",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.33",

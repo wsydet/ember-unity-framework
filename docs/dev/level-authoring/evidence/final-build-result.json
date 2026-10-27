@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Build Succeeded.",
+  "data": {
+    "job_id": "build-f21dc181f3",
+    "result": "succeeded",
+    "platform": "StandaloneWindows64",
+    "output_path": "C:/Users/wuyu/My/ember-unity-framework/.utmp/level-authoring-final-build/EmberLevelProbe.exe",
+    "started_at": "2026-10-27T08:36:31.8646369Z",
+    "duration_seconds": 34.968434699999996,
+    "completed_at": "2026-10-27T08:37:06.8330716Z",
+    "total_size_mb": 237.34,
+    "errors": 0,
+    "warnings": 4
+  }
+}

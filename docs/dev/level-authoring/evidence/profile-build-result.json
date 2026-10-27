@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Last build report from Unity.\",\"data\":{\"result\":\"succeeded\",\"platform\":\"StandaloneWindows64\",\"output_path\":\"C:/Users/wuyu/My/ember-unity-framework/.utmp/level-authoring-profile-build/EmberLevelProbe.exe\",\"total_size_mb\":237.33,\"duration_seconds\":37.036949,\"errors\":0,\"warnings\":8}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Last build report from Unity.",
+    "data": {
+      "result": "succeeded",
+      "platform": "StandaloneWindows64",
+      "output_path": "C:/Users/wuyu/My/ember-unity-framework/.utmp/level-authoring-profile-build/EmberLevelProbe.exe",
+      "total_size_mb": 237.33,
+      "duration_seconds": 37.036949,
+      "errors": 0,
+      "warnings": 8
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,1 @@
+{"name":"Game.LevelAuthoring.Runtime","references":["Game.Player.Runtime","Game.Entity.Runtime","Game.SceneFlow.Runtime","Ember.Basic.Runtime","Ember.Core.Runtime","Ember.Camera.Runtime","Ember.LevelAuthoring.Runtime","UniTask"],"autoReferenced":true}

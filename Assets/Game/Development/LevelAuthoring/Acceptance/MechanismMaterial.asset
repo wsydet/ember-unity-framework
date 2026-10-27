@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7439ba38ba6380c41bf86bba133d76dc, type: 3}
+  m_Name: MechanismMaterial
+  m_EditorClassIdentifier: Ember.LevelAuthoring.Editor::Ember.LevelAuthoring.Editor.EmberLevelMaterial
+  _id: acceptance.Mechanism
+  _displayName: Mechanism updated
+  _adapterId: platformer-2d.mechanism
+  _description: 
+  _kind: 1
+  _prefab: {fileID: 1418080313731715440, guid: 8d08d38b90c14d8409c3d272920cf109, type: 3}
+  _sprite: {fileID: 0}
+  _terrain: {fileID: 0}
+  _allowRotation: 1
+  _allowScale: 1
+  _allowMirror: 1
+  _hasPhysics: 1

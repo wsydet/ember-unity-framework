@@ -4,7 +4,7 @@
     "displayName": "UI 游戏",
     "description": "基于 base 的通用 UI 游戏模板：中性步骤示例、主页、局内、暂停设置、结果与重开；产品规则由消费项目实现。",
     "version": "0.2.0",
-    "frameworkVersion": "0.23.0",
+    "frameworkVersion": "0.24.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",

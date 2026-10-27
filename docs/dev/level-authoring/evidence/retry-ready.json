@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"TrialReady\":true,\"TrialStatus\":\"试玩就绪 · 测试进度 · sample.authoring\",\"request\":\"c00b0fa4cdfc424594e6ff510cac2ec1\",\"previous\":\"a04ce24f7f52457ab72536c8344058df\",\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\7e26b99d5ec048ec9cb6df4553a15ae7\",\"previousRoot\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\866c73fc7a804bbeaf7f283fe9d34511\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "TrialReady": true,
+        "TrialStatus": "试玩就绪 · 测试进度 · sample.authoring",
+        "request": "c00b0fa4cdfc424594e6ff510cac2ec1",
+        "previous": "a04ce24f7f52457ab72536c8344058df",
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\7e26b99d5ec048ec9cb6df4553a15ae7",
+        "previousRoot": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\866c73fc7a804bbeaf7f283fe9d34511"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

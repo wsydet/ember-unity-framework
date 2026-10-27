@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"ready\":true,\"position\":\"(-7.00, 0.89, 0.00)\",\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\0a7fe54cbc0b48eeae4a60f159407b56\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "ready": true,
+        "position": "(-7.00, 0.89, 0.00)",
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\0a7fe54cbc0b48eeae4a60f159407b56"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

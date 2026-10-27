@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":\"创建白盒样例、五种尺寸、三种物理语义、256邻域规则、机关/背景/装饰。草稿未加入发行集合。\",\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": "创建白盒样例、五种尺寸、三种物理语义、256邻域规则、机关/背景/装饰。草稿未加入发行集合。",
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playing\":false,\"pendingPlay\":false,\"active\":false,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "playing": false,
+        "pendingPlay": false,
+        "active": false,
+        "scene": "Assets/Game/Scenes/FrameworkScene.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

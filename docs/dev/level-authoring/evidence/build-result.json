@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Build Succeeded.\",\"data\":{\"job_id\":\"build-d638ebe21a\",\"result\":\"succeeded\",\"platform\":\"StandaloneWindows64\",\"output_path\":\"C:/Users/wuyu/My/ember-unity-framework/.utmp/level-authoring-build/EmberLevelProbe.exe\",\"started_at\":\"2026-10-27T07:18:49.0066893Z\",\"duration_seconds\":95.0028251,\"completed_at\":\"2026-10-27T07:20:24.0095144Z\",\"total_size_mb\":237.33,\"errors\":0,\"warnings\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Build Succeeded.",
+    "data": {
+      "job_id": "build-d638ebe21a",
+      "result": "succeeded",
+      "platform": "StandaloneWindows64",
+      "output_path": "C:/Users/wuyu/My/ember-unity-framework/.utmp/level-authoring-build/EmberLevelProbe.exe",
+      "started_at": "2026-10-27T07:18:49.0066893Z",
+      "duration_seconds": 95.0028251,
+      "completed_at": "2026-10-27T07:20:24.0095144Z",
+      "total_size_mb": 237.33,
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":[\"shape 0: native paint, erase, move, Undo/Redo, no extra occupancy\",\"shape 1: native paint, erase, move, Undo/Redo, no extra occupancy\",\"shape 2: native paint, erase, move, Undo/Redo, no extra occupancy\",\"shape 3: native paint, erase, move, Undo/Redo, no extra occupancy\",\"shape 4: native paint, erase, move, Undo/Redo, no extra occupancy\",\"compatible replacement preserves collision/occupancy; different group hard boundary\"],\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        "shape 0: native paint, erase, move, Undo/Redo, no extra occupancy",
+        "shape 1: native paint, erase, move, Undo/Redo, no extra occupancy",
+        "shape 2: native paint, erase, move, Undo/Redo, no extra occupancy",
+        "shape 3: native paint, erase, move, Undo/Redo, no extra occupancy",
+        "shape 4: native paint, erase, move, Undo/Redo, no extra occupancy",
+        "compatible replacement preserves collision/occupancy; different group hard boundary"
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

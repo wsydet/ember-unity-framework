@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3697824784c991d4b92a836ff7643a6b, type: 3}
+  m_Name: AuthoringSampleConfig
+  m_EditorClassIdentifier: Game.Player.Runtime::Game.Player.PlayerConfig
+  _scheme: {fileID: 11400000, guid: a2d7100fc47f54b4282b5be389d735b8, type: 2}
+  _graph: {fileID: 0}
+  _powers: {fileID: 0}
+  _enableEffects: 0
+  _inputChannel: 
+  _moveAction: 
+  _jumpAction: 
+  _dashAction: 
+  _scene: AuthoringSample
+  _spawn: {x: -4, y: 1}
+  _feel: {fileID: 0}

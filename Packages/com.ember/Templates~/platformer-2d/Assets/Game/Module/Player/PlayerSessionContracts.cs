@@ -39,6 +39,15 @@ namespace Game.Player
             return result;
         }
         public void Dispose() { LevelCapture?.Dispose(); LevelCapture = null; IsDisposed = true; }
+        /// <summary>合法关卡测试位置，使用冻结的完整方案和零初速，不修改正式出生配置。</summary>
+        [HasGC] public static PlayerEntryRequest ForLevelTrial(string levelId, string scenePath, PlayerConfig config, UnityEngine.Vector2 position)
+        {
+            if (string.IsNullOrWhiteSpace(levelId) || config == null || System.IO.Path.GetFileNameWithoutExtension(scenePath) != config.Scene)
+                throw new ArgumentException("测试关卡身份与配置场景必须一致。");
+            var result = new PlayerEntryRequest(new PlayerTrialStart(config.Scene, position, UnityEngine.Vector2.zero, config.Feel));
+            result.LevelId = levelId; result.ScenePath = scenePath; result.LevelCapture = new PlayerSchemeCapture(config);
+            return result;
+        }
     }
 
     /// <summary>转场拥有的候选，独立于模块运行字段，Reset 不清除它。成功交接后由模块接管。</summary>

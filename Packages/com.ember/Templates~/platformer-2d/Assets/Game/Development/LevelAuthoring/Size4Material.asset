@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7439ba38ba6380c41bf86bba133d76dc, type: 3}
+  m_Name: Size4Material
+  m_EditorClassIdentifier: Ember.LevelAuthoring.Editor::Ember.LevelAuthoring.Editor.EmberLevelMaterial
+  _id: whitebox.size.4
+  _displayName: "\u5B9E\u4F53 3\xD70.5"
+  _adapterId: 
+  _description: "\u5B9E\u5FC3\u8F6E\u5ED3 \xB7 \u5B9E\u4F53\u78B0\u649E \xB7 0.5\u7F51\u683C"
+  _kind: 0
+  _prefab: {fileID: 0}
+  _sprite: {fileID: 0}
+  _terrain: {fileID: 11400000, guid: 281f08ecb6d9a12428d24cddda08b125, type: 2}
+  _allowRotation: 0
+  _allowScale: 0
+  _allowMirror: 0
+  _hasPhysics: 0

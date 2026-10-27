@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"message\":\"新关卡装配校验失败：需要唯一玩家与启用的 GameSceneScope。\",\"leftovers\":[],\"halfRegistered\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "message": "新关卡装配校验失败：需要唯一玩家与启用的 GameSceneScope。",
+        "leftovers": [],
+        "halfRegistered": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

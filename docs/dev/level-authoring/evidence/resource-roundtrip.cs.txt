@@ -1,0 +1,46 @@
+var root = "Assets/Game/Development/LevelAuthoring/Acceptance";
+if (!AssetDatabase.IsValidFolder(root)) AssetDatabase.CreateFolder("Assets/Game/Development/LevelAuthoring", "Acceptance");
+var checks = new System.Collections.Generic.List<string>();
+var terrain = AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.EmberTerrainTile>("Assets/Game/Development/LevelAuthoring/Solid.asset");
+var size = Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveSize(root+"/CustomSize.asset", "acceptance.custom", new Vector2(3.5f,.5f), Vector2Int.zero, terrain);
+var sizeGuid = AssetDatabase.AssetPathToGUID(root+"/CustomSize.asset");
+size = Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveSize(root+"/CustomSize.asset", "acceptance.custom", new Vector2(4,.5f), new Vector2Int(1,0), terrain);
+if(sizeGuid != AssetDatabase.AssetPathToGUID(root+"/CustomSize.asset") || size.Size != new Vector2(4,.5f)) throw new Exception("size update");
+checks.Add("custom size new/update stable GUID");
+var names = new[]{"Terrain","Mechanism","Background","Decoration"};
+var launch = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Game/Development/LevelAuthoring/LaunchPad.prefab");
+for(int i=0;i<4;i++) {
+ int k=i; string id="acceptance."+names[i], path=root+"/"+names[i]+"Material.asset";
+ var material=Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveMaterial(path,id,m=>m.Configure(id,names[k],(Ember.LevelAuthoring.Editor.EmberLevelMaterialKind)k,k==1?launch:null,k>1?terrain.Fallback:null,k==0?size:null,k==1?"platformer-2d.mechanism":"",true,true,true,k==1));
+ string guid=AssetDatabase.AssetPathToGUID(path);
+ for(int pass=0;pass<2;pass++) Ember.LevelAuthoring.Editor.EmberLevelAssetService.SaveMaterial(path,id,m=>m.Configure(id,names[k]+" updated",(Ember.LevelAuthoring.Editor.EmberLevelMaterialKind)k,k==1?launch:null,k>1?terrain.Fallback:null,k==0?size:null,k==1?"platformer-2d.mechanism":"",true,true,true,k==1));
+ if(guid!=AssetDatabase.AssetPathToGUID(path) || Ember.LevelAuthoring.Editor.EmberLevelAssetService.Find<Ember.LevelAuthoring.Editor.EmberLevelMaterial>().Count(m=>m.Id==id)!=1)throw new Exception("duplicate/update "+id);
+ checks.Add(names[i]+" new/update twice: stable GUID and one ID");
+}
+var scene=UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene,UnityEditor.SceneManagement.NewSceneMode.Additive);
+try {
+ var gridObject=new GameObject("Grid",typeof(Grid)); UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gridObject,scene); gridObject.GetComponent<Grid>().cellSize=new Vector3(.5f,.5f,1);
+ var mapObject=new GameObject("Map",typeof(UnityEngine.Tilemaps.Tilemap),typeof(UnityEngine.Tilemaps.TilemapRenderer),typeof(UnityEngine.Tilemaps.TilemapCollider2D)); mapObject.transform.SetParent(gridObject.transform);
+ var map=mapObject.GetComponent<UnityEngine.Tilemaps.Tilemap>();
+ var dimensions=new[]{new Vector2(.5f,.5f),Vector2.one,new Vector2(.5f,10),new Vector2(10,.5f)};
+ for(int i=0;i<dimensions.Length;i++) {
+  var preset=ScriptableObject.CreateInstance<Ember.LevelAuthoring.Editor.EmberTerrainPreset>(); preset.Configure("test",dimensions[i],Vector2Int.zero,terrain);
+  map.ClearAllTiles(); Ember.LevelAuthoring.Editor.EmberTerrainEditing.Stamp(map,Vector3Int.zero,preset); Physics2D.SyncTransforms();
+  var bounds=map.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>().bounds;
+  if(Vector2.Distance(bounds.size,dimensions[i])>.001f)throw new Exception("collision dimension "+dimensions[i]+" != "+bounds.size);
+  checks.Add("world collision size "+dimensions[i]+" correct"); UnityEngine.Object.DestroyImmediate(preset);
+ }
+ var material=AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.Editor.EmberLevelMaterial>(root+"/MechanismMaterial.asset");
+ var instance=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Place(material,scene,new Vector3(2,2,0),Quaternion.identity,Vector3.one);
+ var copy=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Duplicate(instance,Ember.LevelAuthoring.Editor.EmberLevelAdapters.GetObject(material.AdapterId));
+ if(!PrefabUtility.IsPartOfPrefabInstance(copy))throw new Exception("lost prefab connection");
+ Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Delete(copy);
+ Undo.PerformUndo(); Undo.PerformRedo(); checks.Add("prefab place/duplicate/delete undo redo; connection retained");
+ var decor=Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.Place(AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.Editor.EmberLevelMaterial>(root+"/DecorationMaterial.asset"),scene,new Vector3(-2,2,0),Quaternion.Euler(0,0,15),new Vector3(-2,2,1));
+ Ember.LevelAuthoring.Editor.EmberLevelObjectEditing.ConfigureRenderer(decor.GetComponent<SpriteRenderer>(),Color.cyan,0,12,Vector2.one,false);
+ if(decor.GetComponent<Collider2D>()!=null)throw new Exception("unexpected decoration physics");
+ UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,root+"/ResourceRoundtrip.unity");
+} finally { UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene,true); }
+var reopened=UnityEditor.SceneManagement.EditorSceneManager.OpenScene(root+"/ResourceRoundtrip.unity",UnityEditor.SceneManagement.OpenSceneMode.Additive);
+try { if(reopened.GetRootGameObjects().Length!=3)throw new Exception("roundtrip root count"); checks.Add("save reopen scene objects retained"); } finally { UnityEditor.SceneManagement.EditorSceneManager.CloseScene(reopened,true); }
+AssetDatabase.SaveAssets(); return checks.ToArray();

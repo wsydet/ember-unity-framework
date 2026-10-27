@@ -1,0 +1,34 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":[{\"id\":\"ember-level-add-terrain\",\"block\":null},{\"id\":\"ember-level-add-mechanism\",\"block\":null},{\"id\":\"ember-level-add-background\",\"block\":null},{\"id\":\"ember-level-add-decoration\",\"block\":null}],\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "id": "ember-level-add-terrain",
+          "block": null
+        },
+        {
+          "id": "ember-level-add-mechanism",
+          "block": null
+        },
+        {
+          "id": "ember-level-add-background",
+          "block": null
+        },
+        {
+          "id": "ember-level-add-decoration",
+          "block": null
+        }
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

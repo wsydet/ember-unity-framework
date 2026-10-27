@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"moved\":\"Assets/Game/Development/LevelAuthoring/Acceptance/MovedLevel.unity\",\"enabled\":false,\"bootstrap\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "moved": "Assets/Game/Development/LevelAuthoring/Acceptance/MovedLevel.unity",
+        "enabled": false,
+        "bootstrap": "Assets/Game/Scenes/FrameworkScene.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

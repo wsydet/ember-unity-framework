@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"compileFailed\":true,\"reason\":\"请等待上一轮试玩、导入或编译结束，并修复编译错误。\",\"playing\":false,\"active\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "compileFailed": true,
+        "reason": "请等待上一轮试玩、导入或编译结束，并修复编译错误。",
+        "playing": false,
+        "active": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

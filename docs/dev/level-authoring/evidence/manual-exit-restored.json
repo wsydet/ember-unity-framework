@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "play": false,
+      "active": false,
+      "scenes": [
+        "Assets/Game/Scenes/FrameworkScene.unity"
+      ],
+      "failed": false
+    },
+    "compiler": "codedom"
+  }
+}

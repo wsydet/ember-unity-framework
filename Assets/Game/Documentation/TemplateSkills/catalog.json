@@ -32,6 +32,38 @@
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
       "minimumTemplateVersion": "0.6.0"
+    },
+    {
+      "id": "ember-level-add-terrain",
+      "displayName": "关卡制作 terrain",
+      "description": "新增和更新关卡terrain资源并验证编辑与试玩",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.24.0",
+      "minimumTemplateVersion": "0.13.0"
+    },
+    {
+      "id": "ember-level-add-mechanism",
+      "displayName": "关卡制作 mechanism",
+      "description": "新增和更新关卡mechanism资源并验证编辑与试玩",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.24.0",
+      "minimumTemplateVersion": "0.13.0"
+    },
+    {
+      "id": "ember-level-add-background",
+      "displayName": "关卡制作 background",
+      "description": "新增和更新关卡background资源并验证编辑与试玩",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.24.0",
+      "minimumTemplateVersion": "0.13.0"
+    },
+    {
+      "id": "ember-level-add-decoration",
+      "displayName": "关卡制作 decoration",
+      "description": "新增和更新关卡decoration资源并验证编辑与试玩",
+      "templateId": "platformer-2d",
+      "minimumFrameworkVersion": "0.24.0",
+      "minimumTemplateVersion": "0.13.0"
     }
   ]
 }

@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "compiling": false,
+      "updating": false,
+      "compileFailed": false,
+      "play": false,
+      "active": false,
+      "runtimeMvid": "7a2a4f66-b154-4890-9eb2-de7629a163f2",
+      "adapterMvid": "3643a5b7-e5ba-4185-a350-a7a0bce92b52",
+      "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+      "profile": "",
+      "global": [
+        {
+          "path": "Assets/Game/Scenes/FrameworkScene.unity",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Game/Scenes/GameplayScene.unity",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Game/Scenes/MainScene.unity",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Game/Scenes/SettingsScene.unity",
+          "enabled": true
+        }
+      ],
+      "options": "DisableDomainReload",
+      "optionsEnabled": true,
+      "buildIssues": []
+    },
+    "compiler": "codedom"
+  }
+}

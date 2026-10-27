@@ -34,6 +34,18 @@ namespace Game.Entity
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        public LaunchRequest2D Configuration => new(_sourceId, _velocity, _mode, _duration, _end, _interrupt, _horizontal, _wallQualification, _tail);
+        public float Cooldown => _cooldown;
+        /// <summary>编辑器与制作流程共用的配置入口；完整验证后提交，不改碰撞范围。</summary>
+        public void Configure(LaunchRequest2D request, float cooldown)
+        {
+            _ = new LaunchRequest2D(request.SourceId, request.Velocity, request.Mode, request.Duration, request.End,
+                request.Interrupt, request.Horizontal, request.WallQualification, request.Tail);
+            if (!float.IsFinite(cooldown) || cooldown < 0) throw new ArgumentOutOfRangeException(nameof(cooldown));
+            _sourceId=request.SourceId; _velocity=request.Velocity; _mode=request.Mode; _duration=request.Duration;
+            _end=request.End; _interrupt=request.Interrupt; _horizontal=request.Horizontal; _wallQualification=request.WallQualification;
+            _tail=request.Tail; _cooldown=cooldown;
+        }
         [HasGC] public bool TryTrigger(Collider2D other)
         {
             if (!isActiveAndEnabled || other == null || !float.IsFinite(_cooldown) || _cooldown < 0) return false;

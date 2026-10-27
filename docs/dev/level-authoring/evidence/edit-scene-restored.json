@@ -1,0 +1,34 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"playing\":false,\"active\":false,\"cleaning\":false,\"scenes\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"isActive\":false,\"isLoaded\":true},{\"path\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"isActive\":true,\"isLoaded\":true}],\"selection\":\"PlayerBlock\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "playing": false,
+        "active": false,
+        "cleaning": false,
+        "scenes": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "isActive": false,
+            "isLoaded": true
+          },
+          {
+            "path": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+            "isActive": true,
+            "isLoaded": true
+          }
+        ],
+        "selection": "PlayerBlock"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

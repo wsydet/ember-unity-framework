@@ -138,6 +138,7 @@ namespace Game.Player.Editor
             catch (Exception error)
             {
                 Status = "开发环境初始化失败：" + error.Message;
+                PlayerLabEditorBridge.ReportDevelopmentFailure?.Invoke(Status);
                 EditorApplication.isPlaying = false;
                 throw;
             }
@@ -155,6 +156,7 @@ namespace Game.Player.Editor
                 if (!result.Succeeded)
                 {
                     Status = "开发库存储初始化失败，已中止播放：" + result.Status;
+                    PlayerLabEditorBridge.ReportDevelopmentFailure?.Invoke(Status);
                     EmberDebug.LogError("Game.Player.Development", Status);
                     EditorApplication.isPlaying = false;
                 }

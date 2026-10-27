@@ -1,0 +1,55 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"0a870c7a83c74f638cd3c22e32527605\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1793086022159,\"finished_unix_ms\":1793086032212,\"last_update_unix_ms\":1793086032212,\"progress\":{\"completed\":13,\"total\":13,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.RejectsFractionalAndNonFiniteDimensions\",\"last_finished_unix_ms\":1793086032044,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":13,\"passed\":13,\"failed\":0,\"skipped\":0,\"durationSeconds\":1.0909173,\"resultState\":\"Passed\"},\"results\":[]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "0a870c7a83c74f638cd3c22e32527605",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1793086022159,
+        "finished_unix_ms": 1793086032212,
+        "last_update_unix_ms": 1793086032212,
+        "progress": {
+          "completed": 13,
+          "total": 13,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.RejectsFractionalAndNonFiniteDimensions",
+          "last_finished_unix_ms": 1793086032044,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 13,
+            "passed": 13,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 1.0909173,
+            "resultState": "Passed"
+          },
+          "results": []
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

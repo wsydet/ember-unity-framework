@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"done\":true,\"fault\":null,\"result\":[\"physics launch observed=1\",\"parallax outbound/return/camera-switch passed\",\"tiled background sorting and non-colliding decoration passed\"]},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "done": true,
+        "fault": null,
+        "result": [
+          "physics launch observed=1",
+          "parallax outbound/return/camera-switch passed",
+          "tiled background sorting and non-colliding decoration passed"
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Ember.LevelAuthoring.Editor",
+  "rootNamespace": "Ember.LevelAuthoring.Editor",
+  "references": ["Ember.LevelAuthoring.Runtime", "Ember.Core.Editor", "Ember.Basic.Runtime", "UniTask"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

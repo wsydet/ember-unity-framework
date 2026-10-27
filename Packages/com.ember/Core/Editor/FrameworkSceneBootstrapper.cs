@@ -40,6 +40,7 @@ namespace Ember.Core.Editor
         /// </summary>
         private static void OnPlayModeChanged(PlayModeStateChange state)
         {
+            if (SessionState.GetBool("Ember.LevelAuthoring.OwnsSceneRestore", false)) return;
             switch (state)
             {
                 case PlayModeStateChange.ExitingEditMode:
@@ -121,13 +122,15 @@ namespace Ember.Core.Editor
             }
 
             private static bool IsInScenesFolder(string path) =>
-                path.StartsWith(ScenesFolder) && path.EndsWith(".unity");
+                path.StartsWith("Assets/") && path.EndsWith(".unity");
         }
 
         /// <summary>
         /// 扫描 Scenes 文件夹，同步到 EditorBuildSettings。
         /// FrameworkScene 强制首位，其余按文件名排序。
         /// </summary>
+        public static void Synchronize() => SyncBuildScenes();
+
         private static void SyncBuildScenes()
         {
             // 扫描文件夹下所有场景
@@ -146,41 +149,14 @@ namespace Ember.Core.Editor
                 return;
             }
 
-            // 找到 FrameworkScene
-            string frameworkPath = null;
-            foreach (var s in allScenes)
-            {
-                if (Path.GetFileNameWithoutExtension(s) == FrameworkSceneName)
-                {
-                    frameworkPath = s;
-                    break;
-                }
-            }
-
-            // 构建列表：FrameworkScene 首位，其余按名排序
-            allScenes.Sort();
-            var result = new List<EditorBuildSettingsScene>();
-
-            if (frameworkPath != null)
-            {
-                result.Add(new EditorBuildSettingsScene(frameworkPath, true));
-                foreach (var s in allScenes)
-                    if (s != frameworkPath)
-                        result.Add(new EditorBuildSettingsScene(s, true));
-            }
-            else
-            {
-                EmberDebug.LogWarning(TAG, $"{FrameworkSceneName}.unity not found in {ScenesFolder}. All scenes added alphabetically.");
-                foreach (var s in allScenes)
-                    result.Add(new EditorBuildSettingsScene(s, true));
-            }
+            var result = new List<EditorBuildSettingsScene>(EmberBuildSceneRegistry.Merge(EmberBuildSceneRegistry.ResolveDeclarations(EditorBuildSettings.globalScenes), allScenes, FindFrameworkScenePath()));
 
             // 仅在列表变化时才写入，避免脏标记
-            var current = EditorBuildSettings.scenes;
+            var current = EditorBuildSettings.globalScenes;
             if (ScenesEqual(current, result))
                 return;
 
-            EditorBuildSettings.scenes = result.ToArray();
+            EditorBuildSettings.globalScenes = result.ToArray();
             EmberDebug.LogInit(TAG, $"Build Settings synced: {result.Count} scene(s) from {ScenesFolder}");
         }
 

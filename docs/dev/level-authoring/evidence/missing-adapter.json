@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "message": "缺少关卡适配器。",
+      "active": false,
+      "playing": false
+    },
+    "compiler": "codedom"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "Scope": "Application.persistentDataPath files excluding Unity analytics and log files",
+  "BeforeCount": 41,
+  "AfterCount": 41,
+  "ChangedCount": 0,
+  "Changes": []
+}

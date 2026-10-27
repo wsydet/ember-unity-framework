@@ -1,0 +1,29 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"level\":\"Assets/Game/Development/LevelAuthoring/Acceptance/SkillWorkflow.unity\",\"id\":\"52d0722c416748578bff94ea5f0a335c\",\"tileGuid\":\"02fe6584b10d5644f9d5038535fb820c\",\"launchGuid\":\"9230648198eb15a43bc5c449d6b39335\",\"skills\":[\"ember-level-add-terrain\",\"ember-level-add-mechanism\",\"ember-level-add-background\",\"ember-level-add-decoration\"],\"resourceChecks\":\"new/update + stable identity + scaled collision + undo + save/reopen preflight passed\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "level": "Assets/Game/Development/LevelAuthoring/Acceptance/SkillWorkflow.unity",
+        "id": "52d0722c416748578bff94ea5f0a335c",
+        "tileGuid": "02fe6584b10d5644f9d5038535fb820c",
+        "launchGuid": "9230648198eb15a43bc5c449d6b39335",
+        "skills": [
+          "ember-level-add-terrain",
+          "ember-level-add-mechanism",
+          "ember-level-add-background",
+          "ember-level-add-decoration"
+        ],
+        "resourceChecks": "new/update + stable identity + scaled collision + undo + save/reopen preflight passed"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

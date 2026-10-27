@@ -24,6 +24,7 @@ namespace Game.State
         {
 #if UNITY_EDITOR
             PlayerLabEditorBridge.Prepare?.Invoke();
+            PlayerLabEditorBridge.PrepareLevelAuthoring?.Invoke();
 #endif
             base.OnEnter(args);
 #if UNITY_EDITOR

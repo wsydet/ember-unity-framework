@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"unique\":true,\"conflict\":true,\"first\":\"Assets/Game/Development/LevelAuthoring/Acceptance/NewLevel.unity\",\"second\":\"Assets/Game/Development/LevelAuthoring/Acceptance/CopiedLevel.unity\",\"issuesA\":[],\"issuesB\":[],\"draftNotPublished\":true},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "unique": true,
+        "conflict": true,
+        "first": "Assets/Game/Development/LevelAuthoring/Acceptance/NewLevel.unity",
+        "second": "Assets/Game/Development/LevelAuthoring/Acceptance/CopiedLevel.unity",
+        "issuesA": [],
+        "issuesB": [],
+        "draftNotPublished": true
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"files\":1917,\"id\":\"platformer-2d\",\"version\":\"0.12.1\",\"parentVersion\":\"0.10.0\",\"contentHash\":\"e486f91d0a6d2627b90d70eb8b69fa29\",\"versionedContentHash\":\"cf9f81aa956920aca4b4e081f63cad6d\",\"settingsCount\":1,\"options\":\"DisableDomainReload\",\"active\":false,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "files": 1917,
+        "id": "platformer-2d",
+        "version": "0.12.1",
+        "parentVersion": "0.10.0",
+        "contentHash": "e486f91d0a6d2627b90d70eb8b69fa29",
+        "versionedContentHash": "cf9f81aa956920aca4b4e081f63cad6d",
+        "settingsCount": 1,
+        "options": "DisableDomainReload",
+        "active": false,
+        "scene": "Assets/Game/Scenes/FrameworkScene.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

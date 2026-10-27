@@ -10,6 +10,8 @@ namespace Game.Player
         public const string SceneName = "PlayerFeelLab";
         public static Action Prepare;
         public static Action ObserveStorage;
+        public static Action PrepareLevelAuthoring;
+        public static Action<string> ReportDevelopmentFailure;
         public static string GameplayScenePath { get; set; }
         public static bool Active => !string.IsNullOrEmpty(GameplayScenePath);
         #endregion

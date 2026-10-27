@@ -1,10 +1,12 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.23.0**，交付公共 UI 组件库、PSD/BUI 制作流程、base 全量组件化与四个派生模板同步，以及项目初始化模板身份和更新状态布局。模板切换可能出现确认弹窗，代理必须及时请用户处理；消费升级、发行构建及真机验证仍须独立验收。
+当前发布：Ember **0.24.0**，随包封存 platformer-2d **0.13.0**，交付2D关卡工作台、白盒尺寸/连接、背景装饰、四类制作Skill、隔离试玩及业务场景登记。相关测试22/22通过，真实工程重开与Windows独立构建进入样例关已验证；Windward适配和干净消费迁移仍待独立验收。
 
 ## 清单范围
 
-完整 manifest 包含 56 项直接依赖（开发项目 55 项加 Feel），按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Unity/OpenUPM 及内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+0.24.0完整 manifest 包含 57 项直接依赖（增加显式Collections），按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。新增Collections 6.5.0显式声明，其余Unity/OpenUPM及内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+
+本版清单：[release-0.24.0.json](release-0.24.0.json)、[manifest-0.24.0.json](manifest-0.24.0.json)。平台模板0.13.0迁移与验收边界见[发布说明](../../../docs/dev/release-0.24.0.md)。以下带旧版本号的流程记录保留其历史含义。
 
 ## 已有消费项目升级
 
@@ -32,4 +34,4 @@
 
 ## 发布顺序
 
-本版按 package.json、CHANGELOG、release/manifest、提交与 annotated tag 对齐发布 v0.23.0。停止协议和验证边界见 [0.22.0 发布说明](../../../docs/dev/release-0.22.0.md)。四个模板均同步新停止协议；通用技能和第三方依赖保持原版。
+本版按 package.json、CHANGELOG、release/manifest、提交与annotated tag对齐发布v0.24.0。平台模板0.13.0，其余模板内容版本不变；通用技能及第三方标签保持原版。

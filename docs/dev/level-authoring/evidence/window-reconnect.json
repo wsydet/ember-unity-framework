@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "play": true,
+      "active": true,
+      "sameRequest": true,
+      "ready": true,
+      "consumed": "70eb7259f48c4aac8495b60f44b99c61",
+      "error": null
+    },
+    "compiler": "codedom"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "version": "0.12.1",
+      "contentHash": "d2a61693b4fb0beb51c0d728aa250c3e",
+      "versionedContentHash": "cf9f81aa956920aca4b4e081f63cad6d",
+      "skills": [
+        {
+          "id": "ember-level-add-terrain",
+          "reason": null
+        },
+        {
+          "id": "ember-level-add-mechanism",
+          "reason": null
+        },
+        {
+          "id": "ember-level-add-background",
+          "reason": null
+        },
+        {
+          "id": "ember-level-add-decoration",
+          "reason": null
+        }
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

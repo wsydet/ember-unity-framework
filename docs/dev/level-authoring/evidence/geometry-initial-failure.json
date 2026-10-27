@@ -1,0 +1,152 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "32881ab7f50a415a9dc6892600d7ecee",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1793089202619,
+      "finished_unix_ms": 1793089219592,
+      "last_update_unix_ms": 1793089219592,
+      "progress": {
+        "completed": 22,
+        "total": 22,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(32.0f,3,True)",
+        "last_finished_unix_ms": 1793089219510,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.MoveUpdatesOldAndNewOccupancy",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.PaintEraseAndUndoPreserveOccupancy",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(2.0f,0.5f,4,8)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(-2.0f,2.0f,4,2)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(0.5f,0.5f,16,8)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(16.0f,0,False)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(64.0f,1,False)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          },
+          {
+            "full_name": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(32.0f,3,True)",
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 22,
+          "passed": 14,
+          "failed": 8,
+          "skipped": 0,
+          "durationSeconds": 8.9021113,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "MoveUpdatesOldAndNewOccupancy",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.MoveUpdatesOldAndNewOccupancy",
+            "state": "Failed",
+            "durationSeconds": 0.0758541,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:MoveUpdatesOldAndNewOccupancy () (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:65)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions ()\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "PaintEraseAndUndoPreserveOccupancy",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.PaintEraseAndUndoPreserveOccupancy",
+            "state": "Failed",
+            "durationSeconds": 0.0468605,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:PaintEraseAndUndoPreserveOccupancy () (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:56)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteStep () (at ./Library/PackageCache/com.unity.test-framework@1405238725ab\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "ScaledGridUsesWorldDimensionsWithoutChangingTransform(2.0f,0.5f,4,8)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(2.0f,0.5f,4,8)",
+            "state": "Failed",
+            "durationSeconds": 0.040474,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Stamp (UnityEngine.Tilemaps.Tilemap,UnityEngine.Vector3Int,Ember.LevelAuthoring.Editor.EmberTerrainPreset,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:64)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:ScaledGridUsesWorldDimensionsWithoutChangingTransform (single,single,int,int) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:86)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextA\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "ScaledGridUsesWorldDimensionsWithoutChangingTransform(-2.0f,2.0f,4,2)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(-2.0f,2.0f,4,2)",
+            "state": "Failed",
+            "durationSeconds": 0.1183651,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Stamp (UnityEngine.Tilemaps.Tilemap,UnityEngine.Vector3Int,Ember.LevelAuthoring.Editor.EmberTerrainPreset,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:64)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:ScaledGridUsesWorldDimensionsWithoutChangingTransform (single,single,int,int) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:86)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextA\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "ScaledGridUsesWorldDimensionsWithoutChangingTransform(0.5f,0.5f,16,8)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.ScaledGridUsesWorldDimensionsWithoutChangingTransform(0.5f,0.5f,16,8)",
+            "state": "Failed",
+            "durationSeconds": 0.078682,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Stamp (UnityEngine.Tilemaps.Tilemap,UnityEngine.Vector3Int,Ember.LevelAuthoring.Editor.EmberTerrainPreset,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:64)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:ScaledGridUsesWorldDimensionsWithoutChangingTransform (single,single,int,int) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:86)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextA\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "SpriteAndCollisionMatchNonSquareGridWithCustomPivot(16.0f,0,False)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(16.0f,0,False)",
+            "state": "Failed",
+            "durationSeconds": 0.0145155,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:SpriteAndCollisionMatchNonSquareGridWithCustomPivot (single,int,bool) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:124)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:Execu\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "SpriteAndCollisionMatchNonSquareGridWithCustomPivot(64.0f,1,False)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(64.0f,1,False)",
+            "state": "Failed",
+            "durationSeconds": 0.0070952,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:SpriteAndCollisionMatchNonSquareGridWithCustomPivot (single,int,bool) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:124)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:Execu\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          },
+          {
+            "name": "SpriteAndCollisionMatchNonSquareGridWithCustomPivot(32.0f,3,True)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelAuthoringTests.SpriteAndCollisionMatchNonSquareGridWithCustomPivot(32.0f,3,True)",
+            "state": "Failed",
+            "durationSeconds": 0.0090574,
+            "message": "Unhandled log message: '[Error] Not allowed to override physics shape on sprite '''. Use UnityEngine.TestTools.LogAssert.Expect",
+            "stackTrace": "UnityEngine.Sprite:OverridePhysicsShape (System.Collections.Generic.IList`1<UnityEngine.Vector2[]>)\r\nEmber.LevelAuthoring.EmberTerrainTile:PhysicsSprite (UnityEngine.Sprite) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:72)\r\nEmber.LevelAuthoring.EmberTerrainTile:GetTileData (UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&) (at ./Packages/com.ember/LevelAuthoring/Runtime/EmberTerrainTile.cs:112)\r\nUnityEngine.Tilemaps.Tilemap:SetTilesBlock (UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])\r\nEmber.LevelAuthoring.Editor.EmberTerrainEditing:Paint (UnityEngine.Tilemaps.Tilemap,UnityEngine.BoundsInt,Ember.LevelAuthoring.EmberTerrainTile,bool) (at ./Packages/com.ember/LevelAuthoring/Editor/EmberTerrainEditing.cs:78)\r\nEmber.LevelAuthoring.Tests.EmberLevelAuthoringTests:SpriteAndCollisionMatchNonSquareGridWithCustomPivot (single,int,bool) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelAuthoringTests.cs:124)\r\nSystem.Reflection.MethodBase:Invoke (object,object[])\r\nNUnit.Framework.Internal.Reflect:InvokeMethod (System.Reflection.MethodInfo,object,object[])\r\nNUnit.Framework.Internal.MethodWrapper:Invoke (object,object[])\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod (NUnit.Framework.Internal.ITestExecutionContext)\r\nNUnit.Framework.Internal.Commands.TestMethodCommand:Execute (NUnit.Framework.Internal.ITestExecutionContext)\r\nUnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:Execu\r\n\r\n",
+            "output": "Not allowed to override physics shape on sprite ''\r\nNot allowed to override physics shape on sprite ''\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,28 @@
+var scene=UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+var tile=AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.EmberTerrainTile>(Game.State.Editor.PlatformerLevelSamples.ROOT+"/Solid.asset");
+var result=new System.Collections.Generic.List<string>();
+try{
+ var grid=new GameObject("Grid",typeof(Grid));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(grid,scene);grid.GetComponent<Grid>().cellSize=new Vector3(.5f,.5f,1);
+ var go=new GameObject("Map",typeof(UnityEngine.Tilemaps.Tilemap),typeof(UnityEngine.Tilemaps.TilemapRenderer),typeof(UnityEngine.Tilemaps.TilemapCollider2D));go.transform.SetParent(grid.transform,false);var map=go.GetComponent<UnityEngine.Tilemaps.Tilemap>();
+ var shapes=new[]{new[]{"11111","11111","11111"},new[]{"11000","11000","11111"},new[]{"11111","10001","10001","11111"},new[]{"00100"},new[]{"111111"}};
+ var offsets=new[]{Vector3Int.right,Vector3Int.up,Vector3Int.left,Vector3Int.down,new Vector3Int(1,1,0),new Vector3Int(-1,1,0),new Vector3Int(-1,-1,0),new Vector3Int(1,-1,0)};
+ Action verify=()=>{foreach(var p in map.cellBounds.allPositionsWithin){if(!map.HasTile(p))continue;int mask=0;for(int bit=0;bit<8;bit++){var neighbor=map.GetTile<Ember.LevelAuthoring.EmberTerrainTile>(p+offsets[bit]);if(neighbor!=null && neighbor.ConnectionGroup==tile.ConnectionGroup)mask|=1<<bit;}var sprite=map.GetSprite(p);if(sprite==null||sprite.name!="mask-"+mask.ToString("D3"))throw new Exception("wrong seam "+p+" mask="+mask+" sprite="+(sprite==null?"null":sprite.name));}};
+ for(int shape=0;shape<shapes.Length;shape++){
+  map.ClearAllTiles();int expected=0;var rows=shapes[shape];for(int y=0;y<rows.Length;y++)for(int x=0;x<rows[y].Length;x++)if(rows[y][x]=='1'){map.SetTile(new Vector3Int(x,-y,0),tile);expected++;}
+  verify();if(map.GetTilesBlock(map.cellBounds).Count(t=>t!=null)!=expected)throw new Exception("occupancy grew");
+  var first=Vector3Int.zero;foreach(var p in map.cellBounds.allPositionsWithin)if(map.HasTile(p)){first=p;break;}
+  Ember.LevelAuthoring.Editor.EmberTerrainEditing.Paint(map,new BoundsInt(first,Vector3Int.one),tile,true);verify();Undo.PerformUndo();verify();Undo.PerformRedo();verify();Undo.PerformUndo();
+  map.CompressBounds();var source=map.cellBounds;Ember.LevelAuthoring.Editor.EmberTerrainEditing.Move(map,source,new Vector3Int(20,0,0),tile);verify();Undo.PerformUndo();verify();
+  result.Add("shape "+shape+": native paint, erase, move, Undo/Redo, no extra occupancy");
+ }
+ var replacement=UnityEngine.Object.Instantiate(tile);
+ try{
+ replacement.Configure("replacement",tile.ConnectionGroup,tile.CellSize,tile.Anchor,tile.Physics,tile.Fallback,Color.red,tile.Rules);
+ map.ClearAllTiles();Ember.LevelAuthoring.Editor.EmberTerrainEditing.Paint(map,new BoundsInt(0,0,0,8,2,1),tile);Physics2D.SyncTransforms();var before=map.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>().bounds;
+ Ember.LevelAuthoring.Editor.EmberTerrainEditing.ReplaceStyle(map,new BoundsInt(0,0,0,8,2,1),tile,replacement);Physics2D.SyncTransforms();if(map.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>().bounds!=before || map.GetTilesBlock(new BoundsInt(0,0,0,8,2,1)).Count(t=>t!=null)!=16)throw new Exception("style changed geometry");
+ Ember.LevelAuthoring.Editor.EmberTerrainEditing.ReplaceStyle(map,new BoundsInt(0,0,0,8,2,1),replacement,tile);
+ replacement.Configure("other","other.group",tile.CellSize,tile.Anchor,tile.Physics,tile.Fallback,Color.red,tile.Rules);map.SetTile(new Vector3Int(8,0,0),replacement);map.RefreshAllTiles();if(map.GetSprite(new Vector3Int(7,0,0)).name!="mask-038")throw new Exception("mixed group connected");
+ result.Add("compatible replacement preserves collision/occupancy; different group hard boundary");
+ }finally{UnityEngine.Object.DestroyImmediate(replacement);}
+ return result.ToArray();
+}finally{UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);}

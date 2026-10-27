@@ -1,0 +1,55 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"processId\":113428,\"profile\":\"Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset\",\"global\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/GameplayScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/MainScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Scenes/SettingsScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"enabled\":false}],\"effective\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"enabled\":true},{\"path\":\"Assets/Game/Development/LevelAuthoring/AuthoringSample.unity\",\"enabled\":false}],\"failed\":false,\"active\":false,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "processId": 113428,
+        "profile": "Assets/Game/Development/LevelAuthoring/Acceptance/OwnScenesProfile.asset",
+        "global": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/GameplayScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/MainScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Scenes/SettingsScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+            "enabled": false
+          }
+        ],
+        "effective": [
+          {
+            "path": "Assets/Game/Scenes/FrameworkScene.unity",
+            "enabled": true
+          },
+          {
+            "path": "Assets/Game/Development/LevelAuthoring/AuthoringSample.unity",
+            "enabled": false
+          }
+        ],
+        "failed": false,
+        "active": false,
+        "scene": "Assets/Game/Scenes/FrameworkScene.unity"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

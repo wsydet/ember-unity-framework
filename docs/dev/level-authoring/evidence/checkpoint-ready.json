@@ -1,0 +1,23 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"ready\":true,\"status\":\"试玩就绪 · 测试进度 · sample.authoring\",\"position\":\"(-2.00, 0.89, 0.00)\",\"checkpoint\":\"sample.checkpoint\",\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Library\\\\PlayerFormalAcceptance\\\\d07e8093805040a4b09530cbc57736f8\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "ready": true,
+        "status": "试玩就绪 · 测试进度 · sample.authoring",
+        "position": "(-2.00, 0.89, 0.00)",
+        "checkpoint": "sample.checkpoint",
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\PlayerFormalAcceptance\\d07e8093805040a4b09530cbc57736f8"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

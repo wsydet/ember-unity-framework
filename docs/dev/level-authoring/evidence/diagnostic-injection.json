@@ -1,0 +1,65 @@
+{
+  "missingAndPosition": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "rule": "prefab.missing",
+          "message": "Prefab源资源缺失。",
+          "target": "Missing prefab acceptance"
+        },
+        {
+          "rule": "spawn.finite",
+          "message": "测试位置必须为有限坐标。",
+          "target": "AuthoringSampleLevel"
+        },
+        {
+          "rule": "spawn.blocked",
+          "message": "出生空间与实体碰撞重叠；请移动测试位置。",
+          "target": "实体地形"
+        },
+        {
+          "rule": "spawn.blocked",
+          "message": "出生空间与实体碰撞重叠；请移动测试位置。",
+          "target": "单向平台"
+        },
+        {
+          "rule": "spawn.blocked",
+          "message": "出生空间与实体碰撞重叠；请移动测试位置。",
+          "target": "ResetPlatform"
+        }
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "duplicateAndCheckpoint": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "rule": "prefab.missing",
+          "message": "Prefab源资源缺失。",
+          "target": "Missing prefab acceptance"
+        },
+        {
+          "rule": "checkpoint.id",
+          "message": "检查点ID为空或重复：sample.checkpoint",
+          "target": "Checkpoint · 世界初态"
+        },
+        {
+          "rule": "checkpoint.missing",
+          "message": "请选择唯一且启用的已登记检查点。",
+          "target": "AuthoringSampleLevel"
+        },
+        {
+          "rule": "spawn.blocked",
+          "message": "出生空间与实体碰撞重叠；请移动测试位置。",
+          "target": "实体地形"
+        }
+      ],
+      "compiler": "codedom"
+    }
+  }
+}
