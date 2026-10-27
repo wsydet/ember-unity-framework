@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布：Ember **0.24.1**，修复存量非 Prefab 场景对象适配器解析与工作台复制/删除接线，相关回归14/14通过，含实际 GUI、Scene 范围及 Undo/Redo/失败回滚。platformer-2d **0.13.0** 及其他模板、依赖和技能内容不变；Windward 未升级或部署，消费端验收仍待接入后执行。
+当前发布：Ember **0.24.2**，修复 B02 规则瓦片在真实脚本域重载后丢失临时 Sprite 引用的问题。框架定向回归8/8及连续两次真实域重载通过；platformer-2d **0.13.0**及其余模板、依赖和技能内容不变。Windward未升级或部署；其他加载路径未验，B02保持未关闭。
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.24.1"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.24.2"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.24.1 manifest](Dependencies~/manifest-0.24.1.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。停止协议与消费示例见 [异步所有权契约](Documentation~/maintenance/inflight-ownership.md)。
+完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.24.2 manifest](Dependencies~/manifest-0.24.2.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。B02修复与验证边界见 [瓦片缓存恢复](Documentation~/maintenance/terrain-cache-b02.md)。
 
 0.21.5 正式发布后，已有 platformer-2d 0.11.1 项目需先通过 UPM Manager 更新框架，再对0.11.2进行模板三方补丁预览，保护定制。包升级不会自动修复已部署的 Player/Entity 源码，详见[本版准备说明](../../docs/dev/release-0.21.5.md)。
 

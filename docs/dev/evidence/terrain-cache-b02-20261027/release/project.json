@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 294734,
+  "result": {
+    "contents": [
+      {
+        "uri": "mcpforunity://project/info",
+        "mimeType": "text/plain",
+        "text": "{\"success\":true,\"message\":\"Retrieved project info.\",\"error\":null,\"data\":{\"projectRoot\":\"C:/Users/wuyu/My/ember-unity-framework\",\"projectName\":\"ember-unity-framework\",\"unityVersion\":\"6000.5.4f1\",\"platform\":\"StandaloneWindows64\",\"assetsPath\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\"},\"hint\":null}"
+      }
+    ]
+  }
+}

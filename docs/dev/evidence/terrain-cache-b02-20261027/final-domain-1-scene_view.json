@@ -1,0 +1,30 @@
+{
+  "jsonrpc": "2.0",
+  "id": 315007,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Scene View screenshot captured to 'docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png' (scene view: Scene).\",\"data\":{\"path\":\"docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png\",\"fullPath\":\"C:/Users/wuyu/My/ember-unity-framework/docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png\",\"superSize\":1,\"isAsync\":false,\"camera\":\"SceneCamera\",\"captureSource\":\"scene_view\",\"captureMode\":\"scene_view_viewport\",\"sceneViewName\":\"Scene\",\"viewportWidth\":1791,\"viewportHeight\":1001,\"viewTarget\":\"B02 Variant Instance\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Scene View screenshot captured to 'docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png' (scene view: Scene).",
+      "data": {
+        "path": "docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png",
+        "fullPath": "C:/Users/wuyu/My/ember-unity-framework/docs/dev/evidence/terrain-cache-b02-20261027/final-domain-1-scene_view.png",
+        "superSize": 1,
+        "isAsync": false,
+        "camera": "SceneCamera",
+        "captureSource": "scene_view",
+        "captureMode": "scene_view_viewport",
+        "sceneViewName": "Scene",
+        "viewportWidth": 1791,
+        "viewportHeight": 1001,
+        "viewTarget": "B02 Variant Instance"
+      }
+    },
+    "isError": false
+  }
+}

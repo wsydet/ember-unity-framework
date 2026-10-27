@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 905389,
+  "result": {
+    "contents": [
+      {
+        "uri": "mcpforunity://editor/state",
+        "mimeType": "text/plain",
+        "text": "{\"success\":false,\"message\":null,\"error\":\"Unity session not ready for 'get_editor_state' (ping not answered); please retry\",\"data\":null,\"hint\":\"retry\"}"
+      }
+    ]
+  }
+}

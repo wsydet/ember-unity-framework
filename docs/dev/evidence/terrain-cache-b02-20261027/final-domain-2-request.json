@@ -1,0 +1,33 @@
+{
+  "jsonrpc": "2.0",
+  "id": 390707,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Refresh requested.\",\"error\":null,\"data\":{\"refresh_triggered\":true,\"compile_requested\":true,\"compile_started\":null,\"resulting_state\":\"idle\",\"hint\":\"If Unity enters compilation/domain reload, poll the mcpforunity://editor/state resource until data.advice.ready_for_tools is true.\"},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Refresh requested.",
+        "error": null,
+        "data": {
+          "refresh_triggered": true,
+          "compile_requested": true,
+          "compile_started": null,
+          "resulting_state": "idle",
+          "hint": "If Unity enters compilation/domain reload, poll the mcpforunity://editor/state resource until data.advice.ready_for_tools is true."
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

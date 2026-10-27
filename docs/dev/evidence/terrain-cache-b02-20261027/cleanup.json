@@ -1,0 +1,25 @@
+{
+  "jsonrpc": "2.0",
+  "id": 334799,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"fixtureDeleted\":true,\"probeDeleted\":true,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\"},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "fixtureDeleted": true,
+          "probeDeleted": true,
+          "scene": "Assets/Game/Scenes/FrameworkScene.unity"
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

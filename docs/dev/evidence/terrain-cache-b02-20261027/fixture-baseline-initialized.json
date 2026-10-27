@@ -1,0 +1,21 @@
+{
+  "jsonrpc": "2.0",
+  "id": 639024,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":\"Initial fixture baseline only; no domain acceptance has begun.\",\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": "Initial fixture baseline only; no domain acceptance has begun.",
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "jsonrpc": "2.0",
+  "id": 874045,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"scene\":\"Assets/__B02TerrainCacheAcceptance_20261027/B02.unity\",\"dirty\":false,\"rootInstance\":\"568105589213750106\",\"prefabType\":\"Variant\",\"maps\":[{\"name\":\"Fallback12\",\"instance\":\"568105589213750096\",\"cells\":[{\"position\":\"(0, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(1, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(2, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(3, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(0, 1, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(1, 1, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(2, 1, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(3, 1, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(0, 2, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(1, 2, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(2, 2, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(3, 2, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null}],\"grid\":\"(1.00, 1.00, 1.00)\",\"anchor\":\"(0.50, 0.50, 0.00)\",\"sortingOrder\":3,\"sortingLayer\":0,\"bounds\":\"Position: (0, 0, 0), Size: (4, 3, 1)\",\"collisionBounds\":\"Center: (0.00, 0.00, 0.00), Extents: (0.00, 0.00, 0.00)\",\"paths\":1,\"compositePoints\":4,\"changesPending\":false,\"prefab\":\"Assets/__B02TerrainCacheAcceptance_20261027/Variant.prefab\",\"overrides\":[\"m_Name:B02 Variant Instance:\",\"m_TileSpriteArray.Array.size:2:\",\"m_TileSpriteArray.Array.data[1].m_Data::\",\"m_TileSpriteArray.Array.data[0].m_RefCount:0:\",\"m_TileSpriteArray.Array.data[1].m_RefCount:12:\",\"m_Tiles.Array.data[0].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[1].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[2].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[3].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[4].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[5].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[6].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[7].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[8].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[9].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[10].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[11].second.m_TileSpriteIndex:1:\",\"m_LocalPosition.x:0:\",\"m_LocalPosition.y:0:\",\"m_LocalPosition.z:0:\",\"m_LocalRotation.w:1:\",\"m_LocalRotation.x:0:\",\"m_LocalRotation.y:0:\",\"m_LocalRotation.z:0:\",\"m_LocalEulerAnglesHint.x:0:\",\"m_LocalEulerAnglesHint.y:0:\",\"m_LocalEulerAnglesHint.z:0:\",\"m_ChunkCullingBounds.x:0.5:\",\"m_ChunkCullingBounds.x:0.70000005:\",\"m_ChunkCullingBounds.y:0.024999976:\",\"m_TileSpriteArray.Array.data[0].m_Data::\",\"m_TileSpriteArray.Array.data[1].m_Data::\"]},{\"name\":\"RulesAndOrdinary\",\"instance\":\"568105589213750076\",\"cells\":[{\"position\":\"(0, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/RuleTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(0.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(1, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/RuleTile.asset\",\"sprite\":null,\"spriteInstance\":null,\"spritePersistent\":false,\"color\":\"RGBA(0.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockAll\",\"collider\":\"Grid\",\"fallback\":\"Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png\",\"vertices\":null},{\"position\":\"(3, 0, 0)\",\"tile\":\"Assets/__B02TerrainCacheAcceptance_20261027/OrdinaryTile.asset\",\"sprite\":\"Ordinary\",\"spriteInstance\":\"568105584918858474\",\"spritePersistent\":true,\"color\":\"RGBA(1.000, 1.000, 1.000, 1.000)\",\"matrix\":\"1.00000\\t0.00000\\t0.00000\\t0.00000\\n0.00000\\t1.00000\\t0.00000\\t0.00000\\n0.00000\\t0.00000\\t1.00000\\t0.00000\\n0.00000\\t0.00000\\t0.00000\\t1.00000\\n\",\"flags\":\"LockColor\",\"collider\":\"Sprite\",\"fallback\":null,\"vertices\":[\"(-0.25, 0.125)\",\"(0.25, 0.125)\",\"(-0.25, -0.125)\",\"(0.25, -0.125)\"]}],\"grid\":\"(1.50, 0.75, 1.00)\",\"anchor\":\"(0.20, 0.70, 0.00)\",\"sortingOrder\":5,\"sortingLayer\":0,\"bounds\":\"Position: (0, 0, 0), Size: (4, 1, 1)\",\"collisionBounds\":\"Center: (2.53, 0.38, 0.00), Extents: (2.53, 0.38, 0.00)\",\"paths\":-1,\"compositePoints\":-1,\"changesPending\":false,\"prefab\":\"Assets/__B02TerrainCacheAcceptance_20261027/Variant.prefab\",\"overrides\":[\"m_Name:B02 Variant Instance:\",\"m_TileSpriteArray.Array.size:2:\",\"m_TileSpriteArray.Array.data[1].m_Data::\",\"m_TileSpriteArray.Array.data[0].m_RefCount:0:\",\"m_TileSpriteArray.Array.data[1].m_RefCount:12:\",\"m_Tiles.Array.data[0].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[1].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[2].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[3].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[4].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[5].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[6].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[7].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[8].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[9].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[10].second.m_TileSpriteIndex:1:\",\"m_Tiles.Array.data[11].second.m_TileSpriteIndex:1:\",\"m_LocalPosition.x:0:\",\"m_LocalPosition.y:0:\",\"m_LocalPosition.z:0:\",\"m_LocalRotation.w:1:\",\"m_LocalRotation.x:0:\",\"m_LocalRotation.y:0:\",\"m_LocalRotation.z:0:\",\"m_LocalEulerAnglesHint.x:0:\",\"m_LocalEulerAnglesHint.y:0:\",\"m_LocalEulerAnglesHint.z:0:\",\"m_ChunkCullingBounds.x:0.5:\",\"m_ChunkCullingBounds.x:0.70000005:\",\"m_ChunkCullingBounds.y:0.024999976:\",\"m_TileSpriteArray.Array.data[0].m_Data::\",\"m_TileSpriteArray.Array.data[1].m_Data::\"]}],\"cache\":[{\"tile\":\"FallbackTile\",\"count\":1},{\"tile\":\"RuleTile\",\"count\":2}],\"generated\":[{\"name\":\"Rule\",\"id\":\"568105589213748868\"},{\"name\":\"Fallback\",\"id\":\"568105589213748870\"},{\"name\":\"Fallback\",\"id\":\"568105589213748872\"}],\"editorMvid\":\"86942693-d6dc-4e76-9a15-b66e66539124\",\"probe\":[\"9e4407bd-ca20-4972-9b70-c80469068637\"],\"compiling\":false,\"updating\":false,\"failed\":false},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+          "scene": "Assets/__B02TerrainCacheAcceptance_20261027/B02.unity",
+          "dirty": false,
+          "rootInstance": "568105589213750106",
+          "prefabType": "Variant",
+          "maps": [
+            {
+              "name": "Fallback12",
+              "instance": "568105589213750096",
+              "cells": [
+                {
+                  "position": "(0, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(1, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(2, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(3, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(0, 1, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(1, 1, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(2, 1, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(3, 1, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(0, 2, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(1, 2, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(2, 2, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(3, 2, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/FallbackTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                }
+              ],
+              "grid": "(1.00, 1.00, 1.00)",
+              "anchor": "(0.50, 0.50, 0.00)",
+              "sortingOrder": 3,
+              "sortingLayer": 0,
+              "bounds": "Position: (0, 0, 0), Size: (4, 3, 1)",
+              "collisionBounds": "Center: (0.00, 0.00, 0.00), Extents: (0.00, 0.00, 0.00)",
+              "paths": 1,
+              "compositePoints": 4,
+              "changesPending": false,
+              "prefab": "Assets/__B02TerrainCacheAcceptance_20261027/Variant.prefab",
+              "overrides": [
+                "m_Name:B02 Variant Instance:",
+                "m_TileSpriteArray.Array.size:2:",
+                "m_TileSpriteArray.Array.data[1].m_Data::",
+                "m_TileSpriteArray.Array.data[0].m_RefCount:0:",
+                "m_TileSpriteArray.Array.data[1].m_RefCount:12:",
+                "m_Tiles.Array.data[0].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[1].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[2].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[3].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[4].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[5].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[6].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[7].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[8].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[9].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[10].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[11].second.m_TileSpriteIndex:1:",
+                "m_LocalPosition.x:0:",
+                "m_LocalPosition.y:0:",
+                "m_LocalPosition.z:0:",
+                "m_LocalRotation.w:1:",
+                "m_LocalRotation.x:0:",
+                "m_LocalRotation.y:0:",
+                "m_LocalRotation.z:0:",
+                "m_LocalEulerAnglesHint.x:0:",
+                "m_LocalEulerAnglesHint.y:0:",
+                "m_LocalEulerAnglesHint.z:0:",
+                "m_ChunkCullingBounds.x:0.5:",
+                "m_ChunkCullingBounds.x:0.70000005:",
+                "m_ChunkCullingBounds.y:0.024999976:",
+                "m_TileSpriteArray.Array.data[0].m_Data::",
+                "m_TileSpriteArray.Array.data[1].m_Data::"
+              ]
+            },
+            {
+              "name": "RulesAndOrdinary",
+              "instance": "568105589213750076",
+              "cells": [
+                {
+                  "position": "(0, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/RuleTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(0.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(1, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/RuleTile.asset",
+                  "sprite": null,
+                  "spriteInstance": null,
+                  "spritePersistent": false,
+                  "color": "RGBA(0.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockAll",
+                  "collider": "Grid",
+                  "fallback": "Assets/__B02TerrainCacheAcceptance_20261027/Fallback.png",
+                  "vertices": null
+                },
+                {
+                  "position": "(3, 0, 0)",
+                  "tile": "Assets/__B02TerrainCacheAcceptance_20261027/OrdinaryTile.asset",
+                  "sprite": "Ordinary",
+                  "spriteInstance": "568105584918858474",
+                  "spritePersistent": true,
+                  "color": "RGBA(1.000, 1.000, 1.000, 1.000)",
+                  "matrix": "1.00000\t0.00000\t0.00000\t0.00000\n0.00000\t1.00000\t0.00000\t0.00000\n0.00000\t0.00000\t1.00000\t0.00000\n0.00000\t0.00000\t0.00000\t1.00000\n",
+                  "flags": "LockColor",
+                  "collider": "Sprite",
+                  "fallback": null,
+                  "vertices": [
+                    "(-0.25, 0.125)",
+                    "(0.25, 0.125)",
+                    "(-0.25, -0.125)",
+                    "(0.25, -0.125)"
+                  ]
+                }
+              ],
+              "grid": "(1.50, 0.75, 1.00)",
+              "anchor": "(0.20, 0.70, 0.00)",
+              "sortingOrder": 5,
+              "sortingLayer": 0,
+              "bounds": "Position: (0, 0, 0), Size: (4, 1, 1)",
+              "collisionBounds": "Center: (2.53, 0.38, 0.00), Extents: (2.53, 0.38, 0.00)",
+              "paths": -1,
+              "compositePoints": -1,
+              "changesPending": false,
+              "prefab": "Assets/__B02TerrainCacheAcceptance_20261027/Variant.prefab",
+              "overrides": [
+                "m_Name:B02 Variant Instance:",
+                "m_TileSpriteArray.Array.size:2:",
+                "m_TileSpriteArray.Array.data[1].m_Data::",
+                "m_TileSpriteArray.Array.data[0].m_RefCount:0:",
+                "m_TileSpriteArray.Array.data[1].m_RefCount:12:",
+                "m_Tiles.Array.data[0].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[1].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[2].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[3].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[4].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[5].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[6].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[7].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[8].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[9].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[10].second.m_TileSpriteIndex:1:",
+                "m_Tiles.Array.data[11].second.m_TileSpriteIndex:1:",
+                "m_LocalPosition.x:0:",
+                "m_LocalPosition.y:0:",
+                "m_LocalPosition.z:0:",
+                "m_LocalRotation.w:1:",
+                "m_LocalRotation.x:0:",
+                "m_LocalRotation.y:0:",
+                "m_LocalRotation.z:0:",
+                "m_LocalEulerAnglesHint.x:0:",
+                "m_LocalEulerAnglesHint.y:0:",
+                "m_LocalEulerAnglesHint.z:0:",
+                "m_ChunkCullingBounds.x:0.5:",
+                "m_ChunkCullingBounds.x:0.70000005:",
+                "m_ChunkCullingBounds.y:0.024999976:",
+                "m_TileSpriteArray.Array.data[0].m_Data::",
+                "m_TileSpriteArray.Array.data[1].m_Data::"
+              ]
+            }
+          ],
+          "cache": [
+            {
+              "tile": "FallbackTile",
+              "count": 1
+            },
+            {
+              "tile": "RuleTile",
+              "count": 2
+            }
+          ],
+          "generated": [
+            {
+              "name": "Rule",
+              "id": "568105589213748868"
+            },
+            {
+              "name": "Fallback",
+              "id": "568105589213748870"
+            },
+            {
+              "name": "Fallback",
+              "id": "568105589213748872"
+            }
+          ],
+          "editorMvid": "86942693-d6dc-4e76-9a15-b66e66539124",
+          "probe": [
+            "9e4407bd-ca20-4972-9b70-c80469068637"
+          ],
+          "compiling": false,
+          "updating": false,
+          "failed": false
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

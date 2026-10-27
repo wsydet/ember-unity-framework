@@ -1,0 +1,31 @@
+const string folder="Assets/__B02TerrainCacheAcceptance_20261027";
+var scene=UnityEngine.SceneManagement.SceneManager.GetSceneByPath(folder+"/B02.unity");
+var root=System.Array.Find(scene.GetRootGameObjects(), r=>r.name=="B02 Variant Instance");
+var maps=root.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>(true);
+var results=new System.Collections.Generic.List<object>();
+foreach(var map in maps)
+{
+    var cells=new System.Collections.Generic.List<object>();
+    foreach(var p in map.cellBounds.allPositionsWithin)
+    {
+        var tile=map.GetTile(p); if(tile==null) continue;
+        // 首先读取渲染引用；本脚本不调用任何 Refresh/SetTile/碰撞重建。
+        var sprite=map.GetSprite(p);
+        var terrain=tile as Ember.LevelAuthoring.EmberTerrainTile;
+        cells.Add(new { position=p.ToString(), tile=UnityEditor.AssetDatabase.GetAssetPath(tile), sprite=sprite==null?null:sprite.name, spriteInstance=sprite==null?null:sprite.GetEntityId().ToString(), spritePersistent=sprite!=null && UnityEditor.EditorUtility.IsPersistent(sprite), color=map.GetColor(p).ToString(), matrix=map.GetTransformMatrix(p).ToString(), flags=map.GetTileFlags(p).ToString(), collider=map.GetColliderType(p).ToString(), fallback=terrain==null?null:UnityEditor.AssetDatabase.GetAssetPath(terrain.Fallback), vertices=sprite==null?null:sprite.vertices.Select(v=>v.ToString("R")).ToArray() });
+    }
+    var composite=map.GetComponent<UnityEngine.CompositeCollider2D>();
+    var collider=map.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>();
+    results.Add(new {name=map.name, instance=map.GetEntityId().ToString(), cells=cells, grid=map.layoutGrid.cellSize.ToString(), anchor=map.tileAnchor.ToString(), sortingOrder=map.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>().sortingOrder, sortingLayer=map.GetComponent<UnityEngine.Tilemaps.TilemapRenderer>().sortingLayerID, bounds=map.cellBounds.ToString(), collisionBounds=collider.bounds.ToString(), paths=composite==null?-1:composite.pathCount, compositePoints=composite==null?-1:composite.pointCount, changesPending=collider.hasTilemapChanges, prefab=UnityEditor.PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(map.gameObject), overrides=UnityEditor.PrefabUtility.GetPropertyModifications(root).Select(m=>m.propertyPath+":"+m.value+":"+UnityEditor.AssetDatabase.GetAssetPath(m.objectReference)).ToArray() });
+}
+var cache=new System.Collections.Generic.List<object>();
+foreach(string name in new[]{"FallbackTile","RuleTile"})
+{
+    var tile=UnityEditor.AssetDatabase.LoadAssetAtPath<Ember.LevelAuthoring.EmberTerrainTile>(folder+"/"+name+".asset");
+    var dict=(System.Collections.IDictionary)typeof(Ember.LevelAuthoring.EmberTerrainTile).GetField("_renderSprites",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(tile);
+    cache.Add(new {tile=name, count=dict==null?0:dict.Count});
+}
+var generated=new System.Collections.Generic.List<object>();
+foreach(var sprite in UnityEngine.Resources.FindObjectsOfTypeAll<UnityEngine.Sprite>())
+    if(!UnityEditor.EditorUtility.IsPersistent(sprite) && sprite.texture!=null && UnityEditor.AssetDatabase.GetAssetPath(sprite.texture).StartsWith(folder+"/")) generated.Add(new {name=sprite.name, id=sprite.GetEntityId().ToString()});
+return new {project=UnityEngine.Application.dataPath, scene=scene.path, dirty=scene.isDirty, rootInstance=root.GetEntityId().ToString(), prefabType=UnityEditor.PrefabUtility.GetPrefabAssetType(root).ToString(), maps=results, cache=cache, generated=generated, editorMvid=typeof(Ember.LevelAuthoring.Editor.EmberTerrainEditing).Assembly.ManifestModule.ModuleVersionId.ToString(), probe=System.AppDomain.CurrentDomain.GetAssemblies().Where(a=>a.GetName().Name=="Assembly-CSharp-Editor").Select(a=>a.ManifestModule.ModuleVersionId.ToString()).ToArray(), compiling=UnityEditor.EditorApplication.isCompiling, updating=UnityEditor.EditorApplication.isUpdating, failed=UnityEditor.EditorUtility.scriptCompilationFailed};

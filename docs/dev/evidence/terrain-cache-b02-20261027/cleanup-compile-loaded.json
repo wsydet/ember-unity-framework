@@ -1,0 +1,35 @@
+{
+  "jsonrpc": "2.0",
+  "id": 268207,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"dirty\":false,\"scenes\":1,\"failed\":false,\"compiling\":false,\"updating\":false,\"fixtureAbsent\":true,\"probeAbsent\":true,\"editorMvid\":\"d7b390c0-effe-4916-9994-b480944fc9ba\",\"probeAssemblyMvid\":[\"15f48b91-cdf5-4c9f-ad09-4a4652dcbee8\"]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+          "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+          "dirty": false,
+          "scenes": 1,
+          "failed": false,
+          "compiling": false,
+          "updating": false,
+          "fixtureAbsent": true,
+          "probeAbsent": true,
+          "editorMvid": "d7b390c0-effe-4916-9994-b480944fc9ba",
+          "probeAssemblyMvid": [
+            "15f48b91-cdf5-4c9f-ad09-4a4652dcbee8"
+          ]
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

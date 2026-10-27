@@ -1,0 +1,31 @@
+{
+  "jsonrpc": "2.0",
+  "id": 350161,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"reloads\":1,\"restores\":0,\"trace\":\"absent\",\"sprite\":[{\"loaded\":true,\"sprite\":null}]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "reloads": 1,
+          "restores": 0,
+          "trace": "absent",
+          "sprite": [
+            {
+              "loaded": true,
+              "sprite": null
+            }
+          ]
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

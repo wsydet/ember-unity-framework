@@ -1,0 +1,73 @@
+{
+  "Cycles": [
+    {
+      "Cycle": 1,
+      "SameRoot": true,
+      "SameMapAndCellSemanticData": true,
+      "PrefabOverrideDifferences": [
+        {
+          "InputObject": "m_ChunkCullingBounds.x:0.5:",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_ChunkCullingBounds.x:0.70000005:",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_ChunkCullingBounds.y:0.024999976:",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_ChunkCullingBounds.x:0.5:",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_ChunkCullingBounds.x:0.70000005:",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_ChunkCullingBounds.y:0.024999976:",
+          "SideIndicator": "=>"
+        }
+      ],
+      "NullSprites": 0,
+      "Generated": 3,
+      "OldSpriteIdsRetained": 0,
+      "MvidChanged": true,
+      "Dirty": false,
+      "Probe": "00486357-d496-4f57-b3ef-e171b3b9bae0"
+    },
+    {
+      "Cycle": 2,
+      "SameRoot": true,
+      "SameMapAndCellSemanticData": true,
+      "PrefabOverrideDifferences": [
+        {
+          "InputObject": "m_TileSpriteArray.Array.data[0].m_Data::",
+          "SideIndicator": "=>"
+        },
+        {
+          "InputObject": "m_TileSpriteArray.Array.data[0].m_Data::",
+          "SideIndicator": "=>"
+        }
+      ],
+      "NullSprites": 0,
+      "Generated": 3,
+      "OldSpriteIdsRetained": 0,
+      "MvidChanged": true,
+      "Dirty": false,
+      "Probe": "c23e1fce-912f-4d32-9abe-93bf7d2172d0"
+    }
+  ],
+  "FixtureFileHashChanges": [],
+  "GameImageHashes": [
+    {
+      "Path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\dev\\evidence\\terrain-cache-b02-20261027\\final-domain-1-game_view.png",
+      "Hash": "96DF096773987338A5277948C76E9AF6D7B254FE3210D742D8ED44E12A2FC891"
+    },
+    {
+      "Path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\dev\\evidence\\terrain-cache-b02-20261027\\final-domain-2-game_view.png",
+      "Hash": "96DF096773987338A5277948C76E9AF6D7B254FE3210D742D8ED44E12A2FC891"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "jsonrpc": "2.0",
+  "id": 683057,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"scene\":\"Assets/__B02TerrainCacheAcceptance_20261027/B02.unity\",\"original\":[{\"path\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"isLoaded\":true,\"isActive\":true,\"isSubScene\":false}],\"variant\":\"Variant\",\"maps\":2},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "scene": "Assets/__B02TerrainCacheAcceptance_20261027/B02.unity",
+          "original": [
+            {
+              "path": "Assets/Game/Scenes/FrameworkScene.unity",
+              "isLoaded": true,
+              "isActive": true,
+              "isSubScene": false
+            }
+          ],
+          "variant": "Variant",
+          "maps": 2
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

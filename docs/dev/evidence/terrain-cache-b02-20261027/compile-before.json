@@ -1,0 +1,29 @@
+{
+  "jsonrpc": "2.0",
+  "id": 779088,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"editorMvid\":\"c992ce91-300b-4627-b453-4101af4cd3e5\",\"runtimeMvid\":\"b5e86f48-fba8-46e3-81d4-f8bff631dd2d\",\"cacheHookLoaded\":true,\"compiling\":false,\"updating\":false,\"failed\":false},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+          "editorMvid": "c992ce91-300b-4627-b453-4101af4cd3e5",
+          "runtimeMvid": "b5e86f48-fba8-46e3-81d4-f8bff631dd2d",
+          "cacheHookLoaded": true,
+          "compiling": false,
+          "updating": false,
+          "failed": false
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

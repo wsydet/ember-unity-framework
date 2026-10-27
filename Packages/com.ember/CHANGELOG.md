@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.2] - 2026-10-28
+
+- 修复 B02：EmberTerrainTile 临时 Sprite 缓存重建后，已打开场景中的 Tilemap 在脚本域重载后自动重新取得渲染引用。
+- 使用脚本重载通知与临时 Editor update 等待编译/导入结束，扫描前解除订阅；仅恢复使用 EmberTerrainTile 的已加载 Tilemap，不重铺或改写 Grid、Anchor、TileBase、碰撞及 Prefab 来源。
+- 定向回归8/8通过，真实 Prefab Variant 实例连续两次域重载通过；临时 Sprite 数量3→3→3，旧对象释放，Scene/Game相机画面已核对。
+- 模板、依赖及技能内容不变。Windward原实例、保存重开场景、正常重开Unity、正式试玩/停止、Windows构建、Player首次加载、源图集和大图耗时仍待验；B02暂不关闭，本次不升级Windward。
+
 ## [0.24.1] - 2026-10-27
 
 - 修复存量非 Prefab 场景对象无法解析项目对象适配器的问题，新增 RegisterObjectResolver、UnregisterObjectResolver 与 ResolveObject。

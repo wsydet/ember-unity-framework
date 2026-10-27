@@ -1,0 +1,27 @@
+{
+  "jsonrpc": "2.0",
+  "id": 387379,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"version\":\"0.24.2\",\"path\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Packages\\\\com.ember\",\"failed\":false,\"editorMvid\":\"d7b390c0-effe-4916-9994-b480944fc9ba\",\"testsMvid\":\"f8dfad5b-65b4-47e5-86e0-0b31bab1fb40\"},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "version": "0.24.2",
+          "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember",
+          "failed": false,
+          "editorMvid": "d7b390c0-effe-4916-9994-b480944fc9ba",
+          "testsMvid": "f8dfad5b-65b4-47e5-86e0-0b31bab1fb40"
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  }
+}

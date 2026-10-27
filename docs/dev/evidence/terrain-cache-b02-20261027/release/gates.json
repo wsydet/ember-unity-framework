@@ -1,0 +1,16 @@
+{
+  "version": "0.24.2",
+  "baseline": "c83ecb13a4e16f1f070c2937a3bdb1cc157d6a05",
+  "initialCandidateTree": "c7c2f5fea4b4b47a261f919673a5529e40e13747",
+  "sharedBinaryGate": {"passed": true, "fonts": 4, "cleanCheckoutAutocrlfFalse": true, "cleanCheckoutAutocrlfTrue": true},
+  "sharedFontConfigurationGate": {"passed": true, "workspace": true, "index": true},
+  "skillBundleGate": {"passed": true, "skills": 11, "files": 33, "regenerated": false, "bundledRawBlobsMatchManifest": true, "sourceDifferencesOnlyNewlines": true, "independentCandidateIndex": true, "treeUnchangedByNormalization": true},
+  "unity": {"project": "ember-unity-framework", "version": "6000.5.4f1", "package": "0.24.2", "compileAndDomainReloadCompleted": true, "consoleErrorsAndWarnings": 0, "editorMvid": "d7b390c0-effe-4916-9994-b480944fc9ba"},
+  "reusedSameFinalSourceEvidence": {"relatedTestsPassed": 8, "relatedTestsFailed": 0, "realDomainReloadsPassed": 2},
+  "templateActualHashesAndParentSnapshotsVerified": 5,
+  "templateChanges": false,
+  "preexistingUnrelatedPathsPreserved": 1244,
+  "windwardChanged": false,
+  "b02Closed": false,
+  "unvalidated": ["Windward original instance", "saved scene reopen", "normal Unity restart", "formal lifecycle play/stop", "Windows build", "Player first load", "real SpriteAtlas", "large-map recovery timing"]
+}
