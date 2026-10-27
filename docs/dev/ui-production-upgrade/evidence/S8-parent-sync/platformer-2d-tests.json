@@ -1,0 +1,35 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "2c796854efa74e60b9f0ab03ece8e002",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1793072468095,
+      "finished_unix_ms": 1793072479016,
+      "last_update_unix_ms": 1793072479016,
+      "progress": {
+        "completed": 13,
+        "total": 13,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.SceneFlow.Tests.GameLoadingProgressTests.SlowBusinessPreparationHoldsBelow100EvenWhenSceneIsIdle",
+        "last_finished_unix_ms": 1793072478981,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

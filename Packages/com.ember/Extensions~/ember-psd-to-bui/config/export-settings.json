@@ -1,0 +1,15 @@
+{
+  "plugin": "ember-psd-to-bui",
+  "version": "1.0.0",
+  "schemaPathHint": "protocol/bui.v3.schema.json",
+  "output": {
+    "buiExtension": ".bui",
+    "assetsSuffix": "_bui_assets",
+    "sliceFileNamePrefix": "UI_"
+  },
+  "slicing": {
+    "compactNineSlice": true,
+    "nineSliceCenterSize": 2
+  },
+  "defaultExportBaseOverrides": []
+}

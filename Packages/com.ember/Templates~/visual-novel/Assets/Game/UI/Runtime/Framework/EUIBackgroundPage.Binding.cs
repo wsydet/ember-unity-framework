@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUIBackgroundPanel
+ * prefab name  : EUIBackgroundPage
  * page name    : EUIBackgroundPage
- * update time  : 2026/9/1 20:35:29
+ * update time  : 2026/10/27 12:04:11
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

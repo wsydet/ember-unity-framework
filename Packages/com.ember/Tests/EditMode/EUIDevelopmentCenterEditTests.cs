@@ -71,7 +71,7 @@ namespace Ember.UI.Tests
         public void CreationPlan_ValidBusinessRequest_ShouldResolvePathsWithoutWriting()
         {
             var suffix = Guid.NewGuid().ToString("N");
-            var prefabName = $"DevCenter{suffix}Panel";
+            var prefabName = $"DevCenter{suffix}Page";
             var className = $"DevCenter{suffix}Page";
             var pageName = $"DevCenter{suffix}PageDef";
             var settings = EUIBindingSettingData.LoadExistingSettings();
@@ -135,7 +135,7 @@ namespace Ember.UI.Tests
         {
             var request = new EUICreationRequest
             {
-                PrefabName = "TraversalPanel",
+                PrefabName = "TraversalPage",
                 PageName = "TraversalPage",
                 ClassPath = "Inventory/../Page",
                 ClassName = "TraversalPage",
@@ -156,7 +156,7 @@ namespace Ember.UI.Tests
             var request = new EUICreationRequest
             {
                 CodePathMode = EUIBinding.CodePathMode.Business,
-                PrefabName = $"ExistingClass{suffix}Panel",
+                PrefabName = $"ExistingClass{suffix}Page",
                 PageName = $"ExistingClass{suffix}Page",
                 ClassPath = "DevCenterTests/Page",
                 ClassName = "EUIMainPage",
@@ -178,7 +178,7 @@ namespace Ember.UI.Tests
             var request = new EUICreationRequest
             {
                 CodePathMode = EUIBinding.CodePathMode.Business,
-                PrefabName = $"DotPath{suffix}Panel",
+                PrefabName = $"DotPath{suffix}Page",
                 PageName = $"DotPath{suffix}Page",
                 ClassPath = "Dev.cs/Page",
                 ClassName = $"DotPath{suffix}Page",
@@ -223,7 +223,7 @@ namespace Ember.UI.Tests
         {
             var request = new EUICreationRequest
             {
-                PrefabName = "ReservedNamePanel",
+                PrefabName = "ReservedNamePage",
                 PageName = "ReservedNamePage",
                 ClassPath = "DevCenterTests/Page",
                 ClassName = "CON",
@@ -240,7 +240,7 @@ namespace Ember.UI.Tests
             var suffix = Guid.NewGuid().ToString("N");
             var request = new EUICreationRequest
             {
-                PrefabName = $"ReservedPageName{suffix}Panel",
+                PrefabName = $"ReservedPageName{suffix}Page",
                 PageName = "CON",
                 ClassPath = "DevCenterTests/Page",
                 ClassName = $"ReservedPageName{suffix}Page",
@@ -389,7 +389,7 @@ namespace Ember.UI.Tests
                 var request = new EUICreationRequest
                 {
                     CodePathMode = EUIBinding.CodePathMode.Framework,
-                    PrefabName = "CreationPopupPanel",
+                    PrefabName = "CreationPopupPage",
                     PageName = "CreationPopupPage",
                     ClassPath = "UI/Page",
                     ClassName = "CreationPopupPage",

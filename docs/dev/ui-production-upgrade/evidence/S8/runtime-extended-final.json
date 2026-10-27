@@ -1,0 +1,116 @@
+{
+  "status": "failed",
+  "error": "System.Exception: transition-exit-clears\r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__0 (System.String name, System.Boolean ok, System.Object detail) [0x0003a] in <92dbf40c542c4e79a302eacb61ce68ce>:0 \r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__2 () [0x018e3] in <92dbf40c542c4e79a302eacb61ce68ce>:0 ",
+  "log": [
+    {
+      "name": "resolution-1280",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "gm-panel-fits-1280",
+      "ok": true,
+      "detail": {
+        "lo": "(100.00, 60.00)",
+        "hi": "(1180.00, 660.00)"
+      }
+    },
+    {
+      "name": "resolution-1600",
+      "ok": true,
+      "detail": {
+        "width": 1600,
+        "height": 720
+      }
+    },
+    {
+      "name": "gm-panel-fits-1600",
+      "ok": true,
+      "detail": {
+        "lo": "(260.00, 60.00)",
+        "hi": "(1340.00, 660.00)"
+      }
+    },
+    {
+      "name": "dialog-body-scroll-reference",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "confirm-callback-once",
+      "ok": true,
+      "detail": {
+        "callbacks": 1,
+        "result": "Accepted"
+      }
+    },
+    {
+      "name": "cancel-callback-once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "alert-callback-once",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "dynamic-three",
+      "ok": true,
+      "detail": 3
+    },
+    {
+      "name": "dynamic-progress-preserved",
+      "ok": true,
+      "detail": 0.5
+    },
+    {
+      "name": "dynamic-twenty",
+      "ok": true,
+      "detail": 20
+    },
+    {
+      "name": "dynamic-old-lease-invalid",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "dynamic-empty",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "ownership-both-created",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "loading-fill-binding",
+      "ok": true,
+      "detail": 0.37
+    },
+    {
+      "name": "loading-waits-for-preparation",
+      "ok": true,
+      "detail": 0.99
+    },
+    {
+      "name": "loading-finishes",
+      "ok": true,
+      "detail": 1.0
+    },
+    {
+      "name": "transition-enter-blocks",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transition-exit-clears",
+      "ok": false,
+      "detail": null
+    }
+  ]
+}

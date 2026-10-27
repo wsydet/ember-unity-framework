@@ -22,6 +22,9 @@ namespace Ember.Core.Editor
         private readonly EmberSetupWindowContext _context;
         private string _lastResult;
         private int _legacyActiveIndex;
+        private string _selectedTemplateId;
+        private Vector2 _templateScroll;
+        private Vector2 _detailScroll;
         private TemplatePatchPlan _patchPlan;
         private readonly Dictionary<string, TemplateConflictChoice> _patchChoices = new();
 
@@ -79,7 +82,6 @@ namespace Ember.Core.Editor
                 EmberSetupWindow.ShowProjectValidation(true);
 
             GUILayout.Space(8);
-            EditorGUILayout.LabelField("可用模板", EditorStyles.boldLabel);
             var templates = EmberProjectSetup.GetCompatibleTemplates();
             if (templates.Count == 0)
             {
@@ -89,11 +91,38 @@ namespace Ember.Core.Editor
             }
             else
             {
+                var editing = EmberProjectSetup.IsEmbeddedPackage() ? EmberProjectSetup.GetEditingTemplate() : null;
+                string currentId = editing?.templateId ?? EmberProjectSetup.GetActiveDeployedTemplate()?.templateId;
+                if (!templates.Any(t => t.id == _selectedTemplateId))
+                    _selectedTemplateId = templates.Any(t => t.id == currentId) ? currentId : templates[0].id;
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.BeginVertical(GUILayout.Width(270));
+                EditorGUILayout.LabelField("可用模板", EditorStyles.boldLabel);
+                _templateScroll = EditorGUILayout.BeginScrollView(_templateScroll);
+                var rowStyle = new GUIStyle(GUI.skin.button) { alignment = TextAnchor.MiddleLeft, wordWrap = true };
                 foreach (var template in templates)
                 {
-                    DrawTemplateRow(template);
-                    GUILayout.Space(4);
+                    string marker = template.id == currentId ? "当前 · " : "";
+                    string status = template.id == currentId ? GetCurrentStatus(template) : "可用模板";
+                    if (GUILayout.Toggle(_selectedTemplateId == template.id,
+                            $"{marker}{template.displayName}\n{template.id} · v{template.version}\n{status}",
+                            rowStyle, GUILayout.MinHeight(66)) && _selectedTemplateId != template.id)
+                    {
+                        _selectedTemplateId = template.id;
+                        _patchPlan = null;
+                        _patchChoices.Clear();
+                        _detailScroll = Vector2.zero;
+                    }
                 }
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(8);
+                EditorGUILayout.BeginVertical();
+                _detailScroll = EditorGUILayout.BeginScrollView(_detailScroll);
+                DrawTemplateRow(templates.First(t => t.id == _selectedTemplateId));
+                EditorGUILayout.EndScrollView();
+                EditorGUILayout.EndVertical();
+                EditorGUILayout.EndHorizontal();
 
                 int hidden = EmberProjectSetup.GetTemplates().Count - templates.Count;
                 if (hidden > 0)
@@ -111,7 +140,9 @@ namespace Ember.Core.Editor
 
             GUILayout.Space(8);
             EditorGUILayout.HelpBox(
-                "消费项目可从包内模板初始化或进行补丁增量更新，不会修改框架模板。跨前两位版本或切换模板时，先保护本地内容，再完整部署。",
+                EmberProjectSetup.IsEmbeddedPackage()
+                    ? "当前为框架开发仓库。此页展示模板身份与更新状态；模板内容维护统一进入模板开发页。"
+                    : "消费项目可从包内模板初始化或进行补丁增量更新，不会修改框架模板。跨前两位版本或切换模板时，先保护本地内容，再完整部署。",
                 MessageType.Info);
         }
 
@@ -123,13 +154,27 @@ namespace Ember.Core.Editor
 
         private void DrawActiveTemplateState()
         {
+            var editing = EmberProjectSetup.IsEmbeddedPackage() ? EmberProjectSetup.GetEditingTemplate() : null;
+            if (editing != null)
+            {
+                var template = EmberProjectSetup.GetTemplates().Find(t => t.id == editing.templateId);
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.LabelField($"当前正在编辑：{template?.displayName ?? editing.templateId}", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField($"{editing.templateId} · 编辑基线 v{editing.templateVersion} · 包内 v{template?.version ?? "未知"}", EditorStyles.wordWrappedLabel);
+                EditorGUILayout.HelpBox(template == null ? "包内未找到当前模板，请检查模板存储。" : GetCurrentStatus(template), MessageType.Info);
+                EditorGUILayout.LabelField("框架开发身份；保存、父级同步和切换请使用模板开发页。", EditorStyles.wordWrappedMiniLabel);
+                EditorGUILayout.EndVertical();
+                return;
+            }
             var active = EmberProjectSetup.GetActiveDeployedTemplate();
             if (active != null)
             {
-                DrawStatusRow(
-                    "当前活动模板",
-                    $"{active.templateId} · v{active.version}",
-                    true);
+                var template = EmberProjectSetup.GetTemplates().Find(t => t.id == active.templateId);
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.LabelField($"当前已部署：{template?.displayName ?? active.templateId}", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField($"{active.templateId} · 已部署 v{active.version} · 包内 v{template?.version ?? "未知"}", EditorStyles.wordWrappedLabel);
+                EditorGUILayout.HelpBox(template == null ? "包内未找到当前模板，无法判断更新。" : GetCurrentStatus(template), MessageType.Info);
+                EditorGUILayout.EndVertical();
                 return;
             }
 
@@ -193,7 +238,19 @@ namespace Ember.Core.Editor
             EditorGUILayout.EndHorizontal();
 
             if (!string.IsNullOrEmpty(template.description))
-                EditorGUILayout.LabelField("    " + template.description, EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(template.description, EditorStyles.wordWrappedMiniLabel);
+
+            if (EmberProjectSetup.IsEmbeddedPackage())
+            {
+                var editing = EmberProjectSetup.GetEditingTemplate();
+                EditorGUILayout.LabelField("模板 ID", template.id);
+                EditorGUILayout.LabelField("父模板", string.IsNullOrEmpty(template.parentId) ? "独立模板" : $"{template.parentId} · v{template.parentVersion}");
+                EditorGUILayout.HelpBox(editing?.templateId == template.id ? GetCurrentStatus(template) : "此模板尚未载入当前编辑副本。", MessageType.Info);
+                if (GUILayout.Button("前往模板开发：加载 / 保存 / 父级更新", GUILayout.MinHeight(28)))
+                    EmberSetupWindow.ShowTemplateDevelopment();
+                EditorGUILayout.EndVertical();
+                return;
+            }
 
             if (activeTemplate)
                 DrawUpgradeStatus(template, record);
@@ -253,12 +310,25 @@ namespace Ember.Core.Editor
                 return;
             }
 
+            if (record.version == template.version && record.contentHash != template.contentHash)
+            {
+                EditorGUILayout.HelpBox("版本号相同，但内容基线不同；请先检查差异，不能按“已是最新”处理。", MessageType.Warning);
+                return;
+            }
+            if (string.IsNullOrEmpty(record.contentHash) || string.IsNullOrEmpty(template.contentHash))
+            {
+                EditorGUILayout.HelpBox("内容基线记录不完整，请检查项目或恢复部署基线后再判断更新。", MessageType.Warning);
+                return;
+            }
+
             switch (EmberProjectSetup.GetTemplateUpgradeLevel(record.version, template.version))
             {
                 case TemplateUpgradeLevel.None:
                     EditorGUILayout.LabelField(
-                        $"    已部署 v{record.version} · 已是最新",
-                        EditorStyles.miniLabel);
+                        record.version == template.version
+                            ? $"已部署 v{record.version} · 与包内内容一致"
+                            : $"已部署 v{record.version}，包内 v{template.version}；不属于前向升级，请先检查版本来源。",
+                        EditorStyles.wordWrappedMiniLabel);
                     break;
                 case TemplateUpgradeLevel.Patch:
                     EditorGUILayout.LabelField(
@@ -276,6 +346,32 @@ namespace Ember.Core.Editor
                         MessageType.Error);
                     break;
             }
+        }
+
+        private static string GetCurrentStatus(TemplateInfo template)
+        {
+            var editing = EmberProjectSetup.IsEmbeddedPackage() ? EmberProjectSetup.GetEditingTemplate() : null;
+            var deployed = editing == null ? EmberProjectSetup.GetActiveDeployedTemplate() : null;
+            string version = editing?.templateVersion ?? deployed?.version;
+            string hash = editing?.contentHash ?? deployed?.contentHash;
+            if (string.IsNullOrEmpty(hash) || string.IsNullOrEmpty(template.contentHash))
+                return "内容基线记录不完整，暂不能判断是否需要更新。";
+            if (version != template.version || hash != template.contentHash)
+                return editing != null ? "编辑基线已变化，请到模板开发页比较内容后处理。"
+                    : version == template.version ? "同版本内容不同，需要检查差异。"
+                    : $"包内版本与部署版本不同：v{version} → v{template.version}，请查看更新方式。";
+            if (editing != null)
+            {
+                var parent = EmberProjectSetup.GetTemplates().Find(t => t.id == template.parentId);
+                if (!string.IsNullOrEmpty(template.parentId) && parent == null)
+                    return "缺少父模板，无法判断父级更新。";
+                if (parent != null && (template.parentVersion != parent.version || template.parentContentHash != parent.contentHash))
+                    return "父模板有变化，请到模板开发页预览父级更新。";
+                if (template.contentHash != template.versionedContentHash)
+                    return "模板已保存，但仍有未封存内容。";
+                return "模板基线一致，父级无待同步变化；项目未保存修改请通过校验查看。";
+            }
+            return "已部署版本与包内内容一致；本地开发改动请通过校验查看。";
         }
 
         private void DrawPatchUpdate(TemplateInfo template)

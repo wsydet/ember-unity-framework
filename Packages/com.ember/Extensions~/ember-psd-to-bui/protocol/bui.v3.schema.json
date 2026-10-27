@@ -1,0 +1,1037 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://burner.local/schemas/bui.v3.schema.json",
+  "title": "BUI v3",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schemaVersion",
+    "source",
+    "assetsRoot",
+    "canvas",
+    "targets",
+    "nodes"
+  ],
+  "properties": {
+    "designTexts": {
+      "type": "array",
+      "description": "Native PSD design styles outside exported nodes, independent of creation/replacement and Rename. Never generates nodes.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "purpose", "targetIds", "text"],
+        "not": { "required": ["binding"] },
+        "properties": {
+          "id": { "type": "string", "pattern": "^design_text_[1-9][0-9]*$" },
+          "name": { "type": "string" },
+          "purpose": { "const": "design-text-style" },
+          "targetIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "text": { "$ref": "#/$defs/text" }
+        }
+      }
+    },
+    "retainedTexts": {
+      "type": "array",
+      "description": "Explicit replacement text styles for existing objects; never generation nodes. Bindings must agree with source.replacement.replaceMap relations[].textStyleBindings.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "purpose", "binding", "text"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^retained_text_[1-9][0-9]*$" },
+          "name": { "type": "string" },
+          "purpose": { "const": "existing-text-style" },
+          "binding": {
+            "type": "object",
+            "required": ["relationId", "targetId", "prefabGuid", "globalObjectId"],
+            "properties": {
+              "relationId": { "type": "string", "minLength": 1 },
+              "targetId": { "type": "string", "minLength": 1 },
+              "prefabGuid": { "type": "string", "pattern": "^[a-f0-9]{32}$" },
+              "globalObjectId": { "type": "string", "minLength": 1 }
+            }
+          },
+          "text": { "$ref": "#/$defs/text" }
+        }
+      }
+    },
+    "schemaVersion": {
+      "const": 3
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "type",
+        "psdName",
+        "psdRelativePath",
+        "psdSha256",
+        "psdSize",
+        "psdModifiedAt",
+        "adapter",
+        "adapterVersion",
+        "exportedAt"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "psdName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "psdRelativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "psdSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "psdSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "psdModifiedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapterVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exportedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "designSource": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "specRef",
+            "specVersion"
+          ],
+          "properties": {
+            "specRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "specVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "specType": {
+              "type": "string"
+            }
+          }
+        },
+        "uxp": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "assetsRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "referenceResolution",
+        "coordinateSystem",
+        "origin",
+        "unit"
+      ],
+      "properties": {
+        "referenceResolution": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "coordinateSystem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/target"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "ownerNodeId",
+          "name",
+          "sourcePath",
+          "resource"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ownerNodeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resource": {
+            "$ref": "#/$defs/resource"
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exportWarning"
+      }
+    },
+    "resourceReuse": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "state",
+        "snapshotId",
+        "declarationSha256",
+        "renameRecordSha256",
+        "declaration",
+        "bindings",
+        "consumers"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "state": {
+          "enum": [
+            "none",
+            "required",
+            "direct-export"
+          ]
+        },
+        "snapshotId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declarationSha256": {
+          "type": "string"
+        },
+        "renameRecordSha256": {
+          "type": "string"
+        },
+        "declaration": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "bindings": {
+          "type": "array"
+        },
+        "consumers": {
+          "type": "array"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "targetId",
+        "targetType",
+        "name",
+        "sourceRootNodeId",
+        "nodeIds"
+      ],
+      "properties": {
+        "targetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetType": {
+          "enum": [
+            "Page",
+            "Popup",
+            "Component",
+            "ListItem"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRootNodeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "targetType": {
+                "const": "Page"
+              }
+            },
+            "required": [
+              "targetType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "pattern": "^.+Page$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "targetType": {
+                "const": "Popup"
+              }
+            },
+            "required": [
+              "targetType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "pattern": "^.+Popup$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "name",
+        "type",
+        "active",
+        "siblingIndex",
+        "rect"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "Group",
+            "Bg",
+            "Top",
+            "Center",
+            "Bottom",
+            "Image",
+            "RawImage",
+            "Button",
+            "Text",
+            "PrefabRef",
+            "List"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "siblingIndex": {
+          "type": "integer"
+        },
+        "sourcePath": {
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "rect": {
+          "$ref": "#/$defs/rect"
+        },
+        "resource": {
+          "$ref": "#/$defs/resource"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "$ref": "#/$defs/layout"
+        },
+        "prefabRef": {
+          "$ref": "#/$defs/prefabRef"
+        },
+        "binding": {
+          "$ref": "#/$defs/binding"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "PrefabRef"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "prefabRef"
+            ]
+          }
+        }
+      ]
+    },
+    "binding": {
+      "description": "Optional binding collection intent. collect=false means Unity Make Prefab must not add m_ or collect GameUIBinding for this node.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "collect"
+      ],
+      "properties": {
+        "collect": {
+          "type": "boolean"
+        },
+        "source": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "text": {
+      "description": "Text payload. text is design/placeholder copy. key is an optional LanguageKey seed used by static NoBind Text.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "description": "Design/placeholder text copied from the PSD Text layer.",
+          "type": "string"
+        },
+        "key": {
+          "description": "Optional LanguageKey seed. Static NoBind Text resolves key first from this field, then from node.name, then from text.",
+          "type": "string"
+        },
+        "fontSize": {
+          "description": "PSD Text layer font size. Make Prefab maps this value directly to TextMeshProUGUI.fontSize.",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "visualStyle": {
+          "description": "PSD Text visual drawing features. key is for TMP style/profile mapping only and must not be used as a LanguageKey.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "version": {
+              "type": "integer",
+              "enum": [
+                1
+              ]
+            },
+            "status": {
+              "enum": [
+                "Resolved",
+                "Partial",
+                "Mixed",
+                "Unavailable"
+              ]
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "features": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "missingFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "effects": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Raw Photoshop layerEffects, strokeStyle and optional globalLightingAngle with source/read status. Interpreted by font/preset analysis; not directly applied during BUI import."
+            },
+            "textStyleRanges": {
+              "type": "array",
+              "description": "Original native style ranges; mixed ranges remain explicit.",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "valuePolicy": {
+          "type": "string",
+          "enum": [
+            "preserve"
+          ],
+          "description": "Preserve existing/reused runtime text values; apply PSD font, size, color and layout only."
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Native Photoshop layer identity and DOM/descriptor read mode."
+        },
+        "previewReference": {
+          "type": "object",
+          "description": "Optional PSD composite crop for visual comparison; not a Unity business resource. Exported by UXP 3.0.2+.",
+          "required": [
+            "version",
+            "status",
+            "source",
+            "sourceLayerId",
+            "sourcePsdSha256"
+          ],
+          "properties": {
+            "version": {
+              "const": 1
+            },
+            "status": {
+              "enum": [
+                "captured",
+                "unavailable"
+              ]
+            },
+            "source": {
+              "const": "psd-composite-crop"
+            },
+            "sourceLayerId": {
+              "type": "string"
+            },
+            "sourcePsdSha256": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{64}$"
+            },
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{64}$"
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 16,
+              "maximum": 2048
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 16,
+              "maximum": 2048
+            },
+            "pixelScale": {
+              "const": 1
+            },
+            "colorSpace": {
+              "const": "sRGB"
+            },
+            "crop": {
+              "type": "object"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "captured"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "path",
+                  "sha256",
+                  "width",
+                  "height",
+                  "pixelScale",
+                  "colorSpace",
+                  "crop"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "direction"
+      ],
+      "properties": {
+        "direction": {
+          "enum": [
+            "Vertical",
+            "Horizontal"
+          ]
+        }
+      }
+    },
+    "prefabRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "ExternalPrefab",
+            "GeneratedTarget"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prefabName": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!.*[\\s@])(?!_)(?!.*__)(?!.*_$).+$"
+        },
+        "targetId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "slot",
+              "element",
+              "rect"
+            ],
+            "properties": {
+              "slot": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceNodeId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Optional PSD override identity for exporter PNG reuse; not a BUI node reference."
+              },
+              "sourcePath": {
+                "type": "string"
+              },
+              "source": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "layerId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "resource": {
+                "$ref": "#/$defs/resource"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              },
+              "rect": {
+                "$ref": "#/$defs/prefabOverrideRect"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "resource"
+                ],
+                "not": {
+                  "required": [
+                    "text"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "text"
+                ],
+                "not": {
+                  "required": [
+                    "resource"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "assetGuid": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{32}$",
+          "description": "Explicit Unity Prefab identity. Presence forbids Catalog and GeneratedTarget name fallback."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "GeneratedTarget"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "name",
+              "targetId"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "prefabName"
+                  ]
+                },
+                {
+                  "required": [
+                    "assetGuid"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ExternalPrefab"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "prefabName"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "name"
+                  ]
+                },
+                {
+                  "required": [
+                    "targetId"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "rect": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "anchorMin",
+        "anchorMax",
+        "pivot",
+        "anchoredPosition",
+        "sizeDelta"
+      ],
+      "properties": {
+        "anchorMin": {
+          "$ref": "#/$defs/vector2"
+        },
+        "anchorMax": {
+          "$ref": "#/$defs/vector2"
+        },
+        "pivot": {
+          "$ref": "#/$defs/vector2"
+        },
+        "anchoredPosition": {
+          "$ref": "#/$defs/vector2"
+        },
+        "sizeDelta": {
+          "$ref": "#/$defs/vector2"
+        }
+      }
+    },
+    "prefabOverrideRect": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "anchorMin",
+        "anchorMax",
+        "pivot",
+        "anchoredPosition",
+        "sizeDelta"
+      ],
+      "properties": {
+        "anchorMin": {
+          "const": [
+            0.5,
+            0.5
+          ]
+        },
+        "anchorMax": {
+          "const": [
+            0.5,
+            0.5
+          ]
+        },
+        "pivot": {
+          "const": [
+            0.5,
+            0.5
+          ]
+        },
+        "anchoredPosition": {
+          "$ref": "#/$defs/vector2"
+        },
+        "sizeDelta": {
+          "$ref": "#/$defs/vector2"
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "asset",
+        "sha256",
+        "width",
+        "height",
+        "resourceType"
+      ],
+      "properties": {
+        "asset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "contentHashAlgorithm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resourceType": {
+          "enum": [
+            "Atlas",
+            "StaticTexture",
+            "DynamicTexture"
+          ]
+        },
+        "border": {
+          "$ref": "#/$defs/borderObject"
+        },
+        "outputModule": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9_](?:[A-Za-z0-9_.-]*[A-Za-z0-9_-])?)?$",
+          "description": "Optional resource-local PSD @Module value. Empty inherits the target module unless Make settings override it."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resourceType": {
+                "const": "DynamicTexture"
+              }
+            },
+            "required": [
+              "resourceType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outputModule": {
+                "maxLength": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "borderObject": {
+      "description": "Nine-slice border in {left, top, right, bottom} fields.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ],
+      "properties": {
+        "left": {
+          "type": "number",
+          "minimum": 0
+        },
+        "top": {
+          "type": "number",
+          "minimum": 0
+        },
+        "right": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bottom": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "exportWarning": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": [
+            "Blocking",
+            "Warning",
+            "Info"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeId": {
+          "type": "string"
+        },
+        "sourcePath": {
+          "type": "string"
+        }
+      }
+    },
+    "vector2": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      }
+    }
+  }
+}

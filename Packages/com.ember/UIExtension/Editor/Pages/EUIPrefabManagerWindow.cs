@@ -32,10 +32,12 @@ namespace Ember.UIExtension.Editor
             Overview,
             ModuleTemplate,
             Maintenance,
+            Library,
+            Bui,
         }
 
         private static readonly string[] TabLabels =
-            { "创建 UI", "UI 总览", "模块模板", "清理与删除" };
+            { "创建 UI", "UI 总览", "模块模板", "清理与删除", "公共预制体库", "BUI 制作" };
 
         private static readonly PageType[] SupportedPageTypes =
         {
@@ -79,6 +81,8 @@ namespace Ember.UIExtension.Editor
         private string _layoutStatusMessage;
         private MessageType _layoutStatusType;
         private EUIModuleTemplatePanel _moduleTemplatePanel;
+        private EUILibraryPanel _libraryPanel;
+        private EmberBuiPanel _buiPanel;
         private readonly List<EUIOrphanScriptGroup> _orphanGroups = new List<EUIOrphanScriptGroup>();
         private readonly List<KeyValuePair<string, string>> _emptyLeaves =
             new List<KeyValuePair<string, string>>();
@@ -98,7 +102,14 @@ namespace Ember.UIExtension.Editor
             _creationRequest ??= new EUICreationRequest();
             _moduleTemplatePanel = new EUIModuleTemplatePanel();
             _moduleTemplatePanel.Refresh();
+            _libraryPanel = new EUILibraryPanel();
             RequestCatalogRefresh();
+        }
+
+        private void OnDisable()
+        {
+            _libraryPanel?.Dispose();
+            _libraryPanel = null;
         }
 
         private void OnGUI()
@@ -127,6 +138,14 @@ namespace Ember.UIExtension.Editor
                         ? "配置 UI → 检查生成预览 → 创建" : "选择目标并查看可用操作", TextAlignment.Left, true);
                     switch (_tab)
                     {
+                        case DevelopmentTab.Bui:
+                            _buiPanel ??= new EmberBuiPanel();
+                            _buiPanel.Draw();
+                            break;
+                        case DevelopmentTab.Library:
+                            _libraryPanel ??= new EUILibraryPanel();
+                            _libraryPanel.Draw(ref _lastResult);
+                            break;
                         case DevelopmentTab.Create:
                             DrawCreationTab();
                             break;
@@ -150,6 +169,7 @@ namespace Ember.UIExtension.Editor
 
         private void OnProjectChange()
         {
+            _libraryPanel?.RequestRefresh();
             RequestCatalogRefresh();
         }
 
@@ -179,6 +199,14 @@ namespace Ember.UIExtension.Editor
 
             EditorGUI.BeginChangeCheck();
             DrawCreationBasicFields();
+            _creationRequest.SourceSkeleton = (GameObject)EditorGUILayout.ObjectField("源骨架 (Variant)", _creationRequest.SourceSkeleton, typeof(GameObject), false);
+            _creationRequest.ContentSlotPath = EditorGUILayout.TextField("内容插入路径", _creationRequest.ContentSlotPath);
+            _creationRequest.StructureOnly = EditorGUILayout.Toggle("只创建结构（不注册）", _creationRequest.StructureOnly);
+            _creationRequest.InheritBinding = EditorGUILayout.Toggle("继承源 Binding 类", _creationRequest.InheritBinding);
+            if (!_creationRequest.SourceSkeleton) {
+                _creationRequest.ReferenceResolution = EditorGUILayout.Vector2Field("参考分辨率", _creationRequest.ReferenceResolution);
+                _creationRequest.MatchWidthOrHeight = EditorGUILayout.Slider("宽高匹配", _creationRequest.MatchWidthOrHeight, 0, 1);
+            }
             DrawCreationBehaviourFields();
             DrawCreationAdvancedFields();
             if (EditorGUI.EndChangeCheck())
@@ -516,6 +544,31 @@ namespace Ember.UIExtension.Editor
             EditorGUILayout.LabelField(description.Replace("　|　", "\n"), EditorStyles.wordWrappedLabel);
             if (!string.IsNullOrEmpty(entry.PageDefLine))
                 EditorGUILayout.LabelField(entry.PageDefLine, EditorStyles.wordWrappedMiniLabel);
+            if (GUILayout.Button("导出只读 EUI 契约"))
+            {
+                var path = EditorUtility.SaveFilePanel("导出 EUI 契约", "", Path.GetFileNameWithoutExtension(entry.PrefabPath) + ".eui.contract", "json");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var contract = EUIContractService.Export(entry.PrefabPath);
+                    EUIContractService.Write(path, contract);
+                    _lastResult = $"已导出：{path}\n阻断 {contract.blockers.Count}，待确认 {contract.unresolved.Count}";
+                }
+            }
+            if (GUILayout.Button("与已导出契约比较（只读）"))
+            {
+                var path = EditorUtility.OpenFilePanel("选择旧 EUI 契约", "", "json");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    try
+                    {
+                        var old = JsonUtility.FromJson<EUIContract>(File.ReadAllText(path));
+                        var changes = EUIContractService.Compare(old, EUIContractService.Export(entry.PrefabPath));
+                        _lastResult = string.Join("\n", changes.Select(c => $"{(c.blocksApply ? "阻断" : "检查")} {c.category}: {c.target}"));
+                        if (changes.Count == 0) _lastResult = "契约核心信息无差异。";
+                    }
+                    catch (Exception ex) { _lastResult = ex.Message; }
+                }
+            }
             SirenixEditorGUI.EndBox();
         }
 
@@ -840,3 +893,4 @@ namespace Ember.UIExtension.Editor
         #endregion
     }
 }
+

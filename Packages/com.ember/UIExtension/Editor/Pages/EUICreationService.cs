@@ -22,7 +22,7 @@ namespace Ember.UIExtension.Editor
     public sealed class EUICreationRequest
     {
         public EUIBinding.CodePathMode CodePathMode = EUIBinding.CodePathMode.Business;
-        public string PrefabName = "NewPanel";
+        public string PrefabName = "NewPage";
         public string PageName = "NewPage";
         public string ClassPath = "Module/Page";
         public string ClassName = "NewPage";
@@ -44,6 +44,12 @@ namespace Ember.UIExtension.Editor
         public bool GenerateAutoCreateClickableMaskOverride;
         public bool GenerateOnClickMaskOverride;
         public bool GenerateCustomSettings;
+        public bool StructureOnly;
+        public GameObject SourceSkeleton;
+        public string ContentSlotPath;
+        public bool InheritBinding;
+        public Vector2 ReferenceResolution = new Vector2(2560, 1440);
+        public float MatchWidthOrHeight = 0.5f;
 
         internal EUICreationRequest Clone()
         {
@@ -148,6 +154,8 @@ namespace Ember.UIExtension.Editor
                 return FailPlan(plan, result, error);
 
             plan.Request = normalized;
+            if (!EUILibraryService.ValidateCreationSource(normalized, out error))
+                return FailPlan(plan, result, error);
 
             if (normalized.CodePathMode == EUIBinding.CodePathMode.Framework
                 && !EUIBindingCodeGenUtility.IsEmbeddedPackage())
@@ -363,6 +371,11 @@ namespace Ember.UIExtension.Editor
                 if (!binding)
                     throw new InvalidOperationException("已保存的预制体缺少 EUIBinding，已保留该预制体供排查。");
 
+                if (plan.Request.StructureOnly)
+                {
+                    result.Success = true;
+                    return result;
+                }
                 codeGenerationAttempted = true;
                 if (!EUIBindingCodeGenUtility.TryGenerateCode(binding,
                         showConfirmation: false,
@@ -411,6 +424,25 @@ namespace Ember.UIExtension.Editor
             UnityEngine.SceneManagement.Scene previewScene)
         {
             var request = plan.Request;
+            if (request.SourceSkeleton)
+            {
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(request.SourceSkeleton, previewScene);
+                instance.name = request.PrefabName;
+                var sourceBinding = request.SourceSkeleton.GetComponent<EUIBinding>();
+                var snapshot = EUIBindingEditorUtility.GetBindingSnapshot(sourceBinding);
+                var targetBinding = instance.GetComponent<EUIBinding>();
+                EUIBindingEditorUtility.ApplyCreationConfig(targetBinding, request);
+                EUIBindingEditorUtility.SetBindings(targetBinding, snapshot.Entries);
+                using (var serialized = new SerializedObject(targetBinding))
+                {
+                    serialized.FindProperty("noCodeGen").boolValue = request.StructureOnly;
+                    serialized.FindProperty("baseBindingUUID").stringValue = request.InheritBinding
+                        ? AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(request.SourceSkeleton)) : "";
+                    serialized.ApplyModifiedPropertiesWithoutUndo();
+                }
+                PrefabUtility.RecordPrefabInstancePropertyModifications(targetBinding);
+                return instance;
+            }
             if (!request.IsPage)
                 return BuildStandardItem(request, previewScene);
 
@@ -442,9 +474,9 @@ namespace Ember.UIExtension.Editor
 
             var scaler = root.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(2560f, 1440f);
+            scaler.referenceResolution = request.ReferenceResolution;
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 0.5f;
+            scaler.matchWidthOrHeight = request.MatchWidthOrHeight;
             scaler.referencePixelsPerUnit = 100f;
 
             var rootGroup = root.GetComponent<CanvasGroup>();
@@ -577,6 +609,11 @@ namespace Ember.UIExtension.Editor
             normalized.PrefabName = NormalizePrefabName(request.PrefabName);
             normalized.PageName = request.IsPage ? request.PageName?.Trim() : string.Empty;
             normalized.ClassName = request.ClassName?.Trim();
+            if (normalized.IsPage && normalized.PrefabName.EndsWith("Panel", StringComparison.Ordinal))
+            {
+                error = "Page 角色的预制体请使用 Page 后缀；弹窗通过 PageType 表达。";
+                return false;
+            }
 
             if (!normalized.IsPage)
             {

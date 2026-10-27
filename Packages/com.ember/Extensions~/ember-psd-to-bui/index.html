@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <title>ember-psd-to-bui</title>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="content">
+        <section class="left-panel">
+          <div class="panel-heading-row preview-header">
+            <div class="preview-heading-copy">
+              <div class="brand-block">
+                <img class="brand-icon" src="./icons/icon@2x.png" alt="" />
+                <div class="brand-copy">
+                  <div class="brand-title-row">
+                    <div class="brand-title">ember-psd-to-bui</div>
+                    <span id="pluginVersion" class="brand-version" aria-label="Plugin version"></span>
+                  </div>
+                  <div class="brand-subtitle" data-i18n="subtitle">Photoshop PSD 转 Burner BUI</div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-heading-actions">
+              <button id="langToggleBtn" class="utility-button" type="button">EN</button>
+              <button id="namingRulesBtn" class="utility-button wide" type="button" data-i18n="namingRules">命名说明</button>
+            </div>
+          </div>
+
+          <div class="panel-state-cache" aria-hidden="true">
+            <span id="documentTitle">当前文档：无</span>
+            <span id="documentMeta">请先打开一个 PSD 文件</span>
+            <span id="previewCanvas">画布：- × -</span>
+            <span id="previewLayerCount">Targets：- · Nodes：-</span>
+          </div>
+
+          <div class="block-heading-row">
+            <div class="block-title" data-i18n="psdPreview">BUI 结构预览</div>
+          </div>
+          <div class="preview-toolbar">
+            <div id="documentPath" class="preview-doc-path">未读取到 PSD 路径</div>
+            <div class="heading-actions">
+              <button id="refreshBtn" class="small-button inline-action" type="button" data-i18n="refresh">刷新</button>
+              <button id="copyWarningsBtn" class="small-button inline-action" type="button" data-i18n="copyWarnings">复制警告</button>
+              <button id="copyPreviewBtn" class="small-button inline-action" type="button" data-i18n="copyPreview">复制 JSON</button>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="layer-preview-list" id="layerPreviewList">
+              <div class="hint-row" data-i18n="previewEmpty">打开 PSD 后点击刷新预览。</div>
+            </div>
+          </div>
+          <div class="preview-warning-box" id="previewWarnings">
+            <strong data-i18n="previewWarningsTitle">PSD 转换状态</strong>
+            <span data-i18n="previewWarningsEmpty">当前预览暂无阻断问题。</span>
+          </div>
+
+          <div class="log-block">
+            <div class="log-heading-row">
+              <div class="block-title inline" data-i18n="statusLog">状态日志</div>
+              <div class="heading-actions">
+                <button id="clearLogBtn" class="small-button inline-action" type="button" data-i18n="clearLog">清除日志</button>
+                <button id="copyLogBtn" class="small-button inline-action" type="button" data-i18n="copyLog">复制日志</button>
+              </div>
+            </div>
+            <div id="log" class="log-list"></div>
+          </div>
+        </section>
+
+        <section class="right-panel">
+          <h2 data-i18n="rightTitle">导出设置</h2>
+
+          <div class="rule-block first">
+            <label class="rule-title" for="exportBaseName" data-i18n="exportBaseName">BUI 名称</label>
+            <div class="input-box name-input-box">
+              <input id="exportBaseName" type="text" placeholder="当前 PSD 文件名" data-i18n-placeholder="exportBaseNamePlaceholder" />
+            </div>
+            <div class="help-text" data-i18n="baseHelp">生成 BUI 文件和 assets 目录；后缀由配置决定。</div>
+          </div>
+
+          <div class="rule-block">
+            <label class="rule-title" for="sliceFileNamePrefix" data-i18n="sliceFileNamePrefix">切图文件名前缀</label>
+            <div class="input-box name-input-box">
+              <input id="sliceFileNamePrefix" type="text" value="UI_" maxlength="32" />
+            </div>
+            <div id="slicePrefixStatus" class="help-text" aria-live="polite"></div>
+            <div class="help-text" data-i18n="sliceFileNamePrefixHelp">按 PSD 自动保存，例如 UIV1_；留空不添加固定头。修改后需重新导出 PNG。</div>
+          </div>
+
+          <div class="rule-block">
+            <div class="rule-title" data-i18n="outputFolder">导出位置</div>
+            <div id="outputFolder" class="path-box is-empty" role="textbox" aria-readonly="true">当前 PSD 所在目录</div>
+            <div class="help-text" data-i18n="folderHelp">不支持手动选择目录；BUI 和 assets 固定写到当前 PSD 所在目录。</div>
+          </div>
+
+          <div class="rule-block">
+            <div class="rule-title" data-i18n="bridgeTitle">AI 文件桥接</div>
+            <div id="bridgeStatus" class="help-text" aria-live="polite"></div>
+            <button id="bridgeToggleBtn" type="button" class="small-button">关闭 AI</button>
+          </div>
+
+          <div class="rule-block output-artifacts">
+            <div class="artifact-field">
+              <div class="artifact-label" data-i18n="previewPlanBui">BUI 文件</div>
+              <div id="plannedBuiFile" class="artifact-value is-empty">未填写 BUI 名称</div>
+            </div>
+            <div class="artifact-field">
+              <div class="artifact-label" data-i18n="previewPlanAssets">Assets 目录</div>
+              <div id="plannedAssetsFolder" class="artifact-value is-empty">未填写 BUI 名称</div>
+            </div>
+          </div>
+
+          <div class="rule-block">
+            <div class="rule-title" data-i18n="processTitle">处理动作</div>
+            <div class="process-note">
+              <strong data-i18n="processMain">导出 BUI</strong>
+              <span data-i18n="processBody">按命名规则生成 BUI JSON；勾选切 PNG 时同步输出 assets PNG。</span>
+            </div>
+            <div class="help-text" data-i18n="coverageHelp">文本样式、蒙版、图层效果、智能对象仍会记录为待确认 warnings。</div>
+          </div>
+
+          <div class="button-row">
+            <label class="slice-option-row">
+              <span class="slice-option-copy">
+                <strong data-i18n="sliceAssetsExport">切 PNG 资源</strong>
+                <em data-i18n="sliceAssetsExportHelp">用于后续 Make Prefab；取消后只导出 BUI。</em>
+              </span>
+              <input id="sliceAssetsExport" type="checkbox" checked />
+            </label>
+            <label class="slice-option-row">
+              <span class="slice-option-copy"><strong data-i18n="retainReuse">继续采用复用与替换关系</strong>
+                <em data-i18n="retainReuseHelp">不勾选时仅按当前 PSD 导出；勾选后检查当前图层与所选关系。</em></span>
+              <input id="retainReuse" type="checkbox" />
+            </label>
+            <button id="exportBtn" class="start-button" type="button" data-i18n="startProcess">导出 BUI</button>
+          </div>
+          <div class="export-summary" id="exportSummary">
+            <strong data-i18n="summaryTitle">导出状态：等待 PSD 与输出目录</strong>
+            <span data-i18n="summaryBody">第一版会写出 BUI、warnings 和整页 preview。</span>
+          </div>
+        </section>
+      </div>
+
+      <div id="namingPopover" class="naming-popover is-hidden">
+        <div class="popover-title-row">
+          <strong data-i18n="namingRules">命名说明</strong>
+          <button id="namingRulesCloseBtn" class="popover-close" type="button">×</button>
+        </div>
+        <div class="popover-body" data-i18n="namingRulesBody">
+          UXP 使用 CCX 内置命名规则；Unity 工程的独立规则文件由 Ember PSD 设置指定。
+        </div>
+      </div>
+    </main>
+    <script src="./src/common.js"></script>
+    <script src="./src/config-loader.js"></script>
+    <script src="./src/warnings.js"></script>
+    <script src="./src/naming/parser.js"></script>
+    <script src="./src/naming/semantics.js"></script>
+    <script src="./src/bui/rect.js"></script>
+    <script src="./src/bui/model-builder.js"></script>
+    <script src="./src/bui/adaptation.js"></script>
+    <script src="./src/bui/checklist.js"></script>
+    <script src="./src/export/source-info.js"></script>
+    <script src="./src/export/resource-reuse.js"></script>
+    <script src="./src/bui/design-texts.js"></script>
+    <script src="./src/photoshop/layer-reader.js"></script>
+    <script src="./src/export/png-exporter.js"></script>
+    <script src="./src/bui/export-model-builder.js"></script>
+    <script src="./src/export/output-snapshot.js"></script>
+    <script src="./src/export/export-runner.js"></script>
+    <script src="./src/export/prefix-preferences.js"></script>
+    <script src="./src/export/file-bridge-export.js"></script>
+    <script src="./src/export/file-bridge.js"></script>
+    <script src="./src/export/file-bridge-store.js"></script>
+    <script src="./src/export/file-bridge-host.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>

@@ -6,6 +6,7 @@ namespace Game.Fonts
         @Serif = 1,
         @DingTalk = 2,
         @DaKai = 3,
+        @DefaultLightSans = 4,
     }
     public enum FontSlotId
     {

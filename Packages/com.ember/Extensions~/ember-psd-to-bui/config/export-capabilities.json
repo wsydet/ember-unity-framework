@@ -1,0 +1,172 @@
+{
+  "plugin": "ember-psd-to-bui",
+  "version": "1.0.0",
+  "directoryStructure": [
+    {
+      "path": "manifest.json",
+      "purpose": "UXP plugin manifest and Photoshop panel entrypoint declaration."
+    },
+    {
+      "path": "README.md",
+      "purpose": "Full hand-written English usage, packaging, install, output and naming convention guide."
+    },
+    {
+      "path": "index.html",
+      "purpose": "Photoshop UXP panel UI entry."
+    },
+    {
+      "path": "src/main.js",
+      "purpose": "PSD selection, active document scan, BUI writing and assets folder creation."
+    },
+    {
+      "path": "src/styles.css",
+      "purpose": "Panel styling."
+    },
+    {
+      "path": "config/known-limitations.json",
+      "purpose": "First-pass uncertain or unavailable Photoshop fields."
+    },
+    {
+      "path": "config/i18n.json",
+      "purpose": "Machine-readable panel copy for Chinese and English UI language switching."
+    },
+    {
+      "path": "config/export-settings.json",
+      "purpose": "Machine-readable output naming settings, preview asset name, schema path hint and smoke-test default export names."
+    },
+    {
+      "path": "config/psd-naming-rules.json",
+      "purpose": "Bundled actual naming grammar; Ember semantic mapping is a separate required companion."
+    },
+    {
+      "path": "config/export-capabilities.json",
+      "purpose": "Machine-readable export contract for this first pass."
+    }
+  ],
+  "entrypoints": {
+    "manifest": "manifest.json",
+    "main": "index.html",
+    "script": "src/main.js",
+    "panelId": "ember-psd-to-bui-panel",
+    "pluginName": "ember-psd-to-bui"
+  },
+  "outputs": {
+    "settingsSource": "config/export-settings.json",
+    "bui": "<OutputRoot>/<ExportBaseName><output.buiExtension>",
+    "assetsRoot": "<OutputRoot>/<ExportBaseName><output.assetsSuffix>/",
+    "pathsRelativeTo": "outputRoot"
+  },
+  "exportedFields": [
+    "schemaVersion",
+    "source.type",
+    "source.psdName",
+    "source.psdRelativePath",
+    "source.psdSha256",
+    "source.psdSize",
+    "source.psdModifiedAt",
+    "source.adapter",
+    "source.adapterVersion",
+    "source.exportedAt",
+    "source.uxp",
+    "source.uxp.namingRules",
+    "assetsRoot",
+    "canvas.referenceResolution",
+    "canvas.coordinateSystem",
+    "canvas.origin",
+    "canvas.unit",
+    "targets[].targetId",
+    "targets[].targetType",
+    "targets[].name",
+    "targets[].sourceRootNodeId",
+    "targets[].nodeIds",
+    "nodes[].id",
+    "nodes[].parentId",
+    "nodes[].name",
+    "nodes[].type",
+    "nodes[].active",
+    "nodes[].siblingIndex",
+    "nodes[].sourcePath",
+    "nodes[].source.layerId",
+    "nodes[].source.layerType",
+    "nodes[].source.resourceType",
+    "nodes[].source.variant",
+    "nodes[].source.zIndex",
+    "nodes[].source.naming",
+    "nodes[].rect.anchorMin",
+    "nodes[].rect.anchorMax",
+    "nodes[].rect.pivot",
+    "nodes[].rect.anchoredPosition",
+    "nodes[].rect.sizeDelta",
+    "nodes[].text.text",
+    "nodes[].text.fontSize",
+    "nodes[].text.visualStyle",
+    "nodes[].text.visualStyle.key",
+    "nodes[].text.visualStyle.features",
+    "nodes[].text.visualStyle.missingFields",
+    "nodes[].text.styleStatus",
+    "nodes[].text.tmpStatus",
+    "nodes[].layout.direction",
+    "nodes[].prefabRef.kind",
+    "nodes[].prefabRef.prefabName",
+    "nodes[].prefabRef.name",
+    "nodes[].prefabRef.targetId",
+    "nodes[].prefabRef.overrides[].slot",
+    "nodes[].prefabRef.overrides[].property",
+    "nodes[].prefabRef.overrides[].resource",
+    "nodes[].resource.asset",
+    "nodes[].resource.sha256",
+    "nodes[].resource.width",
+    "nodes[].resource.height",
+    "nodes[].resource.resourceType",
+    "nodes[].resource.border",
+    "warnings[].code",
+    "warnings[].severity",
+    "warnings[].message",
+    "warnings[].nodeId",
+    "warnings[].sourcePath"
+  ],
+  "deferredOrUncertainFields": [
+    {
+      "field": "Editor/Protocol/bui.v3.schema.json validation",
+      "status": "lightweight-required-type-checklist-only",
+      "warningCode": "BUI_SCHEMA_REFERENCE_ONLY"
+    },
+    {
+      "field": "per-layer PNG slicing",
+      "status": "best-effort",
+      "warningCode": "LAYER_PNG_EXPORT_FAILED"
+    },
+    {
+      "field": "stable Photoshop layer id",
+      "status": "best-effort",
+      "warningCode": "LAYER_ID_UNAVAILABLE"
+    },
+    {
+      "field": "TextMeshPro-ready text style",
+      "status": "visual-style-key-exported-profile-application-deferred",
+      "warningCode": "TEXT_STYLE_UNCERTAIN"
+    },
+    {
+      "field": "layer masks and vector masks",
+      "status": "unknown",
+      "warningCode": "LAYER_MASK_UNCERTAIN"
+    },
+    {
+      "field": "Photoshop layer effects",
+      "status": "unknown",
+      "warningCode": "LAYER_EFFECTS_UNCERTAIN"
+    },
+    {
+      "field": "smart object source, placed document and transform",
+      "status": "unknown",
+      "warningCode": "SMART_OBJECT_UNCERTAIN"
+    }
+  ],
+  "guardrails": [
+    "Photoshop host execution is required.",
+    "No Unity C# or Prefab files are written.",
+    "Ember S4 supports current-psd BUI schema 3 only.",
+    "Dynamic-list-v1 requires the Ember companion contract; structural List alone is insufficient.",
+    "SubPage, adaptation and legacy product history are outside the verified S4 lane."
+  ]
+}

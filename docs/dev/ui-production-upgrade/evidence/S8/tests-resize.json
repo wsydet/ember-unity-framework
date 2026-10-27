@@ -1,0 +1,65 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "bf9b469172fa49b7a524bde70c487cb6",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793065406204,
+      "finished_unix_ms": 1793065414216,
+      "last_update_unix_ms": 1793065414216,
+      "progress": {
+        "completed": 2,
+        "total": 2,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EUITransitionBlockPreviewTests.ReusedCurtain_AfterParentResize_RebuildsGridToCoverContainer",
+        "last_finished_unix_ms": 1793065414135,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.7270456,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "FormalLoadingPrefabContents_PublicPreviewInitializesAndUnloads",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.FormalLoadingPrefabContents_PublicPreviewInitializesAndUnloads",
+            "state": "Passed",
+            "durationSeconds": 0.1298943,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：3×3 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n"
+          },
+          {
+            "name": "ReusedCurtain_AfterParentResize_RebuildsGridToCoverContainer",
+            "fullName": "Ember.UI.Tests.EUITransitionBlockPreviewTests.ReusedCurtain_AfterParentResize_RebuildsGridToCoverContainer",
+            "state": "Passed",
+            "durationSeconds": 0.0398583,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：11×7 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：13×7 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n<color=#E68C4C><b>[EmberUI]</b></color> <color=#FFFFFF>初始化完成：11×9 网格（方块按需创建）</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Components\\EUITransitionBlock.cs:646)</i></color>\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

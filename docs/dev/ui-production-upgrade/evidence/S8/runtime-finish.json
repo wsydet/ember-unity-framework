@@ -1,0 +1,49 @@
+{
+  "status": "failed",
+  "error": "System.Exception: Timeout EUIMainPage\r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__1 (System.String name) [0x00145] in <72d944208aae469394e5d571f950b439>:0 \r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__2 () [0x00b4a] in <72d944208aae469394e5d571f950b439>:0 ",
+  "log": [
+    {
+      "name": "transition-exit-visually-hidden",
+      "ok": true,
+      "detail": {
+        "visible": 0,
+        "HasActiveBlocks": true
+      }
+    },
+    {
+      "name": "transition-pool-reset",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "quick-progress-hidden",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "expanded-forms",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "expanded-dialog-roundtrip",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "library-popup-roundtrip",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "candidate-list-inherits",
+      "ok": true,
+      "detail": 3
+    },
+    {
+      "name": "candidate-main-fields",
+      "ok": true,
+      "detail": null
+    }
+  ]
+}

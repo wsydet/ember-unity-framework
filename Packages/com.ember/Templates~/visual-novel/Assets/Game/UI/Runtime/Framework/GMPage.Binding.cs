@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : GMPanel
+ * prefab name  : GMPage
  * page name    : GMPage
- * update time  : 2026/9/29 15:01:19
+ * update time  : 2026/10/27 12:14:31
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -27,17 +27,12 @@ namespace Game.UI
         /// <summary>
         /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Time/m_Pgb_TimeScale
         /// </summary>
-        private Slider Pgb_TimeScale;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Time/m_Txt_TimeScale
-        /// </summary>
-        private TMP_Text Txt_TimeScale;
+        private EUIGMTimeScaleItem Pgb_TimeScale;
 
         /// <summary>
         /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/顶层状态/m_Txt_GameState
         /// </summary>
-        private TMP_Text Txt_GameState;
+        private EUIGMStateItem Txt_GameState;
 
         /// <summary>
         /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/开关/m_Tgl_Test
@@ -67,7 +62,7 @@ namespace Game.UI
         /// <summary>
         /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUITgl_Test
         /// </summary>
-        private Ember.UIExtension.EUIToggleEx EUITgl_Test;
+        private EUIGMEnhancedToggleItem EUITgl_Test;
 
         /// <summary>
         /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUIImg_Test
@@ -86,15 +81,14 @@ namespace Game.UI
         base.OnBind();
             Btn_GM = ControlMap["Btn_GM"] as Button;
             Panel_GM = ControlMap["Panel_GM"] as Component;
-            Pgb_TimeScale = ControlMap["Pgb_TimeScale"] as Slider;
-            Txt_TimeScale = ControlMap["Txt_TimeScale"] as TMP_Text;
-            Txt_GameState = ControlMap["Txt_GameState"] as TMP_Text;
+            Pgb_TimeScale = GetChildLogic<EUIGMTimeScaleItem>("Pgb_TimeScale");
+            Txt_GameState = GetChildLogic<EUIGMStateItem>("Txt_GameState");
             Tgl_Test = ControlMap["Tgl_Test"] as Toggle;
             Scr_Test = ControlMap["Scr_Test"] as ScrollRect;
             Img_Test = ControlMap["Img_Test"] as Image;
             Raw_Test = ControlMap["Raw_Test"] as RawImage;
             EUIBtn_Exit = ControlMap["EUIBtn_Exit"] as Ember.UIExtension.EUIButtonEx;
-            EUITgl_Test = ControlMap["EUITgl_Test"] as Ember.UIExtension.EUIToggleEx;
+            EUITgl_Test = GetChildLogic<EUIGMEnhancedToggleItem>("EUITgl_Test");
             EUIImg_Test = ControlMap["EUIImg_Test"] as Ember.UIExtension.EUIImageEx;
             Img_Circle = ControlMap["Img_Circle"] as Ember.UIExtension.EUICircleImage;
 

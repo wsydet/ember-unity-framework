@@ -31,7 +31,6 @@ namespace Ember.Core.Editor
         private EmberProjectSetupPanel _projectSetupPanel;
         private EmberTemplateDevelopmentPanel _templateDevelopmentPanel;
         private EmberProjectValidationPanel _projectValidationPanel;
-        private Vector2 _scroll;
         private OdinMenuTree _navigation;
         private bool _navigationDevMode;
         private int? _pendingTab;
@@ -182,9 +181,7 @@ namespace Ember.Core.Editor
                         _projectValidationPanel.Draw();
                     else
                     {
-                        _scroll = EditorGUILayout.BeginScrollView(_scroll);
                         _projectSetupPanel.Draw();
-                        EditorGUILayout.EndScrollView();
                     }
                 }
             }

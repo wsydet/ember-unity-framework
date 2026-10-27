@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "mapPath": "docs/dev/ui-production-upgrade/evidence/S5/validation-input.eui-map.json",
+  "ownerTemplateId": "base",
+  "moduleType": "",
+  "receiptPath": ".utmp/ui-production-S5/negative-never-written.json",
+  "fontPolicy": "preserve-existing",
+  "newTextFontPath": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset",
+  "targets": [
+    {
+      "targetId": "uifoundation_dynamic_option_row_item",
+      "mode": "update",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+      "prefabGuid": "d7f6decd589b0884c927115ef5c1b4ac",
+      "contentPath": "",
+      "nodes": [
+        {
+          "nodeId": "target_uifoundation_dynamic_option_row_item_root",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "group_39",
+          "operation": "update",
+          "reason": "",
+          "path": "BuiDisabled",
+          "geometry": false,
+          "appearance": false,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "parentPath": ".",
+          "active": true,
+          "stateTogglePath": ".",
+          "stateSlot": "disabled",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:6728069139868212422",
+          "copyLayoutPath": "Selected"
+        },
+        {
+          "nodeId": "text_42",
+          "operation": "update",
+          "reason": "",
+          "path": "BuiDisabled/Label",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "parentPath": "BuiDisabled",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:1560044477119253315",
+          "active": true
+        },
+        {
+          "nodeId": "group_36",
+          "operation": "update",
+          "reason": "",
+          "path": "Selected",
+          "geometry": false,
+          "appearance": false,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "stateTogglePath": ".",
+          "stateSlot": "selected",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:6308462300233945558"
+        },
+        {
+          "nodeId": "psd_layer_38",
+          "operation": "update",
+          "reason": "",
+          "path": "Selected/Checkmark",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "imagePath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Checkmark.png",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:7388363403114760672"
+        },
+        {
+          "nodeId": "psd_layer_35",
+          "operation": "update",
+          "reason": "",
+          "path": "Progress",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "imagePath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Progress.png",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:891019078659369022"
+        },
+        {
+          "nodeId": "psd_layer_34",
+          "operation": "update",
+          "reason": "",
+          "path": "BuiTrack",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": 0,
+          "textPolicy": "preserve",
+          "parentPath": ".",
+          "copyLayoutPath": "Progress",
+          "imagePath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:7602416191441240227"
+        },
+        {
+          "nodeId": "text_33",
+          "operation": "update",
+          "reason": "",
+          "path": "Label",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:5637218984257960761"
+        },
+        {
+          "nodeId": "psd_layer_31",
+          "operation": "update",
+          "reason": "",
+          "path": "Icon",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:7197792227493925001"
+        },
+        {
+          "nodeId": "psd_layer_30",
+          "operation": "update",
+          "reason": "",
+          "path": ".",
+          "geometry": false,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "imagePath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+          "expectedObjectId": "d7f6decd589b0884c927115ef5c1b4ac:6847566655768844198"
+        }
+      ],
+      "sourceSkeletonPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+      "className": "EUIBuiCandidateDynamicOptionRowItem",
+      "classPath": "Module/UIFoundation",
+      "inheritBinding": true
+    },
+    {
+      "targetId": "uifoundation_dynamic_list_page",
+      "mode": "update",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab",
+      "prefabGuid": "e54ecc4f1072bb945be6f6c632f558c9",
+      "contentPath": "Animator/EUISafeArea/Center/Content",
+      "nodes": [
+        {
+          "nodeId": "target_uifoundation_dynamic_list_page_root",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "text_45",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "list_26",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/Center/Content/List",
+          "geometry": false,
+          "appearance": false,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "expectedObjectId": "e54ecc4f1072bb945be6f6c632f558c9:361651660069222164"
+        },
+        {
+          "nodeId": "psd_layer_43",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "prefab_ref_28",
+          "operation": "reference",
+          "reason": "",
+          "path": "",
+          "geometry": false,
+          "appearance": false,
+          "siblingIndex": -1,
+          "textPolicy": "preserve"
+        },
+        {
+          "nodeId": "text_25",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "psd_layer_23",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        }
+      ],
+      "sourceSkeletonPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+      "className": "EUIBuiCandidateDynamicListPage",
+      "classPath": "Module/UIFoundation",
+      "inheritBinding": true
+    },
+    {
+      "targetId": "uibase_main_page",
+      "mode": "update",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab",
+      "prefabGuid": "dce9b62f55d43ee4e8bd939f7d3bb764",
+      "contentPath": "Animator/EUISafeArea/Center",
+      "nodes": [
+        {
+          "nodeId": "target_uibase_main_page_root",
+          "operation": "preserve",
+          "reason": "Outside limited S5 production validation; retain engineering layout and behavior",
+          "path": "",
+          "geometry": false,
+          "appearance": false
+        },
+        {
+          "nodeId": "psd_layer_20",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/Center/BuiSurface",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "parentPath": "Animator/EUISafeArea/Center",
+          "imagePath": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Surface.png",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:8562420563768527475"
+        },
+        {
+          "nodeId": "prefab_ref_15",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/Center/m_Btn_Settings",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "replaceSourceGuid": "fcb3e6dae623b0a42965381362dfc2b9",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:5224974288310815226"
+        },
+        {
+          "nodeId": "prefab_ref_10",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/Center/m_Btn_Start",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:1818112087046072709"
+        },
+        {
+          "nodeId": "text_9",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/Center/BuiSubtitle",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "parentPath": "Animator/EUISafeArea/Center",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:174314032953697174",
+          "textBoxSize": {
+            "y": 45,
+            "x": 420
+          }
+        },
+        {
+          "nodeId": "text_7",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/EUISafeArea/TopCenter/TitleText",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": -1,
+          "textPolicy": "preserve",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:5599548653536397721",
+          "textBoxSize": {
+            "y": 110,
+            "x": 740
+          }
+        },
+        {
+          "nodeId": "psd_layer_5",
+          "operation": "update",
+          "reason": "",
+          "path": "Animator/BuiBackground",
+          "geometry": true,
+          "appearance": true,
+          "siblingIndex": 0,
+          "textPolicy": "preserve",
+          "parentPath": "Animator",
+          "imagePath": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+          "expectedObjectId": "dce9b62f55d43ee4e8bd939f7d3bb764:3473592078972988514"
+        }
+      ],
+      "applyReferenceResolution": true,
+      "sourceSkeletonPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "className": "EUIBuiCandidateMainPage",
+      "classPath": "Module/UIFoundation",
+      "inheritBinding": true
+    }
+  ]
+}

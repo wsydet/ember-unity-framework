@@ -1,0 +1,311 @@
+{
+  "date": "2026-10-26",
+  "projectRoot": "C:/Users/wuyu/My/ember-unity-framework",
+  "scope": "S2 expanded public library; no S3",
+  "compile": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1793018413361,\\\"sequence\\\":15,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":\\\"Assets/Game/Scenes/FrameworkScene.unity\\\",\\\"guid\\\":\\\"30fc7ce87c922d343a7920d067a6930e\\\",\\\"name\\\":\\\"FrameworkScene\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1793018383731,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1793018221489,\\\"last_compile_finished_unix_ms\\\":1793018224987,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1793018232086},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":null,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":1793018220589,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":1793018242387,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":{\\\"finished_unix_ms\\\":1793018250459,\\\"result\\\":\\\"unknown\\\",\\\"counts\\\":null}},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":651,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}",
+  "initialTests": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"648b854b2b2c4f3a8873f28a46d2f257\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1793018182044,\"finished_unix_ms\":1793018199877,\"last_update_unix_ms\":1793018199877,\"progress\":{\"completed\":12,\"total\":12,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed\",\"last_finished_unix_ms\":1793018198914,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification\",\"message\":\"  Expected: 145\\r\\n  But was:  200.0f\\r\\n\"},{\"full_name\":\"Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents\",\"message\":\"  Expected string length 0 but was 4. Strings differ at index 0.\\r\\n  Expected: <string.Empty>\\r\\n  But was:  \\\"keep\\\"\\r\\n  -----------^\\r\\n\"},{\"full_name\":\"Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"message\":\"  Expected: 2\\r\\n  But was:  1\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":12,\"passed\":9,\"failed\":3,\"skipped\":0,\"durationSeconds\":9.1718502,\"resultState\":\"Failed(Child)\"},\"results\":[{\"name\":\"BadgeModes_AreExclusive_AndOverflowIsCapped\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.BadgeModes_AreExclusive_AndOverflowIsCapped\",\"state\":\"Passed\",\"durationSeconds\":0.023605,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification\",\"state\":\"Failed\",\"durationSeconds\":0.0095716,\"message\":\"  Expected: 145\\r\\n  But was:  200.0f\\r\\n\",\"stackTrace\":\"at Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification () [0x0015c] in .\\\\Packages\\\\com.ember\\\\Tests\\\\EditMode\\\\EUICommonControlsEditTests.cs:25\\r\\n\",\"output\":\"\"},{\"name\":\"ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents\",\"state\":\"Failed\",\"durationSeconds\":0.0060825,\"message\":\"  Expected string length 0 but was 4. Strings differ at index 0.\\r\\n  Expected: <string.Empty>\\r\\n  But was:  \\\"keep\\\"\\r\\n  -----------^\\r\\n\",\"stackTrace\":\"at Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents () [0x000d0] in .\\\\Packages\\\\com.ember\\\\Tests\\\\EditMode\\\\EUICommonControlsEditTests.cs:34\\r\\n\",\"output\":\"\"},{\"name\":\"StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"state\":\"Failed\",\"durationSeconds\":0.0049096,\"message\":\"  Expected: 2\\r\\n  But was:  1\\r\\n\",\"stackTrace\":\"at Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges () [0x001ac] in .\\\\Packages\\\\com.ember\\\\Tests\\\\EditMode\\\\EUICommonControlsEditTests.cs:53\\r\\n\",\"output\":\"\"},{\"name\":\"Catalog_ExpiresWhenDefinitionChanges\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.Catalog_ExpiresWhenDefinitionChanges\",\"state\":\"Passed\",\"durationSeconds\":1.7527335,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DuplicateIdentity_StopsExactLookup\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.DuplicateIdentity_StopsExactLookup\",\"state\":\"Passed\",\"durationSeconds\":1.1271264,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ExternalSlot_IsRejected\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.ExternalSlot_IsRejected\",\"state\":\"Passed\",\"durationSeconds\":1.0714434,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MissingInheritedField_AndBindingCycle_AreErrors\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.MissingInheritedField_AndBindingCycle_AreErrors\",\"state\":\"Passed\",\"durationSeconds\":0.8875203,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MissingSlot_StopsCatalog\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.MissingSlot_StopsCatalog\",\"state\":\"Passed\",\"durationSeconds\":0.7791499,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StructureOnlySource_CannotBecomeBindingBase\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.StructureOnlySource_CannotBecomeBindingBase\",\"state\":\"Passed\",\"durationSeconds\":0.942493,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"TwoInstances_KeepOverridesAndSourceIndependent\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.TwoInstances_KeepOverridesAndSourceIndependent\",\"state\":\"Passed\",\"durationSeconds\":0.9057641,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"WrongType_IsDiagnosed\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed\",\"state\":\"Passed\",\"durationSeconds\":1.0330672,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "648b854b2b2c4f3a8873f28a46d2f257",
+          "status": "failed",
+          "mode": "EditMode",
+          "started_unix_ms": 1793018182044,
+          "finished_unix_ms": 1793018199877,
+          "last_update_unix_ms": 1793018199877,
+          "progress": {
+            "completed": 12,
+            "total": 12,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": null,
+            "last_finished_test_full_name": "Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed",
+            "last_finished_unix_ms": 1793018198914,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "run_in_background": true,
+            "focus_nudge_attempts": null,
+            "focus_nudge_limit": null,
+            "focus_nudge_status": null,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification",
+                "message": "  Expected: 145\r\n  But was:  200.0f\r\n"
+              },
+              {
+                "full_name": "Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents",
+                "message": "  Expected string length 0 but was 4. Strings differ at index 0.\r\n  Expected: <string.Empty>\r\n  But was:  \"keep\"\r\n  -----------^\r\n"
+              },
+              {
+                "full_name": "Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+                "message": "  Expected: 2\r\n  But was:  1\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "EditMode",
+            "summary": {
+              "total": 12,
+              "passed": 9,
+              "failed": 3,
+              "skipped": 0,
+              "durationSeconds": 9.1718502,
+              "resultState": "Failed(Child)"
+            },
+            "results": [
+              {
+                "name": "BadgeModes_AreExclusive_AndOverflowIsCapped",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.BadgeModes_AreExclusive_AndOverflowIsCapped",
+                "state": "Passed",
+                "durationSeconds": 0.023605,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification",
+                "state": "Failed",
+                "durationSeconds": 0.0095716,
+                "message": "  Expected: 145\r\n  But was:  200.0f\r\n",
+                "stackTrace": "at Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification () [0x0015c] in .\\Packages\\com.ember\\Tests\\EditMode\\EUICommonControlsEditTests.cs:25\r\n",
+                "output": ""
+              },
+              {
+                "name": "ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents",
+                "state": "Failed",
+                "durationSeconds": 0.0060825,
+                "message": "  Expected string length 0 but was 4. Strings differ at index 0.\r\n  Expected: <string.Empty>\r\n  But was:  \"keep\"\r\n  -----------^\r\n",
+                "stackTrace": "at Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents () [0x000d0] in .\\Packages\\com.ember\\Tests\\EditMode\\EUICommonControlsEditTests.cs:34\r\n",
+                "output": ""
+              },
+              {
+                "name": "StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+                "state": "Failed",
+                "durationSeconds": 0.0049096,
+                "message": "  Expected: 2\r\n  But was:  1\r\n",
+                "stackTrace": "at Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges () [0x001ac] in .\\Packages\\com.ember\\Tests\\EditMode\\EUICommonControlsEditTests.cs:53\r\n",
+                "output": ""
+              },
+              {
+                "name": "Catalog_ExpiresWhenDefinitionChanges",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.Catalog_ExpiresWhenDefinitionChanges",
+                "state": "Passed",
+                "durationSeconds": 1.7527335,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "DuplicateIdentity_StopsExactLookup",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.DuplicateIdentity_StopsExactLookup",
+                "state": "Passed",
+                "durationSeconds": 1.1271264,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "ExternalSlot_IsRejected",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.ExternalSlot_IsRejected",
+                "state": "Passed",
+                "durationSeconds": 1.0714434,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "MissingInheritedField_AndBindingCycle_AreErrors",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.MissingInheritedField_AndBindingCycle_AreErrors",
+                "state": "Passed",
+                "durationSeconds": 0.8875203,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "MissingSlot_StopsCatalog",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.MissingSlot_StopsCatalog",
+                "state": "Passed",
+                "durationSeconds": 0.7791499,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "StructureOnlySource_CannotBecomeBindingBase",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.StructureOnlySource_CannotBecomeBindingBase",
+                "state": "Passed",
+                "durationSeconds": 0.942493,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "TwoInstances_KeepOverridesAndSourceIndependent",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.TwoInstances_KeepOverridesAndSourceIndependent",
+                "state": "Passed",
+                "durationSeconds": 0.9057641,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "WrongType_IsDiagnosed",
+                "fullName": "Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed",
+                "state": "Passed",
+                "durationSeconds": 1.0330672,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  },
+  "correctedTests": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"4a2c4e47dbbe4328ba0926d8d12bdba7\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1793018242375,\"finished_unix_ms\":1793018250459,\"last_update_unix_ms\":1793018250459,\"progress\":{\"completed\":4,\"total\":4,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"last_finished_unix_ms\":1793018250284,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":4,\"passed\":4,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.6667373,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"BadgeModes_AreExclusive_AndOverflowIsCapped\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.BadgeModes_AreExclusive_AndOverflowIsCapped\",\"state\":\"Passed\",\"durationSeconds\":0.0192197,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification\",\"state\":\"Passed\",\"durationSeconds\":0.0106183,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents\",\"state\":\"Passed\",\"durationSeconds\":0.0080555,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"fullName\":\"Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges\",\"state\":\"Passed\",\"durationSeconds\":0.0685754,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "4a2c4e47dbbe4328ba0926d8d12bdba7",
+          "status": "succeeded",
+          "mode": "EditMode",
+          "started_unix_ms": 1793018242375,
+          "finished_unix_ms": 1793018250459,
+          "last_update_unix_ms": 1793018250459,
+          "progress": {
+            "completed": 4,
+            "total": 4,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": null,
+            "last_finished_test_full_name": "Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+            "last_finished_unix_ms": 1793018250284,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "run_in_background": true,
+            "focus_nudge_attempts": null,
+            "focus_nudge_limit": null,
+            "focus_nudge_status": null,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "EditMode",
+            "summary": {
+              "total": 4,
+              "passed": 4,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 0.6667373,
+              "resultState": "Passed"
+            },
+            "results": [
+              {
+                "name": "BadgeModes_AreExclusive_AndOverflowIsCapped",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.BadgeModes_AreExclusive_AndOverflowIsCapped",
+                "state": "Passed",
+                "durationSeconds": 0.0192197,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.NumericRangeChange_IsSilent_AndClampsWithoutRecursiveNotification",
+                "state": "Passed",
+                "durationSeconds": 0.0106183,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.ReadOnlyInput_RejectsClear_AndReenableDoesNotDuplicateEvents",
+                "state": "Passed",
+                "durationSeconds": 0.0080555,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+                "fullName": "Ember.UI.Tests.EUICommonControlsEditTests.StaticChoices_RejectDisabled_AndNotifyOnlyForChanges",
+                "state": "Passed",
+                "durationSeconds": 0.0685754,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  },
+  "runtime": {
+    "numericReenable": {
+      "value": 8,
+      "eventCount": 1
+    },
+    "readonlyClear": "rejected then successful after editable+reenable",
+    "dropdown": {
+      "selectedIndex": 1,
+      "eventCount": 1,
+      "disabledRejected": true
+    },
+    "confirmCancel": {
+      "callbackCount": 1,
+      "result": "Cancelled"
+    },
+    "alertAccept": {
+      "callbackCount": 1
+    },
+    "toastExpired": true,
+    "contractRepeatDiff": 0
+  },
+  "history": [
+    "Builder initially rejected duplicate sibling slot paths; fixed unique names and retained generated GUIDs.",
+    "Initial edit tests: 9 passed / 3 failed because non ExecuteAlways lifecycle was not invoked in EditMode fixture; fixed fixture, 4/4 retest; independent Play reenable checks passed.",
+    "Visual review found stretched slider handle and nonstretch selected tab; fixed source Prefabs and builder.",
+    "Evidence exporter Json.NET Color loop failed; used JsonUtility for binding snapshots, export succeeded.",
+    "GameView cleanup used relative index and emitted Invalid index 3 7 4; corrected to verified absolute index, original 10 sizes and selection5 restored.",
+    "Alert close requested while Showing emitted deferred-close warning; eventual callback count1 verified.",
+    "MCP domain reload WebSocket warning observed and recovered on target project."
+  ],
+  "notVerified": [
+    "Clean consumer deployment/build",
+    "Physical touch/IME/accessibility or comprehensive keyboard navigation",
+    "Portrait/notch devices and complete CJK localization",
+    "S3 containers/pools/virtualization"
+  ]
+}

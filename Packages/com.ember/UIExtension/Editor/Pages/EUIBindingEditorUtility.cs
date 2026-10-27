@@ -29,6 +29,11 @@ namespace Ember.UIExtension.Editor
         public string ClassPath;
         public string ClassName;
         public string UIDescription;
+        public EUIBinding.CodePathMode? CodePathMode;
+        public bool? GenerateCustomSettings;
+        public bool? UseMask, ClickMaskToClose, UsePresetFade, UseTransitionBlock, UseAnimator, UseCustomTransition;
+        public Color? MaskColor;
+        public float? FadeInTime, FadeOutTime;
         public bool IsDeletionProtected;
         public bool IsPage;
         public PageType PageType;
@@ -51,6 +56,8 @@ namespace Ember.UIExtension.Editor
         public string GameObjectPath;
         public EUIBinding.WidgetTypes WidgetType;
         public string ClassName;
+        public bool IsFramework;
+        public bool? HasGameObject;
     }
 
     /// <summary>验证问题严重度</summary>
@@ -192,6 +199,17 @@ namespace Ember.UIExtension.Editor
                 ClassPath = binding.ClassPath,
                 ClassName = binding.ClassName,
                 UIDescription = binding.UIDescription,
+                CodePathMode = binding.PathMode,
+                GenerateCustomSettings = binding.GenerateCustomSettings,
+                UseMask = binding.UseMask,
+                MaskColor = binding.MaskColor,
+                ClickMaskToClose = binding.ClickMaskToClose,
+                UsePresetFade = binding.UsePresetFade,
+                UseTransitionBlock = binding.UseTransitionBlock,
+                UseAnimator = binding.UseAnimator,
+                UseCustomTransition = binding.UseCustomTransition,
+                FadeInTime = binding.FadeInTime,
+                FadeOutTime = binding.FadeOutTime,
                 IsDeletionProtected = binding.IsDeletionProtected,
                 IsPage = binding.IsPage,
                 PageType = binding.PageType,
@@ -219,6 +237,8 @@ namespace Ember.UIExtension.Editor
                             entry.GameObject ? entry.GameObject.transform : null),
                         WidgetType = entry.Type,
                         ClassName = entry.ClassName,
+                        IsFramework = entry.IsFramework,
+                        HasGameObject = entry.GameObject != null,
                     });
                 }
             }
@@ -233,6 +253,17 @@ namespace Ember.UIExtension.Editor
             using (var so = new SerializedObject(binding))
             {
                 so.FindProperty(UIDescriptionProperty).stringValue = snapshot.UIDescription ?? string.Empty;
+                if (snapshot.CodePathMode.HasValue) so.FindProperty(CodePathModeProperty).intValue = (int)snapshot.CodePathMode.Value;
+                if (snapshot.GenerateCustomSettings.HasValue) so.FindProperty(GenerateCustomSettingsProperty).boolValue = snapshot.GenerateCustomSettings.Value;
+                if (snapshot.UseMask.HasValue) so.FindProperty(UseMaskProperty).boolValue = snapshot.UseMask.Value;
+                if (snapshot.MaskColor.HasValue) so.FindProperty(MaskColorProperty).colorValue = snapshot.MaskColor.Value;
+                if (snapshot.ClickMaskToClose.HasValue) so.FindProperty(ClickMaskToCloseProperty).boolValue = snapshot.ClickMaskToClose.Value;
+                if (snapshot.UsePresetFade.HasValue) so.FindProperty(UsePresetFadeProperty).boolValue = snapshot.UsePresetFade.Value;
+                if (snapshot.UseTransitionBlock.HasValue) so.FindProperty(UseTransitionBlockProperty).boolValue = snapshot.UseTransitionBlock.Value;
+                if (snapshot.UseAnimator.HasValue) so.FindProperty(UseAnimatorProperty).boolValue = snapshot.UseAnimator.Value;
+                if (snapshot.UseCustomTransition.HasValue) so.FindProperty(UseCustomTransitionProperty).boolValue = snapshot.UseCustomTransition.Value;
+                if (snapshot.FadeInTime.HasValue) so.FindProperty(FadeInTimeProperty).floatValue = snapshot.FadeInTime.Value;
+                if (snapshot.FadeOutTime.HasValue) so.FindProperty(FadeOutTimeProperty).floatValue = snapshot.FadeOutTime.Value;
                 // 普通快照应用不能解除已有保护，兼容不含保护字段的旧快照。
                 so.FindProperty("deletionProtected").boolValue =
                     binding.IsDeletionProtected || snapshot.IsDeletionProtected;
@@ -313,7 +344,7 @@ namespace Ember.UIExtension.Editor
                 so.FindProperty(ClassPathProperty).stringValue = request.ClassPath;
                 so.FindProperty(ClassNameProperty).stringValue = request.ClassName;
                 so.FindProperty(PrefabNameProperty).stringValue = request.PrefabName;
-                so.FindProperty(NoCodeGenProperty).boolValue = false;
+                so.FindProperty(NoCodeGenProperty).boolValue = request.StructureOnly;
                 so.FindProperty(GenerateCustomSettingsProperty).boolValue = request.GenerateCustomSettings;
 
                 so.FindProperty(IsPageProperty).boolValue = request.IsPage;
@@ -372,10 +403,11 @@ namespace Ember.UIExtension.Editor
                         var sp = bp.GetArrayElementAtIndex(i);
                         sp.FindPropertyRelative("Name").stringValue = entry?.Name;
                         sp.FindPropertyRelative("GameObject").objectReferenceValue =
-                            ResolveGameObject(binding, entry?.GameObjectPath);
+                            entry?.HasGameObject == false ? null : ResolveGameObject(binding, entry?.GameObjectPath);
                         sp.FindPropertyRelative("Type").enumValueIndex = entry?.WidgetType > EUIBinding.WidgetTypes.End
                             ? (int)EUIBinding.WidgetTypes.End + 1 : (int)(entry?.WidgetType ?? 0);
                         sp.FindPropertyRelative("ClassName").stringValue = entry?.ClassName;
+                        sp.FindPropertyRelative("IsFramework").boolValue = entry != null && entry.IsFramework;
                     }
                 }
                 so.ApplyModifiedProperties();
@@ -675,6 +707,29 @@ namespace Ember.UIExtension.Editor
             {
                 result.AddIssue(EUIBindingIssueSeverity.Error, null,
                     "baseBindingUUID 指向的 prefab 不存在。", "清空继承配置或重新选择基础 prefab。");
+                return;
+            }
+            var visited = new HashSet<string>();
+            var current = binding;
+            while (current)
+            {
+                var baseGuid = GetBaseBindingGuid(current);
+                if (string.IsNullOrEmpty(baseGuid)) break;
+                if (!visited.Add(baseGuid))
+                { result.AddIssue(EUIBindingIssueSeverity.Error, null, "Binding 继承循环。"); break; }
+                var asset = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(baseGuid));
+                var parent = asset ? asset.GetComponent<EUIBinding>() : null;
+                if (!parent || parent.NoCodeGeneration || parent.Role != binding.Role)
+                { result.AddIssue(EUIBindingIssueSeverity.Error, null, "Binding 基类缺失、角色不兼容或没有生成逻辑。"); break; }
+                foreach (var inherited in parent.Bindings ?? Array.Empty<EUIBinding.BindingEntry>())
+                {
+                    var target = (binding.Bindings ?? Array.Empty<EUIBinding.BindingEntry>()).FirstOrDefault(e => e.Name == inherited.Name);
+                    if (string.IsNullOrEmpty(target.Name) || !target.GameObject)
+                        result.AddIssue(EUIBindingIssueSeverity.Error, inherited.Name, "缺失继承控件: " + inherited.Name);
+                    else if (target.Type != inherited.Type || target.ClassName != inherited.ClassName)
+                        result.AddIssue(EUIBindingIssueSeverity.Error, inherited.Name, "继承控件类型不兼容: " + inherited.Name);
+                }
+                current = parent;
             }
         }
 
@@ -1101,3 +1156,5 @@ namespace Ember.UIExtension.Editor
         #endregion
     }
 }
+
+

@@ -1,0 +1,9 @@
+{
+    "name": "Game.UiGame.Tests",
+    "rootNamespace": "Game.UiGame.Tests",
+    "references": ["Game.UiGame.Runtime", "Ember.Core.Runtime"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

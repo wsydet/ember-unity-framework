@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "error": "System.Exception: No raycast: m_Btn_GM\r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__1 (UnityEngine.Component c) [0x00053] in <9b40dc73a1cc4d628689fd36ccff1721>:0 \r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__3 () [0x0023c] in <9b40dc73a1cc4d628689fd36ccff1721>:0 ",
+  "log": [
+    {
+      "name": "resolution",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "gm-13-fields",
+      "ok": true,
+      "detail": 13
+    },
+    {
+      "name": "gm-default-closed",
+      "ok": true,
+      "detail": null
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "platformer-2d",
+    "version": "0.12.1",
+    "parentVersion": "0.10.0",
+    "status": "Synced",
+    "Error": null
+  },
+  {
+    "id": "source3d-2p5d",
+    "version": "0.6.0",
+    "parentVersion": "0.10.0",
+    "status": "Synced",
+    "Error": null
+  },
+  {
+    "id": "ui-game",
+    "version": "0.2.0",
+    "parentVersion": "0.10.0",
+    "status": "Synced",
+    "Error": null
+  },
+  {
+    "id": "visual-novel",
+    "version": "0.22.1",
+    "parentVersion": "0.10.0",
+    "status": "Synced",
+    "Error": null
+  }
+]

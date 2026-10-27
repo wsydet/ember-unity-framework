@@ -110,9 +110,20 @@ namespace Ember.UIExtension
 
                         if (childLogicType != null)
                         {
-                            var childLogic = (EUILogic)Activator.CreateInstance(childLogicType);
+                            var ownership = EUIInstanceOwnership.Acquire(entry.GameObject);
+                            EUILogic childLogic;
+                            try
+                            {
+                                childLogic = (EUILogic)Activator.CreateInstance(childLogicType);
+                                childLogic.TrackDisposable(ownership);
+                                parentLogic.RegisterChildLogic(entry.Name, childLogic);
+                            }
+                            catch
+                            {
+                                ownership.Dispose();
+                                throw;
+                            }
                             childLogic.ControlMap = new Dictionary<string, Component>();
-                            parentLogic.RegisterChildLogic(childLogic);
                             // 递归填充子 UIBinding 的控件（可能还有更深层嵌套）
                             PopulateControlMap(childBinding, childLogic.ControlMap, childLogic);
                             childLogic.OnBeginLoad();

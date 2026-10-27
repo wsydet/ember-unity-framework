@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "plugin": "ember-psd-to-bui",
+  "version": "1.5.0",
+  "sourceDocument": "README.md",
+  "syntax": {
+    "flagPrefix": "@",
+    "mainDelimiter": "_",
+    "tokenSeparators": [
+      " ",
+      "\t",
+      "\n",
+      "\r"
+    ],
+    "ignorePrefixes": [
+      "___"
+    ],
+    "nameCase": "PascalCaseRecommended",
+    "languagePolicy": "Use either English or Chinese flags consistently inside one PSD."
+  },
+  "rootPolicy": {
+    "targetDepth": 0,
+    "unmarkedRoot": "ignoreSubtree",
+    "ignoredRoot": "ignoreSubtree",
+    "noTargetFallback": {
+      "enabled": false,
+      "targetType": "Page",
+      "warningCode": "PSD_NO_TARGET_ROOT_FALLBACK",
+      "reason": "Official BUI export requires explicit @Page_ / @Popup_ / @Component_ / @ListItem_ target flags."
+    }
+  },
+  "defaults": {
+    "resourceType": "Atlas",
+    "variant": "normal",
+    "nodeTypeByLayerType": {
+      "group": "Group",
+      "text": "Text",
+      "image": "Image",
+      "shape": "Image",
+      "smartObject": "Image"
+    }
+  },
+  "targetTypes": [
+    {
+      "id": "Page",
+      "flags": [
+        "Page",
+        "页面"
+      ],
+      "targetType": "Page",
+      "nodeType": "Group",
+      "allowedAtRoot": true
+    },
+    {
+      "id": "SubPage",
+      "flags": [
+        "SubPage",
+        "子页"
+      ],
+      "targetType": "SubPage",
+      "nodeType": "Group",
+      "allowedAtRoot": true
+    },
+    {
+      "id": "Popup",
+      "flags": [
+        "Popup",
+        "弹窗"
+      ],
+      "targetType": "Popup",
+      "nodeType": "Group",
+      "allowedAtRoot": true
+    },
+    {
+      "id": "Component",
+      "flags": [
+        "Component",
+        "组件"
+      ],
+      "targetType": "Component",
+      "nodeType": "Group",
+      "allowedAtRoot": true
+    },
+    {
+      "id": "ListItem",
+      "flags": [
+        "ListItem",
+        "列表项"
+      ],
+      "targetType": "ListItem",
+      "nodeType": "Group",
+      "allowedAtRoot": true,
+      "allowedAsListPlaceholder": true
+    }
+  ],
+  "nodeTypes": [
+    {
+      "id": "Group",
+      "flags": [
+        "Group",
+        "组"
+      ],
+      "buiNodeType": "Group",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false
+    },
+    {
+      "id": "Bg",
+      "flags": [
+        "Bg",
+        "背景"
+      ],
+      "buiNodeType": "Bg",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false,
+      "pageRegion": "Bg",
+      "requiresTargetType": "Page",
+      "requiresTargetTypes": [
+        "Page",
+        "SubPage"
+      ],
+      "requiresDirectTargetChild": true,
+      "disallowLayout": true
+    },
+    {
+      "id": "Top",
+      "flags": [
+        "Top",
+        "顶部"
+      ],
+      "buiNodeType": "Top",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false,
+      "safeAreaRegion": "Top",
+      "requiresTargetType": "Page",
+      "requiresTargetTypes": [
+        "Page",
+        "SubPage"
+      ],
+      "requiresDirectTargetChild": true,
+      "disallowLayout": true
+    },
+    {
+      "id": "Center",
+      "flags": [
+        "Center",
+        "中部"
+      ],
+      "buiNodeType": "Center",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false,
+      "safeAreaRegion": "Center",
+      "requiresTargetType": "Page",
+      "requiresTargetTypes": [
+        "Page",
+        "SubPage"
+      ],
+      "requiresDirectTargetChild": true,
+      "disallowLayout": true
+    },
+    {
+      "id": "Bottom",
+      "flags": [
+        "Bottom",
+        "底部"
+      ],
+      "buiNodeType": "Bottom",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false,
+      "safeAreaRegion": "Bottom",
+      "requiresTargetType": "Page",
+      "requiresTargetTypes": [
+        "Page",
+        "SubPage"
+      ],
+      "requiresDirectTargetChild": true,
+      "disallowLayout": true
+    },
+    {
+      "id": "Image",
+      "flags": [
+        "Image",
+        "图片"
+      ],
+      "buiNodeType": "Image",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "slice": true,
+      "groupRequiresMaterialization": true,
+      "defaultResourceType": "Atlas"
+    },
+    {
+      "id": "RawImage",
+      "flags": [
+        "RawImage",
+        "原始图片"
+      ],
+      "buiNodeType": "RawImage",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "slice": true,
+      "groupRequiresMaterialization": true,
+      "defaultResourceType": "StaticTexture"
+    },
+    {
+      "id": "Button",
+      "flags": [
+        "Button",
+        "按钮"
+      ],
+      "buiNodeType": "Button",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "slice": true,
+      "defaultResourceType": "Atlas"
+    },
+    {
+      "id": "Text",
+      "flags": [
+        "Text",
+        "文本"
+      ],
+      "buiNodeType": "Text",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "slice": false
+    },
+    {
+      "id": "PrefabRef",
+      "flags": [
+        "PrefabRef",
+        "预制体引用"
+      ],
+      "buiNodeType": "PrefabRef",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "slice": false,
+      "skipChildren": true
+    },
+    {
+      "id": "List",
+      "flags": [
+        "List",
+        "列表"
+      ],
+      "buiNodeType": "List",
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "slice": false
+    }
+  ],
+  "optionTypes": [
+    {
+      "id": "Module",
+      "flags": [
+        "Module",
+        "模块"
+      ],
+      "kind": "outputModule",
+      "paramNames": [
+        "module"
+      ],
+      "paramType": "string",
+      "valueMode": "remainder",
+      "resourceField": "outputModule",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "allowedOnGroup": true,
+      "allowedOnLeaf": true,
+      "unique": true,
+      "warningCode": "PSD_OUTPUT_MODULE_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "NineSlice",
+      "flags": [
+        "9S",
+        "九宫"
+      ],
+      "kind": "border",
+      "paramNames": [
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ],
+      "paramType": "number",
+      "validOnNodeTypes": [
+        "Image",
+        "Button"
+      ],
+      "resourceField": "border",
+      "warningCode": "PSD_NINESLICE_OPTION_INVALID"
+    },
+    {
+      "id": "Atlas",
+      "flags": [
+        "Atlas",
+        "图集"
+      ],
+      "kind": "resourceType",
+      "value": "Atlas",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "warningCode": "PSD_ASSET_OPTION_INVALID"
+    },
+    {
+      "id": "StaticTexture",
+      "flags": [
+        "StaticTexture",
+        "散图"
+      ],
+      "kind": "resourceType",
+      "value": "StaticTexture",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "warningCode": "PSD_ASSET_OPTION_INVALID"
+    },
+    {
+      "id": "DynamicTexture",
+      "flags": [
+        "DynamicTexture",
+        "动态图"
+      ],
+      "kind": "resourceType",
+      "value": "DynamicTexture",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "warningCode": "PSD_ASSET_OPTION_INVALID"
+    },
+    {
+      "id": "Composite",
+      "flags": [
+        "Composite",
+        "合成"
+      ],
+      "kind": "sliceMode",
+      "value": "Composite",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "allowedOnGroup": true,
+      "allowedOnLeaf": false,
+      "unique": true,
+      "warningCode": "PSD_COMPOSITE_CONTEXT_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "PrefabAsset",
+      "flags": [
+        "PrefabAsset"
+      ],
+      "kind": "prefabAsset",
+      "paramNames": [
+        "assetGuid"
+      ],
+      "paramType": "string",
+      "validOnNodeTypes": [
+        "PrefabRef"
+      ],
+      "unique": true,
+      "warningCode": "PSD_PREFAB_ASSET_CONTEXT_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "PrefabOverride",
+      "flags": [
+        "PrefabOverride",
+        "预制体覆盖"
+      ],
+      "kind": "prefabOverride",
+      "paramNames": [
+        "slot"
+      ],
+      "paramType": "string",
+      "validOnNodeTypes": [
+        "Image",
+        "Text"
+      ],
+      "warningCode": "PSD_PREFAB_OVERRIDE_ELEMENT_TYPE_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "ExportOnly",
+      "flags": [
+        "ExportOnly",
+        "仅切图",
+        "切图"
+      ],
+      "kind": "exportOnly",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage"
+      ],
+      "allowedOnGroup": false,
+      "unique": true,
+      "warningCode": "PSD_EXPORT_ONLY_CONTEXT_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "ExportBounds",
+      "flags": [
+        "ExportBounds"
+      ],
+      "kind": "exportBounds",
+      "paramNames": [
+        "mode"
+      ],
+      "paramType": "string",
+      "validOnNodeTypes": [
+        "Image",
+        "RawImage",
+        "Button"
+      ],
+      "allowedOnGroup": false,
+      "allowedOnLeaf": true,
+      "unique": true,
+      "warningCode": "PSD_EXPORT_BOUNDS_CONTEXT_INVALID",
+      "invalidSeverity": "Blocking"
+    },
+    {
+      "id": "NoBind",
+      "flags": [
+        "NoBind"
+      ],
+      "kind": "binding",
+      "collect": false,
+      "source": "PsdNoBind",
+      "reason": "static-control",
+      "validOnNodeTypes": [
+        "Group",
+        "Image",
+        "RawImage",
+        "Button",
+        "Text",
+        "PrefabRef",
+        "List"
+      ],
+      "warningCode": "PSD_NOBIND_OPTION_INVALID"
+    },
+    {
+      "id": "Vertical",
+      "flags": [
+        "Ver",
+        "垂直"
+      ],
+      "kind": "layout",
+      "value": "Vertical",
+      "validOnNodeTypes": [
+        "Group",
+        "List"
+      ],
+      "warningCode": "PSD_LAYOUT_OPTION_INVALID"
+    },
+    {
+      "id": "Horizontal",
+      "flags": [
+        "Hor",
+        "水平"
+      ],
+      "kind": "layout",
+      "value": "Horizontal",
+      "validOnNodeTypes": [
+        "Group",
+        "List"
+      ],
+      "warningCode": "PSD_LAYOUT_OPTION_INVALID"
+    }
+  ],
+  "behaviors": {
+    "prefabRef": {
+      "skipChildren": true,
+      "skipSlice": true,
+      "field": "prefabRef",
+      "kind": "ExternalPrefab",
+      "identityField": "prefabName",
+      "identitySource": "PrefabRefMainFlag"
+    },
+    "list": {
+      "generatedItemTargetFlags": [
+        "ListItem",
+        "列表项"
+      ],
+      "mountNodeType": "PrefabRef",
+      "mountPrefabRefKind": "GeneratedTarget"
+    },
+    "component": {
+      "mountNodeType": "PrefabRef",
+      "mountPrefabRefKind": "GeneratedTarget",
+      "allowedParentTargetTypes": [
+        "Page",
+        "SubPage",
+        "Popup",
+        "Component",
+        "ListItem"
+      ]
+    },
+    "text": {
+      "exportTextInfo": true,
+      "slice": false
+    }
+  },
+  "warningCodes": {
+    "configLoadFailed": "PSD_NAMING_RULES_CONFIG_LOAD_FAILED",
+    "ignoredSubtree": "PSD_IGNORE_MARK_APPLIED",
+    "unmarkedRootIgnored": "PSD_UNMARKED_ROOT_IGNORED",
+    "unknownMainFlag": "PSD_UNKNOWN_MAIN_FLAG",
+    "unknownOptionFlag": "PSD_UNKNOWN_OPTION_FLAG",
+    "multipleMainFlags": "PSD_MULTIPLE_MAIN_FLAGS",
+    "invalidFlagContext": "PSD_FLAG_CONTEXT_INVALID",
+    "safeAreaRegionContextInvalid": "PSD_SAFE_AREA_REGION_CONTEXT_INVALID",
+    "safeAreaRegionLayoutInvalid": "PSD_SAFE_AREA_REGION_LAYOUT_INVALID",
+    "safeAreaRegionMainConflict": "PSD_SAFE_AREA_REGION_MAIN_CONFLICT",
+    "pageTargetNameInvalid": "PSD_PAGE_TARGET_NAME_SUFFIX_INVALID",
+    "invalidOptionParams": "PSD_OPTION_PARAMS_INVALID",
+    "duplicateUniqueOption": "PSD_DUPLICATE_UNIQUE_OPTION",
+    "groupRenderModeRequired": "PSD_GROUP_RENDER_MODE_REQUIRED",
+    "materializationRequired": "PSD_RENAME_MATERIALIZATION_REQUIRED",
+    "compositeDynamicConflict": "PSD_COMPOSITE_DYNAMIC_CONFLICT",
+    "targetNoBindIgnored": "PSD_TARGET_NOBIND_IGNORED",
+    "noBindHighRisk": "PSD_NOBIND_HIGH_RISK",
+    "prefabRefChildrenSkipped": "PSD_PREFAB_REF_CHILDREN_SKIPPED",
+    "listItemTargetGenerated": "PSD_LISTITEM_TARGET_GENERATED",
+    "componentTargetGenerated": "PSD_COMPONENT_TARGET_GENERATED",
+    "duplicateTargetName": "PSD_DUPLICATE_TARGET_NAME"
+  }
+}

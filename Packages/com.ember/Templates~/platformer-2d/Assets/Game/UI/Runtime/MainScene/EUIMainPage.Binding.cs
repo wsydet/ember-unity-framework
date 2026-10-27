@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUIMainPanel
+ * prefab name  : EUIMainPage
  * page name    : EUIMainPage
- * update time  : 2026/10/8 21:32:52
+ * update time  : 2026/10/27 11:35:06
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

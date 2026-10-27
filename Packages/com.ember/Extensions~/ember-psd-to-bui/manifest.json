@@ -1,0 +1,38 @@
+{
+  "manifestVersion": 5,
+  "id": "com.ember.psd.to.bui",
+  "name": "ember-psd-to-bui",
+  "version": "1.0.0",
+  "main": "index.html",
+  "host": {
+    "app": "PS",
+    "minVersion": "25.0.0"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "ember-psd-to-bui-panel",
+      "label": "Ember PSD Exporter",
+      "minimumSize": {
+        "width": 1080,
+        "height": 860
+      },
+      "maximumSize": {
+        "width": 2400,
+        "height": 1800
+      },
+      "preferredDockedSize": {
+        "width": 1180,
+        "height": 920
+      },
+      "preferredFloatingSize": {
+        "width": 1180,
+        "height": 920
+      }
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "clipboard": "readAndWrite"
+  }
+}

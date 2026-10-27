@@ -1,0 +1,946 @@
+{
+  "comparison": {
+    "Issues": [
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/Game/Documentation/base/DefaultUILibrary.md",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/Game/Scenes/FrameworkScene.unity",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Framework/GMPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 框架区 + 用户区",
+        "AssetPath": "Assets/Game/UI/Runtime/Framework/GMPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 框架区 + 用户区",
+        "AssetPath": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      }
+    ],
+    "CheckedAt": "2026-10-27T11:00:30.1190031+08:00",
+    "TemplateId": "base",
+    "Baseline": "当前项目 → 基础模板 v0.9.0（按模板保存规则）",
+    "ProjectFingerprint": "61cbe49aa797b1604f293b9756674566",
+    "ComparisonCompleted": true,
+    "IsEditingTemplate": true,
+    "ErrorCount": 0,
+    "WarningCount": 0,
+    "DifferenceCount": 63
+  },
+  "scan": {
+    "Issues": [
+      {
+        "Severity": 3,
+        "Category": "版本封存",
+        "Message": "模板有已保存但未封存到版本的内容。",
+        "AssetPath": null,
+        "Suggestion": "在模板开发的版本与设置页选择版本封存。"
+      },
+      {
+        "Severity": 0,
+        "Category": "模板存储",
+        "Message": "模板内容、元数据和父级状态正常。",
+        "AssetPath": null,
+        "Suggestion": null
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/Game/Documentation/base/DefaultUILibrary.md",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/Game/Scenes/FrameworkScene.unity",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Framework/GMPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 框架区 + 用户区",
+        "AssetPath": "Assets/Game/UI/Runtime/Framework/GMPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 用户代码",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · UI 生成器管理",
+        "AssetPath": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 框架区 + 用户区",
+        "AssetPath": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.cs",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目已修改 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 2,
+        "Category": "内容差异",
+        "Message": "项目新增 · 资源/配置",
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab.meta",
+        "Suggestion": "保存模板时将写入此文件。"
+      },
+      {
+        "Severity": 0,
+        "Category": "资源元数据",
+        "Message": "业务目录资源/.meta 配对与 GUID 检查完成。",
+        "AssetPath": null,
+        "Suggestion": null
+      },
+      {
+        "Severity": 0,
+        "Category": "配置表",
+        "Message": "Schema、源数据、引用和全部生成物一致。",
+        "AssetPath": null,
+        "Suggestion": null
+      },
+      {
+        "Severity": 1,
+        "Category": "UI 生成链路",
+        "Message": "已检查 70 个 UI Prefab；Item 不要求 GamePages 注册，不生成代码的 UI 不要求脚本。",
+        "AssetPath": "Assets/GameResource/Resources/UI",
+        "Suggestion": "需要修复时进入 UI 开发中心或打开对应 Prefab。"
+      }
+    ],
+    "CheckedAt": "2026-10-27T11:00:30.8944247+08:00",
+    "TemplateId": "base",
+    "Baseline": "编辑副本 base v0.9.0 → 当前模板 v0.9.0",
+    "ProjectFingerprint": "61cbe49aa797b1604f293b9756674566",
+    "ComparisonCompleted": true,
+    "IsEditingTemplate": true,
+    "ErrorCount": 0,
+    "WarningCount": 1,
+    "DifferenceCount": 63
+  },
+  "graph": []
+}

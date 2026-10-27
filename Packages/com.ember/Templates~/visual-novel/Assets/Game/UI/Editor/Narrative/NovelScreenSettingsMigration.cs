@@ -18,7 +18,7 @@ namespace Game.UI.Editor
     internal static class NovelScreenSettingsMigration
     {
         #region 内部参数
-        private const string PREFAB = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab";
+        private const string PREFAB = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab";
         private const string BINDING = "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs";
         [Serializable] private sealed class Identity { public string templateId; }
         #endregion

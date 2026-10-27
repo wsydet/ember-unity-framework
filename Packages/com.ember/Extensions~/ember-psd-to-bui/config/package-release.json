@@ -1,0 +1,8 @@
+{
+  "packageName": "com.ember",
+  "packageVersion": "0.23.0",
+  "uxpVersion": "1.0.0",
+  "upstreamPackage": "com.burner.ui.prefabmaker",
+  "upstreamVersion": "2.0.0-preview.17",
+  "upstreamUxpVersion": "3.0.14"
+}

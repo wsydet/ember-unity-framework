@@ -72,7 +72,7 @@ namespace Game.Narrative.Tests
         [TestCase(0, true, true, 5)]
         public void MainMenuVisibilityAndLayoutFollowSlotKinds(int slot, bool resume, bool load, int count)
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab");
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab");
             var root = Object.Instantiate(prefab);
             var page = new EUIPage(root);
             try

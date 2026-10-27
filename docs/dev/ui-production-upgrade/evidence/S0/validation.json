@@ -1,0 +1,165 @@
+{
+  "capabilities": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "name": "TMPEx",
+          "loadedTypes": [
+            "Ember.UIExtension.TMPEx"
+          ]
+        },
+        {
+          "name": "EUIButtonEx",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIButtonEx"
+          ]
+        },
+        {
+          "name": "EUIImageEx",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIImageEx"
+          ]
+        },
+        {
+          "name": "EUIToggleEx",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIToggleEx"
+          ]
+        },
+        {
+          "name": "EUIToggleGroupEx",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIToggleGroupEx"
+          ]
+        },
+        {
+          "name": "UIContainer",
+          "loadedTypes": []
+        },
+        {
+          "name": "TabLoader",
+          "loadedTypes": []
+        },
+        {
+          "name": "PagePreloader",
+          "loadedTypes": []
+        },
+        {
+          "name": "TMPMarquee",
+          "loadedTypes": []
+        },
+        {
+          "name": "EUIItemFactory",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIItemFactory"
+          ]
+        },
+        {
+          "name": "EUIBindingBridge",
+          "loadedTypes": [
+            "Ember.UIExtension.EUIBindingBridge"
+          ]
+        }
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "bindingValidation": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "name": "EUIBackgroundPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        },
+        {
+          "name": "EUIGamePlayPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        },
+        {
+          "name": "EUILoadingPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        },
+        {
+          "name": "EUIMainPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        },
+        {
+          "name": "EUISettingPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        },
+        {
+          "name": "GMPanel",
+          "validation": {
+            "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPanel.prefab",
+            "Issues": [],
+            "HasError": false
+          },
+          "baseGuid": ""
+        }
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "compile": {
+    "instance": "ember-unity-framework@b23e9b768e85ed30",
+    "request": {
+      "compile": "request",
+      "mode": "force",
+      "scope": "all",
+      "wait_for_ready": false
+    },
+    "startedUnixMs": 1793007204252,
+    "finishedUnixMs": 1793007207037,
+    "domainReloadAfterUnixMs": 1793007213117,
+    "postCompileConsole": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "runtimeConsole": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "finalConsole": {
+      "errors": 0,
+      "warnings": 2,
+      "description": "MCP WebSocket receive/closed warnings after read-only whole-Assets hash query; connection recovered on first retry after 30 seconds."
+    }
+  },
+  "final": {
+    "playing": false,
+    "activeScene": "Assets/Game/Scenes/FrameworkScene.unity",
+    "sceneDirty": false,
+    "templateId": "base",
+    "templateVersion": "0.8.4",
+    "contentHash": "936dcb1d411afefcacd961cbad1d1d0d"
+  }
+}

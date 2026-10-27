@@ -32,8 +32,8 @@ namespace Game.UI.Editor
 
         private const string TAG = "Novel.UiText";
 
-        private const string Main = "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab";
-        private const string Setting = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab";
+        private const string Main = "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab";
+        private const string Setting = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab";
         private const string Reader = "Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReaderPage.prefab";
         private const string ChoiceItem = "Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelChoiceItem.prefab";
         private const string ReadingMenu = "Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelReadingMenuPage.prefab";

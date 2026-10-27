@@ -1,0 +1,168 @@
+{
+  "job_id": "996dd472d1774d1baf9f9483b13774cb",
+  "status": "failed",
+  "mode": "EditMode",
+  "started_unix_ms": 1793021101598,
+  "finished_unix_ms": 1793021118554,
+  "last_update_unix_ms": 1793021118554,
+  "progress": {
+    "completed": 12,
+    "total": 12,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": null,
+    "last_finished_test_full_name": "Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+    "last_finished_unix_ms": 1793021118382,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "run_in_background": true,
+    "focus_nudge_attempts": null,
+    "focus_nudge_limit": null,
+    "focus_nudge_status": null,
+    "blocked_reason": null,
+    "failures_so_far": [
+      {
+        "full_name": "Ember.UI.Tests.EUIDynamicListEditTests.BindingExceptionAndHostDisposalReleaseEveryLease",
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。"
+      },
+      {
+        "full_name": "Ember.UI.Tests.EUIDynamicListEditTests.CancellationReentrancyDisposesWithoutDoubleRelease",
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。"
+      },
+      {
+        "full_name": "Ember.UI.Tests.EUIDynamicListEditTests.Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance",
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。"
+      },
+      {
+        "full_name": "Ember.UI.Tests.EUIDynamicListEditTests.LayoutConflictsAreActionable_AndListContractChangesBlock",
+        "message": "  Expected: <empty>\r\n  But was:  < \"首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。\" >\r\n"
+      },
+      {
+        "full_name": "Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。"
+      }
+    ],
+    "failures_capped": false
+  },
+  "error": null,
+  "result": {
+    "mode": "EditMode",
+    "summary": {
+      "total": 12,
+      "passed": 7,
+      "failed": 5,
+      "skipped": 0,
+      "durationSeconds": 8.3443053,
+      "resultState": "Failed(Child)"
+    },
+    "results": [
+      {
+        "name": "ButtonLabelSlot_IsNotCollectedAgain_AndEnableStateDoesNotChangeInteractable",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.ButtonLabelSlot_IsNotCollectedAgain_AndEnableStateDoesNotChangeInteractable",
+        "state": "Passed",
+        "durationSeconds": 0.2569936,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "Diff_ColorIsAppearance_ButRemovalAndTypeChangesBlock",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.Diff_ColorIsAppearance_ButRemovalAndTypeChangesBlock",
+        "state": "Passed",
+        "durationSeconds": 1.5882077,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "DynamicOwnership_RejectsSecondFactoryBeforeOnBind_AndReleasesOnDispose",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.DynamicOwnership_RejectsSecondFactoryBeforeOnBind_AndReleasesOnDispose",
+        "state": "Passed",
+        "durationSeconds": 0.0137043,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "Export_IsReadOnlyStable_AndPreservesFrameworkMetadata",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.Export_IsReadOnlyStable_AndPreservesFrameworkMetadata",
+        "state": "Passed",
+        "durationSeconds": 0.7772624,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "Export_RejectsMissingReferenceAndDuplicateSemanticIds",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.Export_RejectsMissingReferenceAndDuplicateSemanticIds",
+        "state": "Passed",
+        "durationSeconds": 1.0416424,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "PageCreation_DefaultUsesPage_AndRejectsOldPanelSuffix",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.PageCreation_DefaultUsesPage_AndRejectsOldPanelSuffix",
+        "state": "Passed",
+        "durationSeconds": 0.0131382,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "ParentOwnership_BlocksFactoryOnNestedLogic_AndReleasesWithParent",
+        "fullName": "Ember.UI.Tests.EUIContractEditTests.ParentOwnership_BlocksFactoryOnNestedLogic_AndReleasesWithParent",
+        "state": "Passed",
+        "durationSeconds": 0.0062684,
+        "message": null,
+        "stackTrace": null,
+        "output": ""
+      },
+      {
+        "name": "BindingExceptionAndHostDisposalReleaseEveryLease",
+        "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.BindingExceptionAndHostDisposalReleaseEveryLease",
+        "state": "Failed:Error",
+        "durationSeconds": 0.7635798,
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。",
+        "stackTrace": "  at Ember.UIExtension.EUIDynamicListHost.Create[T] (System.Func`2[T,TResult] key, System.Action`1[T] bind) [0x00055] in .\\Packages\\com.ember\\UIExtension\\Runtime\\EUIDynamicListHost.cs:41 \r\n  at Ember.UI.Tests.EUIDynamicListEditTests.BindingExceptionAndHostDisposalReleaseEveryLease () [0x0000d] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIDynamicListEditTests.cs:88 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+        "output": ""
+      },
+      {
+        "name": "CancellationReentrancyDisposesWithoutDoubleRelease",
+        "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.CancellationReentrancyDisposesWithoutDoubleRelease",
+        "state": "Failed:Error",
+        "durationSeconds": 0.7440321,
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。",
+        "stackTrace": "  at Ember.UIExtension.EUIDynamicListHost.Create[T] (System.Func`2[T,TResult] key, System.Action`1[T] bind) [0x00055] in .\\Packages\\com.ember\\UIExtension\\Runtime\\EUIDynamicListHost.cs:41 \r\n  at Ember.UI.Tests.EUIDynamicListEditTests.CancellationReentrancyDisposesWithoutDoubleRelease () [0x00006] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIDynamicListEditTests.cs:100 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+        "output": ""
+      },
+      {
+        "name": "Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance",
+        "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance",
+        "state": "Failed:Error",
+        "durationSeconds": 0.7714425,
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。",
+        "stackTrace": "  at Ember.UIExtension.EUIDynamicListHost.Create[T] (System.Func`2[T,TResult] key, System.Action`1[T] bind) [0x00055] in .\\Packages\\com.ember\\UIExtension\\Runtime\\EUIDynamicListHost.cs:41 \r\n  at Ember.UI.Tests.EUIDynamicListEditTests.Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance () [0x00006] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIDynamicListEditTests.cs:54 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+        "output": ""
+      },
+      {
+        "name": "LayoutConflictsAreActionable_AndListContractChangesBlock",
+        "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.LayoutConflictsAreActionable_AndListContractChangesBlock",
+        "state": "Failed",
+        "durationSeconds": 0.7324597,
+        "message": "  Expected: <empty>\r\n  But was:  < \"首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。\" >\r\n",
+        "stackTrace": "at Ember.UI.Tests.EUIDynamicListEditTests.LayoutConflictsAreActionable_AndListContractChangesBlock () [0x00000] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIDynamicListEditTests.cs:110\r\n",
+        "output": ""
+      },
+      {
+        "name": "LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+        "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+        "state": "Failed:Error",
+        "durationSeconds": 0.7897655,
+        "message": "System.InvalidOperationException : 首版 List 要求 VerticalLayoutGroup 控制高度且不强制扩展高度。",
+        "stackTrace": "  at Ember.UIExtension.EUIDynamicListHost.Create[T] (System.Func`2[T,TResult] key, System.Action`1[T] bind) [0x00055] in .\\Packages\\com.ember\\UIExtension\\Runtime\\EUIDynamicListHost.cs:41 \r\n  at Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease () [0x00014] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIDynamicListEditTests.cs:75 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+        "output": ""
+      }
+    ]
+  }
+}

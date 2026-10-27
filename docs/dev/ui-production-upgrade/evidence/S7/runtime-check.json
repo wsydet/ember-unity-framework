@@ -1,0 +1,84 @@
+{
+  "status": "failed",
+  "error": "System.NullReferenceException: Object reference not set to an instance of an object\r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__1 () [0x0099a] in <e34f5914a2d9412f86a447126e7cd7e9>:0 ",
+  "log": [
+    {
+      "name": "initial-three-rows",
+      "ok": true,
+      "detail": {
+        "Count": 3,
+        "InstanceCount": 3,
+        "Generation": 1
+      }
+    },
+    {
+      "name": "same-frame-double-click",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "old-lease-invalid-after-refresh",
+      "ok": true,
+      "detail": {
+        "IsCurrent": false,
+        "key": "step-0",
+        "index": 0
+      }
+    },
+    {
+      "name": "settings-pauses-session",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "mask-blocks-underlying-input",
+      "ok": true,
+      "detail": "EmberBgMask"
+    },
+    {
+      "name": "settings-present",
+      "ok": true,
+      "detail": [
+        "Btn_Close",
+        "Txt_NowScene"
+      ]
+    },
+    {
+      "name": "resume-same-session",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "result-once-and-list-disposed",
+      "ok": true,
+      "detail": {
+        "Count": 0,
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "restart-one-new-session",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 2,
+        "ReleasedSessions": 1
+      }
+    },
+    {
+      "name": "late-old-session-cannot-mutate",
+      "ok": true,
+      "detail": 2
+    },
+    {
+      "name": "rapid-return-releases",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 2,
+        "ReleasedSessions": 2,
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    }
+  ]
+}

@@ -43,6 +43,11 @@ namespace Ember.UIExtension
             }
 
             EUILogic logic = null;
+            if (EUIInstanceOwnership.IsOwned(instance))
+            {
+                error = $"EUIItem '{instance.name}' already has a logic owner.";
+                return false;
+            }
             if (!string.IsNullOrWhiteSpace(binding.ClassName))
             {
                 Type logicType = EUIBindingBridge.FindLogicType(binding.ClassName);

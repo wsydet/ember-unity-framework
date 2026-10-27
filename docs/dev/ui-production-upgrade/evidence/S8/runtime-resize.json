@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "log": [
+    {
+      "name": "ownership-contrast",
+      "ok": true
+    },
+    {
+      "name": "curtain-coverage-1280",
+      "ok": true,
+      "uncovered": 0,
+      "samples": 153,
+      "sameInstance": true,
+      "blocks": 93
+    },
+    {
+      "name": "curtain-coverage-1600",
+      "ok": true,
+      "uncovered": 0,
+      "samples": 153,
+      "sameInstance": true,
+      "blocks": 109
+    }
+  ]
+}

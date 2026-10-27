@@ -1,0 +1,43 @@
+{
+  "ui-game": {
+    "version": "0.2.0",
+    "parentVersion": "0.10.0",
+    "parentHash": "61cbe49aa797b1604f293b9756674566",
+    "sealed": true,
+    "customModuleFilesUnchanged": 12,
+    "customModuleFilesChanged": [],
+    "duplicateGuids": []
+  },
+  "platformer-2d": {
+    "version": "0.12.1",
+    "parentVersion": "0.10.0",
+    "parentHash": "61cbe49aa797b1604f293b9756674566",
+    "sealed": true,
+    "customModuleFilesUnchanged": 738,
+    "customModuleFilesChanged": [
+      "Game\\Module\\SceneFlow\\Tests\\GameLoadingProgressTests.cs"
+    ],
+    "duplicateGuids": []
+  },
+  "source3d-2p5d": {
+    "version": "0.6.0",
+    "parentVersion": "0.10.0",
+    "parentHash": "61cbe49aa797b1604f293b9756674566",
+    "sealed": true,
+    "customModuleFilesUnchanged": 18,
+    "customModuleFilesChanged": [],
+    "duplicateGuids": []
+  },
+  "visual-novel": {
+    "version": "0.22.1",
+    "parentVersion": "0.10.0",
+    "parentHash": "61cbe49aa797b1604f293b9756674566",
+    "sealed": true,
+    "customModuleFilesUnchanged": 370,
+    "customModuleFilesChanged": [
+      "Game\\Module\\Narrative\\Tests\\NovelGameplayTests.cs",
+      "Game\\Module\\Narrative\\Tests\\NovelUIFollowupTests.cs"
+    ],
+    "duplicateGuids": []
+  }
+}

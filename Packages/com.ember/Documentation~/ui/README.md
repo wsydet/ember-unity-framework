@@ -51,3 +51,5 @@ Item 没有独立 Canvas/页面排序，复用宿主的渲染环境；临时隐�
 SceneUI 的气泡就是 Item，见 [SceneUI 接入](../scene-ui/README.md)。
 
 框架开发仓库另有 `docs/user/UI开发参考.md` 与 `docs/dev/eui-reference.md`，只属于仓库维护资料，单独安装 UPM 包时不要求这些文件存在。消费项目以本页、随包源码及 UI 开发中心生成结果为依据。
+
+- [EUI 契约、页面命名与嵌套所有权](eui-contract.md)：只读导出/差异、语义登记、Page 命名与生成示例。

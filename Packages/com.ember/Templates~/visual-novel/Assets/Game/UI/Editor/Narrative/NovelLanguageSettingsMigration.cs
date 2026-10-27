@@ -33,7 +33,7 @@ namespace Game.UI.Editor
         #region 内部参数
 
         private const string TAG = "Novel.Language";
-        private const string PREFAB = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab";
+        private const string PREFAB = "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab";
         private const string BINDING = "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs";
         private const string FIRST_BINDING = "LanguageZhHans";
 

@@ -571,6 +571,13 @@ namespace Ember.UIExtension.Editor
                     skeletonWritten = true;
                     File.WriteAllText(path, renderedSkeleton, new UTF8Encoding(false));
                 }
+                else
+                {
+                    // 仅同步生成头中的资产标识，用户代码及生命周期受管块保持原样。
+                    var existing = File.ReadAllText(path);
+                    var updated = Regex.Replace(existing, @"(?m)^( \* prefab name  : )[^\r\n]*", m => m.Groups[1].Value + prefabName);
+                    if (updated != existing) File.WriteAllText(path, updated, new UTF8Encoding(false));
+                }
 
                 // 2. 生成 .Binding.cs（每次覆盖）
                 bindingWritten = true;
@@ -1284,7 +1291,9 @@ namespace Ember.UIExtension.Editor
                     decl.AppendLine($"        private {typeName} {entry.Name};");
                     decl.AppendLine();
 
-                    bind.AppendLine($"            {entry.Name} = ControlMap[\"{entry.Name}\"] as {typeName};");
+                    bind.AppendLine(entry.Type == EUIBinding.WidgetTypes.UILogic
+                        ? $"            {entry.Name} = GetChildLogic<{typeName}>(\"{entry.Name}\");"
+                        : $"            {entry.Name} = ControlMap[\"{entry.Name}\"] as {typeName};");
                 }
             }
 

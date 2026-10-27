@@ -19,7 +19,7 @@ namespace Game.Narrative.Tests
         public void SettingsAreAnOverlayAndValuesTrackTheirControls()
         {
             var root = UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(
-                "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPanel.prefab"));
+                "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab"));
             var page = new EUIPage(root);
             try
             {
@@ -53,7 +53,7 @@ namespace Game.Narrative.Tests
         [TestCase(false)]
         public void NewGameShowsOwnedProgressWhileQuickRestoreStaysCovered(bool showProgress)
         {
-            var prefab = AssetDatabase.FindAssets("EUILoadingPanel t:Prefab").Select(AssetDatabase.GUIDToAssetPath)
+            var prefab = AssetDatabase.FindAssets("EUILoadingPage t:Prefab").Select(AssetDatabase.GUIDToAssetPath)
                 .Select(AssetDatabase.LoadAssetAtPath<GameObject>).First();
             var root = UnityEngine.Object.Instantiate(prefab); var page = new EUIPage(root);
             try
@@ -74,20 +74,21 @@ namespace Game.Narrative.Tests
                 var logic = page.Logic.GetType();
                 logic.GetMethod("HideProgressVisuals", PrivateInstance).Invoke(page.Logic, null);
                 logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
-                var bar = (Image)page.Logic.ControlMap["Img_ProgressBar"];
-                var number = (TMP_Text)page.Logic.ControlMap["Txt_ProgressNum"];
-                Assert.AreEqual(showProgress, bar.gameObject.activeSelf);
+                var bar = progressGroup.GetComponent<Slider>();
+                var barVisual = progressGroup.transform.Find("Track").gameObject;
+                var number = progressGroup.transform.Find("Value").GetComponent<TMP_Text>();
+                Assert.AreEqual(showProgress, barVisual.activeSelf);
                 Assert.AreEqual(showProgress, number.gameObject.activeSelf);
-                if (showProgress) { Assert.AreEqual(.45f, bar.fillAmount); Assert.AreEqual("45%", number.text); }
+                if (showProgress) { Assert.AreEqual(.45f, bar.value); Assert.AreEqual("45%", number.text); }
                 type.GetProperty("Progress", PrivateInstance).SetValue(request, 1f);
                 logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
                 Assert.IsFalse(page.Logic.IsTransitionReady);
-                if (showProgress) { Assert.AreEqual(.99f, bar.fillAmount); Assert.AreEqual("99%", number.text); }
+                if (showProgress) { Assert.AreEqual(.99f, bar.value); Assert.AreEqual("99%", number.text); }
                 typeof(EUILogic).GetProperty(nameof(EUILogic.LoadingWorkCompleted)).SetValue(page.Logic, true);
                 logic.GetMethod("RefreshNovelLoadingProgress", PrivateInstance).Invoke(page.Logic, null);
                 Assert.IsTrue(page.Logic.IsTransitionReady);
-                if (showProgress) { Assert.AreEqual(1f, bar.fillAmount); Assert.AreEqual("100%", number.text); }
-                else { Assert.IsFalse(bar.gameObject.activeSelf); Assert.IsFalse(number.gameObject.activeSelf); }
+                if (showProgress) { Assert.AreEqual(1f, bar.value); Assert.AreEqual("100%", number.text); }
+                else { Assert.IsFalse(barVisual.activeSelf); Assert.IsFalse(number.gameObject.activeSelf); }
                 page.Logic.OnClose();
                 CollectionAssert.AreEqual(raycastValues, groups.Select(group => group.blocksRaycasts).ToArray(),
                     "Closing the restore curtain must restore each ancestor's original raycast state.");

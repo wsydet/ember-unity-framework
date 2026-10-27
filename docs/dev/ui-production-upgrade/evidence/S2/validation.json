@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-26",
+  "projectRoot": "C:/Users/wuyu/My/ember-unity-framework",
+  "implemented": "S2",
+  "tests": {
+    "passed": 56,
+    "failed": 0,
+    "job": "360078f706604c7eb952624ebf196901",
+    "scope": [
+      "EUIDevelopmentCenterEditTests",
+      "EUIContractEditTests",
+      "EUILibraryEditTests"
+    ]
+  },
+  "final": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "comparison": {
+          "Issues": [
+            {
+              "Severity": 0,
+              "Category": "内容差异",
+              "Message": "磁盘文件与所列基准一致。",
+              "AssetPath": null,
+              "Suggestion": null
+            }
+          ],
+          "CheckedAt": "2026-10-26T19:41:52.1062839+08:00",
+          "TemplateId": "base",
+          "Baseline": "当前项目 → 基础模板 v0.8.4（按模板保存规则）",
+          "ProjectFingerprint": "a326eb5801392b8ebf71661c4a5ddd8d",
+          "ComparisonCompleted": true,
+          "IsEditingTemplate": true,
+          "ErrorCount": 0,
+          "WarningCount": 0,
+          "DifferenceCount": 0
+        },
+        "libraryErrors": [],
+        "catalogCurrent": true,
+        "sceneDirty": false,
+        "play": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "state": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1793014939462,\\\"sequence\\\":23,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":\\\"Assets/Game/Scenes/FrameworkScene.unity\\\",\\\"guid\\\":\\\"30fc7ce87c922d343a7920d067a6930e\\\",\\\"name\\\":\\\"FrameworkScene\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1793014151545,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1793013404725,\\\"last_compile_finished_unix_ms\\\":1793013407962,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1793013411822},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":null,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":1793013490437,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":1793013448887,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":{\\\"finished_unix_ms\\\":1793013469843,\\\"result\\\":\\\"unknown\\\",\\\"counts\\\":null}},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":605,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}",
+  "console": {
+    "success": true,
+    "message": "Retrieved 0 log entries.",
+    "data": []
+  },
+  "maskClose": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "popupGone": true,
+        "root": "C:/Users/wuyu/My/ember-unity-framework/Assets"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "notVerified": [
+    "physical touch",
+    "clean consumer deployment/build",
+    "portrait/device safe area",
+    "complete CJK/localization visual",
+    "derived template merge"
+  ],
+  "noBumpCommitPushRelease": true
+}

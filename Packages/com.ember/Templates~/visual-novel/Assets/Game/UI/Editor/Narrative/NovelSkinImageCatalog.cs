@@ -35,7 +35,7 @@ namespace Game.UI.Editor
             "Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelBackgroundItem.prefab",
             "Assets/GameResource/Resources/UI/Module/NovelSave/Prefabs/EUINovelSavePage.prefab",
             "Assets/GameResource/Resources/UI/Module/NovelSave/Prefabs/EUINovelSaveSlotItem.prefab",
-            "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPanel.prefab"
+            "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab"
         };
         private const string RESOURCES_ROOT = "Assets/GameResource/Resources/";
         private const string OUTPUT_PATH = ".utmp/novel-skin/image-candidates.md";
@@ -59,7 +59,7 @@ namespace Game.UI.Editor
             {
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (!prefab) continue;
-                string page = Path.GetFileNameWithoutExtension(path);
+                string page = NovelUISkinEditorService.SkinPageId(Path.GetFileNameWithoutExtension(path));
                 var binding = prefab.GetComponentInChildren<EUIBinding>(true);
                 var bound = BoundTransforms(binding);
                 report.AppendLine("## " + page);
@@ -112,7 +112,7 @@ namespace Game.UI.Editor
             page = control = node = spritePath = null;
             if (target == null) return false;
             Transform root = target.root;
-            page = root == null ? null : root.name;
+            page = root == null ? null : NovelUISkinEditorService.SkinPageId(root.name);
             if (string.IsNullOrEmpty(page)) return false;
             var binding = root.GetComponentInChildren<EUIBinding>(true);
             control = ResolveControl(target, BoundTransforms(binding), out Transform anchor);

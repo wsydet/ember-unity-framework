@@ -129,8 +129,11 @@ namespace Game.UI.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
+        /// <summary>资产改名后仍保持已有小说皮肤的稳定页面键。</summary>
+        internal static string SkinPageId(string name) => name == "EUIMainPage" ? "EUIMainPanel" : name;
+
         public static string[] Prefabs() => AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/GameResource/Resources/UI" })
-            .Select(AssetDatabase.GUIDToAssetPath).Where(p => PAGES.Contains(Path.GetFileNameWithoutExtension(p)))
+            .Select(AssetDatabase.GUIDToAssetPath).Where(p => PAGES.Contains(SkinPageId(Path.GetFileNameWithoutExtension(p))))
             .OrderBy(p => p, StringComparer.Ordinal).ToArray();
 
         public static NovelUISkin[] Skins() => AssetDatabase.IsValidFolder(ROOT)
@@ -177,7 +180,7 @@ namespace Game.UI.Editor
                     if (anchor == root.transform) control = bound.TryGetValue(anchor, out var c) ? c : "";
                     string node = AnimationUtility.CalculateTransformPath(image.transform, anchor);
                     var entry = NovelUISkinRuntime.Capture(image);
-                    entry.Page = root.name; entry.Control = control ?? ""; entry.Node = node;
+                    entry.Page = SkinPageId(root.name); entry.Control = control ?? ""; entry.Node = node;
                     if (entries.Any(e => e.Key == entry.Key)) throw new InvalidOperationException("图片目标不唯一：" + entry.Key);
                     entries.Add(entry);
                 }
@@ -310,7 +313,7 @@ namespace Game.UI.Editor
         public static string[] Validate(NovelUISkin skin)
         {
             if (!skin) return new[] { "未选择皮肤。" };
-            var pages = Prefabs().ToDictionary(Path.GetFileNameWithoutExtension, p => AssetDatabase.LoadAssetAtPath<GameObject>(p));
+            var pages = Prefabs().ToDictionary(p => SkinPageId(Path.GetFileNameWithoutExtension(p)), p => AssetDatabase.LoadAssetAtPath<GameObject>(p));
             var issues = new List<string>(); var keys = new HashSet<string>();
             foreach (var e in skin.Images)
             {

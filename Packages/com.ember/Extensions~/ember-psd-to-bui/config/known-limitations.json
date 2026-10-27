@@ -1,0 +1,36 @@
+{
+  "plugin": "ember-psd-to-bui",
+  "version": "1.0.0",
+  "fields": [
+    {
+      "field": "layer.id",
+      "status": "best-effort",
+      "note": "Photoshop DOM layer id is used when exposed. If unavailable, the exporter falls back to a path hash and emits a warning."
+    },
+    {
+      "field": "text.style",
+      "status": "partial",
+      "note": "Text content may be readable, but TMP-ready font, size, color, tracking, leading, alignment and rich style mapping remain warnings."
+    },
+    {
+      "field": "layer.mask",
+      "status": "unknown",
+      "note": "Layer masks and vector masks are not serialized in the first pass."
+    },
+    {
+      "field": "layer.effects",
+      "status": "unknown",
+      "note": "Photoshop layer effects are not serialized as Unity-ready effects in the first pass."
+    },
+    {
+      "field": "smartObject",
+      "status": "unknown",
+      "note": "Smart object source, transforms and placed documents need later batchPlay coverage."
+    },
+    {
+      "field": "perLayerPng",
+      "status": "best-effort",
+      "note": "The plugin attempts to duplicate each visible leaf layer into a temporary Photoshop document, trim transparent bounds and save a PNG. Failures are recorded per node as warnings."
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "log": [
+    {
+      "name": "resolution",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "gm-13-fields",
+      "ok": true,
+      "detail": 13
+    },
+    {
+      "name": "gm-default-closed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "gm-entry-raycast-opens",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "time-group-hidden",
+      "ok": true,
+      "detail": "Time"
+    },
+    {
+      "name": "time-group-enabled",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "time-slider-input",
+      "ok": true,
+      "detail": {
+        "value": 1.9849999,
+        "timeScale": 1.9849999
+      }
+    },
+    {
+      "name": "time-value-label",
+      "ok": true,
+      "detail": "TimeScale: 1.99x"
+    },
+    {
+      "name": "time-off-restores",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "enhanced-toggle",
+      "ok": true,
+      "detail": "已开启"
+    },
+    {
+      "name": "circle-progress",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "image-controls",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "scroll-active-both-axes",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "scroll-input-moves-content",
+      "ok": true,
+      "detail": {
+        "before": "(0.00, 0.00)",
+        "after": "(-3.00, 3.00)"
+      }
+    },
+    {
+      "name": "fps-updates",
+      "ok": true,
+      "detail": 179
+    },
+    {
+      "name": "state-label",
+      "ok": true,
+      "detail": "Main"
+    },
+    {
+      "name": "drag-disables-click",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "drag-moves-and-restores",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "settings-main-context",
+      "ok": true,
+      "detail": "当前场景：主界面"
+    },
+    {
+      "name": "settings-gameplay-context",
+      "ok": true,
+      "detail": "当前场景：玩法中"
+    },
+    {
+      "name": "navigation-roundtrip",
+      "ok": true,
+      "detail": null
+    }
+  ]
+}

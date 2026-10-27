@@ -1,0 +1,628 @@
+{
+  "prefabCount": 62,
+  "bindingPrefabCount": 61,
+  "libraryCount": 44,
+  "libraryErrors": [],
+  "catalogCurrent": true,
+  "bindingErrors": [],
+  "unownedGraphics": [],
+  "inventory": [
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIAmountButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIAmountButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBadgeItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBadgeItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICircleProgressItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUICircleProgressItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICloseButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContinuousSliderItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContinuousSliderItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDestructiveButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDropdownItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDropdownItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIEmptyStateItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIEmptyStateItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIFreeScrollHostItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIFreeScrollHostItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGridHostItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIHorizontalListHostItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconCardItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconCardItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISearchFieldItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISearchFieldItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISectionTitleItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISectionTitleItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISegmentedControlItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingSliderRowItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingSliderRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingToggleRowItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingToggleRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStepperItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStepperItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITitleBarItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITitleBarItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIToastItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIToastItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITooltipItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITooltipItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITransitionSurfaceItem.prefab",
+      "librarySource": true,
+      "used": [],
+      "missingScripts": 0,
+      "fields": 0
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContinuousSliderItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIFreeScrollHostItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUICircleProgressItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 13
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Prefabs/EUILoadingProgressItem.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIAlertPage.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 5
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 10
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIConfirmPage.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 5
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 10
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIExpandedLibraryPage.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIAmountButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingToggleRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingSliderRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStepperItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBadgeItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISearchFieldItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDropdownItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITitleBarItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIEmptyStateItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITooltipItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIToastItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUISectionTitleItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconCardItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 9
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPopupPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 3
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 6
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowVariantItem.prefab",
+      "librarySource": true,
+      "used": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 2
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipLeafItem.prefab",
+      "librarySource": false,
+      "used": [
+        "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab"
+      ],
+      "missingScripts": 0,
+      "fields": 1
+    }
+  ]
+}

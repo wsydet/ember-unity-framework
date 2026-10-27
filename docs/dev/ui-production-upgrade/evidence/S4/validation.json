@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "scope": "read-only S4 structural and semantic gate; not Unity Maker",
+  "targets": 3,
+  "nodes": 24,
+  "lists": 1,
+  "assets": [
+    {
+      "asset": "EMBER_Foundation_DL_ViewportExtent.png",
+      "width": 1040,
+      "height": 240,
+      "sha256": "7223b049c19e321f2a8bd3f824a2b615325d7f5fdf8143ae38d1a2b462b3be07"
+    },
+    {
+      "asset": "EMBER_Foundation_DOR_Checkmark_01.png",
+      "width": 31,
+      "height": 25,
+      "sha256": "0bb1a37755bb1c40e10f0742465d52bc9eda2cac963d4b838558a8ffa68029d2"
+    },
+    {
+      "asset": "EMBER_Foundation_DOR_Progress.png",
+      "width": 360,
+      "height": 6,
+      "sha256": "b97f6e331fca04cfcbfced4b984e7183d943e51460a68f828bc9f9d4f3d03d6b"
+    },
+    {
+      "asset": "EMBER_Foundation_DOR_Track.png",
+      "width": 720,
+      "height": 6,
+      "sha256": "77f5d9af1927063e15dcdf522bf4b6c09334d731ab22f64e6b8e618d6d6169a2"
+    },
+    {
+      "asset": "EMBER_Foundation_DOR_Background.png",
+      "width": 1040,
+      "height": 120,
+      "sha256": "9a7f124d45a0559349a3477ad81bdc26126f789429ff4de4191578c8522e9445"
+    },
+    {
+      "asset": "EMBER_Foundation_DL_Background.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "3d1304b1bd57185689e0ff03459a4156f26856699723704cf6c8eb4db47bb16f"
+    },
+    {
+      "asset": "EMBER_Base_M_Surface.png",
+      "width": 130,
+      "height": 130,
+      "sha256": "c7b8f585cb3c7f35a3cd6cc46bf662c58d93bdc0cdf509e1686a7f6837b78d8b"
+    },
+    {
+      "asset": "EMBER_Base_M_Background.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "28899587ce10d23d0efcc9de22fd1eb32b6400f96c18cf01eb30637d908d2860"
+    }
+  ],
+  "textReferences": 4
+}

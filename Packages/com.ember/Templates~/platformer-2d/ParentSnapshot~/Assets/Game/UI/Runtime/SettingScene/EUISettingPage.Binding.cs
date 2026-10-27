@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUISettingPanel
+ * prefab name  : EUISettingPage
  * page name    : EUISettingPage
- * update time  : 2026/9/2 17:27:57
+ * update time  : 2026/10/27 10:34:47
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -22,7 +22,7 @@ namespace Game.UI
         /// <summary>
         /// Animator/EUISafeArea/Center/PanelBg/m_Txt_NowScene
         /// </summary>
-        private TMP_Text Txt_NowScene;
+        private EUISettingsContextItem Txt_NowScene;
 
 
 
@@ -30,7 +30,7 @@ namespace Game.UI
     {
         base.OnBind();
             Btn_Close = ControlMap["Btn_Close"] as Button;
-            Txt_NowScene = ControlMap["Txt_NowScene"] as TMP_Text;
+            Txt_NowScene = GetChildLogic<EUISettingsContextItem>("Txt_NowScene");
 
     }
 }

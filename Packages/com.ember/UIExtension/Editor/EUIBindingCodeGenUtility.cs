@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Ember.Basic;
@@ -283,6 +284,15 @@ namespace Ember.UIExtension.Editor
                     return false;
             }
 
+            if (!string.IsNullOrEmpty(EUIBindingEditorUtility.GetBaseBindingGuid(binding)))
+            {
+                var inheritanceValidation = EUIBindingEditorUtility.ValidateBinding(binding);
+                if (inheritanceValidation.HasError)
+                {
+                    error = string.Join("\n", inheritanceValidation.Issues.Where(i => i.Severity == EUIBindingIssueSeverity.Error).Select(i => i.Message));
+                    return false;
+                }
+            }
             string baseClsName = null;
             EUIBinding.BindingEntry[] declaredFields = null;
             bool coreGenerationCompleted = false;
@@ -1677,3 +1687,5 @@ namespace {namespaceName}
         #endregion
     }
 }
+
+

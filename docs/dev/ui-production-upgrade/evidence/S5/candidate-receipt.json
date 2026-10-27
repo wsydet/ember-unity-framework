@@ -1,0 +1,124 @@
+{
+    "consumerVersion": "1.0.0",
+    "requestPath": "docs/dev/ui-production-upgrade/evidence/S5/candidate-request.json",
+    "requestDigest": "2e37b1c9086add6e5e6eadae171e9991c14d8090e62c8de01e8a04a554e9458c",
+    "planDigest": "0ef9677bb451d16d0a2f53ecce954dc5eea1e2ca4c6ce300c3dde2b37d97af19",
+    "status": "writing:uibase_main_page",
+    "error": "System.IO.InvalidDataException: NESTED_SOURCE_CHANGED\r\n  at Ember.UIExtension.Editor.EmberBuiService.Require (System.Boolean condition, System.String message) [0x0000a] in .\\Packages\\com.ember\\UIExtension\\Editor\\Pages\\EmberBuiService.cs:206 \r\n  at Ember.UIExtension.Editor.EmberBuiService.ApplyReference (Ember.UIExtension.Editor.EmberBuiService+Input input, Ember.UIExtension.Editor.EmberBuiNodeEdit op, Ember.Basic.LitJson.JsonData node, UnityEngine.GameObject instance) [0x00064] in .\\Packages\\com.ember\\UIExtension\\Editor\\Pages\\EmberBuiService.Edit.cs:176 \r\n  at Ember.UIExtension.Editor.EmberBuiService.Edit (Ember.UIExtension.Editor.EmberBuiService+Input input, Ember.UIExtension.Editor.EmberBuiTargetEdit target, UnityEngine.GameObject root, System.Boolean preview, System.Collections.Generic.List`1[T] temporary) [0x0023f] in .\\Packages\\com.ember\\UIExtension\\Editor\\Pages\\EmberBuiService.Edit.cs:72 \r\n  at Ember.UIExtension.Editor.EmberBuiService.Apply (Ember.UIExtension.Editor.EmberBuiPlan plan) [0x00247] in .\\Packages\\com.ember\\UIExtension\\Editor\\Pages\\EmberBuiService.cs:100 ",
+    "backupPath": ".utmp/EmberBui/0ef9677bb451d16d0a2f53ecce954dc5eea1e2ca4c6ce300c3dde2b37d97af19",
+    "saved": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab"
+    ],
+    "generated": [
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+        "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab"
+    ],
+    "after": [
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.cs",
+            "sha256": "a4c8bc4ae09157733366e4047ee7c5195b2c355a5dc9bb23164ddbd6e875d776"
+        },
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.Binding.cs",
+            "sha256": "683afbcd0994a69144869c942ae12fe14ced993ba69b3ea97a1c089bd4f7bbe1"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+            "sha256": "0d55b2ff2d83090018095366b4cd19ebb81c4a8ae472567baa5dc5a0e9b9f41f"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab.meta",
+            "sha256": "df4d4a6ddaee08117aa09623651792cb3a0a6b681f8a6364cc7926c851d31429"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Checkmark.png",
+            "sha256": "0bb1a37755bb1c40e10f0742465d52bc9eda2cac963d4b838558a8ffa68029d2"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Checkmark.png.meta",
+            "sha256": "de84cb3bcd3b810ca9dab06323cced664643d7a8de59ac691303d93141f34733"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Progress.png",
+            "sha256": "b97f6e331fca04cfcbfced4b984e7183d943e51460a68f828bc9f9d4f3d03d6b"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Progress.png.meta",
+            "sha256": "e97c3294934856da97b91e8bf87e8b7bfe5e34356eede489bff631c0b149ab82"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+            "sha256": "77f5d9af1927063e15dcdf522bf4b6c09334d731ab22f64e6b8e618d6d6169a2"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png.meta",
+            "sha256": "9802b36384d62ed01d215ccdaf2f4926a8889c56f7dbf7d28b8d9b29e14f1837"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+            "sha256": "9a7f124d45a0559349a3477ad81bdc26126f789429ff4de4191578c8522e9445"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png.meta",
+            "sha256": "0baa90eb4ef31c715dff4db799660d463e200db826769d3498552d5e3949aaad"
+        },
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.cs",
+            "sha256": "7020f8f9ae962a666766e8e6dcdad390392dac167ec581f5d80cfc5d45ba2b43"
+        },
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.Binding.cs",
+            "sha256": "8a1ce2beea3152fb37c21d7a27bf6c4b6abf660b03f97d1a7ed4b5cd65816a27"
+        },
+        {
+            "path": "Assets/Game/UI/GamePages.User.cs",
+            "sha256": "31b32e4ca8370c157a2730a31807df90dfe424359f7ceedff721ec0b6c6ce31b"
+        },
+        {
+            "path": "Assets/Game/UI/GamePages.User.cs.meta",
+            "sha256": "9f362eb81a8978703e434c5a8229670c7ac63bf772fadddaec59610034df4b17"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab",
+            "sha256": "9eccb090c39776d57685ba83e7916c4d4dbea7ec271ba02bf78f96a3afb06fc3"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab.meta",
+            "sha256": "a63f66a442bf93b4205e863cbbf1220ecc0e235909c410bb2c3d978042cb7723"
+        },
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.cs",
+            "sha256": "a52a9fa56e25bf277b75b64239567bf0f66331f44a4a55056627dc08ee7d0367"
+        },
+        {
+            "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.Binding.cs",
+            "sha256": "3d69c7c066ceb31952ea408623b42ce8baf70b168754f564e0170d6e88a1d180"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab",
+            "sha256": "020235e4728c1fdf498c23acfb2297e2f0b0754113758bd2b7fa05295b034a08"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab.meta",
+            "sha256": "eacbe76ede61363c7fd71eef63128a6e971f88385ba5a4402d5fe0776940d834"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Surface.png",
+            "sha256": "c7b8f585cb3c7f35a3cd6cc46bf662c58d93bdc0cdf509e1686a7f6837b78d8b"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Surface.png.meta",
+            "sha256": "3d433d211074453d987ea214d4a15030d88ddc037cd55be55857c53586e1d0ec"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+            "sha256": "28899587ce10d23d0efcc9de22fd1eb32b6400f96c18cf01eb30637d908d2860"
+        },
+        {
+            "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png.meta",
+            "sha256": "1b6f6ddf9226dc409c0c55231f2c2dc17e02b4b0f8a1966459efc87870ff7b95"
+        }
+    ],
+    "verification": []
+}

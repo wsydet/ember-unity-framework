@@ -1,0 +1,162 @@
+{
+  "status": "completed",
+  "log": [
+    {
+      "name": "initial-start-hit",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "initial-three-rows",
+      "ok": true,
+      "detail": {
+        "Count": 3,
+        "InstanceCount": 3,
+        "Generation": 1
+      }
+    },
+    {
+      "name": "same-frame-double-click",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "old-lease-invalid-after-refresh",
+      "ok": true,
+      "detail": {
+        "IsCurrent": false,
+        "key": "step-0",
+        "index": 0
+      }
+    },
+    {
+      "name": "settings-pauses-session",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "mask-blocks-underlying-input",
+      "ok": true,
+      "detail": "EmberBgMask"
+    },
+    {
+      "name": "settings-present",
+      "ok": true,
+      "detail": [
+        "Btn_Close",
+        "Txt_NowScene"
+      ]
+    },
+    {
+      "name": "resume-same-session",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "result-once-and-list-disposed",
+      "ok": true,
+      "detail": {
+        "Count": 0,
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "restart-one-new-session",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 2,
+        "ReleasedSessions": 1
+      }
+    },
+    {
+      "name": "late-old-session-cannot-mutate",
+      "ok": true,
+      "detail": 2
+    },
+    {
+      "name": "rapid-return-releases",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 2,
+        "ReleasedSessions": 2,
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "cycle-result-0",
+      "ok": true,
+      "detail": {
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "cycle-release-0",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 3,
+        "ReleasedSessions": 3,
+        "activePages": 3
+      }
+    },
+    {
+      "name": "cycle-result-1",
+      "ok": true,
+      "detail": {
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "cycle-release-1",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 4,
+        "ReleasedSessions": 4,
+        "activePages": 3
+      }
+    },
+    {
+      "name": "cycle-result-2",
+      "ok": true,
+      "detail": {
+        "CreatedCount": 3,
+        "DestroyedCount": 3
+      }
+    },
+    {
+      "name": "cycle-release-2",
+      "ok": true,
+      "detail": {
+        "CreatedSessions": 5,
+        "ReleasedSessions": 5,
+        "activePages": 3
+      }
+    },
+    {
+      "name": "active-pages-stable",
+      "ok": true,
+      "detail": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "name": "second-aspect-ratio",
+      "ok": true,
+      "detail": {
+        "width": 720,
+        "height": 1600,
+        "safeArea": "(x:0.00, y:0.00, width:720.00, height:1600.00)"
+      }
+    },
+    {
+      "name": "second-aspect-flow",
+      "ok": true,
+      "detail": 3
+    }
+  ]
+}

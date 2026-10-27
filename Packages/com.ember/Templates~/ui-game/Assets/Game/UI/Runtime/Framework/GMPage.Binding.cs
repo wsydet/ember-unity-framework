@@ -1,0 +1,97 @@
+﻿/*=============================================================
+ * author       : Bingo
+ * prefab name  : GMPage
+ * page name    : GMPage
+ * update time  : 2026/10/27 10:34:46
+ * ============================================================
+ * 本文件为自动生成，请勿修改
+*/
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+namespace Game.UI
+{
+    public partial class GMPage : Ember.UI.EUILogic
+    {
+        /// <summary>
+        /// Animator/EUISafeArea/TopRight/m_Btn_GM
+        /// </summary>
+        private Button Btn_GM;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM
+        /// </summary>
+        private Component Panel_GM;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Time/m_Pgb_TimeScale
+        /// </summary>
+        private EUIGMTimeScaleItem Pgb_TimeScale;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/顶层状态/m_Txt_GameState
+        /// </summary>
+        private EUIGMStateItem Txt_GameState;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/开关/m_Tgl_Test
+        /// </summary>
+        private Toggle Tgl_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/ScrollRect/m_Scr_Test/Scroll
+        /// </summary>
+        private ScrollRect Scr_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/Image/m_Img_Test
+        /// </summary>
+        private Image Img_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Infos/RawIamge/m_Raw_Test
+        /// </summary>
+        private RawImage Raw_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/Buttons/m_EUIBtn_Exit
+        /// </summary>
+        private Ember.UIExtension.EUIButtonEx EUIBtn_Exit;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUITgl_Test
+        /// </summary>
+        private EUIGMEnhancedToggleItem EUITgl_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/m_EUIImg_Test
+        /// </summary>
+        private Ember.UIExtension.EUIImageEx EUIImg_Test;
+
+        /// <summary>
+        /// Animator/EUISafeArea/Center/m_Panel_GM/m_Img_Circle
+        /// </summary>
+        private Ember.UIExtension.EUICircleImage Img_Circle;
+
+
+
+    public override void OnBind()
+    {
+        base.OnBind();
+            Btn_GM = ControlMap["Btn_GM"] as Button;
+            Panel_GM = ControlMap["Panel_GM"] as Component;
+            Pgb_TimeScale = GetChildLogic<EUIGMTimeScaleItem>("Pgb_TimeScale");
+            Txt_GameState = GetChildLogic<EUIGMStateItem>("Txt_GameState");
+            Tgl_Test = ControlMap["Tgl_Test"] as Toggle;
+            Scr_Test = ControlMap["Scr_Test"] as ScrollRect;
+            Img_Test = ControlMap["Img_Test"] as Image;
+            Raw_Test = ControlMap["Raw_Test"] as RawImage;
+            EUIBtn_Exit = ControlMap["EUIBtn_Exit"] as Ember.UIExtension.EUIButtonEx;
+            EUITgl_Test = GetChildLogic<EUIGMEnhancedToggleItem>("EUITgl_Test");
+            EUIImg_Test = ControlMap["EUIImg_Test"] as Ember.UIExtension.EUIImageEx;
+            Img_Circle = ControlMap["Img_Circle"] as Ember.UIExtension.EUICircleImage;
+
+    }
+}
+}

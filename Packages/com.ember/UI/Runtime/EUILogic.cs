@@ -171,6 +171,7 @@ namespace Ember.UI
 
         // 嵌套子 Logic（对标 Burner behaviours 列表，子 UIBinding 独立管理）
         private readonly List<EUILogic> _childLogics = new();
+        private readonly Dictionary<string, EUILogic> _namedChildLogics = new();
 
         #endregion
 
@@ -187,6 +188,20 @@ namespace Ember.UI
                 child.Item = Item;
                 _childLogics.Add(child);
             }
+        }
+
+        /// <summary>按真实绑定名注册父级拥有的逻辑，供生成代码取回。</summary>
+        public void RegisterChildLogic(string bindingName, EUILogic child)
+        {
+            if (string.IsNullOrEmpty(bindingName) || child == null) throw new System.ArgumentException("Child binding name and logic are required.");
+            _namedChildLogics.Add(bindingName, child);
+            RegisterChildLogic(child);
+        }
+
+        /// <summary>取得父级创建的嵌套逻辑；与 Component ControlMap 分开存储。</summary>
+        public T GetChildLogic<T>(string bindingName) where T : EUILogic
+        {
+            return _namedChildLogics.TryGetValue(bindingName, out var child) ? child as T : null;
         }
 
         #endregion
@@ -497,8 +512,12 @@ namespace Ember.UI
         internal void BroadcastDispose()
         {
             foreach (var child in _childLogics)
-                child.BroadcastDispose();
+            {
+                try { child.BroadcastDispose(); }
+                catch (System.Exception ex) { EmberDebug.LogError(TAG, $"Child Logic 清理异常: {ex}"); }
+            }
             _childLogics.Clear();
+            _namedChildLogics.Clear();
 
             // 自动清理所有 TrackDisposable 注册的资源（对标 Burner RemoveAllEvents）
             if (_trackedDisposables != null)

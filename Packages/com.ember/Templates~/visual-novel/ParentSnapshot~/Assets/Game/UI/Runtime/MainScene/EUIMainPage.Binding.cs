@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUIMainPanel
+ * prefab name  : EUIMainPage
  * page name    : EUIMainPage
- * update time  : 2026/8/31 20:50:47
+ * update time  : 2026/10/27 9:12:40
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,12 +15,12 @@ namespace Game.UI
     public partial class EUIMainPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// m_Btn_Start
+        /// Animator/EUISafeArea/Center/m_Btn_Start
         /// </summary>
         private Button Btn_Start;
 
         /// <summary>
-        /// m_Btn_Settings
+        /// Animator/EUISafeArea/Center/m_Btn_Settings
         /// </summary>
         private Button Btn_Settings;
 

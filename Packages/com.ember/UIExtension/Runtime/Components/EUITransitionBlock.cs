@@ -174,6 +174,7 @@ namespace Ember.UIExtension
         private RectTransform _containerRect;
         private Vector2Int _gridSize;
         private float _blockSize;
+        private Vector2 _gridContainerSize;
         private bool _gridDirty = true;
 
         private OrderCache _enterCache = new();
@@ -458,12 +459,15 @@ namespace Ember.UIExtension
                 if (_containerRect == null) throw new InvalidOperationException("Transition block requires a RectTransform.");
                 _gridDirty = true;
             }
-            if (!_gridDirty) return;
-            _gridDirty = false;
-
             Rect rect = _containerRect.rect;
             float cw = rect.width > 0f ? rect.width : Screen.width;
             float ch = rect.height > 0f ? rect.height : Screen.height;
+            // Reused curtains may open after the Canvas resolution or parent layout changes.
+            // The cached order and block size must describe the current container.
+            if (!_gridDirty && Mathf.Approximately(_gridContainerSize.x, cw)
+                && Mathf.Approximately(_gridContainerSize.y, ch)) return;
+            _gridDirty = false;
+            _gridContainerSize = new Vector2(cw, ch);
 
             _gridSize = ComputeGridSize(cw, ch);
 

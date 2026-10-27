@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EmberFontSkins
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EmberFontSkinCatalog
   DefaultSkinId: 2
-  NextSkinId: 4
+  NextSkinId: 5
   NextSlotId: 4
   Slots:
   - Id: 1
@@ -56,3 +56,13 @@ MonoBehaviour:
       Font: {fileID: 11400000, guid: 77c89972350737f44a59171e94bffe21, type: 2}
     - SlotId: 3
       Font: {fileID: 11400000, guid: 77c89972350737f44a59171e94bffe21, type: 2}
+  - Id: 4
+    Name: Default Light Sans
+    EnumName: DefaultLightSans
+    Fonts:
+    - SlotId: 1
+      Font: {fileID: 11400000, guid: c2f8d501f39a00440b53d72a9183ef8c, type: 2}
+    - SlotId: 2
+      Font: {fileID: 11400000, guid: c2f8d501f39a00440b53d72a9183ef8c, type: 2}
+    - SlotId: 3
+      Font: {fileID: 11400000, guid: c2f8d501f39a00440b53d72a9183ef8c, type: 2}

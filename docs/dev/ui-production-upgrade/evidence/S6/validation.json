@@ -1,0 +1,23 @@
+{
+  "stage": "S6",
+  "date": "2026-10-27",
+  "scope": "Explicit appearance mappings and Editor runtime; not pixel-exact, device, build, release or clean consumer deployment",
+  "acceptance": {
+    "F01": {"status": "passed", "evidence": ["inputs.json", "contract-comparison.json", "settings-layout-verified.json"]},
+    "F02": {"status": "passed_with_documented_preservation", "evidence": ["visual-review.md"], "limits": "Existing text/font/alignment/functional layout intentionally preserved; PS state samples are not baked runtime data"},
+    "F03": {"status": "passed", "evidence": ["runtime.txt"], "input": "EventSystem pointer events and actual mask raycast"},
+    "F04": {"status": "passed_in_declared_scope", "evidence": ["runtime.txt", "visual-review.md"], "screenSizes": [[1280,720],[1600,720]], "safeArea": "Full Screen.safeArea plus explicit symmetric padding layout simulation; no notched device"},
+    "F05": {"status": "passed", "evidence": ["skill-invocation.md", "settings-repeat.json", "increment-repeat.json"]},
+    "F06": {"status": "passed", "evidence": ["increment-receipt.json", "template-save.json", "final-state.json"]},
+    "F07": {"status": "passed_for_independent_test_asset", "evidence": ["skin-before.contract.json", "skin-after.contract.json", "skin-source-check.json", "project-skin-1280.png", "runtime.txt"]}
+  },
+  "editModeTests": {"total": 18, "passed": 18, "failed": 0, "fullSuite": false, "jobId": "3340404ae3684ccd8c3ce9b0b870dbb5"},
+  "explicitCompilationAndDomainReloadConfirmed": true,
+  "finalConsoleErrors": 0,
+  "finalConsoleWarnings": 0,
+  "skillValidation": "Skill is valid! (Python UTF-8 mode)",
+  "pendingWrites": 0,
+  "template": {"id": "base", "version": "0.8.4", "frameworkVersion": "0.22.0", "files": 627, "differenceCount": 0, "contentHash": "f5ae9bcc0e3bd361a65b056b367cda71", "versionedContentHash": "936dcb1d411afefcacd961cbad1d1d0d"},
+  "s7Executed": false,
+  "remainingOutsideScope": ["Skill bundle generation after authorized source commit", "Clean consumer installation and deployment", "Build and physical device input", "Notched safe areas and all aspect ratios", "Full language and native Photoshop effects coverage", "All external consumer reference migration"]
+}

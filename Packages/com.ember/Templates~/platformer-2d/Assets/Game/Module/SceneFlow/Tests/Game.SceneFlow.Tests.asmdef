@@ -1,8 +1,22 @@
 {
     "name": "Game.SceneFlow.Tests",
     "rootNamespace": "Game.SceneFlow.Tests",
-    "references": ["Game.SceneFlow.Runtime", "Game.Input.Runtime", "Ember.Basic.Runtime", "Ember.Core.Runtime", "Ember.UI.Runtime", "Unity.InputSystem", "Unity.ugui", "UniTask"],
-    "optionalUnityReferences": ["TestAssemblies"],
+    "references": [
+        "Game.SceneFlow.Runtime",
+        "Game.Input.Runtime",
+        "Ember.Basic.Runtime",
+        "Ember.Core.Runtime",
+        "Ember.UI.Runtime",
+        "Unity.InputSystem",
+        "Unity.ugui",
+        "UniTask",
+        "Ember.UIExtension.Runtime"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
     "autoReferenced": false,
-    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ]
 }

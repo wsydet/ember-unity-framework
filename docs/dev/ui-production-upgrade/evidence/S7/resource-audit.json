@@ -1,0 +1,99 @@
+{
+  "pages": [
+    {
+      "name": "EUIMainPage",
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "variant": "Regular",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    },
+    {
+      "name": "EUISettingPage",
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+      "variant": "Regular",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+      ]
+    },
+    {
+      "name": "EUIDynamicListPage",
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+      "variant": "Variant",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    },
+    {
+      "name": "EUIDynamicOptionRowItem",
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+      "variant": "Variant",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    },
+    {
+      "name": "EUIUiGameHomePage",
+      "path": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGameHomePage.prefab",
+      "variant": "Variant",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGameHomePage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    },
+    {
+      "name": "EUIUiGamePlayPage",
+      "path": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGamePlayPage.prefab",
+      "variant": "Variant",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGamePlayPage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    },
+    {
+      "name": "EUIUiGameResultPage",
+      "path": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGameResultPage.prefab",
+      "variant": "Variant",
+      "binding": {
+        "AssetPath": "Assets/GameResource/Resources/UI/Module/UiGame/Prefabs/EUIUiGameResultPage.prefab",
+        "Issues": [],
+        "HasError": false
+      },
+      "fonts": [
+        "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+      ]
+    }
+  ],
+  "libraryErrors": [],
+  "catalogCurrent": true,
+  "entries": 37
+}

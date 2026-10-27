@@ -1,0 +1,16 @@
+{
+  "consumerVersion": "1.0.0",
+  "capabilities": ["ember-eui-map-v1", "dynamic-list-v1"],
+  "buiSchemaVersion": 3,
+  "mapSchemaVersion": 1,
+  "contractSchemaVersion": 1,
+  "contractToolVersion": "1.1",
+  "realInput": {"targets": 3, "nodes": 24, "referencedPngs": 8, "textReferences": 4, "importedPngs": 6},
+  "production": {"updatedOriginalPrefabs": 3, "createdCandidatePrefabs": 3, "oldAssetsDeleted": 0, "sharedSourcesUnchanged": true, "originalUserLogicUnchanged": true},
+  "editModeTests": {"total": 18, "passed": 18, "failed": 0, "fullSuite": false, "jobId": "732b67307ae440c6b191f9538fb9d810"},
+  "lastCompilation": {"started": 1793033009138, "finished": 1793033013161, "domainReloadAfter": 1793033019445, "newApiInvokedAfterReload": "VerifySaved and critical-option rejection"},
+  "console": {"productOrCompileErrors": 0, "transportWarnings": 1, "warning": "MCP WebSocket is not initialised; subsequent calls succeeded"},
+  "finalEditor": {"scene": "Assets/Game/Scenes/FrameworkScene.unity", "dirty": false, "playing": false, "compiling": false},
+  "ordinarySave": {"files": 617, "differences": 0, "template": "base", "version": "0.8.4", "frameworkVersion": "0.22.0", "contentHash": "846454530d463521510735d5e796ce43", "versionedContentHash": "936dcb1d411afefcacd961cbad1d1d0d"},
+  "scopeLimits": ["No persistent interactive preview window", "No complete ArialMT/TMP/effects or multilingual equivalence", "No all-device aspect/safe-area verification", "Candidate consumer migration only; no global external-consumer rewrite", "No build or clean consumer deployment", "No S6 full reskin or S7 delivery"]
+}

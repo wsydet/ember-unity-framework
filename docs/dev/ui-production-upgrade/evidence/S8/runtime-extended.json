@@ -1,0 +1,22 @@
+{
+  "status": "failed",
+  "error": "System.Exception: Timeout EUIMainPage\r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__1 (System.String name) [0x00131] in <dd9c68d166a841b4a23c158fd23ed9ab>:0 \r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__2 () [0x00910] in <dd9c68d166a841b4a23c158fd23ed9ab>:0 ",
+  "log": [
+    {
+      "name": "resolution-1280",
+      "ok": true,
+      "detail": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "name": "gm-panel-fits-1280",
+      "ok": true,
+      "detail": {
+        "lo": "(100.00, 60.00)",
+        "hi": "(1180.00, 660.00)"
+      }
+    }
+  ]
+}

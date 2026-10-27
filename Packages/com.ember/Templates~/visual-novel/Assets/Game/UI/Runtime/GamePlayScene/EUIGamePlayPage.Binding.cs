@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUIGamePlayPanel
+ * prefab name  : EUIGamePlayPage
  * page name    : EUIGamePlayPage
- * update time  : 2026/9/29 14:51:53
+ * update time  : 2026/10/27 12:04:13
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

@@ -37,5 +37,32 @@ namespace Game.UI
         /// <summary>EUINovelNameInputPage 页面</summary>
         public static readonly EUIPageDef EUINovelNameInputPage = new("Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/EUINovelNameInputPage.prefab", UILayer.Popup, PageType.Popup);
 
+        /// <summary>EUIAlertPage 页面</summary>
+        public static readonly EUIPageDef EUIAlertPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIAlertPage.prefab", UILayer.Popup, PageType.Popup);
+
+        /// <summary>EUIBuiCandidateDynamicListPage 页面</summary>
+        public static readonly EUIPageDef EUIBuiCandidateDynamicListPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUIBuiCandidateMainPage 页面</summary>
+        public static readonly EUIPageDef EUIBuiCandidateMainPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUIConfirmPage 页面</summary>
+        public static readonly EUIPageDef EUIConfirmPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIConfirmPage.prefab", UILayer.Popup, PageType.Popup);
+
+        /// <summary>EUIDynamicListPage 页面</summary>
+        public static readonly EUIPageDef EUIDynamicListPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUIExpandedLibraryPage 页面</summary>
+        public static readonly EUIPageDef EUIExpandedLibraryPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIExpandedLibraryPage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUILibraryPopupPage 页面</summary>
+        public static readonly EUIPageDef EUILibraryPopupPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPopupPage.prefab", UILayer.Popup, PageType.Popup);
+
+        /// <summary>EUILibraryPreviewPage 页面</summary>
+        public static readonly EUIPageDef EUILibraryPreviewPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUIOwnershipExamplePage 页面</summary>
+        public static readonly EUIPageDef EUIOwnershipExamplePage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
+
     }
 }

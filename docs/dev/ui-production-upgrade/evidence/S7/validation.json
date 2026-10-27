@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-27",
+  "scope": "local Windows Unity Editor implementation; not release or consumer deployment",
+  "acceptance": {
+    "T01": {
+      "status": "passed",
+      "scope": "local authorized scope"
+    },
+    "T02": {
+      "status": "passed",
+      "scope": "local authorized scope"
+    },
+    "T03": {
+      "status": "passed",
+      "scope": "local authorized scope"
+    },
+    "T04": {
+      "status": "passed",
+      "scope": "local authorized scope"
+    },
+    "T05": {
+      "status": "passed",
+      "scope": "local authorized scope"
+    },
+    "T06": {
+      "status": "not_verified",
+      "reason": "No named consumer project or actual released package in scope"
+    }
+  },
+  "runtime": {
+    "status": "completed",
+    "assertions": 21,
+    "allPassed": true
+  },
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "job": "38dcf612dbdc4e80960ad691f0f36db3"
+  },
+  "template": {
+    "templateId": "ui-game",
+    "templateVersion": "0.1.0",
+    "contentHash": "98470c704b0e51b0d40df193b8b8a088",
+    "loadedAt": "2026-10-27 02:05:42"
+  },
+  "comparison": {
+    "differences": 0,
+    "errors": 0,
+    "warnings": 1,
+    "warningReason": "saved content is not version-sealed"
+  },
+  "unknownOperations": 0,
+  "releaseActions": {
+    "baseLocalBump": true,
+    "uiGameFinalBump": false,
+    "gitCommit": false,
+    "push": false,
+    "tag": false,
+    "published": false,
+    "skillBundleGenerated": false,
+    "consumerDeployment": false
+  },
+  "limitations": [
+    "Editor EventSystem pointer simulation, not hardware touch",
+    "full rectangular safe area and explicit padding layout only",
+    "no build, device, full-language, landscape or consumer validation"
+  ]
+}

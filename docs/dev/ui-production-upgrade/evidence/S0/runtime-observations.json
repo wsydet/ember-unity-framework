@@ -1,0 +1,1193 @@
+{
+  "main": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:35:03.359316Z",
+        "state": "Main",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": true
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "Text (TMP)",
+            "text": "112"
+          },
+          {
+            "name": "VersionText",
+            "text": "v1.0.0"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "TitleText",
+            "text": "Ember Framework"
+          },
+          {
+            "name": "Text",
+            "text": "开始游戏"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "settings-main": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:35:28.6947397Z",
+        "state": "Settings",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": true
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": true
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": true,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "Text",
+            "text": "关闭"
+          },
+          {
+            "name": "Text (TMP)",
+            "text": "139"
+          },
+          {
+            "name": "TitleText",
+            "text": "设置"
+          },
+          {
+            "name": "VersionText",
+            "text": "v1.0.0"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "TitleText",
+            "text": "Ember Framework"
+          },
+          {
+            "name": "Text",
+            "text": "开始游戏"
+          },
+          {
+            "name": "m_Txt_NowScene",
+            "text": "当前场景：主界面"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "return-main": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:35:56.477923Z",
+        "state": "Main",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": true
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "Text (TMP)",
+            "text": "174"
+          },
+          {
+            "name": "VersionText",
+            "text": "v1.0.0"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "TitleText",
+            "text": "Ember Framework"
+          },
+          {
+            "name": "Text",
+            "text": "开始游戏"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "gameplay": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:36:05.8827397Z",
+        "state": "Gameplay",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": true
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "TitleText",
+            "text": "游戏中"
+          },
+          {
+            "name": "Text (TMP)",
+            "text": "154"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "Text",
+            "text": "返回主菜单\n"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "settings-gameplay": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:36:27.7664296Z",
+        "state": "Settings",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": true
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": true
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": true,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": false
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "Text",
+            "text": "关闭"
+          },
+          {
+            "name": "TitleText",
+            "text": "游戏中"
+          },
+          {
+            "name": "Text (TMP)",
+            "text": "166"
+          },
+          {
+            "name": "TitleText",
+            "text": "设置"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "Text",
+            "text": "返回主菜单\n"
+          },
+          {
+            "name": "m_Txt_NowScene",
+            "text": "当前场景：玩法中"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "return-gameplay": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:36:58.7359219Z",
+        "state": "Gameplay",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": true
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "TitleText",
+            "text": "游戏中"
+          },
+          {
+            "name": "Text (TMP)",
+            "text": "162"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "Text",
+            "text": "返回主菜单\n"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "final-main": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "time": "2026-10-26T09:37:15.1926786Z",
+        "state": "Main",
+        "transitioning": false,
+        "timeScale": 1,
+        "size": [
+          2560,
+          1440
+        ],
+        "bindings": [
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": false
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "EUISettingPanel",
+            "active": false
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": true
+          },
+          {
+            "name": "EUILoadingPanel",
+            "active": false
+          },
+          {
+            "name": "GMPanel",
+            "active": true
+          },
+          {
+            "name": "EUIMainPanel",
+            "active": false
+          },
+          {
+            "name": "EUIGamePlayPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": false
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "active": true
+          }
+        ],
+        "buttons": [
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": true,
+            "interactable": true
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Close",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "EmberBgMask",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Back",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": false
+          },
+          {
+            "name": "m_EUIBtn_Exit",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_GM",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Settings",
+            "active": false,
+            "interactable": true
+          },
+          {
+            "name": "m_Btn_Start",
+            "active": false,
+            "interactable": true
+          }
+        ],
+        "texts": [
+          {
+            "name": "Text (TMP)",
+            "text": "113"
+          },
+          {
+            "name": "TitleText",
+            "text": "Ember Framework"
+          },
+          {
+            "name": "Text",
+            "text": "开始游戏"
+          },
+          {
+            "name": "Text",
+            "text": "设置"
+          },
+          {
+            "name": "VersionText",
+            "text": "v1.0.0"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "environment": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "scalers": [
+          {
+            "name": "UI_Layer_25000",
+            "mode": "ConstantPixelSize",
+            "reference": [
+              800,
+              600
+            ],
+            "matchWidthOrHeight": 0
+          },
+          {
+            "name": "GMPanel",
+            "mode": "ScaleWithScreenSize",
+            "reference": [
+              2560,
+              1440
+            ],
+            "matchWidthOrHeight": 0.5
+          },
+          {
+            "name": "EUIMainPanel",
+            "mode": "ScaleWithScreenSize",
+            "reference": [
+              2560,
+              1440
+            ],
+            "matchWidthOrHeight": 0.5
+          },
+          {
+            "name": "UI_Layer_1000",
+            "mode": "ConstantPixelSize",
+            "reference": [
+              800,
+              600
+            ],
+            "matchWidthOrHeight": 0
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "mode": "ScaleWithScreenSize",
+            "reference": [
+              2560,
+              1440
+            ],
+            "matchWidthOrHeight": 0.5
+          },
+          {
+            "name": "UI_Layer_0",
+            "mode": "ConstantPixelSize",
+            "reference": [
+              800,
+              600
+            ],
+            "matchWidthOrHeight": 0
+          },
+          {
+            "name": "UI_Layer_2000",
+            "mode": "ConstantPixelSize",
+            "reference": [
+              800,
+              600
+            ],
+            "matchWidthOrHeight": 0
+          }
+        ],
+        "canvases": [
+          {
+            "name": "UI_Layer_25000",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 25000
+          },
+          {
+            "name": "UI_Layer_0",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 0
+          },
+          {
+            "name": "UI_Layer_2000",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 2000
+          },
+          {
+            "name": "EUIMainPanel",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 1000
+          },
+          {
+            "name": "UI_Layer_1000",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 1000
+          },
+          {
+            "name": "GMPanel",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 30000
+          },
+          {
+            "name": "EUIBackgroundPanel",
+            "mode": "ScreenSpaceCamera",
+            "sortingOrder": 0
+          }
+        ],
+        "assemblies": [
+          {
+            "name": "Ember.UI.Runtime",
+            "mvid": "cfb883fe-47f5-4e4d-8e85-1d24720d5814"
+          },
+          {
+            "name": "Ember.UI.Tests",
+            "mvid": "e97256fc-f1d1-493a-bf27-440a7fae8543"
+          },
+          {
+            "name": "Ember.UIExtension.Editor",
+            "mvid": "2f058648-6346-4da2-b0d8-c60e76f05407"
+          },
+          {
+            "name": "Ember.UIExtension.Runtime",
+            "mvid": "b0268fbe-75ce-408f-a274-b1c4c7fa75a1"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  }
+}

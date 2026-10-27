@@ -1,0 +1,34 @@
+{
+    "name": "GameInputActions",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "f5a4b06d-95bc-416f-99db-c6c1b561a611",
+            "actions": [
+                { "name": "Direction", "type": "Value", "id": "c6bd982e-df6b-46e6-a42f-94fd906f3323", "expectedControlType": "Vector2", "processors": "", "interactions": "", "initialStateCheck": true },
+                { "name": "Primary", "type": "Button", "id": "de6c7286-bcc2-4116-a9aa-4a59bdc057ca", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true }
+            ],
+            "bindings": [
+                { "name": "WASD", "id": "ea048736-c53a-46a6-a6a8-15e678cccbac", "path": "2DVector", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": true, "isPartOfComposite": false },
+                { "name": "up", "id": "d634cf82-13c7-4cc2-ab1c-ece6a382a31e", "path": "<Keyboard>/w", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": false, "isPartOfComposite": true },
+                { "name": "down", "id": "ce0d2f22-49cb-4a80-bb43-55d3476c447c", "path": "<Keyboard>/s", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": false, "isPartOfComposite": true },
+                { "name": "left", "id": "a7791762-2e24-4a94-a733-0038d1c63194", "path": "<Keyboard>/a", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": false, "isPartOfComposite": true },
+                { "name": "right", "id": "8cfa78a8-1dfe-4b9d-9f42-d0be46779d91", "path": "<Keyboard>/d", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": false, "isPartOfComposite": true },
+                { "name": "", "id": "d8c069f6-72f3-499b-8e58-9f8438e2683e", "path": "<Gamepad>/leftStick", "interactions": "", "processors": "", "groups": "", "action": "Direction", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b8b7e897-d078-48ef-b694-e154b4ebd21f", "path": "<Keyboard>/space", "interactions": "", "processors": "", "groups": "", "action": "Primary", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "e1329424-5797-4390-8c17-982c61c8b0b9", "path": "<Gamepad>/buttonSouth", "interactions": "", "processors": "", "groups": "", "action": "Primary", "isComposite": false, "isPartOfComposite": false }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "9bfda448-d04c-4e9d-83a2-a63ff180a633",
+            "actions": [
+                { "name": "Confirm", "type": "Button", "id": "72b8128b-63fd-436b-8a39-a935c03c012f", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true }
+            ],
+            "bindings": [
+                { "name": "", "id": "6a5d62c0-d678-4c2b-a187-d513a7d954e5", "path": "<Keyboard>/enter", "interactions": "", "processors": "", "groups": "", "action": "Confirm", "isComposite": false, "isPartOfComposite": false }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

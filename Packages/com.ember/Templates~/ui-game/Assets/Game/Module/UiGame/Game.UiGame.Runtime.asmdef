@@ -1,0 +1,6 @@
+{
+    "name": "Game.UiGame.Runtime",
+    "rootNamespace": "Game.UiGame",
+    "references": ["Ember.Core.Runtime"],
+    "autoReferenced": true
+}

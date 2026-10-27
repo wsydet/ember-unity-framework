@@ -26,6 +26,7 @@ namespace Ember.UI
         private bool _leaseOpened;
         private bool _visible;
         private bool _disposed;
+        private readonly IDisposable _ownership;
 
         /// <summary>
         /// 构造一个已经实例化的 Item，并完成一次性的 Logic 创建与控件绑定阶段。
@@ -45,6 +46,7 @@ namespace Ember.UI
                 throw new ArgumentException("EUIItem root requires a RectTransform.", nameof(gameObject));
 
             _gameObject = gameObject;
+            _ownership = EUIInstanceOwnership.Acquire(gameObject);
             _logic = logic;
             try
             {
@@ -68,6 +70,7 @@ namespace Ember.UI
             }
             catch
             {
+                _ownership.Dispose();
                 if (_updateDriver)
                     _updateDriver.Bind(null);
                 if (_logic != null)
@@ -205,6 +208,7 @@ namespace Ember.UI
                 _updateDriver.Bind(null);
             }
             _updateDriver = null;
+            _ownership.Dispose();
         }
 
         /// <summary>

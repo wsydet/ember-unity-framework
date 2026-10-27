@@ -1,0 +1,64 @@
+{
+  "counts": [
+    {
+      "data": 0,
+      "active": 0,
+      "cached": 20,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 0
+    },
+    {
+      "data": 1,
+      "active": 1,
+      "cached": 19,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 1
+    },
+    {
+      "data": 3,
+      "active": 3,
+      "cached": 17,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 3
+    },
+    {
+      "data": 20,
+      "active": 20,
+      "cached": 0,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 20
+    },
+    {
+      "data": 3,
+      "active": 3,
+      "cached": 17,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 3
+    },
+    {
+      "data": 1,
+      "active": 1,
+      "cached": 19,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 1
+    },
+    {
+      "data": 0,
+      "active": 0,
+      "cached": 20,
+      "created": 20,
+      "logic": 20,
+      "subscriptions": 0
+    }
+  ],
+  "key": "option-2",
+  "index": 0,
+  "clickDelta": 1,
+  "disabledDelta": 0
+}

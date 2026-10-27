@@ -1,0 +1,174 @@
+{
+  "upstreamPackage": "com.burner.ui.prefabmaker",
+  "resolvedVersion": "2.0.0-preview.17",
+  "upstreamUxpVersion": "3.0.14",
+  "emberUxpVersion": "1.0.0",
+  "license": "Original copyright notices retained; this adaptation does not grant additional redistribution rights.",
+  "adaptations": [
+    "Ember manifest, labels, config paths; removed product export defaults",
+    "Native PSD authoring/rename preserves visibility after Photoshop name assignment",
+    "Read-only Ember EUI companion gate and scoped tests; no Unity Maker"
+  ],
+  "files": [
+    {
+      "path": "src/common.js",
+      "upstreamSha256": "1c79fc108f73370b6e2316efd5c8e04c72afb7321ec7878101c8d0b8e45f32c9",
+      "emberSha256": "1c79fc108f73370b6e2316efd5c8e04c72afb7321ec7878101c8d0b8e45f32c9"
+    },
+    {
+      "path": "src/config-loader.js",
+      "upstreamSha256": "ea3a5ee5944979255b9461209858b1f720c55fcec36e83ff537144ab49ed62c9",
+      "emberSha256": "ea3a5ee5944979255b9461209858b1f720c55fcec36e83ff537144ab49ed62c9"
+    },
+    {
+      "path": "src/main.js",
+      "upstreamSha256": "6a34d9cc98728705b74998de65b7299a58531d87b08ffad1f5836d0ac4831742",
+      "emberSha256": "d0661d0fbae1364cbb1c5230846980f6512b7b127dfe4ed74835aa5101fc89c1"
+    },
+    {
+      "path": "src/styles.css",
+      "upstreamSha256": "36dd1fe610b7e9b7754c9e147f08ecee34d2e9fcffa53bb1a9141d3a4e273c05",
+      "emberSha256": "36dd1fe610b7e9b7754c9e147f08ecee34d2e9fcffa53bb1a9141d3a4e273c05"
+    },
+    {
+      "path": "src/warnings.js",
+      "upstreamSha256": "c4a34a319a8fd81a921a1c980d4f9dc7eb12f896073725040423de84ce19333d",
+      "emberSha256": "c4a34a319a8fd81a921a1c980d4f9dc7eb12f896073725040423de84ce19333d"
+    },
+    {
+      "path": "src/photoshop/layer-reader.js",
+      "upstreamSha256": "7e23663c550bfd64e9a2a12958dbb391484698bf77bf57b5c3895ad2e01cb958",
+      "emberSha256": "7e23663c550bfd64e9a2a12958dbb391484698bf77bf57b5c3895ad2e01cb958"
+    },
+    {
+      "path": "src/naming/parser.js",
+      "upstreamSha256": "9f3de72e39f1a5b3082cfd7d4cdff8cf64d337b4b49493a04c1adab2147d2fb9",
+      "emberSha256": "9f3de72e39f1a5b3082cfd7d4cdff8cf64d337b4b49493a04c1adab2147d2fb9"
+    },
+    {
+      "path": "src/naming/semantics.js",
+      "upstreamSha256": "146c17608b0a7d7f24f917983ffa5a45c2b320f7752ab018ef636347f15ac37b",
+      "emberSha256": "146c17608b0a7d7f24f917983ffa5a45c2b320f7752ab018ef636347f15ac37b"
+    },
+    {
+      "path": "src/export/export-runner.js",
+      "upstreamSha256": "e22b9b75f3fb8ffec21e6f51bed4601af57cae2da51ffab827e5c3095a41051c",
+      "emberSha256": "e22b9b75f3fb8ffec21e6f51bed4601af57cae2da51ffab827e5c3095a41051c"
+    },
+    {
+      "path": "src/export/file-bridge-export.js",
+      "upstreamSha256": "43c52490767e18ed9c563b5777a9590132aedf3a913166ad894975b0c00bf37a",
+      "emberSha256": "43c52490767e18ed9c563b5777a9590132aedf3a913166ad894975b0c00bf37a"
+    },
+    {
+      "path": "src/export/file-bridge-host.js",
+      "upstreamSha256": "f9797188727c4b0a33081405936c45db5d8b0bd394aa2b66482d5aba0412c1ba",
+      "emberSha256": "f9797188727c4b0a33081405936c45db5d8b0bd394aa2b66482d5aba0412c1ba"
+    },
+    {
+      "path": "src/export/file-bridge-store.js",
+      "upstreamSha256": "bcc98f7fcfbd584f63ac73b5ca38c52b0ff301f03dd2733c74f5cb9846cc8ab4",
+      "emberSha256": "bcc98f7fcfbd584f63ac73b5ca38c52b0ff301f03dd2733c74f5cb9846cc8ab4"
+    },
+    {
+      "path": "src/export/file-bridge.js",
+      "upstreamSha256": "ea32c933759277624b3e407bb19264d2d6081ac4438f1278c7ae042694f8a388",
+      "emberSha256": "ea32c933759277624b3e407bb19264d2d6081ac4438f1278c7ae042694f8a388"
+    },
+    {
+      "path": "src/export/output-snapshot.js",
+      "upstreamSha256": "500fd165e7ae5e7170df8717ae66d584795ec1f4ba971f1b93ed423bdcfc8b07",
+      "emberSha256": "500fd165e7ae5e7170df8717ae66d584795ec1f4ba971f1b93ed423bdcfc8b07"
+    },
+    {
+      "path": "src/export/png-exporter.js",
+      "upstreamSha256": "630a7298dd76284724f8df1737024ab638bb11600258a80fd15b1e7d40f1e8bd",
+      "emberSha256": "630a7298dd76284724f8df1737024ab638bb11600258a80fd15b1e7d40f1e8bd"
+    },
+    {
+      "path": "src/export/prefix-preferences.js",
+      "upstreamSha256": "dd8a922a474283460158cfef5f8fd25528c359f0df4dc1033717a57b7527822a",
+      "emberSha256": "dd8a922a474283460158cfef5f8fd25528c359f0df4dc1033717a57b7527822a"
+    },
+    {
+      "path": "src/export/resource-reuse.js",
+      "upstreamSha256": "0e2f5abb791d73aee94ff47bb1827e387508797ef07b26cbeee3538cb9613a32",
+      "emberSha256": "0e2f5abb791d73aee94ff47bb1827e387508797ef07b26cbeee3538cb9613a32"
+    },
+    {
+      "path": "src/export/source-info.js",
+      "upstreamSha256": "a27ec0e6851c2743c03e8fcf77419f173f2e97040bae6173c6a44d8de4690745",
+      "emberSha256": "a27ec0e6851c2743c03e8fcf77419f173f2e97040bae6173c6a44d8de4690745"
+    },
+    {
+      "path": "src/bui/adaptation.js",
+      "upstreamSha256": "0d264792a7d478064de6441a10d748be08d7700ae5dd17efcb3766798b04349c",
+      "emberSha256": "0d264792a7d478064de6441a10d748be08d7700ae5dd17efcb3766798b04349c"
+    },
+    {
+      "path": "src/bui/checklist.js",
+      "upstreamSha256": "615fc085b30ccf9678df7e97d8818bf712dd7ea32eb28004d644fa98ca8f3eee",
+      "emberSha256": "615fc085b30ccf9678df7e97d8818bf712dd7ea32eb28004d644fa98ca8f3eee"
+    },
+    {
+      "path": "src/bui/design-texts.js",
+      "upstreamSha256": "daa0aa53ad30d117bdbd738228b917a97e063b3857e092e59697dba25e760fc4",
+      "emberSha256": "daa0aa53ad30d117bdbd738228b917a97e063b3857e092e59697dba25e760fc4"
+    },
+    {
+      "path": "src/bui/export-model-builder.js",
+      "upstreamSha256": "4f258e7fe17092877474a1946251883acdafc6d7e44f731a734e861602c7811d",
+      "emberSha256": "4f258e7fe17092877474a1946251883acdafc6d7e44f731a734e861602c7811d"
+    },
+    {
+      "path": "src/bui/model-builder.js",
+      "upstreamSha256": "6c6d3cae4fb3c134fb1956e2a7e600a24f374e9c1c218bedcbd5a2ba310b609a",
+      "emberSha256": "6c6d3cae4fb3c134fb1956e2a7e600a24f374e9c1c218bedcbd5a2ba310b609a"
+    },
+    {
+      "path": "src/bui/rect.js",
+      "upstreamSha256": "d88915fa5b9ab40ed05cbac618e7639d0f4fd10505bff6d711f560d592590da8",
+      "emberSha256": "d88915fa5b9ab40ed05cbac618e7639d0f4fd10505bff6d711f560d592590da8"
+    },
+    {
+      "path": "config/export-capabilities.json",
+      "upstreamSha256": "051237f20116776804e51db62c9a661bf80183385ae6994420ed86857b022148",
+      "emberSha256": "7ef1473be4bae6bb710e1eb34868238e7840341fa7122b48eda51636f91c7d4e"
+    },
+    {
+      "path": "config/export-settings.json",
+      "upstreamSha256": "291fea73e6e1e60cf91d7ce76c16a3c4d83554850f9183924491fd99d483ac29",
+      "emberSha256": "2ee2334bb55a90ed5de03126a537b4da847853b9bc34765b76bb3165b4957adf"
+    },
+    {
+      "path": "config/i18n.json",
+      "upstreamSha256": "9ed8022298cd1a7802f06665f63b252ac412807c08ad6772aefc70170a74655f",
+      "emberSha256": "6234285c498e21750015015c63525059f41248ea36a052bcfd7fcdbf8e11db3c"
+    },
+    {
+      "path": "config/known-limitations.json",
+      "upstreamSha256": "f959c88356e310a65c65e46d4def03466ca3c7b84824765d79e406761cf918e1",
+      "emberSha256": "58f39a75e43a1fae37cdf719a77a2fffbc4080a91ba4b8a585495f4487ea6c2a"
+    },
+    {
+      "path": "config/package-release.json",
+      "upstreamSha256": "02359b728b825ab7df2b2a88160939124855352cd4f1640f579b29a4033f46db",
+      "emberSha256": "a2c41b98dffab80871963996588c85c806da1bae7f40e1d7e9fb390fdda5f496"
+    },
+    {
+      "path": "config/psd-naming-rules.json",
+      "upstreamSha256": "a6d3c735ea2e85c1567768426ded09b2b9f5cdda5962ae082df6b18fea8cf4f4",
+      "emberSha256": "a3caca26c75a14affc20587920adb9235d334926e6971d89d7f18c75e8aa0813"
+    },
+    {
+      "path": "scripts/bridge.js",
+      "upstreamSha256": "4d0ede61b6802024a12370fde690af98264331ab0ac1d61f43015908adc16a7b",
+      "emberSha256": "4d0ede61b6802024a12370fde690af98264331ab0ac1d61f43015908adc16a7b"
+    },
+    {
+      "path": "protocol/bui.v3.schema.json",
+      "upstreamSha256": "163b4e83095b21592a2883af8887113e14968a8b2a64b5b43ea70fdde39a2052",
+      "emberSha256": "163b4e83095b21592a2883af8887113e14968a8b2a64b5b43ea70fdde39a2052"
+    }
+  ]
+}

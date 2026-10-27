@@ -9,9 +9,33 @@ namespace Ember.UI.Tests
     public sealed class EUITransitionBlockPreviewTests
     {
         [Test]
+        public void ReusedCurtain_AfterParentResize_RebuildsGridToCoverContainer()
+        {
+            var parent = new GameObject("Resizable curtain parent", typeof(RectTransform));
+            try
+            {
+                var child = new GameObject("Nested curtain", typeof(RectTransform));
+                child.transform.SetParent(parent.transform, false);
+                var block = child.AddComponent<EUITransitionBlock>();
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                foreach (var size in new[] { new Vector2(1280, 720), new Vector2(1600, 720), new Vector2(1280, 900) })
+                {
+                    ((RectTransform)parent.transform).sizeDelta = size;
+                    block.EditorPlayEnterPreview();
+                    var grid = (Vector2Int)typeof(EUITransitionBlock).GetField("_gridSize", flags).GetValue(block);
+                    var blockSize = (float)typeof(EUITransitionBlock).GetField("_blockSize", flags).GetValue(block);
+                    Assert.That(grid.x * blockSize, Is.GreaterThanOrEqualTo(size.x - 0.01f), "horizontal coverage after resize");
+                    Assert.That(grid.y * blockSize, Is.GreaterThanOrEqualTo(size.y - 0.01f), "vertical coverage after resize");
+                    block.EditorPreviewStop();
+                }
+            }
+            finally { Object.DestroyImmediate(parent); }
+        }
+
+        [Test]
         public void HorizontalBands_RenderFormalPrefabParametersAndSaveEvidence()
         {
-            const string source = "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPanel.prefab";
+            const string source = "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPage.prefab";
             string output = System.IO.Path.GetFullPath("docs/dev/evidence/loading-curtain-20261023");
             System.IO.Directory.CreateDirectory(output);
             var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
@@ -154,7 +178,7 @@ namespace Ember.UI.Tests
         [Test]
         public void FormalLoadingPrefabContents_PublicPreviewInitializesAndUnloads()
         {
-            const string path = "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPanel.prefab";
+            const string path = "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPage.prefab";
             var contents = PrefabUtility.LoadPrefabContents(path);
             try
             {

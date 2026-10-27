@@ -1,0 +1,22 @@
+[
+  {
+    "name": "current",
+    "actual": "模板基线一致，父级无待同步变化；项目未保存修改请通过校验查看。"
+  },
+  {
+    "name": "sameVersionChangedContent",
+    "actual": "编辑基线已变化，请到模板开发页比较内容后处理。"
+  },
+  {
+    "name": "unsealed",
+    "actual": "模板已保存，但仍有未封存内容。"
+  },
+  {
+    "name": "missingBaseline",
+    "actual": "内容基线记录不完整，暂不能判断是否需要更新。"
+  },
+  {
+    "name": "missingParent",
+    "actual": "缺少父模板，无法判断父级更新。"
+  }
+]

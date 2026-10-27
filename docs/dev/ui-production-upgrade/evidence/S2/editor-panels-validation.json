@@ -1,0 +1,162 @@
+{
+  "date": "2026-10-26",
+  "scope": "S2 editor library Odin and FSM blueprint template access",
+  "projectRoot": "C:/Users/wuyu/My/ember-unity-framework",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "unityVersion": "6000.5.4f1",
+  "odinVersion": "4.0.3",
+  "compile": {
+    "is_compiling": false,
+    "is_domain_reload_pending": false,
+    "last_compile_started_unix_ms": 1793020213815,
+    "last_compile_finished_unix_ms": 1793020218314,
+    "last_domain_reload_before_unix_ms": null,
+    "last_domain_reload_after_unix_ms": 1793020225054
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "processWarnings": [
+      "2 existing Core UAC1001 warnings",
+      "3 temporary capture active RenderTexture warnings; capture cleanup fixed"
+    ]
+  },
+  "tests": {
+    "initial": {
+      "mode": "EditMode",
+      "summary": {
+        "total": 8,
+        "passed": 6,
+        "failed": 2,
+        "skipped": 0,
+        "durationSeconds": 2.5258727,
+        "resultState": "Failed(Child)"
+      },
+      "results": [
+        {
+          "name": "ExecutionRechecksVisibilityAndModuleConditionBeforeAction",
+          "fullName": "Ember.Core.Fsm.Tests.EmberConditionalMenuTests.ExecutionRechecksVisibilityAndModuleConditionBeforeAction",
+          "state": "Passed",
+          "durationSeconds": 0.0585542,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "VisibilityActuallyAddsAndRemovesMenuAndDisposalRemovesEntry",
+          "fullName": "Ember.Core.Fsm.Tests.EmberConditionalMenuTests.VisibilityActuallyAddsAndRemovesMenuAndDisposalRemovesEntry",
+          "state": "Passed",
+          "durationSeconds": 0.0016085,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "InactiveProvidersAreNotInvoked",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.InactiveProvidersAreNotInvoked",
+          "state": "Passed",
+          "durationSeconds": 0.0095025,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "OldWindowRejectsGraphAndLayoutOperationsWithoutLosingGraph",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.OldWindowRejectsGraphAndLayoutOperationsWithoutLosingGraph",
+          "state": "Failed:Error",
+          "durationSeconds": 0.0785771,
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stackTrace": "  at UnityEditor.EditorWindow.Close () [0x00054] in <b69798a175fc402fb7a30c358b62aa3a>:0 \r\n  at Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.OldWindowRejectsGraphAndLayoutOperationsWithoutLosingGraph () [0x000ac] in .\\Packages\\com.ember\\Core\\Tests\\EditMode\\EmberFsmBlueprintAccessTests.cs:39 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+          "output": ""
+        },
+        {
+          "name": "ParameterExtensionsShareModuleAvailability",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.ParameterExtensionsShareModuleAvailability",
+          "state": "Failed:Error",
+          "durationSeconds": 0.0272964,
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stackTrace": "  at UnityEditor.EditorWindow.Close () [0x00054] in <b69798a175fc402fb7a30c358b62aa3a>:0 \r\n  at Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.ParameterExtensionsShareModuleAvailability () [0x0008e] in .\\Packages\\com.ember\\Core\\Tests\\EditMode\\EmberFsmBlueprintAccessTests.cs:51 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+          "output": ""
+        },
+        {
+          "name": "UnknownOwnerAndDisabledModuleCannotGrantAccess",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.UnknownOwnerAndDisabledModuleCannotGrantAccess",
+          "state": "Passed",
+          "durationSeconds": 0.0097409,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "CapturedOriginMapsSharedSourcePerNodeAndKeepsTwoHostsIndependent",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmTests.CapturedOriginMapsSharedSourcePerNodeAndKeepsTwoHostsIndependent",
+          "state": "Passed",
+          "durationSeconds": 0.673523,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "LayoutRuntimeObservationAndPresetChangesKeepCoordinates",
+          "fullName": "Ember.Core.Fsm.Tests.EmberFsmTests.LayoutRuntimeObservationAndPresetChangesKeepCoordinates",
+          "state": "Passed",
+          "durationSeconds": 0.930713,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        }
+      ]
+    },
+    "initialJob": "ec2b69ad15fe462d956b38d4d376b37b",
+    "correctedAccess": {
+      "job": "c9bc2826669f4df894dd457968ac9556",
+      "passed": 4,
+      "failed": 0
+    },
+    "identity": {
+      "job": "f0c5b80f274b492c89375ad1b1774165",
+      "passed": 15,
+      "failed": 0
+    },
+    "uniqueFinalPassed": 23
+  },
+  "menu": {
+    "template": "base",
+    "newMenu": false,
+    "oldMenu": false,
+    "publicOpenRejected": true,
+    "testCapability": {
+      "enabled": true,
+      "disabled": false,
+      "disposed": false
+    }
+  },
+  "library": {
+    "count": 37,
+    "treeEntries": 37,
+    "issues": [],
+    "catalogCurrent": true,
+    "mouseSelected": "ember.amountbutton",
+    "slotsExpandedByMouse": true,
+    "configurationHashUnchanged": true,
+    "searchVerified": [
+      "ember.settingsliderrow",
+      "ember.slider"
+    ]
+  },
+  "newScriptGuids": {
+    "Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs": "426a0cfd2b11e7d4ba09ff08f179702f",
+    "Packages/com.ember/Core/Tests/EditMode/EmberFsmBlueprintAccessTests.cs": "267e737f86e8b094abb72b7146e214b5"
+  },
+  "templateSavedThisFollowup": false,
+  "unverified": [
+    "Actual template switching and descendant project menus",
+    "Clean consumer deployment",
+    "All thumbnail previews and pagination sizes",
+    "Legacy unloaded template explicit owner/module registration migration"
+  ],
+  "documentation": {
+    "allRepositoryIssues": 65,
+    "changedDocumentIssues": 0
+  }
+}

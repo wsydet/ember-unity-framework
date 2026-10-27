@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "requiredCapabilities": [
+    "ember-eui-map-v1",
+    "dynamic-list-v1"
+  ],
+  "bui": {
+    "path": "art/ui/S4/EmberPilot.bui",
+    "sha256": "4b28841b937af76cf728eafabc2d93054cf679a3d7564386860d92bdad2b6f48"
+  },
+  "sourcePsd": {
+    "path": "art/ui/S4/EmberPilot.source.psd",
+    "sha256": "7254350f66baf66bdf89b47fa7c8395d6808603703b79aaa4e2eb0d1eefcb8a2"
+  },
+  "workingPsd": {
+    "path": "art/ui/S4/EmberPilot.renamed.psd",
+    "sha256": "81ef4a3c69a9fa2ec710f06f3ccf877a59989dd71952d58fd3f7ab1e0519baa9"
+  },
+  "contracts": [
+    {
+      "path": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIBuiCandidateMainPage.contract.json",
+      "sha256": "dbe6e981877f9fba36862c8ad059c5539dceb9c81a7c2aa6014e2dbcc83b0eeb",
+      "schemaVersion": 1,
+      "toolVersion": "1.1",
+      "prefabPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "prefabGuid": "dce9b62f55d43ee4e8bd939f7d3bb764",
+      "role": "Page",
+      "codeMode": "Framework",
+      "pageType": "MainPage",
+      "requiredCapabilities": [],
+      "lists": []
+    },
+    {
+      "path": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIBuiCandidateDynamicListPage.contract.json",
+      "sha256": "ac75e6e4eef87ddb8a358366a3bbada37a2e9ba8be908d4103b151b388334ad1",
+      "schemaVersion": 1,
+      "toolVersion": "1.1",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+      "prefabGuid": "e54ecc4f1072bb945be6f6c632f558c9",
+      "role": "Page",
+      "codeMode": "Business",
+      "pageType": "MainPage",
+      "requiredCapabilities": [
+        "dynamic-list-v1"
+      ],
+      "lists": [
+        {
+          "kind": "List",
+          "templateKind": "PrefabRef",
+          "hostId": "d5d93f1625ea48d4ea449887c0370258:2795852216272064971",
+          "hostPath": "Animator/EUISafeArea/Center/Content/List",
+          "containerPrefab": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab",
+          "itemPrefab": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+          "itemGuid": "31e58672571f8fc45a944d3915096d0f",
+          "itemLogic": "EUIDynamicOptionRowItem",
+          "contentId": "d5d93f1625ea48d4ea449887c0370258:8602308713369688306",
+          "viewportId": "d5d93f1625ea48d4ea449887c0370258:2668392684772037828",
+          "dataBinding": "Game.UI.EUIDynamicOptionRowItem.Bind(EUIItemLease<EUIOptionRowData>); key=Id; index=display position",
+          "owner": "host:instances+items;lease:events+cancellation;external-provider:prefab-resource",
+          "refresh": "replace-all-bindings;ordinal-unique-key;index-is-display-position",
+          "cacheCapacity": 20
+        }
+      ]
+    },
+    {
+      "path": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIDynamicListItem.contract.json",
+      "sha256": "7c54cd9f9691928a6c6bd5c615add5ef5d2616e8a28cadf09e5671697117ac1b",
+      "schemaVersion": 1,
+      "toolVersion": "1.1",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab",
+      "prefabGuid": "0236256f3df79bf47b176289da266e6b",
+      "role": "Item",
+      "codeMode": "Business",
+      "pageType": "MainPage",
+      "requiredCapabilities": [
+        "dynamic-list-v1"
+      ],
+      "lists": [
+        {
+          "kind": "List",
+          "templateKind": "PrefabRef",
+          "hostId": "0236256f3df79bf47b176289da266e6b:8385661855155029999",
+          "hostPath": ".",
+          "containerPrefab": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+          "itemPrefab": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+          "itemGuid": "31e58672571f8fc45a944d3915096d0f",
+          "itemLogic": "EUIDynamicOptionRowItem",
+          "contentId": "0236256f3df79bf47b176289da266e6b:2734403996516634326",
+          "viewportId": "0236256f3df79bf47b176289da266e6b:8618498540193907424",
+          "dataBinding": "Game.UI.EUIDynamicOptionRowItem.Bind(EUIItemLease<EUIOptionRowData>); key=Id; index=display position",
+          "owner": "host:instances+items;lease:events+cancellation;external-provider:prefab-resource",
+          "refresh": "replace-all-bindings;ordinal-unique-key;index-is-display-position",
+          "cacheCapacity": 20
+        }
+      ]
+    },
+    {
+      "path": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIBuiCandidateDynamicOptionRowItem.contract.json",
+      "sha256": "7a2fc5a30431d58a1c865004f62d977f48a38e56ccde125f0be3da303c7affc8",
+      "schemaVersion": 1,
+      "toolVersion": "1.1",
+      "prefabPath": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+      "prefabGuid": "d7f6decd589b0884c927115ef5c1b4ac",
+      "role": "Item",
+      "codeMode": "Business",
+      "pageType": "MainPage",
+      "requiredCapabilities": [],
+      "lists": []
+    }
+  ],
+  "inputs": [
+    {
+      "path": "Assets/Ember/Editor/UILibrary/catalog.json",
+      "sha256": "2f4bf8c3c414e1a99c081187ac02effb9ef29d738514c6b12daec3ab8634c576"
+    },
+    {
+      "path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs",
+      "sha256": "5732445b699d9f4419ebb3b1221a2b9587cf182046259f257f28715cbf8f50a9"
+    },
+    {
+      "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.cs",
+      "sha256": "86cfe90edf68254ee9b549e8c3fa0c99328a05ec2472f79d5dd2f0aa1b9d8e8e"
+    },
+    {
+      "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.cs",
+      "sha256": "d8312282aa8e0c9bdca66905533145117da89a8a6a014e048a3f5d1f831c81c1"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "sha256": "4c61e8c0ce9ada8a6264267784efce30f0816f16413ea83628b1eedd1e808ba3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+      "sha256": "19768191fdeb235f67e555830739dd8908735a7777ae5548e10ed4cf4b0995d3"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab",
+      "sha256": "6a3d55a15de55e9a89d0003552ea783de1fd3ebc24676588c2206976bde65a2b"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+      "sha256": "1f10561331bf63c28427bba52aeba7e7bcf4f49a9c4a5d38776a5fdadb57a9d5"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab",
+      "sha256": "8aaf9819483c2fe6423e9d6a4f76aea9143c987bcc029acfab0ace3a249303c0"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab.meta",
+      "sha256": "e37a78b485358e9d165ed25bcd40cd6163814a7836cdccb5917d06e0cd2ad2f5"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+      "sha256": "a8600928d83e3edbcf80b3c37906165b065115ebd2f664578b14e2cef74523c0"
+    },
+    {
+      "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab.meta",
+      "sha256": "b6a155198cb6a47d2778f27db996065ba0f243bcace37773185bf55fe8c2aae4"
+    }
+  ],
+  "targets": [
+    {
+      "targetId": "uibase_main_page",
+      "buiRole": "Page",
+      "euiClass": "EUIMainPage",
+      "prefabGuid": "dce9b62f55d43ee4e8bd939f7d3bb764",
+      "codeMode": "Framework",
+      "preserve": [
+        "GUID",
+        "IsFramework",
+        "PageType",
+        "navigation",
+        "user-logic"
+      ]
+    },
+    {
+      "targetId": "uifoundation_dynamic_list_page",
+      "buiRole": "Page",
+      "euiClass": "EUIDynamicListPage",
+      "prefabGuid": "e54ecc4f1072bb945be6f6c632f558c9",
+      "scope": "list-area-only; retain toolbar commands and Back control outside visual replacement"
+    },
+    {
+      "targetId": "uifoundation_dynamic_option_row_item",
+      "buiRole": "ListItem",
+      "euiClass": "EUIDynamicOptionRowItem",
+      "prefabGuid": "d7f6decd589b0884c927115ef5c1b4ac",
+      "registration": "dynamic-item-only",
+      "fixedUILogic": false
+    }
+  ],
+  "lists": [
+    {
+      "nodeId": "list_26",
+      "itemNodeId": "prefab_ref_28",
+      "itemTargetId": "uifoundation_dynamic_option_row_item",
+      "contractPath": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIBuiCandidateDynamicListPage.contract.json",
+      "contractIndex": 0,
+      "contract": {
+        "kind": "List",
+        "templateKind": "PrefabRef",
+        "hostId": "e54ecc4f1072bb945be6f6c632f558c9:316946340529312936",
+        "hostPath": "Animator/EUISafeArea/Center/Content/List",
+        "containerPrefab": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+        "itemPrefab": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+        "itemGuid": "d7f6decd589b0884c927115ef5c1b4ac",
+        "itemLogic": "EUIBuiCandidateDynamicOptionRowItem",
+        "contentId": "e54ecc4f1072bb945be6f6c632f558c9:6182127211535621521",
+        "viewportId": "e54ecc4f1072bb945be6f6c632f558c9:550231632819786151",
+        "dataBinding": "Game.UI.EUIDynamicOptionRowItem.Bind(EUIItemLease<EUIOptionRowData>); key=Id; index=display position",
+        "owner": "host:instances+items;lease:events+cancellation;external-provider:prefab-resource",
+        "refresh": "replace-all-bindings;ordinal-unique-key;index-is-display-position",
+        "cacheCapacity": 20
+      },
+      "hostContract": "docs/dev/ui-production-upgrade/evidence/S5/final-EUIDynamicListItem.contract.json",
+      "key": "Id",
+      "index": "display-position",
+      "layout": "single-template vertical; no virtualization; no diff refresh"
+    }
+  ],
+  "publicReferences": [
+    {
+      "nodeId": "prefab_ref_15",
+      "guid": "e11aa996340b33b4c9d37b4eb6aa3371",
+      "prefabName": "EUISecondaryButtonItem",
+      "slots": [
+        {
+          "id": "root/EUIImageEx",
+          "role": "image",
+          "targetId": "e11aa996340b33b4c9d37b4eb6aa3371:3086663145892675825",
+          "path": "",
+          "componentType": "Ember.UIExtension.EUIImageEx",
+          "state": "default",
+          "properties": [
+            "m_Sprite",
+            "m_Color"
+          ]
+        },
+        {
+          "id": "root/EUIButtonEx",
+          "role": "control",
+          "targetId": "e11aa996340b33b4c9d37b4eb6aa3371:1534817637074645081",
+          "path": "",
+          "componentType": "Ember.UIExtension.EUIButtonEx",
+          "state": "interactable / pressed / selected",
+          "properties": [
+            "m_Interactable"
+          ]
+        },
+        {
+          "id": "Label/TMPEx",
+          "role": "label",
+          "targetId": "e11aa996340b33b4c9d37b4eb6aa3371:747909742026613862",
+          "path": "Label",
+          "componentType": "Ember.UIExtension.TMPEx",
+          "state": "default",
+          "properties": [
+            "m_text",
+            "m_fontColor",
+            "m_fontSize"
+          ]
+        },
+        {
+          "id": "Icon/EUIImageEx",
+          "role": "image",
+          "targetId": "e11aa996340b33b4c9d37b4eb6aa3371:7767984486401883290",
+          "path": "Icon",
+          "componentType": "Ember.UIExtension.EUIImageEx",
+          "state": "default",
+          "properties": [
+            "m_Sprite",
+            "m_Color"
+          ]
+        }
+      ],
+      "slotMap": {
+        "label": "Label/TMPEx"
+      },
+      "prefabPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab"
+    },
+    {
+      "nodeId": "prefab_ref_10",
+      "guid": "fcb3e6dae623b0a42965381362dfc2b9",
+      "prefabName": "EUIActionButtonItem",
+      "slots": [
+        {
+          "id": "label",
+          "role": "label",
+          "targetId": "fcb3e6dae623b0a42965381362dfc2b9:5399223685625105543",
+          "path": "Label",
+          "componentType": "Ember.UIExtension.TMPEx",
+          "state": "default",
+          "properties": [
+            "m_text",
+            "m_fontColor",
+            "m_fontSize",
+            "m_fontAsset"
+          ]
+        },
+        {
+          "id": "euiactionbuttonitem-image",
+          "role": "image",
+          "targetId": "fcb3e6dae623b0a42965381362dfc2b9:7663711908066404368",
+          "path": "",
+          "componentType": "Ember.UIExtension.EUIImageEx",
+          "state": "default",
+          "properties": [
+            "m_Sprite",
+            "m_Color"
+          ]
+        },
+        {
+          "id": "icon-image",
+          "role": "icon",
+          "targetId": "fcb3e6dae623b0a42965381362dfc2b9:3116933068384441467",
+          "path": "Icon",
+          "componentType": "Ember.UIExtension.EUIImageEx",
+          "state": "default",
+          "properties": [
+            "m_Sprite",
+            "m_Color"
+          ]
+        },
+        {
+          "id": "control",
+          "role": "control",
+          "targetId": "fcb3e6dae623b0a42965381362dfc2b9:6179002619371264184",
+          "path": "",
+          "componentType": "Ember.UIExtension.EUIButtonEx",
+          "state": "Selectable.interactable / pressed / focus",
+          "properties": [
+            "m_Interactable"
+          ]
+        }
+      ],
+      "prefabPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab"
+    }
+  ],
+  "states": [
+    {
+      "nodeId": "group_36",
+      "designActive": false,
+      "binding": "EUIOptionRowData.Selected",
+      "meaning": "selected visual; independent from visibility and interactable"
+    },
+    {
+      "nodeId": "group_39",
+      "designActive": false,
+      "binding": "!EUIOptionRowData.Interactable",
+      "meaning": "disabled visual only; must not replace Selectable.interactable"
+    }
+  ],
+  "bindings": [
+    {
+      "nodeId": "text_33",
+      "source": "EUIOptionRowData.Title",
+      "policy": "runtime text; preserve editable style; PSD placeholder is not data"
+    },
+    {
+      "nodeId": "psd_layer_31",
+      "source": "EUIOptionRowData.Icon",
+      "policy": "DynamicTexture; no static sprite assignment; preserve runtime binding"
+    },
+    {
+      "nodeId": "psd_layer_35",
+      "source": "EUIOptionRowData.Progress",
+      "policy": "fillAmount=Clamp01; runtime geometry follows full track width, not the 50% placeholder slice width"
+    },
+    {
+      "nodeId": "prefab_ref_10",
+      "source": "EUIMainPage.Btn_Start.onClick",
+      "behavior": "TransitionTo<GameplayState>()"
+    },
+    {
+      "nodeId": "prefab_ref_15",
+      "source": "EUIMainPage.Btn_Settings.onClick",
+      "behavior": "TransitionTo<SettingsState>(SettingsContext.Main)"
+    },
+    {
+      "nodeId": "text_45",
+      "source": "EUIDynamicListPage Back",
+      "policy": "visual label only; retain existing Back button and ClosePage(Page), never infer hit area from glyph bounds"
+    }
+  ],
+  "constraints": [
+    "No S5 prefab generation performed.",
+    "Do not use PSD hidden target status as page lifecycle or EnableState.",
+    "EnableState/IsVisible controls presence; interactable controls accepting input.",
+    "Static TabGroup/Dropdown/horizontal/grid hosts gain no dynamic capability here.",
+    "Glyph bounds are not dynamic text layout bounds: preserve EUITextRowLayout and source UI layout behavior.",
+    "Unknown required capability blocks consumption; no static Group fallback.",
+    "Root-independent Target coordinates: consumer must convert group ancestry correctly.",
+    "Only public label slots are overridden; private component children are skipped.",
+    "ArialMT design source is not a TMP font asset mapping; retain existing font until explicit S5 mapping.",
+    "List viewport extent is design geometry, not an extra data row.",
+    "PSD slot label on EUISecondaryButtonItem explicitly maps to catalog slot Label/TMPEx; do not assume identical slot IDs across variants."
+  ]
+}

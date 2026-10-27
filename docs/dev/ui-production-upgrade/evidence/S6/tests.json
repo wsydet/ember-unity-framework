@@ -1,0 +1,218 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"3340404ae3684ccd8c3ce9b0b870dbb5\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1793035243635,\"finished_unix_ms\":1793035265791,\"last_update_unix_ms\":1793035265791,\"progress\":{\"completed\":18,\"total\":18,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed\",\"last_finished_unix_ms\":1793035265494,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":18,\"passed\":18,\"failed\":0,\"skipped\":0,\"durationSeconds\":14.5607927,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Analyze_RejectsEscapingRequestWithoutWriting(\\\"../outside.json\\\")\",\"fullName\":\"Ember.UI.Tests.EmberBuiEditTests.Analyze_RejectsEscapingRequestWithoutWriting(\\\"../outside.json\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0207542,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Analyze_RejectsEscapingRequestWithoutWriting(\\\"Assets/../outside.json\\\")\",\"fullName\":\"Ember.UI.Tests.EmberBuiEditTests.Analyze_RejectsEscapingRequestWithoutWriting(\\\"Assets/../outside.json\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0002141,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ZeroScaleCanvasAndDrivenSafeArea_KeepTopFrameAtHalfHeight\",\"fullName\":\"Ember.UI.Tests.EmberBuiEditTests.ZeroScaleCanvasAndDrivenSafeArea_KeepTopFrameAtHalfHeight\",\"state\":\"Passed\",\"durationSeconds\":0.0298096,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"BindingExceptionAndHostDisposalReleaseEveryLease\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.BindingExceptionAndHostDisposalReleaseEveryLease\",\"state\":\"Passed\",\"durationSeconds\":0.8529632,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"CacheCapacityAndSingleOwnerAreEnforced\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.CacheCapacityAndSingleOwnerAreEnforced\",\"state\":\"Passed\",\"durationSeconds\":0.6809834,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"CancellationReentrancyDisposesWithoutDoubleRelease\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.CancellationReentrancyDisposesWithoutDoubleRelease\",\"state\":\"Passed\",\"durationSeconds\":0.6958056,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance\",\"state\":\"Passed\",\"durationSeconds\":0.7419608,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"LayoutConflictsAreActionable_AndListContractChangesBlock\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.LayoutConflictsAreActionable_AndListContractChangesBlock\",\"state\":\"Passed\",\"durationSeconds\":0.8615281,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease\",\"fullName\":\"Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease\",\"state\":\"Passed\",\"durationSeconds\":0.7759847,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Catalog_ExpiresWhenDefinitionChanges\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.Catalog_ExpiresWhenDefinitionChanges\",\"state\":\"Passed\",\"durationSeconds\":1.5552458,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DuplicateIdentity_StopsExactLookup\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.DuplicateIdentity_StopsExactLookup\",\"state\":\"Passed\",\"durationSeconds\":0.8105533,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ExternalSlot_IsRejected\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.ExternalSlot_IsRejected\",\"state\":\"Passed\",\"durationSeconds\":0.8408833,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MissingInheritedField_AndBindingCycle_AreErrors\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.MissingInheritedField_AndBindingCycle_AreErrors\",\"state\":\"Passed\",\"durationSeconds\":0.6296873,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MissingSlot_StopsCatalog\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.MissingSlot_StopsCatalog\",\"state\":\"Passed\",\"durationSeconds\":0.6234916,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"NestedSourceInsidePageVariant_ResolvesPublicSlotWithoutChangingSource\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.NestedSourceInsidePageVariant_ResolvesPublicSlotWithoutChangingSource\",\"state\":\"Passed\",\"durationSeconds\":2.1716066,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StructureOnlySource_CannotBecomeBindingBase\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.StructureOnlySource_CannotBecomeBindingBase\",\"state\":\"Passed\",\"durationSeconds\":0.7554979000000001,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"TwoInstances_KeepOverridesAndSourceIndependent\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.TwoInstances_KeepOverridesAndSourceIndependent\",\"state\":\"Passed\",\"durationSeconds\":0.7483136,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"WrongType_IsDiagnosed\",\"fullName\":\"Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed\",\"state\":\"Passed\",\"durationSeconds\":0.7748402,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "3340404ae3684ccd8c3ce9b0b870dbb5",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1793035243635,
+        "finished_unix_ms": 1793035265791,
+        "last_update_unix_ms": 1793035265791,
+        "progress": {
+          "completed": 18,
+          "total": 18,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed",
+          "last_finished_unix_ms": 1793035265494,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 18,
+            "passed": 18,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 14.5607927,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "Analyze_RejectsEscapingRequestWithoutWriting(\"../outside.json\")",
+              "fullName": "Ember.UI.Tests.EmberBuiEditTests.Analyze_RejectsEscapingRequestWithoutWriting(\"../outside.json\")",
+              "state": "Passed",
+              "durationSeconds": 0.0207542,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "Analyze_RejectsEscapingRequestWithoutWriting(\"Assets/../outside.json\")",
+              "fullName": "Ember.UI.Tests.EmberBuiEditTests.Analyze_RejectsEscapingRequestWithoutWriting(\"Assets/../outside.json\")",
+              "state": "Passed",
+              "durationSeconds": 0.0002141,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ZeroScaleCanvasAndDrivenSafeArea_KeepTopFrameAtHalfHeight",
+              "fullName": "Ember.UI.Tests.EmberBuiEditTests.ZeroScaleCanvasAndDrivenSafeArea_KeepTopFrameAtHalfHeight",
+              "state": "Passed",
+              "durationSeconds": 0.0298096,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "BindingExceptionAndHostDisposalReleaseEveryLease",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.BindingExceptionAndHostDisposalReleaseEveryLease",
+              "state": "Passed",
+              "durationSeconds": 0.8529632,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "CacheCapacityAndSingleOwnerAreEnforced",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.CacheCapacityAndSingleOwnerAreEnforced",
+              "state": "Passed",
+              "durationSeconds": 0.6809834,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "CancellationReentrancyDisposesWithoutDoubleRelease",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.CancellationReentrancyDisposesWithoutDoubleRelease",
+              "state": "Passed",
+              "durationSeconds": 0.6958056,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.Counts_Reorder_DuplicateKeys_AndClearKeepOneLogicPerInstance",
+              "state": "Passed",
+              "durationSeconds": 0.7419608,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "LayoutConflictsAreActionable_AndListContractChangesBlock",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.LayoutConflictsAreActionable_AndListContractChangesBlock",
+              "state": "Passed",
+              "durationSeconds": 0.8615281,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+              "fullName": "Ember.UI.Tests.EUIDynamicListEditTests.LeaseCancelsAndUnsubscribes_RejectsLateResult_ButHideRetainsLease",
+              "state": "Passed",
+              "durationSeconds": 0.7759847,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "Catalog_ExpiresWhenDefinitionChanges",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.Catalog_ExpiresWhenDefinitionChanges",
+              "state": "Passed",
+              "durationSeconds": 1.5552458,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DuplicateIdentity_StopsExactLookup",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.DuplicateIdentity_StopsExactLookup",
+              "state": "Passed",
+              "durationSeconds": 0.8105533,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ExternalSlot_IsRejected",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.ExternalSlot_IsRejected",
+              "state": "Passed",
+              "durationSeconds": 0.8408833,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "MissingInheritedField_AndBindingCycle_AreErrors",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.MissingInheritedField_AndBindingCycle_AreErrors",
+              "state": "Passed",
+              "durationSeconds": 0.6296873,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "MissingSlot_StopsCatalog",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.MissingSlot_StopsCatalog",
+              "state": "Passed",
+              "durationSeconds": 0.6234916,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "NestedSourceInsidePageVariant_ResolvesPublicSlotWithoutChangingSource",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.NestedSourceInsidePageVariant_ResolvesPublicSlotWithoutChangingSource",
+              "state": "Passed",
+              "durationSeconds": 2.1716066,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "StructureOnlySource_CannotBecomeBindingBase",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.StructureOnlySource_CannotBecomeBindingBase",
+              "state": "Passed",
+              "durationSeconds": 0.7554979000000001,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "TwoInstances_KeepOverridesAndSourceIndependent",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.TwoInstances_KeepOverridesAndSourceIndependent",
+              "state": "Passed",
+              "durationSeconds": 0.7483136,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "WrongType_IsDiagnosed",
+              "fullName": "Ember.UI.Tests.EUILibraryEditTests.WrongType_IsDiagnosed",
+              "state": "Passed",
+              "durationSeconds": 0.7748402,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}
