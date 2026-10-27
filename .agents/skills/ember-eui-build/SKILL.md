@@ -1,6 +1,6 @@
 ---
 name: ember-eui-build
-description: 使用 Ember UI 开发中心的创建、绑定与生成接口，制作或修改 Unity 项目的正式 EUI Prefab，并基于实际生成结果编写用户逻辑。适用于批量创建 UI、按需求搭建控件、重新绑定及生成代码。
+description: 使用 Ember UI 开发中心制作正式 EUI Prefab、绑定与用户逻辑；支持已有界面的 PSD/BUI 美术替换、公共组件复用和制作回执续接。适用于批量创建 UI、搭建控件、重新绑定、生成代码及换肤。
 ---
 
 # Ember EUI 制作
@@ -15,6 +15,8 @@ description: 使用 Ember UI 开发中心的创建、绑定与生成接口，制
 - 列清新建或修改的 Prefab、角色、类名、输出目录、绑定字段、嵌套所有权、默认状态。用户明确要求代做资源时，直接实施，不再要求用户逐个制作或批准同一动作。
 
 ## 编辑器制作流程
+
+有 PSD、工作 PSD、BUI 或现有制作回执时，先读 [美术替换与断点续接](references/artwork-workflow.md)，从已验证的最近阶段进入。普通控件搭建仍走以下流程；不要为了换肤重建有效上游。
 
 1. 新 UI 使用 `EUICreationService.TryBuildPlan` 预检，通过后调用 `Create`。所有目标先预检；同名资源转为检查/修改，不能删掉用户资源重建。业务界面使用 `Business`，可复用控件使用 `Item`。
 2. 备份拟修改的资产、元数据和生成文件。通过 `PrefabUtility.LoadPrefabContents` 编辑正式资源，在 `finally` 中 `UnloadPrefabContents`。不用运行时 `Awake` 搭界面，不手写 Prefab YAML。
