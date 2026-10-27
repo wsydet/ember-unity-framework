@@ -1,0 +1,146 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "ade52d2df553489eb0f936af59541598",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793102257749,
+      "finished_unix_ms": 1793102272492,
+      "last_update_unix_ms": 1793102272492,
+      "progress": {
+        "completed": 11,
+        "total": 11,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchRangeReadsRealComponentAndReportsCallbackFailure",
+        "last_finished_unix_ms": 1793102272401,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 11,
+          "passed": 11,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 6.3843105,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "PlainObjectsRemainEditableWithoutAdapter",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.PlainObjectsRemainEditableWithoutAdapter",
+            "state": "Passed",
+            "durationSeconds": 0.3059695,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PrefabFallbackPlacementOverridesDuplicateDeleteAndPriorityRemainValid",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.PrefabFallbackPlacementOverridesDuplicateDeleteAndPriorityRemainValid",
+            "state": "Passed",
+            "durationSeconds": 3.9513842,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PublicServiceUsesSameResolverEvenWithExplicitNull",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.PublicServiceUsesSameResolverEvenWithExplicitNull",
+            "state": "Passed",
+            "durationSeconds": 0.1220835,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RegistrationRejectsDuplicateNamesAndAllowsResolverAgreement",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.RegistrationRejectsDuplicateNamesAndAllowsResolverAgreement",
+            "state": "Passed",
+            "durationSeconds": 0.0683077,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ResolverConflictBlocksWorkbenchBeforeMutation",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.ResolverConflictBlocksWorkbenchBeforeMutation",
+            "state": "Passed",
+            "durationSeconds": 0.0706813,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StaleResolverAndThrownResolverCannotFallBackToNull",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.StaleResolverAndThrownResolverCannotFallBackToNull",
+            "state": "Passed",
+            "durationSeconds": 0.0713937,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WorkbenchCallbackFailureRollsBack(True)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchCallbackFailureRollsBack(True)",
+            "state": "Passed",
+            "durationSeconds": 0.2289961,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WorkbenchCallbackFailureRollsBack(False)",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchCallbackFailureRollsBack(False)",
+            "state": "Passed",
+            "durationSeconds": 0.1298131,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WorkbenchDeleteUndoesObjectAndReferenceTogether",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchDeleteUndoesObjectAndReferenceTogether",
+            "state": "Passed",
+            "durationSeconds": 0.1610591,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WorkbenchDuplicatePreservesSourceAndUndoesIdentityAndReferencesTogether",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchDuplicatePreservesSourceAndUndoesIdentityAndReferencesTogether",
+            "state": "Passed",
+            "durationSeconds": 0.2141141,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WorkbenchRangeReadsRealComponentAndReportsCallbackFailure",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberLevelObjectResolutionTests.WorkbenchRangeReadsRealComponentAndReportsCallbackFailure",
+            "state": "Passed",
+            "durationSeconds": 0.0709083,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

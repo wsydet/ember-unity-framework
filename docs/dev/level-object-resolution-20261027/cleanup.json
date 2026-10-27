@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "cleaned": true,
+      "activeScene": "Assets/Game/Scenes/FrameworkScene.unity",
+      "remainingFixtureObjects": 0,
+      "remainingResolvers": [
+        "platformer-2d.mechanism"
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

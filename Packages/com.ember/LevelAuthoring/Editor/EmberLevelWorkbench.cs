@@ -29,6 +29,8 @@ namespace Ember.LevelAuthoring.Editor
         private float _snapStep = .5f, _rotation;
         private Vector3 _placementScale = Vector3.one;
         private string _objectAdapter = "";
+        private string _objectError = "";
+        private bool _messageError;
         private Vector2 _cameraPreview;
         private Vector3Int _begin, _last;
         private int _stroke = -1;
@@ -39,7 +41,7 @@ namespace Ember.LevelAuthoring.Editor
         #region 生命周期
         private void OnEnable() { titleContent = new GUIContent("2D 关卡工作台"); SceneView.duringSceneGui += SceneGUI; Reload(); }
         private void OnDisable() { CancelStroke(); SceneView.duringSceneGui -= SceneGUI; if (_inspector != null) DestroyImmediate(_inspector); }
-        private void OnSelectionChange() { if (_inspector != null) DestroyImmediate(_inspector); _inspector = null; Repaint(); }
+        private void OnSelectionChange() { if (_inspector != null) DestroyImmediate(_inspector); _inspector = null; _objectError = ""; Repaint(); }
         private void OnGUI()
         {
             if (!EmberLevelAdapters.All.Any(a => string.IsNullOrEmpty(a.UnavailableReason)))
@@ -130,7 +132,8 @@ namespace Ember.LevelAuthoring.Editor
             }
             foreach (var diagnostic in _diagnostics)
                 if (GUILayout.Button(diagnostic.RuleId + " · " + diagnostic.Message, EditorStyles.helpBox)) { Selection.activeObject = diagnostic.Target; EditorGUIUtility.PingObject(diagnostic.Target); }
-            if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, MessageType.Info);
+            if (!string.IsNullOrEmpty(_objectError)) EditorGUILayout.HelpBox(_objectError, MessageType.Error);
+            if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, _messageError ? MessageType.Error : MessageType.Info);
             EditorGUILayout.EndScrollView();
         }
         #endregion
@@ -138,7 +141,7 @@ namespace Ember.LevelAuthoring.Editor
         #region 内部方法
         private static string Key(EmberLevelMaterial material) => "Ember.Level.Favorite." + Application.dataPath + "." + material.Id;
         private static bool Favorite(EmberLevelMaterial material) => EditorPrefs.GetBool(Key(material));
-        private void Run(Action action) { try { action(); _message = ""; } catch (Exception error) { _message = error.Message; } Repaint(); }
+        private void Run(Action action) { try { action(); _message = ""; _messageError = false; } catch (Exception error) { _message = error.Message; _messageError = true; } Repaint(); }
         private void Reload()
         {
             _levels = EmberLevelAdapters.All.Where(a => string.IsNullOrEmpty(a.UnavailableReason)).SelectMany(a => a.Discover()).ToArray();
@@ -195,11 +198,11 @@ namespace Ember.LevelAuthoring.Editor
             var selected = Selection.activeGameObject;
             if (selected == null || !selected.scene.IsValid()) return;
             EditorGUILayout.Space(); EditorGUILayout.LabelField("所选对象：" + selected.name, EditorStyles.boldLabel);
-            var adapter = AdapterFor(selected);
             using (new EditorGUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("复制")) Run(() => Selection.activeGameObject = EmberLevelObjectEditing.Duplicate(selected, adapter));
-                if (GUILayout.Button("删除")) Run(() => EmberLevelObjectEditing.Delete(selected, adapter));
+                // 对象/选择变化或 Undo 回滚会使当前 Inspector 与布局失效，下一帧重新绘制。
+                if (GUILayout.Button("复制")) { Run(DuplicateSelection); GUIUtility.ExitGUI(); }
+                if (GUILayout.Button("删除")) { Run(DeleteSelection); GUIUtility.ExitGUI(); }
                 if (GUILayout.Button("锁定")) EmberLevelObjectEditing.SetEditorVisibility(selected, true, true);
                 if (GUILayout.Button("解锁")) EmberLevelObjectEditing.SetEditorVisibility(selected, true, false);
                 if (GUILayout.Button("隐藏")) EmberLevelObjectEditing.SetEditorVisibility(selected, false, false);
@@ -235,17 +238,20 @@ namespace Ember.LevelAuthoring.Editor
             EditorGUILayout.HelpBox("机关参数与Collider范围使用原生Inspector/Scene手柄；读取实际组件，支持Prefab覆写与Undo。", MessageType.None);
         }
         private void CancelStroke() { if (_stroke >= 0) Undo.RevertAllDownToGroup(_stroke); _stroke = -1; }
-        private IEmberLevelObjectAdapter AdapterFor(GameObject instance)
+        private void DuplicateSelection() => Selection.activeGameObject = EmberLevelObjectEditing.Duplicate(Selection.activeGameObject);
+        private void DeleteSelection() => EmberLevelObjectEditing.Delete(Selection.activeGameObject);
+        private void DrawSelectedScene()
         {
-            var source = PrefabUtility.GetCorrespondingObjectFromOriginalSource(instance);
-            var material = _materials.FirstOrDefault(m => m.Prefab != null && m.Prefab == source);
-            return EmberLevelAdapters.GetObject(material?.AdapterId);
+            var selected = Selection.activeGameObject;
+            if (selected != null) EmberLevelAdapters.ResolveObject(selected)?.DrawScene(selected);
         }
         private void SceneGUI(SceneView view)
         {
             if (Selection.activeGameObject != null)
             {
-                var selected = Selection.activeGameObject; AdapterFor(selected)?.DrawScene(selected);
+                var selected = Selection.activeGameObject;
+                try { DrawSelectedScene(); if (_objectError.Length > 0) { _objectError = ""; Repaint(); } }
+                catch (Exception error) { if (_objectError != error.Message) { _objectError = error.Message; Repaint(); } Handles.Label(selected.transform.position, error.Message); }
                 var layer = selected.GetComponent<EmberParallaxLayer>(); var renderer = selected.GetComponent<SpriteRenderer>();
                 if (layer != null && renderer != null)
                 {

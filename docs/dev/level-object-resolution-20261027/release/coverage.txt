@@ -1,0 +1,1 @@
+Ember 0.24.1 patch: registered scene-object resolvers with explicit conflict/failure diagnostics; unified workbench duplicate/delete/Scene resolution and GUI event lifecycle fix; related tests and release documentation only. Templates, dependencies and skills unchanged. No Windward upgrade/deployment.

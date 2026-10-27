@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "activeScene": "Assets/Game/Scenes/FrameworkScene.unity",
+      "fixtureObjects": 0,
+      "workbenchWindows": 0,
+      "sceneViews": [
+        {
+          "title": "Scene",
+          "cameraAlive": true
+        }
+      ],
+      "fixtureFolders": [],
+      "objectAdapters": [
+        "platformer-2d.mechanism"
+      ],
+      "template": "platformer-2d"
+    },
+    "compiler": "codedom"
+  }
+}

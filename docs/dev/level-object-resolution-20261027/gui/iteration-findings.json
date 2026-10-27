@@ -1,0 +1,93 @@
+{
+  "firstRun": [
+    {
+      "name": "GuiButtonCallbackFailuresRollBackAndRenderErrors",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Error] EndLayoutGroup: BeginLayoutGroup must be called first.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEditor.EditorGUILayout:EndScrollView ()\r\nEmber.LevelAuthoring.Editor.EmberLevelWorkbench:OnGUI () (at ./Packages/com.ember/LevelAuthoring/Editor/EmberLevelWorkbench.cs:137)\r\nUnityEditor.EditorWindow:SendEvent (UnityEngine.Event)\r\nEmber.LevelAuthoring.Tests.EmberLevelObjectResolutionTests:ClickButton (string) (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelObjectResolutionGuiTests.cs:76)\r\nEmber.LevelAuthoring.Tests.EmberLevelObjectResolutionTests/<GuiButtonCallbackFailuresRollBackAndRenderErrors>d__20:MoveNext () (at ./Packages/com.ember/LevelAuthoring/Tests/EmberLevelObjectResolutionGuiTests.cs:182)\r\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions ()\r\n\r\n"
+    },
+    {
+      "name": "GuiButtonsCopyDeleteUndoRedoMaintainIdentityAndReferences",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Exception] MissingReferenceException: The object of type 'UnityEngine.GameObject' has been destroyed but you are still trying to access it.\nYour script should either check if it is null or you should not destroy the object.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.GameObject.GetComponentFastPath (System.Type type) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.GameObject.GetComponent[T] () (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nEmber.LevelAuthoring.Editor.EmberLevelWorkbench.DrawSelection () (at ./Packages/com.ember/LevelAuthoring/Editor/EmberLevelWorkbench.cs:210)\r\nEmber.LevelAuthoring.Editor.EmberLevelWorkbench.OnGUI () (at ./Packages/com.ember/LevelAuthoring/Editor/EmberLevelWorkbench.cs:131)\r\nUnityEditor.HostView.OldOnGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEngine.UIElements.IMGUIContainer.DoOnGUI (UnityEngine.Event evt, UnityEngine.Matrix4x4 parentTransform, UnityEngine.Rect clippingRect, System.Boolean isComputingLayout, UnityEngine.Rect layoutSize, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, UnityEngine.Matrix4x4 worldTransform, UnityEngine.Rect clippingRect, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUIRaw (UnityEngine.UIEl"
+    },
+    {
+      "name": "GuiSceneRangeRendersComponentUndoRedoAndFailureDiagnostic",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "PlainObjectsRemainEditableWithoutAdapter",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "PrefabFallbackPlacementOverridesDuplicateDeleteAndPriorityRemainValid",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "PublicServiceUsesSameResolverEvenWithExplicitNull",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "RegistrationRejectsDuplicateNamesAndAllowsResolverAgreement",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "ResolverConflictBlocksWorkbenchBeforeMutation",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "StaleResolverAndThrownResolverCannotFallBackToNull",
+      "state": "Passed",
+      "message": null
+    },
+    {
+      "name": "WorkbenchCallbackFailureRollsBack(True)",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Exception] MissingReferenceException: The object of type 'UnityEngine.Camera' has been destroyed but you are still trying to access it.\nYour script should either check if it is null or you should not destroy the object.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Camera.get_rect () (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEditor.SceneView.DoOnGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEditor.SceneView.OnSceneGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEngine.UIElements.IMGUIContainer.DoOnGUI (UnityEngine.Event evt, UnityEngine.Matrix4x4 parentTransform, UnityEngine.Rect clippingRect, System.Boolean isComputingLayout, UnityEngine.Rect layoutSize, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, UnityEngine.Matrix4x4 worldTransform, UnityEngine.Rect clippingRect, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUIRaw (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUI (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baa"
+    },
+    {
+      "name": "WorkbenchCallbackFailureRollsBack(False)",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Exception] MissingReferenceException: The object of type 'UnityEngine.Camera' has been destroyed but you are still trying to access it.\nYour script should either check if it is null or you should not destroy the object.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Camera.get_rect () (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEditor.SceneView.DoOnGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEditor.SceneView.OnSceneGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEngine.UIElements.IMGUIContainer.DoOnGUI (UnityEngine.Event evt, UnityEngine.Matrix4x4 parentTransform, UnityEngine.Rect clippingRect, System.Boolean isComputingLayout, UnityEngine.Rect layoutSize, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, UnityEngine.Matrix4x4 worldTransform, UnityEngine.Rect clippingRect, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUIRaw (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUI (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baa"
+    },
+    {
+      "name": "WorkbenchDeleteUndoesObjectAndReferenceTogether",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Exception] MissingReferenceException: The object of type 'UnityEngine.Camera' has been destroyed but you are still trying to access it.\nYour script should either check if it is null or you should not destroy the object.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Camera.get_rect () (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEditor.SceneView.DoOnGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEditor.SceneView.OnSceneGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEngine.UIElements.IMGUIContainer.DoOnGUI (UnityEngine.Event evt, UnityEngine.Matrix4x4 parentTransform, UnityEngine.Rect clippingRect, System.Boolean isComputingLayout, UnityEngine.Rect layoutSize, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, UnityEngine.Matrix4x4 worldTransform, UnityEngine.Rect clippingRect, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUIRaw (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUI (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baa"
+    },
+    {
+      "name": "WorkbenchDuplicatePreservesSourceAndUndoesIdentityAndReferencesTogether",
+      "state": "Failed",
+      "message": "Unhandled log message: '[Exception] MissingReferenceException: The object of type 'UnityEngine.Camera' has been destroyed but you are still trying to access it.\nYour script should either check if it is null or you should not destroy the object.'. Use UnityEngine.TestTools.LogAssert.Expect",
+      "stack": "UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEngine.Camera.get_rect () (at <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0)\r\nUnityEditor.SceneView.DoOnGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEditor.SceneView.OnSceneGUI () (at <b69798a175fc402fb7a30c358b62aa3a>:0)\r\nUnityEngine.UIElements.IMGUIContainer.DoOnGUI (UnityEngine.Event evt, UnityEngine.Matrix4x4 parentTransform, UnityEngine.Rect clippingRect, System.Boolean isComputingLayout, UnityEngine.Rect layoutSize, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, UnityEngine.Matrix4x4 worldTransform, UnityEngine.Rect clippingRect, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Action onGUIHandler, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.HandleIMGUIEvent (UnityEngine.Event e, System.Boolean canAffectFocus) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUIRaw (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baadfde>:0)\r\nUnityEngine.UIElements.IMGUIContainer.SendEventToIMGUI (UnityEngine.UIElements.EventBase evt, System.Boolean canAffectFocus, System.Boolean verifyBounds) (at <39fe98335f264878889471168baa"
+    },
+    {
+      "name": "WorkbenchRangeReadsRealComponentAndReportsCallbackFailure",
+      "state": "Passed",
+      "message": null
+    }
+  ],
+  "secondRun": {
+    "total": 14,
+    "passed": 3,
+    "failed": 11,
+    "skipped": 0,
+    "durationSeconds": 7.1102533,
+    "resultState": "Failed(Child)"
+  },
+  "thirdRun": {
+    "job_id": "19907e915dd54008992582ee96eeae48",
+    "summary": "3 GUI tests passed; 11 other cases failed in TearDown because NUnit reused the fixture and _guiShown was not reset. Fixed Setup reset; cleaned leaked test scenes, hidden windows and the temporary Prefab folder."
+  },
+  "finalJobId": "e380231ec5444e2cb96792b5d237ee02"
+}

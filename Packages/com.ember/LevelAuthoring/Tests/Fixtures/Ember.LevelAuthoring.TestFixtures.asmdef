@@ -1,0 +1,7 @@
+{
+  "name": "Ember.LevelAuthoring.TestFixtures",
+  "rootNamespace": "Ember.LevelAuthoring.Tests",
+  "references": [],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "autoReferenced": false
+}

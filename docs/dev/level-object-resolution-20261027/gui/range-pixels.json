@@ -1,0 +1,26 @@
+{
+    "first": {
+        "x": 452,
+        "y": 262,
+        "width": 176,
+        "height": 411
+    },
+    "second": {
+        "x": 306,
+        "y": 408,
+        "width": 468,
+        "height": 119
+    },
+    "undone": {
+        "x": 452,
+        "y": 262,
+        "width": 176,
+        "height": 411
+    },
+    "redone": {
+        "x": 306,
+        "y": 408,
+        "width": 468,
+        "height": 119
+    }
+}

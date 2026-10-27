@@ -1,0 +1,72 @@
+{
+    "steps": [
+        {
+            "step": "create-failed-rolled-back",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "injected-create",
+            "objectError": "",
+            "buttonRect": "(x:3.00, y:482.00, width:106.00, height:20.00)",
+            "messageError": true,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 1,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        },
+        {
+            "step": "delete-failed-rolled-back",
+            "sourceId": "A",
+            "linkedId": "9a6fedae9c2c43efb4b7819210a706f4",
+            "message": "injected-delete",
+            "objectError": "",
+            "buttonRect": "(x:112.00, y:482.00, width:106.00, height:20.00)",
+            "messageError": true,
+            "sourceIsPrefab": false,
+            "children": 2,
+            "created": 2,
+            "deleted": 1,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        },
+        {
+            "step": "undo-previous-success",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "injected-delete",
+            "objectError": "",
+            "buttonRect": "(x:112.00, y:482.00, width:106.00, height:20.00)",
+            "messageError": true,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 2,
+            "deleted": 1,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        },
+        {
+            "step": "redo-previous-success",
+            "sourceId": "A",
+            "linkedId": "9a6fedae9c2c43efb4b7819210a706f4",
+            "message": "injected-delete",
+            "objectError": "",
+            "buttonRect": "(x:112.00, y:482.00, width:106.00, height:20.00)",
+            "messageError": true,
+            "sourceIsPrefab": false,
+            "children": 2,
+            "created": 2,
+            "deleted": 1,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        }
+    ]
+}

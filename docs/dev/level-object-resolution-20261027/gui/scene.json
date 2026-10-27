@@ -1,0 +1,106 @@
+{
+    "steps": [
+        {
+            "step": "range-3x7",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        },
+        {
+            "step": "range-8x2",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 8.0,
+                "y": 2.0
+            }
+        },
+        {
+            "step": "range-undo",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 3.0,
+                "y": 7.0
+            }
+        },
+        {
+            "step": "range-redo",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 8.0,
+                "y": 2.0
+            }
+        },
+        {
+            "step": "draw-failed-diagnostic",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "injected-draw",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 8.0,
+                "y": 2.0
+            }
+        },
+        {
+            "step": "draw-recovered",
+            "sourceId": "A",
+            "linkedId": "A",
+            "message": "",
+            "objectError": "",
+            "buttonRect": "(x:0.00, y:0.00, width:0.00, height:0.00)",
+            "messageError": false,
+            "sourceIsPrefab": false,
+            "children": 1,
+            "created": 0,
+            "deleted": 0,
+            "drawnRange": {
+                "x": 8.0,
+                "y": 2.0
+            }
+        }
+    ]
+}

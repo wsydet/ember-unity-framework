@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "packageVersion": "0.24.1",
+      "editorMvid": "14f1db77-b700-459b-a016-b310e65dd78f",
+      "testsMvid": "e3696986-f006-4b86-8f0c-80f81c46a445"
+    },
+    "compiler": "codedom"
+  }
+}

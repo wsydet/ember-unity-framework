@@ -1,0 +1,15 @@
+{
+  "scopedFiles": 60,
+  "codeMatchesValidatedWorkingCopy": true,
+  "codeGitSha256": {
+    "Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs": "45db8baf3071ea50f9d4f6e4d6ce98c780f8c37be150d848bfb2b9ce02a78730",
+    "Packages/com.ember/LevelAuthoring/Editor/EmberLevelObjectEditing.cs": "993332a597719ba267c234d8d76ed69c75060ae687b395c14bfd36e7b80d8e6d",
+    "Packages/com.ember/LevelAuthoring/Editor/EmberLevelWorkbench.cs": "5dd074e8319ec61f451d2264ba428313b52670447ab62c8b590bfd61c4e7377a",
+    "Packages/com.ember/LevelAuthoring/Tests/Ember.LevelAuthoring.Tests.asmdef": "8fdbea5cf7c3c50d4bf5a23a8fb98269648c09ff8a30abfaba1c95d92c78b040",
+    "Packages/com.ember/LevelAuthoring/Tests/EmberLevelObjectResolutionGuiTests.cs": "5b5ccc89cc6f2482b3da7ca02b22fe2bfa2396dd6ad86d619b65140bc64ae26c",
+    "Packages/com.ember/LevelAuthoring/Tests/EmberLevelObjectResolutionTests.cs": "5b00ebecd4b863a5be01d8bc8b147cc558353ba1c39720a0d887c1531da69e18",
+    "Packages/com.ember/LevelAuthoring/Tests/Fixtures/Ember.LevelAuthoring.TestFixtures.asmdef": "2a7563e2533e3308eedec2869dbac4ee26e7aa41179be568c7cd261cc25e0ddd",
+    "Packages/com.ember/LevelAuthoring/Tests/Fixtures/EmberLevelObjectTestNode.cs": "3ea10b941caeb039246d51159d4f8acf5e79425f1f5a9d42871abdd9e8ebf6f8"
+  },
+  "templatesDependenciesAndSkillsUnchanged": true
+}

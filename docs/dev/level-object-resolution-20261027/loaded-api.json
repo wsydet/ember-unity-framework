@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "assembly": "Ember.LevelAuthoring.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "mvid": "b93e6e6b-ea62-408d-bd0c-c394b3a5eabc",
+      "resolver": "Void RegisterObjectResolver(System.String, System.Func`2[UnityEngine.GameObject,Ember.LevelAuthoring.Editor.IEmberLevelObjectAdapter])",
+      "testFixture": "Ember.LevelAuthoring.TestFixtures, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "template": "platformer-2d"
+    },
+    "compiler": "codedom"
+  }
+}

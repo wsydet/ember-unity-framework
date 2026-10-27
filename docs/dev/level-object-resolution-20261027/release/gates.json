@@ -1,0 +1,27 @@
+{
+  "candidateTree": "34938df7594f62e0051b7de5b33d0451e090df92",
+  "baseline": "b47fe03be500db38dafd5156fdeef8a810b55758",
+  "binary": {
+    "command": "python scripts/check-shared-binaries.py --revision : --checkout",
+    "exitCode": 0,
+    "inventoryFonts": 4,
+    "cleanCheckoutAutocrlfFalse": "PASS",
+    "cleanCheckoutAutocrlfTrue": "PASS"
+  },
+  "font": {
+    "chunk_id": "546654",
+    "wall_time_seconds": 1.9332446,
+    "exit_code": 0,
+    "original_token_count": 124,
+    "output": "PASS workspace: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved\r\nPASS workspace: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license\r\nPASS Git :: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved\r\nPASS Git :: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license\r\nStatic configuration only: execute SharedFontAtlasPlayModeTests and visually accept SceneUI in Unity.\r\n"
+  },
+  "bundle": {
+    "chunk_id": "4f758b",
+    "wall_time_seconds": 1.7233456999999999,
+    "exit_code": 0,
+    "original_token_count": 13,
+    "output": "Verified 11 bundled framework skills, 33 files.\r\n"
+  },
+  "preservedUnrelatedFiles": 1244,
+  "changedUnrelatedFiles": []
+}

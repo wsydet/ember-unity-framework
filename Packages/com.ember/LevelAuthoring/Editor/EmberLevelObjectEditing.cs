@@ -39,6 +39,7 @@ namespace Ember.LevelAuthoring.Editor
         public static GameObject Duplicate(GameObject source, IEmberLevelObjectAdapter adapter = null)
         {
             if (source == null || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请选择编辑对象。");
+            adapter ??= EmberLevelAdapters.ResolveObject(source);
             Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
             try
             {
@@ -52,6 +53,7 @@ namespace Ember.LevelAuthoring.Editor
         public static void Delete(GameObject instance, IEmberLevelObjectAdapter adapter = null)
         {
             if (instance == null || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请选择编辑对象。");
+            adapter ??= EmberLevelAdapters.ResolveObject(instance);
             Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
             try { adapter?.BeforeDelete(instance); var scene = instance.scene; Undo.DestroyObjectImmediate(instance); EditorSceneManager.MarkSceneDirty(scene); Undo.CollapseUndoOperations(group); }
             catch { Undo.RevertAllDownToGroup(group); throw; }
