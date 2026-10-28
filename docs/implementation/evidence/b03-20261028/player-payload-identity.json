@@ -1,0 +1,79 @@
+[
+  {
+    "build": "candidate",
+    "path": "Managed/Ember.LevelAuthoring.Runtime.dll",
+    "sha256": "0F812803D229289F01AB181F397B0655525C5BB41CCF34309FD41B173DAE9333",
+    "bytes": 13312,
+    "terrainSceneHook": true
+  },
+  {
+    "build": "candidate",
+    "path": "Managed/Ember.UIExtension.Runtime.dll",
+    "sha256": "749AFB8DA9E481534DAA1878F995766CE9AD2BC41FA5AFB0AFDEBF94EBB941BC",
+    "bytes": 125952,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "candidate",
+    "path": "Managed/Ember.Regression.dll",
+    "sha256": "DFD989C849DFAEDA7523802030435FF1A9EFADF4947A712F7ABDD3F8969AB948",
+    "bytes": 15360,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "candidate",
+    "path": "globalgamemanagers",
+    "sha256": "70951B8B867BC9FB8299D05F4EEBC2EFE7F79E04F356232F17D8D5E744EF7F48",
+    "bytes": 440788,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "candidate",
+    "path": "resources.assets",
+    "sha256": "8AE649401F336A179477B8D72BC7128CDFA717DD1ACF832C3FDFFFCD48807F9B",
+    "bytes": 3217700,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "candidate",
+    "path": "level1",
+    "sha256": "83ADC6474A58C5E74B55172AA22E6AE41B44A8FD97C0595A02EFDDDDCBC7EFFB",
+    "bytes": 4432,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "original",
+    "path": "Managed/Ember.LevelAuthoring.Runtime.dll",
+    "sha256": "399AA744106A015D011FDBE6D3ED64F871F4A56C0F8B3F971624E3BCB374C494",
+    "bytes": 12288,
+    "terrainSceneHook": false
+  },
+  {
+    "build": "original",
+    "path": "Managed/Ember.UIExtension.Runtime.dll",
+    "sha256": "1CA04FCC22EC345BADD56990D6740E5282083BDBA03B2DB6C00299EBC1EA7837",
+    "bytes": 127488,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "original",
+    "path": "globalgamemanagers",
+    "sha256": "0038C6BC13E0C7D6C4DFB14CFC84789ACB74BE79302A08B68D64EF31C953FB62",
+    "bytes": 494388,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "original",
+    "path": "resources.assets",
+    "sha256": "D53C4DCF7F6607A237272D8CC49922C5A35063102119BDDFC17BA871508231FB",
+    "bytes": 32769092,
+    "terrainSceneHook": null
+  },
+  {
+    "build": "original",
+    "path": "level1",
+    "sha256": "CD35B6C413F86938F2C389FC4A088F96862452FFA584FA664223AB9C4442D937",
+    "bytes": 7588,
+    "terrainSceneHook": null
+  }
+]

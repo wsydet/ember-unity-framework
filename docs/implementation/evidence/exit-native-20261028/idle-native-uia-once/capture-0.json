@@ -1,0 +1,70 @@
+{
+  "kind": "trace-window-query",
+  "tid": 81908,
+  "firstChance": true,
+  "code": "0x80000003",
+  "exceptionAddress": "0x7ffb5d63d2e0",
+  "information": [
+    "0x0"
+  ],
+  "registers": {
+    "rax": "0x170e0016420",
+    "rcx": "0x6d9e6eeff8",
+    "rdx": "0xffffffffffffffe7",
+    "rbx": "0x6d9e6eeff8",
+    "rsp": "0x6d9e6eef78",
+    "rbp": "0x74ae2778",
+    "rsi": "0xffffffffffffffe7",
+    "rdi": "0x170e000a240",
+    "r8": "0x74ae2778",
+    "r9": "0xffffffffffffffe7",
+    "r10": "0x0",
+    "r11": "0x246",
+    "r12": "0x0",
+    "r13": "0x3d",
+    "r14": "0x74ae2778",
+    "r15": "0xc6060a",
+    "rip": "0x7ffb5d63d2e1"
+  },
+  "screen": {
+    "screenManager": "0x171010c2490",
+    "window": "0xc6060a"
+  },
+  "frames": [
+    {
+      "address": "0x7ffb5d63d2e1",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d63d2e1",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d64a0b7",
+      "symbol": "PlatformAccessibilityManager::GetProviderForUIA",
+      "displacement": "0x37",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee7dcee",
+      "symbol": "PlayerMainWndProc",
+      "displacement": "0x99e",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffd2d7952e6",
+      "module": "C:\\Windows\\System32\\user32.dll",
+      "rva": "0x152e6"
+    }
+  ],
+  "phase": {
+    "quitRequested": false,
+    "inputStopped": false,
+    "playerConnectionCleanup": false,
+    "logTail": "Process is running in low integrity mode...\r\nMono path[0] = 'C:/Users/wuyu/My/ember-unity-framework/Builds/B03/Protected/EmberRegression_Data/Managed'\r\nMono config path = 'C:/Users/wuyu/My/ember-unity-framework/Builds/B03/Protected/MonoBleedingEdge/etc'\r\nCodeReloadManager initialized\r\nFound 2 interfaces on host : 0) 192.168.20.27 1) 100.64.164.2\r\nPlayer connection [81908]  Target information:\r\n\r\nPlayer connection [81908]  * \"[IP] 192.168.20.27 [Port] 55001 [Flags] 2 [Guid] 411034898 [EditorId] 2279323656 [Version] 1048832 [Id] WindowsPlayer(2,DESKTOP-5SRUU55) [Debug] 0 [PackageName] WindowsPlayer [ProjectName] ember-unity-framework\" \r\n\r\nPlayer connection [81908]  * \"[IP] 100.64.164.2 [Port] 55001 [Flags] 2 [Guid] 411034898 [EditorId] 2279323656 [Version] 1048832 [Id] WindowsPlayer(2,DESKTOP-5SRUU55) [Debug] 0 [PackageName] WindowsPlayer [ProjectName] ember-unity-framework\" \r\n\r\nPlayer connection [81908] Started UDP target info broadcast (1) on [225.0.0.222:54997].\r\n\r\nInput System module state changed to: Initialized.\r\n[Physics::Module] Initialized fallback backend.\r\n[Physics::Module] Id: 0xdecafbad\r\nInitialize engine version: 6000.5.4f1 (d550df8bd089)\r\n[Subsystems] Discovering subsystems at path C:/Users/wuyu/My/ember-unity-framework/Builds/B03/Protected/EmberRegression_Data/UnitySubsystems\r\nForcing GfxDevice: Direct3D 11\r\nGfxDevice: creating device client; kGfxThreadingModeClientWorkerJobs\r\nDirect3D:\r\n    Version:  Direct3D 11.0 [level 11.1]\r\n    Renderer: NVIDIA GeForce RTX 5060 Ti (ID=0x2d04)\r\n    Vendor:   NVIDIA\r\n    VRAM:     7891 MB\r\n    Driver:   32.0.16.1088\r\nBegin MonoManager ReloadAssembly\r\n- Finished resetting the current domain, in  0.032 seconds\r\n[Physics::Module] Selected backend.\r\n[Physics::Module] Name: PhysX\r\n[Physics::Module] Id: 0xf2b8ea05\r\n[Physics::Module] SDK Version: 4.1.2\r\n[Physics::Module] Integration Version: 1.0.0\r\n[Physics::Module] Threading Mode: Multi-Threaded\r\n<RI> Initializing input.\r\r\nUsing Windows.Gaming.Input\r\n"
+  }
+}

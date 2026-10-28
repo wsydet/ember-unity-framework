@@ -1,0 +1,45 @@
+{
+  "fonts": [
+    {
+      "path": "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+      "fontDirty": false,
+      "atlasDirty": false,
+      "materialDirty": false,
+      "glyphs": 0,
+      "width": 1
+    },
+    {
+      "path": "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
+      "fontDirty": false,
+      "atlasDirty": false,
+      "materialDirty": false,
+      "glyphs": 0,
+      "width": 1
+    },
+    {
+      "path": "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+      "fontDirty": false,
+      "atlasDirty": false,
+      "materialDirty": false,
+      "glyphs": 0,
+      "width": 1
+    },
+    {
+      "path": "Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset",
+      "fontDirty": false,
+      "atlasDirty": false,
+      "materialDirty": false,
+      "glyphs": 0,
+      "width": 1
+    }
+  ],
+  "playing": false,
+  "compiling": false,
+  "updating": false,
+  "scriptCompilationFailed": false,
+  "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+  "sceneCount": 1,
+  "dirty": false,
+  "spritePacker": "Disabled",
+  "playStart": null
+}

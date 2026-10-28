@@ -6,7 +6,7 @@
 
 首次打开选择“从框架预设创建项目字体皮肤库”。项目配置保存在
 `Assets/GameResource/Resources/Config/FontSkins/EmberFontSkins.asset`，可随模板保存。
-项目未创建配置时使用包内默认库，不需要复制字体文件。
+包内默认库提供源配方。需要动态补字的项目应创建项目库，由工具生成一组项目自有字体资源；不按 UI 复制字库。
 
 预设为皮肤 1「思源宋体」、皮肤 2「钉钉进步体」、皮肤 3「阿里妈妈东方大楷」。
 每套预设有正文、标题、特殊文字三个字体选项，初始分别使用该皮肤的同一款字体。
@@ -70,3 +70,44 @@ text.SetFontSkin(-1, (int)Game.Fonts.FontSlotId.Body); // 固定当前字体
 旧消费项目升级时必须同时处理模板字体迁移：旧 Assets 中同 GUID 的字体不能与包内版本并存。
 本次属于框架与模板配套变更；经 `Ember/UPM Manager` 升级后按模板迁移流程处理本地业务修改，
 不要通过手改 PackageCache 或仅复制新字体来完成升级。
+
+## 动态字体的可写归属（0.24.3）
+
+TMP 动态补字会修改字形表和 Atlas；Font Asset 本体 dirty=false 时，Atlas 子资源仍可能已被标脏。
+包内四份字体作为共享源保留 Dynamic、源 TTF、材质参数、fallback 和字重配方，但关闭源上的
+Clear Dynamic Data On Build，避免 TMP 的全工程构建预处理清空包资产。动态显示应使用项目生成资源。
+只关闭源构建清理不能替代引用迁移，也不能证明旧工程已经安全。
+
+创建项目库、或在字体皮肤窗口执行“保存配置并生成皮肤 / 字体枚举”，现在会调用
+`EmberWritableFonts.EnsureProjectFonts(catalog, outputFolder)`。默认输出：
+`Assets/GameResource/Resources/UI/Common/Fonts/EmberGenerated/<源GUID>/<源文件名>`。
+同一源 GUID 在项目中共享一份资源；TTF 和许可证继续引用包内源，不重复复制。
+生成器复制字体及其 Atlas/材质子资源，递归重定向共享 fallback 和字重引用，保持皮肤/槽位 ID。
+已有项目生成资源不会被覆盖。生成资源保持 Dynamic 和 Multi Atlas 设置，并启用构建清理；
+Editor 动态缓存、构建清空及 Player 内存中的运行状态均由这些项目资产及 TMP 原有生命周期管理。
+不额外手动销毁共享源材质/Atlas，不引入每帧刷新或第二套字体渲染器。
+
+已有工程定向迁移，先备份项目字体库与待迁移 Prefab：
+
+```csharp
+// Editor-only；先迁移库，再迁移指定目录内的固定字体/普通 TMP 引用。
+var catalog = AssetDatabase.LoadAssetAtPath<EmberFontSkinCatalog>(
+    "Assets/GameResource/Resources/Config/FontSkins/EmberFontSkins.asset");
+EmberWritableFonts.EnsureProjectFonts(catalog);
+EmberWritableFonts.MakePrefabsWritable("Assets/GameResource/Resources/UI");
+EmberFontSkins.Reload();
+```
+
+`MakePrefabsWritable` 只处理指定 Assets 目录，修改前备份 Prefab/meta 到
+`Library/EmberFontSkinBackups/<批次>/`，路径见 `LastBackupPath`。保持组件/FileID、输入框/Binding
+引用、文本、颜色、字号和材质预设参数；自定义材质也生成项目副本并绑定对应项目 Atlas。
+未替换组件或 Binding，不需要重新制作 UI。场景内独立固定字体、其他自定义字体调用方及 TMP Settings
+全局 fallback 不在该 Prefab API 的迁移范围，必须定向核对其引用是否仍指向包源。
+
+TMPEx 在 TMP 的 Awake/OnEnable 准备之前选择映射字体，避免先用 Prefab 中遗留的包源准备字形。
+当字体没有变化时保留已有自定义材质。固定字体仍遵循其明确引用，须完成上述迁移。
+没有项目库、继续直接使用包内动态 Font Asset 的工程不在资产保护验收范围内；不要只升级代码就宣称字体迁移完成。
+
+本轮只在框架夹具生成资源并定向验证，未更改、重部署或升级 Windward。消费项目应通过正式 UPM Manager
+取得0.24.3或后续包含该能力的版本，再执行资源差异迁移，保留活动模板部署身份，无需全量重新部署。
+详见[三项独立回归记录](../../../../docs/implementation/b03-player-exit-font-20261028.md)。

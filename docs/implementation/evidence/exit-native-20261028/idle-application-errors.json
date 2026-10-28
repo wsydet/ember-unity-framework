@@ -1,0 +1,10 @@
+[
+  {
+    "TimeCreated": "2026-10-28T12:52:37.9201535+08:00",
+    "Message": "出错应用程序名称： EmberRegression.exe，版本： 6000.5.4.20703，时间戳： 0x6a4d4542\r\n出错模块名称： UnityPlayer.dll， 版本： 6000.5.4.20703，时间戳： 0x6a4d466b\r\n异常代码： 0xc0000005\r\n错误偏移： 0x00000000001dd2e9\r\n出错进程 ID： 0x11C80\r\n出错应用程序开始时间： 0x1DD669811F08EFD\r\nFaulting 应用程序路径： C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe\r\nFaulting 模块路径： C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\UnityPlayer.dll\r\nReport ID： 80b78a40-fe78-427a-b518-ba61e09e6fa4\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  },
+  {
+    "TimeCreated": "2026-10-28T12:51:17.7856612+08:00",
+    "Message": "出错应用程序名称： EmberRegression.exe，版本： 6000.5.4.20703，时间戳： 0x6a4d4542\r\n出错模块名称： UnityPlayer.dll， 版本： 6000.5.4.20703，时间戳： 0x6a4d466b\r\n异常代码： 0xc0000005\r\n错误偏移： 0x00000000001dd2e9\r\n出错进程 ID： 0x11B80\r\n出错应用程序开始时间： 0x1DD6697E1307A65\r\nFaulting 应用程序路径： C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe\r\nFaulting 模块路径： C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\UnityPlayer.dll\r\nReport ID： fb917e20-a62d-4e8c-bc57-fab25336613b\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  }
+]

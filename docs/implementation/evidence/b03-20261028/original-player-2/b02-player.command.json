@@ -1,0 +1,46 @@
+{
+  "id": "b02-player",
+  "steps": [
+    {
+      "action": "wait",
+      "seconds": 8,
+      "label": "baseline"
+    },
+    {
+      "action": "keys",
+      "keys": [
+        "D"
+      ],
+      "seconds": 0.6,
+      "label": "move"
+    },
+    {
+      "action": "keys",
+      "keys": [],
+      "seconds": 0.5,
+      "label": "release"
+    },
+    {
+      "action": "keys",
+      "keys": [
+        "Space"
+      ],
+      "seconds": 0.08,
+      "label": "jump"
+    },
+    {
+      "action": "keys",
+      "keys": [],
+      "seconds": 1.1,
+      "label": "land"
+    },
+    {
+      "action": "return",
+      "seconds": 0.3,
+      "label": "returned"
+    },
+    {
+      "action": "quit"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "files": 34,
+  "unexpected": [],
+  "details": [
+    {
+      "path": "7000汉字+符号+英文字符集.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "7000汉字+符号+英文字符集.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\NotoSansSymbols2-Regular SDF.asset",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\NotoSansSymbols2-Regular SDF.asset.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\NotoSansSymbols2-Regular.ttf",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\NotoSansSymbols2-Regular.ttf.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\OFL.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\OFL.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\README.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSansSymbols2\\README.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\NotoSerifSC.ttf",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\NotoSerifSC.ttf.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\NovelSerif SDF.asset",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\NovelSerif SDF.asset.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\OFL.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "NotoSerifSC\\OFL.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\DingTalk-JinBuTi SDF.asset",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\DingTalk-JinBuTi SDF.asset.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\DingTalk-JinBuTi.ttf",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\DingTalk-JinBuTi.ttf.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\LICENSE.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "钉钉进步体\\LICENSE.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\AlimamaDongFangDaKai SDF.asset",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\AlimamaDongFangDaKai SDF.asset.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\AlimamaDongFangDaKai-Regular.ttf",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\AlimamaDongFangDaKai-Regular.ttf.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\INSTRUCTION.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\INSTRUCTION.txt.meta",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\LICENSE.txt",
+      "matchesExpected": true
+    },
+    {
+      "path": "阿里妈妈东方大楷\\LICENSE.txt.meta",
+      "matchesExpected": true
+    }
+  ]
+}

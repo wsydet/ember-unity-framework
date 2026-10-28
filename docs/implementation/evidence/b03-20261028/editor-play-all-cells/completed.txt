@@ -1,0 +1,1 @@
+direct fixture finished; process exit must be checked separately

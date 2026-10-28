@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "message": "Retrieved 2 log entries.",
+  "data": [
+    {
+      "type": "Error",
+      "message": "Scene 'CacheFixture' couldn't be loaded because it has not been added to the active build profile or shared scene list or the AssetBundle has not been loaded.\nTo add a scene to the active build profile or shared scene list use the menu File->Build Profiles",
+      "file": "Assets/Game/Development/EmberRegression/B03/EmberPlayerRegression.cs",
+      "line": 32,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: The scene is invalid.",
+      "file": "Assets/Game/Development/EmberRegression/B03/EmberPlayerRegression.cs",
+      "line": 35,
+      "stackTrace": null
+    }
+  ]
+}

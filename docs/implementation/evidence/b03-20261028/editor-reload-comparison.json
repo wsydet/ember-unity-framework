@@ -1,0 +1,36 @@
+{
+  "cycles": [
+    {
+      "from": 1,
+      "to": 2,
+      "mvidChanged": true,
+      "oldSpritesReleased": true,
+      "cacheCounts": [
+        2
+      ],
+      "missing": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "mvidChanged": true,
+      "oldSpritesReleased": true,
+      "cacheCounts": [
+        2
+      ],
+      "missing": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "semanticsEqual": [
+    true,
+    true
+  ]
+}

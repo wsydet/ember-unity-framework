@@ -1,0 +1,17 @@
+[
+  {
+    "report": "AppCrash_Windward.exe_d2b6d682ea8978d333ddb48d5d395155803f350_1623c83c_4bbeb4c0-a8dc-462d-898d-096eb77e5820",
+    "moduleOffset": "Sig[7].Value=00000000001dd2e9",
+    "loadedNonWindows": null
+  },
+  {
+    "report": "AppCrash_Windward.exe_d2b6d682ea8978d333ddb48d5d395155803f350_1623c83c_db33953a-f3bb-4c23-88ef-bf13a1d3b0eb",
+    "moduleOffset": "Sig[7].Value=00000000001dd2e9",
+    "loadedNonWindows": null
+  },
+  {
+    "report": "AppCrash_Windward.exe_d2b6d682ea8978d333ddb48d5d395155803f350_1623c83c_f90c326b-8e5f-48d9-a99e-20ae88133aa7",
+    "moduleOffset": "Sig[7].Value=00000000001dd2e9",
+    "loadedNonWindows": null
+  }
+]

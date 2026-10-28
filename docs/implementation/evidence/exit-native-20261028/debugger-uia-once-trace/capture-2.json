@@ -1,0 +1,70 @@
+{
+  "kind": "trace-window-query",
+  "tid": 70844,
+  "firstChance": true,
+  "code": "0x80000003",
+  "exceptionAddress": "0x7ffb5d63d2e0",
+  "information": [
+    "0x0"
+  ],
+  "registers": {
+    "rax": "0x220e0016420",
+    "rcx": "0x7e65dbf1e8",
+    "rdx": "0xffffffffffffffe7",
+    "rbx": "0x7e65dbf1e8",
+    "rsp": "0x7e65dbf168",
+    "rbp": "0x0",
+    "rsi": "0xffffffffffffffe7",
+    "rdi": "0x220e000a240",
+    "r8": "0x0",
+    "r9": "0xffffffffffffffe7",
+    "r10": "0x0",
+    "r11": "0x246",
+    "r12": "0x0",
+    "r13": "0x3d",
+    "r14": "0x0",
+    "r15": "0x1e50646",
+    "rip": "0x7ffb5d63d2e1"
+  },
+  "screen": {
+    "screenManager": "0x221010c2490",
+    "window": "0x1e50646"
+  },
+  "frames": [
+    {
+      "address": "0x7ffb5d63d2e1",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d63d2e1",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d64a0b7",
+      "symbol": "PlatformAccessibilityManager::GetProviderForUIA",
+      "displacement": "0x37",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee7dcee",
+      "symbol": "PlayerMainWndProc",
+      "displacement": "0x99e",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffd2d7952e6",
+      "module": "C:\\Windows\\System32\\user32.dll",
+      "rva": "0x152e6"
+    }
+  ],
+  "phase": {
+    "quitRequested": false,
+    "inputStopped": false,
+    "playerConnectionCleanup": false,
+    "logTail": "og (object) (at C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs:123)\r\nEmber.Basic.EmberDebug:LogCleanup (string,string,string,int) (at ./Library/PackageCache/com.ember@ba9b1746db2f/Basic/Runtime/Debug/EmberDebug.cs:271)\r\nEmber.UI.EUIViewEngine/<>c__DisplayClass44_0:<ClosePageInternal>b__0 () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UI/Runtime/EUIViewEngine.cs:293)\r\nEmber.UI.EUIPage:CompleteHide () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UI/Runtime/EUIPage.cs:951)\r\nEmber.UI.EUIPage/<RunHideAnimationSequence>d__78:MoveNext () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UI/Runtime/EUIPage.cs:861)\r\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Ember.UI.EUIPage/<RunHideAnimationSequence>d__78>:Run () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:189)\r\nCysharp.Threading.Tasks.AwaiterActions:Continuation (object) (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/UniTask.cs:25)\r\nCysharp.Threading.Tasks.UniTaskCompletionSourceCore`1<Cysharp.Threading.Tasks.AsyncUnit>:TrySetResult (Cysharp.Threading.Tasks.AsyncUnit) (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/UniTaskCompletionSource.cs:139)\r\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Ember.UIExtension.EUITransitionBlock/<PlayTransitionAsync>d__51>:SetResult () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:204)\r\nEmber.UIExtension.EUITransitionBlock/<PlayTransitionAsync>d__51:MoveNext () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UIExtension/Runtime/Components/EUITransitionBlock.cs:387)\r\nCysharp.Threading.Tasks.CompilerServices.AsyncUniTask`1<Ember.UIExtension.EUITransitionBlock/<PlayTransitionAsync>d__51>:Run () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/CompilerServices/StateMachineRunner.cs:189)\r\nCysharp.Threading.Tasks.Internal.ContinuationQueue:RunCore () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/Internal/ContinuationQueue.cs:194)\r\nCysharp.Threading.Tasks.Internal.ContinuationQueue:Update () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/Internal/ContinuationQueue.cs:159)\r\nCysharp.Threading.Tasks.Internal.ContinuationQueue:Run () (at ./Library/PackageCache/com.ember@ba9b1746db2f/UniTask/Runtime/Internal/ContinuationQueue.cs:118)\r\n\r\n(Filename: C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs Line: 123)\r\n\r\n"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "pid": 72832,
+  "command": [
+    "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+    "-force-d3d11",
+    "-screen-width",
+    "960",
+    "-screen-height",
+    "540",
+    "-screen-fullscreen",
+    "0",
+    "-logFile",
+    "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-visible-uia-once-2\\player.log"
+  ],
+  "uia": true,
+  "querySucceeded": true,
+  "uiaWorkerExitedBeforeClose": true,
+  "wmClose": [
+    {
+      "hwnd": "0xb21216",
+      "success": true
+    }
+  ],
+  "exitCode": 3221225477,
+  "exitHex": "0xc0000005",
+  "seconds": 42.33754359999966,
+  "debugger": false,
+  "forcedTermination": false
+}

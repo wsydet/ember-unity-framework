@@ -1,0 +1,24 @@
+{
+  "pid": 71064,
+  "exitCode": -1073741819,
+  "exitHex": "0xc0000005",
+  "commandSent": true,
+  "seconds": 50.60152560000006,
+  "exceptionCounts": {
+    "0x80000003": 8,
+    "0x406d1388": 5,
+    "0x80000004": 7,
+    "0x8001010d": 1,
+    "0xe06d7363": 2,
+    "0xc0000005": 2
+  },
+  "captures": 9,
+  "traceHits": {
+    "window-query": 4,
+    "screen-dtor": 1,
+    "screen-win-dtor": 1,
+    "gfx-destroy": 1
+  },
+  "debugger": true,
+  "forcedTermination": false
+}

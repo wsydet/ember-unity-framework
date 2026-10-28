@@ -1,0 +1,43 @@
+{
+  "allPassed": true,
+  "results": [
+    {
+      "cycle": 1,
+      "mvidChanged": true,
+      "semanticStatePreserved": true,
+      "allSpritesNonNull": true,
+      "oldCachedSpritesReleased": true,
+      "cacheCounts": [
+        {
+          "path": "Assets/Game/Development/Windward/LevelAuthoring/B02Validation/NonSquare.asset",
+          "count": 2
+        },
+        {
+          "path": "Assets/Game/Development/Windward/LevelAuthoring/SecretWallTile.asset",
+          "count": 12
+        }
+      ],
+      "compileReady": true,
+      "passed": true
+    },
+    {
+      "cycle": 2,
+      "mvidChanged": true,
+      "semanticStatePreserved": true,
+      "allSpritesNonNull": true,
+      "oldCachedSpritesReleased": true,
+      "cacheCounts": [
+        {
+          "path": "Assets/Game/Development/Windward/LevelAuthoring/B02Validation/NonSquare.asset",
+          "count": 2
+        },
+        {
+          "path": "Assets/Game/Development/Windward/LevelAuthoring/SecretWallTile.asset",
+          "count": 12
+        }
+      ],
+      "compileReady": true,
+      "passed": true
+    }
+  ]
+}

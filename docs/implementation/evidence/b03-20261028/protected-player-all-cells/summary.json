@@ -1,0 +1,12 @@
+{
+  "maps": [
+    "map=B02 Mixed Rule And Ordinary cells=3 paths=0 cycle=0 phase=initial grid=(1.50, 0.75, 1.00) anchor=(0.20, 0.70, 0.00)",
+    "map=VariantMap cells=15 paths=1 cycle=0 phase=initial grid=(1.50, 0.75, 1.00) anchor=(0.20, 0.70, 0.00)",
+    "map=B02 Mixed Rule And Ordinary cells=3 paths=0 cycle=1 phase=initial grid=(1.50, 0.75, 1.00) anchor=(0.20, 0.70, 0.00)",
+    "map=VariantMap cells=15 paths=1 cycle=1 phase=initial grid=(1.50, 0.75, 1.00) anchor=(0.20, 0.70, 0.00)"
+  ],
+  "spriteSamples": 36,
+  "nullSprites": 0,
+  "fontMissing": 0,
+  "diagnosticFile": false
+}

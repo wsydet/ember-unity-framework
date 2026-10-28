@@ -1,0 +1,34 @@
+[
+  {
+    "file": "exception-7.dmp",
+    "bytes": 68051647,
+    "sha256": "de65f059d66d4690160ead444de703326a12a1230c3910b657ec85b8162a2310",
+    "signature": "MDMP",
+    "streams": 17,
+    "threadId": 81908,
+    "code": "0xc0000005",
+    "address": "0x7ffb5d63d2e9",
+    "rax": "0x0",
+    "rip": "0x7ffb5d63d2e9",
+    "parameters": [
+      "0x0",
+      "0x138"
+    ]
+  },
+  {
+    "file": "exception-8.dmp",
+    "bytes": 68052687,
+    "sha256": "59a5289fa89bd2a2f12319a7dd8a1e06a455f8bf790d140cd68f1524fb7111b2",
+    "signature": "MDMP",
+    "streams": 17,
+    "threadId": 81908,
+    "code": "0xc0000005",
+    "address": "0x7ffb5d63d2e9",
+    "rax": "0x0",
+    "rip": "0x7ffb5d63d2e9",
+    "parameters": [
+      "0x0",
+      "0x138"
+    ]
+  }
+]

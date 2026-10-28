@@ -1,0 +1,23 @@
+{
+  "beforeBytes": 46508,
+  "afterBytes": 2144192,
+  "beforeHash": "FE228E4F863B3E91D208EF4EBAE5E643F13AA48E1BB021E94F351329BC8D31E0",
+  "afterHash": "D003A251D1F0EF8D0B468B506C2C92A0E9FF9226AFD81A8C2ABDA132A2F6501B",
+  "afterAtlasAndGlyphFields": [
+    "      m_Width: 81.453125",
+    "      m_Height: 75.5",
+    "      m_Width: 82",
+    "      m_Height: 77",
+    "  m_CharacterTable:",
+    "    m_Unicode: 39564",
+    "  m_ClearDynamicDataOnBuild: 0",
+    "    m_Width: 101",
+    "    m_Height: 96",
+    "    m_Width: 1023",
+    "    m_Height: 927",
+    "    m_Width: 922",
+    "    m_Height: 1023",
+    "  m_Width: 1024",
+    "  m_Height: 1024"
+  ]
+}

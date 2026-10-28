@@ -86,13 +86,25 @@ namespace Ember.UIExtension
 
         #region 生命周期
 
+        protected override void Awake()
+        {
+            // TMP 的 Awake 可能立即准备字形；先选择项目自有字体，避免先触碰 Prefab 中的旧共享源。
+            int skinId = _fontSkinId == 0 ? EmberFontSkins.ActiveSkinId : _fontSkinId;
+            if (EmberFontSkins.TryGetFont(skinId, GetFontSlotForSkin(skinId), out var selected) && m_fontAsset != selected)
+            {
+                m_fontAsset = selected;
+                m_sharedMaterial = selected.material;
+            }
+            base.Awake();
+        }
+
         protected override void OnEnable()
         {
+            ApplyFontSkin();
             base.OnEnable();
             if (_source == null) _source = m_text;
             TextLocalization.Register(this);
             EmberFontSkins.Register(this);
-            ApplyFontSkin();
             ApplyLocalizedText();
         }
 

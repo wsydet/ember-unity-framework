@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": [
+      {
+        "p": "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+        "glyphs": 0,
+        "dirty": false,
+        "atlasDirty": [
+          false
+        ],
+        "materialDirty": false
+      },
+      {
+        "p": "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
+        "glyphs": 2,
+        "dirty": false,
+        "atlasDirty": [
+          false
+        ],
+        "materialDirty": false
+      },
+      {
+        "p": "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+        "glyphs": 2,
+        "dirty": false,
+        "atlasDirty": [
+          false
+        ],
+        "materialDirty": false
+      },
+      {
+        "p": "Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset",
+        "glyphs": 2,
+        "dirty": false,
+        "atlasDirty": [
+          false
+        ],
+        "materialDirty": false
+      }
+    ],
+    "compiler": "codedom"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "kind": "access-violation",
+  "tid": 75056,
+  "firstChance": true,
+  "code": "0xc0000005",
+  "exceptionAddress": "0x7ffb5d63d2e9",
+  "information": [
+    "0x0",
+    "0x138"
+  ],
+  "registers": {
+    "rax": "0x0",
+    "rcx": "0x70c91fb9dd7e0000",
+    "rdx": "0x0",
+    "rbx": "0x2bea0016420",
+    "rsp": "0xf40633f980",
+    "rbp": "0xf40633fba0",
+    "rsi": "0x7ffb6058ec00",
+    "rdi": "0x7ffb60ca8e40",
+    "r8": "0xf40633f808",
+    "r9": "0x0",
+    "r10": "0x0",
+    "r11": "0x246",
+    "r12": "0x0",
+    "r13": "0xb",
+    "r14": "0x0",
+    "r15": "0x0",
+    "rip": "0x7ffb5d63d2e9"
+  },
+  "screen": {
+    "screenManager": "0x0",
+    "window": null
+  },
+  "frames": [
+    {
+      "address": "0x7ffb5d63d2e9",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x9",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d63d2e9",
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "displacement": "0x9",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5d64b70b",
+      "symbol": "RuntimeStatic<PlatformAccessibilityManager,0>::StaticDestroy",
+      "displacement": "0x3b",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5fc49acd",
+      "symbol": "RegisterRuntimeInitializeAndCleanup::ExecuteCleanup",
+      "displacement": "0xed",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5f40a877",
+      "symbol": "RuntimeCleanup",
+      "displacement": "0x27",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee816a7",
+      "symbol": "UnityMainImpl",
+      "displacement": "0x12e7",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee8236b",
+      "symbol": "UnityMain",
+      "displacement": "0xb",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ff661d111f6"
+    }
+  ],
+  "phase": {
+    "quitRequested": true,
+    "inputStopped": true,
+    "playerConnectionCleanup": true,
+    "logTail": "ctStackTrace () (at C:/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)\r\nUnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)\r\nUnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[]) (at C:/build/output/unity/unity/Runtime/Export/Logging/DebugLogHandler.cs:9)\r\nUnityEngine.Logger:Log (UnityEngine.LogType,object) (at C:/build/output/unity/unity/Runtime/Export/Logging/Logger.cs:60)\r\nUnityEngine.Debug:Log (object) (at C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs:123)\r\nEmber.Basic.EmberDebug:LogShutdown (string,string,string,int) (at ./Library/PackageCache/com.ember@ba9b1746db2f/Basic/Runtime/Debug/EmberDebug.cs:293)\r\nEmber.Basic.ApplicationQuitUtil:Quit () (at ./Library/PackageCache/com.ember@ba9b1746db2f/Basic/Runtime/Utils/ApplicationQuitUtil.cs:82)\r\nEmber.Core.GameLauncher/<QuitAfterStopAsync>d__48:MoveNext () (at ./Library/PackageCache/com.ember@ba9b1746db2f/Core/Runtime/GameLauncher.cs:280)\r\nSystem.Runtime.CompilerServices.AsyncTaskMethodBuilder:Start<Ember.Core.GameLauncher/<QuitAfterStopAsync>d__48> (Ember.Core.GameLauncher/<QuitAfterStopAsync>d__48&)\r\nEmber.Core.GameLauncher:QuitAfterStopAsync ()\r\nEmber.Core.GameLauncher:Quit () (at ./Library/PackageCache/com.ember@ba9b1746db2f/Core/Runtime/GameLauncher.cs:275)\r\nGame.WindwardFlow.WindwardFlowModule/<RequestQuitAsync>d__107:MoveNext () (at C:/Users/wuyu/My/Windward/Assets/Game/Module/WindwardFlow/WindwardQuit.cs:34)\r\nGame.WindwardFlow.WindwardFlowModule:RequestQuitAsync ()\r\nGame.WindwardFlow.WindwardFlowModule:OnApplicationWantsToQuit () (at C:/Users/wuyu/My/Windward/Assets/Game/Module/WindwardFlow/WindwardQuit.cs:13)\r\nUnityEngine.Application:Internal_ApplicationWantsToQuit () (at C:/build/output/unity/unity/Runtime/Export/Application/Application.cs:339)\r\n\r\n(Filename: C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs Line: 123)\r\n\r\nUnloading 1603 unused Assets / (7.5 MB). Loaded Objects now: 6326.\r\nMemory consumption went from 226.2 MB to 218.7 MB.\r\nTotal: 10.106600 ms (FindLiveObjects: 0.436700 ms CreateObjectMapping: 0.940800 ms MarkObjects: 5.224600 ms  DeleteObjects: 3.497800 ms)\r\n\r\n[Physics::Module] Cleanup current backend.\r\n[Physics::Module] Id: 0xf2b8ea05\r\nInput System module state changed to: ShutdownInProgress.\r\nInput Polling Thread exited.\r\nInput System module state changed to: Shutdown.\r\nCodeReloadManager destroyed\r\nPlayerConnection::Cleanup"
+  },
+  "dump": {
+    "path": "exception-0.dmp",
+    "success": true,
+    "error": 0
+  }
+}

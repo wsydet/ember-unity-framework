@@ -1,0 +1,92 @@
+[
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\UnityPlayer.dll",
+    "size": 88257448,
+    "sha256": "0fcf6d820362361deb538a02142aafe6dd9343ea3bef90078e837e5e45123b82",
+    "codeview": {
+      "guid": "fa546238-6fe9-44fd-8c1a-7376b3667b2a",
+      "age": 1,
+      "path": "C:\\build\\output\\unity\\unity\\artifacts\\UnityPlayer\\Win_x64_VS2022_VB_MT_dev_m_ut_r\\UnityPlayer_Win64_player_development_mono_x64.pdb"
+    }
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\UnityPlayer.dll",
+    "size": 88257448,
+    "sha256": "0fcf6d820362361deb538a02142aafe6dd9343ea3bef90078e837e5e45123b82",
+    "codeview": {
+      "guid": "fa546238-6fe9-44fd-8c1a-7376b3667b2a",
+      "age": 1,
+      "path": "C:\\build\\output\\unity\\unity\\artifacts\\UnityPlayer\\Win_x64_VS2022_VB_MT_dev_m_ut_r\\UnityPlayer_Win64_player_development_mono_x64.pdb"
+    }
+  },
+  {
+    "path": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.5.4f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityPlayer.dll",
+    "size": 88257448,
+    "sha256": "0fcf6d820362361deb538a02142aafe6dd9343ea3bef90078e837e5e45123b82",
+    "codeview": {
+      "guid": "fa546238-6fe9-44fd-8c1a-7376b3667b2a",
+      "age": 1,
+      "path": "C:\\build\\output\\unity\\unity\\artifacts\\UnityPlayer\\Win_x64_VS2022_VB_MT_dev_m_ut_r\\UnityPlayer_Win64_player_development_mono_x64.pdb"
+    }
+  },
+  {
+    "path": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.5.4f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityPlayer_Win64_player_development_mono_x64.pdb",
+    "size": 72839168,
+    "sha256": "4e13ae830e9883dfbcbee9d6326df44afb06027b09c292ec3d236417cef487de"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\Packages\\manifest.json",
+    "size": 3357,
+    "sha256": "1fc6278e618620c5aa2fc9c001edb19b36bd24835066b29c831b911589463eac"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\Packages\\packages-lock.json",
+    "size": 17285,
+    "sha256": "1f1822a43d4ed4748bedb4901165f7047eb67c101456b2f359cbed34a262c136"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\ProjectSettings\\EmberTemplateBaseline~\\template.json",
+    "size": 1090,
+    "sha256": "fa3f1b5533ef80f47181013d5da22b45aac9f54787c135405325aaab38eebab5"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression_Data\\Managed\\Ember.Regression.dll",
+    "size": 15360,
+    "sha256": "dfd989c849dfaeda7523802030435ff1a9efadf4947a712f7abdd3f8969ab948",
+    "codeview": {
+      "guid": "d7b6ccb9-895f-4b1e-b2e9-a9fe1f9fb30b",
+      "age": 1,
+      "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\Bee\\artifacts\\1900b0aPDev.dag\\Ember.Regression.pdb"
+    }
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\Windward_Data\\Managed\\Assembly-CSharp.dll",
+    "size": 339968,
+    "sha256": "d0622d2e8bb365f4d320ebaf0d9b922d455e2495df58174c0c0ad7081ef65737",
+    "codeview": {
+      "guid": "ea5429a0-b22f-420d-8695-6663316ce2b8",
+      "age": 1,
+      "path": "C:\\Users\\wuyu\\My\\Windward\\Library\\Bee\\artifacts\\1900b0aPDev.dag\\Assembly-CSharp.pdb"
+    }
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\Windward_Data\\Managed\\Game.WindwardPlayer.Runtime.dll",
+    "size": 60416,
+    "sha256": "6d6e4534a853bf062d20c5e0d7154291e006d2513d0ad334c867998a0c28c5f5",
+    "codeview": {
+      "guid": "a6f5b672-2de2-4dd7-97e3-41519051aede",
+      "age": 1,
+      "path": "C:\\Users\\wuyu\\My\\Windward\\Library\\Bee\\artifacts\\1900b0aPDev.dag\\Game.WindwardPlayer.Runtime.pdb"
+    }
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression_Data\\globalgamemanagers",
+    "size": 440788,
+    "sha256": "70951b8b867bc9fb8299d05f4eebc2efe7f79e04f356232f17d8d5e744ef7f48"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression_Data\\level0",
+    "size": 1164,
+    "sha256": "6090bc796490512a63e00dd5ff9d824d094aae0e1a4567b73d7911229fe44535"
+  }
+]

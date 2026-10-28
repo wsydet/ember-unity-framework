@@ -1,0 +1,6 @@
+cycle=0 skin=1 glyphs=11 characters=10 missing=0 faces=NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF
+cycle=0 skin=2 glyphs=10 characters=10 missing=0 faces=DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;NotoSansSymbols2-Regular SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF
+cycle=0 skin=3 glyphs=10 characters=10 missing=0 faces=AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;NotoSansSymbols2-Regular SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF
+cycle=1 skin=1 glyphs=11 characters=10 missing=0 faces=NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF;NovelSerif SDF
+cycle=1 skin=2 glyphs=10 characters=10 missing=0 faces=DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;NotoSansSymbols2-Regular SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF;DingTalk-JinBuTi SDF
+cycle=1 skin=3 glyphs=10 characters=10 missing=0 faces=AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;NotoSansSymbols2-Regular SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF;AlimamaDongFangDaKai SDF

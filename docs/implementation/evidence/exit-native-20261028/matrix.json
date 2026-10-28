@@ -1,0 +1,266 @@
+[
+  {
+    "case": "debugger-baseline-1",
+    "pid": 64124,
+    "exitCode": 0,
+    "exitHex": "0x0",
+    "commandSent": true,
+    "seconds": 43.764970000000176,
+    "exceptionCounts": {
+      "0x80000003": 1,
+      "0x406d1388": 5
+    },
+    "captures": 0,
+    "traceHits": {},
+    "debugger": true,
+    "forcedTermination": false
+  },
+  {
+    "case": "debugger-trace-1",
+    "pid": 66092,
+    "exitCode": 0,
+    "exitHex": "0x0",
+    "commandSent": true,
+    "seconds": 45.095970399999715,
+    "exceptionCounts": {
+      "0x80000003": 4,
+      "0x406d1388": 5,
+      "0x80000004": 3
+    },
+    "captures": 3,
+    "traceHits": {
+      "window-query": 0,
+      "screen-dtor": 1,
+      "screen-win-dtor": 1,
+      "gfx-destroy": 1
+    },
+    "debugger": true,
+    "forcedTermination": false
+  },
+  {
+    "case": "debugger-uia-1",
+    "exitCode": null,
+    "lastEvent": "timeout"
+  },
+  {
+    "case": "debugger-uia-once-dump",
+    "pid": 73480,
+    "exitCode": -1073741819,
+    "exitHex": "0xc0000005",
+    "commandSent": true,
+    "seconds": 65.96791029999986,
+    "exceptionCounts": {
+      "0x80000003": 1,
+      "0x406d1388": 5,
+      "0x8001010d": 1,
+      "0xe06d7363": 2,
+      "0xc0000005": 2
+    },
+    "captures": 2,
+    "traceHits": {},
+    "debugger": true,
+    "forcedTermination": false,
+    "normalCloseRetry": true
+  },
+  {
+    "case": "debugger-uia-once-no-breakpoints",
+    "exitCode": null,
+    "lastEvent": "timeout"
+  },
+  {
+    "case": "debugger-uia-once-trace",
+    "pid": 71064,
+    "exitCode": -1073741819,
+    "exitHex": "0xc0000005",
+    "commandSent": true,
+    "seconds": 50.60152560000006,
+    "exceptionCounts": {
+      "0x80000003": 8,
+      "0x406d1388": 5,
+      "0x80000004": 7,
+      "0x8001010d": 1,
+      "0xe06d7363": 2,
+      "0xc0000005": 2
+    },
+    "captures": 9,
+    "traceHits": {
+      "window-query": 4,
+      "screen-dtor": 1,
+      "screen-win-dtor": 1,
+      "gfx-destroy": 1
+    },
+    "debugger": true,
+    "forcedTermination": false
+  },
+  {
+    "case": "idle-native-uia-once",
+    "pid": 60776,
+    "exitCode": -1073741819,
+    "exitHex": "0xc0000005",
+    "commandSent": true,
+    "seconds": 51.98799449999933,
+    "exceptionCounts": {
+      "0x80000003": 8,
+      "0x406d1388": 1,
+      "0x80000004": 7,
+      "0x8001010d": 1,
+      "0xe06d7363": 2,
+      "0xc0000005": 2
+    },
+    "captures": 9,
+    "traceHits": {
+      "window-query": 4,
+      "screen-dtor": 1,
+      "screen-win-dtor": 1,
+      "gfx-destroy": 1
+    },
+    "debugger": true,
+    "forcedTermination": false,
+    "normalCloseRetry": false
+  },
+  {
+    "case": "idle-no-uia-1",
+    "pid": 76868,
+    "command": [
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+      "-force-d3d11",
+      "-screen-width",
+      "960",
+      "-screen-height",
+      "540",
+      "-screen-fullscreen",
+      "0",
+      "-logFile",
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-no-uia-1\\player.log"
+    ],
+    "uia": false,
+    "querySucceeded": false,
+    "uiaWorkerExitedBeforeClose": null,
+    "wmClose": [],
+    "exitCode": null,
+    "exitHex": null,
+    "seconds": 46.03697009999996,
+    "debugger": false,
+    "forcedTermination": false
+  },
+  {
+    "case": "idle-visible-no-uia-1",
+    "pid": 81220,
+    "command": [
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+      "-force-d3d11",
+      "-screen-width",
+      "960",
+      "-screen-height",
+      "540",
+      "-screen-fullscreen",
+      "0",
+      "-logFile",
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-visible-no-uia-1\\player.log"
+    ],
+    "uia": false,
+    "querySucceeded": false,
+    "uiaWorkerExitedBeforeClose": null,
+    "wmClose": [
+      {
+        "hwnd": "0xc0060a",
+        "success": true
+      }
+    ],
+    "exitCode": 0,
+    "exitHex": "0x0",
+    "seconds": 37.317645600000105,
+    "debugger": false,
+    "forcedTermination": false
+  },
+  {
+    "case": "idle-visible-no-uia-2",
+    "pid": 75164,
+    "command": [
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+      "-force-d3d11",
+      "-screen-width",
+      "960",
+      "-screen-height",
+      "540",
+      "-screen-fullscreen",
+      "0",
+      "-logFile",
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-visible-no-uia-2\\player.log"
+    ],
+    "uia": false,
+    "querySucceeded": false,
+    "uiaWorkerExitedBeforeClose": null,
+    "wmClose": [
+      {
+        "hwnd": "0x1e06b0",
+        "success": true
+      }
+    ],
+    "exitCode": 0,
+    "exitHex": "0x0",
+    "seconds": 37.3882478000005,
+    "debugger": false,
+    "forcedTermination": false
+  },
+  {
+    "case": "idle-visible-uia-once-1",
+    "pid": 72576,
+    "command": [
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+      "-force-d3d11",
+      "-screen-width",
+      "960",
+      "-screen-height",
+      "540",
+      "-screen-fullscreen",
+      "0",
+      "-logFile",
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-visible-uia-once-1\\player.log"
+    ],
+    "uia": true,
+    "querySucceeded": true,
+    "uiaWorkerExitedBeforeClose": true,
+    "wmClose": [
+      {
+        "hwnd": "0x1c06b0",
+        "success": true
+      }
+    ],
+    "exitCode": 3221225477,
+    "exitHex": "0xc0000005",
+    "seconds": 44.3726300999997,
+    "debugger": false,
+    "forcedTermination": false
+  },
+  {
+    "case": "idle-visible-uia-once-2",
+    "pid": 72832,
+    "command": [
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+      "-force-d3d11",
+      "-screen-width",
+      "960",
+      "-screen-height",
+      "540",
+      "-screen-fullscreen",
+      "0",
+      "-logFile",
+      "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-visible-uia-once-2\\player.log"
+    ],
+    "uia": true,
+    "querySucceeded": true,
+    "uiaWorkerExitedBeforeClose": true,
+    "wmClose": [
+      {
+        "hwnd": "0xb21216",
+        "success": true
+      }
+    ],
+    "exitCode": 3221225477,
+    "exitHex": "0xc0000005",
+    "seconds": 42.33754359999966,
+    "debugger": false,
+    "forcedTermination": false
+  }
+]

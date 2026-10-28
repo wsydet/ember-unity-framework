@@ -1,0 +1,67 @@
+{
+  "completed": true,
+  "failure": null,
+  "traceCount": 4782,
+  "lastByLabel": [
+    {
+      "label": "baseline",
+      "last": {
+        "phase": "Playing",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": -300.0,
+        "y": 28.3899822,
+        "error": null
+      }
+    },
+    {
+      "label": "jump",
+      "last": {
+        "phase": "Playing",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": -293.85968,
+        "y": 29.51,
+        "error": null
+      }
+    },
+    {
+      "label": "land",
+      "last": {
+        "phase": "Playing",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": -293.85968,
+        "y": 28.3900032,
+        "error": null
+      }
+    },
+    {
+      "label": "move",
+      "last": {
+        "phase": "Playing",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": -294.319672,
+        "y": 28.3899975,
+        "error": null
+      }
+    },
+    {
+      "label": "release",
+      "last": {
+        "phase": "Playing",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": -293.85968,
+        "y": 28.3899975,
+        "error": null
+      }
+    },
+    {
+      "label": "returned",
+      "last": {
+        "phase": "Menu",
+        "level": "windward-candidate-99bb37f7ee1648538f165518fc902c16",
+        "x": null,
+        "y": null,
+        "error": null
+      }
+    }
+  ]
+}

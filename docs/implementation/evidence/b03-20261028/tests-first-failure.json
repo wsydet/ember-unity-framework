@@ -1,0 +1,137 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "a7ad46ee19a0417b9c62a709b8a04ec8",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1793157462921,
+      "finished_unix_ms": 1793157486232,
+      "last_update_unix_ms": 1793157486232,
+      "progress": {
+        "completed": 9,
+        "total": 9,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+        "last_finished_unix_ms": 1793157485778,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Ember.UI.Tests.EmberWritableFontsTests.FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance",
+            "message": "  Expected: same as <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n  But was:  <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n"
+          },
+          {
+            "full_name": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "message": "  Expected: same as <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n  But was:  <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 9,
+          "passed": 7,
+          "failed": 2,
+          "skipped": 0,
+          "durationSeconds": 15.4040247,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "TwoCacheInvalidationsRestoreReferencesWithoutChangingTileState",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberTerrainCacheLifecycleTests.TwoCacheInvalidationsRestoreReferencesWithoutChangingTileState",
+            "state": "Passed",
+            "durationSeconds": 0.6499375,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CatalogRejectsMissingMappingsAndDoesNotUseListPositionAsIdentity",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.CatalogRejectsMissingMappingsAndDoesNotUseListPositionAsIdentity",
+            "state": "Passed",
+            "durationSeconds": 0.0389808,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ConversionPreservesPrefabInputReferenceAndTypography",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.ConversionPreservesPrefabInputReferenceAndTypography",
+            "state": "Passed",
+            "durationSeconds": 0.9662458,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisabledTextCatchesUpAndMissingSelectionKeepsExistingFont",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.DisabledTextCatchesUpAndMissingSelectionKeepsExistingFont",
+            "state": "Passed",
+            "durationSeconds": 0.0207504,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EachSkinUsesItsOwnSelectionAndFixedTextDoesNotChange",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.EachSkinUsesItsOwnSelectionAndFixedTextDoesNotChange",
+            "state": "Passed",
+            "durationSeconds": 0.0047428,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GenericComponentReplacementRejectsUnrelatedTextTypesBeforeCloning",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.GenericComponentReplacementRejectsUnrelatedTextTypesBeforeCloning",
+            "state": "Passed",
+            "durationSeconds": 0.0055221,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LegacyConversionCopiesOnlyDisplayPropertiesAndSavesCleanPrefab",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.LegacyConversionCopiesOnlyDisplayPropertiesAndSavesCleanPrefab",
+            "state": "Passed",
+            "durationSeconds": 0.8362502,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance",
+            "fullName": "Ember.UI.Tests.EmberWritableFontsTests.FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance",
+            "state": "Failed",
+            "durationSeconds": 4.6440539,
+            "message": "  Expected: same as <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n  But was:  <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EmberWritableFontsTests.FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance () [0x001af] in .\\Packages\\com.ember\\Tests\\EditMode\\EmberWritableFontsTests.cs:98\r\n",
+            "output": ""
+          },
+          {
+            "name": "GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "fullName": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "state": "Failed",
+            "durationSeconds": 6.9724032,
+            "message": "  Expected: same as <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n  But was:  <Noto Serif SC - ExtraLight Atlas (UnityEngine.Texture2D)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources () [0x00195] in .\\Packages\\com.ember\\Tests\\EditMode\\EmberWritableFontsTests.cs:48\r\n",
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

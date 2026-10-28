@@ -1,0 +1,15 @@
+{
+  "pid": 64124,
+  "exitCode": 0,
+  "exitHex": "0x0",
+  "commandSent": true,
+  "seconds": 43.764970000000176,
+  "exceptionCounts": {
+    "0x80000003": 1,
+    "0x406d1388": 5
+  },
+  "captures": 0,
+  "traceHits": {},
+  "debugger": true,
+  "forcedTermination": false
+}

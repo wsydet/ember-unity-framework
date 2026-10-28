@@ -1,0 +1,42 @@
+[
+  {
+    "path": "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/77c89972350737f44a59171e94bffe21/AlimamaDongFangDaKai SDF.asset",
+    "added": true,
+    "characters": 1,
+    "materialOwned": true,
+    "textureOwned": true,
+    "textureMatches": true,
+    "fallbacks": [
+      "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/c7a84069be03475d8bbf927ef431d010/NotoSansSymbols2-Regular SDF.asset"
+    ]
+  },
+  {
+    "path": "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/410e2504c5fcf9f43a3d390f5cacdbd9/NovelSerif SDF.asset",
+    "added": true,
+    "characters": 1,
+    "materialOwned": true,
+    "textureOwned": true,
+    "textureMatches": true,
+    "fallbacks": []
+  },
+  {
+    "path": "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/a32ba8ab7d4aa814e8b5f0a267b29b42/DingTalk-JinBuTi SDF.asset",
+    "added": true,
+    "characters": 1,
+    "materialOwned": true,
+    "textureOwned": true,
+    "textureMatches": true,
+    "fallbacks": [
+      "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/c7a84069be03475d8bbf927ef431d010/NotoSansSymbols2-Regular SDF.asset"
+    ]
+  },
+  {
+    "path": "Assets/Game/Development/EmberRegression/B03/Fonts/Generated/c7a84069be03475d8bbf927ef431d010/NotoSansSymbols2-Regular SDF.asset",
+    "added": true,
+    "characters": 1,
+    "materialOwned": true,
+    "textureOwned": true,
+    "textureMatches": true,
+    "fallbacks": []
+  }
+]

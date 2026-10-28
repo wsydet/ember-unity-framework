@@ -1,0 +1,10 @@
+[
+  {
+    "TimeCreated": "2026-10-28T01:36:00.4328375+08:00",
+    "Message": "出错应用程序名称： Windward.exe，版本： 6000.5.4.20703，时间戳： 0x6a4d4542\r\n出错模块名称： UnityPlayer.dll， 版本： 6000.5.4.20703，时间戳： 0x6a4d466b\r\n异常代码： 0xc0000005\r\n错误偏移： 0x00000000001dd2e9\r\n出错进程 ID： 0x11C90\r\n出错应用程序开始时间： 0x1DD663988C0FA42\r\nFaulting 应用程序路径： C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\Windward.exe\r\nFaulting 模块路径： C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\UnityPlayer.dll\r\nReport ID： 27c3d6d5-5235-481a-9420-d11cd55f2a8d\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  },
+  {
+    "TimeCreated": "2026-10-28T01:34:11.007728+08:00",
+    "Message": "出错应用程序名称： Windward.exe，版本： 6000.5.4.20703，时间戳： 0x6a4d4542\r\n出错模块名称： UnityPlayer.dll， 版本： 6000.5.4.20703，时间戳： 0x6a4d466b\r\n异常代码： 0xc0000005\r\n错误偏移： 0x00000000001dd2e9\r\n出错进程 ID： 0x26458\r\n出错应用程序开始时间： 0x1DD663946E26394\r\nFaulting 应用程序路径： C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\Windward.exe\r\nFaulting 模块路径： C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\UnityPlayer.dll\r\nReport ID： 1073f8b9-73c0-4d9b-a1d0-53eeda5e677f\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  }
+]

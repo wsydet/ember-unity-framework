@@ -1,0 +1,23 @@
+{
+  "before": {
+    "fontDirty": false,
+    "atlasDirty": false,
+    "materialDirty": false,
+    "glyphs": 0,
+    "width": 1,
+    "assetHash": "87uXZp3jC9qTShtn6h4yNBIV3prNaHd1b81bcScTJFk="
+  },
+  "added": true,
+  "missing": "",
+  "after": {
+    "fontDirty": false,
+    "atlasDirty": true,
+    "materialDirty": false,
+    "glyphs": 1,
+    "width": 1024,
+    "assetHash": "87uXZp3jC9qTShtn6h4yNBIV3prNaHd1b81bcScTJFk="
+  },
+  "events": [
+    "  at System.Environment.get_StackTrace () [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at MCPDynamicCode+<Execute>c__AnonStorey0.<>m__1 (TMPro.TMP_FontAsset value) [0x00000] in <d44a901c7894445fabe231a8b7fa3c37>:0 \r\n  at TMPro.TMP_FontAsset.TryAddCharacters (System.String characters, System.String& missingCharacters, System.Boolean includeFontFeatures) [0x003c8] in .\\Library\\PackageCache\\com.unity.ugui@f2d87ebaaa32\\Runtime\\TMP\\TMP_FontAsset.cs:2197 \r\n  at MCPDynamicCode.Execute () [0x00000] in <d44a901c7894445fabe231a8b7fa3c37>:0 \r\n  at System.Reflection.RuntimeMethodInfo.InternalInvoke (System.Reflection.RuntimeMethodInfo , System.Object , System.Object[] , System.Exception& ) [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at MCPForUnity.Editor.Tools.ExecuteCode.InvokeCompiled (System.Reflection.Assembly assembly, System.String compilerUsed) [0x00048] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Tools\\ExecuteCode.cs:275 \r\n  at MCPForUnity.Editor.Tools.ExecuteCode.CompileAndExecute (System.String code, System.String compiler) [0x0018b] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Tools\\ExecuteCode.cs:257 \r\n  at MCPForUnity.Editor.Tools.ExecuteCode.HandleExecute (Newtonsoft.Json.Linq.JObject params) [0x000c0] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Tools\\ExecuteCode.cs:130 \r\n  at MCPForUnity.Editor.Tools.ExecuteCode.HandleCommand (Newtonsoft.Json.Linq.JObject params) [0x00078] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Tools\\ExecuteCode.cs:95 \r\n  at MCPForUnity.Editor.Tools.CommandRegistry.ExecuteCommand (System.String commandName, Newtonsoft.Json.Linq.JObject params, System.Threading.Tasks.TaskCompletionSource`1[TResult] tcs) [0x00038] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Tools\\CommandRegistry.cs:295 \r\n  at MCPForUnity.Editor.Services.Transport.TransportCommandDispatcher.ProcessCommand (System.String id, MCPForUnity.Editor.Services.Transport.TransportCommandDispatcher+PendingCommand pending) [0x0037b] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Services\\Transport\\TransportCommandDispatcher.cs:366 \r\n  at MCPForUnity.Editor.Services.Transport.TransportCommandDispatcher.ProcessQueue () [0x000df] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Services\\Transport\\TransportCommandDispatcher.cs:262 \r\n  at MCPForUnity.Editor.Services.Transport.TransportCommandDispatcher.<RequestMainThreadPump>g__Pump|11_0 () [0x0000a] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Services\\Transport\\TransportCommandDispatcher.cs:184 \r\n  at MCPForUnity.Editor.Services.Transport.TransportCommandDispatcher+<>c.<RequestMainThreadPump>b__11_1 (System.Object _) [0x00000] in .\\Library\\PackageCache\\com.coplaydev.unity-mcp@da7b9ae4aeeb\\Editor\\Services\\Transport\\TransportCommandDispatcher.cs:189 \r\n  at UnityEngine.UnitySynchronizationContext+WorkRequest.Invoke () [0x00000] in <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0 \r\n  at UnityEngine.UnitySynchronizationContext.Exec () [0x00000] in <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0 \r\n  at UnityEngine.UnitySynchronizationContext.ExecuteTasks () [0x00000] in <0ce87f9710ab4aa994e7b9ccfb3ea0fb>:0 "
+  ]
+}

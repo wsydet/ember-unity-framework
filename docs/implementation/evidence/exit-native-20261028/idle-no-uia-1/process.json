@@ -1,0 +1,24 @@
+{
+  "pid": 76868,
+  "command": [
+    "C:\\Users\\wuyu\\My\\ember-unity-framework\\Builds\\B03\\Protected\\EmberRegression.exe",
+    "-force-d3d11",
+    "-screen-width",
+    "960",
+    "-screen-height",
+    "540",
+    "-screen-fullscreen",
+    "0",
+    "-logFile",
+    "C:\\Users\\wuyu\\My\\ember-unity-framework\\docs\\implementation\\evidence\\exit-native-20261028\\idle-no-uia-1\\player.log"
+  ],
+  "uia": false,
+  "querySucceeded": false,
+  "uiaWorkerExitedBeforeClose": null,
+  "wmClose": [],
+  "exitCode": null,
+  "exitHex": null,
+  "seconds": 46.03697009999996,
+  "debugger": false,
+  "forcedTermination": false
+}

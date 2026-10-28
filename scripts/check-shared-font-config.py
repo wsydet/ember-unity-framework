@@ -18,7 +18,7 @@ def verify(asset, meta, source):
     for field, value in {
         'm_AtlasPopulationMode': '1', 'm_IsMultiAtlasTexturesEnabled': '1',
         'm_AtlasWidth': '1024', 'm_AtlasHeight': '1024', 'm_AtlasPadding': '9',
-        'm_PointSize': '90', 'm_ClearDynamicDataOnBuild': '1',
+        'm_PointSize': '90', 'm_ClearDynamicDataOnBuild': '0',
         'm_SourceFontFileGUID': '3990ff594a20c3e42a78428e8b921683',
     }.items():
         found = re.findall(r'^\s+' + field + r': (\S+)\s*$', text, re.M)
@@ -48,7 +48,7 @@ def verify_symbol_fallback(read, source):
          r'\s*\n  - \{fileID: 11400000, guid: ' + SYMBOL_GUID + r', type: 2\}'),
         (symbol, 'm_AtlasPopulationMode', r' 1'),
         (symbol, 'm_IsMultiAtlasTexturesEnabled', r' 1'),
-        (symbol, 'm_ClearDynamicDataOnBuild', r' 1'),
+        (symbol, 'm_ClearDynamicDataOnBuild', r' 0'),
         (symbol, 'm_AtlasWidth', r' 1024'),
         (symbol, 'm_AtlasHeight', r' 1024'),
         (symbol, 'm_AtlasPadding', r' 9'),
@@ -81,6 +81,17 @@ def verify_symbol_fallback(read, source):
     print(f'PASS {source}: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license')
 
 
+def verify_shared_ownership(read, source):
+    for path in [REL, SYMBOL_REL, 'SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset',
+                 'SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset']:
+        text = read(path).decode('utf-8-sig')
+        for field, expected in [('m_AtlasPopulationMode', '1'), ('m_ClearDynamicDataOnBuild', '0')]:
+            found = re.findall(r'^\s+' + field + r': (\S+)\s*$', text, re.M)
+            if found != [expected]:
+                raise ValueError(f'{source}: {path}: {field} expected {expected}, found {found}')
+    print(f'PASS {source}: four immutable dynamic font recipes excluded from TMP build clearing; project-owned copies required')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--revision', default='HEAD')
@@ -88,14 +99,17 @@ def main():
     args = parser.parse_args()
     verify((ROOT/PATH).read_bytes(), (ROOT/(PATH+'.meta')).read_bytes(), 'workspace')
     verify_symbol_fallback(lambda path: (ROOT/'Packages/com.ember'/path).read_bytes(), 'workspace')
+    verify_shared_ownership(lambda path: (ROOT/'Packages/com.ember'/path).read_bytes(), 'workspace')
     prefix = ':' if args.revision == ':' else args.revision + ':'
     def blob(path):
         return subprocess.check_output(['git', 'show', prefix+path], cwd=ROOT)
     verify(blob(PATH), blob(PATH+'.meta'), 'Git '+args.revision)
     verify_symbol_fallback(lambda path: blob('Packages/com.ember/' + path), 'Git '+args.revision)
+    verify_shared_ownership(lambda path: blob('Packages/com.ember/' + path), 'Git '+args.revision)
     if args.package_root:
         verify((args.package_root/REL).read_bytes(), (args.package_root/(REL+'.meta')).read_bytes(), 'consumer')
         verify_symbol_fallback(lambda path: (args.package_root/path).read_bytes(), 'consumer')
+        verify_shared_ownership(lambda path: (args.package_root/path).read_bytes(), 'consumer')
     print('Static configuration only: execute SharedFontAtlasPlayModeTests and visually accept SceneUI in Unity.')
 
 

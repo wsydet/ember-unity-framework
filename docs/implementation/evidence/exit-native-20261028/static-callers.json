@@ -1,0 +1,58 @@
+{
+  "targetAliases": [
+    "PlatformAccessibilityTestUtilities::GetWindow",
+    "ExternalGPUProfiler::GetGameViewWindowHandle"
+  ],
+  "relativeCallSites": [
+    {
+      "rva": "0x1ea0b2",
+      "symbol": {
+        "address": "0x1801ea0b2",
+        "symbol": "PlatformAccessibilityManager::GetProviderForUIA",
+        "displacement": "0x32",
+        "moduleBase": "0x180000000"
+      },
+      "bytes": "8b 78 20 48 85 ff 74 2a e8 29 32 ff ff 48 8b c8 4c 8b cf 4c 8b c6 48 8b"
+    },
+    {
+      "rva": "0x1ea5c1",
+      "symbol": {
+        "address": "0x1801ea5c1",
+        "symbol": "PlatformAccessibilityManager::NotifyUIADestroy",
+        "displacement": "0x21",
+        "moduleBase": "0x180000000"
+      },
+      "bytes": "40 30 00 e8 ed 97 b3 02 e8 1a 2d ff ff 48 8b c8 45 33 c9 45 33 c0 33 d2"
+    },
+    {
+      "rva": "0x1eb706",
+      "symbol": {
+        "address": "0x1801eb706",
+        "symbol": "RuntimeStatic<PlatformAccessibilityManager,0>::StaticDestroy",
+        "displacement": "0x36",
+        "moduleBase": "0x180000000"
+      },
+      "bytes": "40 30 00 e8 a8 86 b3 02 e8 d5 1b ff ff 48 8b c8 45 33 c9 45 33 c0 33 d2"
+    },
+    {
+      "rva": "0x1f2533a",
+      "symbol": {
+        "address": "0x181f2533a",
+        "symbol": "RenderDocGPUProfiler::BeginCapture",
+        "displacement": "0x5a",
+        "moduleBase": "0x180000000"
+      },
+      "bytes": "cf 48 8b 98 98 00 00 00 e8 a1 7f 2b fe 48 8b d0 48 8b ce ff d3 48 8b 74"
+    },
+    {
+      "rva": "0x1f2540a",
+      "symbol": {
+        "address": "0x181f2540a",
+        "symbol": "RenderDocGPUProfiler::EndCapture",
+        "displacement": "0x5a",
+        "moduleBase": "0x180000000"
+      },
+      "bytes": "cf 48 8b 98 a8 00 00 00 e8 d1 7e 2b fe 48 8b d0 48 8b ce ff d3 48 8b 74"
+    }
+  ]
+}

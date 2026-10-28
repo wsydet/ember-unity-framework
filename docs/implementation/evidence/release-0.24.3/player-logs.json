@@ -1,0 +1,102 @@
+[
+  {
+    "path": "docs/implementation/evidence/b03-20261028/baseline-fixture/player.log",
+    "bytes": 6389,
+    "sha256": "b94e788ca97dada31e74a43a9d31905d2d949e07bb3de9323942863b0974e232"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/final-player/player.log",
+    "bytes": 6395,
+    "sha256": "fd9630483350210edabb8fe17a699a0e965f0eb95ee44bf956b9566c01ebfdfe"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/fixed-fixture/player.log",
+    "bytes": 6273,
+    "sha256": "1500fa462b12cf7e1fae67795bf712dd2434348435f00855dd9d16e539e50a6f"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/original-medium/player.log",
+    "bytes": 447791,
+    "sha256": "81dc6846f7c116ac67851603e790c907ebafb67ff6cdc04cd32d119b949f2532"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/original-player-2/player.log",
+    "bytes": 447995,
+    "sha256": "b601564d411b2b545b3d11346d731f5b1638468f5f18d272d01559b9889183f9"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/original-player/player.log",
+    "bytes": 265791,
+    "sha256": "2d935b275ba75b01081f7f7a671be587dea54e56a5deb96a82297ae9e64deed5"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/protected-player-all-cells/player.log",
+    "bytes": 6580,
+    "sha256": "6150009eeb4320479c85619593336ebaca33bce05c53646c69eb7694932d1389"
+  },
+  {
+    "path": "docs/implementation/evidence/b03-20261028/verified-player/player.log",
+    "bytes": 6704,
+    "sha256": "f7c44228715348fc7e3dfb64421f1d47a910356a04bec8c8e116388e58041eca"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-baseline-1/player.log",
+    "bytes": 448128,
+    "sha256": "d63ad68c4ddb4e7d6c4e4f473a5ba760387cf9561cd7b45e47bd988f136c148d"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-trace-1/player.log",
+    "bytes": 448122,
+    "sha256": "63fd06af40656e9eaf248a9e1b9a0ab076adfc47e1f87fd67a56687016bcdf18"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-uia-1/player.log",
+    "bytes": 451638,
+    "sha256": "44e07cad2ff657e0393d4c3f22b07016ff0c38ed91ec870633c1e874d1f26e90"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-uia-once-dump/player.log",
+    "bytes": 451917,
+    "sha256": "158db7b3e5f1dae4e5ceadc1624cc254854f09d887a0824181e29732c07eabf4"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-uia-once-no-breakpoints/player.log",
+    "bytes": 451656,
+    "sha256": "ca73b14c85db8d59d5094c0be6efe8521661f20db8af6c8266ca2e83c6fb3d39"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/debugger-uia-once-trace/player.log",
+    "bytes": 447677,
+    "sha256": "9a1344c43c84b7e71ae53a65f52bb5bff094893ccbbbd585a8b4ab31a47d75de"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-native-uia-once/player.log",
+    "bytes": 5097,
+    "sha256": "367c2c721c23d3b1b4560e0ae1c6d9cd4974aaccf5f2e769145b99f2075a5768"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-no-uia-1/player.log",
+    "bytes": 5488,
+    "sha256": "eebb42f216295ea99dcfe76abb7453c0e2979d04502db1846f96d5ff5bd81e9a"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-visible-no-uia-1/player.log",
+    "bytes": 6111,
+    "sha256": "4a5d41bc02adf522b4fda942c97d75cbb64c3839123d252c3fe9a64518983b93"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-visible-no-uia-2/player.log",
+    "bytes": 6109,
+    "sha256": "41aa31c932203874eb282a515bc1c04567c63f418a70a9e97ff698215ddfd294"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-visible-uia-once-1/player.log",
+    "bytes": 5542,
+    "sha256": "207d94d4dcc2d20297535cd57365b11007aaad72b950c6856eac4645866262e4"
+  },
+  {
+    "path": "docs/implementation/evidence/exit-native-20261028/idle-visible-uia-once-2/player.log",
+    "bytes": 5542,
+    "sha256": "4950516e2c1e6de6f95052f8f8db7d29abfd98d606cce81591c615adfa7c7386"
+  }
+]

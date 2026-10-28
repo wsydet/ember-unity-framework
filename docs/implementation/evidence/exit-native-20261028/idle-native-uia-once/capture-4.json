@@ -1,0 +1,88 @@
+{
+  "kind": "trace-screen-dtor",
+  "tid": 81908,
+  "firstChance": true,
+  "code": "0x80000003",
+  "exceptionAddress": "0x7ffb5f75c0a0",
+  "information": [
+    "0x0"
+  ],
+  "registers": {
+    "rax": "0x1",
+    "rcx": "0x171010c2490",
+    "rdx": "0xd",
+    "rbx": "0x171010c2490",
+    "rsp": "0x6d9e6ef048",
+    "rbp": "0x6d9e6ef189",
+    "rsi": "0x1",
+    "rdi": "0x0",
+    "r8": "0xe",
+    "r9": "0x6",
+    "r10": "0x17105219580",
+    "r11": "0x1709ada0008",
+    "r12": "0x0",
+    "r13": "0x10",
+    "r14": "0x0",
+    "r15": "0xc6060a",
+    "rip": "0x7ffb5f75c0a1"
+  },
+  "screen": {
+    "screenManager": "0x171010c2490",
+    "window": "0xc6060a"
+  },
+  "frames": [
+    {
+      "address": "0x7ffb5f75c0a1",
+      "symbol": "ScreenManager::~ScreenManager",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5f75c0a1",
+      "symbol": "ScreenManager::~ScreenManager",
+      "displacement": "0x1",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5f7675ca",
+      "symbol": "ReleaseScreenManager",
+      "displacement": "0x1a",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5f470b95",
+      "symbol": "CleanupEngine",
+      "displacement": "0x1f5",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5f40471c",
+      "symbol": "PlayerCleanup",
+      "displacement": "0xac",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee79e96",
+      "symbol": "DoQuit",
+      "displacement": "0x46",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffb5ee7dbcf",
+      "symbol": "PlayerMainWndProc",
+      "displacement": "0x87f",
+      "moduleBase": "0x7ffb5d460000"
+    },
+    {
+      "address": "0x7ffd2d7952e6",
+      "module": "C:\\Windows\\System32\\user32.dll",
+      "rva": "0x152e6"
+    }
+  ],
+  "phase": {
+    "quitRequested": false,
+    "inputStopped": true,
+    "playerConnectionCleanup": false,
+    "logTail": "xport/Logging/DebugLogHandler.cs:9)\r\nUnityEngine.Logger:Log (UnityEngine.LogType,object) (at C:/build/output/unity/unity/Runtime/Export/Logging/Logger.cs:60)\r\nUnityEngine.Debug:Log (object) (at C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs:123)\r\nSirenix.Serialization.ArchitectureInfo:.cctor () (at C:/Sirenix/OdinSerializer/OdinSerializer/Core/Misc/ArchitectureInfo.cs:53)\r\nSirenix.Serialization.UnitySerializationInitializer:Initialize () (at C:/Sirenix/OdinSerializer/OdinSerializer/Unity Integration/UnitySerializationInitializer.cs:57)\r\nSirenix.Serialization.UnitySerializationInitializer:InitializeRuntime () (at C:/Sirenix/OdinSerializer/OdinSerializer/Unity Integration/UnitySerializationInitializer.cs:88)\r\n\r\n(Filename: C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs Line: 123)\r\n\r\nOdin Serializer detected whitelisted runtime platform WindowsPlayer and memory read test succeeded; enabling all unaligned memory read/writes.\r\nUnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)\r\nUnityEngine.StackTraceUtility:ExtractStackTrace () (at C:/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)\r\nUnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)\r\nUnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[]) (at C:/build/output/unity/unity/Runtime/Export/Logging/DebugLogHandler.cs:9)\r\nUnityEngine.Logger:Log (UnityEngine.LogType,object) (at C:/build/output/unity/unity/Runtime/Export/Logging/Logger.cs:60)\r\nUnityEngine.Debug:Log (object) (at C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs:123)\r\nSirenix.Serialization.ArchitectureInfo:SetRuntimePlatform (UnityEngine.RuntimePlatform) (at C:/Sirenix/OdinSerializer/OdinSerializer/Core/Misc/ArchitectureInfo.cs:115)\r\nSirenix.Serialization.UnitySerializationInitializer:Initialize () (at C:/Sirenix/OdinSerializer/OdinSerializer/Unity Integration/UnitySerializationInitializer.cs:57)\r\nSirenix.Serialization.UnitySerializationInitializer:InitializeRuntime () (at C:/Sirenix/OdinSerializer/OdinSerializer/Unity Integration/UnitySerializationInitializer.cs:88)\r\n\r\n(Filename: C:/build/output/unity/unity/Runtime/Export/Debug/Debug.bindings.cs Line: 123)\r\n\r\n[Physics::Module] Cleanup current backend.\r\n[Physics::Module] Id: 0xf2b8ea05\r\nInput System module state changed to: ShutdownInProgress.\r\nInput Polling Thread exited.\r\nInput System module state changed to: Shutdown.\r\n"
+  }
+}

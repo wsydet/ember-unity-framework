@@ -1,0 +1,29 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Build Succeeded.\",\"data\":{\"job_id\":\"build-0939a9657f\",\"result\":\"succeeded\",\"platform\":\"StandaloneWindows64\",\"output_path\":\"Builds/Windows64/B02-0242/Windward.exe\",\"started_at\":\"2026-10-27T17:32:26.1887884Z\",\"duration_seconds\":49.562475299999996,\"completed_at\":\"2026-10-27T17:33:15.7512637Z\",\"total_size_mb\":272.25,\"errors\":0,\"warnings\":1}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Build Succeeded.",
+      "data": {
+        "job_id": "build-0939a9657f",
+        "result": "succeeded",
+        "platform": "StandaloneWindows64",
+        "output_path": "Builds/Windows64/B02-0242/Windward.exe",
+        "started_at": "2026-10-27T17:32:26.1887884Z",
+        "duration_seconds": 49.562475299999996,
+        "completed_at": "2026-10-27T17:33:15.7512637Z",
+        "total_size_mb": 272.25,
+        "errors": 0,
+        "warnings": 1
+      }
+    },
+    "isError": false
+  }
+}

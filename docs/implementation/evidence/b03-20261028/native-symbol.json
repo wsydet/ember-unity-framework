@@ -1,0 +1,11 @@
+{
+  "initialized": true,
+  "moduleBase": "0x180000000",
+  "resolved": true,
+  "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+  "displacement": "0x9",
+  "lastError": 487,
+  "imageSha256": "0FCF6D820362361DEB538A02142AAFE6DD9343EA3BEF90078E837E5E45123B82",
+  "installedImageSha256": "0FCF6D820362361DEB538A02142AAFE6DD9343EA3BEF90078E837E5E45123B82",
+  "pdb": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.5.4f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityPlayer_Win64_player_development_mono_x64.pdb"
+}

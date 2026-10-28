@@ -1,0 +1,844 @@
+{
+  "fault": {
+    "address": "0x1801dd2e9",
+    "module": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\UnityPlayer.dll",
+    "rva": "0x1dd2e9"
+  },
+  "bytesAtFunction": "48 83 ec 28 e8 57 72 12 02 48 8b 80 38 01 00 00 48 83 c4 28 c3 cc cc cc cc cc cc cc cc cc cc cc 48 8b 41 40 c3 cc cc cc cc cc cc cc cc cc cc cc e9 eb d3 00 00 cc cc cc cc cc cc cc cc cc cc cc 48 83 ec 28 8b 49 68 e8 e4 f8 00 00 33 c9 ba 05 40 00 80 84 c0 0f 44 ca 8b c1 48 83 c4 28 c3 cc",
+  "profilerFunctions": [
+    {
+      "symbol": "ExternalGPUProfiler::`RTTI Base Class Array'",
+      "address": "0x18353e210",
+      "rva": "0x353e210"
+    },
+    {
+      "symbol": "ExternalGPUProfiler::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x18353e1f8",
+      "rva": "0x353e1f8"
+    },
+    {
+      "symbol": "ExternalGPUProfilerFactory::FindAndInit",
+      "address": "0x181f25480",
+      "rva": "0x1f25480"
+    },
+    {
+      "symbol": "ExternalGPUProfilerBindings::EndGPUCapture",
+      "address": "0x18227ed30",
+      "rva": "0x227ed30"
+    },
+    {
+      "symbol": "ExternalGPUProfilerBindings::IsAttached",
+      "address": "0x182282a90",
+      "rva": "0x2282a90"
+    },
+    {
+      "symbol": "ExternalGPUProfiler `RTTI Type Descriptor'",
+      "address": "0x185082be0",
+      "rva": "0x5082be0"
+    },
+    {
+      "symbol": "ExternalGPUProfiler_CUSTOM_IsAttached",
+      "address": "0x1816abca0",
+      "rva": "0x16abca0"
+    },
+    {
+      "symbol": "Singleton<ExternalGPUProfilerFactory>::g_Instance",
+      "address": "0x18520a3d0",
+      "rva": "0x520a3d0"
+    },
+    {
+      "symbol": "ExternalGPUProfiler::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x18353e220",
+      "rva": "0x353e220"
+    },
+    {
+      "symbol": "ExternalGPUProfiler_CUSTOM_EndGPUCapture",
+      "address": "0x1816ab8b0",
+      "rva": "0x16ab8b0"
+    },
+    {
+      "symbol": "ExternalGPUProfilerBindings::BeginGPUCapture",
+      "address": "0x18227ad20",
+      "rva": "0x227ad20"
+    },
+    {
+      "symbol": "ExternalGPUProfiler_CUSTOM_BeginGPUCapture",
+      "address": "0x1816ab5a0",
+      "rva": "0x16ab5a0"
+    },
+    {
+      "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+      "address": "0x1801dd2e0",
+      "rva": "0x1dd2e0"
+    }
+  ],
+  "gfxDestruction": [
+    {
+      "symbol": "DestroyGfxDevice",
+      "address": "0x181b82780",
+      "rva": "0x1b82780"
+    }
+  ],
+  "windowDestruction": [
+    {
+      "symbol": "_imp_DestroyWindow",
+      "address": "0x182e70b60",
+      "rva": "0x2e70b60"
+    },
+    {
+      "symbol": "vksc::PlatformDestroyWindowTemp",
+      "address": "0x182dd6ca0",
+      "rva": "0x2dd6ca0"
+    }
+  ],
+  "faultAfterSymbolLoad": {
+    "address": "0x1801dd2e9",
+    "symbol": "ExternalGPUProfiler::GetGameViewWindowHandle",
+    "displacement": "0x9",
+    "moduleBase": "0x180000000"
+  },
+  "callee": {
+    "address": "0x182304540",
+    "symbol": "GetScreenManager",
+    "displacement": "0x0",
+    "moduleBase": "0x180000000"
+  },
+  "calleeBytes": "48 8b 05 79 40 f1 02 c3 cc cc cc cc cc cc cc cc 48 89 5c 24 08 57 48 83 ec 20 48 8b d9 48 8d b9 90 00 00 00 48 83 c1 30 e8 f3 8d 83 ff 84 c0 74",
+  "screenFunctions": [
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::IgnoreScreenManagerTests",
+      "address": "0x181b8e750",
+      "rva": "0x1b8e750"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::`dynamic initializer for 'adderBackbuffer_AlwaysEnoughSizeForResolution''",
+      "address": "0x180099760",
+      "rva": "0x99760"
+    },
+    {
+      "symbol": "ScreenManager::SetIsFullscreenImmediate",
+      "address": "0x18230efa0",
+      "rva": "0x230efa0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`vector deleting destructor'",
+      "address": "0x18013d250",
+      "rva": "0x13d250"
+    },
+    {
+      "symbol": "ScreenManager::RequestOrientation",
+      "address": "0x180d29be0",
+      "rva": "0xd29be0"
+    },
+    {
+      "symbol": "ScreenManager::GetDPI",
+      "address": "0x1801ef3e0",
+      "rva": "0x1ef3e0"
+    },
+    {
+      "symbol": "ScreenManager::SetLockCursor",
+      "address": "0x18230f070",
+      "rva": "0x230f070"
+    },
+    {
+      "symbol": "ScreenManager::RequestHDRModeChange",
+      "address": "0x182307960",
+      "rva": "0x2307960"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x183560900",
+      "rva": "0x3560900"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`RTTI Base Class Array'",
+      "address": "0x183560918",
+      "rva": "0x3560918"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetLockCursorInternal",
+      "address": "0x181a296e0",
+      "rva": "0x1a296e0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`RTTI Base Class Array'",
+      "address": "0x183560810",
+      "rva": "0x3560810"
+    },
+    {
+      "symbol": "ScreenManagerWin::`scalar deleting destructor'",
+      "address": "0x181a226a0",
+      "rva": "0x1a226a0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x1835607f8",
+      "rva": "0x35607f8"
+    },
+    {
+      "symbol": "ScreenManagerWin::`vftable'",
+      "address": "0x1832427a8",
+      "rva": "0x32427a8"
+    },
+    {
+      "symbol": "ScreenManager::`RTTI Base Class Array'",
+      "address": "0x1835524c8",
+      "rva": "0x35524c8"
+    },
+    {
+      "symbol": "ScreenManager::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x1835524b0",
+      "rva": "0x35524b0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`vftable'",
+      "address": "0x18327e128",
+      "rva": "0x327e128"
+    },
+    {
+      "symbol": "ScreenManager::RestoreCursorLock",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetSystemResolution",
+      "address": "0x181a256f0",
+      "rva": "0x1a256f0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`scalar deleting destructor'",
+      "address": "0x18013d250",
+      "rva": "0x13d250"
+    },
+    {
+      "symbol": "ScreenManager::SetScreenTimeout",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ReleaseScreenManager",
+      "address": "0x1823075b0",
+      "rva": "0x23075b0"
+    },
+    {
+      "symbol": "ScreenManager::OnAntiAliasingChanged",
+      "address": "0x1823063d0",
+      "rva": "0x23063d0"
+    },
+    {
+      "symbol": "ScreenManager::GetCursorInsideWindow",
+      "address": "0x1817d21e0",
+      "rva": "0x17d21e0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::adderBackbuffer_AlwaysEnoughSizeForResolution",
+      "address": "0x1851fc8de",
+      "rva": "0x51fc8de"
+    },
+    {
+      "symbol": "ScreenManager::`RTTI Complete Object Locator'",
+      "address": "0x1835e9700",
+      "rva": "0x35e9700"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x183560930",
+      "rva": "0x3560930"
+    },
+    {
+      "symbol": "ScreenManagerWin::`vector deleting destructor'",
+      "address": "0x181a226a0",
+      "rva": "0x1a226a0"
+    },
+    {
+      "symbol": "ScreenManager::SetupDisplay",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::`RTTI Complete Object Locator'",
+      "address": "0x1835608d8",
+      "rva": "0x35608d8"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution `RTTI Type Descriptor'",
+      "address": "0x18509ee20",
+      "rva": "0x509ee20"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetWidth",
+      "address": "0x18058c9a0",
+      "rva": "0x58c9a0"
+    },
+    {
+      "symbol": "ScreenManagerWin::RecommitCursorLock",
+      "address": "0x181a28fb0",
+      "rva": "0x1a28fb0"
+    },
+    {
+      "symbol": "ScreenManagerWin::MoveMainWindow",
+      "address": "0x181a28cb0",
+      "rva": "0x1a28cb0"
+    },
+    {
+      "symbol": "ScreenManager::PopulateHDROutputSettings",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManager::GetRect",
+      "address": "0x18051ac00",
+      "rva": "0x51ac00"
+    },
+    {
+      "symbol": "ScreenManager::ReapplyRequestedResolution",
+      "address": "0x182307110",
+      "rva": "0x2307110"
+    },
+    {
+      "symbol": "ScreenManager::GetShowCursor",
+      "address": "0x18015b350",
+      "rva": "0x15b350"
+    },
+    {
+      "symbol": "ScreenManager::GetHDROutputSettings",
+      "address": "0x180931b70",
+      "rva": "0x931b70"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetHeight",
+      "address": "0x18058a8c0",
+      "rva": "0x58a8c0"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetShowCursor",
+      "address": "0x180200b30",
+      "rva": "0x200b30"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`vftable'",
+      "address": "0x18327e118",
+      "rva": "0x327e118"
+    },
+    {
+      "symbol": "ScreenManagerWin::`RTTI Complete Object Locator'",
+      "address": "0x183552408",
+      "rva": "0x3552408"
+    },
+    {
+      "symbol": "ScreenManagerWin::BlitUpscaledFramebuffer",
+      "address": "0x181a22b40",
+      "rva": "0x1a22b40"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`scalar deleting destructor'",
+      "address": "0x181b8b8d0",
+      "rva": "0x1b8b8d0"
+    },
+    {
+      "symbol": "ScreenManager::GetScreenOrientation",
+      "address": "0x18024a3f0",
+      "rva": "0x24a3f0"
+    },
+    {
+      "symbol": "ScreenManager::GetSystemResolution",
+      "address": "0x182304670",
+      "rva": "0x2304670"
+    },
+    {
+      "symbol": "ScreenManager::SetResolutionImmediate",
+      "address": "0x180158070",
+      "rva": "0x158070"
+    },
+    {
+      "symbol": "ScreenManager::GetBrightness",
+      "address": "0x1801ec920",
+      "rva": "0x1ec920"
+    },
+    {
+      "symbol": "ScreenManager::IsFullscreen",
+      "address": "0x1823055b0",
+      "rva": "0x23055b0"
+    },
+    {
+      "symbol": "ScreenManagerWin::UpdateResolutionPrefs",
+      "address": "0x181a2adc0",
+      "rva": "0x1a2adc0"
+    },
+    {
+      "symbol": "ScreenManager::SetScreenOrientation",
+      "address": "0x180d29130",
+      "rva": "0xd29130"
+    },
+    {
+      "symbol": "ScreenManager::SetRequestedResolution",
+      "address": "0x18230f4c0",
+      "rva": "0x230f4c0"
+    },
+    {
+      "symbol": "ScreenManager::GetCutouts",
+      "address": "0x182303880",
+      "rva": "0x2303880"
+    },
+    {
+      "symbol": "ScreenManager::RequestSetFullscreenModeFromScript",
+      "address": "0x182307a60",
+      "rva": "0x2307a60"
+    },
+    {
+      "symbol": "ScreenManagerWin `RTTI Type Descriptor'",
+      "address": "0x185091cd8",
+      "rva": "0x5091cd8"
+    },
+    {
+      "symbol": "ScreenManagerWin::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x183552460",
+      "rva": "0x3552460"
+    },
+    {
+      "symbol": "ScreenManager::RequestSetFullscreenMode",
+      "address": "0x1809551f0",
+      "rva": "0x9551f0"
+    },
+    {
+      "symbol": "ScreenManagerWin::IsFullscreen",
+      "address": "0x18024b2e0",
+      "rva": "0x24b2e0"
+    },
+    {
+      "symbol": "ScreenManagerWin::UpdateHDRDisplaySupport",
+      "address": "0x181a21880",
+      "rva": "0x1a21880"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::testBackbuffer_AlwaysEnoughSizeForResolutionFactory",
+      "address": "0x184f1f3c8",
+      "rva": "0x4f1f3c8"
+    },
+    {
+      "symbol": "ScreenManager::GetAllowLayeredRendering",
+      "address": "0x18015b350",
+      "rva": "0x15b350"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x1835608b0",
+      "rva": "0x35608b0"
+    },
+    {
+      "symbol": "ScreenManager::RequestSetFullscreenFromScript",
+      "address": "0x1823079e0",
+      "rva": "0x23079e0"
+    },
+    {
+      "symbol": "ScreenManagerWin::HandleWindowResize",
+      "address": "0x181a25740",
+      "rva": "0x1a25740"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetWindow",
+      "address": "0x181a2a7c0",
+      "rva": "0x1a2a7c0"
+    },
+    {
+      "symbol": "ScreenManagerWin::ActivateMultiDisplay",
+      "address": "0x181a22a80",
+      "rva": "0x1a22a80"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`vector deleting destructor'",
+      "address": "0x181b8b8d0",
+      "rva": "0x1b8b8d0"
+    },
+    {
+      "symbol": "ScreenManager::GetResolutions",
+      "address": "0x182303880",
+      "rva": "0x2303880"
+    },
+    {
+      "symbol": "ScreenManager::GetDefaultFrameRate",
+      "address": "0x1811103b0",
+      "rva": "0x11103b0"
+    },
+    {
+      "symbol": "GetScreenManagerPtr",
+      "address": "0x182304540",
+      "rva": "0x2304540"
+    },
+    {
+      "symbol": "ScreenManager::RequestSetFullscreen",
+      "address": "0x182307990",
+      "rva": "0x2307990"
+    },
+    {
+      "symbol": "ScreenManager::GetRequestedMSAASamples",
+      "address": "0x1823044e0",
+      "rva": "0x23044e0"
+    },
+    {
+      "symbol": "ScreenManager::SetAllowCursorLock",
+      "address": "0x18230ee70",
+      "rva": "0x230ee70"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetAllowCursorHide",
+      "address": "0x181a29560",
+      "rva": "0x1a29560"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetRequestedResolution",
+      "address": "0x181a29a40",
+      "rva": "0x1a29a40"
+    },
+    {
+      "symbol": "ScreenManager::IsHDROutputFakingEnabled",
+      "address": "0x1823055e0",
+      "rva": "0x23055e0"
+    },
+    {
+      "symbol": "ScreenManager::SetAllowLayeredRendering",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManager::UpdateCursorInsideWindowFromInputManager",
+      "address": "0x18230f760",
+      "rva": "0x230f760"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`RTTI Base Class Array'",
+      "address": "0x183560890",
+      "rva": "0x3560890"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x183560878",
+      "rva": "0x3560878"
+    },
+    {
+      "symbol": "GetScreenManager",
+      "address": "0x182304540",
+      "rva": "0x2304540"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetScreenTimeout",
+      "address": "0x181a2a680",
+      "rva": "0x1a2a680"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::`RTTI Complete Object Locator'",
+      "address": "0x183560850",
+      "rva": "0x3560850"
+    },
+    {
+      "symbol": "ScreenManager::UpdateResolutionAfterPresent",
+      "address": "0x18015b350",
+      "rva": "0x15b350"
+    },
+    {
+      "symbol": "ScreenManagerWin::UpdateResolutionAfterPresent",
+      "address": "0x181a2a910",
+      "rva": "0x1a2a910"
+    },
+    {
+      "symbol": "ScreenManager::SetLockCursorInternal",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManager::IsValidForRender",
+      "address": "0x18015b350",
+      "rva": "0x15b350"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`scalar deleting destructor'",
+      "address": "0x181b8b7f0",
+      "rva": "0x1b8b7f0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`vftable'",
+      "address": "0x18327e108",
+      "rva": "0x327e108"
+    },
+    {
+      "symbol": "ScreenManager::GetSafeArea",
+      "address": "0x18051ac00",
+      "rva": "0x51ac00"
+    },
+    {
+      "symbol": "ScreenManagerWin::ScreenManagerWin",
+      "address": "0x181a224c0",
+      "rva": "0x1a224c0"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetResolutions",
+      "address": "0x181a25210",
+      "rva": "0x1a25210"
+    },
+    {
+      "symbol": "ScreenManagerWin::`RTTI Class Hierarchy Descriptor'",
+      "address": "0x183552430",
+      "rva": "0x3552430"
+    },
+    {
+      "symbol": "ScreenManagerWin::`RTTI Base Class Array'",
+      "address": "0x183552448",
+      "rva": "0x3552448"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetResolutionImmediate",
+      "address": "0x181a29cd0",
+      "rva": "0x1a29cd0"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetShowCursor",
+      "address": "0x181a2a6a0",
+      "rva": "0x1a2a6a0"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetMainWindowDisplayInfo",
+      "address": "0x181a24420",
+      "rva": "0x1a24420"
+    },
+    {
+      "symbol": "ScreenManagerWin::IsMultiDisplayEnabled",
+      "address": "0x181a1b4e0",
+      "rva": "0x1a1b4e0"
+    },
+    {
+      "symbol": "ScreenManager::IsMultiDisplayEnabled",
+      "address": "0x180158070",
+      "rva": "0x158070"
+    },
+    {
+      "symbol": "ScreenManager::GetCurrentResolution",
+      "address": "0x182303800",
+      "rva": "0x2303800"
+    },
+    {
+      "symbol": "ScreenManager::SetShowCursor",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`vector deleting destructor'",
+      "address": "0x181b8b7f0",
+      "rva": "0x1b8b7f0"
+    },
+    {
+      "symbol": "ScreenManager::IsExplicitCommitCursorLockRequired",
+      "address": "0x180158070",
+      "rva": "0x158070"
+    },
+    {
+      "symbol": "ScreenManagerWin::SetCursorInsideWindow",
+      "address": "0x181a29580",
+      "rva": "0x1a29580"
+    },
+    {
+      "symbol": "ScreenManager::GetFullscreenMode",
+      "address": "0x18083c450",
+      "rva": "0x83c450"
+    },
+    {
+      "symbol": "InitScreenManager",
+      "address": "0x1823054d0",
+      "rva": "0x23054d0"
+    },
+    {
+      "symbol": "ScreenManagerWin::IsStereoscopic",
+      "address": "0x181a27b60",
+      "rva": "0x1a27b60"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::CreateTestBackbuffer_AlwaysEnoughSizeForResolution",
+      "address": "0x181b8c5b0",
+      "rva": "0x1b8c5b0"
+    },
+    {
+      "symbol": "ScreenManager::GetRect",
+      "address": "0x182304410",
+      "rva": "0x2304410"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetCurrentResolution",
+      "address": "0x181a24200",
+      "rva": "0x1a24200"
+    },
+    {
+      "symbol": "ScreenManager::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x183552488",
+      "rva": "0x3552488"
+    },
+    {
+      "symbol": "ScreenManager::SetIsOrientationEnabled",
+      "address": "0x18230f050",
+      "rva": "0x230f050"
+    },
+    {
+      "symbol": "ScreenManager::`scalar deleting destructor'",
+      "address": "0x1822fca20",
+      "rva": "0x22fca20"
+    },
+    {
+      "symbol": "ScreenManager::SetBrightness",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManagerWin::InvalidateDWMQuirkDetection",
+      "address": "0x181a25e50",
+      "rva": "0x1a25e50"
+    },
+    {
+      "symbol": "ScreenManager::SetAllowCursorHide",
+      "address": "0x18230ee50",
+      "rva": "0x230ee50"
+    },
+    {
+      "symbol": "ScreenManager::GetScriptingHDROutputSettings",
+      "address": "0x182304550",
+      "rva": "0x2304550"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetDisplayLayout",
+      "address": "0x181a242a0",
+      "rva": "0x1a242a0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+      "address": "0x183560828",
+      "rva": "0x3560828"
+    },
+    {
+      "symbol": "ScreenManager::GetScreenTimeout",
+      "address": "0x1801be080",
+      "rva": "0x1be080"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture `RTTI Type Descriptor'",
+      "address": "0x18509ed40",
+      "rva": "0x509ed40"
+    },
+    {
+      "symbol": "ScreenManager::ScreenManager",
+      "address": "0x1822fbea0",
+      "rva": "0x22fbea0"
+    },
+    {
+      "symbol": "ScreenManager::SetCursorInsideWindow",
+      "address": "0x18230ef30",
+      "rva": "0x230ef30"
+    },
+    {
+      "symbol": "ScreenManager::IsStereoscopic",
+      "address": "0x180158070",
+      "rva": "0x158070"
+    },
+    {
+      "symbol": "ScreenManagerWin::NotifyUnityOnResolutionChange",
+      "address": "0x181a28d80",
+      "rva": "0x1a28d80"
+    },
+    {
+      "symbol": "ScreenManager `RTTI Type Descriptor'",
+      "address": "0x185091d00",
+      "rva": "0x5091d00"
+    },
+    {
+      "symbol": "ScreenManager::~ScreenManager",
+      "address": "0x1822fc0a0",
+      "rva": "0x22fc0a0"
+    },
+    {
+      "symbol": "ScreenManagerWin::IsExplicitCommitCursorLockRequired",
+      "address": "0x18015b350",
+      "rva": "0x15b350"
+    },
+    {
+      "symbol": "ScreenManager::SetHDROutputFakingEnabled",
+      "address": "0x18230ef90",
+      "rva": "0x230ef90"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper::RunImpl",
+      "address": "0x181b903d0",
+      "rva": "0x1b903d0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolution::RunImpl",
+      "address": "0x181b90300",
+      "rva": "0x1b90300"
+    },
+    {
+      "symbol": "ScreenManagerWin::~ScreenManagerWin",
+      "address": "0x181a22520",
+      "rva": "0x1a22520"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetMainWindowPosition",
+      "address": "0x181a245b0",
+      "rva": "0x1a245b0"
+    },
+    {
+      "symbol": "ScreenManager::`vector deleting destructor'",
+      "address": "0x1822fca20",
+      "rva": "0x22fca20"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetScreenTimeout",
+      "address": "0x1817879e0",
+      "rva": "0x17879e0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::TestBackbuffer_AlwaysEnoughSizeForResolutionHelper `RTTI Type Descriptor'",
+      "address": "0x18509eda0",
+      "rva": "0x509eda0"
+    },
+    {
+      "symbol": "SuiteGfxDevice_ScreenManagerkIntegrationTestCategory::Fixture::`RTTI Complete Object Locator'",
+      "address": "0x1835607d0",
+      "rva": "0x35607d0"
+    },
+    {
+      "symbol": "ScreenManager::SetRequestedMSAASamples",
+      "address": "0x18230f280",
+      "rva": "0x230f280"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetFullscreenMode",
+      "address": "0x1817876e0",
+      "rva": "0x17876e0"
+    },
+    {
+      "symbol": "ScreenManager::CommitCursorLock",
+      "address": "0x182300350",
+      "rva": "0x2300350"
+    },
+    {
+      "symbol": "ScreenManager::RequestResolution",
+      "address": "0x182307970",
+      "rva": "0x2307970"
+    },
+    {
+      "symbol": "ScreenManager::UpdateHDRDisplaySupport",
+      "address": "0x180148450",
+      "rva": "0x148450"
+    },
+    {
+      "symbol": "ScreenManagerWin::GetDPI",
+      "address": "0x1802bd170",
+      "rva": "0x2bd170"
+    },
+    {
+      "symbol": "ScreenManager::`vftable'",
+      "address": "0x18331d5c8",
+      "rva": "0x331d5c8"
+    }
+  ],
+  "sameAddressAliases": [
+    "PlatformAccessibilityTestUtilities::GetWindow",
+    "ExternalGPUProfiler::GetGameViewWindowHandle"
+  ],
+  "screenManagerGlobalRva": "0x52185c0"
+}

@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Build Succeeded.",
+  "data": {
+    "job_id": "build-a639171927",
+    "result": "succeeded",
+    "platform": "StandaloneWindows64",
+    "output_path": "Builds/B03/Protected/EmberRegression.exe",
+    "started_at": "2026-10-28T04:02:16.3648049Z",
+    "duration_seconds": 42.2219828,
+    "completed_at": "2026-10-28T04:02:58.5867877Z",
+    "total_size_mb": 236.9,
+    "errors": 0,
+    "warnings": 0
+  }
+}

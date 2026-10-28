@@ -1,0 +1,128 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "b96d9797ac504300a28627d0f22037e0",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793168732582,
+      "finished_unix_ms": 1793168771527,
+      "last_update_unix_ms": 1793168771527,
+      "progress": {
+        "completed": 9,
+        "total": 9,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+        "last_finished_unix_ms": 1793168770937,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 9,
+          "passed": 9,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 32.0782823,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "TwoCacheInvalidationsRestoreReferencesWithoutChangingTileState",
+            "fullName": "Ember.LevelAuthoring.Tests.EmberTerrainCacheLifecycleTests.TwoCacheInvalidationsRestoreReferencesWithoutChangingTileState",
+            "state": "Passed",
+            "durationSeconds": 0.6450896,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CatalogRejectsMissingMappingsAndDoesNotUseListPositionAsIdentity",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.CatalogRejectsMissingMappingsAndDoesNotUseListPositionAsIdentity",
+            "state": "Passed",
+            "durationSeconds": 0.0608231,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ConversionPreservesPrefabInputReferenceAndTypography",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.ConversionPreservesPrefabInputReferenceAndTypography",
+            "state": "Passed",
+            "durationSeconds": 1.2014724,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisabledTextCatchesUpAndMissingSelectionKeepsExistingFont",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.DisabledTextCatchesUpAndMissingSelectionKeepsExistingFont",
+            "state": "Passed",
+            "durationSeconds": 0.0553173,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EachSkinUsesItsOwnSelectionAndFixedTextDoesNotChange",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.EachSkinUsesItsOwnSelectionAndFixedTextDoesNotChange",
+            "state": "Passed",
+            "durationSeconds": 0.0124114,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GenericComponentReplacementRejectsUnrelatedTextTypesBeforeCloning",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.GenericComponentReplacementRejectsUnrelatedTextTypesBeforeCloning",
+            "state": "Passed",
+            "durationSeconds": 0.0097694,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LegacyConversionCopiesOnlyDisplayPropertiesAndSavesCleanPrefab",
+            "fullName": "Ember.UI.Tests.EmberFontSkinEditTests.LegacyConversionCopiesOnlyDisplayPropertiesAndSavesCleanPrefab",
+            "state": "Passed",
+            "durationSeconds": 1.3162225,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance",
+            "fullName": "Ember.UI.Tests.EmberWritableFontsTests.FixedPrefabMigrationPreservesComponentIdentityAndMaterialAppearance",
+            "state": "Passed",
+            "durationSeconds": 8.1275174,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "fullName": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "state": "Passed",
+            "durationSeconds": 18.9461804,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "root": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+      "compiling": false,
+      "updating": false,
+      "failed": false,
+      "assemblies": [
+        {
+          "name": "Ember.UIExtension.Editor",
+          "mvid": "41d4254e-c601-4957-b913-736fb4007f85"
+        },
+        {
+          "name": "Ember.LevelAuthoring.Runtime",
+          "mvid": "f887f3f2-3c4a-445e-a197-05d41f9ec0e7"
+        }
+      ],
+      "issues": [],
+      "templates": [
+        {
+          "id": "base",
+          "version": "0.10.0",
+          "frameworkVersion": "0.24.0",
+          "contentHash": "61cbe49aa797b1604f293b9756674566",
+          "versionedContentHash": "61cbe49aa797b1604f293b9756674566",
+          "actual": "61cbe49aa797b1604f293b9756674566",
+          "parentContentHash": "",
+          "parentActual": ""
+        },
+        {
+          "id": "platformer-2d",
+          "version": "0.13.0",
+          "frameworkVersion": "0.24.0",
+          "contentHash": "ff217ca17005f39519049c46a83c138b",
+          "versionedContentHash": "ff217ca17005f39519049c46a83c138b",
+          "actual": "ff217ca17005f39519049c46a83c138b",
+          "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+          "parentActual": "61cbe49aa797b1604f293b9756674566"
+        },
+        {
+          "id": "source3d-2p5d",
+          "version": "0.6.0",
+          "frameworkVersion": "0.24.0",
+          "contentHash": "f98b85bf591042619e55fafd5cd88af4",
+          "versionedContentHash": "f98b85bf591042619e55fafd5cd88af4",
+          "actual": "f98b85bf591042619e55fafd5cd88af4",
+          "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+          "parentActual": "61cbe49aa797b1604f293b9756674566"
+        },
+        {
+          "id": "ui-game",
+          "version": "0.2.0",
+          "frameworkVersion": "0.24.0",
+          "contentHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+          "versionedContentHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+          "actual": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+          "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+          "parentActual": "61cbe49aa797b1604f293b9756674566"
+        },
+        {
+          "id": "visual-novel",
+          "version": "0.22.1",
+          "frameworkVersion": "0.24.0",
+          "contentHash": "61155f5eb3958eacdbd0a9467ebf60c3",
+          "versionedContentHash": "61155f5eb3958eacdbd0a9467ebf60c3",
+          "actual": "61155f5eb3958eacdbd0a9467ebf60c3",
+          "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+          "parentActual": "61cbe49aa797b1604f293b9756674566"
+        }
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "b5f02ad702554e8e9fe66f5ce2712c49",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1793158510500,
+      "finished_unix_ms": 1793158591562,
+      "last_update_unix_ms": 1793158591562,
+      "progress": {
+        "completed": 8,
+        "total": 8,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+        "last_finished_unix_ms": 1793158591207,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Ember.UI.Tests.EmberWritableFontsTests.GeneratedFontsOwnAtlasMaterialAndFallbackAndDoNotModifySources",
+            "message": "  ★\r\n  Expected: True\r\n  But was:  False\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "candidate": "C:/Users/wuyu/.codex/worktrees/release-0243/ember-unity-framework",
+  "sharedBinaries": {"command": "python scripts/check-shared-binaries.py --revision : --checkout", "exitCode": 0, "fonts": 4, "cleanCheckoutAutocrlf": [false, true]},
+  "fontConfiguration": {"command": "python scripts/check-shared-font-config.py --revision :", "exitCode": 0, "ownership": "four shared dynamic source recipes excluded from build clearing; project-owned copies required"},
+  "skillBundle": {"command": "pwsh -NoProfile -File scripts/build-ai-skill-bundle.ps1 -Check", "exitCode": 0, "skills": 11, "files": 33, "regenerated": false},
+  "markdownLinks": {"documents": 6, "links": 61, "missing": []},
+  "diffCheck": {"command": "git diff --cached --check", "exitCode": 0},
+  "limitations": ["Main workspace bundle check rejected existing untracked skill directories; strict check passed in clean managed candidate without removing or committing them.", "Twenty raw Player logs are archived byte-for-byte with hashes instead of normalizing original CRLF evidence.", "Native dumps and two oversized raw gameplay receipts remain local; structured results, stacks and summaries are published."]
+}

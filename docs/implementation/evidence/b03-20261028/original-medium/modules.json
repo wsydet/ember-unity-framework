@@ -1,0 +1,414 @@
+[
+  {
+    "ModuleName": "Windward.exe",
+    "FileName": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\Windward.exe"
+  },
+  {
+    "ModuleName": "ntdll.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\ntdll.dll"
+  },
+  {
+    "ModuleName": "KERNEL32.DLL",
+    "FileName": "C:\\WINDOWS\\System32\\KERNEL32.DLL"
+  },
+  {
+    "ModuleName": "KERNELBASE.dll",
+    "FileName": "C:\\WINDOWS\\System32\\KERNELBASE.dll"
+  },
+  {
+    "ModuleName": "UnityPlayer.dll",
+    "FileName": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\UnityPlayer.dll"
+  },
+  {
+    "ModuleName": "CRYPT32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\CRYPT32.dll"
+  },
+  {
+    "ModuleName": "ucrtbase.dll",
+    "FileName": "C:\\WINDOWS\\System32\\ucrtbase.dll"
+  },
+  {
+    "ModuleName": "ole32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\ole32.dll"
+  },
+  {
+    "ModuleName": "msvcp_win.dll",
+    "FileName": "C:\\WINDOWS\\System32\\msvcp_win.dll"
+  },
+  {
+    "ModuleName": "GDI32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\GDI32.dll"
+  },
+  {
+    "ModuleName": "win32u.dll",
+    "FileName": "C:\\WINDOWS\\System32\\win32u.dll"
+  },
+  {
+    "ModuleName": "gdi32full.dll",
+    "FileName": "C:\\WINDOWS\\System32\\gdi32full.dll"
+  },
+  {
+    "ModuleName": "USER32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\USER32.dll"
+  },
+  {
+    "ModuleName": "combase.dll",
+    "FileName": "C:\\WINDOWS\\System32\\combase.dll"
+  },
+  {
+    "ModuleName": "RPCRT4.dll",
+    "FileName": "C:\\WINDOWS\\System32\\RPCRT4.dll"
+  },
+  {
+    "ModuleName": "SHLWAPI.dll",
+    "FileName": "C:\\WINDOWS\\System32\\SHLWAPI.dll"
+  },
+  {
+    "ModuleName": "SETUPAPI.dll",
+    "FileName": "C:\\WINDOWS\\System32\\SETUPAPI.dll"
+  },
+  {
+    "ModuleName": "msvcrt.dll",
+    "FileName": "C:\\WINDOWS\\System32\\msvcrt.dll"
+  },
+  {
+    "ModuleName": "shcore.dll",
+    "FileName": "C:\\WINDOWS\\System32\\shcore.dll"
+  },
+  {
+    "ModuleName": "SHELL32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\SHELL32.dll"
+  },
+  {
+    "ModuleName": "OLEAUT32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\OLEAUT32.dll"
+  },
+  {
+    "ModuleName": "IMM32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\IMM32.dll"
+  },
+  {
+    "ModuleName": "ADVAPI32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\ADVAPI32.dll"
+  },
+  {
+    "ModuleName": "sechost.dll",
+    "FileName": "C:\\WINDOWS\\System32\\sechost.dll"
+  },
+  {
+    "ModuleName": "WS2_32.dll",
+    "FileName": "C:\\WINDOWS\\System32\\WS2_32.dll"
+  },
+  {
+    "ModuleName": "VERSION.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\VERSION.dll"
+  },
+  {
+    "ModuleName": "WINMM.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\WINMM.dll"
+  },
+  {
+    "ModuleName": "dwmapi.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dwmapi.dll"
+  },
+  {
+    "ModuleName": "DSTORAGE.dll",
+    "FileName": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\DSTORAGE.dll"
+  },
+  {
+    "ModuleName": "WINHTTP.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\WINHTTP.dll"
+  },
+  {
+    "ModuleName": "IPHLPAPI.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL"
+  },
+  {
+    "ModuleName": "bcrypt.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\bcrypt.dll"
+  },
+  {
+    "ModuleName": "OPENGL32.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\OPENGL32.dll"
+  },
+  {
+    "ModuleName": "d3d11.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\d3d11.dll"
+  },
+  {
+    "ModuleName": "HID.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\HID.DLL"
+  },
+  {
+    "ModuleName": "UIAutomationCore.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\UIAutomationCore.DLL"
+  },
+  {
+    "ModuleName": "dxgi.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dxgi.dll"
+  },
+  {
+    "ModuleName": "GLU32.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\GLU32.dll"
+  },
+  {
+    "ModuleName": "powrprof.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\powrprof.dll"
+  },
+  {
+    "ModuleName": "dxcore.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dxcore.dll"
+  },
+  {
+    "ModuleName": "UMPDC.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\UMPDC.dll"
+  },
+  {
+    "ModuleName": "kernel.appcore.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\kernel.appcore.dll"
+  },
+  {
+    "ModuleName": "bcryptPrimitives.dll",
+    "FileName": "C:\\WINDOWS\\System32\\bcryptPrimitives.dll"
+  },
+  {
+    "ModuleName": "uxtheme.dll",
+    "FileName": "C:\\WINDOWS\\system32\\uxtheme.dll"
+  },
+  {
+    "ModuleName": "clbcatq.dll",
+    "FileName": "C:\\WINDOWS\\System32\\clbcatq.dll"
+  },
+  {
+    "ModuleName": "wbemprox.dll",
+    "FileName": "C:\\WINDOWS\\system32\\wbem\\wbemprox.dll"
+  },
+  {
+    "ModuleName": "wbemcomn.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\wbemcomn.dll"
+  },
+  {
+    "ModuleName": "wbemsvc.dll",
+    "FileName": "C:\\WINDOWS\\system32\\wbem\\wbemsvc.dll"
+  },
+  {
+    "ModuleName": "fastprox.dll",
+    "FileName": "C:\\WINDOWS\\system32\\wbem\\fastprox.dll"
+  },
+  {
+    "ModuleName": "amsi.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\amsi.dll"
+  },
+  {
+    "ModuleName": "USERENV.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\USERENV.dll"
+  },
+  {
+    "ModuleName": "profapi.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\profapi.dll"
+  },
+  {
+    "ModuleName": "mc-sec-plugin-x64.dll",
+    "FileName": "C:\\Program Files\\McAfee\\wps\\1.40.161.1\\mc-sec-plugin-x64.dll"
+  },
+  {
+    "ModuleName": "WINTRUST.dll",
+    "FileName": "C:\\WINDOWS\\System32\\WINTRUST.dll"
+  },
+  {
+    "ModuleName": "MSASN1.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\MSASN1.dll"
+  },
+  {
+    "ModuleName": "windows.storage.dll",
+    "FileName": "C:\\WINDOWS\\system32\\windows.storage.dll"
+  },
+  {
+    "ModuleName": "WinPixEventRuntime.dll",
+    "FileName": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\WinPixEventRuntime.dll"
+  },
+  {
+    "ModuleName": "VCRUNTIME140.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\VCRUNTIME140.dll"
+  },
+  {
+    "ModuleName": "VCRUNTIME140_1.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\VCRUNTIME140_1.dll"
+  },
+  {
+    "ModuleName": "MSVCP140.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\MSVCP140.dll"
+  },
+  {
+    "ModuleName": "mono-2.0-bdwgc.dll",
+    "FileName": "C:\\Users\\wuyu\\My\\Windward\\Builds\\Windows64\\B02-0242\\MonoBleedingEdge\\EmbedRuntime\\mono-2.0-bdwgc.dll"
+  },
+  {
+    "ModuleName": "mswsock.dll",
+    "FileName": "C:\\WINDOWS\\system32\\mswsock.dll"
+  },
+  {
+    "ModuleName": "NSI.dll",
+    "FileName": "C:\\WINDOWS\\System32\\NSI.dll"
+  },
+  {
+    "ModuleName": "dhcpcsvc6.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL"
+  },
+  {
+    "ModuleName": "dhcpcsvc.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL"
+  },
+  {
+    "ModuleName": "DNSAPI.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll"
+  },
+  {
+    "ModuleName": "DSPARSE.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\DSPARSE.dll"
+  },
+  {
+    "ModuleName": "napinsp.dll",
+    "FileName": "C:\\WINDOWS\\system32\\napinsp.dll"
+  },
+  {
+    "ModuleName": "winrnr.dll",
+    "FileName": "C:\\WINDOWS\\System32\\winrnr.dll"
+  },
+  {
+    "ModuleName": "nlansp_c.dll",
+    "FileName": "C:\\WINDOWS\\system32\\nlansp_c.dll"
+  },
+  {
+    "ModuleName": "wshbth.dll",
+    "FileName": "C:\\WINDOWS\\system32\\wshbth.dll"
+  },
+  {
+    "ModuleName": "secur32.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\secur32.dll"
+  },
+  {
+    "ModuleName": "SSPICLI.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\SSPICLI.DLL"
+  },
+  {
+    "ModuleName": "MSCTF.dll",
+    "FileName": "C:\\WINDOWS\\System32\\MSCTF.dll"
+  },
+  {
+    "ModuleName": "directxdatabasehelper.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\directxdatabasehelper.dll"
+  },
+  {
+    "ModuleName": "cfgmgr32.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\cfgmgr32.dll"
+  },
+  {
+    "ModuleName": "nvldumdx.dll",
+    "FileName": "C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\nv_dispig.inf_amd64_cc526ccc3287f5cd\\nvldumdx.dll"
+  },
+  {
+    "ModuleName": "cryptnet.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\cryptnet.dll"
+  },
+  {
+    "ModuleName": "cryptbase.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\cryptbase.dll"
+  },
+  {
+    "ModuleName": "wldp.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\wldp.dll"
+  },
+  {
+    "ModuleName": "drvstore.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\drvstore.dll"
+  },
+  {
+    "ModuleName": "devobj.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\devobj.dll"
+  },
+  {
+    "ModuleName": "imagehlp.dll",
+    "FileName": "C:\\WINDOWS\\System32\\imagehlp.dll"
+  },
+  {
+    "ModuleName": "CRYPTSP.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\CRYPTSP.dll"
+  },
+  {
+    "ModuleName": "rsaenh.dll",
+    "FileName": "C:\\WINDOWS\\system32\\rsaenh.dll"
+  },
+  {
+    "ModuleName": "nvgpucomp64.dll",
+    "FileName": "C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\nv_dispig.inf_amd64_cc526ccc3287f5cd\\nvgpucomp64.dll"
+  },
+  {
+    "ModuleName": "NvMemMapStoragex.dll",
+    "FileName": "C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\nv_dispig.inf_amd64_cc526ccc3287f5cd\\NvMemMapStoragex.dll"
+  },
+  {
+    "ModuleName": "nvwgf2umx.dll",
+    "FileName": "C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\nv_dispig.inf_amd64_cc526ccc3287f5cd\\nvwgf2umx.dll"
+  },
+  {
+    "ModuleName": "nvspcap64.dll",
+    "FileName": "C:\\WINDOWS\\system32\\nvspcap64.dll"
+  },
+  {
+    "ModuleName": "ntmarta.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\ntmarta.dll"
+  },
+  {
+    "ModuleName": "nvppex.dll",
+    "FileName": "C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\nv_dispig.inf_amd64_cc526ccc3287f5cd\\nvppex.dll"
+  },
+  {
+    "ModuleName": "MMDevApi.dll",
+    "FileName": "C:\\WINDOWS\\System32\\MMDevApi.dll"
+  },
+  {
+    "ModuleName": "AUDIOSES.DLL",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\AUDIOSES.DLL"
+  },
+  {
+    "ModuleName": "resourcepolicyclient.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\resourcepolicyclient.dll"
+  },
+  {
+    "ModuleName": "Windows.Gaming.Input.dll",
+    "FileName": "C:\\Windows\\System32\\Windows.Gaming.Input.dll"
+  },
+  {
+    "ModuleName": "inputhost.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\inputhost.dll"
+  },
+  {
+    "ModuleName": "CoreMessaging.dll",
+    "FileName": "C:\\Windows\\System32\\CoreMessaging.dll"
+  },
+  {
+    "ModuleName": "twinapi.appcore.dll",
+    "FileName": "C:\\Windows\\System32\\twinapi.appcore.dll"
+  },
+  {
+    "ModuleName": "WinTypes.dll",
+    "FileName": "C:\\Windows\\System32\\WinTypes.dll"
+  },
+  {
+    "ModuleName": "dcomp.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\dcomp.dll"
+  },
+  {
+    "ModuleName": "Microsoft.Internal.WarpPal.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\Microsoft.Internal.WarpPal.dll"
+  },
+  {
+    "ModuleName": "textinputframework.dll",
+    "FileName": "C:\\WINDOWS\\SYSTEM32\\textinputframework.dll"
+  },
+  {
+    "ModuleName": "Oleacc.dll",
+    "FileName": "C:\\WINDOWS\\system32\\Oleacc.dll"
+  }
+]

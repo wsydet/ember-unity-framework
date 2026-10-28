@@ -1,0 +1,21 @@
+{
+  "pid": 66092,
+  "exitCode": 0,
+  "exitHex": "0x0",
+  "commandSent": true,
+  "seconds": 45.095970399999715,
+  "exceptionCounts": {
+    "0x80000003": 4,
+    "0x406d1388": 5,
+    "0x80000004": 3
+  },
+  "captures": 3,
+  "traceHits": {
+    "window-query": 0,
+    "screen-dtor": 1,
+    "screen-win-dtor": 1,
+    "gfx-destroy": 1
+  },
+  "debugger": true,
+  "forcedTermination": false
+}

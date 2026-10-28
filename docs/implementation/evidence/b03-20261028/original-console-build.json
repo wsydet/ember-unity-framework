@@ -1,0 +1,26 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Retrieved 1 log entries.\",\"data\":[{\"type\":\"Exception\",\"message\":\"The following asset(s) located in immutable packages were unexpectedly altered. Making changes to immutable packages isn't recommended because the changes can be lost without any warning during Package Manager operations.\",\"file\":\"C:\\\\build\\\\output\\\\unity\\\\unity\\\\Modules\\\\PackageManager\\\\Editor\\\\PackageManagerImmutableAssets.cpp\",\"line\":227,\"stackTrace\":\"  Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset\\n  Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset\\n  Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset\\n  Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset\\n\\n\"}]}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Retrieved 1 log entries.",
+      "data": [
+        {
+          "type": "Exception",
+          "message": "The following asset(s) located in immutable packages were unexpectedly altered. Making changes to immutable packages isn't recommended because the changes can be lost without any warning during Package Manager operations.",
+          "file": "C:\\build\\output\\unity\\unity\\Modules\\PackageManager\\Editor\\PackageManagerImmutableAssets.cpp",
+          "line": 227,
+          "stackTrace": "  Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset\n  Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset\n  Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset\n  Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset\n\n"
+        }
+      ]
+    },
+    "isError": false
+  }
+}
