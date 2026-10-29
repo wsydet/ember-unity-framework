@@ -1,0 +1,1847 @@
+[
+  {
+    "Path": "Assets/Game/Documentation/README.md",
+    "SHA256": "B672F5FE7A567EA72F022C417BCA865CD09BBCD7D89E1570BD4F070DAD1CEB55",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d.meta",
+    "SHA256": "18E54A21FFA8991AA292287BAD7B7BE0805DA35D2695CA9FA58059749565AAF2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/Extensions.md",
+    "SHA256": "6456460FBC8208A3D3FAF10BBF0A284B2A315C1175BD3C7FFB78C1C08EDA37FA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/Extensions.md.meta",
+    "SHA256": "6A4697F6CA96AFB86BAB2A14E987FEF044F4C9E6C42372F1ED6CF1DABD1CADF7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/glossary.md",
+    "SHA256": "D04EA8E0E85AD1B36E172A6310D0DBAC52D192C7BCFD554A04A45DE6B2E1C4AF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/glossary.md.meta",
+    "SHA256": "A21DC0B3683C5E50270612EB3B44B8C8DB88E8B9861A16F07AEA5A629EDE7922",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/LevelAuthoring.md",
+    "SHA256": "13218E1AEECF2056D66C10526CF3FD934FC677832F21348CCDAFEAD844F3F849",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/LevelAuthoring.md.meta",
+    "SHA256": "B54F475FD8AAF7726EBA6E0356ABA43B0CBBC834FF41CFF5BEFAF04ED960B886",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md",
+    "SHA256": "C7A01035FAC202335ECC7619DDC0FEEDECF1BABC72FDB97B46BC99AFDC974808",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md.meta",
+    "SHA256": "FB414A6E98A3E37906DA41AD2F1C2B93C9465CDC5F3C443C34A680BC7183BB1B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/README.md",
+    "SHA256": "4D55E6AFF252B5241D8F3BA62E84EBCBD3FAD73D00555AB92C035EC7D2550CCC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/README.md.meta",
+    "SHA256": "5EB58F0096A924CD7F26A4F8644420BAC83C470C69C8618D4014020BF2FA978A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/Weapons.md",
+    "SHA256": "4FDFDAB1E8AB9294E183BDA767EDFA12690C6ECC97CC58024A18C28FB5E211EF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Documentation/topdown-2d/Weapons.md.meta",
+    "SHA256": "C906705FEF83530A1D18DFBB2FA6B8DDECB12C32451E79E89EA9B3255C84E7FF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity.meta",
+    "SHA256": "96489695EEF1646A5B2A14557159EDDA22695948B2E7BC1772484C3FEC8228A8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects.meta",
+    "SHA256": "90A33C9139212CC2D1450ACF93823A81752849FACF2F2E8752C5795C239C5890",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs",
+    "SHA256": "541729B64F31F4554E5D7F41D4AF7FC1F45CA9579FE39CB0F9A2D744A4DD0904",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs.meta",
+    "SHA256": "6B97ED67F0A8C4C081DC4F637DE8A2EBFA0EBC2692770494606E0E6DF4F60E15",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs",
+    "SHA256": "AF4E9B1EF8896655DD299FD6AF20FB928D6B355557E2196F169E264CC20E0696",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs.meta",
+    "SHA256": "DECDFDFF6958CAD03900BDED3A4F3AE851DDCEDF6FDFDB651C6092E71E981D04",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs",
+    "SHA256": "98F68826F499CBB7EFDDEA0947C9D468E9334173D825756B2ED0774515935AF3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs.meta",
+    "SHA256": "E09447193D4FB58D0D8703085100CDD8A52FA4E2BBEA0D09FBBE9CB1F8D283C2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs",
+    "SHA256": "96B3421F5128E6E4CDC385CDBD486FE122BB2DAA395145381FEAE72BD3261C97",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs.meta",
+    "SHA256": "A0CB88A89E9B7EF3AE1B7BB8A4242D6F6B7CCAE1A8C311D1A89F88DF2DA04405",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs",
+    "SHA256": "8C0CDB81DE2674625783EA557789D938077B89041312B1A9EB79256377FABB30",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs.meta",
+    "SHA256": "4793A018FBC2C3302690E04A5A154818C42CB665D2BF4608D0FB698B826DE2A9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs",
+    "SHA256": "B44DF4B1AF5B1FC31710AB9D7AD8F39D053B6F35BAB09E34EB2C4C19CB40CACB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs.meta",
+    "SHA256": "4A0D9413E4718BFC2D9C67E5611C7F4807E918A0D57B3BA04CB265D142275E4E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Entity2D.cs",
+    "SHA256": "58AD1C9D722B27E1631F52D45DC0F7BA4FF4580F4F95480A532DEBD5BAF87096",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Entity2D.cs.meta",
+    "SHA256": "842D506DCD06B1A5BE6F8021BDC8C7F5B2945448B1083D9AF315E8B078E2DB96",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHealth.cs",
+    "SHA256": "622D51A017D0C313D9D8BFB7B28703BDBFD675ECF906A6D7E52EAF8676289204",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHealth.cs.meta",
+    "SHA256": "68C1A7D65BD503E5F708687DA6C360D253D2EBEEDD23032B4CEB541507281A76",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitBatch.cs",
+    "SHA256": "FFA0E93C875777B08E104D20F64D401A431B741FD8FFDBE521FE70A48729095E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitBatch.cs.meta",
+    "SHA256": "01AA27E2C2D3235DA69A279C6D108A70619988645552980DF4E070AA665DEF1D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitContracts.cs",
+    "SHA256": "D0730895D9C6DC8DB8430B1B4ED5976D1B1084F0063EED882AF0A00FE84EE082",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitContracts.cs.meta",
+    "SHA256": "6C0FD97D0A5B3F55D2A077E29190572934A35E6E8ED3F538EBF40127C5EF48D9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitPayload.cs",
+    "SHA256": "09BA2DB3938E983320EF8D5614A238A5407E64D8DF6CC5FC51EBD0B63B720CF2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitPayload.cs.meta",
+    "SHA256": "B55A0EF3BC6D71145FED3F981BE8DB4FBEA26E80E11F2883F8FE6DE802658F1A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+    "SHA256": "E8C66C6CCA83769948BA4EF76FC12706E6FC9741AE5F91212F88FEB63E8DC2D5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityMotor2D.cs.meta",
+    "SHA256": "05681D659E5D44142292CCB349B2778E6A9C4F949DC869BF7330162A469F018A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityPlaneFrame.cs",
+    "SHA256": "486F6301A728B7B2C5E8DF9C18386A0C1AE87A00559B980444DC9AE8D565FC8C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityPlaneFrame.cs.meta",
+    "SHA256": "812C45E20B5CB2754103B4473257A03141DBA644116847B807C55B798D7C3A5D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef",
+    "SHA256": "E1E266208897ECBB319D7358E18954E518DBFED8DDB981A1A0F4685055C55FEF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef.meta",
+    "SHA256": "992292215B1F47C3C67AFE969F634385312B7F167B92244941E1504019C340AD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers.meta",
+    "SHA256": "53F60461F705DAA8AFB7DA1CC7FE2301257D58385C42732F2D28CA11B6F130C8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs",
+    "SHA256": "8BA5135E4630D2AB715C24F6FFE10F0F6CF14EA42B84A2D7DA0CB906BFAFCF1F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs.meta",
+    "SHA256": "C45709661439A5E1128A67C7966CC9CD3C293C71E296D07156D5B49C50A37ACE",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs",
+    "SHA256": "869DF97A43E5F5127F22B0CDB5BE70A44ACA88794C6C81B5838B85BB26BEFB56",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs.meta",
+    "SHA256": "8984A53FF9DFCBDA55D18E453C4CC6BF129681A5BE95B3E61ABFEB0B5EEA7B67",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs",
+    "SHA256": "0A9E20D3B15BC9EB6BFEB3B7263C497699124E101689E9DE53B3238418489FB7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs.meta",
+    "SHA256": "D3B3CAB9C3B2AE9DF0EE279D0D57009F6052318B4AE18B1A34A3BFDB911F3697",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs",
+    "SHA256": "F3DFEE28A4269BC544DB61F8E543143834FDBFB3655169226BBA44064A3689B0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs.meta",
+    "SHA256": "AE6D30B52652F4175FA251B5E255FBB61F35002B308055F10DF5D180D22A2465",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs",
+    "SHA256": "BC8DF39D17B35618F06BF73543F10005833CB5886C447E582B0000328499C7F2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs.meta",
+    "SHA256": "29455EFF84CB014FD2FAF3B59485F0E30FCF6D0F1C4ECD6628D44D2D4EF68D67",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs",
+    "SHA256": "2D776E5AB2C01615F0748D0451E3D1FF8F06A94B4688A378B277D125E97E699F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs.meta",
+    "SHA256": "866799725D226C3497A539650188A9BFE91824D868A1ADA36EE16DDE43EEDC70",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs",
+    "SHA256": "C9A7C082672C781D493F774BC6CF83C7009770D0A46A23F001D64D4BBF087E68",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs.meta",
+    "SHA256": "442D21E34B698368DACA49B230A989045F9C8E674D51CCD9689F30C3FF5DB336",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests.meta",
+    "SHA256": "B618BDF86DE74B15EEBE665108A75651AF298E2CDF672C17F4F4394D03306E05",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs",
+    "SHA256": "E0ECA5D1099D178A1155A9346C925328C8C4746B1051D3B9542E34765F53C6C8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs.meta",
+    "SHA256": "AE5B85114EAD1B4CC87F8F7CAB8CF6D456767EF40F3AF6676BBCBEE4D965E5CC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs",
+    "SHA256": "E8637684A24D4BF3F652224CD3C292A755538B5979930671961AE35DF2E2F46C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs.meta",
+    "SHA256": "BCE84C16B35062B2A50EB69FD614D0DCD93921A562ACE7935DD5E6B62249306A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs",
+    "SHA256": "D32551F56A158CD1E5384005C28E38DEE99722D7EFD2A6B2D5AE65FA99CEBBE4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs.meta",
+    "SHA256": "89BC9A1365B9F6BDE6B4CDF36A24E543801406F26BF6F22731739E94DA6C47C8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs",
+    "SHA256": "B470CC32609C9BAAD9B790A50A07A174735ED5C58B315DF150CFC448C927199D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs.meta",
+    "SHA256": "07A19ED3CF0A27361354DAD91183B3888A5D0E7B3A26414E6F95D2EBFD1AD45B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef",
+    "SHA256": "F6C8EDDC7A86317CA8EEB9D1214A5F908D854820B9EB8399B831D5C164668EB0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef.meta",
+    "SHA256": "6E6734CCF86A8DA7B58422D69588EEB3C9E6CD39C265CB963E8366CD2ACE663C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/TopdownCombatActor.cs",
+    "SHA256": "821EF2D4DBA59A4AC971F38201ED9C7B2F5E60871A4A322106152BD7C0ACBD73",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/TopdownCombatActor.cs.meta",
+    "SHA256": "0D784CE8FF71FE75B5E8D0C8B4BC56D20664CE4B0A1DFE5BE1FF0574629E8C3F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/GameInput/GameInputModule.cs",
+    "SHA256": "AAD3BC0A76E39F6A6448ED6ACEF4B0E509EA9E173FF8D35D2453491EA1CA820F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring.meta",
+    "SHA256": "F44AD199C02DBA92DDBCDE909714368AA009958C3157987679167D76EF7FF428",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor.meta",
+    "SHA256": "5548A31FA9D842E838E128240A7F3BB0143683DDDACA6EDC6291CC85FBA70B2A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef",
+    "SHA256": "9AB319A6C459773C83A2B9F9C7B26383314661D2C720D2E3BE8374DF02ACCC26",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef.meta",
+    "SHA256": "05D58548A3C9EBFF785D7C7438B34505A6E3436D464F0EBD3442BE25F290F8EB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials.meta",
+    "SHA256": "0B907815E9E5BA28ABE34A011E86096BE18AC7CEF04C8E70F3EB31F9B5B88F7A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset",
+    "SHA256": "09DE13082ADF795335DC94F02C46652D85A7837752C24511E934C9FEAF49EFDD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset.meta",
+    "SHA256": "F030167455EC6E68B6A0251E50EB1369CF391BFCC2B3BBACE183BAA71F8887FC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset",
+    "SHA256": "CC0AF3C99B6E645107F98F4B82151B7D80A4D39996BF142CC26FCC4EBABFEC27",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset.meta",
+    "SHA256": "E14ABCF2541CD16E42C7AD1480273B1B599E8A44FC0A1D18A72C299B996015C6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset",
+    "SHA256": "AA130603911A6404E9718752C643E825E5527E7AAD6512DD75058E298DE007B2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset.meta",
+    "SHA256": "C9A5E335A2C1AE0B855854729E6EC69A00A609B3E3BB9827CFAB6B64AB43AB2E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset",
+    "SHA256": "DE7743C7C8564A8B924C74A4D7C8815F6091EC0E4409BE7236E5EEB3D78D2EA0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset.meta",
+    "SHA256": "CA76C84C170E82F8C1879C02148ABBBAEAEEEEB106275C7CCAE16613CA3039F1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Tests.meta",
+    "SHA256": "5914199CAC761339EF106138F2563508F4725DAB5D7D96E3B29FFB109260B0FF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef",
+    "SHA256": "65F60F96B033637982500746D3551E6761601ED61B9C0A0ECA715E1FE4F5E042",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef.meta",
+    "SHA256": "BA3F229C0F0C9946237B4F3DD1365642C419AD4A1FA05490BBC98C8C3506F9EF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs",
+    "SHA256": "48D794634D65EC4CEE970A0076791B60C31AFD0A1C4609202D2D5D8A9278A7B4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs.meta",
+    "SHA256": "CA729813F5BFC07F1F3C0E39B3F10E55CF9C89544427315A3761BA2EF77D229A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs",
+    "SHA256": "843E73B65A206B3EF16B9EED1CBE91AF23B4E3A825E68D04CA0600DA08A36140",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs.meta",
+    "SHA256": "B2918FCFC9C2FDD72C24445AB5845C2126DAC39FDE2B0C67C2CE700DBAC934E9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs",
+    "SHA256": "B3E37071A1DDF2FAB4D62C3EFA04EAC2B16718A4274C0444BC1D13132A86826B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs.meta",
+    "SHA256": "F5C4ACC7A866A73B6DE22EFD5F38CB1985502865F222A9A9E51A6B4B585B5B99",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs",
+    "SHA256": "455E37858A658535D9D8C68FE0B9F708E7D67DAB3911CB61EBB0976047D4919C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs.meta",
+    "SHA256": "6F15972AEBB101F0E6727EB0425BC9B91D6C21DEC2E378E254E7C57E227CEB23",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs",
+    "SHA256": "84EFDA56EAB52C723819F57E04CA31575E1264B68E3F3A7ADB96AD5CA9BD7043",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs.meta",
+    "SHA256": "DD390E2184DEE30CC5CBF9B0229726107A3A00C8B962CD7A077739F4BD398A14",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef",
+    "SHA256": "C1E0B3B83B60A1F917C1B84C91A9617D80A5D640C5B7F3CF6F6132BEE1ADF16F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef.meta",
+    "SHA256": "7CF7E2B5568DDF67B4DFD6F9B03A4C282723B441581BB4DBE7DC366FD726524D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs",
+    "SHA256": "A3059433E15E2519B3B3EA0CE2904C476166A3C154013A72233E96E3256685B4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs.meta",
+    "SHA256": "6C8FF894771CA191C059A1DFFEEE4CBB216EEC7F47839CFAE9A13F35F771918A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player.meta",
+    "SHA256": "2F4E2BD03826CF6F67F94EBD7554767AD8D2F700E65198A4945C66EA66A6DE98",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor.meta",
+    "SHA256": "D51752D1E4A55CDC94319F3EB3F9DEEA8FCF42CC51B3B94642A0C3F7AF54D640",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef",
+    "SHA256": "5AF2CD6295FD7DF1700F42854057B70867CD83C9C907DFAF14D22B7347CD175F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef.meta",
+    "SHA256": "EECFE9E4D274CD9CCE9289C5417CF6EB154F5468223292EA85509BAFF21E66B1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs",
+    "SHA256": "A21387FE2B2ED71C29ED8A25920E3A55097DDE377E1B0B32843231440E59E5FB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs.meta",
+    "SHA256": "121FC3D1AE48A2D317A45E30E33D5FD56F2BCF2964C367415136110B1B272EC7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs",
+    "SHA256": "D9820EC8A80456765EF89C7A8F8CAEDB0B16D7D33BB9B1A47771149DF423130B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs.meta",
+    "SHA256": "BDDD86B86008D4EB9CA65994215B2BE59499FBC6E11D9592EB8E66597B2A0E32",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs",
+    "SHA256": "4290B9D78E5F3B7B62F3FD1CA3407277A987BB9A1C29D63198E9BBC9D4C49E89",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs.meta",
+    "SHA256": "4FA4C5C13E540840E31025FF361249BF6C3A48650654A0546B720C81DBC72361",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs",
+    "SHA256": "6BF6C08F89C5EC3AADB077B46E97AF81D7A7B1CBBD729F7E7AE9BA29913DFCEB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs.meta",
+    "SHA256": "36C95ADE2C4F0F244621B55BA6DC7A85A28097A7B92A565E6C49EAA973E97B6E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs",
+    "SHA256": "61C58E355519EAC3C78721C02F46970A670862604000BBA378FEB2CB0C74E053",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs.meta",
+    "SHA256": "35A710185E1E7CCB532304CBC22731F23449A8F337BA9F8A32D32C1A66BA5A0B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs",
+    "SHA256": "47CA11CFEE9431A741BBBD1710C3D7064CA91FC2DAAD141F1BAED3F2589F5FF0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs.meta",
+    "SHA256": "E4E0C3F9FDA2313C75320211B5F854C158FE0335DF556C147F8E3376A68A467A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs",
+    "SHA256": "AB055A954A204EC5E30878682FE57DDEB2D4D7733C311BBBFE6D8085DB809E66",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs.meta",
+    "SHA256": "E48D34C8DBA30C8764C2A372A846423A14CE0F5D12CEB3AB1EC9594C62B6829E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Tests.meta",
+    "SHA256": "90280372B45EBF3B178F2A5C87599B15CED39E5F739A65A30CC8A7B0C729E8CA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef",
+    "SHA256": "BDD9FC187554E2C96AA8ACC15FFA48690F037939E376FEF33007295B8D772D8B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef.meta",
+    "SHA256": "4DA7805800EB9C4C3A9B666F48AC976191B0929159D7A1A001673C9DB6A748B4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs",
+    "SHA256": "C30F9355950DE20DB9F9B632F871D702F2D37ADF992AB3EE533543639C65EED7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs.meta",
+    "SHA256": "A399BC09677502734350229945AC22F3C9DB22D2F092F2E80DADCE30A4FEB5EA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs",
+    "SHA256": "A6C2D9A2F51ECDA0B2D8AD656EE60DD32E69D548339D78E9480D63D9E48DA253",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs.meta",
+    "SHA256": "E05F0A08CA79670614F52CD3E7C6768D39A148E546779646DC0BCFE4AC5F4A4F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples.meta",
+    "SHA256": "149827821CFDC026EEFCBA9CEBD867542FFC9DF77D251151A21BB0D1406E13F1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Editor.meta",
+    "SHA256": "AB636A3FBD3D85D43259DBD32E091C48A1C1A7992FCF2A7CDE2C819E5BBF1489",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs",
+    "SHA256": "EDC78DAE44BBF89DC5536A748C1BE64D2952BD406598C716C7DEA01A38F097AD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs.meta",
+    "SHA256": "8E583C0BF31F509727DC46640E04A87A8EA04530B53D6325241A938127C1EE15",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef",
+    "SHA256": "517F6CEA2F273D8BA22FAD34C2B9426416F6F72C17EA2BDE3B810AF02C726DDF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef.meta",
+    "SHA256": "58D190BC3F745843769042A3CE8337B7C5E77D300950F5DAC431281862BBEA51",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs",
+    "SHA256": "AE86E31DAE362329D9C8AE73123893FC93487AE74DD23727F936DB3E273598A6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs.meta",
+    "SHA256": "12A3F1230F8786AC0BE2E371F13DE248DE55D6692FDF51A83069E3297192E066",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/FocusStateDefinition.cs",
+    "SHA256": "5AB17416B3A0ACDE5D83B81C45CF5DEE3AD7A35C0169BCC801C3DE5E3B453E31",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/FocusStateDefinition.cs.meta",
+    "SHA256": "8215C3B81299AE4AF2913EE8881A9FE7AD575C902150EEBFAE838E8E123D4B15",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef",
+    "SHA256": "950F40BBCC12484D25EE19BD37C8A1B96CE06107F4779F882E6D81236A7C3E97",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef.meta",
+    "SHA256": "C13C98A5941D035E3C05CDD5FAA8074499A9F5C6F366B2383EB13E007B8FF096",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef",
+    "SHA256": "85B176B7B310D46EE04F893563CB91323F3D9B82B79D2E89357C8C0330C1AEBA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef.meta",
+    "SHA256": "39C3AC08F909001CB5080853E2AD7124E922BF396E7BFBE9C756F37D84FCD9D6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerActionControl.cs",
+    "SHA256": "920DAEF97FBF96E4B444FC0D677F969931B2E878508A7A7543ECDD2B83F0FC3C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerActionControl.cs.meta",
+    "SHA256": "952A91340E81851C0C61079EF8603BFBFE45B93AB199FCB7CF33BBBCFCEA36D7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerActionRequest.cs",
+    "SHA256": "FC016FC27B1327F4889286258E13D7A6148682C344ADBF4FA3E50BC507898570",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerActionRequest.cs.meta",
+    "SHA256": "4FC59A8A71BA2BBA505D23F6E514B811AE0C66222279501538C7C2A6FFDB35DD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerAnimationMapping.cs",
+    "SHA256": "31B7BF6F8A29029DC07CECC4D4D0642D46C6EA38D171D420FAE3C4FFEA3A847C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerAnimationMapping.cs.meta",
+    "SHA256": "FC080005FAB1247BFCA81F44E4223555B0B08E178A60526F87A7359DABD25C04",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatActorView.cs",
+    "SHA256": "26F5C4D04BB0E20857AFF0FCB0C5D020C1C7780A0B8123EAB166B513752C40A5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatActorView.cs.meta",
+    "SHA256": "908B5F0938339DA08106797AF2E3F0249054CAEE17CA6C3CB00D502789F3AC2C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatRules.cs",
+    "SHA256": "1E47480FE01E93E4E3C7324EDBEA6D052E544CB9FD84F989C6C39FE780C7E359",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatRules.cs.meta",
+    "SHA256": "B117F012DF60B44001FFE5E5FAB100A51240062261BF3D05FF194B7338350B3B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatScene.cs",
+    "SHA256": "D91C453EA80E267065ED780AB7311A06F2596C144B735263314B9DC7D0DFDE1A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatScene.cs.meta",
+    "SHA256": "39A206314F971967C233D5235C5263DA3539AA633EE061E9D62B748829BE8D1B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatSettings.cs",
+    "SHA256": "373A967E958184C19F240552DFB85438E899EE7194DD31689078D696181A6F50",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerCombatSettings.cs.meta",
+    "SHA256": "5C4CEAB34EFA5924A32F6F3CE44F5652230F0168431B53F8842F0D61C9613F25",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerContext.cs",
+    "SHA256": "9763FEFFAE32DC4CB9BE36AA84097F2D4C8ECC8B7652579E041E3CEEF5918ED9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerContext.cs.meta",
+    "SHA256": "2506E1B2390359F14F16A67EB3F3F796881378C28A310C11592B08A471EDEC59",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerController.cs",
+    "SHA256": "20C3D0A403FA9D26C1C150146D53E4959D421CDA116D7196CAF2061978FEFE67",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerController.cs.meta",
+    "SHA256": "83539A506AFA2232719A334E6004A225F9354E44DA65E32A5854037331CB8211",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerHitQuery.cs",
+    "SHA256": "55C99FDC05526F2E2FC2C0957ECDF0C1ADEBDEBBC88977B9183251829EC08244",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerHitQuery.cs.meta",
+    "SHA256": "9D9882F06552C338AFF1818C9D30489030743AF013585D48C7A2D59027E1EBE9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerIntegrationContracts.cs",
+    "SHA256": "A567A86757901C28246F4C52D2A27E4E8E96FC08DCA371150C4C92263F147F36",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerIntegrationContracts.cs.meta",
+    "SHA256": "1EF118259D9134EB383666BF112F9EA5126CEC8D115210261B75D091B0F9CB4E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerModule.cs",
+    "SHA256": "DA0BEF4A54CB0D95F0FD1645152C95EA76EDF1B338411DD50340E206912F9BE4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerModule.cs.meta",
+    "SHA256": "86DA4D9F2BD6F3A2888A41D281E701B1840D66A5F34E8EA4527D2AE68FD91E7D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerModule.Progress.cs",
+    "SHA256": "39B057F1F0EDAD9B3F03703FD17BA9EDE3B7C5D7BF6D14B1B0FAD7205E922D00",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerModule.Progress.cs.meta",
+    "SHA256": "AD40B9A18A13B8CB758FB609A6AA38CF6372B66CAC31270D14F57F1C521D9D5C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerPowersDefinition.cs",
+    "SHA256": "CBAFF512EA283D75472AD6D3DCB5C6EA793A199F58DF7C5346EA68EAA201F5B0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerPowersDefinition.cs.meta",
+    "SHA256": "701D4D891C89D81838A4D778B9250554743A01D073548A8E389715B42978AC53",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerRuntime.cs",
+    "SHA256": "7ABF3FA0BA8853578C9AA6B3B645B4B7CBD22ECB7B2765248114DDDAF0C83848",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerRuntime.cs.meta",
+    "SHA256": "D98D97F22F19204C29086B5917FF612BB57B1DC2D45BC48FC31ACF39F7D8B96B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerSceneParticipant.cs",
+    "SHA256": "CD61E1FC07D820B89C695A3F3B09E531DDCE366F66D8B3C4E2411DD318AF6E1F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerSceneParticipant.cs.meta",
+    "SHA256": "ED851A3703070CF714C823AF430472AFD01E1231F2848F54CC7F95672AAF5F14",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerScheme.cs",
+    "SHA256": "D83D93E7AE970A3821A202F4DBC0EE0E9A616D93BB6583706E724A00D9A654C4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerScheme.cs.meta",
+    "SHA256": "C927BD71297B9F10269F2A4AF99AA4F4243DB86BEB574B0A4033144B6B369E0C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerStateDefinition.cs",
+    "SHA256": "E1C9FDC13651EB4E2E1EED14C9DD3DB10471A3F4A5B3739DA6EFB9D4ADA9AC3A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerStateDefinition.cs.meta",
+    "SHA256": "A98E953063448CC055C159946C52EF463E6F1ED79313C858C82C01129013A5F3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerTrialBridge.cs",
+    "SHA256": "FAE637F22B9EED2B30C09F94EE77E94ADD9CC4C800B3C2D847415B06C90B520C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerTrialBridge.cs.meta",
+    "SHA256": "D75328B659376C120005758D9FA693443D2B2BFD247740EA7B617FCD37C07384",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerWorldSession.cs",
+    "SHA256": "03DF810FFFC99B147BADB31F9A38D2CD60B080AAA2BA73F06101B6D220809C41",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerWorldSession.cs.meta",
+    "SHA256": "28E0C99AD4B82B2AA5BF315E7DC941D8B1A555B8E8EB4ADE668F70EC7D44CFA1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PreparedPlayerSession.cs",
+    "SHA256": "DD73E9E479FEF9ECAD9728D88270B6A7E1F6C0F255C816E7E6F227929C2913C8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PreparedPlayerSession.cs.meta",
+    "SHA256": "4D3F30DE144E0CBCC37C48C52350C8BAA72816DB5E52D579855878D59EA2ECFC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests.meta",
+    "SHA256": "C31BFF88B938242FE52874B9D4EE2A1E3C425EF472CF394881A97D48CE915BA7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef",
+    "SHA256": "88DC16B0C6361E55B4353F853EB2164499D5FABA99328547949C0491680E1C77",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef.meta",
+    "SHA256": "F1F7D33C465170CFB44690C7926F8199F685103D9F4F876D1A7F777ABBD30DEB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerCombatTests.cs",
+    "SHA256": "FCEAC0E5DA878CDC0374EFDE7F413BD2F52AC4DA40FA3E5A325D7A563AEC4D65",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerCombatTests.cs.meta",
+    "SHA256": "F1EC26A0CAAD710483F669A13C40D31CCC56DEF27C03EB0036494610FD1C6292",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs",
+    "SHA256": "C55C12B473157497C78426C5C1BF6C9C10C2845F2D74D2130B79D0BC6267448E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs.meta",
+    "SHA256": "17ADCC5DEB58FEDF29F7AD4079004E51229A8D994AF62CC3BF16BE7496A15D39",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs",
+    "SHA256": "C36AF3DCA0B6FE12174683A2B185188E51ABF8A3BBEF7C76FD272EF8503DBADC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs.meta",
+    "SHA256": "F61EBFB7673568E6EAA7A3958550C9ABA67F5FFE30A1033FEF5269E4DBCB12D5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerMovementTests.cs",
+    "SHA256": "C2371EDBBF98D2493138FC80E11126AC5ADE1D3B882C629A439FF62008D857C1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerMovementTests.cs.meta",
+    "SHA256": "B4BA70488A83A02A022419926026CE0AFA4C4598461D8F8A35B88AEB7ABC0029",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerProgressTests.cs",
+    "SHA256": "08C5AB1BACC727E94EFC6C2C84F5C78FF77192D03FDE8CF791A627BD9689B731",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerProgressTests.cs.meta",
+    "SHA256": "DF824F072CB34DBBAE365E89FE076768E2CE79F1819C5E73F012D2DC7C6926BE",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs",
+    "SHA256": "A9AADADF4D050B55324BCF704EAA1C9AB1A1F5D419EAC9F4F0CDB17214EC7CDA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs.meta",
+    "SHA256": "4C508BEDDF12F853F1ED2B18D1DD74CBDFB5392334EAD7DBFF670D58BAC52B31",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownEntryRequest.cs",
+    "SHA256": "C47414069328D252CD94E9665927FA7D16F1F8D6E3F722E7BE192F03DB63735A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownEntryRequest.cs.meta",
+    "SHA256": "C14C71582CA03CCA99CE6ADEED84ABECBC5070D3FC3FF8785250A55A72F2A589",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownInteraction.cs",
+    "SHA256": "C588890D8DDAFDC3A45101CDFE59616C4AF23A6661AAB6C2AEABA70906BA1FB4",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownInteraction.cs.meta",
+    "SHA256": "3819CAC2EBA2BADADFF01E1F59FC7A4CDD7D4264FFF95239363D47098F871E4D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownLevelIdentity.cs",
+    "SHA256": "1A708AF0AD14467076AA8C62F1392A1B4098278CD56898D5D643BD377A14819E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownLevelIdentity.cs.meta",
+    "SHA256": "155891AB2F465F8EA0DDAABEE440BA2D054207FDA3DD649C287DAD713A0101C0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownRecoveryTransition.cs",
+    "SHA256": "797068A8649591C3E9468BF642BE4E4A3B279297F561A4F50EB9CF0B8F5B263A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownRecoveryTransition.cs.meta",
+    "SHA256": "521AD2D808997B919A70D2975D7513093223AD71ED49A37DBCAC37274275AD2B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownSnapshot.cs",
+    "SHA256": "B212AB4BCF7245CC379D5B234FE44FFCE1EF203A4CB95D8E5FCCB565296982F3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownSnapshot.cs.meta",
+    "SHA256": "3DC052CE357B8919044200D76256E65238D0BEC638FB04F71E88ABDAEF596DEC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownSnapshotCodec.cs",
+    "SHA256": "4C3E704D344FAA66402052AFC91B880051C05E557C634F9D97480B9ADD451F4E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/TopdownSnapshotCodec.cs.meta",
+    "SHA256": "3D6887785A4729BC0FA37710025B2186F8030885D910882ADFC29CC6987BB42A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons.meta",
+    "SHA256": "5CA68F46935608D35916AE9305986AAEDB0A30472AD8345FFC57DF826FD3E157",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponDefinition.cs",
+    "SHA256": "FF1EBA0859BEE2C6D7C72679CCEFAC301D2361DA2EE65EA9C740FC9E924810DF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponDefinition.cs.meta",
+    "SHA256": "5B553A06CC22DC5F623D4F099D5E2201A9356B396811BF6C86E9A27C62408045",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponRuntime.cs",
+    "SHA256": "954AB14B7AD9C67E3A976ABF217FB7FF7CA1007B7327F4EB24B1993807D29CF2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponRuntime.cs.meta",
+    "SHA256": "B4B918DE421626A665AA0B2D40EDF89BE6F7FF3434B28725BF42364E3BF45CE3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs",
+    "SHA256": "0B87C7F1F02758514BB2EE88F7AD6AEAED71F7FB28B92702419C42B2184EF4E8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs.meta",
+    "SHA256": "2BB0BBFAE206E206E131DADA6965B0480E411139AA7FE74F5217C69A0A4AC319",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera.meta",
+    "SHA256": "F7E62062B5D5C9E1D03086728924513FBB6A8923D6C97EABC41B570CCFA48CDC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef",
+    "SHA256": "4A63A4BC377A7462EF2B1460E4D3B56C490814BB8FB9520B3373766544DE3A70",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef.meta",
+    "SHA256": "7D9E911803652371470803B9FE1A0839C98887D1EB8A7C12185162A9D025E613",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs",
+    "SHA256": "477D68490B1AA2441322F7FAB3B847C642486A7E377DC2CA6D1639595AB2A1D1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs.meta",
+    "SHA256": "69E54CB1C1041A30B2993DAF2BC23F69A251F8EE712CB1DDA70916DC94A02C74",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerData/PlayerDataModule.cs",
+    "SHA256": "5048103C1F8FF77264D7E116834E67038E5112E3F167824428667F6216D756EC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Scenes/FrameworkScene.unity",
+    "SHA256": "877930889D3EC0B7EC14A3AE1646BDD467A74FD5CD02B8C523AA59129E6CFA76",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Scenes/GameplayScene.unity",
+    "SHA256": "B0846868BDE7A6F83BFEA848A14B5D849C677A479BA5F795CA8FEA7C03DCAAE0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Scenes/TopdownArena.unity",
+    "SHA256": "0E593C920E94A739A6672C9892B0A48AA652AE419F61F17E34DAF5C7793B3D35",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/Scenes/TopdownArena.unity.meta",
+    "SHA256": "8B00649136FF40E36991D6C141BAA132A75915EE9E5B49C8E314E7860179D290",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/State/GameGameplayState.cs",
+    "SHA256": "3CE8EA62C44E8767F7A1EA2004CEFD4F5B5573F0FBD0E517FA1FA89C10E043FC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/State/GameInitState.cs",
+    "SHA256": "35E8355AA240064284C9F09FB08F4707A1FD571CC16EED60AD172D64A559D581",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/State/GameMainState.cs",
+    "SHA256": "8E9742EA211751B0233973D854008E951BFEA48C0F8DB17D77944B001F61A57F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Editor/Player.meta",
+    "SHA256": "220031252E8F17CEA418E9A052F32B54AD4511D8E8C1C59E056ECF990E7CCDB5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef",
+    "SHA256": "889B43281334E97DE912CEC5E45A11F6E6F35DB6CC8DCED72D03AE7B3B9ADC56",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef.meta",
+    "SHA256": "62A41FA4CC6A8889B961C487F8FF40ABCAD9E35DBF4DA328C6F8805E3F6DA570",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs",
+    "SHA256": "41DE127997F861817444B0A57230EB5572C96F2F7E08C4C505D0E332B92DFC80",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs.meta",
+    "SHA256": "87F6EC9D9FB4427587F347960C21DDC172C6C164CBBEE90835DB86C8F9363057",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/GamePages.User.cs",
+    "SHA256": "2B38BC6F73119BBC9FB499F7482B975A09935385E4B28C4934089BDD938B7225",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.Binding.cs",
+    "SHA256": "F55F2D58926BB9B4E8BCCBEFC597CBCC06FC229076BA087F68DA07DEBA3B73DB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.cs",
+    "SHA256": "1361A242401161FE986B9B2F6ECFF86F56F767C35D79E07117D8A0C68AD5A2BC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.Binding.cs",
+    "SHA256": "B888268F7AE76FC6989636C0BE9617ECBF04E53A318D9CAF7E4422B378FF3FD5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs",
+    "SHA256": "719E7ED0415D09EDB09610D73C47C6F05EDC2830DD63E6E214BCA115ADC4BB1A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/Module/Player.meta",
+    "SHA256": "5195A82F2328EE7F8A943E1BE8ED61D971BDCA0315F8D67EAAA689612ED2DEF5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs",
+    "SHA256": "DD6F5349614F15CBF613658208216296FC777803AB5D82C2EE596DD335D50307",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs.meta",
+    "SHA256": "F7C47669B6D716A43C6E04438E0CEB0741C3F0D1E8D584BCDAC7E71D6C1DAE62",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs",
+    "SHA256": "B36FAE229CD4CE03B1740C9C4B7B22A5D4339014D51AECA5CB309D8884247BAB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs.meta",
+    "SHA256": "754B30602BDED89FB7D924C8B884FE7E2B1BAAAC32CB009EF2D39E18CA3C66C1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player.meta",
+    "SHA256": "6A537232C5557D0DFF147F4A835C486CEABFFA6A7E2AC171B10B64BC6AD9236C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown.meta",
+    "SHA256": "AE0D0A9D48F6E3A98488AE7D94EFC9A41715953857AE15269D4C6073E821FDE5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Chaser.prefab",
+    "SHA256": "9EAB5EE81319236A64B14DF48BC0905848FD8EBEB085391A28B52B398AD26F02",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Chaser.prefab.meta",
+    "SHA256": "D8CFBECF34AAAF883B5FEC63860F27097A94AD6B5C4EA1D5F368BFAF476E93D3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Checkpoint.prefab",
+    "SHA256": "0542B3D183378039D25D07508C1EFE002A7D55529A36322FC364E95D7B39B14C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Checkpoint.prefab.meta",
+    "SHA256": "38F46FC30811B69FA74364AD93FAB6BC97307BA246BDFB3F9F20AB01628A8E04",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Player.prefab",
+    "SHA256": "9CB7BF75943D4DFAD595835B446A79994E76CEA3AC9CFCE676061B6F53C57CE1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Player.prefab.meta",
+    "SHA256": "0EB8C1E0463971C87BC641B58871B4D87D6EBA74D26B24BF0BEFEC4FD23BAEF0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/SolidObstacle.prefab",
+    "SHA256": "9D6B3F9C21B8D3E0C0C301EF8508E74E8B27EA6D791A1EECA1D29B366A5DB1EB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/SolidObstacle.prefab.meta",
+    "SHA256": "5EF7BBB7E0FE5C55B47CF3799CB3AE4C8A5BB45B2B42DAA8875C789F25535AC3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Square.png",
+    "SHA256": "0595759487AA5410592335D71DBAD35BEB706BFFBB0727E52C79C21ECE3D26FC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/Square.png.meta",
+    "SHA256": "92A64CF4634882423FC8E02360F5F70CDFA3112AE86F2F42B225EFD17B15E111",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/TrainingTarget.prefab",
+    "SHA256": "B18CB25D2EA72E192BE1E769E13F5354348C914BE33ACAB37EE98570BBB012CB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Player/Topdown/TrainingTarget.prefab.meta",
+    "SHA256": "132C4936317E10B1BF124289218DE54E5D647AD9E8BBE3A3917811E4650AD4BA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/GameInput/GameInputConfig.asset",
+    "SHA256": "E8DF9F7AB04CD3A91E4E277A5001476D2FD6F9ED9A8595486AC3F65E0723BD0B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions",
+    "SHA256": "933942AF36FA61DD9A2FD1DABEEC895DAD68D55CCD972F17E3F8557ED8522246",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions.meta",
+    "SHA256": "D36A7EB7A0EF70180B1849DBA755A3088B24D6B16BEC2E7F0AC54740BD233A04",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Level.meta",
+    "SHA256": "FE321B1D57DE5152382D5B8C86AE4FE2485A4EEEB4662BB26ED4A489F70FB054",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Level/Starter.asset",
+    "SHA256": "495CB02968008B628491E6FE7C8C686613617551D32EBC7947F946EB5F4DF394",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Level/Starter.asset.meta",
+    "SHA256": "6595200F4F11B3B705390A0476546EFE9034FA8F1BCAA4A99BCDA380689C0C62",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Level/TopdownArena.asset",
+    "SHA256": "4F83351BA6140B762AB4C0511AFA003A7D6071F509767BB3FD7921059F118A6D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Level/TopdownArena.asset.meta",
+    "SHA256": "55714A389B97D13643D3B4E6FEB48D65213A303B6142E5BBC2393CCC561D563D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player.meta",
+    "SHA256": "3322D9B7BFF11010B757BD3BD0C33576B861C3204E164F9E265E0A1F06C4B9A7",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/dash.asset",
+    "SHA256": "5C9F9185D663FC51018EC410348490B08B8F979C338D4CF7A112F57CF6643F44",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/dash.asset.meta",
+    "SHA256": "58A4FEEF933068BD96BEB65CDA1524E86F7C3BF73831048059E546D74A30A6AF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample.meta",
+    "SHA256": "BBCF2C72A945C25BA202E5E51E67B6D1B7C8FC078A30E95119D65B6494D7D0FE",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset",
+    "SHA256": "7AAD7860815FF2CAC0A7ABF525882CDCFDBB14A8988362E18F5F407BC0C25A96",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset.meta",
+    "SHA256": "0F6383E4ACF764572AF5CCA279817EBB4D04E109BAE4C2C1574A118121EDFE01",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset",
+    "SHA256": "694C963B4FAB135A9B1224E90763C1B2AFD4C178C485F0890F8EA1CB5CA0F2C6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset.meta",
+    "SHA256": "D89EDA9C8E0B935CA12EEE52E720393DD78A84A17C3F8234FCF36CD4A9C2617F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset",
+    "SHA256": "8A2B5CCAE1165F92C6E9B1A251AE5D0A9A7BEA5B1E3708B555F25A5322189D79",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset.meta",
+    "SHA256": "B33CB717FF8C296D3AB60AFFA50302A91095805A107C4C56C7567829F62FFD35",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset",
+    "SHA256": "7561D271EF9ED5270CD80A2A2ED61F6DC95D755388CB7EBAFF17824116CCBA2E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset.meta",
+    "SHA256": "CB94B73BBE91904B5FD806C7A23202B29DA2968C8C528EFDA4750C83BE29179E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset",
+    "SHA256": "0E18DFA28E85D2889E8AE0077D7DA7311CD405C42BA14C916D00B0AF16065DFF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset.meta",
+    "SHA256": "F84AF592EB49BE13EDA3D23150D56C0F06BF96114F0F62D53E38B4F8648CCA25",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset",
+    "SHA256": "5E434AA3E72EBB38AE3B789A273B5E1D9A25D338D526EFDB09C95CF53ACB49B0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset.meta",
+    "SHA256": "CD34EC9C23351AA2AFCFACD583930C2409175C35DDBEBC58C3A19DAF2F4A59E2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset",
+    "SHA256": "C2EB2CABEA560F89F0C06D62A3A467972CC916D5C916E617E17B9AD76A0EC3CF",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset.meta",
+    "SHA256": "647F55C9558EBFB6BBE8E42688EE184A5C21A700BB2FC2C6B962384282243AFD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset",
+    "SHA256": "A347624C4461099C70C7EEDBAC439B0AE290C271ADD82265031888D12710F55E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset.meta",
+    "SHA256": "1136A17D7C74D908939A34B0B9DB50BE5B8E278BDC3987532A18028E4231B6CA",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset",
+    "SHA256": "C39EFD29074F9D8BB65E068CF22092893E19BF8E9B624FAE169E14BE9678118F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset.meta",
+    "SHA256": "B2004775F97F03D30E82A3D64E478B1EEDDFE0DE83BA73D801A18D16EEAFDB0B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset",
+    "SHA256": "69DD072BAAB3745453D1E028A199BEC3BCFEBD3C730E39895113F72E83E59BD2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset.meta",
+    "SHA256": "9E797638937B0DEFA1050CEC3AF7319C761DC5CB8E81209420FFC6B06C6E7E57",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset",
+    "SHA256": "B12BA2A1A040D37E9CCB79C1421D99E06C9CB2F7AD54A45E7F4E21A1F76A393B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset.meta",
+    "SHA256": "748738EA3AFB7F2E83E84EFE68B2D550CD0D93ECCEE249F217DF39FF1C8DEB80",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset",
+    "SHA256": "FCD6FA2C410AE6AEA93143498E2A4838FD99009B1F178B661BF48A5E1071FAD5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset.meta",
+    "SHA256": "43562DD984E0241F25C1A198CF3C53C31B4C6EC899635CD02B14E0F9F0EE665D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset",
+    "SHA256": "B52A26FEDB366113CA1B07B879C35C82430F445C883EC5C1A9B9B5CD20A1C8B3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset.meta",
+    "SHA256": "292DE4B8A225647DAE61D2E02497C4BDD3F8BE7CCA43EB08573C539E55977EFE",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset",
+    "SHA256": "BA300ADA75D2B85142F2D793DEF25C617A7741192F7B1E490572220AD03A92D2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset.meta",
+    "SHA256": "4E90413A6E42C7E3BD77294476F7992C34BB8BF1BDF9F91A0566BFF510E9A6E1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset",
+    "SHA256": "09866D592EADDE15BBC5F74F5F58B149334CF7B32B52B81AA1D340703A203AAC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset.meta",
+    "SHA256": "E7B0D49CDA123C1858570BD646AB07AA8684198B330F806B600BA8AF6AB8D3EC",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset",
+    "SHA256": "1E7354C5F0974FCB11E9AA921E9AB76F471915D7BEE7CD7BF8B57E28569D8040",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset.meta",
+    "SHA256": "FB250804D016523A8614FA7B3ADC46272B6B8FFCE3F04CEEC49F4231F1E7ECCE",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset",
+    "SHA256": "988879C46BE33251ED60CC3781CE90DF68906EC7F518DDB08541E5F7D72A38D3",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset.meta",
+    "SHA256": "F4A9F88D4B450CD6280CC01A8E7E79625191144002C6B864878499B9A4237CA5",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerScheme.asset",
+    "SHA256": "2F243CC4413C1AF5CED51AE2EFBDEB49513C62E4D34F8D0EF4F93D8EF2135368",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerScheme.asset.meta",
+    "SHA256": "D4D104E51C23542F4F6E07EF487D356F1C441C69B9F3F00CC7F484625A022105",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States.meta",
+    "SHA256": "48D14A23B2B79ACCF6623418C50C5A0BFD1E3FDF92B9A0BD937453332A72AF1F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Action.asset",
+    "SHA256": "C777971740D513E91F8A1728CCCE05C8CF46565AA4A1DD3EEBAA6F8162C459B6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Action.asset.meta",
+    "SHA256": "E1DDD20B93B0A273E28E2E89A0B5F567850A2C3D437070166FB73E9B1E9D85C2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Alive.asset",
+    "SHA256": "DC60848F299C2606951DE0C8463588B18561083900352A115F984DB25FACC398",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Alive.asset.meta",
+    "SHA256": "CD901D3F71ABF3A640CC53BA05EAD2372653098549887BD125536C1C15F66535",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Dash.asset",
+    "SHA256": "64D8CF93717C42BA31F47CC93C8FB9A381724C38EE0CEBD908D10E1B804CF825",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Dash.asset.meta",
+    "SHA256": "FCAC891491D9E8DE63D98145F407BA0A8D859D7A13E2F454C2CE933E24685569",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Dead.asset",
+    "SHA256": "C10ABCBB88DB82A124A116C41ECAAA3749ABBEDD95F23C2A026BF70DEED81A08",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Dead.asset.meta",
+    "SHA256": "C6FF302BEE0D7D082E91C2EF6049CA7EF85CEB21F79C5454D143B3A72CE4FDD2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Hit.asset",
+    "SHA256": "C7B607927B72256FE1EDBB3CE1B9959B79D99FAC56AA3D67619C0AA1A22D07A1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Hit.asset.meta",
+    "SHA256": "EFAC23E64460209C15165697201C279E9F1B4B8E88E59CCECF78C74A8C00D290",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Idle.asset",
+    "SHA256": "9AC8F911AF75169B603F54655DFCCC4BF995AC3561E0C521417C7652C11E7DE0",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Idle.asset.meta",
+    "SHA256": "7E275E008023534F7585CDD82FF39D919FA81E1FB9E87E7054BDCC4EE1FE3A19",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Locomotion.asset",
+    "SHA256": "6B910F33EB9F34A54429AF4B133218DCBFCF73633EE22073486C5447251B5575",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Locomotion.asset.meta",
+    "SHA256": "BA93DFE4F97CF5261C818CC677C6E496D9FA65E98894E9FA0C591A572493BF68",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Move.asset",
+    "SHA256": "894955C08F36B49698966195D0D6A309325D879E07918D7BA4556B263A48747D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/States/Move.asset.meta",
+    "SHA256": "11349A674273CAE219ECE28C481139D5C1237755082552C275C9F98F88E89C07",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/PlayerData/PlayerDataConfig.asset",
+    "SHA256": "05467DDFDBD969A938EAF0E083AE84E8A31324F2AA40761C44C4FEEEB8F93CA8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon.meta",
+    "SHA256": "02F8B44169CFE226EF2EFDAB2BAB61FD96B2E88EA3ED0CC4212F5110DB63AE75",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol.meta",
+    "SHA256": "33D710351F5A74FFFE5FA921A77B5913B7DF180663728F2A81204A3BFCFE0724",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset",
+    "SHA256": "68B59D1B89C90D8063CEAFB043A3C999C3256E95DA37F4C0E5974A6BC5AF8153",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset.meta",
+    "SHA256": "CB911522EE72F03ECA347E2E0962381B39C039B6F553A87B5185CCBDBB0131A8",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset",
+    "SHA256": "2E424391E83989A6B8B23D5D211E1BCE65ACB561160701E12668DA56B8D61204",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset.meta",
+    "SHA256": "7F47F2BE0FF659291F9636E04C0E682B43BCB8E1480014D603F56B98B44C5E05",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset",
+    "SHA256": "01B703510CC0D22D0258B32FF7036F70DCB956E967D3D966B93BDBDBF4EC0962",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset.meta",
+    "SHA256": "58CE23C89A0979AAC6130DBBC966BBE7EB32B7DDD3F35DAC4656D5B1DFAA1F0E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset",
+    "SHA256": "89292FA28B9CCCA4B2FD19F9A1E7BD50CC67984568DF3F1B9AC139441F85D45A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset.meta",
+    "SHA256": "0801FF30EE837860A60DCCD0C2053604B9ACFD7647B68205AC41DF5FDB836BB1",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset",
+    "SHA256": "CCC57CD02D2CCBF2614C0F1F77F679D11003345AAA236AD65CCF21B07B9BEB86",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset.meta",
+    "SHA256": "F3EBF6AD58B1B4BCC82098BBD543F6CCEE977A758C3D1F8DFE3BEB13FBB84868",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset",
+    "SHA256": "15A0421665B68DEFDC0EA574977F6D4B11152D61F405ECC7CC92F4C6E73C1B95",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset.meta",
+    "SHA256": "286372D0B30C99E5ECD115D41C20B8A105148012E64B6002C17F08CA095C7A69",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset",
+    "SHA256": "C62173650BFBF446B764EFC1D52596CA2BFA2EA0E34370FF0136859FFD6D569F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset.meta",
+    "SHA256": "08FBAF6304D50889CE5484D323D52798FA43D606C853693AEDAAD08A43A9C8BB",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset",
+    "SHA256": "5971B5A492F93A0EC8FDE872B3056A504F402DBD8C814817A2F3FB6BD53680D2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset.meta",
+    "SHA256": "89F40D109E93576B33E2BD27119BD3B4A7D0CBF6ABC8BE40893C5C09C0EDEDD6",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword.meta",
+    "SHA256": "0C27F31B663EE50301F9C8FA91BF9DEAA7DE8731BCE2A26B6F307F012F417535",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/active.asset",
+    "SHA256": "68B59D1B89C90D8063CEAFB043A3C999C3256E95DA37F4C0E5974A6BC5AF8153",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/active.asset.meta",
+    "SHA256": "EB8FFFE5573E7188B38D2A35435A2D4B0A028661E7602071F7F4BAA42D23766C",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset",
+    "SHA256": "453DE71E754480C91ACC4DCAD1489EBAA795D49A61ABAFE8B21BE473A0F57587",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset.meta",
+    "SHA256": "4BBE260953720FD2E539940C3D0033A96BCE963DEAC3EF46152153EFD74B7006",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset",
+    "SHA256": "0B132AB0638BA6C833D71014927731A14001020485F0EA2AEFD2160AA52E85AD",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset.meta",
+    "SHA256": "1E8E4C7217DC87A1A0B299014F365B97496E88D4116EA3386A9D85C3CA92D83B",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset",
+    "SHA256": "1F6FB114793AB4D5F3F014B18FF906B299AF908C20C5B3B49D82670382A0C32A",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset.meta",
+    "SHA256": "E7452EE49759A7D0C9CD413F4A6CC029DEA95754114D249F538560AA04F1A978",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset",
+    "SHA256": "CCC57CD02D2CCBF2614C0F1F77F679D11003345AAA236AD65CCF21B07B9BEB86",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset.meta",
+    "SHA256": "5E3AC4662DE072251E93E5EF36AF0D828AF253B1E85BE07E92C62B290B31B1C9",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset",
+    "SHA256": "15A0421665B68DEFDC0EA574977F6D4B11152D61F405ECC7CC92F4C6E73C1B95",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset.meta",
+    "SHA256": "88F7204DC02D191682CF4A8EA1EB704F58F7598B62AB8E5E8AEDA3DB11F48323",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset",
+    "SHA256": "42D4EA202444C9670D1F924BDA989958A020D474AB7CD7F30CD0E2208C9272F2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset.meta",
+    "SHA256": "85EB28A8C393C1AD63B5922A01F0457D0D2AB6A022D9DCC11F702307DE542D84",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset",
+    "SHA256": "5971B5A492F93A0EC8FDE872B3056A504F402DBD8C814817A2F3FB6BD53680D2",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset.meta",
+    "SHA256": "568A83CA07C441014596A742814E0BE0E197BA9BE8C721D5F2CA4A1031BEB20E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab",
+    "SHA256": "7936FB4158E7C79E0C0E0B4A9A6DABB43258571B729E09BA8C21FC873BA3240F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+    "SHA256": "7723AD800C855F7A5179C1F14F321169FA4079291229F392490B9D6E7A557D26",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player.meta",
+    "SHA256": "FC63A745E761F637473A10C57D38C79EE2AA8309C389F1DE877AA20F25D68E17",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player/Animator.meta",
+    "SHA256": "5B8B9F92F5AA7CA1706295499AEE73F12C3514B65A975A7F68D5A41545F2F84D",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player/Atlas.meta",
+    "SHA256": "5F58B6F7216EE07B551A385507A0CF44591C6DCCE62FC24FA6C613969F888131",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs.meta",
+    "SHA256": "AF749C46CF8C0D1E28657A13C3C6022B02E2C421F93047390AA6A19858056B8F",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+    "SHA256": "2EB417D0D7C426016CDD52FF66F648311B9AF22DDDAAD5606F600F3DCEA20F0E",
+    "Category": "active topdown-2d template"
+  },
+  {
+    "Path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab.meta",
+    "SHA256": "194836BD8FBEED8DBBEC15FABF756961FE41A8B971A0A7114EA590D750532089",
+    "Category": "active topdown-2d template"
+  }
+]

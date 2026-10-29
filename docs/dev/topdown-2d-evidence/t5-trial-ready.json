@@ -1,0 +1,14 @@
+{
+  "ready": true,
+  "scene": "Assets/Game/Scenes/TopdownArena.unity",
+  "scheme": "topdown.cf1053c8a74f46f6ac93f7f86a85f5ea",
+  "storage": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\TopdownTrials\\6076486f77f6422fa28b94c9212d4d82",
+  "nodes": 10,
+  "observed": [
+    "alive",
+    "locomotion",
+    "idle"
+  ],
+  "x": -6.0,
+  "y": -4.0
+}

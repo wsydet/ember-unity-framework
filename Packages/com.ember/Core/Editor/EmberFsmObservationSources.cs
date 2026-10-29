@@ -11,16 +11,23 @@ namespace Ember.Core.Editor
     {
         #region 内部参数
         private static readonly Dictionary<string,Func<IEnumerable<EmberFsmObservedInstance>>> Providers=new();
+        private static readonly Dictionary<string,Func<bool>> Availability=new();
+        public static bool HasAvailableProvider => Availability.Values.Any(available=>available());
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public static void Register(string key,Func<IEnumerable<EmberFsmObservedInstance>> read) => Providers[key]=read;
-        public static void Remove(string key) => Providers.Remove(key);
+        public static void Register(string key,Func<IEnumerable<EmberFsmObservedInstance>> read, string ownerTemplateId=null, Func<bool> enabled=null)
+        {
+            var owner=ownerTemplateId??EmberFsmBlueprintAccess.CurrentTemplateId;
+            Providers[key]=read??throw new ArgumentNullException(nameof(read));
+            Availability[key]=()=>EmberFsmBlueprintAccess.Allows(owner,enabled);
+        }
+        public static void Remove(string key) { Providers.Remove(key); Availability.Remove(key); }
         public static IReadOnlyList<EmberFsmObservedInstance> Read(EmberFsmGraph graph)
         {
             var result=new List<EmberFsmObservedInstance>();
-            foreach(var provider in Providers.Values.ToArray())
-                foreach(var item in provider())
+            foreach(var provider in Providers.ToArray())
+                if(Availability[provider.Key]()) foreach(var item in provider.Value())
                     if(item!=null && item.Owner!=null && item.Graph==graph && item.Snapshot!=null)result.Add(item);
             return result.GroupBy(x=>x.Snapshot.InstanceId).Select(x=>x.First()).ToArray();
         }

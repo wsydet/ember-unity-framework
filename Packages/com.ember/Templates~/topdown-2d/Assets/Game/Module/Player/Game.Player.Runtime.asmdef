@@ -1,0 +1,1 @@
+{"name":"Game.Player.Runtime","rootNamespace":"Game.Player","references":["Game.Entity.Runtime","Game.SceneFlow.Runtime","Game.Input.Runtime","Game.PlayerData.Runtime","Game.PlayerData.Storage","Ember.Core.Runtime","Ember.Basic.Runtime","Unity.InputSystem","UniTask"],"autoReferenced":true}

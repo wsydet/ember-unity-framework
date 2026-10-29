@@ -1,0 +1,11 @@
+{
+  "id": "topdown-2d",
+  "version": "0.1.0",
+  "previousContentHash": "5ef1d9ae0042f8852d4b34566d7cd8bc",
+  "contentHash": "549c696fccdd7614fd68ff6e9f787933",
+  "versionedContentHash": "61cbe49aa797b1604f293b9756674566",
+  "files": 1053,
+  "action": "EmberProjectSetup.SaveTemplate via Unity MCP",
+  "bumped": false,
+  "backup": "Library/EmberExtensionWiring/20261029-followup"
+}

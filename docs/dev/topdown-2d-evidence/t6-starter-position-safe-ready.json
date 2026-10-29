@@ -1,0 +1,10 @@
+{
+  "TrialReady": true,
+  "scene": "Assets/Game/Scenes/GameplayScene.unity",
+  "nodes": 9,
+  "x": -9.0,
+  "y": -6.0,
+  "expectedX": -9,
+  "expectedY": -6,
+  "health": 6.0
+}

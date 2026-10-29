@@ -1,0 +1,67 @@
+{
+    "Success": true,
+    "Error": "",
+    "CreatedAssetPaths": [
+        "Assets/GameResource/Resources/UI/Module/Player",
+        "Assets/GameResource/Resources/UI/Module/Player/Animator",
+        "Assets/GameResource/Resources/UI/Module/Player/Atlas",
+        "Assets/GameResource/Resources/UI/Module/Player/Prefabs",
+        "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+        "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs",
+        "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs"
+    ],
+    "ModifiedAssetPaths": [
+        "Assets/Game/UI/GamePages.User.cs"
+    ],
+    "PrefabPath": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+    "RequiresRefresh": true,
+    "WaitingForCompilation": true,
+    "Plan": {
+        "IsValid": true,
+        "Error": "",
+        "Request": {
+            "CodePathMode": 1,
+            "PrefabName": "EUITopdownHudPage",
+            "PageName": "EUITopdownHudPage",
+            "ClassPath": "Module/Player",
+            "ClassName": "EUITopdownHudPage",
+            "Role": 1,
+            "PageType": 6,
+            "FixedSortingOrder": 100,
+            "UseUIUpdate": true,
+            "UseMask": false,
+            "MaskColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.5
+            },
+            "ClickMaskToClose": false,
+            "TransitionMode": 1,
+            "FadeInTime": 0.30000001192092898,
+            "FadeOutTime": 0.20000000298023225,
+            "GenerateAutoCreateClickableMaskOverride": false,
+            "GenerateOnClickMaskOverride": false,
+            "GenerateCustomSettings": false,
+            "StructureOnly": false,
+            "SourceSkeleton": {
+                "instanceID": 0
+            },
+            "ContentSlotPath": "",
+            "InheritBinding": false,
+            "ReferenceResolution": {
+                "x": 2560.0,
+                "y": 1440.0
+            },
+            "MatchWidthOrHeight": 0.5
+        },
+        "PrefabPath": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+        "LogicScriptPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs",
+        "BindingScriptPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs",
+        "SettingsScriptPath": "",
+        "PageDefFile": "Assets/Game/UI/GamePages.User.cs",
+        "AnimatorControllerPath": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Ani.controller",
+        "SafeAreaPrefabPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISafeArea.prefab",
+        "ModuleDirectory": "Assets/GameResource/Resources/UI/Module/Player"
+    }
+}

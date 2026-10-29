@@ -1,5 +1,7 @@
 # 通用层级状态机
 
+编辑器入口与模板接线见 [FSM 蓝图能力与模板隔离](../manual/fsm-blueprint-access.md)。运行时能力归框架，不意味着蓝图菜单在所有模板都显示；base 默认隐藏。
+
 实现位于 `Core/Runtime/Fsm/`，命名空间 `Ember.Core.Fsm`，程序集 `Ember.Core.Runtime`。
 `EmberFsm<TContext>` 是由宿主持有、显式驱动的普通 C# 对象。现有 `EmberStateMachine`
 继续管理 Init/Main/Gameplay、场景转场和覆盖状态。本功能不增加全局 Manager。

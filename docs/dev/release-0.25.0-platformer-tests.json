@@ -1,0 +1,83 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "59ff83edbd634790bc6cd3418e71c7d3",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793258816958,
+      "finished_unix_ms": 1793258838326,
+      "last_update_unix_ms": 1793258838326,
+      "progress": {
+        "completed": 4,
+        "total": 4,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Editor.Tests.PlayerExtensionAccessTests.OldWindowExtensionHashIsRejectedWithoutMutatingSerializedDraft",
+        "last_finished_unix_ms": 1793258837742,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 11.3484071,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "DisabledExtensionRejectsPublicEntrypointsAndRetainsOldWindowDraft",
+            "fullName": "Game.Player.Editor.Tests.PlayerExtensionAccessTests.DisabledExtensionRejectsPublicEntrypointsAndRetainsOldWindowDraft",
+            "state": "Passed",
+            "durationSeconds": 2.7793265,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\c9b6ab9dd1d74fad9efff034211526fd\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\8e6e358f351b43e8a29968756ec5a669\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n"
+          },
+          {
+            "name": "DisabledExtensionRemovesDocumentDiscoveryAndBlocksOldDocumentIdWithoutDeletingSource",
+            "fullName": "Game.Player.Editor.Tests.PlayerExtensionAccessTests.DisabledExtensionRemovesDocumentDiscoveryAndBlocksOldDocumentIdWithoutDeletingSource",
+            "state": "Passed",
+            "durationSeconds": 2.5125494,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\22cace82f0fe43b3b27c385383bea2ae\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\f539938d8c5b4db4b3ace4cb66a5b960\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n"
+          },
+          {
+            "name": "FormalLevelTrialDoesNotRequireBlueprintAndOldVersionWindowIsRejected",
+            "fullName": "Game.Player.Editor.Tests.PlayerExtensionAccessTests.FormalLevelTrialDoesNotRequireBlueprintAndOldVersionWindowIsRejected",
+            "state": "Passed",
+            "durationSeconds": 3.6519197,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\a40f0775d3ca444d972b6f0fb9d95b70\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\ff8904ae457e49e193f79bdc0ec7ae3a\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-ai-skills\\6cdd5f7bfff34647af0df115c48840b9\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:74)</i></color>\r\n"
+          },
+          {
+            "name": "OldWindowExtensionHashIsRejectedWithoutMutatingSerializedDraft",
+            "fullName": "Game.Player.Editor.Tests.PlayerExtensionAccessTests.OldWindowExtensionHashIsRejectedWithoutMutatingSerializedDraft",
+            "state": "Passed",
+            "durationSeconds": 1.5111199,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

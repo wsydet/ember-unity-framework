@@ -10,7 +10,8 @@ namespace Game.Player.Editor
     [InitializeOnLoad]
     internal static class PlayerFsmObservationSource
     {
-        static PlayerFsmObservationSource() => EmberFsmObservationSources.Register("platformer-player",Read);
+        static PlayerFsmObservationSource() => EmberFsmObservationSources.Register("platformer-player", Read,
+            ownerTemplateId: "platformer-2d", enabled: () => PlayerEditorAccess.Enabled);
         public static string Metrics(PlayerContext context)
         {
             var result = new StringBuilder();

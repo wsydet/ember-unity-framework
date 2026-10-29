@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-29",
+  "action": "EmberProjectSetup.SaveTemplate via Unity MCP",
+  "receipt": {
+    "id": "ui-game",
+    "version": "0.2.0",
+    "previousContentHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+    "contentHash": "43030af8571b29f5c1d2d0631faa1733",
+    "versionedContentHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+    "files": 749,
+    "beforeDifferences": 3,
+    "errors": 0,
+    "differences": 0,
+    "bumped": false
+  },
+  "compile": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1793243414950,\\\"sequence\\\":6,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":null,\\\"guid\\\":null,\\\"name\\\":\\\"\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1793243414943,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1793243337046,\\\"last_compile_finished_unix_ms\\\":1793243341958,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1793243350143},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":1793211646578,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":1793243334733,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":1793243405176,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":{\\\"finished_unix_ms\\\":1793243414799,\\\"result\\\":\\\"unknown\\\",\\\"counts\\\":null}},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":600,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}",
+  "inspection": {
+    "template": {
+      "templateId": "ui-game",
+      "templateVersion": "0.2.0",
+      "contentHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+      "loadedAt": "2026-10-29 11:07:11"
+    },
+    "enabled": [
+      "ember.core"
+    ],
+    "docs": 0,
+    "blocked": [
+      "fsm",
+      "level",
+      "room"
+    ],
+    "playerSkillVisible": false,
+    "levelSkillVisible": false,
+    "extensionMenus": [],
+    "mvid": "4a53d027-e6e8-4586-b461-3987f0ed8bc1"
+  },
+  "tests": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.9770352,
+    "resultState": "Passed"
+  },
+  "backup": "Library/EmberExtensionWiring/20261029-followup/ui-game-stored-before",
+  "backupFiles": 1445,
+  "console": {
+    "errors": 0,
+    "warnings": "Two MCP WebSocket close/keep-alive warnings during reload; connection recovered."
+  }
+}

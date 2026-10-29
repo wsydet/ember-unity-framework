@@ -1,0 +1,1 @@
+{"name":"Game.Entity.Runtime","rootNamespace":"Game.Entity","references":["Ember.Basic.Runtime"],"autoReferenced":true}

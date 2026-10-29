@@ -193,9 +193,16 @@ namespace Ember.Core.Editor
                     faultInjector?.Invoke(i);
                 }
             }
-            catch
+            catch (Exception commitError)
             {
-                Rollback(states);
+                try { Rollback(states); }
+                catch (Exception rollbackError)
+                {
+                    // 两种错误都必须保留；否则回滚失败会遮掉首次提交失败的路径与原因。
+                    throw new IOException(
+                        "模板提交与回滚均失败；请保留 *.ember-backup~，依据内部两项异常检查原始失败及恢复状态。",
+                        new AggregateException(commitError, rollbackError));
+                }
                 throw;
             }
 
@@ -690,17 +697,24 @@ namespace Ember.Core.Editor
 
         private static void MovePath(string source, string destination)
         {
-            if (File.Exists(source))
+            try
             {
-                File.Move(source, destination);
-                return;
+                if (File.Exists(source))
+                {
+                    File.Move(source, destination);
+                    return;
+                }
+                if (Directory.Exists(source))
+                {
+                    Directory.Move(source, destination);
+                    return;
+                }
+                throw new FileNotFoundException($"待移动路径不存在：{source}", source);
             }
-            if (Directory.Exists(source))
+            catch (IOException error)
             {
-                Directory.Move(source, destination);
-                return;
+                throw new IOException($"模板事务移动失败：[{source}] → [{destination}]。", error);
             }
-            throw new FileNotFoundException($"待移动路径不存在：{source}", source);
         }
 
         private static void EnsureParentDirectory(string path)

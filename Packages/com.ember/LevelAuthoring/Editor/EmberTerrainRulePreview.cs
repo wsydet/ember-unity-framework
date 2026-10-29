@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ember.Core.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,15 +10,23 @@ namespace Ember.LevelAuthoring.Editor
     public sealed class EmberTerrainRulePreview : EditorWindow
     {
         private EmberTerrainTile _terrain;
+        [SerializeField] private string _previewDraft;
+        [SerializeField] private string _extensionScope;
         private Vector2 _scroll;
         private static readonly string[][] Shapes = {
             new[] { "111111", "111111", "111111" }, new[] { "11000", "11000", "11111" },
             new[] { "11111", "10001", "10001", "11111" }, new[] { "00100" }, new[] { "111111" }, new[] { "111222", "111222" } };
         private static readonly string[] Labels = { "矩形", "L形", "内洞", "孤立格", "单格宽平台", "不同连接组硬边界" };
         private static readonly Vector2Int[] Offsets = { Vector2Int.right, new(0,-1), Vector2Int.left, new(0,1), new(1,-1),new(-1,-1),new(-1,1),new(1,1) };
-        private void OnDisable() { if (_terrain != null) DestroyImmediate(_terrain); }
+        private void OnEnable()
+        {
+            if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.LevelAuthoring);
+            if (!string.IsNullOrEmpty(_previewDraft)) { _terrain = CreateInstance<EmberTerrainTile>(); EditorJsonUtility.FromJsonOverwrite(_previewDraft, _terrain); _terrain.hideFlags = HideFlags.HideAndDontSave; }
+        }
+        private void OnDisable() { if (_terrain != null) { _previewDraft = EditorJsonUtility.ToJson(_terrain); DestroyImmediate(_terrain); } }
         private void OnGUI()
         {
+            if (!EmberExtensionProject.AllowsScope(EmberExtensionProject.LevelAuthoring, _extensionScope)) { EditorGUILayout.HelpBox("关卡制作扩展或版本已变化。规则草稿保留。", MessageType.Info); return; }
             if (_terrain == null) return;
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
             var rules = _terrain.Rules;
@@ -53,7 +62,10 @@ namespace Ember.LevelAuthoring.Editor
         }
         public static void Show(EmberTerrainTile terrain)
         {
-            var window = GetWindow<EmberTerrainRulePreview>("连接规则预览板");
+            Ember.Core.Editor.EmberExtensionProject.Require(Ember.Core.Editor.EmberExtensionProject.LevelAuthoring);
+            var window = Resources.FindObjectsOfTypeAll<EmberTerrainRulePreview>().FirstOrDefault(w => EmberExtensionProject.AllowsScope(EmberExtensionProject.LevelAuthoring, w._extensionScope))
+                ?? CreateInstance<EmberTerrainRulePreview>();
+            window.titleContent = new GUIContent("连接规则预览板");
             if (window._terrain != null) DestroyImmediate(window._terrain);
             window._terrain = Instantiate(terrain); window._terrain.hideFlags = HideFlags.HideAndDontSave; window.Show();
         }
@@ -63,12 +75,16 @@ namespace Ember.LevelAuthoring.Editor
     internal sealed class EmberTerrainTileInspector : UnityEditor.Editor
     {
         private EmberTerrainTile _draft;
+        [SerializeField] private string _ruleDraft;
+        [SerializeField] private string _extensionScope;
         private SerializedObject _serialized;
         private string[] _affected = Array.Empty<string>();
-        private void OnEnable() { _draft = Instantiate((EmberTerrainTile)target); _draft.hideFlags = HideFlags.HideAndDontSave; _serialized = new SerializedObject(_draft); }
-        private void OnDisable() { _serialized?.Dispose(); if (_draft != null) DestroyImmediate(_draft); }
+        private void OnEnable() { if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.LevelAuthoring);
+            _draft = Instantiate((EmberTerrainTile)target); if (!string.IsNullOrEmpty(_ruleDraft)) EditorJsonUtility.FromJsonOverwrite(_ruleDraft, _draft); _draft.hideFlags = HideFlags.HideAndDontSave; _serialized = new SerializedObject(_draft); }
+        private void OnDisable() { _serialized?.Dispose(); if (_draft != null) { _ruleDraft = EditorJsonUtility.ToJson(_draft); DestroyImmediate(_draft); } }
         public override void OnInspectorGUI()
         {
+            if (!EmberExtensionProject.AllowsScope(EmberExtensionProject.LevelAuthoring, _extensionScope)) { EditorGUILayout.HelpBox("关卡制作扩展或版本已变化。资产与规则草稿保留。", MessageType.Info); return; }
             _serialized.Update(); DrawPropertiesExcluding(_serialized, "m_Script"); _serialized.ApplyModifiedProperties();
             EditorGUILayout.HelpBox("当前为规则草稿。先预览，再明确应用；不会打开或保存其他关卡。", MessageType.Info);
             if (GUILayout.Button("预览连接与受影响场景"))

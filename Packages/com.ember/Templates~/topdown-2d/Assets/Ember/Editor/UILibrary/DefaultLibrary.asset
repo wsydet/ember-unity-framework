@@ -1,0 +1,5616 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9110dc1a9cca7ac4e90fc20be966a5d6, type: 3}
+  m_Name: DefaultLibrary
+  m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.EUILibrary
+  SkinId: EmberDefaultLight
+  SkinVersion: 1.1.0
+  ReferenceResolution: {x: 1280, y: 720}
+  Entries:
+  - Id: ember.standard
+    Family: Standard
+    Category: Skeleton
+    Prefab: {fileID: 211011299030331944, guid: 847b9816e9a8a724b95552cfe5e6dcd5, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - Standard
+    RequiredRoles:
+    - label
+    - image
+    - content
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: title
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6811986602547019486, guid: 847b9816e9a8a724b95552cfe5e6dcd5, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: surface-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1635665779776889840, guid: 847b9816e9a8a724b95552cfe5e6dcd5, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: content
+      Role: content
+      ComponentType: UnityEngine.RectTransform
+      State: default
+      Target: {fileID: 4059971713483775257, guid: 847b9816e9a8a724b95552cfe5e6dcd5, type: 3}
+      Required: 1
+      Properties:
+      - children
+  - Id: ember.standardpopup
+    Family: StandardPopup
+    Category: Skeleton
+    Prefab: {fileID: 6034843762067657018, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - StandardPopup
+    RequiredRoles:
+    - label
+    - image
+    - control
+    - content
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: title
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 161431240372097382, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: label
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4327128644913325318, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: surface-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3019833322826325838, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: close-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4772091764759479597, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: control
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: Selectable.interactable / pressed / focus
+      Target: {fileID: 3679258915156399545, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: content
+      Role: content
+      ComponentType: UnityEngine.RectTransform
+      State: default
+      Target: {fileID: 8139027076076896729, guid: a7dab034ad3eeb141af5b2e88cb8145e, type: 3}
+      Required: 1
+      Properties:
+      - children
+  - Id: ember.actionbutton
+    Family: ActionButton
+    Category: Component
+    Prefab: {fileID: 7247049841585529174, guid: fcb3e6dae623b0a42965381362dfc2b9, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - ActionButton
+    RequiredRoles:
+    - label
+    - image
+    - icon
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 280, y: 48}
+    Slots:
+    - Id: label
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5399223685625105543, guid: fcb3e6dae623b0a42965381362dfc2b9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: euiactionbuttonitem-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7663711908066404368, guid: fcb3e6dae623b0a42965381362dfc2b9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: icon-image
+      Role: icon
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3116933068384441467, guid: fcb3e6dae623b0a42965381362dfc2b9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: control
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: Selectable.interactable / pressed / focus
+      Target: {fileID: 6179002619371264184, guid: fcb3e6dae623b0a42965381362dfc2b9, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.choicetoggle
+    Family: ChoiceToggle
+    Category: Component
+    Prefab: {fileID: 7611053913276523999, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - ChoiceToggle
+    RequiredRoles:
+    - selected-indicator
+    - label
+    - image
+    - unselected-indicator
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 280, y: 56}
+    Slots:
+    - Id: selected
+      Role: selected-indicator
+      ComponentType: UnityEngine.UI.Image
+      State: Toggle.isOn = true
+      Target: {fileID: 8305693069526637479, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: label
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 586643109337800670, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: euichoicetoggleitem-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5788327175315018984, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: unselected-image
+      Role: unselected-indicator
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: Toggle.isOn = false
+      Target: {fileID: 8626631508988464283, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: control
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: Toggle.isOn / Selectable.interactable
+      Target: {fileID: 6175396950884030983, guid: 0cc64dbd2924aa3469163f1765667577, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.progress
+    Family: Progress
+    Category: Component
+    Prefab: {fileID: 5884186036043967692, guid: 28fcf4ed35e930845bf65a8d66848536, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - Progress
+    RequiredRoles:
+    - value
+    - track-background
+    - track-fill
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 360, y: 40}
+    Slots:
+    - Id: value
+      Role: value
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 793527333601327899, guid: 28fcf4ed35e930845bf65a8d66848536, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: track-image
+      Role: track-background
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7831601483100642078, guid: 28fcf4ed35e930845bf65a8d66848536, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: fill-image
+      Role: track-fill
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4183715386995296523, guid: 28fcf4ed35e930845bf65a8d66848536, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: control
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: Selectable.interactable / pressed / focus
+      Target: {fileID: 945230160437410015, guid: 28fcf4ed35e930845bf65a8d66848536, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.contenthost
+    Family: ContentHost
+    Category: Component
+    Prefab: {fileID: 1192241273735827673, guid: 5e4b71f8e6544a946b786276c47abf5c, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - ContentHost
+    RequiredRoles:
+    - image
+    - content
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 440, y: 260}
+    Slots:
+    - Id: euicontenthostitem-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3576473748608702176, guid: 5e4b71f8e6544a946b786276c47abf5c, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: content
+      Role: content
+      ComponentType: UnityEngine.RectTransform
+      State: default
+      Target: {fileID: 4630890819242768988, guid: 5e4b71f8e6544a946b786276c47abf5c, type: 3}
+      Required: 1
+      Properties:
+      - children
+  - Id: ember.optionrow
+    Family: OptionRow
+    Category: Component
+    Prefab: {fileID: 8713926596607726906, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - OptionRow
+    RequiredRoles:
+    - selected-indicator
+    - label
+    - image
+    - unselected-indicator
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 440, y: 56}
+    Slots:
+    - Id: selected
+      Role: selected-indicator
+      ComponentType: UnityEngine.UI.Image
+      State: Toggle.isOn = true
+      Target: {fileID: 502361161870448733, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: label
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8426989445628740881, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: euioptionrowitem-image
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3926818582460934386, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: unselected-image
+      Role: unselected-indicator
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: Toggle.isOn = false
+      Target: {fileID: 5215608943064355719, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: control
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: Toggle.isOn / Selectable.interactable
+      Target: {fileID: 2036717191725748069, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: icon
+      Role: icon
+      ComponentType: UnityEngine.UI.Image
+      State: 
+      Target: {fileID: 1916508726966086657, guid: 43432c95c3466274fb862b8eac2959c9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.optionrow.variant
+    Family: OptionRow
+    Category: Component
+    Prefab: {fileID: 1637035741423990182, guid: ad624695dcd2ac7469f1d340edd1dcc3, type: 3}
+    AutoMatch: 0
+    Aliases:
+    - OptionRow
+    RequiredRoles:
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 440, y: 56}
+    Slots:
+    - Id: label
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1921720959043822989, guid: ad624695dcd2ac7469f1d340edd1dcc3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+    - Id: icon
+      Role: icon
+      ComponentType: UnityEngine.UI.Image
+      State: 
+      Target: {fileID: 8413062543428275357, guid: ad624695dcd2ac7469f1d340edd1dcc3, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.secondarybutton
+    Family: SecondaryButton
+    Category: Component
+    Prefab: {fileID: 2602605356693719479, guid: e11aa996340b33b4c9d37b4eb6aa3371, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 48}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3086663145892675825, guid: e11aa996340b33b4c9d37b4eb6aa3371, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1534817637074645081, guid: e11aa996340b33b4c9d37b4eb6aa3371, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 747909742026613862, guid: e11aa996340b33b4c9d37b4eb6aa3371, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7767984486401883290, guid: e11aa996340b33b4c9d37b4eb6aa3371, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.destructivebutton
+    Family: DestructiveButton
+    Category: Component
+    Prefab: {fileID: 2113830692907214703, guid: 959ce476882ad974c9f8e6676e8b83b8, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 48}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1413459442094468649, guid: 959ce476882ad974c9f8e6676e8b83b8, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3172608482228166273, guid: 959ce476882ad974c9f8e6676e8b83b8, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3686902087242975934, guid: 959ce476882ad974c9f8e6676e8b83b8, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5946711539858133570, guid: 959ce476882ad974c9f8e6676e8b83b8, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.iconbutton
+    Family: IconButton
+    Category: Component
+    Prefab: {fileID: 4326749475122828281, guid: d5dfda64b3474b74f9919be2ab791cdf, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 40, y: 40}
+    Slots:
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2500203797175899723, guid: d5dfda64b3474b74f9919be2ab791cdf, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6344260408850903230, guid: d5dfda64b3474b74f9919be2ab791cdf, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 408814673312048569, guid: d5dfda64b3474b74f9919be2ab791cdf, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.closebutton
+    Family: CloseButton
+    Category: Component
+    Prefab: {fileID: 951381741992756298, guid: b869a45053b33214b936707726cfa46e, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 40, y: 40}
+    Slots:
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1408163255893361144, guid: b869a45053b33214b936707726cfa46e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7580429144478541581, guid: b869a45053b33214b936707726cfa46e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3788699202338681354, guid: b869a45053b33214b936707726cfa46e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.backbutton
+    Family: BackButton
+    Category: Component
+    Prefab: {fileID: 5216699612736411258, guid: 518be8f6f6d8eba43a9359fe906c71f0, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 40, y: 40}
+    Slots:
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6258949097388970952, guid: 518be8f6f6d8eba43a9359fe906c71f0, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3199126023492760893, guid: 518be8f6f6d8eba43a9359fe906c71f0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8197296610987008058, guid: 518be8f6f6d8eba43a9359fe906c71f0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.amountbutton
+    Family: AmountButton
+    Category: Component
+    Prefab: {fileID: 4361722122871045278, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 240, y: 48}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3625321997724808664, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 996835261178725744, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1367026189360566607, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8310496301435865523, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: AmountIcon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2616700136662963724, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Amount/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6534972406936662032, guid: 44c2c5d99ed66154987e29f42ae31577, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.tab
+    Family: Tab
+    Category: Component
+    Prefab: {fileID: 7234616140752859219, guid: 57e18419214c5cc4298158efa28081db, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 144, y: 40}
+    Slots:
+    - Id: root/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5754948017176385719, guid: 57e18419214c5cc4298158efa28081db, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3401298129486939473, guid: 57e18419214c5cc4298158efa28081db, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7647388237518191707, guid: 57e18419214c5cc4298158efa28081db, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7114916244841501981, guid: 57e18419214c5cc4298158efa28081db, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.tabgroup
+    Family: TabGroup
+    Category: Component
+    Prefab: {fileID: 902634843549152557, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - behaviour
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 450, y: 44}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3037847761749175811, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIToggleGroupEx
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIToggleGroupEx
+      State: default
+      Target: {fileID: 4405515559549620733, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties: []
+    - Id: EUITabItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7176706668252475258, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 249581079289901724, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5072633309460892566, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5690338447090361040, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUITabItem1/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2255683519068317239, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 9197392974355577809, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4229048941295141595, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3615581458913635229, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUITabItem2/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2274550969932024144, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 9186969500064912566, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4210163754315754940, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3670495361410893050, guid: aa04ec1c114184d499ff9ef4d7392a73, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.segmentedcontrol
+    Family: SegmentedControl
+    Category: Component
+    Prefab: {fileID: 7251908238837824483, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - behaviour
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 450, y: 44}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4759640653272277197, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIToggleGroupEx
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIToggleGroupEx
+      State: default
+      Target: {fileID: 6126778450765307699, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties: []
+    - Id: EUITabItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 846097517339124148, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7733675816754658386, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3332844710320407896, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2800426628085885982, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUITabItem1/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8604397228444756217, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1695198076473980191, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5950838535088540693, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6487463486245971283, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUITabItem2/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8626061843466192798, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUITabItem2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1683103333637462648, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5929191381208408946, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUITabItem2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6545139355375536692, guid: 2c79f8201de79654590d53ea339e97a7, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.switch
+    Family: Switch
+    Category: Component
+    Prefab: {fileID: 1310565742050618000, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 52, y: 32}
+    Slots:
+    - Id: root/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6073054747160647503, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2934809584351370099, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: On/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6287282695248655630, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: On/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1731904961883799835, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Off/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6242175871710034391, guid: 5e00a5fdf1697634a8b9977485899fd0, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.settingtogglerow
+    Family: SettingToggleRow
+    Category: Component
+    Prefab: {fileID: 397640168314448190, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 440, y: 76}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1672828100689065102, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7263814005495723060, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2559099622991759237, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUISwitchItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3770130795632880437, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUISwitchItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5237522689502684937, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISwitchItem/On/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3987102574308641140, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISwitchItem/On/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8655096622245870945, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISwitchItem/Off/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3942139531376821677, guid: fdd74da106d8fd74c9f5aec0e3090dcb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.slider
+    Family: Slider
+    Category: Component
+    Prefab: {fileID: 6316126143184000839, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 400, y: 48}
+    Slots:
+    - Id: root/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 2291262829795358574, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1943696473171778490, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7239520700166365517, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4567356570343860152, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3314528271330356600, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2996255513210198691, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 140204043523685837, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5199484795161551547, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2405829157260793888, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7763956106807946068, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Track/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5901528633663347538, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Track/Slider
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: interactable / pressed / selected
+      Target: {fileID: 8459423711741864704, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Track/Fill/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6083759676670914670, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Track/HandleArea/Handle/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7699935901452892171, guid: 8ff841477cef6c44eb141731cb357726, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.settingsliderrow
+    Family: SettingSliderRow
+    Category: Component
+    Prefab: {fileID: 8836685127785464654, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - behaviour
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 440, y: 110}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8387774582040519170, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4354397622478394560, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUISliderItem/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 6700620339017934416, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties: []
+    - Id: EUISliderItem/Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6469478528721914500, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2830125807025336435, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUISliderItem/Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8958736420177819270, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUISliderItem/Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7984530518044277830, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7684697145464245149, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4810771293196823795, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUISliderItem/Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 799694643696497541, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUISliderItem/Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7084840656218573086, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2922358028427262570, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: EUISliderItem/Track/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1357589904521235052, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Track/Slider
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: interactable / pressed / selected
+      Target: {fileID: 3914957242499742270, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: EUISliderItem/Track/Fill/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1683373073697956176, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: EUISliderItem/Track/HandleArea/Handle/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3020502740046031157, guid: 79c34b5e481cd284180c2e1f6dc8738b, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.stepper
+    Family: Stepper
+    Category: Component
+    Prefab: {fileID: 2637275835457977241, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 180, y: 48}
+    Slots:
+    - Id: root/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 7082068455576866705, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6352298706797876105, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1317831041321643280, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5857026292398600827, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3379371864079772505, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8193345239244682443, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5437758043052728790, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6730502418608115356, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8945235014240026852, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3725694139818159579, guid: 172000ad64bf2ea40bedc50bb80b0548, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.emptystate
+    Family: EmptyState
+    Category: Component
+    Prefab: {fileID: 1019348677952706538, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 270}
+    Slots:
+    - Id: Illustration/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4881646235266630751, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1969188261516749195, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5185902226625740871, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Action/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2574670221033250849, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Action/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1940406970149118877, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Action/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2586353648200148604, guid: 27f57fbb39c301f4ca9d066d963950a3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.badge
+    Family: Badge
+    Category: Component
+    Prefab: {fileID: 8625418286334682997, guid: 3e7bd3d8436284b4999da6af57841de2, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 54, y: 24}
+    Slots:
+    - Id: root/EUIBadgeView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIBadgeView
+      State: default
+      Target: {fileID: 3680159275522328036, guid: 3e7bd3d8436284b4999da6af57841de2, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Dot/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4442929917697073814, guid: 3e7bd3d8436284b4999da6af57841de2, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Tag/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7225468460652448563, guid: 3e7bd3d8436284b4999da6af57841de2, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Tag/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5779504686890568910, guid: 3e7bd3d8436284b4999da6af57841de2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.iconcard
+    Family: IconCard
+    Category: Component
+    Prefab: {fileID: 4652646100677245729, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - control
+    - image
+    - behaviour
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 150, y: 172}
+    Slots:
+    - Id: root/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5831210333400195700, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 9037812011942243256, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 609441700319231373, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6747832680989434918, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 550034709500545625, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7278757916882549788, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1252871695806847166, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5203217832838390256, guid: 08f38777860c50845b8041f46818bd67, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.horizontallisthost
+    Family: HorizontalListHost
+    Category: Component
+    Prefab: {fileID: 8855908140213297218, guid: 786ec6a9f1dea2a4c8c82c73100c9dad, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - behaviour
+    - content
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 480, y: 220}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6615540993676994171, guid: 786ec6a9f1dea2a4c8c82c73100c9dad, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 4081998648393962429, guid: 786ec6a9f1dea2a4c8c82c73100c9dad, type: 3}
+      Required: 1
+      Properties: []
+    - Id: content
+      Role: content
+      ComponentType: UnityEngine.RectTransform
+      State: 
+      Target: {fileID: 3037970682524142279, guid: 786ec6a9f1dea2a4c8c82c73100c9dad, type: 3}
+      Required: 1
+      Properties:
+      - children
+  - Id: ember.gridhost
+    Family: GridHost
+    Category: Component
+    Prefab: {fileID: 3166764992646161327, guid: fc5387dad57296d45b79ce60ae6b4004, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - behaviour
+    - content
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 480, y: 220}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 782224493405840790, guid: fc5387dad57296d45b79ce60ae6b4004, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 7616209668571123792, guid: fc5387dad57296d45b79ce60ae6b4004, type: 3}
+      Required: 1
+      Properties: []
+    - Id: content
+      Role: content
+      ComponentType: UnityEngine.RectTransform
+      State: 
+      Target: {fileID: 8880271969800505642, guid: fc5387dad57296d45b79ce60ae6b4004, type: 3}
+      Required: 1
+      Properties:
+      - children
+  - Id: ember.titlebar
+    Family: TitleBar
+    Category: Component
+    Prefab: {fileID: 139349129068834469, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - label
+    - image
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 480, y: 60}
+    Slots:
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5549308989363372343, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Help/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1469611513169127933, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Help/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 262377708095369871, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Help/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4701343176667303241, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Help/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8592777641834256202, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Back/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3450951662783998744, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Back/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7589961776100982461, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Back/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3139390876415481276, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Back/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7521898260964071919, guid: 9e935de1e31017e4b807615c50b615a9, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.sectiontitle
+    Family: SectionTitle
+    Category: Component
+    Prefab: {fileID: 7244445582120430241, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - label
+    - image
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 480, y: 42}
+    Slots:
+    - Id: Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4871018555098110979, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Help/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8483111842991943389, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Help/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2151485762371968922, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Help/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 249440431763480103, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Help/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4906675178906717988, guid: 6ce01527466e349448f2bfb9f9cf2424, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.input
+    Family: Input
+    Category: Component
+    Prefab: {fileID: 3365222278311081126, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - control
+    - behaviour
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 48}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4740456894678512644, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/TMP_InputField
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: interactable / pressed / selected
+      Target: {fileID: 173555161321209378, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIInputActions
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIInputActions
+      State: default
+      Target: {fileID: 2429715249440344342, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Viewport/Text/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 939099583935173700, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Viewport/Placeholder/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7062507640516678676, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Clear/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 879173415029228470, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Clear/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4589022276455895362, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Clear/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4920774804207956693, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Clear/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3206555913098723481, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Error/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8821521554270910644, guid: 487ef89d72e5ac54ca4253a9ec619c45, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.searchfield
+    Family: SearchField
+    Category: Component
+    Prefab: {fileID: 2539617214874549884, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - control
+    - behaviour
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 48}
+    Slots:
+    - Id: root/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5495622851828072158, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: root/TMP_InputField
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: interactable / pressed / selected
+      Target: {fileID: 1145520469401302264, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: root/EUIInputActions
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIInputActions
+      State: default
+      Target: {fileID: 3185512332308235212, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Viewport/Text/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 37569948520439454, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Viewport/Placeholder/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8038418408969903822, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Clear/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 125625954158430572, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Clear/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3612547439210535832, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Clear/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5316280759938971663, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Clear/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2446257442851097155, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Error/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8638313853666652782, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: SearchIcon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7416928218124989279, guid: 9a4c56f05b005e74ca591ce860c59c42, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.toast
+    Family: Toast
+    Category: Component
+    Prefab: {fileID: 2927029071322310935, guid: 4c7556be5b6f5ca4a912868debc1c176, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 420, y: 60}
+    Slots:
+    - Id: root/EUITimedNotice
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUITimedNotice
+      State: default
+      Target: {fileID: 8221931723823656697, guid: 4c7556be5b6f5ca4a912868debc1c176, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Notice/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8147383886818043053, guid: 4c7556be5b6f5ca4a912868debc1c176, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Notice/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8416445680148204955, guid: 4c7556be5b6f5ca4a912868debc1c176, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Notice/Message/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4647833781268654535, guid: 4c7556be5b6f5ca4a912868debc1c176, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.tooltip
+    Family: Tooltip
+    Category: Component
+    Prefab: {fileID: 3866615558043273311, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 40, y: 40}
+    Slots:
+    - Id: root/EUIAnchoredTip
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIAnchoredTip
+      State: default
+      Target: {fileID: 5117176363782943250, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Trigger/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6459460741054600540, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Trigger/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6878983102116899053, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Trigger/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4013763994898989377, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Trigger/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2014409965880573487, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Panel/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7299712733520375176, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Panel/Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 720058227856279254, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Panel/Close/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5717025078582504225, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Panel/Close/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4549416949865348397, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Panel/Close/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3809647166739044151, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Panel/Close/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2429147984594850783, guid: 97c2250ee3a0eaf47b7365d0b543613a, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.dropdown
+    Family: Dropdown
+    Category: Component
+    Prefab: {fileID: 2950643519192754263, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - behaviour
+    - image
+    - control
+    - label
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 280, y: 44}
+    Slots:
+    - Id: root/EUIStaticChoiceMenu
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIStaticChoiceMenu
+      State: default
+      Target: {fileID: 4223689079644149071, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Trigger/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1601416737750202353, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Trigger/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6550067674267059252, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Trigger/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8147980565852495476, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Trigger/Arrow/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 9160495095415953099, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Blocker/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1399777276061555878, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Blocker/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3027882665272475480, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Blocker/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4438410922166076358, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Options/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7999640285115847840, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Options/Option0/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7312159201602002995, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Options/Option0/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5329044849323289369, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Options/Option0/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3706756196525092713, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Options/Option1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1478311702686884554, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Options/Option1/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5115982974201406838, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Options/Option1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8469909778964940894, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Options/Option2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1669758982200057470, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Options/Option2/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 904485959000939915, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Options/Option2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1075531252969436093, guid: d67381e7035b67f4898d523dbcc7d102, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.alertpage
+    Family: AlertPage
+    Category: Page
+    Prefab: {fileID: 2573948536475598529, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - behaviour
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: Animator/EUISafeArea/Center/Surface/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6453667660259831989, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8234011926070460061, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6466751691423418238, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 3069292272347205126, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/Body/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5223985079742325912, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Accept/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5602460905239988994, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Accept/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8225037227612732330, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Accept/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7856789821700845461, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 816372564860462198, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3805143390934160606, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3162453483610964193, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Close/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3621301805172632278, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Close/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4861574905333021250, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Close/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5509483925492992765, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Close/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6429592445159705285, guid: 5eb7d8761201d73419fd0bfce7916421, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.confirmpage
+    Family: ConfirmPage
+    Category: Page
+    Prefab: {fileID: 3461099430574147644, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - behaviour
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: Animator/EUISafeArea/Center/Surface/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5341484237496829512, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7058791183978072160, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3513813389199852248, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 2007869659791620926, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/BodyViewport/Body/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5913107151535004133, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Accept/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2887034923677232292, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Accept/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1696183271353883660, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Accept/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 623698804722911283, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3225686573542032764, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1394202306640606676, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Cancel/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 897602726342271467, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Close/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2445940412027100203, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Close/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5820624926859431103, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Close/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6901015903875529728, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Close/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6969425763597600517, guid: 0a2e19211df10674b970846fcd97f56e, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.expandedlibrarypage
+    Family: ExpandedLibraryPage
+    Category: Page
+    Prefab: {fileID: 4160920082059474784, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - image
+    - label
+    - behaviour
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: Animator/EUISafeArea/Center/Surface/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3305688513099818680, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7339230036394949526, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUIToggleGroupEx
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIToggleGroupEx
+      State: default
+      Target: {fileID: 3116270934076586526, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1572217426892462955, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8448712703282546317, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3471420742589759367, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4085133682331260609, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem1/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3718483862259357706, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6013657097191540204, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1614506319352134886, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2232194717333968288, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem2/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2371912125078513625, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4613024783126837823, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 367021569749910325, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 975686385324468851, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem3/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7115918850520745626, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem3/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 157250390191872892, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem3/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5133408480709649014, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Tabs/EUITabItem3/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5737654532994206512, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISecondaryButtonItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 796781282616192621, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISecondaryButtonItem/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3788792960715005637, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISecondaryButtonItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3150725814059879162, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISecondaryButtonItem/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5338409492575359494, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIDestructiveButtonItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 716904696356691572, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIDestructiveButtonItem/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3920443127097847516, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIDestructiveButtonItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2974039522483092195, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIDestructiveButtonItem/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5253904683783021087, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8147779817036572291, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5658906893739906603, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5883291722392928788, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3461528617233439464, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/AmountIcon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7425700607824430423, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIAmountButtonItem/Amount/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1868399502620386123, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUICloseButtonItem/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8712725446730018795, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUICloseButtonItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 166638135646095646, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUICloseButtonItem/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6915054565526248473, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBackButtonItem/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5494315845897035813, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBackButtonItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3928948701449373392, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBackButtonItem/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7719556763888243671, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5586518035202781709, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUIToggleGroupEx
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIToggleGroupEx
+      State: default
+      Target: {fileID: 6524695457438633459, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 303744814741517172, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7266951997837733522, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2434841983344072600, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2979116135712358110, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem1/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8710554083176512057, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1732868612650592223, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6710169274963910357, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6161758622408538003, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem2/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8664647446506558814, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1788345671257082040, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6756058446164029874, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUITabGroupItem/EUITabItem2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6151898304227105012, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4279982968678393152, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUIToggleGroupEx
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIToggleGroupEx
+      State: default
+      Target: {fileID: 3201670844655016638, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8274765168401441849, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1313827401485122015, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6280422214692061397, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6896474547707177363, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem1/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1009047733485399412, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7993506205826379922, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3169846117591009688, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2549098457604514014, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem2/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1071227423550063123, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7940896937702449141, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3107648687115691775, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISegmentedControlItem/EUITabItem2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2575267000701407161, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8017363358068936038, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2070021328305786332, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6626992666677673581, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUISwitchItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5487144456908378845, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUISwitchItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3520436217758441185, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUISwitchItem/On/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5701972326086881436, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUISwitchItem/On/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 29666683548828809, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingToggleRowItem/EUISwitchItem/Off/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5674880983322590277, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5279715771231579551, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 94541089552931677, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 7052478403188992461, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7271687763343623449, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1901835582644125678, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4715794653857184027, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6047434058769707995, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6307161918951949312, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 9214723343813370734, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3907746810224294936, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6877106606819837571, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1561693725010212343, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Track/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3455718715624998385, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Track/Slider
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: interactable / pressed / selected
+      Target: {fileID: 826047491858265507, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Track/Fill/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3062034243600461517, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUISettingSliderRowItem/EUISliderItem/Track/HandleArea/Handle/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1497717573097350824, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 1476169879628964820, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3319998549858369484, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7240951791586066773, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2845344169122618942, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6399922786054063900, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 540567222688667790, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4414138082491403667, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3121957000515789529, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 727116702569671841, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIStepperItem/Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5008200729930711454, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBadgeItem/EUIBadgeView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIBadgeView
+      State: default
+      Target: {fileID: 455175534403921927, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBadgeItem/Dot/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 642857888859819893, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBadgeItem/Tag/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5838234842193225424, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIBadgeItem/Tag/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7311446678850461997, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4481946973328651592, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4311138009257442215, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/Selected/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1713311280866330744, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/Selected/Checkmark/Image
+      Role: image
+      ComponentType: UnityEngine.UI.Image
+      State: default
+      Target: {fileID: 2100058636994705927, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/Unselected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1860167265491840315, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Controls/EUIChoiceToggleItem/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7368868860474359422, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1044449138567460327, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/TMP_InputField
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: interactable / pressed / selected
+      Target: {fileID: 5611287106999025601, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/EUIInputActions
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIInputActions
+      State: default
+      Target: {fileID: 7930779288283269365, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Viewport/Text/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4809710827059271079, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Viewport/Placeholder/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3293483576357623287, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Clear/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4865205959931413077, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Clear/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8077390552680206497, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Clear/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 864064440156975926, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Clear/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7190037513245163898, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIInputItem/Error/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3880848912874961239, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5885418413672817621, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/TMP_InputField
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: interactable / pressed / selected
+      Target: {fileID: 1300660461928425971, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/EUIInputActions
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIInputActions
+      State: default
+      Target: {fileID: 3592849501592886983, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Viewport/Text/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2120090054410077077, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Viewport/Placeholder/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8243656550345163717, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Clear/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2042165979543704679, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Clear/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3443903244938364563, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Clear/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6065876112571770116, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Clear/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4331250278938597192, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/Error/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7640391600305811301, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISearchFieldItem/SearchIcon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8865146657177661012, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/EUIStaticChoiceMenu
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIStaticChoiceMenu
+      State: default
+      Target: {fileID: 5618493854869274757, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Trigger/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7015491915955511867, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Trigger/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3279723798628471294, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Trigger/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 465587735893937086, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Trigger/Arrow/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 596152399314928385, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Blocker/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7208128540795996524, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Blocker/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6728478509891644050, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Blocker/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5403492188988134924, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1756692781636256106, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option0/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1305879785285055993, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option0/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4508660395083972307, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option0/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4905655486697388707, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7197152542065981184, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option1/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3574441775716675772, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option1/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 211179496605228436, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6938151747095186356, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option2/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8928396722112317505, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUIDropdownItem/Options/Option2/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8757360846067394167, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/EUINumericControl
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUINumericControl
+      State: default
+      Target: {fileID: 2528785146085073891, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Decrease/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2750954395787595575, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Decrease/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6387175668738536896, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Decrease/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 267609363488256821, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Decrease/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1237274046409734645, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Increase/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1531480428775362094, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Increase/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4406249984452733248, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Increase/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8429744586037622326, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Increase/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2141187885160975533, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Value/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6299167158222880729, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Track/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7868438154664054751, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Track/Slider
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: interactable / pressed / selected
+      Target: {fileID: 5310261684454997901, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Track/Fill/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7546314331734795491, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISliderItem/Track/HandleArea/Handle/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6201339306771819654, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISwitchItem/EUIToggleEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4831931228802003393, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISwitchItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4608076335367224829, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISwitchItem/On/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4614305653888848768, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISwitchItem/On/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1099250651202627477, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUISwitchItem/Off/Knob/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4749341737541230425, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/Hint/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5141357766165152115, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1713550673445352006, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Help/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5666022833918089868, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Help/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6440426190128071166, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Help/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2016025935589129784, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Help/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3313373758974501947, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Back/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8439996515803273321, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Back/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3715518450324409804, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Back/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8166575351463241421, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Forms/EUITitleBarItem/Back/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3650163926480579230, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Illustration/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8811313050313081792, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2496387968886844948, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 9083482764366530520, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Action/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1894912664080656318, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Action/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 2529527861798380546, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIEmptyStateItem/Action/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1879011613308969443, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenConfirm/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7370680131577306969, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenConfirm/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6472563004396171249, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenConfirm/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5115797473553824718, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenAlert/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5206394616915929904, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenAlert/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8636240612538456984, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/OpenAlert/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7563734432699535271, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/Notify/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1280090107158682591, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/Notify/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 3339709870453615479, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/Notify/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3563709729880063816, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/EUIAnchoredTip
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIAnchoredTip
+      State: default
+      Target: {fileID: 1464456132156929671, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Trigger/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 789689645136974281, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Trigger/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 875415159206718584, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Trigger/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7269608919287236052, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Trigger/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5234740694756948666, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3899235278286825757, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/Description/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6534510823688962627, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/Close/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2019833481042685876, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/Close/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 7814819855752296888, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/Close/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7462326268753105826, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUITooltipItem/Panel/Close/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8279594022351427402, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIToastItem/EUITimedNotice
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUITimedNotice
+      State: default
+      Target: {fileID: 250279474641188796, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIToastItem/Notice/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 32179364062756328, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIToastItem/Notice/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 409326517455410398, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUIToastItem/Notice/Message/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3594836493440200834, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUISectionTitleItem/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1548600402364195908, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUISectionTitleItem/Help/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2548754864137426586, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUISectionTitleItem/Help/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 5422178558405093341, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUISectionTitleItem/Help/Label/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6166235538486830688, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Feedback/EUISectionTitleItem/Help/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1368229353421436771, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5461959711032701707, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 2929015637916911309, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 740863844241459234, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2866628545885880814, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 5967734212478949339, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 504846574450577008, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6703204515782123535, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4586875093141821002, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5460497389458813672, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card0/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1337857537543359398, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6219090896449652485, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8921343874770390729, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 1069344465531885820, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6559254044374532439, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 72098791795388200, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7179141454059542893, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1711685566559288783, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card1/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5663192773098456193, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 4367567448173692684, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1233119543074180800, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 7207169442743212277, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3590837307205321054, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7769329706955861793, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 681026858607483236, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 9012601946810449350, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card2/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2613673958437504136, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6709941786851326527, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8115165771214500851, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 398346025219335622, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5789096345466895469, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 743098067487494674, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7561906221845701719, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2058433434371490037, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIHorizontalListHostItem/Viewport/Content/Card3/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5028151796841462203, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3077972168115326129, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/ScrollRect
+      Role: behaviour
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 5322714066438781303, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 8444260421571913354, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6390703365019119430, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 3290371032252070259, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8681122487723712728, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2485575078618762919, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4674669587270236386, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3800911441142062144, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card0/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 7919896565442389262, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 260255050459834322, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3322742084248301086, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 6558694124472072235, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1068791701309137280, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6111982651175161855, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3923573928002828730, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 4761178207141125400, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card1/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1965127981475062870, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 6076794009260206524, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 8779001321276153968, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 922304356250596933, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 6421177600842887150, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 223940508603416977, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7042172764485220308, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1574743887497368438, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card2/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5515799168394046008, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/EUIButtonEx
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: interactable / pressed / selected
+      Target: {fileID: 1131080119619116612, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 2464097523901650824, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/EUIIconCardView
+      Role: behaviour
+      ComponentType: Ember.UIExtension.EUIIconCardView
+      State: default
+      Target: {fileID: 6281345518812971453, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties: []
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/Icon/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 215020034645628950, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/Title/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6412250795616171625, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/Quantity/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4205709241552994348, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/Selected/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 5637910438113305742, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/EUIGridHostItem/Viewport/Content/Card3/Locked/EUIImageEx
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 1687568424119557568, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+    - Id: Animator/EUISafeArea/Center/Content/Layout/LayoutNote/TMPEx
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5680027596768669167, guid: 4e89af04156fe62488ded29e7973e5dc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.text
+    Family: Text
+    Category: Component
+    Prefab: {fileID: 352654473501848243, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 240, y: 48}
+    Slots:
+    - Id: content
+      Role: label
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+      - m_fontAsset
+  - Id: ember.image
+    Family: Image
+    Category: Component
+    Prefab: {fileID: 9043817330405070735, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 240, y: 48}
+    Slots:
+    - Id: content
+      Role: image
+      ComponentType: Ember.UIExtension.EUIImageEx
+      State: default
+      Target: {fileID: 3566007942343926706, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.rawimage
+    Family: RawImage
+    Category: Component
+    Prefab: {fileID: 7083028562225130955, guid: d9c3137b8b313c9469fc45113316d294, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 240, y: 48}
+    Slots:
+    - Id: content
+      Role: image
+      ComponentType: UnityEngine.UI.RawImage
+      State: default
+      Target: {fileID: 6165125170571160848, guid: d9c3137b8b313c9469fc45113316d294, type: 3}
+      Required: 1
+      Properties:
+      - m_Texture
+      - m_Color
+  - Id: ember.circleprogress
+    Family: CircleProgress
+    Category: Component
+    Prefab: {fileID: 4908319593539039812, guid: 9bd97cc343b003e4ca7cf53382eb63eb, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 80, y: 80}
+    Slots:
+    - Id: content
+      Role: image
+      ComponentType: Ember.UIExtension.EUICircleImage
+      State: default
+      Target: {fileID: 5120948838764941989, guid: 9bd97cc343b003e4ca7cf53382eb63eb, type: 3}
+      Required: 1
+      Properties:
+      - m_Sprite
+      - m_Color
+  - Id: ember.freescrollhost
+    Family: FreeScrollHost
+    Category: Component
+    Prefab: {fileID: 1949118101725716380, guid: 0f518ccef97729b4681b986972f593a9, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 320, y: 220}
+    Slots:
+    - Id: content
+      Role: control
+      ComponentType: UnityEngine.UI.ScrollRect
+      State: default
+      Target: {fileID: 2135225362750123067, guid: 0f518ccef97729b4681b986972f593a9, type: 3}
+      Required: 1
+      Properties: []
+  - Id: ember.transitionsurface
+    Family: TransitionSurface
+    Category: Component
+    Prefab: {fileID: 8075855043457849289, guid: df2b5fb3f907a8c488fd881abba88c85, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 240, y: 48}
+    Slots:
+    - Id: content
+      Role: control
+      ComponentType: Ember.UIExtension.EUITransitionBlock
+      State: default
+      Target: {fileID: 2411525687920383445, guid: df2b5fb3f907a8c488fd881abba88c85, type: 3}
+      Required: 1
+      Properties: []
+  - Id: ember.continuousslider
+    Family: ContinuousSlider
+    Category: Component
+    Prefab: {fileID: 4730774988409903949, guid: f98dbec1d395cff42851c976696297f8, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles: []
+    AllowedOverrides:
+    - root.position
+    - root.size
+    ReferenceSize: {x: 280, y: 24}
+    Slots:
+    - Id: control
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: 
+      Target: {fileID: 1131467515922424018, guid: f98dbec1d395cff42851c976696297f8, type: 3}
+      Required: 1
+      Properties:
+      - m_MinValue
+      - m_MaxValue
+      - m_Value
+      - m_Interactable

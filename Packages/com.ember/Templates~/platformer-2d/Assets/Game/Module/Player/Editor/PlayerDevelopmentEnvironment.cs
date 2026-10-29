@@ -250,7 +250,7 @@ namespace Game.Player.Editor
         }
         public static void Play(bool formalAcceptance = false)
         {
-            PlayerEditorAccess.Require();
+            PlayerEditorAccess.RequireSession(formalAcceptance);
             if (_cleaning || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请等待本次播放及清理完成。");
             SessionState.EraseString(Key + "AcceptanceSchemeNext");
             SessionState.SetBool(Key + "AcceptanceNext", formalAcceptance);
@@ -259,7 +259,7 @@ namespace Game.Player.Editor
         /// <summary>本次正式场景验收使用指定方案与隔离存档，不修改默认方案或白盒偏好。</summary>
         public static void PlayFormalWithScheme(PlayerScheme scheme)
         {
-            PlayerEditorAccess.Require(); PlayerSchemeWorkflow.Validate(scheme);
+            PlayerEditorAccess.RequireSession(true); PlayerSchemeWorkflow.Validate(scheme);
             if (_cleaning || EditorApplication.isPlayingOrWillChangePlaymode)
                 throw new InvalidOperationException("请等待本次播放及清理完成。");
             string guid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(scheme));

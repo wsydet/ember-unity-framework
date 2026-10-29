@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "phase": "Won",
+      "result": "TrainingYard:1",
+      "Kills": 7,
+      "Escapes": 0,
+      "BaseHealth": 5,
+      "ProjectileCount": 0,
+      "results": 1
+    },
+    "compiler": "codedom"
+  }
+}

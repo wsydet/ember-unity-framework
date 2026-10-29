@@ -14,13 +14,19 @@ namespace Ember.Core.Editor
     {
         #region 内部方法
         private static EmberAISkillInstaller.TemplatePreview PreviewSkills(
-            string projectRoot, string assets, TemplateInfo template, string previousId, bool editing = false)
+            string projectRoot, string assets, TemplateInfo template, string previousId, bool editing = false,
+            EmberAISkillInstaller.ExtensionIdentity[] extensions = null)
         {
             var preview = EmberAISkillInstaller.PreviewTemplateSkills(projectRoot, assets,
                 new EmberAISkillInstaller.TemplateContext(template.id, template.version, template.contentHash,
-                    previousId, GetFrameworkVersion(), HasSkillEuiApi(), editing));
+                    previousId, GetFrameworkVersion(), HasSkillEuiApi(), editing,
+                    extensions: extensions ?? EmberExtensionProject.SourceIdentities(assets, projectRoot, template.id, template.version),
+                    moduleScopes: template.id == EmberFsmBlueprintAccess.CurrentTemplateId ? EmberExtensionDocuments.EnabledScopes : Array.Empty<string>()));
             EmberAISkillInstaller.BindTemplateIdentityRecord(preview, EditingRecordPath);
             EmberAISkillInstaller.BindTemplateIdentityRecord(preview, DeployedRecordsPath);
+            EmberAISkillInstaller.BindReadOnlyInput(preview, Path.Combine(assets, "Game/Config/EmberExtensionDefaults.json"));
+            string extensionConfiguration = IsEmbeddedPackage() ? "ProjectSettings/EmberExtensions." + template.id + ".json" : "ProjectSettings/EmberExtensions.json";
+            EmberAISkillInstaller.BindReadOnlyInput(preview, Path.Combine(projectRoot, extensionConfiguration));
             return preview;
         }
 
@@ -93,7 +99,7 @@ namespace Ember.Core.Editor
                 Directory.GetParent(Application.dataPath).FullName, skillId,
                 editing?.templateId ?? deployed?.templateId,
                 editing?.templateVersion ?? deployed?.version,
-                editing?.contentHash ?? deployed?.contentHash, editing != null);
+                editing?.contentHash ?? deployed?.contentHash, editing != null, EmberExtensionProject.EnabledIdentities(), EmberExtensionDocuments.EnabledScopes);
         }
 
         /// <summary>查看包内模板技能；此预览不代表项目已获得该模板的使用条件。</summary>
@@ -138,7 +144,8 @@ namespace Ember.Core.Editor
             EnsureSkillSourceGuids(projectRoot, assets);
             var preview = EmberAISkillInstaller.PreviewTemplateSkills(projectRoot, assets,
                 new EmberAISkillInstaller.TemplateContext(template.id, template.version, template.contentHash,
-                    deployed.templateId, frameworkVersion, hasEuiApi, false, deployed.version, deployed.contentHash, true));
+                    deployed.templateId, frameworkVersion, hasEuiApi, false, deployed.version, deployed.contentHash, true,
+                    EmberExtensionProject.SourceIdentities(assets, projectRoot, template.id, deployed.version), EmberExtensionDocuments.EnabledScopes));
             EmberAISkillInstaller.BindTemplateIdentityRecord(preview, EditingRecordPath);
             EmberAISkillInstaller.BindTemplateIdentityRecord(preview, DeployedRecordsPath);
             return preview;

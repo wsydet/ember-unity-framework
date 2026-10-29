@@ -58,6 +58,7 @@ namespace Ember.Core.Fsm.Tests
         [TearDown]
         public void TearDown()
         {
+            _blueprintScope?.Dispose(); _blueprintScope=null;
             foreach (var machine in _machines) machine.Dispose();
             foreach (var asset in _assets) UnityEngine.Object.DestroyImmediate(asset);
             _machines.Clear(); _assets.Clear();

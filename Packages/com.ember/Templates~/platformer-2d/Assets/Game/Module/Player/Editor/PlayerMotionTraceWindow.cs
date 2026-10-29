@@ -11,17 +11,25 @@ namespace Game.Player.Editor
         #region 编辑器面板参数
         [SerializeField] private PlayerController _player;
         [SerializeField] private string _instance;
+        [SerializeField] private string _ownerTemplate, _ownerVersion;
+        [SerializeField] private string _extensionScope;
         #endregion
         // --------------------------------------------------------
         #region 内部参数
         private Vector2 _scroll;
+        private bool HasAccess => PlayerEditorAccess.AllowsWindow(_ownerTemplate, _ownerVersion)
+            && EmberExtensionProject.AllowsScope(EmberExtensionProject.FsmBlueprint, _extensionScope);
         #endregion
         // --------------------------------------------------------
         #region 生命周期
         private void OnInspectorUpdate() => Repaint();
+        private void OnEnable()
+        { if (string.IsNullOrEmpty(_ownerTemplate)) { _ownerTemplate = EmberFsmBlueprintAccess.CurrentTemplateId; _ownerVersion = PlayerEditorAccess.CurrentVersion; }
+            if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.FsmBlueprint); }
         private void OnGUI()
         {
-            if (PlayerEditorAccess.DrawUnavailable()) return;
+            if (PlayerEditorAccess.DrawUnavailable(_ownerTemplate, _ownerVersion)) return;
+            if (!HasAccess) { EditorGUILayout.HelpBox("窗口绑定的扩展版本/hash 已变化，观察停止，草稿保留。", MessageType.Info); return; }
             var selected = (PlayerController)EditorGUILayout.ObjectField("观察宿主", _player, typeof(PlayerController), true);
             if (selected != _player) { _player = selected; _instance = selected?.FsmInstanceId?.ToString(); }
             using (new EditorGUI.DisabledScope(_player == null || !_player.IsPrepared))
@@ -102,11 +110,18 @@ namespace Game.Player.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public static void ShowWindow() { PlayerEditorAccess.Require(); GetWindow<PlayerMotionTraceWindow>("运动曲线与实测").Show(); }
+        private static PlayerMotionTraceWindow OpenScoped()
+        {
+            PlayerEditorAccess.Require();
+            var window = Resources.FindObjectsOfTypeAll<PlayerMotionTraceWindow>().FirstOrDefault(w => w.HasAccess) ?? CreateInstance<PlayerMotionTraceWindow>();
+            window.titleContent = new GUIContent("运动曲线与实测"); window.Show(); return window;
+        }
+        public static void ShowWindow() => OpenScoped();
         public static void Open(EmberFsmBlueprintWindow blueprint)
         {
             PlayerEditorAccess.Require();
-            var window = GetWindow<PlayerMotionTraceWindow>("运动曲线与实测");
+            if (blueprint == null || !blueprint.IsTemplateAvailable) throw new InvalidOperationException("蓝图窗口不属于当前活动模板版本。");
+            var window = OpenScoped();
             var id = blueprint.ObservedSnapshot?.InstanceId;
             window._player = id.HasValue ? Resources.FindObjectsOfTypeAll<PlayerController>().FirstOrDefault(x => x.IsPrepared && x.FsmInstanceId == id) : null;
             window._instance = id?.ToString(); window.minSize = new Vector2(500, 400); window.Show();

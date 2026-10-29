@@ -1,0 +1,1 @@
+{"name":"Game.Player.Examples","rootNamespace":"Game.Player.Examples","references":["Game.Player.Runtime","Game.Entity.Runtime","Game.Input.Runtime","Ember.Core.Runtime","Ember.Basic.Runtime"]}

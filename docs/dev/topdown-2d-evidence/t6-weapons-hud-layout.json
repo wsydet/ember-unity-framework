@@ -1,0 +1,6 @@
+{
+  "prefab": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+  "binding": "EUITopdownHudPage",
+  "generatedCodeChanged": true,
+  "backup": "Library/EmberBackups/topdown-2d-before-weapon/HUDLayoutBefore"
+}

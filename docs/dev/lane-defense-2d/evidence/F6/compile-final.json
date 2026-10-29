@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "compiling": false,
+      "updating": false,
+      "runtimeMvid": "35454430-5825-48a6-8273-bd5ab261b6d1",
+      "testMvid": "973c6490-9a3d-456b-8cac-8c2adca9a704",
+      "uiMvid": "d6aa56f5-a2e6-493b-b374-6bace89d9f3e",
+      "editorMvid": "434d9f51-02ff-42b3-8c67-2d5d786399d7"
+    },
+    "compiler": "codedom"
+  }
+}

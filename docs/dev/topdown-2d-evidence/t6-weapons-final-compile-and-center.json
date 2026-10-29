@@ -1,0 +1,19 @@
+{
+  "counts": {
+    "Scan": {
+      "errors": 0,
+      "warnings": 0,
+      "differences": 369
+    },
+    "CompareEditingTemplate": {
+      "errors": 0,
+      "warnings": 0,
+      "differences": 369
+    }
+  },
+  "playerMvid": "e190c566-51b8-4697-99a9-fa82959e43e6",
+  "snapshotVersion": 2,
+  "compileStarted": 1793204119574,
+  "compileFinished": 1793204123368,
+  "domainReloadFinished": 1793204131508
+}

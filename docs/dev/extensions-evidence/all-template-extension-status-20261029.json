@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-29",
+  "published": false,
+  "bumped": false,
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.10.0",
+      "contentHash": "e9d789311cad169a19b6a76331a2877a",
+      "sealedHash": "61cbe49aa797b1604f293b9756674566",
+      "schema": 2,
+      "owner": "base",
+      "ownerVersion": "0.10.0",
+      "roots": [],
+      "identityMatches": true,
+      "bindingsMatch": true
+    },
+    {
+      "id": "platformer-2d",
+      "version": "0.13.0",
+      "contentHash": "1cf67da87731c1b88d685a8d4e8a7e08",
+      "sealedHash": "ff217ca17005f39519049c46a83c138b",
+      "schema": 2,
+      "owner": "platformer-2d",
+      "ownerVersion": "0.13.0",
+      "roots": [
+        "ember.fsm.blueprint",
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "identityMatches": true,
+      "bindingsMatch": true
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.6.0",
+      "contentHash": "9be0d1035d4396e096a3eaa820765eed",
+      "sealedHash": "f98b85bf591042619e55fafd5cd88af4",
+      "schema": 2,
+      "owner": "source3d-2p5d",
+      "ownerVersion": "0.6.0",
+      "roots": [],
+      "identityMatches": true,
+      "bindingsMatch": true
+    },
+    {
+      "id": "topdown-2d",
+      "version": "0.1.0",
+      "contentHash": "b3bf3acb890f00980fd6633f8765a93a",
+      "sealedHash": "61cbe49aa797b1604f293b9756674566",
+      "schema": 2,
+      "owner": "topdown-2d",
+      "ownerVersion": "0.1.0",
+      "roots": [
+        "ember.fsm.blueprint",
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "identityMatches": true,
+      "bindingsMatch": true
+    },
+    {
+      "id": "ui-game",
+      "version": "0.2.0",
+      "contentHash": "43030af8571b29f5c1d2d0631faa1733",
+      "sealedHash": "cc6430af3e8cdb46ee0e034ac1a18fb0",
+      "schema": 2,
+      "owner": "ui-game",
+      "ownerVersion": "0.2.0",
+      "roots": [],
+      "identityMatches": true,
+      "bindingsMatch": true
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.22.1",
+      "contentHash": "437a3552583df64cf2ab3d1c26083864",
+      "sealedHash": "61155f5eb3958eacdbd0a9467ebf60c3",
+      "schema": 2,
+      "owner": "visual-novel",
+      "ownerVersion": "0.22.1",
+      "roots": [],
+      "identityMatches": true,
+      "bindingsMatch": true
+    }
+  ]
+}

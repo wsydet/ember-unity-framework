@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fa3d8997a24136984ca6e2c99902bc, type: 3}
+  m_Name: LaneDefenseActions
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionAsset
+  m_ActionMaps:
+  - m_Name: Gameplay
+    m_Id: 40c9981f-b456-49fe-be1e-0e770a2cd4d6
+    m_Asset: {fileID: 11400000}
+    m_Actions:
+    - m_Name: Point
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: dba6967e-c29a-4a54-8647-a9faced7dfe7
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Place
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: c687a33a-7cdf-4f17-adca-9c234d219165
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Cancel
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: 585d0154-22eb-4c58-9898-a98a9978ded0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: 
+      m_Id: 1dd4bccf-35d0-4dbb-aad7-9ba83c380285
+      m_Path: <Pointer>/position
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Point
+      m_Flags: 0
+    - m_Name: 
+      m_Id: d83806e7-90f2-496a-a7bd-79a7463b04d7
+      m_Path: <Pointer>/press
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Place
+      m_Flags: 0
+    - m_Name: 
+      m_Id: efffc2ca-a925-4540-9a04-35b37e2a3103
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Cancel
+      m_Flags: 0
+    - m_Name: 
+      m_Id: b9239413-2df2-4321-8ce1-baa4d3ee41a6
+      m_Path: <Mouse>/rightButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Cancel
+      m_Flags: 0
+  m_ControlSchemes: []
+  m_IsProjectWide: 0

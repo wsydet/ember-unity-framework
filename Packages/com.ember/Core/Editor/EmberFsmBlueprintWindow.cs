@@ -15,6 +15,8 @@ namespace Ember.Core.Editor
     {
         #region 编辑器面板参数
         [SerializeField] private EmberFsmGraph _graph;
+        [SerializeField] private string _templateScope;
+        [SerializeField] private string _extensionScope;
         #endregion
         // --------------------------------------------------------
         #region 内部参数
@@ -42,11 +44,15 @@ namespace Ember.Core.Editor
         #region 生命周期
         private void OnEnable()
         {
+            if (string.IsNullOrEmpty(_templateScope)) _templateScope=EmberFsmBlueprintAccess.CurrentTemplateId;
+            if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.FsmBlueprint);
             AssemblyReloadEvents.beforeAssemblyReload += PersistLayout;
+            AssemblyReloadEvents.beforeAssemblyReload += CaptureExtensionLayoutDraft;
             Undo.undoRedoPerformed += LayoutUndoRedo;
         }
         private void CreateGUI()
         {
+            string retainedDraft = _extensionLayoutDraft;
             PersistLayout();
             rootVisualElement.Clear(); _nodes.Clear(); _fullNested = true;
             rootVisualElement.AddToClassList("fsm-blueprint");
@@ -97,22 +103,41 @@ namespace Ember.Core.Editor
             body.Add(side); rootVisualElement.Add(body);
             _errors = new Label(); _errors.style.whiteSpace = WhiteSpace.Normal; rootVisualElement.Add(_errors);
             LoadLayout(); RefreshGraph();
+            _extensionLayoutDraft = retainedDraft; RestoreExtensionLayoutDraft();
             if (!RestoreViewport()) _canvas.schedule.Execute(FitVisible);
             CreateRuntimeView();
             // 长条件树由详情区滚动；不能挤掉方案选择、运行历史和折叠标题。
             foreach (var child in rootVisualElement.Children())
                 if (child != body) child.style.flexShrink = 0;
+            rootVisualElement.schedule.Execute(RefreshTemplateAccess).Every(500);
+            RefreshTemplateAccess();
         }
         private void OnDisable()
         {
             PersistLayout();
             AssemblyReloadEvents.beforeAssemblyReload -= PersistLayout;
+            AssemblyReloadEvents.beforeAssemblyReload -= CaptureExtensionLayoutDraft;
             Undo.undoRedoPerformed -= LayoutUndoRedo;
-            CancelLayoutPreview(); DisposeLayoutUndo();
+            CaptureExtensionLayoutDraft();
+            string retainedDraft = _extensionLayoutDraft;
+            CancelLayoutPreview(); _extensionLayoutDraft = retainedDraft; DisposeLayoutUndo();
         }
         #endregion
         // --------------------------------------------------------
         #region 内部方法
+        private void RefreshTemplateAccess()
+        {
+            bool available=IsTemplateAvailable;
+            foreach(var element in rootVisualElement.Children()) element.SetEnabled(available);
+            if (available) ResumeExtensionLayoutDraft();
+            if (!available)
+            {
+                SuspendExtensionLayoutDraft(); ObservedSnapshot=null;
+                if(_runtimeHistory!=null) _runtimeHistory.Clear();
+                if(_runtimeStatus!=null) _runtimeStatus.text="模板或模块已变化，运行观察已停止。";
+                if(_errors!=null) _errors.text="当前模板未启用 FSM 蓝图，或窗口属于另一模板。原图与本机布局保留；请从当前模板的入口重新打开。";
+            }
+        }
         private sealed class BlueprintCanvas : GraphView
         {
             internal BlueprintCanvas(Action<List<GraphElement>> moved, Action preview, Action clear)
@@ -304,15 +329,23 @@ namespace Ember.Core.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        [MenuItem("Tools/Ember/FSM/蓝图观察器")]
         public static void OpenSelected() => Open(Selection.activeObject as EmberFsmGraph);
         public static EmberFsmBlueprintWindow Open(EmberFsmGraph graph)
         {
+            if(!EmberFsmBlueprintAccess.IsAvailable) throw new InvalidOperationException("当前模板未启用 FSM 蓝图工具。");
             var window = GetWindow<EmberFsmBlueprintWindow>("FSM 蓝图");
+            if(!window.IsTemplateAvailable)
+            { window=CreateInstance<EmberFsmBlueprintWindow>(); window.titleContent=new GUIContent("FSM 蓝图"); window.Show(); }
+            window._templateScope=EmberFsmBlueprintAccess.CurrentTemplateId;
+            window.RefreshTemplateAccess();
             window.minSize = new Vector2(900, 500); window.SetGraph(graph); return window;
         }
+        public bool IsTemplateAvailable => EmberFsmBlueprintAccess.IsAvailable
+            && _templateScope==EmberFsmBlueprintAccess.CurrentTemplateId
+            && EmberExtensionProject.AllowsScope(EmberExtensionProject.FsmBlueprint, _extensionScope);
         public void SetGraph(EmberFsmGraph graph)
         {
+            if(!IsTemplateAvailable) return;
             bool changed = _graph != graph;
             if (changed) { CancelLayoutPreview(); DisposeLayoutUndo(); }
             if (_graph != graph) { PersistLayout(); _nodes.Clear(); _map.Clear();  _graph = graph;
@@ -323,6 +356,7 @@ namespace Ember.Core.Editor
         }
         public void SaveLayout()
         {
+            if(!IsTemplateAvailable) return;
             if (_graph == null) return;
             if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(_graph)))
             { _errors.text = "请先保存图资产，再按稳定 GUID 保存布局。"; return; }
@@ -344,6 +378,7 @@ namespace Ember.Core.Editor
         }
         public void SetCollapsed(string nodeId, bool collapsed)
         {
+            if(!IsTemplateAvailable) return;
             CapturePositions(); ApplyPositions();
             if (collapsed) _collapsed.Add(nodeId); else _collapsed.Remove(nodeId);
             RefreshGraph();
@@ -351,6 +386,7 @@ namespace Ember.Core.Editor
         }
         public void RefreshGraph()
         {
+            if(!IsTemplateAvailable) return;
             if (_canvas == null) return;
             CancelLayoutPreview();
             CapturePositions();

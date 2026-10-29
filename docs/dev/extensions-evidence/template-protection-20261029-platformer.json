@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-29",
+  "baselineFiles": 10322,
+  "allowedSavedTemplates": [
+    "topdown-2d",
+    "platformer-2d"
+  ],
+  "changedSavedTemplateFiles": [
+    "Packages\\com.ember\\Templates~\\platformer-2d\\template.json",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Documentation\\platformer-2d\\README.md",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Documentation\\TemplateSkills\\catalog.json",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerDevelopmentEnvironment.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerEditorAccess.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerFsmObservationSource.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerFsmParameterEditor.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerMotionTraceWindow.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerSchemeWindow.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerSchemeWindow.Draft.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerSchemeWindow.Panels.cs",
+    "Packages\\com.ember\\Templates~\\platformer-2d\\Assets\\Game\\State\\Editor\\PlatformerLevelAuthoringAdapter.cs",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\template.json",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\Assets\\Game\\Documentation\\topdown-2d\\README.md",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\Assets\\Game\\Module\\LevelAuthoring\\Editor\\TopdownLevelAdapter.cs",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\Assets\\Game\\Module\\LevelAuthoring\\Editor\\TopdownObjectAdapter.cs",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerDevelopmentWindow.cs",
+    "Packages\\com.ember\\Templates~\\topdown-2d\\Assets\\Game\\Module\\Player\\Editor\\PlayerEditorAccess.cs"
+  ],
+  "unexpectedChanges": [],
+  "parentSnapshotsProtected": true
+}

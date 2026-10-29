@@ -1,0 +1,19 @@
+{
+  "dash": false,
+  "attack": false,
+  "slash": false,
+  "x": 1.00646842,
+  "y": -0.402587682,
+  "actors": [
+    {
+      "Id": "enemy.training",
+      "Health": 4.0,
+      "Phase": "strike"
+    },
+    {
+      "Id": "target.training",
+      "Health": 12.0,
+      "Phase": "idle"
+    }
+  ]
+}

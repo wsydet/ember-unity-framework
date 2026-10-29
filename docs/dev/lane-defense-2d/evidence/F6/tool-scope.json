@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "staleWindowBlocked": true,
+      "draftRetained": "CompactYard",
+      "actualTemplate": "lane-defense-2d"
+    },
+    "compiler": "codedom"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "WasConsidered": true,
+  "IsPending": false,
+  "LastProgressMessage": "已返回主菜单。",
+  "captured": true,
+  "why": null,
+  "before": false,
+  "after": false,
+  "x": -6.0,
+  "y": -4.0,
+  "targetX": -5.0,
+  "targetY": -4.0,
+  "Radius": 1.5
+}

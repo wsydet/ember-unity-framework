@@ -19,6 +19,97 @@ namespace Ember.UI.Tests
         #endregion
 
         #region 外部方法
+        [Test]
+        public void ExtensionSkill_DiscoveryExecutionHashAndModuleFailClosed_KeepSourceAndBackup()
+        {
+            string catalog = Path.Combine(SourceRoot(), "catalog.json");
+            File.WriteAllText(catalog, File.ReadAllText(catalog).Replace("\"minimumTemplateVersion\":", "\"requiredExtensions\":[\"ember.fixture\"],\"requiredModuleScope\":\"fixture.module\",\"minimumTemplateVersion\":"));
+            var info = Info();
+            var identity = new EmberAISkillInstaller.ExtensionIdentity { id = "ember.fixture", contractVersion = 1, contentHash = "source-a" };
+            EmberAISkillInstaller.TemplatePreview Plan(EmberAISkillInstaller.ExtensionIdentity[] enabled, string[] scopes) =>
+                EmberAISkillInstaller.PreviewTemplateSkills(_project, _assets, new EmberAISkillInstaller.TemplateContext(info.id, info.version,
+                    info.contentHash, info.id, "0.24.3", true, extensions: enabled, moduleScopes: scopes));
+            Commit(info, Plan(Array.Empty<EmberAISkillInstaller.ExtensionIdentity>(), new[] { "fixture.module" }));
+            Assert.IsFalse(File.Exists(Target()));
+            Commit(info, Plan(new[] { identity }, new[] { "fixture.module" }));
+            Assert.IsTrue(File.Exists(Target()));
+            Assert.IsNull(EmberAISkillInstaller.GetTemplateSkillExecutionBlockReason(_project, Skill, info.id, info.version, info.contentHash,
+                extensions: new[] { identity }, moduleScopes: new[] { "fixture.module" }));
+            Assert.IsNotNull(EmberAISkillInstaller.GetTemplateSkillExecutionBlockReason(_project, Skill, info.id, info.version, info.contentHash));
+            Assert.IsNotNull(EmberAISkillInstaller.GetTemplateSkillExecutionBlockReason(_project, Skill, info.id, info.version, info.contentHash,
+                extensions: new[] { new EmberAISkillInstaller.ExtensionIdentity { id = identity.id, contractVersion = 1, contentHash = "source-b" } }, moduleScopes: new[] { "fixture.module" }));
+            Assert.IsNotNull(EmberAISkillInstaller.GetTemplateSkillExecutionBlockReason(_project, Skill, info.id, info.version, info.contentHash,
+                extensions: new[] { identity }));
+            string sourceBefore = File.ReadAllText(Path.Combine(SourceRoot(), Skill, "SKILL.md"));
+            File.AppendAllText(Target(), "local draft");
+            var off = Plan(Array.Empty<EmberAISkillInstaller.ExtensionIdentity>(), new[] { "fixture.module" });
+            Assert.IsTrue(off.NeedsBackupConfirmation);
+            Commit(info, off);
+            Assert.IsFalse(File.Exists(Target()));
+            Assert.AreEqual(sourceBefore, File.ReadAllText(Path.Combine(SourceRoot(), Skill, "SKILL.md")));
+            Assert.IsTrue(Directory.GetFiles(Path.Combine(_project, ".utmp/ember-ai-skills"), "SKILL.md", SearchOption.AllDirectories).Any(p => File.ReadAllText(p).Contains("local draft")));
+        }
+
+        [Test]
+        public void ExtensionBindings_RejectOldSchemaTemplateVersionAndHash_WithoutChangingDraft()
+        {
+            var config = EmberExtensionProject.CreateConfiguration(new[] { EmberExtensionProject.FsmBlueprint });
+            string id = config.ownerTemplateId, version = config.ownerTemplateVersion;
+            Assert.IsTrue(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(EmberExtensionProject.FsmBlueprint));
+            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, "999.0.0").IsEnabled(EmberExtensionProject.FsmBlueprint));
+            config.bindings.Single(x => x.id == EmberExtensionProject.Core).contentHash = "old-core";
+            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(EmberExtensionProject.FsmBlueprint));
+            config = EmberExtensionProject.CreateConfiguration(new[] { EmberExtensionProject.FsmBlueprint });
+            config.bindings.Single(x => x.id == EmberExtensionProject.FsmBlueprint).contentHash = "different";
+            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(EmberExtensionProject.FsmBlueprint));
+            config = EmberExtensionProject.CreateConfiguration(new[] { EmberExtensionProject.FsmBlueprint });
+            config.schemaVersion = 1;
+            string before = JsonUtility.ToJson(config);
+            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(EmberExtensionProject.FsmBlueprint));
+            Assert.AreEqual(before, JsonUtility.ToJson(config));
+        }
+
+        [Test] public void ExtensionDeclarationChangedAfterPreview_RejectsSkillCommit()
+        {
+            var info = Info(); var preview = Preview(info);
+            string declaration = Path.Combine(_root, "extensions.json"); File.WriteAllText(declaration, "first");
+            EmberAISkillInstaller.BindReadOnlyInput(preview, declaration);
+            File.WriteAllText(declaration, "changed");
+            Assert.Throws<IOException>(() => EmberAISkillInstaller.PrepareTemplateSkills(preview, true, out _));
+            Assert.IsFalse(File.Exists(Target()));
+        }
+        [Test] public void ExtensionTextFingerprintIgnoresCheckoutNewlineAndBomOnly()
+        {
+            var first = System.Text.Encoding.UTF8.GetBytes("line1\nline2\n");
+            var second = System.Text.Encoding.UTF8.GetBytes("\uFEFFline1\r\nline2\r\n");
+            CollectionAssert.AreEqual(EmberExtensionProject.CanonicalSource(first), EmberExtensionProject.CanonicalSource(second));
+            CollectionAssert.AreNotEqual(EmberExtensionProject.CanonicalSource(first), EmberExtensionProject.CanonicalSource(System.Text.Encoding.UTF8.GetBytes("changed\n")));
+        }
+        [Test] public void MalformedExtensionArrayCannotSilentlyRemoveSkillGate()
+        {
+            string catalog = Path.Combine(SourceRoot(), "catalog.json");
+            File.WriteAllText(catalog, File.ReadAllText(catalog).Replace("\"minimumTemplateVersion\":", "\"requiredExtensions\":\"ember.fixture\",\"minimumTemplateVersion\":"));
+            Assert.Throws<InvalidDataException>(() => EmberAISkillInstaller.ValidateTemplateSkillSource(_assets));
+        }
+
+        [Test]
+        public void ExtensionCompositionRollback_RestoresConfigurationAndDiscoveryTogether()
+        {
+            var info = Info(); Commit(info, Preview(info));
+            string configuration = Path.Combine(_project, "ProjectSettings/EmberExtensions.json");
+            Write(_project, "ProjectSettings/EmberExtensions.json", "before");
+            File.AppendAllText(Target(), "preserved draft");
+            string before = File.ReadAllText(Target());
+            string incoming = Path.Combine(_root, "new-config.json"); File.WriteAllText(incoming, "after");
+            string empty = Path.Combine(_root, "Empty", "Assets"); Directory.CreateDirectory(empty);
+            var off = EmberAISkillInstaller.PreviewTemplateSkills(_project, empty, new EmberAISkillInstaller.TemplateContext(info.id, info.version,
+                info.contentHash, info.id, "0.24.3", true, true));
+            var prepared = EmberAISkillInstaller.PrepareTemplateSkills(off, true, out _).Select(x => new TemplateTransactionTarget(x.StagedPath, x.DestinationPath, x.Remove)).ToList();
+            prepared.Insert(0, new TemplateTransactionTarget(incoming, configuration));
+            Assert.Throws<IOException>(() => EmberTemplateTransaction.CommitPreparedTargets(prepared, i => { if (i == 1) throw new IOException("injected"); }));
+            Assert.AreEqual("before", File.ReadAllText(configuration)); Assert.AreEqual(before, File.ReadAllText(Target()));
+        }
+
         [SetUp]
         public void SetUp()
         {

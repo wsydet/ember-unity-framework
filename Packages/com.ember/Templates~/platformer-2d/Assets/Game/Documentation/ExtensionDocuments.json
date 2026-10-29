@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "documents": [
+    {
+      "id": "platformer.player.workflow",
+      "title": "平台玩家工作流",
+      "path": "platformer-2d/PlayerWorkflow.md",
+      "ownerTemplateId": "platformer-2d",
+      "ownerTemplateVersion": "0.13.1",
+      "moduleScope": "platformer.player",
+      "contentHash": "2fa07b94ef697d8719be7c93f705153597e85c1e2cf3481e2b56d3f2982c6139",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ]
+    },
+    {
+      "id": "platformer.level.authoring",
+      "title": "平台关卡制作",
+      "path": "platformer-2d/LevelAuthoring.md",
+      "ownerTemplateId": "platformer-2d",
+      "ownerTemplateVersion": "0.13.1",
+      "moduleScope": "platformer.player",
+      "contentHash": "754b269a327fa2ccbdb811a18c7d81bdf7c053bef0e94c06a899ee99661807fb",
+      "requiredExtensions": [
+        "ember.level.authoring"
+      ]
+    }
+  ]
+}

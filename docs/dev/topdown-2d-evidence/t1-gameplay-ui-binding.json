@@ -1,0 +1,24 @@
+{
+  "PrefabAssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab",
+  "ClassName": "EUIGamePlayPage",
+  "ClassPath": "GamePlayScene",
+  "CodePathMode": 0,
+  "Entries": [
+    {
+      "Name": "Btn_Back",
+      "GameObjectPath": "Animator/EUISafeArea/Center/m_Btn_Back",
+      "WidgetType": 3,
+      "ClassName": "",
+      "IsFramework": true,
+      "HasGameObject": true
+    },
+    {
+      "Name": "Btn_Settings",
+      "GameObjectPath": "Animator/EUISafeArea/Center/m_Btn_Settings",
+      "WidgetType": 3,
+      "ClassName": "",
+      "IsFramework": true,
+      "HasGameObject": true
+    }
+  ]
+}

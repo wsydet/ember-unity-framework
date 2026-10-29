@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ember.Core.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace Game.Player.Editor
         [SerializeField] private bool _ruler = true;
         [SerializeField] private Vector2 _position, _velocity;
         [SerializeField] private bool _initialized;
+        [SerializeField] private string _ownerTemplate, _ownerVersion;
+        [SerializeField] private string _extensionScope;
         [SerializeField] private PlayerFeelProfile _legacyScaleFeel;
         [SerializeField] private PlayerScheme _legacyLabScheme;
         #endregion
@@ -23,6 +26,8 @@ namespace Game.Player.Editor
         private string _message;
         private List<string> _differences;
         private bool _rulerSubscribed;
+        internal bool HasAccess => PlayerEditorAccess.AllowsWindow(_ownerTemplate, _ownerVersion)
+            && EmberExtensionProject.AllowsScope(EmberExtensionProject.FsmBlueprint, _extensionScope);
         #endregion
         // --------------------------------------------------------
         #region 外部方法
@@ -31,7 +36,8 @@ namespace Game.Player.Editor
         public static void OpenTab(int tab, PlayerScheme scheme = null)
         {
             PlayerEditorAccess.Require();
-            var window = GetWindow<PlayerSchemeWindow>("玩家开发工具");
+            var window = Resources.FindObjectsOfTypeAll<PlayerSchemeWindow>().FirstOrDefault(w => w.HasAccess) ?? CreateInstance<PlayerSchemeWindow>();
+            window.titleContent = new GUIContent("玩家开发工具");
             if (scheme != null) window._selected = scheme;
             window._tab = Mathf.Clamp(tab, 0, 1);
             window.minSize = new Vector2(560, 460); window.Show();
@@ -42,9 +48,11 @@ namespace Game.Player.Editor
         // --------------------------------------------------------
         #region 内部方法
         private void Run(Action action)
-        { try { PlayerEditorAccess.Require(); action(); _messageIsError = false; _message = "操作完成。"; } catch (ExitGUIException) { throw; } catch (Exception error) { _messageIsError = true; _message = error.Message; } }
+        { try { PlayerEditorAccess.Require(); if (!HasAccess) throw new InvalidOperationException("窗口所属模板版本已变化，草稿保留。"); action(); _messageIsError = false; _message = "操作完成。"; } catch (ExitGUIException) { throw; } catch (Exception error) { _messageIsError = true; _message = error.Message; } }
         private void OnEnable()
         {
+            if (string.IsNullOrEmpty(_ownerTemplate)) { _ownerTemplate = Ember.Core.Editor.EmberFsmBlueprintAccess.CurrentTemplateId; _ownerVersion = PlayerEditorAccess.CurrentVersion; }
+            if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.FsmBlueprint);
             titleContent = new GUIContent("玩家开发工具");
             minSize = new Vector2(560, 460);
             if (!_initialized)
@@ -71,7 +79,7 @@ namespace Game.Player.Editor
         }
         private void UpdateRulerSubscription()
         {
-            bool wanted = PlayerEditorAccess.Available && _ruler;
+            bool wanted = HasAccess && _ruler;
             if (wanted == _rulerSubscribed) return;
             if (wanted) SceneView.duringSceneGui += DrawRuler;
             else SceneView.duringSceneGui -= DrawRuler;
@@ -79,7 +87,7 @@ namespace Game.Player.Editor
         }
         private void IntegrateLegacyWindows()
         {
-            if (this == null || !PlayerEditorAccess.Available) return;
+            if (this == null || !HasAccess) return;
             foreach (var old in Resources.FindObjectsOfTypeAll<PlayerFeelLabWindow>())
             {
                 using var data = new SerializedObject(old);
@@ -95,7 +103,7 @@ namespace Game.Player.Editor
             }
         }
         private void DrawRuler(SceneView view)
-        { if (PlayerEditorAccess.Available) PlayerAppearanceWindow.DrawWorldRuler(view, _ruler); }
+        { if (HasAccess) PlayerAppearanceWindow.DrawWorldRuler(view, _ruler); }
         private void OnInspectorUpdate() { UpdateRulerSubscription(); RefreshStatus(); Repaint(); }
         private void Copy(bool blank)
         {

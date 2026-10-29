@@ -78,6 +78,38 @@ namespace Ember.UI.Tests
         }
 
         [Test]
+        public void CommitPreparedTargets_RollbackFailureShouldPreserveOriginalErrorAndBackups()
+        {
+            var first = WriteFile(Path.Combine(_testRoot, "first.txt"), "old-first");
+            var second = WriteFile(Path.Combine(_testRoot, "second.txt"), "old-second");
+            var stagedFirst = WriteFile(Path.Combine(_testRoot, "staged-first.txt"), "new-first");
+            var stagedSecond = WriteFile(Path.Combine(_testRoot, "staged-second.txt"), "new-second");
+            var original = new InjectedTransactionException();
+
+            var error = Assert.Throws<IOException>(() => EmberTemplateTransaction.CommitPreparedTargets(
+                new[]
+                {
+                    new TemplateTransactionTarget(stagedFirst, first),
+                    new TemplateTransactionTarget(stagedSecond, second)
+                },
+                index =>
+                {
+                    if (index != 0) return;
+                    // 第二目标尚未落位；外部占用它，稳定制造回滚冲突而不依赖平台文件锁。
+                    WriteFile(second, "external-conflict");
+                    throw original;
+                }));
+
+            var failures = error.InnerException as AggregateException;
+            Assert.IsNotNull(failures);
+            Assert.AreSame(original, failures.InnerExceptions[0]);
+            StringAssert.Contains(second + ".ember-backup~", failures.InnerExceptions[1].ToString());
+            Assert.AreEqual("old-first", File.ReadAllText(first));
+            Assert.AreEqual("old-second", File.ReadAllText(second + ".ember-backup~"));
+            Assert.AreEqual("external-conflict", File.ReadAllText(second));
+        }
+
+        [Test]
         public void CopyDirectory_FolderMetadataShouldMaterializeVirtualEmptyDirectory()
         {
             var source = Path.Combine(_testRoot, "VirtualFolderSource");

@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "state": "Game.State.GameMainState",
+      "transitioning": false,
+      "battleGone": true,
+      "exitPublished": false,
+      "old": "Disposed/0/0/0",
+      "scenes": [
+        "FrameworkScene",
+        "MainScene"
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

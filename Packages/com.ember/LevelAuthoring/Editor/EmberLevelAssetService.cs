@@ -15,6 +15,7 @@ namespace Ember.LevelAuthoring.Editor
 
         public static T Upsert<T>(string path, Action<T> configure) where T : ScriptableObject
         {
+            EmberLevelAccess.RequireWrite();
             path = path.Replace('\\', '/');
             if (!path.StartsWith("Assets/", StringComparison.Ordinal) || path.Contains("..") || !path.EndsWith(".asset", StringComparison.Ordinal))
                 throw new ArgumentException("资源必须保存到项目 Assets 内的 .asset 路径。");

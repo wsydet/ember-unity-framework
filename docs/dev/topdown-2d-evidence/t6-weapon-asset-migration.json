@@ -1,0 +1,42 @@
+[
+  {
+    "id": "topdown.starter",
+    "playerNodes": 8,
+    "weapons": [
+      {
+        "id": "weapon.training-sword",
+        "mode": "Melee",
+        "nodes": 4,
+        "moveLocked": true,
+        "graphGuid": "ad16f1c90eb8c0d41b2ca133e5c5d2c4"
+      },
+      {
+        "id": "weapon.training-pistol",
+        "mode": "Ray",
+        "nodes": 4,
+        "moveLocked": false,
+        "graphGuid": "3c13196776ee69141bea7edffb7d7b7e"
+      }
+    ]
+  },
+  {
+    "id": "topdown.cf1053c8a74f46f6ac93f7f86a85f5ea",
+    "playerNodes": 9,
+    "weapons": [
+      {
+        "id": "weapon.training-sword",
+        "mode": "Melee",
+        "nodes": 4,
+        "moveLocked": true,
+        "graphGuid": "ad16f1c90eb8c0d41b2ca133e5c5d2c4"
+      },
+      {
+        "id": "weapon.training-pistol",
+        "mode": "Ray",
+        "nodes": 4,
+        "moveLocked": false,
+        "graphGuid": "3c13196776ee69141bea7edffb7d7b7e"
+      }
+    ]
+  }
+]

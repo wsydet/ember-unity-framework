@@ -1,0 +1,23 @@
+{
+  "IsRunning": true,
+  "CurrentState": "dead",
+  "hp": 0.0,
+  "input": false,
+  "actors": [
+    {
+      "Id": "enemy.training",
+      "Health": 4.0,
+      "Phase": "strike"
+    },
+    {
+      "Id": "target.training",
+      "Health": 12.0,
+      "Phase": "idle"
+    }
+  ],
+  "blueprintNodes": 9,
+  "observed": [
+    "dead"
+  ],
+  "diagnostics": true
+}

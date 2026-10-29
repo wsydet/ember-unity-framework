@@ -1,0 +1,26 @@
+[
+  {
+    "Path": "Packages/com.ember/package.json",
+    "Unchanged": true
+  },
+  {
+    "Path": "Packages/com.ember/Templates~/base/template.json",
+    "Unchanged": true
+  },
+  {
+    "Path": "Packages/com.ember/Templates~/platformer-2d/template.json",
+    "Unchanged": true
+  },
+  {
+    "Path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+    "Unchanged": true
+  },
+  {
+    "Path": "Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+    "Unchanged": true
+  },
+  {
+    "Path": "Packages/com.ember/Core/Editor/EmberTemplateDevelopmentPanel.cs",
+    "Unchanged": true
+  }
+]

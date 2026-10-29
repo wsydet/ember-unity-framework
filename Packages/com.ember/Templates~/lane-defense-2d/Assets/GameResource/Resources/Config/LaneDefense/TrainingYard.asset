@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b86cdd4e06c474880adea40b03f62c, type: 3}
+  m_Name: TrainingYard
+  m_EditorClassIdentifier: Game.LaneDefense.Runtime::Game.LaneDefense.LaneDefenseLevel
+  _id: TrainingYard
+  _rows: 5
+  _columns: 9
+  _cellSize: {x: 1.2, y: 1}
+  _initialResource: 650
+  _resourceCap: 9999
+  _baseHealth: 5
+  _buildDuringWave: 1
+  _demolishRefund: 0.5
+  _unbuildable: 
+  _units:
+  - _id: sentry
+    _label: SENTRY
+    _cost: 50
+    _cooldown: 1
+    _health: 100
+    _limit: 20
+    _shooter: 1
+    _range: 12
+    _attackInterval: 1
+    _damage: 25
+    _projectileSpeed: 9
+    _projectileLifetime: 4
+  - _id: barrier
+    _label: BARRIER
+    _cost: 30
+    _cooldown: 1
+    _health: 350
+    _limit: 20
+    _shooter: 0
+    _range: 12
+    _attackInterval: 1
+    _damage: 25
+    _projectileSpeed: 9
+    _projectileLifetime: 4
+  _enemies:
+  - _id: walker
+    _health: 100
+    _speed: 0.45
+    _damage: 15
+    _attackInterval: 1
+    _baseDamage: 1
+  - _id: scout
+    _health: 50
+    _speed: 0.8
+    _damage: 10
+    _attackInterval: 1
+    _baseDamage: 1
+  _waves:
+  - _id: first
+    _spawns:
+    - _enemyId: walker
+      _lane: 0
+      _time: 1
+    - _enemyId: walker
+      _lane: 2
+      _time: 3
+    - _enemyId: walker
+      _lane: 4
+      _time: 5
+  - _id: second
+    _spawns:
+    - _enemyId: scout
+      _lane: 1
+      _time: 1
+    - _enemyId: walker
+      _lane: 3
+      _time: 2
+    - _enemyId: walker
+      _lane: 0
+      _time: 4
+    - _enemyId: scout
+      _lane: 4
+      _time: 5

@@ -1,0 +1,1 @@
+{"name":"Game.PlayerCamera.Runtime","rootNamespace":"Game.PlayerCamera","references":["Game.Player.Runtime","Game.SceneFlow.Runtime","Ember.Camera.Runtime","Ember.Core.Runtime","Ember.Basic.Runtime","Unity.Cinemachine","UniTask"],"autoReferenced":true}

@@ -1,0 +1,12 @@
+{
+  "active": false,
+  "playing": false,
+  "bridge": false,
+  "setup": [
+    {
+      "path": "Assets/Game/Scenes/FrameworkScene.unity",
+      "isLoaded": true,
+      "isActive": true
+    }
+  ]
+}

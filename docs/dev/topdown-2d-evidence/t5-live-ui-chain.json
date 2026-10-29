@@ -1,0 +1,11 @@
+{
+  "paused": true,
+  "drift": 0.0,
+  "loadedHp": 6.0,
+  "retryHp": 6.0,
+  "continued": "Assets/Game/Scenes/TopdownArena.unity",
+  "nodes": 10,
+  "formalUnchanged": true,
+  "world": false,
+  "developmentRoot": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\TopdownTrials\\6076486f77f6422fa28b94c9212d4d82"
+}

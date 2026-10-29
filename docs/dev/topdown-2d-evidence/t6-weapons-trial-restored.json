@@ -1,0 +1,15 @@
+{
+  "playing": false,
+  "trial": false,
+  "bridge": false,
+  "settingsEnabled": true,
+  "settings": 1,
+  "scenes": [
+    {
+      "path": "Assets/Game/Scenes/FrameworkScene.unity",
+      "isLoaded": true,
+      "isActive": true
+    }
+  ],
+  "selection": ""
+}

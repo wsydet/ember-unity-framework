@@ -1,0 +1,6 @@
+{
+    "name": "Game.PlayerData.Storage",
+    "rootNamespace": "Game.PlayerData",
+    "references": ["Ember.Basic.Runtime"],
+    "autoReferenced": true
+}

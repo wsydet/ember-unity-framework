@@ -1,0 +1,90 @@
+// 未发布迁移样例；不在框架中编译。消费升级授权后，放入 WindwardFlow 的 Editor 程序集。
+// 保留原房间/图/场景/截图类型与 GUID，按消费项目实际源码再次核对。
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Ember.Core;
+using Ember.Core.Editor;
+using Ember.LevelAuthoring.Editor;
+using Game.Player;
+using UnityEditor;
+using UnityEngine;
+
+namespace Game.WindwardFlow.Editor
+{
+    [InitializeOnLoad]
+    internal sealed class WindwardRoomGraphAdapter : IEmberRoomGraphAdapter, IEmberRoomGraphTrialAdapter
+    {
+        private static readonly IDisposable Registration;
+        public string Id => "windward.rooms";
+        private static bool ModuleEnabled(Type type) =>
+            ((EmberModuleAttribute)Attribute.GetCustomAttribute(type, typeof(EmberModuleAttribute)))?.Enabled == true;
+        internal static bool BusinessAvailable => EmberProjectSetup.IsTemplateActive("platformer-2d")
+            && ModuleEnabled(typeof(WindwardFlowModule)) && ModuleEnabled(typeof(PlayerModule));
+        static WindwardRoomGraphAdapter()
+        {
+            Registration = EmberRoomGraphService.Register(new WindwardRoomGraphAdapter(), "platformer-2d", () => BusinessAvailable);
+            // 旧关卡适配器也要迁为显式 owner/module；Stop 清理不依赖此访问开关。
+            EmberLevelAdapters.Register(WindwardLevelAuthoringAdapter.Instance, "platformer-2d", () => BusinessAvailable);
+        }
+        public bool CanRead(UnityEngine.Object graph) => graph is WindwardRoomGraph;
+        public IEnumerable<UnityEngine.Object> Targets(UnityEngine.Object source)
+        { yield return source; foreach (var n in ((WindwardRoomGraph)source).nodes) if (n.room != null) yield return n.room; }
+        public EmberRoomGraphSnapshot Read(UnityEngine.Object source)
+        {
+            var graph = (WindwardRoomGraph)source;
+            return new EmberRoomGraphSnapshot(graph.nodes.Select(n =>
+            {
+                var room = n.room; var boundary = room.ConnectionBoundary;
+                var ports = room.Ports.Select(p =>
+                {
+                    var actual = p.Anchor(boundary);
+                    var anchor = new Vector2(Mathf.InverseLerp(boundary.xMin, boundary.xMax, actual.x),
+                        1 - Mathf.InverseLerp(boundary.yMin, boundary.yMax, actual.y));
+                    var normal = p.side switch { WindwardRoomSide.Left => Vector2.left, WindwardRoomSide.Right => Vector2.right,
+                        WindwardRoomSide.Top => Vector2.down, _ => Vector2.up };
+                    return new EmberRoomGraphPort(p.Key, anchor, normal, p.enabled, p.entrance, p.exit, actual);
+                });
+                return new EmberRoomGraphNode(room.RoomId, room.AuthoringTitle, n.graphPosition,
+                    (Vector2)room.AuthoringSize * 270, ports, room.AuthoringScreenshot, room);
+            }), graph.connections.Select(c => new EmberRoomGraphConnection(c.fromRoom, c.fromPort, c.toRoom, c.toPort, c.bidirectional)),
+                requireOpposedNormals: true, requireWorldAlignment: true, worldTolerance: .01f);
+        }
+        public void WriteLayout(UnityEngine.Object source, IReadOnlyDictionary<string, Vector2> positions)
+        {
+            foreach (var n in ((WindwardRoomGraph)source).nodes) n.graphPosition = positions[n.room.RoomId];
+            // 不写 authoredWorldOrigin，不移动内容、不改变关卡/场景/房间身份。
+        }
+        public void AddConnection(UnityEngine.Object source, EmberRoomGraphConnection edge)
+        {
+            var graph = (WindwardRoomGraph)source;
+            graph.connections = graph.connections.Append(new WindwardRoomConnection { fromRoom = edge.FromRoom,
+                fromPort = edge.FromPort, toRoom = edge.ToRoom, toPort = edge.ToPort, bidirectional = edge.Bidirectional }).ToArray();
+        }
+        public void RemoveConnection(UnityEngine.Object source, EmberRoomGraphConnection edge)
+        {
+            var graph = (WindwardRoomGraph)source;
+            graph.connections = graph.connections.Where(c => !(c.fromRoom == edge.FromRoom && c.fromPort == edge.FromPort
+                && c.toRoom == edge.ToRoom && c.toPort == edge.ToPort && c.bidirectional == edge.Bidirectional)).ToArray();
+        }
+        public IEnumerable<EmberLevelDiagnostic> Validate(UnityEngine.Object source)
+        {
+            // 产品完整规则保留：十二槽、内容依赖、检查点唯一性及其他后续产品约束。
+            string error = null;
+            try { ((WindwardRoomGraph)source).Validate(); } catch (Exception e) { error = e.Message; }
+            if (error != null) yield return new EmberLevelDiagnostic("windward.rooms", error, EmberLevelSeverity.Error, source);
+        }
+        public IEnumerable<EmberLevelDescriptor> Trials(UnityEngine.Object graph, string roomId)
+            => WindwardLevelAuthoringAdapter.Instance.Discover().Where(d => d.configuration is WindwardLevel level
+                && level.RoomTrial?.graph == graph && level.RoomTrial.startRoom == roomId);
+        public EmberLevelTrialRequest CreateTrial(UnityEngine.Object graph, string roomId, EmberLevelDescriptor descriptor)
+        {
+            var level = (WindwardLevel)descriptor.configuration; var preset = level.RoomTrial;
+            if (preset.graph != graph || preset.startRoom != roomId) throw new InvalidOperationException("试玩不属于所选房间。");
+            preset.graph.Validate();
+            // 生命、能力、加载范围、开发存档与冻结策略继续由原 Level 适配器和 RoomTrial/Plan 拥有。
+            return new EmberLevelTrialRequest { mode = EmberLevelStartMode.Position,
+                position = preset.graph.Room(roomId).Port(preset.startPort).spawn };
+        }
+    }
+}

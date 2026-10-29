@@ -1,0 +1,65 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "398cebe58caa4b07815a1531a5949b5b",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793259160780,
+      "finished_unix_ms": 1793259174891,
+      "last_update_unix_ms": 1793259174891,
+      "progress": {
+        "completed": 2,
+        "total": 2,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.Player.Editor.Tests.TopdownExtensionAccessTests.OldVersionWindowCannotBeAdoptedByCurrentOpenEntrypoint",
+        "last_finished_unix_ms": 1793259174488,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 3.8342481,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "DisabledExtensionRejectsPublicToolsAndDocumentsWithoutChangingWindowDraft",
+            "fullName": "Game.Player.Editor.Tests.TopdownExtensionAccessTests.DisabledExtensionRejectsPublicToolsAndDocumentsWithoutChangingWindowDraft",
+            "state": "Passed",
+            "durationSeconds": 1.4997777,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OldVersionWindowCannotBeAdoptedByCurrentOpenEntrypoint",
+            "fullName": "Game.Player.Editor.Tests.TopdownExtensionAccessTests.OldVersionWindowCannotBeAdoptedByCurrentOpenEntrypoint",
+            "state": "Passed",
+            "durationSeconds": 1.6237153,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

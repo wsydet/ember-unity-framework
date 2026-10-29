@@ -100,9 +100,10 @@ namespace Ember.Core.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public void ObserveInstance(Guid id){_observedId=id.ToString();_historyStamp=null;RefreshRuntimeObservation();}
+        public void ObserveInstance(Guid id){if(!IsTemplateAvailable)return;_observedId=id.ToString();_historyStamp=null;RefreshRuntimeObservation();}
         public void RefreshRuntimeObservation()
         {
+            if(!IsTemplateAvailable) { ObservedSnapshot=null; return; }
             if(_instancePicker==null || _canvas==null)return;
             _instances.Clear();ObservedSnapshot=null;_runtimeMetrics.text="";
             try{_instances.AddRange(EmberFsmObservationSources.Read(_graph));}

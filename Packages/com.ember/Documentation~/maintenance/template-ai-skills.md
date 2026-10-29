@@ -6,6 +6,8 @@
 
 ## 分类与职责
 
+未发布的可组合扩展接线还支持模板清单 `requiredExtensions` 与 `requiredModuleScope`。发现、安装绑定、执行前检查和域重载后的收回均受正式扩展版本/hash及模块条件约束；配置和发现目录同事务提交，本地修改先备份。具体格式、迁移和验证边界见[可组合扩展](../manual/composable-extensions.md#skill-与专属文档全链路)。无声明不按模板名称默认开启扩展；旧配置需要项目中心审阅签收。
+
 | 类别 | 唯一维护源 | 分发与启用 |
 |---|---|---|
 | 框架级（原通用 Skill） | 框架仓库 `.agents/skills/`，schema v1 catalog | 构建为包内 `AISkills~/`；安装框架并完成编译后自动补入缺失的首次安装。UPM Manager 继续提供独立 Git 版本检查与更新 |

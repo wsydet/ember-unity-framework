@@ -1,0 +1,32 @@
+[
+  {
+    "Path": "Assets/Game/Module/Player/PlayerController.cs.meta",
+    "OriginalGuid": "aee77dc442009384a9bda62163a91e9f",
+    "NewGuid": "aee77dc442009384a9bda62163a91e9f",
+    "Independent": false
+  },
+  {
+    "Path": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef.meta",
+    "OriginalGuid": "47e58cd2f19257c469a943377ae08c5c",
+    "NewGuid": "47e58cd2f19257c469a943377ae08c5c",
+    "Independent": false
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitContracts.cs.meta",
+    "OriginalGuid": "2dc5164cdcb145747a839292b5ae720b",
+    "NewGuid": "2dc5164cdcb145747a839292b5ae720b",
+    "Independent": false
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerScheme.asset.meta",
+    "OriginalGuid": null,
+    "NewGuid": "8e19c87e78f1e3841b19d998d3c36257",
+    "Independent": true
+  },
+  {
+    "Path": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset.meta",
+    "OriginalGuid": "a545c004d0aa61f4a85aae967fa1d423",
+    "NewGuid": "a545c004d0aa61f4a85aae967fa1d423",
+    "Independent": false
+  }
+]

@@ -228,6 +228,7 @@ namespace Ember.Core.Editor
         #region 外部方法
         public void FitVisible()
         {
+            if(!IsTemplateAvailable) return;
             if (_canvas == null || _nodes.Count == 0) return;
             var bounds = _nodes.Keys.Select(Envelope).ToArray();
             float left = bounds.Min(r => r.xMin) - 35, top = bounds.Min(r => r.yMin) - 35;
@@ -242,6 +243,7 @@ namespace Ember.Core.Editor
         public void SetFullNested(bool enabled) { } // 旧调用保留；新窗口始终单画布，不恢复旧分页。
         public void NavigateToState(string id)
         {
+            if(!IsTemplateAvailable) return;
             if (id == null || !_map.ContainsKey(id)) return;
             CapturePositions(); ApplyPositions();
             var parent = id; while (_parents.TryGetValue(parent, out parent)) _collapsed.Remove(parent);
@@ -252,11 +254,11 @@ namespace Ember.Core.Editor
         }
         public void RearrangeLocalLayout()
         { PreviewLayout("all"); }
-        public void SetShowRedirects(bool show) { _showRedirects=show; RefreshGraph(); }
+        public void SetShowRedirects(bool show) { if(!IsTemplateAvailable)return;_showRedirects=show; RefreshGraph(); }
         public void SetRedirectsForNode(string id, bool show)
-        { if(show) _expandedRedirects.Add(id); else _expandedRedirects.Remove(id); RefreshGraph(); }
+        { if(!IsTemplateAvailable)return;if(show) _expandedRedirects.Add(id); else _expandedRedirects.Remove(id); RefreshGraph(); }
         public void SelectDeclaration(string source, bool redirect, string id)
-        { var r=_relations.FirstOrDefault(r=>r.Key==RelationKey(source,redirect,id)); if(r!=null) SelectRelation(r); }
+        { if(!IsTemplateAvailable)return;var r=_relations.FirstOrDefault(r=>r.Key==RelationKey(source,redirect,id)); if(r!=null) SelectRelation(r); }
         #endregion
     }
 }

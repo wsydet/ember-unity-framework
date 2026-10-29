@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ember.Core.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace Ember.LevelAuthoring.Editor
         public static EmberLevelTrialRequest Request => _state == null ? null : JsonUtility.FromJson<EmberLevelTrialRequest>(JsonUtility.ToJson(_state.request));
         public static bool Active => _state != null;
         public static string LastError { get; private set; }
-        public static string Status => _state == null ? LastError ?? "编辑" : EmberLevelAdapters.Get(_state.request.adapterId)?.TrialStatus ?? "缺少试玩适配器；可停止并恢复编辑现场。";
+        public static string Status => _state == null ? LastError ?? "编辑" : EmberLevelAdapters.GetForCleanup(_state.request.adapterId)?.TrialStatus ?? "缺少试玩适配器；可停止并恢复编辑现场。";
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -50,6 +51,8 @@ namespace Ember.LevelAuthoring.Editor
         private static void Save() => SessionState.SetString(KEY, JsonUtility.ToJson(_state));
         private static void Tick()
         {
+            if (_state != null && !_state.returning && (!EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelTrial) || !EmberLevelAdapters.IsAvailable(_state.request.adapterId)))
+            { StopCurrent(); return; }
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
             if (_state != null) { if (_state.returning) TryRestore(); return; }
             string retry = SessionState.GetString(KEY + ".Retry", "");
@@ -69,7 +72,7 @@ namespace Ember.LevelAuthoring.Editor
         }
         private static void TryRestore()
         {
-            if (_state == null || !_state.returning || EditorApplication.isPlayingOrWillChangePlaymode || EmberLevelAdapters.Get(_state.request.adapterId)?.IsCleaning == true) return;
+            if (_state == null || !_state.returning || EditorApplication.isPlayingOrWillChangePlaymode || EmberLevelAdapters.GetForCleanup(_state.request.adapterId)?.IsCleaning == true) return;
             try
             {
                 EditorSceneManager.RestoreSceneManagerSetup(_state.scenes);
@@ -85,11 +88,13 @@ namespace Ember.LevelAuthoring.Editor
         #region 外部方法
         public static void Start(EmberLevelDescriptor level, EmberLevelStartMode mode, Vector2 position, string checkpoint = "")
         {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelTrial, true);
             if (Active || EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating || EditorUtility.scriptCompilationFailed)
                 throw new InvalidOperationException("请等待上一轮试玩、导入或编译结束，并修复编译错误。");
             if (EditorSettings.enterPlayModeOptionsEnabled && (EditorSettings.enterPlayModeOptions & EnterPlayModeOptions.DisableDomainReload) != 0)
                 throw new InvalidOperationException("本版试玩要求启用 Domain Reload；请在项目设置中恢复域重载。");
             var adapter = EmberLevelAdapters.Get(level?.adapterId) ?? throw new InvalidOperationException("缺少关卡适配器。");
+            if (!EmberLevelAdapters.IsAvailable(adapter.Id)) throw new InvalidOperationException("关卡适配器所属模板或模块不可用。");
             if (!string.IsNullOrEmpty(adapter.UnavailableReason)) throw new InvalidOperationException(adapter.UnavailableReason);
             var request = new EmberLevelTrialRequest { requestId = Guid.NewGuid().ToString("N"), adapterId = level.adapterId,
                 levelId = level.id, sceneGuid = level.sceneGuid, configurationGuid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(level.configuration)),
@@ -132,7 +137,7 @@ namespace Ember.LevelAuthoring.Editor
             if (_state == null) return;
             // 进入Play前取消可能没有EnteredEditMode事件；停止请求本身即进入恢复阶段。
             _state.returning = true; Save();
-            var adapter = EmberLevelAdapters.Get(_state.request.adapterId);
+            var adapter = EmberLevelAdapters.GetForCleanup(_state.request.adapterId);
             if (adapter != null) adapter.StopTrial(); else EditorApplication.isPlaying = false;
         }
         /// <summary>适配器报告自己的启动/清理错误；恢复编辑现场后仍保留可行动诊断。</summary>
@@ -140,6 +145,7 @@ namespace Ember.LevelAuthoring.Editor
         { LastError = message; SessionState.SetString(KEY + ".Error", message ?? ""); }
         public static void Retry()
         {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelTrial);
             if (_state == null) throw new InvalidOperationException("当前没有试玩会话。");
             SessionState.SetString(KEY + ".Retry", JsonUtility.ToJson(_state.request)); StopCurrent();
         }

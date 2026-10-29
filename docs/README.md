@@ -92,6 +92,7 @@ visual-novel 0.18.2 选择关联标记与概览标色随 [框架 0.17.3](dev/rel
 | [小说存储接入计划](dev/visual-novel-storage-integration-plan.md) | 尚未实施的公共 PlayerData 接线、旧档只读导入与退出刷新契约 |
 | [Audio 升级预案](dev/audio-upgrade-plan.md) | 未实施的分类、池化和播放代理设计 |
 | [独立升级器预案](dev/independent-updater-package-plan.md) | 触发拆包条件和迁移策略，当前未实施 |
+| [可选扩展的蓝图可视化后续方向](dev/optional-extensions-blueprint.md) | 扩展组合、依赖关系、影响追踪与业务图导航；仅记录未来需求，尚未实施 |
 | [UI 设计取舍](dev/ember-vs-burner-ui-comparison.md) | 当前实现与历史研究的对应关系 |
 | [Burner 历史研究](dev/burner-architecture.md) | 外部项目历史资料，不作为当前 Ember API |
 | [CHANGELOG](../Packages/com.ember/CHANGELOG.md) | 发布历史与未发布变更记录 |

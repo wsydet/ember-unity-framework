@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf8aa94b2b31d7449fc3e53db3584c6, type: 3}
+  m_Name: GameInputConfig
+  m_EditorClassIdentifier: 
+  _actions: {fileID: 11400000, guid: 9d6a49f38f2a5f842bcc07a9530b4d84, type: 2}
+  _channels:
+  - _id: gameplay
+    _actionMap: Gameplay
+    _defaultEnabled: 1

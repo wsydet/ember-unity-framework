@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "configs": [
+        "eae425270266ccc41a4ae491d48aace7",
+        "76cc96f69e8949a44ba7bef3b4cecda1"
+      ],
+      "ui": [
+        "ea484078b65bb3d46ab0f3a68bc2a115",
+        "15d73a0e643803f459cb146446f1c2a8",
+        "741e4c55fabe01c4a91ed904222a4ecb",
+        "caa8e48ebc4cf09429d5129a3eab782d"
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

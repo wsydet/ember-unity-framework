@@ -1,0 +1,92 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "4fe189f52dce4789b271950524fdedfd",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793257967772,
+      "finished_unix_ms": 1793257989592,
+      "last_update_unix_ms": 1793257989592,
+      "progress": {
+        "completed": 5,
+        "total": 5,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.Core.Fsm.Tests.EmberFsmTests.ExtensionDisablePreservesLayoutCandidateAndSerializableDraft",
+        "last_finished_unix_ms": 1793257989532,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 13.4267257,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "InactiveProvidersAreNotInvoked",
+            "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.InactiveProvidersAreNotInvoked",
+            "state": "Passed",
+            "durationSeconds": 0.5972741,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OldWindowRejectsGraphAndLayoutOperationsWithoutLosingGraph",
+            "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.OldWindowRejectsGraphAndLayoutOperationsWithoutLosingGraph",
+            "state": "Passed",
+            "durationSeconds": 0.6353792,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParameterExtensionsShareModuleAvailability",
+            "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.ParameterExtensionsShareModuleAvailability",
+            "state": "Passed",
+            "durationSeconds": 0.3437365,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UnknownOwnerAndDisabledModuleCannotGrantAccess",
+            "fullName": "Ember.Core.Fsm.Tests.EmberFsmBlueprintAccessTests.UnknownOwnerAndDisabledModuleCannotGrantAccess",
+            "state": "Passed",
+            "durationSeconds": 0.3211244,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExtensionDisablePreservesLayoutCandidateAndSerializableDraft",
+            "fullName": "Ember.Core.Fsm.Tests.EmberFsmTests.ExtensionDisablePreservesLayoutCandidateAndSerializableDraft",
+            "state": "Passed",
+            "durationSeconds": 10.6199215,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

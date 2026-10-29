@@ -1,0 +1,1 @@
+{"name":"Game.Player.Examples.Editor","rootNamespace":"Game.Player.Examples.Editor","references":["Game.Player.Examples","Game.Player.Runtime","Game.Player.Editor","Game.Entity.Runtime","Game.LevelAuthoring.Runtime","Ember.Core.Runtime","Ember.Core.Editor","Ember.Basic.Runtime","Unity.InputSystem"],"includePlatforms":["Editor"]}

@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-29",
+  "template": "platformer-2d",
+  "templateVersion": "0.13.0",
+  "compile": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1793242070511,\\\"sequence\\\":3,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":\\\"Assets/Game/Scenes/FrameworkScene.unity\\\",\\\"guid\\\":\\\"30fc7ce87c922d343a7920d067a6930e\\\",\\\"name\\\":\\\"FrameworkScene\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1793242051900,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1793242038495,\\\"last_compile_finished_unix_ms\\\":1793242041048,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1793242048649},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":1793211646578,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":1793242036871,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":null,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":null},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":576,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}",
+  "before": {
+    "m_Enabled": true,
+    "m_EditorHideFlags": 0,
+    "m_Name": "EmberExtensionDomainProbe",
+    "m_EditorClassIdentifier": "Ember.LevelAuthoring.Editor::Ember.LevelAuthoring.Editor.EmberRoomGraphWindow",
+    "m_MinSize": {
+      "x": 50,
+      "y": 50
+    },
+    "m_MaxSize": {
+      "x": 4000,
+      "y": 4000
+    },
+    "m_TitleContent": {
+      "m_Text": "扩展隔离验证（临时）",
+      "m_Image": {
+        "instanceID": 0
+      },
+      "m_Tooltip": "",
+      "m_TextWithWhitespace": "扩展隔离验证（临时）​"
+    },
+    "m_Pos": {
+      "serializedVersion": "2",
+      "x": 0,
+      "y": 26,
+      "width": 1101.3333740234375,
+      "height": 652
+    },
+    "m_SerializedDataModeController": {
+      "m_DataMode": 0,
+      "m_PreferredDataMode": 0,
+      "m_SupportedDataModes": [],
+      "isAutomatic": true
+    },
+    "m_ViewDataDictionary": {
+      "instanceID": 0
+    },
+    "m_OverlayCanvas": {
+      "m_LastAppliedPresetName": "Default",
+      "m_SaveData": [],
+      "m_ContainerData": [],
+      "m_DynamicPanelContainerData": [],
+      "m_OverlaysVisible": true,
+      "m_PresetDirty": false,
+      "m_DynamicPanelBehavior": 0,
+      "m_DynamicPanelBehaviorModified": false
+    },
+    "_graph": {
+      "instanceID": 0
+    },
+    "_adapterId": "",
+    "_owner": "platformer-2d",
+    "_selectedRoom": "",
+    "_revision": "",
+    "_capturedOwner": true,
+    "_extensionScope": "platformer-2d@0.13.0:ember.core@1:116c1446c206f8bc5065c65ba0c101fb9d47eb092bb0511c4a4097605dc04ebc;ember.level.authoring@1:76c15c2cea82252b6da5c885a4632f9646dc04a71a045123d5cf6a1d8e3fd990;ember.level.room-graph@1:3db0d9cb853f437bc60ac4847ddbdf9ccdd8d859df0552abb59c2e9c760a30db;ember.level.runtime@1:d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31",
+    "_draft": [
+      {
+        "id": "probe-room",
+        "position": {
+          "x": 321,
+          "y": 654
+        }
+      }
+    ]
+  },
+  "after": {
+    "m_Enabled": true,
+    "m_EditorHideFlags": 0,
+    "m_Name": "EmberExtensionDomainProbe",
+    "m_EditorClassIdentifier": "Ember.LevelAuthoring.Editor::Ember.LevelAuthoring.Editor.EmberRoomGraphWindow",
+    "m_MinSize": {
+      "x": 50,
+      "y": 50
+    },
+    "m_MaxSize": {
+      "x": 4000,
+      "y": 4000
+    },
+    "m_TitleContent": {
+      "m_Text": "扩展隔离验证（临时）",
+      "m_Image": {
+        "instanceID": 0
+      },
+      "m_Tooltip": "",
+      "m_TextWithWhitespace": "扩展隔离验证（临时）​"
+    },
+    "m_Pos": {
+      "serializedVersion": "2",
+      "x": 1401.3333740234375,
+      "y": 712.6666870117188,
+      "width": 1101.3333740234375,
+      "height": 652
+    },
+    "m_SerializedDataModeController": {
+      "m_DataMode": 0,
+      "m_PreferredDataMode": 0,
+      "m_SupportedDataModes": [],
+      "isAutomatic": true
+    },
+    "m_ViewDataDictionary": {
+      "instanceID": 0
+    },
+    "m_OverlayCanvas": {
+      "m_LastAppliedPresetName": "Default",
+      "m_SaveData": [],
+      "m_ContainerData": [],
+      "m_DynamicPanelContainerData": [],
+      "m_OverlaysVisible": true,
+      "m_PresetDirty": false,
+      "m_DynamicPanelBehavior": 0,
+      "m_DynamicPanelBehaviorModified": false
+    },
+    "_graph": {
+      "instanceID": 0
+    },
+    "_adapterId": "",
+    "_owner": "platformer-2d",
+    "_selectedRoom": "",
+    "_revision": "",
+    "_capturedOwner": true,
+    "_extensionScope": "platformer-2d@0.13.0:ember.core@1:116c1446c206f8bc5065c65ba0c101fb9d47eb092bb0511c4a4097605dc04ebc;ember.level.authoring@1:76c15c2cea82252b6da5c885a4632f9646dc04a71a045123d5cf6a1d8e3fd990;ember.level.room-graph@1:3db0d9cb853f437bc60ac4847ddbdf9ccdd8d859df0552abb59c2e9c760a30db;ember.level.runtime@1:d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31",
+    "_draft": [
+      {
+        "id": "probe-room",
+        "position": {
+          "x": 321,
+          "y": 654
+        }
+      }
+    ]
+  },
+  "comparison": {
+    "_graph": true,
+    "_adapterId": true,
+    "_owner": true,
+    "_selectedRoom": true,
+    "_revision": true,
+    "_capturedOwner": true,
+    "_extensionScope": true,
+    "_draft": true
+  },
+  "disabled": {
+    "enabled": [
+      "ember.core"
+    ],
+    "hasAccess": false,
+    "documents": 0,
+    "skillVisible": false,
+    "skillBlock": "此技能没有模板所有权记录。",
+    "extensionMenus": []
+  },
+  "restoredOriginalConfiguration": true,
+  "temporaryWindowClosed": true
+}

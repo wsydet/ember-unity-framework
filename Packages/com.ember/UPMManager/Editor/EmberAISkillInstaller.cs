@@ -35,6 +35,8 @@ namespace Ember.UPMManager.Editor
             public string requiredCapability;
             public string templateId;
             public string minimumTemplateVersion;
+            public string[] requiredExtensions;
+            public string requiredModuleScope;
         }
 
         [Serializable] internal sealed class Fingerprint
@@ -58,6 +60,8 @@ namespace Ember.UPMManager.Editor
             public string originTemplateId;
             public string templateMode;
             public string[] directories;
+            public ExtensionIdentity[] extensions;
+            public string requiredModuleScope;
         }
 
         [Serializable] internal sealed class State
@@ -253,7 +257,15 @@ namespace Ember.UPMManager.Editor
             string catalogPath = Within(skillsRoot, CatalogFile);
             if (!File.Exists(catalogPath) || new FileInfo(catalogPath).Length > 128 * 1024)
                 throw new InvalidDataException("所选版本缺少有效的 AI Skill 发布目录，请选择包含 catalog.json 的版本。");
-            var catalog = JsonUtility.FromJson<Catalog>(File.ReadAllText(catalogPath, Utf8));
+            string catalogText = File.ReadAllText(catalogPath, Utf8);
+            // JsonUtility silently treats a string supplied for an array as null. Never let a malformed declaration erase a gate.
+            foreach (Match field in Regex.Matches(catalogText, "\"requiredExtensions\"\\s*:\\s*(\\[|null|\\S)"))
+                if (field.Groups[1].Value != "[" && field.Groups[1].Value != "null")
+                    throw new InvalidDataException("requiredExtensions 必须是扩展 ID 数组。");
+            foreach (Match field in Regex.Matches(catalogText, "\"requiredModuleScope\"\\s*:\\s*(\"|null|\\S)"))
+                if (field.Groups[1].Value != "\"" && field.Groups[1].Value != "null")
+                    throw new InvalidDataException("requiredModuleScope 必须是模块范围字符串。");
+            var catalog = JsonUtility.FromJson<Catalog>(catalogText);
             if (catalog == null || catalog.schemaVersion != (templateCatalog ? 2 : 1) || catalog.skills == null
                 || (!templateCatalog && catalog.skills.Length == 0) || catalog.skills.Length > 64)
                 throw new InvalidDataException("AI Skill 发布目录为空或版本不受支持。");
@@ -263,6 +275,10 @@ namespace Ember.UPMManager.Editor
             {
                 if (definition == null) throw new InvalidDataException("技能定义为空。");
                 CheckId(definition.id);
+                if ((definition.requiredExtensions ?? Array.Empty<string>()).Any(id => id == null
+                    || !Regex.IsMatch(id, @"\A[a-z0-9][a-z0-9.-]*\z"))
+                    || (definition.requiredExtensions ?? Array.Empty<string>()).Distinct(StringComparer.Ordinal).Count() != (definition.requiredExtensions?.Length ?? 0))
+                    throw new InvalidDataException("技能扩展依赖声明无效：" + definition.id);
                 if (templateCatalog)
                 {
                     CheckId(definition.templateId);
@@ -270,7 +286,8 @@ namespace Ember.UPMManager.Editor
                         || !Version.TryParse(definition.minimumFrameworkVersion, out _))
                         throw new InvalidDataException("模板技能必须声明最低框架和模板版本：" + definition.id);
                 }
-                else if (!string.IsNullOrEmpty(definition.templateId) || !string.IsNullOrEmpty(definition.minimumTemplateVersion))
+                else if (!string.IsNullOrEmpty(definition.templateId) || !string.IsNullOrEmpty(definition.minimumTemplateVersion)
+                    || (definition.requiredExtensions?.Length ?? 0) > 0 || !string.IsNullOrEmpty(definition.requiredModuleScope))
                     throw new InvalidDataException("通用目录不能分发模板技能，请通过项目中心部署模板。");
                 if (!ids.Add(definition.id)) throw new InvalidDataException("技能目录重复：" + definition.id);
                 string directory = Within(skillsRoot, definition.id);

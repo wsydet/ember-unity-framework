@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-29",
+  "baselineSha256": "A0B21328A9907FB71DA0D2A6B81BAC08819AA9C0BF3B6D2682A456F2096422DF",
+  "protectedFiles": 10960,
+  "templateSnapshotFiles": 10322,
+  "changedExistingFiles": [
+    "Assets\\Game\\Documentation\\topdown-2d\\README.md",
+    "Assets\\Game\\Module\\LevelAuthoring\\Editor\\TopdownLevelAdapter.cs",
+    "Assets\\Game\\Module\\LevelAuthoring\\Editor\\TopdownObjectAdapter.cs",
+    "Assets\\Game\\Module\\Player\\Editor\\PlayerDevelopmentWindow.cs",
+    "Assets\\Game\\Module\\Player\\Editor\\PlayerEditorAccess.cs"
+  ],
+  "templateSnapshotChanges": [],
+  "note": "Only listed active topdown editor wiring and README intentionally changed. Existing resource/scene/GUID files and stored templates retained."
+}

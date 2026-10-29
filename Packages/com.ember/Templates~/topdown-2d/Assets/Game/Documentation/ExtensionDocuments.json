@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "documents": [
+    {
+      "id": "topdown.player.tools",
+      "title": "俯视玩家编辑工具",
+      "path": "topdown-2d/EditorTools.md",
+      "ownerTemplateId": "topdown-2d",
+      "ownerTemplateVersion": "0.1.1",
+      "moduleScope": "topdown.player",
+      "contentHash": "3eb8ea90dbfbf7d881b402344a8fa13c48619ebb279182eb4d04c46ca04885e8",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ]
+    },
+    {
+      "id": "topdown.level.authoring",
+      "title": "俯视关卡制作与试玩",
+      "path": "topdown-2d/LevelAuthoring.md",
+      "ownerTemplateId": "topdown-2d",
+      "ownerTemplateVersion": "0.1.1",
+      "moduleScope": "topdown.player",
+      "contentHash": "13218e1aeecf2056d66c10526cf3fd934fc677832f21348ccdafead844f3f849",
+      "requiredExtensions": [
+        "ember.level.authoring"
+      ]
+    }
+  ]
+}

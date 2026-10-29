@@ -24,13 +24,14 @@ namespace Ember.Core.Editor
 
         #region 内部参数
 
-        private static readonly string[] DevTabs = { "项目初始化", "模板开发", "项目校验" };
+        private static readonly string[] DevTabs = { "项目初始化", "模板开发", "项目校验", "扩展组合" };
         private static readonly string[] ConsumerTabs = { "项目初始化", "项目校验" };
 
         private EmberSetupWindowContext _context;
         private EmberProjectSetupPanel _projectSetupPanel;
         private EmberTemplateDevelopmentPanel _templateDevelopmentPanel;
         private EmberProjectValidationPanel _projectValidationPanel;
+        private readonly EmberExtensionPanel _extensionPanel = new();
         private OdinMenuTree _navigation;
         private bool _navigationDevMode;
         private int? _pendingTab;
@@ -143,6 +144,7 @@ namespace Ember.Core.Editor
                         _navigation.Add("项目初始化", 0);
                         if (devMode) _navigation.Add("模板开发", 1);
                         _navigation.Add("项目校验", 2);
+                        _navigation.Add("扩展组合", 3);
                         _navigation.MenuItems.FirstOrDefault(i => i.Value is int value && value == _selectedTab)?.Select();
                         var navigation = _navigation;
                         navigation.Selection.SelectionChanged += change =>
@@ -175,7 +177,9 @@ namespace Ember.Core.Editor
                     GUILayout.Space(6);
                     if (EditorApplication.isPlayingOrWillChangePlaymode)
                         EditorGUILayout.HelpBox("运行期间可以查看信息；退出播放模式后可保存、同步和校验。", MessageType.Info);
-                    if (_selectedTab == 1 && devMode)
+                    if (_selectedTab == 3)
+                        _extensionPanel.Draw();
+                    else if (_selectedTab == 1 && devMode)
                         _templateDevelopmentPanel.Draw(position.width - 180);
                     else if (_selectedTab == 2)
                         _projectValidationPanel.Draw();

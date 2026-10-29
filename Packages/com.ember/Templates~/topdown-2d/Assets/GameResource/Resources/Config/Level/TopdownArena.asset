@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234e1868c18b6ff4b9b84faf933e5a1b, type: 3}
+  m_Name: TopdownArena
+  m_EditorClassIdentifier: Game.LevelAuthoring.Runtime::Game.LevelAuthoring.TopdownLevelDefinition
+  _id: level.57187c8a32794074a4635ffb2874b434
+  _displayName: "\u4FEF\u89C6\u969C\u788D\u7ADE\u6280\u573A"
+  _scenePath: Assets/Game/Scenes/TopdownArena.unity
+  _scheme: {fileID: 11400000, guid: fefd995ef779b3141ae209afdac399eb, type: 2}

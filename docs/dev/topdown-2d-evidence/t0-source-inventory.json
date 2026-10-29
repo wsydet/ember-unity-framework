@@ -1,0 +1,130 @@
+[
+  {
+    "Path": "Assets/Editor/EmberEditingTemplate.json",
+    "SHA256": "07941F0C39E40AE7584EF2B733CFBF435E270E120F00AE7A41D58C3F6BC18B03"
+  },
+  {
+    "Path": "Packages/com.ember/package.json",
+    "SHA256": "12B8A920B5199BA5F1493E93224529D7CC37B5F6076DC3B99DC625FA4CC4EAB6"
+  },
+  {
+    "Path": "Packages/com.ember/Templates~/base/template.json",
+    "SHA256": "13066A502D8AB9B30E93B0E0AADA1CCFDA62360530C78D6066967D3AC5EB5908"
+  },
+  {
+    "Path": "Packages/com.ember/Templates~/platformer-2d/template.json",
+    "SHA256": "FA3F1B5533EF80F47181013D5DA22B45AAC9F54787C135405325AAAB38EEBAB5"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Entity2D.cs",
+    "SHA256": "58AD1C9D722B27E1631F52D45DC0F7BA4FF4580F4F95480A532DEBD5BAF87096"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHealth.cs",
+    "SHA256": "622D51A017D0C313D9D8BFB7B28703BDBFD675ECF906A6D7E52EAF8676289204"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitPayload.cs",
+    "SHA256": "09BA2DB3938E983320EF8D5614A238A5407E64D8DF6CC5FC51EBD0B63B720CF2"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitContracts.cs",
+    "SHA256": "500AAD1105CBD574F940292B040E801740CD85E6ABC7E8D384C58B3E42B13F08"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityHitBatch.cs",
+    "SHA256": "FFA0E93C875777B08E104D20F64D401A431B741FD8FFDBE521FE70A48729095E"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityReactionMotion.cs",
+    "SHA256": "751B806BCBEDFF32F8654D796B14AA8BA16277A64C42FD8749774C338D948ED6"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+    "SHA256": "6E7C32D4CDCB5771A9115F3CF76D0320FD6D21C3E63D8A3C7FAC1437FF2C38D4"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/EntityFacing2D.cs",
+    "SHA256": "4F65CEC068DB58ED34087E87AB7C37FE9B07B9F7737B7169AD3E25D45630E98F"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerHitQuery.cs",
+    "SHA256": "1B203F6056FC2ECB2CDCF92EB94F2A577D1AC94B851271EC68416D38EAC71C44"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerModule.cs",
+    "SHA256": "E43CC85C41D6EFA5D34979AF33BED1A2547932C51C4DF93714267A1A0DA8ADA2"
+  },
+  {
+    "Path": "Assets/Game/Module/Player/PlayerSceneParticipant.cs",
+    "SHA256": "1C611075F3E8ACC8831D314DAB976F8D322319AACB0E1DA1B474DBC32E4D502F"
+  },
+  {
+    "Path": "Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs",
+    "SHA256": "1327FB3FA6868F4C69746F7C3BFF55A803FF98229AB8686C788201D0F763F757"
+  },
+  {
+    "Path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+    "SHA256": "45DB8BAF3071EA50F9D4F6E4D6CE98C780F8C37BE150D848BFB2B9CE02A78730"
+  },
+  {
+    "Path": "Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+    "SHA256": "2544CAC474E0E2C84458D9C6BA29CAF593EFF0C938E694687EA3C8B073F61B02"
+  },
+  {
+    "Path": "Packages/com.ember/Core/Editor/EmberTemplateDevelopmentPanel.cs",
+    "SHA256": "7D689FB795C4CCDE4BD0FF9B35B70EDC78CE6596FB01F7DADFF1846670292E7B"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs",
+    "SHA256": "8BA5135E4630D2AB715C24F6FFE10F0F6CF14EA42B84A2D7DA0CB906BFAFCF1F"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs",
+    "SHA256": "869DF97A43E5F5127F22B0CDB5BE70A44ACA88794C6C81B5838B85BB26BEFB56"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs",
+    "SHA256": "0A9E20D3B15BC9EB6BFEB3B7263C497699124E101689E9DE53B3238418489FB7"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs",
+    "SHA256": "F3DFEE28A4269BC544DB61F8E543143834FDBFB3655169226BBA44064A3689B0"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs",
+    "SHA256": "BC8DF39D17B35618F06BF73543F10005833CB5886C447E582B0000328499C7F2"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs",
+    "SHA256": "2D776E5AB2C01615F0748D0451E3D1FF8F06A94B4688A378B277D125E97E699F"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs",
+    "SHA256": "C9A7C082672C781D493F774BC6CF83C7009770D0A46A23F001D64D4BBF087E68"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs",
+    "SHA256": "541729B64F31F4554E5D7F41D4AF7FC1F45CA9579FE39CB0F9A2D744A4DD0904"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs",
+    "SHA256": "AF4E9B1EF8896655DD299FD6AF20FB928D6B355557E2196F169E264CC20E0696"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs",
+    "SHA256": "98F68826F499CBB7EFDDEA0947C9D468E9334173D825756B2ED0774515935AF3"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs",
+    "SHA256": "96B3421F5128E6E4CDC385CDBD486FE122BB2DAA395145381FEAE72BD3261C97"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs",
+    "SHA256": "8C0CDB81DE2674625783EA557789D938077B89041312B1A9EB79256377FABB30"
+  },
+  {
+    "Path": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs",
+    "SHA256": "B44DF4B1AF5B1FC31710AB9D7AD8F39D053B6F35BAB09E34EB2C4C19CB40CACB"
+  }
+]

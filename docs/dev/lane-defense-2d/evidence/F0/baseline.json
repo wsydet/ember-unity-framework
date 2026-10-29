@@ -1,0 +1,57 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "embedded": true,
+      "frameworkVersion": "0.24.3",
+      "unityVersion": "6000.5.4f1",
+      "editing": {
+        "templateId": "topdown-2d",
+        "templateVersion": "0.1.0",
+        "contentHash": "b3bf3acb890f00980fd6633f8765a93a",
+        "loadedAt": "2026-10-29 12:06:43"
+      },
+      "baseline": {
+        "schemaVersion": 2,
+        "id": "base",
+        "displayName": "基础模板",
+        "description": "Ember 框架基础演示：完整状态继承 + 演示 UI（GM 页/主菜单/设置/游戏内）+ 演示模块（流送/全局灯光/存档/红点）+ 4 个完整场景。用户只需在状态钩子函数中填写业务代码。 内置跨模板公共 UI 多语言源表与注册，使用框架多语言中心编辑和翻译。",
+        "version": "0.10.0",
+        "frameworkVersion": "0.24.0",
+        "channel": "stable",
+        "order": 1,
+        "parentId": "",
+        "parentVersion": "",
+        "parentContentHash": "",
+        "contentHash": "e9d789311cad169a19b6a76331a2877a",
+        "versionedContentHash": "61cbe49aa797b1604f293b9756674566"
+      },
+      "baseActualHash": "e9d789311cad169a19b6a76331a2877a",
+      "sealedSnapshotHash": "61cbe49aa797b1604f293b9756674566",
+      "graphIssues": [],
+      "comparison": {
+        "Issues": [
+          {
+            "Severity": 0,
+            "Category": "内容差异",
+            "Message": "磁盘文件与所列基准一致。",
+            "AssetPath": null,
+            "Suggestion": null
+          }
+        ],
+        "CheckedAt": "2026-10-29T13:11:32.7203698+08:00",
+        "TemplateId": "topdown-2d",
+        "Baseline": "当前项目 → 2D 俯视 v0.1.0（按模板保存规则）",
+        "ProjectFingerprint": "b3bf3acb890f00980fd6633f8765a93a",
+        "ComparisonCompleted": true,
+        "IsEditingTemplate": true,
+        "ErrorCount": 0,
+        "WarningCount": 0,
+        "DifferenceCount": 0
+      },
+      "laneDefenseExists": false
+    },
+    "compiler": "codedom"
+  }
+}

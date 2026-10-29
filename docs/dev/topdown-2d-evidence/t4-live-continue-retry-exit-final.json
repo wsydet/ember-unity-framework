@@ -1,0 +1,14 @@
+{
+  "loaded": "Completed",
+  "loadError": null,
+  "retry": "Completed",
+  "Error": null,
+  "before": 1,
+  "after": 4,
+  "captured": true,
+  "world": true,
+  "hp": 6.0,
+  "exit": true,
+  "session": false,
+  "state": "GameMainState"
+}

@@ -1,0 +1,1 @@
+{"name":"Game.LaneDefense.Tests","rootNamespace":"Game.LaneDefense.Tests","references":["Game.LaneDefense.Runtime","Unity.InputSystem","Ember.Basic.Runtime","Ember.UIExtension.Runtime","Ember.UI.Runtime"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"defineConstraints":["UNITY_INCLUDE_TESTS"]}

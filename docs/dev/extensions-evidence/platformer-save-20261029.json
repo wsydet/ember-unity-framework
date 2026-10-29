@@ -1,0 +1,15 @@
+{
+  "id": "platformer-2d",
+  "version": "0.13.0",
+  "previousContentHash": "ff217ca17005f39519049c46a83c138b",
+  "contentHash": "1cf67da87731c1b88d685a8d4e8a7e08",
+  "versionedContentHash": "ff217ca17005f39519049c46a83c138b",
+  "files": 1955,
+  "errors": 0,
+  "differences": 0,
+  "skillBlock": null,
+  "bumped": false,
+  "action": "EmberProjectSetup.SaveTemplate + SyncCurrentTemplateSkills via Unity MCP",
+  "backup": "Library/EmberExtensionWiring/20261029-followup/platformer-stored-before",
+  "backupFiles": 2647
+}

@@ -7,7 +7,14 @@ namespace Game.Player.Editor
     public sealed partial class PlayerSchemeWindow
     {
         #region 内部参数
-        private static string DraftKey => "Game.Player.SchemeWindow.Draft." + Application.dataPath;
+        private string DraftKey => "Game.Player.SchemeWindow.Draft." + Application.dataPath + "." + _ownerTemplate + "." + _ownerVersion;
+        private string ReadDraft()
+        {
+            string current = SessionState.GetString(DraftKey, "");
+            // One-way read fallback preserves existing unversioned platformer drafts without deleting or overwriting them.
+            return !string.IsNullOrEmpty(current) || _ownerTemplate != "platformer-2d" ? current
+                : SessionState.GetString("Game.Player.SchemeWindow.Draft." + Application.dataPath, "");
+        }
         [Serializable]
         private sealed class WindowDraft
         {
@@ -42,7 +49,7 @@ namespace Game.Player.Editor
 
         private bool RestoreDraft()
         {
-            string json = SessionState.GetString(DraftKey, "");
+            string json = ReadDraft();
             if (string.IsNullOrEmpty(json)) return false;
             var draft = JsonUtility.FromJson<WindowDraft>(json);
             if (draft == null) return false;
@@ -59,7 +66,7 @@ namespace Game.Player.Editor
         private void RestoreCombatDraft()
         {
             if (_combatDraft != null) return;
-            var json = SessionState.GetString(DraftKey, "");
+            var json = ReadDraft();
             if (string.IsNullOrEmpty(json)) return;
             var draft = JsonUtility.FromJson<WindowDraft>(json);
             if (string.IsNullOrEmpty(draft?.combatAttack)) return;

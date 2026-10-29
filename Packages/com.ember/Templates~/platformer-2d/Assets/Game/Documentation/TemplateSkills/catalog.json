@@ -7,7 +7,11 @@
       "description": "通过完整候选事务新增攻击、连招、动画和命中窗口，并验证实际战斗。",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.18.0",
-      "minimumTemplateVersion": "0.3.1"
+      "minimumTemplateVersion": "0.3.1",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-platformer-tune-feel",
@@ -15,7 +19,11 @@
       "description": "发现已有玩家机制，将手感目标转成完整方案候选，并用 Unity 白盒验证。",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
-      "minimumTemplateVersion": "0.2.1"
+      "minimumTemplateVersion": "0.2.1",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-platformer-replace-animation",
@@ -23,7 +31,11 @@
       "description": "按实际玩家状态映射导入序列帧，替换自有方案动画并验证运行表现。",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
-      "minimumTemplateVersion": "0.2.1"
+      "minimumTemplateVersion": "0.2.1",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-platformer-add-state",
@@ -31,7 +43,11 @@
       "description": "将已明确的玩家新动作接入真实状态、转换、完整方案和动画，并验证生命周期。",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.17.0",
-      "minimumTemplateVersion": "0.6.0"
+      "minimumTemplateVersion": "0.6.0",
+      "requiredExtensions": [
+        "ember.fsm.blueprint"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-level-add-terrain",
@@ -39,7 +55,12 @@
       "description": "新增和更新关卡terrain资源并验证编辑与试玩",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.24.0",
-      "minimumTemplateVersion": "0.13.0"
+      "minimumTemplateVersion": "0.13.0",
+      "requiredExtensions": [
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-level-add-mechanism",
@@ -47,7 +68,12 @@
       "description": "新增和更新关卡mechanism资源并验证编辑与试玩",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.24.0",
-      "minimumTemplateVersion": "0.13.0"
+      "minimumTemplateVersion": "0.13.0",
+      "requiredExtensions": [
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-level-add-background",
@@ -55,7 +81,12 @@
       "description": "新增和更新关卡background资源并验证编辑与试玩",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.24.0",
-      "minimumTemplateVersion": "0.13.0"
+      "minimumTemplateVersion": "0.13.0",
+      "requiredExtensions": [
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "requiredModuleScope": "platformer.player"
     },
     {
       "id": "ember-level-add-decoration",
@@ -63,7 +94,12 @@
       "description": "新增和更新关卡decoration资源并验证编辑与试玩",
       "templateId": "platformer-2d",
       "minimumFrameworkVersion": "0.24.0",
-      "minimumTemplateVersion": "0.13.0"
+      "minimumTemplateVersion": "0.13.0",
+      "requiredExtensions": [
+        "ember.level.authoring",
+        "ember.level.trial"
+      ],
+      "requiredModuleScope": "platformer.player"
     }
   ]
 }

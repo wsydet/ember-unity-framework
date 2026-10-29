@@ -1,0 +1,42 @@
+{
+    "schemaVersion": 2,
+    "ownerTemplateId": "platformer-2d",
+    "ownerTemplateVersion": "0.13.1",
+    "enabled": [
+        "ember.fsm.blueprint",
+        "ember.level.authoring",
+        "ember.level.trial"
+    ],
+    "bindings": [
+        {
+            "id": "ember.core",
+            "contractVersion": 1,
+            "contentHash": "116c1446c206f8bc5065c65ba0c101fb9d47eb092bb0511c4a4097605dc04ebc"
+        },
+        {
+            "id": "ember.fsm.blueprint",
+            "contractVersion": 1,
+            "contentHash": "b3240af7e3938391f9bd558ebc2a671ea09e1a0f3d259a322a26f74998f89605"
+        },
+        {
+            "id": "ember.fsm.runtime",
+            "contractVersion": 1,
+            "contentHash": "5b1a160369e9aa17b541832acf0d1c16d95bf75f0ea31e6a3da16b185c83a96b"
+        },
+        {
+            "id": "ember.level.authoring",
+            "contractVersion": 1,
+            "contentHash": "76c15c2cea82252b6da5c885a4632f9646dc04a71a045123d5cf6a1d8e3fd990"
+        },
+        {
+            "id": "ember.level.runtime",
+            "contractVersion": 1,
+            "contentHash": "d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31"
+        },
+        {
+            "id": "ember.level.trial",
+            "contractVersion": 1,
+            "contentHash": "418767ca2228c0bca042f6f42cf7edb7f5bafc0c169706051d9f019590ca9b17"
+        }
+    ]
+}

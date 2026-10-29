@@ -1,0 +1,263 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "88c8241793744a2e9ea4787cc5434833",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1793254890007,
+      "finished_unix_ms": 1793254900397,
+      "last_update_unix_ms": 1793254900397,
+      "progress": {
+        "completed": 24,
+        "total": 24,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Game.LaneDefense.Tests.LaneDefenseTests.ValidationRejectsDuplicateIds_UnsortedAndMissingSpawns",
+        "last_finished_unix_ms": 1793254900226,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 24,
+          "passed": 24,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.834529,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "CreditIsSessionScoped_Deduplicated_AndCapped",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.CreditIsSessionScoped_Deduplicated_AndCapped",
+            "state": "Passed",
+            "durationSeconds": 0.0527637,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CrossLanePolicy_UsesTwoDimensionalSweep",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.CrossLanePolicy_UsesTwoDimensionalSweep",
+            "state": "Passed",
+            "durationSeconds": 0.0187283,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CustomPlacementRejection_IsAtomic",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.CustomPlacementRejection_IsAtomic",
+            "state": "Passed",
+            "durationSeconds": 0.0009709,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EmptyWavesAndDuplicateStart_AreDefined",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.EmptyWavesAndDuplicateStart_AreDefined",
+            "state": "Passed",
+            "durationSeconds": 0.0005552,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EnemyBlockerDeath_ResumesMovement",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.EnemyBlockerDeath_ResumesMovement",
+            "state": "Passed",
+            "durationSeconds": 0.0008651,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EscapeAndWaveClearSameStep_FailureWins_Once",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.EscapeAndWaveClearSameStep_FailureWins_Once",
+            "state": "Passed",
+            "durationSeconds": 0.0038315,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ExitAndRestartGeneration_DoNotPublishVictoryOrAcceptOldCommands",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.ExitAndRestartGeneration_DoNotPublishVictoryOrAcceptOldCommands",
+            "state": "Passed",
+            "durationSeconds": 0.0030938,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Freeze_IsolatedFromSourceConfiguration",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.Freeze_IsolatedFromSourceConfiguration",
+            "state": "Passed",
+            "durationSeconds": 0.0004458,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HighSpeedSweep_HitsOnceAndRecyclesOnce",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.HighSpeedSweep_HitsOnceAndRecyclesOnce",
+            "state": "Passed",
+            "durationSeconds": 0.0005478,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HitInterception_DoesNotApplyDefaultDamage",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.HitInterception_DoesNotApplyDefaultDamage",
+            "state": "Passed",
+            "durationSeconds": 0.0007737,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LastSpawnCanDieFirst_WithoutPrematureCompletion",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.LastSpawnCanDieFirst_WithoutPrematureCompletion",
+            "state": "Passed",
+            "durationSeconds": 0.0023625,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Lifetime_StillEnforcedWithReplacementDriver",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.Lifetime_StillEnforcedWithReplacementDriver",
+            "state": "Passed",
+            "durationSeconds": 0.0005688,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PauseFreezesAllCombatTimeAndCooldown",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PauseFreezesAllCombatTimeAndCooldown",
+            "state": "Passed",
+            "durationSeconds": 0.0036631,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlacementChecksResourceCooldownOccupancyLimitAndPhase",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PlacementChecksResourceCooldownOccupancyLimitAndPhase",
+            "state": "Passed",
+            "durationSeconds": 0.0015455,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlacementRejected_LeavesEconomyAndBoard(-1,0,OutOfBounds)",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PlacementRejected_LeavesEconomyAndBoard(-1,0,OutOfBounds)",
+            "state": "Passed",
+            "durationSeconds": 0.0012623,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlacementRejected_LeavesEconomyAndBoard(0,4,OutOfBounds)",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PlacementRejected_LeavesEconomyAndBoard(0,4,OutOfBounds)",
+            "state": "Passed",
+            "durationSeconds": 0.0002094,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlacementRejected_LeavesEconomyAndBoard(0,1,Unbuildable)",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PlacementRejected_LeavesEconomyAndBoard(0,1,Unbuildable)",
+            "state": "Passed",
+            "durationSeconds": 0.0001197,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PreviewAndDuplicatePlacement_HaveNoExtraSideEffects",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.PreviewAndDuplicatePlacement_HaveNoExtraSideEffects",
+            "state": "Passed",
+            "durationSeconds": 0.0011898,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ProjectionRoundTrip_NonSquareAndOpenEdges",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.ProjectionRoundTrip_NonSquareAndOpenEdges",
+            "state": "Passed",
+            "durationSeconds": 0.0045589,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RemovalReasonsRefundOnce_ExitDoesNotReward",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.RemovalReasonsRefundOnce_ExitDoesNotReward",
+            "state": "Passed",
+            "durationSeconds": 0.002107,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplacementDriver_IsUnique_HitDedup_AndLateContextIsInvalid",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.ReplacementDriver_IsUnique_HitDedup_AndLateContextIsInvalid",
+            "state": "Passed",
+            "durationSeconds": 0.0014676,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ResultObserverCanDispose_AfterSimulationIterationEnds",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.ResultObserverCanDispose_AfterSimulationIterationEnds",
+            "state": "Passed",
+            "durationSeconds": 0.0012102,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SameLaneDefault_DoesNotHitAdjacentLane",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.SameLaneDefault_DoesNotHitAdjacentLane",
+            "state": "Passed",
+            "durationSeconds": 0.0003993,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ValidationRejectsDuplicateIds_UnsortedAndMissingSpawns",
+            "fullName": "Game.LaneDefense.Tests.LaneDefenseTests.ValidationRejectsDuplicateIds_UnsortedAndMissingSpawns",
+            "state": "Passed",
+            "durationSeconds": 0.031335,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

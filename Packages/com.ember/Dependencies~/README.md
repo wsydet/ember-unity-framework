@@ -1,12 +1,12 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.24.3**，修复 B03 Player 场景首次加载／重载的规则瓦片渲染引用，并将共享动态字体的可变字形、Atlas和材质迁移到项目可写资源。框架定向回归9/9及既有Editor／Windows夹具通过；退出0xC0000005仍未修复。模板、依赖和技能内容不变，Windward未升级或重部署，字体旧引用需定向迁移。
+当前发布：Ember **0.25.0**，交付可组合扩展、FSM/关卡工具门禁、房间图适配，以及 topdown-2d 和 lane-defense-2d 基础模板。七个模板已封存，父基线统一 base 0.10.1，兼容声明统一 0.25.0。定向验证与未覆盖范围见当版发布说明；第三方依赖及11项公共技能源不变，消费项目尚未升级或重部署。
 
 ## 清单范围
 
-0.24.3完整 manifest（依赖沿用0.24.2）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+0.25.0完整 manifest（依赖沿用0.24.3）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
 
-本版清单：[release-0.24.3.json](release-0.24.3.json)、[manifest-0.24.3.json](manifest-0.24.3.json)。本补丁接入与验收边界见[发布说明](../../../docs/dev/release-0.24.3.md)。以下带旧版本号的流程记录保留其历史含义。
+本版清单：[release-0.25.0.json](release-0.25.0.json)、[manifest-0.25.0.json](manifest-0.25.0.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.25.0.md)。以下带旧版本号的流程记录保留其历史含义。
 
 ## 已有消费项目升级
 
@@ -34,4 +34,4 @@
 
 ## 发布顺序
 
-本版按 package.json、CHANGELOG、release/manifest、提交与annotated tag对齐发布v0.24.2。平台模板0.13.0，其余模板内容版本不变；通用技能及第三方标签保持原版。
+本版按 package.json、CHANGELOG、release/manifest、提交与 annotated tag 对齐 v0.25.0。七个模板版本、hash及父基线见发布声明；公共技能源和第三方标签保持原版。

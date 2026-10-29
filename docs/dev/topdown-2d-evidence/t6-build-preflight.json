@@ -1,0 +1,15 @@
+{
+  "unity": "6000.5.4f1",
+  "activeTarget": "StandaloneWindows64",
+  "windowsSupported": true,
+  "backend": "Mono2x",
+  "scenes": [
+    "Assets/Game/Scenes/FrameworkScene.unity",
+    "Assets/Game/Scenes/GameplayScene.unity",
+    "Assets/Game/Scenes/MainScene.unity",
+    "Assets/Game/Scenes/SettingsScene.unity",
+    "Assets/Game/Scenes/TopdownArena.unity"
+  ],
+  "playerMvid": "a8fbf92c-ee3a-4ea0-8c7f-9ec94dfac5c1",
+  "entityMvid": "a5bebf3d-12c3-4799-99d9-f84de6474185"
+}

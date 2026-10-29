@@ -1,0 +1,13 @@
+{
+    "schemaVersion": 2,
+    "ownerTemplateId": "lane-defense-2d",
+    "ownerTemplateVersion": "0.1.1",
+    "enabled": [],
+    "bindings": [
+        {
+            "id": "ember.core",
+            "contractVersion": 1,
+            "contentHash": "116c1446c206f8bc5065c65ba0c101fb9d47eb092bb0511c4a4097605dc04ebc"
+        }
+    ]
+}

@@ -1,0 +1,83 @@
+diff --git a/Packages/com.ember/Core/Editor/EmberFsmBlueprintParameters.cs b/Packages/com.ember/Core/Editor/EmberFsmBlueprintParameters.cs
+index ddd9aa8..2b6b216 100644
+--- a/Packages/com.ember/Core/Editor/EmberFsmBlueprintParameters.cs
++++ b/Packages/com.ember/Core/Editor/EmberFsmBlueprintParameters.cs
+@@ -1,5 +1,6 @@
+ ﻿using System;
+ using System.Collections.Generic;
++using System.Linq;
+ using Ember.Core.Fsm;
+ using UnityEditor;
+ using UnityEngine;
+@@ -12,17 +13,25 @@ public static class EmberFsmBlueprintParameters
+         #region 内部参数
+         private static readonly Dictionary<string, Action<EmberFsmBlueprintWindow>> Drawers = new();
+         private static readonly Dictionary<string, Action<EmberFsmBlueprintWindow>> Toolbars = new();
++        private static readonly Dictionary<string, Func<bool>> Availability = new();
++        public static bool HasAvailableProvider => Availability.Values.Any(available => available());
+         #endregion
+         // --------------------------------------------------------
+         #region 外部方法
+-        public static void Register(string key, Action<EmberFsmBlueprintWindow> draw, Action<EmberFsmBlueprintWindow> toolbar = null)
+-        { Drawers[key] = draw ?? throw new ArgumentNullException(nameof(draw)); Toolbars[key] = toolbar; }
+-        public static void Remove(string key) { Drawers.Remove(key); Toolbars.Remove(key); }
++        public static void Register(string key, Action<EmberFsmBlueprintWindow> draw, Action<EmberFsmBlueprintWindow> toolbar = null,
++            string ownerTemplateId = null, Func<bool> enabled = null)
++        {
++            var owner = ownerTemplateId ?? EmberFsmBlueprintAccess.CurrentTemplateId;
++            Drawers[key] = draw ?? throw new ArgumentNullException(nameof(draw)); Toolbars[key] = toolbar;
++            Availability[key] = () => EmberFsmBlueprintAccess.Allows(owner,enabled);
++        }
++        public static void Remove(string key) { Drawers.Remove(key); Toolbars.Remove(key); Availability.Remove(key); }
+         public static void DrawToolbar(EmberFsmBlueprintWindow window)
+-        { foreach (var draw in Toolbars.Values) draw?.Invoke(window); }
++        { if (!window.IsTemplateAvailable) return; foreach (var pair in Toolbars.ToArray()) if (Availability[pair.Key]()) pair.Value?.Invoke(window); }
+         public static void Draw(EmberFsmBlueprintWindow window)
+         {
+-            foreach (var draw in Drawers.Values) draw(window);
++            if (!window.IsTemplateAvailable) return;
++            foreach (var pair in Drawers.ToArray()) if (Availability[pair.Key]()) pair.Value(window);
+         }
+ 
+         /// <summary>只编辑调用方开放的真实序列化参数；ApplyModifiedProperties 使用 Unity Undo。</summary>
+@@ -51,7 +60,7 @@ public sealed partial class EmberFsmBlueprintWindow
+         #region 外部方法
+         public EmberFsmGraph ParameterGraph => _graph;
+         public EmberFsmNodeDescription ParameterNode => _selected;
+-        public ScriptableObject ParameterPreset { get => _parameterPreset; set => _parameterPreset = value; }
++        public ScriptableObject ParameterPreset { get => _parameterPreset; set { if(IsTemplateAvailable) _parameterPreset = value; } }
+         #endregion
+     }
+ }
+diff --git a/Packages/com.ember/Core/Editor/EmberFsmObservationSources.cs b/Packages/com.ember/Core/Editor/EmberFsmObservationSources.cs
+index 82b1362..6d36c2e 100644
+--- a/Packages/com.ember/Core/Editor/EmberFsmObservationSources.cs
++++ b/Packages/com.ember/Core/Editor/EmberFsmObservationSources.cs
+@@ -11,16 +11,23 @@ public static class EmberFsmObservationSources
+     {
+         #region 内部参数
+         private static readonly Dictionary<string,Func<IEnumerable<EmberFsmObservedInstance>>> Providers=new();
++        private static readonly Dictionary<string,Func<bool>> Availability=new();
++        public static bool HasAvailableProvider => Availability.Values.Any(available=>available());
+         #endregion
+         // --------------------------------------------------------
+         #region 外部方法
+-        public static void Register(string key,Func<IEnumerable<EmberFsmObservedInstance>> read) => Providers[key]=read;
+-        public static void Remove(string key) => Providers.Remove(key);
++        public static void Register(string key,Func<IEnumerable<EmberFsmObservedInstance>> read, string ownerTemplateId=null, Func<bool> enabled=null)
++        {
++            var owner=ownerTemplateId??EmberFsmBlueprintAccess.CurrentTemplateId;
++            Providers[key]=read??throw new ArgumentNullException(nameof(read));
++            Availability[key]=()=>EmberFsmBlueprintAccess.Allows(owner,enabled);
++        }
++        public static void Remove(string key) { Providers.Remove(key); Availability.Remove(key); }
+         public static IReadOnlyList<EmberFsmObservedInstance> Read(EmberFsmGraph graph)
+         {
+             var result=new List<EmberFsmObservedInstance>();
+-            foreach(var provider in Providers.Values.ToArray())
+-                foreach(var item in provider())
++            foreach(var provider in Providers.ToArray())
++                if(Availability[provider.Key]()) foreach(var item in provider.Value())
+                     if(item!=null && item.Owner!=null && item.Graph==graph && item.Snapshot!=null)result.Add(item);
+             return result.GroupBy(x=>x.Snapshot.InstanceId).Select(x=>x.First()).ToArray();
+         }

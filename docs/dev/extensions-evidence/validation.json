@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-29",
+  "unity": "6000.5.4f1",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "finalFocused": {
+    "jobId": "16528c3cc5ca430f93c54bf6ba588d3d",
+    "summary": {
+      "total": 26,
+      "passed": 26,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 31.9061979,
+      "resultState": "Passed"
+    }
+  },
+  "finalScope": {
+    "jobId": "b6280b6a12f84baa87a767aa51c0c0ae",
+    "summary": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 3.4734751,
+      "resultState": "Passed"
+    }
+  },
+  "assemblies": {
+    "core": "8251e7e7-b890-45c2-b558-57868102dc6f",
+    "rooms": "6f073818-1288-42aa-b086-5dbe4a6e295e",
+    "active": "topdown-2d"
+  },
+  "editorState": {
+    "schema_version": "unity-mcp/editor_state@2",
+    "observed_at_unix_ms": 1793211961295,
+    "sequence": 3,
+    "unity": {
+      "instance_id": "ember-unity-framework@b23e9b768e85ed30",
+      "unity_version": "6000.5.4f1",
+      "project_id": null,
+      "platform": "WindowsEditor",
+      "is_batch_mode": false
+    },
+    "editor": {
+      "is_focused": false,
+      "play_mode": {
+        "is_playing": false,
+        "is_paused": false,
+        "is_changing": false
+      },
+      "active_scene": {
+        "path": "Assets/Game/Scenes/FrameworkScene.unity",
+        "guid": "30fc7ce87c922d343a7920d067a6930e",
+        "name": "FrameworkScene"
+      }
+    },
+    "activity": {
+      "phase": "idle",
+      "since_unix_ms": 1793211926189,
+      "reasons": [
+        "tick"
+      ]
+    },
+    "compilation": {
+      "is_compiling": false,
+      "is_domain_reload_pending": false,
+      "last_compile_started_unix_ms": 1793211912913,
+      "last_compile_finished_unix_ms": 1793211916494,
+      "last_domain_reload_before_unix_ms": null,
+      "last_domain_reload_after_unix_ms": 1793211923388
+    },
+    "assets": {
+      "is_updating": false,
+      "external_changes_dirty": false,
+      "external_changes_last_seen_unix_ms": 1793211646578,
+      "external_changes_dirty_since_unix_ms": null,
+      "external_changes_last_cleared_unix_ms": 1793211938164,
+      "refresh": {
+        "is_refresh_in_progress": false,
+        "last_refresh_requested_unix_ms": null,
+        "last_refresh_finished_unix_ms": null
+      }
+    },
+    "tests": {
+      "is_running": false,
+      "mode": null,
+      "current_job_id": null,
+      "started_unix_ms": null,
+      "started_by": "unknown",
+      "last_run": null
+    },
+    "transport": {
+      "unity_bridge_connected": null,
+      "last_message_unix_ms": null
+    },
+    "settings": {
+      "batch_execute_max_commands": 25
+    },
+    "advice": {
+      "ready_for_tools": true,
+      "blocking_reasons": [],
+      "recommended_retry_after_ms": 0,
+      "recommended_next_action": "none"
+    },
+    "staleness": {
+      "age_ms": 395,
+      "is_stale": false
+    }
+  },
+  "console": {
+    "errors": 0,
+    "warnings": [
+      "MCP WebSocket is not initialised during reload; connection restored and subsequent calls succeeded."
+    ]
+  },
+  "domainAudit": {
+    "disabledAfterReload": true,
+    "roomMenu": false,
+    "fsmMenu": false,
+    "serializedFieldsPreserved": [
+      "_graph",
+      "_adapterId",
+      "_owner",
+      "_selectedRoom",
+      "_revision",
+      "_capturedOwner",
+      "_draft"
+    ],
+    "draftCount": 2,
+    "temporaryAssetsRemoved": true,
+    "originalConfigurationRestored": true
+  },
+  "notPerformed": [
+    "actual template switch",
+    "Windward writes/upgrade",
+    "Player build",
+    "full suite",
+    "template save/Bump/commit/publish"
+  ]
+}

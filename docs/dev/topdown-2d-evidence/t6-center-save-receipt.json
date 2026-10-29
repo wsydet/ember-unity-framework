@@ -1,0 +1,39 @@
+{
+  "operation": "EmberProjectSetup.SaveTemplate",
+  "template": "topdown-2d",
+  "copiedFiles": 1050,
+  "metadataBefore": {
+    "schemaVersion": 2,
+    "id": "topdown-2d",
+    "displayName": "2D 俯视",
+    "description": "直接继承 base 的二维俯视模板：平面移动与瞄准、可选近战与冲刺、生命与世界进度、正式场景准备及制作工具。实施中的 preview，验收范围见阶段记录。",
+    "version": "0.1.0",
+    "frameworkVersion": "0.24.0",
+    "channel": "preview",
+    "order": 99,
+    "parentId": "base",
+    "parentVersion": "0.10.0",
+    "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+    "contentHash": "61cbe49aa797b1604f293b9756674566",
+    "versionedContentHash": "61cbe49aa797b1604f293b9756674566"
+  },
+  "metadataAfter": {
+    "schemaVersion": 2,
+    "id": "topdown-2d",
+    "displayName": "2D 俯视",
+    "description": "直接继承 base 的二维俯视模板：平面移动与瞄准、可选近战与冲刺、生命与世界进度、正式场景准备及制作工具。实施中的 preview，验收范围见阶段记录。",
+    "version": "0.1.0",
+    "frameworkVersion": "0.24.0",
+    "channel": "preview",
+    "order": 99,
+    "parentId": "base",
+    "parentVersion": "0.10.0",
+    "parentContentHash": "61cbe49aa797b1604f293b9756674566",
+    "contentHash": "5ef1d9ae0042f8852d4b34566d7cd8bc",
+    "versionedContentHash": "61cbe49aa797b1604f293b9756674566"
+  },
+  "versionAndParentAndSealedHashUnchanged": true,
+  "backup": "Library/EmberBackups/topdown-2d-before-first-save/stored-template-before.zip",
+  "buildPerformed": false,
+  "bumpPerformed": false
+}

@@ -1,0 +1,21 @@
+{
+  "scenes": [
+    {
+      "path": "Assets/Game/Scenes/FrameworkScene.unity",
+      "isLoaded": true,
+      "isActive": true
+    }
+  ],
+  "selection": null,
+  "hasView": true,
+  "pivotX": 2.99999976,
+  "pivotY": 1.48750007,
+  "pivotZ": 0.5,
+  "rotX": 0.0,
+  "rotY": 0.0,
+  "rotZ": 0.0,
+  "rotW": 1.0,
+  "size": 4.02835655,
+  "mode2D": true,
+  "orthographic": true
+}

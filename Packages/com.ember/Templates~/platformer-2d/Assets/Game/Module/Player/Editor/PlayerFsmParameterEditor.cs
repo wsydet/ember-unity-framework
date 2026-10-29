@@ -21,7 +21,8 @@ namespace Game.Player.Editor
         #endregion
         // --------------------------------------------------------
         #region 内部方法
-        static PlayerFsmParameterEditor() => EmberFsmBlueprintParameters.Register("platformer-feel", Draw, DrawToolbar);
+        static PlayerFsmParameterEditor() => EmberFsmBlueprintParameters.Register("platformer-feel", Draw, DrawToolbar,
+            ownerTemplateId: "platformer-2d", enabled: () => PlayerEditorAccess.Enabled);
         private static void Draw(EmberFsmBlueprintWindow window)
         {
             if (!PlayerEditorAccess.Available) return;

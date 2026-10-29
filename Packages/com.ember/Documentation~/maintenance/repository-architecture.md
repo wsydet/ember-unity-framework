@@ -101,7 +101,7 @@
 
 - 模板专属编辑器工具只在所属活动模板体系（含合法派生模板）显示入口，非所属模板必须隐藏，不能仅置灰。
 - 复用`EmberProjectSetup.IsTemplateActive`区分开发端编辑身份和消费端活动部署身份；禁止以残留脚本、资源或场景推断模板。
-- 菜单、窗口、Inspector/蓝图快捷入口及写入/试跑操作使用一致校验；模板变化后旧窗口安全失效并保留草稿。公共工具不受业务模板限制。
+- 菜单、窗口、Inspector/蓝图快捷入口及写入/试跑操作使用一致校验；模板变化后旧窗口安全失效并保留草稿。通用工具按[正式扩展组合](../manual/composable-extensions.md)开放；模板参数、观察源和适配器继续受 owner/module 约束。FSM 蓝图按[接入契约](../manual/fsm-blueprint-access.md)启用，base 默认组合隐藏。
 - 完整约束及验收要求见[业务代码与资源目录规范](../../../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md#模板专属编辑器工具的可见性与入口)。
 
 ### UnityFarm 改动回流规范（强制阅读）

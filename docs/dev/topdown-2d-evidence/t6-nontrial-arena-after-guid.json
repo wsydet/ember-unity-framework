@@ -1,0 +1,11 @@
+{
+  "status": "Completed",
+  "Error": null,
+  "trial": false,
+  "playing": true,
+  "scene": "Assets/Game/Scenes/TopdownArena.unity",
+  "nodes": 10,
+  "input": true,
+  "x": -6.0,
+  "y": -4.0
+}

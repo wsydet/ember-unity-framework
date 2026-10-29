@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布：Ember **0.24.3**，修复 B03 Player 场景首次加载／重载的规则瓦片渲染引用，并将共享动态字体的可变字形、Atlas和材质迁移到项目可写资源。框架定向回归9/9及既有Editor／Windows夹具通过；退出0xC0000005仍未修复。模板、依赖和技能内容不变，Windward未升级或重部署，字体旧引用需定向迁移。
+当前发布：Ember **0.25.0**，交付可组合扩展、FSM/关卡工具门禁、房间图适配，以及 topdown-2d 和 lane-defense-2d 基础模板。七个模板已封存，父基线统一 base 0.10.1，兼容声明统一 0.25.0。定向验证与未覆盖范围见当版发布说明；第三方依赖及11项公共技能源不变，消费项目尚未升级或重部署。
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.24.3"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.25.0"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.24.2 manifest](Dependencies~/manifest-0.24.2.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。B02修复与验证边界见 [瓦片缓存恢复](Documentation~/maintenance/terrain-cache-b02.md)。
+完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.25.0 manifest](Dependencies~/manifest-0.25.0.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。B02修复与验证边界见 [瓦片缓存恢复](Documentation~/maintenance/terrain-cache-b02.md)。
 
 0.21.5 正式发布后，已有 platformer-2d 0.11.1 项目需先通过 UPM Manager 更新框架，再对0.11.2进行模板三方补丁预览，保护定制。包升级不会自动修复已部署的 Player/Entity 源码，详见[本版准备说明](../../docs/dev/release-0.21.5.md)。
 
@@ -67,6 +67,7 @@ Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团�
 | SceneUI | [接入](Documentation~/scene-ui/README.md)、[API](SceneUI/README.md) |
 | Table | [强类型配置表](Table/Documentation~/table/README.md) |
 | Core.Editor / FrameworkTools / UPMManager | [编辑器](Documentation~/core/README-Editor.md) |
+| 可组合扩展（本地未发布） | [扩展组合、API 与 Windward 消费迁移](Documentation~/manual/composable-extensions.md) |
 | LevelAuthoring.Editor 对象扩展 | [场景对象适配器解析](Documentation~/manual/level-object-resolution.md)（0.24.1 新增） |
 | Basic / Extensions / 内置 UniTask | 集合、池、数据结构、存储、日志、扩展和异步基础 |
 | AI Skill 独立更新 | [安装、来源与备份](Documentation~/maintenance/ai-skills.md) |

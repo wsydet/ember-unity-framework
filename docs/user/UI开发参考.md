@@ -179,7 +179,7 @@ protected override void OnSafeAreaChanged() { }  // 安全区变化（旋转等�
 
 ### 8.2 UI 总览与安全维护
 
-- 在 Prefab 根节点的 EUIBinding「UI 信息 → UI 用途」中填写中文说明，例如为 `EUIGamePlayPanel` 填写“游戏模式主UI”，然后保存 Prefab。Page 和 Item 都可以填写；用途独立于类名、页面名称和代码生成，无需重新生成脚本。
+- 在 Prefab 根节点的 EUIBinding「UI 信息 → UI 用途」中填写中文说明，例如为 `EUIGamePlayPage` 填写“游戏模式主UI”，然后保存 Prefab。Page 和 Item 都可以填写；用途独立于类名、页面名称和代码生成，无需重新生成脚本。
 - 「UI 总览」会在每条记录顶部突出显示用途，保留原有预制体名与路径，并支持直接输入中文用途筛选。保存资源后目录会重新读取，也可以点击「刷新扫描」；未填写用途的旧 UI 保持原有显示。
 - 「UI 总览」只读扫描配置资源根下含根级 EUIBinding 的 prefab，集中显示页面定义、逻辑脚本、Binding、Settings 与 `GamePages` 健康状态，可直接定位或打开资产。
 - 「清理与删除」的单个 UI 列表同样突出显示中文用途，并保留预制体名和完整路径以核对对象。操作先做影响预览，再逐项确认；支持失效 `EUIPageDef`、Missing Script、空引用绑定、带自动生成锚点的孤儿脚本组，以及可安全识别的空叶子节点。

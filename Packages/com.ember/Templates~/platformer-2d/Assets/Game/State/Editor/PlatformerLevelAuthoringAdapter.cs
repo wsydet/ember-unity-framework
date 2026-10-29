@@ -33,8 +33,11 @@ namespace Game.State.Editor
         private string _status = "编辑", _requestId;
         private bool _ready, _stopping;
         public string Id => ADAPTER_ID;
+        internal static bool Available => EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelAuthoring)
+            && EmberProjectSetup.IsTemplateActive("platformer-2d") && typeof(PlayerModule).GetCustomAttribute<EmberModuleAttribute>()?.Enabled == true;
         public string UnavailableReason => !EmberProjectSetup.IsTemplateActive("platformer-2d") ? "需要活动 platformer-2d 或合法派生模板。"
-            : typeof(PlayerModule).GetCustomAttribute<EmberModuleAttribute>()?.Enabled != true ? "Player 模块已关闭。" : null;
+            : typeof(PlayerModule).GetCustomAttribute<EmberModuleAttribute>()?.Enabled != true ? "Player 模块已关闭。"
+            : !EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelAuthoring) ? "关卡制作扩展未启用或声明不兼容。" : null;
         public string TrialStatus => _status;
         public bool TrialReady => _ready;
         public bool IsCleaning => _stopping || PlayerDevelopmentEnvironment.IsCleaning;
@@ -43,9 +46,9 @@ namespace Game.State.Editor
         #region 内部方法
         static PlatformerLevelAuthoringAdapter()
         {
-            EmberLevelAdapters.Register(Instance);
-            EmberLevelAdapters.Register(new PlatformerLevelObjectAdapter());
-            EmberConditionalMenu.Register("Ember/Level/2D 关卡制作工作台", () => EmberProjectSetup.IsTemplateActive("platformer-2d"), EmberLevelWorkbench.Open, () => Instance.UnavailableReason == null);
+            EmberLevelAdapters.Register(Instance, "platformer-2d", () => Available);
+            EmberLevelAdapters.Register(new PlatformerLevelObjectAdapter(), "platformer-2d", () => Available);
+            EmberConditionalMenu.Register("Ember/Level/2D 关卡制作工作台", () => Available, EmberLevelWorkbench.Open);
             PlayerLabEditorBridge.PrepareLevelAuthoring = Instance.Prepare;
             PlayerLabEditorBridge.ReportDevelopmentFailure = message =>
             { if (EmberLevelTrialSession.Request?.adapterId == ADAPTER_ID) EmberLevelTrialSession.ReportFailure(message); };
@@ -144,7 +147,7 @@ namespace Game.State.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public IEnumerable<EmberLevelDescriptor> Discover() => EmberLevelAssetService.Find<PlatformerAuthoringLevel>().Select(level =>
+        public IEnumerable<EmberLevelDescriptor> Discover() => (Available ? EmberLevelAssetService.Find<PlatformerAuthoringLevel>() : Array.Empty<PlatformerAuthoringLevel>()).Select(level =>
             new EmberLevelDescriptor { id = level.Id, displayName = level.name, sceneGuid = level.SceneGuid, configuration = level, adapterId = Id });
 
         public IEnumerable<EmberLevelDiagnostic> Validate(EmberLevelDescriptor level, EmberLevelTrialRequest trial)
@@ -202,6 +205,8 @@ namespace Game.State.Editor
 
         public EmberLevelDescriptor Create(string folder, string name, EmberLevelDescriptor source)
         {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelAuthoring, true);
+            if (!Available) throw new InvalidOperationException(UnavailableReason);
             if (UnavailableReason != null) throw new InvalidOperationException(UnavailableReason);
             if (!AssetDatabase.IsValidFolder(folder) || !folder.StartsWith("Assets/", StringComparison.Ordinal) || string.IsNullOrWhiteSpace(name) || name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || name.Contains('/') || name.Contains('\\')) throw new ArgumentException("请选择 Assets 下有效目录与文件名。");
             string scenePath = folder + "/" + name + ".unity", configPath = folder + "/" + name + "Config.asset", levelPath = folder + "/" + name + "Level.asset";
@@ -237,6 +242,7 @@ namespace Game.State.Editor
         }
         public void BeginTrial(EmberLevelTrialRequest frozen)
         {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelTrial, true);
             if (UnavailableReason != null || IsCleaning) throw new InvalidOperationException(UnavailableReason ?? "请等待清理结束。");
             _status = "保存后试玩，正在进入正式启动流程"; PlayerDevelopmentEnvironment.Play(true);
         }
@@ -249,6 +255,7 @@ namespace Game.State.Editor
         public string Id => "platformer-2d.mechanism";
         public void ValidatePlacement(EmberLevelMaterial material, Scene scene)
         {
+            RequireWrite();
             if (!EmberProjectSetup.IsTemplateActive("platformer-2d")) throw new InvalidOperationException("平台模板未激活。");
             if (material.Prefab != null && material.Prefab.GetComponentInChildren<LaunchZone2D>(true) != null &&
                 !scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<PlayerLaunchTarget2D>(true)).Any())
@@ -256,15 +263,22 @@ namespace Game.State.Editor
         }
         public void OnCreated(GameObject instance, bool duplicate)
         {
+            RequireWrite();
             foreach (var checkpoint in instance.GetComponentsInChildren<PlatformerAuthoringCheckpoint>(true))
             { Undo.RecordObjects(new UnityEngine.Object[] { checkpoint, checkpoint.GetComponent<PlayerCheckpointZone2D>() }, "检查点身份"); checkpoint.Configure(Guid.NewGuid().ToString("N"), checkpoint.Spawn - (Vector2)checkpoint.transform.position); PrefabUtility.RecordPrefabInstancePropertyModifications(checkpoint); PrefabUtility.RecordPrefabInstancePropertyModifications(checkpoint.GetComponent<PlayerCheckpointZone2D>()); }
         }
-        public void BeforeDelete(GameObject instance) { }
+        public void BeforeDelete(GameObject instance) { RequireWrite(); }
         public IEnumerable<EmberLevelDiagnostic> Validate(GameObject instance) { yield break; }
         public void DrawScene(GameObject instance)
         {
+            if (!PlatformerLevelAuthoringAdapter.Available) return;
             foreach (var collider in instance.GetComponentsInChildren<BoxCollider2D>(true))
             { Handles.color = collider.isTrigger ? Color.yellow : Color.green; using (new Handles.DrawingScope(collider.transform.localToWorldMatrix)) Handles.DrawWireCube(collider.offset, collider.size); }
+        }
+        private static void RequireWrite()
+        {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelAuthoring, true);
+            if (!PlatformerLevelAuthoringAdapter.Available) throw new InvalidOperationException("平台关卡模块未启用。");
         }
     }
 }

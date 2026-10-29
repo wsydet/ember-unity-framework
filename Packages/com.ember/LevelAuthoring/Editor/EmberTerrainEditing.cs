@@ -37,6 +37,7 @@ namespace Ember.LevelAuthoring.Editor
 
         public static void Validate(Tilemap map, EmberTerrainTile terrain)
         {
+            EmberLevelAccess.RequireWrite();
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请停止试玩后编辑地形。");
             if (map == null || !map.gameObject.scene.IsValid() || terrain == null) throw new ArgumentException("请选择场景 Tilemap 与地形。");
             var grid = map.layoutGrid;

@@ -1,0 +1,11 @@
+Compared read-only:
+  Packages/com.ember/Templates~/topdown-2d/ParentSnapshot~/Assets
+  Packages/com.ember/Templates~/base/Assets
+Verified baseline hash: 61cbe49aa797b1604f293b9756674566
+Verified live hash: e9d789311cad169a19b6a76331a2877a
+
+A Assets/Game/Config.meta
+A Assets/Game/Config/EmberExtensionDefaults.json
+A Assets/Game/Config/EmberExtensionDefaults.json.meta
+
+3 added files. No other differences reported by git diff --no-index.

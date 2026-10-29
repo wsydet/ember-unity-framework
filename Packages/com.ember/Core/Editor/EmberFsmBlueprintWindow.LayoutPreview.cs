@@ -147,6 +147,7 @@ namespace Ember.Core.Editor
         /// <summary>只计算候选并叠加显示边界，不修改本机坐标。scope 为 overlaps、branch 或 all。</summary>
         public string[] PreviewLayout(string scope)
         {
+            if(!IsTemplateAvailable) return new[]{"当前模板未启用此窗口。"};
             CancelLayoutPreview();
             if (_map.Count == 0) return new[] { "请先选择有效图。" };
             if (scope != "overlaps" && scope != "branch" && scope != "all") throw new ArgumentException("未知布局范围", nameof(scope));
@@ -176,6 +177,7 @@ namespace Ember.Core.Editor
         }
         public bool ApplyLayoutPreview()
         {
+            if(!IsTemplateAvailable) return false;
             if (_layoutCandidate == null || _layoutCandidate.Conflicts.Count != 0) return false;
             if (_previewSignature != LayoutSignature())
             { CancelLayoutPreview(); _candidateNotice.text = "布局或显示范围已变化，请重新预览。"; return false; }
@@ -189,6 +191,7 @@ namespace Ember.Core.Editor
         }
         public void CancelLayoutPreview()
         {
+            _extensionLayoutDraft = null; _layoutSuspended = false;
             foreach (var ghost in _layoutGhosts) _canvas?.RemoveElement(ghost);
             _layoutGhosts.Clear(); _layoutCandidate = null; _previewBefore = null;
             _applyLayoutButton?.SetEnabled(false); _cancelLayoutButton?.SetEnabled(false);
@@ -197,6 +200,7 @@ namespace Ember.Core.Editor
         }
         public void SetLayoutPinned(string[] ids, bool pinned)
         {
+            if(!IsTemplateAvailable) return;
             var valid = ids.Where(_map.ContainsKey).Distinct().ToArray();
             if (!valid.Any(id => _pinnedLayout.Contains(id) != pinned)) return;
             CancelLayoutPreview(); BeginLayoutUndo(pinned ? "固定 FSM 节点" : "取消 FSM 节点固定");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ember.Core.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -68,17 +69,25 @@ namespace Ember.LevelAuthoring.Editor
         private static readonly Dictionary<string, IEmberLevelAdapter> Levels = new();
         private static readonly Dictionary<string, IEmberLevelObjectAdapter> Objects = new();
         private static readonly Dictionary<string, Func<GameObject, IEmberLevelObjectAdapter>> ObjectResolvers = new();
+        private static readonly Dictionary<string, Func<bool>> LevelScopes = new();
+        private static readonly Dictionary<string, Func<bool>> ObjectScopes = new();
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public static void Register(IEmberLevelAdapter adapter) { Levels[adapter.Id] = adapter; }
-        public static void Register(IEmberLevelObjectAdapter adapter) { Objects[adapter.Id] = adapter; }
-        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && Get(adapter.Id) == adapter) Levels.Remove(adapter.Id); }
-        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && GetObject(adapter.Id) == adapter) Objects.Remove(adapter.Id); }
-        public static IEmberLevelAdapter Get(string id) => id != null && Levels.TryGetValue(id, out var value) ? value : null;
-        public static IEmberLevelObjectAdapter GetObject(string id) => id != null && Objects.TryGetValue(id, out var value) ? value : null;
-        public static IEnumerable<IEmberLevelAdapter> All => Levels.Values;
-        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters => Objects.Values;
+        public static void Register(IEmberLevelAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => string.IsNullOrEmpty(adapter.UnavailableReason));
+        public static void Register(IEmberLevelObjectAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => true);
+        public static void Register(IEmberLevelAdapter adapter, string ownerTemplateId, Func<bool> enabled)
+        { Levels[adapter.Id] = adapter; LevelScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
+        public static void Register(IEmberLevelObjectAdapter adapter, string ownerTemplateId, Func<bool> enabled)
+        { Objects[adapter.Id] = adapter; ObjectScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
+        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && GetForCleanup(adapter.Id) == adapter) { Levels.Remove(adapter.Id); LevelScopes.Remove(adapter.Id); } }
+        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && Objects.TryGetValue(adapter.Id, out var current) && ReferenceEquals(current, adapter)) { Objects.Remove(adapter.Id); ObjectScopes.Remove(adapter.Id); } }
+        internal static IEmberLevelAdapter GetForCleanup(string id) => id != null && Levels.TryGetValue(id, out var value) ? value : null;
+        public static IEmberLevelAdapter Get(string id) => IsAvailable(id) ? GetForCleanup(id) : null;
+        public static IEmberLevelObjectAdapter GetObject(string id) => id != null && Objects.TryGetValue(id, out var value) && ObjectScopes[id]() ? value : null;
+        public static bool IsAvailable(string id) => id != null && LevelScopes.TryGetValue(id, out var scope) && scope() && string.IsNullOrEmpty(GetForCleanup(id)?.UnavailableReason);
+        public static IEnumerable<IEmberLevelAdapter> All => Levels.Values.Where(a => IsAvailable(a.Id));
+        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters => Objects.Values.Where(a => ObjectScopes[a.Id]());
 
         /// <summary>登记只读场景对象解析器。返回 null 表示不匹配；匹配时必须返回已登记的适配器实例。</summary>
         public static void RegisterObjectResolver(string id, Func<GameObject, IEmberLevelObjectAdapter> resolver)
@@ -94,6 +103,7 @@ namespace Ember.LevelAuthoring.Editor
         /// <summary>项目解析优先；无匹配才查 Prefab 素材。冲突、失效或异常抛错，禁止降级为空适配器。</summary>
         public static IEmberLevelObjectAdapter ResolveObject(GameObject instance)
         {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelAuthoring);
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             IEmberLevelObjectAdapter result = null;
             string owner = null;

@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-29",
+  "action": "EmberProjectSetup.SaveTemplate via Unity MCP",
+  "receipt": {
+    "id": "base",
+    "version": "0.10.0",
+    "previousContentHash": "61cbe49aa797b1604f293b9756674566",
+    "contentHash": "e9d789311cad169a19b6a76331a2877a",
+    "versionedContentHash": "61cbe49aa797b1604f293b9756674566",
+    "files": 701,
+    "beforeDifferences": 3,
+    "errors": 0,
+    "differences": 0,
+    "bumped": false
+  },
+  "compile": "{\"server\":\"unityMCP\",\"uri\":\"mcpforunity://editor/state\",\"contents\":[{\"uri\":\"mcpforunity://editor/state\",\"mimeType\":\"text/plain\",\"text\":\"{\\\"success\\\":true,\\\"message\\\":\\\"Retrieved editor state.\\\",\\\"error\\\":null,\\\"data\\\":{\\\"schema_version\\\":\\\"unity-mcp/editor_state@2\\\",\\\"observed_at_unix_ms\\\":1793243066703,\\\"sequence\\\":3,\\\"unity\\\":{\\\"instance_id\\\":\\\"ember-unity-framework@b23e9b768e85ed30\\\",\\\"unity_version\\\":\\\"6000.5.4f1\\\",\\\"project_id\\\":null,\\\"platform\\\":\\\"WindowsEditor\\\",\\\"is_batch_mode\\\":false},\\\"editor\\\":{\\\"is_focused\\\":false,\\\"play_mode\\\":{\\\"is_playing\\\":false,\\\"is_paused\\\":false,\\\"is_changing\\\":false},\\\"active_scene\\\":{\\\"path\\\":\\\"Assets/Game/Scenes/FrameworkScene.unity\\\",\\\"guid\\\":\\\"30fc7ce87c922d343a7920d067a6930e\\\",\\\"name\\\":\\\"FrameworkScene\\\"}},\\\"activity\\\":{\\\"phase\\\":\\\"idle\\\",\\\"since_unix_ms\\\":1793243046083,\\\"reasons\\\":[\\\"tick\\\"]},\\\"compilation\\\":{\\\"is_compiling\\\":false,\\\"is_domain_reload_pending\\\":false,\\\"last_compile_started_unix_ms\\\":1793243028741,\\\"last_compile_finished_unix_ms\\\":1793243032575,\\\"last_domain_reload_before_unix_ms\\\":null,\\\"last_domain_reload_after_unix_ms\\\":1793243041388},\\\"assets\\\":{\\\"is_updating\\\":false,\\\"external_changes_dirty\\\":false,\\\"external_changes_last_seen_unix_ms\\\":1793211646578,\\\"external_changes_dirty_since_unix_ms\\\":null,\\\"external_changes_last_cleared_unix_ms\\\":1793243026892,\\\"refresh\\\":{\\\"is_refresh_in_progress\\\":false,\\\"last_refresh_requested_unix_ms\\\":null,\\\"last_refresh_finished_unix_ms\\\":null}},\\\"tests\\\":{\\\"is_running\\\":false,\\\"mode\\\":null,\\\"current_job_id\\\":null,\\\"started_unix_ms\\\":null,\\\"started_by\\\":\\\"unknown\\\",\\\"last_run\\\":null},\\\"transport\\\":{\\\"unity_bridge_connected\\\":null,\\\"last_message_unix_ms\\\":null},\\\"settings\\\":{\\\"batch_execute_max_commands\\\":25},\\\"advice\\\":{\\\"ready_for_tools\\\":true,\\\"blocking_reasons\\\":[],\\\"recommended_retry_after_ms\\\":0,\\\"recommended_next_action\\\":\\\"none\\\"},\\\"staleness\\\":{\\\"age_ms\\\":719,\\\"is_stale\\\":false}},\\\"hint\\\":null}\"}]}",
+  "inspection": {
+    "template": {
+      "templateId": "base",
+      "templateVersion": "0.10.0",
+      "contentHash": "61cbe49aa797b1604f293b9756674566",
+      "loadedAt": "2026-10-29 11:02:27"
+    },
+    "enabled": [
+      "ember.core"
+    ],
+    "docs": 0,
+    "blocked": [
+      "fsm",
+      "level",
+      "room"
+    ],
+    "playerSkillVisible": false,
+    "levelSkillVisible": false,
+    "mvid": "4a53d027-e6e8-4586-b461-3987f0ed8bc1",
+    "extensionMenus": []
+  },
+  "tests": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.9984904,
+    "resultState": "Passed"
+  },
+  "backup": "Library/EmberExtensionWiring/20261029-followup/base-stored-before",
+  "backupFiles": 699
+}

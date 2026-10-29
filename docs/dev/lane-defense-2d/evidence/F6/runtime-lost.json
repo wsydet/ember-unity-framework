@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "phase": "Lost",
+      "level": "CompactYard",
+      "result": "CompactYard:3",
+      "BaseHealth": 0,
+      "Kills": 0,
+      "Escapes": 5,
+      "EnemyCount": 0,
+      "ProjectileCount": 0,
+      "results": 1
+    },
+    "compiler": "codedom"
+  }
+}

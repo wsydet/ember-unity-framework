@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "uiBlocked": true,
+      "UnitCount": 0,
+      "Resource": 650,
+      "baseBoundary": 1,
+      "spawnMarkers": 5,
+      "monoBytes": 1266249728,
+      "totalAllocatedBytes": 1740440769
+    },
+    "compiler": "codedom"
+  }
+}

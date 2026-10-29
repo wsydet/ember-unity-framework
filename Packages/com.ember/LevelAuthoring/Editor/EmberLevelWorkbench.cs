@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ember.Core.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -13,22 +14,26 @@ namespace Ember.LevelAuthoring.Editor
     {
         #region 内部参数
         private EmberLevelDescriptor[] _levels = Array.Empty<EmberLevelDescriptor>();
+        [SerializeField] private string _templateScope;
+        [SerializeField] private string _extensionScope;
+        private bool HasAccess => EmberLevelAccess.Available && _templateScope == (EmberFsmBlueprintAccess.CurrentTemplateId ?? "")
+            && EmberExtensionProject.AllowsScope(EmberExtensionProject.LevelAuthoring, _extensionScope);
         private EmberLevelMaterial[] _materials = Array.Empty<EmberLevelMaterial>();
         private EmberLevelDiagnostic[] _diagnostics = Array.Empty<EmberLevelDiagnostic>();
-        private int _levelIndex, _category;
-        private string _search = "", _message = "", _newName = "Level", _sizeId = "custom-size";
-        private Vector2 _scroll, _size = Vector2.one, _testPosition;
-        private Vector2Int _anchor;
-        private string _checkpoint = "";
-        private EmberLevelMaterial _material;
-        private EmberTerrainTile _style;
-        private EmberTerrainPreset _sizePreset;
-        private Tilemap _map;
-        private bool _placing, _erase, _rectangle, _favoritesOnly;
-        private bool _snap = true, _materialPhysics, _allowRotation, _allowScale, _allowMirror;
-        private float _snapStep = .5f, _rotation;
-        private Vector3 _placementScale = Vector3.one;
-        private string _objectAdapter = "";
+        [SerializeField] private int _levelIndex, _category;
+        [SerializeField] private string _search = "", _message = "", _newName = "Level", _sizeId = "custom-size";
+        [SerializeField] private Vector2 _scroll, _size = Vector2.one, _testPosition;
+        [SerializeField] private Vector2Int _anchor;
+        [SerializeField] private string _checkpoint = "";
+        [SerializeField] private EmberLevelMaterial _material;
+        [SerializeField] private EmberTerrainTile _style;
+        [SerializeField] private EmberTerrainPreset _sizePreset;
+        [SerializeField] private Tilemap _map;
+        [SerializeField] private bool _placing, _erase, _rectangle, _favoritesOnly;
+        [SerializeField] private bool _snap = true, _materialPhysics, _allowRotation, _allowScale, _allowMirror;
+        [SerializeField] private float _snapStep = .5f, _rotation;
+        [SerializeField] private Vector3 _placementScale = Vector3.one;
+        [SerializeField] private string _objectAdapter = "";
         private string _objectError = "";
         private bool _messageError;
         private Vector2 _cameraPreview;
@@ -39,13 +44,17 @@ namespace Ember.LevelAuthoring.Editor
         #endregion
         // --------------------------------------------------------
         #region 生命周期
-        private void OnEnable() { titleContent = new GUIContent("2D 关卡工作台"); SceneView.duringSceneGui += SceneGUI; Reload(); }
+        private void OnEnable() { if (string.IsNullOrEmpty(_templateScope)) _templateScope = EmberFsmBlueprintAccess.CurrentTemplateId ?? "";
+            if (string.IsNullOrEmpty(_extensionScope)) _extensionScope = EmberExtensionProject.CaptureScope(EmberExtensionProject.LevelAuthoring);
+            titleContent = new GUIContent("2D 关卡工作台"); SceneView.duringSceneGui += SceneGUI; Reload(); }
         private void OnDisable() { CancelStroke(); SceneView.duringSceneGui -= SceneGUI; if (_inspector != null) DestroyImmediate(_inspector); }
         private void OnSelectionChange() { if (_inspector != null) DestroyImmediate(_inspector); _inspector = null; _objectError = ""; Repaint(); }
         private void OnGUI()
         {
+            if (!HasAccess)
+            { CancelStroke(); EditorGUILayout.HelpBox("关卡制作扩展已关闭，或活动模板已变化。资产与草稿保留。", MessageType.Info); if (EmberLevelTrialSession.Active && GUILayout.Button("停止试玩并恢复现场")) EmberLevelTrialSession.Stop(); return; }
             if (!EmberLevelAdapters.All.Any(a => string.IsNullOrEmpty(a.UnavailableReason)))
-            { EditorGUILayout.HelpBox("缺少可用关卡适配器。请部署 platformer-2d 的关卡制作接线，或登记项目适配器。", MessageType.Warning); return; }
+            { EditorGUILayout.HelpBox("缺少当前模板和模块允许的关卡适配器。请登记项目接线。", MessageType.Warning); return; }
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
                 if (GUILayout.Button("刷新", EditorStyles.toolbarButton)) Reload();
@@ -57,7 +66,7 @@ namespace Ember.LevelAuthoring.Editor
             EditorGUILayout.LabelField(EmberLevelTrialSession.Status, EditorStyles.wordWrappedLabel);
             using (new EditorGUILayout.HorizontalScope())
             {
-                using (new EditorGUI.DisabledScope(Level == null || EmberLevelTrialSession.Active))
+                using (new EditorGUI.DisabledScope(Level == null || EmberLevelTrialSession.Active || !EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelTrial)))
                 {
                     if (GUILayout.Button("入口试玩")) Run(() => EmberLevelTrialSession.Start(Level, EmberLevelStartMode.Entrance, Vector2.zero));
                     if (GUILayout.Button("位置试玩")) Run(() => EmberLevelTrialSession.Start(Level, EmberLevelStartMode.Position, _testPosition));
@@ -68,6 +77,8 @@ namespace Ember.LevelAuthoring.Editor
             }
             _testPosition = EditorGUILayout.Vector2Field("测试位置（不改出生配置）", _testPosition);
             _checkpoint = EditorGUILayout.TextField("已登记检查点ID", _checkpoint);
+            if (!string.IsNullOrEmpty(_objectError)) EditorGUILayout.HelpBox(_objectError, MessageType.Error);
+            if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, _messageError ? MessageType.Error : MessageType.Info);
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
             using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
@@ -132,8 +143,6 @@ namespace Ember.LevelAuthoring.Editor
             }
             foreach (var diagnostic in _diagnostics)
                 if (GUILayout.Button(diagnostic.RuleId + " · " + diagnostic.Message, EditorStyles.helpBox)) { Selection.activeObject = diagnostic.Target; EditorGUIUtility.PingObject(diagnostic.Target); }
-            if (!string.IsNullOrEmpty(_objectError)) EditorGUILayout.HelpBox(_objectError, MessageType.Error);
-            if (!string.IsNullOrEmpty(_message)) EditorGUILayout.HelpBox(_message, _messageError ? MessageType.Error : MessageType.Info);
             EditorGUILayout.EndScrollView();
         }
         #endregion
@@ -247,6 +256,7 @@ namespace Ember.LevelAuthoring.Editor
         }
         private void SceneGUI(SceneView view)
         {
+            if (!HasAccess) { CancelStroke(); return; }
             if (Selection.activeGameObject != null)
             {
                 var selected = Selection.activeGameObject;
@@ -309,7 +319,13 @@ namespace Ember.LevelAuthoring.Editor
         #endregion
         // --------------------------------------------------------
         #region 外部方法
-        public static void Open() => GetWindow<EmberLevelWorkbench>();
+        public static void Open()
+        {
+            EmberExtensionProject.Require(EmberExtensionProject.LevelAuthoring);
+            string scope = EmberFsmBlueprintAccess.CurrentTemplateId ?? "";
+            var window = Resources.FindObjectsOfTypeAll<EmberLevelWorkbench>().FirstOrDefault(w => w._templateScope == scope && w.HasAccess) ?? CreateInstance<EmberLevelWorkbench>();
+            window._templateScope = scope; window.Show();
+        }
         #endregion
     }
 }

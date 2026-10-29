@@ -1,0 +1,14 @@
+{
+  "focusPreemptedWeapon": true,
+  "playing": true,
+  "trial": false,
+  "scene": "Assets/Game/Scenes/TopdownArena.unity",
+  "playerNodes": 9,
+  "weaponNodes": [
+    4,
+    4
+  ],
+  "equipped": "weapon.training-pistol",
+  "input": true,
+  "success": true
+}

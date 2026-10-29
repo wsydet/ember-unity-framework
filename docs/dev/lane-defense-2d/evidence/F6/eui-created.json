@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": [
+      {
+        "PrefabPath": "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneBattleHUD.prefab",
+        "CreatedAssetPaths": [
+          "Assets/GameResource/Resources/UI/Module/LaneDefense",
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Animator",
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Atlas",
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs",
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneBattleHUD.prefab",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneBattleHUD.cs",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneBattleHUD.Binding.cs"
+        ]
+      },
+      {
+        "PrefabPath": "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneCardItem.prefab",
+        "CreatedAssetPaths": [
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneCardItem.prefab",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneCardItem.cs",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneCardItem.Binding.cs"
+        ]
+      },
+      {
+        "PrefabPath": "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILanePausePopup.prefab",
+        "CreatedAssetPaths": [
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILanePausePopup.prefab",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILanePausePopup.cs",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILanePausePopup.Binding.cs"
+        ]
+      },
+      {
+        "PrefabPath": "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneResultPopup.prefab",
+        "CreatedAssetPaths": [
+          "Assets/GameResource/Resources/UI/Module/LaneDefense/Prefabs/EUILaneResultPopup.prefab",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneResultPopup.cs",
+          "Assets/Game/UI/Runtime/Module/LaneDefense/EUILaneResultPopup.Binding.cs"
+        ]
+      }
+    ],
+    "compiler": "codedom"
+  }
+}

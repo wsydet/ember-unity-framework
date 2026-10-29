@@ -1,0 +1,13 @@
+{
+  "playing": true,
+  "compiling": false,
+  "updating": false,
+  "trial": false,
+  "scene": "Assets/Game/Scenes/TopdownArena.unity",
+  "weapon": "weapon.training-pistol",
+  "playerState": "idle",
+  "input": true,
+  "playerMvid": "e190c566-51b8-4697-99a9-fa82959e43e6",
+  "stableAfterEntryMs": 3000,
+  "noAssetsWrittenAfterFinalCompile": true
+}

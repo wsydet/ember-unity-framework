@@ -1,10 +1,10 @@
 # 平台跳跃模板
 
-归属 `platformer-2d` 及合法派生模板。统一入口是 **Ember → Player → 玩家开发工具**，窗口内保留“手感白盒／玩家配置”两个页签；旧 Tools/Ember/Player 菜单已撤下。非所属活动模板隐藏入口，Player 模块关闭时保留草稿并禁用操作。
+归属 `platformer-2d` 及合法派生模板。可选编辑器扩展的启用、版本签收与操作文档统一从 **Ember → 项目中心 → 扩展组合** 发现；只有正式启用、版本/hash 与模块条件均满足时才提供工具和专属文档入口。关闭后资产与窗口草稿保留。运行时业务说明仍可按下列目录查阅。
 
 ## 使用与扩展
 
-- [2D 关卡制作工作台](LevelAuthoring.md)：地形、机关、背景、装饰、正式试玩与消费接入；当前新增能力的发布和验收状态见该页。
+- 关卡制作工作台及玩家编辑工作流：在项目中心启用对应扩展后查看受控操作文档索引；本地 Markdown 维护源保留。
 
 - [地面支撑事实与跳跃机会](ground-support-contract.md)：真实接触、法线相对速度、主动起跳消费锁、统一消费者及消费合并边界。
 
@@ -21,26 +21,21 @@
 - [外部运动与塌陷平台](ExternalMotion.md)：实例来源、局部交互锁、真实物理验证及消费边界。
 - [公共机关与检查点接入](CheckpointIntegration.md)：平移支撑、弹射、世界复位、冻结关卡入口、组合进度和区域归属。
 - [两关正式链路验收](LevelAcceptance.md)：独立A/B场景、正式加载和UI、组合保存续玩及相机加载/恢复/卸载。
-- [玩家工作流](PlayerWorkflow.md)：部署、选择/复制完整方案、调参、白盒、相机、换图和保存。
+- 玩家编辑工作流：启用 FSM 蓝图扩展及 Player 模块后，从项目中心的扩展文档入口读取。
 - [玩家架构与所有权](PlayerArchitecture.md)：唯一驱动、冻结 A、输入/能力/效果、暂停及完整快照恢复。
 - [转换规则与状态扩展](PlayerRules.md)：E01 请求位置和提交点，E02 三个入口的有限附加条件。
-- [手感参数与依赖](../TemplateSkills/ember-platformer-tune-feel/references/parameters.md)：按动作/机制定位真实字段与单位。
+- 手感参数与依赖：随正式启用的模板 Skill 分发，按动作/机制定位真实字段与单位。
 - [预设测量基线](../../../GameResource/Resources/Config/Player/Feel/README.md)：历史调校条件与实测结果，实际参数以方案资产为准。
 
 从 FrameworkScene 正常 Play → Main → 新游戏/继续进入 Gameplay。白盒通过开发设置选择，复用正式玩家和驱动；每次 Play 使用独立开发库，不直接运行白盒场景绕过准备。当前编辑方案、下次白盒方案、项目默认和运行冻结方案是不同对象，编辑不追溯改变当前会话。
 
 基础移动/跳跃/下落、地空水平控制、二段跳、墙面、水平冲刺、下穿、挂边翻越、落地/翻滚和踩头已有实现。基础移动图为21节点，数量不是扩展限制；图身份、配置来源和布局不得因调参被重建。攻击、命中、生命与恢复见[战斗工作流](PlayerCombat.md)。两套移动方案仍为21节点，独立“通用攻击模板1”为31节点。移动平台挂边、精确动作存档及任意无代码动作编辑不属于现有范围。
 
-下落加速通过下落重力倍率配置，顶点区间优先。碰撞补正提供默认关闭的跳跃顶角、地冲、空冲和普通移动跨台阶配置；白盒提供真实位置尾迹与 X–Y 运动轨迹图，入口及限制见[玩家工作流](PlayerWorkflow.md)。
+下落加速通过下落重力倍率配置，顶点区间优先。碰撞补正提供默认关闭的跳跃顶角、地冲、空冲和普通移动跨台阶配置；白盒提供真实位置尾迹与 X–Y 运动轨迹图，入口及限制由项目中心的已启用扩展文档提供。
 
 ## 模板专属 Skill
 
-- [手感调整](../TemplateSkills/ember-platformer-tune-feel/SKILL.md)
-- [序列帧替换](../TemplateSkills/ember-platformer-replace-animation/SKILL.md)
-- [新状态接入](../TemplateSkills/ember-platformer-add-state/SKILL.md)
-- [攻击接入](../TemplateSkills/ember-platformer-add-attack/SKILL.md)
-
-四个 Skill 的唯一维护源在 `Assets/Game/Documentation/TemplateSkills/`，schema v2清单归属本模板；通过正式模板预览/同步维护发现副本，不进入框架公共技能清单或个人全局目录。执行前检查正式模板身份、兼容条件和真实模块/API；只发现 Skill 不代表所需业务已部署。
+玩家手感、序列帧、新状态、攻击及关卡制作 Skill 由项目中心按扩展、模板版本/hash 和模块条件筛选发现。唯一维护源仍在 `Assets/Game/Documentation/TemplateSkills/`，关闭时保留，受管发现副本退出 `.agents/skills` 并备份本地修改。模板加载后的正式预览/同步负责安装，不进入框架公共技能清单或个人全局目录；执行前调用公共前置检查。
 
 ## 维护边界
 

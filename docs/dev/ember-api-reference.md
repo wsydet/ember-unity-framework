@@ -2,6 +2,12 @@
 
 ## 条件编辑器菜单
 
+FSM 蓝图通过项目中心正式扩展 `ember.fsm.blueprint` 启用；旧 `EmberFsmBlueprintAccess.Register` 保留调用兼容但不再授予开关。参数与观察源 Register 继续声明 `ownerTemplateId/enabled`。入口统一为 `Ember/FSM/蓝图观察器`，base 默认组合隐藏。新增接线必须显式声明所有者与模块条件，完整契约见 [蓝图模板隔离](../../Packages/com.ember/Documentation~/manual/fsm-blueprint-access.md)。
+
+本地未发布的 `EmberExtensionProject` 提供 `Register/Load/Resolve/IsEnabled/Allows/Require/Save`；纯 `EmberExtensionCatalog.Resolve/PreviewDisable` 校验依赖、循环和兼容。`EmberRoomGraphService` 通过 `IEmberRoomGraphAdapter` 投影原图，执行 `Connect/Disconnect/ApplyLayout` 与 Undo/冲突回滚；图位置与世界坐标独立。消费项目可取得的 ID、默认配置、旧 API 对应及 Windward 接线样例见[可组合扩展迁移](../../Packages/com.ember/Documentation~/manual/composable-extensions.md)。
+
+扩展 schema v2 用 `CreateConfiguration(ids)` 生成精确模板版本与传递依赖的契约版本/hash，`Save` 将配置和 Skill 发现副本同事务提交；不按模板名称自动启用。窗口使用 `CaptureScope/AllowsScope` 保留并核对版本身份。`EmberExtensionDocuments.Available/Read/Open` 依据扩展、模板版本、模块范围及文档 hash 提供专属文档索引，`RegisterModuleScope` 复用只读模块启用条件，`ComputeContentHash` 生成文档声明指纹。模板技能清单用 `requiredExtensions/requiredModuleScope` 声明范围，执行前调用 `EmberProjectSetup.GetTemplateSkillExecutionBlockReason`。术语入口：[框架 Wiki / 通用字典](../../Packages/com.ember/Documentation~/maintenance/glossary.md)。
+
 `Ember.Core.Editor.EmberConditionalMenu.Register(path, visible, execute, enabled, priority)`返回可释放登记；`visible=false`实际移除菜单，`enabled=false`保留入口但阻止执行，执行前再次检查两项条件。`Refresh()`用于身份变更后的显式同步，编辑器同时按一秒间隔和projectChanged刷新。模板业务复用`EmberProjectSetup.IsTemplateActive`作为条件，不以资产残留判断身份。Unity 6内部动态菜单API的反射封装只位于该公共适配；不支持时拒绝登记，不降级为无条件菜单。Unity MCP编译、菜单真实增删及执行复查验证记录见[平台交付记录](platformer-delivery.md)；未实际切换模板或部署消费项目的限制在该记录中单列。
 
 ## 图片资源编辑器（0.16.0）

@@ -1,0 +1,10 @@
+{
+  "operation": "EmberProjectSetup.CreateTemplate",
+  "templateId": "lane-defense-2d",
+  "parentId": "base",
+  "result": "rejected",
+  "message": "父模板 [base] 有未版本化内容，请先 bump 版本。",
+  "templateExistsAfterRequest": false,
+  "bumpExecuted": false,
+  "templateSwitchExecuted": false
+}

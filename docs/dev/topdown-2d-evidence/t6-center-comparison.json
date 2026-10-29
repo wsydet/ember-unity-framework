@@ -1,0 +1,2596 @@
+{
+  "Issues": [
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/README.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/Extensions.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/Extensions.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/LevelAuthoring.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/LevelAuthoring.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/README.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/README.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/Weapons.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/Weapons.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/glossary.md",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Documentation/topdown-2d/glossary.md.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectRules.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Entity2D.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Entity2D.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHealth.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHealth.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitBatch.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitBatch.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitContracts.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitContracts.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitPayload.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityHitPayload.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityMotor2D.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityMotor2D.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/EntityPlaneFrame.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/EntityPlaneFrame.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerHost.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Entity/TopdownCombatActor.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Entity/TopdownCombatActor.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 用户代码",
+      "AssetPath": "Assets/Game/Module/GameInput/GameInputModule.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Tests.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Tests.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Editor.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Examples/FocusStateDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/FocusStateDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Game.Player.Runtime.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerActionControl.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerActionControl.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerActionRequest.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerActionRequest.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerAnimationMapping.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerAnimationMapping.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatActorView.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatActorView.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatRules.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatRules.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatScene.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatScene.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatSettings.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerCombatSettings.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerContext.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerContext.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerController.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerController.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerHitQuery.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerHitQuery.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerIntegrationContracts.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerIntegrationContracts.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerModule.Progress.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerModule.Progress.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerModule.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerModule.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerPowersDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerPowersDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerRuntime.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerRuntime.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerSceneParticipant.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerSceneParticipant.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerScheme.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerScheme.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerStateDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerStateDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerTrialBridge.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerTrialBridge.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PlayerWorldSession.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PlayerWorldSession.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/PreparedPlayerSession.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/PreparedPlayerSession.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerCombatTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerCombatTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerMovementTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerMovementTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerProgressTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerProgressTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownEntryRequest.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownEntryRequest.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownInteraction.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownInteraction.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownLevelIdentity.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownLevelIdentity.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownRecoveryTransition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownRecoveryTransition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownSnapshot.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownSnapshot.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/TopdownSnapshotCodec.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/TopdownSnapshotCodec.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Weapons.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponRuntime.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponRuntime.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/PlayerCamera.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 用户代码",
+      "AssetPath": "Assets/Game/Module/PlayerData/PlayerDataModule.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/Game/Scenes/FrameworkScene.unity",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/Game/Scenes/GameplayScene.unity",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Scenes/TopdownArena.unity",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/Scenes/TopdownArena.unity.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 框架区 + 用户区",
+      "AssetPath": "Assets/Game/State/GameGameplayState.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 框架区 + 用户区",
+      "AssetPath": "Assets/Game/State/GameInitState.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 框架区 + 用户区",
+      "AssetPath": "Assets/Game/State/GameMainState.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Editor/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 用户代码",
+      "AssetPath": "Assets/Game/UI/GamePages.User.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · UI 生成器管理",
+      "AssetPath": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.Binding.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 框架区 + 用户区",
+      "AssetPath": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · UI 生成器管理",
+      "AssetPath": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.Binding.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 框架区 + 用户区",
+      "AssetPath": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Runtime/Module/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · UI 生成器管理",
+      "AssetPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 用户代码",
+      "AssetPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Chaser.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Chaser.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Checkpoint.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Checkpoint.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Player.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Player.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/SolidObstacle.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/SolidObstacle.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Square.png",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/Square.png.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/TrainingTarget.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Player/Topdown/TrainingTarget.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/GameInput/GameInputConfig.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Level.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Level/Starter.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Level/Starter.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Level/TopdownArena.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Level/TopdownArena.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerGraph.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerPowers.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerScheme.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/PlayerScheme.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Action.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Action.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Alive.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Alive.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Dash.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Dash.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Dead.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Dead.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Hit.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Hit.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Idle.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Idle.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Locomotion.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Locomotion.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Move.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/States/Move.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/dash.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Player/dash.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/PlayerData/PlayerDataConfig.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/active.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/active.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目已修改 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player/Animator.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player/Atlas.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player/Prefabs.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+      "Suggestion": "保存模板时将写入此文件。"
+    },
+    {
+      "Severity": 2,
+      "Category": "内容差异",
+      "Message": "项目新增 · 资源/配置",
+      "AssetPath": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab.meta",
+      "Suggestion": "保存模板时将写入此文件。"
+    }
+  ],
+  "CheckedAt": "2026-10-29T00:37:50.6657494+08:00",
+  "TemplateId": "topdown-2d",
+  "Baseline": "当前项目 → 2D 俯视 v0.1.0（按模板保存规则）",
+  "ProjectFingerprint": "5ef1d9ae0042f8852d4b34566d7cd8bc",
+  "ComparisonCompleted": true,
+  "IsEditingTemplate": true,
+  "ErrorCount": 0,
+  "WarningCount": 0,
+  "DifferenceCount": 369
+}

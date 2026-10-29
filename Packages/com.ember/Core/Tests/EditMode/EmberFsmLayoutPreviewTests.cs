@@ -18,11 +18,13 @@ namespace Ember.Core.Fsm.Tests
         private static Dictionary<string, Vector2> LayoutPositions(EmberFsmBlueprintWindow window) =>
             new((Dictionary<string, Vector2>)typeof(EmberFsmBlueprintWindow)
                 .GetField("_positions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(window));
-        private static EmberFsmBlueprintWindow IsolatedLayoutWindow(EmberFsmGraph graph)
+        private EmberFsmBlueprintWindow IsolatedLayoutWindow(EmberFsmGraph graph)
         {
+            _blueprintScope ??= EmberFsmBlueprintAccess.Register(EmberFsmBlueprintAccess.CurrentTemplateId, () => true);
             var window = ScriptableObject.CreateInstance<EmberFsmBlueprintWindow>();
             window.Show(); window.SetGraph(graph); return window;
         }
+        private System.IDisposable _blueprintScope;
         private static void AssertLayout(Dictionary<string, Vector2> expected, EmberFsmBlueprintWindow window)
         { CollectionAssert.AreEquivalent(expected, LayoutPositions(window)); }
         #endregion

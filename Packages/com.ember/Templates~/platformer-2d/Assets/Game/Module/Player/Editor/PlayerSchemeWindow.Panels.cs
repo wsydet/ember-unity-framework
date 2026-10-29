@@ -40,7 +40,7 @@ namespace Game.Player.Editor
         // 校验在编辑器更新中执行，绘制只消费结果；不在 getter / Layout 中创建试跑或写资产。
         private void RefreshStatus()
         {
-            if (!PlayerEditorAccess.Available) return;
+            if (!HasAccess) return;
             try
             {
                 if (_selected == null) { _validation = null; _dirtySummary = "未选择方案"; _validatedScheme = null; _validatedFingerprint = null; }
@@ -73,7 +73,8 @@ namespace Game.Player.Editor
 
         private void OnGUI()
         {
-            if (PlayerEditorAccess.DrawUnavailable()) return;
+            if (PlayerEditorAccess.DrawUnavailable(_ownerTemplate, _ownerVersion)) return;
+            if (!HasAccess) { EditorGUILayout.HelpBox("窗口绑定的扩展版本/hash 已变化。草稿保留，请从正式入口打开当前版本。", MessageType.Info); return; }
             // 固定每个 IMGUI 周期的树，避免输入事件重建导致 Layout/Repaint 数量变化。
             if (Event.current.type == EventType.Layout && (_navigation == null || _panelScheme != _selected || _rebuildPanels))
             {

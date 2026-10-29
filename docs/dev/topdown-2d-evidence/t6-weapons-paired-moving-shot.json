@@ -1,0 +1,22 @@
+{
+  "player": "move",
+  "weapon": "active",
+  "delta": {
+    "x": 0.0,
+    "y": 0.977997065
+  },
+  "move": {
+    "x": 0.0,
+    "y": 1.0
+  },
+  "facing": {
+    "x": 1.0,
+    "y": 0.0
+  },
+  "pairedDevices": [
+    "/Keyboard",
+    "/Mouse",
+    "/Gamepad"
+  ],
+  "success": true
+}

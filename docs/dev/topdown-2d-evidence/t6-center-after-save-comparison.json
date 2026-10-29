@@ -1,0 +1,20 @@
+{
+  "Issues": [
+    {
+      "Severity": 0,
+      "Category": "内容差异",
+      "Message": "磁盘文件与所列基准一致。",
+      "AssetPath": null,
+      "Suggestion": null
+    }
+  ],
+  "CheckedAt": "2026-10-29T00:44:31.1728044+08:00",
+  "TemplateId": "topdown-2d",
+  "Baseline": "当前项目 → 2D 俯视 v0.1.0（按模板保存规则）",
+  "ProjectFingerprint": "5ef1d9ae0042f8852d4b34566d7cd8bc",
+  "ComparisonCompleted": true,
+  "IsEditingTemplate": true,
+  "ErrorCount": 0,
+  "WarningCount": 0,
+  "DifferenceCount": 0
+}

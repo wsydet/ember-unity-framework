@@ -1,0 +1,38 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "compiling": false,
+      "updating": false,
+      "editing": {
+        "templateId": "topdown-2d",
+        "templateVersion": "0.1.1",
+        "contentHash": "406816c22a27be1fd281be126732d93e",
+        "loadedAt": "2026-10-29 15:31:30"
+      },
+      "stale": false,
+      "playerEditorMvid": [
+        "f74763dc-c9da-4170-a807-761b0fbbc8b6"
+      ],
+      "issues": [],
+      "extensions": {
+        "Problems": {},
+        "Enabled": [
+          "ember.core",
+          "ember.fsm.blueprint",
+          "ember.fsm.runtime",
+          "ember.level.authoring",
+          "ember.level.runtime",
+          "ember.level.trial"
+        ]
+      },
+      "docs": [
+        "ember.fsm.blueprint.guide",
+        "topdown.player.tools",
+        "topdown.level.authoring"
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

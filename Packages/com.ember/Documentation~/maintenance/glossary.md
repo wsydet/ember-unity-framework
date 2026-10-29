@@ -24,6 +24,8 @@
 | 父模板、父快照 | 正式继承关系及 ParentSnapshot~ 记录的父基线 | 不是复制文件夹的非正式关系；禁止手改快照/hash |
 | 消费项目 | 安装框架、部署模板并开发具体游戏的工程 | 例如 Windward；不在 PackageCache 修改通用修复 |
 | 当前实现、工作区版本 | 本地源码和未提交修改所构成的实际状态 | 不能仅以 package.json 的版本号宣称已发布或其他项目已接入 |
+| 扩展、拓展、Ember 扩展 | 具有稳定 ID、版本/契约与兼容声明、显式依赖及正式启用配置的可组合框架能力或编辑器扩展 | 不是共同父模板、UPM 包或常驻 Manager/Module 的别名；工具、Skill、专属文档发现及执行均须满足正式模板/项目身份、版本/hash、启用和模块条件，未启用不开放 |
+| 框架 Wiki、框架wiki、对照字典、术语对照 | 框架公共术语入口本页，以及由它链接的随包架构、API、维护和迁移文档 | 玩法术语仍查正式活动模板字典；公共 Wiki 可解释未启用能力，但阅读说明不表示扩展已启用、Skill 已安装或工具可执行 |
 | 基线、已签收 | 明确日期/版本/内容/范围的已确认结果 | 只覆盖记录范围；键盘签收不自动包含手柄、构建或全路线 |
 
 ## 能力、生命周期和验证
@@ -48,7 +50,7 @@
 | 增量验证 | 仅运行新增或直接受影响的用例；不默认为全量测试 |
 | 人工验收 | 用户或明确记录的人工输入现场；代码检查/自动测试不替代 |
 
-完整规范：[架构与模板](repository-architecture.md)、[编译与重连](unity-validation.md)、[Loading会话](../ui/loading-sessions.md)。
+框架 Wiki 导航：[架构与模板](repository-architecture.md)、[可组合扩展与迁移](../manual/composable-extensions.md)、[模板 Skill](template-ai-skills.md)、[目录和隔离](business-directory-layout.md)、[编译与重连](unity-validation.md)、[Loading会话](../ui/loading-sessions.md)。这些公共定义可供所有项目阅读，实际工具、Skill 和专属文档入口仍由项目中心的正式启用声明决定。
 
 ## 维护约定
 

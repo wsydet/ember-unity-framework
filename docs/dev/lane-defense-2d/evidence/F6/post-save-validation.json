@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "ComparisonCompleted": true,
+      "ErrorCount": 0,
+      "WarningCount": 0,
+      "DifferenceCount": 0,
+      "ProjectFingerprint": "8ee687e49bda1147509317eb2177fec3",
+      "actualStoredHash": "8ee687e49bda1147509317eb2177fec3",
+      "actualParentSnapshotHash": "e9d789311cad169a19b6a76331a2877a",
+      "editing": {
+        "templateId": "lane-defense-2d",
+        "templateVersion": "0.1.0",
+        "contentHash": "8ee687e49bda1147509317eb2177fec3",
+        "loadedAt": "2026-10-29 14:47:29"
+      },
+      "sync": "Synced",
+      "playing": false,
+      "compiling": false,
+      "updating": false,
+      "scenes": [
+        {
+          "path": "Assets/Game/Scenes/FrameworkScene.unity",
+          "isDirty": false
+        }
+      ]
+    },
+    "compiler": "codedom"
+  }
+}

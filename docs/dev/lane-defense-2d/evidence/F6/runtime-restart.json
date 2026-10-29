@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "phase": "Ready",
+      "Generation": 2,
+      "previous": "1",
+      "Resource": 650,
+      "UnitCount": 0,
+      "EnemyCount": 0,
+      "ProjectileCount": 0,
+      "roots": 1,
+      "popup": 0
+    },
+    "compiler": "codedom"
+  }
+}

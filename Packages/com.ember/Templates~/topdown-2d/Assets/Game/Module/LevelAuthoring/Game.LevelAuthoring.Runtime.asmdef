@@ -1,0 +1,1 @@
+{"name":"Game.LevelAuthoring.Runtime","rootNamespace":"Game.LevelAuthoring","references":["Game.Player.Runtime","Ember.Basic.Runtime"]}

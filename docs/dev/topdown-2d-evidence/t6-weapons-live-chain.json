@@ -1,0 +1,44 @@
+{
+  "formalBefore": [
+    ".writer.lock:E3-B0-C4-42-98-FC-1C-14-9A-FB-F4-C8-99-6F-B9-24-27-AE-41-E4-64-9B-93-4C-A4-95-99-1B-78-52-B8-55",
+    "747700b62c19420e99aa69d47d948725.progress:54-DE-E5-B7-85-55-64-8C-63-D0-1E-07-A4-CC-20-3D-9D-62-44-86-D8-70-B6-31-0D-49-A0-ED-88-13-94-52",
+    "bf95093481594a57801ac507ac76f042.progress:37-19-2C-C4-AE-F3-AC-84-15-7B-52-BC-21-F5-A5-F9-B8-0B-BD-2B-F7-C6-5D-82-8E-C8-E1-1F-09-10-18-12",
+    "index.json:39-67-23-92-56-71-3B-AB-D9-89-D5-AC-37-3D-8A-FC-0B-DA-B4-30-BC-92-43-98-8B-55-CB-62-BF-BE-7E-B9",
+    "index.json.bak:5B-AF-FB-84-2F-6E-22-FB-FB-ED-A5-26-D5-D5-E2-14-04-D1-48-7F-6E-E2-97-9A-62-9F-77-AB-9B-A0-00-DC"
+  ],
+  "developmentRoot": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Library\\TopdownTrials\\c3f0def782244aaa99a2dc099431a3d0",
+  "playerNodes": 9,
+  "weaponNodes": [
+    4,
+    4
+  ],
+  "movingShot": {
+    "player": "idle",
+    "weapon": "active",
+    "x": -6.0,
+    "y": -4.0,
+    "delta": 0.0
+  },
+  "weaponBlueprint": {
+    "nodes": 4,
+    "path": [
+      "active"
+    ]
+  },
+  "pause": {
+    "paused": true,
+    "drift": 0.0
+  },
+  "savedWeapon": "weapon.training-pistol",
+  "loadedWeapon": "weapon.training-pistol",
+  "continuedWeapon": "weapon.training-pistol",
+  "snapshotVersion": 2,
+  "formalAfter": [
+    ".writer.lock:E3-B0-C4-42-98-FC-1C-14-9A-FB-F4-C8-99-6F-B9-24-27-AE-41-E4-64-9B-93-4C-A4-95-99-1B-78-52-B8-55",
+    "747700b62c19420e99aa69d47d948725.progress:54-DE-E5-B7-85-55-64-8C-63-D0-1E-07-A4-CC-20-3D-9D-62-44-86-D8-70-B6-31-0D-49-A0-ED-88-13-94-52",
+    "bf95093481594a57801ac507ac76f042.progress:37-19-2C-C4-AE-F3-AC-84-15-7B-52-BC-21-F5-A5-F9-B8-0B-BD-2B-F7-C6-5D-82-8E-C8-E1-1F-09-10-18-12",
+    "index.json:39-67-23-92-56-71-3B-AB-D9-89-D5-AC-37-3D-8A-FC-0B-DA-B4-30-BC-92-43-98-8B-55-CB-62-BF-BE-7E-B9",
+    "index.json.bak:5B-AF-FB-84-2F-6E-22-FB-FB-ED-A5-26-D5-D5-E2-14-04-D1-48-7F-6E-E2-97-9A-62-9F-77-AB-9B-A0-00-DC"
+  ],
+  "success": true
+}

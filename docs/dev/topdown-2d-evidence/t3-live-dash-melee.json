@@ -1,0 +1,19 @@
+{
+  "dash": true,
+  "attack": true,
+  "slash": true,
+  "x": 1.73247468,
+  "y": -1.64334118,
+  "actors": [
+    {
+      "Id": "enemy.training",
+      "Health": 4.0,
+      "Phase": "chase"
+    },
+    {
+      "Id": "target.training",
+      "Health": 10.0,
+      "Phase": "idle"
+    }
+  ]
+}

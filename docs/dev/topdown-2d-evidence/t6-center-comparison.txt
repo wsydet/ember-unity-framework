@@ -1,0 +1,1110 @@
+项目校验 · 2026-10-29 00:37:50
+基准：当前项目 → 2D 俯视 v0.1.0（按模板保存规则）
+错误 0 · 警告 0 · 差异 369
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/Game/Documentation/README.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/Extensions.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/Extensions.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/LevelAuthoring.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/LevelAuthoring.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/PlayerArchitecture.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/README.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/README.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/Weapons.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/Weapons.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/glossary.md
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Documentation/topdown-2d/glossary.md.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectBinding.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectContainer.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectContracts.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectRules.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectRules.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Effects/EntityEffectTargets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Entity2D.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Entity2D.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityHealth.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityHealth.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityHitBatch.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityHitBatch.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityHitContracts.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityHitContracts.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityHitPayload.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityHitPayload.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityMotor2D.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityMotor2D.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/EntityPlaneFrame.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/EntityPlaneFrame.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Game.Entity.Runtime.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityAbilityDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityPowerConfig.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityPowerContracts.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityPowerHost.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityPowerHost.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityPowerRuntime.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntityPowerSnapshot.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Powers/EntitySkillDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/EntityEffectContainerTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/EntityEffectRulesTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/EntityHitBatchTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/EntityPowerHostTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/Tests/Game.Entity.Tests.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Entity/TopdownCombatActor.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Entity/TopdownCombatActor.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 用户代码
+Assets/Game/Module/GameInput/GameInputModule.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Game.LevelAuthoring.Editor.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/chaser.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/checkpoint.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/target.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Materials/wall.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Tests.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Tests/Game.LevelAuthoring.Editor.Tests.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/Tests/TopdownAuthoringTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelAdapter.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelExampleAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/TopdownLevelTrial.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Editor/TopdownObjectAdapter.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/Game.LevelAuthoring.Runtime.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/LevelAuthoring/TopdownLevelDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Game.Player.Editor.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerCombatExampleAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerDevelopmentWindow.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerEditorAccess.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerFsmObservationSource.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerProgressExampleAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerSchemeWorkflow.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/PlayerStarterAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Tests.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Tests/Game.Player.Editor.Tests.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/Tests/PlayerSchemeTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Editor/WeaponExampleAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Editor.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Editor/FocusExampleAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Editor/Game.Player.Examples.Editor.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/ExampleLocomotionDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Examples/FocusStateDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/FocusStateDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Examples/Game.Player.Examples.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Game.Player.Runtime.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Game.Player.Runtime.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerActionControl.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerActionControl.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerActionRequest.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerActionRequest.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerAnimationMapping.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerAnimationMapping.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerCombatActorView.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerCombatActorView.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerCombatRules.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerCombatRules.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerCombatScene.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerCombatScene.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerCombatSettings.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerCombatSettings.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerContext.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerContext.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerController.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerController.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerHitQuery.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerHitQuery.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerIntegrationContracts.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerIntegrationContracts.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerModule.Progress.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerModule.Progress.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerModule.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerModule.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerPowersDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerPowersDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerRuntime.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerRuntime.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerSceneParticipant.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerSceneParticipant.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerScheme.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerScheme.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerStateDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerStateDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerTrialBridge.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerTrialBridge.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PlayerWorldSession.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PlayerWorldSession.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/PreparedPlayerSession.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/PreparedPlayerSession.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/Game.Player.PlayModeTests.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerCombatTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerCombatTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerExtensionTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerLifecycleTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerMovementTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerMovementTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerProgressTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerProgressTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Tests/PlayerWeaponTests.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownEntryRequest.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownEntryRequest.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownInteraction.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownInteraction.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownLevelIdentity.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownLevelIdentity.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownRecoveryTransition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownRecoveryTransition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownSnapshot.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownSnapshot.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/TopdownSnapshotCodec.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/TopdownSnapshotCodec.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Weapons.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Weapons/WeaponDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Weapons/WeaponDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Weapons/WeaponRuntime.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Weapons/WeaponRuntime.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/Player/Weapons/WeaponStateDefinition.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/PlayerCamera.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/PlayerCamera/Game.PlayerCamera.Runtime.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Module/PlayerCamera/PlayerCameraParticipant.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 用户代码
+Assets/Game/Module/PlayerData/PlayerDataModule.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/Game/Scenes/FrameworkScene.unity
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/Game/Scenes/GameplayScene.unity
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Scenes/TopdownArena.unity
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/Scenes/TopdownArena.unity.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 框架区 + 用户区
+Assets/Game/State/GameGameplayState.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 框架区 + 用户区
+Assets/Game/State/GameInitState.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 框架区 + 用户区
+Assets/Game/State/GameMainState.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Editor/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/UI/Editor/Player/TopdownHudAssets.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Editor/Player/TopdownHudAssets.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 用户代码
+Assets/Game/UI/GamePages.User.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · UI 生成器管理
+Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.Binding.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 框架区 + 用户区
+Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · UI 生成器管理
+Assets/Game/UI/Runtime/MainScene/EUIMainPage.Binding.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 框架区 + 用户区
+Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Runtime/Module/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · UI 生成器管理
+Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 用户代码
+Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Chaser.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Chaser.prefab.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Checkpoint.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Checkpoint.prefab.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Player.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Player.prefab.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/SolidObstacle.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/SolidObstacle.prefab.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Square.png
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/Square.png.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/TrainingTarget.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Player/Topdown/TrainingTarget.prefab.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/GameResource/Resources/Config/GameInput/GameInputConfig.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/GameInput/Topdown.inputactions.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Level.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Level/Starter.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Level/Starter.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Level/TopdownArena.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Level/TopdownArena.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/ExampleLocomotion.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/Focus.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerGraph.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerPowers.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/PlayerScheme.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/Power1.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State0.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State1.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State2.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State3.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State4.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State6.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State7.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/State8.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/FocusExample/focus-skill.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerGraph.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerGraph.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerPowers.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerPowers.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerScheme.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/PlayerScheme.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Action.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Action.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Alive.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Alive.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Dash.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Dash.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Dead.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Dead.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Hit.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Hit.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Idle.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Idle.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Locomotion.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Locomotion.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Move.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/States/Move.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/dash.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Player/dash.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/GameResource/Resources/Config/PlayerData/PlayerDataConfig.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Fire.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Graph.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Powers.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/Weapon.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/active.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/ready.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/recovery.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Pistol/windup.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Fire.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Graph.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Powers.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/Weapon.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/active.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/active.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/ready.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/recovery.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/Config/Weapon/Sword/windup.asset.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目已修改 · 资源/配置
+Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player/Animator.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player/Atlas.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player/Prefabs.meta
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab
+建议：保存模板时将写入此文件。
+[Difference] 内容差异：项目新增 · 资源/配置
+Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab.meta
+建议：保存模板时将写入此文件。

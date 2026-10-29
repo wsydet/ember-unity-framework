@@ -11,6 +11,7 @@ namespace Ember.LevelAuthoring.Editor
         #region 外部方法
         public static GameObject Place(EmberLevelMaterial material, Scene scene, Vector3 position, Quaternion rotation, Vector3 scale)
         {
+            EmberLevelAccess.RequireWrite();
             if (EditorApplication.isPlayingOrWillChangePlaymode || material == null || !scene.IsValid() || !scene.isLoaded)
                 throw new InvalidOperationException("请选择素材与已加载的编辑场景。");
             if (!float.IsFinite(position.x) || !float.IsFinite(position.y) || !float.IsFinite(position.z) ||
@@ -38,8 +39,10 @@ namespace Ember.LevelAuthoring.Editor
 
         public static GameObject Duplicate(GameObject source, IEmberLevelObjectAdapter adapter = null)
         {
+            EmberLevelAccess.RequireWrite();
             if (source == null || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请选择编辑对象。");
             adapter ??= EmberLevelAdapters.ResolveObject(source);
+            if (adapter != null && !ReferenceEquals(EmberLevelAdapters.GetObject(adapter.Id), adapter)) throw new InvalidOperationException("对象适配器未启用。");
             Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
             try
             {
@@ -52,8 +55,10 @@ namespace Ember.LevelAuthoring.Editor
 
         public static void Delete(GameObject instance, IEmberLevelObjectAdapter adapter = null)
         {
+            EmberLevelAccess.RequireWrite();
             if (instance == null || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("请选择编辑对象。");
             adapter ??= EmberLevelAdapters.ResolveObject(instance);
+            if (adapter != null && !ReferenceEquals(EmberLevelAdapters.GetObject(adapter.Id), adapter)) throw new InvalidOperationException("对象适配器未启用。");
             Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
             try { adapter?.BeforeDelete(instance); var scene = instance.scene; Undo.DestroyObjectImmediate(instance); EditorSceneManager.MarkSceneDirty(scene); Undo.CollapseUndoOperations(group); }
             catch { Undo.RevertAllDownToGroup(group); throw; }
@@ -61,6 +66,7 @@ namespace Ember.LevelAuthoring.Editor
 
         public static void ConfigureRenderer(SpriteRenderer renderer, Color color, int sortingLayer, int order, Vector2 size, bool tiled)
         {
+            EmberLevelAccess.RequireWrite();
             if (renderer == null || renderer.sprite == null) throw new ArgumentException("需要带图片的 SpriteRenderer。");
             // 未打包Sprite的packingMode并不表示其MeshType；白盒FullRect也可能返回Tight。
             if (tiled && (renderer.sprite.vertices.Length != 4 || renderer.sprite.packed &&
@@ -75,6 +81,7 @@ namespace Ember.LevelAuthoring.Editor
 
         public static void SetEditorVisibility(GameObject instance, bool visible, bool locked)
         {
+            EmberLevelAccess.RequireWrite();
             if (visible) SceneVisibilityManager.instance.Show(instance, true); else SceneVisibilityManager.instance.Hide(instance, true);
             if (locked) SceneVisibilityManager.instance.DisablePicking(instance, true); else SceneVisibilityManager.instance.EnablePicking(instance, true);
         }

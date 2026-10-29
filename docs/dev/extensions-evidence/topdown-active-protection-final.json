@@ -1,0 +1,12 @@
+{
+  "baseline": "topdown-active-before",
+  "files": 1053,
+  "missing": [],
+  "changed": [
+    "Game\\Config\\EmberExtensionDefaults.json",
+    "Game\\Documentation\\topdown-2d\\README.md",
+    "Game\\Module\\LevelAuthoring\\Editor\\TopdownLevelAdapter.cs",
+    "Game\\Module\\LevelAuthoring\\Editor\\TopdownLevelTrial.cs",
+    "Game\\Module\\Player\\Editor\\PlayerDevelopmentWindow.cs"
+  ]
+}

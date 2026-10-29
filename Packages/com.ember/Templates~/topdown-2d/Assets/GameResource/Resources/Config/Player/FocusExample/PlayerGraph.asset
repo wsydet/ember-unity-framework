@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed63b088269f4e0e970aec5acde29e91, type: 3}
+  m_Name: PlayerGraph
+  m_EditorClassIdentifier: Ember.Core.Runtime::Ember.Core.Fsm.EmberFsmGraph
+  _entryId: alive
+  _nodes:
+  - _id: alive
+    _displayName: "\u5B58\u6D3B"
+    _definition: {fileID: 11400000, guid: a885e34633e082346ababd3df4c222b9, type: 2}
+    _parentId: 
+    _defaultChildId: locomotion
+    _bindings:
+    - _slot: dead
+      _targetId: dead
+    - _slot: hit
+      _targetId: hit
+  - _id: locomotion
+    _displayName: "\u79FB\u52A8\u57DF"
+    _definition: {fileID: 11400000, guid: 6d6ab0f58451633498ef1408b5461567, type: 2}
+    _parentId: alive
+    _defaultChildId: idle
+    _bindings:
+    - _slot: dash
+      _targetId: dash
+    - _slot: focus
+      _targetId: focus
+  - _id: idle
+    _displayName: "\u5F85\u673A"
+    _definition: {fileID: 11400000, guid: 6f4819cab57662a4f9f4692acd9e4fca, type: 2}
+    _parentId: locomotion
+    _defaultChildId: 
+    _bindings:
+    - _slot: move
+      _targetId: move
+  - _id: move
+    _displayName: "\u79FB\u52A8"
+    _definition: {fileID: 11400000, guid: da827c062b5bd5641a492c235ab28b93, type: 2}
+    _parentId: locomotion
+    _defaultChildId: 
+    _bindings:
+    - _slot: idle
+      _targetId: idle
+  - _id: action
+    _displayName: "\u52A8\u4F5C\u57DF"
+    _definition: {fileID: 11400000, guid: 9adef99ac93186b48827860f1ccf6ac1, type: 2}
+    _parentId: alive
+    _defaultChildId: dash
+    _bindings: []
+  - _id: dash
+    _displayName: "\u51B2\u523A"
+    _definition: {fileID: 11400000, guid: be47bd5b73ea86f42b286462be7c4782, type: 2}
+    _parentId: action
+    _defaultChildId: 
+    _bindings:
+    - _slot: locomotion
+      _targetId: locomotion
+  - _id: hit
+    _displayName: "\u53D7\u51FB"
+    _definition: {fileID: 11400000, guid: 586bf7081c1d3024cbb4b9bb34c61762, type: 2}
+    _parentId: alive
+    _defaultChildId: 
+    _bindings:
+    - _slot: locomotion
+      _targetId: locomotion
+  - _id: dead
+    _displayName: "\u6B7B\u4EA1"
+    _definition: {fileID: 11400000, guid: 3fe3fc5b55f1e21408f6bb88cca3e87c, type: 2}
+    _parentId: 
+    _defaultChildId: 
+    _bindings: []
+  - _id: focus
+    _displayName: "\u4E13\u6CE8\u793A\u4F8B"
+    _definition: {fileID: 11400000, guid: bbff955b25cb1df4292542c8db124087, type: 2}
+    _parentId: action
+    _defaultChildId: 
+    _bindings:
+    - _slot: locomotion
+      _targetId: locomotion
