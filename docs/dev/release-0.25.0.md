@@ -42,7 +42,7 @@ platformer/topdown 的启用组合和受控文档需与封存版本一致。base
 - 公共扩展/FSM/房间图/Skill 门禁定向范围首次 **26/29**，三项夹具失败修正后相关 **5/5** 复验通过，两批有重叠。platformer 新版绑定后 **4/4**、topdown 新版绑定后 **2/2** 隔离回归通过。
 - lane-defense 同业务源码已有 **35/35** EditMode、正式启动、鼠标放置与 UI 阻断、两套棋盘/波次的胜负、暂停、重开、回主页清理及 16:9/4:3 画面证据。本轮版本绑定更改没有冒充重新运行这些测试；范围见[实施记录](lane-defense-2d-template-progress.md)与[验证目录](lane-defense-2d/evidence/F6)。
 - 最终封存后再次通过 MCP 核对七个实际内容 hash、封存 hash、六份父快照与父指针，全部一致，谱系零问题。维护工程留在 topdown-2d 0.1.1，编辑副本未过期；新的 Player.Editor MVID 为 `f74763dc-c9da-4170-a807-761b0fbbc8b6`，编辑器非编译/非更新状态。
-- 共享字体二进制/配置预检通过；最终候选提交与干净环境的 bundle 门禁待完成，见[准备记录](release-0.25.0-preparation.md)。公共技能源 11 项保持不变，现有 bundle 33 个文件原始 hash 全匹配，声明源码提交 `5868837542df759baf6ffd9412c7ae10cf7ee66b`。
+- 候选 index 与提交 `629d0f9c4425e20d6f22753c2375899645fa07a6` 的共享字体二进制/配置检查通过，四份 TTF 的结构、hash 及两种 autocrlf 干净检出通过；相关公共 C# 的暂存差异空白检查通过。该提交的干净 Codex 工作树中正式 `build-ai-skill-bundle.ps1 -Check` 通过：11 项公共技能、33 文件。公共技能源和 bundle 内容未改变，声明源码提交 `5868837542df759baf6ffd9412c7ae10cf7ee66b`；本版最终验证补记仅修改文档，未改变这些已验证资源、代码或模板。详见[准备记录](release-0.25.0-preparation.md)。
 
 没有执行完整测试集、干净消费项目部署、此次发行构建、全部模板交互矩阵或真实设备验收。上一版 Windows 原生退出 `0xC0000005` 仍未解决，不随此次发布自动关闭。
 

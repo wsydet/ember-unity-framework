@@ -1,6 +1,6 @@
 # Ember 文档索引
 
-当前框架发布：[0.21.3](dev/release-0.21.3.md)：项目公共规则入口自动同步，模板版本不变。
+当前框架发布：[0.25.0](dev/release-0.25.0.md)：可组合扩展、FSM/关卡工具门禁、房间图适配，以及 topdown-2d、lane-defense-2d 基础模板；七个模板均已封存。
 
 平台模板说明见[玩家文档（只读已保存快照）](../Packages/com.ember/Templates~/platformer-2d/Assets/Game/Documentation/platformer-2d/README.md)，R12 进度、实际验证与未执行项见[交付记录](dev/platformer-delivery.md)。模板文档只适用于所属模板及合法派生；下列发布记录保留历史版本语义，不代替当前工作区或消费部署状态。
 

@@ -39,7 +39,7 @@ source3d-2p5d、ui-game、visual-novel 的已保存内容已通过项目中心 B
 3. 扩展默认配置和专属文档索引绑定精确模板版本。尤其 platformer/topdown 启用了 FSM/关卡扩展，必须在活动 Assets 中核对新版身份和源码指纹，再通过项目中心保存/封存，不能仅 Bump 后留下失效默认组合。需要加载时保留人工弹窗。
 4. 本轮测试结果及修正后复验已取得，见上方说明及 [5 项复验原始回执](release-0.25.0-tests-fixed.json)。保留对应源码的既有 lane-defense 35/35 与正式启动、放置、胜负、暂停/重开证据，明确其验证日期和范围，不作为本轮重跑。后续模板保存/切换仍须相应验证。
 5. `release-0.25.0.json`、`manifest-0.25.0.json`、CHANGELOG、正式说明、lane-defense交接及当前版本入口已更新。
-6. 选择性暂存发布范围，运行共享二进制、字体配置和技能 bundle 门禁；必要时使用干净候选提交环境检查，保留当前工作区。
+6. 选择性暂存、实际提交清单核对、共享二进制、字体配置和干净候选工作树中的正式技能 bundle 门禁均已完成，保留当前工作区。
 7. 审阅提交内容、创建 annotated `v0.25.0`，向既有 origin 原子推送目标分支及这一个 tag，最后核对远端 branch/tag peeled commit 一致。禁止强推或批量推送全部 tag。
 
 ## 验证边界
@@ -53,3 +53,11 @@ source3d-2p5d、ui-game、visual-novel 的已保存内容已通过项目中心 B
 在尚未暂存本次发布的阶段，对现有 index（`:`）及工作区执行共享二进制/字体预检：四份 TTF 的长度、SHA256、字体结构和 `core.autocrlf=false/true` 干净检出均通过；字体配置、fallback、GUID、动态模式、多 Atlas 和构建清空策略静态检查通过。这是未改变共享源资源的预检，最终候选提交仍需正式门禁，不能把它写成全部待发布文件已通过。
 
 `build-ai-skill-bundle.ps1 -Check` 实际执行后因 `.agents/skills` 存在未提交变更而停止。目录含现有模板 Skill 发现副本变动与新发布技能；11 项公共分发源及 catalog 对 HEAD 没有差异。未删除、暂存或提交无关副本以绕过检查。另已核对 bundle 的 33 个原始文件均符合 manifest hash，声明源码提交为 `5868837542df759baf6ffd9412c7ae10cf7ee66b`；与该提交的源码字节差异逐项证明仅为 LF/CRLF 文本换行，UTF-8 文本一致。明细保存在 `Library/EmberReleasePreparation/bundle-byte-check.json`。这项补充静态检查不替代最终干净候选提交环境的正式 bundle 检查。
+
+## 最终候选门禁
+
+核心发行提交为 **629d0f9c4425e20d6f22753c2375899645fa07a6**，3548 个文件，实际提交路径与选择性审阅清单完全一致；没有混入开发 Assets、ProjectSettings、共享字体缓存或产品策划。提交后 `check-shared-binaries.py --revision HEAD --checkout`、`check-shared-font-config.py --revision HEAD` 均通过。当前包的未提交差异只保留被排除的共享字体缓存。
+
+通过 Codex 创建干净验证工作树，确认其 HEAD 精确为上述候选提交；在该工作树执行正式 `scripts/build-ai-skill-bundle.ps1 -Check`，实际输出 **Verified 11 bundled framework skills, 33 files.**，相关源和 bundle 工作区零差异。最初沙箱无法访问位于 `.codex/worktrees` 的新目录，获自动审批后以只读方式完成检查；没有通过删除副本或跳过门禁解决 dirty 限制。
+
+最终补记只修改发布验证记录和当前文档版本指针；已验证的包源码、模板、依赖、公共技能源及 bundle 不变。远端发布引用为 `v0.25.0`，实际最终提交以该 annotated tag 的 peeled commit 为准，防止把准备阶段提交误作最终标签对象。
