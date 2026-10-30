@@ -58,3 +58,6 @@
 - 11份本轮修改/新增Markdown的严格本地链接检查无缺失；接口及锚点另行按实际源码复核。发布manifest仅com.ember引用从v0.25.0变为v0.25.1，依赖及模板元数据逐项相同。
 - 干净受管工作树基线`b9a8243739fa19e2e3982beeefe06633105b7dde`的正式`build-ai-skill-bundle.ps1 -Check`通过：11技能、33文件。候选index的通用源、bundle和检查脚本与该基线没有差异。bundle原始33份文件hash逐一匹配manifest；index文本及记录的sourceCommit与bundle仅有已严格验证的UTF-8换行差异，没有重生成bundle或伪造sourceCommit。
 - 提交后继续针对同一发布内容复核并核验远端main/tag，不批量推送tag、不移动旧tag。远端推送结果以实际引用为准。
+
+
+提交后复核：发布实现提交为 `2a49793e69f2252afb057ae9e7f4aebe6b67b74a`。在该提交的干净受管工作树中，正式 `check-shared-binaries.py --revision HEAD --checkout`（两种autocrlf）、`check-shared-font-config.py --revision HEAD`、`build-ai-skill-bundle.ps1 -Check` 全部通过。其后只补记本文验证结果，没有改动已验证的源码、模板、依赖、字体或Skill内容；发行tag包含该验证补记。没有以主工作区未提交资产代替发布字节。
