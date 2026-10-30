@@ -27,11 +27,12 @@ namespace Ember.Core.Editor
 
         private void OnGUI()
         {
-            SirenixEditorGUI.Title("模板专属 AI Skill", "预览当前模板 → 检查差异 → 同步技能", TextAlignment.Left, true);
+            SirenixEditorGUI.Title("模板与项目 AI Skill", "预览当前身份 → 检查差异 → 同步技能", TextAlignment.Left, true);
             _showHelp = SirenixEditorGUI.Foldout(_showHelp, "技能源与同步说明");
             if (_showHelp)
             EditorGUILayout.HelpBox("源：Assets/Game/Documentation/TemplateSkills\n发现副本：.agents/skills/<id>\n"
                 + "消费项目升级框架后，在此独立更新技能，保留剧情、配表、图片、场景和业务代码。"
+                + "\n项目自有源：ProjectSettings/EmberProjectSkills（schema v3）；模板更新不覆盖项目源。"
                 + "\n编辑源文件后使用当前模板预览。通用 Skill 仍由 UPM Manager 独立管理。", MessageType.Info);
             using (new EditorGUI.DisabledScope(EditorApplication.isCompiling || EditorApplication.isUpdating
                 || EditorApplication.isPlayingOrWillChangePlaymode))

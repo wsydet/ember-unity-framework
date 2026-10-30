@@ -63,12 +63,21 @@ namespace Ember.LevelAuthoring.Editor
             SessionState.EraseString(KEY + ".Retry");
             try
             {
-                if (AssetDatabase.GetAssetDependencyHash(AssetDatabase.GUIDToAssetPath(request.configurationGuid)).ToString() != request.configurationHash)
-                    throw new InvalidOperationException("冻结配置已变化，请重新选择启动；重试不会静默捕获新配置。");
-                var level = adapter.Discover().Single(l => l.id == request.levelId && l.sceneGuid == request.sceneGuid);
+                var level = ResolveRetry(adapter, request);
                 Start(level, request.mode, request.position, request.checkpointId);
             }
-            catch (Exception error) { LastError = error.Message; }
+            catch (Exception error) { ReportFailure(error.Message); }
+        }
+        private static EmberLevelDescriptor ResolveRetry(IEmberLevelAdapter adapter, EmberLevelTrialRequest request)
+        {
+            if (adapter == null) throw new InvalidOperationException("重试适配器已失效，请重新选择启动。");
+            string config = AssetDatabase.GUIDToAssetPath(request.configurationGuid);
+            if (string.IsNullOrEmpty(config) || AssetDatabase.GetAssetDependencyHash(config).ToString() != request.configurationHash)
+                throw new InvalidOperationException("冻结配置已变化，请重新选择启动；重试不会静默捕获新配置。");
+            var level = adapter.Discover().Single(l => l.id == request.levelId && l.sceneGuid == request.sceneGuid);
+            if (level.adapterId != request.adapterId || AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(level.configuration)) != request.configurationGuid)
+                throw new InvalidOperationException("关卡发现结果已换绑配置或适配器，请重新选择启动。");
+            return level;
         }
         private static void TryRestore()
         {
@@ -89,7 +98,8 @@ namespace Ember.LevelAuthoring.Editor
         public static void Start(EmberLevelDescriptor level, EmberLevelStartMode mode, Vector2 position, string checkpoint = "")
         {
             EmberExtensionProject.Require(EmberExtensionProject.LevelTrial, true);
-            if (Active || EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating || EditorUtility.scriptCompilationFailed)
+            if (Active || !string.IsNullOrEmpty(SessionState.GetString(KEY + ".Retry", ""))
+                || EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating || EditorUtility.scriptCompilationFailed)
                 throw new InvalidOperationException("请等待上一轮试玩、导入或编译结束，并修复编译错误。");
             if (EditorSettings.enterPlayModeOptionsEnabled && (EditorSettings.enterPlayModeOptions & EnterPlayModeOptions.DisableDomainReload) != 0)
                 throw new InvalidOperationException("本版试玩要求启用 Domain Reload；请在项目设置中恢复域重载。");
@@ -138,11 +148,26 @@ namespace Ember.LevelAuthoring.Editor
             // 进入Play前取消可能没有EnteredEditMode事件；停止请求本身即进入恢复阶段。
             _state.returning = true; Save();
             var adapter = EmberLevelAdapters.GetForCleanup(_state.request.adapterId);
-            if (adapter != null) adapter.StopTrial(); else EditorApplication.isPlaying = false;
+            try { if (adapter != null) adapter.StopTrial(); else EditorApplication.isPlaying = false; }
+            catch (Exception error)
+            {
+                SessionState.EraseString(KEY + ".Retry");
+                ReportFailure("试玩停止失败：" + error.Message);
+                EditorApplication.isPlaying = false;
+            }
         }
         /// <summary>适配器报告自己的启动/清理错误；恢复编辑现场后仍保留可行动诊断。</summary>
         public static void ReportFailure(string message)
         { LastError = message; SessionState.SetString(KEY + ".Error", message ?? ""); }
+        /// <summary>异步回调必须带请求所有权；旧会话不得覆盖新会话诊断。</summary>
+        public static void ReportFailure(string requestId, string message)
+        { if (_state != null && _state.request.requestId == requestId) ReportFailure(message); }
+        /// <summary>仅停止该请求；旧窗口或迟到回调不影响新会话。</summary>
+        public static void Stop(string requestId)
+        { if (_state != null && _state.request.requestId == requestId) Stop(); }
+        /// <summary>仅重试该请求；旧会话请求不能重启当前试玩。</summary>
+        public static void Retry(string requestId)
+        { if (_state != null && _state.request.requestId == requestId) Retry(); }
         public static void Retry()
         {
             EmberExtensionProject.Require(EmberExtensionProject.LevelTrial);

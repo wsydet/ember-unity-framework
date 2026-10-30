@@ -20,6 +20,103 @@ namespace Ember.UI.Tests
 
         #region 外部方法
         [Test]
+        public void ProjectSkills_IndependentOwnershipVersionBackupAndTemplateUpdate()
+        {
+            ProjectSource(); var info = Info(); ApplyProject(ProjectPlan(info));
+            Assert.IsNull(ProjectBlock(info));
+            string statePath = Path.Combine(_project, ".agents/ember-ai-skills.json");
+            var state = JsonUtility.FromJson<EmberAISkillInstaller.State>(File.ReadAllText(statePath));
+            var installed = state.skills.Single(s => s.id == "project-fixture");
+            Assert.AreEqual(4, state.schemaVersion); Assert.AreEqual("project", installed.ownerKind);
+            Assert.AreEqual("fixture-project", installed.projectId); Assert.AreEqual("1.0.0", installed.revision);
+            File.AppendAllText(ProjectTarget(), "local draft");
+            ProjectSource("1.0.1", "updated");
+            Assert.IsNotNull(ProjectBlock(info));
+            var preview = ProjectPlan(info);
+            Assert.IsTrue(preview.NeedsBackupConfirmation);
+            Assert.Throws<InvalidOperationException>(() => EmberAISkillInstaller.PrepareTemplateSkills(preview, false, out _));
+            ApplyProject(preview); Assert.IsNull(ProjectBlock(info));
+            Assert.IsTrue(Directory.GetFiles(Path.Combine(_project, ".utmp"), "SKILL.md", SearchOption.AllDirectories).Any(p => File.ReadAllText(p).Contains("local draft")));
+            string source = File.ReadAllText(Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory, "catalog.json"));
+            // Full template deployment uses the same transaction and cannot replace the project source.
+            Commit(info, ProjectPlan(info));
+            Assert.AreEqual(source, File.ReadAllText(Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory, "catalog.json")));
+            Assert.IsNull(ProjectBlock(info));
+        }
+
+        [TestCase("extension")]
+        [TestCase("module")]
+        [TestCase("template")]
+        [TestCase("version")]
+        [TestCase("source")]
+        [TestCase("hash")]
+        public void ProjectSkills_InvalidConditionsPruneWithBackupAndRejectCachedExecution(string change)
+        {
+            ProjectSource(); var info = Info(); ApplyProject(ProjectPlan(info));
+            File.AppendAllText(ProjectTarget(), "preserved discovery draft");
+            var extensions = ProjectExtensions(); var scopes = new[] { "fixture.module" };
+            if (change == "extension") extensions = Array.Empty<EmberAISkillInstaller.ExtensionIdentity>();
+            if (change == "module") scopes = Array.Empty<string>();
+            if (change == "template") info = Info(id: "other");
+            if (change == "version") info = Info(version: "2.0.0");
+            if (change == "hash") extensions[0].contentHash = "changed";
+            if (change == "source") ProjectSource(body: "changed without version bump");
+            Assert.IsNotNull(ProjectBlock(info, extensions, scopes));
+            var plan = ProjectPlan(info, extensions, scopes);
+            EmberAISkillInstaller.LimitToUnavailableExtensions(plan); ApplyProject(plan);
+            Assert.IsFalse(File.Exists(ProjectTarget()));
+            Assert.IsTrue(File.Exists(Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory, "project-fixture/SKILL.md")));
+            Assert.IsTrue(Directory.GetFiles(Path.Combine(_project, ".utmp"), "SKILL.md", SearchOption.AllDirectories).Any(p => File.ReadAllText(p).Contains("preserved discovery draft")));
+        }
+
+        [Test]
+        public void ProjectSkills_IndependentTemplateSourceUpdateKeepsBusinessBindingAndBecomesNoOp()
+        {
+            ProjectSource(); EnsureMetadata(_assets); var business = Info(); Commit(business, ProjectPlan(business));
+            Source(body: "new template source"); EnsureMetadata(_assets); var next = Info(version: "1.1.0");
+            EmberAISkillInstaller.TemplatePreview Plan() => EmberAISkillInstaller.PreviewTemplateSkills(_project, _assets,
+                new EmberAISkillInstaller.TemplateContext(next.id, next.version, next.contentHash, business.id, "0.25.0", true,
+                    businessVersion: business.version, businessContentHash: business.contentHash, updateSource: true,
+                    extensions: ProjectExtensions(), moduleScopes: new[] { "fixture.module" }));
+            EmberProjectSetup.CommitTemplateSkillUpdate(Plan(), true);
+            Assert.IsNull(ProjectBlock(business));
+            Assert.IsFalse(Plan().HasChanges);
+        }
+
+        [Test]
+        public void ProjectSkills_PreviewMutationConflictAndRollbackFailClosed()
+        {
+            ProjectSource(); var info = Info(); var plan = ProjectPlan(info);
+            ProjectSource(body: "changed after preview");
+            Assert.Throws<IOException>(() => ApplyProject(plan));
+            ApplyProject(ProjectPlan(info));
+            string before = File.ReadAllText(ProjectTarget());
+            ProjectSource("1.0.1", "new");
+            var targets = EmberAISkillInstaller.PrepareTemplateSkills(ProjectPlan(info), true, out _)
+                .Select(t => new TemplateTransactionTarget(t.StagedPath, t.DestinationPath, t.Remove)).ToList();
+            Assert.Throws<IOException>(() => EmberTemplateTransaction.CommitPreparedTargets(targets, i => { if (i == 1) throw new IOException("injected"); }));
+            Assert.AreEqual(before, File.ReadAllText(ProjectTarget()));
+            string catalog = Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory, "catalog.json");
+            File.WriteAllText(catalog, File.ReadAllText(catalog).Replace("fixture-project", "another-owner"));
+            Assert.IsTrue(ProjectPlan(info).Errors.Any(e => e.Contains("所有权")));
+            var prune = EmberAISkillInstaller.PreviewUnavailableProjectSkills(_project); ApplyProject(prune);
+            Assert.IsFalse(File.Exists(ProjectTarget()));
+        }
+
+        [Test]
+        public void ProjectSkills_UnmanagedAndTemplateIdsCannotBeAdopted()
+        {
+            ProjectSource(); var info = Info(); Write(_project, ".agents/skills/project-fixture/SKILL.md", "unmanaged");
+            Assert.IsTrue(ProjectPlan(info).Errors.Count > 0);
+            string source = Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory);
+            string catalog = Path.Combine(source, "catalog.json");
+            File.WriteAllText(catalog, File.ReadAllText(catalog).Replace("project-fixture", Skill));
+            Directory.Move(Path.Combine(source, "project-fixture"), Path.Combine(source, Skill));
+            File.WriteAllText(Path.Combine(source, Skill, "SKILL.md"), "---\nname: " + Skill + "\ndescription: fixture\n---\nfixture");
+            Assert.Throws<InvalidDataException>(() => ProjectPlan(info));
+        }
+
+        [Test]
         public void ExtensionSkill_DiscoveryExecutionHashAndModuleFailClosed_KeepSourceAndBackup()
         {
             string catalog = Path.Combine(SourceRoot(), "catalog.json");
@@ -546,6 +643,29 @@ namespace Ember.UI.Tests
         #endregion
 
         #region 内部方法
+        private void ProjectSource(string version = "1.0.0", string body = "project source")
+        {
+            string root = Path.Combine(_project, EmberAISkillInstaller.ProjectSourceDirectory);
+            Write(root, "project-fixture/SKILL.md", "---\nname: project-fixture\ndescription: project fixture\n---\n" + body);
+            Write(root, "catalog.json", "{\"schemaVersion\":3,\"skills\":[{\"id\":\"project-fixture\",\"projectId\":\"fixture-project\",\"version\":\"" + version
+                + "\",\"templateId\":\"fixture\",\"minimumFrameworkVersion\":\"0.1.0\",\"minimumTemplateVersion\":\"1.0.0\",\"maximumTemplateVersion\":\"1.9.9\",\"requiredExtensions\":[\"ember.fixture\"],\"requiredModuleScope\":\"fixture.module\"}]}");
+        }
+        private static EmberAISkillInstaller.ExtensionIdentity[] ProjectExtensions() => new[] {
+            new EmberAISkillInstaller.ExtensionIdentity { id = "ember.fixture", contractVersion = 1, contentHash = "source-a" } };
+        private string ProjectTarget() => Path.Combine(_project, ".agents/skills/project-fixture/SKILL.md");
+        private EmberAISkillInstaller.TemplatePreview ProjectPlan(TemplateInfo info, EmberAISkillInstaller.ExtensionIdentity[] extensions = null, string[] scopes = null) =>
+            EmberAISkillInstaller.PreviewTemplateSkills(_project, _assets, new EmberAISkillInstaller.TemplateContext(info.id, info.version, info.contentHash,
+                "fixture", "0.25.0", true, extensions: extensions ?? ProjectExtensions(), moduleScopes: scopes ?? new[] { "fixture.module" }));
+        private string ProjectBlock(TemplateInfo info, EmberAISkillInstaller.ExtensionIdentity[] extensions = null, string[] scopes = null) =>
+            EmberAISkillInstaller.GetTemplateSkillExecutionBlockReason(_project, "project-fixture", info.id, info.version, info.contentHash,
+                editing: false, extensions: extensions ?? ProjectExtensions(), moduleScopes: scopes ?? new[] { "fixture.module" }, frameworkVersion: "0.25.0", hasEuiApi: true);
+        private static void ApplyProject(EmberAISkillInstaller.TemplatePreview plan)
+        {
+            var targets = EmberAISkillInstaller.PrepareTemplateSkills(plan, true, out _)
+                .Select(t => new TemplateTransactionTarget(t.StagedPath, t.DestinationPath, t.Remove)).ToList();
+            EmberAISkillInstaller.ValidateTemplatePreview(plan);
+            EmberTemplateTransaction.CommitPreparedTargets(targets);
+        }
         private EmberAISkillInstaller.TemplatePreview Independent(TemplateInfo next, TemplateInfo business) =>
             EmberProjectSetup.PreviewDeployedTemplateSkillUpdate(_project, _assets, next,
                 new DeployedTemplateRecord { templateId = business.id, version = business.version, contentHash = business.contentHash }, "0.14.4", true);

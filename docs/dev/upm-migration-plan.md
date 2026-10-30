@@ -1,6 +1,6 @@
 # UPM 包交付与维护
 
-当前发布：Ember **0.25.0**，交付可组合扩展、FSM/关卡工具门禁、房间图适配，以及 topdown-2d 和 lane-defense-2d 基础模板。七个模板已封存，父基线统一 base 0.10.1，兼容声明统一 0.25.0。定向验证与未覆盖范围见当版发布说明；第三方依赖及11项公共技能源不变，消费项目尚未升级或重部署。
+当前发布：Ember **0.25.1**，补足独立项目 AI Skill 来源与完整发现隔离，并修复正式试玩重试身份和停止异常处理。保留旧 API；房间图仅兼容保留，连接及能力进度业务归消费项目。七个模板内容、封存版本/父基线及 0.25.0 兼容声明保持不变；第三方依赖和11项公共技能源不变。本轮定向验证与未覆盖范围见 [0.25.1 发布说明](release-0.25.1.md)，未升级或重部署消费项目。
 
 > 2026-10-15：框架 **0.19.2** 文档补丁：模板保存与 Bump 必须通过项目中心，禁止直接修改快照及 metadata 代替正式操作。模板、运行时代码、公共技能及依赖不变。见[0.19.2 发布说明](release-0.19.2.md)。
 
@@ -51,7 +51,7 @@
 > 2026-09-23：已发布流程推进至 **0.14.3 / visual-novel 0.7.2**，修复消费项目布局菜单身份判断；验证及定制工程迁移步骤见 [0.14.3 发布说明](release-0.14.3.md)。以下旧版本段落保留历史语境。
 
 > 更新：2026-09-17。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为 **0.25.0**；历史版本验收不替代当前消费项目验证。
+> 当前发布版本为 **0.25.1**；历史版本验收不替代当前消费项目验证。
 
 ## 目录与依赖
 
@@ -80,7 +80,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 新工程添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.25.0`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.25.0.json`，不覆盖消费项目其他依赖。已有消费项目通过 `Ember/UPM Manager` 升级，不手改 manifest 或 lock。
+3. 新工程添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.25.1`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.25.1.json`，不覆盖消费项目其他依赖。已有消费项目通过 `Ember/UPM Manager` 升级，不手改 manifest 或 lock。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。

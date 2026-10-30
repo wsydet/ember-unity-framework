@@ -23,15 +23,19 @@ namespace Ember.Core.Editor
             if (EditorApplication.timeSinceStartup < _nextCheck || EditorApplication.isCompiling || EditorApplication.isUpdating
                 || EditorApplication.isPlayingOrWillChangePlaymode) return;
             _nextCheck = EditorApplication.timeSinceStartup + 2;
-            string path = EmberExtensionProject.ConfigurationPath;
-            string signature = path + ":" + File.GetLastWriteTimeUtc(path).Ticks + ":"
-                + File.GetLastWriteTimeUtc(EmberExtensionProject.DefaultsPath).Ticks + ":" + EmberExtensionProject.CurrentTemplateVersion
-                + ":" + string.Join(",", EmberExtensionDocuments.EnabledScopes)
-                + ":" + File.GetLastWriteTimeUtc("Assets/" + EmberAISkillInstaller.TemplateSourceDirectory + "/catalog.json").Ticks;
-            if (_signature == signature) return;
-            _signature = signature;
             try
             {
+                string path = EmberExtensionProject.ConfigurationPath;
+                string root = Directory.GetParent(UnityEngine.Application.dataPath).FullName;
+                string signature = path + ":" + File.GetLastWriteTimeUtc(path).Ticks + ":"
+                    + File.GetLastWriteTimeUtc(EmberExtensionProject.DefaultsPath).Ticks + ":" + EmberExtensionProject.CurrentTemplateVersion
+                    + ":" + string.Join(",", EmberExtensionDocuments.EnabledScopes)
+                    + ":" + File.GetLastWriteTimeUtc("Assets/Editor/EmberEditingTemplate.json").Ticks
+                    + ":" + File.GetLastWriteTimeUtc("Assets/Editor/EmberDeployedTemplates.json").Ticks
+                    + ":" + File.GetLastWriteTimeUtc("Assets/" + EmberAISkillInstaller.TemplateSourceDirectory + "/catalog.json").Ticks
+                    + ":" + EmberAISkillInstaller.ProjectSkillSourceFingerprint(root);
+                if (_signature == signature) return;
+                _signature = signature;
                 var preview = EmberProjectSetup.PreviewExtensionSkills(EmberExtensionProject.Load());
                 if (preview == null) return;
                 EmberAISkillInstaller.LimitToUnavailableExtensions(preview);
@@ -40,6 +44,12 @@ namespace Ember.Core.Editor
             }
             catch (Exception exception)
             {
+                try
+                {
+                    var unavailable = EmberAISkillInstaller.PreviewUnavailableProjectSkills(Directory.GetParent(UnityEngine.Application.dataPath).FullName);
+                    if (unavailable.HasChanges) EmberProjectSetup.CommitExtensionDiscoveryPruning(unavailable);
+                }
+                catch (Exception cleanup) { exception = new AggregateException(exception, cleanup); }
                 Error = "扩展发现副本未能同步；执行前检查仍会阻止失效入口。" + exception.Message;
                 EmberDebug.LogWarning("EmberExtension", Error);
             }

@@ -12,6 +12,8 @@ namespace Ember.UPMManager.Editor
         #region 内部参数
         /// <summary>相对于模板 Assets；属于模板内容 hash，不是 AI 客户端的发现目录。</summary>
         public const string TemplateSourceDirectory = "Game/Documentation/TemplateSkills";
+        /// <summary>项目维护源；位于模板加载/部署的 Assets 替换范围外。</summary>
+        public const string ProjectSourceDirectory = "ProjectSettings/EmberProjectSkills";
 
         [Serializable] public sealed class ExtensionIdentity
         {
@@ -69,6 +71,9 @@ namespace Ember.UPMManager.Editor
             internal string[] LocalSourceDirectories;
             internal bool LocalSourceExists;
             internal string LocalSourceMetaHash;
+            internal Fingerprint[] ProjectSourceFiles;
+            internal string[] ProjectSourceDirectories;
+            internal bool DiscoveryPruning;
             internal readonly Dictionary<string, string> IdentityRecords = new Dictionary<string, string>();
             internal readonly Dictionary<string, string> ReadOnlyInputs = new Dictionary<string, string>();
             public IReadOnlyList<string> Differences { get; internal set; }
@@ -136,6 +141,21 @@ namespace Ember.UPMManager.Editor
             return ReadCatalog(sourceRoot, true);
         }
 
+        private static List<Package> ReadProjectPackages(string projectRoot)
+        {
+            string source = Within(projectRoot, ProjectSourceDirectory);
+            if (File.Exists(source)) throw new IOException("项目技能源路径是文件。");
+            return Directory.Exists(source) ? ReadCatalog(source, true, true) : new List<Package>();
+        }
+
+        private static bool IsProject(Package package) => !string.IsNullOrEmpty(package.Definition.projectId);
+
+        private static bool ProjectCompatible(Package package, TemplateContext context) =>
+            package.Definition.templateId == context.TemplateId
+            && Version.Parse(context.BusinessVersion) >= Version.Parse(package.Definition.minimumTemplateVersion)
+            && Version.Parse(context.BusinessVersion) <= Version.Parse(package.Definition.maximumTemplateVersion)
+            && Incompatibility(package.Definition, context.FrameworkVersion, context.HasEuiApi) == null;
+
         private static IEnumerable<string> FileDifferences(string id, Fingerprint[] before, Fingerprint[] after)
         {
             var left = before.ToDictionary(f => f.path, f => f.sha256, StringComparer.Ordinal);
@@ -191,16 +211,22 @@ namespace Ember.UPMManager.Editor
 
         /// <summary>只查询有明确模板所有权的安装记录。</summary>
         public static bool HasTemplateSkillOwnership(string projectRoot, string templateId = null) =>
-            ReadState(projectRoot).skills.Any(s => s.ownerKind == "template" && (templateId == null || s.templateId == templateId));
+            ReadState(projectRoot).skills.Any(s => (s.ownerKind == "template" || s.ownerKind == "project") && (templateId == null || s.templateId == templateId));
 
         /// <summary>技能执行前只读检查归属，不回收已加载会话内容。</summary>
         public static string GetTemplateSkillExecutionBlockReason(string projectRoot, string id,
-            string templateId, string version, string contentHash, bool editing = false, ExtensionIdentity[] extensions = null, string[] moduleScopes = null)
+            string templateId, string version, string contentHash, bool editing = false, ExtensionIdentity[] extensions = null, string[] moduleScopes = null) =>
+            GetTemplateSkillExecutionBlockReason(projectRoot, id, templateId, version, contentHash, editing, extensions, moduleScopes, null, false);
+
+        /// <summary>项目技能还须提供当前框架版本与 API 能力；旧签名保留供模板调用方使用。</summary>
+        public static string GetTemplateSkillExecutionBlockReason(string projectRoot, string id,
+            string templateId, string version, string contentHash, bool editing, ExtensionIdentity[] extensions, string[] moduleScopes,
+            string frameworkVersion, bool hasEuiApi)
         {
             CheckId(id);
             var state = ReadState(projectRoot);
-            var installed = state.skills.FirstOrDefault(s => s.id == id && s.ownerKind == "template");
-            if (installed == null) return "此技能没有模板所有权记录。";
+            var installed = state.skills.FirstOrDefault(s => s.id == id && (s.ownerKind == "template" || s.ownerKind == "project"));
+            if (installed == null) return "此技能没有有效的模板或项目所有权记录。";
             if (!string.IsNullOrEmpty(installed.requiredModuleScope) && !(moduleScopes ?? Array.Empty<string>()).Contains(installed.requiredModuleScope))
                 return "技能所属业务模块未启用。";
             if ((installed.extensions ?? Array.Empty<ExtensionIdentity>()).Any(expected => expected == null
@@ -217,7 +243,19 @@ namespace Ember.UPMManager.Editor
                 if (source != null && (installed.requiredModuleScope ?? "") != (source.Definition.requiredModuleScope ?? ""))
                     return "技能的业务模块声明与安装记录不一致，请在项目中心同步。";
             }
-            if (!editing && state.templateBaseline != null)
+            if (installed.ownerKind == "project")
+            {
+                var source = ReadProjectPackages(projectRoot).FirstOrDefault(p => p.Definition.id == id);
+                if (source == null || source.Definition.projectId != installed.projectId || source.Definition.version != installed.revision
+                    || Hash(Within(projectRoot, ProjectSourceDirectory + "/" + CatalogFile)) != installed.sourceCatalogHash
+                    || !Same(source.Files, installed.files) || !SnapshotDirectories(source.Directory).SequenceEqual(installed.directories ?? Array.Empty<string>())
+                    || !SameExtensions(installed.extensions, RequiredExtensions(source.Definition, extensions))
+                    || (installed.requiredModuleScope ?? "") != (source.Definition.requiredModuleScope ?? ""))
+                    return "项目技能源、版本、所有权或条件已变化，请重新预览同步。";
+                if (!ProjectCompatible(source, new TemplateContext(templateId, version, contentHash, templateId, frameworkVersion, hasEuiApi, editing)))
+                    return "项目技能的框架/API 或活动模板兼容范围不满足。";
+            }
+            if (installed.ownerKind == "template" && !editing && state.templateBaseline != null)
             {
                 if (!MatchesBusiness(state.templateBaseline, templateId, version, contentHash))
                     return "技能独立基线与正式业务部署记录不一致，请在项目中心检查。";
@@ -230,6 +268,8 @@ namespace Ember.UPMManager.Editor
             if (installed.templateMode != (editing ? "editing" : "deployed")) return "技能的开发/部署身份模式不一致。";
             if (!Same(Snapshot(Within(projectRoot, ".agents/skills/" + id)), installed.files))
                 return "技能发现副本有本地修改，请先检查并重新同步。";
+            if (installed.ownerKind == "project" && !SnapshotDirectories(Within(projectRoot, ".agents/skills/" + id)).SequenceEqual(installed.directories ?? Array.Empty<string>()))
+                return "项目技能发现副本目录结构已变化，请重新同步。";
             return null;
         }
 
@@ -272,11 +312,57 @@ namespace Ember.UPMManager.Editor
         {
             var state = ReadState(preview.ProjectRoot);
             var source = ReadTemplatePackages(preview.SourceRoot);
+            // Project source changes require explicit sync; stale copies must leave discovery even if gates remain enabled.
+            foreach (var entry in preview.Entries.Where(e => e.Package != null && IsProject(e.Package)))
+            {
+                var old = state.skills.FirstOrDefault(s => s.id == entry.Id && s.ownerKind == "project");
+                if (old != null && (old.projectId != entry.Package.Definition.projectId || old.revision != entry.Package.Definition.version
+                    || old.sourceCatalogHash != Hash(Within(preview.ProjectRoot, ProjectSourceDirectory + "/" + CatalogFile))
+                    || old.templateId != preview.Context.TemplateId || old.templateVersion != preview.Context.BusinessVersion
+                    || old.templateContentHash != preview.Context.BusinessContentHash
+                    || old.templateMode != (preview.IsEditing ? "editing" : "deployed")
+                    || !Same(old.files, entry.Package.Files)
+                    || !SnapshotDirectories(entry.Package.Directory).SequenceEqual(old.directories ?? Array.Empty<string>())
+                    || (old.requiredModuleScope ?? "") != (entry.Package.Definition.requiredModuleScope ?? "")
+                    || !SameExtensions(old.extensions, RequiredExtensions(entry.Package.Definition, preview.Context.Extensions))))
+                    entry.Package = null;
+            }
             preview.Entries = preview.Entries.Where(entry => entry.Package == null
                 && (source.Any(p => p.Definition.id == entry.Id && ((p.Definition.requiredExtensions?.Length ?? 0) > 0 || !string.IsNullOrEmpty(p.Definition.requiredModuleScope)))
-                    || state.skills.Any(s => s.id == entry.Id && ((s.extensions?.Length ?? 0) > 0 || !string.IsNullOrEmpty(s.requiredModuleScope))))).ToList();
+                    || state.skills.Any(s => s.id == entry.Id && (s.ownerKind == "project" || (s.extensions?.Length ?? 0) > 0 || !string.IsNullOrEmpty(s.requiredModuleScope))))).ToList();
             preview.DesiredBaseline = state.templateBaseline;
+            preview.DiscoveryPruning = true;
             preview.HasChanges = preview.Entries.Count > 0;
+        }
+
+        /// <summary>失效身份或损坏清单时仍收回项目受管副本；不读取/解释项目业务类型。</summary>
+        public static TemplatePreview PreviewUnavailableProjectSkills(string projectRoot)
+        {
+            var state = ReadState(projectRoot);
+            string source = Within(projectRoot, "Assets/" + TemplateSourceDirectory);
+            var entries = state.skills.Where(s => s.ownerKind == "project").Select(s =>
+            {
+                string target = Within(projectRoot, ".agents/skills/" + s.id);
+                if (File.Exists(target)) throw new IOException("技能目标是文件：" + s.id);
+                return new TemplateEntry { Id = s.id, Existed = Directory.Exists(target), Local = Snapshot(target),
+                    LocalDirectories = SnapshotDirectories(target), SourceDirectories = Array.Empty<string>() };
+            }).ToList();
+            return new TemplatePreview { ProjectRoot = projectRoot, SourceRoot = source,
+                SourceAssetsPath = Path.Combine(projectRoot, "Assets"), Context = new TemplateContext("unavailable", "0.0.0", "unavailable", null, "0.0.0", false),
+                StateHash = Hash(Within(projectRoot, StateFile)), CatalogHash = Hash(Within(source, CatalogFile)),
+                Entries = entries, Packages = new List<Package>(), DesiredBaseline = state.templateBaseline, DiscoveryPruning = true,
+                ProjectSourceFiles = SnapshotTemplateSource(Within(projectRoot, ProjectSourceDirectory)),
+                ProjectSourceDirectories = SnapshotDirectories(Within(projectRoot, ProjectSourceDirectory)),
+                HasChanges = entries.Count > 0, NeedsBackupConfirmation = entries.Count > 0,
+                Differences = entries.Select(e => "移出失效项目技能：" + e.Id).ToList().AsReadOnly(), Errors = Array.Empty<string>() };
+        }
+
+        /// <summary>用于发现生命周期检测；源码及空目录改变均可失效，源缺失仍保留可检测身份。</summary>
+        public static string ProjectSkillSourceFingerprint(string projectRoot)
+        {
+            string source = Within(projectRoot, ProjectSourceDirectory);
+            return string.Join(";", SnapshotTemplateSource(source).Select(f => f.path + ":" + f.sha256))
+                + "|" + string.Join(";", SnapshotDirectories(source));
         }
 
         /// <summary>生命周期提交入口必须确认计划仍绑定同一项目与模板快照。</summary>
@@ -306,7 +392,12 @@ namespace Ember.UPMManager.Editor
             Within(sourceAssets, TemplateSourceDirectory + ".meta");
             var desiredBaseline = context.Editing ? null : CreateBaseline(context, source);
             var allPackages = ReadTemplatePackages(source);
+            var projectPackages = ReadProjectPackages(projectRoot);
+            if (allPackages.Select(p => p.Definition.id).Intersect(projectPackages.Select(p => p.Definition.id), StringComparer.OrdinalIgnoreCase).Any())
+                throw new InvalidDataException("项目技能与模板技能源 ID 冲突，不能接管。");
+            allPackages.AddRange(projectPackages);
             var packages = allPackages.Where(p => RequiredExtensions(p.Definition, context.Extensions).All(x => x != null)
+                && (!IsProject(p) || ProjectCompatible(p, context))
                 && (string.IsNullOrEmpty(p.Definition.requiredModuleScope) || context.ModuleScopes.Contains(p.Definition.requiredModuleScope))).ToList();
             if (Directory.Exists(Within(projectRoot, StateFile))) throw new IOException("AI Skill 安装记录路径是目录，请先修复。");
             var state = ReadState(projectRoot);
@@ -315,8 +406,8 @@ namespace Ember.UPMManager.Editor
             var entries = new List<TemplateEntry>();
             bool confirm = false, changed = false;
             var desired = packages.ToDictionary(p => p.Definition.id, StringComparer.OrdinalIgnoreCase);
-            var owned = state.skills.Where(s => s.ownerKind == "template"
-                && s.templateId == context.PreviousTemplateId).ToList();
+            var owned = state.skills.Where(s => s.ownerKind == "project" || (s.ownerKind == "template"
+                && s.templateId == context.PreviousTemplateId)).ToList();
             if (!context.UpdateSource && packages.Count == 0 && owned.Count == 0 && state.templateBaseline == null)
                 desiredBaseline = null; // Legacy templates without skills retain their no-op lifecycle.
 
@@ -332,6 +423,9 @@ namespace Ember.UPMManager.Editor
                 if (Version.Parse(context.BusinessVersion) < Version.Parse(definition.minimumTemplateVersion))
                     errors.Add(definition.id + ": 需要实际业务模板版本 >= " + definition.minimumTemplateVersion);
                 var installed = state.skills.FirstOrDefault(s => s.id == definition.id);
+                if (installed != null && ((installed.ownerKind == "project") != IsProject(package)
+                    || (IsProject(package) && installed.projectId != definition.projectId)))
+                    errors.Add(definition.id + ": 来源所有权冲突，不能接管。");
                 string target = Within(projectRoot, ".agents/skills/" + definition.id);
                 if (File.Exists(target)) errors.Add(definition.id + ": 目标是文件。");
                 if ((installed != null && !owned.Contains(installed))
@@ -362,14 +456,18 @@ namespace Ember.UPMManager.Editor
                 bool entryChanged = package == null || old == null || !Same(local, package.Files)
                     || !Same(old.files, package.Files) || old.originTemplateId != package.Definition.templateId
                     || !localDirectories.SequenceEqual(sourceDirectories)
-                    || old.templateId != context.TemplateId || old.templateVersion != context.Version
-                    || old.templateContentHash != context.ContentHash || old.templateMode != (context.Editing ? "editing" : "deployed");
+                    || old.templateId != context.TemplateId || old.templateVersion != (IsProject(package) ? context.BusinessVersion : context.Version)
+                    || old.templateContentHash != (IsProject(package) ? context.BusinessContentHash : context.ContentHash) || old.templateMode != (context.Editing ? "editing" : "deployed");
                 if (package != null && old != null)
                     entryChanged |= !SameExtensions(old.extensions, RequiredExtensions(package.Definition, context.Extensions));
-                if (package != null && old != null) entryChanged |= old.requiredModuleScope != package.Definition.requiredModuleScope;
+                if (package != null && old != null) entryChanged |= (old.requiredModuleScope ?? "") != (package.Definition.requiredModuleScope ?? "");
+                if (package != null && IsProject(package) && old != null)
+                    entryChanged |= old.revision != package.Definition.version
+                        || old.sourceCatalogHash != Hash(Within(projectRoot, ProjectSourceDirectory + "/" + CatalogFile))
+                        || old.templateVersion != context.BusinessVersion || old.templateContentHash != context.BusinessContentHash;
                 changed |= entryChanged;
                 differences.Add((package == null ? "移出发现目录" : old == null ? "安装" : entryChanged ? "更新" : "已一致")
-                    + " · 模板专属 · " + id + " · 来源模板 " + (package?.Definition.templateId ?? old.originTemplateId)
+                    + (package != null && IsProject(package) || old?.ownerKind == "project" ? " · 项目自有 · " : " · 模板专属 · ") + id + " · 来源模板 " + (package?.Definition.templateId ?? old.originTemplateId)
                     + " · " + context.TemplateId + " " + context.Version + (context.Editing ? "（编辑基线，允许草稿）" : "（部署版本）"));
                 differences.AddRange(FileDifferences(id, local, package?.Files ?? Array.Empty<Fingerprint>()));
                 entries.Add(new TemplateEntry { Id = id, Package = package, Local = local, Existed = exists,
@@ -388,7 +486,7 @@ namespace Ember.UPMManager.Editor
                 if (state.templateBaseline != null && !MatchesBusiness(state.templateBaseline,
                         context.TemplateId, context.BusinessVersion, context.BusinessContentHash))
                     errors.Add("技能独立基线与业务部署身份不一致，请先检查记录。");
-                foreach (var old in owned)
+                foreach (var old in owned.Where(s => s.ownerKind == "template"))
                 {
                     string expectedVersion = state.templateBaseline?.sourceVersion ?? context.BusinessVersion;
                     string expectedHash = state.templateBaseline?.sourceContentHash ?? context.BusinessContentHash;
@@ -427,7 +525,9 @@ namespace Ember.UPMManager.Editor
                 DesiredBaseline = desiredBaseline, LocalSourceFiles = localSourceFiles, LocalSourceDirectories = localSourceDirectories,
                 LocalSourceExists = localSourceExists, LocalSourceMetaHash = localSourceMetaHash,
                 Differences = differences.AsReadOnly(), Errors = errors.AsReadOnly(),
-                NeedsBackupConfirmation = confirm, HasChanges = changed
+                NeedsBackupConfirmation = confirm, HasChanges = changed,
+                ProjectSourceFiles = SnapshotTemplateSource(Within(projectRoot, ProjectSourceDirectory)),
+                ProjectSourceDirectories = SnapshotDirectories(Within(projectRoot, ProjectSourceDirectory))
             };
         }
 
@@ -436,6 +536,9 @@ namespace Ember.UPMManager.Editor
         {
             if (preview == null) throw new ArgumentNullException(nameof(preview));
             if (preview.Errors.Count > 0) throw new InvalidOperationException(string.Join("\n", preview.Errors));
+            if (!Same(SnapshotTemplateSource(Within(preview.ProjectRoot, ProjectSourceDirectory)), preview.ProjectSourceFiles)
+                || !SnapshotDirectories(Within(preview.ProjectRoot, ProjectSourceDirectory)).SequenceEqual(preview.ProjectSourceDirectories))
+                throw new IOException("项目技能源在预览后变化，请重新预览。");
             foreach (var input in preview.ReadOnlyInputs)
                 if (Directory.Exists(input.Key) || Hash(input.Key) != input.Value)
                     throw new IOException("扩展声明或组合在预览后变化，请重新预览。");
@@ -448,7 +551,7 @@ namespace Ember.UPMManager.Editor
                 || Hash(Within(preview.SourceRoot, CatalogFile)) != preview.CatalogHash)
                 throw new IOException("技能清单或安装记录在预览后变化，请重新预览。");
             Within(Path.GetDirectoryName(preview.SourceRoot), Path.GetFileName(preview.SourceRoot) + ".meta");
-            if (preview.DesiredBaseline != null && !SameBaseline(preview.DesiredBaseline, CreateBaseline(preview.Context, preview.SourceRoot)))
+            if (!preview.DiscoveryPruning && preview.DesiredBaseline != null && !SameBaseline(preview.DesiredBaseline, CreateBaseline(preview.Context, preview.SourceRoot)))
                 throw new IOException("完整技能源或根目录 .meta 在预览后变化，请重新预览。");
             if (preview.IsIndependentUpdate)
             {
@@ -496,19 +599,22 @@ namespace Ember.UPMManager.Editor
                 string staged = Path.Combine(transaction, "incoming", entry.Id);
                 if (entry.Package != null) CopySkillFiles(entry.Package.Directory, staged, entry.Package.Files);
                 targets.Add(new PreparedSkillTarget(staged, target, entry.Package == null));
-                state.skills.RemoveAll(s => s.id == entry.Id && s.ownerKind == "template"
-                    && s.templateId == preview.Context.PreviousTemplateId);
+                state.skills.RemoveAll(s => s.id == entry.Id && (s.ownerKind == "project" || (s.ownerKind == "template"
+                    && s.templateId == preview.Context.PreviousTemplateId)));
                 if (entry.Package != null)
                     state.skills.Add(new Installation
                     {
-                        id = entry.Id, ownerKind = "template", templateId = preview.Context.TemplateId,
-                        templateVersion = preview.Context.Version, templateContentHash = preview.Context.ContentHash,
-                        originTemplateId = entry.Package.Definition.templateId, revision = preview.Context.Version,
+                        id = entry.Id, ownerKind = IsProject(entry.Package) ? "project" : "template", templateId = preview.Context.TemplateId,
+                        templateVersion = IsProject(entry.Package) ? preview.Context.BusinessVersion : preview.Context.Version,
+                        templateContentHash = IsProject(entry.Package) ? preview.Context.BusinessContentHash : preview.Context.ContentHash,
+                        projectId = entry.Package.Definition.projectId,
+                        sourceCatalogHash = IsProject(entry.Package) ? Hash(Within(preview.ProjectRoot, ProjectSourceDirectory + "/" + CatalogFile)) : null,
+                        originTemplateId = entry.Package.Definition.templateId, revision = IsProject(entry.Package) ? entry.Package.Definition.version : preview.Context.Version,
                         templateMode = preview.Context.Editing ? "editing" : "deployed",
                         directories = entry.SourceDirectories,
                         extensions = RequiredExtensions(entry.Package.Definition, preview.Context.Extensions),
                         requiredModuleScope = entry.Package.Definition.requiredModuleScope,
-                        repository = "package:com.ember", files = entry.Package.Files, installedAtUtc = DateTime.UtcNow.ToString("o")
+                        repository = IsProject(entry.Package) ? "project:" + ProjectSourceDirectory : "package:com.ember", files = entry.Package.Files, installedAtUtc = DateTime.UtcNow.ToString("o")
                     });
             }
             if (preview.IsIndependentUpdate)
@@ -523,7 +629,7 @@ namespace Ember.UPMManager.Editor
                 if (preview.DesiredBaseline.sourceMetaHash != null) File.Copy(preview.SourceRoot + ".meta", stagedMeta);
                 targets.Add(new PreparedSkillTarget(stagedMeta, destination + ".meta", preview.DesiredBaseline.sourceMetaHash == null));
             }
-            state.schemaVersion = 3;
+            state.schemaVersion = Math.Max(state.schemaVersion, state.skills.Any(s => s.ownerKind == "project") ? 4 : 3);
             state.templateBaseline = preview.DesiredBaseline;
             string pending = Path.Combine(transaction, "state.json");
             File.WriteAllText(pending, JsonUtility.ToJson(state, true) + "\n", Utf8);

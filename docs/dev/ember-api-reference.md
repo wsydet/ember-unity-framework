@@ -2064,3 +2064,10 @@ Editor 公共入口 `Ember.Table.Editor.EmberTableSourceFiles` 读取共享
 旧 Source 字段保留；共享映射/外部绑定生效时缺失不回退旧文件。
 配置、迁移与 API 示例见 [外部源表](../../Packages/com.ember/Table/Documentation~/table/external-sources.md)，
 实际验证边界见 [本次交付记录](external-table-sources-delivery.md)。
+
+
+### 项目自有 Skill 与正式试玩补强（0.25.1）
+
+`EmberAISkillInstaller.ProjectSourceDirectory` 为 `ProjectSettings/EmberProjectSkills`，schema v3 清单声明 projectId、Skill version、精确模板 ID 和兼容范围；安装记录使用 schema v4，所有权为 project。项目中心既有 `PreviewCurrentTemplateSkills/SyncCurrentTemplateSkills` 与 `GetTemplateSkillExecutionBlockReason` 同时覆盖项目来源；配置、发现副本和记录复用既有模板事务。格式、备份、失效收回及降级边界见[项目 Skill](../../Packages/com.ember/Documentation~/manual/project-ai-skills.md)。
+
+`EmberLevelTrialSession.Stop(string requestId)`、`Retry(string requestId)` 与 `ReportFailure(string requestId, string message)` 拒绝旧请求影响当前会话；原无参数 Stop 和单参数 ReportFailure 保留兼容，适用于显式当前会话操作。异步适配器回调应携带启动时冻结的 requestId。重试额外拒绝关卡发现结果换绑配置/适配器；同步 StopTrial 异常取消重试、记录诊断并允许编辑现场恢复。框架不负责产品能力初态或项目临时存储清理。验证范围见[实施记录](../../Packages/com.ember/Documentation~/manual/level-authoring-boundary-plan.md#9-框架侧实施记录2026-10-30)。

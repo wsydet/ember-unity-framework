@@ -99,7 +99,8 @@ namespace Ember.Core.Editor
                 Directory.GetParent(Application.dataPath).FullName, skillId,
                 editing?.templateId ?? deployed?.templateId,
                 editing?.templateVersion ?? deployed?.version,
-                editing?.contentHash ?? deployed?.contentHash, editing != null, EmberExtensionProject.EnabledIdentities(), EmberExtensionDocuments.EnabledScopes);
+                editing?.contentHash ?? deployed?.contentHash, editing != null, EmberExtensionProject.EnabledIdentities(), EmberExtensionDocuments.EnabledScopes,
+                GetFrameworkVersion(), HasSkillEuiApi());
         }
 
         /// <summary>查看包内模板技能；此预览不代表项目已获得该模板的使用条件。</summary>
