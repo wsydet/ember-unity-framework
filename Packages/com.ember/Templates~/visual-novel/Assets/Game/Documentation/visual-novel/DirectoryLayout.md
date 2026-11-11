@@ -14,8 +14,9 @@
 | 阅读布局编辑器 | `Assets/Game/UI/Editor/Narrative/` |
 | 阅读相关 Prefab | `Assets/GameResource/Resources/UI/Module/Narrative/Prefabs/` |
 | 存档 Prefab | `Assets/GameResource/Resources/UI/Module/NovelSave/Prefabs/` |
-| 阅读背景及立绘 | `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/<剧情名>/{Backgrounds,Portraits}/` |
-| 主对话框与阅读菜单的整组 8 张图标 | `Assets/GameResource/Resources/UI/Common/Atlas/Novel/` |
+| 按剧情数据选择的背景及立绘 | `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/<剧情名>/{Backgrounds,Portraits}/` |
+| 小说专用固定大图与控件图标 | `Assets/GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/` |
+| 按皮肤表选择的图片及独立皮肤资源 | `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/` |
 | 所有模板共用的字体及许可证 | `Packages/com.ember/SharedAssets/Fonts/` |
 | 项目字体皮肤与默认皮肤 | `Assets/GameResource/Resources/Config/FontSkins/EmberFontSkins.asset` |
 | 剧情、章节及节点 SO | `Assets/GameResource/Resources/Config/Narrative/<剧情名>/` |
@@ -25,7 +26,7 @@
 
 `Narrative` 和 `NovelSave` 的业务脚本本来已按模块归档，不改模块名称、命名空间或程序集边界。配表声明、Row 和生成代码继续使用项目统一的 `Game/Table` 流程，CSV 源文件仍在 `GameResource/TableSources`。
 
-图片随使用它的 UI 放在 `Atlas`；多个 UI 共用的图片放 `Common/Atlas`。主对话框与阅读菜单的图标按同一套通用控件素材管理，history、hide、auto、speed、save、quick_save、settings、return 全部放 `Common/Atlas/Novel`，不再按当前某个按钮的唯一使用方拆分。
+图片分类统一遵循[UI 命名、路径与图片分类规范](../../../../Packages/com.ember/Documentation~/ui/naming-and-paths.md)。小说专用图片归 Narrative，不作为所有模板共用素材。history、hide、auto、speed、save、quick_save、settings 为固定引用的大图，放 `Narrative/StaticTexture/Novel`；皮肤表选择的 return 与 menu_evening 放 `Narrative/DynamicTexture/Skins/Default`，原有 Prefab 占位引用继续保留 GUID。剧情背景、立绘按数据选择，放 DynamicTexture；小型固定配图和九宫素材仍可放 Atlas，不仅凭尺寸分类。
 
 `Resources/Config/Narrative/M1Sample` 已移出运行目录；其中三章节剧情保留为测试夹具，编辑器测试通过 AssetDatabase 加载，确保跨章节测试仍覆盖真实 SO。正式默认剧情只保留 LastLight。旧 M1Sample 剧情存档不再作为运行示例支持，不将其偷偷转向 LastLight；原音频目录中的 BGM/SFX 仍被 LastLight 使用，因此保留。已有配表引用的占位背景、立绘也不随剧情目录一起删除。
 

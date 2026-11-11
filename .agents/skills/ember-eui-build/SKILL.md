@@ -14,6 +14,8 @@ description: 使用 Ember UI 开发中心制作正式 EUI Prefab、绑定与用�
 - 本技能由 Ember 框架仓库统一维护，通过 `Ember/UPM Manager → AI Skill` 安装到当前项目。使用适配器前确认公开的 `EUIBindingCodeGenUtility.TryRegenerateCode` 已存在；旧框架先通过 UPM Manager 升级，不把新适配器复制到缺少该 API 的项目。已部署的旧适配器与业务调用按实际差异迁移，不重复定义同名类。
 - 列清新建或修改的 Prefab、角色、类名、输出目录、绑定字段、嵌套所有权、默认状态。用户明确要求代做资源时，直接实施，不再要求用户逐个制作或批准同一动作。
 
+命名、目录与图片分类先读取目标工程实际安装包内的 Documentation~/ui/naming-and-paths.md；新分类约定不代表旧包已实现自动分流或迁移。
+
 ## 编辑器制作流程
 
 有 PSD、工作 PSD、BUI 或现有制作回执时，先读 [美术替换与断点续接](references/artwork-workflow.md)，从已验证的最近阶段进入。普通控件搭建仍走以下流程；不要为了换肤重建有效上游。

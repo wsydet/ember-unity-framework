@@ -17,7 +17,7 @@ using Game.Narrative;
 - `Assign(story, skin)`：story 为实际 `NarrativeStorySO` 资产；null skin 恢复基础外观。仅改变该剧情关联，下次打开页面生效。
 - `Validate(skin)`：返回待检查的问题列表。
 
-资源目录：`Assets/GameResource/Resources/UI/Common/Atlas/NovelSkins/<id>/Skin.asset` 及 `Images/`；剧情关联为 `Assets/GameResource/Resources/Config/Narrative/UISkinAssignments.asset`。皮肤资产是新增编辑器皮肤的维护源，不手工将同一配置再写一份旧配表。
+资源目录：`Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/<id>/Skin.asset` 及 `Images/`；剧情关联为 `Assets/GameResource/Resources/Config/Narrative/UISkinAssignments.asset`。皮肤资产是新增编辑器皮肤的维护源，不手工将同一配置再写一份旧配表。
 
 截图示例：
 

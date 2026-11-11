@@ -132,10 +132,9 @@ UnityFarm 的 PackageCache，不得把产品专用业务误收进通用框架或
   必须通过 UI 中心（EUI 开发中心）完成**，覆盖页面、弹窗、Item、Prefab 骨架、Binding 和配套注册。
   保持 UI 中心生成的 `Game/UI/Runtime/Module` 结构和模块归属。按实际 Binding
   编写用户逻辑，调整绑定后通过中心重新生成，不手工拼造生成文件或绕开中心另建 UI 骨架。
-- 业务资源放到 `Assets/GameResource` 下对应的资源类别和模块位置。当前模块 UI 资源为
-  `Resources/UI/Module/<模块名>/`；图片放其 `Atlas`，通用图片与同组通用控件图标放
-  `Resources/UI/Common/Atlas/`；配置、音频分别归 `Resources/Config/<模块名>/`、
-  `Resources/Audio/<模块名>/`。
+- 业务资源放到 `Assets/GameResource` 下对应的资源类别和模块位置。UI 命名、目录及
+  Atlas / StaticTexture / DynamicTexture 分类统一遵循 [UI 规范](../ui/naming-and-paths.md)；
+  配置、音频分别归 `Resources/Config/<模块名>/`、`Resources/Audio/<模块名>/`。
 - 模板名称不作为混放各类内容的顶层业务目录；项目公共接线及配表生成目录继续遵循各自规则。
 - 实际迁移时保持生成配置、Prefab ClassPath、页面注册和资源加载路径一致，保留 GUID；不为匹配
   文档示意而自行修改 UI 中心生成的路径。

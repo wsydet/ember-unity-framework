@@ -66,7 +66,7 @@ MonoBehaviour:
   deletionProtected: 0
   baseBindingUUID: 
   codePathMode: 1
-  classPath: UIFoundation/Item
+  classPath: Module/UIFoundation/Item
   className: EUIOwnershipLeafItem
   prefabName: EUIOwnershipLeafItem
   noCodeGen: 0

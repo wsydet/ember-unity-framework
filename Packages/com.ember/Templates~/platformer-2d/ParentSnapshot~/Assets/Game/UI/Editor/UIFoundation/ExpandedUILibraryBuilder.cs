@@ -32,7 +32,7 @@ namespace Game.UI.Editor
             _round = AssetDatabase.LoadAssetAtPath<Sprite>(ATLAS + "RoundedSurfaceHiDPI.png");
             foreach (var icon in new[]{"Close","Back","Search","Help","Plus","Minus","Chevron","Lock"})
             {
-                var path = ATLAS + icon + ".png"; AssetDatabase.ImportAsset(path);
+                var path = "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/" + icon + ".png"; AssetDatabase.ImportAsset(path);
                 var importer = (TextureImporter)AssetImporter.GetAtPath(path);
                 importer.textureType = TextureImporterType.Sprite; importer.spriteImportMode = SpriteImportMode.Single;
                 importer.alphaIsTransparency = true; importer.mipmapEnabled = false; importer.textureCompression = TextureImporterCompression.Uncompressed;
@@ -85,7 +85,7 @@ namespace Game.UI.Editor
             var i=r.gameObject.AddComponent<EUIImageEx>(); i.sprite=_round; i.type=Image.Type.Sliced; i.pixelsPerUnitMultiplier=16/radius; i.color=color; i.raycastTarget=hit; return i;
         }
         private static Image Icon(string name,Transform parent,string sprite,float size=24,float x=0,float y=0)
-        { var i=Rect(name,parent,size,size,x,y).gameObject.AddComponent<EUIImageEx>(); i.sprite=AssetDatabase.LoadAssetAtPath<Sprite>(ATLAS+sprite+".png"); i.preserveAspect=true; i.color=Ink; i.raycastTarget=false; return i; }
+        { var i=Rect(name,parent,size,size,x,y).gameObject.AddComponent<EUIImageEx>(); i.sprite=AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/"+sprite+".png"); i.preserveAspect=true; i.color=Ink; i.raycastTarget=false; return i; }
         private static TMPEx Text(string name,Transform parent,string value,float w,float h,float x=0,float y=0,float size=16)
         {
             var t=Rect(name,parent,w,h,x,y).gameObject.AddComponent<TMPEx>(); t.font=_font; t.SetFontForSkin(4,1);t.SetFontSkin(4,1);t.fontSize=size;t.color=Ink;t.text=value;
@@ -133,7 +133,7 @@ namespace Game.UI.Editor
                 case "IconButton":
                     r.sizeDelta=new Vector2(40,40);var ib=root.AddComponent<EUIButtonEx>();ib.targetGraphic=Surface(r,Pale,8,true);Icon("Icon",r,"Help");Bind(root,("Button",ib));break;
                 case "CloseButton":case "BackButton":
-                    r.sizeDelta=new Vector2(40,40);root.transform.Find("Icon").GetComponent<Image>().sprite=AssetDatabase.LoadAssetAtPath<Sprite>(ATLAS+(name=="CloseButton"?"Close":"Back")+".png");break;
+                    r.sizeDelta=new Vector2(40,40);root.transform.Find("Icon").GetComponent<Image>().sprite=AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/"+(name=="CloseButton"?"Close":"Back")+".png");break;
                 case "AmountButton":
                     r.sizeDelta=new Vector2(240,48);var ab=root.GetComponent<EUIButtonEx>();ab.Label.text="Unlock";ab.Label.rectTransform.sizeDelta=new Vector2(110,40);ab.Label.rectTransform.anchorMin=ab.Label.rectTransform.anchorMax=new Vector2(.25f,.5f);ab.Label.rectTransform.anchoredPosition=Vector2.zero;
                     Icon("AmountIcon",r,"Plus",22,38);var amount=Text("Amount",r,"120",50,36,82);amount.color=Color.white;break;

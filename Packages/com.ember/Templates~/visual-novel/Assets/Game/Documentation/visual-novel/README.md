@@ -116,7 +116,7 @@
 
 底部渐变采用黑色托底和向上透明过渡。正文右边界留在可见推进箭头之前；**Advance 的点击范围覆盖整片底部渐变，不能按箭头图标尺寸缩小点击范围**。阅读菜单压缩上下留白，分割线仅保留在相邻菜单项之间，末项下方不画线。
 
-新增 Page / Popup / Item、骨架、Binding 和注册必须经 EUI 开发中心；已有 Binding 调整后使用统一生成器。正式资源位于 `Resources/UI/Module/Narrative/Prefabs`，8 张通用图标位于 `Resources/UI/Common/Atlas/Novel`。
+新增 Page / Popup / Item、骨架、Binding 和注册必须经 EUI 开发中心；已有 Binding 调整后使用统一生成器。正式资源位于 `Resources/UI/Module/Narrative/Prefabs`，8 张通用图标位于 `Resources/UI/Module/Narrative/StaticTexture/Novel`。
 
 ## E0 演出入口
 

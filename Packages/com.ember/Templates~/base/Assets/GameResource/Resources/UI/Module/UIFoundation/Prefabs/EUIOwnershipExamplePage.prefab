@@ -136,7 +136,7 @@ MonoBehaviour:
   deletionProtected: 0
   baseBindingUUID: 
   codePathMode: 1
-  classPath: UIFoundation/Page
+  classPath: Module/UIFoundation/Page
   className: EUIOwnershipExamplePage
   prefabName: EUIOwnershipExamplePage
   noCodeGen: 0

@@ -31,10 +31,10 @@ namespace Game.Narrative.Tests
                 EUIBindingBridge.Attach(page, root.GetComponent<EUIBinding>()); page.Logic.OnInit(); root.GetComponent<CanvasGroup>().alpha = 1;
                 var view = (INovelView)page.Logic; var screen = (INovelScreenView)page.Logic; var actor = (INovelActorView)page.Logic;
                 var opacity = (INovelOpacityView)page.Logic;
-                var old = Resources.Load<Sprite>("UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening");
-                var next = Resources.Load<Sprite>("UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile");
-                var day = Resources.Load<Sprite>("UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_dusk");
-                var night = Resources.Load<Sprite>("UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night");
+                var old = Resources.Load<Sprite>("UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_evening");
+                var next = Resources.Load<Sprite>("UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_smile");
+                var day = Resources.Load<Sprite>("UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_dusk");
+                var night = Resources.Load<Sprite>("UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_night");
                 Assert.IsNotNull(old); Assert.IsNotNull(next); Assert.IsNotNull(day); Assert.IsNotNull(night);
                 view.Visual(new NovelCommand("bg", NovelCommandKind.Background), day, 1);
                 view.Visual(new NovelCommand("actor", NovelCommandKind.Character, slot: NovelPortraitSlot.Center), old, 1);

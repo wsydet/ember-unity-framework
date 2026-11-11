@@ -4,6 +4,8 @@
 `EUIManager` 是业务入口，`EUIViewEngine` 执行资源加载、排序、过渡和生命周期。两者均为
 `EmberSingleton` + `IEmberManager`，不是挂在预制体上的 MonoBehaviour。
 
+命名、目录、绑定节点与 Atlas / StaticTexture / DynamicTexture 分类统一见 [UI 命名、路径与图片分类规范](naming-and-paths.md)。
+
 ## 打开与关闭页面
 
 先用 UI 开发中心创建 Page、生成 Binding 和 `EUIPageDef`，业务使用生成的 `GamePages` 常量：
@@ -52,4 +54,4 @@ SceneUI 的气泡就是 Item，见 [SceneUI 接入](../scene-ui/README.md)。
 
 框架开发仓库另有 `docs/user/UI开发参考.md` 与 `docs/dev/eui-reference.md`，只属于仓库维护资料，单独安装 UPM 包时不要求这些文件存在。消费项目以本页、随包源码及 UI 开发中心生成结果为依据。
 
-- [EUI 契约、页面命名与嵌套所有权](eui-contract.md)：只读导出/差异、语义登记、Page 命名与生成示例。
+- [EUI 契约、页面命名与嵌套所有权](eui-contract.md)：只读导出/差异、语义登记、绑定快照与实例所有权。

@@ -13,7 +13,7 @@ namespace Game.Narrative.Editor
     public static class NarrativeM2Assets
     {
         #region 内部参数
-        private const string RESOURCE = "UI/Module/Narrative/Atlas/LastLight/";
+        private const string RESOURCE = "UI/Module/Narrative/DynamicTexture/LastLight/";
         private const string AUDIO_RESOURCE = "Audio/Narrative/M1Sample/";
         [Serializable] private sealed class Commands { public List<NovelCommand> _commands; }
         #endregion

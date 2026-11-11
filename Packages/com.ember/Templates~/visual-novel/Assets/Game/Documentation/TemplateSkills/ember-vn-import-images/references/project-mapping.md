@@ -1,19 +1,19 @@
 # 视觉小说图片与配表映射
 
-路径均相对实际消费项目根目录。以下为 visual-novel 0.6.0 的既有结构；执行时以当前项目的表 Definition、Row 和模板文档为准。这个 Skill 还依赖支持模板技能身份检查的框架实现，已发布的旧 0.13.2 不因此自动获得该能力。
+路径均相对实际消费项目根目录。以下为本轮 UI 分类对齐后的结构；执行时以当前项目的表 Definition、Row 和模板文档为准。这个 Skill 还依赖支持模板技能身份检查的框架实现，已发布的旧 0.13.2 不因此自动获得该能力。
 
 ## 图片
 
 | 用途 | 文件目录 | 源表 |
 | --- | --- | --- |
-| 角色立绘、表情变体 | `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/<剧情名>/Portraits/` | `novel_portraits`，必要时 `novel_characters` |
-| 场景背景 | `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/<剧情名>/Backgrounds/` | `novel_backgrounds` |
+| 角色立绘、表情变体 | `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/<剧情名>/Portraits/` | `novel_portraits`，必要时 `novel_characters` |
+| 场景背景 | `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/<剧情名>/Backgrounds/` | `novel_backgrounds` |
 | 阅读 UI 专用图片 | `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/` 下按现有用途组织 | 无通用小说图片表；核对实际 UI 引用 |
 | 多 UI 共用图标 | `Assets/GameResource/Resources/UI/Common/Atlas/` 下按现有分组组织 | 不写小说背景/立绘表 |
 
 不要将 `<剧情名>` 固定为 LastLight 或模板名。从用户正在制作的剧情或明确指定的分组选择；不清楚时询问。遮罩和特效需核对 `Assets/Game/Documentation/visual-novel/EffectConfiguration.md` 的现有资产配置，不能仅凭一张图推断完整效果。
 
-CSV 中 `resourcePath` 去掉 `Assets/GameResource/Resources/` 和文件扩展名，使用 `/`。例如 `UI/Module/Narrative/Atlas/MyStory/Portraits/hero1_neutral`，不是绝对路径、GUID 或带 `.png` 的路径。同一个 Resources 相对路径即使扩展名不同也可能冲突，应一并检查。
+CSV 中 `resourcePath` 去掉 `Assets/GameResource/Resources/` 和文件扩展名，使用 `/`。例如 `UI/Module/Narrative/DynamicTexture/MyStory/Portraits/hero1_neutral`，不是绝对路径、GUID 或带 `.png` 的路径。同一个 Resources 相对路径即使扩展名不同也可能冲突，应一并检查。
 
 ## 源表与列
 
@@ -25,7 +25,7 @@ CSV 中 `resourcePath` 去掉 `Assets/GameResource/Resources/` 和文件扩展�
 | `novel_portraits.etable.csv` | `id,characterId,expression,resourcePath` | `characterId` 引用角色表；多个表情各有独立立绘 ID |
 | `novel_backgrounds.etable.csv` | `id,resourcePath` | 背景 ID 独立；不添加不存在的场景/时段列 |
 
-例：用户确认“这是 MyStory 的主角1，普通表情，新建角色 hero1”后，可提议（最终仍由用户确认）角色 `hero1,主角1` 与立绘 `hero1_neutral,hero1,neutral,UI/Module/Narrative/Atlas/MyStory/Portraits/hero1_neutral`。不把显示名直接当文件路径，不因为表里有其他角色就覆盖它。时段等信息可体现在背景 ID 和文件名，不扩展表结构。
+例：用户确认“这是 MyStory 的主角1，普通表情，新建角色 hero1”后，可提议（最终仍由用户确认）角色 `hero1,主角1` 与立绘 `hero1_neutral,hero1,neutral,UI/Module/Narrative/DynamicTexture/MyStory/Portraits/hero1_neutral`。不把显示名直接当文件路径，不因为表里有其他角色就覆盖它。时段等信息可体现在背景 ID 和文件名，不扩展表结构。
 
 ## 现有 Unity API
 

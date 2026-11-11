@@ -14,7 +14,7 @@ namespace Game.Narrative.Editor
         #region 内部方法
         protected override IEnumerable<EmberImageSource> BuiltinSources()
         {
-            const string root = "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/";
+            const string root = "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/";
             yield return new EmberImageSource
             {
                 Label = "角色立绘", TableId = "novel_portraits", GroupColumns = new[] { "characterId" },

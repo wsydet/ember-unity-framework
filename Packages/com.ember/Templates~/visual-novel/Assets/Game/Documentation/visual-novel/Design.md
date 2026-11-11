@@ -10,7 +10,7 @@
 
 以下日期记录及 §1–§18 保留最初设计、阶段证据与当时待办；其中“当前”“最新”“未实现”“未保存”均指对应日期，不覆盖页首当前契约，也不代表本批新增验证。既有平台、人工画面和消费端验收待办保留。
 
-> **样例归属更新**：M1Sample 剧情已移到 "Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample"，仅供跨章节测试和编辑器验证；Resources 内默认剧情为 LastLight，另有 FlowExample 日程与子流程示例。主对话框与菜单的 8 张图标统一在 "UI/Common/Atlas/Novel"。历史章节中的 M1 运行入口不再适用。
+> **样例归属更新**：M1Sample 剧情已移到 "Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample"，仅供跨章节测试和编辑器验证；Resources 内默认剧情为 LastLight，另有 FlowExample 日程与子流程示例。主对话框与菜单的 8 张图标统一在 "UI/Module/Narrative/StaticTexture/Novel"。历史章节中的 M1 运行入口不再适用。
 
 > **最新 M5 收束（2026-09-21）**：编辑工具与完整示例已落盘，跨剧情定位/编辑器观察四组 XML 14/14 通过；双结局测试补齐 Wait 驱动后，用户确认测试全部通过，本批失败关闭。归档 XML 保留 380/382 历史结果，没有新全量 XML。人工画面、保存/Bump 与消费端验收仍待完成；封存仍为 visual-novel 0.4.0 / preview。详见 Implementation 顶部与 M5 分项。
 

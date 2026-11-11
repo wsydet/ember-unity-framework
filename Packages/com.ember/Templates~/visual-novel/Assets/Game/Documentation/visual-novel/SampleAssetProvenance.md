@@ -1,6 +1,6 @@
 # 天台示例素材记录
 
-2026-09-21。工具：内置 `image_gen.imagegen`；参考输入为 `UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening.png`。输出复制为 `Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/zhou_evening.png`。未程序化裁剪或重绘，保留真实透明 alpha；Unity 导入 Sprite Single、FullRect、最大 2048、无 mipmap。
+2026-09-21。工具：内置 `image_gen.imagegen`；参考输入为 `UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_evening.png`。输出复制为 `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/zhou_evening.png`。未程序化裁剪或重绘，保留真实透明 alpha；Unity 导入 Sprite Single、FullRect、最大 2048、无 mipmap。
 
 完整生成提示：
 
@@ -10,7 +10,7 @@ Create one new visual novel character sprite, matching the reference image's det
 
 ## 菜单背景与统一界面（2026-09-24）
 
-工具：内置 `image_gen.imagegen`。输出原样复制为 `Assets/GameResource/Resources/UI/Common/Atlas/Novel/menu_evening.png`，用于主菜单、设置和存档页。Unity 导入为 Sprite Single，最大 2048，无 mipmap。文字、按钮、边框和滑块为正式 EUI 控件，未烘焙在图片中。
+工具：内置 `image_gen.imagegen`。输出原样复制为 `Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/Default/menu_evening.png`，用于主菜单、设置和存档页。Unity 导入为 Sprite Single，最大 2048，无 mipmap。文字、按钮、边框和滑块为正式 EUI 控件，未烘焙在图片中。
 
 完整生成提示：
 

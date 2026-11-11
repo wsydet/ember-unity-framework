@@ -14,33 +14,18 @@
 
 框架通用实现仍归 `Packages/com.ember/<子系统>/`。项目启动、状态切换、场景和集中配表等已有公共接线继续使用各自专门目录，例如 `Game/State`、`Game/Scenes`、`Game/Table`，不因引用某模块就迁入该模块。
 
-## UI 必须通过 UI 中心生成
+## UI 制作、命名与资源目录
 
-**所有正式 UI 的创建及代码生成必须通过 UI 中心完成。** 页面、弹窗、Item、Prefab 骨架、Binding 和配套注册信息均使用现有 UI 中心（EUI 开发中心）的创建、绑定及生成流程。
+UI 的命名、路径、绑定节点、图片分类、公共素材归属和迁移要求统一见 [UI 命名、路径与图片分类规范](../ui/naming-and-paths.md)。正式 Page、Item、Prefab 骨架、Binding 与注册通过 EUI 开发中心完成，保留 `Game/UI/Runtime/Module/<模块>/` 结构。图片按 Atlas、StaticTexture、DynamicTexture 的实际用途归类，不再把全部 UI 图片统一放入 Atlas。
 
-先在 UI 中心选择正确的模块归属，再按实际生成的目录和 Binding 编写用户逻辑。新增或调整控件绑定后，通过 UI 中心重新生成；不手工拼造生成文件、绑定字段或另起一套 UI 骨架绕开中心。
-
-运行时 UI 的标准路径是 `Assets/Game/UI/Runtime/Module/<模块名>/`，`Runtime` 必须保留，不使用省略该层的 `Game/UI/Module` 路径。UI 编辑器工具放在 `Game/UI/Editor/<模块名>/`。通过 UI 中心生成后，Prefab 的 ClassPath、生成文件和页面注册应与实际生成结果保持一致。
-
-## UI 与资源对应关系
-
-当前 Resources 加载方案采用以下位置；路径大小写统一使用示例中的形式：
+## 非 UI 资源归属
 
 | 资源 | 位置 |
 | --- | --- |
-| 模块 UI Prefab | `Assets/GameResource/Resources/UI/Module/<模块名>/Prefabs/` |
-| 模块 UI 专用图片 | `Assets/GameResource/Resources/UI/Module/<模块名>/Atlas/` |
-| 模块 UI 动画、材质等 | 对应 UI 模块目录内的 `Animator/`、`Material/` 等目录 |
-| 通用 UI 图片及可复用控件图标 | `Assets/GameResource/Resources/UI/Common/Atlas/` |
-| 共用 UI Prefab、字体等 | `Assets/GameResource/Resources/UI/Common/Prefabs/`、`Fonts/` 等目录 |
 | 模块配置及运行内容数据 | `Assets/GameResource/Resources/Config/<模块名>/` |
 | 模块音频 | `Assets/GameResource/Resources/Audio/<模块名>/` |
 | 集中配表源文件 | `Assets/GameResource/TableSources/` |
 | 配表生成的运行数据 | 沿用配表系统声明的输出位置，例如 `Resources/Config/Tables/` |
-
-图片跟随使用它的 UI 放入 `Atlas`。通用素材放 `Common/Atlas`，可以按用途或素材组继续细分，例如 `Common/Atlas/Novel`。同一套主对话框、阅读菜单的通用按钮图标可以整体放 Common，不必因为某张图目前只被一个按钮引用而拆散。剧情背景和人物立绘等内容图片仍归使用它们的模块 UI。
-
-`Common` 只收纳职责明确的公共资源，不作为无法判断归属时的默认目录。不按图片文件名猜模块归属，应以实际用途为准；也不为多个 UI 各复制一份相同公共素材。
 
 资源是否进入 `Resources` 由加载方案决定，不要求所有资源都进入 Resources。原始素材、编辑器数据和测试夹具不作为运行时加载内容混入其中；切换加载方案时，仍保持按资源类别、模块及 UI 归属组织。
 
@@ -103,7 +88,7 @@ Assets/
             ├── Common/Atlas/Novel/
             ├── Common/Fonts/
             └── Module/
-                ├── Narrative/    # Prefabs、Atlas 等
+                ├── Narrative/    # Prefabs、Atlas、StaticTexture、DynamicTexture 等
                 └── NovelSave/    # Prefabs 等
 ```
 

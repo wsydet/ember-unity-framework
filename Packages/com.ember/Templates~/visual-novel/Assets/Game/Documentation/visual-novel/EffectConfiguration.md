@@ -585,7 +585,7 @@ Key 查不到也不报错，直接回退原文。说话人显示名再往前多�
 | `page` | 页面 Prefab 名，例如 `EUINovelReaderPage`、`EUINovelReadingMenuPage`、`EUIMainPanel` |
 | `control` | EUI 绑定控件名，例如 `Menu`、`History`；**留空表示页面根** |
 | `node` | 锚点下的相对节点路径，例如 `SkinBorder`、`Border/Fill`；**留空表示锚点自身** |
-| `spritePath` | Resources 下不含扩展名的图片路径，例如 `UI/Common/Atlas/Novel/return` |
+| `spritePath` | Resources 下不含扩展名的图片路径，例如 `UI/Module/Narrative/DynamicTexture/Skins/Default/return` |
 
 `control` 与 `node` 组合起来，同名节点就能分别覆盖：阅读页上很多按钮下都有叫 `SkinIcon` 的图，
 写 `History` / `SkinIcon` 只会换历史按钮那一个。

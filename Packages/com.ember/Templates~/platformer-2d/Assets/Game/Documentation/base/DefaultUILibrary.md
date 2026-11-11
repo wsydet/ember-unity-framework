@@ -16,7 +16,7 @@ GM 入口继续显示 FPS 并支持拖拽，面板包含时间缩放、当前状
 
 字体 DefaultLightSans 为现有 Liberation Sans 的动态 TMP 资产，源 TTF 与 OFL 授权位于 Common/Fonts/DefaultLight。通过字体中心创建的项目目录登记固定皮肤 4（DefaultLightSans）、正文槽位 1、标题槽位 2；保留原默认字体选择，中文/符号回退至框架 DingTalk。完整 CJK 外观需项目选定正式字体。
 
-背景在 Common/Textures/DefaultLight/Background.png，空态在 Common/Atlas/DefaultLight/EmptyState.png。二者由 imagegen 创建并已复制到项目；圆角使用新制 RoundedSurfaceHiDPI.png（256×256，PPU400，border=64），普通控件倍率4/3、细进度条倍率8/3。Checkmark.png 为 imagegen 生成的独立透明图标，等比显示；不使用字体字符或 Unity 内置 UI 图片替代。旧 RoundedSurface.png 仅保留历史资产。来源与提示词见仓库 docs/dev/ui-production-upgrade/evidence/S2/materials.md。
+背景在 Common/StaticTexture/DefaultLight/Background.png，空态在 Common/StaticTexture/DefaultLight/EmptyState.png。二者由 imagegen 创建并已复制到项目；圆角使用新制 RoundedSurfaceHiDPI.png（256×256，PPU400，border=64），普通控件倍率4/3、细进度条倍率8/3。Checkmark.png 为 imagegen 生成的独立透明图标，等比显示；不使用字体字符或 Unity 内置 UI 图片替代。旧 RoundedSurface.png 仅保留历史资产。来源与提示词见仓库 docs/dev/ui-production-upgrade/evidence/S2/materials.md。
 
 DefaultUILibraryBuilder 是本轮初始制作助手，拒绝覆盖已存在资产，不是最终资产的无损重建器；后续在正式 Prefab 与配置上维护，并重新生成目录。不要再次 Build 或重建 GUID。S3 从 EUIContentHostItem 的 Viewport/Content 和 EUIOptionRowItem 接入 EUIItemFactory；先明确实例生命周期和释放所有权，不重复实现现有控件。
 

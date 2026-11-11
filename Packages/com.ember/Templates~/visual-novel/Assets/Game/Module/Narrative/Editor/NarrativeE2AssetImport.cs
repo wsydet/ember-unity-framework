@@ -13,8 +13,8 @@ namespace Game.Narrative.Editor
         #region 内部方法
         private void OnPreprocessTexture()
         {
-            if (assetPath != "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile.png" &&
-                assetPath != "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night.png") return;
+            if (assetPath != "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_smile.png" &&
+                assetPath != "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_night.png") return;
             var importer = (TextureImporter)assetImporter;
             importer.textureType = TextureImporterType.Sprite; importer.spriteImportMode = SpriteImportMode.Single;
             importer.alphaIsTransparency = true; importer.mipmapEnabled = false; importer.maxTextureSize = 2048;

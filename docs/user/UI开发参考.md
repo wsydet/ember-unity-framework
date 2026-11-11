@@ -1,35 +1,16 @@
 # UI 开发参考（Ember）
 
-> 版本：2026-09-02（v0.10.0）
-> 本文规定 ember UI 代码的目录约定、页面打开规则、绑定使用、生命周期约定与提交前检查项，是 UI 开发的统一入口。
+> 命名与目录入口更新：2026-11-11；其余机制按对应源码和随包 API 文档核对。
+> 本文规定 ember UI 代码的目录约定、页面打开规则、绑定使用、生命周期约定与提交前检查项，是仓库 UI 开发操作入口；命名与目录契约以随包规范为准。
 > 机制依据：`Packages/com.ember/UI`（EUIManager/EUIPage/EUILogic）、`Packages/com.ember/UIExtension`（EUIBinding 代码生成）。API 细节见 `docs/dev/ember-api-reference.md`。
 
 ---
 
-## 1. 目录约定
+## 1. 命名与目录入口
 
-**预制体与代码分离（资源加载友好）**：
+UI 命名、代码及资源路径、绑定节点、图片分类和迁移要求统一见随包的 [UI 命名、路径与图片分类规范](../../Packages/com.ember/Documentation~/ui/naming-and-paths.md)。本页保留页面使用、生命周期和中心操作流程。
 
-| 内容 | 位置 |
-| --- | --- |
-| 逻辑代码根 | `Assets/Game/UI/Runtime/`（codegen 的 `CodePath`，可配置） |
-| UI 资源根 | `Assets/GameResource/Resources/UI/`（codegen 的 `UIResourceRoot` 配置，与逻辑目录分离；位于 `Resources` 下，打包运行时默认后端可加载） |
-| 页面注册表 | `Assets/Game/UI/GamePages.cs`（框架区，全文件框架所有）+ `GamePages.User.cs`（用户区，框架永不覆盖） |
-| 生成配置资产 | `Assets/Ember/Editor/SOs/EmberCSharpImplementation.asset`（`codePath`/`pageDefFile`/`uiResourceRoot`/模板引用） |
-| 编辑器 SO | `Assets/Ember/Editor/SOs/` |
-
-**逻辑分模块放置（业务新页面约定）**：
-
-```text
-Assets/Game/UI/Runtime/Module/<模块>/Page/<页面类名>.cs      ← 页面级 UI
-Assets/Game/UI/Runtime/Module/<模块>/Component/<组件类名>.cs  ← 可复用组件（Tab 项、列表单元等）
-```
-
-- 框架演示页面保持现状目录（`Framework/`、`MainScene/` 等）；业务新页面按模块目录写 `classPath`。
-- `classPath` 是相对代码根（`Assets/Game/UI/Runtime`）的输出子目录，例如 `Module/Inventory/Page`，不包含类名或 `.cs`；生成器另拼接逻辑类文件名。新业务按[目录规范](../../Packages/com.ember/Documentation~/maintenance/business-directory-layout.md)保留 Module 层，旧路径的兼容识别不代表应沿用旧目录。
-- 框架模式的预制体固定生成到 `UI/Common/Prefabs/`。
-- 用户模式支持两种等价写法：`Inventory/Page` → `UI/Module/Inventory/Prefabs/`；若代码本身按 `Module/<模块>` 组织，则 `Module/SceneUI` → `UI/Module/SceneUI/Prefabs/`，不会重复生成 `Module/Module`。
-- 模块配套资源按同级目录整理：`Animator/`、`Atlas/`、`Prefabs/`。
+新增正式 UI 通过 UI 开发中心创建及生成，使用真实生成配置，保留 `Assets/Game/UI/Runtime/Module/<模块>/`。图片按 Atlas / StaticTexture / DynamicTexture 的用途分类；既有目录不会因文档更新自动迁移。
 
 ## 2. 打开页面
 

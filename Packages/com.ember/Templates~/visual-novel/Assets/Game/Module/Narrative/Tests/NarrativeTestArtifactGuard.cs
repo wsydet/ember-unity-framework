@@ -28,8 +28,8 @@ namespace Game.Narrative.Tests
             "Assets/Game/Scenes/FrameworkScene.unity",
             "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
             "Assets/Resources/EmberDebugConfig.asset",
-            "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night.png.meta",
-            "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile.png.meta"
+            "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_night.png.meta",
+            "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_smile.png.meta"
         };
 
         #endregion

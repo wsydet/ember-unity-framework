@@ -19,6 +19,7 @@ TABLES = {
 }
 RESOURCE_ROOT = 'Assets/GameResource/Resources/'
 ATLAS = 'UI/Module/Narrative/Atlas/'
+DYNAMIC_TEXTURE = 'UI/Module/Narrative/DynamicTexture/'
 EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp', '.bmp', '.tga', '.tif', '.tiff'}
 
 
@@ -206,7 +207,8 @@ class Batch:
                     raise ValueError('请选择其他用途类别')
                 base, folder, table = segment(choice.get('scene', '') or source.stem), subtype, None
             resource_id = segment(choice.get('resourceId', '') or f'{base}_{variant}')
-            resource = f'{ATLAS}{story}/{folder}/{resource_id}'
+            resource_root = DYNAMIC_TEXTURE if kind in {'portrait', 'background'} else ATLAS
+            resource = f'{resource_root}{story}/{folder}/{resource_id}'
             target = no_links(self.project / f'{RESOURCE_ROOT}{resource}{source.suffix.lower()}')
             if resource.casefold() in targets:
                 raise ValueError('本批目标 Resources 路径重复，请修改 ID 或跳过重复图')

@@ -179,7 +179,7 @@ namespace Game.UI.Editor
                 else
                 {
                     // 内置图没有可寻址路径：仍给出定位信息，路径留占位提醒换成项目图片。
-                    string path = string.IsNullOrEmpty(spritePath) ? "UI/Common/Atlas/Novel/换成项目图片" : spritePath;
+                    string path = string.IsNullOrEmpty(spritePath) ? "UI/Module/Narrative/StaticTexture/Novel/换成项目图片" : spritePath;
                     EditorGUIUtility.systemCopyBuffer = NovelSkinImageCatalog.BuildRow(
                         string.IsNullOrWhiteSpace(_skinId) ? "SKINID" : _skinId.Trim(), page, control, node, path);
                     _message = string.IsNullOrEmpty(spritePath)

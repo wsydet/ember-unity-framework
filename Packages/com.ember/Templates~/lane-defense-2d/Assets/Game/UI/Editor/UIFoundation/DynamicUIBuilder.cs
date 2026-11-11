@@ -86,9 +86,9 @@ namespace Game.UI.Editor
             var iconRect = (RectTransform)root.transform.Find("Icon"); iconRect.anchorMin = iconRect.anchorMax = new Vector2(0,.5f);
             iconRect.sizeDelta = new Vector2(28,28); iconRect.anchoredPosition = new Vector2(38,0);
             var icon = iconRect.GetComponent<Image>(); icon.preserveAspect = true; icon.raycastTarget = false;
-            icon.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png");
+            icon.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png");
             var alternate = Rect("AlternateIcon", root.transform).gameObject.AddComponent<Image>();
-            alternate.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png");
+            alternate.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png");
             alternate.raycastTarget = false; alternate.gameObject.SetActive(false);
             var progressRect = Rect("Progress", root.transform); progressRect.anchorMin = new Vector2(0,0); progressRect.anchorMax = new Vector2(1,0);
             progressRect.offsetMin = new Vector2(92,8); progressRect.offsetMax = new Vector2(-36,12);

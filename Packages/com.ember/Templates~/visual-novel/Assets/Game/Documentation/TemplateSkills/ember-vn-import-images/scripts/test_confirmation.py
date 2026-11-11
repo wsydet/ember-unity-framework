@@ -37,7 +37,8 @@ class ConfirmationTests(unittest.TestCase):
         self.confirm()
         receipt = verify(self.batch.work)
         self.assertEqual(receipt['plan'][0]['tableRows'][0]['row']['displayName'], '主角,一')
-        self.assertEqual(receipt['plan'][1]['resourcesPath'], 'UI/Module/Narrative/Atlas/Story/Backgrounds/room_day')
+        self.assertEqual(receipt['plan'][0]['resourcesPath'], 'UI/Module/Narrative/DynamicTexture/Story/Portraits/hero_neutral')
+        self.assertEqual(receipt['plan'][1]['resourcesPath'], 'UI/Module/Narrative/DynamicTexture/Story/Backgrounds/room_day')
         self.assertEqual(before, self.batch.snapshot())
         self.assertFalse(Path(receipt['plan'][0]['target']).exists())
 

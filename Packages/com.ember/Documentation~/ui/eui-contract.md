@@ -30,7 +30,9 @@ bool blocked = differences.Any(d => d.blocksApply);
 
 ## 页面命名与生成
 
-Page（包括 Popup/FullScreenPopup）的资产、根名、PrefabName/PageName 和类名对应同一个 Page 名称；弹窗种类由 PageType 表达。`EUICreationRequest` 默认 NewPage，旧 Panel 后缀请求会预检失败并提示改正。已有特殊名称 API 仍可读取；内部 Panel 容器不迁移。使用 AssetDatabase.MoveAsset 保留 GUID，再更新 Binding 并调用 `EUIBindingCodeGenUtility.TryRegenerateCode`。生成器同步生成头的 prefab name，保留用户代码和受管生命周期内容。
+Page/Item、Prefab、类与绑定节点的命名及生成目录统一见 [UI 命名、路径与图片分类规范](naming-and-paths.md)。本页负责契约、绑定快照和实例所有权。
+
+已授权页面迁移使用 AssetDatabase.MoveAsset 保留 GUID，更新 Binding 后调用 `EUIBindingCodeGenUtility.TryRegenerateCode`。生成器同步生成头的 prefab name，保留用户代码和受管生命周期内容。
 
 `GetBindingSnapshot/ApplyBindingSnapshot` 补齐代码模式、过渡/遮罩配置和条目 IsFramework/HasGameObject；新增可空配置字段保持旧调用未提供值时的兼容性。HasGameObject=false 保留缺失引用，不会把它变成根节点。快照用于绑定编辑，Odin 专有 Settings 实例不在其重建范围。
 

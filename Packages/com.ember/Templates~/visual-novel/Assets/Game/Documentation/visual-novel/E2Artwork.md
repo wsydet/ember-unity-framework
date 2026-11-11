@@ -4,8 +4,8 @@
 
 | 资源键 | 项目内文件（相对于 Assets/GameResource/Resources） | 原图 | 尺寸 |
 |---|---|---|---|
-| `lastlight_wan_smile` | `UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile.png` | 同目录 `lin_evening.png` | 1024×1536，RGBA |
-| `lastlight_rooftop_night` | `UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night.png` | 同目录 `rooftop_dusk.png` | 1672×941，RGB |
+| `lastlight_wan_smile` | `UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_smile.png` | 同目录 `lin_evening.png` | 1024×1536，RGBA |
+| `lastlight_rooftop_night` | `UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_night.png` | 同目录 `rooftop_dusk.png` | 1672×941，RGB |
 
 女主保持同一人物、姿态、服饰和暖色轮廓光，只柔化眼神并微笑。屋顶保持建筑、栏杆、云层和镜头位置，改为蓝色入夜，保留暖色门灯。旧的 `alice_smile` 兼容键不改为新图，避免改变旧剧情/测试的资源含义。表格源与正文已引用新键，正式 bytes 由配表中心 BakeCurrent 导出。
 

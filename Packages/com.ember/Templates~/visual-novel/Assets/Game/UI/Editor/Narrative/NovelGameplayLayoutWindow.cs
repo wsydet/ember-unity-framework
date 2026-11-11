@@ -222,7 +222,7 @@ namespace Game.UI.Editor
                 foreach (var record in _draft) record.Apply(_targets[record.Key]);
                 ApplyStyles();
                 _sourceHash = hash; hasUnsavedChanges = _draft.Count > 0;
-                const string sample = "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/";
+                const string sample = "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/";
                 if (!_background) _background = AssetDatabase.LoadAssetAtPath<Sprite>(sample + "Backgrounds/rooftop_dusk.png");
                 if (!_center) _center = AssetDatabase.LoadAssetAtPath<Sprite>(sample + "Portraits/lin_evening.png");
                 RebuildPreview(); _message = "正式阅读页已载入；示例图片、对白、选项仅用于预览。";
@@ -291,7 +291,7 @@ namespace Game.UI.Editor
             EditorGUILayout.HelpBox("以下图片用于预览，不保存到 Prefab。", MessageType.None);
             if (GUILayout.Button("使用规范示例：黄昏天台 / 林晚"))
             {
-                const string sample = "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/";
+                const string sample = "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/";
                 _background = AssetDatabase.LoadAssetAtPath<Sprite>(sample + "Backgrounds/rooftop_dusk.png");
                 _center = AssetDatabase.LoadAssetAtPath<Sprite>(sample + "Portraits/lin_evening.png");
                 _left = _right = null; _usePreviewContext = true;

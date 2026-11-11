@@ -1,0 +1,925 @@
+{
+  "base": {
+    "version": "0.10.2",
+    "parentVersion": "",
+    "contentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+    "versionedContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "lane-defense-2d": {
+    "version": "0.1.2",
+    "parentVersion": "0.10.2",
+    "contentHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
+    "versionedContentHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "platformer-2d": {
+    "version": "0.13.2",
+    "parentVersion": "0.10.2",
+    "contentHash": "567e277ba4d75871dad05b00b8ec48c8",
+    "versionedContentHash": "567e277ba4d75871dad05b00b8ec48c8",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "source3d-2p5d": {
+    "version": "0.6.2",
+    "parentVersion": "0.10.2",
+    "contentHash": "80a86599d447326f049b4be3954db7cb",
+    "versionedContentHash": "80a86599d447326f049b4be3954db7cb",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "topdown-2d": {
+    "version": "0.1.2",
+    "parentVersion": "0.10.2",
+    "contentHash": "d83863b16bda8c2655f21d6aa3d55693",
+    "versionedContentHash": "d83863b16bda8c2655f21d6aa3d55693",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "ui-game": {
+    "version": "0.2.2",
+    "parentVersion": "0.10.2",
+    "contentHash": "8dfcca368a0262eb5271008669a64358",
+    "versionedContentHash": "8dfcca368a0262eb5271008669a64358",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  },
+  "visual-novel": {
+    "version": "0.22.3",
+    "parentVersion": "0.10.2",
+    "contentHash": "eadb06cc16d55c09718ac839ae8dd554",
+    "versionedContentHash": "eadb06cc16d55c09718ac839ae8dd554",
+    "moves": [
+      {
+        "guid": "05e9730b906017c4f9d9ac8bda31da6d",
+        "source": "GameResource/Resources/UI/Common/Textures",
+        "target": "GameResource/Resources/UI/Common/StaticTexture"
+      },
+      {
+        "guid": "b2f0da5072522c043b66992e08e0d5c9",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/RowBackground.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png"
+      },
+      {
+        "guid": "3a7040a5f5b85244caaf1f1b8288db3b",
+        "source": "GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Track.png",
+        "target": "GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png"
+      },
+      {
+        "guid": "f705f08d9c39b0b40a79349b8f35fadc",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight"
+      },
+      {
+        "guid": "2e78ab5f9121b3b449b2ee26f3c6c590",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds"
+      },
+      {
+        "guid": "e5d47d231ef327246bd98df5be3f0fe8",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits"
+      },
+      {
+        "guid": "7f37c1e90a987af4bb42531504b50c3b",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_dusk.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_dusk.png"
+      },
+      {
+        "guid": "cee04c9d38096424a82d7c8a6ced529b",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_night.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_night.png"
+      },
+      {
+        "guid": "c7e790cd73c690f43af47a2f5888e9a4",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_evening.png"
+      },
+      {
+        "guid": "8962c7b682e278f49a49f370a69d72ba",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_smile.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_smile.png"
+      },
+      {
+        "guid": "652326ec917937a44854ff60cbcff0bd",
+        "source": "GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/zhou_evening.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/zhou_evening.png"
+      },
+      {
+        "guid": "76dbabaf6cb17ad4a828f197c4634dd8",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel"
+      },
+      {
+        "guid": "53efafc936ef5b84891d140064a9dc00",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight"
+      },
+      {
+        "guid": "f9b9a56a341221a4b8a5a1a5bbb18b77",
+        "source": "GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png"
+      },
+      {
+        "guid": "7bcbdb973c5c5084ba7eece4f8ca0649",
+        "source": "GameResource/Resources/UI/Common/Atlas/BuiPilot/Background.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png"
+      },
+      {
+        "guid": "e05aa3a69a658544b8563fbce932407e",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Back.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png"
+      },
+      {
+        "guid": "946f3585d6d582b42bc92e7836ff8293",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Checkmark.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png"
+      },
+      {
+        "guid": "1e157a704efb5524a86c93b08d9fcfe5",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Chevron.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png"
+      },
+      {
+        "guid": "c1b2702931c2c3945bdb6969d7035772",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Close.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png"
+      },
+      {
+        "guid": "322c3effd82470a48baab402c39c26bf",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/EmptyState.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"
+      },
+      {
+        "guid": "88e91ec62d1fe7e44915daf80678fff0",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Help.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png"
+      },
+      {
+        "guid": "e3c60446f592ea94c95ff6395eeb92a9",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Lock.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png"
+      },
+      {
+        "guid": "5672f4d0a96783b4dbe027b174a4e875",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Minus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png"
+      },
+      {
+        "guid": "14e2f413b23886c4ab81581b5c576c47",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Plus.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png"
+      },
+      {
+        "guid": "77465369b7b940a479e42bfad2290de1",
+        "source": "GameResource/Resources/UI/Common/Atlas/DefaultLight/Search.png",
+        "target": "GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png"
+      },
+      {
+        "guid": "aa2da00fc4aa0b44db40eb9cecdeba60",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/auto.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/auto.png"
+      },
+      {
+        "guid": "cdc1e99ad512710429db928c28b9b032",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/hide.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/hide.png"
+      },
+      {
+        "guid": "b7e60fe25e7184245bf5bb6f711e97af",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/history.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/history.png"
+      },
+      {
+        "guid": "e9e2ccccc0690dd428378c323ef2a4ba",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/menu_evening.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/Default/menu_evening.png"
+      },
+      {
+        "guid": "acf9f12b9dc0dec459148f140cb97f33",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/quick_save.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/quick_save.png"
+      },
+      {
+        "guid": "ac64109797914484a81cc5710ca6b9cd",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/return.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/Default/return.png"
+      },
+      {
+        "guid": "47c283e1a0df2034ba60d95fba436071",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/save.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/save.png"
+      },
+      {
+        "guid": "ac51cfa8b9bce854e85efc7c3e2eeed1",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/settings.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/settings.png"
+      },
+      {
+        "guid": "a960a257a0425964bb0dd2eeefca58ed",
+        "source": "GameResource/Resources/UI/Common/Atlas/Novel/speed.png",
+        "target": "GameResource/Resources/UI/Module/Narrative/StaticTexture/Novel/speed.png"
+      },
+      {
+        "guid": "e9f014e9faecfe349a5dc5e81a63f18a",
+        "source": "Game/UI/Runtime/UIFoundation/Item",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item"
+      },
+      {
+        "guid": "5ff51565fe34a1547acbe29f172fd6f5",
+        "source": "Game/UI/Runtime/UIFoundation/Page",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page"
+      },
+      {
+        "guid": "b83cc650a2fc5ec41bf82b52d521fd06",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs"
+      },
+      {
+        "guid": "943e6832544a90a409415044b596e00b",
+        "source": "Game/UI/Runtime/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs"
+      },
+      {
+        "guid": "f27e1df3ea0c8f94bbbc4ede98b47eb9",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs"
+      },
+      {
+        "guid": "a063b0d372ff5254b8f46e7bf6e2ef69",
+        "source": "Game/UI/Runtime/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+        "target": "Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs"
+      }
+    ],
+    "missing_original_guids": []
+  }
+}

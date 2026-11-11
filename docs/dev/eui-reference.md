@@ -180,32 +180,7 @@ TrackDisposable(EUIObserver.OnPageOpened.Subscribe(evt =>
 
 ## 7. 命名
 
-### 5.1 绑定变量名规则
-
-| 组件类型 | 前缀 | 示例 |
-|----------|------|------|
-| Button（原生） | `m_Btn_` | `m_Btn_Close`, `m_Btn_StartGame` |
-| EUIButtonEx | `m_EUIBtn_` | `m_EUIBtn_Confirm`, `m_EUIBtn_Skip` |
-| Toggle（原生） | `m_Tgl_` | `m_Tgl_AutoLogin`, `m_Tgl_Sound` |
-| EUIToggleEx | `m_EUITgl_` | `m_EUITgl_Remember` |
-| Text | `m_Txt_` | `m_Txt_Title`, `m_Txt_Gold` |
-| Image（原生） | `m_Img_` | `m_Img_Icon`, `m_Img_Bg` |
-| EUIImageEx | `m_EUIImg_` | `m_EUIImg_Avatar` |
-| InputField | `m_Inp_` | `m_Inp_Name`, `m_Inp_Password` |
-| Slider/ProgressBar | `m_Pgb_` | `m_Pgb_HP`, `m_Pgb_Volume` |
-| ToggleGroup | `m_Tgp_` | `m_Tgp_TabGroup` |
-| ScrollRect | `m_Scr_` | `m_Scr_ShopList` |
-| UIContainer | `m_Ctn_` | `m_Ctn_ItemList` |
-| Canvas | `m_Cvs_` | `m_Cvs_Main` |
-| RawImage | `m_Raw_` | `m_Raw_Minimap` |
-| TabLoader | `m_Tab_` | `m_Tab_Settings` |
-
-### 5.2 通用规则
-
-1. **绑定子节点必须以 `m_` 或 `m`+大写字母开头**（如 `m_Btn_Start` 或 `mBtnStart`），自动收集只识别这些节点
-2. **EUI 增强组件用 `EU` 标记**（如 `m_EUIBtn_` 区别于 `m_Btn_`），一眼看出用了增强版
-3. **不需要绑定的节点**不挂 `m_` 前缀（如 `Background`、`Layout`），或挂 `EUIBindingExclude` 排除
-4. **页面级绑定**根节点用页面英文名（如 `MainMenuPanel` → 脚本名 `MainMenu`，页面名 `MainMenuPanel`）
+Page/Item、Prefab、类、绑定节点及图片命名统一见 [UI 命名、路径与图片分类规范](../../Packages/com.ember/Documentation~/ui/naming-and-paths.md)。节点前缀用于识别和阅读，真实类型以 Binding 及生成结果为准；UIContainer/TabLoader 的保留标记不表示完整能力已交付。
 
 ## 8. 阅读与验证
 

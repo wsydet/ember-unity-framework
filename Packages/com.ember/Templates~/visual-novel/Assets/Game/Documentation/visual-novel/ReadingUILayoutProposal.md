@@ -34,12 +34,12 @@ Gameplay 主 UI 布局窗口把“位置与尺寸”“外观与文字”“仅�
 
 | 元素 | 图片 | 导入 |
 |---|---|---|
-| 黄昏天台背景 | [rooftop_dusk.png](../../../GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_dusk.png) | 1672 × 941，Sprite Single |
-| 林晚立绘 | [lin_evening.png](../../../GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening.png) | 1024 × 1536，透明 PNG，Sprite Single |
+| 黄昏天台背景 | [rooftop_dusk.png](../../../GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_dusk.png) | 1672 × 941，Sprite Single |
+| 林晚立绘 | [lin_evening.png](../../../GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_evening.png) | 1024 × 1536，透明 PNG，Sprite Single |
 
-![独立背景示例](../../../GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_dusk.png)
+![独立背景示例](../../../GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_dusk.png)
 
-![独立立绘示例](../../../GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Portraits/lin_evening.png)
+![独立立绘示例](../../../GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Portraits/lin_evening.png)
 
 打开 **Ember / 视觉小说 / Gameplay 主UI布局**，在预览图片区域点击 **使用规范示例：黄昏天台 / 林晚**，将背景和中间立绘设为上述素材，清空左右预览立绘。新窗口默认使用这一组素材。流程图节点预览可使用这组图片作为初始上下文；当前节点自身的背景/立绘命令仍按原规则覆盖，不推断前序分支。
 
@@ -95,7 +95,7 @@ Gameplay 主 UI 布局窗口把“位置与尺寸”“外观与文字”“仅�
 
 ## 正式资源与实测截图（2026-09-21）
 
-阅读页、字号弹窗、历史、菜单均为正式 EUI；8 张图标统一位于 Resources/UI/Common/Atlas/Novel：history、hide、auto、speed、save、quick_save、settings、return。菜单依次使用 save、quick_save、auto、settings、speed、return；字号 Aa 和菜单三横线仍由 TMP/uGUI 绘制。所有装饰图片关闭 Raycast，不新增交互绑定。弹窗风格、按钮位置与字体已写入正式 Prefab，因此布局编辑器与实际游戏共同使用。
+阅读页、字号弹窗、历史、菜单均为正式 EUI；8 张图标统一位于 Resources/UI/Module/Narrative/StaticTexture/Novel：history、hide、auto、speed、save、quick_save、settings、return。菜单依次使用 save、quick_save、auto、settings、speed、return；字号 Aa 和菜单三横线仍由 TMP/uGUI 绘制。所有装饰图片关闭 Raycast，不新增交互绑定。弹窗风格、按钮位置与字体已写入正式 Prefab，因此布局编辑器与实际游戏共同使用。
 
 默认中文字体为 Noto Serif SC，字体文件和 SIL OFL 1.1 许可证位于框架 `Packages/com.ember/SharedAssets/Fonts/NotoSerifSC`，动态 TMP 资源为 `NovelSerif SDF.asset`。通过 `Ember/Tool/字体皮肤` 管理思源宋体、钉钉进步体、阿里妈妈东方大楷三套皮肤；每个 TMPEx 分别指定各皮肤下的字体，特殊文本可固定字体而不参与切换。
 

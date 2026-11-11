@@ -97,7 +97,7 @@ Key 必须**稳定**：重新导入换个顺序、改一个错字都不能换 Ke
   `id` 约定 `skinId.page.control.node`；`page` 取 Prefab 文件名（如 `EUINovelReaderPage`、`EUIMainPanel`）；
   `control` 取 EUI 绑定控件名（留空表示页面根）；`node` 是锚点下的相对节点路径（留空表示锚点自身）。
 - `novel_story_skin`：`storyId,skinId`。没有记录的剧情不套皮肤，沿用 Prefab 外观。
-- **`spritePath` 必须是项目 Resources 下的图片**（如 `UI/Common/Atlas/Novel/return`）。
+- **`spritePath` 必须是项目 Resources 下的图片**（如 `UI/Module/Narrative/DynamicTexture/Skins/Default/return`）。
   Unity 内置的 `UISprite`（`Resources/unity_builtin_extra`）**无法用路径表示**，只能当被替换方。
 - 取候选行有两种方式：布局窗口选中元素后点「把此元素加入皮肤清单（复制 CSV 行）」单个取，
   或用运行菜单 **`Ember/视觉小说/导出皮肤可覆盖图片清单`** 批量取：

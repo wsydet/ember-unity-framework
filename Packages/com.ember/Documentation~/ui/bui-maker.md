@@ -2,6 +2,8 @@
 
 `Ember.UIExtension.Editor.EmberBuiService` 1.0.0 消费 BUI schemaVersion 3、独立 EUI map schemaVersion 1 和 EUI contract schemaVersion 1/toolVersion 1.1。入口为 **Ember → UI → UI 开发中心 → BUI 制作**。窗口、MCP C# 调用和编辑器批处理使用同一服务；不增加运行时依赖或独立包。
 
+资源命名、输出目录及图片分类遵循 [UI 命名、路径与图片分类规范](naming-and-paths.md)。本页说明当前制作 API；分类约定不代表已实现自动分流或图集检查。
+
 ## 输入与 API
 
 制作请求是 `EmberBuiRequest` JSON，使用项目相对路径。必须提供 `mapPath`、`ownerTemplateId`、独立 `receiptPath`、全部 Target 和全部 nodeId 的明确映射。`moduleType` 用于具有 `EmberModule` 特性的业务模块，指定后必须存在且启用；不依赖模块的通用 UI 可留空。活动模板必须匹配。

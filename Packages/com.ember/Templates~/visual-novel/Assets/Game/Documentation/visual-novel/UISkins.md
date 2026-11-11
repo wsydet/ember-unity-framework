@@ -10,7 +10,7 @@
 
 ## 资源与兼容
 
-- 每套皮肤：`Assets/GameResource/Resources/UI/Common/Atlas/NovelSkins/<id>/Skin.asset` 与 `Images/`。
+- 每套皮肤：`Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins/<id>/Skin.asset` 与 `Images/`。
 - 剧情关联：`Assets/GameResource/Resources/Config/Narrative/UISkinAssignments.asset`。
 - 新皮肤资产保存图片引用和显示参数，不复制页面 Prefab、代码或 Binding。控件位置、锚点、字体与结构仍由布局编辑器管理。
 - 已安装旧 `NovelSkin` 配表系统的消费项目：明确的皮肤资产关联优先；没有关联的剧情继续走旧表。旧表作为复制来源，不同步回写，也不形成两份维护源。

@@ -2,7 +2,7 @@
 
 新增节点与循环编排请参阅 [章节内跳转与复合流程](../NovelFlow.md)：包含稳定跳转 ID、调用/返回边界、局部变量、流程复制、连续试播、存档兼容和消费端迁移。FlowExample 位于 Resources，作为可选日程示例；不替换 LastLight 默认启动配置。
 
-> **样例归属更新**：M1Sample 剧情已移到 "Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample"，仅供跨章节测试和编辑器验证；Resources 内默认剧情为 LastLight，另提供 FlowExample 日程与子流程示例；PresentationE0 位于 Tests/Fixtures/PresentationE0，仅供自动测试。主对话框与菜单的 8 张图标统一在 "UI/Common/Atlas/Novel"。历史章节中的 M1 运行入口不再适用。
+> **样例归属更新**：M1Sample 剧情已移到 "Assets/Game/Module/Narrative/Tests/Fixtures/M1Sample"，仅供跨章节测试和编辑器验证；Resources 内默认剧情为 LastLight，另提供 FlowExample 日程与子流程示例；PresentationE0 位于 Tests/Fixtures/PresentationE0，仅供自动测试。主对话框与菜单的 8 张图标统一在 "UI/Module/Narrative/StaticTexture/Novel"。历史章节中的 M1 运行入口不再适用。
 
 本文对应 visual-novel 0.18.1 文档基线，版本与本次验证摘要见 [README](README.md)。下文 E0–E5 的版本号、用户确认和未执行项保留为各批次历史记录；已交付演出能力均已收入后续模板，不再是当前保存阻塞项。人工全功能、移动端和消费项目验收仍须独立完成，历史 XML 与用户确认不合并为新全量报告。
 
@@ -16,7 +16,7 @@
 
 旁白使用空角色键；内心独白使用角色 `lastlight_inner`（我（内心））及括号文字，这是现有 Say 的编写约定，不是新的指令类型。`lastlight_wan`（林晚）与 `lastlight_zhou`（周砚）使用独立角色表项，不重命名 M1 的 alice/lin。
 
-示例包含居中立绘、左右双人、隐藏立绘后的纯背景旁白、等待、BGM/SFX、两句 Voice、选择、变量分流和双结局。图片位于 `UI/Module/Narrative/Atlas/LastLight`；BGM/SFX 仍复用 M1Sample，因此交付时保留两目录。Voice 是 Windows Huihui 合成语音，仅用于功能演示，不是真人录音；其余 77 句为空 Voice，正常逐字推进。跨章节示例继续参考 M1Sample；错误资源/断链等反例只在测试副本制造，不污染正式故事。
+示例包含居中立绘、左右双人、隐藏立绘后的纯背景旁白、等待、BGM/SFX、两句 Voice、选择、变量分流和双结局。图片位于 `UI/Module/Narrative/DynamicTexture/LastLight`；BGM/SFX 仍复用 M1Sample，因此交付时保留两目录。Voice 是 Windows Huihui 合成语音，仅用于功能演示，不是真人录音；其余 77 句为空 Voice，正常逐字推进。跨章节示例继续参考 M1Sample；错误资源/断链等反例只在测试副本制造，不污染正式故事。
 
 ## 阅读页底板、背景重设与槽位隐藏（0.10.1 修复批）
 

@@ -21,7 +21,7 @@ namespace Game.UI.Editor
         private const string Common = "Assets/GameResource/Resources/UI/Common/Prefabs/";
         private const string Module = "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/";
         private const string Atlas = "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/";
-        private const string Background = "Assets/GameResource/Resources/UI/Common/Textures/DefaultLight/Background.png";
+        private const string Background = "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png";
         private static TMP_FontAsset _font;
         private static Sprite _round;
         private static readonly Color Ink = new Color32(29,29,31,255);
@@ -40,7 +40,7 @@ namespace Game.UI.Editor
             if (AssetDatabase.LoadAssetAtPath<EUILibrary>(EUILibraryService.DefaultPath)) throw new InvalidOperationException("默认库已存在；不重复制作。");
             _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset");
             ImportImage(Background, false);
-            ImportImage(Atlas + "EmptyState.png", true);
+            ImportImage("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png", true);
             MakeRound();
             var paths = new List<string>();
             foreach (var request in requests.Take(7))
@@ -264,7 +264,7 @@ namespace Game.UI.Editor
             var disabled=Nest("EUIActionButtonItem",content,new Vector2(-370,44),new Vector2(280,48)); disabled.name="Disabled"; disabled.GetComponent<EUIButtonEx>().interactable=false; disabled.GetComponent<EUIButtonEx>().Label.text="Unavailable";
             var toggle=Nest("EUIChoiceToggleItem",content,new Vector2(-370,-28),new Vector2(280,56)); toggle.name="Choice"; toggle.GetComponent<Toggle>().isOn=true;
             var progress=Nest("EUIProgressItem",content,new Vector2(-350,-105),new Vector2(320,40));
-            var empty=Rect("EmptyState",content,210,150); empty.anchoredPosition=new Vector2(330,110); var image=empty.gameObject.AddComponent<Image>(); image.sprite=AssetDatabase.LoadAssetAtPath<Sprite>(Atlas+"EmptyState.png"); image.preserveAspect=true; image.raycastTarget=false;
+            var empty=Rect("EmptyState",content,210,150); empty.anchoredPosition=new Vector2(330,110); var image=empty.gameObject.AddComponent<Image>(); image.sprite=AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png"); image.preserveAspect=true; image.raycastTarget=false;
             var host=Nest("EUIContentHostItem",content,new Vector2(100,-70),new Vector2(440,240));
             for(var i=0;i<6;i++) { var row=Nest("EUIOptionRowItem",host.transform.Find("Viewport/Content"),Vector2.zero,new Vector2(400,56)); row.name="Option"+i; row.GetComponent<EUIToggleEx>().Label.text="Option "+(i+1); var layout=row.AddComponent<LayoutElement>(); layout.preferredHeight=56; }
             foreach(var component in root.GetComponentsInChildren<Component>(true)) if(component && PrefabUtility.IsPartOfPrefabInstance(component)) PrefabUtility.RecordPrefabInstancePropertyModifications(component);

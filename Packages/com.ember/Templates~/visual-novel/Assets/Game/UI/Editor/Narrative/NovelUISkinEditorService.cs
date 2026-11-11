@@ -18,7 +18,7 @@ namespace Game.UI.Editor
     public static class NovelUISkinEditorService
     {
         #region 内部参数
-        public const string ROOT = "Assets/GameResource/Resources/UI/Common/Atlas/NovelSkins";
+        public const string ROOT = "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Skins";
         private const string ASSIGNMENTS = "Assets/GameResource/Resources/Config/Narrative/UISkinAssignments.asset";
         private static readonly HashSet<string> PAGES = new(StringComparer.Ordinal)
         {

@@ -111,7 +111,7 @@ namespace Game.Narrative.Tests
                 var originalColor = image.color;
                 var originalSprite = image.sprite;
                 var color = new Color(.2f, .4f, .6f, .73f);
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Module/Narrative/Atlas/LastLight/Backgrounds/rooftop_dusk.png");
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/LastLight/Backgrounds/rooftop_dusk.png");
                 Assert.IsNotNull(sprite);
                 Undo.IncrementCurrentGroup();
                 Undo.RecordObject(image, "Appearance test");

@@ -9,7 +9,7 @@
   "items": [{
     "source": "Assets/Incoming/hero_new.png",
     "candidates": [{
-      "target": "Assets/GameResource/Resources/UI/Module/Narrative/Atlas/Story/Portraits/hero_smile.png",
+      "target": "Assets/GameResource/Resources/UI/Module/Narrative/DynamicTexture/Story/Portraits/hero_smile.png",
       "reason": "角色与服装一致，嘴角与眉眼对应微笑差分；已查看两图",
       "warnings": ["同组还存在 neutral、angry，未纳入替换"],
       "references": ["novel_portraits: hero_smile；Chapter1 节点 12"],
