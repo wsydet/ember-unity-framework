@@ -1,0 +1,357 @@
+{
+  "taskId": "20261111-patch-preview-long-paths",
+  "sourceAbsolutePath": "C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-workflow\\20261111-patch-preview-long-paths",
+  "archiveRelativePath": "docs/tasks/20261111-patch-preview-long-paths",
+  "owner": "this task per handoff r6 and current user authorization",
+  "date": "2026-11-12",
+  "reparsePoints": [],
+  "unknownContents": [],
+  "allSourceBytesArchived": true,
+  "files": [
+    {
+      "path": "consumer-validation-prompt.md",
+      "size": 9366,
+      "sha256": "62e5560a00ec34211a64c68c6bf271ac35e9af8c6dd9de4647c9adeddb83eec3"
+    },
+    {
+      "path": "design.md",
+      "size": 22376,
+      "sha256": "11be0882b96ba39ee981c73271ca947e33602c941fb53239d1a5a08c6531dd2d"
+    },
+    {
+      "path": "evidence/add_io_diagnostics.py",
+      "size": 1561,
+      "sha256": "c1eadafd96bfb32f56eccc97057037053897cfc68c2443d2621d8217e6f94c95"
+    },
+    {
+      "path": "evidence/archive_prepare.py",
+      "size": 8354,
+      "sha256": "18b5abcb3b12ed443a1fd53b00aa5b819d7a5bf3a3c66779020f84964268ce17"
+    },
+    {
+      "path": "evidence/compile1.json",
+      "size": 905,
+      "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+    },
+    {
+      "path": "evidence/compile3console.json",
+      "size": 274,
+      "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+    },
+    {
+      "path": "evidence/compile3loaded.json",
+      "size": 1151,
+      "sha256": "c3b161d0ae6d25bc814921f72f16a89b3b9c877a4e7f5c1303b70c405d6b7b0f"
+    },
+    {
+      "path": "evidence/compile3state.json",
+      "size": 2284,
+      "sha256": "2c2caa3fcf019073c093fe92c718efd9df408f82ab8c713c08495e07ce8258e2"
+    },
+    {
+      "path": "evidence/compile4console.json",
+      "size": 274,
+      "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+    },
+    {
+      "path": "evidence/compile4loaded.json",
+      "size": 1277,
+      "sha256": "d50ec52d33f9f1017822123f17de730ba7cebcc3c2ecfb526b24f3b4a5992c18"
+    },
+    {
+      "path": "evidence/compile4request.json",
+      "size": 905,
+      "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+    },
+    {
+      "path": "evidence/compile4state.json",
+      "size": 2284,
+      "sha256": "5fc92a2e4ff027a7edc4458c1132a13a5b8559fac6e559f7877e4ef5b60bc073"
+    },
+    {
+      "path": "evidence/consolefinal.json",
+      "size": 77,
+      "sha256": "0dd70c770c7b459ca7767d798aa1b39ba38410bee998ccdd476037efe8d737a5"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberExtensionProject.cs",
+      "size": 7728,
+      "sha256": "653f2419511d83f08b27730140167308df35fcdb767d8da908f24f6093838eff"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberExtensionProject.Identity.cs",
+      "size": 9250,
+      "sha256": "e008ca359bc0318537609170acec8634f81d7ec7b9b6db00983db6c4f3b18701"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberProjectSetup.AISkills.cs",
+      "size": 18828,
+      "sha256": "f4e280b0324667091fca0a73667b931cea15616b771c4df2d32fa74f6447246b"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberProjectSetup.cs",
+      "size": 84528,
+      "sha256": "1a547ee716a1f49525d24fb6db8e4168ac0d447a4ec82be2875091b546630c89"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberProjectSetup.Patch.cs",
+      "size": 27638,
+      "sha256": "871da8f36392068cf79514950d7611b1d3aaffd69fcc26c7743fa1034b6ea7d8"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberTemplateInheritanceEngine.cs",
+      "size": 55349,
+      "sha256": "8f2e33d37c4d033d6fe3d06c765e027224d67c848566bfc14689c9d6aa129159"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs",
+      "size": 4706,
+      "sha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+      "size": 59,
+      "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+    },
+    {
+      "path": "evidence/delivery-source/Core/Editor/EmberTemplateTransaction.cs",
+      "size": 37699,
+      "sha256": "9aa20a6ffb146f9b254087a2ec16fe5e7f1bd32ca83ffd20e1e0f5bd69a7f74a"
+    },
+    {
+      "path": "evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs",
+      "size": 18071,
+      "sha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84"
+    },
+    {
+      "path": "evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta",
+      "size": 61,
+      "sha256": "493ca94917bc3c7c2aa01245c97c63429cd23707eca31db751ab18ec549d92a9"
+    },
+    {
+      "path": "evidence/delivery-source/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+      "size": 34104,
+      "sha256": "4ded0d89902a44dce2534b4241ec0a74a1cf5bcf444da370a0969a69ac8b18af"
+    },
+    {
+      "path": "evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.cs",
+      "size": 27384,
+      "sha256": "41b0ee2fdf8fe83a8580561bfef0fb0cdb18b3f3548e67663aa0c190e511b7f8"
+    },
+    {
+      "path": "evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+      "size": 49049,
+      "sha256": "fca7da1b39979a8f5c0f5c909c84b6cd12f0e6ac66c3410f01a1adf81efbace6"
+    },
+    {
+      "path": "evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs",
+      "size": 9516,
+      "sha256": "89718fb2ef2ee90e9b92743f0ccec02bea506af63212ad7836e1740f0a1c0de3"
+    },
+    {
+      "path": "evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs.meta",
+      "size": 59,
+      "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+    },
+    {
+      "path": "evidence/delivery-tracked.diff",
+      "size": 78821,
+      "sha256": "617b36aaebff13cbfd1c3638db6d98cd19e1e35461229d44b0937d114836ed5e"
+    },
+    {
+      "path": "evidence/finish_records.py",
+      "size": 1055,
+      "sha256": "85615e6fbc174da2b5ec426ea36e695cd577f561848313883eda6ef711b10fc4"
+    },
+    {
+      "path": "evidence/git-status-final.txt",
+      "size": 1508,
+      "sha256": "7efedb5d2b12add9d88e07b4b98e20d5066856d6743b578be900688bfc78d7fb"
+    },
+    {
+      "path": "evidence/implement_io.py",
+      "size": 5593,
+      "sha256": "2325beef40f54896c89cf8f23515bf0f3f9c6064789c60c9ef4f35b509131183"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberExtensionProject.cs",
+      "size": 7511,
+      "sha256": "539102d56d9c9377c49294bb5f2e43eb750a97eeeb334276f4f43318e1e2a2cc"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberExtensionProject.Identity.cs",
+      "size": 9022,
+      "sha256": "10acb0139ed9459c80b2e1e02f85ee243918d42994f66730bc1d018196f81d99"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberProjectSetup.AISkills.cs",
+      "size": 18407,
+      "sha256": "1d52629098a7a9c7d4cd1bc6f88cab040e7c6a3fdbfcee00dc35d70bf469cab6"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberProjectSetup.cs",
+      "size": 82362,
+      "sha256": "a5f6eb7232371b7dcf261b211312bf2b36f08eff70912a191c4e94e53acf95f7"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberProjectSetup.Patch.cs",
+      "size": 26629,
+      "sha256": "129144d003e6304735ea15184a2ecc96f93c886bd5ec98e5b19b9a26b5f5f0f0"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs",
+      "size": 5116,
+      "sha256": "5acdac1109079b696247a5d5387e972cb06ac785e4ce2c3bedbbb3820bc20beb"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs.meta",
+      "size": 59,
+      "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateInheritanceEngine.cs",
+      "size": 53981,
+      "sha256": "6e0b2c0cabb6f989bf7acfbd6219a6f4a4f0750dd3f235d53437ca47b471c124"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs",
+      "size": 2810,
+      "sha256": "5b0ea71be75ded06116ae7f1994a73de64caf882a25654a907e81e7aba8a9d3d"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+      "size": 59,
+      "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+    },
+    {
+      "path": "evidence/implementation-start/Core/Editor/EmberTemplateTransaction.cs",
+      "size": 35646,
+      "sha256": "dc15e5286af35895964e4b1291f302402675eb94fec25e9c45b221c54c7011bd"
+    },
+    {
+      "path": "evidence/implementation-start/git-status.txt",
+      "size": 1030,
+      "sha256": "5b1972507e6f9f8dbf7144f788b6a21e75639a7363c08c0d91c784ab0a8ae906"
+    },
+    {
+      "path": "evidence/implementation-start/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+      "size": 21890,
+      "sha256": "e1ef68e7c37dc0ad7531a82a16c75cc3f99f66590062843a21a11c1ff27e5fa0"
+    },
+    {
+      "path": "evidence/implementation-start/Tests/EditMode/EmberTemplateTransactionEditTests.cs",
+      "size": 34582,
+      "sha256": "27b5dca1402d1004d0b3885755ec4366d2fcd38f5324997d562b89b2262cdaad"
+    },
+    {
+      "path": "evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.cs",
+      "size": 27088,
+      "sha256": "2fe79bdbc35322e15c4feca133295616475089c4cf8bab9c83d46328f8eacc06"
+    },
+    {
+      "path": "evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+      "size": 48089,
+      "sha256": "0ceb47724881a50dc60484e2b6895cd9e38073946fadd266e8e57ea2976525b3"
+    },
+    {
+      "path": "evidence/improve_patch_tests.py",
+      "size": 5963,
+      "sha256": "3d4dd68297e8d47d29db5dda68b047765492611518bee91a5705089df2fee60e"
+    },
+    {
+      "path": "evidence/io-audit.md",
+      "size": 3122,
+      "sha256": "b1996cca1429370de893e5bba371edb6e43b182eadf7f5bf2ba268dacd8fd6df"
+    },
+    {
+      "path": "evidence/loaded1.json",
+      "size": 1136,
+      "sha256": "06154791df09d14733c98ee41d66442680067b20c8ae2fc703f5451f28afd14d"
+    },
+    {
+      "path": "evidence/loaded2.json",
+      "size": 1413,
+      "sha256": "f5bd16816b2d481b906026d88d36c10f7ae6b6ebca182bffb56b28a9735d6388"
+    },
+    {
+      "path": "evidence/record-link-check.json",
+      "size": 1718,
+      "sha256": "72244760f05cdc5d7363f0596d51136c6aaac0246bf00f2770d9caab172a3db5"
+    },
+    {
+      "path": "evidence/record_identity.py",
+      "size": 2077,
+      "sha256": "9254a08aa0c673cfe26127062dba0ed71865bf3c155031574875dd41f795a3be"
+    },
+    {
+      "path": "evidence/resume_io.py",
+      "size": 208,
+      "sha256": "6a430c8a5ad8299d798a6ffafff47c4d2e6f5a20f8c3a89612fbbab4638e14d2"
+    },
+    {
+      "path": "evidence/snapshot_delivery.py",
+      "size": 565,
+      "sha256": "9bf95f318e2f8e6d7a2407dd4e5cd6a39b6df0fe2fe5ed7cc4dc8dd4ea037894"
+    },
+    {
+      "path": "evidence/source-identity.json",
+      "size": 3129,
+      "sha256": "aa778a8e6ec4368e972ec242e35e8bf53b13b246cbbfb1e41a0834811beec899"
+    },
+    {
+      "path": "evidence/test-filters.json",
+      "size": 5153,
+      "sha256": "3c638b440212edbcf6a2ae1a7f6710274d84d72c2b7b49a8f7a83c5f69e9fb56"
+    },
+    {
+      "path": "evidence/test1final.json",
+      "size": 419033,
+      "sha256": "e256b17d856e242730c15c48cb5ceb2daa0d64c18eaa7e175128a78c37a0fc28"
+    },
+    {
+      "path": "evidence/test2final.json",
+      "size": 63537,
+      "sha256": "75da8dcbb94af24f2b86edb4c70b87b1a064505b395c6b2223a15b9ca35a6ce0"
+    },
+    {
+      "path": "evidence/test3final.json",
+      "size": 4201,
+      "sha256": "83373a6886ad07942b5ae2a7190d11a6119e74d9557e6b6a5d7ca9137095a256"
+    },
+    {
+      "path": "evidence/test_filters.py",
+      "size": 1598,
+      "sha256": "b95d9ed2b1e522f570e3a49eef29b2ada12787cf4da800276decf6a592ea46c9"
+    },
+    {
+      "path": "handoff.md",
+      "size": 14358,
+      "sha256": "de1bac2484342eb03b684e7a06299bd168d287b07a09dc61bf5f151830777a5b"
+    },
+    {
+      "path": "implementation.md",
+      "size": 12157,
+      "sha256": "329369d1fca0728a8fec485287c644844beda498ad75d828c9ff6f0f37d12555"
+    },
+    {
+      "path": "prompts/02-design.md",
+      "size": 3768,
+      "sha256": "8bf4e9786ed4f298ae63e7d41e89753a2ce3a0bd734ff7705185c641f548ff4e"
+    },
+    {
+      "path": "prompts/03-implementation.md",
+      "size": 7637,
+      "sha256": "393058369258a1430655486ff35f070b1eace0754cc7b15ae53482513dc330a7"
+    },
+    {
+      "path": "prompts/04-acceptance.md",
+      "size": 1657,
+      "sha256": "6ac2027eb2097ddd14a14603fb7747a20991bf91e86a1ba885149b141af7a517"
+    },
+    {
+      "path": "requirements.md",
+      "size": 3285,
+      "sha256": "d001e7bae3dd061fdfaa03af5a593a3c1d0f29250424acd23ceb86ce7ac51dbe"
+    }
+  ]
+}

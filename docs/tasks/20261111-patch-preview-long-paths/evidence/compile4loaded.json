@@ -1,0 +1,35 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"compiling\":false,\"updating\":false,\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\",\"assemblies\":[{\"name\":\"Ember.Core.Editor\",\"mvid\":\"f7a9767c-d956-4fb9-8a5d-f7263cf3c16f\"},{\"name\":\"Ember.UI.Tests\",\"mvid\":\"e2ddb411-d417-4bb6-8a96-e7a5fe7a3af7\"},{\"name\":\"Ember.UPMManager.Editor\",\"mvid\":\"18af4670-80b2-431c-9dd7-e7a77b9af1f2\"}]},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "compiling": false,
+        "updating": false,
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework",
+        "assemblies": [
+          {
+            "name": "Ember.Core.Editor",
+            "mvid": "f7a9767c-d956-4fb9-8a5d-f7263cf3c16f"
+          },
+          {
+            "name": "Ember.UI.Tests",
+            "mvid": "e2ddb411-d417-4bb6-8a96-e7a5fe7a3af7"
+          },
+          {
+            "name": "Ember.UPMManager.Editor",
+            "mvid": "18af4670-80b2-431c-9dd7-e7a77b9af1f2"
+          }
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

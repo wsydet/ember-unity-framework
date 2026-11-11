@@ -1,0 +1,5 @@
+# Preserve original evidence/backup bytes independently of checkout CRLF settings.
+# Historical patches and stage documents retain their original whitespace.
+evidence/** -text -whitespace
+prompts/** -text -whitespace
+design.md -text -whitespace

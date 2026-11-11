@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
+using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
 using System.Text;
 using System.Text.RegularExpressions;
 using Ember.Basic;

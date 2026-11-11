@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
+using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Ember.Basic;
@@ -1186,11 +1188,20 @@ namespace Ember.Core.Editor
         /// </summary>
         private static bool RewriteVersionMarker(string fullPath, string version, string frameworkVersion)
         {
+            try { return RewriteVersionMarkerStrict(fullPath, version, frameworkVersion); }
+            catch (Exception error)
+            {
+                EmberDebug.LogWarning(LogTags.CoreEditor, $"版本头未更新 [{fullPath}]：{error}");
+                return false;
+            }
+        }
+
+        private static bool RewriteVersionMarkerStrict(string fullPath, string version, string frameworkVersion)
+        {
             if (string.IsNullOrEmpty(version)) return false;
 
             byte[] bytes;
-            try { bytes = File.ReadAllBytes(fullPath); }
-            catch { return false; }
+            bytes = File.ReadAllBytes(fullPath);
 
             var replaced = RewriteVersionMarker(
                 bytes,
@@ -1199,8 +1210,7 @@ namespace Ember.Core.Editor
                 out var changed);
             if (!changed) return false;
 
-            try { File.WriteAllBytes(fullPath, replaced); }
-            catch { return false; /* 写失败不影响部署，标记保持原样 */ }
+            File.WriteAllBytes(fullPath, replaced);
             return true;
         }
 
@@ -1471,7 +1481,7 @@ namespace Ember.Core.Editor
         private static void TryCleanTransactionPath(string path)
         {
             try { EmberTemplateTransaction.CleanPath(path); }
-            catch { /* 暂存清理失败不覆盖主事务结果。 */ }
+            catch (Exception error) { EmberDebug.LogWarning(TAG, $"暂存目录清理失败 [{path}]：{error}"); }
         }
 
         /// <summary>整树复制模板到项目 Assets/。返回部署的文件数。</summary>

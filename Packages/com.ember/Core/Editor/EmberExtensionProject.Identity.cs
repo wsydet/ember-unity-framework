@@ -99,10 +99,10 @@ namespace Ember.Core.Editor
             string relative = EmberProjectSetup.IsEmbeddedPackage() ? "ProjectSettings/EmberExtensions." + id + ".json" : "ProjectSettings/EmberExtensions.json";
             string config = Path.Combine(projectRoot, relative);
             // A different consumer template never borrows the previous template's override.
-            Configuration value = File.Exists(config) ? Read(config) : null;
+            Configuration value = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.Exists(config) ? Read(config) : null;
             if (value != null && value.ownerTemplateId != id) value = null;
             string defaults = Path.Combine(assets, "Game/Config/EmberExtensionDefaults.json");
-            value ??= File.Exists(defaults) ? Read(defaults) : new Configuration { ownerTemplateId = id, ownerTemplateVersion = version };
+            value ??= Ember.UPMManager.Editor.EmberTemplateFileSystem.File.Exists(defaults) ? Read(defaults) : new Configuration { ownerTemplateId = id, ownerTemplateVersion = version };
             return Identities(ResolveConfiguration(value, id, version));
         }
         #endregion

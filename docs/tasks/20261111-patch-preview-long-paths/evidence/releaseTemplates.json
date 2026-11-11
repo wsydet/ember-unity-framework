@@ -1,0 +1,93 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": [
+      {
+        "id": "base",
+        "version": "0.10.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "0b0431013fcd599ea1d8f1c27aafd169",
+        "stored": "0b0431013fcd599ea1d8f1c27aafd169",
+        "sealedHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "parentId": "",
+        "parentVersion": "",
+        "parentContentHash": "",
+        "actualParent": ""
+      },
+      {
+        "id": "lane-defense-2d",
+        "version": "0.1.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "0aa2e18bdf1864add23cd7a7fe7e5674",
+        "stored": "0aa2e18bdf1864add23cd7a7fe7e5674",
+        "sealedHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      },
+      {
+        "id": "platformer-2d",
+        "version": "0.13.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "567e277ba4d75871dad05b00b8ec48c8",
+        "stored": "567e277ba4d75871dad05b00b8ec48c8",
+        "sealedHash": "567e277ba4d75871dad05b00b8ec48c8",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      },
+      {
+        "id": "source3d-2p5d",
+        "version": "0.6.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "80a86599d447326f049b4be3954db7cb",
+        "stored": "80a86599d447326f049b4be3954db7cb",
+        "sealedHash": "80a86599d447326f049b4be3954db7cb",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      },
+      {
+        "id": "topdown-2d",
+        "version": "0.1.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "d83863b16bda8c2655f21d6aa3d55693",
+        "stored": "d83863b16bda8c2655f21d6aa3d55693",
+        "sealedHash": "d83863b16bda8c2655f21d6aa3d55693",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      },
+      {
+        "id": "ui-game",
+        "version": "0.2.2",
+        "frameworkVersion": "0.25.0",
+        "actual": "8dfcca368a0262eb5271008669a64358",
+        "stored": "8dfcca368a0262eb5271008669a64358",
+        "sealedHash": "8dfcca368a0262eb5271008669a64358",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      },
+      {
+        "id": "visual-novel",
+        "version": "0.22.3",
+        "frameworkVersion": "0.25.0",
+        "actual": "eadb06cc16d55c09718ac839ae8dd554",
+        "stored": "eadb06cc16d55c09718ac839ae8dd554",
+        "sealedHash": "eadb06cc16d55c09718ac839ae8dd554",
+        "parentId": "base",
+        "parentVersion": "0.10.2",
+        "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+        "actualParent": "0b0431013fcd599ea1d8f1c27aafd169"
+      }
+    ],
+    "compiler": "codedom"
+  }
+}

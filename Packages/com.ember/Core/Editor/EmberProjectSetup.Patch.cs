@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
+using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
 using System.Linq;
 using Ember.UPMManager.Editor;
 using UnityEditor;
@@ -78,21 +80,25 @@ namespace Ember.Core.Editor
         }
 
         // 只比较实际由部署器管理的内容；头标记不是业务变化，统一到固定值后分类。
-        private static void CopyPatchAssets(string sourceAssets, string destination, bool normalizeMarkers)
+        private static void CopyPatchAssets(string sourceAssets, string destination, bool normalizeMarkers,
+            Action<string> beforeNormalizeForTest = null, Action<string, string> copiedForTest = null)
         {
             Directory.CreateDirectory(destination);
             foreach (string relative in TemplateDirNames)
             {
                 string source = Path.Combine(sourceAssets, relative);
                 if (Directory.Exists(source))
-                    EmberTemplateTransaction.CopyDirectory(source, Path.Combine(destination, relative));
+                    EmberTemplateTransaction.CopyDirectory(source, Path.Combine(destination, relative), copiedForTest);
                 else if (File.Exists(source))
                     throw new InvalidDataException("模板管理目录被文件占用：" + relative);
             }
             if (!normalizeMarkers) return;
             foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
                 if (!IsSkillSourcePath(RelativePath(destination, file), EmberAISkillInstaller.TemplateSourceDirectory))
-                    RewriteVersionMarker(file, "0.0.0", "0.0.0");
+                {
+                    beforeNormalizeForTest?.Invoke(file);
+                    RewriteVersionMarkerStrict(file, "0.0.0", "0.0.0");
+                }
         }
 
         private static string PatchProjectHash(string projectRoot)
@@ -149,7 +155,7 @@ namespace Ember.Core.Editor
                     Directory.CreateDirectory(Path.GetDirectoryName(target));
                     File.Copy(Path.Combine(plan.SourceAssets, file.RelativePath), target, true);
                     if (!IsSkillSourcePath(file.RelativePath, EmberAISkillInstaller.TemplateSourceDirectory))
-                        RewriteVersionMarker(target, template.version, template.frameworkVersion);
+                        RewriteVersionMarkerStrict(target, template.version, template.frameworkVersion);
                 }
                 if (change.UnitKind == TemplateChangeUnitKind.DirectoryMetadata
                     && Directory.Exists(Path.Combine(plan.SourceAssets, change.UnitPath)))
@@ -205,7 +211,8 @@ namespace Ember.Core.Editor
                 Path.Combine(GetResolvedPath(PACKAGE), "Templates~", templateId, "Assets"), template);
         }
 
-        internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, string sourceAssets, TemplateInfo template)
+        internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, string sourceAssets, TemplateInfo template,
+            Action<string> previewStaged = null, Action<string> beforeNormalizeForTest = null, Action<string, string> copiedForTest = null)
         {
             var data = ReadPatchDeploymentData(projectRoot);
             var active = ResolveActiveDeployment(data);
@@ -219,13 +226,13 @@ namespace Ember.Core.Editor
                 BaselineHash = ComputeTemplateContentHash(baseline), ProjectHash = PatchProjectHash(projectRoot),
                 RecordJson = JsonUtility.ToJson(data), TemplateJson = JsonUtility.ToJson(template)
             };
-            string stage = Path.Combine(projectRoot, "Temp", "EmberPatchPreview-" + Guid.NewGuid().ToString("N") + "~");
-            try
+            return EmberTemplateTemporaryDirectory.Run(projectRoot, "EmberPatchPreview", stage =>
             {
                 string old = Path.Combine(stage, "Old"), incoming = Path.Combine(stage, "Incoming"), local = Path.Combine(stage, "Local");
-                CopyPatchAssets(baseline, old, true);
-                CopyPatchAssets(sourceAssets, incoming, true);
-                CopyPatchAssets(Path.Combine(projectRoot, "Assets"), local, true);
+                CopyPatchAssets(baseline, old, true, beforeNormalizeForTest, copiedForTest);
+                CopyPatchAssets(sourceAssets, incoming, true, beforeNormalizeForTest, copiedForTest);
+                CopyPatchAssets(Path.Combine(projectRoot, "Assets"), local, true, beforeNormalizeForTest, copiedForTest);
+                previewStaged?.Invoke(stage);
                 EmberTemplateInheritanceEngine.ValidateCaseInsensitivePathUniqueness(
                     new[] { old, incoming, local }.SelectMany(root =>
                         Directory.GetFiles(root, "*", SearchOption.AllDirectories).Select(file => RelativePath(root, file)))
@@ -233,8 +240,7 @@ namespace Ember.Core.Editor
                 plan.Changes = EmberTemplateInheritanceEngine.BuildThreeWayChanges(old, incoming, local).AsReadOnly();
                 ValidatePatchPlan(plan, template);
                 return plan;
-            }
-            finally { TryCleanTransactionPath(stage); }
+            });
         }
 
         /// <summary>应用已审阅补丁；AcceptParent=采用新版，KeepChild=保留本地。所有冲突必须明确解决。</summary>
@@ -257,78 +263,80 @@ namespace Ember.Core.Editor
         }
 
         internal static int CommitTemplatePatch(TemplatePatchPlan plan, TemplateInfo template,
-            IDictionary<string, TemplateConflictChoice> resolutions, bool confirmSkills = false, Action<int> faultInjector = null)
+            IDictionary<string, TemplateConflictChoice> resolutions, bool confirmSkills = false, Action<int> faultInjector = null,
+            EmberTemplateTemporaryDirectory.TestHooks scopeHooksForTest = null)
         {
             ValidatePatchPlan(plan, template);
-            string stage = Path.Combine(plan.ProjectRoot, "Temp", "EmberPatchApply-" + Guid.NewGuid().ToString("N") + "~");
-            string assets = Path.Combine(stage, "Assets");
             AssetDatabase.DisallowAutoRefresh();
             try
             {
-                CopyPatchAssets(Path.Combine(plan.ProjectRoot, "Assets"), assets, false);
-                ApplyPatchChanges(plan, assets, resolutions, template);
-                if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(assets, out _, out string error))
-                    throw new InvalidDataException("增量结果资源校验失败：" + error);
-                EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
-                var skills = confirmSkills ? ConfirmLifecycleSkills(plan.ProjectRoot, assets, template, false)
-                    : PreviewSkills(plan.ProjectRoot, assets, template, template.id);
-                EmberAISkillInstaller.ValidateTemplatePreview(skills);
-                var targets = new List<TemplateTransactionTarget>();
-                int count = 0;
-                // 逐文件提交，仅写发生变化的文件；本地独有内容与顶层目录 GUID 保持原位。
-                foreach (string relative in TemplateDirNames)
+                return EmberTemplateTemporaryDirectory.Run(plan.ProjectRoot, "EmberPatchApply", stage =>
                 {
-                    string destination = Path.Combine(plan.ProjectRoot, "Assets", relative);
-                    string prepared = Path.Combine(assets, relative);
-                    var files = new HashSet<string>(StringComparer.Ordinal);
-                    if (Directory.Exists(destination))
-                        foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
-                            files.Add(relative + "/" + RelativePath(destination, file));
-                    if (Directory.Exists(prepared))
-                        foreach (string file in Directory.GetFiles(prepared, "*", SearchOption.AllDirectories))
-                            files.Add(relative + "/" + RelativePath(prepared, file));
-                    // 新增/删除目录作为事务单元，保证空目录及其 GUID 不会在导入后被重新生成。
-                    var directoryTargets = new List<string>();
-                    var candidates = new List<string>();
-                    if (!Directory.Exists(destination) && Directory.Exists(prepared)) candidates.Add(relative);
-                    if (Directory.Exists(destination))
-                        candidates.AddRange(Directory.GetDirectories(destination, "*", SearchOption.AllDirectories)
-                            .Select(p => relative + "/" + RelativePath(destination, p))
-                            .Where(p => !Directory.Exists(Path.Combine(assets, p))));
-                    if (Directory.Exists(prepared))
-                        candidates.AddRange(Directory.GetDirectories(prepared, "*", SearchOption.AllDirectories)
-                            .Select(p => relative + "/" + RelativePath(prepared, p))
-                            .Where(p => !Directory.Exists(Path.Combine(plan.ProjectRoot, "Assets", p))));
-                    foreach (string directory in candidates.OrderBy(p => p.Length))
+                    string assets = Path.Combine(stage, "Assets");
+                    CopyPatchAssets(Path.Combine(plan.ProjectRoot, "Assets"), assets, false);
+                    ApplyPatchChanges(plan, assets, resolutions, template);
+                    if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(assets, out _, out string error))
+                        throw new InvalidDataException("增量结果资源校验失败：" + error);
+                    EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
+                    var skills = confirmSkills ? ConfirmLifecycleSkills(plan.ProjectRoot, assets, template, false)
+                        : PreviewSkills(plan.ProjectRoot, assets, template, template.id);
+                    EmberAISkillInstaller.ValidateTemplatePreview(skills);
+                    var targets = new List<TemplateTransactionTarget>();
+                    int count = 0;
+                    // 逐文件提交，仅写发生变化的文件；本地独有内容与顶层目录 GUID 保持原位。
+                    foreach (string relative in TemplateDirNames)
                     {
-                        if (directoryTargets.Any(p => directory.StartsWith(p + "/", StringComparison.Ordinal))) continue;
-                        directoryTargets.Add(directory);
-                        string stagedDirectory = Path.Combine(assets, directory);
-                        targets.Add(new TemplateTransactionTarget(stagedDirectory,
-                            Path.Combine(plan.ProjectRoot, "Assets", directory), !Directory.Exists(stagedDirectory)));
+                        string destination = Path.Combine(plan.ProjectRoot, "Assets", relative);
+                        string prepared = Path.Combine(assets, relative);
+                        var files = new HashSet<string>(StringComparer.Ordinal);
+                        if (Directory.Exists(destination))
+                            foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
+                                files.Add(relative + "/" + RelativePath(destination, file));
+                        if (Directory.Exists(prepared))
+                            foreach (string file in Directory.GetFiles(prepared, "*", SearchOption.AllDirectories))
+                                files.Add(relative + "/" + RelativePath(prepared, file));
+                        // 新增/删除目录作为事务单元，保证空目录及其 GUID 不会在导入后被重新生成。
+                        var directoryTargets = new List<string>();
+                        var candidates = new List<string>();
+                        if (!Directory.Exists(destination) && Directory.Exists(prepared)) candidates.Add(relative);
+                        if (Directory.Exists(destination))
+                            candidates.AddRange(Directory.GetDirectories(destination, "*", SearchOption.AllDirectories)
+                                .Select(p => relative + "/" + RelativePath(destination, p))
+                                .Where(p => !Directory.Exists(Path.Combine(assets, p))));
+                        if (Directory.Exists(prepared))
+                            candidates.AddRange(Directory.GetDirectories(prepared, "*", SearchOption.AllDirectories)
+                                .Select(p => relative + "/" + RelativePath(prepared, p))
+                                .Where(p => !Directory.Exists(Path.Combine(plan.ProjectRoot, "Assets", p))));
+                        foreach (string directory in candidates.OrderBy(p => p.Length))
+                        {
+                            if (directoryTargets.Any(p => directory.StartsWith(p + "/", StringComparison.Ordinal))) continue;
+                            directoryTargets.Add(directory);
+                            string stagedDirectory = Path.Combine(assets, directory);
+                            targets.Add(new TemplateTransactionTarget(stagedDirectory,
+                                Path.Combine(plan.ProjectRoot, "Assets", directory), !Directory.Exists(stagedDirectory)));
+                        }
+                        foreach (string file in files.OrderBy(p => p, StringComparer.Ordinal))
+                        {
+                            string stagedFile = Path.Combine(assets, file), liveFile = Path.Combine(plan.ProjectRoot, "Assets", file);
+                            if (File.Exists(stagedFile) && File.Exists(liveFile)
+                                && File.ReadAllBytes(stagedFile).SequenceEqual(File.ReadAllBytes(liveFile))) continue;
+                            if (!directoryTargets.Any(p => file.StartsWith(p + "/", StringComparison.Ordinal)))
+                                targets.Add(new TemplateTransactionTarget(stagedFile, liveFile, !File.Exists(stagedFile)));
+                            count++;
+                        }
                     }
-                    foreach (string file in files.OrderBy(p => p, StringComparer.Ordinal))
-                    {
-                        string stagedFile = Path.Combine(assets, file), liveFile = Path.Combine(plan.ProjectRoot, "Assets", file);
-                        if (File.Exists(stagedFile) && File.Exists(liveFile)
-                            && File.ReadAllBytes(stagedFile).SequenceEqual(File.ReadAllBytes(liveFile))) continue;
-                        if (!directoryTargets.Any(p => file.StartsWith(p + "/", StringComparison.Ordinal)))
-                            targets.Add(new TemplateTransactionTarget(stagedFile, liveFile, !File.Exists(stagedFile)));
-                        count++;
-                    }
-                }
-                AddDeploymentBaseline(targets, stage, plan.ProjectRoot, plan.SourceAssets, template);
-                AddDeploymentRecord(targets, stage, plan.ProjectRoot, template);
-                AddPreparedSkills(targets, skills, true);
-                ValidatePatchPlan(plan, template);
-                EmberAISkillInstaller.ValidateTemplatePreview(skills);
-                EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
-                EmberTemplateTransaction.CommitPreparedTargets(targets, faultInjector);
-                return count;
+                    AddDeploymentBaseline(targets, stage, plan.ProjectRoot, plan.SourceAssets, template);
+                    AddDeploymentRecord(targets, stage, plan.ProjectRoot, template);
+                    AddPreparedSkills(targets, skills, true);
+                    ValidatePatchPlan(plan, template);
+                    EmberAISkillInstaller.ValidateTemplatePreview(skills);
+                    EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
+                    EmberTemplateTransaction.CommitPreparedTargets(targets, faultInjector);
+                    return count;
+                }, committedOnSuccess: true, hooks: scopeHooksForTest);
             }
             finally
             {
-                TryCleanTransactionPath(stage);
                 AssetDatabase.AllowAutoRefresh();
             }
         }

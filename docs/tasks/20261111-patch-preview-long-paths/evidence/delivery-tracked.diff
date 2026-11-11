@@ -1,0 +1,1157 @@
+diff --git a/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs b/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+index 16c2b7d..30f9b9a 100644
+--- a/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
++++ b/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+@@ -99,10 +99,10 @@ internal static EmberAISkillInstaller.ExtensionIdentity[] SourceIdentities(strin
+             string relative = EmberProjectSetup.IsEmbeddedPackage() ? "ProjectSettings/EmberExtensions." + id + ".json" : "ProjectSettings/EmberExtensions.json";
+             string config = Path.Combine(projectRoot, relative);
+             // A different consumer template never borrows the previous template's override.
+-            Configuration value = File.Exists(config) ? Read(config) : null;
++            Configuration value = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.Exists(config) ? Read(config) : null;
+             if (value != null && value.ownerTemplateId != id) value = null;
+             string defaults = Path.Combine(assets, "Game/Config/EmberExtensionDefaults.json");
+-            value ??= File.Exists(defaults) ? Read(defaults) : new Configuration { ownerTemplateId = id, ownerTemplateVersion = version };
++            value ??= Ember.UPMManager.Editor.EmberTemplateFileSystem.File.Exists(defaults) ? Read(defaults) : new Configuration { ownerTemplateId = id, ownerTemplateVersion = version };
+             return Identities(ResolveConfiguration(value, id, version));
+         }
+         #endregion
+diff --git a/Packages/com.ember/Core/Editor/EmberExtensionProject.cs b/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+index b66ffe5..9caf9e2 100644
+--- a/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
++++ b/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+@@ -50,9 +50,9 @@ static EmberExtensionProject()
+         }
+         private static Configuration Read(string path)
+         {
+-            long stamp = File.GetLastWriteTimeUtc(path).Ticks;
++            long stamp = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.GetLastWriteTimeUtc(path).Ticks;
+             if (!Files.TryGetValue(path, out var cached) || cached.stamp != stamp)
+-            { cached = (stamp, File.ReadAllText(path)); Files[path] = cached; }
++            { cached = (stamp, Ember.UPMManager.Editor.EmberTemplateFileSystem.File.ReadAllText(path)); Files[path] = cached; }
+             var config = JsonUtility.FromJson<Configuration>(cached.text);
+             if (config == null || config.schemaVersion < 1 || config.schemaVersion > 2 || config.enabled == null || config.enabled.Any(string.IsNullOrWhiteSpace))
+                 throw new InvalidDataException("扩展配置格式无效：" + path);
+diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+index 9959214..df5a5a7 100644
+--- a/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
++++ b/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+@@ -2,6 +2,8 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
+ using System.Linq;
+ using Ember.Basic;
+ using Ember.UPMManager.Editor;
+diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+index bd67a4f..05f5836 100644
+--- a/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
++++ b/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+@@ -2,6 +2,8 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
+ using System.Linq;
+ using Ember.UPMManager.Editor;
+ using UnityEditor;
+@@ -78,21 +80,25 @@ private static string ValidateDeploymentBaseline(string projectRoot, DeployedTem
+         }
+ 
+         // 只比较实际由部署器管理的内容；头标记不是业务变化，统一到固定值后分类。
+-        private static void CopyPatchAssets(string sourceAssets, string destination, bool normalizeMarkers)
++        private static void CopyPatchAssets(string sourceAssets, string destination, bool normalizeMarkers,
++            Action<string> beforeNormalizeForTest = null, Action<string, string> copiedForTest = null)
+         {
+             Directory.CreateDirectory(destination);
+             foreach (string relative in TemplateDirNames)
+             {
+                 string source = Path.Combine(sourceAssets, relative);
+                 if (Directory.Exists(source))
+-                    EmberTemplateTransaction.CopyDirectory(source, Path.Combine(destination, relative));
++                    EmberTemplateTransaction.CopyDirectory(source, Path.Combine(destination, relative), copiedForTest);
+                 else if (File.Exists(source))
+                     throw new InvalidDataException("模板管理目录被文件占用：" + relative);
+             }
+             if (!normalizeMarkers) return;
+             foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
+                 if (!IsSkillSourcePath(RelativePath(destination, file), EmberAISkillInstaller.TemplateSourceDirectory))
+-                    RewriteVersionMarker(file, "0.0.0", "0.0.0");
++                {
++                    beforeNormalizeForTest?.Invoke(file);
++                    RewriteVersionMarkerStrict(file, "0.0.0", "0.0.0");
++                }
+         }
+ 
+         private static string PatchProjectHash(string projectRoot)
+@@ -149,7 +155,7 @@ private static void ValidatePatchPlan(TemplatePatchPlan plan, TemplateInfo templ
+                     Directory.CreateDirectory(Path.GetDirectoryName(target));
+                     File.Copy(Path.Combine(plan.SourceAssets, file.RelativePath), target, true);
+                     if (!IsSkillSourcePath(file.RelativePath, EmberAISkillInstaller.TemplateSourceDirectory))
+-                        RewriteVersionMarker(target, template.version, template.frameworkVersion);
++                        RewriteVersionMarkerStrict(target, template.version, template.frameworkVersion);
+                 }
+                 if (change.UnitKind == TemplateChangeUnitKind.DirectoryMetadata
+                     && Directory.Exists(Path.Combine(plan.SourceAssets, change.UnitPath)))
+@@ -205,7 +211,8 @@ public static TemplatePatchPlan PreviewTemplatePatch(string templateId)
+                 Path.Combine(GetResolvedPath(PACKAGE), "Templates~", templateId, "Assets"), template);
+         }
+ 
+-        internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, string sourceAssets, TemplateInfo template)
++        internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, string sourceAssets, TemplateInfo template,
++            Action<string> previewStaged = null, Action<string> beforeNormalizeForTest = null, Action<string, string> copiedForTest = null)
+         {
+             var data = ReadPatchDeploymentData(projectRoot);
+             var active = ResolveActiveDeployment(data);
+@@ -219,13 +226,13 @@ internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, str
+                 BaselineHash = ComputeTemplateContentHash(baseline), ProjectHash = PatchProjectHash(projectRoot),
+                 RecordJson = JsonUtility.ToJson(data), TemplateJson = JsonUtility.ToJson(template)
+             };
+-            string stage = Path.Combine(projectRoot, "Temp", "EmberPatchPreview-" + Guid.NewGuid().ToString("N") + "~");
+-            try
++            return EmberTemplateTemporaryDirectory.Run(projectRoot, "EmberPatchPreview", stage =>
+             {
+                 string old = Path.Combine(stage, "Old"), incoming = Path.Combine(stage, "Incoming"), local = Path.Combine(stage, "Local");
+-                CopyPatchAssets(baseline, old, true);
+-                CopyPatchAssets(sourceAssets, incoming, true);
+-                CopyPatchAssets(Path.Combine(projectRoot, "Assets"), local, true);
++                CopyPatchAssets(baseline, old, true, beforeNormalizeForTest, copiedForTest);
++                CopyPatchAssets(sourceAssets, incoming, true, beforeNormalizeForTest, copiedForTest);
++                CopyPatchAssets(Path.Combine(projectRoot, "Assets"), local, true, beforeNormalizeForTest, copiedForTest);
++                previewStaged?.Invoke(stage);
+                 EmberTemplateInheritanceEngine.ValidateCaseInsensitivePathUniqueness(
+                     new[] { old, incoming, local }.SelectMany(root =>
+                         Directory.GetFiles(root, "*", SearchOption.AllDirectories).Select(file => RelativePath(root, file)))
+@@ -233,8 +240,7 @@ internal static TemplatePatchPlan BuildTemplatePatchPlan(string projectRoot, str
+                 plan.Changes = EmberTemplateInheritanceEngine.BuildThreeWayChanges(old, incoming, local).AsReadOnly();
+                 ValidatePatchPlan(plan, template);
+                 return plan;
+-            }
+-            finally { TryCleanTransactionPath(stage); }
++            });
+         }
+ 
+         /// <summary>应用已审阅补丁；AcceptParent=采用新版，KeepChild=保留本地。所有冲突必须明确解决。</summary>
+@@ -257,78 +263,80 @@ public static int ApplyTemplatePatch(TemplatePatchPlan plan, IDictionary<string,
+         }
+ 
+         internal static int CommitTemplatePatch(TemplatePatchPlan plan, TemplateInfo template,
+-            IDictionary<string, TemplateConflictChoice> resolutions, bool confirmSkills = false, Action<int> faultInjector = null)
++            IDictionary<string, TemplateConflictChoice> resolutions, bool confirmSkills = false, Action<int> faultInjector = null,
++            EmberTemplateTemporaryDirectory.TestHooks scopeHooksForTest = null)
+         {
+             ValidatePatchPlan(plan, template);
+-            string stage = Path.Combine(plan.ProjectRoot, "Temp", "EmberPatchApply-" + Guid.NewGuid().ToString("N") + "~");
+-            string assets = Path.Combine(stage, "Assets");
+             AssetDatabase.DisallowAutoRefresh();
+             try
+             {
+-                CopyPatchAssets(Path.Combine(plan.ProjectRoot, "Assets"), assets, false);
+-                ApplyPatchChanges(plan, assets, resolutions, template);
+-                if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(assets, out _, out string error))
+-                    throw new InvalidDataException("增量结果资源校验失败：" + error);
+-                EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
+-                var skills = confirmSkills ? ConfirmLifecycleSkills(plan.ProjectRoot, assets, template, false)
+-                    : PreviewSkills(plan.ProjectRoot, assets, template, template.id);
+-                EmberAISkillInstaller.ValidateTemplatePreview(skills);
+-                var targets = new List<TemplateTransactionTarget>();
+-                int count = 0;
+-                // 逐文件提交，仅写发生变化的文件；本地独有内容与顶层目录 GUID 保持原位。
+-                foreach (string relative in TemplateDirNames)
++                return EmberTemplateTemporaryDirectory.Run(plan.ProjectRoot, "EmberPatchApply", stage =>
+                 {
+-                    string destination = Path.Combine(plan.ProjectRoot, "Assets", relative);
+-                    string prepared = Path.Combine(assets, relative);
+-                    var files = new HashSet<string>(StringComparer.Ordinal);
+-                    if (Directory.Exists(destination))
+-                        foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
+-                            files.Add(relative + "/" + RelativePath(destination, file));
+-                    if (Directory.Exists(prepared))
+-                        foreach (string file in Directory.GetFiles(prepared, "*", SearchOption.AllDirectories))
+-                            files.Add(relative + "/" + RelativePath(prepared, file));
+-                    // 新增/删除目录作为事务单元，保证空目录及其 GUID 不会在导入后被重新生成。
+-                    var directoryTargets = new List<string>();
+-                    var candidates = new List<string>();
+-                    if (!Directory.Exists(destination) && Directory.Exists(prepared)) candidates.Add(relative);
+-                    if (Directory.Exists(destination))
+-                        candidates.AddRange(Directory.GetDirectories(destination, "*", SearchOption.AllDirectories)
+-                            .Select(p => relative + "/" + RelativePath(destination, p))
+-                            .Where(p => !Directory.Exists(Path.Combine(assets, p))));
+-                    if (Directory.Exists(prepared))
+-                        candidates.AddRange(Directory.GetDirectories(prepared, "*", SearchOption.AllDirectories)
+-                            .Select(p => relative + "/" + RelativePath(prepared, p))
+-                            .Where(p => !Directory.Exists(Path.Combine(plan.ProjectRoot, "Assets", p))));
+-                    foreach (string directory in candidates.OrderBy(p => p.Length))
+-                    {
+-                        if (directoryTargets.Any(p => directory.StartsWith(p + "/", StringComparison.Ordinal))) continue;
+-                        directoryTargets.Add(directory);
+-                        string stagedDirectory = Path.Combine(assets, directory);
+-                        targets.Add(new TemplateTransactionTarget(stagedDirectory,
+-                            Path.Combine(plan.ProjectRoot, "Assets", directory), !Directory.Exists(stagedDirectory)));
+-                    }
+-                    foreach (string file in files.OrderBy(p => p, StringComparer.Ordinal))
++                    string assets = Path.Combine(stage, "Assets");
++                    CopyPatchAssets(Path.Combine(plan.ProjectRoot, "Assets"), assets, false);
++                    ApplyPatchChanges(plan, assets, resolutions, template);
++                    if (!EmberTemplateInheritanceEngine.TryValidateTemplateAssets(assets, out _, out string error))
++                        throw new InvalidDataException("增量结果资源校验失败：" + error);
++                    EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
++                    var skills = confirmSkills ? ConfirmLifecycleSkills(plan.ProjectRoot, assets, template, false)
++                        : PreviewSkills(plan.ProjectRoot, assets, template, template.id);
++                    EmberAISkillInstaller.ValidateTemplatePreview(skills);
++                    var targets = new List<TemplateTransactionTarget>();
++                    int count = 0;
++                    // 逐文件提交，仅写发生变化的文件；本地独有内容与顶层目录 GUID 保持原位。
++                    foreach (string relative in TemplateDirNames)
+                     {
+-                        string stagedFile = Path.Combine(assets, file), liveFile = Path.Combine(plan.ProjectRoot, "Assets", file);
+-                        if (File.Exists(stagedFile) && File.Exists(liveFile)
+-                            && File.ReadAllBytes(stagedFile).SequenceEqual(File.ReadAllBytes(liveFile))) continue;
+-                        if (!directoryTargets.Any(p => file.StartsWith(p + "/", StringComparison.Ordinal)))
+-                            targets.Add(new TemplateTransactionTarget(stagedFile, liveFile, !File.Exists(stagedFile)));
+-                        count++;
++                        string destination = Path.Combine(plan.ProjectRoot, "Assets", relative);
++                        string prepared = Path.Combine(assets, relative);
++                        var files = new HashSet<string>(StringComparer.Ordinal);
++                        if (Directory.Exists(destination))
++                            foreach (string file in Directory.GetFiles(destination, "*", SearchOption.AllDirectories))
++                                files.Add(relative + "/" + RelativePath(destination, file));
++                        if (Directory.Exists(prepared))
++                            foreach (string file in Directory.GetFiles(prepared, "*", SearchOption.AllDirectories))
++                                files.Add(relative + "/" + RelativePath(prepared, file));
++                        // 新增/删除目录作为事务单元，保证空目录及其 GUID 不会在导入后被重新生成。
++                        var directoryTargets = new List<string>();
++                        var candidates = new List<string>();
++                        if (!Directory.Exists(destination) && Directory.Exists(prepared)) candidates.Add(relative);
++                        if (Directory.Exists(destination))
++                            candidates.AddRange(Directory.GetDirectories(destination, "*", SearchOption.AllDirectories)
++                                .Select(p => relative + "/" + RelativePath(destination, p))
++                                .Where(p => !Directory.Exists(Path.Combine(assets, p))));
++                        if (Directory.Exists(prepared))
++                            candidates.AddRange(Directory.GetDirectories(prepared, "*", SearchOption.AllDirectories)
++                                .Select(p => relative + "/" + RelativePath(prepared, p))
++                                .Where(p => !Directory.Exists(Path.Combine(plan.ProjectRoot, "Assets", p))));
++                        foreach (string directory in candidates.OrderBy(p => p.Length))
++                        {
++                            if (directoryTargets.Any(p => directory.StartsWith(p + "/", StringComparison.Ordinal))) continue;
++                            directoryTargets.Add(directory);
++                            string stagedDirectory = Path.Combine(assets, directory);
++                            targets.Add(new TemplateTransactionTarget(stagedDirectory,
++                                Path.Combine(plan.ProjectRoot, "Assets", directory), !Directory.Exists(stagedDirectory)));
++                        }
++                        foreach (string file in files.OrderBy(p => p, StringComparer.Ordinal))
++                        {
++                            string stagedFile = Path.Combine(assets, file), liveFile = Path.Combine(plan.ProjectRoot, "Assets", file);
++                            if (File.Exists(stagedFile) && File.Exists(liveFile)
++                                && File.ReadAllBytes(stagedFile).SequenceEqual(File.ReadAllBytes(liveFile))) continue;
++                            if (!directoryTargets.Any(p => file.StartsWith(p + "/", StringComparison.Ordinal)))
++                                targets.Add(new TemplateTransactionTarget(stagedFile, liveFile, !File.Exists(stagedFile)));
++                            count++;
++                        }
+                     }
+-                }
+-                AddDeploymentBaseline(targets, stage, plan.ProjectRoot, plan.SourceAssets, template);
+-                AddDeploymentRecord(targets, stage, plan.ProjectRoot, template);
+-                AddPreparedSkills(targets, skills, true);
+-                ValidatePatchPlan(plan, template);
+-                EmberAISkillInstaller.ValidateTemplatePreview(skills);
+-                EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
+-                EmberTemplateTransaction.CommitPreparedTargets(targets, faultInjector);
+-                return count;
++                    AddDeploymentBaseline(targets, stage, plan.ProjectRoot, plan.SourceAssets, template);
++                    AddDeploymentRecord(targets, stage, plan.ProjectRoot, template);
++                    AddPreparedSkills(targets, skills, true);
++                    ValidatePatchPlan(plan, template);
++                    EmberAISkillInstaller.ValidateTemplatePreview(skills);
++                    EnsureNoTemplateGuidCollisions(plan.ProjectRoot, assets, true);
++                    EmberTemplateTransaction.CommitPreparedTargets(targets, faultInjector);
++                    return count;
++                }, committedOnSuccess: true, hooks: scopeHooksForTest);
+             }
+             finally
+             {
+-                TryCleanTransactionPath(stage);
+                 AssetDatabase.AllowAutoRefresh();
+             }
+         }
+diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+index 3d227f4..acf58dc 100644
+--- a/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
++++ b/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+@@ -4,6 +4,8 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
+ using System.Linq;
+ using System.Text.RegularExpressions;
+ using Ember.Basic;
+@@ -1185,12 +1187,21 @@ private static int[] ParseTemplateVersion(string version)
+         /// 返回是否实际发生了替换（用于统计「标记刷新」数量）。
+         /// </summary>
+         private static bool RewriteVersionMarker(string fullPath, string version, string frameworkVersion)
++        {
++            try { return RewriteVersionMarkerStrict(fullPath, version, frameworkVersion); }
++            catch (Exception error)
++            {
++                EmberDebug.LogWarning(LogTags.CoreEditor, $"版本头未更新 [{fullPath}]：{error}");
++                return false;
++            }
++        }
++
++        private static bool RewriteVersionMarkerStrict(string fullPath, string version, string frameworkVersion)
+         {
+             if (string.IsNullOrEmpty(version)) return false;
+ 
+             byte[] bytes;
+-            try { bytes = File.ReadAllBytes(fullPath); }
+-            catch { return false; }
++            bytes = File.ReadAllBytes(fullPath);
+ 
+             var replaced = RewriteVersionMarker(
+                 bytes,
+@@ -1199,8 +1210,7 @@ private static bool RewriteVersionMarker(string fullPath, string version, string
+                 out var changed);
+             if (!changed) return false;
+ 
+-            try { File.WriteAllBytes(fullPath, replaced); }
+-            catch { return false; /* 写失败不影响部署，标记保持原样 */ }
++            File.WriteAllBytes(fullPath, replaced);
+             return true;
+         }
+ 
+@@ -1471,7 +1481,7 @@ private static void CleanDirectory(string path)
+         private static void TryCleanTransactionPath(string path)
+         {
+             try { EmberTemplateTransaction.CleanPath(path); }
+-            catch { /* 暂存清理失败不覆盖主事务结果。 */ }
++            catch (Exception error) { EmberDebug.LogWarning(TAG, $"暂存目录清理失败 [{path}]：{error}"); }
+         }
+ 
+         /// <summary>整树复制模板到项目 Assets/。返回部署的文件数。</summary>
+diff --git a/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs b/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+index de5fe15..d772a74 100644
+--- a/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
++++ b/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+@@ -5,6 +5,8 @@
+ using System.Collections.Generic;
+ using System.Globalization;
+ using System.IO;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
+ using System.Text;
+ using System.Text.RegularExpressions;
+ using Ember.Basic;
+diff --git a/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs b/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+index b4dfefe..a65abaa 100644
+--- a/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
++++ b/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+@@ -4,6 +4,8 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
+ using System.Linq;
+ 
+ using Ember.Basic;
+@@ -18,6 +20,7 @@ internal static class EmberTemplateTransaction
+         #region 内部参数
+ 
+         private const string BackupSuffix = ".ember-backup~";
++        private static int _commitActive;
+ 
+         #endregion
+ 
+@@ -114,12 +117,12 @@ internal static TemplateInfo ApplyParentSync(ParentSyncTransactionRequest reques
+             finally
+             {
+                 try { CleanPath(stageRoot); }
+-                catch { /* 暂存区清理失败不覆盖事务本身的成功/失败结果。 */ }
++                catch (Exception error) { EmberDebug.LogWarning(LogTags.CoreEditor, $"暂存目录清理失败 [{stageRoot}]：{error}"); }
+             }
+         }
+ 
+         /// <summary>递归复制完整目录树（包含空目录、.meta 与仅由 folderAsset .meta 表示的空目录）。</summary>
+-        internal static int CopyDirectory(string source, string destination)
++        internal static int CopyDirectory(string source, string destination, Action<string, string> copiedForTest = null)
+         {
+             ValidatePathLinks(source);
+             ValidatePathLinks(destination);
+@@ -147,6 +150,7 @@ internal static int CopyDirectory(string source, string destination)
+                 if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
+                 File.Copy(file, target, true);
+                 count++;
++                copiedForTest?.Invoke(file, target);
+             }
+ 
+             MaterializeFolderMetadataDirectories(destination);
+@@ -160,6 +164,15 @@ internal static int CopyDirectory(string source, string destination)
+         internal static void CommitPreparedTargets(
+             IReadOnlyList<TemplateTransactionTarget> targets,
+             Action<int> faultInjector = null)
++        {
++            if (System.Threading.Interlocked.CompareExchange(ref _commitActive, 1, 0) != 0)
++                throw new InvalidOperationException("模板事务正在提交，拒绝并发或嵌套提交。");
++            try { CommitPreparedTargetsCore(targets, faultInjector); }
++            finally { System.Threading.Volatile.Write(ref _commitActive, 0); }
++        }
++
++        private static void CommitPreparedTargetsCore(
++            IReadOnlyList<TemplateTransactionTarget> targets, Action<int> faultInjector)
+         {
+             if (targets == null || targets.Count == 0)
+                 throw new ArgumentException("事务目标不能为空。", nameof(targets));
+@@ -174,6 +187,10 @@ internal static int CopyDirectory(string source, string destination)
+                     var state = new TemplateTransactionState(target);
+                     states.Add(state);
+                     EnsureParentDirectory(target.DestinationPath);
++                    ValidatePathLinks(target.DestinationPath);
++                    ValidatePathLinks(state.BackupPath);
++                    if (PathExists(state.BackupPath))
++                        throw new IOException("事务备份已被占用，保留未知备份：" + state.BackupPath);
+                     if (PathExists(target.DestinationPath))
+                     {
+                         MovePath(target.DestinationPath, state.BackupPath);
+@@ -210,13 +227,14 @@ internal static int CopyDirectory(string source, string destination)
+             {
+                 if (!state.BackupCreated) continue;
+                 try { CleanPath(state.BackupPath); }
+-                catch { /* 新内容已完整提交；残留备份保留为可恢复副本。 */ }
++                catch (Exception error) { EmberDebug.LogWarning(LogTags.CoreEditor, $"模板已提交；事务备份清理失败，保留残留 [{state.BackupPath}]：{error}"); }
+             }
+         }
+ 
+         internal static void CleanPath(string path)
+         {
+             if (string.IsNullOrEmpty(path)) return;
++            ValidateDirectorySafety(path);
+             if (File.Exists(path))
+             {
+                 File.Delete(path);
+@@ -486,7 +504,7 @@ private static void ValidateParentSyncRequest(ParentSyncTransactionRequest reque
+             EnsureParentDirectory(stagedScenePath);
+             File.WriteAllBytes(stagedScenePath, mergeResult.MergedBytes);
+             if (!string.Equals(
+-                    CryptographyUtils.GetMD5File(stagedScenePath),
++                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(stagedScenePath),
+                     preview.MergedHash,
+                     StringComparison.Ordinal))
+             {
+@@ -512,7 +530,7 @@ private static void ValidateParentSyncRequest(ParentSyncTransactionRequest reque
+                 || !metaFile.ChildExists
+                 || !File.Exists(stagedMetaPath)
+                 || !string.Equals(
+-                    CryptographyUtils.GetMD5File(stagedMetaPath),
++                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(stagedMetaPath),
+                     metaFile.ChildHash,
+                     StringComparison.Ordinal))
+             {
+@@ -555,7 +573,7 @@ private static void ValidateParentSyncRequest(ParentSyncTransactionRequest reque
+             if (string.IsNullOrEmpty(expectedHash)
+                 || !File.Exists(path)
+                 || !string.Equals(
+-                    CryptographyUtils.GetMD5File(path),
++                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(path),
+                     expectedHash,
+                     StringComparison.Ordinal))
+             {
+@@ -633,7 +651,7 @@ private static void ValidateTargets(IReadOnlyList<TemplateTransactionTarget> tar
+             }
+         }
+ 
+-        private static void ValidatePathLinks(string path)
++        internal static void ValidatePathLinks(string path)
+         {
+             for (string current = Path.GetFullPath(path); !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
+             {
+@@ -665,7 +683,7 @@ private static void ValidateTreeLinks(string path)
+ 
+         private static void Rollback(List<TemplateTransactionState> states)
+         {
+-            Exception rollbackError = null;
++            var rollbackErrors = new List<Exception>();
+             for (int i = states.Count - 1; i >= 0; i--)
+             {
+                 var state = states[i];
+@@ -678,15 +696,15 @@ private static void Rollback(List<TemplateTransactionState> states)
+                 }
+                 catch (Exception ex)
+                 {
+-                    rollbackError ??= ex;
++                    rollbackErrors.Add(new IOException($"恢复失败，目标 [{state.Target.DestinationPath}]，备份 [{state.BackupPath}]；请保留相关文件。", ex));
+                 }
+             }
+ 
+-            if (rollbackError != null)
++            if (rollbackErrors.Count != 0)
+             {
+                 throw new IOException(
+                     "模板事务失败，且自动回滚未能完整恢复；请保留 *.ember-backup~ 并人工检查。",
+-                    rollbackError);
++                    new AggregateException(rollbackErrors));
+             }
+         }
+ 
+@@ -711,9 +729,11 @@ private static void MovePath(string source, string destination)
+                 }
+                 throw new FileNotFoundException($"待移动路径不存在：{source}", source);
+             }
+-            catch (IOException error)
++            catch (Exception error)
+             {
+-                throw new IOException($"模板事务移动失败：[{source}] → [{destination}]。", error);
++                error.Data["EmberMoveSource"] = source;
++                error.Data["EmberMoveDestination"] = destination;
++                throw;
+             }
+         }
+ 
+diff --git a/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs b/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+index 2dc742a..e733419 100644
+--- a/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
++++ b/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+@@ -2,6 +2,8 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using File = Ember.UI.Tests.PatchObservation.File;
++using Directory = Ember.UI.Tests.PatchObservation.Directory;
+ using System.Linq;
+ using Ember.Core.Editor;
+ using Ember.UPMManager.Editor;
+@@ -236,9 +238,265 @@ public void GeneratedVersionHeader_IsNotAConcurrentEdit()
+             StringAssert.Contains("fixed", Read("Assets/Game/Generated.txt"));
+             StringAssert.Contains("v1.2.1", Read("Assets/Game/Generated.txt"));
+         }
++
++        [TestCase(false)]
++        [TestCase(true)]
++        public void LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(bool interrupt)
++        {
++            string relative = LongAssetPath();
++            Asset(_source, relative, "old asset");
++            Deploy(Info("1.2.0"));
++            string live = Path.Combine(_project, "Assets", relative);
++            Assert.AreEqual(235, (live + ".meta").Length);
++            Assert.AreEqual(RuntimePlatform.WindowsEditor, Application.platform);
++            Assert.AreEqual(0, (int)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem", "LongPathsEnabled", -1));
++            foreach (string input in new[] { live, Path.Combine(_source, relative) })
++            {
++                Assert.LessOrEqual((input + ".meta").Length, 235);
++                Assert.AreEqual("old asset", System.IO.File.ReadAllText(input));
++                Assert.IsNotEmpty(System.IO.File.ReadAllBytes(input + ".meta"));
++                TestContext.Out.WriteLine("ordinary input=" + input + " meta length=" + (input + ".meta").Length);
++            }
++            TestContext.Out.WriteLine("Unity=" + Application.unityVersion + " platform=" + Application.platform
++                + " CLR=" + Environment.Version + " OS=" + Environment.OSVersion + " volume=" + new DriveInfo(Path.GetPathRoot(_root)).DriveFormat);
++            // 源与 live 必须能普通读取。
++            Assert.AreEqual("old asset", System.IO.File.ReadAllText(live));
++            string meta = System.IO.File.ReadAllText(live + ".meta");
++            Asset(_source, relative, "new asset");
++            var next = Info("1.2.1");
++            string before = Fingerprint(), sourceBefore = RawTree(_source);
++            string stage = null;
++            var plan = EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
++            {
++                stage = path;
++                foreach (string side in new[] { "Old", "Incoming", "Local" })
++                {
++                    string staged = Path.Combine(path, side, relative);
++                    Assert.Greater((staged + ".meta").Length, 260);
++                    TestContext.Out.WriteLine(side + " meta length=" + (staged + ".meta").Length);
++                    Assert.AreEqual(meta, File.ReadAllText(staged + ".meta"));
++                }
++                TestContext.Out.WriteLine("live meta length=235, source meta length=" + (Path.Combine(_source, relative) + ".meta").Length
++                    + ", Local meta length=" + Path.Combine(path, "Local", relative + ".meta").Length);
++            });
++            Assert.IsFalse(Directory.Exists(stage));
++            Assert.AreEqual(before, Fingerprint());
++            Assert.AreEqual(sourceBefore, RawTree(_source));
++            var change = plan.Changes.Single(c => c.UnitPath == relative);
++            Assert.IsFalse(change.IsConflict);
++            Assert.AreEqual(TemplateConflictChoice.AcceptParent, change.RecommendedChoice);
++            Assert.IsTrue(change.Files.Any(f => f.RelativePath == relative + ".meta"));
++            Assert.IsFalse(plan.Changes.SelectMany(c => c.Files).Any(f => f.RelativePath.Contains(@"\\?\")));
++            if (interrupt)
++            {
++                var primary = new IOException("injected long-path commit");
++                Assert.AreSame(primary, Assert.Throws<IOException>(() => EmberProjectSetup.CommitTemplatePatch(plan, next, null,
++                    faultInjector: _ => throw primary)));
++                Assert.AreEqual(before, Fingerprint());
++            }
++            else
++            {
++                EmberProjectSetup.CommitTemplatePatch(plan, next, null);
++                Assert.AreEqual("new asset", System.IO.File.ReadAllText(live));
++                Assert.AreEqual(next.contentHash, Record().contentHash);
++            }
++            Assert.AreEqual(meta, System.IO.File.ReadAllText(live + ".meta"));
++            Assert.AreEqual(sourceBefore, RawTree(_source));
++            Assert.IsEmpty(Directory.GetDirectories(Path.Combine(_project, "Temp"), "EmberPatch*"));
++        }
++
++        [Test]
++        public void LongPaths_ConcurrentEditRemainsConflict_WithOriginalGuidAndHashes()
++        {
++            string relative = LongAssetPath();
++            Asset(_source, relative, "old");
++            Deploy(Info("1.2.0"));
++            Asset(_source, relative, "parent");
++            Asset(_project, "Assets/" + relative, "child");
++            string before = Fingerprint();
++            var plan = Plan(Info("1.2.1"));
++            var change = plan.Changes.Single(c => c.UnitPath == relative);
++            Assert.IsTrue(change.IsConflict);
++            var file = change.Files.Single(f => f.RelativePath == relative);
++            Assert.AreNotEqual(file.OldHash, file.ParentHash);
++            Assert.AreNotEqual(file.ParentHash, file.ChildHash);
++            var meta = change.Files.Single(f => f.RelativePath == relative + ".meta");
++            Assert.AreEqual(meta.OldGuid, meta.ParentGuid);
++            Assert.AreEqual(meta.OldGuid, meta.ChildGuid);
++            Assert.AreEqual(before, Fingerprint());
++        }
++
++        [TestCase(false)]
++        [TestCase(true)]
++        public void LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(bool lockFile)
++        {
++            if (lockFile && Application.platform != RuntimePlatform.WindowsEditor) Assert.Ignore("Windows 文件锁语义");
++            string relative = LongAssetPath();
++            Asset(_source, relative, "old");
++            Deploy(Info("1.2.0"));
++            Asset(_source, relative, "incoming");
++            var next = Info("1.2.1");
++            string before = Fingerprint(), stage = null;
++            string sibling = Path.Combine(_project, "Temp", "EmberPatchPreview-other~");
++            Write(sibling, "keep.txt", "another operation");
++            FileStream held = null;
++            var primary = new IOException("primary preview fault: " + relative);
++            try
++            {
++                var actual = Assert.Throws<IOException>(() => EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
++                {
++                    stage = path;
++                    if (lockFile) held = new FileStream(PatchObservation.Native(Path.Combine(path, "Local", relative)),
++                        FileMode.Open, FileAccess.Read, FileShare.None);
++                    throw primary;
++                }));
++                Assert.AreSame(primary, actual);
++                Assert.AreEqual(stage, actual.Data["EmberTemporaryDirectory"]);
++                Assert.AreEqual(lockFile, Directory.Exists(stage));
++                if (lockFile)
++                {
++                    var cleanup = actual.Data["EmberStageCleanupException"] as IOException;
++                    Assert.IsNotNull(cleanup);
++                    StringAssert.Contains(stage, cleanup.Message);
++                    Assert.IsNotNull(cleanup.InnerException);
++                }
++                Assert.AreEqual(before, Fingerprint());
++                Assert.AreEqual("another operation", File.ReadAllText(Path.Combine(sibling, "keep.txt")));
++            }
++            finally
++            {
++                held?.Dispose();
++                if (stage != null) EmberTemplateTransaction.CleanPath(stage);
++            }
++        }
++
++        [Test]
++        public void Preview_NestedOperationsHaveSeparateOwnedDirectories()
++        {
++            Asset(_source, "Game/Shared.txt", "new");
++            var next = Info("1.2.1");
++            string outer = null, inner = null;
++            EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
++            {
++                outer = path;
++                EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, nested => inner = nested);
++                Assert.AreNotEqual(outer, inner);
++                Assert.IsTrue(Directory.Exists(outer));
++                Assert.IsFalse(Directory.Exists(inner));
++            });
++            Assert.IsFalse(Directory.Exists(outer));
++        }
++
++        [TestCase("copy")] [TestCase("normalize")] [TestCase("meta")]
++        public void Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(string phase)
++        {
++            Asset(_source, "Game/Shared.txt", "new"); var next = Info("1.2.1");
++            string before = Fingerprint(), sourceBefore = RawTree(_source), stage = null, failedPath = null;
++            var primary = new IOException("copy interrupted"); FileStream held = null;
++            try
++            {
++                var error = Assert.Throws<IOException>(() => EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next,
++                    previewStaged: p => { stage = p; if (phase == "meta") { failedPath = Path.Combine(p, "Local/Game/Shared.txt.meta"); held = new FileStream(PatchObservation.Native(failedPath), FileMode.Open, FileAccess.Read, FileShare.None); } },
++                    beforeNormalizeForTest: p => { if (phase == "normalize" && held == null) { failedPath = p; held = new FileStream(PatchObservation.Native(p), FileMode.Open, FileAccess.Read, FileShare.None); } },
++                    copiedForTest: (source, dest) => { if (phase == "copy") { failedPath = dest; primary.Data["copyPath"] = dest; throw primary; } }));
++                stage ??= (string)error.Data["EmberTemporaryDirectory"];
++                Assert.IsNotNull(stage);
++                if (phase == "copy") { Assert.AreSame(primary, error); StringAssert.Contains("CopyPatchAssets", error.StackTrace); Assert.IsNotNull(error.Data["copyPath"]); }
++                else { Assert.AreEqual(Path.GetFullPath(failedPath), Path.GetFullPath((string)error.Data["EmberIOPath"])); Assert.IsNotNull(error.Data["EmberStageCleanupException"]); }
++                Assert.AreEqual(before, Fingerprint()); Assert.AreEqual(sourceBefore, RawTree(_source));
++                if (phase == "copy") Assert.IsFalse(Directory.Exists(stage));
++            }
++            finally { held?.Dispose(); if (stage != null) EmberTemplateTransaction.CleanPath(stage); }
++        }
++
++        [Test] public void Preview_NoChangesPreservesRawTreesAndDirectoryGuids()
++        {
++            var next = Info("1.2.1"); string before = Fingerprint(), sourceBefore = RawTree(_source);
++            var plan = Plan(next); Assert.IsFalse(plan.Changes.Any(c => c.IsConflict));
++            Assert.IsTrue(plan.Changes.All(c => c.RecommendedChoice == TemplateConflictChoice.KeepChild));
++            Assert.AreEqual(before, Fingerprint()); Assert.AreEqual(sourceBefore, RawTree(_source));
++        }
++
++        [Test] public void Apply_CommittedCleanupFailureReturnsCountAndWarnsWithoutRetryAmbiguity()
++        {
++            Asset(_source, "Game/Shared.txt", "committed"); var next = Info("1.2.1"); var plan = Plan(next);
++            string stage = null; FileStream held = null; var warnings = new List<string>();
++            void Observe(string message, string stack, LogType type) { if (type == LogType.Warning) warnings.Add(message); }
++            Application.logMessageReceived += Observe;
++            try
++            {
++                var hooks = new EmberTemplateTemporaryDirectory.TestHooks { BeforeCleanup = p =>
++                {
++                    stage = p; string path = Path.Combine(p, "cleanup-lock"); File.WriteAllText(path, "lock");
++                    held = new FileStream(PatchObservation.Native(path), FileMode.Open, FileAccess.Read, FileShare.None);
++                }};
++                Assert.Greater(EmberProjectSetup.CommitTemplatePatch(plan, next, null, scopeHooksForTest: hooks), 0);
++                Assert.AreEqual("committed", Read("Assets/Game/Shared.txt")); Assert.AreEqual("1.2.1", Record().version);
++                Assert.IsTrue(Directory.Exists(stage)); Assert.IsTrue(warnings.Any(w => w.Contains("已提交") && w.Contains(stage)));
++            }
++            finally { Application.logMessageReceived -= Observe; held?.Dispose(); if (stage != null) EmberTemplateTransaction.CleanPath(stage); }
++        }
++
++        [Test] public void LongPaths_ShortEquivalentPlanAndHashesMatch()
++        {
++            string relative = LongAssetPath(); Asset(_source, relative, "old\r\nasset"); Deploy(Info("1.2.0"));
++            Asset(_source, relative, "new\r\nasset"); var next = Info("1.2.1");
++            string sandbox = Path.Combine(Path.GetTempPath(), "EP" + Guid.NewGuid().ToString("N").Substring(0, 12));
++            Assert.IsFalse(Directory.Exists(sandbox)); Directory.CreateDirectory(sandbox);
++            try
++            {
++            string shortRoot = Path.Combine(sandbox, "P");
++            EmberTemplateTransaction.CopyDirectory(_project, shortRoot);
++            string shortSource = Path.Combine(sandbox, "N"); EmberTemplateTransaction.CopyDirectory(_source, shortSource);
++            var longPlan = Plan(next); var shortPlan = EmberProjectSetup.BuildTemplatePatchPlan(shortRoot, shortSource, next, stage =>
++            {
++                foreach (string side in new[] { "Old", "Incoming", "Local" })
++                {
++                    string meta = Path.Combine(stage, side, relative + ".meta"); Assert.Less(meta.Length, 260);
++                    Assert.IsNotEmpty(System.IO.File.ReadAllText(meta)); TestContext.Out.WriteLine("short " + side + " meta=" + meta.Length);
++                }
++            });
++            Assert.AreEqual(longPlan.ProjectHash, shortPlan.ProjectHash); Assert.AreEqual(longPlan.BaselineHash, shortPlan.BaselineHash);
++            CollectionAssert.AreEqual(longPlan.Changes.Select(c => c.UnitPath + ":" + c.Kind + ":" + c.RecommendedChoice), shortPlan.Changes.Select(c => c.UnitPath + ":" + c.Kind + ":" + c.RecommendedChoice));
++            CollectionAssert.AreEqual(longPlan.Changes.SelectMany(c => c.Files).Select(f => f.RelativePath + ":" + f.OldHash + ":" + f.ParentHash + ":" + f.ChildHash),
++                shortPlan.Changes.SelectMany(c => c.Files).Select(f => f.RelativePath + ":" + f.OldHash + ":" + f.ParentHash + ":" + f.ChildHash));
++            Assert.IsFalse(Read(RecordPath).Contains(@"\\?\"));
++            }
++            finally { Directory.Delete(sandbox, true); }
++        }
++
++        [Test] public void LongPaths_DeepSkillApplyCoversUpmSnapshotsAndDefaults()
++        {
++            string skillRoot = EmberAISkillInstaller.TemplateSourceDirectory;
++            Write(_source, skillRoot + "/ember-fixture/SKILL.md", "---\nname: ember-fixture\ndescription: isolated fixture\n---\nfixture");
++            Write(_source, skillRoot + "/catalog.json", "{\"schemaVersion\":2,\"skills\":[{\"id\":\"ember-fixture\",\"templateId\":\"fixture\",\"minimumFrameworkVersion\":\"0.1.0\",\"minimumTemplateVersion\":\"0.1.0\"}]}");
++            string deep = skillRoot + "/ember-fixture/" + string.Join("/", Enumerable.Repeat("nested-legal-component", 8)) + "/reference.md";
++            Write(_source, deep, "old reference");
++            Write(_source, "Game/Config/EmberExtensionDefaults.json", "{\"schemaVersion\":2,\"ownerTemplateId\":\"fixture\",\"ownerTemplateVersion\":\"1.2.0\",\"enabled\":[]}");
++            foreach (string file in Directory.GetFiles(_source, "*", SearchOption.AllDirectories).Where(p => !p.EndsWith(".meta")))
++                if (!File.Exists(file + ".meta")) File.WriteAllText(file + ".meta", Meta());
++            foreach (string dir in Directory.GetDirectories(_source, "*", SearchOption.AllDirectories))
++                if (!File.Exists(dir + ".meta")) File.WriteAllText(dir + ".meta", Meta(true));
++            Deploy(Info("1.2.0")); Write(_source, deep, "new reference");
++            var next = Info("1.2.1"); var plan = Plan(next); string sourceBefore = RawTree(_source);
++            EmberProjectSetup.CommitTemplatePatch(plan, next, null);
++            Assert.AreEqual("new reference", Read("Assets/" + deep));
++            string discovery = Path.Combine(_project, ".agents/skills/ember-fixture", deep.Substring((skillRoot + "/ember-fixture/").Length));
++            Assert.Greater(discovery.Length, 260); Assert.AreEqual("new reference", File.ReadAllText(discovery));
++            Assert.AreEqual(sourceBefore, RawTree(_source)); Assert.IsFalse(Read(".agents/ember-ai-skills.json").Contains(@"\\?\"));
++        }
+         #endregion
+ 
+         #region 内部方法
++        private string LongAssetPath()
++        {
++            string prefix = "GameResource/LongPaths/";
++            int length = 235 - Path.Combine(_project, "Assets", prefix).Length - ".asset.meta".Length;
++            Assert.Greater(length, 0);
++            while (length > 40) { prefix += new string('a', 30) + "/"; length -= 31; }
++            return prefix + new string('b', length) + ".asset";
++        }
++
+         private TemplatePatchPlan ConcurrentAddition(TemplateInfo next)
+         {
+             Asset(_source, "Game/Added.txt", "incoming");
+@@ -267,10 +525,18 @@ private void Deploy(TemplateInfo info, bool replace = true)
+         private string Read(string path) => File.ReadAllText(Path.Combine(_project, path));
+         private DeployedTemplateRecord Record() => EmberProjectSetup.ResolveActiveDeployment(
+             JsonUtility.FromJson<DeployedTemplatesData>(Read(RecordPath)));
+-        private string Fingerprint() => string.Join("\n", Directory.GetFiles(_project, "*", SearchOption.AllDirectories)
+-            .Where(p => !p.StartsWith(Path.Combine(_project, "Temp") + Path.DirectorySeparatorChar)
+-                && !p.StartsWith(Path.Combine(_project, ".utmp") + Path.DirectorySeparatorChar))
+-            .OrderBy(p => p, StringComparer.Ordinal).Select(p => p.Substring(_project.Length) + ":" + Convert.ToBase64String(File.ReadAllBytes(p))));
++        private string Fingerprint() => RawTree(_project, true);
++        private static string RawTree(string root, bool excludeTemp = false)
++        {
++            bool Include(string p) => !excludeTemp || (!p.StartsWith(Path.Combine(root, "Temp") + Path.DirectorySeparatorChar)
++                && !p.StartsWith(Path.Combine(root, ".utmp") + Path.DirectorySeparatorChar));
++            var dirs = Directory.GetDirectories(root, "*", SearchOption.AllDirectories).Where(Include)
++                .Where(p => !excludeTemp || (p != Path.Combine(root, "Temp") && p != Path.Combine(root, ".utmp")))
++                .Select(p => "D:" + p.Substring(root.Length));
++            var files = Directory.GetFiles(root, "*", SearchOption.AllDirectories).Where(Include)
++                .Select(p => "F:" + p.Substring(root.Length) + ":" + Convert.ToBase64String(File.ReadAllBytes(p)));
++            return string.Join("\n", dirs.Concat(files).OrderBy(p => p, StringComparer.Ordinal));
++        }
+         private static string Meta(bool folder = false) => "fileFormatVersion: 2\nguid: " + Guid.NewGuid().ToString("N") + "\n"
+             + (folder ? "folderAsset: yes\n" : "");
+         private static void Asset(string root, string relative, string text)
+@@ -288,3 +554,30 @@ private static void Write(string root, string relative, string text)
+         #endregion
+     }
+ }
++
++namespace Ember.UI.Tests
++{
++    internal static class PatchObservation
++    {
++        internal static string Native(string p) => Path.DirectorySeparatorChar != '\\' ? p
++            : p.StartsWith(@"\\", StringComparison.Ordinal) ? @"\\?\UNC\" + p.Substring(2) : @"\\?\" + Path.GetFullPath(p);
++        internal static class File
++        {
++            internal static bool Exists(string p) => System.IO.File.Exists(Native(p));
++            internal static string ReadAllText(string p) => System.IO.File.ReadAllText(Native(p));
++            internal static byte[] ReadAllBytes(string p) => System.IO.File.ReadAllBytes(Native(p));
++            internal static void WriteAllText(string p, string t) => System.IO.File.WriteAllText(Native(p), t);
++            internal static void Copy(string a, string b, bool overwrite = false) => System.IO.File.Copy(Native(a), Native(b), overwrite);
++            internal static void Delete(string p) => System.IO.File.Delete(Native(p));
++        }
++        internal static class Directory
++        {
++            internal static bool Exists(string p) => System.IO.Directory.Exists(Native(p));
++            internal static void CreateDirectory(string p) => System.IO.Directory.CreateDirectory(Native(p));
++            internal static void Delete(string p, bool recursive = false) => System.IO.Directory.Delete(Native(p), recursive);
++            private static string[] Restore(string root, string[] entries) => entries.Select(p => Path.Combine(root, p.Substring(Native(root).TrimEnd('\\').Length).TrimStart('\\', '/'))).ToArray();
++            internal static string[] GetFiles(string p, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly) => Restore(p, System.IO.Directory.GetFiles(Native(p), pattern, option));
++            internal static string[] GetDirectories(string p, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly) => Restore(p, System.IO.Directory.GetDirectories(Native(p), pattern, option));
++        }
++    }
++}
+diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+index 615ea44..2806b37 100644
+--- a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
++++ b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+@@ -118,7 +118,7 @@ internal PreparedSkillTarget(string staged, string destination, bool remove = fa
+         {
+             templateId = context.TemplateId, businessVersion = context.BusinessVersion,
+             businessContentHash = context.BusinessContentHash, sourceVersion = context.Version,
+-            sourceContentHash = context.ContentHash, sourceExists = Directory.Exists(source),
++            sourceContentHash = context.ContentHash, sourceExists = EmberTemplateFileSystem.Directory.Exists(source),
+             sourceFiles = SnapshotTemplateSource(source), sourceDirectories = SnapshotDirectories(source),
+             sourceMetaHash = Hash(source + ".meta")
+         };
+@@ -135,8 +135,8 @@ internal PreparedSkillTarget(string staged, string destination, bool remove = fa
+         private static List<Package> ReadTemplatePackages(string sourceRoot)
+         {
+             Within(sourceRoot, CatalogFile);
+-            if (File.Exists(sourceRoot)) throw new IOException("模板技能源路径是文件而非目录。");
+-            if (!Directory.Exists(sourceRoot)) return new List<Package>();
++            if (EmberTemplateFileSystem.File.Exists(sourceRoot)) throw new IOException("模板技能源路径是文件而非目录。");
++            if (!EmberTemplateFileSystem.Directory.Exists(sourceRoot)) return new List<Package>();
+             // An existing source directory without a catalog is an authoring error, not an empty template.
+             return ReadCatalog(sourceRoot, true);
+         }
+@@ -144,8 +144,8 @@ private static List<Package> ReadTemplatePackages(string sourceRoot)
+         private static List<Package> ReadProjectPackages(string projectRoot)
+         {
+             string source = Within(projectRoot, ProjectSourceDirectory);
+-            if (File.Exists(source)) throw new IOException("项目技能源路径是文件。");
+-            return Directory.Exists(source) ? ReadCatalog(source, true, true) : new List<Package>();
++            if (EmberTemplateFileSystem.File.Exists(source)) throw new IOException("项目技能源路径是文件。");
++            return EmberTemplateFileSystem.Directory.Exists(source) ? ReadCatalog(source, true, true) : new List<Package>();
+         }
+ 
+         private static bool IsProject(Package package) => !string.IsNullOrEmpty(package.Definition.projectId);
+@@ -168,13 +168,13 @@ private static IEnumerable<string> FileDifferences(string id, Fingerprint[] befo
+ 
+         private static void CopySkillFiles(string source, string destination, Fingerprint[] files)
+         {
+-            Directory.CreateDirectory(destination);
+-            foreach (string directory in SnapshotDirectories(source)) Directory.CreateDirectory(Within(destination, directory));
++            EmberTemplateFileSystem.Directory.CreateDirectory(destination);
++            foreach (string directory in SnapshotDirectories(source)) EmberTemplateFileSystem.Directory.CreateDirectory(Within(destination, directory));
+             foreach (var file in files)
+             {
+                 string target = Within(destination, file.path);
+-                Directory.CreateDirectory(Path.GetDirectoryName(target));
+-                File.Copy(Within(source, file.path), target);
++                EmberTemplateFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target));
++                EmberTemplateFileSystem.File.Copy(Within(source, file.path), target);
+             }
+             if (!Same(Snapshot(destination, MaxFiles * 64, MaxBytes * 64L), files)) throw new IOException("技能暂存校验失败。");
+         }
+@@ -188,8 +188,8 @@ private static string[] SnapshotDirectories(string root)
+ 
+         private static void CollectDirectories(string root, string current, List<string> result)
+         {
+-            if (!Directory.Exists(current)) return;
+-            foreach (string directory in Directory.GetDirectories(current))
++            if (!EmberTemplateFileSystem.Directory.Exists(current)) return;
++            foreach (string directory in EmberTemplateFileSystem.Directory.GetDirectories(current))
+             {
+                 string relative = directory.Substring(root.Length + 1).Replace('\\', '/');
+                 Within(root, relative);
+@@ -235,7 +235,7 @@ public static void ValidateTemplateSkillSource(string assetsPath)
+                 return "技能所需扩展未启用或版本/hash 已变化，请在项目中心重新预览组合与技能。";
+             // Older installation records cannot grant access to newly extension-scoped source skills.
+             string sourceRoot = Within(projectRoot, "Assets/" + TemplateSourceDirectory);
+-            if (Directory.Exists(sourceRoot))
++            if (EmberTemplateFileSystem.Directory.Exists(sourceRoot))
+             {
+                 var source = ReadTemplatePackages(sourceRoot).FirstOrDefault(p => p.Definition.id == id);
+                 if (source != null && !SameExtensions(installed.extensions, RequiredExtensions(source.Definition, extensions)))
+@@ -277,7 +277,7 @@ public static void ValidateTemplateSkillSource(string assetsPath)
+         public static void BindTemplateIdentityRecord(TemplatePreview preview, string projectRelativePath)
+         {
+             string path = Within(preview.ProjectRoot, projectRelativePath);
+-            if (Directory.Exists(path)) throw new IOException("模板身份记录不是文件。");
++            if (EmberTemplateFileSystem.Directory.Exists(path)) throw new IOException("模板身份记录不是文件。");
+             preview.IdentityRecords.Add(projectRelativePath, Hash(path));
+         }
+ 
+@@ -285,7 +285,7 @@ public static void BindReadOnlyInput(TemplatePreview preview, string path)
+         {
+             path = Path.GetFullPath(path);
+             path = Within(Path.GetDirectoryName(path), Path.GetFileName(path));
+-            if (Directory.Exists(path)) throw new IOException("扩展声明不是文件。");
++            if (EmberTemplateFileSystem.Directory.Exists(path)) throw new IOException("扩展声明不是文件。");
+             preview.ReadOnlyInputs[path] = Hash(path);
+         }
+ 
+@@ -343,8 +343,8 @@ public static TemplatePreview PreviewUnavailableProjectSkills(string projectRoot
+             var entries = state.skills.Where(s => s.ownerKind == "project").Select(s =>
+             {
+                 string target = Within(projectRoot, ".agents/skills/" + s.id);
+-                if (File.Exists(target)) throw new IOException("技能目标是文件：" + s.id);
+-                return new TemplateEntry { Id = s.id, Existed = Directory.Exists(target), Local = Snapshot(target),
++                if (EmberTemplateFileSystem.File.Exists(target)) throw new IOException("技能目标是文件：" + s.id);
++                return new TemplateEntry { Id = s.id, Existed = EmberTemplateFileSystem.Directory.Exists(target), Local = Snapshot(target),
+                     LocalDirectories = SnapshotDirectories(target), SourceDirectories = Array.Empty<string>() };
+             }).ToList();
+             return new TemplatePreview { ProjectRoot = projectRoot, SourceRoot = source,
+@@ -399,7 +399,7 @@ public static TemplatePreview PreviewTemplateSkills(string projectRoot, string s
+             var packages = allPackages.Where(p => RequiredExtensions(p.Definition, context.Extensions).All(x => x != null)
+                 && (!IsProject(p) || ProjectCompatible(p, context))
+                 && (string.IsNullOrEmpty(p.Definition.requiredModuleScope) || context.ModuleScopes.Contains(p.Definition.requiredModuleScope))).ToList();
+-            if (Directory.Exists(Within(projectRoot, StateFile))) throw new IOException("AI Skill 安装记录路径是目录，请先修复。");
++            if (EmberTemplateFileSystem.Directory.Exists(Within(projectRoot, StateFile))) throw new IOException("AI Skill 安装记录路径是目录，请先修复。");
+             var state = ReadState(projectRoot);
+             var errors = new List<string>();
+             var differences = new List<string>();
+@@ -427,15 +427,15 @@ public static TemplatePreview PreviewTemplateSkills(string projectRoot, string s
+                     || (IsProject(package) && installed.projectId != definition.projectId)))
+                     errors.Add(definition.id + ": 来源所有权冲突，不能接管。");
+                 string target = Within(projectRoot, ".agents/skills/" + definition.id);
+-                if (File.Exists(target)) errors.Add(definition.id + ": 目标是文件。");
++                if (EmberTemplateFileSystem.File.Exists(target)) errors.Add(definition.id + ": 目标是文件。");
+                 if ((installed != null && !owned.Contains(installed))
+-                    || (installed == null && Directory.Exists(target)))
++                    || (installed == null && EmberTemplateFileSystem.Directory.Exists(target)))
+                     errors.Add(definition.id + ": 同名目录属于通用/其他模板/未管理技能。请先自行移走或改 ID，不能接管。");
+                 // Development repository generic source is protected even if it has no installation record.
+                 string genericCatalog = Within(projectRoot, ".agents/skills/catalog.json");
+-                if (File.Exists(genericCatalog))
++                if (EmberTemplateFileSystem.File.Exists(genericCatalog))
+                 {
+-                    var generic = JsonUtility.FromJson<Catalog>(File.ReadAllText(genericCatalog, Utf8));
++                    var generic = JsonUtility.FromJson<Catalog>(EmberTemplateFileSystem.File.ReadAllText(genericCatalog, Utf8));
+                     if (generic?.skills != null && generic.skills.Any(s => s.id == definition.id))
+                         errors.Add(definition.id + ": 与通用技能维护源 ID 冲突。");
+                 }
+@@ -443,11 +443,11 @@ public static TemplatePreview PreviewTemplateSkills(string projectRoot, string s
+             foreach (string id in desired.Keys.Union(owned.Select(s => s.id), StringComparer.OrdinalIgnoreCase).OrderBy(s => s))
+             {
+                 string target = Within(projectRoot, ".agents/skills/" + id);
+-                if (File.Exists(target)) throw new IOException("技能目标是文件：" + id);
++                if (EmberTemplateFileSystem.File.Exists(target)) throw new IOException("技能目标是文件：" + id);
+                 var local = Snapshot(target);
+                 var old = owned.FirstOrDefault(s => s.id == id);
+                 desired.TryGetValue(id, out var package);
+-                bool exists = Directory.Exists(target);
++                bool exists = EmberTemplateFileSystem.Directory.Exists(target);
+                 var localDirectories = SnapshotDirectories(target);
+                 var sourceDirectories = package == null ? Array.Empty<string>() : SnapshotDirectories(package.Directory);
+                 bool modified = old != null && (!exists || !Same(local, old.files)
+@@ -481,7 +481,7 @@ public static TemplatePreview PreviewTemplateSkills(string projectRoot, string s
+             string localSourceMetaHash = null;
+             if (context.UpdateSource)
+             {
+-                if (File.Exists(localSource) || Directory.Exists(localSource + ".meta"))
++                if (EmberTemplateFileSystem.File.Exists(localSource) || EmberTemplateFileSystem.Directory.Exists(localSource + ".meta"))
+                     throw new IOException("项目技能源路径类型错误。");
+                 if (state.templateBaseline != null && !MatchesBusiness(state.templateBaseline,
+                         context.TemplateId, context.BusinessVersion, context.BusinessContentHash))
+@@ -495,7 +495,7 @@ public static TemplatePreview PreviewTemplateSkills(string projectRoot, string s
+                 }
+                 localSourceFiles = SnapshotTemplateSource(localSource);
+                 localSourceDirectories = SnapshotDirectories(localSource);
+-                localSourceExists = Directory.Exists(localSource);
++                localSourceExists = EmberTemplateFileSystem.Directory.Exists(localSource);
+                 localSourceMetaHash = Hash(localSource + ".meta");
+                 bool sourceChanged = localSourceExists != desiredBaseline.sourceExists
+                     || !Same(localSourceFiles, desiredBaseline.sourceFiles)
+@@ -540,13 +540,13 @@ public static void ValidateTemplatePreview(TemplatePreview preview)
+                 || !SnapshotDirectories(Within(preview.ProjectRoot, ProjectSourceDirectory)).SequenceEqual(preview.ProjectSourceDirectories))
+                 throw new IOException("项目技能源在预览后变化，请重新预览。");
+             foreach (var input in preview.ReadOnlyInputs)
+-                if (Directory.Exists(input.Key) || Hash(input.Key) != input.Value)
++                if (EmberTemplateFileSystem.Directory.Exists(input.Key) || Hash(input.Key) != input.Value)
+                     throw new IOException("扩展声明或组合在预览后变化，请重新预览。");
+             foreach (var record in preview.IdentityRecords)
+-                if (Directory.Exists(Within(preview.ProjectRoot, record.Key))
++                if (EmberTemplateFileSystem.Directory.Exists(Within(preview.ProjectRoot, record.Key))
+                     || Hash(Within(preview.ProjectRoot, record.Key)) != record.Value)
+                     throw new IOException("正式模板身份记录在预览后变化，请重新预览。");
+-            if (Directory.Exists(Within(preview.ProjectRoot, StateFile))
++            if (EmberTemplateFileSystem.Directory.Exists(Within(preview.ProjectRoot, StateFile))
+                 || Hash(Within(preview.ProjectRoot, StateFile)) != preview.StateHash
+                 || Hash(Within(preview.SourceRoot, CatalogFile)) != preview.CatalogHash)
+                 throw new IOException("技能清单或安装记录在预览后变化，请重新预览。");
+@@ -557,7 +557,7 @@ public static void ValidateTemplatePreview(TemplatePreview preview)
+             {
+                 string source = Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory);
+                 Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory + ".meta");
+-                if (File.Exists(source) || Directory.Exists(source + ".meta") || Directory.Exists(source) != preview.LocalSourceExists
++                if (EmberTemplateFileSystem.File.Exists(source) || EmberTemplateFileSystem.Directory.Exists(source + ".meta") || EmberTemplateFileSystem.Directory.Exists(source) != preview.LocalSourceExists
+                     || !Same(SnapshotTemplateSource(source), preview.LocalSourceFiles)
+                     || !SnapshotDirectories(source).SequenceEqual(preview.LocalSourceDirectories)
+                     || Hash(source + ".meta") != preview.LocalSourceMetaHash)
+@@ -566,7 +566,7 @@ public static void ValidateTemplatePreview(TemplatePreview preview)
+             foreach (var entry in preview.Entries)
+             {
+                 string target = Within(preview.ProjectRoot, ".agents/skills/" + entry.Id);
+-                if (File.Exists(target) || Directory.Exists(target) != entry.Existed || !Same(Snapshot(target), entry.Local))
++                if (EmberTemplateFileSystem.File.Exists(target) || EmberTemplateFileSystem.Directory.Exists(target) != entry.Existed || !Same(Snapshot(target), entry.Local))
+                     throw new IOException("项目技能在预览后变化：" + entry.Id);
+                 if (!SnapshotDirectories(target).SequenceEqual(entry.LocalDirectories)
+                     || (entry.Package != null && !SnapshotDirectories(entry.Package.Directory).SequenceEqual(entry.SourceDirectories)))
+@@ -590,8 +590,8 @@ public static void ValidateTemplatePreview(TemplatePreview preview)
+             backupRoot = Path.Combine(transaction, "backup");
+             var state = ReadState(preview.ProjectRoot);
+             string statePath = Within(preview.ProjectRoot, StateFile);
+-            Directory.CreateDirectory(backupRoot);
+-            if (File.Exists(statePath)) File.Copy(statePath, Path.Combine(backupRoot, "ember-ai-skills.json"));
++            EmberTemplateFileSystem.Directory.CreateDirectory(backupRoot);
++            if (EmberTemplateFileSystem.File.Exists(statePath)) EmberTemplateFileSystem.File.Copy(statePath, Path.Combine(backupRoot, "ember-ai-skills.json"));
+             foreach (var entry in preview.Entries)
+             {
+                 string target = Within(preview.ProjectRoot, ".agents/skills/" + entry.Id);
+@@ -622,17 +622,17 @@ public static void ValidateTemplatePreview(TemplatePreview preview)
+                 string destination = Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory);
+                 string stagedSource = Path.Combine(transaction, "template-source");
+                 if (preview.LocalSourceExists) CopySkillFiles(destination, Path.Combine(backupRoot, ".template-source"), preview.LocalSourceFiles);
+-                if (preview.LocalSourceMetaHash != null) File.Copy(destination + ".meta", Path.Combine(backupRoot, ".template-source.meta"));
++                if (preview.LocalSourceMetaHash != null) EmberTemplateFileSystem.File.Copy(destination + ".meta", Path.Combine(backupRoot, ".template-source.meta"));
+                 if (preview.DesiredBaseline.sourceExists) CopySkillFiles(preview.SourceRoot, stagedSource, preview.DesiredBaseline.sourceFiles);
+                 targets.Add(new PreparedSkillTarget(stagedSource, destination, !preview.DesiredBaseline.sourceExists));
+                 string stagedMeta = stagedSource + ".meta";
+-                if (preview.DesiredBaseline.sourceMetaHash != null) File.Copy(preview.SourceRoot + ".meta", stagedMeta);
++                if (preview.DesiredBaseline.sourceMetaHash != null) EmberTemplateFileSystem.File.Copy(preview.SourceRoot + ".meta", stagedMeta);
+                 targets.Add(new PreparedSkillTarget(stagedMeta, destination + ".meta", preview.DesiredBaseline.sourceMetaHash == null));
+             }
+             state.schemaVersion = Math.Max(state.schemaVersion, state.skills.Any(s => s.ownerKind == "project") ? 4 : 3);
+             state.templateBaseline = preview.DesiredBaseline;
+             string pending = Path.Combine(transaction, "state.json");
+-            File.WriteAllText(pending, JsonUtility.ToJson(state, true) + "\n", Utf8);
++            EmberTemplateFileSystem.File.WriteAllText(pending, JsonUtility.ToJson(state, true) + "\n", Utf8);
+             targets.Add(new PreparedSkillTarget(pending, statePath));
+             ValidateTemplatePreview(preview);
+             return targets.AsReadOnly();
+diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+index 6aa20c1..a72bfa5 100644
+--- a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
++++ b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+@@ -129,7 +129,7 @@ private static string Within(string root, string relative)
+             for (string current = full; !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
+             {
+                 FileAttributes attributes;
+-                try { attributes = File.GetAttributes(current); }
++                try { attributes = EmberTemplateFileSystem.File.GetAttributes(current); }
+                 catch (FileNotFoundException) { continue; }
+                 catch (DirectoryNotFoundException) { continue; }
+                 if ((attributes & FileAttributes.ReparsePoint) != 0)
+@@ -140,9 +140,9 @@ private static string Within(string root, string relative)
+ 
+         private static IEnumerable<string> EnumerateFiles(string directory)
+         {
+-            foreach (string entry in Directory.GetFileSystemEntries(directory).OrderBy(p => p, StringComparer.Ordinal))
++            foreach (string entry in EmberTemplateFileSystem.Directory.GetFileSystemEntries(directory).OrderBy(p => p, StringComparer.Ordinal))
+             {
+-                var attributes = File.GetAttributes(entry);
++                var attributes = EmberTemplateFileSystem.File.GetAttributes(entry);
+                 if ((attributes & FileAttributes.ReparsePoint) != 0)
+                     throw new InvalidDataException("技能中不支持符号链接：" + entry);
+                 if ((attributes & FileAttributes.Directory) != 0)
+@@ -156,20 +156,20 @@ private static IEnumerable<string> EnumerateFiles(string directory)
+ 
+         private static string Hash(string file)
+         {
+-            if (!File.Exists(file)) return null;
+-            using var stream = File.OpenRead(file);
++            if (!EmberTemplateFileSystem.File.Exists(file)) return null;
++            using var stream = EmberTemplateFileSystem.File.OpenRead(file);
+             using var algorithm = SHA256.Create();
+             return BitConverter.ToString(algorithm.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+         }
+ 
+         private static Fingerprint[] Snapshot(string directory, int fileLimit = MaxFiles, long byteLimit = MaxBytes)
+         {
+-            if (!Directory.Exists(directory)) return Array.Empty<Fingerprint>();
++            if (!EmberTemplateFileSystem.Directory.Exists(directory)) return Array.Empty<Fingerprint>();
+             var result = new List<Fingerprint>();
+             long size = 0;
+             foreach (string file in EnumerateFiles(directory))
+             {
+-                size += new FileInfo(file).Length;
++                size += EmberTemplateFileSystem.File.Length(file);
+                 if (result.Count >= fileLimit || size > byteLimit)
+                     throw new InvalidDataException("技能源超过文件数量或大小上限，停止安装。");
+                 result.Add(new Fingerprint
+@@ -192,8 +192,8 @@ private static bool Same(Fingerprint[] left, Fingerprint[] right)
+         private static State ReadState(string projectRoot)
+         {
+             string path = Within(projectRoot, StateFile);
+-            if (!File.Exists(path)) return new State();
+-            var state = JsonUtility.FromJson<State>(File.ReadAllText(path, Utf8));
++            if (!EmberTemplateFileSystem.File.Exists(path)) return new State();
++            var state = JsonUtility.FromJson<State>(EmberTemplateFileSystem.File.ReadAllText(path, Utf8));
+             if (state == null || state.schemaVersion < 1 || state.schemaVersion > 4 || state.skills == null)
+                 throw new InvalidDataException("AI Skill 安装记录无效，请先检查 " + StateFile);
+             // JsonUtility materializes null serializable classes as empty objects and null strings as empty strings.
+@@ -267,9 +267,9 @@ private static State ReadState(string projectRoot)
+         internal static List<Package> ReadCatalog(string skillsRoot, bool templateCatalog = false, bool projectCatalog = false)
+         {
+             string catalogPath = Within(skillsRoot, CatalogFile);
+-            if (!File.Exists(catalogPath) || new FileInfo(catalogPath).Length > 128 * 1024)
++            if (!EmberTemplateFileSystem.File.Exists(catalogPath) || EmberTemplateFileSystem.File.Length(catalogPath) > 128 * 1024)
+                 throw new InvalidDataException("所选版本缺少有效的 AI Skill 发布目录，请选择包含 catalog.json 的版本。");
+-            string catalogText = File.ReadAllText(catalogPath, Utf8);
++            string catalogText = EmberTemplateFileSystem.File.ReadAllText(catalogPath, Utf8);
+             // JsonUtility silently treats a string supplied for an array as null. Never let a malformed declaration erase a gate.
+             foreach (Match field in Regex.Matches(catalogText, "\"requiredExtensions\"\\s*:\\s*(\\[|null|\\S)"))
+                 if (field.Groups[1].Value != "[" && field.Groups[1].Value != "null")
+@@ -315,7 +315,7 @@ internal static List<Package> ReadCatalog(string skillsRoot, bool templateCatalo
+                 var files = Snapshot(directory);
+                 if (!files.Any(f => f.path == "SKILL.md")) throw new InvalidDataException("技能缺少 SKILL.md：" + definition.id);
+                 // Read raw bytes: StreamReader silently consumes BOMs before frontmatter validation.
+-                byte[] markdownBytes = File.ReadAllBytes(Path.Combine(directory, "SKILL.md"));
++                byte[] markdownBytes = EmberTemplateFileSystem.File.ReadAllBytes(Path.Combine(directory, "SKILL.md"));
+                 string markdown;
+                 try { markdown = new UTF8Encoding(false, true).GetString(markdownBytes); }
+                 catch (DecoderFallbackException exception)

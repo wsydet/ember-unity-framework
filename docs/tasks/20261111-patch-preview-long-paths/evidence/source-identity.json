@@ -1,0 +1,77 @@
+{
+  "taskId": "20261111-patch-preview-long-paths",
+  "date": "2026-11-11 Asia/Shanghai",
+  "status": "local verification incomplete: file symlink safety pending",
+  "packageVersion": "0.25.2",
+  "published": false,
+  "head": "16cff3d85d3b40a5ddab11e30801dfa5e36ed0c2",
+  "branch": "codex/local-snapshot-20261111-162819",
+  "aggregateAlgorithm": "SHA256 of UTF8 ordinal-sorted path TAB raw-file-sha256 LF rows",
+  "aggregateSha256": "84084d51b877aacabf644720ab149b07d7a2b5f4d241112436e64fad91e6ce75",
+  "entries": [
+    {
+      "path": "Core/Editor/EmberExtensionProject.Identity.cs",
+      "sha256": "e008ca359bc0318537609170acec8634f81d7ec7b9b6db00983db6c4f3b18701"
+    },
+    {
+      "path": "Core/Editor/EmberExtensionProject.cs",
+      "sha256": "653f2419511d83f08b27730140167308df35fcdb767d8da908f24f6093838eff"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.AISkills.cs",
+      "sha256": "f4e280b0324667091fca0a73667b931cea15616b771c4df2d32fa74f6447246b"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.Patch.cs",
+      "sha256": "871da8f36392068cf79514950d7611b1d3aaffd69fcc26c7743fa1034b6ea7d8"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.cs",
+      "sha256": "1a547ee716a1f49525d24fb6db8e4168ac0d447a4ec82be2875091b546630c89"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateInheritanceEngine.cs",
+      "sha256": "8f2e33d37c4d033d6fe3d06c765e027224d67c848566bfc14689c9d6aa129159"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTemporaryDirectory.cs",
+      "sha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+      "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTransaction.cs",
+      "sha256": "9aa20a6ffb146f9b254087a2ec16fe5e7f1bd32ca83ffd20e1e0f5bd69a7f74a"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplateFileSystemEditTests.cs",
+      "sha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta",
+      "sha256": "493ca94917bc3c7c2aa01245c97c63429cd23707eca31db751ab18ec549d92a9"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplatePatchEditTests.cs",
+      "sha256": "4ded0d89902a44dce2534b4241ec0a74a1cf5bcf444da370a0969a69ac8b18af"
+    },
+    {
+      "path": "UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+      "sha256": "fca7da1b39979a8f5c0f5c909c84b6cd12f0e6ac66c3410f01a1adf81efbace6"
+    },
+    {
+      "path": "UPMManager/Editor/EmberAISkillInstaller.cs",
+      "sha256": "41b0ee2fdf8fe83a8580561bfef0fb0cdb18b3f3548e67663aa0c190e511b7f8"
+    },
+    {
+      "path": "UPMManager/Editor/EmberTemplateFileSystem.cs",
+      "sha256": "89718fb2ef2ee90e9b92743f0ccec02bea506af63212ad7836e1740f0a1c0de3"
+    },
+    {
+      "path": "UPMManager/Editor/EmberTemplateFileSystem.cs.meta",
+      "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+    }
+  ]
+}

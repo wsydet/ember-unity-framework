@@ -50,9 +50,9 @@ namespace Ember.Core.Editor
         }
         private static Configuration Read(string path)
         {
-            long stamp = File.GetLastWriteTimeUtc(path).Ticks;
+            long stamp = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.GetLastWriteTimeUtc(path).Ticks;
             if (!Files.TryGetValue(path, out var cached) || cached.stamp != stamp)
-            { cached = (stamp, File.ReadAllText(path)); Files[path] = cached; }
+            { cached = (stamp, Ember.UPMManager.Editor.EmberTemplateFileSystem.File.ReadAllText(path)); Files[path] = cached; }
             var config = JsonUtility.FromJson<Configuration>(cached.text);
             if (config == null || config.schemaVersion < 1 || config.schemaVersion > 2 || config.enabled == null || config.enabled.Any(string.IsNullOrWhiteSpace))
                 throw new InvalidDataException("扩展配置格式无效：" + path);

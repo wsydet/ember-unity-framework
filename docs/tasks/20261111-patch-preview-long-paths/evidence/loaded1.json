@@ -1,0 +1,33 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":[{\"name\":\"Ember.Core.Editor\",\"mvid\":\"e98096cc-a5ab-4647-b89d-5c55ee61a601\",\"filesystem\":false},{\"name\":\"Ember.UI.Tests\",\"mvid\":\"10519b8e-b6c4-4fa4-ae5a-a3e5fe142e9b\",\"filesystem\":false},{\"name\":\"Ember.UPMManager.Editor\",\"mvid\":\"825f3011-1329-4b6d-bd4a-e67acd7a5b31\",\"filesystem\":true}],\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": [
+        {
+          "name": "Ember.Core.Editor",
+          "mvid": "e98096cc-a5ab-4647-b89d-5c55ee61a601",
+          "filesystem": false
+        },
+        {
+          "name": "Ember.UI.Tests",
+          "mvid": "10519b8e-b6c4-4fa4-ae5a-a3e5fe142e9b",
+          "filesystem": false
+        },
+        {
+          "name": "Ember.UPMManager.Editor",
+          "mvid": "825f3011-1329-4b6d-bd4a-e67acd7a5b31",
+          "filesystem": true
+        }
+      ],
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-12 Asia/Shanghai",
+  "instance": "ember-unity-framework@b23e9b768e85ed30",
+  "projectRoot": "C:/Users/wuyu/My/ember-unity-framework",
+  "last_compile_started_unix_ms": 1794418439148,
+  "last_compile_finished_unix_ms": 1794418442729,
+  "last_domain_reload_after_unix_ms": 1794418462114,
+  "is_compiling": false,
+  "is_domain_reload_pending": false,
+  "is_updating": false,
+  "packageInfoVersion": "0.25.3",
+  "frameworkApiVersion": "0.25.3",
+  "sourceCodeChangedSincePriorPassedTests": false,
+  "note": "Observed via Unity MCP editor/state after the release refresh request; loaded assemblies and Console are separate evidence."
+}

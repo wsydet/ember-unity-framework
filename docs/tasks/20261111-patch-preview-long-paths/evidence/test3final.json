@@ -1,0 +1,74 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "42192328b8214559a28eb358aa0383ce",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1794404363629,
+      "finished_unix_ms": 1794404376611,
+      "last_update_unix_ms": 1794404376611,
+      "progress": {
+        "completed": 3,
+        "total": 3,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_ShortEquivalentPlanAndHashesMatch",
+        "last_finished_unix_ms": 1794404376170,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 3.5140461,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(False)",
+            "state": "Passed",
+            "durationSeconds": 0.9497164,
+            "message": null,
+            "stackTrace": null,
+            "output": "ordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-8b38fb503c414bcabd40b067d73f5d4c\\Project\\Assets\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=235\r\nordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-8b38fb503c414bcabd40b067d73f5d4c\\Source\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=227\r\nUnity=6000.5.4f1 platform=WindowsEditor CLR=4.0.30319.42000 OS=Microsoft Windows NT 10.0.26200.0 volume=NTFS\r\nOld meta length=289\r\nIncoming meta length=294\r\nLocal meta length=291\r\nlive meta length=235, source meta length=227, Local meta length=291\r\n"
+          },
+          {
+            "name": "LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(True)",
+            "state": "Passed",
+            "durationSeconds": 0.8880721,
+            "message": null,
+            "stackTrace": null,
+            "output": "ordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-2523afb05c374c778c9d466ab4161342\\Project\\Assets\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=235\r\nordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-2523afb05c374c778c9d466ab4161342\\Source\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=227\r\nUnity=6000.5.4f1 platform=WindowsEditor CLR=4.0.30319.42000 OS=Microsoft Windows NT 10.0.26200.0 volume=NTFS\r\nOld meta length=289\r\nIncoming meta length=294\r\nLocal meta length=291\r\nlive meta length=235, source meta length=227, Local meta length=291\r\n"
+          },
+          {
+            "name": "LongPaths_ShortEquivalentPlanAndHashesMatch",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_ShortEquivalentPlanAndHashesMatch",
+            "state": "Passed",
+            "durationSeconds": 1.0003591,
+            "message": null,
+            "stackTrace": null,
+            "output": "short Old meta=249\r\nshort Incoming meta=254\r\nshort Local meta=251\r\n"
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

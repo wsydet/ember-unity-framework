@@ -1,0 +1,713 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "20ca5bffa0bb4eea864828e70533985a",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1794404160050,
+      "finished_unix_ms": 1794404228455,
+      "last_update_unix_ms": 1794404228455,
+      "progress": {
+        "completed": 74,
+        "total": 74,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_SemanticSceneShouldRerunInStageAndPreserveChildMeta",
+        "last_finished_unix_ms": 1794404228222,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 74,
+          "passed": 73,
+          "failed": 0,
+          "skipped": 1,
+          "durationSeconds": 57.0377588,
+          "resultState": "Skipped:Ignored"
+        },
+        "results": [
+          {
+            "name": "LongPrimitives_EnumerationRestoresLogicalPaths_AndRawMd5Matches",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.LongPrimitives_EnumerationRestoresLogicalPaths_AndRawMd5Matches",
+            "state": "Passed",
+            "durationSeconds": 0.0766208,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_ConcurrentNestedAndInterruptedScopesStayIsolated",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_ConcurrentNestedAndInterruptedScopesStayIsolated",
+            "state": "Passed",
+            "durationSeconds": 0.0485695,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_CreationOrOwnerWriteFailurePreservesPrimaryAndUnownedRoot(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_CreationOrOwnerWriteFailurePreservesPrimaryAndUnownedRoot(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0168979,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-ef55a6f017764b3eb8dcbc7c75150c31\\Temp\\EmberPatchPreview-6487765af16c45ccb15e51f96f3ed805~]。 ---> System.IO.IOException: 未建立完整归属，保留可能残留：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-ef55a6f017764b3eb8dcbc7c75150c31\\Temp\\EmberPatchPreview-6487765af16c45ccb15e51f96f3ed805~\r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x00180] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:66 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Owned_CreationOrOwnerWriteFailurePreservesPrimaryAndUnownedRoot(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_CreationOrOwnerWriteFailurePreservesPrimaryAndUnownedRoot(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0089163,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-f59f97d35c7d4b868bf1ebd0cb6017e4\\Temp\\EmberPatchPreview-e2774476a97a4c5a9897425ceec6d096~]。 ---> System.IO.IOException: 未建立完整归属，保留可能残留：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-f59f97d35c7d4b868bf1ebd0cb6017e4\\Temp\\EmberPatchPreview-e2774476a97a4c5a9897425ceec6d096~\r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x00180] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:66 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Owned_LeaseRejectsOtherWriters_AndOccupiedRootIsPreserved",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LeaseRejectsOtherWriters_AndOccupiedRootIsPreserved",
+            "state": "Passed",
+            "durationSeconds": 0.0247127,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_LinksAreRejectedWithoutFollowingTargets(\"parent\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LinksAreRejectedWithoutFollowingTargets(\"parent\")",
+            "state": "Passed",
+            "durationSeconds": 0.2588715,
+            "message": null,
+            "stackTrace": null,
+            "output": "Directory junction fallback exercised; symlink unavailable Win32=1314\r\nDirectory junction fallback exercised; symlink unavailable Win32=1314\r\n"
+          },
+          {
+            "name": "Owned_LinksAreRejectedWithoutFollowingTargets(\"root\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LinksAreRejectedWithoutFollowingTargets(\"root\")",
+            "state": "Passed",
+            "durationSeconds": 0.4901235,
+            "message": null,
+            "stackTrace": null,
+            "output": "Directory junction fallback exercised; symlink unavailable Win32=1314\r\nDirectory junction fallback exercised; symlink unavailable Win32=1314\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-f4459274c7904d10bf2a58e0f0515208\\Temp\\EmberPatchPreview-1dd648160225476d9d6c9484f24442a1~]。 ---> System.IO.IOException: 未建立完整归属，保留可能残留：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-f4459274c7904d10bf2a58e0f0515208\\Temp\\EmberPatchPreview-1dd648160225476d9d6c9484f24442a1~\r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x00180] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:66 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Owned_LinksAreRejectedWithoutFollowingTargets(\"directory\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LinksAreRejectedWithoutFollowingTargets(\"directory\")",
+            "state": "Passed",
+            "durationSeconds": 0.5413484,
+            "message": null,
+            "stackTrace": null,
+            "output": "Directory junction fallback exercised; symlink unavailable Win32=1314\r\nDirectory junction fallback exercised; symlink unavailable Win32=1314\r\n"
+          },
+          {
+            "name": "Owned_LinksAreRejectedWithoutFollowingTargets(\"file\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LinksAreRejectedWithoutFollowingTargets(\"file\")",
+            "state": "Skipped:Ignored",
+            "durationSeconds": 0.0097194,
+            "message": "文件 symlink 未测；创建权限不可用，Win32=1314",
+            "stackTrace": "at Ember.UI.Tests.EmberTemplateFileSystemEditTests.MakeLink (System.String link, System.String target, System.Boolean directory) [0x000d0] in .\\Packages\\com.ember\\Tests\\EditMode\\EmberTemplateFileSystemEditTests.cs:242\r\nat Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LinksAreRejectedWithoutFollowingTargets (System.String kind) [0x00074] in .\\Packages\\com.ember\\Tests\\EditMode\\EmberTemplateFileSystemEditTests.cs:189\r\n",
+            "output": ""
+          },
+          {
+            "name": "Owned_LockedCleanupFailsPreview_ButCommittedResultSurvives(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LockedCleanupFailsPreview_ButCommittedResultSurvives(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0384586,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_LockedCleanupFailsPreview_ButCommittedResultSurvives(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_LockedCleanupFailsPreview_ButCommittedResultSurvives(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0335535,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 模板已提交；暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-a79274fbbc2245828250397ce324fbec\\Temp\\EmberPatchApply-599fc0ff842c44718f4269c686ab1e3f~]。 ---> System.IO.IOException: The process cannot access the file 'locked' because it is being used by another process.\r\n  at System.IO.FileSystem.RemoveDirectoryRecursive (System.String fullPath, Interop+Kernel32+WIN32_FIND_DATA& findData, System.Boolean topLevel) [0x0014c] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.FileSystem.RemoveDirectory (System.String fullPath, System.Boolean recursive) [0x00036] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.Directory.Delete (System.String path, System.Boolean recursive) [0x00006] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory+<>c__DisplayClass3_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory.Delete (System.String path, System.Boolean recursive) [0x00014] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00026] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:244 \r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x0024a] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:79 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Owned_MissingOrCorruptMarkerStopsDeletion(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_MissingOrCorruptMarkerStopsDeletion(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0164332,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_MissingOrCorruptMarkerStopsDeletion(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_MissingOrCorruptMarkerStopsDeletion(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0186429,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Owned_PermissionFailureReportsPathAndPreservesUnownedDirectory",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_PermissionFailureReportsPathAndPreservesUnownedDirectory",
+            "state": "Passed",
+            "durationSeconds": 1.532872,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-0106e056fd534ea68fb025b580b27d39\\Temp\\EmberPatchPreview-034e2106d70b4d13820f75964bd351bb~]。 ---> System.IO.IOException: 未建立完整归属，保留可能残留：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-0106e056fd534ea68fb025b580b27d39\\Temp\\EmberPatchPreview-034e2106d70b4d13820f75964bd351bb~\r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x00180] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:66 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Owned_UnrelatedSharedTempLinkDoesNotBlockOrGetSwept",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Owned_UnrelatedSharedTempLinkDoesNotBlockOrGetSwept",
+            "state": "Passed",
+            "durationSeconds": 0.1156243,
+            "message": null,
+            "stackTrace": null,
+            "output": "Directory junction fallback exercised; symlink unavailable Win32=1314\r\n"
+          },
+          {
+            "name": "Paths_DosUncDeviceDotAndEnumerationBoundaries",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Paths_DosUncDeviceDotAndEnumerationBoundaries",
+            "state": "Passed",
+            "durationSeconds": 0.0051057,
+            "message": null,
+            "stackTrace": null,
+            "output": "UNC format only; no network share exercised.\r\n"
+          },
+          {
+            "name": "Transaction_BackupBeyond260_CommitsOrRestoresRawFiles(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Transaction_BackupBeyond260_CommitsOrRestoresRawFiles(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0835718,
+            "message": null,
+            "stackTrace": null,
+            "output": "target=258 backup=272\r\n"
+          },
+          {
+            "name": "Transaction_BackupBeyond260_CommitsOrRestoresRawFiles(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Transaction_BackupBeyond260_CommitsOrRestoresRawFiles(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0697182,
+            "message": null,
+            "stackTrace": null,
+            "output": "target=258 backup=272\r\n"
+          },
+          {
+            "name": "Transaction_BackupCleanupFailureReportsCommittedAndKeepsBackup",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Transaction_BackupCleanupFailureReportsCommittedAndKeepsBackup",
+            "state": "Passed",
+            "durationSeconds": 0.0230789,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>模板已提交；事务备份清理失败，保留残留 [C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-a22509535731410c9801ac27d8d92680\\live.ember-backup~]：System.IO.IOException: The process cannot access the file '\\\\?\\C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberIO-a22509535731410c9801ac27d8d92680\\live.ember-backup~' because it is being used by another process.\r\n  at System.IO.FileSystem.DeleteFile (System.String fullPath) [0x0001a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.File.Delete (System.String path) [0x00014] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+File+<>c__DisplayClass13_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:98 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+File.Delete (System.String path) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:98 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00017] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:240 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CommitPreparedTargetsCore (System.Collections.Generic.IReadOnlyList`1[T] targets, System.Action`1[T] faultInjector) [0x0016c] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:229 </color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:230)</i></color>\r\n"
+          },
+          {
+            "name": "Transaction_UnknownBackupAndNestedCommitAreRejected",
+            "fullName": "Ember.UI.Tests.EmberTemplateFileSystemEditTests.Transaction_UnknownBackupAndNestedCommitAreRejected",
+            "state": "Passed",
+            "durationSeconds": 0.0279974,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Apply_CommittedCleanupFailureReturnsCountAndWarnsWithoutRetryAmbiguity",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Apply_CommittedCleanupFailureReturnsCountAndWarnsWithoutRetryAmbiguity",
+            "state": "Passed",
+            "durationSeconds": 1.1625149,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 模板已提交；暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-bc8cb780be7d4f5c8a3332cd21df2ec9\\Project\\Temp\\EmberPatchApply-26077b3f1e5e407dae40baf01a027248~]。 ---> System.IO.IOException: The process cannot access the file 'cleanup-lock' because it is being used by another process.\r\n  at System.IO.FileSystem.RemoveDirectoryRecursive (System.String fullPath, Interop+Kernel32+WIN32_FIND_DATA& findData, System.Boolean topLevel) [0x0014c] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.FileSystem.RemoveDirectory (System.String fullPath, System.Boolean recursive) [0x00036] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.Directory.Delete (System.String path, System.Boolean recursive) [0x00006] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory+<>c__DisplayClass3_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory.Delete (System.String path, System.Boolean recursive) [0x00014] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00026] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:244 \r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x0024a] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:79 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Conflict_NoWritesUntilResolved_AndLogHasThreeWayIdentity",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Conflict_NoWritesUntilResolved_AndLogHasThreeWayIdentity",
+            "state": "Passed",
+            "durationSeconds": 2.221164,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DeletedFolderWithLocalAddition_CannotDropFolderGuidWhileKeepingItsContent",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.DeletedFolderWithLocalAddition_CannotDropFolderGuidWhileKeepingItsContent",
+            "state": "Passed",
+            "durationSeconds": 2.2601555,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FolderDeletionAndEmptyAddition_CommitAsDirectoryUnits",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.FolderDeletionAndEmptyAddition_CommitAsDirectoryUnits",
+            "state": "Passed",
+            "durationSeconds": 1.7523275,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GeneratedVersionHeader_IsNotAConcurrentEdit",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.GeneratedVersionHeader_IsNotAConcurrentEdit",
+            "state": "Passed",
+            "durationSeconds": 1.6965245,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GuidCollisionOutsideManagedDirectories_RejectsBeforeWrite",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.GuidCollisionOutsideManagedDirectories_RejectsBeforeWrite",
+            "state": "Passed",
+            "durationSeconds": 0.6625624,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InterruptedCommit_RestoresFilesBaselineAndRecord(0)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.InterruptedCommit_RestoresFilesBaselineAndRecord(0)",
+            "state": "Passed",
+            "durationSeconds": 1.098917,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InterruptedCommit_RestoresFilesBaselineAndRecord(1)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.InterruptedCommit_RestoresFilesBaselineAndRecord(1)",
+            "state": "Passed",
+            "durationSeconds": 0.8322473,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InterruptedCommit_RestoresFilesBaselineAndRecord(2)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.InterruptedCommit_RestoresFilesBaselineAndRecord(2)",
+            "state": "Passed",
+            "durationSeconds": 1.0985195,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LongPaths_ConcurrentEditRemainsConflict_WithOriginalGuidAndHashes",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_ConcurrentEditRemainsConflict_WithOriginalGuidAndHashes",
+            "state": "Passed",
+            "durationSeconds": 1.4214794,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LongPaths_DeepSkillApplyCoversUpmSnapshotsAndDefaults",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_DeepSkillApplyCoversUpmSnapshotsAndDefaults",
+            "state": "Passed",
+            "durationSeconds": 5.2030392,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-00e786c1e29b4299834d24ca35125f34\\Project\\.utmp\\ember-ai-skills\\5f569c506bc44816b741a31999b9156d\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-00e786c1e29b4299834d24ca35125f34\\Project\\.utmp\\ember-ai-skills\\296568ad911d41bcb14248a9b1ae25a5\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(False)",
+            "state": "Passed",
+            "durationSeconds": 3.2331543,
+            "message": null,
+            "stackTrace": null,
+            "output": "ordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-c949e39c829c477c95f23c4677a5c8d2\\Project\\Assets\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=235\r\nordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-c949e39c829c477c95f23c4677a5c8d2\\Source\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=227\r\nUnity=6000.5.4f1 platform=WindowsEditor CLR=4.0.30319.42000 OS=Microsoft Windows NT 10.0.26200.0 volume=NTFS\r\nOld meta length=289\r\nIncoming meta length=294\r\nLocal meta length=291\r\nsource meta length=235, Local meta length=291\r\n"
+          },
+          {
+            "name": "LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(True)",
+            "state": "Passed",
+            "durationSeconds": 2.4166425,
+            "message": null,
+            "stackTrace": null,
+            "output": "ordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-398b51a2d0bd4b738c1027c0bf47cb12\\Project\\Assets\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=235\r\nordinary input=C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-398b51a2d0bd4b738c1027c0bf47cb12\\Source\\GameResource/LongPaths/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbb.asset meta length=227\r\nUnity=6000.5.4f1 platform=WindowsEditor CLR=4.0.30319.42000 OS=Microsoft Windows NT 10.0.26200.0 volume=NTFS\r\nOld meta length=289\r\nIncoming meta length=294\r\nLocal meta length=291\r\nsource meta length=235, Local meta length=291\r\n"
+          },
+          {
+            "name": "LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(False)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(False)",
+            "state": "Passed",
+            "durationSeconds": 0.9094674,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(True)",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(True)",
+            "state": "Passed",
+            "durationSeconds": 0.83443,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-2615a563e3e4482f81b373c026784463\\Project\\Temp\\EmberPatchPreview-089e80ad59ad4fb999f3f38a2700bbaf~]。 ---> System.IO.IOException: The process cannot access the file 'bbbbbbbbbbb.asset' because it is being used by another process.\r\n  at System.IO.FileSystem.RemoveDirectoryRecursive (System.String fullPath, Interop+Kernel32+WIN32_FIND_DATA& findData, System.Boolean topLevel) [0x0014c] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.FileSystem.RemoveDirectory (System.String fullPath, System.Boolean recursive) [0x00036] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.Directory.Delete (System.String path, System.Boolean recursive) [0x00006] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory+<>c__DisplayClass3_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory.Delete (System.String path, System.Boolean recursive) [0x00014] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00026] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:244 \r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x0024a] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:79 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "LongPaths_ShortEquivalentPlanAndHashesMatch",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.LongPaths_ShortEquivalentPlanAndHashesMatch",
+            "state": "Passed",
+            "durationSeconds": 1.4916314,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingBaseline_CanRestoreOnlyFromMatchingOldOriginal",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.MissingBaseline_CanRestoreOnlyFromMatchingOldOriginal",
+            "state": "Passed",
+            "durationSeconds": 0.5625212,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Patch_UpdatesChangedFiles_PreservesLocalAdditionsEditsAndDeletions",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Patch_UpdatesChangedFiles_PreservesLocalAdditionsEditsAndDeletions",
+            "state": "Passed",
+            "durationSeconds": 1.5385815,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"copy\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"copy\")",
+            "state": "Passed",
+            "durationSeconds": 0.3471061,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"normalize\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"normalize\")",
+            "state": "Passed",
+            "durationSeconds": 0.5890772,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-c478b29a4f40409792529f0f1e5fe354\\Project\\Temp\\EmberPatchPreview-783a78dc400a45e09cdcee33aea5c450~]。 ---> System.IO.IOException: The process cannot access the file 'Local.txt' because it is being used by another process.\r\n  at System.IO.FileSystem.RemoveDirectoryRecursive (System.String fullPath, Interop+Kernel32+WIN32_FIND_DATA& findData, System.Boolean topLevel) [0x0014c] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.FileSystem.RemoveDirectory (System.String fullPath, System.Boolean recursive) [0x00036] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.Directory.Delete (System.String path, System.Boolean recursive) [0x00006] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory+<>c__DisplayClass3_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory.Delete (System.String path, System.Boolean recursive) [0x00014] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00026] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:244 \r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x0024a] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:79 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"meta\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(\"meta\")",
+            "state": "Passed",
+            "durationSeconds": 0.4466962,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#FFFFFF>System.IO.IOException: 暂存目录清理失败，残留需人工检查：[C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberPatchTests-ccd0c77697e740c1906d137791c5dd4e\\Project\\Temp\\EmberPatchPreview-e03f139490714c498a385c862c6f69bd~]。 ---> System.IO.IOException: The process cannot access the file 'Shared.txt.meta' because it is being used by another process.\r\n  at System.IO.FileSystem.RemoveDirectoryRecursive (System.String fullPath, Interop+Kernel32+WIN32_FIND_DATA& findData, System.Boolean topLevel) [0x0014c] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.FileSystem.RemoveDirectory (System.String fullPath, System.Boolean recursive) [0x00036] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.IO.Directory.Delete (System.String path, System.Boolean recursive) [0x00006] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory+<>c__DisplayClass3_0.<Delete>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+<>c__DisplayClass3_0.<Access>b__0 () [0x00000] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access[T] (System.String operation, System.String path, System.Func`1[TResult] action) [0x0002a] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:49 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem.Access (System.String operation, System.String path, System.Action action) [0x0000d] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:54 \r\n  at Ember.UPMManager.Editor.EmberTemplateFileSystem+Directory.Delete (System.String path, System.Boolean recursive) [0x00014] in .\\Packages\\com.ember\\UPMManager\\Editor\\EmberTemplateFileSystem.cs:111 \r\n  at Ember.Core.Editor.EmberTemplateTransaction.CleanPath (System.String path) [0x00026] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTransaction.cs:244 \r\n  at Ember.Core.Editor.EmberTemplateTemporaryDirectory.Run[T] (System.String projectRoot, System.String operation, System.Func`2[T,TResult] action, System.Boolean committedOnSuccess, Ember.Core.Editor.EmberTemplateTemporaryDirectory+TestHooks hooks) [0x0024a] in .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:79 \r\n   --- End of inner exception stack trace ---</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberTemplateTemporaryDirectory.cs:88)</i></color>\r\n"
+          },
+          {
+            "name": "Preview_NestedOperationsHaveSeparateOwnedDirectories",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Preview_NestedOperationsHaveSeparateOwnedDirectories",
+            "state": "Passed",
+            "durationSeconds": 0.6866182,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Preview_NoChangesPreservesRawTreesAndDirectoryGuids",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Preview_NoChangesPreservesRawTreesAndDirectoryGuids",
+            "state": "Passed",
+            "durationSeconds": 0.412566,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Repair_DoesNotAdvanceBaseline_AndCannotUpgrade",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.Repair_DoesNotAdvanceBaseline_AndCannotUpgrade",
+            "state": "Passed",
+            "durationSeconds": 0.5419977,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StalePreview_RejectsChangedInputs(\"source\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.StalePreview_RejectsChangedInputs(\"source\")",
+            "state": "Passed",
+            "durationSeconds": 0.4846403,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StalePreview_RejectsChangedInputs(\"baseline\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.StalePreview_RejectsChangedInputs(\"baseline\")",
+            "state": "Passed",
+            "durationSeconds": 0.4778904,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StalePreview_RejectsChangedInputs(\"record\")",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.StalePreview_RejectsChangedInputs(\"record\")",
+            "state": "Passed",
+            "durationSeconds": 0.470977,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StalePreview_RejectsLocalChange",
+            "fullName": "Ember.UI.Tests.EmberTemplatePatchEditTests.StalePreview_RejectsLocalChange",
+            "state": "Passed",
+            "durationSeconds": 0.6202557,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ChangesAfterPreview_RejectBeforeDeployment(\"skill\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.ChangesAfterPreview_RejectBeforeDeployment(\"skill\")",
+            "state": "Passed",
+            "durationSeconds": 0.3027887,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-c4d319c526fc4a238677edc23ff7a199\\Project\\.utmp\\ember-ai-skills\\aad72c8fb12349ae9a9a96ba198061bc\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "ChangesAfterPreview_RejectBeforeDeployment(\"catalog\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.ChangesAfterPreview_RejectBeforeDeployment(\"catalog\")",
+            "state": "Passed",
+            "durationSeconds": 0.3521355,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-df5cb36126454d6fb51e30e412edf00e\\Project\\.utmp\\ember-ai-skills\\d94f4ec42a0542e0bf6fc24fdf93f23d\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "ChangesAfterPreview_RejectBeforeDeployment(\"state\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.ChangesAfterPreview_RejectBeforeDeployment(\"state\")",
+            "state": "Passed",
+            "durationSeconds": 0.341697,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-9c8ce8d2415a4835b240f214c2c178df\\Project\\.utmp\\ember-ai-skills\\cbee18ba47394fdca35f17a980d788c7\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "ChangesAfterPreview_RejectBeforeDeployment(\"identity\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.ChangesAfterPreview_RejectBeforeDeployment(\"identity\")",
+            "state": "Passed",
+            "durationSeconds": 0.3200941,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-e8f7e7d23f2d476990a1df49e504f8cf\\Project\\.utmp\\ember-ai-skills\\0c10c26b155e4960ad377c25c10274c2\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "ChangesAfterPreview_RejectBeforeDeployment(\"local\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.ChangesAfterPreview_RejectBeforeDeployment(\"local\")",
+            "state": "Passed",
+            "durationSeconds": 0.3338042,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-97c4e3c1af4f47fcaea22a34dac62623\\Project\\.utmp\\ember-ai-skills\\c85917ff292b4a789f6236011be04c7b\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentAndIndependentUpdate_PreserveUtf8BytesAndLocalBackup(\"\\n\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentAndIndependentUpdate_PreserveUtf8BytesAndLocalBackup(\"\\n\")",
+            "state": "Passed",
+            "durationSeconds": 0.5773155,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-1a4e3540a2cb4ef9a15408e894f4e673\\Project\\.utmp\\ember-ai-skills\\a04b4c7190714c60b335cf0992415b76\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-1a4e3540a2cb4ef9a15408e894f4e673\\Project\\.utmp\\ember-ai-skills\\e002e082a057442aba51ec59c5f37256\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentAndIndependentUpdate_PreserveUtf8BytesAndLocalBackup(\"\\r\\n\")",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentAndIndependentUpdate_PreserveUtf8BytesAndLocalBackup(\"\\r\\n\")",
+            "state": "Passed",
+            "durationSeconds": 0.6471311,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-f1e3be71708b49b7b1bcee27887218f1\\Project\\.utmp\\ember-ai-skills\\b770b7b48ca342e2900f7d2607c56792\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-f1e3be71708b49b7b1bcee27887218f1\\Project\\.utmp\\ember-ai-skills\\3d83f5a078c243ada483d0c1a1c3f43b\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentOrSkillOrRecordFailure_RestoresEverything(0)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentOrSkillOrRecordFailure_RestoresEverything(0)",
+            "state": "Passed",
+            "durationSeconds": 0.623708,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-d67bc541d0ea400f83fa68719a6aacc6\\Project\\.utmp\\ember-ai-skills\\97404654fdd344878c7d847ce5a3fea1\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-d67bc541d0ea400f83fa68719a6aacc6\\Project\\.utmp\\ember-ai-skills\\adfdf1041d2741a888bc75c97aaddbd4\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentOrSkillOrRecordFailure_RestoresEverything(5)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentOrSkillOrRecordFailure_RestoresEverything(5)",
+            "state": "Passed",
+            "durationSeconds": 0.5947389,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-189cbd0a70bb408f8c1196fafbe94c73\\Project\\.utmp\\ember-ai-skills\\d4c02ce1995144f8a7daceb37f8b95ad\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-189cbd0a70bb408f8c1196fafbe94c73\\Project\\.utmp\\ember-ai-skills\\a5ec4625306c43678b5f9e3c1698a35b\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentOrSkillOrRecordFailure_RestoresEverything(6)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentOrSkillOrRecordFailure_RestoresEverything(6)",
+            "state": "Passed",
+            "durationSeconds": 0.7320892,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-84a95768e9eb4a15b1020df0d80b06a7\\Project\\.utmp\\ember-ai-skills\\3589abfbb3474b88b1d8703c44f6231f\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-84a95768e9eb4a15b1020df0d80b06a7\\Project\\.utmp\\ember-ai-skills\\9978755e3dd64500ba92f1959b40ac39\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "DeploymentOrSkillOrRecordFailure_RestoresEverything(7)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.DeploymentOrSkillOrRecordFailure_RestoresEverything(7)",
+            "state": "Passed",
+            "durationSeconds": 0.6164314,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-f67942f2b1914c0d9c540aed2aa14d6c\\Project\\.utmp\\ember-ai-skills\\fbfb6c5dc8024cc28bf834721ded4349\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-f67942f2b1914c0d9c540aed2aa14d6c\\Project\\.utmp\\ember-ai-skills\\e80805852a4946dda1c33c0c0172c8da\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "FirstDeploymentFailure_DoesNotLeaveSkillsOrDeploymentRecord",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.FirstDeploymentFailure_DoesNotLeaveSkillsOrDeploymentRecord",
+            "state": "Passed",
+            "durationSeconds": 0.2529006,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-7182d7fbb55a4876a6c06717979efd87\\Project\\.utmp\\ember-ai-skills\\7fe5e5abc0d7410cb240adbbca02e0e4\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "IndependentUpdate_FailureRollsBackEveryTarget(0)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.IndependentUpdate_FailureRollsBackEveryTarget(0)",
+            "state": "Passed",
+            "durationSeconds": 1.4184737,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-bbf7230a6189477db4bb5616b9150aed\\Project\\.utmp\\ember-ai-skills\\e67ffc22e83743b0bb44867c76717d92\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-bbf7230a6189477db4bb5616b9150aed\\Project\\.utmp\\ember-ai-skills\\9e6039243f5d4a2486132d6e5a5ef037\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "IndependentUpdate_FailureRollsBackEveryTarget(1)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.IndependentUpdate_FailureRollsBackEveryTarget(1)",
+            "state": "Passed",
+            "durationSeconds": 0.8999325,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-189152fa5b8e4de18b9282b5888dc83a\\Project\\.utmp\\ember-ai-skills\\2894ae031f0f421f9a7da076fa0741a4\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-189152fa5b8e4de18b9282b5888dc83a\\Project\\.utmp\\ember-ai-skills\\977d88a0ff5e42a9b53f45f84b81b9ed\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "IndependentUpdate_FailureRollsBackEveryTarget(2)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.IndependentUpdate_FailureRollsBackEveryTarget(2)",
+            "state": "Passed",
+            "durationSeconds": 0.8195062,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-fa4fe6ef47474c059ae647c76dadab1e\\Project\\.utmp\\ember-ai-skills\\62924714334c4319ad7c6ae3d441624f\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-fa4fe6ef47474c059ae647c76dadab1e\\Project\\.utmp\\ember-ai-skills\\adc3eeecd9f14b5fbef44146b8006095\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "IndependentUpdate_FailureRollsBackEveryTarget(3)",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.IndependentUpdate_FailureRollsBackEveryTarget(3)",
+            "state": "Passed",
+            "durationSeconds": 1.1169184,
+            "message": null,
+            "stackTrace": null,
+            "output": "<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-b2a5835e92ca44d88dd2dd1502f27144\\Project\\.utmp\\ember-ai-skills\\1c2f4c2955154dec9019fd065b105e76\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n<color=#40D966><b>[EmberCore.Editor]</b></color> <color=#a7f57a>模板技能已暂存；旧副本备份：C:\\Users\\wuyu\\AppData\\Local\\Temp\\EmberTemplateSkills-b2a5835e92ca44d88dd2dd1502f27144\\Project\\.utmp\\ember-ai-skills\\1efa28cd2ea7492aad9febdff84dc0b3\\backup</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\Core\\Editor\\EmberProjectSetup.AISkills.cs:76)</i></color>\r\n"
+          },
+          {
+            "name": "PathSafety_JunctionDiscoveryRoot_IsRejected",
+            "fullName": "Ember.UI.Tests.EmberTemplateSkillsEditTests.PathSafety_JunctionDiscoveryRoot_IsRejected",
+            "state": "Passed",
+            "durationSeconds": 0.1109574,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CommitPreparedTargets_AllTargetsShouldReplaceTogether",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.CommitPreparedTargets_AllTargetsShouldReplaceTogether",
+            "state": "Passed",
+            "durationSeconds": 0.0718396,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CommitPreparedTargets_RollbackFailureShouldPreserveOriginalErrorAndBackups",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.CommitPreparedTargets_RollbackFailureShouldPreserveOriginalErrorAndBackups",
+            "state": "Passed",
+            "durationSeconds": 0.133227,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CopyDirectory_FolderMetadataShouldMaterializeVirtualEmptyDirectory",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.CopyDirectory_FolderMetadataShouldMaterializeVirtualEmptyDirectory",
+            "state": "Passed",
+            "durationSeconds": 0.0159471,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(0)",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(0)",
+            "state": "Passed",
+            "durationSeconds": 0.423828,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(1)",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(1)",
+            "state": "Passed",
+            "durationSeconds": 0.2062505,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(2)",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_FaultAtAnyCommitStepShouldRestoreAllFormalTargets(2)",
+            "state": "Passed",
+            "durationSeconds": 0.196413,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_SafeParentChangeShouldUpdateAssetsSnapshotAndMetadata",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_SafeParentChangeShouldUpdateAssetsSnapshotAndMetadata",
+            "state": "Passed",
+            "durationSeconds": 0.1635376,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_SemanticResultHashMismatchShouldWriteNothing",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_SemanticResultHashMismatchShouldWriteNothing",
+            "state": "Passed",
+            "durationSeconds": 0.2062326,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ParentSync_SemanticSceneShouldRerunInStageAndPreserveChildMeta",
+            "fullName": "Ember.UI.Tests.EmberTemplateTransactionEditTests.ParentSync_SemanticSceneShouldRerunInStageAndPreserveChildMeta",
+            "state": "Passed",
+            "durationSeconds": 0.2738734,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

@@ -1,0 +1,248 @@
+[
+  {
+    "document": "README.md",
+    "target": "requirements.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "design.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "implementation.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "handoff.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/io-audit.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/source-identity.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/delivery-source/",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/implementation-start/",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/test-filters.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/test2final.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/test3final.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/compile4state.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/compile4loaded.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "evidence/consolefinal.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "README.md",
+    "target": "../../dev/release-0.25.3.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "README.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/source-identity.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/implementation-start/",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/io-audit.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/delivery-tracked.diff",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4request.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4state.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4loaded.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4console.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/consolefinal.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test-filters.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test1final.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test2final.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test3final.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/io-audit.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "implementation.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "README.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "implementation.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "evidence/compile4state.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "evidence/compile4loaded.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "evidence/source-identity.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "evidence/implementation-start/",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
+    "document": "handoff.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "root": "C:\\Users\\wuyu\\My\\ember-unity-framework",
+      "packageVersion": "0.25.3",
+      "resolved": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember",
+      "frameworkVersion": "0.25.3",
+      "compiling": false,
+      "updating": false,
+      "assemblies": [
+        {
+          "name": "Ember.Core.Editor",
+          "mvid": "f7a9767c-d956-4fb9-8a5d-f7263cf3c16f"
+        },
+        {
+          "name": "Ember.UI.Tests",
+          "mvid": "e2ddb411-d417-4bb6-8a96-e7a5fe7a3af7"
+        },
+        {
+          "name": "Ember.UPMManager.Editor",
+          "mvid": "18af4670-80b2-431c-9dd7-e7a77b9af1f2"
+        }
+      ],
+      "editing": {
+        "templateId": "topdown-2d",
+        "templateVersion": "0.1.2",
+        "contentHash": "d83863b16bda8c2655f21d6aa3d55693",
+        "loadedAt": "2026-11-11 15:53:02"
+      }
+    },
+    "compiler": "codedom"
+  }
+}

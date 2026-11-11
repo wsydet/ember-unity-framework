@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
+using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
 using System.Linq;
 using Ember.Basic;
 using Ember.UPMManager.Editor;

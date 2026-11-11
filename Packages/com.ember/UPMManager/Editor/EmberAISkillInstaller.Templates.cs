@@ -118,7 +118,7 @@ namespace Ember.UPMManager.Editor
         {
             templateId = context.TemplateId, businessVersion = context.BusinessVersion,
             businessContentHash = context.BusinessContentHash, sourceVersion = context.Version,
-            sourceContentHash = context.ContentHash, sourceExists = Directory.Exists(source),
+            sourceContentHash = context.ContentHash, sourceExists = EmberTemplateFileSystem.Directory.Exists(source),
             sourceFiles = SnapshotTemplateSource(source), sourceDirectories = SnapshotDirectories(source),
             sourceMetaHash = Hash(source + ".meta")
         };
@@ -135,8 +135,8 @@ namespace Ember.UPMManager.Editor
         private static List<Package> ReadTemplatePackages(string sourceRoot)
         {
             Within(sourceRoot, CatalogFile);
-            if (File.Exists(sourceRoot)) throw new IOException("模板技能源路径是文件而非目录。");
-            if (!Directory.Exists(sourceRoot)) return new List<Package>();
+            if (EmberTemplateFileSystem.File.Exists(sourceRoot)) throw new IOException("模板技能源路径是文件而非目录。");
+            if (!EmberTemplateFileSystem.Directory.Exists(sourceRoot)) return new List<Package>();
             // An existing source directory without a catalog is an authoring error, not an empty template.
             return ReadCatalog(sourceRoot, true);
         }
@@ -144,8 +144,8 @@ namespace Ember.UPMManager.Editor
         private static List<Package> ReadProjectPackages(string projectRoot)
         {
             string source = Within(projectRoot, ProjectSourceDirectory);
-            if (File.Exists(source)) throw new IOException("项目技能源路径是文件。");
-            return Directory.Exists(source) ? ReadCatalog(source, true, true) : new List<Package>();
+            if (EmberTemplateFileSystem.File.Exists(source)) throw new IOException("项目技能源路径是文件。");
+            return EmberTemplateFileSystem.Directory.Exists(source) ? ReadCatalog(source, true, true) : new List<Package>();
         }
 
         private static bool IsProject(Package package) => !string.IsNullOrEmpty(package.Definition.projectId);
@@ -168,13 +168,13 @@ namespace Ember.UPMManager.Editor
 
         private static void CopySkillFiles(string source, string destination, Fingerprint[] files)
         {
-            Directory.CreateDirectory(destination);
-            foreach (string directory in SnapshotDirectories(source)) Directory.CreateDirectory(Within(destination, directory));
+            EmberTemplateFileSystem.Directory.CreateDirectory(destination);
+            foreach (string directory in SnapshotDirectories(source)) EmberTemplateFileSystem.Directory.CreateDirectory(Within(destination, directory));
             foreach (var file in files)
             {
                 string target = Within(destination, file.path);
-                Directory.CreateDirectory(Path.GetDirectoryName(target));
-                File.Copy(Within(source, file.path), target);
+                EmberTemplateFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target));
+                EmberTemplateFileSystem.File.Copy(Within(source, file.path), target);
             }
             if (!Same(Snapshot(destination, MaxFiles * 64, MaxBytes * 64L), files)) throw new IOException("技能暂存校验失败。");
         }
@@ -188,8 +188,8 @@ namespace Ember.UPMManager.Editor
 
         private static void CollectDirectories(string root, string current, List<string> result)
         {
-            if (!Directory.Exists(current)) return;
-            foreach (string directory in Directory.GetDirectories(current))
+            if (!EmberTemplateFileSystem.Directory.Exists(current)) return;
+            foreach (string directory in EmberTemplateFileSystem.Directory.GetDirectories(current))
             {
                 string relative = directory.Substring(root.Length + 1).Replace('\\', '/');
                 Within(root, relative);
@@ -235,7 +235,7 @@ namespace Ember.UPMManager.Editor
                 return "技能所需扩展未启用或版本/hash 已变化，请在项目中心重新预览组合与技能。";
             // Older installation records cannot grant access to newly extension-scoped source skills.
             string sourceRoot = Within(projectRoot, "Assets/" + TemplateSourceDirectory);
-            if (Directory.Exists(sourceRoot))
+            if (EmberTemplateFileSystem.Directory.Exists(sourceRoot))
             {
                 var source = ReadTemplatePackages(sourceRoot).FirstOrDefault(p => p.Definition.id == id);
                 if (source != null && !SameExtensions(installed.extensions, RequiredExtensions(source.Definition, extensions)))
@@ -277,7 +277,7 @@ namespace Ember.UPMManager.Editor
         public static void BindTemplateIdentityRecord(TemplatePreview preview, string projectRelativePath)
         {
             string path = Within(preview.ProjectRoot, projectRelativePath);
-            if (Directory.Exists(path)) throw new IOException("模板身份记录不是文件。");
+            if (EmberTemplateFileSystem.Directory.Exists(path)) throw new IOException("模板身份记录不是文件。");
             preview.IdentityRecords.Add(projectRelativePath, Hash(path));
         }
 
@@ -285,7 +285,7 @@ namespace Ember.UPMManager.Editor
         {
             path = Path.GetFullPath(path);
             path = Within(Path.GetDirectoryName(path), Path.GetFileName(path));
-            if (Directory.Exists(path)) throw new IOException("扩展声明不是文件。");
+            if (EmberTemplateFileSystem.Directory.Exists(path)) throw new IOException("扩展声明不是文件。");
             preview.ReadOnlyInputs[path] = Hash(path);
         }
 
@@ -343,8 +343,8 @@ namespace Ember.UPMManager.Editor
             var entries = state.skills.Where(s => s.ownerKind == "project").Select(s =>
             {
                 string target = Within(projectRoot, ".agents/skills/" + s.id);
-                if (File.Exists(target)) throw new IOException("技能目标是文件：" + s.id);
-                return new TemplateEntry { Id = s.id, Existed = Directory.Exists(target), Local = Snapshot(target),
+                if (EmberTemplateFileSystem.File.Exists(target)) throw new IOException("技能目标是文件：" + s.id);
+                return new TemplateEntry { Id = s.id, Existed = EmberTemplateFileSystem.Directory.Exists(target), Local = Snapshot(target),
                     LocalDirectories = SnapshotDirectories(target), SourceDirectories = Array.Empty<string>() };
             }).ToList();
             return new TemplatePreview { ProjectRoot = projectRoot, SourceRoot = source,
@@ -399,7 +399,7 @@ namespace Ember.UPMManager.Editor
             var packages = allPackages.Where(p => RequiredExtensions(p.Definition, context.Extensions).All(x => x != null)
                 && (!IsProject(p) || ProjectCompatible(p, context))
                 && (string.IsNullOrEmpty(p.Definition.requiredModuleScope) || context.ModuleScopes.Contains(p.Definition.requiredModuleScope))).ToList();
-            if (Directory.Exists(Within(projectRoot, StateFile))) throw new IOException("AI Skill 安装记录路径是目录，请先修复。");
+            if (EmberTemplateFileSystem.Directory.Exists(Within(projectRoot, StateFile))) throw new IOException("AI Skill 安装记录路径是目录，请先修复。");
             var state = ReadState(projectRoot);
             var errors = new List<string>();
             var differences = new List<string>();
@@ -427,15 +427,15 @@ namespace Ember.UPMManager.Editor
                     || (IsProject(package) && installed.projectId != definition.projectId)))
                     errors.Add(definition.id + ": 来源所有权冲突，不能接管。");
                 string target = Within(projectRoot, ".agents/skills/" + definition.id);
-                if (File.Exists(target)) errors.Add(definition.id + ": 目标是文件。");
+                if (EmberTemplateFileSystem.File.Exists(target)) errors.Add(definition.id + ": 目标是文件。");
                 if ((installed != null && !owned.Contains(installed))
-                    || (installed == null && Directory.Exists(target)))
+                    || (installed == null && EmberTemplateFileSystem.Directory.Exists(target)))
                     errors.Add(definition.id + ": 同名目录属于通用/其他模板/未管理技能。请先自行移走或改 ID，不能接管。");
                 // Development repository generic source is protected even if it has no installation record.
                 string genericCatalog = Within(projectRoot, ".agents/skills/catalog.json");
-                if (File.Exists(genericCatalog))
+                if (EmberTemplateFileSystem.File.Exists(genericCatalog))
                 {
-                    var generic = JsonUtility.FromJson<Catalog>(File.ReadAllText(genericCatalog, Utf8));
+                    var generic = JsonUtility.FromJson<Catalog>(EmberTemplateFileSystem.File.ReadAllText(genericCatalog, Utf8));
                     if (generic?.skills != null && generic.skills.Any(s => s.id == definition.id))
                         errors.Add(definition.id + ": 与通用技能维护源 ID 冲突。");
                 }
@@ -443,11 +443,11 @@ namespace Ember.UPMManager.Editor
             foreach (string id in desired.Keys.Union(owned.Select(s => s.id), StringComparer.OrdinalIgnoreCase).OrderBy(s => s))
             {
                 string target = Within(projectRoot, ".agents/skills/" + id);
-                if (File.Exists(target)) throw new IOException("技能目标是文件：" + id);
+                if (EmberTemplateFileSystem.File.Exists(target)) throw new IOException("技能目标是文件：" + id);
                 var local = Snapshot(target);
                 var old = owned.FirstOrDefault(s => s.id == id);
                 desired.TryGetValue(id, out var package);
-                bool exists = Directory.Exists(target);
+                bool exists = EmberTemplateFileSystem.Directory.Exists(target);
                 var localDirectories = SnapshotDirectories(target);
                 var sourceDirectories = package == null ? Array.Empty<string>() : SnapshotDirectories(package.Directory);
                 bool modified = old != null && (!exists || !Same(local, old.files)
@@ -481,7 +481,7 @@ namespace Ember.UPMManager.Editor
             string localSourceMetaHash = null;
             if (context.UpdateSource)
             {
-                if (File.Exists(localSource) || Directory.Exists(localSource + ".meta"))
+                if (EmberTemplateFileSystem.File.Exists(localSource) || EmberTemplateFileSystem.Directory.Exists(localSource + ".meta"))
                     throw new IOException("项目技能源路径类型错误。");
                 if (state.templateBaseline != null && !MatchesBusiness(state.templateBaseline,
                         context.TemplateId, context.BusinessVersion, context.BusinessContentHash))
@@ -495,7 +495,7 @@ namespace Ember.UPMManager.Editor
                 }
                 localSourceFiles = SnapshotTemplateSource(localSource);
                 localSourceDirectories = SnapshotDirectories(localSource);
-                localSourceExists = Directory.Exists(localSource);
+                localSourceExists = EmberTemplateFileSystem.Directory.Exists(localSource);
                 localSourceMetaHash = Hash(localSource + ".meta");
                 bool sourceChanged = localSourceExists != desiredBaseline.sourceExists
                     || !Same(localSourceFiles, desiredBaseline.sourceFiles)
@@ -540,13 +540,13 @@ namespace Ember.UPMManager.Editor
                 || !SnapshotDirectories(Within(preview.ProjectRoot, ProjectSourceDirectory)).SequenceEqual(preview.ProjectSourceDirectories))
                 throw new IOException("项目技能源在预览后变化，请重新预览。");
             foreach (var input in preview.ReadOnlyInputs)
-                if (Directory.Exists(input.Key) || Hash(input.Key) != input.Value)
+                if (EmberTemplateFileSystem.Directory.Exists(input.Key) || Hash(input.Key) != input.Value)
                     throw new IOException("扩展声明或组合在预览后变化，请重新预览。");
             foreach (var record in preview.IdentityRecords)
-                if (Directory.Exists(Within(preview.ProjectRoot, record.Key))
+                if (EmberTemplateFileSystem.Directory.Exists(Within(preview.ProjectRoot, record.Key))
                     || Hash(Within(preview.ProjectRoot, record.Key)) != record.Value)
                     throw new IOException("正式模板身份记录在预览后变化，请重新预览。");
-            if (Directory.Exists(Within(preview.ProjectRoot, StateFile))
+            if (EmberTemplateFileSystem.Directory.Exists(Within(preview.ProjectRoot, StateFile))
                 || Hash(Within(preview.ProjectRoot, StateFile)) != preview.StateHash
                 || Hash(Within(preview.SourceRoot, CatalogFile)) != preview.CatalogHash)
                 throw new IOException("技能清单或安装记录在预览后变化，请重新预览。");
@@ -557,7 +557,7 @@ namespace Ember.UPMManager.Editor
             {
                 string source = Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory);
                 Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory + ".meta");
-                if (File.Exists(source) || Directory.Exists(source + ".meta") || Directory.Exists(source) != preview.LocalSourceExists
+                if (EmberTemplateFileSystem.File.Exists(source) || EmberTemplateFileSystem.Directory.Exists(source + ".meta") || EmberTemplateFileSystem.Directory.Exists(source) != preview.LocalSourceExists
                     || !Same(SnapshotTemplateSource(source), preview.LocalSourceFiles)
                     || !SnapshotDirectories(source).SequenceEqual(preview.LocalSourceDirectories)
                     || Hash(source + ".meta") != preview.LocalSourceMetaHash)
@@ -566,7 +566,7 @@ namespace Ember.UPMManager.Editor
             foreach (var entry in preview.Entries)
             {
                 string target = Within(preview.ProjectRoot, ".agents/skills/" + entry.Id);
-                if (File.Exists(target) || Directory.Exists(target) != entry.Existed || !Same(Snapshot(target), entry.Local))
+                if (EmberTemplateFileSystem.File.Exists(target) || EmberTemplateFileSystem.Directory.Exists(target) != entry.Existed || !Same(Snapshot(target), entry.Local))
                     throw new IOException("项目技能在预览后变化：" + entry.Id);
                 if (!SnapshotDirectories(target).SequenceEqual(entry.LocalDirectories)
                     || (entry.Package != null && !SnapshotDirectories(entry.Package.Directory).SequenceEqual(entry.SourceDirectories)))
@@ -590,8 +590,8 @@ namespace Ember.UPMManager.Editor
             backupRoot = Path.Combine(transaction, "backup");
             var state = ReadState(preview.ProjectRoot);
             string statePath = Within(preview.ProjectRoot, StateFile);
-            Directory.CreateDirectory(backupRoot);
-            if (File.Exists(statePath)) File.Copy(statePath, Path.Combine(backupRoot, "ember-ai-skills.json"));
+            EmberTemplateFileSystem.Directory.CreateDirectory(backupRoot);
+            if (EmberTemplateFileSystem.File.Exists(statePath)) EmberTemplateFileSystem.File.Copy(statePath, Path.Combine(backupRoot, "ember-ai-skills.json"));
             foreach (var entry in preview.Entries)
             {
                 string target = Within(preview.ProjectRoot, ".agents/skills/" + entry.Id);
@@ -622,17 +622,17 @@ namespace Ember.UPMManager.Editor
                 string destination = Within(preview.ProjectRoot, "Assets/" + TemplateSourceDirectory);
                 string stagedSource = Path.Combine(transaction, "template-source");
                 if (preview.LocalSourceExists) CopySkillFiles(destination, Path.Combine(backupRoot, ".template-source"), preview.LocalSourceFiles);
-                if (preview.LocalSourceMetaHash != null) File.Copy(destination + ".meta", Path.Combine(backupRoot, ".template-source.meta"));
+                if (preview.LocalSourceMetaHash != null) EmberTemplateFileSystem.File.Copy(destination + ".meta", Path.Combine(backupRoot, ".template-source.meta"));
                 if (preview.DesiredBaseline.sourceExists) CopySkillFiles(preview.SourceRoot, stagedSource, preview.DesiredBaseline.sourceFiles);
                 targets.Add(new PreparedSkillTarget(stagedSource, destination, !preview.DesiredBaseline.sourceExists));
                 string stagedMeta = stagedSource + ".meta";
-                if (preview.DesiredBaseline.sourceMetaHash != null) File.Copy(preview.SourceRoot + ".meta", stagedMeta);
+                if (preview.DesiredBaseline.sourceMetaHash != null) EmberTemplateFileSystem.File.Copy(preview.SourceRoot + ".meta", stagedMeta);
                 targets.Add(new PreparedSkillTarget(stagedMeta, destination + ".meta", preview.DesiredBaseline.sourceMetaHash == null));
             }
             state.schemaVersion = Math.Max(state.schemaVersion, state.skills.Any(s => s.ownerKind == "project") ? 4 : 3);
             state.templateBaseline = preview.DesiredBaseline;
             string pending = Path.Combine(transaction, "state.json");
-            File.WriteAllText(pending, JsonUtility.ToJson(state, true) + "\n", Utf8);
+            EmberTemplateFileSystem.File.WriteAllText(pending, JsonUtility.ToJson(state, true) + "\n", Utf8);
             targets.Add(new PreparedSkillTarget(pending, statePath));
             ValidateTemplatePreview(preview);
             return targets.AsReadOnly();

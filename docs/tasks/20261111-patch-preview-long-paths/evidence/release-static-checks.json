@@ -1,0 +1,17 @@
+{
+  "version": "0.25.3",
+  "archiveSourceFilesExactInGit": 69,
+  "manifestDependencies": 57,
+  "changedDependencies": [
+    "com.ember"
+  ],
+  "templatesAndParentsUnchanged": true,
+  "bundleAndSourcesUnchanged": true,
+  "unrelatedFontsWorkflowSkillsExcluded": true,
+  "whitespaceCheck": "run separately after this audit",
+  "binaryCheck": "PASS staged index and clean checkouts core.autocrlf=false and true",
+  "fontCheck": "PASS staged index and candidate workspace",
+  "bundleCheck": "PASS 12 skills / 34 files",
+  "codeProof": "all 16 source files identical to validated task modulo Git CRLF text normalization",
+  "fileSymlink": "environment-limited pending, explicitly accepted by user; not passed"
+}

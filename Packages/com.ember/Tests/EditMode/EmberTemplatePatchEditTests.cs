@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using File = Ember.UI.Tests.PatchObservation.File;
+using Directory = Ember.UI.Tests.PatchObservation.Directory;
 using System.Linq;
 using Ember.Core.Editor;
 using Ember.UPMManager.Editor;
@@ -236,9 +238,265 @@ namespace Ember.UI.Tests
             StringAssert.Contains("fixed", Read("Assets/Game/Generated.txt"));
             StringAssert.Contains("v1.2.1", Read("Assets/Game/Generated.txt"));
         }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void LongPaths_FullPreviewPreservesInputs_AndApplyCanCommitOrRollback(bool interrupt)
+        {
+            string relative = LongAssetPath();
+            Asset(_source, relative, "old asset");
+            Deploy(Info("1.2.0"));
+            string live = Path.Combine(_project, "Assets", relative);
+            Assert.AreEqual(235, (live + ".meta").Length);
+            Assert.AreEqual(RuntimePlatform.WindowsEditor, Application.platform);
+            Assert.AreEqual(0, (int)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem", "LongPathsEnabled", -1));
+            foreach (string input in new[] { live, Path.Combine(_source, relative) })
+            {
+                Assert.LessOrEqual((input + ".meta").Length, 235);
+                Assert.AreEqual("old asset", System.IO.File.ReadAllText(input));
+                Assert.IsNotEmpty(System.IO.File.ReadAllBytes(input + ".meta"));
+                TestContext.Out.WriteLine("ordinary input=" + input + " meta length=" + (input + ".meta").Length);
+            }
+            TestContext.Out.WriteLine("Unity=" + Application.unityVersion + " platform=" + Application.platform
+                + " CLR=" + Environment.Version + " OS=" + Environment.OSVersion + " volume=" + new DriveInfo(Path.GetPathRoot(_root)).DriveFormat);
+            // 源与 live 必须能普通读取。
+            Assert.AreEqual("old asset", System.IO.File.ReadAllText(live));
+            string meta = System.IO.File.ReadAllText(live + ".meta");
+            Asset(_source, relative, "new asset");
+            var next = Info("1.2.1");
+            string before = Fingerprint(), sourceBefore = RawTree(_source);
+            string stage = null;
+            var plan = EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
+            {
+                stage = path;
+                foreach (string side in new[] { "Old", "Incoming", "Local" })
+                {
+                    string staged = Path.Combine(path, side, relative);
+                    Assert.Greater((staged + ".meta").Length, 260);
+                    TestContext.Out.WriteLine(side + " meta length=" + (staged + ".meta").Length);
+                    Assert.AreEqual(meta, File.ReadAllText(staged + ".meta"));
+                }
+                TestContext.Out.WriteLine("live meta length=235, source meta length=" + (Path.Combine(_source, relative) + ".meta").Length
+                    + ", Local meta length=" + Path.Combine(path, "Local", relative + ".meta").Length);
+            });
+            Assert.IsFalse(Directory.Exists(stage));
+            Assert.AreEqual(before, Fingerprint());
+            Assert.AreEqual(sourceBefore, RawTree(_source));
+            var change = plan.Changes.Single(c => c.UnitPath == relative);
+            Assert.IsFalse(change.IsConflict);
+            Assert.AreEqual(TemplateConflictChoice.AcceptParent, change.RecommendedChoice);
+            Assert.IsTrue(change.Files.Any(f => f.RelativePath == relative + ".meta"));
+            Assert.IsFalse(plan.Changes.SelectMany(c => c.Files).Any(f => f.RelativePath.Contains(@"\\?\")));
+            if (interrupt)
+            {
+                var primary = new IOException("injected long-path commit");
+                Assert.AreSame(primary, Assert.Throws<IOException>(() => EmberProjectSetup.CommitTemplatePatch(plan, next, null,
+                    faultInjector: _ => throw primary)));
+                Assert.AreEqual(before, Fingerprint());
+            }
+            else
+            {
+                EmberProjectSetup.CommitTemplatePatch(plan, next, null);
+                Assert.AreEqual("new asset", System.IO.File.ReadAllText(live));
+                Assert.AreEqual(next.contentHash, Record().contentHash);
+            }
+            Assert.AreEqual(meta, System.IO.File.ReadAllText(live + ".meta"));
+            Assert.AreEqual(sourceBefore, RawTree(_source));
+            Assert.IsEmpty(Directory.GetDirectories(Path.Combine(_project, "Temp"), "EmberPatch*"));
+        }
+
+        [Test]
+        public void LongPaths_ConcurrentEditRemainsConflict_WithOriginalGuidAndHashes()
+        {
+            string relative = LongAssetPath();
+            Asset(_source, relative, "old");
+            Deploy(Info("1.2.0"));
+            Asset(_source, relative, "parent");
+            Asset(_project, "Assets/" + relative, "child");
+            string before = Fingerprint();
+            var plan = Plan(Info("1.2.1"));
+            var change = plan.Changes.Single(c => c.UnitPath == relative);
+            Assert.IsTrue(change.IsConflict);
+            var file = change.Files.Single(f => f.RelativePath == relative);
+            Assert.AreNotEqual(file.OldHash, file.ParentHash);
+            Assert.AreNotEqual(file.ParentHash, file.ChildHash);
+            var meta = change.Files.Single(f => f.RelativePath == relative + ".meta");
+            Assert.AreEqual(meta.OldGuid, meta.ParentGuid);
+            Assert.AreEqual(meta.OldGuid, meta.ChildGuid);
+            Assert.AreEqual(before, Fingerprint());
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void LongPaths_PreviewFailurePreservesPrimary_AndReportsCleanupFailure(bool lockFile)
+        {
+            if (lockFile && Application.platform != RuntimePlatform.WindowsEditor) Assert.Ignore("Windows 文件锁语义");
+            string relative = LongAssetPath();
+            Asset(_source, relative, "old");
+            Deploy(Info("1.2.0"));
+            Asset(_source, relative, "incoming");
+            var next = Info("1.2.1");
+            string before = Fingerprint(), stage = null;
+            string sibling = Path.Combine(_project, "Temp", "EmberPatchPreview-other~");
+            Write(sibling, "keep.txt", "another operation");
+            FileStream held = null;
+            var primary = new IOException("primary preview fault: " + relative);
+            try
+            {
+                var actual = Assert.Throws<IOException>(() => EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
+                {
+                    stage = path;
+                    if (lockFile) held = new FileStream(PatchObservation.Native(Path.Combine(path, "Local", relative)),
+                        FileMode.Open, FileAccess.Read, FileShare.None);
+                    throw primary;
+                }));
+                Assert.AreSame(primary, actual);
+                Assert.AreEqual(stage, actual.Data["EmberTemporaryDirectory"]);
+                Assert.AreEqual(lockFile, Directory.Exists(stage));
+                if (lockFile)
+                {
+                    var cleanup = actual.Data["EmberStageCleanupException"] as IOException;
+                    Assert.IsNotNull(cleanup);
+                    StringAssert.Contains(stage, cleanup.Message);
+                    Assert.IsNotNull(cleanup.InnerException);
+                }
+                Assert.AreEqual(before, Fingerprint());
+                Assert.AreEqual("another operation", File.ReadAllText(Path.Combine(sibling, "keep.txt")));
+            }
+            finally
+            {
+                held?.Dispose();
+                if (stage != null) EmberTemplateTransaction.CleanPath(stage);
+            }
+        }
+
+        [Test]
+        public void Preview_NestedOperationsHaveSeparateOwnedDirectories()
+        {
+            Asset(_source, "Game/Shared.txt", "new");
+            var next = Info("1.2.1");
+            string outer = null, inner = null;
+            EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, path =>
+            {
+                outer = path;
+                EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next, nested => inner = nested);
+                Assert.AreNotEqual(outer, inner);
+                Assert.IsTrue(Directory.Exists(outer));
+                Assert.IsFalse(Directory.Exists(inner));
+            });
+            Assert.IsFalse(Directory.Exists(outer));
+        }
+
+        [TestCase("copy")] [TestCase("normalize")] [TestCase("meta")]
+        public void Preview_CopyAndReadFailuresPreservePrimaryPathAndInputs(string phase)
+        {
+            Asset(_source, "Game/Shared.txt", "new"); var next = Info("1.2.1");
+            string before = Fingerprint(), sourceBefore = RawTree(_source), stage = null, failedPath = null;
+            var primary = new IOException("copy interrupted"); FileStream held = null;
+            try
+            {
+                var error = Assert.Throws<IOException>(() => EmberProjectSetup.BuildTemplatePatchPlan(_project, _source, next,
+                    previewStaged: p => { stage = p; if (phase == "meta") { failedPath = Path.Combine(p, "Local/Game/Shared.txt.meta"); held = new FileStream(PatchObservation.Native(failedPath), FileMode.Open, FileAccess.Read, FileShare.None); } },
+                    beforeNormalizeForTest: p => { if (phase == "normalize" && held == null) { failedPath = p; held = new FileStream(PatchObservation.Native(p), FileMode.Open, FileAccess.Read, FileShare.None); } },
+                    copiedForTest: (source, dest) => { if (phase == "copy") { failedPath = dest; primary.Data["copyPath"] = dest; throw primary; } }));
+                stage ??= (string)error.Data["EmberTemporaryDirectory"];
+                Assert.IsNotNull(stage);
+                if (phase == "copy") { Assert.AreSame(primary, error); StringAssert.Contains("CopyPatchAssets", error.StackTrace); Assert.IsNotNull(error.Data["copyPath"]); }
+                else { Assert.AreEqual(Path.GetFullPath(failedPath), Path.GetFullPath((string)error.Data["EmberIOPath"])); Assert.IsNotNull(error.Data["EmberStageCleanupException"]); }
+                Assert.AreEqual(before, Fingerprint()); Assert.AreEqual(sourceBefore, RawTree(_source));
+                if (phase == "copy") Assert.IsFalse(Directory.Exists(stage));
+            }
+            finally { held?.Dispose(); if (stage != null) EmberTemplateTransaction.CleanPath(stage); }
+        }
+
+        [Test] public void Preview_NoChangesPreservesRawTreesAndDirectoryGuids()
+        {
+            var next = Info("1.2.1"); string before = Fingerprint(), sourceBefore = RawTree(_source);
+            var plan = Plan(next); Assert.IsFalse(plan.Changes.Any(c => c.IsConflict));
+            Assert.IsTrue(plan.Changes.All(c => c.RecommendedChoice == TemplateConflictChoice.KeepChild));
+            Assert.AreEqual(before, Fingerprint()); Assert.AreEqual(sourceBefore, RawTree(_source));
+        }
+
+        [Test] public void Apply_CommittedCleanupFailureReturnsCountAndWarnsWithoutRetryAmbiguity()
+        {
+            Asset(_source, "Game/Shared.txt", "committed"); var next = Info("1.2.1"); var plan = Plan(next);
+            string stage = null; FileStream held = null; var warnings = new List<string>();
+            void Observe(string message, string stack, LogType type) { if (type == LogType.Warning) warnings.Add(message); }
+            Application.logMessageReceived += Observe;
+            try
+            {
+                var hooks = new EmberTemplateTemporaryDirectory.TestHooks { BeforeCleanup = p =>
+                {
+                    stage = p; string path = Path.Combine(p, "cleanup-lock"); File.WriteAllText(path, "lock");
+                    held = new FileStream(PatchObservation.Native(path), FileMode.Open, FileAccess.Read, FileShare.None);
+                }};
+                Assert.Greater(EmberProjectSetup.CommitTemplatePatch(plan, next, null, scopeHooksForTest: hooks), 0);
+                Assert.AreEqual("committed", Read("Assets/Game/Shared.txt")); Assert.AreEqual("1.2.1", Record().version);
+                Assert.IsTrue(Directory.Exists(stage)); Assert.IsTrue(warnings.Any(w => w.Contains("已提交") && w.Contains(stage)));
+            }
+            finally { Application.logMessageReceived -= Observe; held?.Dispose(); if (stage != null) EmberTemplateTransaction.CleanPath(stage); }
+        }
+
+        [Test] public void LongPaths_ShortEquivalentPlanAndHashesMatch()
+        {
+            string relative = LongAssetPath(); Asset(_source, relative, "old\r\nasset"); Deploy(Info("1.2.0"));
+            Asset(_source, relative, "new\r\nasset"); var next = Info("1.2.1");
+            string sandbox = Path.Combine(Path.GetTempPath(), "EP" + Guid.NewGuid().ToString("N").Substring(0, 12));
+            Assert.IsFalse(Directory.Exists(sandbox)); Directory.CreateDirectory(sandbox);
+            try
+            {
+            string shortRoot = Path.Combine(sandbox, "P");
+            EmberTemplateTransaction.CopyDirectory(_project, shortRoot);
+            string shortSource = Path.Combine(sandbox, "N"); EmberTemplateTransaction.CopyDirectory(_source, shortSource);
+            var longPlan = Plan(next); var shortPlan = EmberProjectSetup.BuildTemplatePatchPlan(shortRoot, shortSource, next, stage =>
+            {
+                foreach (string side in new[] { "Old", "Incoming", "Local" })
+                {
+                    string meta = Path.Combine(stage, side, relative + ".meta"); Assert.Less(meta.Length, 260);
+                    Assert.IsNotEmpty(System.IO.File.ReadAllText(meta)); TestContext.Out.WriteLine("short " + side + " meta=" + meta.Length);
+                }
+            });
+            Assert.AreEqual(longPlan.ProjectHash, shortPlan.ProjectHash); Assert.AreEqual(longPlan.BaselineHash, shortPlan.BaselineHash);
+            CollectionAssert.AreEqual(longPlan.Changes.Select(c => c.UnitPath + ":" + c.Kind + ":" + c.RecommendedChoice), shortPlan.Changes.Select(c => c.UnitPath + ":" + c.Kind + ":" + c.RecommendedChoice));
+            CollectionAssert.AreEqual(longPlan.Changes.SelectMany(c => c.Files).Select(f => f.RelativePath + ":" + f.OldHash + ":" + f.ParentHash + ":" + f.ChildHash),
+                shortPlan.Changes.SelectMany(c => c.Files).Select(f => f.RelativePath + ":" + f.OldHash + ":" + f.ParentHash + ":" + f.ChildHash));
+            Assert.IsFalse(Read(RecordPath).Contains(@"\\?\"));
+            }
+            finally { Directory.Delete(sandbox, true); }
+        }
+
+        [Test] public void LongPaths_DeepSkillApplyCoversUpmSnapshotsAndDefaults()
+        {
+            string skillRoot = EmberAISkillInstaller.TemplateSourceDirectory;
+            Write(_source, skillRoot + "/ember-fixture/SKILL.md", "---\nname: ember-fixture\ndescription: isolated fixture\n---\nfixture");
+            Write(_source, skillRoot + "/catalog.json", "{\"schemaVersion\":2,\"skills\":[{\"id\":\"ember-fixture\",\"templateId\":\"fixture\",\"minimumFrameworkVersion\":\"0.1.0\",\"minimumTemplateVersion\":\"0.1.0\"}]}");
+            string deep = skillRoot + "/ember-fixture/" + string.Join("/", Enumerable.Repeat("nested-legal-component", 8)) + "/reference.md";
+            Write(_source, deep, "old reference");
+            Write(_source, "Game/Config/EmberExtensionDefaults.json", "{\"schemaVersion\":2,\"ownerTemplateId\":\"fixture\",\"ownerTemplateVersion\":\"1.2.0\",\"enabled\":[]}");
+            foreach (string file in Directory.GetFiles(_source, "*", SearchOption.AllDirectories).Where(p => !p.EndsWith(".meta")))
+                if (!File.Exists(file + ".meta")) File.WriteAllText(file + ".meta", Meta());
+            foreach (string dir in Directory.GetDirectories(_source, "*", SearchOption.AllDirectories))
+                if (!File.Exists(dir + ".meta")) File.WriteAllText(dir + ".meta", Meta(true));
+            Deploy(Info("1.2.0")); Write(_source, deep, "new reference");
+            var next = Info("1.2.1"); var plan = Plan(next); string sourceBefore = RawTree(_source);
+            EmberProjectSetup.CommitTemplatePatch(plan, next, null);
+            Assert.AreEqual("new reference", Read("Assets/" + deep));
+            string discovery = Path.Combine(_project, ".agents/skills/ember-fixture", deep.Substring((skillRoot + "/ember-fixture/").Length));
+            Assert.Greater(discovery.Length, 260); Assert.AreEqual("new reference", File.ReadAllText(discovery));
+            Assert.AreEqual(sourceBefore, RawTree(_source)); Assert.IsFalse(Read(".agents/ember-ai-skills.json").Contains(@"\\?\"));
+        }
         #endregion
 
         #region 内部方法
+        private string LongAssetPath()
+        {
+            string prefix = "GameResource/LongPaths/";
+            int length = 235 - Path.Combine(_project, "Assets", prefix).Length - ".asset.meta".Length;
+            Assert.Greater(length, 0);
+            while (length > 40) { prefix += new string('a', 30) + "/"; length -= 31; }
+            return prefix + new string('b', length) + ".asset";
+        }
+
         private TemplatePatchPlan ConcurrentAddition(TemplateInfo next)
         {
             Asset(_source, "Game/Added.txt", "incoming");
@@ -267,10 +525,18 @@ namespace Ember.UI.Tests
         private string Read(string path) => File.ReadAllText(Path.Combine(_project, path));
         private DeployedTemplateRecord Record() => EmberProjectSetup.ResolveActiveDeployment(
             JsonUtility.FromJson<DeployedTemplatesData>(Read(RecordPath)));
-        private string Fingerprint() => string.Join("\n", Directory.GetFiles(_project, "*", SearchOption.AllDirectories)
-            .Where(p => !p.StartsWith(Path.Combine(_project, "Temp") + Path.DirectorySeparatorChar)
-                && !p.StartsWith(Path.Combine(_project, ".utmp") + Path.DirectorySeparatorChar))
-            .OrderBy(p => p, StringComparer.Ordinal).Select(p => p.Substring(_project.Length) + ":" + Convert.ToBase64String(File.ReadAllBytes(p))));
+        private string Fingerprint() => RawTree(_project, true);
+        private static string RawTree(string root, bool excludeTemp = false)
+        {
+            bool Include(string p) => !excludeTemp || (!p.StartsWith(Path.Combine(root, "Temp") + Path.DirectorySeparatorChar)
+                && !p.StartsWith(Path.Combine(root, ".utmp") + Path.DirectorySeparatorChar));
+            var dirs = Directory.GetDirectories(root, "*", SearchOption.AllDirectories).Where(Include)
+                .Where(p => !excludeTemp || (p != Path.Combine(root, "Temp") && p != Path.Combine(root, ".utmp")))
+                .Select(p => "D:" + p.Substring(root.Length));
+            var files = Directory.GetFiles(root, "*", SearchOption.AllDirectories).Where(Include)
+                .Select(p => "F:" + p.Substring(root.Length) + ":" + Convert.ToBase64String(File.ReadAllBytes(p)));
+            return string.Join("\n", dirs.Concat(files).OrderBy(p => p, StringComparer.Ordinal));
+        }
         private static string Meta(bool folder = false) => "fileFormatVersion: 2\nguid: " + Guid.NewGuid().ToString("N") + "\n"
             + (folder ? "folderAsset: yes\n" : "");
         private static void Asset(string root, string relative, string text)
@@ -286,5 +552,32 @@ namespace Ember.UI.Tests
             File.WriteAllText(path, text);
         }
         #endregion
+    }
+}
+
+namespace Ember.UI.Tests
+{
+    internal static class PatchObservation
+    {
+        internal static string Native(string p) => Path.DirectorySeparatorChar != '\\' ? p
+            : p.StartsWith(@"\\", StringComparison.Ordinal) ? @"\\?\UNC\" + p.Substring(2) : @"\\?\" + Path.GetFullPath(p);
+        internal static class File
+        {
+            internal static bool Exists(string p) => System.IO.File.Exists(Native(p));
+            internal static string ReadAllText(string p) => System.IO.File.ReadAllText(Native(p));
+            internal static byte[] ReadAllBytes(string p) => System.IO.File.ReadAllBytes(Native(p));
+            internal static void WriteAllText(string p, string t) => System.IO.File.WriteAllText(Native(p), t);
+            internal static void Copy(string a, string b, bool overwrite = false) => System.IO.File.Copy(Native(a), Native(b), overwrite);
+            internal static void Delete(string p) => System.IO.File.Delete(Native(p));
+        }
+        internal static class Directory
+        {
+            internal static bool Exists(string p) => System.IO.Directory.Exists(Native(p));
+            internal static void CreateDirectory(string p) => System.IO.Directory.CreateDirectory(Native(p));
+            internal static void Delete(string p, bool recursive = false) => System.IO.Directory.Delete(Native(p), recursive);
+            private static string[] Restore(string root, string[] entries) => entries.Select(p => Path.Combine(root, p.Substring(Native(root).TrimEnd('\\').Length).TrimStart('\\', '/'))).ToArray();
+            internal static string[] GetFiles(string p, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly) => Restore(p, System.IO.Directory.GetFiles(Native(p), pattern, option));
+            internal static string[] GetDirectories(string p, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly) => Restore(p, System.IO.Directory.GetDirectories(Native(p), pattern, option));
+        }
     }
 }

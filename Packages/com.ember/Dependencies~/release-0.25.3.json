@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.25.3",
+  "frameworkTag": "v0.25.3",
+  "status": "Validated UPM Git release via annotated v0.25.3; remote identity verified separately by peeled commit",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.25.3.json",
+  "coverage": "Windows template patch preview and shared transaction long-path IO; shared UPM boundary, Core partials, Skill preparation/validation and staged extension defaults; owned temporary scopes, primary/cleanup diagnostics and committed-result semantics. No template snapshots, shared-font caches, unrelated workflow/rules/skill changes, dependencies or generic bundle changes. User accepted untested file symlink safety case as a non-blocking environment limitation on 2026-11-12.",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.1",
+      "path": "com.moremountains.feel",
+      "tag": "feel-v5.4.1"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.3",
+      "path": "com.sirenix.odin-inspector",
+      "tag": "odin-v4.0.3"
+    },
+    {
+      "name": "com.neuecc.unirx",
+      "path": "com.neuecc.unirx",
+      "version": "7.1.1",
+      "tag": "unirx-v7.1.1"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.10.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "stable",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "versionedContentHash": "0b0431013fcd599ea1d8f1c27aafd169"
+    },
+    {
+      "id": "lane-defense-2d",
+      "version": "0.1.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
+      "versionedContentHash": "0aa2e18bdf1864add23cd7a7fe7e5674"
+    },
+    {
+      "id": "platformer-2d",
+      "version": "0.13.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "567e277ba4d75871dad05b00b8ec48c8",
+      "versionedContentHash": "567e277ba4d75871dad05b00b8ec48c8"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.6.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "80a86599d447326f049b4be3954db7cb",
+      "versionedContentHash": "80a86599d447326f049b4be3954db7cb"
+    },
+    {
+      "id": "topdown-2d",
+      "version": "0.1.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "d83863b16bda8c2655f21d6aa3d55693",
+      "versionedContentHash": "d83863b16bda8c2655f21d6aa3d55693"
+    },
+    {
+      "id": "ui-game",
+      "version": "0.2.2",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "8dfcca368a0262eb5271008669a64358",
+      "versionedContentHash": "8dfcca368a0262eb5271008669a64358"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.22.3",
+      "frameworkVersion": "0.25.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.10.2",
+      "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
+      "contentHash": "eadb06cc16d55c09718ac839ae8dd554",
+      "versionedContentHash": "eadb06cc16d55c09718ac839ae8dd554"
+    }
+  ],
+  "validation": "Same-task targeted EditMode: 74 distinct cases, 73 passed, 0 failed, 1 skipped (file symlink privilege unavailable Win32 1314, explicitly accepted as pending/non-blocking by user); final changed 3 cases re-run 3/3 passed, not added as distinct cases. Unity 6000.5.4f1 WindowsEditor/NTFS/LongPathsEnabled=0: ordinary source/live meta 227/235, Old/Incoming/Local staging 289/294/291, short equivalent 249/254/251; full preview/read-only fingerprints, commit and post-placement rollback, 272-char backup, deep Skill, owner/concurrency/ACL/junction/cleanup diagnostics. Release MCP compile finished 1794418442729/domain reload after 1794418462114, loaded assemblies verified, PackageInfo/framework API 0.25.3, no compile/update, Console 0 errors/warnings. Seven actual/sealed template hashes and six actual parent snapshots/pointers verified unchanged. No UNC network, other OS/Unity, full suite, Player build or consumer deployment. Candidate binary/font/bundle checks recorded separately in release notes and task evidence.",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#feel-v5.4.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.25.3",
+    "skills": [
+      "ember-add-font",
+      "ember-template-conflict-recovery",
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style",
+      "ember-ui-normalize"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1",
+      "ember-ui-normalize": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-level-add-background",
+      "ember-level-add-decoration",
+      "ember-level-add-mechanism",
+      "ember-level-add-terrain",
+      "ember-platformer-add-attack",
+      "ember-platformer-add-state",
+      "ember-platformer-replace-animation",
+      "ember-platformer-tune-feel",
+      "ember-vn-custom-node",
+      "ember-vn-edit-skin",
+      "ember-vn-export-story",
+      "ember-vn-generate-save",
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-replace-images",
+      "ember-vn-sync-images"
+    ],
+    "bundleSourceCommit": "31618f43ee8744d46ea9be9c45e881ba9e2c79be",
+    "templateSkillUpdaterVersion": "0.14.4",
+    "templateSkillStateSchemaVersion": 3
+  },
+  "thirdPartyTagNote": "Default baseline for unchanged packages; per-package tag takes precedence."
+}

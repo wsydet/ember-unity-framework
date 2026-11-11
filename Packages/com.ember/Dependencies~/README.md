@@ -1,12 +1,12 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.25.2**，统一 UI 命名、目录及图片分类规范，封存七个模板的资源路径调整，并新增消费端通用技能 ember-ui-normalize。保留 GUID、图片内容和业务行为；六个派生模板同步至 base 0.10.2，框架兼容声明保留 0.25.0，第三方依赖不变。 验证及迁移边界见 [0.25.2 发布说明](../../../docs/dev/release-0.25.2.md)。
+当前发布：Ember **0.25.3**，修复 Windows 增量预览与共享事务的暂存长路径 IO，保留原 Temp/GUID 结构及三方比较、GUID 和事务语义。模板、依赖和公共技能 bundle 不变；文件 symlink 场景环境受限、待验证，用户已接受此非阻断限制。验证及接入边界见 [0.25.3 发布说明](../../../docs/dev/release-0.25.3.md)。
 
 ## 清单范围
 
-0.25.2完整 manifest（依赖沿用0.25.0）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+0.25.3完整 manifest（依赖沿用0.25.0）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
 
-本版清单：[release-0.25.2.json](release-0.25.2.json)、[manifest-0.25.2.json](manifest-0.25.2.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.25.2.md)。以下带旧版本号的流程记录保留其历史含义。
+本版清单：[release-0.25.3.json](release-0.25.3.json)、[manifest-0.25.3.json](manifest-0.25.3.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.25.3.md)。以下带旧版本号的流程记录保留其历史含义。
 
 ## 已有消费项目升级
 

@@ -1,0 +1,16 @@
+ M .agents/skills/ember-solution-design/SKILL.md
+ M AGENTS.md
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+ M Packages/com.ember/Documentation~/maintenance/ai-skills.md
+ M Packages/com.ember/Documentation~/maintenance/ai-workflow.md
+ M Packages/com.ember/Documentation~/maintenance/glossary.md
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+ M Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateFileSystem.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateFileSystem.cs.meta
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta

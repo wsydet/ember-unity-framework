@@ -1,0 +1,77 @@
+[
+  {
+    "document": "implementation.md",
+    "target": "evidence/source-identity.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/implementation-start/",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/io-audit.md",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/delivery-tracked.diff",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4request.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4state.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4loaded.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/compile4console.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/consolefinal.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test-filters.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test1final.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test2final.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/test3final.json",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "evidence/io-audit.md",
+    "exists": true
+  },
+  {
+    "document": "implementation.md",
+    "target": "consumer-validation-prompt.md",
+    "exists": true
+  }
+]

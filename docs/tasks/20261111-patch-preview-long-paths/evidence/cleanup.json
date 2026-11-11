@@ -1,0 +1,8 @@
+{
+  "taskId": "20261111-patch-preview-long-paths",
+  "date": "2026-11-12 Asia/Shanghai",
+  "cleanedAbsolutePath": "C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-workflow\\20261111-patch-preview-long-paths",
+  "status": "removed exact task directory after byte/link/ownership/reparse checks",
+  "otherTasksAndBackups": "preserved",
+  "filesArchived": 69
+}

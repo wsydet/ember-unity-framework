@@ -1,0 +1,106 @@
+{
+  "version": "0.25.3",
+  "tag": "v0.25.3",
+  "baseCommit": "4eaf344167d679583e17c9f683ef8aea2d5bc95e",
+  "aggregateAlgorithm": "SHA256 UTF8 ordinal-sorted path TAB gitBlobSha256 LF rows",
+  "aggregateSha256": "515cd683c1a174ed5817ecf72f078d9b3db255ec2504c9a16da462f740d4efcc",
+  "entries": [
+    {
+      "path": "Core/Editor/EmberExtensionProject.Identity.cs",
+      "gitBlobSha256": "5c66af4ea220abbeccb9e8fcd6ed26b069850009915c9ce31afbf522f9cc46ac",
+      "lfTextSha256": "5c66af4ea220abbeccb9e8fcd6ed26b069850009915c9ce31afbf522f9cc46ac",
+      "workingTreeSha256": "e008ca359bc0318537609170acec8634f81d7ec7b9b6db00983db6c4f3b18701"
+    },
+    {
+      "path": "Core/Editor/EmberExtensionProject.cs",
+      "gitBlobSha256": "7b8d43f5160638d268cd1b3cc2872d26e167f52db2d0d9fc687967b3e2e435e2",
+      "lfTextSha256": "7b8d43f5160638d268cd1b3cc2872d26e167f52db2d0d9fc687967b3e2e435e2",
+      "workingTreeSha256": "653f2419511d83f08b27730140167308df35fcdb767d8da908f24f6093838eff"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.AISkills.cs",
+      "gitBlobSha256": "0813e98329f845eacfda63c6d3ab6e6126d3bc44f9075000b3e28852f704323e",
+      "lfTextSha256": "0813e98329f845eacfda63c6d3ab6e6126d3bc44f9075000b3e28852f704323e",
+      "workingTreeSha256": "f4e280b0324667091fca0a73667b931cea15616b771c4df2d32fa74f6447246b"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.Patch.cs",
+      "gitBlobSha256": "dc5ccb2e97123ef8d9219dffb12ae68c910fef97a20d49e66bd6048628013716",
+      "lfTextSha256": "dc5ccb2e97123ef8d9219dffb12ae68c910fef97a20d49e66bd6048628013716",
+      "workingTreeSha256": "871da8f36392068cf79514950d7611b1d3aaffd69fcc26c7743fa1034b6ea7d8"
+    },
+    {
+      "path": "Core/Editor/EmberProjectSetup.cs",
+      "gitBlobSha256": "0f56a54609c0decabd316dc0f3106c7b5bc07bd1d16c10f0d36f67a4404df2b4",
+      "lfTextSha256": "0f56a54609c0decabd316dc0f3106c7b5bc07bd1d16c10f0d36f67a4404df2b4",
+      "workingTreeSha256": "1a547ee716a1f49525d24fb6db8e4168ac0d447a4ec82be2875091b546630c89"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateInheritanceEngine.cs",
+      "gitBlobSha256": "6e3a3b03ca7ba9a3a96b266ce4c8605bbafc5cf3cdd097fd1b2127cbc817f41f",
+      "lfTextSha256": "6e3a3b03ca7ba9a3a96b266ce4c8605bbafc5cf3cdd097fd1b2127cbc817f41f",
+      "workingTreeSha256": "8f2e33d37c4d033d6fe3d06c765e027224d67c848566bfc14689c9d6aa129159"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTemporaryDirectory.cs",
+      "gitBlobSha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c",
+      "lfTextSha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c",
+      "workingTreeSha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+      "gitBlobSha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa",
+      "lfTextSha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa",
+      "workingTreeSha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+    },
+    {
+      "path": "Core/Editor/EmberTemplateTransaction.cs",
+      "gitBlobSha256": "fbcfa6fd48a794afb718d74861c3f57f4ea24975262a180d7576cfbd80a13303",
+      "lfTextSha256": "fbcfa6fd48a794afb718d74861c3f57f4ea24975262a180d7576cfbd80a13303",
+      "workingTreeSha256": "9aa20a6ffb146f9b254087a2ec16fe5e7f1bd32ca83ffd20e1e0f5bd69a7f74a"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplateFileSystemEditTests.cs",
+      "gitBlobSha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84",
+      "lfTextSha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84",
+      "workingTreeSha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta",
+      "gitBlobSha256": "fd0bf0bba4242191a3cc8081b75f91142f75f030dea17744303abf8d66557e5d",
+      "lfTextSha256": "fd0bf0bba4242191a3cc8081b75f91142f75f030dea17744303abf8d66557e5d",
+      "workingTreeSha256": "493ca94917bc3c7c2aa01245c97c63429cd23707eca31db751ab18ec549d92a9"
+    },
+    {
+      "path": "Tests/EditMode/EmberTemplatePatchEditTests.cs",
+      "gitBlobSha256": "3ca04f1ba531a552423f12a5ac4a4413cf5dfde83420a7404d370199fa6d2e57",
+      "lfTextSha256": "3ca04f1ba531a552423f12a5ac4a4413cf5dfde83420a7404d370199fa6d2e57",
+      "workingTreeSha256": "4ded0d89902a44dce2534b4241ec0a74a1cf5bcf444da370a0969a69ac8b18af"
+    },
+    {
+      "path": "UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+      "gitBlobSha256": "937fdd3430bf18c649153c3e02f7f37f0e248941e0dadb1b4629f685d77215a2",
+      "lfTextSha256": "937fdd3430bf18c649153c3e02f7f37f0e248941e0dadb1b4629f685d77215a2",
+      "workingTreeSha256": "fca7da1b39979a8f5c0f5c909c84b6cd12f0e6ac66c3410f01a1adf81efbace6"
+    },
+    {
+      "path": "UPMManager/Editor/EmberAISkillInstaller.cs",
+      "gitBlobSha256": "65722f1a51ba5d7208de973eb8051b184c478e0dd27a3a30ba30063769d326e9",
+      "lfTextSha256": "65722f1a51ba5d7208de973eb8051b184c478e0dd27a3a30ba30063769d326e9",
+      "workingTreeSha256": "41b0ee2fdf8fe83a8580561bfef0fb0cdb18b3f3548e67663aa0c190e511b7f8"
+    },
+    {
+      "path": "UPMManager/Editor/EmberTemplateFileSystem.cs",
+      "gitBlobSha256": "b8bc6b5fdf56eb665bcc796f48d9ce5b982d6797ee1f49905b1ab2308c662d76",
+      "lfTextSha256": "b8bc6b5fdf56eb665bcc796f48d9ce5b982d6797ee1f49905b1ab2308c662d76",
+      "workingTreeSha256": "89718fb2ef2ee90e9b92743f0ccec02bea506af63212ad7836e1740f0a1c0de3"
+    },
+    {
+      "path": "UPMManager/Editor/EmberTemplateFileSystem.cs.meta",
+      "gitBlobSha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3",
+      "lfTextSha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3",
+      "workingTreeSha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+    }
+  ],
+  "note": "Original task raw-byte identity retained separately; Git text CRLF normalization only, no semantic source changes."
+}

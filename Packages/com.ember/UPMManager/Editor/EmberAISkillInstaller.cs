@@ -129,7 +129,7 @@ namespace Ember.UPMManager.Editor
             for (string current = full; !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
             {
                 FileAttributes attributes;
-                try { attributes = File.GetAttributes(current); }
+                try { attributes = EmberTemplateFileSystem.File.GetAttributes(current); }
                 catch (FileNotFoundException) { continue; }
                 catch (DirectoryNotFoundException) { continue; }
                 if ((attributes & FileAttributes.ReparsePoint) != 0)
@@ -140,9 +140,9 @@ namespace Ember.UPMManager.Editor
 
         private static IEnumerable<string> EnumerateFiles(string directory)
         {
-            foreach (string entry in Directory.GetFileSystemEntries(directory).OrderBy(p => p, StringComparer.Ordinal))
+            foreach (string entry in EmberTemplateFileSystem.Directory.GetFileSystemEntries(directory).OrderBy(p => p, StringComparer.Ordinal))
             {
-                var attributes = File.GetAttributes(entry);
+                var attributes = EmberTemplateFileSystem.File.GetAttributes(entry);
                 if ((attributes & FileAttributes.ReparsePoint) != 0)
                     throw new InvalidDataException("技能中不支持符号链接：" + entry);
                 if ((attributes & FileAttributes.Directory) != 0)
@@ -156,20 +156,20 @@ namespace Ember.UPMManager.Editor
 
         private static string Hash(string file)
         {
-            if (!File.Exists(file)) return null;
-            using var stream = File.OpenRead(file);
+            if (!EmberTemplateFileSystem.File.Exists(file)) return null;
+            using var stream = EmberTemplateFileSystem.File.OpenRead(file);
             using var algorithm = SHA256.Create();
             return BitConverter.ToString(algorithm.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
         }
 
         private static Fingerprint[] Snapshot(string directory, int fileLimit = MaxFiles, long byteLimit = MaxBytes)
         {
-            if (!Directory.Exists(directory)) return Array.Empty<Fingerprint>();
+            if (!EmberTemplateFileSystem.Directory.Exists(directory)) return Array.Empty<Fingerprint>();
             var result = new List<Fingerprint>();
             long size = 0;
             foreach (string file in EnumerateFiles(directory))
             {
-                size += new FileInfo(file).Length;
+                size += EmberTemplateFileSystem.File.Length(file);
                 if (result.Count >= fileLimit || size > byteLimit)
                     throw new InvalidDataException("技能源超过文件数量或大小上限，停止安装。");
                 result.Add(new Fingerprint
@@ -192,8 +192,8 @@ namespace Ember.UPMManager.Editor
         private static State ReadState(string projectRoot)
         {
             string path = Within(projectRoot, StateFile);
-            if (!File.Exists(path)) return new State();
-            var state = JsonUtility.FromJson<State>(File.ReadAllText(path, Utf8));
+            if (!EmberTemplateFileSystem.File.Exists(path)) return new State();
+            var state = JsonUtility.FromJson<State>(EmberTemplateFileSystem.File.ReadAllText(path, Utf8));
             if (state == null || state.schemaVersion < 1 || state.schemaVersion > 4 || state.skills == null)
                 throw new InvalidDataException("AI Skill 安装记录无效，请先检查 " + StateFile);
             // JsonUtility materializes null serializable classes as empty objects and null strings as empty strings.
@@ -267,9 +267,9 @@ namespace Ember.UPMManager.Editor
         internal static List<Package> ReadCatalog(string skillsRoot, bool templateCatalog = false, bool projectCatalog = false)
         {
             string catalogPath = Within(skillsRoot, CatalogFile);
-            if (!File.Exists(catalogPath) || new FileInfo(catalogPath).Length > 128 * 1024)
+            if (!EmberTemplateFileSystem.File.Exists(catalogPath) || EmberTemplateFileSystem.File.Length(catalogPath) > 128 * 1024)
                 throw new InvalidDataException("所选版本缺少有效的 AI Skill 发布目录，请选择包含 catalog.json 的版本。");
-            string catalogText = File.ReadAllText(catalogPath, Utf8);
+            string catalogText = EmberTemplateFileSystem.File.ReadAllText(catalogPath, Utf8);
             // JsonUtility silently treats a string supplied for an array as null. Never let a malformed declaration erase a gate.
             foreach (Match field in Regex.Matches(catalogText, "\"requiredExtensions\"\\s*:\\s*(\\[|null|\\S)"))
                 if (field.Groups[1].Value != "[" && field.Groups[1].Value != "null")
@@ -315,7 +315,7 @@ namespace Ember.UPMManager.Editor
                 var files = Snapshot(directory);
                 if (!files.Any(f => f.path == "SKILL.md")) throw new InvalidDataException("技能缺少 SKILL.md：" + definition.id);
                 // Read raw bytes: StreamReader silently consumes BOMs before frontmatter validation.
-                byte[] markdownBytes = File.ReadAllBytes(Path.Combine(directory, "SKILL.md"));
+                byte[] markdownBytes = EmberTemplateFileSystem.File.ReadAllBytes(Path.Combine(directory, "SKILL.md"));
                 string markdown;
                 try { markdown = new UTF8Encoding(false, true).GetString(markdownBytes); }
                 catch (DecoderFallbackException exception)

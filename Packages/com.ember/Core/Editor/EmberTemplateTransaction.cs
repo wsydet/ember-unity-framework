@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
+using Directory = Ember.UPMManager.Editor.EmberTemplateFileSystem.Directory;
 using System.Linq;
 
 using Ember.Basic;
@@ -18,6 +20,7 @@ namespace Ember.Core.Editor
         #region 内部参数
 
         private const string BackupSuffix = ".ember-backup~";
+        private static int _commitActive;
 
         #endregion
 
@@ -114,12 +117,12 @@ namespace Ember.Core.Editor
             finally
             {
                 try { CleanPath(stageRoot); }
-                catch { /* 暂存区清理失败不覆盖事务本身的成功/失败结果。 */ }
+                catch (Exception error) { EmberDebug.LogWarning(LogTags.CoreEditor, $"暂存目录清理失败 [{stageRoot}]：{error}"); }
             }
         }
 
         /// <summary>递归复制完整目录树（包含空目录、.meta 与仅由 folderAsset .meta 表示的空目录）。</summary>
-        internal static int CopyDirectory(string source, string destination)
+        internal static int CopyDirectory(string source, string destination, Action<string, string> copiedForTest = null)
         {
             ValidatePathLinks(source);
             ValidatePathLinks(destination);
@@ -147,6 +150,7 @@ namespace Ember.Core.Editor
                 if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
                 File.Copy(file, target, true);
                 count++;
+                copiedForTest?.Invoke(file, target);
             }
 
             MaterializeFolderMetadataDirectories(destination);
@@ -161,6 +165,15 @@ namespace Ember.Core.Editor
             IReadOnlyList<TemplateTransactionTarget> targets,
             Action<int> faultInjector = null)
         {
+            if (System.Threading.Interlocked.CompareExchange(ref _commitActive, 1, 0) != 0)
+                throw new InvalidOperationException("模板事务正在提交，拒绝并发或嵌套提交。");
+            try { CommitPreparedTargetsCore(targets, faultInjector); }
+            finally { System.Threading.Volatile.Write(ref _commitActive, 0); }
+        }
+
+        private static void CommitPreparedTargetsCore(
+            IReadOnlyList<TemplateTransactionTarget> targets, Action<int> faultInjector)
+        {
             if (targets == null || targets.Count == 0)
                 throw new ArgumentException("事务目标不能为空。", nameof(targets));
 
@@ -174,6 +187,10 @@ namespace Ember.Core.Editor
                     var state = new TemplateTransactionState(target);
                     states.Add(state);
                     EnsureParentDirectory(target.DestinationPath);
+                    ValidatePathLinks(target.DestinationPath);
+                    ValidatePathLinks(state.BackupPath);
+                    if (PathExists(state.BackupPath))
+                        throw new IOException("事务备份已被占用，保留未知备份：" + state.BackupPath);
                     if (PathExists(target.DestinationPath))
                     {
                         MovePath(target.DestinationPath, state.BackupPath);
@@ -210,13 +227,14 @@ namespace Ember.Core.Editor
             {
                 if (!state.BackupCreated) continue;
                 try { CleanPath(state.BackupPath); }
-                catch { /* 新内容已完整提交；残留备份保留为可恢复副本。 */ }
+                catch (Exception error) { EmberDebug.LogWarning(LogTags.CoreEditor, $"模板已提交；事务备份清理失败，保留残留 [{state.BackupPath}]：{error}"); }
             }
         }
 
         internal static void CleanPath(string path)
         {
             if (string.IsNullOrEmpty(path)) return;
+            ValidateDirectorySafety(path);
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -486,7 +504,7 @@ namespace Ember.Core.Editor
             EnsureParentDirectory(stagedScenePath);
             File.WriteAllBytes(stagedScenePath, mergeResult.MergedBytes);
             if (!string.Equals(
-                    CryptographyUtils.GetMD5File(stagedScenePath),
+                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(stagedScenePath),
                     preview.MergedHash,
                     StringComparison.Ordinal))
             {
@@ -512,7 +530,7 @@ namespace Ember.Core.Editor
                 || !metaFile.ChildExists
                 || !File.Exists(stagedMetaPath)
                 || !string.Equals(
-                    CryptographyUtils.GetMD5File(stagedMetaPath),
+                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(stagedMetaPath),
                     metaFile.ChildHash,
                     StringComparison.Ordinal))
             {
@@ -555,7 +573,7 @@ namespace Ember.Core.Editor
             if (string.IsNullOrEmpty(expectedHash)
                 || !File.Exists(path)
                 || !string.Equals(
-                    CryptographyUtils.GetMD5File(path),
+                    Ember.UPMManager.Editor.EmberTemplateFileSystem.RawMD5(path),
                     expectedHash,
                     StringComparison.Ordinal))
             {
@@ -633,7 +651,7 @@ namespace Ember.Core.Editor
             }
         }
 
-        private static void ValidatePathLinks(string path)
+        internal static void ValidatePathLinks(string path)
         {
             for (string current = Path.GetFullPath(path); !string.IsNullOrEmpty(current); current = Path.GetDirectoryName(current))
             {
@@ -665,7 +683,7 @@ namespace Ember.Core.Editor
 
         private static void Rollback(List<TemplateTransactionState> states)
         {
-            Exception rollbackError = null;
+            var rollbackErrors = new List<Exception>();
             for (int i = states.Count - 1; i >= 0; i--)
             {
                 var state = states[i];
@@ -678,15 +696,15 @@ namespace Ember.Core.Editor
                 }
                 catch (Exception ex)
                 {
-                    rollbackError ??= ex;
+                    rollbackErrors.Add(new IOException($"恢复失败，目标 [{state.Target.DestinationPath}]，备份 [{state.BackupPath}]；请保留相关文件。", ex));
                 }
             }
 
-            if (rollbackError != null)
+            if (rollbackErrors.Count != 0)
             {
                 throw new IOException(
                     "模板事务失败，且自动回滚未能完整恢复；请保留 *.ember-backup~ 并人工检查。",
-                    rollbackError);
+                    new AggregateException(rollbackErrors));
             }
         }
 
@@ -711,9 +729,11 @@ namespace Ember.Core.Editor
                 }
                 throw new FileNotFoundException($"待移动路径不存在：{source}", source);
             }
-            catch (IOException error)
+            catch (Exception error)
             {
-                throw new IOException($"模板事务移动失败：[{source}] → [{destination}]。", error);
+                error.Data["EmberMoveSource"] = source;
+                error.Data["EmberMoveDestination"] = destination;
+                throw;
             }
         }
 
