@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.25.2] - 2026-11-11
+
+- 集中 UI 命名、代码/资源路径、绑定前缀、图片分类及迁移规则；明确 Atlas、StaticTexture、DynamicTexture 的用途和现有工具边界。
+- 新增通用技能 ember-ui-normalize，消费项目可保留 GUID 整理自有 UI，同步引用与动态地址；公共技能共 12 项，EUI 制作技能引用统一规范。
+- 正式封存 base 0.10.2、lane-defense-2d 0.1.2、platformer-2d 0.13.2、source3d-2p5d 0.6.2、topdown-2d 0.1.2、ui-game 0.2.2、visual-novel 0.22.3，派生父级基线为 base 0.10.2。
+- 固定大图与数据驱动剧情图片分类迁移，保留原 GUID 和图片字节；修正 Ownership 示例目录/生成配置，同步制作工具、三张小说配表及图片导入技能。
+- 本轮相关 Unity EditMode 6/6、图片技能 Python 回归 17/17 通过；编译、域重载、资源加载及七模板实际/封存 hash 和父级谱系通过。未全量重测、构建或执行消费项目升级。
+- 同 major/minor 补丁保留模板兼容声明 0.25.0；第三方依赖不变。已部署 Assets 需单独迁移，包升级不自动整理项目目录。
+
 ## [0.25.1] - 2026-10-30
 
 - 补足项目自有 AI Skill 来源：ProjectSettings/EmberProjectSkills 的 schema v3 清单及 schema v4 所有权记录，独立声明版本、源码/目录指纹、正式模板兼容范围、扩展版本/hash 与模块条件。

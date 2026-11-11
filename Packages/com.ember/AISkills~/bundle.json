@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "generatedBy": "Ember AI Skill Bundle",
-  "sourceCommit": "5868837542df759baf6ffd9412c7ae10cf7ee66b",
+  "sourceCommit": "31618f43ee8744d46ea9be9c45e881ba9e2c79be",
   "files": [
     {
       "path": "catalog.json",
-      "sha256": "fc56fa4e999587d60bd275f2b89091919adb70f6f85d7e8bee8b073a93989016"
+      "sha256": "e40bb812eaa009f84eefd0415e86b05eba667e03bf41cce896c24775b207e9c4"
     },
     {
       "path": "ember-add-font/agents/openai.yaml",
@@ -57,7 +57,7 @@
     },
     {
       "path": "ember-eui-build/SKILL.md",
-      "sha256": "52717e2c7f8d27a7693219e857e4e6f9d7183e8261722bada628eb7e7eac8495"
+      "sha256": "6f338c79ea74a1f535fdf523a4bf0a900e56fbf5e805d0f326a501632f71aab7"
     },
     {
       "path": "ember-generate-doc/agents/openai.yaml",
@@ -134,6 +134,10 @@
     {
       "path": "ember-template-conflict-recovery/SKILL.md",
       "sha256": "e650ad2ffa86a26e008262e775e7615ebe9374d3c713905e06916edcb48bca57"
+    },
+    {
+      "path": "ember-ui-normalize/SKILL.md",
+      "sha256": "d7cf1efdd5c5504fd8ce52c203dd50e4f637c9b98db535a334ccccafd5563cd4"
     }
   ]
 }

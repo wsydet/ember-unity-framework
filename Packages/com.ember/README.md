@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前发布：Ember **0.25.1**，补足独立项目 AI Skill 来源与完整发现隔离，并修复正式试玩重试身份和停止异常处理。保留旧 API；房间图仅兼容保留，连接及能力进度业务归消费项目。七个模板内容、封存版本/父基线及 0.25.0 兼容声明保持不变；第三方依赖和11项公共技能源不变。本轮定向验证与未覆盖范围见 [0.25.1 发布说明](../../docs/dev/release-0.25.1.md)，未升级或重部署消费项目。
+当前发布：Ember **0.25.2**，统一 UI 命名、目录及图片分类规范，封存七个模板的资源路径调整，并新增消费端通用技能 ember-ui-normalize。保留 GUID、图片内容和业务行为；六个派生模板同步至 base 0.10.2，框架兼容声明保留 0.25.0，第三方依赖不变。 验证及迁移边界见 [0.25.2 发布说明](../../docs/dev/release-0.25.2.md)。
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.25.1"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.25.2"
 }
 ```
 
