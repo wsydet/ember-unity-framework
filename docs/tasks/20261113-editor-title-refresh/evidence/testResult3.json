@@ -1,0 +1,128 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"5cd0a0f853a3430fa0b9aee25e948157\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1794552187427,\"finished_unix_ms\":1794552201014,\"last_update_unix_ms\":1794552201014,\"progress\":{\"completed\":8,\"total\":8,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"last_finished_unix_ms\":1794552200763,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":8,\"passed\":8,\"failed\":0,\"skipped\":0,\"durationSeconds\":5.5954534,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\\\"editing\\\")\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\\\"editing\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0248297,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\\\"active\\\")\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\\\"active\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0057311,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormattingRetainsAllFieldsAndFilesystemRoots\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.FormattingRetainsAllFieldsAndFilesystemRoots\",\"state\":\"Passed\",\"durationSeconds\":0.0058375,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground\",\"state\":\"Passed\",\"durationSeconds\":2.7160799,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected\",\"state\":\"Passed\",\"durationSeconds\":0.5291602,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult\",\"state\":\"Passed\",\"durationSeconds\":0.4332232,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ProcessTimeoutCancellationFailureAndBothPipesAreBounded\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.ProcessTimeoutCancellationFailureAndBothPipesAreBounded\",\"state\":\"Passed\",\"durationSeconds\":1.08746,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"state\":\"Passed\",\"durationSeconds\":0.0073525,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "5cd0a0f853a3430fa0b9aee25e948157",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1794552187427,
+        "finished_unix_ms": 1794552201014,
+        "last_update_unix_ms": 1794552201014,
+        "progress": {
+          "completed": 8,
+          "total": 8,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+          "last_finished_unix_ms": 1794552200763,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 8,
+            "passed": 8,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 5.5954534,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\"editing\")",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\"editing\")",
+              "state": "Passed",
+              "durationSeconds": 0.0248297,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\"active\")",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\"active\")",
+              "state": "Passed",
+              "durationSeconds": 0.0057311,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormattingRetainsAllFieldsAndFilesystemRoots",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.FormattingRetainsAllFieldsAndFilesystemRoots",
+              "state": "Passed",
+              "durationSeconds": 0.0058375,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground",
+              "state": "Passed",
+              "durationSeconds": 2.7160799,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected",
+              "state": "Passed",
+              "durationSeconds": 0.5291602,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult",
+              "state": "Passed",
+              "durationSeconds": 0.4332232,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ProcessTimeoutCancellationFailureAndBothPipesAreBounded",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.ProcessTimeoutCancellationFailureAndBothPipesAreBounded",
+              "state": "Passed",
+              "durationSeconds": 1.08746,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+              "state": "Passed",
+              "durationSeconds": 0.0073525,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

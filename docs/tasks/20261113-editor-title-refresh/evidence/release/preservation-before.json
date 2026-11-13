@@ -1,0 +1,1062 @@
+[
+  {
+    "path": ".agents/skills/ember-solution-design/SKILL.md",
+    "sha256": "00f903202f517e73bcc01e7e888a73917fa9ba04108cf6dc7d6a6182d76ff7fe"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs",
+    "sha256": "6b14c01b2f3d342dadd3447d8af26a8f2aa04da0a62b2334896dd43f224ad86a"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs",
+    "sha256": "b3a095b2e9d722988c2901380ec297ac9913b562049ae98ae44aee21424371a2"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta",
+    "sha256": "c0ff7ddd181a82779467422606b7cad0ced68ee7bb6a63b8c0c409c959a69a69"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests.meta",
+    "sha256": "219d3983cd4e9e2f3c765ed831294bf784088aa3aa032e57f3bb216c846cb93f"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests/Editor.meta",
+    "sha256": "d0a8656714131568c49e31973a4af19406a8beb0046f99903350b85397184fd4"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef",
+    "sha256": "29800252e3af09c532c2353f0f29fce5dba0fe1ffa754dfb04c64f6ad064e78b"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef.meta",
+    "sha256": "66e7a771ae8612bb01172d4ba6148f98306bebed86625a478322c5b3df0fb302"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs",
+    "sha256": "02d50be2ae00d1b5f534058ae21e97d301699bc7c96ec6c9e1eb487c27dd69cb"
+  },
+  {
+    "path": "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs.meta",
+    "sha256": "1ada86559b1aaaf1fb93035cd66fd149f248fc5ddfc67d34f44446de1ce9a703"
+  },
+  {
+    "path": "Packages/com.ember/CHANGELOG.md",
+    "sha256": "e2b16626718625fe2343151bdf388267a0f928f7ea342927911a2d62eb055ead"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberConditionalMenu.cs",
+    "sha256": "08eedb2d981d2afd4a651931a9e9a52b2b83d7770bd355a59a0d2c889171c77e"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs",
+    "sha256": "960c26820d51da66c689056a51dded0d689b24b4eccc56e8729e5056de3889e9"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta",
+    "sha256": "0bb4b6f72140fc658531595e9d3f90b184145ae2619dea4fbf8616a6a263cdff"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs",
+    "sha256": "9bf8d5494f0f690c6c02b62d5e6d9a2a2bacee0ec3d08a8c58cb547f56ad3e8c"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs",
+    "sha256": "a12b1ad57fb7de4c447495720106e6f846fe986e5eb6eb3088a69c663b54a194"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs",
+    "sha256": "94824c3a2b1648bc4c72ecf1778a3b85636d6d578e27132907c8123bdf14599d"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta",
+    "sha256": "d6084ad4331d3d2b61540bc7dc818d68372bd000eb4ea2ba74a3b472a0c3d5a4"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs",
+    "sha256": "345593e809156269f8b1f8be808545884d52a541a233aab6dc23f8cb7fd5293b"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.cs",
+    "sha256": "d1b751e20e531f9824c3bc8ead9f3cc5088619b9d0233842bd68d3cf6f2b8802"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs",
+    "sha256": "c7d0bdab43dd99a3616b16178a23a5611d12042cb41b033b1c8d01f2c8963649"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs",
+    "sha256": "f4e280b0324667091fca0a73667b931cea15616b771c4df2d32fa74f6447246b"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs",
+    "sha256": "1f1de69b3bd1cf7f303bdc4468acd4717e29fe7321a752e849b640900023aa75"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs",
+    "sha256": "871da8f36392068cf79514950d7611b1d3aaffd69fcc26c7743fa1034b6ea7d8"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+    "sha256": "3b1539a4cfe0e49228a711b6b93f916fdee5b17b8d5a6c833cb02aff7bf879da"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberSetupWindow.cs",
+    "sha256": "6994187393fca0b64a8e38c561361a47ceb1d9b0757bfd15ba90de120ed32d93"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs",
+    "sha256": "8f2e33d37c4d033d6fe3d06c765e027224d67c848566bfc14689c9d6aa129159"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs",
+    "sha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+    "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs",
+    "sha256": "2a1cea007f4eccb6f6b3b51a3e9e5e0abfbea84dfe1eef57a8ce6dd27da7950d"
+  },
+  {
+    "path": "Packages/com.ember/Dependencies~/README.md",
+    "sha256": "4a265b23530f16bec75a5cabe34b42e7ae60a8b31f927b9f4111fda3b1417fbb"
+  },
+  {
+    "path": "Packages/com.ember/Dependencies~/manifest-0.25.3.json",
+    "sha256": "70bd22c9b587956cb80796b139d135d147efe771be74f6131d25d6dc378aaace"
+  },
+  {
+    "path": "Packages/com.ember/Dependencies~/manifest-0.25.4.json",
+    "sha256": "33a7e7be4afaf28e41fa98e7178ac1e9e34376f2a3c4674fae3fc831da8c4906"
+  },
+  {
+    "path": "Packages/com.ember/Dependencies~/release-0.25.3.json",
+    "sha256": "a295a4f274a8110013fa95766bfe69f83d61c1d8fde5735f13fed5018faac814"
+  },
+  {
+    "path": "Packages/com.ember/Dependencies~/release-0.25.4.json",
+    "sha256": "19f6c2f063659aded293e304a6b05735c0276805f8d59a5c46568afc44a1c0de"
+  },
+  {
+    "path": "Packages/com.ember/Documentation~/maintenance/ai-workflow.md",
+    "sha256": "0adfb8f774287778bd01c4bf7ab0589e4d58e561272151e261ce2eb0b695f8ec"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+    "sha256": "e2563cc358592c301997caf42f6329820a5fb9506edfc27107fde05fe1e8c361"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs",
+    "sha256": "c01c1dd179387ef98b5b533f36c24f9691ad9df475bf322eb28c5f166b4d9c72"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs",
+    "sha256": "8e712f4a7ca11688ffa6f46d84f1a2ed3e27a7c2cba1e20364eb493fbaa9d721"
+  },
+  {
+    "path": "Packages/com.ember/README.md",
+    "sha256": "2de5321c8caeb07467454159e97b501fc7617906afd1cdb56df8cf385540e369"
+  },
+  {
+    "path": "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+    "sha256": "7d3bcc258de65d2d73c5ffc05be7e641b5bf6c07fa0bc839034ebf44794e52f9"
+  },
+  {
+    "path": "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+    "sha256": "6291e7279c02d9db4455bf467b05db416f4716b15302b3d5df73b1e63e990055"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs",
+    "sha256": "e6059bde33422524af3a6a282f38215b293e9b5915aab3062d344d1cdfea5372"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta",
+    "sha256": "66181a72aac0ae1a307af905a9814930d22f11e4114b2aba463b971f16c4c9df"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs",
+    "sha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta",
+    "sha256": "493ca94917bc3c7c2aa01245c97c63429cd23707eca31db751ab18ec549d92a9"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+    "sha256": "4ded0d89902a44dce2534b4241ec0a74a1cf5bcf444da370a0969a69ac8b18af"
+  },
+  {
+    "path": "Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+    "sha256": "fca7da1b39979a8f5c0f5c909c84b6cd12f0e6ac66c3410f01a1adf81efbace6"
+  },
+  {
+    "path": "Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs",
+    "sha256": "41b0ee2fdf8fe83a8580561bfef0fb0cdb18b3f3548e67663aa0c190e511b7f8"
+  },
+  {
+    "path": "Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs",
+    "sha256": "89718fb2ef2ee90e9b92743f0ccec02bea506af63212ad7836e1740f0a1c0de3"
+  },
+  {
+    "path": "Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs.meta",
+    "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+  },
+  {
+    "path": "Packages/com.ember/package.json",
+    "sha256": "d8456247559cd55204420a7e113f2cb0189a7f77efec271bd343f590022f2ce5"
+  },
+  {
+    "path": "docs/dev/framework-progress.md",
+    "sha256": "2a0b8fffeba15e8575cda008a26e0183293e2033e58b9a6faa7048e7280fd67e"
+  },
+  {
+    "path": "docs/dev/release-0.25.3.md",
+    "sha256": "a09e12993290efd68377d28e4490a0ad5bbfe9ed31fbbe213a7a819e5620138b"
+  },
+  {
+    "path": "docs/dev/release-0.25.4.md",
+    "sha256": "0f73a2926d5d16f2371ee3b57ad54206d90ebe671c5ae4e12606d47d2ca8b7c6"
+  },
+  {
+    "path": "docs/dev/upm-migration-plan.md",
+    "sha256": "eaaab73ed7490e88b000003738c5e7c606f6c333be96d1c5caaee9b178d16fe0"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/.gitattributes",
+    "sha256": "2e6f08f7c7749ead603719e5769453c2363752803bb6d72d066a8a0e5fc7beaf"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/README.md",
+    "sha256": "dbb67ca554866481bf4a1e25ba9bb07ba1cec52e9f87956b49b29de50ab2b67e"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/consumer-validation-prompt.md",
+    "sha256": "cac8d04b74f59467e339aaaca4eb442868475225c56bc7a7eb0afbbac4cae3a7"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/design.md",
+    "sha256": "11be0882b96ba39ee981c73271ca947e33602c941fb53239d1a5a08c6531dd2d"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/add_io_diagnostics.py",
+    "sha256": "c1eadafd96bfb32f56eccc97057037053897cfc68c2443d2621d8217e6f94c95"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/consumer-validation-prompt.md",
+    "sha256": "62e5560a00ec34211a64c68c6bf271ac35e9af8c6dd9de4647c9adeddb83eec3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/design.md",
+    "sha256": "11be0882b96ba39ee981c73271ca947e33602c941fb53239d1a5a08c6531dd2d"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/handoff.md",
+    "sha256": "de1bac2484342eb03b684e7a06299bd168d287b07a09dc61bf5f151830777a5b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/implementation.md",
+    "sha256": "329369d1fca0728a8fec485287c644844beda498ad75d828c9ff6f0f37d12555"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/requirements.md",
+    "sha256": "d001e7bae3dd061fdfaa03af5a593a3c1d0f29250424acd23ceb86ce7ac51dbe"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-link-check.json",
+    "sha256": "bd1cc0d2e8a2422477b092ebd91a55c309d6474f96aebed7785e24390c79fb64"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive-manifest.json",
+    "sha256": "99093a345473db3fa98e8ab21a030fd74b23726563b0a84ae337156ebb4cad74"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/archive_prepare.py",
+    "sha256": "18b5abcb3b12ed443a1fd53b00aa5b819d7a5bf3a3c66779020f84964268ce17"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/audit_release.py",
+    "sha256": "d8b8737de655fcb64ed0d2ef602a33dc5f50791fe00bbafaf1a8f5d364703362"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/check_archive.py",
+    "sha256": "4975d314a1fa9b33d368bb5a42ea3781cb053f4bfcd254eabf688afae84ebc23"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/cleanup-task.ps1",
+    "sha256": "d8db6ed3326020aab8d5844c92b7b4870a004834b6f51d83ea5119b5cb4dea15"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/cleanup.json",
+    "sha256": "8ca9f9a946e1a24e8714ca8dbee7493d63cc83a5661c1c015a088b5aa941fb8b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile1.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile3console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile3loaded.json",
+    "sha256": "c3b161d0ae6d25bc814921f72f16a89b3b9c877a4e7f5c1303b70c405d6b7b0f"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile3state.json",
+    "sha256": "2c2caa3fcf019073c093fe92c718efd9df408f82ab8c713c08495e07ce8258e2"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile4console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile4loaded.json",
+    "sha256": "d50ec52d33f9f1017822123f17de730ba7cebcc3c2ecfb526b24f3b4a5992c18"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile4request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/compile4state.json",
+    "sha256": "5fc92a2e4ff027a7edc4458c1132a13a5b8559fac6e559f7877e4ef5b60bc073"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/consolefinal.json",
+    "sha256": "0dd70c770c7b459ca7767d798aa1b39ba38410bee998ccdd476037efe8d737a5"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberExtensionProject.Identity.cs",
+    "sha256": "e008ca359bc0318537609170acec8634f81d7ec7b9b6db00983db6c4f3b18701"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberExtensionProject.cs",
+    "sha256": "653f2419511d83f08b27730140167308df35fcdb767d8da908f24f6093838eff"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.AISkills.cs",
+    "sha256": "f4e280b0324667091fca0a73667b931cea15616b771c4df2d32fa74f6447246b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.Patch.cs",
+    "sha256": "871da8f36392068cf79514950d7611b1d3aaffd69fcc26c7743fa1034b6ea7d8"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.cs",
+    "sha256": "1a547ee716a1f49525d24fb6db8e4168ac0d447a4ec82be2875091b546630c89"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateInheritanceEngine.cs",
+    "sha256": "8f2e33d37c4d033d6fe3d06c765e027224d67c848566bfc14689c9d6aa129159"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs",
+    "sha256": "6422b6daf53275e14c368718b9dcc8ec9346aa036756f0aaca8994800253f41c"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+    "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTransaction.cs",
+    "sha256": "9aa20a6ffb146f9b254087a2ec16fe5e7f1bd32ca83ffd20e1e0f5bd69a7f74a"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs",
+    "sha256": "6ed183fde588ff67e3e045bab0f262c450cef2fd0e1c36e76e520da306909b84"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta",
+    "sha256": "493ca94917bc3c7c2aa01245c97c63429cd23707eca31db751ab18ec549d92a9"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+    "sha256": "4ded0d89902a44dce2534b4241ec0a74a1cf5bcf444da370a0969a69ac8b18af"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+    "sha256": "fca7da1b39979a8f5c0f5c909c84b6cd12f0e6ac66c3410f01a1adf81efbace6"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.cs",
+    "sha256": "41b0ee2fdf8fe83a8580561bfef0fb0cdb18b3f3548e67663aa0c190e511b7f8"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs",
+    "sha256": "89718fb2ef2ee90e9b92743f0ccec02bea506af63212ad7836e1740f0a1c0de3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs.meta",
+    "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-tracked.diff",
+    "sha256": "617b36aaebff13cbfd1c3638db6d98cd19e1e35461229d44b0937d114836ed5e"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/finish_records.py",
+    "sha256": "85615e6fbc174da2b5ec426ea36e695cd577f561848313883eda6ef711b10fc4"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/finish_release_local.py",
+    "sha256": "9be0e7fa8b58cef09ec3f9b5f8d37e3080679469403900cdda76768b153af7b0"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/git-status-final.txt",
+    "sha256": "7efedb5d2b12add9d88e07b4b98e20d5066856d6743b578be900688bfc78d7fb"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implement_io.py",
+    "sha256": "2325beef40f54896c89cf8f23515bf0f3f9c6064789c60c9ef4f35b509131183"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberExtensionProject.Identity.cs",
+    "sha256": "10acb0139ed9459c80b2e1e02f85ee243918d42994f66730bc1d018196f81d99"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberExtensionProject.cs",
+    "sha256": "539102d56d9c9377c49294bb5f2e43eb750a97eeeb334276f4f43318e1e2a2cc"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.AISkills.cs",
+    "sha256": "1d52629098a7a9c7d4cd1bc6f88cab040e7c6a3fdbfcee00dc35d70bf469cab6"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.Patch.cs",
+    "sha256": "129144d003e6304735ea15184a2ecc96f93c886bd5ec98e5b19b9a26b5f5f0f0"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.cs",
+    "sha256": "a5f6eb7232371b7dcf261b211312bf2b36f08eff70912a191c4e94e53acf95f7"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs",
+    "sha256": "5acdac1109079b696247a5d5387e972cb06ac785e4ce2c3bedbbb3820bc20beb"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs.meta",
+    "sha256": "692f695fce5f5812447cd346e2953f17d51b95b299ee2f8f2adad48150d830c3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateInheritanceEngine.cs",
+    "sha256": "6e0b2c0cabb6f989bf7acfbd6219a6f4a4f0750dd3f235d53437ca47b471c124"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs",
+    "sha256": "5b0ea71be75ded06116ae7f1994a73de64caf882a25654a907e81e7aba8a9d3d"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta",
+    "sha256": "ec30619fbcc7ab845ce5ac596630c9656d364c783b22dc8cd337a9fdb54117fa"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTransaction.cs",
+    "sha256": "dc15e5286af35895964e4b1291f302402675eb94fec25e9c45b221c54c7011bd"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+    "sha256": "e1ef68e7c37dc0ad7531a82a16c75cc3f99f66590062843a21a11c1ff27e5fa0"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Tests/EditMode/EmberTemplateTransactionEditTests.cs",
+    "sha256": "27b5dca1402d1004d0b3885755ec4366d2fcd38f5324997d562b89b2262cdaad"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+    "sha256": "0ceb47724881a50dc60484e2b6895cd9e38073946fadd266e8e57ea2976525b3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.cs",
+    "sha256": "2fe79bdbc35322e15c4feca133295616475089c4cf8bab9c83d46328f8eacc06"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/git-status.txt",
+    "sha256": "5b1972507e6f9f8dbf7144f788b6a21e75639a7363c08c0d91c784ab0a8ae906"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/improve_patch_tests.py",
+    "sha256": "3d4dd68297e8d47d29db5dda68b047765492611518bee91a5705089df2fee60e"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/io-audit.md",
+    "sha256": "b1996cca1429370de893e5bba371edb6e43b182eadf7f5bf2ba268dacd8fd6df"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/loaded1.json",
+    "sha256": "06154791df09d14733c98ee41d66442680067b20c8ae2fc703f5451f28afd14d"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/loaded2.json",
+    "sha256": "f5bd16816b2d481b906026d88d36c10f7ae6b6ebca182bffb56b28a9735d6388"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/prepare_release.py",
+    "sha256": "b0d390eb360e8574bd94464b069a5f72caaa2817cc82b6850230abf0d39a2ae3"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/record-link-check.json",
+    "sha256": "72244760f05cdc5d7363f0596d51136c6aaac0246bf00f2770d9caab172a3db5"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/record_identity.py",
+    "sha256": "9254a08aa0c673cfe26127062dba0ed71865bf3c155031574875dd41f795a3be"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-compilation-events.json",
+    "sha256": "997eeed2747b891da6963c56df54bc0dd3b8eca9f73d47c908802bb46737d2d6"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-coverage.txt",
+    "sha256": "68fb023273bd6017be8f9c609ccd477af9ae90cdb3f4662da2738b8a3413497c"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-product.diff",
+    "sha256": "60464727047fba76c80e9064f4d70856ed07b6b45d783a8d7ccaeb89f6d3faf4"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-remote-proof.json",
+    "sha256": "434715cc64f4d136add6bb6e8be7611b6f00b4084fa48e3331741e041f49153d"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-source-identity.json",
+    "sha256": "57c89260df3d526fc2d78e6795fc27047bbadc278fe60815340caa5c718a39cf"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-static-checks.json",
+    "sha256": "442f75eaf51c89b11a1038e314ff08e1a3bd9657ec4fd86c4737444f6fd8f300"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/release-validation.txt",
+    "sha256": "1f4943b8dd4df79e33a50433843000d73ca0190861563508ddf42b2a79a953c7"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/releaseCompileRequest.json",
+    "sha256": "b9638d988f1592d65fdad552d844de9722c0948283b720927a646a4cdc60dd7f"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/releaseConsole.json",
+    "sha256": "0dd70c770c7b459ca7767d798aa1b39ba38410bee998ccdd476037efe8d737a5"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/releaseGraph.json",
+    "sha256": "a1c4172635d5ca1597a245adb78a9fb2801fc51da50ce245b10d1953fc510cd4"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/releaseLoaded.json",
+    "sha256": "608751d615dc675ffc9c148aa5648c9fa0ec71e3c78408dbb035333933bc67fc"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/releaseTemplates.json",
+    "sha256": "9a31efb2c98214dae9e4139bcb19184a6c335eb20e021b22dc1bc22b9d13d48e"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/resume_io.py",
+    "sha256": "6a430c8a5ad8299d798a6ffafff47c4d2e6f5a20f8c3a89612fbbab4638e14d2"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/snapshot_delivery.py",
+    "sha256": "9bf95f318e2f8e6d7a2407dd4e5cd6a39b6df0fe2fe5ed7cc4dc8dd4ea037894"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/source-identity.json",
+    "sha256": "aa778a8e6ec4368e972ec242e35e8bf53b13b246cbbfb1e41a0834811beec899"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/stage_release.py",
+    "sha256": "d4374cf7a965dc5ec4569527c221de44941ec439b69d95c02b435dcd3664cb3b"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/sync_archive_to_candidate.py",
+    "sha256": "959587e1b5e525a6a24a68e7da0fa88ef9ebacaed06da44066d9ec5c6fa0bf55"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/test-filters.json",
+    "sha256": "3c638b440212edbcf6a2ae1a7f6710274d84d72c2b7b49a8f7a83c5f69e9fb56"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/test1final.json",
+    "sha256": "e256b17d856e242730c15c48cb5ceb2daa0d64c18eaa7e175128a78c37a0fc28"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/test2final.json",
+    "sha256": "75da8dcbb94af24f2b86edb4c70b87b1a064505b395c6b2223a15b9ca35a6ce0"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/test3final.json",
+    "sha256": "83373a6886ad07942b5ae2a7190d11a6119e74d9557e6b6a5d7ca9137095a256"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/evidence/test_filters.py",
+    "sha256": "b95d9ed2b1e522f570e3a49eef29b2ada12787cf4da800276decf6a592ea46c9"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/handoff.md",
+    "sha256": "f778fdf12356275ca7775845af438d3c3393f1c3d7e24b693d5291f17c4b1437"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/implementation.md",
+    "sha256": "72492e6083655e63b8b01307857d83fe8dd243b39f7a12b589c02113b8f25dc2"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/prompts/02-design.md",
+    "sha256": "8bf4e9786ed4f298ae63e7d41e89753a2ce3a0bd734ff7705185c641f548ff4e"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/prompts/03-implementation.md",
+    "sha256": "393058369258a1430655486ff35f070b1eace0754cc7b15ae53482513dc330a7"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/prompts/04-acceptance.md",
+    "sha256": "6ac2027eb2097ddd14a14603fb7747a20991bf91e86a1ba885149b141af7a517"
+  },
+  {
+    "path": "docs/tasks/20261111-patch-preview-long-paths/requirements.md",
+    "sha256": "4f2c4fed0b7bbc43932b977107ee7076d23d485858e2bd0736cfc61e309162e1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/.gitattributes",
+    "sha256": "fc6847fc07665ca51d0da6ccaf00a7da22d436bd60a5407d50fd05b5ab8352bf"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/README.md",
+    "sha256": "e92b64991016f736ca1f1090e947a607fc0f6e8c6e678130b6c450480a7940f5"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/consumer-handoff.md",
+    "sha256": "39c9f9636c7b7bcbd0228f804145d738b8696e2aa9b11093efda54f2a1f88fd2"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/consumer-receipt-append.md",
+    "sha256": "99915fc220440fc0c6f155261fc4c0f51f116ed264858b9b44d8edadb70f9e3e"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-delivery.json",
+    "sha256": "eda073029ad991fd88cec563c0cb5ebb6abfed945da47b436c8fdbc3ced43e64"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-final-source.json",
+    "sha256": "ea2084b206616af167862c8fa94ca56af7cdf192d2f2712694cc1974938bb2c8"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-microbenchmark.cs.txt",
+    "sha256": "a6dfe567c0e195f83195e4b3c9ac873a5098b6bd3c11d7771aa31a8ccc79ef0a"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-microbenchmark.json",
+    "sha256": "cb4179b89312096c73cdbefdd4b4c290bba8f9d5dd1fa25a45a10e5d0f4d5a81"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs",
+    "sha256": "a7b45e567950c833c3786d057c6287a78bdb4e65b6561d526be8fe56d026914a"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs",
+    "sha256": "0f97d8e40d57c2a84b23de3b67779c7df88528d923901e7dd2f051e46c324e38"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs",
+    "sha256": "236cfe1e9a48f49ce74bac39dfd90e918e26152bf40ab10fdc99a20eb3759433"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs",
+    "sha256": "e008ca359bc0318537609170acec8634f81d7ec7b9b6db00983db6c4f3b18701"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionProject.cs",
+    "sha256": "653f2419511d83f08b27730140167308df35fcdb767d8da908f24f6093838eff"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs",
+    "sha256": "53b71f0dd583ccbfc4f601aa0b801ba69370122a04cd9d27742cc30a1a525332"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs",
+    "sha256": "3d038d2cc7cd2eb23dc6db9ca1501975c910d689458a29dd0929c2695d97fe95"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+    "sha256": "1a547ee716a1f49525d24fb6db8e4168ac0d447a4ec82be2875091b546630c89"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberSetupWindow.cs",
+    "sha256": "ecd876b42c22bfd2f4107f5e8a9909f3c64eb2569900088977c8fdae1a51b573"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs",
+    "sha256": "9aa20a6ffb146f9b254087a2ec16fe5e7f1bd32ca83ffd20e1e0f5bd69a7f74a"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+    "sha256": "db924bfa6e14f1885639da4650a5a6990fd2fdc54b962f3e2e2ada8d3b73d8e2"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs",
+    "sha256": "b737af15db5173e009a08a2ab2e5aba1433acfaddcbefb535f9f0208a5cb66d1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs",
+    "sha256": "b99fc4cd6d06b20560df6112389ef83afdf46efea112897f9b7fda7e7dac98ba"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/capture-delivery.py",
+    "sha256": "cc636ab0457998a7976218c470ae7ceaa98115e52b6b4c7efbb566fca957d454"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile2-loaded.json",
+    "sha256": "29fe91209af8add95ebfcec2efa04c3ac1b07404b9f23c889ca46d166cde81d4"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile3console.json",
+    "sha256": "ae5afdd8a3cc5de4acca0ca9471bd8572cb382dad7b55556c7e7958866c5feee"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile3loaded.json",
+    "sha256": "608d4d5c219f1f6a1c303b45313f29becd8d2a26436b4cbf657bf6645ee84941"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile3request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile3state.json",
+    "sha256": "130f70ea3a097771216a61c23bac07ae96b72fb2eac79fadb840de440f8ee2cd"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile4console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile4loaded.json",
+    "sha256": "9aa9ff6d27addc2f319fbd4308f7edc468d779a3a2e8466cb74446d01681af8b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile4request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile4state.json",
+    "sha256": "297748d7a821e8622fa7a4b302a18dd35724806ec4a4a161c2eeca4e6f9976d5"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile5console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile5loaded.json",
+    "sha256": "3872ac2b8452e940132a9943d4825e216a239878f88b8ec77f41f260465b4c0b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile5request.json",
+    "sha256": "bb6fceaf1a48978980f7d2e4db75c4eb57b0b73f78067640322df24ae465d50b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile5state.json",
+    "sha256": "7ce0bce300501d5a067ea2a5eb2fca6152b9b1da676e7c5e0147f1100cb14bb1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile6console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile6loaded.json",
+    "sha256": "9230eb47a16fb0e8a41903f3b42112f9246b93c0f3a174f28329679c8ca2ae64"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile6request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/compile6state.json",
+    "sha256": "74c9f92b5ac3d464ba25fe32d615fef6212510cb7f083441a66e543eae20cb70"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/consumer-append-before-final.md",
+    "sha256": "d57d95da7f0cf10f1ef15c62e63c404078f2e4f897115016b76840255cb39632"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/consumer-receipt-linked.json",
+    "sha256": "7e444c56178fee274567f31e614a27e76a89bab8d72521315ba4a46fa3a5775e"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/design.md.txt",
+    "sha256": "4df6e65848cd47d821e9fac13a3e1a4bcd1a2bf8809f760437d6f8afb8b51ac1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/framework-fix-prompt.md.txt",
+    "sha256": "b43c8583adb33a02f88987283b413b3c0362f0335dd5122015cd8307478ab44d"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/implementation.md.txt",
+    "sha256": "e84f2e202430c7537ffff044e6531b41522e06d0efb415ccf155a860577afcd0"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/delivery-console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/delivery-environment.json",
+    "sha256": "04ae6fa10d2601f00565bdcb06b91001a6c416f5a61da71bb6c9bde467683fbf"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/finalconsole.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/finalenvironment.json",
+    "sha256": "4e6310c819e856c2c1efc880fe650b4728429c6fc45c675a724d3291a8caa055"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/finalstate.json",
+    "sha256": "323282ba01d3f13f02c3e6e6066d12a0fae49209a20e6f3e75800201323f1be4"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/link-check.json",
+    "sha256": "3c1713f36852fc91ac52f91d0ba8c1a3583480cd1253ecf1b68d6017ed223d3d"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-delivery.json",
+    "sha256": "ddcd7eec4e21eda7d2817e5bfd2f5834f501189e459c5cb8fc9c43f4882d4396"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-final-source.json",
+    "sha256": "2e3223fb40ec42ee19245e080234233e567db815c863b6671a79067594c90470"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-final.json",
+    "sha256": "cee3ccd07be384e7fa80905e060ceded13fc4bcca70b5e86ecb6bb9377f32db7"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark.cs.txt",
+    "sha256": "cad7f4ea2f5afc03be5a9f03a8c413767439444743245edcd2e1e8fab000e9e9"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark.json",
+    "sha256": "eae9c42f288a96cd4ec2dd577469d80da06c4ed74bcdae7129052083416b8185"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/owner-final-source.json",
+    "sha256": "c04a78fe7b1dc03da359127eabcaf2f8e428ce70444447fd80a6d298ff812393"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/owner-restoration-final.json",
+    "sha256": "756b6d93dbef9f61c1320f9461242bb7a5a3aa0ee0a9d5529906ddf28410c427"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/owner-restoration.json",
+    "sha256": "6254bcc9be7af0888476e345049de9bf6a4128a765e67416b465abb03535c3a5"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/preexisting-preservation.json",
+    "sha256": "dbd96370c982b1584dd3a8714ce7de62780bbf0f1063b222cfbc6e18c078d013"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/preexisting.diff",
+    "sha256": "51a8aed7567a6063ea6857a3867773744cc56c4141030935f609c0327f0c105f"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/append-consumer-published.py",
+    "sha256": "15506764f85b600b8656585ef20ea17c13aaf3ca5674e34978c5a1abe05b5e0b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/audit-candidate.py",
+    "sha256": "75a2dc0bb49fd762467d651b154c51a1ed53230f5c8756ee7e780aae66afba1f"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/binaries-head-result.json",
+    "sha256": "96707658aee26e26fbcb447c13857f8835b49c7f444a5a21e12188f3b9a7a4ed"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/binaries-staged.json",
+    "sha256": "6636df33a92c6adf1ac9fc0f3916eb950f508f85ba9d4a099329911c1dc01dd7"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/binaries_post.json",
+    "sha256": "75d3bc22c320e48b819f9854e0a847f6494b4970cc12a3da52054649acea8b4c"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/bundle-legacy-shell-failure.json",
+    "sha256": "f0bf1febcaf7cc01b664c5d1485ec496559c65f3cc949d6ec38dfe61ec44c343"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/bundle-staged.json",
+    "sha256": "a77c5319c489fedea654061dac13637baf962468a08cd667469eb00f6df36bef"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/candidate-audit.json",
+    "sha256": "9bce2e8f93c68be6dc8b427babd01fdd2816a87aedad5d4ddd63197c46b55417"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compare-source.py",
+    "sha256": "d316a40b24b6dbbea0070273a6b133f5c384f411ddca26337eb770b24f4f2cee"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-console.json",
+    "sha256": "434ab7005af0d8ebb695cdbd30ed5f3deedff6cb08efa16bfd091658a34f527b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-loaded.json",
+    "sha256": "debb5bb2bf81328fbf5255e7fba2599eafab287a07d43de317ac4c4107a62fe7"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-state.json",
+    "sha256": "f436104d2703afc4584065644a23bafe26ab74dbbeae16ac31a1109e869861f8"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/compile-request.json",
+    "sha256": "f2454cd2531358973fca556703c5ae1df0c4a14845bf514c7132306569c8df73"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/consumer-published-receipt.json",
+    "sha256": "23d6046d0019ac4f2b172f76f3b65e2a4500d44b826289fc1b583ceba492dac2"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/coverage.txt",
+    "sha256": "4c7adbf7c7ea14fa7611c0623630be86cc37e1afd7024c0ba59de8d701a3b849"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/finish-primary.py",
+    "sha256": "d266b720625a673f7fb7c15302a58c47f8d10109093352da389763b79fb42d43"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/fonts-staged.json",
+    "sha256": "1b4b1cc09ad6bce2e4f7c993e84d0ae8bc64e27530eab83783739ad1a369aeb1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/fonts_post.json",
+    "sha256": "09435f1d5ff477032520f89004fa83b7afb46a57d107965069a258f63f9e8929"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/metadata-preview.json",
+    "sha256": "dd2135308cfd013841e7b4ba1b56786b47cb3d10fc6a9ff054275d49a1102a41"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/mirror-candidate.py",
+    "sha256": "9db0dce082b702dbf98d95c1d3411f83fb957a1bc0ce3eb026cc202f94b1cec1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/other-work-preserved.json",
+    "sha256": "7dc09d52c17fd3a9ed51f06c67d8c3cab04bbaf569c8b20dce4019b639edf5a2"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/package-before-release.json",
+    "sha256": "1ca0543505cf47a05432ba8a2ed4d2b26f084ce8ee30882f32b545b86923b8a1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/prepare-candidate.py",
+    "sha256": "332262c3806a5ad8ce7df085de0fa94f58edf71dd24baa54ce8ede4c98bf6a9e"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/push.json",
+    "sha256": "9d80f6735a88f9edcbfa85dbce6538cd122eb2d6a18c5fec0b93c1e3f302a9b4"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/remote-proof.json",
+    "sha256": "0c1d51bdfa74020eeb5b789f1f707c25b6eff1b7bdaa893dc31f8fa3589ffd8d"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/remote-verification.json",
+    "sha256": "29143c2234f4f2e9af9224d82a340356e9b17ef7b051cb6b68077ad77ea3f650"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/source-base-comparison.json",
+    "sha256": "f620cd4ef13fcfc51db8e5bf61b90d728e5db8297e1d7999451246e33bfd55fe"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/stage-candidate.py",
+    "sha256": "409d1e83c89fd57f7f2f6b74867e311529942af8084a877b75062afde97fa227"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/start-status.txt",
+    "sha256": "807778b6e885df12c2f8720682ed7e684b0d86e4b4d0660d7b86486edbf0efc1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/start.diff",
+    "sha256": "6d311656f71f931b89c971667ea3445bce56fdd05823294a3587a74c46086bb8"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/templates-actual.json",
+    "sha256": "8b753ef4a3f31840b43522a40e080f8d61e29c23e7591be69d7d750562031850"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/tests-0.25.4.json",
+    "sha256": "c55ad3e87928cceb6c071c65ba792976a99ee18c810d1bee7afba4ad9d7c1518"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/release/validation.txt",
+    "sha256": "d9d4913b6324f79306566fa3a80705e3c83cae4abf2f584b99a7ebe5b67e4e86"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/source-manifest.json",
+    "sha256": "60668740e996ce97f3a008ab52e57cd4ce8dd26dbf17cbae48c5d7225a5178c1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/staged-before.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/status-before.txt",
+    "sha256": "6beb44a0c2ab3083ead209dc6c572cdf84ff4cf704a0aa00cb776b14934f5ffc"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/status-final.txt",
+    "sha256": "807778b6e885df12c2f8720682ed7e684b0d86e4b4d0660d7b86486edbf0efc1"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/sync-consumer-receipt.py",
+    "sha256": "e95ad09e7f9eac0210ff5f9d7314c63dcdc134563b699222bfadb6192f5735e2"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/task-only.diff",
+    "sha256": "9f6f22811849b90c74158d85c8c92052ea63d7c16e6125a14a8bbbe15117ccab"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/tests1.json",
+    "sha256": "da27d778e2b9310597f02e4d597a423f48e2913209fa452983dfe6ba3299ceb8"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/tests2.json",
+    "sha256": "3542c43218b8d98f8299f1afd4f3da14a889b671c4258f83151b95a8c0536df4"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/tests3.json",
+    "sha256": "565a959ea132a4198e2aa7df8facca347790271b2aa02f7c4bc887aab375fd50"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/tests4.json",
+    "sha256": "7c9898ad51542557674f024f2aa6699af92a2dd145ee56e02f306ea19c1edb25"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/tests5.json",
+    "sha256": "28de91c2ccdaeb805b68466cb7219d5920cf8717d203d690e92b392f0b0298f7"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/watcher-environment.json",
+    "sha256": "d711c6ed8bb78f23c093d1e28a1dbd03a774800484333120387207ab7b9015a4"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/window-cache-probe.cs.txt",
+    "sha256": "1c362e910b040026dff9572a6290a7f1aff6ad7adcedc812bc94eaf20cecb956"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/window-cache-probe.json",
+    "sha256": "099c7cbf3798e4ee272bd461262aecf0979e7d36737112b24ea7839b5e7d66c0"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/window-final-source.json",
+    "sha256": "0ae8e9a5c3d54d2ffece27036ac15d755e0f2f246bdafc37e8096d0284cb635b"
+  },
+  {
+    "path": "docs/tasks/20261113-editor-identity-cache/evidence/windward-implementation-before.md",
+    "sha256": "e84f2e202430c7537ffff044e6531b41522e06d0efb415ccf155a860577afcd0"
+  },
+  {
+    "path": "ember-unity-framework.slnx",
+    "sha256": "4c4caae4b1c4fa4f50e77f22ff45a5a5f583e15ad5338000900b0f89f68d3bb6"
+  }
+]

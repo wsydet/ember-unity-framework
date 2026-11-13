@@ -1,0 +1,51 @@
+ M .agents/skills/ember-solution-design/SKILL.md
+ M AGENTS.md
+ M Packages/com.ember/CHANGELOG.md
+ M Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+ M Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+ M Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+ M Packages/com.ember/Dependencies~/README.md
+ M Packages/com.ember/Documentation~/maintenance/ai-skills.md
+ M Packages/com.ember/Documentation~/maintenance/ai-workflow.md
+ M Packages/com.ember/Documentation~/maintenance/glossary.md
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+ M Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+ M Packages/com.ember/README.md
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+ M Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+ M Packages/com.ember/package.json
+ M docs/dev/framework-progress.md
+ M docs/dev/upm-migration-plan.md
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? Packages/com.ember/Dependencies~/manifest-0.25.3.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.4.json
+?? Packages/com.ember/Dependencies~/release-0.25.3.json
+?? Packages/com.ember/Dependencies~/release-0.25.4.json
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/dev/release-0.25.3.md
+?? docs/dev/release-0.25.4.md
+?? docs/tasks/

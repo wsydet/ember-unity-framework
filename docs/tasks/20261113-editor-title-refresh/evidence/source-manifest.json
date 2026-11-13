@@ -1,0 +1,42 @@
+[
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EditorMainWindowTitle.cs",
+    "sha256": "6B14C01B2F3D342DADD3447D8AF26A8F2AA04DA0A62B2334896DD43F224AD86A"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs",
+    "sha256": "B3A095B2E9D722988C2901380EC297AC9913B562049AE98AE44AEE21424371A2"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs.meta",
+    "sha256": "C0FF7DDD181A82779467422606B7CAD0CED68EE7BB6A63B8C0C409C959A69A69"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests.meta",
+    "sha256": "219D3983CD4E9E2F3C765ED831294BF784088AA3AA032E57F3BB216C846CB93F"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\ember-unity-framework.slnx",
+    "sha256": "4C4CAAE4B1C4FA4F50E77F22FF45A5A5F583E15AD5338000900B0F89F68D3BB6"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor.meta",
+    "sha256": "D0A8656714131568C49E31973A4AF19406A8BEB0046F99903350B85397184FD4"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef",
+    "sha256": "29800252E3AF09C532C2353F0F29FCE5DBA0FE1FFA754DFB04C64F6AD064E78B"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef.meta",
+    "sha256": "66E7A771AE8612BB01172D4BA6148F98306BEBED86625A478322C5B3DF0FB302"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs",
+    "sha256": "02D50BE2AE00D1B5F534058AE21E97D301699BC7C96EC6C9E1EB487C27DD69CB"
+  },
+  {
+    "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs.meta",
+    "sha256": "1ADA86559B1AAAF1FB93035CD66FD149F248FC5DDFC67D34F44446DE1CE9A703"
+  }
+]

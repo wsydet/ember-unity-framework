@@ -1,0 +1,174 @@
+{
+  "base": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "staged_file_count": 77,
+  "source_files": [
+    {
+      "path": "Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs",
+      "implementation_sha256": "6B14C01B2F3D342DADD3447D8AF26A8F2AA04DA0A62B2334896DD43F224AD86A",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs",
+      "implementation_sha256": "B3A095B2E9D722988C2901380EC297AC9913B562049AE98AE44AEE21424371A2",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta",
+      "implementation_sha256": "C0FF7DDD181A82779467422606B7CAD0CED68EE7BB6A63B8C0C409C959A69A69",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests.meta",
+      "implementation_sha256": "219D3983CD4E9E2F3C765ED831294BF784088AA3AA032E57F3BB216C846CB93F",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "ember-unity-framework.slnx",
+      "primary_sha256": "4C4CAAE4B1C4FA4F50E77F22FF45A5A5F583E15AD5338000900B0F89F68D3BB6",
+      "candidate_is_base_plus_only_new_title_test_reference": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests/Editor.meta",
+      "implementation_sha256": "D0A8656714131568C49E31973A4AF19406A8BEB0046F99903350B85397184FD4",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef",
+      "implementation_sha256": "29800252E3AF09C532C2353F0F29FCE5DBA0FE1FFA754DFB04C64F6AD064E78B",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef.meta",
+      "implementation_sha256": "66E7A771AE8612BB01172D4BA6148F98306BEBED86625A478322C5B3DF0FB302",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs",
+      "implementation_sha256": "02D50BE2AE00D1B5F534058AE21E97D301699BC7C96EC6C9E1EB487C27DD69CB",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    },
+    {
+      "path": "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs.meta",
+      "implementation_sha256": "1ADA86559B1AAAF1FB93035CD66FD149F248FC5DDFC67D34F44446DE1CE9A703",
+      "candidate_exact_bytes": true,
+      "staged_text_equal": true
+    }
+  ],
+  "package_only_version_changed": true,
+  "manifest_only_framework_tag_changed": true,
+  "dependency_count": 57,
+  "templates_dependencies_bundle_unchanged": true,
+  "actual_templates_verified": 7,
+  "actual_parent_snapshots_verified": 6,
+  "compared_package_cs_asmdefs": 3591,
+  "primary_only_unrelated_cs_differences": [
+    "Packages/com.ember/UPMManager/Editor/EmberProjectRulesSync.cs",
+    "Packages/com.ember/UPMManager/Tests/Editor/EmberProjectRulesSyncEditTests.cs"
+  ],
+  "other_existing_files_unchanged": 259,
+  "intentional_primary_release_pointer_changes": [
+    "Packages/com.ember/CHANGELOG.md",
+    "Packages/com.ember/Dependencies~/README.md",
+    "Packages/com.ember/README.md",
+    "Packages/com.ember/package.json",
+    "docs/dev/framework-progress.md",
+    "docs/dev/upm-migration-plan.md"
+  ],
+  "local_provenance_links": [
+    {
+      "file": "docs\\tasks\\20261113-editor-title-refresh\\README.md",
+      "target": "../../../../Windward/docs/design/planning/editor-performance-20261113/implementation.md"
+    },
+    {
+      "file": "docs\\tasks\\20261113-editor-title-refresh\\README.md",
+      "target": "../../../../Windward/docs/design/planning/editor-performance-20261113/post-upgrade/README.md"
+    }
+  ],
+  "staged_paths": [
+    "Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs",
+    "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs",
+    "Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta",
+    "Packages/com.ember/Basic/Tests.meta",
+    "Packages/com.ember/Basic/Tests/Editor.meta",
+    "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef",
+    "Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef.meta",
+    "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs",
+    "Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs.meta",
+    "Packages/com.ember/CHANGELOG.md",
+    "Packages/com.ember/Dependencies~/README.md",
+    "Packages/com.ember/Dependencies~/manifest-0.25.5.json",
+    "Packages/com.ember/Dependencies~/release-0.25.5.json",
+    "Packages/com.ember/README.md",
+    "Packages/com.ember/package.json",
+    "docs/dev/framework-progress.md",
+    "docs/dev/release-0.25.5.md",
+    "docs/dev/upm-migration-plan.md",
+    "docs/tasks/20261113-editor-title-refresh/.gitattributes",
+    "docs/tasks/20261113-editor-title-refresh/README.md",
+    "docs/tasks/20261113-editor-title-refresh/consumer-handoff.md",
+    "docs/tasks/20261113-editor-title-refresh/consumer-receipt-append.md",
+    "docs/tasks/20261113-editor-title-refresh/evidence/EditorMainWindowTitle.before.cs.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/capture.cs.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileConsole2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileConsole3.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileConsole4.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded3.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded4.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileRequest2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileRequest3.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileRequest4.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileState2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileState3.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/compileState4.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/finalConsole.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/finalState.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/link-check.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/live-cancellation.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/nativeFallback.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/periodic-profile-before-root-path-fix.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/periodic-profile.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/periodic-summary.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/profileStart.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/profileStartFinal.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/binaries-staged.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/bundle-staged.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/candidate-audit.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/coverage.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/fonts-staged.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/metadata-preview.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/prepare-docs.py",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/prepare.py",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/preservation-before.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseCompileRequest.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseCompileState.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseConsole.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseLoaded.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseTemplates.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseTestResult.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/releaseTestStart.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/review.md",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/stage-audit.py",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/status-before.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/release/validation.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/source-manifest.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/status-after.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/status-before.txt",
+    "docs/tasks/20261113-editor-title-refresh/evidence/task-only.diff",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testResult1.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testResult2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testResult3.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testStart.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testStart2.json",
+    "docs/tasks/20261113-editor-title-refresh/evidence/testStart3.json",
+    "ember-unity-framework.slnx"
+  ]
+}

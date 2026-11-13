@@ -1,0 +1,902 @@
+diff --git a/Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs b/Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
+index 8cd16df..40e8092 100644
+--- a/Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
++++ b/Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
+@@ -30,8 +30,6 @@ public static class EditorMainWindowTitle
+         private const string UpdateMainWindowTitleEventName = "updateMainWindowTitle";
+         private const string UpdateMainWindowTitleMethodName = "UpdateMainWindowTitle";
+         private const string TitleFieldName = "title";
+-        private const string EditingTemplateRecordPath = "Assets/Editor/EmberEditingTemplate.json";
+-        private const string DeployedTemplatesRecordPath = "Assets/Editor/EmberDeployedTemplates.json";
+         private const double RefreshIntervalSeconds = 5d;
+ 
+         private static readonly BindingFlags StaticFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+@@ -47,6 +45,15 @@ public static class EditorMainWindowTitle
+         private static bool _internalCallbackRegistered;
+         private static bool _reflectionWarningLogged;
+         private static double _nextRefreshTime;
++        private static readonly EmberTitleSnapshot Snapshot = new EmberTitleSnapshot();
++        private static string _currentTitle;
++        private static bool _disposed;
++#if UNITY_EDITOR_OSX
++        private static System.Threading.Tasks.Task<EmberTitleProcess.Result> _nativeTask;
++        private static System.Threading.CancellationTokenSource _nativeCancellation = new System.Threading.CancellationTokenSource();
++#endif
++        internal static string LastQueryError => Snapshot.Current?.Error;
++        internal static int QueryRequests => Snapshot.Requests;
+ 
+         #endregion
+ 
+@@ -59,8 +66,10 @@ static EditorMainWindowTitle()
+             RegisterInternalTitleCallback();
+             EditorApplication.delayCall += ApplyTitle;
+             EditorApplication.update += RefreshTitlePeriodically;
+-            EditorApplication.playModeStateChanged += _ => ApplyTitle();
+-            EditorApplication.projectChanged += ApplyTitle;
++            EditorApplication.playModeStateChanged += OnPlayModeChanged;
++            EditorApplication.projectChanged += OnProjectChanged;
++            AssemblyReloadEvents.beforeAssemblyReload += Dispose;
++            EditorApplication.quitting += Dispose;
+         }
+ 
+         #endregion
+@@ -71,25 +80,72 @@ static EditorMainWindowTitle()
+ 
+         private static void RefreshTitlePeriodically()
+         {
+-            if (EditorApplication.timeSinceStartup < _nextRefreshTime)
++            if (_disposed) return;
++            bool due = EditorApplication.timeSinceStartup >= _nextRefreshTime;
++            if (due)
+             {
+-                return;
++                _nextRefreshTime = EditorApplication.timeSinceStartup + RefreshIntervalSeconds;
++                UpdateContext();
+             }
+-
+-            _nextRefreshTime = EditorApplication.timeSinceStartup + RefreshIntervalSeconds;
+-            ApplyTitle();
++            if (Snapshot.Tick(due) || due) ApplyTitle();
+         }
+ 
+         private static void ApplyTitle()
+         {
+-            var title = BuildCurrentTitle();
++            if (_disposed) return;
++            var data = Snapshot.Current;
++            _currentTitle = BuildProjectTitle(PlayerSettings.productName, data?.Root ?? GetProjectPath(),
++                data?.Branch, EmberTitleSnapshot.TemplateId(data), GetBuildTargetLabel(), data?.GitRoot);
+ 
+             if (RegisterInternalTitleCallback() && TryUpdateMainWindowTitle())
+             {
+                 return;
+             }
+ 
+-            TryApplyNativeWindowTitle(title);
++            TryApplyNativeWindowTitle(_currentTitle);
++        }
++
++        private static void UpdateContext()
++        {
++            var package = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(EditorMainWindowTitle).Assembly);
++            Snapshot.SetContext(GetProjectPath(), package?.source == UnityEditor.PackageManager.PackageSource.Embedded);
++        }
++
++        private static void OnProjectChanged()
++        {
++#if UNITY_EDITOR_OSX
++            _nativeCancellation.Cancel();
++            var old = _nativeCancellation;
++            if (_nativeTask != null) _nativeTask.ContinueWith(_ => old.Dispose());
++            else old.Dispose();
++            _nativeCancellation = new System.Threading.CancellationTokenSource();
++#endif
++            UpdateContext(); Snapshot.Invalidate(); Snapshot.Tick(true); ApplyTitle();
++        }
++
++        private static void OnPlayModeChanged(PlayModeStateChange _) => RefreshTitleByMenu();
++
++        private static void Dispose()
++        {
++            _disposed = true;
++            EditorApplication.delayCall -= ApplyTitle;
++            EditorApplication.update -= RefreshTitlePeriodically;
++            EditorApplication.playModeStateChanged -= OnPlayModeChanged;
++            EditorApplication.projectChanged -= OnProjectChanged;
++            AssemblyReloadEvents.beforeAssemblyReload -= Dispose;
++            EditorApplication.quitting -= Dispose;
++            try
++            {
++                if (_internalCallbackRegistered)
++                    UpdateMainWindowTitleEvent.GetRemoveMethod(true)?.Invoke(null, new object[] { _updateMainWindowTitleDelegate });
++            }
++            catch (Exception e) { LogReflectionWarning(e); }
++            finally { Snapshot.Dispose(); }
++#if UNITY_EDITOR_OSX
++            _nativeCancellation.Cancel();
++            if (_nativeTask != null) _nativeTask.ContinueWith(_ => _nativeCancellation.Dispose());
++            else _nativeCancellation.Dispose();
++#endif
+         }
+ 
+         private static bool RegisterInternalTitleCallback()
+@@ -107,6 +163,8 @@ private static bool RegisterInternalTitleCallback()
+ 
+             try
+             {
++                if (DescriptorType.GetField(TitleFieldName, InstanceFlags) == null)
++                    throw new MissingFieldException(DescriptorTypeName, TitleFieldName);
+                 var delegateType = typeof(Action<>).MakeGenericType(DescriptorType);
+                 var handler = ((Action<object>)UpdateTitleDescriptor).Method;
+                 _updateMainWindowTitleDelegate = Delegate.CreateDelegate(delegateType, null, handler);
+@@ -143,17 +201,10 @@ private static bool TryUpdateMainWindowTitle()
+ 
+         private static void UpdateTitleDescriptor(object descriptor)
+         {
++            if (_disposed || _currentTitle == null) return;
+             descriptor.GetType()
+                 .GetField(TitleFieldName, InstanceFlags)
+-                ?.SetValue(descriptor, BuildCurrentTitle());
+-        }
+-
+-        private static string BuildCurrentTitle()
+-        {
+-            var projectPath = GetProjectPath();
+-            var branch = GetGitBranch(projectPath);
+-            var template = GetCurrentTemplateId(projectPath);
+-            return BuildProjectTitle(PlayerSettings.productName, projectPath, branch, template, GetBuildTargetLabel());
++                ?.SetValue(descriptor, _currentTitle);
+         }
+ 
+         private static string GetProjectPath()
+@@ -164,59 +215,8 @@ private static string GetProjectPath()
+         private static string NormalizeProjectPath(string projectPath)
+         {
+             var fullPath = Path.GetFullPath(projectPath);
+-            return fullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+-        }
+-
+-        private static string FindGitRoot(string projectPath)
+-        {
+-            var directory = new DirectoryInfo(projectPath);
+-            while (directory != null)
+-            {
+-                var gitPath = Path.Combine(directory.FullName, ".git");
+-                if (Directory.Exists(gitPath) || File.Exists(gitPath))
+-                {
+-                    return NormalizeProjectPath(directory.FullName);
+-                }
+-
+-                directory = directory.Parent;
+-            }
+-
+-            return projectPath;
+-        }
+-
+-        private static string GetGitBranch(string projectPath)
+-        {
+-            try
+-            {
+-                using var process = new Process
+-                {
+-                    StartInfo = new ProcessStartInfo
+-                    {
+-                        FileName = "git",
+-                        Arguments = "branch --show-current",
+-                        WorkingDirectory = projectPath,
+-                        RedirectStandardOutput = true,
+-                        RedirectStandardError = true,
+-                        UseShellExecute = false,
+-                        CreateNoWindow = true
+-                    }
+-                };
+-                process.Start();
+-                var output = process.StandardOutput.ReadToEnd().Trim();
+-                process.WaitForExit(2000);
+-
+-                // detached HEAD 时 --show-current 输出为空
+-                if (string.IsNullOrEmpty(output))
+-                {
+-                    return "HEAD";
+-                }
+-
+-                return output;
+-            }
+-            catch
+-            {
+-                return "?";
+-            }
++            var root = Path.GetPathRoot(fullPath);
++            return fullPath.Length > root.Length ? fullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) : root;
+         }
+ 
+         private static string GetProjectSubPath(string gitRoot, string projectPath)
+@@ -231,7 +231,7 @@ private static string GetProjectSubPath(string gitRoot, string projectPath)
+                 return ".";
+             }
+ 
+-            var gitRootPrefix = gitRoot + Path.DirectorySeparatorChar;
++            var gitRootPrefix = gitRoot.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+             return projectPath.StartsWith(gitRootPrefix, GetPathComparison())
+                 ? projectPath.Substring(gitRootPrefix.Length)
+                 : projectPath;
+@@ -242,40 +242,6 @@ private static string GetBuildTargetLabel()
+             return EditorUserBuildSettings.activeBuildTarget.ToString();
+         }
+ 
+-        private static string GetCurrentTemplateId(string projectPath)
+-        {
+-            var editingRecord = ReadTemplateTitleRecord(projectPath, EditingTemplateRecordPath);
+-            if (!string.IsNullOrWhiteSpace(editingRecord?.templateId))
+-            {
+-                return editingRecord.templateId.Trim();
+-            }
+-
+-            var deployedRecord = ReadTemplateTitleRecord(projectPath, DeployedTemplatesRecordPath);
+-            return string.IsNullOrWhiteSpace(deployedRecord?.activeTemplateId)
+-                ? "?"
+-                : deployedRecord.activeTemplateId.Trim();
+-        }
+-
+-        private static TemplateTitleRecord ReadTemplateTitleRecord(string projectPath, string relativePath)
+-        {
+-            try
+-            {
+-                var recordPath = Path.Combine(
+-                    projectPath,
+-                    relativePath.Replace('/', Path.DirectorySeparatorChar));
+-                if (!File.Exists(recordPath))
+-                {
+-                    return null;
+-                }
+-
+-                return JsonUtility.FromJson<TemplateTitleRecord>(File.ReadAllText(recordPath));
+-            }
+-            catch
+-            {
+-                return null;
+-            }
+-        }
+-
+         private static string ToDisplayPath(string path)
+         {
+             return path?.Replace('\\', '/') ?? string.Empty;
+@@ -304,13 +270,6 @@ private static void LogReflectionWarning(Exception exception = null)
+             EmberDebug.LogWarning(TAG, message);
+         }
+ 
+-        [Serializable]
+-        private sealed class TemplateTitleRecord
+-        {
+-            public string templateId = string.Empty;
+-            public string activeTemplateId = string.Empty;
+-        }
+-
+         private static void TryApplyNativeWindowTitle(string title)
+         {
+ #if UNITY_EDITOR_WIN
+@@ -347,29 +306,16 @@ private static void TryApplyNativeWindowTitleWin(string title)
+         /// </summary>
+         private static void TryApplyNativeWindowTitleMac(string title)
+         {
+-            try
+-            {
+-                // 转义标题中的双引号和反斜杠，防止 osascript 语法错误
+-                var escapedTitle = title.Replace("\\", "\\\\").Replace("\"", "\\\"");
+-                using var process = new Process
++            if (_nativeTask != null && !_nativeTask.IsCompleted) return;
++            var escapedTitle = title.Replace("\\", "\\\\").Replace("\"", "\\\"");
++            var script = $"tell application \"Unity\" to set title of front window to \"{escapedTitle}\"";
++            var token = _nativeCancellation.Token;
++            _nativeTask = System.Threading.Tasks.Task.Run(() => EmberTitleProcess.RunAsync(
++                new ProcessStartInfo
+                 {
+-                    StartInfo = new ProcessStartInfo
+-                    {
+-                        FileName = "osascript",
+-                        Arguments = $"-e 'tell application \"Unity\" to set title of front window to \"{escapedTitle}\"'",
+-                        RedirectStandardError = true,
+-                        RedirectStandardOutput = true,
+-                        UseShellExecute = false,
+-                        CreateNoWindow = true
+-                    }
+-                };
+-                process.Start();
+-                process.WaitForExit(1000);
+-            }
+-            catch
+-            {
+-                // osascript 不可用时静默降级（首次已通过 LogReflectionWarning 通知）
+-            }
++                    FileName = "osascript",
++                    Arguments = "-e \"" + script.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\""
++                }, 1000, token));
+         }
+ #endif
+ 
+@@ -385,6 +331,7 @@ private static void TryApplyNativeWindowTitleMac(string title)
+         [MenuItem("Ember/Tool/刷新编辑器标题", priority = 390)]
+         private static void RefreshTitleByMenu()
+         {
++            UpdateContext(); Snapshot.Tick(true);
+             ApplyTitle();
+         }
+ 
+@@ -393,12 +340,11 @@ private static void RefreshTitleByMenu()
+         /// </summary>
+         internal static string BuildProjectTitle(string projectName, string projectPath)
+         {
+-            var branch = GetGitBranch(projectPath);
+             return BuildProjectTitle(
+                 projectName,
+                 projectPath,
+-                branch,
+-                GetCurrentTemplateId(projectPath),
++                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? Snapshot.Current.Branch : "?",
++                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
+                 GetBuildTargetLabel());
+         }
+ 
+@@ -408,7 +354,7 @@ internal static string BuildProjectTitle(string projectName, string projectPath,
+                 projectName,
+                 projectPath,
+                 branch,
+-                GetCurrentTemplateId(projectPath),
++                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
+                 GetBuildTargetLabel());
+         }
+ 
+@@ -423,7 +369,7 @@ internal static string BuildProjectTitle(string projectName, string projectPath,
+                 projectName,
+                 projectPath,
+                 branch,
+-                GetCurrentTemplateId(projectPath),
++                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
+                 buildTarget);
+         }
+ 
+@@ -438,12 +384,19 @@ internal static string BuildProjectTitle(string projectName, string projectPath,
+             string branch,
+             string template,
+             string buildTarget)
++        {
++            return BuildProjectTitle(projectName, projectPath, branch, template, buildTarget,
++                EmberTitleSnapshot.FindGitRoot(NormalizeProjectPath(projectPath)));
++        }
++
++        internal static string BuildProjectTitle(string projectName, string projectPath, string branch,
++            string template, string buildTarget, string gitRoot)
+         {
+             var normalizedPath = NormalizeProjectPath(projectPath);
+             var normalizedProjectName = string.IsNullOrWhiteSpace(projectName)
+                 ? new DirectoryInfo(normalizedPath).Name
+                 : projectName.Trim();
+-            var gitRoot = FindGitRoot(normalizedPath);
++            gitRoot = NormalizeProjectPath(gitRoot ?? normalizedPath);
+             var projectSubPath = GetProjectSubPath(gitRoot, normalizedPath);
+             var target = string.IsNullOrWhiteSpace(buildTarget) ? "Unknown" : buildTarget.Trim();
+             var branchDisplay = string.IsNullOrWhiteSpace(branch) ? "?" : branch.Trim();
+diff --git a/ember-unity-framework.slnx b/ember-unity-framework.slnx
+index 2c1bdea..7172784 100644
+--- a/ember-unity-framework.slnx
++++ b/ember-unity-framework.slnx
+@@ -64,6 +64,7 @@
+   <Project Path="Game.SceneFlow.Tests.csproj" />
+   <Project Path="Game.Player.Editor.Tests.csproj" />
+   <Project Path="Ember.Scene.Runtime.csproj" />
++  <Project Path="Ember.Basic.Editor.Tests.csproj" />
+   <Project Path="Borodar.RainbowHierarchy.csproj" />
+   <Project Path="Ember.SceneUI.Editor.csproj" />
+   <Project Path="Game.Player.Examples.Editor.csproj" />
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs"
+new file mode 100644
+index 0000000..c4a20a7
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs"
+@@ -0,0 +1,223 @@
++﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
++using System;
++using System.Diagnostics;
++using System.IO;
++using System.Text;
++using System.Threading;
++using System.Threading.Tasks;
++using UnityEngine;
++
++[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Ember.Basic.Editor.Tests")]
++
++namespace Ember.Basic.Editor
++{
++    /// <summary>标题专用显示缓存，不参与模板或扩展资格判断。仅主线程访问状态。</summary>
++    internal sealed class EmberTitleSnapshot : IDisposable
++    {
++        #region 内部参数
++        internal sealed class Data
++        {
++            internal string Root, GitRoot, Branch = "?", TemplateJson, Error;
++            internal bool Embedded;
++        }
++
++        private readonly Func<string, bool, CancellationToken, Task<Data>> _read;
++        private Task<Data> _pending;
++        private CancellationTokenSource _cancellation;
++        private string _root;
++        private bool _embedded, _disposed, _dirty = true;
++        private long _generation, _pendingGeneration;
++        internal Data Current { get; private set; }
++        internal int Requests { get; private set; }
++        internal bool InFlight => _pending != null;
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        internal EmberTitleSnapshot(Func<string, bool, CancellationToken, Task<Data>> read = null)
++        {
++            _read = read ?? ReadAsync;
++        }
++
++        internal void SetContext(string root, bool embedded)
++        {
++            if (_disposed || (_root == root && _embedded == embedded)) return;
++            _root = root; _embedded = embedded;
++            Current = new Data { Root = root, GitRoot = root, Embedded = embedded };
++            Invalidate();
++        }
++
++        internal void Invalidate()
++        {
++            if (_disposed) return;
++            _generation++; _dirty = true;
++            _cancellation?.Cancel();
++        }
++
++        // 返回 true 仅表示可发布的新快照。旧请求结束前不启动另一请求。
++        internal bool Tick(bool request)
++        {
++            if (_disposed) return false;
++            _dirty |= request;
++            bool changed = false;
++            if (_pending?.IsCompleted == true)
++            {
++                Data result;
++                try { result = _pending.GetAwaiter().GetResult(); }
++                catch (Exception e) { result = new Data { Root = _root, GitRoot = _root, Embedded = _embedded, Error = e.Message }; }
++                _pending = null;
++                _cancellation.Dispose(); _cancellation = null;
++                if (_pendingGeneration == _generation)
++                {
++                    Current = result;
++                    changed = true;
++                }
++            }
++            if (_dirty && _pending == null && _root != null)
++            {
++                _dirty = false;
++                _pendingGeneration = _generation;
++                _cancellation = new CancellationTokenSource();
++                string root = _root; bool embedded = _embedded; var token = _cancellation.Token;
++                Requests++;
++                // 即使替换 reader 也保证不在主线程执行文件/进程操作。
++                _pending = Task.Run(() => _read(root, embedded, token));
++            }
++            return changed;
++        }
++
++        public void Dispose()
++        {
++            if (_disposed) return;
++            _disposed = true; _generation++;
++            var cancellation = _cancellation;
++            cancellation?.Cancel();
++            if (_pending != null)
++                _pending.ContinueWith(t => { _ = t.Exception; cancellation.Dispose(); }, TaskScheduler.Default);
++            else cancellation?.Dispose();
++            Current = null;
++        }
++
++        internal static async Task<Data> ReadAsync(string root, bool embedded, CancellationToken token)
++        {
++            var data = new Data { Root = root, GitRoot = root, Embedded = embedded };
++            try
++            {
++                data.GitRoot = FindGitRoot(root);
++                string record = embedded ? "EmberEditingTemplate.json" : "EmberDeployedTemplates.json";
++                string path = Path.Combine(root, "Assets/Editor", record);
++                if (File.Exists(path)) data.TemplateJson = File.ReadAllText(path);
++            }
++            catch (Exception e) { data.Error = "metadata: " + e.Message; }
++            var result = await EmberTitleProcess.RunAsync(new ProcessStartInfo
++            {
++                FileName = "git", Arguments = "branch --show-current", WorkingDirectory = root
++            }, 2000, token).ConfigureAwait(false);
++            data.Branch = result.Success ? (string.IsNullOrWhiteSpace(result.Output) ? "HEAD" : result.Output.Trim()) : "?";
++            if (!result.Success) data.Error = (data.Error == null ? "" : data.Error + "; ") + result.Error;
++            return data;
++        }
++
++        internal static string FindGitRoot(string root)
++        {
++            for (var directory = new DirectoryInfo(root); directory != null; directory = directory.Parent)
++            {
++                string path = Path.Combine(directory.FullName, ".git");
++                if (Directory.Exists(path) || File.Exists(path)) return directory.FullName;
++            }
++            return root;
++        }
++
++        internal static string TemplateId(Data data)
++        {
++            try
++            {
++                var record = JsonUtility.FromJson<TitleRecord>(data?.TemplateJson ?? "");
++                string id = data.Embedded ? record?.templateId : record?.activeTemplateId;
++                return string.IsNullOrWhiteSpace(id) ? "?" : id.Trim();
++            }
++            catch { return "?"; }
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        [Serializable] private sealed class TitleRecord
++        {
++            public string templateId = "";
++            public string activeTemplateId = "";
++        }
++        #endregion
++    }
++
++    /// <summary>只在后台调用。退出、两路 EOF 和超时共享一个期限；输出有界，错误不逐次写 Console。</summary>
++    internal static class EmberTitleProcess
++    {
++        #region 内部参数
++        internal sealed class Result
++        {
++            internal bool Success;
++            internal string Output, Error;
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        internal static async Task<Result> RunAsync(ProcessStartInfo start, int timeoutMs, CancellationToken token)
++        {
++            using var process = new Process { StartInfo = start, EnableRaisingEvents = true };
++            var output = new StringBuilder(); var error = new StringBuilder();
++            var exited = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
++            var stdout = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
++            var stderr = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
++            process.Exited += (_, _) => exited.TrySetResult(true);
++            process.OutputDataReceived += (_, e) => Drain(e.Data, output, stdout);
++            process.ErrorDataReceived += (_, e) => Drain(e.Data, error, stderr);
++            start.UseShellExecute = false; start.CreateNoWindow = true;
++            start.RedirectStandardOutput = true; start.RedirectStandardError = true;
++            bool started = false;
++            // 域重载前同步发出终止信号，不能依赖旧域稍后继续调度 Task；不等待进程。
++            using var stop = token.Register(() => { if (started) TryKill(process); });
++            using var deadlineCancellation = CancellationTokenSource.CreateLinkedTokenSource(token);
++            var deadline = Task.Delay(timeoutMs, deadlineCancellation.Token);
++            try
++            {
++                token.ThrowIfCancellationRequested();
++                started = process.Start();
++                if (token.IsCancellationRequested) TryKill(process);
++                process.BeginOutputReadLine(); process.BeginErrorReadLine();
++                var complete = Task.WhenAll(exited.Task, stdout.Task, stderr.Task);
++                if (await Task.WhenAny(complete, deadline).ConfigureAwait(false) != complete)
++                    return new Result { Error = token.IsCancellationRequested ? "git cancelled" : "git timed out" };
++                await complete.ConfigureAwait(false);
++                return new Result { Success = process.ExitCode == 0, Output = output.ToString(),
++                    Error = process.ExitCode == 0 ? null : "git exit " + process.ExitCode + ": " + error };
++            }
++            catch (Exception e) { return new Result { Error = "git: " + e.Message }; }
++            finally
++            {
++                deadlineCancellation.Cancel();
++                // 有界回收仅在后台执行。
++                if (started)
++                {
++                    TryKill(process);
++                    try { process.WaitForExit(250); } catch (InvalidOperationException) { }
++                }
++            }
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        private static void TryKill(Process process)
++        {
++            try { if (!process.HasExited) process.Kill(); }
++            catch (InvalidOperationException) { }
++            catch (System.ComponentModel.Win32Exception) { }
++        }
++
++        private static void Drain(string line, StringBuilder buffer, TaskCompletionSource<bool> eof)
++        {
++            if (line == null) { eof.TrySetResult(true); return; }
++            // 超出上限继续排空管道，仅丢弃显示内容。
++            if (buffer.Length < 8192) buffer.AppendLine(line.Substring(0, Math.Min(line.Length, 8192 - buffer.Length)));
++        }
++        #endregion
++    }
++}
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs.meta" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs.meta"
+new file mode 100644
+index 0000000..b03f732
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Editor\\EmberTitleSnapshot.cs.meta"
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 5de74f98c7c898a4c906548a60a6da07
+\ No newline at end of file
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests.meta" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests.meta"
+new file mode 100644
+index 0000000..53b1aa0
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests.meta"
+@@ -0,0 +1,8 @@
++fileFormatVersion: 2
++guid: 61415ecf338bbb54f9e3f0c863fbc0aa
++folderAsset: yes
++DefaultImporter:
++  externalObjects: {}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor.meta" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor.meta"
+new file mode 100644
+index 0000000..3c19c9f
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor.meta"
+@@ -0,0 +1,8 @@
++fileFormatVersion: 2
++guid: 7bb748fb6903c65489fd0d1cedfb6a77
++folderAsset: yes
++DefaultImporter:
++  externalObjects: {}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef"
+new file mode 100644
+index 0000000..8508379
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef"
+@@ -0,0 +1,8 @@
++{
++    "name": "Ember.Basic.Editor.Tests",
++    "references": ["Ember.Basic.Editor"],
++    "includePlatforms": ["Editor"],
++    "optionalUnityReferences": ["TestAssemblies"],
++    "autoReferenced": false,
++    "defineConstraints": ["UNITY_INCLUDE_TESTS"]
++}
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef.meta" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef.meta"
+new file mode 100644
+index 0000000..366f22a
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\Ember.Basic.Editor.Tests.asmdef.meta"
+@@ -0,0 +1,7 @@
++fileFormatVersion: 2
++guid: e614cc94c72fd8c4187f907a5f7451aa
++AssemblyDefinitionImporter:
++  externalObjects: {}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs"
+new file mode 100644
+index 0000000..10ec5d8
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs"
+@@ -0,0 +1,204 @@
++﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
++using System;
++using System.Collections;
++using System.Diagnostics;
++using System.IO;
++using System.Reflection;
++using System.Threading;
++using System.Threading.Tasks;
++using NUnit.Framework;
++using UnityEngine.TestTools;
++
++namespace Ember.Basic.Editor.Tests
++{
++    public sealed class EmberTitleSnapshotTests
++    {
++        #region 内部参数
++        private string _root;
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        [SetUp] public void Setup()
++        {
++            _root = Path.Combine(Path.GetTempPath(), "EmberTitle-" + Guid.NewGuid().ToString("N"));
++            Directory.CreateDirectory(_root);
++        }
++
++        [TearDown] public void Teardown()
++        {
++            // 只删除本测试新建的随机目录；不接触项目 Git 或身份记录。
++            if (!Directory.Exists(_root)) return;
++            foreach (string path in Directory.GetFiles(_root, "*", SearchOption.AllDirectories))
++                File.SetAttributes(path, FileAttributes.Normal);
++            Directory.Delete(_root, true);
++        }
++
++        [Test] public void RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle()
++        {
++            var type = typeof(EditorMainWindowTitle);
++            const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
++            type.GetMethod("ApplyTitle", flags).Invoke(null, null);
++            int requests = EditorMainWindowTitle.QueryRequests;
++            string title = (string)type.GetField("_currentTitle", flags).GetValue(null);
++            var descriptorType = typeof(UnityEditor.EditorApplication).Assembly.GetType("UnityEditor.ApplicationTitleDescriptor");
++            var constructor = descriptorType.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)[0];
++            var parameters = constructor.GetParameters();
++            var arguments = new object[parameters.Length];
++            for (int i = 0; i < parameters.Length; i++) arguments[i] = parameters[i].ParameterType == typeof(bool) ? (object)false : "";
++            var descriptor = constructor.Invoke(arguments);
++            var callback = type.GetMethod("UpdateTitleDescriptor", flags);
++            for (int i = 0; i < 100; i++) callback.Invoke(null, new[] { descriptor });
++            Assert.AreEqual(title, descriptorType.GetField("title").GetValue(descriptor));
++            Assert.AreEqual(requests, EditorMainWindowTitle.QueryRequests);
++        }
++
++        [TestCase(true, "editing")]
++        [TestCase(false, "active")]
++        public void DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(bool embedded, string expected)
++        {
++            var data = new EmberTitleSnapshot.Data { Embedded = embedded,
++                TemplateJson = "{\"templateId\":\"editing\",\"activeTemplateId\":\"active\"}" };
++            Assert.AreEqual(expected, EmberTitleSnapshot.TemplateId(data));
++            data.TemplateJson = embedded ? "{\"activeTemplateId\":\"stale\"}" : "{\"templateId\":\"stale\"}";
++            Assert.AreEqual("?", EmberTitleSnapshot.TemplateId(data));
++            data.TemplateJson = "broken";
++            Assert.AreEqual("?", EmberTitleSnapshot.TemplateId(data));
++        }
++
++        [Test] public void FormattingRetainsAllFieldsAndFilesystemRoots()
++        {
++            string project = Path.Combine(_root, "Games", "Example");
++            Assert.AreEqual("Example | Games/Example | topic | base | StandaloneWindows64 | " + _root.Replace('\\', '/'),
++                EditorMainWindowTitle.BuildProjectTitle("Example", project, "topic", "base", "StandaloneWindows64", _root));
++            string drive = Path.GetPathRoot(_root);
++            StringAssert.EndsWith(drive.Replace('\\', '/'), EditorMainWindowTitle.BuildProjectTitle("P", drive, "HEAD", "?", "T", drive));
++            Assert.AreEqual("P | Games/P | HEAD | ? | T | " + drive.Replace('\\', '/'),
++                EditorMainWindowTitle.BuildProjectTitle("P", Path.Combine(drive, "Games", "P"), "HEAD", "?", "T", drive));
++            Assert.AreEqual("P | ? | ? | Unknown | " + _root.Replace('\\', '/'),
++                EditorMainWindowTitle.BuildProjectTitle("P", _root, null, null, null, _root));
++        }
++
++        [UnityTest] public IEnumerator InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected()
++        {
++            var first = new TaskCompletionSource<EmberTitleSnapshot.Data>();
++            var second = new TaskCompletionSource<EmberTitleSnapshot.Data>();
++            int calls = 0;
++            using var cache = new EmberTitleSnapshot((root, embedded, token) =>
++                Interlocked.Increment(ref calls) == 1 ? first.Task : second.Task);
++            cache.SetContext(_root, true); cache.Tick(true);
++            yield return Until(() => Volatile.Read(ref calls) == 1);
++            for (int i = 0; i < 100; i++) cache.Tick(true);
++            Assert.AreEqual(1, cache.Requests);
++            string next = Path.Combine(_root, "other");
++            cache.SetContext(next, false);
++            first.SetResult(new EmberTitleSnapshot.Data { Root = _root, Branch = "late" });
++            yield return Until(() => { cache.Tick(false); return calls == 2; });
++            Assert.AreEqual(next, cache.Current.Root);
++            Assert.AreEqual("?", cache.Current.Branch);
++            cache.Dispose();
++            second.SetResult(new EmberTitleSnapshot.Data { Root = next, Branch = "disposed" });
++            yield return null;
++            Assert.IsFalse(cache.Tick(true)); Assert.IsNull(cache.Current);
++            Assert.AreEqual(2, cache.Requests);
++        }
++
++        [UnityTest] public IEnumerator InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult()
++        {
++            var first = new TaskCompletionSource<EmberTitleSnapshot.Data>();
++            int calls = 0;
++            using var cache = new EmberTitleSnapshot((root, embedded, token) =>
++                Interlocked.Increment(ref calls) == 1 ? first.Task : Task.FromResult(new EmberTitleSnapshot.Data { Root = root, Branch = "new" }));
++            cache.SetContext(_root, true); cache.Tick(true);
++            yield return Until(() => calls == 1);
++            cache.Invalidate();
++            first.SetResult(new EmberTitleSnapshot.Data { Root = _root, Branch = "old" });
++            yield return Until(() => { cache.Tick(false); return cache.Current.Branch == "new"; });
++            Assert.AreEqual(2, cache.Requests);
++        }
++
++        [UnityTest] public IEnumerator GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground()
++        {
++            var init = Git(_root, "init -b main"); yield return Until(() => init.IsCompleted); Assert.IsTrue(init.Result.Success, init.Result.Error);
++            var identity = Git(_root, "-c user.name=EmberTest -c user.email=test@example.invalid commit --allow-empty -m fixture");
++            yield return Until(() => identity.IsCompleted); Assert.IsTrue(identity.Result.Success, identity.Result.Error);
++            string project = Path.Combine(_root, "Games", "Unity");
++            Directory.CreateDirectory(Path.Combine(project, "Assets/Editor"));
++            File.WriteAllText(Path.Combine(project, "Assets/Editor/EmberEditingTemplate.json"), "{\"templateId\":\"dev\"}");
++            File.WriteAllText(Path.Combine(project, "Assets/Editor/EmberDeployedTemplates.json"), "{\"activeTemplateId\":\"consumer\"}");
++            var read = Read(project, false); yield return Until(() => read.IsCompleted);
++            Assert.AreEqual("main", read.Result.Branch); Assert.AreEqual(_root, read.Result.GitRoot);
++            Assert.AreEqual("consumer", EmberTitleSnapshot.TemplateId(read.Result));
++            var branch = Git(_root, "checkout -b changed"); yield return Until(() => branch.IsCompleted); Assert.IsTrue(branch.Result.Success);
++            read = Read(project, true); yield return Until(() => read.IsCompleted);
++            Assert.AreEqual("changed", read.Result.Branch); Assert.AreEqual("dev", EmberTitleSnapshot.TemplateId(read.Result));
++            var detach = Git(_root, "checkout --detach"); yield return Until(() => detach.IsCompleted); Assert.IsTrue(detach.Result.Success);
++            read = Read(project, false); yield return Until(() => read.IsCompleted); Assert.AreEqual("HEAD", read.Result.Branch);
++            string worktree = Path.Combine(_root, "worktree");
++            // separate-git-dir 生成与 worktree 相同的 .git 文件边界，不创建工作区/worktree。
++            var add = Git(_root, "clone --separate-git-dir=\"" + Path.Combine(_root, "git-storage") + "\" \"" + _root + "\" \"" + worktree + "\"");
++            yield return Until(() => add.IsCompleted); Assert.IsTrue(add.Result.Success, add.Result.Error);
++            Assert.IsTrue(File.Exists(Path.Combine(worktree, ".git")));
++            read = Read(worktree, false); yield return Until(() => read.IsCompleted);
++            Assert.AreEqual(worktree, read.Result.GitRoot); Assert.AreEqual("changed", read.Result.Branch);
++            detach = Git(worktree, "checkout --detach"); yield return Until(() => detach.IsCompleted); Assert.IsTrue(detach.Result.Success);
++            read = Read(worktree, false); yield return Until(() => read.IsCompleted); Assert.AreEqual("HEAD", read.Result.Branch);
++            // 无效工作目录和无仓库都是可诊断失败，不能伪装成 detached HEAD。
++            read = Read(Path.Combine(_root, "missing"), false); yield return Until(() => read.IsCompleted);
++            Assert.AreEqual("?", read.Result.Branch); Assert.IsNotEmpty(read.Result.Error);
++            string noGit = Path.Combine(Path.GetDirectoryName(_root), "EmberTitleNoGit-" + Guid.NewGuid().ToString("N"));
++            Directory.CreateDirectory(noGit);
++            try
++            {
++                read = Read(noGit, false); yield return Until(() => read.IsCompleted);
++                Assert.AreEqual("?", read.Result.Branch); Assert.IsNotEmpty(read.Result.Error);
++            }
++            finally { Directory.Delete(noGit); }
++        }
++
++        [UnityTest] public IEnumerator ProcessTimeoutCancellationFailureAndBothPipesAreBounded()
++        {
++            var missing = Run(new ProcessStartInfo { FileName = "ember-title-no-such-executable" }, 1000, CancellationToken.None);
++            yield return Until(() => missing.IsCompleted); Assert.IsFalse(missing.Result.Success); Assert.IsNotEmpty(missing.Result.Error);
++#if UNITY_EDITOR_WIN
++            var slow = new ProcessStartInfo { FileName = "powershell.exe", Arguments = "-NoProfile -NonInteractive -Command \"Start-Sleep -Seconds 10\"" };
++            var flood = new ProcessStartInfo { FileName = "powershell.exe", Arguments = "-NoProfile -NonInteractive -Command \"1..2000 | ForEach-Object { [Console]::Out.WriteLine('output'); [Console]::Error.WriteLine('error') }; exit 7\"" };
++#else
++            var slow = new ProcessStartInfo { FileName = "/bin/sh", Arguments = "-c \"while :; do :; done\"" };
++            var flood = new ProcessStartInfo { FileName = "/bin/sh", Arguments = "-c \"i=0; while [ $i -lt 2000 ]; do echo output; echo error >&2; i=$((i+1)); done; exit 7\"" };
++#endif
++            var watch = Stopwatch.StartNew();
++            var timeout = Run(slow, 100, CancellationToken.None);
++            yield return Until(() => timeout.IsCompleted);
++            Assert.IsFalse(timeout.Result.Success); StringAssert.Contains("timed out", timeout.Result.Error);
++            Assert.Less(watch.Elapsed.TotalSeconds, 3);
++            using var cancellation = new CancellationTokenSource();
++            cancellation.Cancel();
++            var cancelled = Run(new ProcessStartInfo { FileName = "git", Arguments = "--version" }, 2000, cancellation.Token);
++            yield return Until(() => cancelled.IsCompleted); Assert.IsFalse(cancelled.Result.Success);
++            var drained = Run(flood, 3000, CancellationToken.None);
++            yield return Until(() => drained.IsCompleted);
++            Assert.IsFalse(drained.Result.Success); StringAssert.Contains("git exit 7", drained.Result.Error);
++            Assert.LessOrEqual(drained.Result.Output.Length, 8194);
++            Assert.LessOrEqual(drained.Result.Error.Length, 8220);
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        private static IEnumerator Until(Func<bool> done)
++        {
++            double end = UnityEditor.EditorApplication.timeSinceStartup + 12;
++            while (!done())
++            {
++                Assert.Less(UnityEditor.EditorApplication.timeSinceStartup, end, "有界后台操作未完成");
++                yield return null;
++            }
++        }
++        private static Task<EmberTitleSnapshot.Data> Read(string root, bool embedded) =>
++            Task.Run(() => EmberTitleSnapshot.ReadAsync(root, embedded, CancellationToken.None));
++        private static Task<EmberTitleProcess.Result> Git(string root, string args) =>
++            Run(new ProcessStartInfo { FileName = "git", Arguments = args, WorkingDirectory = root }, 2000, CancellationToken.None);
++        private static Task<EmberTitleProcess.Result> Run(ProcessStartInfo info, int timeout, CancellationToken token) =>
++            Task.Run(() => EmberTitleProcess.RunAsync(info, timeout, token));
++        #endregion
++    }
++}
+diff --git "a/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs.meta" "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs.meta"
+new file mode 100644
+index 0000000..167cc89
+--- /dev/null
++++ "b/C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs.meta"
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 872e0839e8cc93c489a530a42fddea3b
+\ No newline at end of file

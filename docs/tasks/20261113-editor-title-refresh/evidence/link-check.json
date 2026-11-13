@@ -1,0 +1,137 @@
+[
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/status-before.txt",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "../../../../Windward/docs/design/planning/editor-performance-20261113/implementation.md",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "../../../../Windward/docs/design/planning/editor-performance-20261113/post-upgrade/README.md",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/testResult1.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/testResult2.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/nativeFallback.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/compileRequest4.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/compileState4.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/compileLoaded4.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/testResult3.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/periodic-profile.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/periodic-summary.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/capture.cs.txt",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/live-cancellation.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/finalState.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/finalConsole.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/task-only.diff",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/source-manifest.json",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "evidence/status-after.txt",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/README.md",
+    "target": "consumer-handoff.md",
+    "exists": true
+  },
+  {
+    "document": "docs/tasks/20261113-editor-title-refresh/consumer-handoff.md",
+    "target": "README.md",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "../../../../../ember-unity-framework/docs/tasks/20261113-editor-title-refresh/README.md",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "../../../../../ember-unity-framework/docs/tasks/20261113-editor-title-refresh/evidence/task-only.diff",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "../../../../../ember-unity-framework/docs/tasks/20261113-editor-title-refresh/evidence/testResult3.json",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "../../../../../ember-unity-framework/docs/tasks/20261113-editor-title-refresh/evidence/periodic-summary.json",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "../../../../../ember-unity-framework/docs/tasks/20261113-editor-title-refresh/consumer-handoff.md",
+    "exists": true
+  },
+  {
+    "document": "Windward implementation appendix",
+    "target": "post-upgrade/README.md",
+    "exists": true
+  }
+]

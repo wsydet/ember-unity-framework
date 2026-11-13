@@ -30,8 +30,6 @@ namespace Ember.Basic.Editor
         private const string UpdateMainWindowTitleEventName = "updateMainWindowTitle";
         private const string UpdateMainWindowTitleMethodName = "UpdateMainWindowTitle";
         private const string TitleFieldName = "title";
-        private const string EditingTemplateRecordPath = "Assets/Editor/EmberEditingTemplate.json";
-        private const string DeployedTemplatesRecordPath = "Assets/Editor/EmberDeployedTemplates.json";
         private const double RefreshIntervalSeconds = 5d;
 
         private static readonly BindingFlags StaticFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
@@ -47,6 +45,15 @@ namespace Ember.Basic.Editor
         private static bool _internalCallbackRegistered;
         private static bool _reflectionWarningLogged;
         private static double _nextRefreshTime;
+        private static readonly EmberTitleSnapshot Snapshot = new EmberTitleSnapshot();
+        private static string _currentTitle;
+        private static bool _disposed;
+#if UNITY_EDITOR_OSX
+        private static System.Threading.Tasks.Task<EmberTitleProcess.Result> _nativeTask;
+        private static System.Threading.CancellationTokenSource _nativeCancellation = new System.Threading.CancellationTokenSource();
+#endif
+        internal static string LastQueryError => Snapshot.Current?.Error;
+        internal static int QueryRequests => Snapshot.Requests;
 
         #endregion
 
@@ -59,8 +66,10 @@ namespace Ember.Basic.Editor
             RegisterInternalTitleCallback();
             EditorApplication.delayCall += ApplyTitle;
             EditorApplication.update += RefreshTitlePeriodically;
-            EditorApplication.playModeStateChanged += _ => ApplyTitle();
-            EditorApplication.projectChanged += ApplyTitle;
+            EditorApplication.playModeStateChanged += OnPlayModeChanged;
+            EditorApplication.projectChanged += OnProjectChanged;
+            AssemblyReloadEvents.beforeAssemblyReload += Dispose;
+            EditorApplication.quitting += Dispose;
         }
 
         #endregion
@@ -71,25 +80,72 @@ namespace Ember.Basic.Editor
 
         private static void RefreshTitlePeriodically()
         {
-            if (EditorApplication.timeSinceStartup < _nextRefreshTime)
+            if (_disposed) return;
+            bool due = EditorApplication.timeSinceStartup >= _nextRefreshTime;
+            if (due)
             {
-                return;
+                _nextRefreshTime = EditorApplication.timeSinceStartup + RefreshIntervalSeconds;
+                UpdateContext();
             }
-
-            _nextRefreshTime = EditorApplication.timeSinceStartup + RefreshIntervalSeconds;
-            ApplyTitle();
+            if (Snapshot.Tick(due) || due) ApplyTitle();
         }
 
         private static void ApplyTitle()
         {
-            var title = BuildCurrentTitle();
+            if (_disposed) return;
+            var data = Snapshot.Current;
+            _currentTitle = BuildProjectTitle(PlayerSettings.productName, data?.Root ?? GetProjectPath(),
+                data?.Branch, EmberTitleSnapshot.TemplateId(data), GetBuildTargetLabel(), data?.GitRoot);
 
             if (RegisterInternalTitleCallback() && TryUpdateMainWindowTitle())
             {
                 return;
             }
 
-            TryApplyNativeWindowTitle(title);
+            TryApplyNativeWindowTitle(_currentTitle);
+        }
+
+        private static void UpdateContext()
+        {
+            var package = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(EditorMainWindowTitle).Assembly);
+            Snapshot.SetContext(GetProjectPath(), package?.source == UnityEditor.PackageManager.PackageSource.Embedded);
+        }
+
+        private static void OnProjectChanged()
+        {
+#if UNITY_EDITOR_OSX
+            _nativeCancellation.Cancel();
+            var old = _nativeCancellation;
+            if (_nativeTask != null) _nativeTask.ContinueWith(_ => old.Dispose());
+            else old.Dispose();
+            _nativeCancellation = new System.Threading.CancellationTokenSource();
+#endif
+            UpdateContext(); Snapshot.Invalidate(); Snapshot.Tick(true); ApplyTitle();
+        }
+
+        private static void OnPlayModeChanged(PlayModeStateChange _) => RefreshTitleByMenu();
+
+        private static void Dispose()
+        {
+            _disposed = true;
+            EditorApplication.delayCall -= ApplyTitle;
+            EditorApplication.update -= RefreshTitlePeriodically;
+            EditorApplication.playModeStateChanged -= OnPlayModeChanged;
+            EditorApplication.projectChanged -= OnProjectChanged;
+            AssemblyReloadEvents.beforeAssemblyReload -= Dispose;
+            EditorApplication.quitting -= Dispose;
+            try
+            {
+                if (_internalCallbackRegistered)
+                    UpdateMainWindowTitleEvent.GetRemoveMethod(true)?.Invoke(null, new object[] { _updateMainWindowTitleDelegate });
+            }
+            catch (Exception e) { LogReflectionWarning(e); }
+            finally { Snapshot.Dispose(); }
+#if UNITY_EDITOR_OSX
+            _nativeCancellation.Cancel();
+            if (_nativeTask != null) _nativeTask.ContinueWith(_ => _nativeCancellation.Dispose());
+            else _nativeCancellation.Dispose();
+#endif
         }
 
         private static bool RegisterInternalTitleCallback()
@@ -107,6 +163,8 @@ namespace Ember.Basic.Editor
 
             try
             {
+                if (DescriptorType.GetField(TitleFieldName, InstanceFlags) == null)
+                    throw new MissingFieldException(DescriptorTypeName, TitleFieldName);
                 var delegateType = typeof(Action<>).MakeGenericType(DescriptorType);
                 var handler = ((Action<object>)UpdateTitleDescriptor).Method;
                 _updateMainWindowTitleDelegate = Delegate.CreateDelegate(delegateType, null, handler);
@@ -143,17 +201,10 @@ namespace Ember.Basic.Editor
 
         private static void UpdateTitleDescriptor(object descriptor)
         {
+            if (_disposed || _currentTitle == null) return;
             descriptor.GetType()
                 .GetField(TitleFieldName, InstanceFlags)
-                ?.SetValue(descriptor, BuildCurrentTitle());
-        }
-
-        private static string BuildCurrentTitle()
-        {
-            var projectPath = GetProjectPath();
-            var branch = GetGitBranch(projectPath);
-            var template = GetCurrentTemplateId(projectPath);
-            return BuildProjectTitle(PlayerSettings.productName, projectPath, branch, template, GetBuildTargetLabel());
+                ?.SetValue(descriptor, _currentTitle);
         }
 
         private static string GetProjectPath()
@@ -164,59 +215,8 @@ namespace Ember.Basic.Editor
         private static string NormalizeProjectPath(string projectPath)
         {
             var fullPath = Path.GetFullPath(projectPath);
-            return fullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-        }
-
-        private static string FindGitRoot(string projectPath)
-        {
-            var directory = new DirectoryInfo(projectPath);
-            while (directory != null)
-            {
-                var gitPath = Path.Combine(directory.FullName, ".git");
-                if (Directory.Exists(gitPath) || File.Exists(gitPath))
-                {
-                    return NormalizeProjectPath(directory.FullName);
-                }
-
-                directory = directory.Parent;
-            }
-
-            return projectPath;
-        }
-
-        private static string GetGitBranch(string projectPath)
-        {
-            try
-            {
-                using var process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = "git",
-                        Arguments = "branch --show-current",
-                        WorkingDirectory = projectPath,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    }
-                };
-                process.Start();
-                var output = process.StandardOutput.ReadToEnd().Trim();
-                process.WaitForExit(2000);
-
-                // detached HEAD 时 --show-current 输出为空
-                if (string.IsNullOrEmpty(output))
-                {
-                    return "HEAD";
-                }
-
-                return output;
-            }
-            catch
-            {
-                return "?";
-            }
+            var root = Path.GetPathRoot(fullPath);
+            return fullPath.Length > root.Length ? fullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) : root;
         }
 
         private static string GetProjectSubPath(string gitRoot, string projectPath)
@@ -231,7 +231,7 @@ namespace Ember.Basic.Editor
                 return ".";
             }
 
-            var gitRootPrefix = gitRoot + Path.DirectorySeparatorChar;
+            var gitRootPrefix = gitRoot.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
             return projectPath.StartsWith(gitRootPrefix, GetPathComparison())
                 ? projectPath.Substring(gitRootPrefix.Length)
                 : projectPath;
@@ -240,40 +240,6 @@ namespace Ember.Basic.Editor
         private static string GetBuildTargetLabel()
         {
             return EditorUserBuildSettings.activeBuildTarget.ToString();
-        }
-
-        private static string GetCurrentTemplateId(string projectPath)
-        {
-            var editingRecord = ReadTemplateTitleRecord(projectPath, EditingTemplateRecordPath);
-            if (!string.IsNullOrWhiteSpace(editingRecord?.templateId))
-            {
-                return editingRecord.templateId.Trim();
-            }
-
-            var deployedRecord = ReadTemplateTitleRecord(projectPath, DeployedTemplatesRecordPath);
-            return string.IsNullOrWhiteSpace(deployedRecord?.activeTemplateId)
-                ? "?"
-                : deployedRecord.activeTemplateId.Trim();
-        }
-
-        private static TemplateTitleRecord ReadTemplateTitleRecord(string projectPath, string relativePath)
-        {
-            try
-            {
-                var recordPath = Path.Combine(
-                    projectPath,
-                    relativePath.Replace('/', Path.DirectorySeparatorChar));
-                if (!File.Exists(recordPath))
-                {
-                    return null;
-                }
-
-                return JsonUtility.FromJson<TemplateTitleRecord>(File.ReadAllText(recordPath));
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         private static string ToDisplayPath(string path)
@@ -302,13 +268,6 @@ namespace Ember.Basic.Editor
                 ? "[EditorMainWindowTitle] Unity internal title API is unavailable, fallback to native window title."
                 : $"[EditorMainWindowTitle] Unity internal title API failed, fallback to native window title. {exception.Message}";
             EmberDebug.LogWarning(TAG, message);
-        }
-
-        [Serializable]
-        private sealed class TemplateTitleRecord
-        {
-            public string templateId = string.Empty;
-            public string activeTemplateId = string.Empty;
         }
 
         private static void TryApplyNativeWindowTitle(string title)
@@ -347,29 +306,16 @@ namespace Ember.Basic.Editor
         /// </summary>
         private static void TryApplyNativeWindowTitleMac(string title)
         {
-            try
-            {
-                // 转义标题中的双引号和反斜杠，防止 osascript 语法错误
-                var escapedTitle = title.Replace("\\", "\\\\").Replace("\"", "\\\"");
-                using var process = new Process
+            if (_nativeTask != null && !_nativeTask.IsCompleted) return;
+            var escapedTitle = title.Replace("\\", "\\\\").Replace("\"", "\\\"");
+            var script = $"tell application \"Unity\" to set title of front window to \"{escapedTitle}\"";
+            var token = _nativeCancellation.Token;
+            _nativeTask = System.Threading.Tasks.Task.Run(() => EmberTitleProcess.RunAsync(
+                new ProcessStartInfo
                 {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = "osascript",
-                        Arguments = $"-e 'tell application \"Unity\" to set title of front window to \"{escapedTitle}\"'",
-                        RedirectStandardError = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    }
-                };
-                process.Start();
-                process.WaitForExit(1000);
-            }
-            catch
-            {
-                // osascript 不可用时静默降级（首次已通过 LogReflectionWarning 通知）
-            }
+                    FileName = "osascript",
+                    Arguments = "-e \"" + script.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\""
+                }, 1000, token));
         }
 #endif
 
@@ -385,6 +331,7 @@ namespace Ember.Basic.Editor
         [MenuItem("Ember/Tool/刷新编辑器标题", priority = 390)]
         private static void RefreshTitleByMenu()
         {
+            UpdateContext(); Snapshot.Tick(true);
             ApplyTitle();
         }
 
@@ -393,12 +340,11 @@ namespace Ember.Basic.Editor
         /// </summary>
         internal static string BuildProjectTitle(string projectName, string projectPath)
         {
-            var branch = GetGitBranch(projectPath);
             return BuildProjectTitle(
                 projectName,
                 projectPath,
-                branch,
-                GetCurrentTemplateId(projectPath),
+                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? Snapshot.Current.Branch : "?",
+                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
                 GetBuildTargetLabel());
         }
 
@@ -408,7 +354,7 @@ namespace Ember.Basic.Editor
                 projectName,
                 projectPath,
                 branch,
-                GetCurrentTemplateId(projectPath),
+                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
                 GetBuildTargetLabel());
         }
 
@@ -423,7 +369,7 @@ namespace Ember.Basic.Editor
                 projectName,
                 projectPath,
                 branch,
-                GetCurrentTemplateId(projectPath),
+                Snapshot.Current?.Root == NormalizeProjectPath(projectPath) ? EmberTitleSnapshot.TemplateId(Snapshot.Current) : "?",
                 buildTarget);
         }
 
@@ -439,11 +385,18 @@ namespace Ember.Basic.Editor
             string template,
             string buildTarget)
         {
+            return BuildProjectTitle(projectName, projectPath, branch, template, buildTarget,
+                EmberTitleSnapshot.FindGitRoot(NormalizeProjectPath(projectPath)));
+        }
+
+        internal static string BuildProjectTitle(string projectName, string projectPath, string branch,
+            string template, string buildTarget, string gitRoot)
+        {
             var normalizedPath = NormalizeProjectPath(projectPath);
             var normalizedProjectName = string.IsNullOrWhiteSpace(projectName)
                 ? new DirectoryInfo(normalizedPath).Name
                 : projectName.Trim();
-            var gitRoot = FindGitRoot(normalizedPath);
+            gitRoot = NormalizeProjectPath(gitRoot ?? normalizedPath);
             var projectSubPath = GetProjectSubPath(gitRoot, normalizedPath);
             var target = string.IsNullOrWhiteSpace(buildTarget) ? "Unknown" : buildTarget.Trim();
             var branchDisplay = string.IsNullOrWhiteSpace(branch) ? "?" : branch.Trim();

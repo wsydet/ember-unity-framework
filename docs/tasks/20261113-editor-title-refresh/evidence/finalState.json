@@ -1,0 +1,36 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"at\":\"2026-11-13T06:44:13.2351227Z\",\"profileResult\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\.utmp\\\\ember-workflow\\\\20261113-editor-title-refresh\\\\evidence\\\\periodic-profile.json\",\"profiler\":false,\"driver\":false,\"profileEditor\":false,\"deep\":false,\"cpu\":false,\"playing\":false,\"compiling\":false,\"updating\":false,\"failed\":false,\"scene\":\"Assets/Game/Scenes/FrameworkScene.unity\",\"dirty\":false,\"error\":null,\"title\":\"ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework\",\"mvid\":\"a846df9e-3b58-41c7-b056-bcd9561e3b31\",\"activeTopdown\":true,\"trialEnabled\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "at": "2026-11-13T06:44:13.2351227Z",
+        "profileResult": "C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-workflow\\20261113-editor-title-refresh\\evidence\\periodic-profile.json",
+        "profiler": false,
+        "driver": false,
+        "profileEditor": false,
+        "deep": false,
+        "cpu": false,
+        "playing": false,
+        "compiling": false,
+        "updating": false,
+        "failed": false,
+        "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+        "dirty": false,
+        "error": null,
+        "title": "ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework",
+        "mvid": "a846df9e-3b58-41c7-b056-bcd9561e3b31",
+        "activeTopdown": true,
+        "trialEnabled": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

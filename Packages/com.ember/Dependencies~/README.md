@@ -1,12 +1,12 @@
 # Ember 消费端依赖声明
 
-当前发布：Ember **0.25.4**，修复 Editor 正式身份与扩展资格查询的重复解析、缓存失效和主线程周期检测开销；保留动态门禁与试玩 owner 清理。模板、依赖和公共技能 bundle 不变；Windward 消费端复测待进行。验证与接入边界见 [0.25.4 发布说明](../../../docs/dev/release-0.25.4.md)。
+当前发布：Ember **0.25.5**，将窗口标题周期 Git 查询与身份文件读取移到单次在途后台快照，descriptor/fallback 复用一次构建的标题；保留格式、更新入口与资格门禁。模板、第三方依赖和公共技能 bundle 不变；Windward 暂未升级。验证与接入边界见 [0.25.5 发布说明](../../../docs/dev/release-0.25.5.md)。
 
 ## 清单范围
 
-0.25.4完整 manifest（依赖沿用0.25.0）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+0.25.5完整 manifest（依赖沿用0.25.0）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
 
-本版清单：[release-0.25.4.json](release-0.25.4.json)、[manifest-0.25.4.json](manifest-0.25.4.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.25.4.md)。以下带旧版本号的流程记录保留其历史含义。
+本版清单：[release-0.25.5.json](release-0.25.5.json)、[manifest-0.25.5.json](manifest-0.25.5.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.25.5.md)。以下带旧版本号的流程记录保留其历史含义。
 
 ## 已有消费项目升级
 

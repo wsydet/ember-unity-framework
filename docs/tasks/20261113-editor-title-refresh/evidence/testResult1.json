@@ -1,0 +1,137 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"89b7f8f07433433d90bd439a25baf794\",\"status\":\"failed\",\"mode\":\"EditMode\",\"started_unix_ms\":1794551681774,\"finished_unix_ms\":1794551693913,\"last_update_unix_ms\":1794551693913,\"progress\":{\"completed\":8,\"total\":8,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"last_finished_unix_ms\":1794551693656,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground\",\"message\":\"  Expected string length 4 but was 7. Strings differ at index 0.\\r\\n  Expected: \\\"HEAD\\\"\\r\\n  But was:  \\\"changed\\\"\\r\\n  -----------^\\r\\n\"},{\"full_name\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"message\":\"System.MissingMethodException : Default constructor not found for type UnityEditor.ApplicationTitleDescriptor\"}],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":8,\"passed\":6,\"failed\":2,\"skipped\":0,\"durationSeconds\":4.3745893,\"resultState\":\"Failed(Child)\"},\"results\":[{\"name\":\"DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\\\"editing\\\")\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\\\"editing\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0261903,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\\\"active\\\")\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\\\"active\\\")\",\"state\":\"Passed\",\"durationSeconds\":0.0077166,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormattingRetainsAllFieldsAndFilesystemRoots\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.FormattingRetainsAllFieldsAndFilesystemRoots\",\"state\":\"Passed\",\"durationSeconds\":0.0100118,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground\",\"state\":\"Failed\",\"durationSeconds\":1.5724992,\"message\":\"  Expected string length 4 but was 7. Strings differ at index 0.\\r\\n  Expected: \\\"HEAD\\\"\\r\\n  But was:  \\\"changed\\\"\\r\\n  -----------^\\r\\n\",\"stackTrace\":\"at Ember.Basic.Editor.Tests.EmberTitleSnapshotTests+<GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground>d__8.MoveNext () [0x00585] in .\\\\Packages\\\\com.ember\\\\Basic\\\\Tests\\\\Editor\\\\EmberTitleSnapshotTests.cs:136\\r\\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\\\Library\\\\PackageCache\\\\com.unity.test-framework@1405238725ab\\\\UnityEngine.TestRunner\\\\NUnitExtensions\\\\Attributes\\\\TestEnumerator.cs:44\\r\\n\",\"output\":\"\"},{\"name\":\"InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected\",\"state\":\"Passed\",\"durationSeconds\":0.537329,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult\",\"state\":\"Passed\",\"durationSeconds\":0.4319002,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ProcessTimeoutCancellationFailureAndBothPipesAreBounded\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.ProcessTimeoutCancellationFailureAndBothPipesAreBounded\",\"state\":\"Passed\",\"durationSeconds\":0.9776454,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"fullName\":\"Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle\",\"state\":\"Failed:Error\",\"durationSeconds\":0.0068032,\"message\":\"System.MissingMethodException : Default constructor not found for type UnityEditor.ApplicationTitleDescriptor\",\"stackTrace\":\"  at System.RuntimeType.CreateInstanceMono (System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00076] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \\r\\n  at System.RuntimeType.CreateInstanceSlow (System.Boolean publicOnly, System.Boolean wrapExceptions, System.Boolean skipCheckThis, System.Boolean fillCache) [0x00009] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \\r\\n  at System.RuntimeType.CreateInstanceDefaultCtor (System.Boolean publicOnly, System.Boolean skipCheckThis, System.Boolean fillCache, System.Boolean wrapExceptions, System.Threading.StackCrawlMark& stackMark) [0x00027] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \\r\\n  at System.Activator.CreateInstance (System.Type type, System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00020] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \\r\\n  at System.Activator.CreateInstance (System.Type type, System.Boolean nonPublic) [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \\r\\n  at Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle () [0x00058] in .\\\\Packages\\\\com.ember\\\\Basic\\\\Tests\\\\Editor\\\\EmberTitleSnapshotTests.cs:44 \\r\\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\\r\\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \",\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "89b7f8f07433433d90bd439a25baf794",
+        "status": "failed",
+        "mode": "EditMode",
+        "started_unix_ms": 1794551681774,
+        "finished_unix_ms": 1794551693913,
+        "last_update_unix_ms": 1794551693913,
+        "progress": {
+          "completed": 8,
+          "total": 8,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+          "last_finished_unix_ms": 1794551693656,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [
+            {
+              "full_name": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground",
+              "message": "  Expected string length 4 but was 7. Strings differ at index 0.\r\n  Expected: \"HEAD\"\r\n  But was:  \"changed\"\r\n  -----------^\r\n"
+            },
+            {
+              "full_name": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+              "message": "System.MissingMethodException : Default constructor not found for type UnityEditor.ApplicationTitleDescriptor"
+            }
+          ],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 8,
+            "passed": 6,
+            "failed": 2,
+            "skipped": 0,
+            "durationSeconds": 4.3745893,
+            "resultState": "Failed(Child)"
+          },
+          "results": [
+            {
+              "name": "DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\"editing\")",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(True,\"editing\")",
+              "state": "Passed",
+              "durationSeconds": 0.0261903,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\"active\")",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.DisplayIdentityUsesOnlyTheFormalRecordForItsPackageSource(False,\"active\")",
+              "state": "Passed",
+              "durationSeconds": 0.0077166,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormattingRetainsAllFieldsAndFilesystemRoots",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.FormattingRetainsAllFieldsAndFilesystemRoots",
+              "state": "Passed",
+              "durationSeconds": 0.0100118,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground",
+              "state": "Failed",
+              "durationSeconds": 1.5724992,
+              "message": "  Expected string length 4 but was 7. Strings differ at index 0.\r\n  Expected: \"HEAD\"\r\n  But was:  \"changed\"\r\n  -----------^\r\n",
+              "stackTrace": "at Ember.Basic.Editor.Tests.EmberTitleSnapshotTests+<GitBranchSwitchDetachedHeadSubdirectoryWorktreeAndNoGitAreReadInBackground>d__8.MoveNext () [0x00585] in .\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs:136\r\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1405238725ab\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r\n",
+              "output": ""
+            },
+            {
+              "name": "InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InFlightRequestsAreCoalescedAndLateProjectOrDisposedResultsAreRejected",
+              "state": "Passed",
+              "durationSeconds": 0.537329,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.InvalidationDiscardsSameProjectGenerationAndPublishesOnlyTheNewResult",
+              "state": "Passed",
+              "durationSeconds": 0.4319002,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ProcessTimeoutCancellationFailureAndBothPipesAreBounded",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.ProcessTimeoutCancellationFailureAndBothPipesAreBounded",
+              "state": "Passed",
+              "durationSeconds": 0.9776454,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+              "fullName": "Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle",
+              "state": "Failed:Error",
+              "durationSeconds": 0.0068032,
+              "message": "System.MissingMethodException : Default constructor not found for type UnityEditor.ApplicationTitleDescriptor",
+              "stackTrace": "  at System.RuntimeType.CreateInstanceMono (System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00076] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.RuntimeType.CreateInstanceSlow (System.Boolean publicOnly, System.Boolean wrapExceptions, System.Boolean skipCheckThis, System.Boolean fillCache) [0x00009] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.RuntimeType.CreateInstanceDefaultCtor (System.Boolean publicOnly, System.Boolean skipCheckThis, System.Boolean fillCache, System.Boolean wrapExceptions, System.Threading.StackCrawlMark& stackMark) [0x00027] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.Activator.CreateInstance (System.Type type, System.Boolean nonPublic, System.Boolean wrapExceptions) [0x00020] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at System.Activator.CreateInstance (System.Type type, System.Boolean nonPublic) [0x00000] in <816f70bc2a9c4332b0bd119906a8d40e>:0 \r\n  at Ember.Basic.Editor.Tests.EmberTitleSnapshotTests.RepeatedInternalDescriptorCallbacksOnlyCopyThePublishedTitle () [0x00058] in .\\Packages\\com.ember\\Basic\\Tests\\Editor\\EmberTitleSnapshotTests.cs:44 \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <816f70bc2a9c4332b0bd119906a8d40e>:0 ",
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

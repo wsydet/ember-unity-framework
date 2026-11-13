@@ -1,0 +1,307 @@
+ M .agents/skills/ember-solution-design/SKILL.md
+ M AGENTS.md
+ M Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
+ M Packages/com.ember/CHANGELOG.md
+ M Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+ M Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+ M Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+ M Packages/com.ember/Dependencies~/README.md
+ M Packages/com.ember/Documentation~/maintenance/ai-skills.md
+ M Packages/com.ember/Documentation~/maintenance/ai-workflow.md
+ M Packages/com.ember/Documentation~/maintenance/glossary.md
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+ M Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+ M Packages/com.ember/README.md
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+ M Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+ M Packages/com.ember/package.json
+ M docs/dev/framework-progress.md
+ M docs/dev/upm-migration-plan.md
+ M ember-unity-framework.slnx
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta
+?? Packages/com.ember/Basic/Tests.meta
+?? Packages/com.ember/Basic/Tests/Editor.meta
+?? Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef
+?? Packages/com.ember/Basic/Tests/Editor/Ember.Basic.Editor.Tests.asmdef.meta
+?? Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs
+?? Packages/com.ember/Basic/Tests/Editor/EmberTitleSnapshotTests.cs.meta
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? Packages/com.ember/Dependencies~/manifest-0.25.3.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.4.json
+?? Packages/com.ember/Dependencies~/release-0.25.3.json
+?? Packages/com.ember/Dependencies~/release-0.25.4.json
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/dev/release-0.25.3.md
+?? docs/dev/release-0.25.4.md
+?? docs/tasks/20261111-patch-preview-long-paths/.gitattributes
+?? docs/tasks/20261111-patch-preview-long-paths/README.md
+?? docs/tasks/20261111-patch-preview-long-paths/consumer-validation-prompt.md
+?? docs/tasks/20261111-patch-preview-long-paths/design.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/add_io_diagnostics.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/consumer-validation-prompt.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/design.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/handoff.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/implementation.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-inputs/requirements.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-link-check.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive-manifest.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/archive_prepare.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/audit_release.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/check_archive.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/cleanup-task.ps1
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/cleanup.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile1.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile3console.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile3loaded.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile3state.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile4console.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile4loaded.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile4request.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/compile4state.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/consolefinal.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberExtensionProject.Identity.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberExtensionProject.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.AISkills.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.Patch.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberProjectSetup.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateInheritanceEngine.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Core/Editor/EmberTemplateTransaction.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/Tests/EditMode/EmberTemplatePatchEditTests.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberAISkillInstaller.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-source/UPMManager/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/delivery-tracked.diff
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/finish_records.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/finish_release_local.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/git-status-final.txt
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implement_io.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberExtensionProject.Identity.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberExtensionProject.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.AISkills.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.Patch.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberProjectSetup.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateInheritanceEngine.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Core/Editor/EmberTemplateTransaction.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Tests/EditMode/EmberTemplatePatchEditTests.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/Tests/EditMode/EmberTemplateTransactionEditTests.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/UPMManager/Editor/EmberAISkillInstaller.cs
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/implementation-start/git-status.txt
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/improve_patch_tests.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/io-audit.md
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/loaded1.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/loaded2.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/prepare_release.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/record-link-check.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/record_identity.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-compilation-events.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-coverage.txt
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-product.diff
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-remote-proof.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-source-identity.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-static-checks.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/release-validation.txt
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/releaseCompileRequest.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/releaseConsole.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/releaseGraph.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/releaseLoaded.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/releaseTemplates.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/resume_io.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/snapshot_delivery.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/source-identity.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/stage_release.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/sync_archive_to_candidate.py
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/test-filters.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/test1final.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/test2final.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/test3final.json
+?? docs/tasks/20261111-patch-preview-long-paths/evidence/test_filters.py
+?? docs/tasks/20261111-patch-preview-long-paths/handoff.md
+?? docs/tasks/20261111-patch-preview-long-paths/implementation.md
+?? docs/tasks/20261111-patch-preview-long-paths/prompts/02-design.md
+?? docs/tasks/20261111-patch-preview-long-paths/prompts/03-implementation.md
+?? docs/tasks/20261111-patch-preview-long-paths/prompts/04-acceptance.md
+?? docs/tasks/20261111-patch-preview-long-paths/requirements.md
+?? docs/tasks/20261113-editor-identity-cache/.gitattributes
+?? docs/tasks/20261113-editor-identity-cache/README.md
+?? docs/tasks/20261113-editor-identity-cache/consumer-handoff.md
+?? docs/tasks/20261113-editor-identity-cache/consumer-receipt-append.md
+?? docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-delivery.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-final-source.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-microbenchmark.cs.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/accepted-preview-microbenchmark.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/before/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+?? docs/tasks/20261113-editor-identity-cache/evidence/capture-delivery.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile2-loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile3console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile3loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile3request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile3state.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile4console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile4loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile4request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile4state.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile5console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile5loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile5request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile5state.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile6console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile6loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile6request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/compile6state.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/consumer-append-before-final.md
+?? docs/tasks/20261113-editor-identity-cache/evidence/consumer-receipt-linked.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/design.md.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/framework-fix-prompt.md.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/consumer-reference/implementation.md.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/delivery-console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/delivery-environment.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/finalconsole.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/finalenvironment.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/finalstate.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/link-check.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-delivery.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-final-source.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark-final.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark.cs.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/microbenchmark.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/owner-final-source.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/owner-restoration-final.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/owner-restoration.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/preexisting-preservation.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/preexisting.diff
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/append-consumer-published.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/audit-candidate.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/binaries-head-result.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/binaries-staged.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/binaries_post.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/bundle-legacy-shell-failure.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/bundle-staged.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/candidate-audit.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compare-source.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-console.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-loaded.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compile-final-state.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/compile-request.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/consumer-published-receipt.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/coverage.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/finish-primary.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/fonts-staged.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/fonts_post.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/metadata-preview.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/mirror-candidate.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/other-work-preserved.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/package-before-release.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/prepare-candidate.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/push.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/remote-proof.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/remote-verification.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/source-base-comparison.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/stage-candidate.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/start-status.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/start.diff
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/templates-actual.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/tests-0.25.4.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/release/validation.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/source-manifest.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/staged-before.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/status-before.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/status-final.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/sync-consumer-receipt.py
+?? docs/tasks/20261113-editor-identity-cache/evidence/task-only.diff
+?? docs/tasks/20261113-editor-identity-cache/evidence/tests1.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/tests2.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/tests3.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/tests4.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/tests5.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/watcher-environment.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/window-cache-probe.cs.txt
+?? docs/tasks/20261113-editor-identity-cache/evidence/window-cache-probe.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/window-final-source.json
+?? docs/tasks/20261113-editor-identity-cache/evidence/windward-implementation-before.md
+?? docs/tasks/20261113-editor-title-refresh/README.md
+?? docs/tasks/20261113-editor-title-refresh/consumer-handoff.md
+?? docs/tasks/20261113-editor-title-refresh/consumer-receipt-append.md
+?? docs/tasks/20261113-editor-title-refresh/evidence/EditorMainWindowTitle.before.cs.txt
+?? docs/tasks/20261113-editor-title-refresh/evidence/capture.cs.txt
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileConsole2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileConsole3.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileConsole4.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded3.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileLoaded4.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileRequest2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileRequest3.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileRequest4.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileState2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileState3.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/compileState4.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/finalConsole.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/finalState.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/link-check.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/live-cancellation.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/nativeFallback.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/periodic-profile-before-root-path-fix.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/periodic-profile.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/periodic-summary.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/profileStart.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/profileStartFinal.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/release/prepare.py
+?? docs/tasks/20261113-editor-title-refresh/evidence/release/preservation-before.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/source-manifest.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/status-after.txt
+?? docs/tasks/20261113-editor-title-refresh/evidence/status-before.txt
+?? docs/tasks/20261113-editor-title-refresh/evidence/task-only.diff
+?? docs/tasks/20261113-editor-title-refresh/evidence/testResult1.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/testResult2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/testResult3.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/testStart.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/testStart2.json
+?? docs/tasks/20261113-editor-title-refresh/evidence/testStart3.json

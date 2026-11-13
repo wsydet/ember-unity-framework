@@ -1,0 +1,106 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"at\":\"2026-11-13T06:53:35.5905394Z\",\"version\":\"0.25.5\",\"templates\":[{\"id\":\"base\",\"version\":\"0.10.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"recorded\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"sealedHash\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"matches\":true,\"parentSnapshot\":null,\"parentMatches\":true},{\"id\":\"lane-defense-2d\",\"version\":\"0.1.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"0aa2e18bdf1864add23cd7a7fe7e5674\",\"recorded\":\"0aa2e18bdf1864add23cd7a7fe7e5674\",\"sealedHash\":\"0aa2e18bdf1864add23cd7a7fe7e5674\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true},{\"id\":\"platformer-2d\",\"version\":\"0.13.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"567e277ba4d75871dad05b00b8ec48c8\",\"recorded\":\"567e277ba4d75871dad05b00b8ec48c8\",\"sealedHash\":\"567e277ba4d75871dad05b00b8ec48c8\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true},{\"id\":\"source3d-2p5d\",\"version\":\"0.6.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"80a86599d447326f049b4be3954db7cb\",\"recorded\":\"80a86599d447326f049b4be3954db7cb\",\"sealedHash\":\"80a86599d447326f049b4be3954db7cb\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true},{\"id\":\"topdown-2d\",\"version\":\"0.1.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"d83863b16bda8c2655f21d6aa3d55693\",\"recorded\":\"d83863b16bda8c2655f21d6aa3d55693\",\"sealedHash\":\"d83863b16bda8c2655f21d6aa3d55693\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true},{\"id\":\"ui-game\",\"version\":\"0.2.2\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"8dfcca368a0262eb5271008669a64358\",\"recorded\":\"8dfcca368a0262eb5271008669a64358\",\"sealedHash\":\"8dfcca368a0262eb5271008669a64358\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true},{\"id\":\"visual-novel\",\"version\":\"0.22.3\",\"frameworkVersion\":\"0.25.0\",\"actual\":\"eadb06cc16d55c09718ac839ae8dd554\",\"recorded\":\"eadb06cc16d55c09718ac839ae8dd554\",\"sealedHash\":\"eadb06cc16d55c09718ac839ae8dd554\",\"matches\":true,\"parentSnapshot\":\"0b0431013fcd599ea1d8f1c27aafd169\",\"parentMatches\":true}],\"graphIssues\":[],\"editing\":{\"templateId\":\"topdown-2d\",\"templateVersion\":\"0.1.2\",\"contentHash\":\"d83863b16bda8c2655f21d6aa3d55693\",\"loadedAt\":\"2026-11-11 15:53:02\"}},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "at": "2026-11-13T06:53:35.5905394Z",
+        "version": "0.25.5",
+        "templates": [
+          {
+            "id": "base",
+            "version": "0.10.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "0b0431013fcd599ea1d8f1c27aafd169",
+            "recorded": "0b0431013fcd599ea1d8f1c27aafd169",
+            "sealedHash": "0b0431013fcd599ea1d8f1c27aafd169",
+            "matches": true,
+            "parentSnapshot": null,
+            "parentMatches": true
+          },
+          {
+            "id": "lane-defense-2d",
+            "version": "0.1.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "0aa2e18bdf1864add23cd7a7fe7e5674",
+            "recorded": "0aa2e18bdf1864add23cd7a7fe7e5674",
+            "sealedHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          },
+          {
+            "id": "platformer-2d",
+            "version": "0.13.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "567e277ba4d75871dad05b00b8ec48c8",
+            "recorded": "567e277ba4d75871dad05b00b8ec48c8",
+            "sealedHash": "567e277ba4d75871dad05b00b8ec48c8",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          },
+          {
+            "id": "source3d-2p5d",
+            "version": "0.6.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "80a86599d447326f049b4be3954db7cb",
+            "recorded": "80a86599d447326f049b4be3954db7cb",
+            "sealedHash": "80a86599d447326f049b4be3954db7cb",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          },
+          {
+            "id": "topdown-2d",
+            "version": "0.1.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "d83863b16bda8c2655f21d6aa3d55693",
+            "recorded": "d83863b16bda8c2655f21d6aa3d55693",
+            "sealedHash": "d83863b16bda8c2655f21d6aa3d55693",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          },
+          {
+            "id": "ui-game",
+            "version": "0.2.2",
+            "frameworkVersion": "0.25.0",
+            "actual": "8dfcca368a0262eb5271008669a64358",
+            "recorded": "8dfcca368a0262eb5271008669a64358",
+            "sealedHash": "8dfcca368a0262eb5271008669a64358",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          },
+          {
+            "id": "visual-novel",
+            "version": "0.22.3",
+            "frameworkVersion": "0.25.0",
+            "actual": "eadb06cc16d55c09718ac839ae8dd554",
+            "recorded": "eadb06cc16d55c09718ac839ae8dd554",
+            "sealedHash": "eadb06cc16d55c09718ac839ae8dd554",
+            "matches": true,
+            "parentSnapshot": "0b0431013fcd599ea1d8f1c27aafd169",
+            "parentMatches": true
+          }
+        ],
+        "graphIssues": [],
+        "editing": {
+          "templateId": "topdown-2d",
+          "templateVersion": "0.1.2",
+          "contentHash": "d83863b16bda8c2655f21d6aa3d55693",
+          "loadedAt": "2026-11-11 15:53:02"
+        }
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

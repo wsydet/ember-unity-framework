@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"at\":\"2026-11-13T06:52:45.1266458Z\",\"root\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\",\"version\":\"0.25.5\",\"resolvedPath\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Packages\\\\com.ember\",\"source\":\"Embedded\",\"frameworkApi\":\"0.25.5\",\"mvid\":\"a846df9e-3b58-41c7-b056-bcd9561e3b31\",\"failed\":false,\"compiling\":false,\"updating\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "at": "2026-11-13T06:52:45.1266458Z",
+        "root": "C:\\Users\\wuyu\\My\\ember-unity-framework",
+        "version": "0.25.5",
+        "resolvedPath": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember",
+        "source": "Embedded",
+        "frameworkApi": "0.25.5",
+        "mvid": "a846df9e-3b58-41c7-b056-bcd9561e3b31",
+        "failed": false,
+        "compiling": false,
+        "updating": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

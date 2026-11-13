@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"title\":\"ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework\",\"nativeTitle\":\"null\",\"before\":28,\"after\":28,\"error\":null,\"at\":\"2026-11-13T06:39:20.1451335Z\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "title": "ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework",
+        "nativeTitle": "null",
+        "before": 28,
+        "after": 28,
+        "error": null,
+        "at": "2026-11-13T06:39:20.1451335Z"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

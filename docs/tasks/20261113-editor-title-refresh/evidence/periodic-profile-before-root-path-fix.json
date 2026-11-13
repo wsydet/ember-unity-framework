@@ -1,0 +1,944 @@
+{
+  "started": 11648.0546715,
+  "ended": 11664.114906600002,
+  "duration": 16.060235100001591,
+  "frames": 147,
+  "samples": [
+    {
+      "frame": 0,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 1,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.1524,
+      "children": 36
+    },
+    {
+      "frame": 1,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.049399998,
+      "children": 19
+    },
+    {
+      "frame": 2,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 3,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 4,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 5,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 6,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 7,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0051,
+      "children": 1
+    },
+    {
+      "frame": 8,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 9,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 10,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 11,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 12,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 13,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 14,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 15,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 16,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 17,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 18,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 19,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 20,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 21,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 22,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0056,
+      "children": 1
+    },
+    {
+      "frame": 23,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 24,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 25,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 26,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 27,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 28,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0025,
+      "children": 1
+    },
+    {
+      "frame": 29,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 30,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 31,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 32,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0025,
+      "children": 1
+    },
+    {
+      "frame": 33,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 34,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 35,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.00239999988,
+      "children": 1
+    },
+    {
+      "frame": 36,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 37,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 38,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0014,
+      "children": 1
+    },
+    {
+      "frame": 39,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 40,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 41,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 42,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 43,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 44,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 45,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 46,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 47,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.3061,
+      "children": 167
+    },
+    {
+      "frame": 47,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0429,
+      "children": 19
+    },
+    {
+      "frame": 48,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.1204,
+      "children": 36
+    },
+    {
+      "frame": 48,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0372,
+      "children": 19
+    },
+    {
+      "frame": 49,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 50,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 51,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 52,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 53,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 54,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 55,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0027,
+      "children": 1
+    },
+    {
+      "frame": 56,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 57,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 58,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 59,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 60,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0026,
+      "children": 1
+    },
+    {
+      "frame": 61,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 62,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 63,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 64,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 65,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 66,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 67,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 68,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0016,
+      "children": 1
+    },
+    {
+      "frame": 69,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 70,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0016,
+      "children": 1
+    },
+    {
+      "frame": 71,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 72,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 73,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 74,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0016,
+      "children": 1
+    },
+    {
+      "frame": 75,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 76,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0045,
+      "children": 1
+    },
+    {
+      "frame": 77,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0025,
+      "children": 1
+    },
+    {
+      "frame": 78,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0046,
+      "children": 1
+    },
+    {
+      "frame": 79,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0027,
+      "children": 1
+    },
+    {
+      "frame": 80,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 81,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 82,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 83,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 84,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 85,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 86,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 87,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 88,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 89,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 90,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 91,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 92,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0014,
+      "children": 1
+    },
+    {
+      "frame": 93,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 94,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.4729,
+      "children": 167
+    },
+    {
+      "frame": 94,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0711,
+      "children": 19
+    },
+    {
+      "frame": 95,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.3076,
+      "children": 36
+    },
+    {
+      "frame": 95,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0477,
+      "children": 19
+    },
+    {
+      "frame": 96,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 97,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 98,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 99,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 100,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0025,
+      "children": 1
+    },
+    {
+      "frame": 101,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 102,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 103,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0045,
+      "children": 1
+    },
+    {
+      "frame": 104,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0015,
+      "children": 1
+    },
+    {
+      "frame": 105,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 106,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 107,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 108,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 109,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.003,
+      "children": 1
+    },
+    {
+      "frame": 110,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 111,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 112,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 113,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0027,
+      "children": 1
+    },
+    {
+      "frame": 114,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 115,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0025,
+      "children": 1
+    },
+    {
+      "frame": 116,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 117,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 118,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0018,
+      "children": 1
+    },
+    {
+      "frame": 119,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 120,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 121,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.00239999988,
+      "children": 1
+    },
+    {
+      "frame": 122,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0039,
+      "children": 1
+    },
+    {
+      "frame": 123,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0027,
+      "children": 1
+    },
+    {
+      "frame": 124,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 125,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0021,
+      "children": 1
+    },
+    {
+      "frame": 126,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 127,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 128,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 129,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 130,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 131,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 132,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 133,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0028,
+      "children": 1
+    },
+    {
+      "frame": 134,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    },
+    {
+      "frame": 135,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 136,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 137,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 138,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0017,
+      "children": 1
+    },
+    {
+      "frame": 139,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 140,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0019,
+      "children": 1
+    },
+    {
+      "frame": 141,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.2923,
+      "children": 167
+    },
+    {
+      "frame": 141,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0447,
+      "children": 19
+    },
+    {
+      "frame": 142,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.1256,
+      "children": 36
+    },
+    {
+      "frame": 142,
+      "name": "UnityEditor.CoreModule.dll!UnityEditor::EditorApplication.BuildMainWindowTitle() [Invoke]",
+      "ms": 0.0372999981,
+      "children": 19
+    },
+    {
+      "frame": 143,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0027,
+      "children": 1
+    },
+    {
+      "frame": 144,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0022,
+      "children": 1
+    },
+    {
+      "frame": 145,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.0023,
+      "children": 1
+    },
+    {
+      "frame": 146,
+      "name": "EditorApplication.update: Ember.Basic.Editor.EditorMainWindowTitle.RefreshTitlePeriodically",
+      "ms": 0.002,
+      "children": 1
+    }
+  ],
+  "requestsAtStart": 16,
+  "requests": 20,
+  "error": null,
+  "title": "ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework",
+  "restored": {
+    "oldEnabled": false,
+    "oldDriver": false,
+    "oldEditor": false,
+    "oldDeep": false,
+    "oldCpu": false
+  },
+  "mainThread": 1
+}

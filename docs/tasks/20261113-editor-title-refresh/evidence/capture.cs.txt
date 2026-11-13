@@ -1,0 +1,68 @@
+var outPath = System.IO.Path.GetFullPath(".utmp/ember-workflow/20261113-editor-title-refresh/evidence/periodic-profile.json");
+var oldEnabled = UnityEngine.Profiling.Profiler.enabled;
+var oldDriver = UnityEditorInternal.ProfilerDriver.enabled;
+var oldEditor = UnityEditorInternal.ProfilerDriver.profileEditor;
+var oldDeep = UnityEditorInternal.ProfilerDriver.deepProfiling;
+var oldCpu = UnityEditorInternal.ProfilerDriver.IsAreaEnabled(UnityEngine.Profiling.ProfilerArea.CPU);
+var samples = new System.Collections.Generic.List<object>();
+var times = new System.Collections.Generic.List<float>();
+var titleType = typeof(Ember.Basic.Editor.EditorMainWindowTitle);
+var titleFlags = System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic;
+var requestsAtStart = titleType.GetProperty("QueryRequests", titleFlags).GetValue(null, null);
+var last = UnityEditorInternal.ProfilerDriver.lastFrameIndex;
+double started = UnityEditor.EditorApplication.timeSinceStartup;
+int frames = 0;
+UnityEditorInternal.ProfilerDriver.deepProfiling = false;
+UnityEditorInternal.ProfilerDriver.profileEditor = true;
+UnityEditorInternal.ProfilerDriver.SetAreaEnabled(UnityEngine.Profiling.ProfilerArea.CPU, true);
+UnityEditorInternal.ProfilerDriver.enabled = true;
+UnityEngine.Profiling.Profiler.enabled = true;
+UnityEditor.EditorApplication.CallbackFunction tick = null;
+tick = () => {
+    try {
+        double now = UnityEditor.EditorApplication.timeSinceStartup;
+        int end = UnityEditorInternal.ProfilerDriver.lastFrameIndex;
+        for (int f = System.Math.Max(last + 1, UnityEditorInternal.ProfilerDriver.firstFrameIndex); f <= end; f++) {
+            using (var view = UnityEditorInternal.ProfilerDriver.GetRawFrameDataView(f, 0)) {
+                if (!view.valid) continue;
+                frames++;
+                for (int i = 0; i < view.sampleCount; i++) {
+                    string name = view.GetSampleName(i);
+                    if (!name.Contains("EditorMainWindowTitle") && !name.Contains("BuildMainWindowTitle")) continue;
+                    float ms = view.GetSampleTimeMs(i);
+                    if (name.Contains("RefreshTitlePeriodically")) times.Add(ms);
+                    samples.Add(new {frame=f, name, ms, children=view.GetSampleChildrenCount(i)});
+                }
+            }
+        }
+        last = end;
+        if (now - started < 16) return;
+        UnityEditor.EditorApplication.update -= tick;
+        UnityEditorInternal.ProfilerDriver.enabled = oldDriver;
+        UnityEngine.Profiling.Profiler.enabled = oldEnabled;
+        UnityEditorInternal.ProfilerDriver.profileEditor = oldEditor;
+        UnityEditorInternal.ProfilerDriver.deepProfiling = oldDeep;
+        UnityEditorInternal.ProfilerDriver.SetAreaEnabled(UnityEngine.Profiling.ProfilerArea.CPU, oldCpu);
+        var type = typeof(Ember.Basic.Editor.EditorMainWindowTitle);
+        var flags = System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic;
+        System.IO.File.WriteAllText(outPath, Newtonsoft.Json.JsonConvert.SerializeObject(new {
+            started, ended=now, duration=now-started, frames, samples,
+            requestsAtStart, requests=type.GetProperty("QueryRequests", flags).GetValue(null, null),
+            error=type.GetProperty("LastQueryError", flags).GetValue(null, null),
+            title=type.GetField("_currentTitle", flags).GetValue(null),
+            restored=new {oldEnabled, oldDriver, oldEditor, oldDeep, oldCpu},
+            mainThread=System.Threading.Thread.CurrentThread.ManagedThreadId
+        }, Newtonsoft.Json.Formatting.Indented));
+        UnityEditor.SessionState.SetString("Ember.TitleProfile.Result", outPath);
+    } catch (System.Exception e) {
+        UnityEditor.EditorApplication.update -= tick;
+        UnityEditorInternal.ProfilerDriver.enabled = oldDriver;
+        UnityEngine.Profiling.Profiler.enabled = oldEnabled;
+        UnityEditorInternal.ProfilerDriver.profileEditor = oldEditor;
+        UnityEditorInternal.ProfilerDriver.deepProfiling = oldDeep;
+        UnityEditorInternal.ProfilerDriver.SetAreaEnabled(UnityEngine.Profiling.ProfilerArea.CPU, oldCpu);
+        UnityEditor.SessionState.SetString("Ember.TitleProfile.Result", e.ToString());
+    }
+};
+UnityEditor.EditorApplication.update += tick;
+return new {started, outPath};

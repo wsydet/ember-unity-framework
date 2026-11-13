@@ -1,0 +1,20 @@
+{
+  "duration": 16.107462099998884,
+  "frames": 148,
+  "titleSamples": 148,
+  "maxMs": 0.3191,
+  "p95Ms": 0.0047,
+  "over1ms": 0,
+  "buildMainMaxMs": 0.0475,
+  "requestsStart": 13,
+  "requestsEnd": 16,
+  "error": null,
+  "title": "ember-unity-framework | codex/local-snapshot-20261111-162819 | topdown-2d | StandaloneWindows64 | C:/Users/wuyu/My/ember-unity-framework",
+  "restored": {
+    "oldEnabled": false,
+    "oldDriver": false,
+    "oldEditor": false,
+    "oldDeep": false,
+    "oldCpu": false
+  }
+}

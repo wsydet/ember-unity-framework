@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"mvid\":\"a846df9e-3b58-41c7-b056-bcd9561e3b31\",\"testMvid\":\"e020f8de-fe41-4d99-ab14-ab7db6110da8\",\"failed\":false,\"compiling\":false,\"updating\":false,\"at\":\"2026-11-13T06:43:06.0820852Z\"},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "mvid": "a846df9e-3b58-41c7-b056-bcd9561e3b31",
+        "testMvid": "e020f8de-fe41-4d99-ab14-ab7db6110da8",
+        "failed": false,
+        "compiling": false,
+        "updating": false,
+        "at": "2026-11-13T06:43:06.0820852Z"
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}
