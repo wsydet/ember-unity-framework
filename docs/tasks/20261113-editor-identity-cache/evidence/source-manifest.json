@@ -1,0 +1,97 @@
+[
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberConditionalMenu.cs",
+    "new": false,
+    "sha256": "08eedb2d981d2afd4a651931a9e9a52b2b83d7770bd355a59a0d2c889171c77e"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs",
+    "new": false,
+    "sha256": "9bf8d5494f0f690c6c02b62d5e6d9a2a2bacee0ec3d08a8c58cb547f56ad3e8c"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs",
+    "new": false,
+    "sha256": "a12b1ad57fb7de4c447495720106e6f846fe986e5eb6eb3088a69c663b54a194"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs",
+    "new": false,
+    "sha256": "345593e809156269f8b1f8be808545884d52a541a233aab6dc23f8cb7fd5293b"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.cs",
+    "new": false,
+    "sha256": "d1b751e20e531f9824c3bc8ead9f3cc5088619b9d0233842bd68d3cf6f2b8802"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs",
+    "new": false,
+    "sha256": "c7d0bdab43dd99a3616b16178a23a5611d12042cb41b033b1c8d01f2c8963649"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs",
+    "new": false,
+    "sha256": "1f1de69b3bd1cf7f303bdc4468acd4717e29fe7321a752e849b640900023aa75"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+    "new": false,
+    "sha256": "3b1539a4cfe0e49228a711b6b93f916fdee5b17b8d5a6c833cb02aff7bf879da"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberSetupWindow.cs",
+    "new": false,
+    "sha256": "6994187393fca0b64a8e38c561361a47ceb1d9b0757bfd15ba90de120ed32d93"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs",
+    "new": false,
+    "sha256": "2a1cea007f4eccb6f6b3b51a3e9e5e0abfbea84dfe1eef57a8ce6dd27da7950d"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+    "new": false,
+    "sha256": "e2563cc358592c301997caf42f6329820a5fb9506edfc27107fde05fe1e8c361"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs",
+    "new": false,
+    "sha256": "c01c1dd179387ef98b5b533f36c24f9691ad9df475bf322eb28c5f166b4d9c72"
+  },
+  {
+    "path": "Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs",
+    "new": false,
+    "sha256": "8e712f4a7ca11688ffa6f46d84f1a2ed3e27a7c2cba1e20364eb493fbaa9d721"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs",
+    "new": true,
+    "sha256": "960c26820d51da66c689056a51dded0d689b24b4eccc56e8729e5056de3889e9"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta",
+    "new": true,
+    "sha256": "0bb4b6f72140fc658531595e9d3f90b184145ae2619dea4fbf8616a6a263cdff"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs",
+    "new": true,
+    "sha256": "94824c3a2b1648bc4c72ecf1778a3b85636d6d578e27132907c8123bdf14599d"
+  },
+  {
+    "path": "Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta",
+    "new": true,
+    "sha256": "d6084ad4331d3d2b61540bc7dc818d68372bd000eb4ea2ba74a3b472a0c3d5a4"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs",
+    "new": true,
+    "sha256": "e6059bde33422524af3a6a282f38215b293e9b5915aab3062d344d1cdfea5372"
+  },
+  {
+    "path": "Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta",
+    "new": true,
+    "sha256": "66181a72aac0ae1a307af905a9814930d22f11e4114b2aba463b971f16c4c9df"
+  }
+]

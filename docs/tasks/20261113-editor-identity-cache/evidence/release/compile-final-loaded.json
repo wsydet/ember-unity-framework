@@ -1,0 +1,26 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T04:20:14.0301696Z\",\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"framework\":\"0.25.4\",\"package\":\"0.25.4\",\"coreMvid\":\"4b66644d-1921-49e0-a818-c1a3557aafba\",\"levelMvid\":\"f2959b0b-51e2-4412-83d8-eb61c33bd61d\",\"compiling\":false,\"updating\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T04:20:14.0301696Z",
+        "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+        "framework": "0.25.4",
+        "package": "0.25.4",
+        "coreMvid": "4b66644d-1921-49e0-a818-c1a3557aafba",
+        "levelMvid": "f2959b0b-51e2-4412-83d8-eb61c33bd61d",
+        "compiling": false,
+        "updating": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

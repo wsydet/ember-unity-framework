@@ -1,0 +1,153 @@
+# Windward 编辑器进入关卡后持续低帧率：调研与优化方案
+
+日期：2026-11-13。当前状态：**方案 B 已采用；完成有限基线并记录缺口，框架修改转交用户另开框架工程对话；尚未修复、发布或消费升级。**
+
+2026-11-13 最新接续：用户明确要求“如果需要修改框架，请给我对应的提示词我去修改框架，然后消费端更新”。本对话停止框架实施，已完成的基线、限制和最终现场见[本轮回执](implementation.md)，可直接粘贴的[框架修复提示词](framework-fix-prompt.md)。下文保留原调研阶段的证据与授权时点；其中“推荐待确认／未获实施授权”不覆盖此处最新决定。后续框架发布、UPM Manager 消费升级和必要的内容 hash 重新绑定仍分别核对授权。
+
+## 1. 需求、范围与当前结论
+
+用户反馈开始游戏后帧率很低，已确认是 **Unity 编辑器内进入关卡后持续卡顿**。入口补充为“两种入口都会卡，或不确定”，因此必须同时覆盖关卡窗口试玩和 FrameworkScene→主菜单→正式关卡，不能只解释试玩入口。具体房间、前台帧率和目标硬件尚未确认，不要求用户重复描述已经明确的症状。
+
+推荐先处理 **Ember 编辑器模板/扩展身份查询的重复解析与检查复用**。当前实际 API 调用已有明显开销，历史有效帧采样也命中过试玩 Tick。普通 Play 仍有条件菜单的周期性检查，属于共同风险入口。正式游戏的当前完整 CPU/GPU 帧采样尚缺，不能宣称全部卡顿均由这一处导致。
+
+本轮只读源码/配置/历史证据，通过 Unity MCP 查询现场和做有界 API 计时，仅新增本目录文档与证据；没有启动 Play、开启 Profiler、修改业务代码/资产/配置、升级包、部署模板、构建、提交、推送或发布。计时脚本由 execute_code 在内存编译执行，不是项目脚本改动或本轮项目重编译证明。
+
+不改已签收移动惯性、跳跃/墙跳、挥旗、风和机关时序；不降低 FixedUpdate 频率、不关闭安全门禁、不改地形/房间/碰撞语义、不撤销一跳加载，不以删美术或降低画质作为首轮措施。FlyingMantis/TravelWithMantis 暂缓及其他历史验收边界继续保持。
+
+## 2. 适用规则与实际版本
+
+- 根 [AGENTS.md](../../../../AGENTS.md)、[当前状态](../../../implementation/current-state.md)、[工作流](../../../implementation/current-workflows.md)、[阶段对账](../../../implementation/stage-history-and-open-items.md)、[S4 保护边界](../../../implementation/S4-implementation-20261022.md)。
+- 设计/实施分阶段遵守 [.agents/skills/ember-solution-design/SKILL.md](../../../../.agents/skills/ember-solution-design/SKILL.md)。设计文档保存不构成实施授权。
+- 实际 Unity 为 6000.5.4f1；manifest、lock 与实际包 package.json 对应 Ember 0.25.3，实际包目录 `Library/PackageCache/com.ember@941a945e9797`，lock Git hash `e31fedd240678d82dbd6fdb71f79a77d8deba70f`。消费端 package fingerprint 与 Git commit 是不同标识。
+- 实际部署记录 `Assets/Editor/EmberDeployedTemplates.json` 的 activeTemplateId=platformer-2d、version=0.13.2；`ProjectSettings/EmberExtensions.json` 同属该版本，显式启用 authoring/trial。本轮 Resolve 返回 problems=0；不是旧模板绑定失效的失败重试。
+- 已完整阅读实际包 `Documentation~/maintenance/unity-validation.md`、`glossary.md`、`unityfarm-change-routing.md` 及项目 platformer-2d 字典。代码实施后的主动 MCP 编译、域重载证据、Console 与人工交接门槛均须遵守；本轮纯文档不要求编译。
+
+## 3. 证据分级
+
+### 3.1 本轮真实现场与 API 计时
+
+Unity MCP 直接查询：工程 Windward，FrameworkScene，playing=false、trialActive=false、compiling=false、updating=false。Profiler.enabled=false、profileEditor=false。当前窗口列表没有 EmberSetupWindow；保留一个 Failed to load 窗口，未调查其原因，不能直接视为性能根因。targetFrameRate=-1、vSyncCount=0、captureFramerate=0、timeScale=1，这些是编辑模式当前值，不能替代卡顿现场查询。
+
+本轮 Console 读取的5条上限内只返回1条已知退出所有权警告，无 error 返回；没有清空 Console。这不是运行中日志频率采样，不足以排除进入关卡后的异常刷屏，也不重开此前暂缓的退出问题。
+
+原始数据：[editor-api-timing.json](editor-api-timing.json)。上海时间约10:56—10:57，两次独立 MCP 请求，各 API 连续调用6次，首样本标 warmup，后5次汇总如下：
+
+|API|后5次耗时范围（ms）|中位数（ms）|解释|
+|---|---:|---:|---|
+|GetTemplates|30.24—34.05|31.86|每次重新枚举7份模板元数据并读取/反序列化|
+|CurrentTemplateId|35.54—55.75|50.25|活动身份查询包含继承有效性判断|
+|Resolve|74.51—108.08|93.91|模板身份、配置、依赖及绑定解析|
+|IsEnabled(LevelTrial)|61.40—97.23|81.10|每次进入 Resolve，非布尔字典命中|
+|IsTemplateActive(platformer-2d)|31.01—35.89|34.42|活动记录与模板列表反复读取|
+|EmberLevelAdapters.IsAvailable(windward.level)|185.10—210.46|199.29|扩展检查、所属模板与 UnavailableReason 叠加|
+|PackageInfo.FindForPackageName|0.031—0.056|0.035|此次不是主要耗时层|
+|IsEmbeddedPackage|0.029—0.035|0.030|此次不是主要耗时层|
+
+**限制：以上是编辑模式 API 墙钟耗时，不是游戏帧采样。** 样本少且有文件系统、编辑器调度和首次路径预热等影响；两批测量时间不同，不能把中位数相加换算 FPS，也不能把嵌套调用 inclusive 时间叠加。计时能证明当前重复查询很贵，不能证明当前普通入口的主线程每帧都执行了全部路径。没有定位到某个底层文件操作的独占耗时，也不归因于磁盘、杀毒或硬件。
+
+### 3.2 历史有效帧证据，仅说明当时
+
+见[2026-11-09 分析](../../../implementation/evidence/passability-20261107/prologue-c-ability-and-editor-fps-20261109.md)及[6帧原始 CPU 样本](../../../implementation/evidence/passability-20261107/prologue-c-low-fps-profile-20261109.json)。当时实际 Editor CPU 时间线：
+
+- `EmberLevelTrialSession.Tick` 每帧24.56—33.41ms；对应整帧33.17—62.27ms。
+- 两个慢帧 `EmberSetupWindow.Paint` 21.91/27.48ms；其 Paint/Repaint/Render 等是嵌套样本，不能逐项累加。
+- 当时单独 FrameTiming 样本显示游戏主线程约3.62ms、渲染线程1.55ms、GPU0.83ms；不足以排除当前 GPU 问题。
+- 关闭项目中心后仍有低帧率，历史最终样本约10FPS且编辑器不聚焦；不能称为前台稳定10FPS，也不能说关窗口已根治。
+
+本轮没有用旧六帧替代新基线，没有把历史数据和当前 API 计时当作相同环境的前后对比。
+
+## 4. 当前源码调用链与归属
+
+以下路径均相对工程根；包内源码只读，实施时须重新核对框架开发仓库。
+
+|路径及行|事实|影响|
+|---|---|---|
+|`Library/PackageCache/com.ember@941a945e9797/LevelAuthoring/Editor/EmberLevelTrialSession.cs:52`|Tick 在 Play 早退之前检查扩展及适配器；条件要求_state存在且非returning|活动试玩有逐编辑器 tick 热路径；普通 Play 且无试玩状态不经过此检查|
+|`Core/Editor/EmberExtensionProject.cs:90`（上述包根下）|IsEnabled每次调用Resolve；Read只缓存文本，仍反序列化；Resolve多次取得正式身份|现有Files缓存并未缓存最终解析结果|
+|`Core/Editor/EmberFsmBlueprintAccess.cs:27`|CurrentTemplateId调用IsTemplateActive|看似简单 getter 会进入模板列表读取|
+|`Core/Editor/EmberProjectSetup.Identity.cs:14`、`EmberProjectSetup.cs:130/965/1409`|IsTemplateActive调用GetTemplates；重新枚举模板目录、读取template.json及部署记录|身份与完整元数据展示未拆分|
+|`LevelAuthoring/Editor/EmberLevelContracts.cs:77`、`EmberLevelAccess.cs:21`|适配器注册的scope及IsAvailable重复扩展、模板和UnavailableReason判断|同一轮无法复用一次解析上下文|
+|`Assets/Game/Module/WindwardFlow/Editor/LevelAuthoring/WindwardLevelAuthoringAdapter.cs:35`|UnavailableReason再次检查platformer-2d活动资格|当前项目消费框架身份接口，不能在项目里硬编码true绕过|
+|`Core/Editor/EmberConditionalMenu.cs:43`|每1秒Refresh遍历所有条件菜单；Play时也执行|普通入口也有周期性停顿风险，当前尚无其帧占用采样|
+|`Core/Editor/EmberSetupWindow.cs:116`、`EmberProjectSetupPanel.cs:127/172`|Play时OnInspectorUpdate请求Repaint；绘制路径读模板元数据|窗口打开时加重；本轮该窗口未打开|
+
+当前条件菜单实际登记5项：FSM蓝图观察器、房间地图组合、2D关卡工作台、玩家开发工具、2D关卡制作工作台。即便某扩展关闭，判断“是否可见”仍会进入身份检查，不能以菜单不可见推断没有查询成本。`EmberExtensionDiscovery.Tick` 在Play时早退，不把它列为持续Play的直接热点；共享缓存改变后仍应验证其失效与技能发现行为。
+
+**首轮长期归属：Ember框架 Editor。** Windward不负责复制一份门禁缓存或反射解绑框架update。涉及模板Assets的优化需要单独核对，首轮无需部署模板。框架修复在真实开发仓库实现；本轮未定位/修改该仓库，仓库路径是实施前置条件。
+
+### 次要的项目候选，均未证实是主要瓶颈
+
+- `Assets/Game/Module/WindwardPlayer/WindwardPlayerOccupancyLayer.cs:14`：每FixedUpdate全局FindObjectsByType玩家、获取子Collider并重复赋层。后续若采样命中，复用PlayerModule.SessionCommitted登记玩家/碰撞体，保留同宿主scene、首次物理步前应用及OnDisable原层恢复；玩家重建/恢复必须换绑。是否动态增删Collider需实施前核对。
+- `Assets/Game/Module/WindwardFlow/WindwardRoomChapterParticipant.cs:132/247`、`WindwardRoomResidency.cs:60`：驻留检查每0.25秒调用Desired；RefreshContents中多次重算Desired，HasMovingBody重新遍历各房刚体；CheckWorldBottom每帧遍历图节点求最小边界。若命中，可缓存加载时刚体表、冻结图邻接/底界并减少同一稳定状态的重复计算。**异步Load/Unload之后须重核状态，不能跨await复用过期Desired。**
+- 一跳集合仍须包含当前房、检查点及其物理邻居、活跃载具/移动体和RequiredRoomIds传递闭包；单向边也构成物理邻接。休眠延迟/容量及世界继续运行语义不改。不能通过取消邻房或冻住安全区世界来提升帧率。
+
+通用Player层变更是否回流platformer-2d模板需另行判断；上述项目专用Windward修改留在产品。本方案不自动扩展为模板升级。
+
+## 5. 方案比较与推荐契约
+
+|方案|用户可见结果与成本|取舍|
+|---|---|---|
+|A：仅关闭窗口、降低试玩检查频率|改动小，可作为对照；重检查集中到检查帧|不能解决共同身份查询成本，可能周期性长停顿；降低门禁频率需要明确失效时效，不适合作最终方案|
+|B：共享身份/扩展快照、按变化失效，窗口和菜单复用（推荐）|框架Core Editor及LevelAuthoring Editor中等范围修改；普通入口与试玩均受益|需要认真设计缓存所有权和失效；保留所有资格与错误处理语义，可分批交付|
+|C：优先优化关卡物理、资源和房间驻留|可能改善真实运行负载，但涉及产品生命周期和已验收行为，回归成本较高|当前无对应帧证据；保留为B后采样仍暴露热点的下一批，不与B混改|
+
+推荐B分两层实现，不新增项目存档schema或坐标约定：
+
+1. **正式身份快照**：复用当前活动部署/编辑记录、模板继承关系及包身份。Key至少涵盖项目绝对根、包resolvedPath/版本或内容代次、embedded/consumer来源、正式模板ID/版本及记录修订。模板展示所需完整元数据与每帧的资格判断分离；不以当前打开场景猜活动模板。
+2. **扩展解析快照**：同一身份代次、配置/defaults修订、定义注册代次和兼容性上下文下只解析一次。多个IsEnabled、适配器及菜单在一个检查批次复用只读上下文；不缓存可被调用者修改的Configuration/List实例供外部写。现有ContentHashes缓存可复用，但内容/包变化要联动失效，不能每帧重新哈希全部源码。
+3. **失效来源**：Save/Commit配置、活动模板变更/部署、Register/Unregister及scope释放、projectChanged/资源导入、包解析变化、域重载均使相关代次失效。文件外部编辑增加轻量、合并的变化侦测；建议最长1秒发现外部记录变化，具体实现须满足框架现有安全契约。事件失效后下一次Tick就重新判断，异常/配置损坏拒绝资格，不静默沿用旧true。
+4. **动态模块条件**：适配器或scope的Func<bool>可能随模块状态改变，不能永久冻结为true。复用稳定模板/扩展解析层，同时保留廉价动态判断；若兼容回调不能证明稳定，就每个检查批次求值，或要求显式修订通知，不能盲目加长TTL。
+5. **操作边界保持实时**：Start/Retry、写入、打开受控文档和工具执行之前仍重新验证当前资格/输入修订；旧窗口快照不授予权限。不能把Tick的Play早退移到所有门禁之前，导致运行中的失效试玩无法停止。停止必须沿用原StopCurrent/owner恢复路径，不能解绑安全回调。
+6. **UI与周期检查**：项目中心Layout/Repaint只读取快照，数据变更后重绘；Play状态显示可单独做轻量刷新。条件菜单可保持1秒周期，但复用同一快照，避免每条菜单重新解析。关闭项目中心只作为对照条件，不作为交付结果。
+
+冷启动或首次失效重建允许存在一次性成本，但不能在每帧/每秒重复全量扫描；缓存异常需可诊断且避免日志刷屏。源代码、模板版本/hash签收、安全门禁与技能发现规则不因缓存被弱化。
+
+## 6. 分步实施与最小验收
+
+### P0：取得当前可比较基线（实施阶段）
+
+预计小范围人工/自动采样总计约5—10分钟，不属于全图长测；超过预估或需扩大时按规则另取授权。先记录当前版本/本地差异、入口、房间、前台焦点、Game分辨率、窗口列表、Profiler配置、timeScale及限帧值。用户尚未给定具体卡房，默认从正式序章起点开始；若不复现，再定位用户房间，不宣布解决。
+
+- 同环境分别记录普通Play→菜单→正式序章与已有正式试玩入口，确认trialActive实际真假；使用隔离存档，不读取或覆盖用户正式进度。不要调用历史Ready预设冒充当前正式资格。
+- 稳定进入后采集Game前台、同一位置约10秒，至少300个有效帧；帧率很低时上限30秒并记录实际样本数。每种入口对照项目中心关闭/打开，其他条件相同；打开时保留正常UI流程，不部署/保存配置。
+- 使用实际可用的MCP manage_profiler或ProfilerDriver编辑器CPU采样；普通运行时Profiler空样本不能作证据。必须含EditorLoop、PlayerLoop、Trial Tick、ConditionalMenu及项目中心绘制；同时观察GC、Physics2D、渲染和GPU数据是否可用。先核对工具schema和Unity当前状态，不照旧脚本盲跑。
+- 录制开销与未录制FPS分开；Deep Profile默认关闭。MCP查询不逐帧轮询。保存原始帧数据及p50/p95/p99和>33/50ms帧数量；没有GPU结果就标缺失。采样后恢复Profiler/profileEditor/CPU区域等原设置，按原所有者退出。
+
+### P1：框架修改与定向验证
+
+1. 在框架开发仓库复核对应版本与当前实现，阅读其AGENTS；先检查是否已经有等价修复。本项目不创建框架工作树或改PackageCache。
+2. 最小修改上述共同身份/扩展解析、trial/adapter批次复用、条件菜单及项目中心读快照路径。保留公开API兼容与consumer/embedded区分。仅当P0实际命中时扩到其他窗口调用方。
+3. 新增直接相关的缓存/失效测试：同代次重复读取不重扫；配置开关/损坏、活动模板/父链改变、包/内容身份变化、定义与动态模块条件失效；旧快照不可修改内部状态；失效试玩停止及owner恢复；不运行全测试程序集。
+4. 每批代码修改后通过Unity MCP主动请求编译，取得本轮编译/域重载完成和已加载新代码证据，再读Console；按包内有界重连规则处理。测试和Play在此之后。
+5. 消费项目接入前须取得框架修改、发布及升级各自授权。正式修复从开发仓库发布版本，再由Windward **Ember/UPM Manager**接收；不手改manifest/lock，不重新部署模板。新的框架内容hash如要求扩展重绑定，必须先展示实际预览差异并按独立授权执行，不能自动把旧绑定改成当前源码。
+
+### P2：Windward 前后复测及必要的项目增量
+
+按P0同硬件/入口/分辨率/窗口条件复测，分别报告两种入口和窗口打开/关闭，不能用框架测试或API微基准代替消费项目结果。
+
+建议验收门槛（待正式采用，不是用户已确认的硬件性能承诺）：
+
+- 预热后的高频身份/扩展查询不重复文件读取或模板枚举；API重复检查中位数目标<1ms。以调用次数证据和正常Profiler为主，不做受机器波动影响的单次耗时硬断言。
+- 试玩Tick稳态p95目标<1ms；条件菜单和项目中心刷新不再造成可归因的>10ms同步长任务；保留冷启动/合法失效重建单独统计。
+- 同环境游戏前台以60FPS为工作目标（16.67ms帧预算），需先在P0确认机器/场景是否具备条件。若没有达到，按剩余帧时间热点继续定位，不把消除框架热点称为整个问题已解决。
+- 定向功能：正式进入、一个已允许的邻房往返、原位死亡恢复、返回菜单、同隔离库继续；检查一跳集合、相机、世界与能力资格无变化。无需全三章通关、暂缓挑战或全量长测。
+- 框架热点消除后，只有新的采样命中碰撞层/驻留/其他运行时路径时，才单独实施项目候选，分别记录前后效果。不能为凑优化清单同时重构所有系统。
+
+## 7. 兼容、迁移与回退
+
+首轮只改Editor实现，保持公开API、扩展配置schema、模板部署基线、存档schema4及蓝图/房间坐标契约；无业务数据迁移。不得重新烘焙运行位移或重放既有房间平移。
+
+工作区已有大量本地改动，默认git status触发LFS失败；本轮仅在单次命令关闭LFS过滤读取了已跟踪状态，没有改Git配置。实施前必须重新保存实际状态/定向文件指纹；不能全仓reset或覆盖已有修改。
+
+框架开发端按本批文件定向回退；消费端通过UPM Manager回退到原已发布版本，并保护升级前配置/发现副本。由于扩展内容hash会随框架文件变化，回退应一并核对相应绑定与发现副本，不能只改版本号。项目候选如另获授权，分批备份并独立回退；不碰用户正式存档。
+
+## 8. 未决事项、决定状态与接续
+
+- 已明确：编辑器进入关卡后持续卡顿；入口可能两种都发生或尚不确定；设计阶段完成后再决定实施。
+- 未明确：用户具体卡顿房间、前台实际FPS、硬件/目标分辨率。先用正式序章取得基线，不能据空闲编辑器数字代答。
+- 当前证据足以确定优先调查与优化共同框架查询路径；不足以签署“当前完整根因已唯一确定”“已经修复”或“打包游戏也受影响”。
+- **必要决定：是否采用方案B，在框架开发工程先做共同缓存/失效修复，再单独授权发布与Windward消费升级。** 本轮不需要在A/B/C里凑选项，也未获此实施/发布授权。用户若明确要求同一对话继续实施，可依其范围推进，不重复方案审批；路径缺失时只澄清框架工程位置。
+
+可粘贴到新对话的接续指令：
+
+> 按 `docs/design/planning/editor-performance-20261113/README.md` 接续编辑器低帧率问题。先读当前AGENTS、状态及实际Ember验证规范，核对源码与原始API计时假设。采用推荐B，先做P0两种入口的有限基线和框架开发端缓存/失效修复、定向测试；先确认框架工程位置与其本地规则。保护已有改动、门禁、玩家手感、一跳加载及用户存档。代码后主动MCP编译并确认本轮域重载，再读Console/运行。不要改Windward PackageCache、manifest/lock或模板快照，不自动部署、发布、提交、推送或升级。发布与Windward UPM Manager接入另行明确授权；未经采样证实不提前实施P2项目候选。把实际验证与偏差写入原文档链接的实施回执，不将本设计标成已实现。

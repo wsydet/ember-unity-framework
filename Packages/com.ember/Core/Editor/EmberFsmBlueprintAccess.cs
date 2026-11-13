@@ -16,7 +16,7 @@ namespace Ember.Core.Editor
         {
             internal string Owner;
             internal Func<bool> Enabled;
-            public void Dispose() => Scopes.Remove(this);
+            public void Dispose() { Scopes.Remove(this); EmberExtensionProject.InvalidateChecks(); }
         }
         private static readonly List<Scope> Scopes = new();
         #endregion
@@ -29,9 +29,8 @@ namespace Ember.Core.Editor
         {
             get
             {
-                var id = EmberProjectSetup.IsEmbeddedPackage() ? EmberProjectSetup.GetEditingTemplate()?.templateId
-                    : EmberProjectSetup.GetActiveDeployedTemplate()?.templateId;
-                return !string.IsNullOrEmpty(id) && EmberProjectSetup.IsTemplateActive(id) ? id : null;
+                try { return EmberProjectSetup.CurrentIdentity.Id; }
+                catch (Exception) { return null; }
             }
         }
         public static bool IsAvailable => EmberExtensionProject.IsEnabled(EmberExtensionProject.FsmBlueprint);
@@ -42,7 +41,7 @@ namespace Ember.Core.Editor
         {
             if (string.IsNullOrWhiteSpace(ownerTemplateId)) throw new ArgumentException("必须声明所属模板。", nameof(ownerTemplateId));
             var scope = new Scope {Owner=ownerTemplateId,Enabled=enabled ?? throw new ArgumentNullException(nameof(enabled))};
-            Scopes.Add(scope); return scope;
+            Scopes.Add(scope); EmberExtensionProject.InvalidateChecks(); return scope;
         }
         #endregion
     }

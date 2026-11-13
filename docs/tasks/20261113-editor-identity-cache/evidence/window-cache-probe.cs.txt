@@ -1,0 +1,10 @@
+var t=typeof(Ember.Core.Editor.EmberProjectSetup).Assembly.GetType("Ember.Core.Editor.EmberEditorMetadataCache");var flags=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static;
+var next=t.GetField("_nextProbe",flags);var check=t.GetMethod("Check",flags,null,new System.Type[0],null);
+var times=new double[100];for(int i=0;i<times.Length;i++){next.SetValue(null,0d);var w=System.Diagnostics.Stopwatch.StartNew();check.Invoke(null,null);w.Stop();times[i]=w.Elapsed.TotalMilliseconds;}
+System.Array.Sort(times);
+var window=ScriptableObject.CreateInstance<Ember.Core.Editor.EmberSetupWindow>();window.titleContent=new GUIContent("Ember 缓存验证");window.Show();window.Repaint();
+var start=EditorApplication.timeSinceStartup;int updates=0;
+System.Func<int[]> counters=()=>new[]{(int)t.GetProperty("JsonReads",flags).GetValue(null),(int)t.GetProperty("TemplateScans",flags).GetValue(null),(int)typeof(Ember.Core.Editor.EmberExtensionProject).GetProperty("ResolutionBuilds",flags).GetValue(null),(int)typeof(Ember.Core.Editor.EmberExtensionProject).GetProperty("ContentHashBuilds",flags).GetValue(null)};
+Ember.Core.Editor.EmberProjectSetup.GetTemplates();Ember.Core.Editor.EmberExtensionProject.Resolve();var before=counters();
+EditorApplication.CallbackFunction tick=null;tick=()=>{updates++;window.Repaint();if(EditorApplication.timeSinceStartup-start<3)return;EditorApplication.update-=tick;var after=counters();window.Close();System.AppDomain.CurrentDomain.SetData("Ember.IdentityCache.WindowProbe",new{utc=System.DateTime.UtcNow.ToString("O"),updates=updates,elapsed=EditorApplication.timeSinceStartup-start,before=before,after=after,delta=after.Select((v,i)=>v-before[i]).ToArray(),periodicMainThreadProbe=new{count=times.Length,p50_ms=times[50],p95_ms=times[95],max_ms=times[99]},windowClosed=true});};
+EditorApplication.update+=tick;return new{started=true,seconds=3};

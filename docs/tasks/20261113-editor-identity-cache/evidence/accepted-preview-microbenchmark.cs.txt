@@ -1,0 +1,12 @@
+var metadata=typeof(Ember.Core.Editor.EmberProjectSetup).Assembly.GetType("Ember.Core.Editor.EmberEditorMetadataCache");
+var flags=System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static;
+System.Func<object> counters=()=>new {reads=metadata.GetProperty("JsonReads",flags).GetValue(null),scans=metadata.GetProperty("TemplateScans",flags).GetValue(null),builds=typeof(Ember.Core.Editor.EmberExtensionProject).GetProperty("ResolutionBuilds",flags).GetValue(null),hashes=typeof(Ember.Core.Editor.EmberExtensionProject).GetProperty("ContentHashBuilds",flags).GetValue(null)};
+var old=Ember.Core.Editor.EmberExtensionProject.Load();
+var preview=Ember.Core.Editor.EmberExtensionProject.CreateConfiguration(old.enabled);
+var prepared=(Ember.Core.Editor.EmberExtensionDefinition[])typeof(Ember.Core.Editor.EmberExtensionProject).GetMethod("PrepareConfiguration",flags).Invoke(null,new object[]{preview,preview.ownerTemplateId,preview.ownerTemplateVersion});
+var accepted=Ember.Core.Editor.EmberExtensionCatalog.Resolve(prepared,preview.enabled);
+var before=counters(); var times=new double[1000];
+for(int i=0;i<times.Length;i++){var watch=System.Diagnostics.Stopwatch.StartNew();Ember.Core.Editor.EmberExtensionCatalog.Resolve(prepared,preview.enabled);watch.Stop();times[i]=watch.Elapsed.TotalMilliseconds;}
+System.Array.Sort(times);var after=counters();
+var probes=new double[30];for(int i=0;i<probes.Length;i++){var watch=System.Diagnostics.Stopwatch.StartNew();Ember.Core.Editor.EmberExtensionProject.ValidateCurrent();watch.Stop();probes[i]=watch.Elapsed.TotalMilliseconds;}System.Array.Sort(probes);
+return new {utc=System.DateTime.UtcNow.ToString("O"),persisted=false,oldOwnerVersion=old.ownerTemplateVersion,previewOwnerVersion=preview.ownerTemplateVersion,previewBindings=preview.bindings,accepted=accepted.Enabled,problems=accepted.Problems,before=before,after=after,acceptedPreparedResolution=new{count=times.Length,p50_ms=times[500],p95_ms=times[950],max_ms=times[999]},statProbeWithAllSources=new{count=probes.Length,p50_ms=probes[15],p95_ms=probes[28],max_ms=probes[29]}};

@@ -1,0 +1,353 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"c2caa5c66853401eb4b57b1fdf858457\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1794541797711,\"finished_unix_ms\":1794541817615,\"last_update_unix_ms\":1794541817615,\"progress\":{\"completed\":33,\"total\":33,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.UnknownTargetAndDuplicateIdentityAreRejected\",\"last_finished_unix_ms\":1794541817363,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":33,\"passed\":33,\"failed\":0,\"skipped\":0,\"durationSeconds\":12.4859417,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"CompatibilityAndExceptionsBlockDependents\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.CompatibilityAndExceptionsBlockDependents\",\"state\":\"Passed\",\"durationSeconds\":0.0136409,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"CompositionResolvesTransitiveDependenciesAndSharedBranches\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.CompositionResolvesTransitiveDependenciesAndSharedBranches\",\"state\":\"Passed\",\"durationSeconds\":0.0036483,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DisablePreviewIncludesTransitiveRootsAndDoesNotMutateRequested\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.DisablePreviewIncludesTransitiveRootsAndDoesNotMutateRequested\",\"state\":\"Passed\",\"durationSeconds\":0.0025476,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InfrastructureCannotBeRemovedFromComposition\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.InfrastructureCannotBeRemovedFromComposition\",\"state\":\"Passed\",\"durationSeconds\":0.0003307,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MissingAndCyclicBranchesFailClosedWithoutBlockingUnrelatedExtension\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.MissingAndCyclicBranchesFailClosedWithoutBlockingUnrelatedExtension\",\"state\":\"Passed\",\"durationSeconds\":0.0005207,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StableIdsAndDuplicateDefinitionsAreRejected\",\"fullName\":\"Ember.Core.Fsm.Tests.EmberExtensionTests.StableIdsAndDuplicateDefinitionsAreRejected\",\"state\":\"Passed\",\"durationSeconds\":0.0031745,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FrozenRetryRejectsReboundConfigurationAndChangedSource\",\"fullName\":\"Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.FrozenRetryRejectsReboundConfigurationAndChangedSource\",\"state\":\"Passed\",\"durationSeconds\":2.3266762,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership\",\"fullName\":\"Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership\",\"state\":\"Passed\",\"durationSeconds\":1.4217897,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RequestCopiesAndLateCallbacksCannotChangeCurrentOwner\",\"fullName\":\"Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.RequestCopiesAndLateCallbacksCannotChangeCurrentOwner\",\"state\":\"Passed\",\"durationSeconds\":1.4087242,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"StopExceptionCancelsRetryAndQueuesEditorRestore\",\"fullName\":\"Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.StopExceptionCancelsRetryAndQueuesEditorRestore\",\"state\":\"Passed\",\"durationSeconds\":1.384651,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"BrokenParentChainCannotAuthorizeEvenItsOwnIdentity\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.BrokenParentChainCannotAuthorizeEvenItsOwnIdentity\",\"state\":\"Passed\",\"durationSeconds\":0.0051642,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DisposingOrDisablingModuleScopeImmediatelyRevokesTheNextCheck\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.DisposingOrDisablingModuleScopeImmediatelyRevokesTheNextCheck\",\"state\":\"Passed\",\"durationSeconds\":0.0097414,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DynamicCompatibilityRegistrationAndBatchInvalidationNeverFreezeTrue\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.DynamicCompatibilityRegistrationAndBatchInvalidationNeverFreezeTrue\",\"state\":\"Passed\",\"durationSeconds\":0.0246651,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ExplicitConfigurationRequiresMatchingIdentityBindingsAndCurrentConditions\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.ExplicitConfigurationRequiresMatchingIdentityBindingsAndCurrentConditions\",\"state\":\"Passed\",\"durationSeconds\":0.0835288,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"ExternalJsonChangesAndCorruptionAreDetectedWithinOneProbe\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.ExternalJsonChangesAndCorruptionAreDetectedWithinOneProbe\",\"state\":\"Passed\",\"durationSeconds\":1.3040853,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"PackageSourceNotificationsInvalidatePreviouslyAcceptedContentHash\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.PackageSourceNotificationsInvalidatePreviouslyAcceptedContentHash\",\"state\":\"Passed\",\"durationSeconds\":2.6316875,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"TransactionCommitInvalidatesCachedInputImmediately\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.TransactionCommitInvalidatesCachedInputImmediately\",\"state\":\"Passed\",\"durationSeconds\":0.0309951,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"WarmChecksReuseMetadataAndBindingsWhileReturningIndependentCopies\",\"fullName\":\"Ember.UI.Tests.EmberEditorIdentityCacheEditTests.WarmChecksReuseMetadataAndBindingsWhileReturningIndependentCopies\",\"state\":\"Passed\",\"durationSeconds\":0.0122586,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(True,\\\"visual-novel\\\",null,True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\\\"visual-novel\\\",null,True)\",\"state\":\"Passed\",\"durationSeconds\":0.0022063,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"visual-novel\\\",True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"visual-novel\\\",True)\",\"state\":\"Passed\",\"durationSeconds\":0.000084,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(True,\\\"novel-child\\\",\\\"base\\\",True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\\\"novel-child\\\",\\\"base\\\",True)\",\"state\":\"Passed\",\"durationSeconds\":0.0000478,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,\\\"base\\\",\\\"novel-child\\\",True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\\\"base\\\",\\\"novel-child\\\",True)\",\"state\":\"Passed\",\"durationSeconds\":0.0000399,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(True,\\\"novel-grandchild\\\",null,True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\\\"novel-grandchild\\\",null,True)\",\"state\":\"Passed\",\"durationSeconds\":0.0000395,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"novel-grandchild\\\",True)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"novel-grandchild\\\",True)\",\"state\":\"Passed\",\"durationSeconds\":0.000037,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(True,\\\"base\\\",\\\"visual-novel\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\\\"base\\\",\\\"visual-novel\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000361,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,\\\"visual-novel\\\",\\\"base\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\\\"visual-novel\\\",\\\"base\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000335,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(True,null,\\\"visual-novel\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,null,\\\"visual-novel\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000333,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,\\\"visual-novel\\\",null,False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\\\"visual-novel\\\",null,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000338,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"missing\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"missing\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000389,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"broken\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"broken\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000347,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"cycle-a\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"cycle-a\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000353,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"Visual-Novel\\\",False)\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\\\"Visual-Novel\\\",False)\",\"state\":\"Passed\",\"durationSeconds\":0.0000367,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"UnknownTargetAndDuplicateIdentityAreRejected\",\"fullName\":\"Ember.UI.Tests.EmberTemplateIdentityEditTests.UnknownTargetAndDuplicateIdentityAreRejected\",\"state\":\"Passed\",\"durationSeconds\":0.0002596,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "c2caa5c66853401eb4b57b1fdf858457",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1794541797711,
+        "finished_unix_ms": 1794541817615,
+        "last_update_unix_ms": 1794541817615,
+        "progress": {
+          "completed": 33,
+          "total": 33,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.UI.Tests.EmberTemplateIdentityEditTests.UnknownTargetAndDuplicateIdentityAreRejected",
+          "last_finished_unix_ms": 1794541817363,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 33,
+            "passed": 33,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 12.4859417,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "CompatibilityAndExceptionsBlockDependents",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.CompatibilityAndExceptionsBlockDependents",
+              "state": "Passed",
+              "durationSeconds": 0.0136409,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "CompositionResolvesTransitiveDependenciesAndSharedBranches",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.CompositionResolvesTransitiveDependenciesAndSharedBranches",
+              "state": "Passed",
+              "durationSeconds": 0.0036483,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DisablePreviewIncludesTransitiveRootsAndDoesNotMutateRequested",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.DisablePreviewIncludesTransitiveRootsAndDoesNotMutateRequested",
+              "state": "Passed",
+              "durationSeconds": 0.0025476,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InfrastructureCannotBeRemovedFromComposition",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.InfrastructureCannotBeRemovedFromComposition",
+              "state": "Passed",
+              "durationSeconds": 0.0003307,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "MissingAndCyclicBranchesFailClosedWithoutBlockingUnrelatedExtension",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.MissingAndCyclicBranchesFailClosedWithoutBlockingUnrelatedExtension",
+              "state": "Passed",
+              "durationSeconds": 0.0005207,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "StableIdsAndDuplicateDefinitionsAreRejected",
+              "fullName": "Ember.Core.Fsm.Tests.EmberExtensionTests.StableIdsAndDuplicateDefinitionsAreRejected",
+              "state": "Passed",
+              "durationSeconds": 0.0031745,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FrozenRetryRejectsReboundConfigurationAndChangedSource",
+              "fullName": "Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.FrozenRetryRejectsReboundConfigurationAndChangedSource",
+              "state": "Passed",
+              "durationSeconds": 2.3266762,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership",
+              "fullName": "Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership",
+              "state": "Passed",
+              "durationSeconds": 1.4217897,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "RequestCopiesAndLateCallbacksCannotChangeCurrentOwner",
+              "fullName": "Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.RequestCopiesAndLateCallbacksCannotChangeCurrentOwner",
+              "state": "Passed",
+              "durationSeconds": 1.4087242,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "StopExceptionCancelsRetryAndQueuesEditorRestore",
+              "fullName": "Ember.LevelAuthoring.Tests.EmberLevelTrialProtocolTests.StopExceptionCancelsRetryAndQueuesEditorRestore",
+              "state": "Passed",
+              "durationSeconds": 1.384651,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "BrokenParentChainCannotAuthorizeEvenItsOwnIdentity",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.BrokenParentChainCannotAuthorizeEvenItsOwnIdentity",
+              "state": "Passed",
+              "durationSeconds": 0.0051642,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DisposingOrDisablingModuleScopeImmediatelyRevokesTheNextCheck",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.DisposingOrDisablingModuleScopeImmediatelyRevokesTheNextCheck",
+              "state": "Passed",
+              "durationSeconds": 0.0097414,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "DynamicCompatibilityRegistrationAndBatchInvalidationNeverFreezeTrue",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.DynamicCompatibilityRegistrationAndBatchInvalidationNeverFreezeTrue",
+              "state": "Passed",
+              "durationSeconds": 0.0246651,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ExplicitConfigurationRequiresMatchingIdentityBindingsAndCurrentConditions",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.ExplicitConfigurationRequiresMatchingIdentityBindingsAndCurrentConditions",
+              "state": "Passed",
+              "durationSeconds": 0.0835288,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "ExternalJsonChangesAndCorruptionAreDetectedWithinOneProbe",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.ExternalJsonChangesAndCorruptionAreDetectedWithinOneProbe",
+              "state": "Passed",
+              "durationSeconds": 1.3040853,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "PackageSourceNotificationsInvalidatePreviouslyAcceptedContentHash",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.PackageSourceNotificationsInvalidatePreviouslyAcceptedContentHash",
+              "state": "Passed",
+              "durationSeconds": 2.6316875,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "TransactionCommitInvalidatesCachedInputImmediately",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.TransactionCommitInvalidatesCachedInputImmediately",
+              "state": "Passed",
+              "durationSeconds": 0.0309951,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "WarmChecksReuseMetadataAndBindingsWhileReturningIndependentCopies",
+              "fullName": "Ember.UI.Tests.EmberEditorIdentityCacheEditTests.WarmChecksReuseMetadataAndBindingsWhileReturningIndependentCopies",
+              "state": "Passed",
+              "durationSeconds": 0.0122586,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(True,\"visual-novel\",null,True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\"visual-novel\",null,True)",
+              "state": "Passed",
+              "durationSeconds": 0.0022063,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"visual-novel\",True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"visual-novel\",True)",
+              "state": "Passed",
+              "durationSeconds": 0.000084,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(True,\"novel-child\",\"base\",True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\"novel-child\",\"base\",True)",
+              "state": "Passed",
+              "durationSeconds": 0.0000478,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,\"base\",\"novel-child\",True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\"base\",\"novel-child\",True)",
+              "state": "Passed",
+              "durationSeconds": 0.0000399,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(True,\"novel-grandchild\",null,True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\"novel-grandchild\",null,True)",
+              "state": "Passed",
+              "durationSeconds": 0.0000395,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"novel-grandchild\",True)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"novel-grandchild\",True)",
+              "state": "Passed",
+              "durationSeconds": 0.000037,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(True,\"base\",\"visual-novel\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,\"base\",\"visual-novel\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000361,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,\"visual-novel\",\"base\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\"visual-novel\",\"base\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000335,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(True,null,\"visual-novel\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(True,null,\"visual-novel\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000333,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,\"visual-novel\",null,False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,\"visual-novel\",null,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000338,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"missing\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"missing\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000389,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"broken\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"broken\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000347,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"cycle-a\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"cycle-a\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000353,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "FormalIdentityAndAncestryDetermineAvailability(False,null,\"Visual-Novel\",False)",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.FormalIdentityAndAncestryDetermineAvailability(False,null,\"Visual-Novel\",False)",
+              "state": "Passed",
+              "durationSeconds": 0.0000367,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "UnknownTargetAndDuplicateIdentityAreRejected",
+              "fullName": "Ember.UI.Tests.EmberTemplateIdentityEditTests.UnknownTargetAndDuplicateIdentityAreRejected",
+              "state": "Passed",
+              "durationSeconds": 0.0002596,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

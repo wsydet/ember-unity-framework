@@ -51,6 +51,7 @@ namespace Ember.LevelAuthoring.Editor
         private static void Save() => SessionState.SetString(KEY, JsonUtility.ToJson(_state));
         private static void Tick()
         {
+            using var batch = EmberExtensionProject.BeginCheckBatch();
             if (_state != null && !_state.returning && (!EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelTrial) || !EmberLevelAdapters.IsAvailable(_state.request.adapterId)))
             { StopCurrent(); return; }
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
@@ -120,6 +121,9 @@ namespace Ember.LevelAuthoring.Editor
             if (dependencies.Length > 0 && !EditorUtility.DisplayDialog("保存试玩依赖", "本次试玩需要保存以下依赖：\n" +
                 string.Join("\n", dependencies.Select(AssetDatabase.GetAssetPath)), "保存并试玩", "取消")) return;
             foreach (var asset in dependencies) AssetDatabase.SaveAssetIfDirty(asset);
+            EmberExtensionProject.Require(EmberExtensionProject.LevelTrial, true);
+            if (!ReferenceEquals(EmberLevelAdapters.Get(level.adapterId), adapter))
+                throw new InvalidOperationException("试玩适配器或资格在准备期间变化，请重新选择启动。");
             request.configurationHash = AssetDatabase.GetAssetDependencyHash(AssetDatabase.GetAssetPath(level.configuration)).ToString();
             var view = SceneView.lastActiveSceneView;
             _state = new Snapshot { scenes = EditorSceneManager.GetSceneManagerSetup(), request = request,
@@ -170,6 +174,7 @@ namespace Ember.LevelAuthoring.Editor
         { if (_state != null && _state.request.requestId == requestId) Retry(); }
         public static void Retry()
         {
+            EmberExtensionProject.ValidateCurrent();
             EmberExtensionProject.Require(EmberExtensionProject.LevelTrial);
             if (_state == null) throw new InvalidOperationException("当前没有试玩会话。");
             SessionState.SetString(KEY + ".Retry", JsonUtility.ToJson(_state.request)); StopCurrent();

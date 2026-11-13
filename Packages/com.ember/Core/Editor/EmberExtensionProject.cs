@@ -21,7 +21,7 @@ namespace Ember.Core.Editor
         public const string RoomGraph = "ember.level.room-graph";
         public const string DefaultsPath = "Assets/Game/Config/EmberExtensionDefaults.json";
         private static readonly Dictionary<string, EmberExtensionDefinition> Definitions = new(StringComparer.Ordinal);
-        private static readonly Dictionary<string, (long stamp, string text)> Files = new();
+        private static IReadOnlyList<EmberExtensionDefinition> _all;
         [Serializable] public sealed class Configuration
         {
             public int schemaVersion = 2;
@@ -30,7 +30,7 @@ namespace Ember.Core.Editor
             public string[] enabled = Array.Empty<string>();
             public Ember.UPMManager.Editor.EmberAISkillInstaller.ExtensionIdentity[] bindings;
         }
-        public static IReadOnlyList<EmberExtensionDefinition> All => Definitions.Values.OrderBy(d => d.Id, StringComparer.Ordinal).ToArray();
+        public static IReadOnlyList<EmberExtensionDefinition> All => _all ??= Array.AsReadOnly(Definitions.Values.OrderBy(d => d.Id, StringComparer.Ordinal).ToArray());
         public static string ConfigurationPath => EmberProjectSetup.IsEmbeddedPackage()
             ? "ProjectSettings/EmberExtensions." + (EmberFsmBlueprintAccess.CurrentTemplateId ?? "unassigned") + ".json"
             : "ProjectSettings/EmberExtensions.json";
@@ -50,17 +50,14 @@ namespace Ember.Core.Editor
         }
         private static Configuration Read(string path)
         {
-            long stamp = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.GetLastWriteTimeUtc(path).Ticks;
-            if (!Files.TryGetValue(path, out var cached) || cached.stamp != stamp)
-            { cached = (stamp, Ember.UPMManager.Editor.EmberTemplateFileSystem.File.ReadAllText(path)); Files[path] = cached; }
-            var config = JsonUtility.FromJson<Configuration>(cached.text);
+            var config = EmberEditorMetadataCache.ReadJson<Configuration>(path);
             if (config == null || config.schemaVersion < 1 || config.schemaVersion > 2 || config.enabled == null || config.enabled.Any(string.IsNullOrWhiteSpace))
                 throw new InvalidDataException("扩展配置格式无效：" + path);
             return config;
         }
         private static Configuration LoadDefaults()
         {
-            if (File.Exists(DefaultsPath))
+            if (EmberEditorMetadataCache.ReadJson<Configuration>(DefaultsPath) != null)
             {
                 var config = Read(DefaultsPath);
                 if (string.IsNullOrEmpty(config.ownerTemplateId) || !EmberProjectSetup.IsTemplateActive(config.ownerTemplateId))
@@ -78,16 +75,25 @@ namespace Ember.Core.Editor
             if (definition == null) throw new ArgumentNullException(nameof(definition));
             if (Definitions.ContainsKey(definition.Id)) throw new InvalidOperationException("扩展 ID 重复：" + definition.Id);
             Definitions.Add(definition.Id, definition);
+            _all = null;
+            InvalidateResolution();
         }
-        public static Configuration Load()
+        /// <summary>只移除同一登记实例，旧 owner 不能注销新定义。</summary>
+        public static void Unregister(EmberExtensionDefinition definition)
         {
-            if (!File.Exists(ConfigurationPath)) return LoadDefaults();
+            if (definition == null || !Definitions.TryGetValue(definition.Id, out var current) || !ReferenceEquals(current, definition)) return;
+            Definitions.Remove(definition.Id); _all = null; InvalidateResolution();
+        }
+        private static Configuration LoadCurrent()
+        {
+            if (EmberEditorMetadataCache.ReadJson<Configuration>(ConfigurationPath) == null) return LoadDefaults();
             var config = Read(ConfigurationPath);
             if (!string.IsNullOrEmpty(config.ownerTemplateId) && config.ownerTemplateId != EmberFsmBlueprintAccess.CurrentTemplateId)
                 throw new InvalidDataException("项目扩展配置属于另一活动模板：" + config.ownerTemplateId);
             return config;
         }
-        public static EmberExtensionResolution Resolve() => ResolveConfiguration(Load(), EmberFsmBlueprintAccess.CurrentTemplateId, CurrentTemplateVersion);
+        public static Configuration Load() => CloneConfiguration(LoadCurrent());
+        public static EmberExtensionResolution Resolve() => ResolveCurrent();
         public static bool IsEnabled(string id)
         {
             try { return Resolve().IsEnabled(id); }
@@ -101,12 +107,19 @@ namespace Ember.Core.Editor
         }
         public static void Require(string id, bool writing = false)
         {
+            if (writing) ValidateCurrent();
+            else
+            {
+                // 只读门禁也用于 Scene GUI；源码变化由合并的后台检测收回资格。
+                EmberEditorMetadataCache.ValidateNow(false); InvalidateChecks();
+            }
             if (!IsEnabled(id)) throw new InvalidOperationException("扩展未启用或依赖/兼容条件不满足：" + id + "。请检查 Ember 项目中心的扩展组合。");
             if (writing && (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating))
                 throw new InvalidOperationException("请等待播放、编译或导入结束再编辑。");
         }
         public static void Save(Configuration config)
         {
+            ValidateCurrent();
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating)
                 throw new InvalidOperationException("请在空闲编辑状态保存扩展组合。");
             if (config == null || config.enabled == null) throw new ArgumentException("配置无效。");
@@ -114,7 +127,7 @@ namespace Ember.Core.Editor
             if (result.Problems.Count > 0) throw new InvalidOperationException(string.Join("\n", result.Problems.Values));
             var copy = CreateConfiguration(config.enabled);
             EmberProjectSetup.CommitExtensionConfiguration(copy);
-            Files.Remove(ConfigurationPath); EmberConditionalMenu.Refresh();
+            InvalidateResolution(); EmberConditionalMenu.Refresh();
         }
         #endregion
     }

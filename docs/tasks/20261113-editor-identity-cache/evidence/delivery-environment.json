@@ -1,0 +1,42 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:58:15.2649295Z\",\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"template\":\"topdown-2d\",\"version\":\"0.1.2\",\"configVersion\":\"0.1.1\",\"coreMvid\":\"4b66644d-1921-49e0-a818-c1a3557aafba\",\"activeTrial\":false,\"restoreOwner\":false,\"scenes\":[\"Assets/Game/Scenes/FrameworkScene.unity\"],\"dirty\":false,\"isPlaying\":false,\"isCompiling\":false,\"isUpdating\":false,\"definitions\":[\"ember.core\",\"ember.fsm.blueprint\",\"ember.fsm.runtime\",\"ember.level.authoring\",\"ember.level.room-graph\",\"ember.level.runtime\",\"ember.level.trial\"]},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:58:15.2649295Z",
+        "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+        "template": "topdown-2d",
+        "version": "0.1.2",
+        "configVersion": "0.1.1",
+        "coreMvid": "4b66644d-1921-49e0-a818-c1a3557aafba",
+        "activeTrial": false,
+        "restoreOwner": false,
+        "scenes": [
+          "Assets/Game/Scenes/FrameworkScene.unity"
+        ],
+        "dirty": false,
+        "isPlaying": false,
+        "isCompiling": false,
+        "isUpdating": false,
+        "definitions": [
+          "ember.core",
+          "ember.fsm.blueprint",
+          "ember.fsm.runtime",
+          "ember.level.authoring",
+          "ember.level.room-graph",
+          "ember.level.runtime",
+          "ember.level.trial"
+        ]
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

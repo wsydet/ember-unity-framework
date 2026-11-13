@@ -101,6 +101,18 @@ namespace Ember.LevelAuthoring.Tests
             Assert.IsTrue((bool)state.GetType().GetField("returning").GetValue(state));
             Assert.IsTrue(SessionState.GetBool("Ember.LevelAuthoring.OwnsSceneRestore", false));
         }
+        [Test] public void InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership()
+        {
+            InstallState(Request());
+            EmberLevelAdapters.Register(_adapter, "", () => false);
+            typeof(EmberLevelTrialSession).GetMethod("Tick", Private).Invoke(null, null);
+            Assert.AreEqual(1, _adapter.stops);
+            var state = typeof(EmberLevelTrialSession).GetField("_state", Private).GetValue(null);
+            Assert.IsTrue((bool)state.GetType().GetField("returning").GetValue(state));
+            Assert.IsTrue(SessionState.GetBool("Ember.LevelAuthoring.OwnsSceneRestore", false));
+            EmberLevelTrialSession.Stop("old-owner");
+            Assert.AreEqual(1, _adapter.stops);
+        }
         #endregion
         // --------------------------------------------------------
         #region 内部方法

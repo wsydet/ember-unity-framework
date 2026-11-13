@@ -1,0 +1,103 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:50:21.5891799Z\",\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"template\":\"topdown-2d\",\"version\":\"0.1.2\",\"cold_ms\":9.6716,\"before\":{\"reads\":236,\"scans\":26,\"builds\":23,\"hashes\":6},\"after\":{\"reads\":236,\"scans\":26,\"builds\":23,\"hashes\":6},\"after_probe\":{\"reads\":236,\"scans\":26,\"builds\":23,\"hashes\":6},\"measurements\":[{\"name\":\"CurrentTemplateId\",\"count\":1000,\"p50_ms\":0.0001,\"p95_ms\":0.00030000000000000003,\"max_ms\":0.0309},{\"name\":\"IsTemplateActive\",\"count\":1000,\"p50_ms\":0.0001,\"p95_ms\":0.0002,\"max_ms\":0.0425},{\"name\":\"IsEnabled\",\"count\":1000,\"p50_ms\":0.0114,\"p95_ms\":0.0165,\"max_ms\":0.1265},{\"name\":\"BatchThreeChecks\",\"count\":1000,\"p50_ms\":0.0134,\"p95_ms\":0.0195,\"max_ms\":0.4194},{\"name\":\"GetTemplatesCopies\",\"count\":1000,\"p50_ms\":0.0018000000000000002,\"p95_ms\":0.0034000000000000002,\"max_ms\":0.3799},{\"name\":\"ConditionalMenuRefresh\",\"count\":50,\"p50_ms\":0.0143,\"p95_ms\":0.0194,\"max_ms\":0.2627},{\"name\":\"ValidateCurrentStatProbe\",\"count\":30,\"p50_ms\":3.4366000000000003,\"p95_ms\":4.7686,\"max_ms\":5.0372}],\"enabled\":[\"ember.core\"],\"problems\":{\"ember.fsm.blueprint\":\"依赖不可用：ember.fsm.runtime（扩展配置与正式活动模板 ID/版本不一致。）\",\"ember.fsm.runtime\":\"扩展配置与正式活动模板 ID/版本不一致。\",\"ember.level.authoring\":\"依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。）\",\"ember.level.runtime\":\"扩展配置与正式活动模板 ID/版本不一致。\",\"ember.level.trial\":\"依赖不可用：ember.level.authoring（依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。））\"},\"isPlaying\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:50:21.5891799Z",
+        "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+        "template": "topdown-2d",
+        "version": "0.1.2",
+        "cold_ms": 9.6716,
+        "before": {
+          "reads": 236,
+          "scans": 26,
+          "builds": 23,
+          "hashes": 6
+        },
+        "after": {
+          "reads": 236,
+          "scans": 26,
+          "builds": 23,
+          "hashes": 6
+        },
+        "after_probe": {
+          "reads": 236,
+          "scans": 26,
+          "builds": 23,
+          "hashes": 6
+        },
+        "measurements": [
+          {
+            "name": "CurrentTemplateId",
+            "count": 1000,
+            "p50_ms": 0.0001,
+            "p95_ms": 0.00030000000000000003,
+            "max_ms": 0.0309
+          },
+          {
+            "name": "IsTemplateActive",
+            "count": 1000,
+            "p50_ms": 0.0001,
+            "p95_ms": 0.0002,
+            "max_ms": 0.0425
+          },
+          {
+            "name": "IsEnabled",
+            "count": 1000,
+            "p50_ms": 0.0114,
+            "p95_ms": 0.0165,
+            "max_ms": 0.1265
+          },
+          {
+            "name": "BatchThreeChecks",
+            "count": 1000,
+            "p50_ms": 0.0134,
+            "p95_ms": 0.0195,
+            "max_ms": 0.4194
+          },
+          {
+            "name": "GetTemplatesCopies",
+            "count": 1000,
+            "p50_ms": 0.0018000000000000002,
+            "p95_ms": 0.0034000000000000002,
+            "max_ms": 0.3799
+          },
+          {
+            "name": "ConditionalMenuRefresh",
+            "count": 50,
+            "p50_ms": 0.0143,
+            "p95_ms": 0.0194,
+            "max_ms": 0.2627
+          },
+          {
+            "name": "ValidateCurrentStatProbe",
+            "count": 30,
+            "p50_ms": 3.4366000000000003,
+            "p95_ms": 4.7686,
+            "max_ms": 5.0372
+          }
+        ],
+        "enabled": [
+          "ember.core"
+        ],
+        "problems": {
+          "ember.fsm.blueprint": "依赖不可用：ember.fsm.runtime（扩展配置与正式活动模板 ID/版本不一致。）",
+          "ember.fsm.runtime": "扩展配置与正式活动模板 ID/版本不一致。",
+          "ember.level.authoring": "依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。）",
+          "ember.level.runtime": "扩展配置与正式活动模板 ID/版本不一致。",
+          "ember.level.trial": "依赖不可用：ember.level.authoring（依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。））"
+        },
+        "isPlaying": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

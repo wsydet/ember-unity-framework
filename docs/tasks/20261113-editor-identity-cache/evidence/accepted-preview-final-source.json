@@ -1,0 +1,87 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:56:29.8112005Z\",\"persisted\":false,\"oldOwnerVersion\":\"0.1.1\",\"previewOwnerVersion\":\"0.1.2\",\"previewBindings\":[{\"id\":\"ember.core\",\"contractVersion\":1,\"contentHash\":\"717bf0b0abe24b2fa1dc4028cd5844abcbe650fed8c6d779b78c93076aa01459\"},{\"id\":\"ember.fsm.blueprint\",\"contractVersion\":1,\"contentHash\":\"8551d12e406d5777a09f5b0cf386afcafb96cb57f985c2555a6ea928905f3b04\"},{\"id\":\"ember.fsm.runtime\",\"contractVersion\":1,\"contentHash\":\"5b1a160369e9aa17b541832acf0d1c16d95bf75f0ea31e6a3da16b185c83a96b\"},{\"id\":\"ember.level.authoring\",\"contractVersion\":1,\"contentHash\":\"5c431da5107bbfb4e2fdfc0f64e62260cd27db509f4841f3751163af7c81fb56\"},{\"id\":\"ember.level.runtime\",\"contractVersion\":1,\"contentHash\":\"d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31\"},{\"id\":\"ember.level.trial\",\"contractVersion\":1,\"contentHash\":\"dcc98c3c8401594fbce7c27acb9418ddd91913e69279301cc9e01ac412041681\"}],\"accepted\":[\"ember.core\",\"ember.fsm.blueprint\",\"ember.fsm.runtime\",\"ember.level.authoring\",\"ember.level.runtime\",\"ember.level.trial\"],\"problems\":{},\"before\":{\"reads\":244,\"scans\":27,\"builds\":23,\"hashes\":12},\"after\":{\"reads\":244,\"scans\":27,\"builds\":23,\"hashes\":12},\"acceptedPreparedResolution\":{\"count\":1000,\"p50_ms\":0.014400000000000001,\"p95_ms\":0.047900000000000005,\"max_ms\":8.0507},\"statProbeWithAllSources\":{\"count\":30,\"p50_ms\":37.4431,\"p95_ms\":77.86880000000001,\"max_ms\":81.6817}},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:56:29.8112005Z",
+        "persisted": false,
+        "oldOwnerVersion": "0.1.1",
+        "previewOwnerVersion": "0.1.2",
+        "previewBindings": [
+          {
+            "id": "ember.core",
+            "contractVersion": 1,
+            "contentHash": "717bf0b0abe24b2fa1dc4028cd5844abcbe650fed8c6d779b78c93076aa01459"
+          },
+          {
+            "id": "ember.fsm.blueprint",
+            "contractVersion": 1,
+            "contentHash": "8551d12e406d5777a09f5b0cf386afcafb96cb57f985c2555a6ea928905f3b04"
+          },
+          {
+            "id": "ember.fsm.runtime",
+            "contractVersion": 1,
+            "contentHash": "5b1a160369e9aa17b541832acf0d1c16d95bf75f0ea31e6a3da16b185c83a96b"
+          },
+          {
+            "id": "ember.level.authoring",
+            "contractVersion": 1,
+            "contentHash": "5c431da5107bbfb4e2fdfc0f64e62260cd27db509f4841f3751163af7c81fb56"
+          },
+          {
+            "id": "ember.level.runtime",
+            "contractVersion": 1,
+            "contentHash": "d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31"
+          },
+          {
+            "id": "ember.level.trial",
+            "contractVersion": 1,
+            "contentHash": "dcc98c3c8401594fbce7c27acb9418ddd91913e69279301cc9e01ac412041681"
+          }
+        ],
+        "accepted": [
+          "ember.core",
+          "ember.fsm.blueprint",
+          "ember.fsm.runtime",
+          "ember.level.authoring",
+          "ember.level.runtime",
+          "ember.level.trial"
+        ],
+        "problems": {},
+        "before": {
+          "reads": 244,
+          "scans": 27,
+          "builds": 23,
+          "hashes": 12
+        },
+        "after": {
+          "reads": 244,
+          "scans": 27,
+          "builds": 23,
+          "hashes": 12
+        },
+        "acceptedPreparedResolution": {
+          "count": 1000,
+          "p50_ms": 0.014400000000000001,
+          "p95_ms": 0.047900000000000005,
+          "max_ms": 8.0507
+        },
+        "statProbeWithAllSources": {
+          "count": 30,
+          "p50_ms": 37.4431,
+          "p95_ms": 77.86880000000001,
+          "max_ms": 81.6817
+        }
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

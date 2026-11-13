@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:49:49.4584684Z\",\"coreMvid\":\"a0e4f035-a6dc-4d99-9044-bb651897d379\",\"levelMvid\":\"f2959b0b-51e2-4412-83d8-eb61c33bd61d\",\"testMvid\":\"316ddf71-5255-4bdb-ab8e-158ea57f9b98\",\"backgroundProbeLoaded\":true,\"isCompiling\":false,\"isUpdating\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:49:49.4584684Z",
+        "coreMvid": "a0e4f035-a6dc-4d99-9044-bb651897d379",
+        "levelMvid": "f2959b0b-51e2-4412-83d8-eb61c33bd61d",
+        "testMvid": "316ddf71-5255-4bdb-ab8e-158ea57f9b98",
+        "backgroundProbeLoaded": true,
+        "isCompiling": false,
+        "isUpdating": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

@@ -1,0 +1,1241 @@
+--- before/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
++++ after/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+@@ -63,6 +63,7 @@
+         }
+         public static void Refresh()
+         {
++            using var batch = EmberExtensionProject.BeginCheckBatch();
+             foreach (var entry in Entries)
+             {
+                 bool visible = entry.Visible();
+@@ -70,7 +71,7 @@
+                 if (visible)
+                 {
+                     Func<bool> validate = () => entry.Visible() && (entry.Enabled?.Invoke() ?? true);
+-                    Action execute = () => { if (validate()) entry.Execute(); };
++                    Action execute = () => { EmberExtensionProject.ValidateCurrent(); if (validate()) entry.Execute(); };
+                     Add.Invoke(null, new object[] { entry.Path, "", false, entry.Priority, execute, validate });
+                 }
+                 else Remove.Invoke(null, new object[] { entry.Path });
+--- before/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
++++ after/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+@@ -47,7 +47,11 @@
+         // --------------------------------------------------------
+         #region 外部方法
+         internal EmberExtensionResolution(HashSet<string> enabled, Dictionary<string, string> problems)
+-        { _enabled = enabled; Enabled = enabled.OrderBy(x => x, StringComparer.Ordinal).ToArray(); Problems = new System.Collections.ObjectModel.ReadOnlyDictionary<string, string>(problems); }
++        {
++            _enabled = new HashSet<string>(enabled, StringComparer.Ordinal);
++            Enabled = Array.AsReadOnly(enabled.OrderBy(x => x, StringComparer.Ordinal).ToArray());
++            Problems = new System.Collections.ObjectModel.ReadOnlyDictionary<string, string>(new Dictionary<string, string>(problems, StringComparer.Ordinal));
++        }
+         public bool IsEnabled(string id) => id != null && _enabled.Contains(id);
+         #endregion
+     }
+--- before/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
++++ after/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+@@ -23,7 +23,7 @@
+         {
+             internal string Id, Owner;
+             internal Func<bool> Enabled;
+-            public void Dispose() => Scopes.Remove(this);
++            public void Dispose() { Scopes.Remove(this); EmberExtensionProject.InvalidateChecks(); }
+         }
+         private static readonly List<Scope> Scopes = new();
+         public const string CatalogPath = "Assets/Game/Documentation/ExtensionDocuments.json";
+@@ -87,7 +87,7 @@
+         public static IDisposable RegisterModuleScope(string id, string ownerTemplateId, Func<bool> enabled)
+         {
+             if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(ownerTemplateId) || enabled == null) throw new ArgumentException("模块范围声明无效。");
+-            var scope = new Scope { Id = id, Owner = ownerTemplateId, Enabled = enabled }; Scopes.Add(scope); return scope;
++            var scope = new Scope { Id = id, Owner = ownerTemplateId, Enabled = enabled }; Scopes.Add(scope); EmberExtensionProject.InvalidateChecks(); return scope;
+         }
+         public static Entry[] Available() => Entries().Where(Allowed).ToArray();
+         /// <summary>维护源改动后显式生成待审阅的文档指纹，不写清单。</summary>
+@@ -95,6 +95,7 @@
+         /// <summary>每次读取/打开都重新核对正式身份和启用绑定，旧索引不能授予访问。</summary>
+         public static string Read(string id)
+         {
++            EmberExtensionProject.ValidateCurrent();
+             var entry = Entries().SingleOrDefault(e => e.id == id && Allowed(e))
+                 ?? throw new InvalidOperationException("文档所属扩展/模板版本/模块当前不可用：" + id);
+             return File.ReadAllText(FullPath(entry));
+--- before/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
++++ after/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+@@ -14,8 +14,7 @@
+     {
+         #region 内部参数
+         private static readonly Dictionary<string, string> ContentHashes = new(StringComparer.Ordinal);
+-        public static string CurrentTemplateVersion => EmberProjectSetup.IsEmbeddedPackage()
+-            ? EmberProjectSetup.GetEditingTemplate()?.templateVersion : EmberProjectSetup.GetActiveDeployedTemplate()?.version;
++        public static string CurrentTemplateVersion => EmberProjectSetup.CurrentIdentity.Version;
+         #endregion
+         // --------------------------------------------------------
+         #region 内部方法
+@@ -30,7 +29,10 @@
+         };
+         private static string ContentHash(EmberExtensionDefinition definition)
+         {
++            long generation = EmberEditorMetadataCache.Generation;
++            if (_hashGeneration != generation) { ContentHashes.Clear(); _hashGeneration = generation; }
+             if (ContentHashes.TryGetValue(definition.Id, out var hash)) return hash;
++            ContentHashBuilds++;
+             string root = PackageInfoRoot();
+             var paths = definition.SourceRoots.Count > 0 ? definition.SourceRoots : BuiltinRoots(definition.Id);
+             var text = new StringBuilder(definition.Id + "\n" + definition.ContractVersion + "\n" + definition.Compatibility
+@@ -40,10 +42,26 @@
+                 string path = Path.GetFullPath(Path.Combine(root, relative));
+                 if (!path.StartsWith(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+                     throw new InvalidDataException("扩展内容根必须位于 com.ember 包内。");
++                // 缺失根也必须登记；否则失败快照可能在源码恢复后永久拒绝。
++                EmberEditorMetadataCache.Track(path, Directory.Exists(path), true);
++                string ancestor = Path.GetDirectoryName(path);
++                while (!string.IsNullOrEmpty(ancestor))
++                {
++                    EmberEditorMetadataCache.Track(ancestor, true, true);
++                    if (Directory.Exists(ancestor)) break;
++                    ancestor = Path.GetDirectoryName(ancestor);
++                }
+                 var files = Directory.Exists(path) ? Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                     : File.Exists(path) ? new[] { path } : throw new FileNotFoundException("扩展内容根不存在：" + relative);
++                if (Directory.Exists(path))
++                {
++                    EmberEditorMetadataCache.Track(path, true, true);
++                    foreach (string directory in Directory.GetDirectories(path, "*", SearchOption.AllDirectories))
++                        EmberEditorMetadataCache.Track(directory, true, true);
++                }
+                 foreach (string file in files.Where(f => !f.EndsWith(".meta", StringComparison.Ordinal)).OrderBy(f => f, StringComparer.Ordinal))
+                 {
++                    EmberEditorMetadataCache.Track(file, false, true);
+                     using var algorithm = SHA256.Create();
+                     byte[] bytes = File.ReadAllBytes(file);
+                     if (new[] { ".cs", ".asmdef", ".asmref", ".json", ".md", ".uss", ".uxml", ".txt" }.Contains(Path.GetExtension(file).ToLowerInvariant()))
+@@ -56,7 +74,7 @@
+             hash = BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text.ToString()))).Replace("-", "").ToLowerInvariant();
+             ContentHashes[definition.Id] = hash; return hash;
+         }
+-        private static string PackageInfoRoot() => UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(EmberExtensionProject).Assembly)?.resolvedPath
++        private static string PackageInfoRoot() => EmberEditorMetadataCache.Package?.resolvedPath
+             ?? throw new InvalidOperationException("无法定位 com.ember 包。");
+         internal static byte[] CanonicalSource(byte[] bytes) => Encoding.UTF8.GetBytes(new UTF8Encoding(false, true).GetString(bytes)
+             .TrimStart('\uFEFF').Replace("\r\n", "\n").Replace("\r", "\n"));
+@@ -76,20 +94,24 @@
+             return null;
+         }
+         internal static EmberExtensionResolution ResolveConfiguration(Configuration config, string templateId, string version)
++            => EmberExtensionCatalog.Resolve(PrepareConfiguration(config, templateId, version), config.enabled);
++
++        private static EmberExtensionDefinition[] PrepareConfiguration(Configuration config, string templateId, string version)
+         {
+             string reason = config.schemaVersion != 2 ? "旧扩展配置尚未签收版本/hash，请在项目中心检查并保存组合。"
+                 : (config.ownerTemplateId ?? "") != (templateId ?? "") || (config.ownerTemplateVersion ?? "") != (version ?? "")
+                     ? "扩展配置与正式活动模板 ID/版本不一致。" : null;
+-            var definitions = All.Select(d => new EmberExtensionDefinition(d.Id, d.DisplayName, d.Kind, d.Dependencies,
++            return All.Select(d =>
++            {
++                string stableProblem = d.Kind == EmberExtensionKind.Infrastructure ? null
++                    : string.IsNullOrEmpty(templateId) ? "缺少有效的正式模板身份。" : reason ?? BindingProblem(d.Id, config);
++                return new EmberExtensionDefinition(d.Id, d.DisplayName, d.Kind, d.Dependencies,
+                 d.Compatibility, () =>
+                 {
+-                    if (d.Kind == EmberExtensionKind.Infrastructure) return d.CheckCompatibility?.Invoke();
+-                    if (reason != null) return reason;
+-                    string bindingProblem = BindingProblem(d.Id, config);
+-                    if (bindingProblem != null) return bindingProblem;
++                    if (stableProblem != null) return stableProblem;
+                     return d.CheckCompatibility?.Invoke();
+-                })).ToArray();
+-            return EmberExtensionCatalog.Resolve(definitions, config.enabled);
++                }, d.ContractVersion, d.SourceRoots);
++            }).ToArray();
+         }
+         internal static EmberAISkillInstaller.ExtensionIdentity[] Identities(EmberExtensionResolution resolution) =>
+             All.Where(d => resolution.IsEnabled(d.Id)).Select(d => new EmberAISkillInstaller.ExtensionIdentity
+--- before/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
++++ after/Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+@@ -21,7 +21,7 @@
+         public const string RoomGraph = "ember.level.room-graph";
+         public const string DefaultsPath = "Assets/Game/Config/EmberExtensionDefaults.json";
+         private static readonly Dictionary<string, EmberExtensionDefinition> Definitions = new(StringComparer.Ordinal);
+-        private static readonly Dictionary<string, (long stamp, string text)> Files = new();
++        private static IReadOnlyList<EmberExtensionDefinition> _all;
+         [Serializable] public sealed class Configuration
+         {
+             public int schemaVersion = 2;
+@@ -30,7 +30,7 @@
+             public string[] enabled = Array.Empty<string>();
+             public Ember.UPMManager.Editor.EmberAISkillInstaller.ExtensionIdentity[] bindings;
+         }
+-        public static IReadOnlyList<EmberExtensionDefinition> All => Definitions.Values.OrderBy(d => d.Id, StringComparer.Ordinal).ToArray();
++        public static IReadOnlyList<EmberExtensionDefinition> All => _all ??= Array.AsReadOnly(Definitions.Values.OrderBy(d => d.Id, StringComparer.Ordinal).ToArray());
+         public static string ConfigurationPath => EmberProjectSetup.IsEmbeddedPackage()
+             ? "ProjectSettings/EmberExtensions." + (EmberFsmBlueprintAccess.CurrentTemplateId ?? "unassigned") + ".json"
+             : "ProjectSettings/EmberExtensions.json";
+@@ -50,17 +50,14 @@
+         }
+         private static Configuration Read(string path)
+         {
+-            long stamp = Ember.UPMManager.Editor.EmberTemplateFileSystem.File.GetLastWriteTimeUtc(path).Ticks;
+-            if (!Files.TryGetValue(path, out var cached) || cached.stamp != stamp)
+-            { cached = (stamp, Ember.UPMManager.Editor.EmberTemplateFileSystem.File.ReadAllText(path)); Files[path] = cached; }
+-            var config = JsonUtility.FromJson<Configuration>(cached.text);
++            var config = EmberEditorMetadataCache.ReadJson<Configuration>(path);
+             if (config == null || config.schemaVersion < 1 || config.schemaVersion > 2 || config.enabled == null || config.enabled.Any(string.IsNullOrWhiteSpace))
+                 throw new InvalidDataException("扩展配置格式无效：" + path);
+             return config;
+         }
+         private static Configuration LoadDefaults()
+         {
+-            if (File.Exists(DefaultsPath))
++            if (EmberEditorMetadataCache.ReadJson<Configuration>(DefaultsPath) != null)
+             {
+                 var config = Read(DefaultsPath);
+                 if (string.IsNullOrEmpty(config.ownerTemplateId) || !EmberProjectSetup.IsTemplateActive(config.ownerTemplateId))
+@@ -78,16 +75,25 @@
+             if (definition == null) throw new ArgumentNullException(nameof(definition));
+             if (Definitions.ContainsKey(definition.Id)) throw new InvalidOperationException("扩展 ID 重复：" + definition.Id);
+             Definitions.Add(definition.Id, definition);
++            _all = null;
++            InvalidateResolution();
+         }
+-        public static Configuration Load()
++        /// <summary>只移除同一登记实例，旧 owner 不能注销新定义。</summary>
++        public static void Unregister(EmberExtensionDefinition definition)
+         {
+-            if (!File.Exists(ConfigurationPath)) return LoadDefaults();
++            if (definition == null || !Definitions.TryGetValue(definition.Id, out var current) || !ReferenceEquals(current, definition)) return;
++            Definitions.Remove(definition.Id); _all = null; InvalidateResolution();
++        }
++        private static Configuration LoadCurrent()
++        {
++            if (EmberEditorMetadataCache.ReadJson<Configuration>(ConfigurationPath) == null) return LoadDefaults();
+             var config = Read(ConfigurationPath);
+             if (!string.IsNullOrEmpty(config.ownerTemplateId) && config.ownerTemplateId != EmberFsmBlueprintAccess.CurrentTemplateId)
+                 throw new InvalidDataException("项目扩展配置属于另一活动模板：" + config.ownerTemplateId);
+             return config;
+         }
+-        public static EmberExtensionResolution Resolve() => ResolveConfiguration(Load(), EmberFsmBlueprintAccess.CurrentTemplateId, CurrentTemplateVersion);
++        public static Configuration Load() => CloneConfiguration(LoadCurrent());
++        public static EmberExtensionResolution Resolve() => ResolveCurrent();
+         public static bool IsEnabled(string id)
+         {
+             try { return Resolve().IsEnabled(id); }
+@@ -101,12 +107,19 @@
+         }
+         public static void Require(string id, bool writing = false)
+         {
++            if (writing) ValidateCurrent();
++            else
++            {
++                // 只读门禁也用于 Scene GUI；源码变化由合并的后台检测收回资格。
++                EmberEditorMetadataCache.ValidateNow(false); InvalidateChecks();
++            }
+             if (!IsEnabled(id)) throw new InvalidOperationException("扩展未启用或依赖/兼容条件不满足：" + id + "。请检查 Ember 项目中心的扩展组合。");
+             if (writing && (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating))
+                 throw new InvalidOperationException("请等待播放、编译或导入结束再编辑。");
+         }
+         public static void Save(Configuration config)
+         {
++            ValidateCurrent();
+             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                 throw new InvalidOperationException("请在空闲编辑状态保存扩展组合。");
+             if (config == null || config.enabled == null) throw new ArgumentException("配置无效。");
+@@ -114,7 +127,7 @@
+             if (result.Problems.Count > 0) throw new InvalidOperationException(string.Join("\n", result.Problems.Values));
+             var copy = CreateConfiguration(config.enabled);
+             EmberProjectSetup.CommitExtensionConfiguration(copy);
+-            Files.Remove(ConfigurationPath); EmberConditionalMenu.Refresh();
++            InvalidateResolution(); EmberConditionalMenu.Refresh();
+         }
+         #endregion
+     }
+--- before/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
++++ after/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+@@ -16,7 +16,7 @@
+         {
+             internal string Owner;
+             internal Func<bool> Enabled;
+-            public void Dispose() => Scopes.Remove(this);
++            public void Dispose() { Scopes.Remove(this); EmberExtensionProject.InvalidateChecks(); }
+         }
+         private static readonly List<Scope> Scopes = new();
+         #endregion
+@@ -29,9 +29,8 @@
+         {
+             get
+             {
+-                var id = EmberProjectSetup.IsEmbeddedPackage() ? EmberProjectSetup.GetEditingTemplate()?.templateId
+-                    : EmberProjectSetup.GetActiveDeployedTemplate()?.templateId;
+-                return !string.IsNullOrEmpty(id) && EmberProjectSetup.IsTemplateActive(id) ? id : null;
++                try { return EmberProjectSetup.CurrentIdentity.Id; }
++                catch (Exception) { return null; }
+             }
+         }
+         public static bool IsAvailable => EmberExtensionProject.IsEnabled(EmberExtensionProject.FsmBlueprint);
+@@ -42,7 +41,7 @@
+         {
+             if (string.IsNullOrWhiteSpace(ownerTemplateId)) throw new ArgumentException("必须声明所属模板。", nameof(ownerTemplateId));
+             var scope = new Scope {Owner=ownerTemplateId,Enabled=enabled ?? throw new ArgumentNullException(nameof(enabled))};
+-            Scopes.Add(scope); return scope;
++            Scopes.Add(scope); EmberExtensionProject.InvalidateChecks(); return scope;
+         }
+         #endregion
+     }
+--- before/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
++++ after/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+@@ -3,11 +3,47 @@
+ using System;
+ using System.Collections.Generic;
+ using System.IO;
++using System.Linq;
+ 
+ namespace Ember.Core.Editor
+ {
+     public static partial class EmberProjectSetup
+     {
++        #region 内部参数
++        internal sealed class TemplateIdentity
++        {
++            internal string Id, Version;
++            internal readonly HashSet<string> Ancestors = new(StringComparer.Ordinal);
++        }
++        internal static TemplateIdentity CurrentIdentity => EmberEditorMetadataCache.Get("formal-identity", BuildIdentity);
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        private static TemplateIdentity BuildIdentity()
++        {
++            var identity = new TemplateIdentity();
++            bool embedded = IsEmbeddedPackage();
++            var editing = embedded ? GetEditingTemplate() : null;
++            var deployed = embedded ? null : GetActiveDeployedTemplate();
++            string id = embedded ? editing?.templateId : deployed?.templateId;
++            string version = embedded ? editing?.templateVersion : deployed?.version;
++            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(version)
++                || string.IsNullOrWhiteSpace(embedded ? editing?.contentHash : deployed?.contentHash)) return identity;
++            var templates = CachedTemplates;
++            if (!IsTemplateActiveForIdentity(id, embedded, editing?.templateId, deployed?.templateId, templates)) return identity;
++            identity.Id = id; identity.Version = version;
++            while (!string.IsNullOrEmpty(id))
++            {
++                var template = templates.Single(t => t.id == id);
++                if (string.IsNullOrWhiteSpace(template.version) || string.IsNullOrWhiteSpace(template.contentHash))
++                    return new TemplateIdentity();
++                identity.Ancestors.Add(id);
++                id = template.parentId;
++            }
++            return identity;
++        }
++        #endregion
++        // --------------------------------------------------------
+         #region 外部方法
+ 
+         /// <summary>当前正式编辑/部署模板是否为指定模板或其派生模板。只读，不回退到另一环境的记录。</summary>
+@@ -15,12 +51,9 @@
+         {
+             try
+             {
+-                bool embedded = IsEmbeddedPackage();
+-                return IsTemplateActiveForIdentity(templateId, embedded,
+-                    embedded ? GetEditingTemplate()?.templateId : null,
+-                    embedded ? null : GetActiveDeployedTemplate()?.templateId, GetTemplates());
++                return templateId != null && CurrentIdentity.Ancestors.Contains(templateId);
+             }
+-            catch (IOException) { return false; }
++            catch (Exception) { return false; }
+         }
+ 
+         internal static bool IsTemplateActiveForIdentity(string templateId, bool embedded,
+@@ -29,6 +62,7 @@
+             if (string.IsNullOrEmpty(templateId) || templates == null) return false;
+             string id = embedded ? editingId : deployedId;
+             var visited = new HashSet<string>(StringComparer.Ordinal);
++            bool matches = false;
+             while (!string.IsNullOrEmpty(id) && visited.Add(id))
+             {
+                 TemplateInfo current = null;
+@@ -39,10 +73,11 @@
+                     current = candidate;
+                 }
+                 if (current == null) return false;
+-                if (string.Equals(id, templateId, StringComparison.Ordinal)) return true;
++                if (string.Equals(id, templateId, StringComparison.Ordinal)) matches = true;
+                 id = current.parentId;
+             }
+-            return false;
++            // 命中当前节点后仍校验到根，不能授权断链或循环中的模板。
++            return string.IsNullOrEmpty(id) && matches;
+         }
+ 
+         #endregion
+--- before/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
++++ after/Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+@@ -68,6 +68,7 @@
+         /// <summary>执行完整初始化：部署指定模板 + 注册场景 + 刷新场景映射。返回部署的文件数。</summary>
+         public static int Initialize(string templateId)
+         {
++            EmberEditorMetadataCache.ValidateNow();
+             var packagePath = GetResolvedPath(PACKAGE);
+             if (packagePath == null) return 0;
+ 
+@@ -89,6 +90,7 @@
+         /// </summary>
+         public static int DeployReplacingActiveTemplate(string templateId)
+         {
++            EmberEditorMetadataCache.ValidateNow();
+             var packagePath = GetResolvedPath(PACKAGE)
+                 ?? throw new InvalidOperationException($"包 [{PACKAGE}] 未安装。");
+             var template = ReadTemplateJson(packagePath, templateId)
+@@ -129,19 +131,30 @@
+         /// <summary>扫描包内 Templates~/ 下的所有模板（未来新增模板自动出现在列表）。</summary>
+         public static List<TemplateInfo> GetTemplates()
+         {
++            return CachedTemplates.Select(EmberTemplateInheritanceEngine.Clone).ToList();
++        }
++
++        internal static List<TemplateInfo> CachedTemplates => EmberEditorMetadataCache.Get("templates", ScanTemplates);
++
++        private static List<TemplateInfo> ScanTemplates()
++        {
++            EmberEditorMetadataCache.TemplateScans++;
+             var result = new List<TemplateInfo>();
+             var packagePath = GetResolvedPath(PACKAGE);
+             if (packagePath == null) return result;
+ 
+             var root = Path.Combine(packagePath, "Templates~");
++            EmberEditorMetadataCache.Track(root, true);
+             if (!Directory.Exists(root)) return result;
+ 
+             foreach (var dir in Directory.GetDirectories(root))
+             {
++                EmberEditorMetadataCache.Track(dir, true);
+                 var jsonPath = Path.Combine(dir, "template.json");
++                EmberEditorMetadataCache.Track(jsonPath);
+                 if (!File.Exists(jsonPath)) continue;
+ 
+-                var info = ReadTemplateJson(packagePath, Path.GetFileName(dir));
++                var info = ReadTemplateJson(packagePath, Path.GetFileName(dir), true);
+                 if (info != null && !string.IsNullOrEmpty(info.id))
+                     result.Add(info);
+             }
+@@ -342,7 +355,7 @@
+         /// <summary>当前框架包版本（如 "0.8.0"）。</summary>
+         public static string GetFrameworkVersion()
+         {
+-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(PACKAGE);
++            var info = EmberEditorMetadataCache.Package;
+             return info?.version ?? "0.0.0";
+         }
+ 
+@@ -620,7 +633,7 @@
+         /// <summary>是否为框架开发仓库（embedded 安装）——模板保存/加载仅在此模式可用。</summary>
+         public static bool IsEmbeddedPackage()
+         {
+-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(PACKAGE);
++            var info = EmberEditorMetadataCache.Package;
+             return info != null && IsTemplateDevelopmentSource(info.source);
+         }
+ 
+@@ -802,6 +815,7 @@
+                     $"模板 [{templateId}] 仍被派生模板 [{child.id}] 引用，不能删除。");
+             }
+             Directory.Delete(tplRoot, true);
++            EmberEditorMetadataCache.Invalidate();
+ 
+             var editing = GetEditingTemplate();
+             if (editing != null && editing.templateId == templateId)
+@@ -875,6 +889,7 @@
+         /// <summary>只用于迁移旧多记录格式：明确认定哪个已有记录对应当前项目内容。</summary>
+         public static void SetActiveDeployedTemplate(string templateId)
+         {
++            EmberEditorMetadataCache.ValidateNow();
+             var data = ReadDeploymentData();
+             if (Ember.UPMManager.Editor.EmberAISkillInstaller.HasTemplateSkillOwnership(
+                     Directory.GetParent(Application.dataPath).FullName)
+@@ -897,16 +912,14 @@
+         /// <summary>读取 dev 仓库「当前正在编辑的模板」记录（无记录返回 null）。</summary>
+         public static EditingTemplateRecord GetEditingTemplate()
+         {
+-            var path = ToFullPath(EditingRecordPath);
+-            if (!File.Exists(path)) return null;
+-
+             try
+             {
+-                return JsonUtility.FromJson<EditingTemplateRecord>(File.ReadAllText(path));
+-            }
+-            catch (Exception ex)
+-            {
+-                EmberDebug.LogWarning(TAG, $"读取编辑记录失败 {EditingRecordPath}: {ex.Message}");
++                var value = EmberEditorMetadataCache.ReadJson<EditingTemplateRecord>(ToFullPath(EditingRecordPath));
++                return value == null ? null : new EditingTemplateRecord { templateId = value.templateId,
++                    templateVersion = value.templateVersion, contentHash = value.contentHash, loadedAt = value.loadedAt };
++            }
++            catch (Exception)
++            {
+                 return null;
+             }
+         }
+@@ -962,7 +975,7 @@
+         #region 内部方法
+ 
+         /// <summary>读取模板元数据；模板不存在或解析失败返回 null（解析失败会打警告）。</summary>
+-        private static TemplateInfo ReadTemplateJson(string packagePath, string templateId)
++        private static TemplateInfo ReadTemplateJson(string packagePath, string templateId, bool cached = false)
+         {
+             var jsonPath = Path.Combine(packagePath, "Templates~", templateId, "template.json");
+             if (!File.Exists(jsonPath)) return null;
+@@ -970,7 +983,8 @@
+             try
+             {
+                 // 必须显式 UTF-8 读取：中文 Windows 默认编码为 GBK，否则中文元数据会乱码
+-                return JsonUtility.FromJson<TemplateInfo>(File.ReadAllText(jsonPath, System.Text.Encoding.UTF8));
++                return cached ? EmberTemplateInheritanceEngine.Clone(EmberEditorMetadataCache.ReadJson<TemplateInfo>(jsonPath))
++                    : JsonUtility.FromJson<TemplateInfo>(File.ReadAllText(jsonPath, System.Text.Encoding.UTF8));
+             }
+             catch (Exception ex)
+             {
+@@ -987,6 +1001,7 @@
+             EmberTemplateTransaction.WriteTemplateJson(
+                 Path.Combine(tplRoot, "template.json"),
+                 info);
++            EmberEditorMetadataCache.Invalidate();
+         }
+ 
+         private static void EnsurePlanIsCurrent(
+@@ -1409,17 +1424,21 @@
+         private static DeployedTemplatesData ReadDeploymentData()
+         {
+             var path = ToFullPath(DeployedRecordsPath);
++            EmberEditorMetadataCache.Track(path);
+             if (!File.Exists(path)) return new DeployedTemplatesData();
+             try
+             {
+-                var data = JsonUtility.FromJson<DeployedTemplatesData>(File.ReadAllText(path))
++                var data = EmberEditorMetadataCache.ReadJson<DeployedTemplatesData>(path)
+                     ?? new DeployedTemplatesData();
+-                data.records ??= new List<DeployedTemplateRecord>();
+-                return data;
+-            }
+-            catch (Exception ex)
+-            {
+-                EmberDebug.LogWarning(TAG, $"读取部署记录失败 {DeployedRecordsPath}: {ex.Message}");
++                if (data.records == null || data.records.Any(record => record == null))
++                    throw new InvalidDataException("部署记录格式无效。");
++                if (data.records.GroupBy(record => record.templateId, StringComparer.Ordinal).Any(group => group.Count() > 1))
++                    throw new InvalidDataException("部署记录包含重复身份。");
++                return new DeployedTemplatesData { activeTemplateId = data.activeTemplateId,
++                    records = data.records.Select(CloneDeploymentRecord).ToList() };
++            }
++            catch (Exception)
++            {
+                 return new DeployedTemplatesData();
+             }
+         }
+@@ -1461,13 +1480,15 @@
+             {
+                 if (File.Exists(path)) File.Delete(path);
+                 if (File.Exists(path + ".meta")) File.Delete(path + ".meta");
++                EmberEditorMetadataCache.Invalidate();
+             }
+             catch { /* 清理失败不阻断 */ }
+         }
+ 
+         private static string GetResolvedPath(string packageName)
+         {
+-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
++            var info = packageName == PACKAGE ? EmberEditorMetadataCache.Package
++                : UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
+             return info?.resolvedPath;
+         }
+ 
+@@ -1610,6 +1631,7 @@
+ 
+         private static void EnsureTemplateDevelopmentAllowed()
+         {
++            EmberEditorMetadataCache.ValidateNow();
+             if (IsEmbeddedPackage()) return;
+             throw new InvalidOperationException(
+                 "模板编辑和保存仅允许在 embedded 框架项目中执行；消费项目只能部署包内模板。");
+--- before/Packages/com.ember/Core/Editor/EmberSetupWindow.cs
++++ after/Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+@@ -121,6 +121,7 @@
+ 
+         private void OnGUI()
+         {
++            using var batch = EmberExtensionProject.BeginCheckBatch();
+             EnsurePanels();
+             bool devMode = EmberProjectSetup.IsEmbeddedPackage();
+             if (Event.current.type == EventType.Layout && _pendingTab.HasValue)
+--- before/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
++++ after/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+@@ -168,7 +168,12 @@
+             if (System.Threading.Interlocked.CompareExchange(ref _commitActive, 1, 0) != 0)
+                 throw new InvalidOperationException("模板事务正在提交，拒绝并发或嵌套提交。");
+             try { CommitPreparedTargetsCore(targets, faultInjector); }
+-            finally { System.Threading.Volatile.Write(ref _commitActive, 0); }
++            finally
++            {
++                System.Threading.Volatile.Write(ref _commitActive, 0);
++                // 提交与回滚都可能改变正式身份、配置或模板父链。
++                EmberEditorMetadataCache.Invalidate();
++            }
+         }
+ 
+         private static void CommitPreparedTargetsCore(
+--- before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
++++ after/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+@@ -77,17 +77,35 @@
+         public static void Register(IEmberLevelAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => string.IsNullOrEmpty(adapter.UnavailableReason));
+         public static void Register(IEmberLevelObjectAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => true);
+         public static void Register(IEmberLevelAdapter adapter, string ownerTemplateId, Func<bool> enabled)
+-        { Levels[adapter.Id] = adapter; LevelScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
++        { Levels[adapter.Id] = adapter; LevelScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); EmberExtensionProject.InvalidateChecks(); }
+         public static void Register(IEmberLevelObjectAdapter adapter, string ownerTemplateId, Func<bool> enabled)
+-        { Objects[adapter.Id] = adapter; ObjectScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
+-        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && GetForCleanup(adapter.Id) == adapter) { Levels.Remove(adapter.Id); LevelScopes.Remove(adapter.Id); } }
+-        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && Objects.TryGetValue(adapter.Id, out var current) && ReferenceEquals(current, adapter)) { Objects.Remove(adapter.Id); ObjectScopes.Remove(adapter.Id); } }
++        { Objects[adapter.Id] = adapter; ObjectScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); EmberExtensionProject.InvalidateChecks(); }
++        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && GetForCleanup(adapter.Id) == adapter) { Levels.Remove(adapter.Id); LevelScopes.Remove(adapter.Id); EmberExtensionProject.InvalidateChecks(); } }
++        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && Objects.TryGetValue(adapter.Id, out var current) && ReferenceEquals(current, adapter)) { Objects.Remove(adapter.Id); ObjectScopes.Remove(adapter.Id); EmberExtensionProject.InvalidateChecks(); } }
+         internal static IEmberLevelAdapter GetForCleanup(string id) => id != null && Levels.TryGetValue(id, out var value) ? value : null;
+         public static IEmberLevelAdapter Get(string id) => IsAvailable(id) ? GetForCleanup(id) : null;
+         public static IEmberLevelObjectAdapter GetObject(string id) => id != null && Objects.TryGetValue(id, out var value) && ObjectScopes[id]() ? value : null;
+-        public static bool IsAvailable(string id) => id != null && LevelScopes.TryGetValue(id, out var scope) && scope() && string.IsNullOrEmpty(GetForCleanup(id)?.UnavailableReason);
+-        public static IEnumerable<IEmberLevelAdapter> All => Levels.Values.Where(a => IsAvailable(a.Id));
+-        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters => Objects.Values.Where(a => ObjectScopes[a.Id]());
++        public static bool IsAvailable(string id)
++        {
++            try { return id != null && LevelScopes.TryGetValue(id, out var scope) && scope() && string.IsNullOrEmpty(GetForCleanup(id)?.UnavailableReason); }
++            catch (Exception) { return false; }
++        }
++        public static IEnumerable<IEmberLevelAdapter> All
++        {
++            get
++            {
++                using var batch = EmberExtensionProject.BeginCheckBatch();
++                return Levels.Values.Where(a => IsAvailable(a.Id)).ToArray();
++            }
++        }
++        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters
++        {
++            get
++            {
++                using var batch = EmberExtensionProject.BeginCheckBatch();
++                return Objects.Values.Where(a => GetObject(a.Id) == a).ToArray();
++            }
++        }
+ 
+         /// <summary>登记只读场景对象解析器。返回 null 表示不匹配；匹配时必须返回已登记的适配器实例。</summary>
+         public static void RegisterObjectResolver(string id, Func<GameObject, IEmberLevelObjectAdapter> resolver)
+@@ -96,9 +114,10 @@
+             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
+             if (ObjectResolvers.ContainsKey(id)) throw new InvalidOperationException("对象解析器已登记：" + id);
+             ObjectResolvers.Add(id, resolver);
++            EmberExtensionProject.InvalidateChecks();
+         }
+ 
+-        public static void UnregisterObjectResolver(string id) { if (id != null) ObjectResolvers.Remove(id); }
++        public static void UnregisterObjectResolver(string id) { if (id != null && ObjectResolvers.Remove(id)) EmberExtensionProject.InvalidateChecks(); }
+ 
+         /// <summary>项目解析优先；无匹配才查 Prefab 素材。冲突、失效或异常抛错，禁止降级为空适配器。</summary>
+         public static IEmberLevelObjectAdapter ResolveObject(GameObject instance)
+--- before/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
++++ after/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+@@ -51,6 +51,7 @@
+         private static void Save() => SessionState.SetString(KEY, JsonUtility.ToJson(_state));
+         private static void Tick()
+         {
++            using var batch = EmberExtensionProject.BeginCheckBatch();
+             if (_state != null && !_state.returning && (!EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelTrial) || !EmberLevelAdapters.IsAvailable(_state.request.adapterId)))
+             { StopCurrent(); return; }
+             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
+@@ -120,6 +121,9 @@
+             if (dependencies.Length > 0 && !EditorUtility.DisplayDialog("保存试玩依赖", "本次试玩需要保存以下依赖：\n" +
+                 string.Join("\n", dependencies.Select(AssetDatabase.GetAssetPath)), "保存并试玩", "取消")) return;
+             foreach (var asset in dependencies) AssetDatabase.SaveAssetIfDirty(asset);
++            EmberExtensionProject.Require(EmberExtensionProject.LevelTrial, true);
++            if (!ReferenceEquals(EmberLevelAdapters.Get(level.adapterId), adapter))
++                throw new InvalidOperationException("试玩适配器或资格在准备期间变化，请重新选择启动。");
+             request.configurationHash = AssetDatabase.GetAssetDependencyHash(AssetDatabase.GetAssetPath(level.configuration)).ToString();
+             var view = SceneView.lastActiveSceneView;
+             _state = new Snapshot { scenes = EditorSceneManager.GetSceneManagerSetup(), request = request,
+@@ -170,6 +174,7 @@
+         { if (_state != null && _state.request.requestId == requestId) Retry(); }
+         public static void Retry()
+         {
++            EmberExtensionProject.ValidateCurrent();
+             EmberExtensionProject.Require(EmberExtensionProject.LevelTrial);
+             if (_state == null) throw new InvalidOperationException("当前没有试玩会话。");
+             SessionState.SetString(KEY + ".Retry", JsonUtility.ToJson(_state.request)); StopCurrent();
+--- before/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
++++ after/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+@@ -101,6 +101,18 @@
+             Assert.IsTrue((bool)state.GetType().GetField("returning").GetValue(state));
+             Assert.IsTrue(SessionState.GetBool("Ember.LevelAuthoring.OwnsSceneRestore", false));
+         }
++        [Test] public void InvalidatedTrialTickStopsThroughCurrentOwnerAndPreservesRestoreOwnership()
++        {
++            InstallState(Request());
++            EmberLevelAdapters.Register(_adapter, "", () => false);
++            typeof(EmberLevelTrialSession).GetMethod("Tick", Private).Invoke(null, null);
++            Assert.AreEqual(1, _adapter.stops);
++            var state = typeof(EmberLevelTrialSession).GetField("_state", Private).GetValue(null);
++            Assert.IsTrue((bool)state.GetType().GetField("returning").GetValue(state));
++            Assert.IsTrue(SessionState.GetBool("Ember.LevelAuthoring.OwnsSceneRestore", false));
++            EmberLevelTrialSession.Stop("old-owner");
++            Assert.AreEqual(1, _adapter.stops);
++        }
+         #endregion
+         // --------------------------------------------------------
+         #region 内部方法
+--- /dev/null
++++ after/Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs
+@@ -0,0 +1,237 @@
++using System;
++using System.Collections.Generic;
++using System.IO;
++using System.Threading;
++using System.Threading.Tasks;
++using UnityEditor;
++using PackageInfo = UnityEditor.PackageManager.PackageInfo;
++using UnityEngine;
++using File = Ember.UPMManager.Editor.EmberTemplateFileSystem.File;
++
++namespace Ember.Core.Editor
++{
++    /// <summary>仅持有 Editor 元数据。文件通知合并到主线程；稳态不枚举模板或读取源码。</summary>
++    [InitializeOnLoad]
++    internal static class EmberEditorMetadataCache
++    {
++        #region 内部参数
++        private sealed class Entry
++        {
++            internal object Value;
++            internal Exception Error;
++        }
++        private readonly struct Stamp : IEquatable<Stamp>
++        {
++            private readonly long _ticks, _length;
++            internal readonly bool Directory;
++            internal readonly bool Content;
++            internal Stamp(string path, bool directory = false, bool content = false)
++            {
++                Directory = directory;
++                Content = content;
++                try { System.IO.File.GetAttributes(path); }
++                catch (FileNotFoundException) { _ticks = -1; _length = -1; return; }
++                catch (DirectoryNotFoundException) { _ticks = -1; _length = -1; return; }
++                if (directory)
++                {
++                    var folder = new DirectoryInfo(path);
++                    _ticks = folder.Exists ? folder.LastWriteTimeUtc.Ticks : -1;
++                    _length = -2;
++                    return;
++                }
++                // 不吞掉权限/IO 异常；不能把无法读取的输入当作未变化。
++                var info = new FileInfo(path);
++                _ticks = info.Exists ? info.LastWriteTimeUtc.Ticks : -1;
++                _length = info.Exists ? info.Length : -1;
++            }
++            public bool Equals(Stamp other) => _ticks == other._ticks && _length == other._length;
++        }
++        private static readonly Dictionary<string, Entry> Values = new(StringComparer.Ordinal);
++        private static readonly Dictionary<string, Stamp> Inputs = new(StringComparer.OrdinalIgnoreCase);
++        private static readonly List<FileSystemWatcher> Watchers = new();
++        private static int _dirty, _watcherFault;
++        private static long _generation;
++        private static double _nextProbe;
++        private static string _packageKey;
++        private static PackageInfo _package;
++        private static Task<bool> _probe;
++        private static long _probeGeneration;
++        internal static int JsonReads { get; private set; }
++        internal static int TemplateScans { get; set; }
++        internal static long Generation { get { Check(); return _generation; } }
++        internal static PackageInfo Package { get { Check(); return _package; } }
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        static EmberEditorMetadataCache()
++        {
++            EditorApplication.projectChanged += Invalidate;
++            EditorApplication.update += Update;
++            AssemblyReloadEvents.beforeAssemblyReload += DisposeWatchers;
++            EditorApplication.quitting += DisposeWatchers;
++        }
++
++        private static void DisposeWatchers()
++        {
++            foreach (var watcher in Watchers) watcher.Dispose();
++            Watchers.Clear();
++        }
++
++        private static void Watch(string root, bool recursive)
++        {
++            var watcher = new FileSystemWatcher(root)
++            {
++                IncludeSubdirectories = recursive,
++                NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite | NotifyFilters.Size,
++                InternalBufferSize = 65536
++            };
++            watcher.Changed += Changed;
++            watcher.Created += Changed;
++            watcher.Deleted += Changed;
++            watcher.Renamed += (_, args) => { Changed(null, args); MarkDirty(); };
++            watcher.Error += (_, _) => { Interlocked.Exchange(ref _watcherFault, 1); MarkDirty(); };
++            watcher.EnableRaisingEvents = true;
++            Watchers.Add(watcher);
++        }
++
++        private static void Changed(object sender, FileSystemEventArgs args)
++        {
++            if (!args.FullPath.EndsWith(".meta", StringComparison.OrdinalIgnoreCase)) MarkDirty();
++        }
++
++        private static void MarkDirty() => Interlocked.Exchange(ref _dirty, 1);
++
++        private static void SetupWatchers()
++        {
++            DisposeWatchers();
++            try
++            {
++                if (_package != null) Watch(_package.resolvedPath, true);
++                string root = Path.GetDirectoryName(Application.dataPath);
++                Watch(Path.Combine(root, "ProjectSettings"), false);
++                // 监视目录替换、默认配置与正式身份；不监视 Library 或生成输出。
++                Watch(Application.dataPath, true);
++                Interlocked.Exchange(ref _watcherFault, 0);
++            }
++            catch
++            {
++                DisposeWatchers();
++                Interlocked.Exchange(ref _watcherFault, 1);
++                throw;
++            }
++        }
++
++        private static void Check() => Check(false);
++
++        private static void Update()
++        {
++            // 查询端会报告同一错误并拒绝资格；后台检测不逐帧刷屏。
++            try { Check(); } catch (Exception) { }
++        }
++
++        private static bool InputsChanged(KeyValuePair<string, Stamp>[] inputs)
++        {
++            foreach (var input in inputs)
++                if (!input.Value.Equals(new Stamp(input.Key, input.Value.Directory, input.Value.Content))) return true;
++            return false;
++        }
++
++        private static void Check(bool force, bool content = true)
++        {
++            try
++            {
++                if (_probe?.IsCompleted == true)
++                {
++                    var probe = _probe; _probe = null;
++                    bool changed = probe.GetAwaiter().GetResult();
++                    if (_probeGeneration == _generation && changed) Invalidate();
++                }
++                if (force || EditorApplication.timeSinceStartup >= _nextProbe)
++                {
++                    if (!force) _nextProbe = EditorApplication.timeSinceStartup + .5;
++                    var package = PackageInfo.FindForAssembly(typeof(EmberProjectSetup).Assembly);
++                    string key = Application.dataPath + "|" + package?.resolvedPath + "|" + package?.version + "|" + package?.source;
++                    if (key != _packageKey || Volatile.Read(ref _watcherFault) != 0)
++                    {
++                        _package = package; _packageKey = key;
++                        Invalidate(); SetupWatchers();
++                    }
++                    var inputs = new List<KeyValuePair<string, Stamp>>();
++                    foreach (var input in Inputs) if (!force || content || !input.Value.Content) inputs.Add(input);
++                    if (force)
++                    {
++                        if (InputsChanged(inputs.ToArray())) Invalidate();
++                    }
++                    else if (_probe == null)
++                    {
++                        // Unity 的文件 stat 可能很慢。后台只访问已冻结的路径/时间戳，不调用 Unity API。
++                        var snapshot = inputs.ToArray();
++                        _probeGeneration = _generation;
++                        _probe = Task.Run(() => InputsChanged(snapshot));
++                    }
++                    if (_package != null) Track(Path.Combine(_package.resolvedPath, "package.json"));
++                    string root = Path.GetDirectoryName(Application.dataPath);
++                    Track(Path.Combine(root, "Packages/manifest.json"));
++                    Track(Path.Combine(root, "Packages/packages-lock.json"));
++                }
++                if (Interlocked.Exchange(ref _dirty, 0) != 0) Invalidate();
++                if (Volatile.Read(ref _watcherFault) != 0)
++                    throw new IOException("Editor 元数据文件监视不可用；资格已拒绝，等待重新建立监视。");
++            }
++            catch
++            {
++                Invalidate();
++                throw;
++            }
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        internal static void Invalidate()
++        {
++            _generation++;
++            Values.Clear(); Inputs.Clear();
++        }
++
++        /// <summary>实际操作边界强制复查轻量输入。动态回调由本次检查重新求值。</summary>
++        internal static void ValidateNow(bool content = true) => Check(true, content);
++
++        /// <summary>冷重建登记已知输入；周期仅 stat，不再枚举目录、读取内容或计算 hash。</summary>
++        internal static void Track(string path, bool directory = false, bool content = false)
++        {
++            string full = Path.GetFullPath(path);
++            if (!Inputs.ContainsKey(full)) Inputs.Add(full, new Stamp(full, directory, content));
++        }
++
++        internal static T Get<T>(string key, Func<T> create)
++        {
++            Check();
++            if (!Values.TryGetValue(key, out var entry))
++            {
++                long generation = _generation;
++                entry = new Entry();
++                try { entry.Value = create(); }
++                catch (Exception error) { entry.Error = error; }
++                if (generation != _generation)
++                    throw new IOException("Editor 元数据在构建期间变化，请在输入稳定后重试。");
++                Values[key] = entry;
++            }
++            if (entry.Error != null) throw new InvalidDataException("Editor 元数据不可用：" + key, entry.Error);
++            return (T)entry.Value;
++        }
++
++        internal static T ReadJson<T>(string path) where T : class
++        {
++            string full = Path.GetFullPath(path);
++            return Get("json:" + typeof(T).FullName + ":" + full, () =>
++            {
++                Track(full);
++                if (!File.Exists(full)) return null;
++                JsonReads++;
++                return JsonUtility.FromJson<T>(File.ReadAllText(full))
++                    ?? throw new InvalidDataException("JSON 内容为空：" + path);
++            });
++        }
++        #endregion
++    }
++}
+--- /dev/null
++++ after/Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 3a36fed8f86d4e4e9fab61c20252ca15
+--- /dev/null
++++ after/Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs
+@@ -0,0 +1,89 @@
++using System;
++using System.Linq;
++using UnityEditor;
++
++namespace Ember.Core.Editor
++{
++    public static partial class EmberExtensionProject
++    {
++        #region 内部参数
++        private static long _resolutionGeneration = -1, _hashGeneration = -1;
++        private static EmberExtensionDefinition[] _prepared;
++        private static string[] _requested;
++        private static int _batchDepth;
++        private static EmberExtensionResolution _batchResolution;
++        internal static int ResolutionBuilds { get; private set; }
++        internal static int ContentHashBuilds { get; private set; }
++        private sealed class CheckBatch : IDisposable
++        {
++            private bool _disposed;
++            public void Dispose()
++            {
++                if (_disposed) return;
++                _disposed = true;
++                if (--_batchDepth == 0) _batchResolution = null;
++            }
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 内部方法
++        private static Configuration CloneConfiguration(Configuration source) => new()
++        {
++            schemaVersion = source.schemaVersion, ownerTemplateId = source.ownerTemplateId,
++            ownerTemplateVersion = source.ownerTemplateVersion, enabled = source.enabled.ToArray(),
++            bindings = source.bindings?.Select(value => value == null ? null : new Ember.UPMManager.Editor.EmberAISkillInstaller.ExtensionIdentity
++            { id = value.id, contractVersion = value.contractVersion, contentHash = value.contentHash }).ToArray()
++        };
++
++        private static void InvalidateResolution()
++        {
++            EmberEditorMetadataCache.Invalidate();
++            _resolutionGeneration = -1; _hashGeneration = -1;
++            _prepared = null; _batchResolution = null;
++        }
++
++        private static EmberExtensionResolution ResolveCurrent()
++        {
++            long generation = EmberEditorMetadataCache.Generation;
++            if (_resolutionGeneration != generation)
++            {
++                _prepared = null; _batchResolution = null;
++                // 失败也按代次保存；损坏配置不会在每帧重新解析，更不会保留旧 true。
++                var prepared = EmberEditorMetadataCache.Get("extension-prepared", () =>
++                {
++                    var config = LoadCurrent();
++                    var definitions = PrepareConfiguration(config, EmberFsmBlueprintAccess.CurrentTemplateId, CurrentTemplateVersion);
++                    ResolutionBuilds++;
++                    return (definitions, requested: config.enabled.ToArray());
++                });
++                _prepared = prepared.definitions; _requested = prepared.requested;
++                _resolutionGeneration = generation;
++            }
++            // 模块和兼容回调只在当前调用/显式批次内求值，不把未知回调缓存到下一帧。
++            if (_batchDepth > 0 && _batchResolution != null) return _batchResolution;
++            var result = EmberExtensionCatalog.Resolve(_prepared, _requested);
++            if (_batchDepth > 0) _batchResolution = result;
++            return result;
++        }
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        /// <summary>同步只读检查批次。不要跨帧持有；动态模块条件仍按调用实时求值。</summary>
++        public static IDisposable BeginCheckBatch()
++        {
++            if (_batchDepth++ == 0) _batchResolution = null;
++            return new CheckBatch();
++        }
++
++        /// <summary>执行、Start/Retry 或写入前重新校验当前输入；旧窗口快照不授予权限。</summary>
++        public static void ValidateCurrent()
++        {
++            EmberEditorMetadataCache.ValidateNow();
++            _batchResolution = null;
++        }
++
++        /// <summary>登记/释放模块或适配器后，下次检查立即重算动态条件。</summary>
++        public static void InvalidateChecks() => _batchResolution = null;
++        #endregion
++    }
++}
+--- /dev/null
++++ after/Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 3586ce0979534547801c60fbeab0b556
+--- /dev/null
++++ after/Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs
+@@ -0,0 +1,201 @@
++using System;
++using System.Collections;
++using System.Collections.Generic;
++using System.IO;
++using System.Linq;
++using Ember.Core.Editor;
++using NUnit.Framework;
++using UnityEngine.TestTools;
++
++namespace Ember.UI.Tests
++{
++    /// <summary>只读真实身份；可写输入放入独立 Temp，不切换模板或签收项目配置。</summary>
++    public sealed class EmberEditorIdentityCacheEditTests
++    {
++        #region 内部参数
++        private string _root;
++        private readonly List<EmberExtensionDefinition> _definitions = new();
++        #endregion
++        // --------------------------------------------------------
++        #region 外部方法
++        [SetUp] public void Setup()
++        {
++            _root = Path.GetFullPath("Temp/EmberIdentityCache-" + Guid.NewGuid().ToString("N"));
++            Directory.CreateDirectory(_root);
++            EmberEditorMetadataCache.Invalidate();
++        }
++
++        [TearDown] public void Teardown()
++        {
++            foreach (var definition in _definitions) EmberExtensionProject.Unregister(definition);
++            _definitions.Clear();
++            EmberEditorMetadataCache.Invalidate();
++            if (Directory.Exists(_root)) Directory.Delete(_root, true);
++        }
++
++        [Test] public void WarmChecksReuseMetadataAndBindingsWhileReturningIndependentCopies()
++        {
++            EmberExtensionProject.Resolve();
++            var templates = EmberProjectSetup.GetTemplates();
++            var config = EmberExtensionProject.Load();
++            int reads = EmberEditorMetadataCache.JsonReads, scans = EmberEditorMetadataCache.TemplateScans;
++            int builds = EmberExtensionProject.ResolutionBuilds, hashes = EmberExtensionProject.ContentHashBuilds;
++            var id = EmberFsmBlueprintAccess.CurrentTemplateId;
++            for (int i = 0; i < 100; i++)
++            {
++                using var batch = EmberExtensionProject.BeginCheckBatch();
++                EmberExtensionProject.IsEnabled(EmberExtensionProject.LevelTrial);
++                EmberExtensionProject.IsEnabled(EmberExtensionProject.FsmBlueprint);
++                Assert.AreEqual(id, EmberFsmBlueprintAccess.CurrentTemplateId);
++            }
++            Assert.AreEqual(reads, EmberEditorMetadataCache.JsonReads);
++            Assert.AreEqual(scans, EmberEditorMetadataCache.TemplateScans);
++            Assert.AreEqual(builds, EmberExtensionProject.ResolutionBuilds);
++            Assert.AreEqual(hashes, EmberExtensionProject.ContentHashBuilds);
++            string firstId = templates[0].id;
++            templates[0].id = "tampered"; templates.Clear();
++            Assert.AreEqual(firstId, EmberProjectSetup.GetTemplates()[0].id);
++            var original = EmberExtensionProject.Load();
++            config.ownerTemplateId = "tampered";
++            if (config.enabled.Length > 0) config.enabled[0] = "tampered";
++            if (config.bindings?.Length > 0) config.bindings[0].contentHash = "tampered";
++            var after = EmberExtensionProject.Load();
++            Assert.AreEqual(original.ownerTemplateId, after.ownerTemplateId);
++            CollectionAssert.AreEqual(original.enabled, after.enabled);
++            if (after.bindings?.Length > 0) Assert.AreEqual(original.bindings[0].contentHash, after.bindings[0].contentHash);
++            var result = EmberExtensionProject.Resolve();
++            Assert.Throws<NotSupportedException>(() => ((IList<string>)result.Enabled).Add("tampered"));
++            Assert.Throws<NotSupportedException>(() => ((IDictionary<string, string>)result.Problems).Add("tampered", "true"));
++        }
++
++        [UnityTest] public IEnumerator ExternalJsonChangesAndCorruptionAreDetectedWithinOneProbe()
++        {
++            string path = Path.Combine(_root, "configuration.json");
++            Assert.IsNull(EmberEditorMetadataCache.ReadJson<EmberExtensionProject.Configuration>(path));
++            File.WriteAllText(path, "{\"schemaVersion\":2,\"enabled\":[\"first\"]}");
++            EmberExtensionProject.ValidateCurrent();
++            Assert.AreEqual("first", EmberEditorMetadataCache.ReadJson<EmberExtensionProject.Configuration>(path).enabled[0]);
++            File.WriteAllText(path, "{\"schemaVersion\":2,\"enabled\":[\"second-longer\"]}");
++            double deadline = UnityEditor.EditorApplication.timeSinceStartup + 1.1;
++            while (UnityEditor.EditorApplication.timeSinceStartup < deadline) yield return null;
++            Assert.AreEqual("second-longer", EmberEditorMetadataCache.ReadJson<EmberExtensionProject.Configuration>(path).enabled[0]);
++            File.WriteAllText(path, "broken-json");
++            EmberExtensionProject.ValidateCurrent();
++            Assert.Throws<InvalidDataException>(() => EmberEditorMetadataCache.ReadJson<EmberExtensionProject.Configuration>(path));
++            File.Delete(path); EmberExtensionProject.ValidateCurrent();
++            Assert.IsNull(EmberEditorMetadataCache.ReadJson<EmberExtensionProject.Configuration>(path));
++        }
++
++        [Test] public void DynamicCompatibilityRegistrationAndBatchInvalidationNeverFreezeTrue()
++        {
++            bool available = true;
++            int checks = 0;
++            var definition = new EmberExtensionDefinition("test.identity-cache", "fixture", EmberExtensionKind.Infrastructure,
++                checkCompatibility: () => { checks++; return available ? null : "disabled"; });
++            _definitions.Add(definition); EmberExtensionProject.Register(definition);
++            using (EmberExtensionProject.BeginCheckBatch())
++            {
++                Assert.IsTrue(EmberExtensionProject.IsEnabled(definition.Id));
++                int once = checks;
++                Assert.IsTrue(EmberExtensionProject.IsEnabled(definition.Id));
++                Assert.AreEqual(once, checks);
++                available = false;
++                EmberExtensionProject.InvalidateChecks();
++                Assert.IsFalse(EmberExtensionProject.IsEnabled(definition.Id));
++                available = true;
++                EmberExtensionProject.ValidateCurrent();
++                Assert.IsTrue(EmberExtensionProject.IsEnabled(definition.Id));
++                EmberExtensionProject.Unregister(definition);
++                Assert.IsFalse(EmberExtensionProject.IsEnabled(definition.Id));
++            }
++        }
++
++        [Test] public void ExplicitConfigurationRequiresMatchingIdentityBindingsAndCurrentConditions()
++        {
++            bool enabled = true;
++            var definition = new EmberExtensionDefinition("test.bound-cache", "fixture", EmberExtensionKind.EditorExtension,
++                checkCompatibility: () => enabled ? null : "disabled");
++            _definitions.Add(definition); EmberExtensionProject.Register(definition);
++            var config = EmberExtensionProject.CreateConfiguration(new[] { definition.Id });
++            string id = EmberFsmBlueprintAccess.CurrentTemplateId, version = EmberExtensionProject.CurrentTemplateVersion;
++            Assert.IsTrue(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++            enabled = false;
++            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++            enabled = true;
++            config.enabled = Array.Empty<string>();
++            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++            config.enabled = new[] { definition.Id }; config.bindings.Single(x => x.id == definition.Id).contentHash = "unaccepted";
++            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, "other", version).IsEnabled(definition.Id));
++            Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, null, null).IsEnabled(definition.Id));
++        }
++
++        [Test] public void BrokenParentChainCannotAuthorizeEvenItsOwnIdentity()
++        {
++            var templates = new List<TemplateInfo> { new() { id = "child", parentId = "missing" } };
++            Assert.IsFalse(EmberProjectSetup.IsTemplateActiveForIdentity("child", true, "child", "base", templates));
++            templates.Add(new TemplateInfo { id = "missing", parentId = "child" });
++            Assert.IsFalse(EmberProjectSetup.IsTemplateActiveForIdentity("child", false, "base", "child", templates));
++            templates[1].parentId = null;
++            Assert.IsTrue(EmberProjectSetup.IsTemplateActiveForIdentity("child", false, "base", "child", templates));
++        }
++
++        [Test] public void DisposingOrDisablingModuleScopeImmediatelyRevokesTheNextCheck()
++        {
++            bool enabled = true;
++            string id = "test.cache-scope";
++            using var batch = EmberExtensionProject.BeginCheckBatch();
++            var scope = EmberExtensionDocuments.RegisterModuleScope(id, EmberFsmBlueprintAccess.CurrentTemplateId, () => enabled);
++            try
++            {
++                Assert.IsTrue(EmberExtensionDocuments.IsScopeEnabled(id));
++                enabled = false;
++                Assert.IsFalse(EmberExtensionDocuments.IsScopeEnabled(id));
++                enabled = true;
++                Assert.IsTrue(EmberExtensionDocuments.IsScopeEnabled(id));
++                scope.Dispose();
++                Assert.IsFalse(EmberExtensionDocuments.IsScopeEnabled(id));
++            }
++            finally { scope.Dispose(); }
++        }
++
++        [Test] public void TransactionCommitInvalidatesCachedInputImmediately()
++        {
++            string destination = Path.Combine(_root, "record.json");
++            string stage = Path.Combine(_root, "stage.json");
++            File.WriteAllText(destination, "{\"templateId\":\"before\"}");
++            Assert.AreEqual("before", EmberEditorMetadataCache.ReadJson<EditingTemplateRecord>(destination).templateId);
++            File.WriteAllText(stage, "{\"templateId\":\"after\"}");
++            EmberTemplateTransaction.CommitPreparedTargets(new[] { new TemplateTransactionTarget(stage, destination) });
++            Assert.AreEqual("after", EmberEditorMetadataCache.ReadJson<EditingTemplateRecord>(destination).templateId);
++        }
++
++        [UnityTest] public IEnumerator PackageSourceNotificationsInvalidatePreviouslyAcceptedContentHash()
++        {
++            string relative = "Tests/.IdentityCacheFixture-" + Guid.NewGuid().ToString("N") + "~";
++            string folder = Path.Combine(EmberEditorMetadataCache.Package.resolvedPath, relative);
++            Directory.CreateDirectory(folder);
++            string path = Path.Combine(folder, "source.txt");
++            try
++            {
++                File.WriteAllText(path, "accepted source");
++                double deadline = UnityEditor.EditorApplication.timeSinceStartup + 1.1;
++                while (UnityEditor.EditorApplication.timeSinceStartup < deadline) yield return null;
++                var definition = new EmberExtensionDefinition("test.source-cache", "fixture", EmberExtensionKind.EditorExtension,
++                    sourceRoots: new[] { relative });
++                _definitions.Add(definition); EmberExtensionProject.Register(definition);
++                var config = EmberExtensionProject.CreateConfiguration(new[] { definition.Id });
++                string id = EmberFsmBlueprintAccess.CurrentTemplateId, version = EmberExtensionProject.CurrentTemplateVersion;
++                Assert.IsTrue(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++                int hashes = EmberExtensionProject.ContentHashBuilds;
++                File.WriteAllText(path, "changed source after acceptance");
++                deadline = UnityEditor.EditorApplication.timeSinceStartup + 1.1;
++                while (UnityEditor.EditorApplication.timeSinceStartup < deadline) yield return null;
++                Assert.IsFalse(EmberExtensionProject.ResolveConfiguration(config, id, version).IsEnabled(definition.Id));
++                Assert.Greater(EmberExtensionProject.ContentHashBuilds, hashes);
++            }
++            finally { Directory.Delete(folder, true); }
++        }
++        #endregion
++    }
++}
+--- /dev/null
++++ after/Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 88fa1ba7d41744afbf6bb7819adf5758

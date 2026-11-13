@@ -1,0 +1,87 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:46:36.7296677Z\",\"persisted\":false,\"oldOwnerVersion\":\"0.1.1\",\"previewOwnerVersion\":\"0.1.2\",\"previewBindings\":[{\"id\":\"ember.core\",\"contractVersion\":1,\"contentHash\":\"346ce3cf0852ff1616d64efd200419f45772c13d29d7ab48449c34fc652667cd\"},{\"id\":\"ember.fsm.blueprint\",\"contractVersion\":1,\"contentHash\":\"55498e34a87ebec142c2e5d83cb9d05ce7957f1ed06798741c78f280ca3aef66\"},{\"id\":\"ember.fsm.runtime\",\"contractVersion\":1,\"contentHash\":\"5b1a160369e9aa17b541832acf0d1c16d95bf75f0ea31e6a3da16b185c83a96b\"},{\"id\":\"ember.level.authoring\",\"contractVersion\":1,\"contentHash\":\"6b18ea1fcfbee8325624a5971246055178e11d38e7881a4769f656a8e26d59ce\"},{\"id\":\"ember.level.runtime\",\"contractVersion\":1,\"contentHash\":\"d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31\"},{\"id\":\"ember.level.trial\",\"contractVersion\":1,\"contentHash\":\"01edf1d221f07b0e85195533b93ca951abc3f05791099874a918716d6d62d557\"}],\"accepted\":[\"ember.core\",\"ember.fsm.blueprint\",\"ember.fsm.runtime\",\"ember.level.authoring\",\"ember.level.runtime\",\"ember.level.trial\"],\"problems\":{},\"before\":{\"reads\":227,\"scans\":25,\"builds\":22,\"hashes\":12},\"after\":{\"reads\":227,\"scans\":25,\"builds\":22,\"hashes\":12},\"acceptedPreparedResolution\":{\"count\":1000,\"p50_ms\":0.015300000000000001,\"p95_ms\":0.0264,\"max_ms\":2.197},\"statProbeWithAllSources\":{\"count\":30,\"p50_ms\":90.7821,\"p95_ms\":139.7669,\"max_ms\":162.5248}},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:46:36.7296677Z",
+        "persisted": false,
+        "oldOwnerVersion": "0.1.1",
+        "previewOwnerVersion": "0.1.2",
+        "previewBindings": [
+          {
+            "id": "ember.core",
+            "contractVersion": 1,
+            "contentHash": "346ce3cf0852ff1616d64efd200419f45772c13d29d7ab48449c34fc652667cd"
+          },
+          {
+            "id": "ember.fsm.blueprint",
+            "contractVersion": 1,
+            "contentHash": "55498e34a87ebec142c2e5d83cb9d05ce7957f1ed06798741c78f280ca3aef66"
+          },
+          {
+            "id": "ember.fsm.runtime",
+            "contractVersion": 1,
+            "contentHash": "5b1a160369e9aa17b541832acf0d1c16d95bf75f0ea31e6a3da16b185c83a96b"
+          },
+          {
+            "id": "ember.level.authoring",
+            "contractVersion": 1,
+            "contentHash": "6b18ea1fcfbee8325624a5971246055178e11d38e7881a4769f656a8e26d59ce"
+          },
+          {
+            "id": "ember.level.runtime",
+            "contractVersion": 1,
+            "contentHash": "d932e5681c92cca92d622043a795ff88d54a07f3280333834682aa528b762e31"
+          },
+          {
+            "id": "ember.level.trial",
+            "contractVersion": 1,
+            "contentHash": "01edf1d221f07b0e85195533b93ca951abc3f05791099874a918716d6d62d557"
+          }
+        ],
+        "accepted": [
+          "ember.core",
+          "ember.fsm.blueprint",
+          "ember.fsm.runtime",
+          "ember.level.authoring",
+          "ember.level.runtime",
+          "ember.level.trial"
+        ],
+        "problems": {},
+        "before": {
+          "reads": 227,
+          "scans": 25,
+          "builds": 22,
+          "hashes": 12
+        },
+        "after": {
+          "reads": 227,
+          "scans": 25,
+          "builds": 22,
+          "hashes": 12
+        },
+        "acceptedPreparedResolution": {
+          "count": 1000,
+          "p50_ms": 0.015300000000000001,
+          "p95_ms": 0.0264,
+          "max_ms": 2.197
+        },
+        "statProbeWithAllSources": {
+          "count": 30,
+          "p50_ms": 90.7821,
+          "p95_ms": 139.7669,
+          "max_ms": 162.5248
+        }
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

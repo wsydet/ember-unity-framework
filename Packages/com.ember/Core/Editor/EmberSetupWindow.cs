@@ -121,6 +121,7 @@ namespace Ember.Core.Editor
 
         private void OnGUI()
         {
+            using var batch = EmberExtensionProject.BeginCheckBatch();
             EnsurePanels();
             bool devMode = EmberProjectSetup.IsEmbeddedPackage();
             if (Event.current.type == EventType.Layout && _pendingTab.HasValue)

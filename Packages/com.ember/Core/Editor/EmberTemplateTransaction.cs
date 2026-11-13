@@ -168,7 +168,12 @@ namespace Ember.Core.Editor
             if (System.Threading.Interlocked.CompareExchange(ref _commitActive, 1, 0) != 0)
                 throw new InvalidOperationException("模板事务正在提交，拒绝并发或嵌套提交。");
             try { CommitPreparedTargetsCore(targets, faultInjector); }
-            finally { System.Threading.Volatile.Write(ref _commitActive, 0); }
+            finally
+            {
+                System.Threading.Volatile.Write(ref _commitActive, 0);
+                // 提交与回滚都可能改变正式身份、配置或模板父链。
+                EmberEditorMetadataCache.Invalidate();
+            }
         }
 
         private static void CommitPreparedTargetsCore(

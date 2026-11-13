@@ -77,17 +77,35 @@ namespace Ember.LevelAuthoring.Editor
         public static void Register(IEmberLevelAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => string.IsNullOrEmpty(adapter.UnavailableReason));
         public static void Register(IEmberLevelObjectAdapter adapter) => Register(adapter, EmberFsmBlueprintAccess.CurrentTemplateId, () => true);
         public static void Register(IEmberLevelAdapter adapter, string ownerTemplateId, Func<bool> enabled)
-        { Levels[adapter.Id] = adapter; LevelScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
+        { Levels[adapter.Id] = adapter; LevelScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); EmberExtensionProject.InvalidateChecks(); }
         public static void Register(IEmberLevelObjectAdapter adapter, string ownerTemplateId, Func<bool> enabled)
-        { Objects[adapter.Id] = adapter; ObjectScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); }
-        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && GetForCleanup(adapter.Id) == adapter) { Levels.Remove(adapter.Id); LevelScopes.Remove(adapter.Id); } }
-        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && Objects.TryGetValue(adapter.Id, out var current) && ReferenceEquals(current, adapter)) { Objects.Remove(adapter.Id); ObjectScopes.Remove(adapter.Id); } }
+        { Objects[adapter.Id] = adapter; ObjectScopes[adapter.Id] = () => EmberLevelAccess.Allows(ownerTemplateId, enabled); EmberExtensionProject.InvalidateChecks(); }
+        public static void Unregister(IEmberLevelAdapter adapter) { if (adapter != null && GetForCleanup(adapter.Id) == adapter) { Levels.Remove(adapter.Id); LevelScopes.Remove(adapter.Id); EmberExtensionProject.InvalidateChecks(); } }
+        public static void Unregister(IEmberLevelObjectAdapter adapter) { if (adapter != null && Objects.TryGetValue(adapter.Id, out var current) && ReferenceEquals(current, adapter)) { Objects.Remove(adapter.Id); ObjectScopes.Remove(adapter.Id); EmberExtensionProject.InvalidateChecks(); } }
         internal static IEmberLevelAdapter GetForCleanup(string id) => id != null && Levels.TryGetValue(id, out var value) ? value : null;
         public static IEmberLevelAdapter Get(string id) => IsAvailable(id) ? GetForCleanup(id) : null;
         public static IEmberLevelObjectAdapter GetObject(string id) => id != null && Objects.TryGetValue(id, out var value) && ObjectScopes[id]() ? value : null;
-        public static bool IsAvailable(string id) => id != null && LevelScopes.TryGetValue(id, out var scope) && scope() && string.IsNullOrEmpty(GetForCleanup(id)?.UnavailableReason);
-        public static IEnumerable<IEmberLevelAdapter> All => Levels.Values.Where(a => IsAvailable(a.Id));
-        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters => Objects.Values.Where(a => ObjectScopes[a.Id]());
+        public static bool IsAvailable(string id)
+        {
+            try { return id != null && LevelScopes.TryGetValue(id, out var scope) && scope() && string.IsNullOrEmpty(GetForCleanup(id)?.UnavailableReason); }
+            catch (Exception) { return false; }
+        }
+        public static IEnumerable<IEmberLevelAdapter> All
+        {
+            get
+            {
+                using var batch = EmberExtensionProject.BeginCheckBatch();
+                return Levels.Values.Where(a => IsAvailable(a.Id)).ToArray();
+            }
+        }
+        public static IEnumerable<IEmberLevelObjectAdapter> ObjectAdapters
+        {
+            get
+            {
+                using var batch = EmberExtensionProject.BeginCheckBatch();
+                return Objects.Values.Where(a => GetObject(a.Id) == a).ToArray();
+            }
+        }
 
         /// <summary>登记只读场景对象解析器。返回 null 表示不匹配；匹配时必须返回已登记的适配器实例。</summary>
         public static void RegisterObjectResolver(string id, Func<GameObject, IEmberLevelObjectAdapter> resolver)
@@ -96,9 +114,10 @@ namespace Ember.LevelAuthoring.Editor
             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
             if (ObjectResolvers.ContainsKey(id)) throw new InvalidOperationException("对象解析器已登记：" + id);
             ObjectResolvers.Add(id, resolver);
+            EmberExtensionProject.InvalidateChecks();
         }
 
-        public static void UnregisterObjectResolver(string id) { if (id != null) ObjectResolvers.Remove(id); }
+        public static void UnregisterObjectResolver(string id) { if (id != null && ObjectResolvers.Remove(id)) EmberExtensionProject.InvalidateChecks(); }
 
         /// <summary>项目解析优先；无匹配才查 Prefab 素材。冲突、失效或异常抛错，禁止降级为空适配器。</summary>
         public static IEmberLevelObjectAdapter ResolveObject(GameObject instance)

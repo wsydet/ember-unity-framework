@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:51:32.2640682Z\",\"template\":\"topdown-2d\",\"version\":\"0.1.2\",\"configVersion\":\"0.1.1\",\"coreMvid\":\"a0e4f035-a6dc-4d99-9044-bb651897d379\",\"activeTrial\":false,\"restoreOwner\":false,\"scenes\":[\"Assets/Game/Scenes/FrameworkScene.unity\"],\"dirty\":false,\"isPlaying\":false,\"isCompiling\":false,\"isUpdating\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:51:32.2640682Z",
+        "template": "topdown-2d",
+        "version": "0.1.2",
+        "configVersion": "0.1.1",
+        "coreMvid": "a0e4f035-a6dc-4d99-9044-bb651897d379",
+        "activeTrial": false,
+        "restoreOwner": false,
+        "scenes": [
+          "Assets/Game/Scenes/FrameworkScene.unity"
+        ],
+        "dirty": false,
+        "isPlaying": false,
+        "isCompiling": false,
+        "isUpdating": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

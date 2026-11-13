@@ -1,0 +1,103 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:56:25.5525005Z\",\"project\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"template\":\"topdown-2d\",\"version\":\"0.1.2\",\"cold_ms\":9.2637,\"before\":{\"reads\":244,\"scans\":27,\"builds\":23,\"hashes\":6},\"after\":{\"reads\":244,\"scans\":27,\"builds\":23,\"hashes\":6},\"after_probe\":{\"reads\":244,\"scans\":27,\"builds\":23,\"hashes\":6},\"measurements\":[{\"name\":\"CurrentTemplateId\",\"count\":1000,\"p50_ms\":0.0001,\"p95_ms\":0.0006000000000000001,\"max_ms\":0.026600000000000002},{\"name\":\"IsTemplateActive\",\"count\":1000,\"p50_ms\":0.0001,\"p95_ms\":0.0002,\"max_ms\":0.0333},{\"name\":\"IsEnabled\",\"count\":1000,\"p50_ms\":0.012400000000000001,\"p95_ms\":0.0176,\"max_ms\":0.16690000000000002},{\"name\":\"BatchThreeChecks\",\"count\":1000,\"p50_ms\":0.013600000000000001,\"p95_ms\":0.018000000000000002,\"max_ms\":0.37570000000000003},{\"name\":\"GetTemplatesCopies\",\"count\":1000,\"p50_ms\":0.0017000000000000001,\"p95_ms\":0.003,\"max_ms\":0.2076},{\"name\":\"ConditionalMenuRefresh\",\"count\":50,\"p50_ms\":0.014700000000000001,\"p95_ms\":0.018600000000000002,\"max_ms\":0.15710000000000002},{\"name\":\"ValidateCurrentStatProbe\",\"count\":30,\"p50_ms\":3.2785,\"p95_ms\":4.9781,\"max_ms\":5.1031}],\"enabled\":[\"ember.core\"],\"problems\":{\"ember.fsm.blueprint\":\"依赖不可用：ember.fsm.runtime（扩展配置与正式活动模板 ID/版本不一致。）\",\"ember.fsm.runtime\":\"扩展配置与正式活动模板 ID/版本不一致。\",\"ember.level.authoring\":\"依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。）\",\"ember.level.runtime\":\"扩展配置与正式活动模板 ID/版本不一致。\",\"ember.level.trial\":\"依赖不可用：ember.level.authoring（依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。））\"},\"isPlaying\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:56:25.5525005Z",
+        "project": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+        "template": "topdown-2d",
+        "version": "0.1.2",
+        "cold_ms": 9.2637,
+        "before": {
+          "reads": 244,
+          "scans": 27,
+          "builds": 23,
+          "hashes": 6
+        },
+        "after": {
+          "reads": 244,
+          "scans": 27,
+          "builds": 23,
+          "hashes": 6
+        },
+        "after_probe": {
+          "reads": 244,
+          "scans": 27,
+          "builds": 23,
+          "hashes": 6
+        },
+        "measurements": [
+          {
+            "name": "CurrentTemplateId",
+            "count": 1000,
+            "p50_ms": 0.0001,
+            "p95_ms": 0.0006000000000000001,
+            "max_ms": 0.026600000000000002
+          },
+          {
+            "name": "IsTemplateActive",
+            "count": 1000,
+            "p50_ms": 0.0001,
+            "p95_ms": 0.0002,
+            "max_ms": 0.0333
+          },
+          {
+            "name": "IsEnabled",
+            "count": 1000,
+            "p50_ms": 0.012400000000000001,
+            "p95_ms": 0.0176,
+            "max_ms": 0.16690000000000002
+          },
+          {
+            "name": "BatchThreeChecks",
+            "count": 1000,
+            "p50_ms": 0.013600000000000001,
+            "p95_ms": 0.018000000000000002,
+            "max_ms": 0.37570000000000003
+          },
+          {
+            "name": "GetTemplatesCopies",
+            "count": 1000,
+            "p50_ms": 0.0017000000000000001,
+            "p95_ms": 0.003,
+            "max_ms": 0.2076
+          },
+          {
+            "name": "ConditionalMenuRefresh",
+            "count": 50,
+            "p50_ms": 0.014700000000000001,
+            "p95_ms": 0.018600000000000002,
+            "max_ms": 0.15710000000000002
+          },
+          {
+            "name": "ValidateCurrentStatProbe",
+            "count": 30,
+            "p50_ms": 3.2785,
+            "p95_ms": 4.9781,
+            "max_ms": 5.1031
+          }
+        ],
+        "enabled": [
+          "ember.core"
+        ],
+        "problems": {
+          "ember.fsm.blueprint": "依赖不可用：ember.fsm.runtime（扩展配置与正式活动模板 ID/版本不一致。）",
+          "ember.fsm.runtime": "扩展配置与正式活动模板 ID/版本不一致。",
+          "ember.level.authoring": "依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。）",
+          "ember.level.runtime": "扩展配置与正式活动模板 ID/版本不一致。",
+          "ember.level.trial": "依赖不可用：ember.level.authoring（依赖不可用：ember.level.runtime（扩展配置与正式活动模板 ID/版本不一致。））"
+        },
+        "isPlaying": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

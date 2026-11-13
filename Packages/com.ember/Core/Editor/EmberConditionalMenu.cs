@@ -63,6 +63,7 @@ namespace Ember.Core.Editor
         }
         public static void Refresh()
         {
+            using var batch = EmberExtensionProject.BeginCheckBatch();
             foreach (var entry in Entries)
             {
                 bool visible = entry.Visible();
@@ -70,7 +71,7 @@ namespace Ember.Core.Editor
                 if (visible)
                 {
                     Func<bool> validate = () => entry.Visible() && (entry.Enabled?.Invoke() ?? true);
-                    Action execute = () => { if (validate()) entry.Execute(); };
+                    Action execute = () => { EmberExtensionProject.ValidateCurrent(); if (validate()) entry.Execute(); };
                     Add.Invoke(null, new object[] { entry.Path, "", false, entry.Priority, execute, validate });
                 }
                 else Remove.Invoke(null, new object[] { entry.Path });

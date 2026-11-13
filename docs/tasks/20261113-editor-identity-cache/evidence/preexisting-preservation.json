@@ -1,0 +1,66 @@
+[
+  {
+    "diff_header": "diff --git a/.agents/skills/ember-solution-design/SKILL.md b/.agents/skills/ember-solution-design/SKILL.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/CHANGELOG.md b/Packages/com.ember/CHANGELOG.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs b/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Dependencies~/README.md b/Packages/com.ember/Dependencies~/README.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Documentation~/maintenance/ai-workflow.md b/Packages/com.ember/Documentation~/maintenance/ai-workflow.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/README.md b/Packages/com.ember/README.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset b/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset b/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs b/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/Packages/com.ember/package.json b/Packages/com.ember/package.json",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/docs/dev/framework-progress.md b/docs/dev/framework-progress.md",
+    "unchanged": true
+  },
+  {
+    "diff_header": "diff --git a/docs/dev/upm-migration-plan.md b/docs/dev/upm-migration-plan.md",
+    "unchanged": true
+  }
+]

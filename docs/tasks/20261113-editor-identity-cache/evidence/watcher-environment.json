@@ -1,0 +1,40 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"watchers\":[{\"path\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Packages\\\\com.ember\",\"enabled\":true,\"recursive\":true},{\"path\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\ProjectSettings\",\"enabled\":true,\"recursive\":false},{\"path\":\"C:/Users/wuyu/My/ember-unity-framework/Assets\",\"enabled\":true,\"recursive\":true}],\"package\":\"C:\\\\Users\\\\wuyu\\\\My\\\\ember-unity-framework\\\\Packages\\\\com.ember\",\"generation\":44,\"dirty\":0,\"watcherFault\":0,\"env\":null},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "watchers": [
+          {
+            "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember",
+            "enabled": true,
+            "recursive": true
+          },
+          {
+            "path": "C:\\Users\\wuyu\\My\\ember-unity-framework\\ProjectSettings",
+            "enabled": true,
+            "recursive": false
+          },
+          {
+            "path": "C:/Users/wuyu/My/ember-unity-framework/Assets",
+            "enabled": true,
+            "recursive": true
+          }
+        ],
+        "package": "C:\\Users\\wuyu\\My\\ember-unity-framework\\Packages\\com.ember",
+        "generation": 44,
+        "dirty": 0,
+        "watcherFault": 0,
+        "env": null
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

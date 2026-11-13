@@ -68,6 +68,7 @@ namespace Ember.Core.Editor
         /// <summary>执行完整初始化：部署指定模板 + 注册场景 + 刷新场景映射。返回部署的文件数。</summary>
         public static int Initialize(string templateId)
         {
+            EmberEditorMetadataCache.ValidateNow();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return 0;
 
@@ -89,6 +90,7 @@ namespace Ember.Core.Editor
         /// </summary>
         public static int DeployReplacingActiveTemplate(string templateId)
         {
+            EmberEditorMetadataCache.ValidateNow();
             var packagePath = GetResolvedPath(PACKAGE)
                 ?? throw new InvalidOperationException($"包 [{PACKAGE}] 未安装。");
             var template = ReadTemplateJson(packagePath, templateId)
@@ -129,19 +131,30 @@ namespace Ember.Core.Editor
         /// <summary>扫描包内 Templates~/ 下的所有模板（未来新增模板自动出现在列表）。</summary>
         public static List<TemplateInfo> GetTemplates()
         {
+            return CachedTemplates.Select(EmberTemplateInheritanceEngine.Clone).ToList();
+        }
+
+        internal static List<TemplateInfo> CachedTemplates => EmberEditorMetadataCache.Get("templates", ScanTemplates);
+
+        private static List<TemplateInfo> ScanTemplates()
+        {
+            EmberEditorMetadataCache.TemplateScans++;
             var result = new List<TemplateInfo>();
             var packagePath = GetResolvedPath(PACKAGE);
             if (packagePath == null) return result;
 
             var root = Path.Combine(packagePath, "Templates~");
+            EmberEditorMetadataCache.Track(root, true);
             if (!Directory.Exists(root)) return result;
 
             foreach (var dir in Directory.GetDirectories(root))
             {
+                EmberEditorMetadataCache.Track(dir, true);
                 var jsonPath = Path.Combine(dir, "template.json");
+                EmberEditorMetadataCache.Track(jsonPath);
                 if (!File.Exists(jsonPath)) continue;
 
-                var info = ReadTemplateJson(packagePath, Path.GetFileName(dir));
+                var info = ReadTemplateJson(packagePath, Path.GetFileName(dir), true);
                 if (info != null && !string.IsNullOrEmpty(info.id))
                     result.Add(info);
             }
@@ -342,7 +355,7 @@ namespace Ember.Core.Editor
         /// <summary>当前框架包版本（如 "0.8.0"）。</summary>
         public static string GetFrameworkVersion()
         {
-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(PACKAGE);
+            var info = EmberEditorMetadataCache.Package;
             return info?.version ?? "0.0.0";
         }
 
@@ -620,7 +633,7 @@ namespace Ember.Core.Editor
         /// <summary>是否为框架开发仓库（embedded 安装）——模板保存/加载仅在此模式可用。</summary>
         public static bool IsEmbeddedPackage()
         {
-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(PACKAGE);
+            var info = EmberEditorMetadataCache.Package;
             return info != null && IsTemplateDevelopmentSource(info.source);
         }
 
@@ -802,6 +815,7 @@ namespace Ember.Core.Editor
                     $"模板 [{templateId}] 仍被派生模板 [{child.id}] 引用，不能删除。");
             }
             Directory.Delete(tplRoot, true);
+            EmberEditorMetadataCache.Invalidate();
 
             var editing = GetEditingTemplate();
             if (editing != null && editing.templateId == templateId)
@@ -875,6 +889,7 @@ namespace Ember.Core.Editor
         /// <summary>只用于迁移旧多记录格式：明确认定哪个已有记录对应当前项目内容。</summary>
         public static void SetActiveDeployedTemplate(string templateId)
         {
+            EmberEditorMetadataCache.ValidateNow();
             var data = ReadDeploymentData();
             if (Ember.UPMManager.Editor.EmberAISkillInstaller.HasTemplateSkillOwnership(
                     Directory.GetParent(Application.dataPath).FullName)
@@ -897,16 +912,14 @@ namespace Ember.Core.Editor
         /// <summary>读取 dev 仓库「当前正在编辑的模板」记录（无记录返回 null）。</summary>
         public static EditingTemplateRecord GetEditingTemplate()
         {
-            var path = ToFullPath(EditingRecordPath);
-            if (!File.Exists(path)) return null;
-
             try
             {
-                return JsonUtility.FromJson<EditingTemplateRecord>(File.ReadAllText(path));
+                var value = EmberEditorMetadataCache.ReadJson<EditingTemplateRecord>(ToFullPath(EditingRecordPath));
+                return value == null ? null : new EditingTemplateRecord { templateId = value.templateId,
+                    templateVersion = value.templateVersion, contentHash = value.contentHash, loadedAt = value.loadedAt };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                EmberDebug.LogWarning(TAG, $"读取编辑记录失败 {EditingRecordPath}: {ex.Message}");
                 return null;
             }
         }
@@ -962,7 +975,7 @@ namespace Ember.Core.Editor
         #region 内部方法
 
         /// <summary>读取模板元数据；模板不存在或解析失败返回 null（解析失败会打警告）。</summary>
-        private static TemplateInfo ReadTemplateJson(string packagePath, string templateId)
+        private static TemplateInfo ReadTemplateJson(string packagePath, string templateId, bool cached = false)
         {
             var jsonPath = Path.Combine(packagePath, "Templates~", templateId, "template.json");
             if (!File.Exists(jsonPath)) return null;
@@ -970,7 +983,8 @@ namespace Ember.Core.Editor
             try
             {
                 // 必须显式 UTF-8 读取：中文 Windows 默认编码为 GBK，否则中文元数据会乱码
-                return JsonUtility.FromJson<TemplateInfo>(File.ReadAllText(jsonPath, System.Text.Encoding.UTF8));
+                return cached ? EmberTemplateInheritanceEngine.Clone(EmberEditorMetadataCache.ReadJson<TemplateInfo>(jsonPath))
+                    : JsonUtility.FromJson<TemplateInfo>(File.ReadAllText(jsonPath, System.Text.Encoding.UTF8));
             }
             catch (Exception ex)
             {
@@ -987,6 +1001,7 @@ namespace Ember.Core.Editor
             EmberTemplateTransaction.WriteTemplateJson(
                 Path.Combine(tplRoot, "template.json"),
                 info);
+            EmberEditorMetadataCache.Invalidate();
         }
 
         private static void EnsurePlanIsCurrent(
@@ -1409,17 +1424,21 @@ namespace Ember.Core.Editor
         private static DeployedTemplatesData ReadDeploymentData()
         {
             var path = ToFullPath(DeployedRecordsPath);
+            EmberEditorMetadataCache.Track(path);
             if (!File.Exists(path)) return new DeployedTemplatesData();
             try
             {
-                var data = JsonUtility.FromJson<DeployedTemplatesData>(File.ReadAllText(path))
+                var data = EmberEditorMetadataCache.ReadJson<DeployedTemplatesData>(path)
                     ?? new DeployedTemplatesData();
-                data.records ??= new List<DeployedTemplateRecord>();
-                return data;
+                if (data.records == null || data.records.Any(record => record == null))
+                    throw new InvalidDataException("部署记录格式无效。");
+                if (data.records.GroupBy(record => record.templateId, StringComparer.Ordinal).Any(group => group.Count() > 1))
+                    throw new InvalidDataException("部署记录包含重复身份。");
+                return new DeployedTemplatesData { activeTemplateId = data.activeTemplateId,
+                    records = data.records.Select(CloneDeploymentRecord).ToList() };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                EmberDebug.LogWarning(TAG, $"读取部署记录失败 {DeployedRecordsPath}: {ex.Message}");
                 return new DeployedTemplatesData();
             }
         }
@@ -1461,13 +1480,15 @@ namespace Ember.Core.Editor
             {
                 if (File.Exists(path)) File.Delete(path);
                 if (File.Exists(path + ".meta")) File.Delete(path + ".meta");
+                EmberEditorMetadataCache.Invalidate();
             }
             catch { /* 清理失败不阻断 */ }
         }
 
         private static string GetResolvedPath(string packageName)
         {
-            var info = UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
+            var info = packageName == PACKAGE ? EmberEditorMetadataCache.Package
+                : UnityEditor.PackageManager.PackageInfo.FindForPackageName(packageName);
             return info?.resolvedPath;
         }
 
@@ -1610,6 +1631,7 @@ namespace Ember.Core.Editor
 
         private static void EnsureTemplateDevelopmentAllowed()
         {
+            EmberEditorMetadataCache.ValidateNow();
             if (IsEmbeddedPackage()) return;
             throw new InvalidOperationException(
                 "模板编辑和保存仅允许在 embedded 框架项目中执行；消费项目只能部署包内模板。");

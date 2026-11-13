@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Retrieved 2 log entries.\",\"data\":[\"Packages\\\\com.ember\\\\Core\\\\Tests\\\\EditMode\\\\EmberFsmConditionTests.cs(17,37): warning UAC1001: Field 'Edges' type 'Ember.Core.Fsm.EmberFsmTransition' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)\\n\",\"Packages\\\\com.ember\\\\Core\\\\Tests\\\\EditMode\\\\EmberFsmRuleTests.cs(22,37): warning UAC1001: Field 'Edges' type 'Ember.Core.Fsm.EmberFsmTransition' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)\\n\"]}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Retrieved 2 log entries.",
+    "data": [
+      "Packages\\com.ember\\Core\\Tests\\EditMode\\EmberFsmConditionTests.cs(17,37): warning UAC1001: Field 'Edges' type 'Ember.Core.Fsm.EmberFsmTransition' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)\n",
+      "Packages\\com.ember\\Core\\Tests\\EditMode\\EmberFsmRuleTests.cs(22,37): warning UAC1001: Field 'Edges' type 'Ember.Core.Fsm.EmberFsmTransition' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)\n"
+    ]
+  },
+  "isError": false
+}

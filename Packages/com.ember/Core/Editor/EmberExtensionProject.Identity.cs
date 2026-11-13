@@ -14,8 +14,7 @@ namespace Ember.Core.Editor
     {
         #region 内部参数
         private static readonly Dictionary<string, string> ContentHashes = new(StringComparer.Ordinal);
-        public static string CurrentTemplateVersion => EmberProjectSetup.IsEmbeddedPackage()
-            ? EmberProjectSetup.GetEditingTemplate()?.templateVersion : EmberProjectSetup.GetActiveDeployedTemplate()?.version;
+        public static string CurrentTemplateVersion => EmberProjectSetup.CurrentIdentity.Version;
         #endregion
         // --------------------------------------------------------
         #region 内部方法
@@ -30,7 +29,10 @@ namespace Ember.Core.Editor
         };
         private static string ContentHash(EmberExtensionDefinition definition)
         {
+            long generation = EmberEditorMetadataCache.Generation;
+            if (_hashGeneration != generation) { ContentHashes.Clear(); _hashGeneration = generation; }
             if (ContentHashes.TryGetValue(definition.Id, out var hash)) return hash;
+            ContentHashBuilds++;
             string root = PackageInfoRoot();
             var paths = definition.SourceRoots.Count > 0 ? definition.SourceRoots : BuiltinRoots(definition.Id);
             var text = new StringBuilder(definition.Id + "\n" + definition.ContractVersion + "\n" + definition.Compatibility
@@ -40,10 +42,26 @@ namespace Ember.Core.Editor
                 string path = Path.GetFullPath(Path.Combine(root, relative));
                 if (!path.StartsWith(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidDataException("扩展内容根必须位于 com.ember 包内。");
+                // 缺失根也必须登记；否则失败快照可能在源码恢复后永久拒绝。
+                EmberEditorMetadataCache.Track(path, Directory.Exists(path), true);
+                string ancestor = Path.GetDirectoryName(path);
+                while (!string.IsNullOrEmpty(ancestor))
+                {
+                    EmberEditorMetadataCache.Track(ancestor, true, true);
+                    if (Directory.Exists(ancestor)) break;
+                    ancestor = Path.GetDirectoryName(ancestor);
+                }
                 var files = Directory.Exists(path) ? Directory.GetFiles(path, "*", SearchOption.AllDirectories)
                     : File.Exists(path) ? new[] { path } : throw new FileNotFoundException("扩展内容根不存在：" + relative);
+                if (Directory.Exists(path))
+                {
+                    EmberEditorMetadataCache.Track(path, true, true);
+                    foreach (string directory in Directory.GetDirectories(path, "*", SearchOption.AllDirectories))
+                        EmberEditorMetadataCache.Track(directory, true, true);
+                }
                 foreach (string file in files.Where(f => !f.EndsWith(".meta", StringComparison.Ordinal)).OrderBy(f => f, StringComparer.Ordinal))
                 {
+                    EmberEditorMetadataCache.Track(file, false, true);
                     using var algorithm = SHA256.Create();
                     byte[] bytes = File.ReadAllBytes(file);
                     if (new[] { ".cs", ".asmdef", ".asmref", ".json", ".md", ".uss", ".uxml", ".txt" }.Contains(Path.GetExtension(file).ToLowerInvariant()))
@@ -56,7 +74,7 @@ namespace Ember.Core.Editor
             hash = BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(text.ToString()))).Replace("-", "").ToLowerInvariant();
             ContentHashes[definition.Id] = hash; return hash;
         }
-        private static string PackageInfoRoot() => UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(EmberExtensionProject).Assembly)?.resolvedPath
+        private static string PackageInfoRoot() => EmberEditorMetadataCache.Package?.resolvedPath
             ?? throw new InvalidOperationException("无法定位 com.ember 包。");
         internal static byte[] CanonicalSource(byte[] bytes) => Encoding.UTF8.GetBytes(new UTF8Encoding(false, true).GetString(bytes)
             .TrimStart('\uFEFF').Replace("\r\n", "\n").Replace("\r", "\n"));
@@ -76,20 +94,24 @@ namespace Ember.Core.Editor
             return null;
         }
         internal static EmberExtensionResolution ResolveConfiguration(Configuration config, string templateId, string version)
+            => EmberExtensionCatalog.Resolve(PrepareConfiguration(config, templateId, version), config.enabled);
+
+        private static EmberExtensionDefinition[] PrepareConfiguration(Configuration config, string templateId, string version)
         {
             string reason = config.schemaVersion != 2 ? "旧扩展配置尚未签收版本/hash，请在项目中心检查并保存组合。"
                 : (config.ownerTemplateId ?? "") != (templateId ?? "") || (config.ownerTemplateVersion ?? "") != (version ?? "")
                     ? "扩展配置与正式活动模板 ID/版本不一致。" : null;
-            var definitions = All.Select(d => new EmberExtensionDefinition(d.Id, d.DisplayName, d.Kind, d.Dependencies,
+            return All.Select(d =>
+            {
+                string stableProblem = d.Kind == EmberExtensionKind.Infrastructure ? null
+                    : string.IsNullOrEmpty(templateId) ? "缺少有效的正式模板身份。" : reason ?? BindingProblem(d.Id, config);
+                return new EmberExtensionDefinition(d.Id, d.DisplayName, d.Kind, d.Dependencies,
                 d.Compatibility, () =>
                 {
-                    if (d.Kind == EmberExtensionKind.Infrastructure) return d.CheckCompatibility?.Invoke();
-                    if (reason != null) return reason;
-                    string bindingProblem = BindingProblem(d.Id, config);
-                    if (bindingProblem != null) return bindingProblem;
+                    if (stableProblem != null) return stableProblem;
                     return d.CheckCompatibility?.Invoke();
-                })).ToArray();
-            return EmberExtensionCatalog.Resolve(definitions, config.enabled);
+                }, d.ContractVersion, d.SourceRoots);
+            }).ToArray();
         }
         internal static EmberAISkillInstaller.ExtensionIdentity[] Identities(EmberExtensionResolution resolution) =>
             All.Where(d => resolution.IsEnabled(d.Id)).Select(d => new EmberAISkillInstaller.ExtensionIdentity

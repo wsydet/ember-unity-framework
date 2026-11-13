@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:50:56.8296046Z\",\"staleStops\":0,\"currentStops\":1,\"restoreQueued\":true,\"activeAfter\":false,\"restoreOwnerAfter\":false,\"scenePathsBefore\":[\"Assets/Game/Scenes/FrameworkScene.unity\"],\"scenePathsAfter\":[\"Assets/Game/Scenes/FrameworkScene.unity\"],\"selectionRestored\":true,\"isPlaying\":false},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:50:56.8296046Z",
+        "staleStops": 0,
+        "currentStops": 1,
+        "restoreQueued": true,
+        "activeAfter": false,
+        "restoreOwnerAfter": false,
+        "scenePathsBefore": [
+          "Assets/Game/Scenes/FrameworkScene.unity"
+        ],
+        "scenePathsAfter": [
+          "Assets/Game/Scenes/FrameworkScene.unity"
+        ],
+        "selectionRestored": true,
+        "isPlaying": false
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

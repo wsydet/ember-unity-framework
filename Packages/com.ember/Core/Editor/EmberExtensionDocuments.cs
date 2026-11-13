@@ -23,7 +23,7 @@ namespace Ember.Core.Editor
         {
             internal string Id, Owner;
             internal Func<bool> Enabled;
-            public void Dispose() => Scopes.Remove(this);
+            public void Dispose() { Scopes.Remove(this); EmberExtensionProject.InvalidateChecks(); }
         }
         private static readonly List<Scope> Scopes = new();
         public const string CatalogPath = "Assets/Game/Documentation/ExtensionDocuments.json";
@@ -87,7 +87,7 @@ namespace Ember.Core.Editor
         public static IDisposable RegisterModuleScope(string id, string ownerTemplateId, Func<bool> enabled)
         {
             if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(ownerTemplateId) || enabled == null) throw new ArgumentException("模块范围声明无效。");
-            var scope = new Scope { Id = id, Owner = ownerTemplateId, Enabled = enabled }; Scopes.Add(scope); return scope;
+            var scope = new Scope { Id = id, Owner = ownerTemplateId, Enabled = enabled }; Scopes.Add(scope); EmberExtensionProject.InvalidateChecks(); return scope;
         }
         public static Entry[] Available() => Entries().Where(Allowed).ToArray();
         /// <summary>维护源改动后显式生成待审阅的文档指纹，不写清单。</summary>
@@ -95,6 +95,7 @@ namespace Ember.Core.Editor
         /// <summary>每次读取/打开都重新核对正式身份和启用绑定，旧索引不能授予访问。</summary>
         public static string Read(string id)
         {
+            EmberExtensionProject.ValidateCurrent();
             var entry = Entries().SingleOrDefault(e => e.id == id && Allowed(e))
                 ?? throw new InvalidOperationException("文档所属扩展/模板版本/模块当前不可用：" + id);
             return File.ReadAllText(FullPath(entry));

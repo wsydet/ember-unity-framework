@@ -1,0 +1,44 @@
+# 框架侧修复提示词
+
+复制下方正文到 `C:\Users\wuyu\My\ember-unity-framework` 的新对话。本文承接 Windward 性能问题的框架实现阶段，不是发布或消费升级授权。
+
+---
+
+请在当前 Ember 框架开发工程修复编辑器模板身份／扩展资格查询的重复解析和缓存失效问题。采用既定方案 B，实施框架修复和直接相关验证；不要只做调研，也不必重复询问是否采用 B。用户决定由框架工程对话负责修改，Windward 消费端随后通过正式更新流程接入。
+
+先读取实际工程适用的 AGENTS.md、CLAUDE.md 及其指定的架构、编码、API 和 Unity 验证规范，再核对当前源码、Git 已暂存／未暂存／未跟踪差异与 Unity MCP 实例。使用已有工程，不自动创建 worktree 或子代理。工作区已有大量修改，包括 `EmberExtensionProject.cs`、`.Identity.cs`、`EmberProjectSetup.cs`、模板事务和长路径 IO 修复，不能覆盖、重置或当成本任务实现。消费侧保存的只读状态只是参考，以当前仓库为准。
+
+必须阅读本机消费项目的有效方案和本轮回执：
+
+- `C:\Users\wuyu\My\Windward\docs\design\planning\editor-performance-20261113\README.md`
+- 同目录 `implementation.md`、`baseline-summary.json`、`sampling-environment.json`、`framework-workspace-status.txt`。
+- `editor-api-timing.json` 为早先编辑模式 API 计时；`ordinary-closed-valid.json`、`ordinary-open.json`、`trial-closed.json`、`trial-open.json` 是本轮 CPU 帧证据。原始 inclusive 样本不能相加。
+
+问题已同时覆盖普通入口和试玩入口。Windward 当前实际消费 Ember 0.25.3、Unity 6000.5.4f1、platformer-2d 0.13.2；包解析目录 `Library/PackageCache/com.ember@941a945e9797`。普通入口通过 FrameworkScene→主菜单按钮→重新开始确认→当前正式序章，trialActive=false；试玩通过关卡窗口相同 Start 路径进入 `Assets/Game/Levels/Windward/Chapters/PrologueChapter.asset`，Profile、authoringReview=false，trialActive=true，不是历史 Adjacent_Ready 诊断资格。两者使用各自新建隔离存档，并在同一序章起点观察。
+
+已确认的重点证据：普通入口关闭项目中心时，条件菜单 Update 单次约 428ms，PlayerLoop p95 约 2.52ms；打开项目中心时，窗口绘制也反复产生长任务。试玩关闭中心时，Trial Tick p50 约 124ms、p95 约 217ms，PlayerLoop p95 约 6.01ms。具体四条件和样本限制取 `baseline-summary.json` 和实施回执，不把有限样本或后台片段称为稳定前台 FPS。GPU 数据缺失。早先 IsEnabled/IsAvailable 微基准耗时不能相加换算 FPS。
+
+优先核对并修复以下公共路径，长期归属为框架 Editor：
+
+- Core/Editor：`EmberProjectSetup.Identity.cs`、`EmberProjectSetup.cs` 中 GetTemplates、活动编辑／部署记录；`EmberFsmBlueprintAccess.CurrentTemplateId`；`EmberExtensionProject.cs`、`.Identity.cs` 的 Load／Resolve／IsEnabled、配置及内容身份缓存。
+- LevelAuthoring/Editor：`EmberLevelContracts.cs`、`EmberLevelAccess.cs`、`EmberLevelTrialSession.Tick` 的重复资格解析与批次复用。
+- `EmberConditionalMenu` 与实际采样命中的 `EmberSetupWindow`／项目中心绘制调用方复用稳定快照。可以保留条件菜单的一秒刷新，不在每条菜单重新扫描模板。不要把关闭窗口作为最终修复。
+
+实现必须保留下列契约：
+
+1. 正式身份区分 embedded 编辑身份和 consumer 活动部署身份，沿正式继承链判断；缺失、损坏、未知或无效身份拒绝资格，不能看场景或残留业务脚本猜身份，也不能跨环境兜底。
+2. 同身份／包／配置／定义代次复用稳定元数据与解析；展示所需完整元数据和高频门禁判断分离。缓存对象不可被公开 Configuration、List、数组或字典返回值反向修改。
+3. Save／Commit、活动模板与部署记录变更、注册／注销／scope Dispose、projectChanged／导入、包来源或内容身份变化和域重载正确失效。外部编辑配置、记录、模板父链或包源码应轻量、合并检测，最长约一秒发现；不要每帧哈希所有源码。异常不能静默沿用旧 true。现有 ContentHashes 必须联动失效。
+4. Func<bool> 模块／adapter 条件与 CheckCompatibility 等未证明稳定的回调继续实时或在当前检查批次求值，不能盲目缓存成 true。禁用模块、释放 scope 或注销适配器应立即影响下一次检查。
+5. Start／Retry、写入、受控文档／工具实际执行前重新验证当前输入与资格；旧窗口快照不授予权限。保留安全门禁，不可把 Tick 的 Play 早退移到失效判断之前。失效中的活动试玩必须按原 StopCurrent／owner 清理与现场恢复路径退出，保留旧请求不能停止新会话的所有权约束。
+6. 冷启动／合法失效重建可有一次性成本，但不能每帧或每秒重复全量扫描。不要新增刷屏日志或修改 Runtime／存档／模板 Assets 来绕过问题。
+
+仅运行新增与直接相关的部分用例，先明确测试类／过滤范围与预计耗时。覆盖同代次不重扫、配置开关／损坏、父链与正式身份、包／内容变化、注册和动态条件、返回副本不可污染、失效试玩停止与 owner 恢复。实际模板切换／部署若会覆盖草稿，保留未覆盖边界，不擅自切换。全量或长时间测试另取授权。
+
+每批 C#／程序集修改后，主动通过对应框架 Unity MCP 请求编译；确认本轮编译／域重载完成、新代码确实已加载，再读 Console、测试或 Play。请求成功或单次 idle 不等于编译完成。断线遵守实际包内规范：先排查待编译修改，有需要且请求尚未提交时尝试显式编译；无法送达立即提示手动触发编译；随后每隔 30 秒最多重试 10 次，不重放结果未知请求、不用 Editor.log／BatchMode／dotnet 替代。没有对应框架实例时先落实连接，不能借 Windward 实例验证另一份源码。
+
+完成后交付可审查的实际差异、直接相关测试结果、编译／已加载程序集证据、缓存命中／失效证据、性能微基准与未覆盖项；将框架实施记录和消费接续说明链接回 Windward 原方案的实施回执。
+
+本次不授权 Git 提交、推送、发版／tag、修改模板快照／ParentSnapshot~／版本/hash、模板保存／Bump／部署，或 Windward 升级。实现验证完成后给出发布前差异与待批准步骤。后续框架发布和 Windward 的 `Ember/UPM Manager` 更新分别执行；必要的扩展内容 hash 重新绑定先展示实际预览差异并取得独立授权。禁止修改 Windward PackageCache、手改 manifest/lock、在产品复制一套缓存或反射解绑框架安全回调。
+
+Windward 的玩家手感、机关时序、能力资格、房间坐标、冻结一跳驻留和正式存档均受保护。未经新帧采样命中，不实施方案 P2 的碰撞层／房间驻留候选。框架测试或 API 微基准通过不能替代消费端前后复测；Windward 同环境复测前，不将整个性能问题标记为已修复。

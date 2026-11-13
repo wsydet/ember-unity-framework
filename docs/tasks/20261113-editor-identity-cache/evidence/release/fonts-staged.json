@@ -1,0 +1,7 @@
+{
+  "chunk_id": "b313cd",
+  "wall_time_seconds": 1.2001287,
+  "exit_code": 0,
+  "original_token_count": 182,
+  "output": "PASS workspace: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved\r\nPASS workspace: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license\r\nPASS workspace: four immutable dynamic font recipes excluded from TMP build clearing; project-owned copies required\r\nPASS Git :: Dynamic + Multi Atlas; source, SDF GUID, dimensions and material references preserved\r\nPASS Git :: bundled symbol font, fallback link, Dynamic + Multi Atlas, material and license\r\nPASS Git :: four immutable dynamic font recipes excluded from TMP build clearing; project-owned copies required\r\nStatic configuration only: execute SharedFontAtlasPlayModeTests and visually accept SceneUI in Unity.\r\n"
+}

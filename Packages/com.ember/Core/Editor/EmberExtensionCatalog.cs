@@ -47,7 +47,11 @@ namespace Ember.Core.Editor
         // --------------------------------------------------------
         #region 外部方法
         internal EmberExtensionResolution(HashSet<string> enabled, Dictionary<string, string> problems)
-        { _enabled = enabled; Enabled = enabled.OrderBy(x => x, StringComparer.Ordinal).ToArray(); Problems = new System.Collections.ObjectModel.ReadOnlyDictionary<string, string>(problems); }
+        {
+            _enabled = new HashSet<string>(enabled, StringComparer.Ordinal);
+            Enabled = Array.AsReadOnly(enabled.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+            Problems = new System.Collections.ObjectModel.ReadOnlyDictionary<string, string>(new Dictionary<string, string>(problems, StringComparer.Ordinal));
+        }
         public bool IsEnabled(string id) => id != null && _enabled.Contains(id);
         #endregion
     }

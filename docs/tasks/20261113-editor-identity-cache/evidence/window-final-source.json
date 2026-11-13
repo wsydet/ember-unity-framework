@@ -1,0 +1,46 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-13T03:56:35.2439251Z\",\"updates\":793,\"elapsed\":3.0871819999999843,\"before\":[244,27,23,12],\"after\":[245,27,23,12],\"delta\":[1,0,0,0],\"periodicMainThreadProbe\":{\"count\":100,\"p50_ms\":0.0889,\"p95_ms\":0.1646,\"max_ms\":0.299},\"windowClosed\":true},\"compiler\":\"codedom\"}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "data": {
+      "result": {
+        "utc": "2026-11-13T03:56:35.2439251Z",
+        "updates": 793,
+        "elapsed": 3.0871819999999843,
+        "before": [
+          244,
+          27,
+          23,
+          12
+        ],
+        "after": [
+          245,
+          27,
+          23,
+          12
+        ],
+        "delta": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "periodicMainThreadProbe": {
+          "count": 100,
+          "p50_ms": 0.0889,
+          "p95_ms": 0.1646,
+          "max_ms": 0.299
+        },
+        "windowClosed": true
+      },
+      "compiler": "codedom"
+    }
+  },
+  "isError": false
+}

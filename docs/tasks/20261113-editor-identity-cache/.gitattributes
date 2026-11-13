@@ -1,0 +1,3 @@
+# Preserve captured source snapshots and tool evidence byte for byte.
+*.md text eol=lf
+evidence/** -text -whitespace

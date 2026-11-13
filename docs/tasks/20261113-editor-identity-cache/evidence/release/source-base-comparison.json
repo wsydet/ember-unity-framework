@@ -1,0 +1,15 @@
+{
+  "base": "e31fedd240678d82dbd6fdb71f79a77d8deba70f",
+  "task_files_verified": 19,
+  "other_code_files_compared": 763,
+  "before_vs_v0253_mismatches": [],
+  "other_package_code_diff": [
+    "Packages/com.ember/UPMManager/Editor/EmberProjectRulesSync.cs",
+    "Packages/com.ember/UPMManager/Tests/Editor/EmberProjectRulesSyncEditTests.cs"
+  ],
+  "excluded_unrelated_workflow_source": [
+    "Packages/com.ember/UPMManager/Editor/EmberProjectRulesSync.cs",
+    "Packages/com.ember/UPMManager/Tests/Editor/EmberProjectRulesSyncEditTests.cs"
+  ],
+  "exclusion_reason": "Rules-entry prose and required workflow-document checks only; separate task, no cache/identity API dependencies. Candidate keeps published v0.25.3 versions."
+}
