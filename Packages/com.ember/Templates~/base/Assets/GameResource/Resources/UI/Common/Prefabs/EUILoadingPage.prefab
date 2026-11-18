@@ -233,6 +233,10 @@ MonoBehaviour:
   useUIUpdate: 1
   useMask: 1
   maskColor: {r: 0, g: 0, b: 0, a: 0.5}
+  maskEffect: 0
+  overrideMaskTint: 0
+  backdropSettingsOverride: {fileID: 0}
+  backdropSchema: 0
   clickMaskToClose: 1
   generateAutoCreateClickableMaskOverride: 0
   generateOnClickMaskOverride: 0
@@ -664,7 +668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -672,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_AnchorMin.y
@@ -680,11 +684,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 92
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -720,7 +724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

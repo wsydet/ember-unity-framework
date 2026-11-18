@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUINovelChoiceItem
  * page name    : 
- * update time  : 2026/9/29 14:51:57
+ * update time  : 2026/11/18 12:21:40
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

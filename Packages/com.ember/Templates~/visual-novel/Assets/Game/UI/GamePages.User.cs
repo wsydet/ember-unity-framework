@@ -64,5 +64,20 @@ namespace Game.UI
         /// <summary>EUIOwnershipExamplePage 页面</summary>
         public static readonly EUIPageDef EUIOwnershipExamplePage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
 
+        /// <summary>EUISoftGlassAlertPage 页面</summary>
+        public static readonly EUIPageDef EUISoftGlassAlertPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassAlertPage.prefab", UILayer.Popup, PageType.Popup);
+
+        /// <summary>EUISoftGlassConfirmPage 页面</summary>
+        public static readonly EUIPageDef EUISoftGlassConfirmPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassConfirmPage.prefab", UILayer.Popup, PageType.Popup);
+
+        /// <summary>EUISoftGlassGMPage 页面</summary>
+        public static readonly EUIPageDef EUISoftGlassGMPage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMPage.prefab", UILayer.TopMost, PageType.FreePage, freePageSortingOrder: 30000);
+
+        /// <summary>EUISoftGlassShowcasePage 页面</summary>
+        public static readonly EUIPageDef EUISoftGlassShowcasePage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassShowcasePage.prefab", UILayer.Normal, PageType.MainPage);
+
+        /// <summary>EUISoftGlassExtensionExamplePage 页面</summary>
+        public static readonly EUIPageDef EUISoftGlassExtensionExamplePage = new("Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExamplePage.prefab", UILayer.Normal, PageType.MainPage);
+
     }
 }

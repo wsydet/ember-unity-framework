@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIGamePlayPage
  * page name    : EUIGamePlayPage
- * update time  : 2026/10/28 20:49:39
+ * update time  : 2026/11/18 2:02:42
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

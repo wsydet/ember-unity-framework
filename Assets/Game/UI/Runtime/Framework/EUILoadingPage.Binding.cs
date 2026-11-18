@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUILoadingPanel
+ * prefab name  : EUILoadingPage
  * page name    : EUILoadingPage
- * update time  : 2026/8/31 20:50:45
+ * update time  : 2026/10/27 10:18:38
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -15,24 +15,19 @@ namespace Game.UI
     public partial class EUILoadingPage : Ember.UI.EUILogic
     {
         /// <summary>
-        /// m_Cg_Progress
+        /// Animator/EUISafeArea/BottomCenter/m_Cg_Progress
         /// </summary>
         private CanvasGroup Cg_Progress;
 
         /// <summary>
-        /// m_Cg_Progress/Pos/m_Img_ProgressBar
-        /// </summary>
-        private Image Img_ProgressBar;
-
-        /// <summary>
-        /// m_Cg_Progress/Pos/m_Txt_ProgressNum
-        /// </summary>
-        private TMP_Text Txt_ProgressNum;
-
-        /// <summary>
-        /// m_TransitionBlock
+        /// Animator/m_TransitionBlock/Effect
         /// </summary>
         private Component TransitionBlock;
+
+        /// <summary>
+        /// Animator/EUISafeArea/BottomCenter/m_Cg_Progress
+        /// </summary>
+        private EUILoadingProgressItem LoadingProgress;
 
 
 
@@ -40,9 +35,8 @@ namespace Game.UI
     {
         base.OnBind();
             Cg_Progress = ControlMap["Cg_Progress"] as CanvasGroup;
-            Img_ProgressBar = ControlMap["Img_ProgressBar"] as Image;
-            Txt_ProgressNum = ControlMap["Txt_ProgressNum"] as TMP_Text;
             TransitionBlock = ControlMap["TransitionBlock"] as Component;
+            LoadingProgress = GetChildLogic<EUILoadingProgressItem>("LoadingProgress");
 
     }
 }

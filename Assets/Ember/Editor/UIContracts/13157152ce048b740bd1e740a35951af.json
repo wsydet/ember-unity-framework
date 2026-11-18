@@ -1,0 +1,20 @@
+{
+    "prefabGuid": "13157152ce048b740bd1e740a35951af",
+    "legacyNames": [
+        "EUISettingPanel"
+    ],
+    "annotations": [
+        {
+            "ownerId": "13157152ce048b740bd1e740a35951af:4906149822544563083",
+            "bindingName": "Btn_Close",
+            "semanticId": "settings.close",
+            "behavior": "实测：click -> 状态栈 Pop，返回调用来源；EUISettingPage.OnInit"
+        },
+        {
+            "ownerId": "13157152ce048b740bd1e740a35951af:4906149822544563083",
+            "bindingName": "Txt_NowScene",
+            "semanticId": "settings.nowscene",
+            "behavior": "动态文本：由 SettingsContext.Main / Gameplay 输入；EUISettingPage.OnOpen"
+        }
+    ]
+}

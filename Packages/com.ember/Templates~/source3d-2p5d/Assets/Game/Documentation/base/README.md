@@ -13,3 +13,5 @@
 
 Guide、PlayerData、GameTable、GameInput 等可选模块是否启用，以对应 EmberModule 特性为准；文档存在不代表已启用。
 框架 API、发布记录和模板管理机制由框架文档维护，不复制到本目录。
+
+- [柔光玻璃 UI 与外观选择](soft-glass-ui.md)

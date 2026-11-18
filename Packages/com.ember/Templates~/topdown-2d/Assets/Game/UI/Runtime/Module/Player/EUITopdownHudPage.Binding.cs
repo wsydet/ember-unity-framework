@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUITopdownHudPage
  * page name    : EUITopdownHudPage
- * update time  : 2026/10/29 0:12:06
+ * update time  : 2026/11/18 2:02:42
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

@@ -100,7 +100,7 @@ namespace Game.UI
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            // 清理事件与引用
+            Btn_Settings.onClick.RemoveAllListeners();
         }
     }
 }

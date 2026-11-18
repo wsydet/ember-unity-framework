@@ -1,0 +1,1 @@
+{"name":"Game.UIFoundation.Editor","rootNamespace":"Game.UI.Editor","references":["Ember.UI.Runtime","Ember.UIExtension.Runtime","Ember.UIExtension.Editor","Ember.Core.Editor","Ember.Basic.Runtime","Unity.TextMeshPro","UnityEngine.UI"],"includePlatforms":["Editor"]}

@@ -16,6 +16,34 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u5F53\u524D\u573A\u666F"
       objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_fontSize
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346223164909878983, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4489736770036150289, guid: 2331d4113c86cca489417cfff65c775c, type: 3}
       propertyPath: className
       value: EUISettingsContextItem

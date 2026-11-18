@@ -1,0 +1,20 @@
+{
+    "prefabGuid": "9b27fbe343055e94fb5f3ae24a87ee96",
+    "legacyNames": [
+        "EUIMainPanel"
+    ],
+    "annotations": [
+        {
+            "ownerId": "9b27fbe343055e94fb5f3ae24a87ee96:7690854953623764773",
+            "bindingName": "Btn_Settings",
+            "semanticId": "main.settings",
+            "behavior": "实测：click -> SettingsState(SettingsContext.Main)；EUIMainPage.OnInit / S0 04-behavior.md"
+        },
+        {
+            "ownerId": "9b27fbe343055e94fb5f3ae24a87ee96:7690854953623764773",
+            "bindingName": "Btn_Start",
+            "semanticId": "main.start",
+            "behavior": "实测：click -> GameplayState；EUIMainPage.OnInit / S0 04-behavior.md"
+        }
+    ]
+}

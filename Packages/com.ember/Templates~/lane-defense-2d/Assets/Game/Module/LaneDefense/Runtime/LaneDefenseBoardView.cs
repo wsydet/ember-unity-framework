@@ -32,8 +32,12 @@ namespace Game.LaneDefense
         private GameInputButton _place,_cancel;
         private GameInputChannel _channel;
         private UniversalAdditionalCameraData _previousStackOwner;
-        private Camera _uiCamera;
-        private int _previousStackIndex=-1;
+        private Camera _mainCamera;
+        private CameraClearFlags _previousMainClearFlags;
+        private Color _previousMainBackground;
+        private int _previousMainCullingMask;
+        private CameraRenderType _previousBoardRenderType;
+        private bool _cameraStackBound;
         private readonly List<RaycastResult> _uiHits=new();
         public BoardProjection Projection=>_projection;
         public Camera BoardCamera=>_camera;
@@ -75,15 +79,26 @@ namespace Game.LaneDefense
             _projection=new BoardProjection(level.Rows,level.Columns,level.CellSize,new Vector2(-level.Columns*level.CellSize.x/2,-level.Rows*level.CellSize.y/2));
             _root=new GameObject("LaneDefenseSession-"+battle.Generation);_root.transform.SetParent(transform,false);
             var main=GameLauncher.Instance.MainCamera;
-            _uiCamera=GameLauncher.Instance.UICamera;
-            if(main!=null&&_uiCamera!=null)
+            var uiCamera=GameLauncher.Instance.UICamera;
+            if(main!=null&&uiCamera!=null)
             {
                 _previousStackOwner=main.GetUniversalAdditionalCameraData();
-                _previousStackIndex=_previousStackOwner.cameraStack.IndexOf(_uiCamera);
-                if(_previousStackIndex>=0)_previousStackOwner.cameraStack.RemoveAt(_previousStackIndex);
-                var stack=_camera.GetUniversalAdditionalCameraData();stack.renderType=CameraRenderType.Base;
-                if(!stack.cameraStack.Contains(_uiCamera))stack.cameraStack.Add(_uiCamera);
-                _camera.depth=main.depth+.1f;
+                int index=_previousStackOwner.cameraStack.IndexOf(uiCamera);
+                if(index<0)throw new InvalidOperationException("Lane presentation requires the existing main/UI camera stack.");
+                var boardData=_camera.GetUniversalAdditionalCameraData();
+                _previousBoardRenderType=boardData.renderType;
+                _mainCamera=main;
+                _previousMainClearFlags=main.clearFlags;
+                _previousMainBackground=main.backgroundColor;
+                _previousMainCullingMask=main.cullingMask;
+                _cameraStackBound=true;
+                // Keep the UI camera and backdrop foreground segments under their existing owner.
+                // The board renders before that chain, using its original orthographic projection.
+                boardData.renderType=CameraRenderType.Overlay;
+                if(!_previousStackOwner.cameraStack.Contains(_camera))_previousStackOwner.cameraStack.Insert(index,_camera);
+                main.clearFlags=CameraClearFlags.SolidColor;
+                main.backgroundColor=_camera.backgroundColor;
+                main.cullingMask=0;
             }
             _camera.enabled=true;
             var baseLine=Instantiate(_cellPrefab,_root.transform);baseLine.name="BaseBoundary";
@@ -154,12 +169,16 @@ namespace Game.LaneDefense
             if(_camera!=null)
             {
                 _camera.enabled=false;
-                var stack=_camera.GetUniversalAdditionalCameraData();
-                if(_uiCamera!=null&&stack.cameraStack!=null)stack.cameraStack.Remove(_uiCamera);
+                if(_cameraStackBound)_camera.GetUniversalAdditionalCameraData().renderType=_previousBoardRenderType;
             }
-            if(_previousStackOwner!=null&&_uiCamera!=null&&_previousStackIndex>=0&&_previousStackOwner.cameraStack!=null&&!_previousStackOwner.cameraStack.Contains(_uiCamera))
-                _previousStackOwner.cameraStack.Insert(Math.Min(_previousStackIndex,_previousStackOwner.cameraStack.Count),_uiCamera);
-            _previousStackOwner=null;_uiCamera=null;_previousStackIndex=-1;
+            if(_cameraStackBound&&_previousStackOwner!=null&&_previousStackOwner.cameraStack!=null)_previousStackOwner.cameraStack.Remove(_camera);
+            if(_cameraStackBound&&_mainCamera!=null)
+            {
+                _mainCamera.clearFlags=_previousMainClearFlags;
+                _mainCamera.backgroundColor=_previousMainBackground;
+                _mainCamera.cullingMask=_previousMainCullingMask;
+            }
+            _previousStackOwner=null;_mainCamera=null;_cameraStackBound=false;
             _place?.Dispose();_cancel?.Dispose();_place=null;_cancel=null;_channel=null;
             if(_root!=null){_root.SetActive(false);Destroy(_root);}
             _root=null;_preview=null;_visuals.Clear();_battle=null;_projection=null;

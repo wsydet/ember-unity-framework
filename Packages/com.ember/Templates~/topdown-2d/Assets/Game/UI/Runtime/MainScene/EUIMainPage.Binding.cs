@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIMainPage
  * page name    : EUIMainPage
- * update time  : 2026/10/28 22:14:53
+ * update time  : 2026/11/18 2:02:42
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -25,12 +25,12 @@ namespace Game.UI
         private Button Btn_Settings;
 
         /// <summary>
-        /// Btn_Continue
+        /// Animator/EUISafeArea/Center/Btn_Continue
         /// </summary>
         private Button Btn_Continue;
 
         /// <summary>
-        /// Txt_Progress
+        /// Animator/EUISafeArea/Center/Txt_Progress
         /// </summary>
         private TMP_Text Txt_Progress;
 

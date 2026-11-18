@@ -68,6 +68,9 @@ namespace Game.UI
 
         // ── 用户级生命周期（块外用户区，永不触碰）──
 
+        private EUIPage _sceneUIHiddenForSettings;
+        private float _sceneUIOriginalAlpha;
+
         /// <summary>用户初始化钩子：框架 OnInit 结束时调用。</summary>
         private void OnInitUser()
         {
@@ -77,7 +80,19 @@ namespace Game.UI
         /// <summary>用户打开钩子：框架 OnOpen 结束时调用。</summary>
         private void OnOpenUser(object param)
         {
-            // 页面被打开，处理传入参数
+            foreach (var page in EUIViewEngine.Instance.ActivePages)
+            {
+                if (!(page.Logic is EUISceneUIPage) || !page.GameObject ||
+                    !page.GameObject.activeInHierarchy || !page.Canvas.enabled ||
+                    page.CanvasGroup.alpha <= 0f ||
+                    (page.State != PageState.Opened && page.State != PageState.Paused))
+                    continue;
+
+                _sceneUIOriginalAlpha = page.CanvasGroup.alpha;
+                _sceneUIHiddenForSettings = page;
+                page.HideViewOnly();
+                break;
+            }
         }
 
         /// <summary>用户显示钩子：框架 OnShow 结束时调用。</summary>
@@ -95,13 +110,24 @@ namespace Game.UI
         /// <summary>用户关闭钩子：框架 OnClose 结束时调用。</summary>
         private void OnCloseUser()
         {
-            // 页面被关闭
+            RestoreSceneUI();
         }
 
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            // 清理事件与引用
+            RestoreSceneUI();
+        }
+
+        private void RestoreSceneUI()
+        {
+            var page = _sceneUIHiddenForSettings;
+            _sceneUIHiddenForSettings = null;
+            if (page == null || !page.GameObject || page.State != PageState.ViewHidden)
+                return;
+
+            page.RestoreViewOnly();
+            page.CanvasGroup.alpha = _sceneUIOriginalAlpha;
         }
     }
 }

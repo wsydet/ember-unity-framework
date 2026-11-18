@@ -3,8 +3,6 @@ using Ember.Core;
 using Ember.UI;
 using Game.UI;
 using Game.Input;
-using Game.Player;
-using UnityEngine;
 
 namespace Game.State
 {
@@ -22,27 +20,15 @@ namespace Game.State
         public override void OnEnter(object args)
         // [EmberManaged:end]
         {
-#if UNITY_EDITOR
-            PlayerLabEditorBridge.Prepare?.Invoke();
-            PlayerLabEditorBridge.PrepareLevelAuthoring?.Invoke();
-#endif
             base.OnEnter(args);
-#if UNITY_EDITOR
-            PlayerLabEditorBridge.ObserveStorage?.Invoke();
-#endif
 
+            // base 已完成 Global 激活；登记不代表 Ready。未选装 GameInput 时无需输入接线。
             if (args is EmberStateMachine fsm
                 && EmberModuleCollector.Instance.TryGetModule<GameInputModule>(out var input))
-            {
-                var playerConfig = Resources.Load<PlayerConfig>(PlayerModule.CONFIG_PATH);
-                if (playerConfig == null) throw new System.InvalidOperationException("缺少 PlayerConfig，不能绑定玩家转场输入。");
-                input.BindTransitions(fsm, playerConfig.Channel);
-            }
-
-            EUIViewEngine.Instance.TransitionHandler = new PlatformerUITransition();
+                input.BindTransitions(fsm, "gameplay");
 
             // 框架就绪后立即创建 GM 调试页（FreePage 常驻，不随 MainPage 切换关闭）
-            EUIManager.Instance.ShowTopMost(GamePages.GMPage);
+            EUIAppearanceBootstrap.ShowGM();
         }
     }
 }

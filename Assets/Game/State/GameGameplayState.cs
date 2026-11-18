@@ -4,7 +4,6 @@ using Ember.UI;
 using Game.UI;
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Player;
 using Game.SceneFlow;
 using UnityEngine.SceneManagement;
 
@@ -19,104 +18,25 @@ namespace Game.State
     /// <b>退出玩法 → 关闭所有 UI：</b>
     /// <see cref="OnGameplayExit"/> 在离开玩法前调用，清理 UI。
     /// </summary>
-    public class GameGameplayState : GameplayState, IEmberInPlaceState
+    public class GameGameplayState : GameplayState
     {
-        private PlayerPauseRequest _overlayPause;
         private GameSceneSession _sceneSession;
-        private string _requestedScene;
-        public override bool AllowReEnter => _requestedScene != null;
-#if UNITY_EDITOR
-        public override string ScenePath => _requestedScene ?? (PlayerLabEditorBridge.Active
-            ? PlayerLabEditorBridge.GameplayScenePath : base.ScenePath);
-#else
-        public override string ScenePath => _requestedScene ?? base.ScenePath;
-#endif
-
-        /// <summary>跨关请求只在同步读取目标 ScenePath 时开放重入；配置已由 ForLevel 冻结。</summary>
-        public EmberTransitionOperation EnterLevel(EmberStateMachine flow, PlayerEntryRequest entry,
-            System.Threading.CancellationToken cancellation = default)
-        {
-            if (flow == null || flow.GetState<GameplayState>() != this || flow.IsTransitioning ||
-                entry == null || entry.IsDisposed || string.IsNullOrWhiteSpace(entry.LevelId) || string.IsNullOrWhiteSpace(entry.ScenePath))
-                throw new InvalidOperationException("关卡入口需要当前注册状态、空闲转场和冻结的关卡请求。");
-            if (EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) && player.HasSession &&
-                player.Controller.gameObject.scene.name == System.IO.Path.GetFileNameWithoutExtension(entry.ScenePath))
-                throw new InvalidOperationException("同场景续玩使用 RestoreCheckpoint；跨关入口不能隐式创建覆盖层。");
-            _requestedScene = entry.ScenePath;
-            try { return flow.RequestTransitionTo<GameplayState>(entry, cancellation: cancellation); }
-            finally { _requestedScene = null; }
-        }
-
-        public override TransitionDescriptor[] GetEdges()
-        {
-            var edges = base.GetEdges();
-            for (int i = 0; i < edges.Length; i++)
-            {
-                var edge = edges[i];
-                edges[i] = new TransitionDescriptor(edge.TargetState, edge.Label)
-                {
-                    QuickSceneLoad = edge.QuickSceneLoad, ReadOnly = edge.ReadOnly, Condition = edge.Condition,
-                    Guard = () => !EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) || player.CanLeaveGameplay
-                };
-            }
-            var result = new TransitionDescriptor[edges.Length + 1];
-            Array.Copy(edges, result, edges.Length);
-            result[edges.Length] = new TransitionDescriptor(typeof(GameplayState), "恢复玩家")
-            {
-                Guard = () => EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player)
-                    && player.HasSession && player.CanLeaveGameplay
-            };
-            return result;
-        }
-
-        public async UniTask PrepareInPlaceAsync(SceneTransitionContext request)
-        {
-            if (_sceneSession == null || !_sceneSession.IsRunning || request.Args is not PlayerEntryRequest entry)
-                throw new InvalidOperationException("恢复需要当前 SceneScope 和明确的进入请求。");
-            if (!EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) || !player.HasSession)
-                throw new InvalidOperationException("没有可恢复的玩家会话。");
-            var participant = player.Controller.GetComponent<PlayerSceneParticipant>();
-            var recovery = new PlayerRecoveryTransition(player);
-            request.PreparedArgs = recovery;
-            await recovery.PrepareAsync(_sceneSession, participant, request.Operation.RequestId, entry, request.Cancellation);
-        }
-
-        public void CommitInPlace(SceneTransitionContext request)
-            => ((PlayerRecoveryTransition)request.PreparedArgs).Commit();
-
-        public UniTask AbortInPlaceAsync(SceneTransitionContext request)
-        { (request.PreparedArgs as PlayerRecoveryTransition)?.Dispose(); return UniTask.CompletedTask; }
 
         public override async UniTask PrepareEnterAsync(SceneTransitionContext request)
         {
-            if (request.Args != null && request.Args is not PlayerEntryRequest)
-                throw new ArgumentException("进入参数必须明确为新游戏或指定槽位。");
             var scene = SceneManager.GetSceneByPath(request.ToScene);
             if (!scene.IsValid()) scene = SceneManager.GetSceneByName(request.ToScene);
-            var scope = GameSceneScope.Require(scene);
-            PlayerController controller = null;
-            foreach (var root in scene.GetRootGameObjects())
-                foreach (var found in root.GetComponentsInChildren<PlayerController>(true))
-                {
-                    if (controller != null) throw new InvalidOperationException("当前模板场景必须有且只有一个玩家。");
-                    controller = found;
-                }
-            var participant = controller != null ? controller.GetComponent<PlayerSceneParticipant>() : null;
-            if (participant == null || !participant.isActiveAndEnabled)
-                throw new InvalidOperationException("玩法场景缺少启用的玩家准备参与者。");
-            var candidate = await scope.PrepareAsync(request.Operation.RequestId,
-                request.Args, request.Cancellation);
-            if (participant.PreparedRequestId != request.Operation.RequestId)
-            {
-                candidate.Dispose();
-                throw new InvalidOperationException("必要玩家未纳入本次 SceneScope 准备列表。");
-            }
+            var candidate = await GameSceneScope.Require(scene).PrepareAsync(
+                request.Operation.RequestId, request.Args, request.Cancellation);
             request.PreparedArgs = candidate;
             candidate.ReleaseOnFailedTransitionAsync(request.Operation).Forget();
         }
 
         public override UniTask AbortPrepareAsync(SceneTransitionContext request)
-        { (request.PreparedArgs as GameSceneSession)?.Dispose(); return UniTask.CompletedTask; }
+        {
+            (request.PreparedArgs as GameSceneSession)?.Dispose();
+            return UniTask.CompletedTask;
+        }
 
         // [EmberManaged:begin OnGameplayEnter]
         protected override void OnGameplayEnter(object args)
@@ -141,20 +61,10 @@ namespace Game.State
             finally
             {
                 _sceneSession = null;
-                _overlayPause?.Dispose(); _overlayPause = null;
                 EUIManager.Instance.CloseAllPopups();
                 EUIManager.Instance.ClosePageByDef(GamePages.EUIGamePlayPage);
                 base.OnGameplayExit();
             }
         }
-
-        protected override void OnGameplayPause()
-        {
-            if (EmberModuleCollector.Instance.TryGetModule<PlayerModule>(out var player) && player.HasSession)
-                _overlayPause = player.Pause();
-        }
-
-        protected override void OnGameplayResume()
-        { _overlayPause?.Dispose(); _overlayPause = null; }
     }
 }

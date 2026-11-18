@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUISettingPage
  * page name    : EUISettingPage
- * update time  : 2026/10/27 12:14:31
+ * update time  : 2026/11/18 12:21:40
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

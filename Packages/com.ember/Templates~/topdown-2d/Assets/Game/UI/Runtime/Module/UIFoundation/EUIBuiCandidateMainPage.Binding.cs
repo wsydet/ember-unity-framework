@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUIBuiCandidateMainPage
  * page name    : EUIBuiCandidateMainPage
- * update time  : 2026/10/27 9:12:40
+ * update time  : 2026/11/18 2:08:41
  * ============================================================
  * 本文件为自动生成，请勿修改
 */

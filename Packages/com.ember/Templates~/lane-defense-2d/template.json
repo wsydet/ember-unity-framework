@@ -3,13 +3,13 @@
     "id": "lane-defense-2d",
     "displayName": "2D 横向分路塔防",
     "description": "直接继承 base 的通用横向分路塔防基础：棋盘、卡牌放置、基础战斗、波次和会话扩展接口。preview；功能与验证边界见随模板文档。",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "frameworkVersion": "0.25.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
-    "parentVersion": "0.10.2",
-    "parentContentHash": "0b0431013fcd599ea1d8f1c27aafd169",
-    "contentHash": "0aa2e18bdf1864add23cd7a7fe7e5674",
-    "versionedContentHash": "0aa2e18bdf1864add23cd7a7fe7e5674"
+    "parentVersion": "0.11.0",
+    "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
+    "contentHash": "7630a27da3efa0620ab038eab47da4b0",
+    "versionedContentHash": "7630a27da3efa0620ab038eab47da4b0"
 }

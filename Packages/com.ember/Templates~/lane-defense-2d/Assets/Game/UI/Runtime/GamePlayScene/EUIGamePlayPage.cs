@@ -99,7 +99,8 @@ namespace Game.UI
         /// <summary>用户释放钩子：框架 OnDispose 结束时调用。</summary>
         private void OnDisposeUser()
         {
-            // 清理事件与引用
+            // 设置入口同返回按钮一样由本页登记；池化复用前撤销，避免叠加导航回调。
+            Btn_Settings.onClick.RemoveAllListeners();
         }
     }
 }

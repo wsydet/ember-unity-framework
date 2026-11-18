@@ -1,8 +1,8 @@
 ﻿/*=============================================================
  * author       : Bingo
- * prefab name  : EUIGamePlayPanel
+ * prefab name  : EUIGamePlayPage
  * page name    : EUIGamePlayPage
- * update time  : 2026/10/9 20:24:05
+ * update time  : 2026/10/27 9:12:40
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -24,26 +24,6 @@ namespace Game.UI
         /// </summary>
         private Button Btn_Settings;
 
-        /// <summary>
-        /// Animator/EUISafeArea/Center/m_Btn_Save
-        /// </summary>
-        private Button Btn_Save;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/m_Btn_SaveExit
-        /// </summary>
-        private Button Btn_SaveExit;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/m_Btn_Respawn
-        /// </summary>
-        private Button Btn_Respawn;
-
-        /// <summary>
-        /// Animator/EUISafeArea/Center/m_Txt_Status
-        /// </summary>
-        private TMPro.TextMeshProUGUI Txt_Status;
-
 
 
     public override void OnBind()
@@ -51,10 +31,6 @@ namespace Game.UI
         base.OnBind();
             Btn_Back = ControlMap["Btn_Back"] as Button;
             Btn_Settings = ControlMap["Btn_Settings"] as Button;
-            Btn_Save = ControlMap["Btn_Save"] as Button;
-            Btn_SaveExit = ControlMap["Btn_SaveExit"] as Button;
-            Btn_Respawn = ControlMap["Btn_Respawn"] as Button;
-            Txt_Status = ControlMap["Txt_Status"] as TMPro.TextMeshProUGUI;
 
     }
 }

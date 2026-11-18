@@ -1,0 +1,3050 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9110dc1a9cca7ac4e90fc20be966a5d6, type: 3}
+  m_Name: SoftGlassLibrary
+  m_EditorClassIdentifier: Ember.UIExtension.Editor::Ember.UIExtension.Editor.EUILibrary
+  SkinId: EmberSoftGlass
+  SkinVersion: 1.0.0
+  ReferenceResolution: {x: 1280, y: 720}
+  Entries:
+  - Id: ember.softglass.standardpage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 5101710093233518553, guid: 42bb70bc27c31e54a8b1e3cc0f59da16, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: TMPro.TextMeshProUGUI
+      State: default
+      Target: {fileID: 798363402122877901, guid: 42bb70bc27c31e54a8b1e3cc0f59da16, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+  - Id: ember.softglass.standardpopuppage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 8189427241078346101, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5029448546588263368, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2281430668298164107, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8190013862399353035, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7342256245486543529, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2106445202367718774, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5019993551492179214, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5088058134431109955, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8867890370512794296, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1405688916320589308, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 8780448935568107914, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-10
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 4815030428644394842, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-11
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 5230351306781862197, guid: 72f59dddd3722ee41a623583d4ee486f, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.panelitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 4418499587351854323, guid: 4908bde224cf99d488fa42750c78206e, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 460, y: 300}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4822864678345958663, guid: 4908bde224cf99d488fa42750c78206e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1454336355286726209, guid: 4908bde224cf99d488fa42750c78206e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+  - Id: ember.softglass.primarybuttonitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 486348939047561798, guid: e9cb9c338865ad84a9b88c1fa8f91e74, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 320, y: 80}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1899341130285029349, guid: e9cb9c338865ad84a9b88c1fa8f91e74, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4588893801084380411, guid: e9cb9c338865ad84a9b88c1fa8f91e74, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7424104503897089954, guid: e9cb9c338865ad84a9b88c1fa8f91e74, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 462215154968620523, guid: e9cb9c338865ad84a9b88c1fa8f91e74, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.secondarybuttonitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 2680643218277043314, guid: bc7199fb3e09e1343af2a89dc4a7aef9, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 320, y: 80}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4167946990707700177, guid: bc7199fb3e09e1343af2a89dc4a7aef9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2027556187591377615, guid: bc7199fb3e09e1343af2a89dc4a7aef9, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4939290676313325974, guid: bc7199fb3e09e1343af2a89dc4a7aef9, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2730952933969693663, guid: bc7199fb3e09e1343af2a89dc4a7aef9, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.iconbuttonitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 8930200469274019058, guid: 8de0746071d460d43b66ac139770e9bc, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 80, y: 80}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2382465610493306526, guid: 8de0746071d460d43b66ac139770e9bc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7024181856136545019, guid: 8de0746071d460d43b66ac139770e9bc, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3168977734811706165, guid: 8de0746071d460d43b66ac139770e9bc, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 4212321678789913399, guid: 8de0746071d460d43b66ac139770e9bc, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.closebuttonitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 6799257626695184030, guid: 313759a9828f67f408ec5cd92fd99c30, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 80, y: 80}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 334837657162697970, guid: 313759a9828f67f408ec5cd92fd99c30, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4958264058329540759, guid: 313759a9828f67f408ec5cd92fd99c30, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1031283353950619993, guid: 313759a9828f67f408ec5cd92fd99c30, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2287985793897185627, guid: 313759a9828f67f408ec5cd92fd99c30, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.switchitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 8457283794482057358, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 360, y: 72}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2069339821627785815, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8587915952866969393, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5892490424953363825, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7288726434095983392, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-4
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3358109676417996050, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-5
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 8356041990645110469, guid: 9b0a9a69cdc179b4f81cf5c8fd8fef8f, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.slideritem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 8421591877818587459, guid: 440ac2baf22070e42beb4a189b2fbfa1, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 360, y: 72}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8286220279953102338, guid: 440ac2baf22070e42beb4a189b2fbfa1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4590423279372406369, guid: 440ac2baf22070e42beb4a189b2fbfa1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8937341290408724476, guid: 440ac2baf22070e42beb4a189b2fbfa1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 4223392831780234591, guid: 440ac2baf22070e42beb4a189b2fbfa1, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.verticalslideritem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 867950424848713405, guid: 1fb30ce3493b40d469d5e5faa8b6e61e, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 96, y: 240}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3929802522776294342, guid: 1fb30ce3493b40d469d5e5faa8b6e61e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8983131328246356725, guid: 1fb30ce3493b40d469d5e5faa8b6e61e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4637475391501396377, guid: 1fb30ce3493b40d469d5e5faa8b6e61e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 5112294522803297102, guid: 1fb30ce3493b40d469d5e5faa8b6e61e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.inputitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 5105188312783505608, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 360, y: 72}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 450461515153683405, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6942313288296610556, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2624234411824280883, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2695879376164678856, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 600504557850290568, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5058637694542992856, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 4228365024443166832, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-7
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 6418572013733590413, guid: e2077725046ede247bff4d7a3392d69d, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.searchitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 4814647908526681894, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 360, y: 72}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 164391453116109859, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7228374554236951826, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2333834584011363037, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2405455984001043238, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 890937355438640742, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4772603209732747830, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 4514435234640320414, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-7
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 6708969565213823587, guid: c20bb861bb3ab9e44884726cf5aa071d, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.extensionexampleitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 3621251067033666881, guid: 4fe620d1280b46b46806bbbd63a1460c, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 320, y: 80}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3361180458656676066, guid: 4fe620d1280b46b46806bbbd63a1460c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 815602302734486524, guid: 4fe620d1280b46b46806bbbd63a1460c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6050912475882408101, guid: 4fe620d1280b46b46806bbbd63a1460c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 3644680231801733868, guid: 4fe620d1280b46b46806bbbd63a1460c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.gmentryitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 6488778104725817617, guid: 825853067942e184094daf048cea1f6b, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 64, y: 64}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4933381799708977102, guid: 825853067942e184094daf048cea1f6b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4525317294372760639, guid: 825853067942e184094daf048cea1f6b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1351597995210791022, guid: 825853067942e184094daf048cea1f6b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 473569065783991283, guid: 825853067942e184094daf048cea1f6b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.gmstateitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 5345063207466432561, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 340, y: 300}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7509251928931944063, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 671677378994169616, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8689617034189800378, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8294342579069270798, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1775301726583280655, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4048269863300835404, guid: 8ad3905634c277945a34ca91834b14e2, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+  - Id: ember.softglass.gmtimeitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 4739903497478582814, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 340, y: 300}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2577840979647649676, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 460853917577710697, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1206455513671927984, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7190036100180783218, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1864464419280434777, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 924003826388236141, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7925461946108414223, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5410188172612899663, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 9220082005074158878, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3767519875955858220, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-10
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6529436805664031107, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-11
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7380512738175857391, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-12
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2095561707493240029, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-13
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 7576200555564275963, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-14
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 6973193724937650232, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-15
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 3745699634921752477, guid: 26e2480bb19da8a48ad69f2dacef929a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.gmactionitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 5023817695113686585, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    - icon
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 152, y: 132}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4979116881303805057, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7846440462088906644, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1963862869076602147, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-3
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2770720513397187133, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-4
+      Role: icon
+      ComponentType: Ember.UIExtension.EUIControlGlyph
+      State: default
+      Target: {fileID: 6792534231714049837, guid: 2d6f3c559cb9a5f448d0a5c941ab06d3, type: 3}
+      Required: 1
+      Properties:
+      - _key
+      - m_Color
+  - Id: ember.softglass.gmtestitem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 6540720724125084901, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 340, y: 300}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 30414418988058423, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7844800636074811246, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8844793823519749957, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5692883017161649706, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8142532399020951464, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3701642962547650681, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8554198126993493230, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 524661698775570952, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2427376245629173832, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1535537347146610201, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-10
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6842084880327428139, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-11
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 260943713975979004, guid: 1b6347e89212dc2449dfec086484e0d1, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.gmcenteritem
+    Family: SoftGlass
+    Category: Component
+    Prefab: {fileID: 8672029218134625074, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 1200, y: 660}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8364421216566939945, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5022392755327197772, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5430807526789208885, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3042856096654096986, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6629187449689939696, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5797063846317008452, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-6
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4308539634566842693, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-7
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6659172710808168324, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-8
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8775614380582960225, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-9
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8003536587744868536, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-10
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2045853898113499258, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-11
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7382418453454734929, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-12
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3149887251209561066, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-13
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5117492814750071731, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-14
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5865284418901595032, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-15
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7267550813687630583, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-16
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6546754018406114165, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-17
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1766616862085338276, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-18
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4439193224747507874, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-19
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 81621785754901335, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-20
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7612943463767867133, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-21
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1965387505945097478, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-22
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8322316138908026725, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-23
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1319716717794883847, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-24
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3798979251965354823, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-25
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 24832750268667158, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-26
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5468669189201292068, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-27
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2680009929360847243, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-28
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1855676292655104743, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-29
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7113603561278037205, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-30
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6731814758883239987, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-31
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3214814827905072853, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-32
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 753629257972262037, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-33
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4509786650052727492, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-34
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8442384486712814838, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-35
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2924269121783369543, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-36
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1623658412462270707, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-37
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2263538499363909680, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-38
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 5500886369640626069, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-39
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2901909052367646497, guid: 2917b7c2ba74daf4ca511dfc6b67d83a, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.alertpage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 865250611264811657, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7353955115651242834, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3114674721200657808, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3642865554443206047, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4106872256806794621, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 9132532611316230485, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5794036573062840103, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 312534463443469260, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7116415941498051834, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8195054064483240455, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 9179042145256565353, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-10
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 3125933721770508002, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-11
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 9083130939795014906, guid: 22d0275be79d4114282532ea183e5217, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.confirmpage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 1029903674612959175, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5839289574646138695, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1131728269656251037, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5883389513603039842, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1513423121560501520, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2101676253776510, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2187693764380230808, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4708340033830065038, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2940458133718988374, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5584757485718540203, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1719026394054182390, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-10
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1365599712297708579, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-11
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 6513475557129856876, guid: 3c19fa03430d9034f87abac8428d8ca0, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.showcasepage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 6149426019949756978, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 167358296552331170, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7453511728749754811, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4793210191080049317, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8746230229349273381, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6670970302780439611, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1843349031959135159, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-6
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 440527588495202495, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-7
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6273303222520978872, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-8
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3537315209308902537, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-9
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8440936595547315014, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-10
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8369566442823991997, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-11
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6090421394421874945, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-12
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3647304948404193328, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-13
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8552053026979366911, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-14
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8623383538476277252, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-15
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1705849886090153379, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-16
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 9129898685121332277, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-17
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4528709777827323984, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-18
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6034691389154192902, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-19
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1505067588765294795, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-20
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 9204395113889883533, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-21
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1885977359821195772, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-22
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 305326725601034082, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-23
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8218305958213191377, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-24
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6117424746862845073, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-25
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6919186696509041344, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-26
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3150627764843812082, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-27
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5429077625544311004, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-28
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 640725548888508737, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-29
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6420576027453310973, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-30
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1692500762044136365, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-31
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6525911673422207812, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-32
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1510462411833763604, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-33
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4714410658560515813, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-34
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8383914526083236254, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-35
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1845507261278562101, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-36
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2696932728093889625, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-37
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8101533521405980642, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-38
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 9032718780703184232, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-39
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 8881661280391218101, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-40
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 7300639011746149675, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-41
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 8562959569296004901, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-42
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 5656241407905180642, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-43
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 7773555736563146245, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-44
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 602432775669128184, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-45
+      Role: control
+      ComponentType: TMPro.TMP_InputField
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 7524373924244767420, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-46
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 853010589798500161, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-47
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 7338318301422684572, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-48
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2577314091844150926, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-49
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2049694164768628872, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-50
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 191573668355472525, guid: fdb31c710b6be9e45b3abdb67629f10b, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.extensionexamplepage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 8496270305991608681, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2517347368238996828, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 9001781063913212630, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6419905490690472392, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 652065182505632580, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1674476437594429972, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4371590995161763899, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-6
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 121780984334449297, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-7
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6902909091136262146, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-8
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4314527420387495224, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-9
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8805213780945985525, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-10
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 6979751089868107992, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-11
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 5573968477702432751, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-12
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 3355326541959394755, guid: e4cf6babadae4f2469e9bee5410e5f9e, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+  - Id: ember.softglass.gmpage
+    Family: SoftGlass
+    Category: Page
+    Prefab: {fileID: 6460976845924530109, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+    AutoMatch: 0
+    Aliases: []
+    RequiredRoles:
+    - text
+    - surface
+    - control
+    AllowedOverrides:
+    - root.position
+    - root.size
+    - slot.text
+    - slot.tint
+    - slot.radius
+    ReferenceSize: {x: 0, y: 0}
+    Slots:
+    - Id: slot-0
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5806584330755734778, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-1
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3039627582947047179, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-2
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 4908092327177095991, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-3
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8483216723095681106, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-4
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8887701702628163883, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-5
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1887864005443346500, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-6
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7779675803834352878, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-7
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6951906266406763610, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-8
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 847361486514606939, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-9
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7810171375753280922, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-10
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 5314337688901674623, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-11
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6853116540760318630, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-12
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3201279196804930148, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-13
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6231558327008353359, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-14
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 1999539909464963572, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-15
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 8578675223309197741, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-16
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7020199406758775174, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-17
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 6112204679833407721, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-18
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 7697726157599652203, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-19
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 2922035288862576314, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-20
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 977916120682330812, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-21
+      Role: text
+      ComponentType: Ember.UIExtension.TMPEx
+      State: default
+      Target: {fileID: 3542245642474225993, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_text
+      - m_fontColor
+      - m_fontSize
+    - Id: slot-22
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 441935521148027738, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-23
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5249970308409689869, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-24
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 6462652884344595683, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-25
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3120742435959451416, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-26
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4861531753558154619, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-27
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2475287014682813209, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-28
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 338263311147202905, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-29
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3481659031231123208, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-30
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 8930060367631479098, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-31
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1529009340270390165, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-32
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 3011149969925265657, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-33
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 5958815979263674059, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-34
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 7882806689353118253, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-35
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 2059339363894961355, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-36
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4214246517621898891, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-37
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 1052879280107784410, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-38
+      Role: surface
+      ComponentType: Ember.UIExtension.EUIGlassImage
+      State: default
+      Target: {fileID: 4981034814846645992, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Color
+      - _radius
+    - Id: slot-39
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1329038780134817991, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-40
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1773424800749458777, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-41
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 2774511529488544493, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-42
+      Role: control
+      ComponentType: UnityEngine.UI.Slider
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 3413969816275462702, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-43
+      Role: control
+      ComponentType: Ember.UIExtension.EUIButtonEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 8961736863227784587, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable
+    - Id: slot-44
+      Role: control
+      ComponentType: Ember.UIExtension.EUIToggleEx
+      State: normal / pressed / selected / disabled
+      Target: {fileID: 1750996286835635519, guid: e420b347aa489e140a22e07af74e7f0c, type: 3}
+      Required: 1
+      Properties:
+      - m_Interactable

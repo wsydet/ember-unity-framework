@@ -42,7 +42,7 @@ namespace Game.State
             EUIViewEngine.Instance.TransitionHandler = new PlatformerUITransition();
 
             // 框架就绪后立即创建 GM 调试页（FreePage 常驻，不随 MainPage 切换关闭）
-            EUIManager.Instance.ShowTopMost(GamePages.GMPage);
+            EUIAppearanceBootstrap.ShowGM();
         }
     }
 }

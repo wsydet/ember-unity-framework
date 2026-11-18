@@ -42,7 +42,6 @@ namespace Game.State
         // [EmberManaged:end]
         {
             EUIManager.Instance.ClosePageByDef(GamePages.EUIUiGameHomePage);
-            EUIManager.Instance.ClearBackground();
         }
 
         // [EmberManaged:begin OnOpeningAnimationEnd]

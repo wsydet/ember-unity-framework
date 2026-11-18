@@ -1,1 +1,0 @@
-{"name":"Game.Entity.Tests","rootNamespace":"Game.Entity.Tests","references":["Game.Entity.Runtime"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"defineConstraints":["UNITY_INCLUDE_TESTS"]}

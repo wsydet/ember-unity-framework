@@ -21,6 +21,8 @@ namespace Game.State
     public class GameGameplayState : GameplayState,IEmberInPlaceState
     {
         private GameSceneSession _sceneSession;
+        private EUIPage _hudPage;
+        private int _hudGeneration;
         private IDisposable _settingsPause;
         private string _requestedScene;
         public override bool AllowReEnter=>_requestedScene!=null;
@@ -100,7 +102,16 @@ namespace Game.State
             {
                 _sceneSession.Start();
                 EUIManager.Instance.ShowMainPage(GamePages.EUIGamePlayPage);
-                EUIManager.Instance.ShowFreePage(GamePages.EUITopdownHudPage);
+                int generation = ++_hudGeneration;
+                EUIManager.Instance.ShowFreePage(GamePages.EUITopdownHudPage, onComplete: page =>
+                {
+                    if (generation != _hudGeneration || _sceneSession == null)
+                    {
+                        if (page != null) EUIManager.Instance.ClosePage(page);
+                        return;
+                    }
+                    _hudPage = page;
+                });
             }
             catch { _sceneSession.Dispose(); _sceneSession = null; throw; }
         }
@@ -116,7 +127,9 @@ namespace Game.State
                 _sceneSession = null;
                 EUIManager.Instance.CloseAllPopups();
                 EUIManager.Instance.ClosePageByDef(GamePages.EUIGamePlayPage);
-                EUIManager.Instance.ClosePageByDef(GamePages.EUITopdownHudPage);
+                _hudGeneration++;
+                if (_hudPage != null) EUIManager.Instance.ClosePage(_hudPage);
+                _hudPage = null;
                 base.OnGameplayExit();
             }
         }

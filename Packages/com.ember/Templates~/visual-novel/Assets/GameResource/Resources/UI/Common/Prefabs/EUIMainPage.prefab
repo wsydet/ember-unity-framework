@@ -2796,6 +2796,10 @@ MonoBehaviour:
   useUIUpdate: 0
   useMask: 1
   maskColor: {r: 0, g: 0, b: 0, a: 0.5}
+  maskEffect: 0
+  overrideMaskTint: 0
+  backdropSettingsOverride: {fileID: 0}
+  backdropSchema: 0
   clickMaskToClose: 1
   generateAutoCreateClickableMaskOverride: 0
   generateOnClickMaskOverride: 0

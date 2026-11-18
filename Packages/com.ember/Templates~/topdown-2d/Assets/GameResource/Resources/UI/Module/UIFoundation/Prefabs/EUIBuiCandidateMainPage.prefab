@@ -210,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8273230433962680069, guid: 9b27fbe343055e94fb5f3ae24a87ee96, type: 3}
       propertyPath: bindings.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9003735818565572106, guid: 9b27fbe343055e94fb5f3ae24a87ee96, type: 3}
       propertyPath: m_fontColor.b
