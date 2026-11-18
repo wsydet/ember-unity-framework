@@ -1,0 +1,98 @@
+[
+  {
+    "id": "A1-original-character-repro-fixed",
+    "pass": true,
+    "detail": {
+      "initiallyFocused": true,
+      "delivered": true,
+      "isFocused": false,
+      "originalText": "Independent A2",
+      "actual": "Independent A2"
+    }
+  },
+  {
+    "id": "modal-live-source-and-visible-lower",
+    "pass": true,
+    "detail": {
+      "version": 10,
+      "after": 12,
+      "alpha": 1.0
+    }
+  },
+  {
+    "id": "A1-original-mask-off-repro-fixed",
+    "pass": true,
+    "detail": {
+      "oldDisposed": true,
+      "newReady": true,
+      "newDisposed": false,
+      "surfaces": 4
+    }
+  },
+  {
+    "id": "mask-off-returned-input-selection",
+    "pass": true,
+    "detail": "EUISoftGlassInputItem"
+  },
+  {
+    "id": "mask-off-business-character-path-works",
+    "pass": true,
+    "detail": {
+      "before": "Independent A2",
+      "actual": "u"
+    }
+  },
+  {
+    "id": "double-hide-top-focuses-lower",
+    "pass": false,
+    "detail": null
+  },
+  {
+    "id": "double-reshow-top-reclaims-focus",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "hide-lower-preserves-top-selection",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "reshow-lower-does-not-steal-top-selection",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "double-hide-chain-top-close-restores-p1",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "double-hide-chain-final-restores-slider",
+    "pass": false,
+    "detail": null
+  },
+  {
+    "id": "destroy-hidden-lower-return-chain",
+    "pass": false,
+    "detail": null
+  },
+  {
+    "id": "external-deactivate-releases-scope-and-lease",
+    "pass": false,
+    "detail": null
+  },
+  {
+    "id": "external-reactivate-reacquires-scope-and-lease",
+    "pass": true,
+    "detail": {
+      "ready": true,
+      "selected": "Accept"
+    }
+  },
+  {
+    "id": "reactivation-final-restores-slider",
+    "pass": false,
+    "detail": null
+  }
+]

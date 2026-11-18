@@ -9,3 +9,7 @@
 5. 确认标题格式、分支切换、正式模板显示和手动刷新，复核直接相关普通/试玩功能及 Console；保留首次缓存热点已经消除的结论和门禁。不要擅自扩大到全量、长期测试或 Runtime/驻留优化。
 
 框架自身的 16 秒 EditMode CPU 采样只能证明其环境下标题周期主线程耗时，不能作为 Windward 四条件 FPS、长期稳定性或 GPU 验收。普通入口中心重绘 46.74ms/GC 21.76ms 继续单独承接。整体问题保持开放。
+
+## 正式版本
+
+v0.25.5 已发布，远端 main 与 annotated tag peeled commit 均为 `f3ea76bd2e45f57d1412f7fcdf540751d55f0abf`，见[发布证明](evidence/release/remote-proof.json)。用户本轮明确要求 Windward 暂不升级，因此当前只交付正式版本和接续说明，未执行上述消费步骤。

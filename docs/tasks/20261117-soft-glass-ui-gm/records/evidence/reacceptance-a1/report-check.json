@@ -1,0 +1,18 @@
+{
+  "revision": "A2",
+  "date": "2026-11-17T17:49:41.0523140+08:00",
+  "brokenLinks": [],
+  "AC03": "passed-editor",
+  "AC04": "failed",
+  "AC09": "pending-device",
+  "AC11": "pending-template",
+  "SG_IA_01": "passed",
+  "SG_IA_02": "original-repro-passed-hidden-chain-failed",
+  "editMode": 19,
+  "runtimeRegression": 40,
+  "productFiles": 890,
+  "productDrift": 0,
+  "playing": false,
+  "compiling": false,
+  "ready": true
+}

@@ -1,0 +1,3850 @@
+[
+  {
+    "path": "Packages/com.ember/UI/Editor.meta",
+    "sha256": "B7A5A3BBCE365A1BA8F53AFBAAD995E64DFE3B12426E764010D93FE000207F27"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime.meta",
+    "sha256": "6AA599F4CF7F5148A3CF62ED199EAAA05DC75293FDD3CC4B7BDA0FA9476E28B7"
+  },
+  {
+    "path": "Packages/com.ember/UI/Editor/Ember.UI.Editor.asmdef",
+    "sha256": "5AA1F43B523BED4511806ED9D867A0C6EF1DC96CB8497E599483DE9E6FE8EE86"
+  },
+  {
+    "path": "Packages/com.ember/UI/Editor/Ember.UI.Editor.asmdef.meta",
+    "sha256": "9BBB04AF9B359BC5B83C9C98BEB33DA69C225EDAC0DE72917F8248CF80FFC435"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components.meta",
+    "sha256": "4A25680E53E41B32A227FC44C3C5B3FCC5238B61894DD201962391D3B109062A"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Ember.UI.Runtime.asmdef",
+    "sha256": "AE6B8205C420062A206B516ACF199E5B2549A66DB965E907D34C6BE0451ABBD5"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Ember.UI.Runtime.asmdef.meta",
+    "sha256": "85D2A134D6CFC6884371B4E0ECF40BA7CA6159F19C4FC268FC3505FA9D872FDD"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EmberPageAnimatorBridge.cs",
+    "sha256": "4BFDA9D3E4BFEBA8C15949D4844F410385944F2338BC2D7F5F5E81B6D8937961"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EmberPageAnimatorBridge.cs.meta",
+    "sha256": "588493A65A61AB594B00D68AF31F463DEBDB4262A0A8F7B287CB9B6537F4D319"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIBgMaskPool.cs",
+    "sha256": "2D157E713F886330FC37253D4D43BE598C073436AFA18BDE6309B86BE74F13E5"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIBgMaskPool.cs.meta",
+    "sha256": "A6D6D5941D0814095B905452F3B7FA2D90A3A4E215718F668614D106F791907F"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUICurtainSession.cs",
+    "sha256": "73400C4C5399C67FB7228F609D79254B312F254B50A211CE692173BD4A0BE094"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUICurtainSession.cs.meta",
+    "sha256": "F2E7E1C20DA559971DDF6FE21201F50C19B336AC62FDF9370EDC5B42BCF0E9A0"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIEnums.cs",
+    "sha256": "2884380D05B8E30EADF579551CC2E0DEAA31BC7245CC7E29C2CF32A40D384305"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIEnums.cs.meta",
+    "sha256": "C22BECA87A884B98AB0556CA9D935C57AAC4816663DA0967DAE5E196E25016A6"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIEvents.cs",
+    "sha256": "5B1300D0F782C5311F7825FE1765CBAC6B863A6D6D0C200ADFB2C87B4E87F142"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIEvents.cs.meta",
+    "sha256": "13E7CF7993B926B5A515D4E480A74A395ACB7F30094FAF7F057645E0127672B6"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIInstanceOwnership.cs",
+    "sha256": "486C3219CF2911966235D594A4AF59EB4843B2D6ECD31074A3129F96A52F1B7A"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIInstanceOwnership.cs.meta",
+    "sha256": "E7A4719CD758E1AC0AB4BFDC1CE9AF47D695AFC557712DE166D03578C039861D"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIItem.cs",
+    "sha256": "19D5BA8BBAE5AFD62A514A53EFC11314B0D6BD08F5915151443C97AE7DE22E59"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIItem.cs.meta",
+    "sha256": "C37B14CD2C1E2E13F9DCA36C926ACA64CA232FD5FFECCEE92EF03E711F75235C"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIItemUpdateDriver.cs",
+    "sha256": "1E6DD19463646FDECB66A7E019338A7FA13F1A866738F57DECE01856FE5B58CF"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIItemUpdateDriver.cs.meta",
+    "sha256": "DF9E6185AE1FA1A2BC0C9E2C82D52FC43689CBEAC995A8F6A8734E2FF607CE64"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUILogic.cs",
+    "sha256": "7FD35BF744BD3E7E4F2ABCCFB875400C637D783CE4C5E33CFA17343250E87282"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUILogic.cs.meta",
+    "sha256": "42909C1EF11BFDC935265C49077D8BE13CB7CE6DDA0AE3392198B02670D95604"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.cs",
+    "sha256": "F7E44BF2531D31BB72708619414E7CA126AB4E02D5ACB5780985C6F51105C86A"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.cs.meta",
+    "sha256": "C33E6B79EA0B440455BEB1686C02BD28A0B4466160C27A48E1FDC2D6B3F0083F"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.Curtain.cs",
+    "sha256": "FB2C58A02A5310BE5550DCC679353A169ACF8CC37E64AD372A22DD53A4B6F1F0"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.Curtain.cs.meta",
+    "sha256": "7A8169D7E5520FEB6BDAF2FD7D542B1D18128D0C0C00BCA64F9807EF637BA980"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.SceneLoading.cs",
+    "sha256": "45E0DA5ED09AD13057688DCB0EE5B911EFF51A5FEE63BF81AB12E78D5DB6FCA2"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIManager.SceneLoading.cs.meta",
+    "sha256": "A154AB9D636024F79573EBFF46697A6D8CCF745A95D77FD2D507FF0930484669"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIObserver.cs",
+    "sha256": "04735D816A4129BD08FB147521FD91F33C37BCDF1022540F82B506E10E523A7D"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIObserver.cs.meta",
+    "sha256": "A19FD62E39D21BB6061E4A7A5D575E5074A1C095229C982D2F05ABF0DBD63DDE"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPage.cs",
+    "sha256": "A1372A451F2856A21A8EEE1A00DBD2C85D5E8FBA25B60D2AC3C7AF09DA6EA146"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPage.cs.meta",
+    "sha256": "051492293CF74E377970E112B4C7D76167CFEF721C839F143EAB91B67E21D33E"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPageContext.cs",
+    "sha256": "B19E4DA1916668851E48B3CD7223A223D02FC1FEEC4043CB9BA54FFF8B298E54"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPageContext.cs.meta",
+    "sha256": "3B1E85C5CCBC19D2079AC1F16DB260070B248FBA82EAA6FBFA9F29D99FECBED9"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPageDef.cs",
+    "sha256": "4BC90C1269F76AE5A6C2127422CF9489C3BB178FB6930516D9CF460E063C7C71"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIPageDef.cs.meta",
+    "sha256": "5517410F54CB9A8E2DA1908B0860A67F71824778C87561F867C84FEC08BF0B9F"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIQuitCurtainCover.cs",
+    "sha256": "20FBDE73F091388BE239C10FC0D8DB152A7C85D7FA5BCA73DAE08750558F3652"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIQuitCurtainCover.cs.meta",
+    "sha256": "29D89599A0334B4CE455949EEB76D404FCEDE3B15097B9FBEC36A1745E92B5AB"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUITransitionPlayback.cs",
+    "sha256": "316BD2CDA9186FD7BA49918393902A715F6A5ED1B0A5B6F9E36686C1A6FABD39"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUITransitionPlayback.cs.meta",
+    "sha256": "65059D1E6968B90FCE00CAA5C30ABE7BE8DBDBCFCD2B32F23CC5C4D51D66D49C"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIViewEngine.cs",
+    "sha256": "177E8AFB7BD2A9EC8FAB7655B444C1884FF279642CAF5E1A44AAB437047E5376"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/EUIViewEngine.cs.meta",
+    "sha256": "322FE1A1A124AA7A1E3E9433BB3976073DCD8BA6976707C83AA168E1D373C8A7"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEmberSafeAreaProvider.cs",
+    "sha256": "0E5F89BB3B675BAC76DE6122D0178882EB066EA5E4C36B2C50AD0D156918896B"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEmberSafeAreaProvider.cs.meta",
+    "sha256": "019EB2F0287EB1E339BDAFFE61E7029F2B1275B035ABA1B0658BA4C55259DA30"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIPersistentUI.cs",
+    "sha256": "3FBB0263BFE5F7D4BAAE96F3D300212602D3B90A03886C85B74D5B1FE25893F4"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIPersistentUI.cs.meta",
+    "sha256": "E2C863404895F179AF7EEEAC76AD8B99D99755E1AE0A2C302334669372B840AF"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIResourceProvider.cs",
+    "sha256": "EBEA722162E4B2E183F725239CCD8BE031520F50065A4610FBE7A3317EFD63AE"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIResourceProvider.cs.meta",
+    "sha256": "5B9FF81627F74CEE9995768F2134111EF3E0C10A0B8B244981C76C0C7B43602E"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUITransitionEffect.cs",
+    "sha256": "77E5381C5CE03FBBADA264B0A77630BAC040F9BF0E4F1018E31DB5F951752F75"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUITransitionEffect.cs.meta",
+    "sha256": "715C863B4C182302306E73C1F4020EA6CBC89436E34BCF3EADDF4386AA64C44B"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUITransitionHandler.cs",
+    "sha256": "00D59ACA4230B7ABA4B78CBA07AC17FF8018BDD05E17AE212A48E840A520A6E2"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUITransitionHandler.cs.meta",
+    "sha256": "72A3813E56241C0C8A42852654B627B8259DDA509836E5389AEAA3BCB26568E9"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIView.cs",
+    "sha256": "C42633A495DB1DEDAA14233C9C91E1E74F338CC8431FBB47462CEA2630CE9904"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/IEUIView.cs.meta",
+    "sha256": "DFCB0FD5A966B60F8DD482CBCEDB144885F6C820207D144C8AD3B5255E99F7FD"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Pages.meta",
+    "sha256": "FED0419AC23F688A6E2F0FBABE8AABC3ECFCEA417DEC8D08BD003C3788438173"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Prefabs.meta",
+    "sha256": "B8EC7230B924F3B05A3ED239356A2F95C9C79C96DABB880FB4EAE29615B23554"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/DraggableUI.cs",
+    "sha256": "B908286579ADE182BD767ADA5CA2900718EEEE2B8B3265CCE2CED942AF25E82C"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/DraggableUI.cs.meta",
+    "sha256": "AA4A0D07047841BB3D224DCF5944418D94DC74AC91D3349FC51035D2C5F85546"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/EUIBlockEnums.cs",
+    "sha256": "69A5546C01A5A9C419F3195A4C3E95484B55FBF38CFB30ABE7DB736726EACAB0"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/EUIBlockEnums.cs.meta",
+    "sha256": "4F8D804E1028467F836882DDC3405C496D80081BD6F3178C90ECD018C64F3969"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/EUIBlockOrderCalculator.cs",
+    "sha256": "8941858D23DAD1EE4F17E4F65FEDB3014C75F1AB6399B0724EF795B0DC89556F"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/EUIBlockOrderCalculator.cs.meta",
+    "sha256": "801ECE395B3B1ACCBEC498ED642C6DFA5F8A7819BDAE7042A4BC1518364C8E0C"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/FPSDisplay.cs",
+    "sha256": "3DFAF539813BE0F17749F8FEDD045CCE49926ECB51E9E0482067B571CCAFE3CA"
+  },
+  {
+    "path": "Packages/com.ember/UI/Runtime/Components/FPSDisplay.cs.meta",
+    "sha256": "9391CB8D79A1FD992148F62BBA16B21619342285B79762662A5A4625D12461B6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor.meta",
+    "sha256": "BBA9408606767C76D590812C27A93946C160A170E781B2B31160333FD934EAD0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime.meta",
+    "sha256": "DB0D288F82D7802FBD909D50DBF94E83CBF7EF9551CED0BAD1BDBD9E5382945D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests.meta",
+    "sha256": "E5C345621F61CE025E56A3E94C8F668E4F2B0C95631C8F9CAF628974A53CD7A3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Bake.meta",
+    "sha256": "D711E62EF9CB65E488F77B53B070ECDDE023182DB7034F7F97560A1D5E89913D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Button.meta",
+    "sha256": "6775B9CD7268B9F653AFCDD8C0DFA19229CB1DF9DB3A5A17DC889801D62A13FE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Ember.UIExtension.Editor.asmdef",
+    "sha256": "B6F197B7455ADECD386B8D13AA08EF79CB878C988C98B099B0AE94D05A31A766"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Ember.UIExtension.Editor.asmdef.meta",
+    "sha256": "26515FE032949DEFDAA7C11C3D3FAA94BD2C6562A963BEC2E98E91308727CCA3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingCodeGenUtility.cs",
+    "sha256": "3BB9FB15B84B1B4E9F74D2F1F5E40447F34B66968574A7A5F72DF81D146052FC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingCodeGenUtility.cs.meta",
+    "sha256": "65779F9C60A84C46232146E4DB3CA180129FD1F646E0114EF55FC9FE058A28F3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingInheritanceUtility.cs",
+    "sha256": "16B0FA19A2432A23D64EE4656ADD366D1252E30E8EA94A2369E5E7FC79372DC5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingInheritanceUtility.cs.meta",
+    "sha256": "CD4D81A7A6311F503DEBA533FFC83B4B39D78704917F46C1393885457A2079A4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingListDrawer.cs",
+    "sha256": "27852C8D95FE8693F510165233519E972FEC79ADDEB99185286FAF400A96E3FA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingListDrawer.cs.meta",
+    "sha256": "517EBB3BF042FDEB257BA5D154E35E23AD3C75DA649EB61F61F44ED91187F5D4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingScanUtility.cs",
+    "sha256": "1EAB69230B38FB304926BEA87110285007219B0A69A69EB8B21A5A0A447E6E25"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingScanUtility.cs.meta",
+    "sha256": "C431CFB3F663E1D134E7A9D35DF18EDBB76A8471CAD918A05971DB1840A6528C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingSelfWidgetUtility.cs",
+    "sha256": "B6762A2556BDF4CBB559D6CDB440073AB67186DEF0AEE090038E0E2F3AB2E462"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingSelfWidgetUtility.cs.meta",
+    "sha256": "1FC67C2BC35DE9DDA8C222A13BE06C0F6559DBC40302044AEEEDF34FEBF22F9E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingTemplateUtility.cs",
+    "sha256": "07918CE721CE0F2AD549348965E4E0FE1BF70DDCB65422F277E8E396A9A3C990"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUIBindingTemplateUtility.cs.meta",
+    "sha256": "619F1BDF6A53B32A3D42E46317A1FD7F30CA7A68EEA7A641D520C96D3A624482"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUITransitionBlockPreviewDriver.cs",
+    "sha256": "28FC7224412F76E92BB58B3EA18037FDAA8E46C0D6F540B39245B46E9194BA13"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/EUITransitionBlockPreviewDriver.cs.meta",
+    "sha256": "A274D92CA8AFF972F28D5062BDC0446D8A7CDE37F25F4BC162091C42F65861BF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Image.meta",
+    "sha256": "8905F42BF39DD5E0382647DAE1E71018F1C270286B9C6084DFB92ED0EDF5F4B7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization.meta",
+    "sha256": "ED036C3D0FE860A32819C18C8A6518D1B1AD64900CD2129802A12608645A9A05"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages.meta",
+    "sha256": "DEA7E0A7A90354579C96FF2F767612D9A9077876550C0DE509392FAE1519F98A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews.meta",
+    "sha256": "B05A4B90CD7E005EB2C3745BE659E2B4EF2BD5CC51B42BD158CEE2D94208C7E0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/ScrollRect.meta",
+    "sha256": "25EEBACD7F1C71BA09EB9592E5CD4D1D7366E04D7CE0239F668DEB6BED9CB8F5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings.meta",
+    "sha256": "61B2231C7326D920428BF75C163827D8939A0C4F5E7C8EFBBFA8C7A3F9DB98B2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt.meta",
+    "sha256": "76829F138E74FA5855B993AF5E559C8AD30E64D195529BF1964CD1364E195AFA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Validation.meta",
+    "sha256": "D9ADBB97031784AE89716364E23409F78F4C2D67BE6129F6A769FF942EBA132A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Bake/UIBakeUtils.cs",
+    "sha256": "88BE1D299D21DC6D8A2261C5E15EEE8720B163BDFFC0D70BD50E1F784D32FD87"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Bake/UIBakeUtils.cs.meta",
+    "sha256": "4ED412C3371E4884E7680D3B22D5BEA23D020544082C05C3ABE949C4D81528D7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Button/BurnerButtonEditor.cs",
+    "sha256": "5750950A4DA9886C61FE066E6C301E5CC32EF2D9E08228DE18C47E20E4B69188"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Button/BurnerButtonEditor.cs.meta",
+    "sha256": "9AE0898A0C0CA27A6B8317D04214600F6693FC4571464534C7E9A74CFF8B32CC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Image/GraphicAnimationEditor.cs",
+    "sha256": "3822B687F55FE872CE48CCD03DB0508DDAD0670212DB9DD8B2122794074D693E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Image/GraphicAnimationEditor.cs.meta",
+    "sha256": "BFC4CEE7F982D8F66DC94CDCA54773FB571E82657880091C9C8AEC1C8CE537A9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationBuildProcessor.cs",
+    "sha256": "9DC903F938B49B16F31CF5469B4EFD6A3E5D05365116AD71900CB7E37278167F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationBuildProcessor.cs.meta",
+    "sha256": "9912585DA465699F98B62565D89D8179F0BFE90743CBB2549D45FAB018F1DBB3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationEditorBootstrap.cs",
+    "sha256": "4F5BCC95C2ADB4968FBFBC45E769B8009154955A56D231C97328DA14B39DA968"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationEditorBootstrap.cs.meta",
+    "sha256": "F0418E4B13D3DD37B3CC13773FA9FB4FF25BC9BC0B9D5EC4E2AADEEB14BB04BF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationEditorService.cs",
+    "sha256": "7B33131E4460FCDCE5AB3238B281DE09022644F7D29B39AD549D31D2D250F279"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationEditorService.cs.meta",
+    "sha256": "9ACE7D38CA7A69C5C05A46B507A1535647C840479A2453715C39864EC119B404"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationSource.cs",
+    "sha256": "EAD0CF6AE2212E0F9173E03275CB037EF8EE159E62ACA260C8F1A837702B4750"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationSource.cs.meta",
+    "sha256": "6F62EDC4DC71D3D131BFB6E09C5F0B470814E8772B59BBAE238E0D5A28029014"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationWindow.cs",
+    "sha256": "3B078B3D8EC03CFE12DF69C569B91D983D8DF83A0C70085DC481BDB469DCEB30"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberLocalizationWindow.cs.meta",
+    "sha256": "BC5C0BE0EB400C933D98FA7C1A7D9EF4D756949611011A01BD34CD8A82E2672B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberTranslationRequest.cs",
+    "sha256": "1C61FF5C8901B27032B0AD3DF8EB92077B3E720F772B3ECBE6F2AAEBACE4D37F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Localization/EmberTranslationRequest.cs.meta",
+    "sha256": "6056E061DC18FD6965E0FE68AD1E847D1491B5DE7E0911E027629E4A09D8CCE8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiModels.cs",
+    "sha256": "218A2800A6B2F9F62F9919EC03B166B5B7D167EE00DEF04E794FCE92F5CE8CE1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiModels.cs.meta",
+    "sha256": "820FA32ED4A7BE685D4AF6DFE92E008D4BAF0B8AE60592261FB6EDB47670EC4C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiPanel.cs",
+    "sha256": "D79B1D329213E94E74BBBF101ABCBAFE0EEC77D2D0B6BBAF0C22F4AEEB259C10"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiPanel.cs.meta",
+    "sha256": "EFB7E7B3CCBE71A34C976460C9E60033823D64BFB671992389190E3A8013606E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.cs",
+    "sha256": "E46E05DBD5B1E8A293992AB9B8084D39996EED534AF548783CE383C6EF11FAAB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.cs.meta",
+    "sha256": "E592E6E15D94A673CC0A1C6F8C494B6DD1D6A44BFC1D8BE5EB8DB220497668BE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.Edit.cs",
+    "sha256": "067BC068DCA3E108E0C06F1012C571883E77264924B0B1034658F6816D6FD89F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.Edit.cs.meta",
+    "sha256": "B9D37F13BBCCA3C05E483BADA5F09BCB59E0982D1ADBB50A46B54C1358286362"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.Read.cs",
+    "sha256": "B54BE1C8008C97A4288DAE57EC32CF1DBCDF4CBEEA94A96AB58E42C2475D0CF5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberBuiService.Read.cs.meta",
+    "sha256": "3D205EC982459BCA4B4093E36BBB0DD56F61D23FF0E41B021EF62140CC08186B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberUIProjectValidator.cs",
+    "sha256": "386ACD803B21DCBD60254D5CD53210C6E42A1F136DD36C8ED36CFE6B207207F5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EmberUIProjectValidator.cs.meta",
+    "sha256": "409C3CFB06D583CF3E9B7797D7D3CFDABCC06E3AD63656CF69325215084C06EE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs",
+    "sha256": "BE7FEA17A746CBC96489109C5BE7D520FDFB25AF8C6A2ACFEB55C4B78D400BA2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs.meta",
+    "sha256": "FBFEA94652C791CE6B314C33DF4EC1A0C591286AEC07127AFDD3F74A9267E398"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIContractService.cs",
+    "sha256": "BCF2277A2E12E4C519EFAE5AAC3BBCE87353DF28AC3C6FD2997FD77225038F41"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIContractService.cs.meta",
+    "sha256": "12826B1D9A58B31049FE91CC3E49C8C7B6F6483A89A7A4243755F0B9A5E57E88"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUICreationCompilationContinuation.cs",
+    "sha256": "14DAF774C27F9E8CE1A81618B507A33F4B6E63F097AA13E87C372548094BC4B8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUICreationCompilationContinuation.cs.meta",
+    "sha256": "9C774887A30E4A2EF112660C3261EE0B777B640E62336FDF62C9DE128DC6B86C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUICreationService.cs",
+    "sha256": "695BD111DD1A66573D3B5C289B7645999A73462523CFFCF18A28FBFD0872DDC5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUICreationService.cs.meta",
+    "sha256": "98FF5EE7CA4BC241CE3FE4D21964C03372C64B13BE538DD42D3C9BB000C393D2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIGameBindingEditor.cs",
+    "sha256": "6DBA207FA728763E60E78885476C0B8A9F1F37132CCCF76CE30901AE37561EC4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIGameBindingEditor.cs.meta",
+    "sha256": "C7287B53F9AF7EDE4127585BAF6171E9BFC85F6A6E0ED531D4848261BAE01A45"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIGameBindingEditorUtility.cs",
+    "sha256": "2DD79297132493C5C58E8DD71D7525F069CBC302D6B03F59372ACE322778CB37"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIGameBindingEditorUtility.cs.meta",
+    "sha256": "A1DCFD204EA63BD37A7C6DE412A7EFFF02359700449D0F24F894E363C7698DA2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibrary.cs",
+    "sha256": "96DC054B02FE0F40F029C272203CF2D6EDB6D920DECAC31F98A449E03FE32BD3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibrary.cs.meta",
+    "sha256": "E91A516AF603895403168C5C70A000079B1D8342A5E7917397EE760B2053704A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibraryPanel.cs",
+    "sha256": "9D18167E6D7359A7A7672A60F4C10CE57D46E44B6C4600E32998B95DC2FED679"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibraryPanel.cs.meta",
+    "sha256": "0FA0AE8C436E0C528685F8F4F90484E9777B684D05E60F295A97208D447D1000"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibraryService.cs",
+    "sha256": "AF2A7C501EA239F0CEF881FEF8EE03B43249C9FD5A822E1A78D79B113BAEF8CD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUILibraryService.cs.meta",
+    "sha256": "218F59C3A9689836A1563AD5664A281620D25FF156070ED30729201C643C9A8F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIModuleTemplatePanel.cs",
+    "sha256": "B66044983E02D2AE87E32B939B47F610B93B8A34158E341F8C6F07F364C61F15"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIModuleTemplatePanel.cs.meta",
+    "sha256": "D107057DE1165CE416D3467EFC72057FBA7D5C7D84C5604221D9C9993FE78ED9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIModuleTemplateService.cs",
+    "sha256": "A1149D8A38F00ED6C8609C220CFD9E91048FFEF273F45A4A68140AF5DCE319EE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIModuleTemplateService.cs.meta",
+    "sha256": "83B42F1DD7F6FD92AA3AED45C55378C69119F28C3788A76AD6B38E8B2EA6CCD5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabCatalogService.cs",
+    "sha256": "49DB4340D3C7DC4A4C8299807643B8D4E0AA055880BAFF4FC3672F30D83CED93"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabCatalogService.cs.meta",
+    "sha256": "8248E6CDB132A9508F164E4FB8B73F08A06F8B8F5551289A046F5DFFCC951055"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabMaintenanceService.cs",
+    "sha256": "961307CA1D32B9C48A26F457B3E0FC2FBC288DBABF7E67F727F29E65455DB064"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabMaintenanceService.cs.meta",
+    "sha256": "A00D82A99729F28E4136E180E0D18460BC0C967D5E592CC4805B220EB26484FA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabManagerWindow.cs",
+    "sha256": "3DE2FF6A593D42B02E76138138D82432D74822CD583FFA5F2864A26F052E9C9F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabManagerWindow.cs.meta",
+    "sha256": "75B434A255ABB2D114866F4A8F664DF553962AE75167BA1AF298AEE99BA04F02"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/TMP_BaseEditorPanel.cs",
+    "sha256": "C7E54E68C8B0BEAEECBC2B5F4371659FB10A3894A19125B3DC8EC344BDAA9B77"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/TMP_BaseEditorPanel.cs.meta",
+    "sha256": "074D9FE4FBA0C4E22A62E5B9B2494E5829483DB650830A54720702187F7F8447"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/TMPMaterialPreview.cs",
+    "sha256": "52F8F1DDCBFB42A186A2AB461F0047EEA74BA723519D0F290CAFBFCB1F98781A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/TMPMaterialPreview.cs.meta",
+    "sha256": "B64A3C2A0E793C09A0E3C1E107C9CFB7C30D18A276FFE7259BFFD627E9E9BEDF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIInspectorPreview.cs",
+    "sha256": "E4DF284F2A673503E44BD22AB7C97C017984CFDF57FE344FF4312711494D31BB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIInspectorPreview.cs.meta",
+    "sha256": "C7F00D839A1EAA903D48F7424EDBF548550BC4A2C90C15AD3690ECFBEB3E1BF1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewCommon.cs",
+    "sha256": "F73858A462E646F684F933DECB418F73C7EC525B609E7883BC7B1CE10F03650F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewCommon.cs.meta",
+    "sha256": "3FF1B6638F78EAA9A2135B653DFF10F1726BEA757CECCDDAF93F048A26B0918B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewConfig.asset",
+    "sha256": "5723C32B04FC87495940E464B87838956DB873EB941C5AA6942FFE480BD600FA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewConfig.asset.meta",
+    "sha256": "A04DDE96186005C7558A9F9CA98842D9C03F88EA66E1390C0864EBBFD88D41AF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewConfig.cs",
+    "sha256": "74720B3230351BC4FBE93FAEAB3681CDBC1D5351083A2C30BB362778CB42E083"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewConfig.cs.meta",
+    "sha256": "5501B4A2BBC56803BE05BAC79572DCA7ED376291328F04888BA80C2D32C83344"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewCS.compute",
+    "sha256": "7F1FDBE2D03BBDDDB9813D1451F4A41812D5989B8BBA79270BD7A0CB29A7F1F3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIPreviewCS.compute.meta",
+    "sha256": "F374604A2E3D19CC617AF64BFA4318577839DCF09EBB974F05263B714F2D054B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIProjectWindowPreview.cs",
+    "sha256": "30CBE19AF9764E042DECC8307B60901353F3FF83568FBDCCBD7E18CF82AB486E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Previews/UIProjectWindowPreview.cs.meta",
+    "sha256": "8E3FC09C6F386AE0AEE2A76EAB97B9C6730F65956C51303E9DB027EF591C3593"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/ScrollRect/BurnerScrollViewEditor.cs",
+    "sha256": "DB319D81D75F9E44C665F8F8CC936DD8C9392061A547219FAB2E593554718F99"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/ScrollRect/BurnerScrollViewEditor.cs.meta",
+    "sha256": "B5163B97B46DCB7F85F4FE57479F6DBF9489394449495E30FA93F792B24CC4CE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpBindingTemplate.tpl",
+    "sha256": "5EA0DD19E28B23EF1F64D55C446577394C6C4517252B51088FC1F69E6289E2A4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpBindingTemplate.tpl.meta",
+    "sha256": "A263A669805E0992546CB883D4054C9E415F1752483F218CA0C3732866BBF97D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeForNoGenTemplate.tpl",
+    "sha256": "B037E8A41C72205811AF75B6C3C126FC832DA9707DAE2D2A80E6A64210B68AE9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeForNoGenTemplate.tpl.meta",
+    "sha256": "EB8D8C2020031DE5E016FB8A9A1647007DDB5A15CB960C7D00EC674EEEE37819"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeTemplate.Framework.tpl",
+    "sha256": "C8E5553A713473B960A02264317467AE41AFE9627868807DA424A24DDE8007D4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeTemplate.Framework.tpl.meta",
+    "sha256": "5D850A3166E41799C7E2E54A647439A4CC194212B9A854E8E6444AD213043894"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeTemplate.tpl",
+    "sha256": "58E2199161BF319DBD7257DBF6B0FCCC24E1D8D67E244A9772646A5A60DADDFD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpCodeTemplate.tpl.meta",
+    "sha256": "5B78ADFC120485979ED716B8CD21C6CEECEE8ED2BE9D94356A68FA3E93192797"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpLogicImplementationData.cs",
+    "sha256": "ACA5DF1D44AE2E8CB9BAE1EF3E670283ABDE74884213B211C5F9865D1EE96F8F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpLogicImplementationData.cs.meta",
+    "sha256": "D2DCCA0B0EE7C685BC1B87DF1FC2D8291A3B7FFF72B4999526872C7A440F6FD0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpPageDefTemplate.tpl",
+    "sha256": "013206319D68E2A782F75A1AA9CF0DB6D9A611B7259819B273AF136572B86D63"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/CSharpPageDefTemplate.tpl.meta",
+    "sha256": "56D2C1A61A0E3805DCDD371E12EC926FA5E02A505B4241E718290AAA33857BA7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/EUIBindingSettingData.cs",
+    "sha256": "B1B8937754E8F0C5E02EFBB076C85AA8A6FBAE9EF16993AC605CE4BB5357F5EC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/EUIBindingSettingData.cs.meta",
+    "sha256": "03ECFC518CF1FC257E93F6E56FF91E00F2A4455F1B0957740D4B804C6E3696C7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/LogicImplementationData.cs",
+    "sha256": "0BFCAFB47EE0C4ED73513C8E5E7686A60546534D621B8AF335BF7E4275E8F874"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Settings/LogicImplementationData.cs.meta",
+    "sha256": "8402F3C66BE813C467403D2F4A7759034ACBD9C483A90C101C169B1C1618A164"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/AdvancedTextEditor.cs",
+    "sha256": "B332EDE9438385D1FD00CC842972658F6DEAB38E407B7A953B996D6790FD6307"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/AdvancedTextEditor.cs.meta",
+    "sha256": "1A4C19E237A8D3A4EC3C92BF3F0F0C4782AB0BA526C7C7D984C60AC5A319BEB6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ButtonExEditor.cs",
+    "sha256": "9BAB7446436FD484D7035F828ABBA7960FD3EDDA4EBA31263E45E567AE3102B5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ButtonExEditor.cs.meta",
+    "sha256": "21CCA136E9EA75CD584EA3453482BF7A187930D13B307328453918BA4B3F7714"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ContentSizeFitterExEditor.cs",
+    "sha256": "39EB27826A41D0F02E23E2CA0AF8E507108088697C70F7C23D6469CA59AB1A95"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ContentSizeFitterExEditor.cs.meta",
+    "sha256": "7B255A0D4D9A9E7657203F884BFD5356F1F0B9339B3318C2BC5C83429F2BF1C5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/DragEventTriggerListenerEditor.cs",
+    "sha256": "54AB71CF3C3685F54343EF691EA017605DFAD7EE673CDD3B9E6B55946C51A7B3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/DragEventTriggerListenerEditor.cs.meta",
+    "sha256": "B850ACCBCE1E9B0963887B601AFA22277C2B395B2F96F5E71E63B8D1BC15B21B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberFontSkinMigration.cs",
+    "sha256": "64D3F8CABD273B8D940AE5416F24E75D89AE768D6EEE29F2B6E0E2CF22D556FD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberFontSkinMigration.cs.meta",
+    "sha256": "B24FF628A6A7C4E058F11E589C7F7C20A388E0AB1C082C412F92496107FA1129"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberFontSkinWindow.cs",
+    "sha256": "340166F6B5C3FD14F95A06087A6629A3B8C1278EC4602B5CCE94D7334222039E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberFontSkinWindow.cs.meta",
+    "sha256": "5A37A95E74EB66547090C9A57BADCC8DC48732BD5C1BEC311331F675DDDEF8AC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberWritableFonts.cs",
+    "sha256": "C9B5F03F49A9E241991DFAE57F407BFAC6AAF899E5F926AA862D39147F684476"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EmberWritableFonts.cs.meta",
+    "sha256": "EF0498539B3430CEC12D2A40B486D89449E26B56D0969377EB7AD1A120A5112B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs",
+    "sha256": "8080995E2EDFDFA21AC8C391A673411B32EABB65E0471FC11CFDC6B2B3DFDE0B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs.meta",
+    "sha256": "297A975238E3F8576CE3614802623585E5E637950753976DC7783FEAAA58E071"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIButtonExEditor.cs",
+    "sha256": "727A859410C5DCD6D6F7C30F9E12A2A68AEFF8AE40659742141C8D10AA57F997"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIButtonExEditor.cs.meta",
+    "sha256": "096F7C50B8A56537A21E09610DA36A74EE0043D8BA33C6DEB7D341CCBF234CD4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUICircleImageEditor.cs",
+    "sha256": "7482D2A2E2D7C0F12275D7564F5C115B3C9DD455CEBC20DE4CE34513F0FBC316"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUICircleImageEditor.cs.meta",
+    "sha256": "07D3C465CADA9A144A6B61DEE10D48C2A4EDC42BC510EFA50F4C22C3DB1CE7D8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIComponentReplaceMenu.cs",
+    "sha256": "E228034FF46295CFC11FBAD40C6FB0D6321D332F3ADE8268AFCC502FF6560786"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIComponentReplaceMenu.cs.meta",
+    "sha256": "DBAEDE5166A4101CA47D41731CE5B1F2AF66CD6D1AFE6A891C9C82007E96CB90"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs",
+    "sha256": "D0C660C9D7DECD159D4A08F3E6C39FC7BE8970FB150E5BCBC4EDD7362002811D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs.meta",
+    "sha256": "DE9056FC0BF100C6085ACC0331DB0B7017FF705346DD5C5AB9970519D6DE8B57"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs",
+    "sha256": "EEC3DF4FE97E3236F335F87D3251DA6EEC3D0438340A75BB42511623ACE02C83"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs.meta",
+    "sha256": "6C58CA59038A9EB7D8FD52759FEAEA0977171D6FB80F149FD6CC4E4365B8A8ED"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIToggleExEditor.cs",
+    "sha256": "29DA4C21A722169AB74F1262FFAD9C52DC0E652F09E91A7383ED3E0AC9D94B2D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/EUIToggleExEditor.cs.meta",
+    "sha256": "0F04AF63DEE98EAA45396A2B623E433F1206E17BC0235956316F869BDEBA2F2B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/GradientEditor.cs",
+    "sha256": "A297CA2B5F267E9E5D5F6E92CFCAA7504DEFB5A060D3E170A3BE91FC5C434DD4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/GradientEditor.cs.meta",
+    "sha256": "233E91A4D6EF1FE46EDA9FA05C3D04A2D7ACBD78A4F37138104F18AA811CF48D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ImageExEditor.cs",
+    "sha256": "E4EF39823721B7224B8FC5839D77920AEFEE5E346E5E88A1A1C279BAD97CD6EC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ImageExEditor.cs.meta",
+    "sha256": "105A58145E225091A64AAA36FA7ED6CC0A6F57605E6D700172B4C31B568CCB51"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ImageFontEditor.cs",
+    "sha256": "47745C8F6DCA9BD0A48B601F5584A6DB6B8A0C1C01682170B36CB4E3B4CED30B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ImageFontEditor.cs.meta",
+    "sha256": "3E575CBE9EA7370D5D20E4B4BFB457A9D81FF820AF6274F191A9DDDFDAE2766F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/MergedImageEditor.cs",
+    "sha256": "D9045BB9E79EB431BF9C6CA78182F6E2892AA19C5B506057854F3EB184491D4F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/MergedImageEditor.cs.meta",
+    "sha256": "0756F99E1F0AB8B99EB44AF721483840DD3AC3AEBE5D7E18F7051F425D3154B0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PackedTexture.meta",
+    "sha256": "EE0B8A6B5CED1ABB6C713C3EC43D49A7CC930DCEB0F36D2A5F332BA2A31DBCD6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/Plaque.meta",
+    "sha256": "278EE84907D53F4778BA626B876355B27EEFB8E18C965C445FD279F7BA5B74BC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PrefabToShaderPrefab.cs",
+    "sha256": "21E78D33B1307173B663E1FAB0ACD5BF26D1B87475BA5748E10888C16444406E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PrefabToShaderPrefab.cs.meta",
+    "sha256": "EB29E85CE051F04977B440E17850B432214464C38087E3A6BD5B412748BF584C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/RelativeCanvasOrderEditor.cs",
+    "sha256": "15081A5AEB0DD2A1DBAE23FA4E57AB227DE77FEC669E96E7B3F06A7B3A69C115"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/RelativeCanvasOrderEditor.cs.meta",
+    "sha256": "95A5E8AF8E6D95F5EF6B5BC5831B06E3FDD678BDEC131EEBEE43814B0C2E38AC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText.meta",
+    "sha256": "2B28D746B5B60B2E2D6541E3B7067459825D5731EDD6A2CCE27F9767C8459948"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TabLoaderEditor.cs",
+    "sha256": "28E2B731A48D11B2D697EFE2229621CBCB4FC45F7B1FF6E66D875841B9C3A98B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TabLoaderEditor.cs.meta",
+    "sha256": "455CDEA08F38746913714D19570D5850484AD41B0A812829DC17E69EB6F2CB2D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TMPExEditor.cs",
+    "sha256": "EA823CDBA0C914BB40CB44A89B52B5355DA9417FE675C0B5A0FA927CEC6C471F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TMPExEditor.cs.meta",
+    "sha256": "70BF397069A202E412CFCA1AD13C3D4CD0F2A4A48362F95AEC4614CDB2593409"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ToggleExEditor.cs",
+    "sha256": "836A5D9B3DCDA58F0CB78C3D305C3C9A0E847C02B62F933A0D245B1A422C0033"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ToggleExEditor.cs.meta",
+    "sha256": "55EA1094B265ADC54F4089348C1EC2CC1068B18CAB8AD7507A31880FF88E8EF5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TransformInspector.cs",
+    "sha256": "2F0E05F1FBF6A0685F455905D6DD126846DC31D319BECE7B0DE14E2E285EB8D5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/TransformInspector.cs.meta",
+    "sha256": "CE26E6301819BD942237DFBB4335F617BAA0E51C48FD7C4A3F1C7D079B48F7E6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/Tweener.meta",
+    "sha256": "256E6B034E914950B65CC37B2B2DC13DFB4E5773DF1AEC2E7590E256E222BE86"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/UIContainerEditor.cs",
+    "sha256": "883D352CB30E76A60C2AE41197E1B709830FC0962A180A022FABE2677FAAA63F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/UIContainerEditor.cs.meta",
+    "sha256": "391F7EFFB009186678371F448C0EC4569014DB100E8DDCFD2D41938757664B2D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/UIParticleOrderEditor.cs",
+    "sha256": "06C38CF42A8C91306518167F1BB0B0E421BE747B70D826EC8ED81679ABF3A2FC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/UIParticleOrderEditor.cs.meta",
+    "sha256": "0F2860435EE7F5085E2D56397681F9CB5CCECA5A131F449DB534CD736DFD44F2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PackedTexture/PackedTextureEdit.cs",
+    "sha256": "3554283B8D8EE8E850155E194EE0125F3E100249AFBBA40016060DBE660E7AEC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PackedTexture/PackedTextureEdit.cs.meta",
+    "sha256": "F286E277805EAC6982F711512BB319F5BC72883495EA5221773CA03B669E21E0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PackedTexture/PackedTextureScriptInspector.cs",
+    "sha256": "0E75511A6CE2E6539BE96EAD62CAA5A1E72E9BF37E8707C6A6CD721CDAA8F7E4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/PackedTexture/PackedTextureScriptInspector.cs.meta",
+    "sha256": "105197D42E126FB279E5203879AC762A3577F52BF09E6386CEFEE1BF2FCD9A40"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/Plaque/PlaqueInspector.cs",
+    "sha256": "1AB25AE0E95F3908194DC5C964C99A51D01603802ACA79EDF80D019548A89694"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/Plaque/PlaqueInspector.cs.meta",
+    "sha256": "7FF10B1AE205B617D42E412D49C180C9B95A7B614AFF6F567DA4CBFE342F7594"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextInspector.cs",
+    "sha256": "0532D58AD741A2DE90351F24B59F039AA3E56CD5D0012D4505721B6E8E9F03AE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextInspector.cs.meta",
+    "sha256": "CA6A774E90FA465172779B89E0B82997CB22037B31609BB65895E5D359ADC1FC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextInstanceInspector.cs",
+    "sha256": "1DD8B962353FDCC91CB9A0302AA30423E09B9245651D184EAA38EB4453F2BA55"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextInstanceInspector.cs.meta",
+    "sha256": "35F566C94DE4EA9CECE64D1C4A671B12A19DFAFB267ACB52D88FB3C0D1E39074"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextureCreatorInspector.cs",
+    "sha256": "B995193EAB7B05B59AF30A6B7C0450226703D8EEF650B1803101E39A8CA238F8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/ShowTextureCreatorInspector.cs.meta",
+    "sha256": "89A72A6D1C4D0782B9C482385E5A18D15A49D878D71829C22580FB417421455F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/SimpleJSON.cs",
+    "sha256": "80661E7EE4660FF32C72345316AA65CCEF3CE3ADB78698C1270D52223FCB6B82"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/UIExt/ShowText/SimpleJSON.cs.meta",
+    "sha256": "6F0F0EEA18B56FD4BFFA4987FEB95129E0251B7087C5E6B7E148CE2A2A54E3F9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Validation/EUIPrefabValidationUtility.cs",
+    "sha256": "A05E0D5173A441CEA045EFE2A2DCE4E98BD0181AFDE228D76E3988206FB17FB6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Editor/Validation/EUIPrefabValidationUtility.cs.meta",
+    "sha256": "6E7428A9E61195A83792FF8B6982A14B49F87D83B4FC8C5B0092414D0AE7FCCC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour.meta",
+    "sha256": "ADBB623BF63C4BDAFECC2AA17815C3AA56F9B00A25DC2B650C27C2BC2F281F61"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components.meta",
+    "sha256": "11DC8103115985B8938CDA6B2684421C4F468FA03BB836AAF86C9685051BD628"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor.meta",
+    "sha256": "537AD96EA037F30350AFA07B7DFC6C30BB827973C9839F44C882EB11508E3873"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef",
+    "sha256": "7E5D3E97B8442C6F4196F9A442B32D8D8AA086563F8FF5967C695C77CCFB1C86"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef.meta",
+    "sha256": "D7C53FD04103CFD69504E699E68B24D63BDC29DCF2DF161877D4D473ECC866D0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBinding.cs",
+    "sha256": "699A4507733DC6AF6F20819C0F90D9625A5603D5894E3E4749ECAE1895C8621A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBinding.cs.meta",
+    "sha256": "7D230630EE7E3AD2E69A09133B052F861A29D9E456A87A9B838E08B0FCAD73AD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingBridge.cs",
+    "sha256": "1917A714E9127E848F4A7A0F7149A50B46A0AC6B1730165C0E3645E2277C53FB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingBridge.cs.meta",
+    "sha256": "A1B047D8A8FB8DEFEDE60FC76065133F6A4A48028C87AA0CD0FF7E2B9ED158B0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingExclude.cs",
+    "sha256": "C6F0D8F51E2AEE430D1F2E827350506325EC4BBE4703FA0C46B71C34FF65E879"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingExclude.cs.meta",
+    "sha256": "F346651DACDA87626809B85012FF854E5DA583048F92BB126B971B72E35A53FE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingListAttribute.cs",
+    "sha256": "33ADB9859DD1FD1110EFC282EFC93035D31F9CC893A3C80CF5ECD248BF8DFE6E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingListAttribute.cs.meta",
+    "sha256": "ED5D571D47A6ADF0A97E47532BC9F9A426BB3B76D9C3DB0B614729EFFCE6A4E3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingTemplate.cs",
+    "sha256": "FC42AAD6E04C768F84B6F2D6A6588BB1D6AD22F9ACB5B602ECC5C9FF1FC66B58"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIBindingTemplate.cs.meta",
+    "sha256": "25C45DD6F7FF88BE8BBD9C8BCC65FB8CB88750EA3287D7F8B02F8D7ADF9A8A47"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIDynamicListHost.cs",
+    "sha256": "226A68894554B7193A4CEAD05AC3AA32D25D48D1232D41F5CB77C25245965031"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIDynamicListHost.cs.meta",
+    "sha256": "CB5CE3BC8E5596CB46F5EEAA2A1BB81C27FDF1383F5AB8D70BF80DE36D1DD443"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemFactory.cs",
+    "sha256": "A3E8F4B1AA1329A3BB9B8DC1FA3C42622828E0B97C3C691692461400F1993BF6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemFactory.cs.meta",
+    "sha256": "14401E488C42486A02ADB98D543BDEB4B14B56EF5730EE2B0AC219FEDC5F82E3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemLease.cs",
+    "sha256": "66FB70C72A3DF4A1DD1DFFCBB7EA21A8FE8B241B077D924A3FE7AB8D99F28E39"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemLease.cs.meta",
+    "sha256": "C3C90A9F26C6EF85C829E5AF5B5F04942193BD4234BCC17ED25F30B50DCC3DBA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemList.cs",
+    "sha256": "1E735384B954609C73DF3EFA1A6421B121CFCEE7CA801881B3FBF1EE053DB28C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/EUIItemList.cs.meta",
+    "sha256": "724B7076BA3610CB674FB5EB2525775788C1E36ADB930F4C760AD3140B38DD28"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager.meta",
+    "sha256": "EF4D5C85B29A9898A6E1DC7ED6F768772CB9A4160E53992FB769AB462EC76EDA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/NodeScreenShot.meta",
+    "sha256": "6336685F40E58DC284C477B4BBE838E9A7C353FD91ACD4EA6AF9BA59CDF6047A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages.meta",
+    "sha256": "FC8FED5BB18AE90061D0DFC1C21129AFE9566BEB78010E076E64643DFF22871C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources.meta",
+    "sha256": "5205DEDA44F64121EB8AB10ABD1A1215C8E418F5CC49F96BE8B42B9D88ED3D31"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/SafeArea.meta",
+    "sha256": "5C0D9BE4C0451F613310F38464C952F8EB1BBC97872CCBB73A8F70DE32A40366"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt.meta",
+    "sha256": "FBAAB62BA1A720A252CAFC7E95C3F2A902C401AE8D69D0231ABA5C87688D0935"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Utils.meta",
+    "sha256": "51F75EB2416C8BA3AC9787EB62482DAA28E7F823F212F8F54D69F1BFA984164E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/AnimationProperty.cs",
+    "sha256": "1DBE1E3781A7E41C24F64955860E6940BE5672562B24B278E73FDB131CA65BAB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/AnimationProperty.cs.meta",
+    "sha256": "FE5DAEED6D72E68681E3937E742B263863D7C27384C2F14C9B34B3D9AC466E10"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/AutoScale.cs",
+    "sha256": "1699600BABFC2C6B6BF37820FA1A9F5952569D915C7E528844B3C3215CFC8B84"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/AutoScale.cs.meta",
+    "sha256": "2ECED35531D4A154E6C2A628F4D5E03552081FC4196D29FC07067B71E8DFDCDE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs",
+    "sha256": "EB4D86940DA56482E3ECA0E404A5F6659075D9EA04D68F2A7085052DCBF36D1B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs.meta",
+    "sha256": "ED3BFB21ED6C4257929651FCF14597B075D7DE3D4F189CEEC2BBA4FE6AE598E1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs",
+    "sha256": "53BBA6EF449BC069BF675BC23888F23E4595940F1691DDCF690D4BEC079AFA34"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs.meta",
+    "sha256": "956173450DFC6763EF7BDFB0D613C2A95173C7088A45631F223F638889DFE2FF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUICircleImage.cs",
+    "sha256": "16264FEFAC330153E069C9E10FA211C2F56F0422D700833A4AFBD79A4ECEBDA4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUICircleImage.cs.meta",
+    "sha256": "BA1E1192CEAE1590C28D851E44C61888E147DC00595F95C646A18E35280B9386"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGraphicAnimation.cs",
+    "sha256": "A13F8FF88FC16C9CD8C995EB2A279BB00E4BB746F9DCFE012BE3D47543BEA1CD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGraphicAnimation.cs.meta",
+    "sha256": "8A139CF87949E0459F6306DCEF79BEAD8C330A15C4796AC2866A4264F9C73A83"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs",
+    "sha256": "BF8E693ED4EF7039C22117DCEF488DEBA5BDE309DF65263A665D275895DF02E1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs.meta",
+    "sha256": "622A6D8153B0E5EFD39113EBC24EFEAA580A32CD537109B65ECC1AE75CC2A018"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs",
+    "sha256": "61323385F2B8FDD661AFE7874ED5F6DCA8B8F0F9C72A97B5DDAAA73B71684840"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs.meta",
+    "sha256": "408B4CBCBB8353EDA7A6478076BD894C015EF0BD51204DFF7EEDC912A271B512"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIPolygonRaycast.cs",
+    "sha256": "507AD77C3F84F663386BDD892129E9D8A638F46AD4B7815B087E8A9BCA2852FE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIPolygonRaycast.cs.meta",
+    "sha256": "9E72B85E3E0375DAA6B44485B307B27A72FB9CF598B3E64F0C52B595D34C2F3B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs",
+    "sha256": "C1A13ACA3EE644C8B8C2A46173E698834842C356469E9CE680ACFD406EE0725A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs.meta",
+    "sha256": "2A11CFDEAB25D51E14E86FB69D448BBBFABF275CD35759E88CF1A5527787C7C2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs",
+    "sha256": "AB2C09506913400F1CB9C8437B4EF40AEB06F97861BE050EAABE88BD4F675CE0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs.meta",
+    "sha256": "1DD251600EF7960DC66C9B7016F9B2B834C8FCAE151E197412AA0BF3F5EF2253"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs",
+    "sha256": "39CFCFC547CF5F7EC368446CBE39273EC9EFF88A506E662557ECE318CC565287"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs.meta",
+    "sha256": "634A51C21AB62D94D65E33936C52C442A3DCCBBB082E6EBF7EEA6F48CD411E6E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs",
+    "sha256": "024ABE814F8D81FD235E7FC8EE28CBBE0CAB85D02E46FF5368A2526ACB8CDAB4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs.meta",
+    "sha256": "5DF313A25B700C34E19BE8A2A09628C6F15830A11789FC211D1731CC781B15E4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/BuiTextVisualStyleRef.cs",
+    "sha256": "B82947EF00073251DB9CC2ED09DB8A0A16ED06AAE0092E0B5DAAD7E20D86CF37"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/BuiTextVisualStyleRef.cs.meta",
+    "sha256": "52F7F25E9EC6A868533EE7BFD11873CC66558E8B96A394164062198AB584ECDE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIBlockCurves.cs",
+    "sha256": "34BC1E5CF77C69C80BF9B1F0B2D2985837BCC26DE52FCB4509802111FE38FE34"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIBlockCurves.cs.meta",
+    "sha256": "928450F0820A75473EA01E5905C14B44D5E699734B77F6CDA67441FC98D76DB7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIButton.cs",
+    "sha256": "62E918A3DA2E3BD689A01DA7D436BFFA8B3070A21868921C1173770A6A4F3661"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIButton.cs.meta",
+    "sha256": "6CB070FD60A31C30ADCEFA65C4EBC4D91C23B3DE9BBAAE5FA34F626FC9D44DC0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIComponent.cs",
+    "sha256": "E2204B67E0F4599EABAB33ED4419A32D97932DD3DB5A0C64F3BDA1F7FC17EF37"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIComponent.cs.meta",
+    "sha256": "1688493F20A3005AC9C5CE62EF159628123F55D55F9F5AB0101B2B191109968B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIImage.cs",
+    "sha256": "D14EABECC27D5A729999500CD3C8F06736091162A3E3277415EDB92515909C72"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIImage.cs.meta",
+    "sha256": "133015A4E7DFCF2010AE6F6AD4FC6716CAE7D3F59EE4D7147F0C9B1F0F17537E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIInputField.cs",
+    "sha256": "3FA4EE475D1CB561590BA0A4EF63019299BB99D289871C7619BBFA9652DE86AB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIInputField.cs.meta",
+    "sha256": "2758702E220A3BD568226754A8B3FEDBE6C64AD16E532E1AB77BB41330CC8C74"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIProgressBar.cs",
+    "sha256": "0D411A722E0D358520DB8239C63B54A8232319ADEF07013ED9CAD592074CA6D7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIProgressBar.cs.meta",
+    "sha256": "AB66E52430559CAE04886E51E85077391F4EB21E8C4F3822634990D16615B5A4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIText.cs",
+    "sha256": "1AC775155E03F78E4178DD4C92C43ED6D861E582652A2EA91E1B121ED8BC77A7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIText.cs.meta",
+    "sha256": "06C51ECCC488CCD294AD50DD54719BFFD476C5D214070E1C2B9A22E319C46354"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIToggle.cs",
+    "sha256": "40F18ABF9559B6529BE731C274D9FAA23A73772C4133E9923708AF7A11876F8A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUIToggle.cs.meta",
+    "sha256": "A2B00E00856D0452E4498157EED87FC0B41EC5C7B3B31893382C870B6F7DAFFC"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUITransitionBlock.cs",
+    "sha256": "EAFF871BE9EC9563F57A5E6D6CCFB11432A045704891BCDE292CE0BB2063A864"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/EUITransitionBlock.cs.meta",
+    "sha256": "E41CA4FFF022F1C01165087862B351F3E78485C6935A63C8B56CD2EC0563691D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameButton.cs",
+    "sha256": "F741C57CF9EC126E888657BBC032EA37EDC2965278BC8E0B907347B36E8A94B6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameButton.cs.meta",
+    "sha256": "A6FFC6E4962ECFD309A25B24F2D91B6CFBEAAC6A4A2B072E92FC6CB587347CD0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameCanvas.cs",
+    "sha256": "2D928DDBCBC32EB13DC721BF60D9D4DE899B22B2A23FE1A177771F3EB9F919A7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameCanvas.cs.meta",
+    "sha256": "40793D4D37186A38FAB25BF68DB12F89B8B211D297C0D8C6C7DB0F0984D88DA3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameImage.cs",
+    "sha256": "41A06189A14A86466BEDBF716E1471D8485E7FE0789BB799E01CE0EA9EA79734"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameImage.cs.meta",
+    "sha256": "665BCF889DA0255A7CF8A32F9E6B4DAD49C916F6E16547CD1432C34F9250801D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameInputField.cs",
+    "sha256": "158BB96123656FA3DA7A9BD4063B7424BB89A78F4FEF623CB2FDB50D892CA5B7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameInputField.cs.meta",
+    "sha256": "CAB92D588EB8818D094ACB775D96D605E31C5B6F4ABDD1B76C40F568B71124FF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GamePagePreloader.cs",
+    "sha256": "C8A463165EDA22B93F0A70A7DAD0451C70CF929D622BB6458B7B3F62290759B9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GamePagePreloader.cs.meta",
+    "sha256": "3C9938281AACB68B2044154D742D5A9847736CFD34B4CAF7D9907C717408002C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameProgressBar.cs",
+    "sha256": "9168D5019E851708C87B9B83A20381546B34B381A0560BAB9C2DD3E3B387E003"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameProgressBar.cs.meta",
+    "sha256": "4355F5448BFA1CCED7D639697D068ED446B6B3F416470F0C4B7B3308BB9988FA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameRawImage.cs",
+    "sha256": "E22E848A75BDC10159C753A8E6D0824EFDF81C6FB664F711C20F8B3F84032D7F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameRawImage.cs.meta",
+    "sha256": "AB9A3DC98A13D89530D386238929BFFF7AF89129CA69C136E74B2CAA59DADBE6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameScrollRect.cs",
+    "sha256": "3A33C8FFC87A904DCCE13260BE553814D7420A609D637BFD39CF88FCA2E0BB40"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameScrollRect.cs.meta",
+    "sha256": "EC8AAE47A36851D14BB4D350D1B4115EE3EAB7608D29703A60773A97F3E42D2B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameTabLoader.cs",
+    "sha256": "7EA72E3287379E323B82516322A18780957045474B77680E46023B36976AF58D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameTabLoader.cs.meta",
+    "sha256": "FFD1F5768D6F906573F9F969B3802F47B2B134E489000BF7892E61328DF831CF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameText.cs",
+    "sha256": "2B13BFC8880F007082DE11A0032698363B5F15A4BEF8133E4BF21C86462965B9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameText.cs.meta",
+    "sha256": "886C9AC2D28046B92CBA73C83EE8A76704A2B44CA51926084190C9D9E047C2BB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameToggle.cs",
+    "sha256": "FDA6CCA06963DA8DF2C4AB7DBE6BF1E381E8FFAE349D2513B30EDF8528DDA8A9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameToggle.cs.meta",
+    "sha256": "732CB49825F8D15FE1C62E4C2216D3CF2AC832AADEEB3D9C313DFE72B13CDFB7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameToggleGroup.cs",
+    "sha256": "245564851168A4D2DDCC30D0D380A2BC03EF4B44CE7152C74F72D71A2EDCAB70"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameToggleGroup.cs.meta",
+    "sha256": "2B82C6075B39F975B6395CFBB9DB81FCC643764AA10ABEBB8C1B9B9135EE2BD6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIAttachment.cs",
+    "sha256": "62655DE832037C60D1C74CA7D9DEF9030AE5067F9C7A03A5D71CEB3A59BD366C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIAttachment.cs.meta",
+    "sha256": "BA2B23AEE43182A67A584128B784F2388E19237EA1123423F3296F0F91C3D493"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIComponent.cs",
+    "sha256": "6704AC96F27863A48FEF1497EDCF8677BAF32CBEB5233F024B81A6DDEC9F4230"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIComponent.cs.meta",
+    "sha256": "F7791DF7BB1C8A734FAB822F3419E2E2452DEFE3E0D83A7CED86E57E83038419"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIContainer.cs",
+    "sha256": "9E81856B5264F3309A7FA2F091AD7A31F917514D5B392E9F520154C06F80D257"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/GameUIContainer.cs.meta",
+    "sha256": "8DA868D4356327F2AB92B9DBD2E0B636FC6870D007421E25892D84F944F2AF16"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/IEUIComponent.cs",
+    "sha256": "6A6DE042932F76E452B35BE511E529FDF74E03B41D575B19994052ABE1C4DE41"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Components/IEUIComponent.cs.meta",
+    "sha256": "3228967F49F4297837DA6B61949D1485E69A33BBBB339EE7DA94430DC2F49502"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources.meta",
+    "sha256": "8F9A805E15A4272A8BC2A80EA768A8D8445D55C0926B4A0367EE327CDE136FBF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_2.shader",
+    "sha256": "091A537CA6CD3A01667407D20C08537571BDF48CBA05D9E61823E9768C1BA5BE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_2.shader.meta",
+    "sha256": "0472BBC4F381A2AC0554CB0CE016D16D85632566F428ADF3D4650F702D19D37E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_3.shader",
+    "sha256": "23D7DB469C84C69D02D35EBAB106BA5022ACC1D70135EA428A6FE474CD335C1C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_3.shader.meta",
+    "sha256": "2658BFF134575F3A9C19AA088388A2DFD6DA3A68D889F7911D7DE05F20B8ECCF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_4.shader",
+    "sha256": "DB03A00B2249F1FC0ECD5CF239A02928151574F2B4F83CF5B2174336EE554CC0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_4.shader.meta",
+    "sha256": "3075C396C40B9ED5947383AC297EA9B584A276662F55851C21FF878F009AEA19"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_5.shader",
+    "sha256": "850A7070F475CD1C45B27923FD525A8C9A274F2CA1EB9AC7E916EEB97C57C2B1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_5.shader.meta",
+    "sha256": "C71A27DAAC0AB913E29A672811A9D8A54D516C4E3FE609DBB9CAC48222E02EAB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_6.shader",
+    "sha256": "55B7D47CE3BC67968C3D4C0BE01D48EF9C1E36979CCB9FE1044166CADC32F88A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_6.shader.meta",
+    "sha256": "5C5AA13AAEB922142B222C7C01D686EDC225A45F2235E71BCDF8260423E75AF0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_7.shader",
+    "sha256": "8068E8EDC357EF0522C6039B78D13833C23D54F96A7823F1011E2B758F90378E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_7.shader.meta",
+    "sha256": "29396BA99C53464CCAA831EA596B5644DEDE1E5523E23AFBE9878C09E6DF1A16"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_8.shader",
+    "sha256": "34182E078A3AB3393342ECC8B5A1A9D14BA3C852ECDD48E04B5FDBC875F5E555"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMaskMergeImage_8.shader.meta",
+    "sha256": "05A0B6D4893D76EE5C1854F30021E660F1260A56486DEB6547FFBE56AC8FFCE3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_2.shader",
+    "sha256": "55E74B6059891F6AC004DBD9580CC85A5D7E49C6A25DC6B250ADA6B9AF72CC98"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_2.shader.meta",
+    "sha256": "1F1F78A45A60FD190B42F4876BBB1AEE8E6670341273B0DB937F64295DC6F682"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_3.shader",
+    "sha256": "C68207E596BA411D2B227AA6D00C6D092EF387F9FDCAC0D021088E5A7EDD13B9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_3.shader.meta",
+    "sha256": "FEC195A5D4332D0423B54D8DE5541AF55B054A9006F6935F9E23E1A3142079F9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_4.shader",
+    "sha256": "553A69CAB288DD14774AE5A4F1A72727229FF4CE652B14E946647F714E4A26F5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_4.shader.meta",
+    "sha256": "1B8F80DCC93A7AE4BE107422D600A53D1DD1BAC556CB41478C6D2F96BEC14B8D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_5.shader",
+    "sha256": "37BBFC111B68FAB6A1BE91F75C4B094B07FF97DC3F235E537F7AB8E5B7254274"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_5.shader.meta",
+    "sha256": "B1E9B916CC3B0580832C873C223FA46859203DC45AD9897924E4BDC0028EF349"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_6.shader",
+    "sha256": "20D0CE3FD2F217C1BE83227C669F986FE4E0FC81A48D8ED797475802C03522C1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_6.shader.meta",
+    "sha256": "9494AE6313CAF18D9B388293422956CF23FFCD53690AA215D0B0361852EFCBE7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_7.shader",
+    "sha256": "A52BC629CC511CA5EABE92B04628A91AD1ECD887030FD1AA1B69AA738495453B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_7.shader.meta",
+    "sha256": "EA705581B58EB6541803468EB2D3071D03E27056EE8C3B080C7B52A5AB9FB063"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_8.shader",
+    "sha256": "E2842698B63AE975266A7164C7B5E71CDDB803DAFD62D40814592E6B5B0CB977"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Editor/Resources/UI-ShaderForMergeImage_8.shader.meta",
+    "sha256": "9FD69B8EC20391F29DB759C71F6F39A07DE24E11BE2022A05B6C1D80B574D9E5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/BurnerUIManager.cs",
+    "sha256": "DFA38F2BF740D781E23E67498A6D03D4CF3116E04AA94A290D0F1377D8AA74A1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/BurnerUIManager.cs.meta",
+    "sha256": "9E38C1B6190CD1F1201A05661F64981AF575E7DF80588A685FB0C2CD10B6D91C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/CacheManager.cs",
+    "sha256": "EE85630C753668580C8A78E0C70DC87885120856B624CB194DEF95C7D6AC9DE3"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/CacheManager.cs.meta",
+    "sha256": "D7B578D1F973E0D261428B6B683301948843413DBC04CF1F7BBE6EE8E18FF15B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/GlobalEvents.cs",
+    "sha256": "76C6300088455E4393A267472923E5318C1F23DFF3717D33ABA54596DABBA48B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/GlobalEvents.cs.meta",
+    "sha256": "1D064731F1B6004AD9FCF8E142C464F14315A7EA589F1B3DA3F9E139908340F8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/ILogicResolver.cs",
+    "sha256": "A678509E12F615B1FB1A3E761AF5AECAA40271C8AC1054AD1B410DB76C793A3A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/ILogicResolver.cs.meta",
+    "sha256": "49327A1EE86DD22AC864BFAD10814416892FB4DDBB36CF36311FBEA0C64A079B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/PageContext.cs",
+    "sha256": "A3AFCC901FEF00A89220221F33B8C2F56477344D54A81199C797CCEE91E6D53F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Manager/PageContext.cs.meta",
+    "sha256": "E9B1B983503BBAE4E6497A611FB396826AD55390FB934422A6BFD42F51FC4A60"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GamePage.cs",
+    "sha256": "2759205BAB82264A9EEBC3F49D1D9199EBA650D11C552C178AE356189605D919"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GamePage.cs.meta",
+    "sha256": "65CEEAB3EF6B120C6F43501D97FDE7DD0C5196327FEA0E16B084F4E39C90B1CB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUIBinding.cs",
+    "sha256": "2D70AEC73198FFBB70329F96733A640502838E0EE8D10ED59F5179EC65C0DAFE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUIBinding.cs.meta",
+    "sha256": "2FAD225CBF7DB49AA244A72858E950288897133A2F42F900CAD38F58906B647E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUIBindingTemplate.cs",
+    "sha256": "D822A9A8791E375CF707FB6C7234356313B6210237953833257B4ECFADDF9F96"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUIBindingTemplate.cs.meta",
+    "sha256": "981455577C149D2969D8A70B56D13563E134951951E5FFD92D2B07C58116C3C9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUILogic.cs",
+    "sha256": "506E0B2DED7367801A683DEB793246ACBBFF5AFE50B553BDEB77B45384A54038"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/GameUILogic.cs.meta",
+    "sha256": "455DB7CD8F1EC308B780FE2C51594088EA1A0F635AFD28ADDCD703D0ACE22B3D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/IUIBehaviour.cs",
+    "sha256": "CF76D323ECAA6EE61332E171F426D7F804ECE068F16B2E8D24FA5A570352EE34"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Pages/IUIBehaviour.cs.meta",
+    "sha256": "E9261AB4B9E21DA838AD47A6F12EE953CA4D68E002264F135EEE7CC88CDAC1BF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/EmptySprite.png",
+    "sha256": "CF5B8B3F04A78C46C6DDC8AB85A4C1A110BEED5DFF15F14E9E32CFF959363AD0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/EmptySprite.png.meta",
+    "sha256": "48DC6D3AED5D97ADFB51BCBCB9E6ED076FEF313181A52FA2FDE01F8558CEC7DD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/Plaque.meta",
+    "sha256": "80BD360F87866FDC36C7F4DDEC6D832DA36E456A8B50D7517264ADF86E0ACB36"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/ShowText.meta",
+    "sha256": "F4036F9B2C8E77A9B3F20B0DD1C2F8A586B10E31863B834ECDC4EF80923CEA11"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/TMP_SDF_Marquee.shader",
+    "sha256": "06EFCC534F51DD2F4C9EB11619ECB210E5D23069F1ADA5AEDD98E38F0EB63AF4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/TMP_SDF_Marquee.shader.meta",
+    "sha256": "F3BB8FF9ECD4A96501851E3432D1E726F5A548032D62F2B9854B92D15A072FED"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-Gray.shader",
+    "sha256": "0FE5D7D8B84CE4A3946D557114020DF617A924F8D8009F53155A27F59084E903"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-Gray.shader.meta",
+    "sha256": "C61D3EB0EAA187258398CEBAF2B181E0AAEF2BAB2A6E7915030A605EE9B4C5B1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-NodeBlurEffectShader.shader",
+    "sha256": "A01576BE1AD0EEA580EBE059D584B5C50F2C4D7C91768ADD4FEB6C4397BF954B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-NodeBlurEffectShader.shader.meta",
+    "sha256": "36AED38D53D04923E30ED06103FBF10FE0A313563E8401AC4BC88ADBCE016278"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-SoftMaskShader.shader",
+    "sha256": "56B655D53383B9C8A1CAFCACEFC53C4BFD22C3EBAC8D6ADD8D48525E638DF7C9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/UI-SoftMaskShader.shader.meta",
+    "sha256": "283082BCE837451F9B97A142204BD9027BFA2F5965149C5C81DE50E0179CFF5C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/Plaque/Plaque.shader",
+    "sha256": "1C130AE98B35D197FDFC195693CE532893BB8D6D18CCCC8712CE74ACE20575A9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/Plaque/Plaque.shader.meta",
+    "sha256": "962FBB85E01468546E905F857B628A547CEA45C08C82EC24D93AB1790B7E29D7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/ShowText/packedTexture.shader",
+    "sha256": "9B299B0013C0F32165928FCFB11F43A6F30989D799DE2FB8F3F0DE5A23B17343"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/ShowText/packedTexture.shader.meta",
+    "sha256": "C9BE158287641D7EF18F36D11E1C3144F6B30EFB782B73BB17D7CE3A050184A8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/ShowText/ShowTextInstance.shader",
+    "sha256": "579FE01CA54165C6E7E5F235C32BE148C49E9ECC0BFBA6034CB8682E4879EBA6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Resources/ShowText/ShowTextInstance.shader.meta",
+    "sha256": "715E841489CADC49CC8462C24AF42E0F32D3A2D56962CFB3B2F3FAC1CBD20845"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/SafeArea/EUISafeArea.cs",
+    "sha256": "D18DED381A634B754EDF813639359DA77DDC514ABC634917D7F63CF72724E5DD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/SafeArea/EUISafeArea.cs.meta",
+    "sha256": "CB5D81F5657B2B096F4FA417DBB36C269003FDDFE7D118A7011CDF94EBBF8A6E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AdvancedText.cs",
+    "sha256": "E11F1212A17921CB26578FCE5D5248A78F67A775EC9717ECCA7D27249ED77CA7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AdvancedText.cs.meta",
+    "sha256": "531FD8176C52D4130B295D6F1C1F1ABBA5276DFA0D9F5251948A472CE2F9891A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AdvancedTextImage.cs",
+    "sha256": "DA3DE5E987403F9724103BDE4479B6751B63748F80054A4AE9D88EABF62C2A50"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AdvancedTextImage.cs.meta",
+    "sha256": "961497F5A046DD452D45E4D79C397179295CC4C67FB30EB4385E7F25CC2D53C9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AnimationEventReceiver.cs",
+    "sha256": "F4DD5E782EB7430FBC977DF3D58B887059C4EB985B9E340F09AA9B3043FA396F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/AnimationEventReceiver.cs.meta",
+    "sha256": "8762B7730797F469E980351A5A8135E0131FD7CDB364BDA4107BC84411B55252"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ContentSizeFitterEx.cs",
+    "sha256": "9EC53A1E8EE791DDCE44324EEDF40E1671FA576552894EB1308ACC3E3EED8CBF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ContentSizeFitterEx.cs.meta",
+    "sha256": "1A78D8B2BE619AA46DE9B946F18160093392673D1B6ED7E4037172F4CD160CD6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/DragEventTriggerListener.cs",
+    "sha256": "B61DC7A6F9D635EDAA2FA8EFCACD64937BA4C0C9F9F8F70BC28DFE35BE276AC2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/DragEventTriggerListener.cs.meta",
+    "sha256": "E7FE421948CA0B554BA8EE677570EB6A5A1D770D8EF9D0180B9B9FC32ECA2FDA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberFontSkinCatalog.cs",
+    "sha256": "7FE0E37776FA7B60D1FA107C10D795B1BB6552D890874EA7C7BA1B860FF0DD2E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberFontSkinCatalog.cs.meta",
+    "sha256": "C4B4735E7A42F55EB5DB82E78A3E4508ED317F738F635E109BC5199826BCF65E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberFontSkins.cs",
+    "sha256": "B5702E26F7278D607AD3E79FF42BEE097543467BFA2859AD8C7B7CAF4BCAE76C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberFontSkins.cs.meta",
+    "sha256": "551298ED9A535D41834ADD9B371CA42B80949ED0C67DFC7D6DE523F4987DD342"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberLocalization.cs",
+    "sha256": "F371919F6A1FC461B4A64C4E2EDB178640FEE1D5BDBA7849DEFE614263A5AC2D"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberLocalization.cs.meta",
+    "sha256": "6C43B7121F7C53B7736E3E52FB2C93076C7DBCA72A542484B587456405332773"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberLocalizationTable.cs",
+    "sha256": "929C0DBDBB65BC9970BC13AC5F539B172A6752839BF8B65FBA365F4A28880DAB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EmberLocalizationTable.cs.meta",
+    "sha256": "12FBE4E756D454B753FBE3FD01A0D0976843FFF8803CE6130FC9488E750F28C7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIAnchoredTip.cs",
+    "sha256": "E1F0DE397DBF7B8587AB63477C1DF9DEF570E48FF573AB3B1327BAC279BCF89A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIAnchoredTip.cs.meta",
+    "sha256": "D3D907E25881CFDF211621C4B1CA6D7CE693D64A88F5A64731463AB122A8B30B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIBadgeView.cs",
+    "sha256": "FCDE3701F5342D8E971234D0B7828ED3280D055770AA0E19E745DB63DB587260"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIBadgeView.cs.meta",
+    "sha256": "6B16FD7C96E07E3F0D103C7FCEDDB84B67CFDECCEA17DCEFF1CB147E3203F33E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIBasicUIExtensions.cs",
+    "sha256": "EDDA86458550242BE8DEBDBC541DD70C6A5D9AD8BB6BE6F874AFD50CA64E0819"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIBasicUIExtensions.cs.meta",
+    "sha256": "779B4AE0F950314C3E0A27EBD6D3A349CE1449827124F20E7ECB9259FC0D7AF2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIButtonEx.cs",
+    "sha256": "3260999CE4A21123B28882361E9876FF342E7CB5ECE79B3AA50A3B8FB08DDDBB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIButtonEx.cs.meta",
+    "sha256": "5CB05E05428394BDA4FE271A0C7819DDEF7B8958A0084AD7E7A4770BEC390901"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIEventTriggerListener.cs",
+    "sha256": "2B83385002C44B1B12A3A29F5DD74153251F068D49EA36A09B2FFB84EE7945C8"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIEventTriggerListener.cs.meta",
+    "sha256": "6C5907B437EF0CE18321237732CA1C7E011533FC87C76C7FFD4DA2032477F6DB"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs",
+    "sha256": "08BA1E26C4E1902AB3C850159111329E5B5CD17F91781E81AE22065727E2AF81"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs.meta",
+    "sha256": "2A7C47617A2038E7D73DD00D27A612AE45A9AD02F07F0E5DC9956048795C2FB1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIGradient.cs",
+    "sha256": "ACC475A4BF9744DE796412D8E00505A7B26135C5AE51228A52536B0D1DA91FE9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIGradient.cs.meta",
+    "sha256": "16E9D5DF084713F9A762E26BA399B2F5DFCDC48041D59010BA90C5091E6542F2"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIIconCardView.cs",
+    "sha256": "256406FF51C1FCA6AD4BDA77B29419F901B90EC9904EE5DBF1D812868E26753A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIIconCardView.cs.meta",
+    "sha256": "BB8D1B935C792B99D3AD721C52E5ACB188B316ABFED1A7066057D5A8561F2B8A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs",
+    "sha256": "B2647533ECA6D1D84193AA2AE2CFFDC7762090BFF1893F1D615E166395230944"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs.meta",
+    "sha256": "05D71651E9094CABECC619F9D9A0175B4686DE052C06598E234E30268C14B78F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIInputActions.cs",
+    "sha256": "3C09510F2B19B9314FC0A117BBAB90568276B3E040CE7CD54680D4CE10291833"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIInputActions.cs.meta",
+    "sha256": "8B5059BD5D344F888A3745F2A57135BBDA9ECF15F3D108C2FF03EB372E1E9F67"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIMeshOrder.cs",
+    "sha256": "3F9BFE627C42193AEC56B6435AE0D85F368274C15A2CC09743DFE17B36215683"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIMeshOrder.cs.meta",
+    "sha256": "F37A37F4C23813BD2BEEA50917B45BFC4F537B57820D6131FE565F7890D3FB87"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUINumericControl.cs",
+    "sha256": "0782D4A7144320441D152AA1E1D5E86ADB2D1809CF788E827FDA56C5118BF627"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUINumericControl.cs.meta",
+    "sha256": "A74C7F1A8DDEF3D4CC963242D8DC502614FB35EFFAF6137AF049E54D161668A9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIStaticChoiceMenu.cs",
+    "sha256": "E61C6FDE60361788151462D32855E68438D7A7FBD6BB7A17CD927364DC96C8DE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIStaticChoiceMenu.cs.meta",
+    "sha256": "919B275FC71B6C3D24B60D5CC36229DB4C5868C81D8229C58C3ED99F9EBE7391"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUITextRowLayout.cs",
+    "sha256": "79A4937D77A0DDADD35FB05667F1D5D89285A4B5C22A9BA4A11060126B4A2D0C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUITextRowLayout.cs.meta",
+    "sha256": "F7D95292020B57292903B1E87E5618029EE1AB46B9EDE0ABD9E27E2C4FA58F46"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUITimedNotice.cs",
+    "sha256": "77313EAF87F8BFE506C89B9FFDA60376D2F5DB33038AFBA091589EF8F397438A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUITimedNotice.cs.meta",
+    "sha256": "C6C61863BDF1239B292B6AAD10D10DD283D1E14882CF5DEACBD48D1DE8AAF542"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIToggleEx.cs",
+    "sha256": "6752940FDA5F5EEDE38815D826396E1AC397D266ADD43AAE1470AA407BB16B4E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIToggleEx.cs.meta",
+    "sha256": "D00A2BED0FE9B315CE7D20459AE6D8161323899FEBF7F4F2642BA94745088759"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIToggleGroupEx.cs",
+    "sha256": "B654B142E8704D1CB0C625935D80C629D32434704098C2A62486B9BEB2704C28"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/EUIToggleGroupEx.cs.meta",
+    "sha256": "F630F2F8AA97B516E8CD91703D311C761EA11A839B26BB100F9A96A77DECA720"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/HrefText.cs",
+    "sha256": "7853E4F53CF156FB242C8DA01B402658C8E17CCBA0E7473421BDBB1F36FF8324"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/HrefText.cs.meta",
+    "sha256": "E5CCD89669B95C119AA1B5FE592B5536F236F9284EFC8882632EAA180BE688B4"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/IBindlessUIBehaviour.cs",
+    "sha256": "37E102A1AE7EC3261E066BD05788A2C8204F3F31EC86C3585099C4266A36B414"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/IBindlessUIBehaviour.cs.meta",
+    "sha256": "E9275214BA4D636BEDD2DF45583566D563CB336E92C415B679520711F94D9F0E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ICanvasSortingOrderHandler.cs",
+    "sha256": "9C66C65AEC19099A19B7D0B6F78F115B825680B3C01E0D6D4B4BA1A56406AA92"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ICanvasSortingOrderHandler.cs.meta",
+    "sha256": "A11CC1EFB512B78AA744E07B4B93F2D374646A5233C14ACA3489A1582334E412"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/IEUIExposedChildProvider.cs",
+    "sha256": "887A61DC5875FB5A01C4401B3D4E18314B4A3FC14F8E777686F790ABAA905721"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/IEUIExposedChildProvider.cs.meta",
+    "sha256": "96C29371B25FCCB33440A05385373D99FF00D8054B56D94AAFE3B4690290FC1E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ImageFont.cs",
+    "sha256": "4B35CDBF5A87E0E185E3CE557F941B5B6316AE141A376BCB528E4DA4AFB095A0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ImageFont.cs.meta",
+    "sha256": "A3A8613BCA60940163865F123FC86BE19C6CE775376F002C3C81BFE3ED29D7D7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ITextLocalizer.cs",
+    "sha256": "A8ECBE4F758D70656C2D645E80D3897B517EB865E897584FF362469BA1F264D0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ITextLocalizer.cs.meta",
+    "sha256": "4A559EE498C1C7CE1F7AD57991E60B5FC08AA50F4BAB4A6582CC577665986282"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/MergedImage.cs",
+    "sha256": "E6382FF46815DC513297FB090AF81345FA475C1976CE5AC80DA332AFECA05E3C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/MergedImage.cs.meta",
+    "sha256": "3AEE95CBC78647CDD7285A3282A25F32AA822C829109B83475EF69349357E127"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PackedTexture.meta",
+    "sha256": "A0E212C24406FAFD483911A5378768FD7B32415513BE0D17D610B3D4656D7FE7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PagePreloader.cs",
+    "sha256": "534E7EA4CB51FB76B3D8B9CCD59DAD9FF123F0F28251FDDCF8FB55D2041FC2C9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PagePreloader.cs.meta",
+    "sha256": "78A3FD826396C6C82163697BF10B7671706A91AFC183BCDE1417D030CA54CF79"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Plaque.meta",
+    "sha256": "98103CE848E88C1CF9E4C97ACF1BC126D79D51BA563006F7826EB761BA2C70BD"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/RelativeCanvasOrder.cs",
+    "sha256": "9C21C9CC4B67147055ABE48A2112F6AB0C6608B42E8F4BAED814577786F8004E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/RelativeCanvasOrder.cs.meta",
+    "sha256": "D26671AD935F76A7F7E1F86C1A57CA095DDFA53BA0F5C7D22989084A6DCEDA9C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText.meta",
+    "sha256": "57897B2BCCFDC81303D4A07CFFBD46D99A610ECB96C0B1C975D8BB892DD392C6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TabLoader.cs",
+    "sha256": "C453EB3D6B51B8E83414EDEC775BEF01DE7AD4B7696ACF364EE68F3C4E65B809"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TabLoader.cs.meta",
+    "sha256": "E47AEC762547C8566F8D5F1483FB400CBF817543E8A27680FA741FF325480BE9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TextLocalization.cs",
+    "sha256": "56E77C5941A79B970308410DE49AA5A87609E1333695EBF34F8BADB4ED000708"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TextLocalization.cs.meta",
+    "sha256": "61D3A5A4D79F6E103506AD247032D6B11E8D74A749818AB8B04D93D98EDE070A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TMPEx.cs",
+    "sha256": "2EC865CA6CCA198EF1DB284A80A48B0A38F165C642E8AF22805BA541BCED1C3C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TMPEx.cs.meta",
+    "sha256": "39B32FD6B7E9B28246A28FDB614375372BFEA288DC4FA20979E56183E938C559"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs",
+    "sha256": "A5A25803BA4F261F23177F6345D839A77538A2B500CD7005BD5CB7D835314EE0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs.meta",
+    "sha256": "4059BA694159785F4086CFA2824C6BB655B06D20457115AAB767CFA6A514F737"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TransformCopier.cs",
+    "sha256": "8F91CF014DCBD34B3C23FD43221C3511BD5EC845040BF4477C5954CA8BC6E9BE"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/TransformCopier.cs.meta",
+    "sha256": "BE2B5111B85D2497AB9ACBF3FFA5216F3A96B88E70B4A0D9BFCF0360F79B0E6A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Tweener.meta",
+    "sha256": "73908C9FE467A25A1E8ED36E121763D1FF2D029ADA1A20B1A770D8363ED96A2B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/UIContainer.cs",
+    "sha256": "8486B43E0B99916C3877DBD50DDFD6757A5596A5BCE10F1A3A32A5A1467F2772"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/UIContainer.cs.meta",
+    "sha256": "EF3D005F94A57ABEC46010B58836C0A9DF1F4F13872E3F6437B2270413033FD0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/UIParticleOrder.cs",
+    "sha256": "1ADABA39637A4B28E58D7855064CE77C7127FC20BFE3959AEE585A01FCE059F9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/UIParticleOrder.cs.meta",
+    "sha256": "DA58D44F1B2233AA72CCBF72030BBAD56CE037574F361484B1CA629381D265F0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PackedTexture/PackedTextureScript.cs",
+    "sha256": "72932ACA7602F2E596D5672DD8D41D34BCB418DDB2FBB54A6BAE7578B65D42B0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PackedTexture/PackedTextureScript.cs.meta",
+    "sha256": "C7AD8F34FC9D5B51A37EED42D56EDFB8EC1DC9978363BBF5A9C15BEE54CCB310"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PackedTexture/PackedTextureSourceData.cs",
+    "sha256": "B6D3C184611047BD148E6E49766DBE70F3C257A074FC7FB7E2C875FA094F7622"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/PackedTexture/PackedTextureSourceData.cs.meta",
+    "sha256": "5E430353550F58AAA8B83A56E1660E93AF20F60E47E85C0A2B1ACCD8E5DC619A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Plaque/Plaque.cs",
+    "sha256": "14731B5283D87A63B5C2E4CA303865EAE0FCA910B82FEAA08AF755FE7BEB700F"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Plaque/Plaque.cs.meta",
+    "sha256": "25594AEC8A38F169CE446548B8A716CDB576D4AD25F264261AF4C0081FCEDD0B"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Plaque/PlaqueUpdateRegistry.cs",
+    "sha256": "D4281BC9A8010E2F7445066B375D96EE04CC68A860C194F2B2A69C168B07A38A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/Plaque/PlaqueUpdateRegistry.cs.meta",
+    "sha256": "AB4AA8DC75EE407427A059B679CEA5786A6C86E854D0BC8F336EA6C0EBBAF8E9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowText.cs",
+    "sha256": "254F50D9B3D40B9B011CBC2966CB503023D46F231FBC91E5DAEB708D29C8C9C0"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowText.cs.meta",
+    "sha256": "75A58AEC801BAA7377AA94DE7B9F1C6EC529742CC16E09D39598FF82AB35B7BA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextCreator.cs",
+    "sha256": "4B205B6DD0EF98CD720E49E8C6BD7270AFF72EF93DFF95ADB3DAE10DDC131A90"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextCreator.cs.meta",
+    "sha256": "BC3AEB557D16C6EA96315885A013F1D0747CA33F83C3B3CBA064F195844432BA"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextInstance.cs",
+    "sha256": "F51F24BD227F1A393DD1F6FCA92F24CFEC0D135B24D5275E0A64C24F67BE140E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextInstance.cs.meta",
+    "sha256": "9BE7CA7CCA6143F975816418E47658E03199A3C00E3BA9F2D3C967CE5982E41E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextInstanceSource.cs",
+    "sha256": "CFE11D021FBC30298406827EAF04499905F441753173E5622B20542732346ACF"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextInstanceSource.cs.meta",
+    "sha256": "4788FEB90D9C57E419F3B93CDF6D623611F11B37CBE14ECC684E398D14A7E0D9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextSource.cs",
+    "sha256": "5D0D4D295B6431F105F374BF6F4D147FBA4D08B3B92D8A25D6BA577D3771AAD9"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/UIExt/ShowText/ShowTextSource.cs.meta",
+    "sha256": "230CB7D1FAD8602FE61DBA51B243ECAE75CC1DDC6A439D9C8C91B3F0AD7C78E5"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Utils/BindingExtensions.cs",
+    "sha256": "B7682F417142BA6380AADCED3331C8C8B3284E55285784AA9946316E58853240"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Utils/BindingExtensions.cs.meta",
+    "sha256": "37033D7F9E04E4102F25E69B0A53C2BA1056DCC4DC83F301AA89652B88ADB00E"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Utils/RectTransformExtensions.cs",
+    "sha256": "0997C44421E1460F7EF03ADA782B9EE758FDCF8A8C6389AF709BE4498DF5519A"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Runtime/Utils/RectTransformExtensions.cs.meta",
+    "sha256": "47CD1F8441793A3A4341E87F5201CA2814570D17910962D3D7E63060489E018C"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode.meta",
+    "sha256": "6B975865A7B188D75FDA4E2B8D4769EEEA20DE08279BA8EDB07169B430994289"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/Ember.UIExtension.PlayModeTests.asmdef",
+    "sha256": "979EF7635875A0DD836D413B73A0AD280319374954D1116A8664B4F678423BF6"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/Ember.UIExtension.PlayModeTests.asmdef.meta",
+    "sha256": "4115AE37DF1528DD7ECB2DAAC65C188E3B300342CF924B6738410285D3650961"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/EUIBufferedProgressBarPlayTests.cs",
+    "sha256": "497BF5EFB6A2B06A57C55D52F4703E5BE0671D484E2E31531D0BD4B729F8ACC1"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/EUIBufferedProgressBarPlayTests.cs.meta",
+    "sha256": "C31C8035E4D014C8E78F2D91874644D522463B06952CB902BE011F7359CE2EC7"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/EUIRuntimeExtensionsPlayTests.cs",
+    "sha256": "06CB800F24C323E45E088A5CCDE55299D7D3B99C54BB5987C11AF83362202713"
+  },
+  {
+    "path": "Packages/com.ember/UIExtension/Tests/PlayMode/EUIRuntimeExtensionsPlayTests.cs.meta",
+    "sha256": "B7858503F2CB614F3842A9DA6CDEEC435FC1AA70A9EFDBA192E499BFD5D38C54"
+  },
+  {
+    "path": "Assets/Game/UI/CustomBootSplash.cs",
+    "sha256": "B97207EC105F3176B63A0DA83489A6C34A0754DA29FF01B740ED909E783497BB"
+  },
+  {
+    "path": "Assets/Game/UI/CustomBootSplash.cs.meta",
+    "sha256": "0A4A98DE4AE2CF482E912B9D46342D504B18880F91E57613CC04B2FB4AAB17E7"
+  },
+  {
+    "path": "Assets/Game/UI/Editor.meta",
+    "sha256": "C3B0F969482ACC0987E556B240F11C94552BC5D156226B49F3436E09F9E137B6"
+  },
+  {
+    "path": "Assets/Game/UI/EUIBootSplash.cs",
+    "sha256": "E7743C8F9554F0602AE5613D169B0258D6898F58097259BCA8FA1B7C72A578A0"
+  },
+  {
+    "path": "Assets/Game/UI/EUIBootSplash.cs.meta",
+    "sha256": "1542A0A19CAFF6D3FE2AFCD907F1A28389F7F42F5A419C4F87CA47C88894D1C9"
+  },
+  {
+    "path": "Assets/Game/UI/EUIDefaultMainAnimation.cs",
+    "sha256": "BD68F247347632E0F11DD7958649C71AEEED0C5D95328230FF38C58BADCDC837"
+  },
+  {
+    "path": "Assets/Game/UI/EUIDefaultMainAnimation.cs.meta",
+    "sha256": "76864EC63DF2A85D2F2495C326597552FB741CF452B614D428A9A72CD8170ADD"
+  },
+  {
+    "path": "Assets/Game/UI/EUIMainAnimationStarter.cs",
+    "sha256": "AD8B710A6832C57F31BC107D1CA67ABB53E31F63A15C3267CA02711A32B43771"
+  },
+  {
+    "path": "Assets/Game/UI/EUIMainAnimationStarter.cs.meta",
+    "sha256": "476699CB090E3FF7BA15CD17120203C2E543FADA01AC9316A936B0FD9D7C529A"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.cs",
+    "sha256": "A2F98C808F15EB9EC65B7A6BD3A2364FD51940DA52CF360555AED7BFAA3C36D7"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.cs.bak",
+    "sha256": "7383910BFAE3D80251713396B44119F234A1F3212BDA9F3959B8D380AB74E736"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.cs.bak.meta",
+    "sha256": "F8D6F1968F0D125D7D59BCD739FB4366571A519EA28A49B2F2FAC03D1CA566FD"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.cs.meta",
+    "sha256": "D4977BF99C0E2FBFBEF2DBFB02689203816EF7265F9BE36B9575721387EA1697"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.User.cs",
+    "sha256": "2B38BC6F73119BBC9FB499F7482B975A09935385E4B28C4934089BDD938B7225"
+  },
+  {
+    "path": "Assets/Game/UI/GamePages.User.cs.meta",
+    "sha256": "9F362EB81A8978703E434C5A8229670C7AC63BF772FADDDAEC59610034DF4B17"
+  },
+  {
+    "path": "Assets/Game/UI/Prefabs.meta",
+    "sha256": "75CF33E22F68463A047A59E92DC9C2C79E175D95D7324F11A036F0C39A873386"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime.meta",
+    "sha256": "5F905AD391AB0476C7A95F22E9D2E37678A6AED3F21AABC00C7EF5F93EED5701"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/EditorUIResourceProvider.cs",
+    "sha256": "C537AF447CD8562DD9FDC4FA6F54D964BFF899D9E46448462A8D3135843CBDCE"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/EditorUIResourceProvider.cs.meta",
+    "sha256": "E3E83BC16DB5143E5D3AB4D5B9D93A97B3596F03218AE01D2DB48A21779ACB0C"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Game.UI.Editor.asmdef",
+    "sha256": "ED1763B0FF4B1B04EDD4509CCFBEC936270CD91AE950CB031103F5EA9981DD9A"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Game.UI.Editor.asmdef.meta",
+    "sha256": "C3C3F57BAB7B6D029AE5EC53343B5AC6F98BB562C09642EB56DB56640AB1A36B"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Player.meta",
+    "sha256": "220031252E8F17CEA418E9A052F32B54AD4511D8E8C1C59E056ECF990E7CCDB5"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation.meta",
+    "sha256": "E62007FA13CE4B410C5A0890C5E5F0B1A4131009CB7BE383E20C2EE34FBB46CD"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef",
+    "sha256": "889B43281334E97DE912CEC5E45A11F6E6F35DB6CC8DCED72D03AE7B3B9ADC56"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Player/Game.PlayerUI.Editor.asmdef.meta",
+    "sha256": "62A41FA4CC6A8889B961C487F8FF40ABCAD9E35DBF4DA328C6F8805E3F6DA570"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs",
+    "sha256": "41DE127997F861817444B0A57230EB5572C96F2F7E08C4C505D0E332B92DFC80"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/Player/TopdownHudAssets.cs.meta",
+    "sha256": "87F6EC9D9FB4427587F347960C21DDC172C6C164CBBEE90835DB86C8F9363057"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/DefaultUILibraryBuilder.cs",
+    "sha256": "522A0AEE38AEDE4D8FFA792BB00FB824B10F68C17209A2835EEEBD1982921D5B"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/DefaultUILibraryBuilder.cs.meta",
+    "sha256": "2016BBF820417C07EB03E482C284F2B3217D246616BB38146C0B6A60ED96FB85"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/DynamicUIBuilder.cs",
+    "sha256": "0D1850F5886C63DED6F78193E18E8D27CFCFCB7B1C1BEDC4E134209A0A749D9D"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/DynamicUIBuilder.cs.meta",
+    "sha256": "91A4BA4EDC96DC2E074B293A5A48295B5E208689E26742C1BE0441C713D9C6C3"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/ExpandedUILibraryBuilder.cs",
+    "sha256": "0E77F4FBAD0FFA5B3DEDECA439B69DB02934544B03CF50494B94A1863D37DF1B"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/ExpandedUILibraryBuilder.cs.meta",
+    "sha256": "06E0D28C4BA5830D3A3232292685EA53F51ADA711B8BD97386543C0C6FEC42CA"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/Game.UIFoundation.Editor.asmdef",
+    "sha256": "4C5D61BB95AFDC5E9A1B4B90ECFD926574E18EC7DB6D2E432CF201B03D5B9680"
+  },
+  {
+    "path": "Assets/Game/UI/Editor/UIFoundation/Game.UIFoundation.Editor.asmdef.meta",
+    "sha256": "BF88E582DCDDBF668EDEEE1254E37DB5B1F12087CF8910D82C94F7D8301454A6"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/DevCenterSmoke.meta",
+    "sha256": "A20EB56E98CEBC1B17F2DE18EDB7F82C8F264AC729E507B4A5600ACE75777ECF"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework.meta",
+    "sha256": "6193FB45DD3F852919DCFDEDCDFDDE6C686570131EFB3A6DD72BFFAD0373D353"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/GamePlayScene.meta",
+    "sha256": "B4D27997BDEAB47E7691C07C28A2F9BE758973281B78EBE90646BB26F9703850"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/MainScene.meta",
+    "sha256": "5A1FEFC50A9640B3E70C9424E7171F5CB7AF5DBDC30412A76E80B28D42491569"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module.meta",
+    "sha256": "42C04009AC6837A9E1B75D2444427B88E5DDFD0A80E582D1C9B4D62B7E05A65D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Prefabs.meta",
+    "sha256": "4E53EEC3CC70D4F2D539B0E2F2C80879677579944FE9FDA71EA427788948655B"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/SettingScene.meta",
+    "sha256": "7071BF6E11F79C586FA276DECB20100F632A8FA54CF9909E057B5EE6EFF1F3CB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/UIFoundation.meta",
+    "sha256": "76E7DAE1A2F3E55F3BD1813953AA13AB34E44D4944E6F0EDF96F1B37412B080E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/DevCenterSmoke/Page.meta",
+    "sha256": "4A8BF6D23278756D87B616DDB37D5D10D9B960E184B08B87D6351A210B9DC143"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUIBackgroundPage.Binding.cs",
+    "sha256": "5E911C644304CB2E59BDCCC54BBF90148F245A011CF8150C81BF6990121F98FB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUIBackgroundPage.Binding.cs.meta",
+    "sha256": "C7DDA96BEDE3F6916BF66D92864BC6E8594832F08D723CAA1916DCE124BCD241"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUIBackgroundPage.cs",
+    "sha256": "3892E18DC72C3E236ED1705699417C75AB8B6A02FD49D714148550E72E748AB6"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUIBackgroundPage.cs.meta",
+    "sha256": "3584A2B326A7F5632173B1B5BFC176344C372313356FA4D5E1B9EB11AA7C0C1D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPage.Binding.cs",
+    "sha256": "8280F1949079FC963929493B59392481E30B676957BE2F7B94164D2CF6FB7F95"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPage.Binding.cs.meta",
+    "sha256": "6609436510D76B40A4E0200019381B30B14E267E507BDE38AA8890D1F81A340E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPage.cs",
+    "sha256": "F66DA959826BEEF4CE972C5C3E86BDBC236577ADB0ADDE05D57E69F436A1232E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPage.cs.meta",
+    "sha256": "6B36F15C9A86A9CD367E45167EAE7D80ECD05A28F50E20708876B19984498B83"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPageSettings.cs",
+    "sha256": "EE6817792D5D7EEBE683972A598560443777A25D64ADB4EC4446B78446481E4C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/EUILoadingPageSettings.cs.meta",
+    "sha256": "80678ADF7E7C27CC583801B87ABBD00593AA46BDA730B390ECD20C33A8578A1A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/GMPage.Binding.cs",
+    "sha256": "A9BEA2334FD9705606F117F44703C7E8FE1B8C46DFB9B121E8A4C79A9F6E353B"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/GMPage.Binding.cs.meta",
+    "sha256": "2D32687C519A1D69E4495312D31327B8429D4146FD2B69803229EF4F5181135F"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/GMPage.cs",
+    "sha256": "DD26B1FAB4185AC4B08CCEB7FDADEB15BAC38EF8BA2A9B9C5BCF4D6D33EFF3F0"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Framework/GMPage.cs.meta",
+    "sha256": "EB713ACD1B931F45D54C9219B25FB322E5863F3046FDFB9FBDDE5198C7B2A8C0"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.Binding.cs",
+    "sha256": "F55F2D58926BB9B4E8BCCBEFC597CBCC06FC229076BA087F68DA07DEBA3B73DB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.Binding.cs.meta",
+    "sha256": "FB99505EE18DD5FFC4CBAD377DEE64145F01DA72D8F1C8A332FCA79164319881"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.cs",
+    "sha256": "1361A242401161FE986B9B2F6ECFF86F56F767C35D79E07117D8A0C68AD5A2BC"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/GamePlayScene/EUIGamePlayPage.cs.meta",
+    "sha256": "6B02AEEED2E9A2CBFFD5B1D69CABD15F0D52ECEE411370E903E7F2AA418F425E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.Binding.cs",
+    "sha256": "B888268F7AE76FC6989636C0BE9617ECBF04E53A318D9CAF7E4422B378FF3FD5"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.Binding.cs.meta",
+    "sha256": "0FB45223F28C3B2D4D6F4A2A5B62EEBBF2A29F24C7325872252CE214F341167A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs",
+    "sha256": "719E7ED0415D09EDB09610D73C47C6F05EDC2830DD63E6E214BCA115ADC4BB1A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/MainScene/EUIMainPage.cs.meta",
+    "sha256": "E8B1495399815BCD71C9D2D05BD272A72276B800B5A093E25720447C93EC6CCB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/Player.meta",
+    "sha256": "5195A82F2328EE7F8A943E1BE8ED61D971BDCA0315F8D67EAAA689612ED2DEF5"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/SceneFlow.meta",
+    "sha256": "D68D6002A1D5A068DDAC2141AD70A115909F8296243A07B83962C4878718ED8D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation.meta",
+    "sha256": "096B9537BD4C02633E63D8ED06AA957E36EF2E3C0B5ACA4294BCD9D3277996EB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs",
+    "sha256": "DD6F5349614F15CBF613658208216296FC777803AB5D82C2EE596DD335D50307"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.Binding.cs.meta",
+    "sha256": "F7C47669B6D716A43C6E04438E0CEB0741C3F0D1E8D584BCDAC7E71D6C1DAE62"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs",
+    "sha256": "B36FAE229CD4CE03B1740C9C4B7B22A5D4339014D51AECA5CB309D8884247BAB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/Player/EUITopdownHudPage.cs.meta",
+    "sha256": "754B30602BDED89FB7D924C8B884FE7E2B1BAAAC32CB009EF2D39E18CA3C66C1"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/SceneFlow/EUILoadingProgressItem.Binding.cs",
+    "sha256": "DB363D33EF1BDE601739CCE628EE3EF057FF5D5A079E5224DF37FE59CD400550"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/SceneFlow/EUILoadingProgressItem.Binding.cs.meta",
+    "sha256": "09EAF5310BC5BE3455F53318B86E51B8A5EEBD28D1B3538CD7EB70C843AE8381"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/SceneFlow/EUILoadingProgressItem.cs",
+    "sha256": "CBF4BC6781A0FAF3A5CAE64AE0DDCD2C81D47FE45D7CCA3522849775568E750B"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/SceneFlow/EUILoadingProgressItem.cs.meta",
+    "sha256": "EDA561793739E328C3E4375D63DF5F0871EB32A5C8B34742EB07CCED4CFDB18A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIAlertPage.Binding.cs",
+    "sha256": "31C94C20DFCF00CE87DC1B5FAA26CF727AB6315EA2F75173BB84DB45208BBFC8"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIAlertPage.Binding.cs.meta",
+    "sha256": "03C923E2191D486D887A9536F5DCD822B5B3C0BE8D2FCA93B05C1260C3E80B29"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIAlertPage.cs",
+    "sha256": "167E06E5DEB21203421D251744793B021D3F5485F2F2279E7290F7FF71CED855"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIAlertPage.cs.meta",
+    "sha256": "FDCB03C16E0F0424B0A01CE93535487198C6CEFC7086907E3EFF56E434687E1E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.Binding.cs",
+    "sha256": "925F6D788B4838EB0C875A83E286688B0F1EE49F5A5656D7B2F84408DB9EFA65"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.Binding.cs.meta",
+    "sha256": "34951A8720B252470931F0B37608E8CDC0CA687CF1D56E8FD8DF3687E06A1AD8"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.cs",
+    "sha256": "FE3207560BA89265A859E58720CD95E86B2EE47AD229F795A963B3188438899C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicListPage.cs.meta",
+    "sha256": "8AAAB75B2354ABCBA7EA0827BB471E61E5DEB2A922B38ED48882835FBA269BD9"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.Binding.cs",
+    "sha256": "509D0141A1BEFACABCEA98959AC09366C3163DDF37F54962386BF48719AD4B0E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.Binding.cs.meta",
+    "sha256": "19FD699CD73D42033F71B2B866820E30A37C74FBA3CD18C7B9B2DCE575A91996"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.cs",
+    "sha256": "06B7DE0A7BA8ED247783901B376C410F2AACD807736C145B9E68BA3B312C68AF"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateDynamicOptionRowItem.cs.meta",
+    "sha256": "ABE6DC60DA1983715F7BB67EFA6134A98D9DC78BB6A39D56B3E518A0010839AA"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.Binding.cs",
+    "sha256": "54C0676B52DA07766FC0C564DD4F98177898C8EFC9FB39AAD3141C16E97A9E34"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.Binding.cs.meta",
+    "sha256": "BF61674FC84FE18C736DB87A8B47B928E098BB9A532492B79F6EC804DE4C5C49"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.cs",
+    "sha256": "B02209613377A11F6D4131F953F0DDC4F8D9FCE9E7B4A92C86398084632E7FA2"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIBuiCandidateMainPage.cs.meta",
+    "sha256": "FC0F4DEAAF85E85E71182843689C14D6D087B55DB168892BD5681D8C23FBC4B2"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIConfirmPage.Binding.cs",
+    "sha256": "6CFC8C9A30640649BCD7505ADE7E477087F6C0D4FAC31EFB01DC4624ED9364C9"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIConfirmPage.Binding.cs.meta",
+    "sha256": "565019D637D4CC9692AB3FF9C44A2D08F161B2A632599F399EE8ACFD8B3989DA"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIConfirmPage.cs",
+    "sha256": "D48B4BF7A2C29B7306DA1EE2EF795DE02F9B61B377260C97469A46062F1D5D7C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIConfirmPage.cs.meta",
+    "sha256": "74B3EBBD31CF03A0C209BDD8BED8BA125580D984DF37CEBEC17614C050308875"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDialogRequest.cs",
+    "sha256": "7EE652955149FCC0526971EC700D7DCC8EDA24B5F07810CB1E28944536432945"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDialogRequest.cs.meta",
+    "sha256": "D0AB9D861E2FDB3C51A1FEC127AE46740EF190A00D600B4F7CB7717A7457042E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.Binding.cs",
+    "sha256": "561E717960007E54F948A437C8FAF7A9A0D19CCEEECFD3B3E985546DD5CD9216"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.Binding.cs.meta",
+    "sha256": "4A6B135F06760EBB61F3FD3DA478F7137AF231DDC75AC12E3C14EEFAB236372A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.cs",
+    "sha256": "62CED98A1B4A47100CF3E8F62E2145028D4CC2DD5EBF7D28C70A34B0B1150B93"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicListPage.cs.meta",
+    "sha256": "68B0DF1CBDACB4E490E529E841CB4D97FB0345674FB83E77BB42DEAFA53D1C01"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.Binding.cs",
+    "sha256": "5CF32B1115D431330DAB7D1B6C4F485EE66AEC704817AEB88C1C578198B1218C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.Binding.cs.meta",
+    "sha256": "DB45642A31DED3E7BC9E739643E21EA5E96E35F1EC2FD3F2CAD6BF34DE21537A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.cs",
+    "sha256": "EDB31B3ECEC42E742977D9D68A62A95BEA2ED43C268A10233E9AF669F6A5A63F"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicOptionRowItem.cs.meta",
+    "sha256": "5018C814412DE74A26D436B2CC36E733E2F9188E6294FDDD6DCBADFDCD1DE55C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs",
+    "sha256": "1CB5F07635AB4B9D227B64523266F75E4FD7D9F1143A62DA023B86735A29F136"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.Binding.cs.meta",
+    "sha256": "7BD46B9B39F1E657285D23F40ECA72E9358A15BEB1AC7A5DD43B4016D77C286C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs",
+    "sha256": "F10E1E5B9047902C68C2F46173FBBD0BE36D38CB7ACDF715E934CA0E4110411E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicRowProgressItem.cs.meta",
+    "sha256": "48A8070B0031E61F040080579287F2A2CEE4DA72ADB257F75EE355C33452551F"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs",
+    "sha256": "DF47E8F8B50410500DEF396C8E04399EE787326DF01982BDF639F829C59DC309"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.Binding.cs.meta",
+    "sha256": "EE299DFC160682B4846D1ADF04C4D80722792D5A1CE7B020CB88820013F71BA9"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs",
+    "sha256": "03509E4B7FBD7D4F16E1EA7461E99668C3FC3EF4A1ED5CCC78C565A232830156"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIDynamicSummaryItem.cs.meta",
+    "sha256": "1859DB76D8BC0E3AA439F3B8712E869D7D80447CB9CEB116D88BB16685671318"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIExpandedLibraryPage.Binding.cs",
+    "sha256": "A67198AC095E0F7EB322BFA236524CC50DF3CDC72F3FA45335D3C8DDDC9D46C5"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIExpandedLibraryPage.Binding.cs.meta",
+    "sha256": "B2B5294B1A03BFD0673594186C7E4B086CEF6AA8EDA898224A7D3D8DE67CE381"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIExpandedLibraryPage.cs",
+    "sha256": "6FA55AC762190FCC35DE25DF9D7239CE862FB1C2442BA0E4B98C30F17A505AA8"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIExpandedLibraryPage.cs.meta",
+    "sha256": "64A7169DF0C8A24166FADC3F6A1ABAA1E8D1ED58E19F30A1C986950D55AB182A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs",
+    "sha256": "3D8BB657077BE764797F601B645EBDA5571416AB383F483C1987C81FB14D94BA"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.Binding.cs.meta",
+    "sha256": "EC96F07886CE3325110C494B777E1C1ECD3D46A6E5192839FC202AFED02523FE"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs",
+    "sha256": "43E63847F35F22B520EC71BD5E28EEF7C7BF67A3247D8099B66B517EA0CAA9B4"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMEnhancedToggleItem.cs.meta",
+    "sha256": "97754E4F20B87F80552EDEA6022F6759861C314DC4310F089815C0F01089383A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs",
+    "sha256": "A1DEB412269EB537F8485AC66B2B4015F079B0143A1EA53E17DE79FB171436C5"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.Binding.cs.meta",
+    "sha256": "42A458DB28ADEF03974959A72984E08177BD351E922730E97953D4EA93419D4D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs",
+    "sha256": "97DC984667C99B924C92B7170AA87934B6549EDED6E4D9FA15F13A8223B9B055"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMStateItem.cs.meta",
+    "sha256": "03444FC223A3CD08561533E293CA59FD304FB313C88C42BC53151E8FAC7AC2D7"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs",
+    "sha256": "C2C900B3F25C2A252F19838CFDEFFDB10DCE451C93CF1CD5096604D24E0E5DB2"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.Binding.cs.meta",
+    "sha256": "210DBF6AA3F66ADEF86B868634AFA49E16B644B34386A5B8B2A333F8E3DD25BC"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs",
+    "sha256": "CC4E934215A78F4ECBFC1C6B4721EDB931BEBC2609DB82C151D08C29B0CD733C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIGMTimeScaleItem.cs.meta",
+    "sha256": "D3C38253B8E6D7AEA19DCA178294DDFE51D4E25E0AADD55614334E2C2F207A0C"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPopupPage.Binding.cs",
+    "sha256": "B90C99B8CF77CCF23CD86095527E332DC4C2637CD7D81DC38C07E925A8D045C3"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPopupPage.Binding.cs.meta",
+    "sha256": "563AED64FD51ECCE226E6891E0C719FF958EC45E3A46920C598BEA3729551959"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPopupPage.cs",
+    "sha256": "E1CDF2944DA8C97AEFE40D9E13CB8A97D3A0566C8EF80D5EDF23771CBDCC76F2"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPopupPage.cs.meta",
+    "sha256": "1C86EC552141E09056E223EDB743BA40F0AD3CCFA1DF90D8209EE76DFD581C27"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.Binding.cs",
+    "sha256": "2D576D98635A94B348691CCF05CF37AFB60C038508CA42352C012402A711860A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.Binding.cs.meta",
+    "sha256": "5495C7F082F0E385D774E546413CB306B0A333B957D65ED092B9857C43AECA27"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.cs",
+    "sha256": "88E11E422681010D43DF2A8A1ED93A554DB0B701E64DE65F0DD7953EC12DB423"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryPreviewPage.cs.meta",
+    "sha256": "4CDA1AC47376A51A0D56E5B2A5F6FF169353C87716FC4505BEB843E8AF1256EE"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs",
+    "sha256": "0E5E4454D390BED0DAE6EB327BCB20A55C13A910C78ECAC9F835939B08F837FB"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.Binding.cs.meta",
+    "sha256": "D6EECFEADDDB0C020852D7B8F607F6037F1CE7F2D7C2FC9D43D29B8A10FE62E2"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs",
+    "sha256": "DCDE109E178B5FA58EA5308F6F5D11489B1C26E674B538488B4D75EDCC866D5E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUILibraryProgressItem.cs.meta",
+    "sha256": "2E29CFE9699A288BD7DC72C4901E927A333E83E17C38B2E18EAE7B9BFE62FAE8"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowItem.Binding.cs",
+    "sha256": "B155BC74151D987CA26B1CBC102B41EA3E660ACCE632AF78FDDBE3F58623111F"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowItem.Binding.cs.meta",
+    "sha256": "3CA0A2E92ADDED9AACB277528FB18ED1D8BA1F6B3004B4FFC23453AA57292B60"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowItem.cs",
+    "sha256": "EDE745CE42F1ABBB81A19A88F1714B07964356B13C0D81B13AA8130C205FADF7"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowItem.cs.meta",
+    "sha256": "CD320B50831BD2102BBBC82FEA9DA553A480A658643F82C5A6FB81CDC7A2B54B"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowVariantItem.Binding.cs",
+    "sha256": "84E4060F7A6E99277063B1744E40FBB010AAEF88418EE71FC7BCD855FF170207"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowVariantItem.Binding.cs.meta",
+    "sha256": "E8B80B3ABD7CDC20C25744D9E6DAB8B9F60C9C8DBFEA125E132D32A4984DDDBA"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowVariantItem.cs",
+    "sha256": "766BB0688BF4E9FFAAFEB77A97D714BB3C90A63349493658FC6483489CB39569"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUIOptionRowVariantItem.cs.meta",
+    "sha256": "B4F1CBCF2EF354E48D5D57E001A4E935283081BD83B7BECCF2A4E0A0DA2EAC76"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs",
+    "sha256": "587FDAD824F490CE8C87BCC8202FCB6A8B4A90953250B0BB0DA475802E500327"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.Binding.cs.meta",
+    "sha256": "FFB7F43064DF853D548AA8D614FD35F2AF1C5BD90C069ADFA7A564915F4A3EB6"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs",
+    "sha256": "AAD003A93EF6FDEF6E84AABA09FACE017810B52490CD62A28E74A4525C69DD67"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISettingsContextItem.cs.meta",
+    "sha256": "A139496A2308540A94F49DC20420C6ADA35CB60E38F38E8E8BD752799FFC9C6F"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Item.meta",
+    "sha256": "A110C58433AC2C67F4B548D8521801368A9E489F9A1B1F9FAE2F585BF1CEC09D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Page.meta",
+    "sha256": "55B7DF2AB45DA511894482C52BFC59A5E5829062FEAE41130AD8A98163E43885"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs",
+    "sha256": "2CB9B7C5C634797D09CDB487DC0D4873C8AB7EF7E5D190C97F2B932521A9130D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.Binding.cs.meta",
+    "sha256": "178DA6AC104162B85690DDE75917F9B55ED14B1522DAD0E4E9703693F1932CA0"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs",
+    "sha256": "FDC1D26D2B6CAE4AF0EFB01F7F17BCDD0331122891E266F5696D3412B8C95E6A"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Item/EUIOwnershipLeafItem.cs.meta",
+    "sha256": "275E69D92122CB43F5EC9ED12C3B0A9215E79841DE8926E8DB6C772C90AEC500"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs",
+    "sha256": "C187E8D05668BEB8ABF57A58DC0C351E5DF62B0AF6AE4775493A0B088254FC2E"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.Binding.cs.meta",
+    "sha256": "6E838703C1DB9717AE54D14D4F38733CEB6D15DCD3CD63B429F84255D4D005F4"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs",
+    "sha256": "D48D87422D152A6864C4CA9ADC09078DF865D41028E70FE63676E4479A970876"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/Module/UIFoundation/Page/EUIOwnershipExamplePage.cs.meta",
+    "sha256": "0C549513099C37F7456381290E4B77BED273B9ED028D812C32F9F1344E8D7F63"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs",
+    "sha256": "E5365241C3249BB6D8CA5F6D7ABD909D9C8C3C14BB914EAA8C996EDD0B1442F4"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.Binding.cs.meta",
+    "sha256": "A418D1C5E1B03DCA0BEE95878945EA9C266440343C8AB47F1318D233EBA14A5D"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.cs",
+    "sha256": "90A4666BC7E3215764DFE212567FFF75D7BB060DBA0F51B39D619B1A71D34B3B"
+  },
+  {
+    "path": "Assets/Game/UI/Runtime/SettingScene/EUISettingPage.cs.meta",
+    "sha256": "817A02697BE2F9AB326E93DD1ACB03FE4B0D05525F1979DB3A8F8D3269FE8E81"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common.meta",
+    "sha256": "E53BF49F4469F4427B0CE0D03D639582A0C219E0370CE422F4E1E807DA67CEE7"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module.meta",
+    "sha256": "20D78DC409BCE414E38DF63FE95F86202257D3749DD841237BAD8FC53906C7A6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator.meta",
+    "sha256": "369E6F9518542EE7C1F72FC11D8E8DD738EC9A7C4A57640E77D9F94CF9D771CE"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas.meta",
+    "sha256": "00FCA0B7D790E3C9D63D54DD1616B77986E12EA2877DE7440B9BD1567EE6229A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts.meta",
+    "sha256": "CD02F3D2F32C97A7DF1B26A62786BBF6BCA97591C6517937B5ACE6C9F58F7DB3"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs.meta",
+    "sha256": "8080730E8712E3A2F9AAB4CFD4DBA15C41CB67FC7CA5C8367DAAB0278FF142F8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture.meta",
+    "sha256": "CA5D8DD4803909B2F278A9C7F745E6B7DA5CC1EC892244CEE0745E8E9A9A34BC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Ani.controller",
+    "sha256": "DC6D51E8CC9218E29C7957D55A3B51FE070ACA1CC61455DEAFAE57E69FEEFBD0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Ani.controller.meta",
+    "sha256": "45D10BFA2CDE59E8B49C619EA67A0ECC96F4BE3F457836D0C7390474060689AC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Enter.anim",
+    "sha256": "915D28D671AC26C1CB0166B5868C9D7EAB5764B3952F9A1185693BF3D41C9D75"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Enter.anim.meta",
+    "sha256": "4AA36B7245CE5B8771853A4C8A610D54E08CB951F398FB1AC828184B68445D71"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Exit.anim",
+    "sha256": "0B68BF2B09737FEC29800B98A9D6121B43EECB0BD697C0353BB953B8157B8D60"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Animator/EUICommon_Exit.anim.meta",
+    "sha256": "A69506C0CA4D83BEB862B1057C0D6A9F45FF4EF2F77BF8A40DD774929A163E06"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot.meta",
+    "sha256": "CFBA209167B362E44B1C7B5802AB3C03C1D455626ACFF33DA874BD1EFFE45572"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings.meta",
+    "sha256": "F31652AC0BE69DD5FDADC90CC5B29538F6CB142881FC7B5B0E926E5745F7F771"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight.meta",
+    "sha256": "A2D9FCDEB22419101E221C3758C9A6680CE02D595FA48573D7175F60571ED30F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/OverlayGradient.png",
+    "sha256": "C52C8471B5A4CEEC98BA3590F655ABFEA22FA73F05CED9E6D927364A7BBE1486"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/OverlayGradient.png.meta",
+    "sha256": "B1B26F261D144CD8A7233341CD30CA9A5D411B6760047F33F45FCEF699448736"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Surface.png",
+    "sha256": "C7B8F585CB3C7F35A3CD6CC46BF662C58D93BDC0CDF509E1686A7F6837B78D8B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiPilot/Surface.png.meta",
+    "sha256": "3D433D211074453D987EA214D4A15030D88DDC037CD55BE55857C53586E1D0EC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/CloseBackground.png",
+    "sha256": "295AA06C35647A617DB7C92C1C71CF4F632E7C247F52C0A197BF3B5EA98531FE"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/CloseBackground.png.meta",
+    "sha256": "ABDE73F9CC42FBA7136D431D6607DF3EACC3E2A030E70BB98E3888283A7B2B40"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/Increment.meta",
+    "sha256": "52DBF7B24EA99DA4F75F6E3FE63FBA6A6823FF706E0B19AED67F4FC1DC048AE9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/Surface.png",
+    "sha256": "C7B8F585CB3C7F35A3CD6CC46BF662C58D93BDC0CDF509E1686A7F6837B78D8B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/Surface.png.meta",
+    "sha256": "D5DA4E25776AFD1E6F189522E2B140FAC14DFB8EFB3AD04112504687A79BEB75"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/Increment/CloseBackground.png",
+    "sha256": "ADB2C7C1BCCD139EEC6BB0E6CF53BCF7FB724AF65590683C9EDF660ABA37E640"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/BuiSettings/Increment/CloseBackground.png.meta",
+    "sha256": "1C761371CFF98D5A0E0D3914543A516E54C6E46FE65BFFA75C3E537C341DADC5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/RoundedSurface.png",
+    "sha256": "575654EBF657579A4DBAB5A9F8F66438C7B3B93556D000429B0F689161F2F409"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/RoundedSurface.png.meta",
+    "sha256": "09DF5E4084278A4C900D91EB7056D52DB087180D9B293A32C6061F571E454CA6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/RoundedSurfaceHiDPI.png",
+    "sha256": "D93C4C0015582970D5C47162EA4EB317FE68E22BEA69C208B5C211E781B264AA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Atlas/DefaultLight/RoundedSurfaceHiDPI.png.meta",
+    "sha256": "E3EAA4118BA606E9C9D3E2DA28F9D8A20936E65798523D4308811F14648CB357"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight.meta",
+    "sha256": "C5A864AC7406AC95C06B99A710DC470F8802C98238151415F858924F1C2763F5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset",
+    "sha256": "14C9718D55D832593C689643CD752A277E0915FE418BB71F8F85C883653C0E4D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset.meta",
+    "sha256": "6275D4D2868F8BA9C0879F467C13B55123BF10CBEFD67B364CA6FC6CC2B669D9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/LiberationSans.ttf",
+    "sha256": "E5B0AF421EA2BFBC1AC8D251D647268087AE82786234C57F757D1F0B90FA8B49"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/LiberationSans.ttf.meta",
+    "sha256": "BE540184B8383B49037300ABC295970F668591E345C012CC848F329CEDEC6EC2"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/OFL.txt",
+    "sha256": "37F8552E9A874EC10710DC0EDE6A9ADF168E6609FBD02A507F35629373B85A48"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/OFL.txt.meta",
+    "sha256": "8671BFB55844A69653C3AAFA14BBDA9502F7F8F3426666167155EA964ECDF070"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab",
+    "sha256": "A8600928D83E3EDBCF80B3C37906165B065115EBD2F664578B14E2CEF74523C0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIActionButtonItem.prefab.meta",
+    "sha256": "B6A155198CB6A47D2778F27DB996065BA0F243BCACE37773185BF55FE8C2AAE4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIAmountButtonItem.prefab",
+    "sha256": "171053EA217BCEE48E575E88415D8D58C9C69FDE43DA94C92A41CB79CD351C70"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIAmountButtonItem.prefab.meta",
+    "sha256": "B9962C202AE3106AB02A440D1A33EDE75CF0EED609EF2E5959D86CE5D6026B12"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackButtonItem.prefab",
+    "sha256": "71E82BE5678F46320F0F5663F48EFCBCC0CFDEE02FFCE1E146396E11137D2EAB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackButtonItem.prefab.meta",
+    "sha256": "CC81F60B28EE3ED327954889FE0D14A2829B7E8B39BFAD11F67FBBFE51049710"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab",
+    "sha256": "7DF3EA58D19416390BAB4A4AD4FFC99F4FFF0FA307691EDCDD47ECE9A4A04BD6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab.meta",
+    "sha256": "BD832EF2EEF6DFF24A423D1A78A6F38F6C3923A04939EF6F7AF3CDD5FEB8EF8D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBadgeItem.prefab",
+    "sha256": "26F847CB7BA54ECD946026148FC27905E658F1CFEAADD8FFE540222EB429C665"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIBadgeItem.prefab.meta",
+    "sha256": "D5B311CAD32798B169C811CB1DCEE0FEA0D3D143C73E0C8F25C44A5CED66BDB9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab",
+    "sha256": "7DE086AAD61FA88E5631D6AE9DDEF0B6B885F2719AED0907C997ED18E94BCF6B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIChoiceToggleItem.prefab.meta",
+    "sha256": "8C94329E345DE04E839A0FE8DEB371ACB990AE5533EA628E16CFAF174A44D02F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICircleProgressItem.prefab",
+    "sha256": "E174B45B01E968BDB364480956D50C1316241A3D4E1216FA96498E0BF60B4CCB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICircleProgressItem.prefab.meta",
+    "sha256": "481DD79F36A302EFB3EE21D6A7C019565ED2705874DB53154FE488540B658D7A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICloseButtonItem.prefab",
+    "sha256": "8AE96ADABE95A5AA595C40AD3E8B4F6026E6E18FAFF2C6B9FBBA32A7036C4062"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUICloseButtonItem.prefab.meta",
+    "sha256": "47F609A78403F1C6CF2166CB24C182E038D00E5438FA2A373A1727A24B539DC8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab",
+    "sha256": "A242F388D8771F6ADFC9EC7C671689036C73E6A97E03EC8C8C9F651BCEDAC0AD"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContentHostItem.prefab.meta",
+    "sha256": "A2D0F51D8D65DF8042FB8515D7029CE4B20C7BF4D6587251F86416A64CBFF225"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContinuousSliderItem.prefab",
+    "sha256": "A5FB7CFFB0693A7DA83A2D58AE737BB920967D99296CE7BF6044283DC531A1A6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIContinuousSliderItem.prefab.meta",
+    "sha256": "51BE79A667E2FA4DF4FF9A395F9844FA60BC824DB5CDF244BAE7F7E764373AC5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDestructiveButtonItem.prefab",
+    "sha256": "D1A559A3201FD4DC348D724F02F2EEC4DAE0C0A0240BA7946365D8562808E3E9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDestructiveButtonItem.prefab.meta",
+    "sha256": "B8336928233158C1158896692B5ECF308CF7B98DA59060A4B6FDE2BA8A11BCFF"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDropdownItem.prefab",
+    "sha256": "A41D6140ACA4DD2F6DD203B267B8CE1B0303A328C6B51D3A2E68412EAADD2802"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIDropdownItem.prefab.meta",
+    "sha256": "76F22E6A271751E2F3931654EA009375462C6E2D285AE4D25680B36814C81DB9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIEmptyStateItem.prefab",
+    "sha256": "AB1ABB077B3505ACFB5AD4B90C235268453A6A701C8EA5253EFA7447FDC92116"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIEmptyStateItem.prefab.meta",
+    "sha256": "2135DA2B0BCCBC76476BAA78A332F4E1786D78A033C41E597EEEE89D86BF9F57"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIFreeScrollHostItem.prefab",
+    "sha256": "A1B89EE10A915FD005D86C1313D97319CE55518332955A54C0FA8243F36441EB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIFreeScrollHostItem.prefab.meta",
+    "sha256": "2E56199C1CAEC2C8529FCD1BB4A42FB09670DFC6E7BDF20D17177E1EE1E2F194"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab",
+    "sha256": "7936FB4158E7C79E0C0E0B4A9A6DABB43258571B729E09BA8C21FC873BA3240F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab.meta",
+    "sha256": "E7C49FC04893C3FAC985603866D22F25D918E1CA9DAB186D9C0589FC76F2960F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGridHostItem.prefab",
+    "sha256": "33F07E36F28F9F129213C0EC1F31C8DC9F58DD7B42523AAF0EABF31F57D49875"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIGridHostItem.prefab.meta",
+    "sha256": "DF101ED3B64E4B6B5130483E0E6C342FAD317DE7DE84B45047F88C7730EB3FFD"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIHorizontalListHostItem.prefab",
+    "sha256": "63ACDD9EE6606F0D1EE30BA952635FC1F14117679578890C9A2A7AC1E446DEB5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIHorizontalListHostItem.prefab.meta",
+    "sha256": "B9412EB0C5C5D99EFDB2BAC611EB4BC878D8772D1833C6C59D4277781346EFBB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab",
+    "sha256": "D176E51BD4E96DE155A2050271BD3607CDB0280B82E173A95D51491CB9F3DA41"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconButtonItem.prefab.meta",
+    "sha256": "9D53B76B1B60FD65DA17AC1D795DA58F97F43CAAFD2037F751456244AC45E852"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconCardItem.prefab",
+    "sha256": "4F916EAD83259791BB41DD60695EFED889768ED04C100F556FD94A1CDA3BABF4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIIconCardItem.prefab.meta",
+    "sha256": "E5986BDF0BD6EDD73C39B9A5F7AF28B952CDC4FAF15803AB116A69F2674D0D94"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab",
+    "sha256": "5186E7EAF555FF8FEE66BE49EC4BB9DE68C6A0B1B6065301CD0AEBD0EEB8567C"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIImageItem.prefab.meta",
+    "sha256": "B58361D3317B484C23E67BF1FAEE8E304F895E4A338BED1860F1D14B0B1DF741"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab",
+    "sha256": "64DC66B6AFBD76AE52406BEE472C447E99AF9CAC51410058E285F540E7B158EB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIInputItem.prefab.meta",
+    "sha256": "38A282D03095AD1F606916BBDBA997913CE02F7B7CC3E6E0F66B9CA118CDD3D4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPage.prefab",
+    "sha256": "EA373F2CEAEE531390A6DA897847E649C646042072054A5E168C902805B8C077"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUILoadingPage.prefab.meta",
+    "sha256": "C9D903C2D0500CEF216B75641C1C2CFEECACC6A88281B588B80A15A20C7C1D1C"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab",
+    "sha256": "7723AD800C855F7A5179C1F14F321169FA4079291229F392490B9D6E7A557D26"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIMainPage.prefab.meta",
+    "sha256": "A4D7DC194F80387AFF0FA9ACB8ADA5D21CA63CEFEF2F6B7BF4B8F668C79B622B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab",
+    "sha256": "E46F0D0B0F3D1FD39639B120F6E328867D9E42826C82674AA52E02F9E4E4061A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIProgressItem.prefab.meta",
+    "sha256": "82387A0A01055113D527D8EA372F711B377B60D1FD6CCD14F5BAB484BCE46AD2"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab",
+    "sha256": "3F4C8C0B73FD9CAF705E7E201E1E4F81D912248B9C96CB02F41F3F1490E30647"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIRawImageItem.prefab.meta",
+    "sha256": "640963444C3AA4D41C6C60E6515F12655790D3591A1598EF0B5AC813F7E48636"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISafeArea.prefab",
+    "sha256": "A2C33A8E5FA62961A9A21A648CD34A14E280BDC058364AE1DB976DFF8848240F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISafeArea.prefab.meta",
+    "sha256": "34FE627C402B7A7A4D88EC88FF3B59CEC4035BF6732C11AC8B17B33B59AA52A5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISearchFieldItem.prefab",
+    "sha256": "9D3148EB07A2772866A56DDB5313FEE4D0A80867A8681E078A58B613F7799A35"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISearchFieldItem.prefab.meta",
+    "sha256": "298B44502598A29A2D249788421CD7AD01BBBBDCDE01CC6B3AE3745FB090D323"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab",
+    "sha256": "8AAF9819483C2FE6423E9D6A4F76AEA9143C987BCC029ACFAB0ACE3A249303C0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISecondaryButtonItem.prefab.meta",
+    "sha256": "E37A78B485358E9D165ED25BCD40CD6163814A7836CDCCB5917D06E0CD2AD2F5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISectionTitleItem.prefab",
+    "sha256": "CAF733BA7136CD606FF7D2EEE759641EBA48D952C0950B0E55C8956C9E78F3A4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISectionTitleItem.prefab.meta",
+    "sha256": "43643D4C800671E058E80E48F36F57B021500E27FB53A795983EA5B12E502733"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISegmentedControlItem.prefab",
+    "sha256": "EF9070C7024B9FE7009ABFB69AC610DF51A9824F82FC0DDEE61725093A82D845"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISegmentedControlItem.prefab.meta",
+    "sha256": "669AF06DC6187BE3A6765202562CABA6928EE4E7F9AE8DC815163EA6A8DEB743"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab",
+    "sha256": "53E38BE1112CF3033937E98F2095213005BEC8EC030159283D5C2E07B16DED4A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingPage.prefab.meta",
+    "sha256": "4E142BD3C1BCC90AC4B1047D875FBA53B5AF82BE276CA71DBE65EBDEEB0751C8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingSliderRowItem.prefab",
+    "sha256": "BAC1583BBFDFC2A3CBAD71E5CB2E694E37A4F8C753135799B8AFE42C80F922E6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingSliderRowItem.prefab.meta",
+    "sha256": "D3E1C7E463C5674B734374A11455A9117794A5EC9B6CD35F31C762DD46D48C34"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingToggleRowItem.prefab",
+    "sha256": "F46436BCC2916337615884607C32A4EA510CA81582539F9B2A39CD4210FDEED6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISettingToggleRowItem.prefab.meta",
+    "sha256": "DDD2AD76452BCCFBA7117E0FEB07A4E01FEC6CAC2E5F4D7C5B0C99651464B610"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab",
+    "sha256": "7F0129B41940B675F6B9E0FBA712DBBB9129AE459D7070FF6B6E543C33D6AED8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISliderItem.prefab.meta",
+    "sha256": "854E572F224D5066ACD7978E2B7FDCAEF2C845AE666D6BDF7B4A0A20B818FB28"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab",
+    "sha256": "AA40374E9E262E8A34B79733BFA9BD2B9835E03AAE3C8713C71A2C24D08888DC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPage.prefab.meta",
+    "sha256": "21A4D95F16E4BECD7998FF741C634B7597C6B25D5073A286DA3BF3C3D0A3478A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab",
+    "sha256": "E7F0D46FA51D6F09971F8CDA5404AE8D652E757AA75CE0F3A49C3FC9B83506DA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStandardPopupPage.prefab.meta",
+    "sha256": "4DE0EBEA9FC3B26917D0A297D9AC94D848431F166A4A462007B183C9EB5F2DB4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStepperItem.prefab",
+    "sha256": "5A5929D0D7ECFCAFC5E10ED0F06DFEF05099CCCD62E3F66DF1D74DC2A973BA51"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIStepperItem.prefab.meta",
+    "sha256": "D5C415646A3C6B9E6B579BD7B4C49C24F97350B3A1480176B3AD88F92AB65A4D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab",
+    "sha256": "7D2DA8D99570BFA184EBC6A4BB0AC20462C2C60F069A4760766B40E7C0D91018"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUISwitchItem.prefab.meta",
+    "sha256": "57CE26129594FAC082E6C2CBB07DFBC4F38485EB2094AE0A3AB8F4B92D152E41"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab",
+    "sha256": "F0A9E8570659BEAAC921AE26AD38BC13B9B2DA1E32E358386BDA76DC7230C634"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabGroupItem.prefab.meta",
+    "sha256": "C2BD0A3EDDF1AEDC81877BD440A8A3B1F6CC70F058A9F96E92DE58E5184BDF9C"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab",
+    "sha256": "B9B65BD2080BAC071655C31F8AB4DB95BB8C5715679BA0DF064F4617B996DC2B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITabItem.prefab.meta",
+    "sha256": "6FC09618C4287A66902A07DB994E90965012AE0181F60ACD48D51A962BB6FBBD"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab",
+    "sha256": "9C1D3F4BA6D8496CACF85D479A429230C72260D3965B881EE1F223A517C9BD74"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITextItem.prefab.meta",
+    "sha256": "D5F97A923E088845898DC0BDDA74CF517AB39961F35172CFF11D8D6A3359088D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITitleBarItem.prefab",
+    "sha256": "5E0E92A6BB392842EA44FE94016CD87399A8598E1EC2CA3FC683CA9EFFE2A0E2"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITitleBarItem.prefab.meta",
+    "sha256": "019D9A0B0C9644C67CEEF0340542EE51BCA6CF68CA541802641BC1335857D36E"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIToastItem.prefab",
+    "sha256": "B017320F7740EC8A56F07FF17BEDAFB5CAE96EF14E09562F31469F5093C82B85"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUIToastItem.prefab.meta",
+    "sha256": "EC43C632A764BBE62F6898995D57019395FB797EC3A5CC11F4611961CC09A94C"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITooltipItem.prefab",
+    "sha256": "4AFA32C9E3960A062F377790FE6A982535057F2FC10073D90159AC8E98B8AF32"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITooltipItem.prefab.meta",
+    "sha256": "231455DBB178896ACFC96090D911B133F4B4BFCB46FDF5B5157AA3CFF090D729"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITransitionSurfaceItem.prefab",
+    "sha256": "9C04E8A36A7578DB5B8B33AC47314E5CE29F30F4B6BBE70FF0EC0FB76737A664"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/EUITransitionSurfaceItem.prefab.meta",
+    "sha256": "AD8CD332863449E0DD1B1A33E535434ED67AC4D5AE3BDAB6D3044E0246EFFAA4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPage.prefab",
+    "sha256": "EB36C29C1907FDAC14D5389AB532E393B50924D2695CDD9315CF3B5A1A1A20A0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/Prefabs/GMPage.prefab.meta",
+    "sha256": "40AD63ABD82C425CEB0B596B26BC59D87E1D1C49E3BCBF332D7E787E5114C94B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/BuiPilot.meta",
+    "sha256": "081BCB3FC183B52CF9931A33376D54048913A3665E0BF1543CC0EA757B59DE25"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight.meta",
+    "sha256": "1F18D95B6116AA38CC2B28F78AA3D61519F9957C146230A594E7D979707F788D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png",
+    "sha256": "28899587CE10D23D0EFCC9DE22FD1EB32B6400F96C18CF01EB30637D908D2860"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/BuiPilot/Background.png.meta",
+    "sha256": "1B6F6DDF9226DC409C0C55231F2C2DC17E02B4B0F8A1966459EFC87870FF7B95"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png",
+    "sha256": "E4C40705476516320F58149F46A334FFE3B5E548CCB972B07E2E65DB4931C4DA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Back.png.meta",
+    "sha256": "CC5597A25776F844C5927BB22A901CFF8F583089D5789E20E20D996FAC723C71"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png",
+    "sha256": "DE10D3347B04E5401E76A5786CA49DC3E0C52F260F23CBAFA7B2BB3901B00ABD"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Background.png.meta",
+    "sha256": "3FCB4A700A14D827A5D3F77F2DED0CBCB88A379CEC8C7F69E2C5485C9BB23C80"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png",
+    "sha256": "5258292AE9EFEAB98896BD49003F2CBB703F779AE21612CC800AB5D43ED96DD3"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Checkmark.png.meta",
+    "sha256": "810F5B1E0D570BA87287C1EC11EE509E39449AAB17B784E8621D503091975C75"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png",
+    "sha256": "3DDFF55A8F8D86F98F1F7A32818FA701C25513147F426F56120603F01ABB6315"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Chevron.png.meta",
+    "sha256": "05B7D5F989A8A8E1E9C22C5F71CB68A9D9C5E75B11464D7E0F41F019C5A31C13"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png",
+    "sha256": "911C8AAFD6561B1900E0A053C3C9C097E3422E6A170DB504D6D5D07EFD26F902"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Close.png.meta",
+    "sha256": "79766EB5CDB3FCCCC102D196736A671393FF8E9BDFBFEA463F594C983E330C30"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png",
+    "sha256": "D4BE0D8C473A276958A9EF217958F66CB4D68C7A6CF2FD40BA0D89F305A0BB7E"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/EmptyState.png.meta",
+    "sha256": "AAE1834C4A902C5B954DB875FD4568690923E1250A5EB9BB456B64CEF77C2FD8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png",
+    "sha256": "37EE011356333F3647590C2F71894E4194574A39D6B26782F4FE9DF97541A363"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Help.png.meta",
+    "sha256": "AA8D6D9C06AC490C25BDA72088CC821DA5CB056A48DF659E3DC607E5AA047101"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png",
+    "sha256": "0EC8C1543AFDAB07A4A068C1BF460B491A90B247FFBE47FE7B998974E00A239B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Lock.png.meta",
+    "sha256": "EB376BF77CA644F80FEA6AE73106B82A4E24AFE902B8F47EC5190BA5D07FBC74"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png",
+    "sha256": "B45F6D3C1E90EF8418B042AE0CF516CCF2774462A971E4D449671F24470B6513"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Minus.png.meta",
+    "sha256": "E50ED1537EAEE8A191E48021947DC92CA015BF9361846DDD771A409626D82E40"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png",
+    "sha256": "615AED75D4A120A5C72740D694C8FDE60D8DC2B4623A7E8662D1B046E551B3C6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Plus.png.meta",
+    "sha256": "CB960CD3C2C8C310ABC56FC6D7512EAA930B59F7506C5EA07A6076E8CC8AA41B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png",
+    "sha256": "F339E76187AC8536AD21FDFD8F31D6D864F15EF592E26CE3854029A0D437396F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Common/StaticTexture/DefaultLight/Search.png.meta",
+    "sha256": "F855300C789DC637E4EB2C22C58C68EE34CD3EED739B96BB986B45F558FFE9AE"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板.meta",
+    "sha256": "D26E449BC16121BA809EE88044E73EAA75227411159C539D15863EB60BDDF921"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/DevCenterSmoke.meta",
+    "sha256": "0650ED21AA96A3582D5E6F22E340290C52A277D4509D9C7368BC416EF0844A22"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player.meta",
+    "sha256": "FC63A745E761F637473A10C57D38C79EE2AA8309C389F1DE877AA20F25D68E17"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow.meta",
+    "sha256": "94704380BF15283294B65ED0BB20005B87A14CED83F2FA9510F109CEC84D96F9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation.meta",
+    "sha256": "14355220EDD6C302C9BC3509E2EE5F5F8C19E5F93E5C703D7A7D1713656A8C4C"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/DevCenterSmoke/Prefabs.meta",
+    "sha256": "2803270A37C56071CFBCE126D8D13D4CF0480759404E45737864BC8638262ECC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player/Animator.meta",
+    "sha256": "5B8B9F92F5AA7CA1706295499AEE73F12C3514B65A975A7F68D5A41545F2F84D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player/Atlas.meta",
+    "sha256": "5F58B6F7216EE07B551A385507A0CF44591C6DCCE62FC24FA6C613969F888131"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs.meta",
+    "sha256": "AF749C46CF8C0D1E28657A13C3C6022B02E2C421F93047390AA6A19858056B8F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab",
+    "sha256": "2EB417D0D7C426016CDD52FF66F648311B9AF22DDDAAD5606F600F3DCEA20F0E"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/Player/Prefabs/EUITopdownHudPage.prefab.meta",
+    "sha256": "194836BD8FBEED8DBBEC15FABF756961FE41A8B971A0A7114EA590D750532089"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Animator.meta",
+    "sha256": "C57674632806D2A0C94D09A916C7058471F9C8F9E03D6184D5AEA2C8FE51A6D0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Atlas.meta",
+    "sha256": "16C98068A23BDB96402810205FB3A140F03C209E7B03CF61326C3C1D675C0422"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Prefabs.meta",
+    "sha256": "52075DA585D35CFDC7499C6106664B8C12EDBCB8DDBC76B9D050EB0C3FD9B646"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Prefabs/EUILoadingProgressItem.prefab",
+    "sha256": "63CE02AB366E7B7B7E3A50A4B4BA1E4C632C0E774A7B4F41EB8D3A1F7402FDA4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/SceneFlow/Prefabs/EUILoadingProgressItem.prefab.meta",
+    "sha256": "524E16C294A45225058B8938B15756A33FE7442FCB17F3B8253BDE993470C0FF"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Animator.meta",
+    "sha256": "EC43150280DE20C58FAE11B900FBB10B7403781528F169EE032487781299FBAA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas.meta",
+    "sha256": "2313071212F702F5D7E2EF419176F1EEA4A86A6E9B2F6E1D7945B315F25280A8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs.meta",
+    "sha256": "ABD9F9D1070A1071B802383E0AFEA90D79D1B10D71ECF3BE9AE0A9708D4EACBA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture.meta",
+    "sha256": "20CC591472D683C7ED7C84C8C129FD38206FAB8F73DB424092367C86C368CF34"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot.meta",
+    "sha256": "CE2EDFA16E05FF37152220A2B16FC235CB254AB0DB6E1BCF55E3C5859AE21596"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Checkmark.png",
+    "sha256": "0BB1A37755BB1C40E10F0742465D52BC9EDA2CAC963D4B838558A8FFA68029D2"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Checkmark.png.meta",
+    "sha256": "DE84CB3BCD3B810CA9DAB06323CCED664643D7A8DE59AC691303D93141F34733"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Progress.png",
+    "sha256": "B97F6E331FCA04CFCBFCED4B984E7183D943E51460A68F828BC9F9D4F3D03D6B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Atlas/BuiPilot/Progress.png.meta",
+    "sha256": "E97C3294934856DA97B91E8BF87E8B7BFE5E34356EEDE489BFF631C0B149AB82"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIAlertPage.prefab",
+    "sha256": "ACCC5312F603C20A189708BAEE1997EB3B03CBABEC1A23C50E8C4B4F530D0E56"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIAlertPage.prefab.meta",
+    "sha256": "CFC95C10700DB63E393CA73FCCF53D7BF5EE5DAF144FF89B1613FABA3D5C356F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab",
+    "sha256": "9ECCB090C39776D57685BA83E7916C4D4DBEA7EC271BA02BF78F96A3AFB06FC3"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicListPage.prefab.meta",
+    "sha256": "A63F66A442BF93B4205E863CBBF1220ECC0E235909C410BB2C3D978042CB7723"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab",
+    "sha256": "0D55B2FF2D83090018095366B4CD19EBB81C4A8AE472567BAA5DC5A0E9B9F41F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateDynamicOptionRowItem.prefab.meta",
+    "sha256": "DF4D4A6DDAEE08117AA09623651792CB3A0A6B681F8A6364CC7926C851D31429"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab",
+    "sha256": "B6547E9B809B0B0E74C67BBDCEC66DD053ECFF4DDD969F1D84F190D681889906"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIBuiCandidateMainPage.prefab.meta",
+    "sha256": "EACBE76EDE61363C7FD71EEF63128A6E971F88385BA5A4402D5FE0776940D834"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIConfirmPage.prefab",
+    "sha256": "EB2A257E06944CFFCCE061B1019EDA42E389EA78DACC349DA4E245EC8A95B1F0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIConfirmPage.prefab.meta",
+    "sha256": "557FB608C5BBE9F6E89C3F443C8FCA41A8D0DF3C69703E2709E0E226C03362CA"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab",
+    "sha256": "6A3D55A15DE55E9A89D0003552EA783DE1FD3EBC24676588C2206976BDE65A2B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListItem.prefab.meta",
+    "sha256": "E6F95001360F879FAFEAC6780557D8CE98ACFA7D7642CD4CA2258D2FC4CE2BF0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab",
+    "sha256": "72C68AB03E5305740986DEB547229FE32AE627B8BE86AE518E97FD64D86C9F05"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicListPage.prefab.meta",
+    "sha256": "3644C1560521A3D68355965E8BBE3518231B60F6DCF3512D1708718E5EFA5E83"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab",
+    "sha256": "F19DDF7D9440A830746F6DB48D279B9206497B42AA2C2A2FBFDF57C1A5F080C0"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicOptionRowItem.prefab.meta",
+    "sha256": "CAE818A896A9F0CDF86F2429B60957BAB48C804577EF5BE865F6AABC04024574"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab",
+    "sha256": "CB49B79B1F001401B5E69B2367E286A260B67710FFBBCBE39A06D8D52A62E1D1"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicRowProgressItem.prefab.meta",
+    "sha256": "7A735DE25704ECF2BC85D1568DD187468B75832F526A72010CDD2CD76F393944"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab",
+    "sha256": "D85591D5E7A23A7FF146680C14A6950629F0B9EEB8418853D1185A327A6471F3"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIDynamicSummaryItem.prefab.meta",
+    "sha256": "F9E7F10F2E5C83ACA9FA92B41413A387A23A553DA8B05EF1148B85A71F125068"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIExpandedLibraryPage.prefab",
+    "sha256": "D095E37CB2EEBC77B9656B129131EBE75853ED64B0020610BC053339138EFDC4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIExpandedLibraryPage.prefab.meta",
+    "sha256": "6DB00786571D74F8C9A43E8698740B4CD6DF8464BC9982B6C69A5E92BCAB1FAC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab",
+    "sha256": "995B3844438EBB3DBCD86F0C9A24FBA23D09F558E99332E31161914F16E3F0AC"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMCircleItem.prefab.meta",
+    "sha256": "A3EE7031F7A8B527822AAD0B95DFF57A1D3EB795E2D2EFB682B313F5B6F56EAE"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab",
+    "sha256": "3A6B388793B7519DD7C2029C63A730F916E1A132DF5AD5C1BAB56331AB8AF610"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMEnhancedToggleItem.prefab.meta",
+    "sha256": "FBBBF74180CB29B7D2BD5D0EB1BD81F5BCC7F30A91521FDB3869AB41FEE64C34"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab",
+    "sha256": "6BA051E2EF447A1946016A0E0289F6908EBDFAC29FA13E8E82303EE533B203B9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMImageItem.prefab.meta",
+    "sha256": "0A347BF9A5732C3105459D178479AE8C982BA3836E07FCE480B6420D697E9B4D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab",
+    "sha256": "4EEAAF159FC8704A498864A5D49074D048A779F0ED08FEBDF4E254E7493E03C6"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMStateItem.prefab.meta",
+    "sha256": "4DDDB9F9C3B38302FF671900EFC77D9C995037DB37A61A11342BA39E4D57FA7A"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab",
+    "sha256": "E2EFA5315040BDED41E2B046969389A255191B21492B83A8466DEB82BC7EB074"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIGMTimeScaleItem.prefab.meta",
+    "sha256": "7A04F8B215C3DB67EF24F2574CB7CEE993C8BB4EE41DB14028105AD5F4A0F8B4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPopupPage.prefab",
+    "sha256": "973F498FF788BAE3E18514A0709D8883C1B3A0115CB3C9C786663DD256D7ED8E"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPopupPage.prefab.meta",
+    "sha256": "45B411C5BF13A7A6025F69B1E0DC888C6E6B799984D9B44B2FE3DF0EBA600A92"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab",
+    "sha256": "71334C36AC90FF2CA6904ECFAEA4113116B17B83778F778FD6C746B7D84740C5"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryPreviewPage.prefab.meta",
+    "sha256": "478892AC62718CF26F8334C106B41B4B9064E54FDAD6C28B9BBCED4B3ED83398"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab",
+    "sha256": "424AC76B2FDB2349A9512A8E0A45324376D2BAC0A8A3C0CD109CB62A9AE4C27F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUILibraryProgressItem.prefab.meta",
+    "sha256": "DFC54AD06DC9F4824926A2EC77C10513D04389B340759D0ACB4E7635CD23F0CB"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab",
+    "sha256": "F4E72275A4BDE1363172E88EC78AE88B469AF36AC5B2D9D81ED8A1D6F7F9D46F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowItem.prefab.meta",
+    "sha256": "4A213913A58CBC735F21662DC3FBA2D375E8A6268CDD0D1488E1184A830B750D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowVariantItem.prefab",
+    "sha256": "60A8D796AE534C9732110BF18020C2CC757B59023B2DA6FE1BA6BE3FE04FC650"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOptionRowVariantItem.prefab.meta",
+    "sha256": "A5DE75D9CDF2AF657C5D3C9F10961637D63E718A16AC369CFC58F21D35BA58F8"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.prefab",
+    "sha256": "D55F3805BCD3EC9F42BB826AE2840C4329899207A588F309AAC936C76DA07AA4"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.prefab.meta",
+    "sha256": "903C50885D3F2BFC00D4243D6A3E7B72223E18888465AA00FB318C294800A99D"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipLeafItem.prefab",
+    "sha256": "0470395948172BCD9EA9F582FCEB9863AFD9D1CC7D48833A7126356B77700A01"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUIOwnershipLeafItem.prefab.meta",
+    "sha256": "2327498515499D9D8F86A571B08A5DB198A261F76EC97804AC862AF069108C6F"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab",
+    "sha256": "EFC5D3FC2E4BF99C7CBEBA863278E7880EB83A8D7279CB20472241B5643E245B"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISettingsContextItem.prefab.meta",
+    "sha256": "DBCB54FDA642EC0D64BD3AE1DE2B9550D5449615EB728CFFEEE48CF184BAA7E9"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot.meta",
+    "sha256": "CBD46091494A6F6BFD38594171C631D5F682B58AB04D823520767C943E56C073"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png",
+    "sha256": "9A7F124D45A0559349A3477AD81BDC26126F789429FF4DE4191578C8522E9445"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/RowBackground.png.meta",
+    "sha256": "0BAA90EB4EF31C715DFF4DB799660D463E200DB826769D3498552D5E3949AAAD"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png",
+    "sha256": "77F5D9AF1927063E15DCDF522BF4B6C09334D731AB22F64E6B8E618D6D6169A2"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/StaticTexture/BuiPilot/Track.png.meta",
+    "sha256": "9802B36384D62ED01D215CCDAF2F4926A8889C56F7DBF7D28B8D9B29E14F1837"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板/Animator.meta",
+    "sha256": "D211A17E5865397A1C3FD95A0030248AC53C58905DA08A4B5BEE41A32C023017"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板/Atlas.meta",
+    "sha256": "D33FBE86DE6AB90E15A127CAE2321EE077A4D29319C8BE1FD5EA6AF19F78EDF7"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板/DynamicTexture.meta",
+    "sha256": "6216D665E0A0C858A7654BFDB251975AB2807C96E8E04E2F240C738A2C304E65"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板/Prefabs.meta",
+    "sha256": "F5EEF34C11D055F0FC5A4B715D36DF65D9760E97BEB84017CF45107A47D230D3"
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/模板/StaticTexture.meta",
+    "sha256": "D8763D51CB63B4371B2240CD627AB2A70AD0F392832EB175212BA71B70B13C96"
+  }
+]

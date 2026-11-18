@@ -1,0 +1,94 @@
+{
+  "checked": 69,
+  "changed": [
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassAlertPage.Binding.cs",
+      "sha256": "49FCEEBA77E5879453928868D3BD2E8E5EFAFAE47EC507679A995FC70D83DF95"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassCloseButtonItem.Binding.cs",
+      "sha256": "73A56253F2C472D4552BF31CEC05BCCC7ABDDE1AE8E59790CD3D0D5C4C43412C"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassConfirmPage.Binding.cs",
+      "sha256": "F4CCFBB668FEFED1EC436FCA65DB66E6A09CBBB74E745AB00192814A033E2B9B"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExampleItem.Binding.cs",
+      "sha256": "8289687FDAC14B2F3445803BA58B6FA8266E70EA830FD3BD716E5899E8505395"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExamplePage.Binding.cs",
+      "sha256": "D352C72C3F8A2809E5A3D1DFF7695C84200CDDF8337A42D47C8956B726E54D01"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMActionItem.Binding.cs",
+      "sha256": "27C2A11468B99F2DE5621FF0CEFD392B4EB30CC96A3F63099AB951746AC5F487"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMCenterItem.Binding.cs",
+      "sha256": "FC9F6EC50151EDC67636ABF6BFC8F729130008BFAA187B3F9389A51670F8B7DF"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMEntryItem.Binding.cs",
+      "sha256": "D0C1F9AEC2A8664E4615A367D4DD2B118FFA1CE853D3E6AF80B2473252D0E1A0"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMPage.Binding.cs",
+      "sha256": "A3B594BF1B96F9940471F888DC048E86A6DF1E9BCF05979495EC3351CA797841"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMStateItem.Binding.cs",
+      "sha256": "027252F8C836987E9ACFB02D91D0C214179C46DA11088C2F0ABADECC4A4E1312"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTestItem.Binding.cs",
+      "sha256": "8E58BF55D8932F0C01536B9178672F12BB2BC46369888EA0519D6D1900B2712D"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTimeItem.Binding.cs",
+      "sha256": "1619F03FF77190D89C7432AE599344DEC268B71D35A877862B83612D326CF1EE"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassIconButtonItem.Binding.cs",
+      "sha256": "926BAB72CAC972E3DFFBC660B9B7F5AD9E37C92B46DC6AF7E67B44BA3B9AD5FF"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassInputItem.Binding.cs",
+      "sha256": "FE591E80A9B926D06FA16316D9404E7CD790A3E2CCA5EBF6EBF1F22298445B69"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPanelItem.Binding.cs",
+      "sha256": "FE75D2B27E45B88B67762C45E42BC0DE7D238887D00D9544339F5A895B03EED8"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPrimaryButtonItem.Binding.cs",
+      "sha256": "7D12117A58E3568D518EBF4C78E93A1E86F2BA14B4FA6FFD07C32714A9BB43C5"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSearchItem.Binding.cs",
+      "sha256": "0EB27967207F0DAD10EC2AC6118DF21B442F8397F72C7F119529470D682FA525"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSecondaryButtonItem.Binding.cs",
+      "sha256": "85E280A227CC26996784C5A5D3C424C9D876E75FD69DAF279C0D86893B11F802"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassShowcasePage.Binding.cs",
+      "sha256": "FF7828A8029DFD6E13DBE2552C3DDA1DEA59C84FC0F1FFA802565EE0695A6D1D"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSliderItem.Binding.cs",
+      "sha256": "B254241B273523410ABF6129A5AEE77E7BC53BA7345323ED5E20EA2288E700A6"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSwitchItem.Binding.cs",
+      "sha256": "7E67681C87BF807DB5A19F0C0956EEE71ADE50F197174C015B656F17945B4E22"
+    },
+    {
+      "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassVerticalSliderItem.Binding.cs",
+      "sha256": "32F6A8284DC624956FF6917F7BAF481BAAE5DDEE61547902EFC734ED0DBAC39E"
+    }
+  ],
+  "date": "2026-11-17T15:21:17.2873616+08:00"
+}

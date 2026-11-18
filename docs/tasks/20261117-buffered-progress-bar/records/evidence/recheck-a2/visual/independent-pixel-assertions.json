@@ -1,0 +1,655 @@
+{
+  "passed": true,
+  "frames": [
+    {
+      "requested": 0.0,
+      "elapsed": 0.0,
+      "formalPage": false,
+      "rows": [
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            }
+          ],
+          "text": "60%"
+        }
+      ]
+    },
+    {
+      "requested": 0.1899999976158142,
+      "elapsed": 0.19142764806747437,
+      "formalPage": false,
+      "rows": [
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 727,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "fromX": 728,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                182,
+                182,
+                183
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 727,
+              "rgb": [
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "fromX": 728,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                208,
+                182
+              ]
+            }
+          ],
+          "text": "60%"
+        }
+      ]
+    },
+    {
+      "requested": 0.3100000023841858,
+      "elapsed": 0.3131665587425232,
+      "formalPage": false,
+      "rows": [
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            }
+          ],
+          "text": "60%"
+        }
+      ]
+    },
+    {
+      "requested": 0.6800000071525574,
+      "elapsed": 0.6805114150047302,
+      "formalPage": false,
+      "rows": [
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 733,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            },
+            {
+              "fromX": 734,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 733,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            },
+            {
+              "fromX": 734,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 733,
+              "rgb": [
+                255,
+                153,
+                22
+              ]
+            },
+            {
+              "fromX": 734,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        }
+      ]
+    },
+    {
+      "requested": 1.0800000429153442,
+      "elapsed": 1.0816986560821533,
+      "formalPage": false,
+      "rows": [
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        },
+        {
+          "mainPixelRange": [
+            100,
+            579
+          ],
+          "mainGreenPixels": 480,
+          "lossSegments": [
+            {
+              "fromX": 580,
+              "toX": 899,
+              "rgb": [
+                22,
+                28,
+                34
+              ]
+            }
+          ],
+          "text": "60%"
+        }
+      ]
+    }
+  ]
+}

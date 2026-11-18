@@ -1,0 +1,53 @@
+ .agents/skills/ember-solution-design/SKILL.md      |  10 +
+ .../Basic/Editor/EditorMainWindowTitle.cs          | 239 +++++------
+ Packages/com.ember/CHANGELOG.md                    |  28 ++
+ .../com.ember/Core/Editor/EmberConditionalMenu.cs  |   3 +-
+ .../com.ember/Core/Editor/EmberExtensionCatalog.cs |   6 +-
+ .../Core/Editor/EmberExtensionDocuments.cs         |   5 +-
+ .../Core/Editor/EmberExtensionProject.Identity.cs  |  46 +-
+ .../com.ember/Core/Editor/EmberExtensionProject.cs |  35 +-
+ .../Core/Editor/EmberFsmBlueprintAccess.cs         |   9 +-
+ .../Core/Editor/EmberProjectSetup.AISkills.cs      |   2 +
+ .../Core/Editor/EmberProjectSetup.Identity.cs      |  49 ++-
+ .../Core/Editor/EmberProjectSetup.Patch.cs         | 154 +++----
+ .../com.ember/Core/Editor/EmberProjectSetup.cs     |  76 +++-
+ Packages/com.ember/Core/Editor/EmberSetupWindow.cs |   1 +
+ .../Core/Editor/EmberTemplateInheritanceEngine.cs  |   2 +
+ .../Core/Editor/EmberTemplateTransaction.cs        |  51 ++-
+ Packages/com.ember/Dependencies~/README.md         |   6 +-
+ .../Documentation~/maintenance/ai-workflow.md      |   2 +-
+ .../com.ember/Documentation~/resource/README.md    |  43 +-
+ Packages/com.ember/Documentation~/ui/README.md     |   2 +
+ .../com.ember/Documentation~/ui/dynamic-lists.md   |   2 +
+ .../LevelAuthoring/Editor/EmberLevelContracts.cs   |  35 +-
+ .../Editor/EmberLevelTrialSession.cs               |   5 +
+ .../Tests/EmberLevelTrialProtocolTests.cs          |  12 +
+ Packages/com.ember/README.md                       |   6 +-
+ .../com.ember/Resource/Runtime/EmberAssetHandle.cs | 175 ++++----
+ .../Resource/Runtime/EmberAssetHandleSlot.cs       | 267 ++++--------
+ .../Resource/Runtime/IResourceProvider.cs          |   3 +
+ .../Resource/Runtime/ResourcesProvider.cs          |   3 +-
+ .../NotoSansSymbols2-Regular SDF.asset             |  45 +-
+ .../Fonts/NotoSerifSC/NovelSerif SDF.asset         |  72 +++-
+ .../钉钉进步体/DingTalk-JinBuTi SDF.asset     | 302 +++++++++++---
+ .../AlimamaDongFangDaKai SDF.asset                 |  72 +++-
+ .../Tests/EditMode/EmberTemplatePatchEditTests.cs  | 301 ++++++++++++-
+ Packages/com.ember/Tests/Ember.UI.Tests.asmdef     |   2 +
+ .../Editor/Pages/EUIBindingEditorUtility.cs        |   2 +
+ .../UIExtension/Editor/UIExt/EUIImageExEditor.cs   |   6 +-
+ .../Runtime/Behaviour/EUIRoundedImageModifier.cs   |  25 +-
+ .../UIExtension/Runtime/Components/EUIButton.cs    |  42 +-
+ .../UIExtension/Runtime/Components/EUIComponent.cs |  26 +-
+ .../Runtime/Ember.UIExtension.Runtime.asmdef       |   1 +
+ .../UIExtension/Runtime/UIExt/EUIButtonEx.cs       |  24 +-
+ .../Runtime/UIExt/EUIExtensionAttribute.cs         |   3 +
+ .../UIExtension/Runtime/UIExt/EUIImageEx.cs        |  14 +-
+ .../UIExtension/Runtime/UIExt/TMPMarquee.cs        | 464 +++++++++------------
+ .../Editor/EmberAISkillInstaller.Templates.cs      |  70 ++--
+ .../UPMManager/Editor/EmberAISkillInstaller.cs     |  24 +-
+ Packages/com.ember/package.json                    |   2 +-
+ docs/dev/ember-api-reference.md                    |  12 +
+ docs/dev/framework-progress.md                     |   2 +-
+ docs/dev/upm-migration-plan.md                     |   6 +-
+ ember-unity-framework.slnx                         |   5 +-
+ 52 files changed, 1744 insertions(+), 1055 deletions(-)

@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-18",
+  "verifiedAt": "2026-11-18T16:46:09.945394+08:00",
+  "operation": "EmberProjectSetup.BumpTemplateVersion with patch field 2",
+  "results": {
+    "base": {
+      "previousVersion": "0.11.0",
+      "version": "0.11.1",
+      "sealedHash": "9077bd5b5271898e8055d1c7cf72b0a7",
+      "parentVersion": "",
+      "parentContentHash": ""
+    },
+    "ui-game": {
+      "previousVersion": "0.2.3",
+      "version": "0.2.4",
+      "sealedHash": "44b95096df206b5a160a1853333cc498",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "visual-novel": {
+      "previousVersion": "0.22.4",
+      "version": "0.22.5",
+      "sealedHash": "13f45e806dd12d33be1779b11864c40e",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "source3d-2p5d": {
+      "previousVersion": "0.6.3",
+      "version": "0.6.4",
+      "sealedHash": "ba33dd3fe620c9ec3aed3818315bd02f",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "lane-defense-2d": {
+      "previousVersion": "0.1.3",
+      "version": "0.1.4",
+      "sealedHash": "7630a27da3efa0620ab038eab47da4b0",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "platformer-2d": {
+      "previousVersion": "0.13.3",
+      "version": "0.13.4",
+      "sealedHash": "27eeb3e3f26785b4c0ef92b469598adc",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "topdown-2d": {
+      "previousVersion": "0.1.3",
+      "version": "0.1.4",
+      "sealedHash": "8789d264af2650178116bbdbe8ea4c5f",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    }
+  },
+  "editing": {
+    "templateId": "topdown-2d",
+    "templateVersion": "0.1.4",
+    "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
+    "loadedAt": "2026-11-18 16:25:36"
+  },
+  "protectedFiles": 15574,
+  "changedProtectedFiles": [],
+  "emptyTransactionResidue": true,
+  "skillHeadersChecked": 43,
+  "skillHeaderErrors": 0
+}

@@ -1,0 +1,278 @@
+[
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassAlertPage.Binding.cs",
+    "sha256": "49FCEEBA77E5879453928868D3BD2E8E5EFAFAE47EC507679A995FC70D83DF95"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassAlertPage.cs",
+    "sha256": "8EBEFCB99BC8EB9808337AC239D64CD06A72F9BC1B7B7D45C51B19B732DDB5A7"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassCloseButtonItem.Binding.cs",
+    "sha256": "73A56253F2C472D4552BF31CEC05BCCC7ABDDE1AE8E59790CD3D0D5C4C43412C"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassCloseButtonItem.cs",
+    "sha256": "E00F2C23EAB5BBAA813300FCD0679A4B1E8CD307507B1431399F7804A774A9CF"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassConfirmPage.Binding.cs",
+    "sha256": "F4CCFBB668FEFED1EC436FCA65DB66E6A09CBBB74E745AB00192814A033E2B9B"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassConfirmPage.cs",
+    "sha256": "53DB098AC675A93AF47C867B8BB74484E409CAC214FD88368D36607A5181A29E"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExampleItem.Binding.cs",
+    "sha256": "8289687FDAC14B2F3445803BA58B6FA8266E70EA830FD3BD716E5899E8505395"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExampleItem.cs",
+    "sha256": "EACEEC99EC86386CEC3721374F59BD244E66D4A592C56347623EAB4A217448D6"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExamplePage.Binding.cs",
+    "sha256": "D352C72C3F8A2809E5A3D1DFF7695C84200CDDF8337A42D47C8956B726E54D01"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassExtensionExamplePage.cs",
+    "sha256": "4FC5BE87683A5CA941E75EB5700A5D547696C0CE1C20E773BE8ED2826891002E"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMActionItem.Binding.cs",
+    "sha256": "27C2A11468B99F2DE5621FF0CEFD392B4EB30CC96A3F63099AB951746AC5F487"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMActionItem.cs",
+    "sha256": "55769696D1503410D9CFF39651D1698D257292FDFD66926C33C558D1F42DA37F"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMCenterItem.Binding.cs",
+    "sha256": "FC9F6EC50151EDC67636ABF6BFC8F729130008BFAA187B3F9389A51670F8B7DF"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMCenterItem.cs",
+    "sha256": "9417195283B9E6E0F7541FF9952A9A236B2B2851D95A8966DB1FD282990AFB75"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMEntryItem.Binding.cs",
+    "sha256": "D0C1F9AEC2A8664E4615A367D4DD2B118FFA1CE853D3E6AF80B2473252D0E1A0"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMEntryItem.cs",
+    "sha256": "97E0134223BEEF76EA9C076E16048AC52F1A97749DBF69E6565909814EC25887"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMPage.Binding.cs",
+    "sha256": "A3B594BF1B96F9940471F888DC048E86A6DF1E9BCF05979495EC3351CA797841"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMPage.cs",
+    "sha256": "689B2E9A85E199B85AC6FE04EA9D6B0AC97AA4BCE4D290A91A75A8B8B2C8207A"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMStateItem.Binding.cs",
+    "sha256": "027252F8C836987E9ACFB02D91D0C214179C46DA11088C2F0ABADECC4A4E1312"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMStateItem.cs",
+    "sha256": "04EBC36F80DB8521B896E81FD350E1CF935B9EFB9A3E6A439FEC4727BC3BC2E0"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTestItem.Binding.cs",
+    "sha256": "8E58BF55D8932F0C01536B9178672F12BB2BC46369888EA0519D6D1900B2712D"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTestItem.cs",
+    "sha256": "EA4FD2908A3BB8941C7AF24B367F9870F12BE9F97C05DEB5B1DB3557721BC507"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTimeItem.Binding.cs",
+    "sha256": "1619F03FF77190D89C7432AE599344DEC268B71D35A877862B83612D326CF1EE"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassGMTimeItem.cs",
+    "sha256": "764AE046F2E7590D5CD1DCA56C29B2C6A61C2004EC24063A9029E67D8085AFFA"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassIconButtonItem.Binding.cs",
+    "sha256": "926BAB72CAC972E3DFFBC660B9B7F5AD9E37C92B46DC6AF7E67B44BA3B9AD5FF"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassIconButtonItem.cs",
+    "sha256": "EE4343709B146DA18A8D991B19FB1D94903BDEDDCD27D071125EC41D9AB36C93"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassInputItem.Binding.cs",
+    "sha256": "FE591E80A9B926D06FA16316D9404E7CD790A3E2CCA5EBF6EBF1F22298445B69"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassInputItem.cs",
+    "sha256": "5D6254F0B989933FE4C868DA2857F5D51EA30841F46E820315DE55C47036DF39"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPanelItem.Binding.cs",
+    "sha256": "FE75D2B27E45B88B67762C45E42BC0DE7D238887D00D9544339F5A895B03EED8"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPanelItem.cs",
+    "sha256": "171A35E90F63DB370822614F6137BBEAB9E1ADE5D78F02E2A544CD8B5F00945A"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPrimaryButtonItem.Binding.cs",
+    "sha256": "7D12117A58E3568D518EBF4C78E93A1E86F2BA14B4FA6FFD07C32714A9BB43C5"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassPrimaryButtonItem.cs",
+    "sha256": "A37A5C3DADDBE06699F551E1717C08593DEE1C7BCE0C7927AD5936B6DF8C5757"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSearchItem.Binding.cs",
+    "sha256": "0EB27967207F0DAD10EC2AC6118DF21B442F8397F72C7F119529470D682FA525"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSearchItem.cs",
+    "sha256": "7850380FC5BF7DEFEB8A2AE6E59246139C063157938B905ED29A9C440B83A55F"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSecondaryButtonItem.Binding.cs",
+    "sha256": "85E280A227CC26996784C5A5D3C424C9D876E75FD69DAF279C0D86893B11F802"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSecondaryButtonItem.cs",
+    "sha256": "597F6485FE045F2D8F146812CC94792A63DD7188B753787A76CC6DA8DD323C67"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassShowcasePage.Binding.cs",
+    "sha256": "FF7828A8029DFD6E13DBE2552C3DDA1DEA59C84FC0F1FFA802565EE0695A6D1D"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassShowcasePage.cs",
+    "sha256": "A130A2C3A5D7C1BF6504E8106C3452F43849A9AB49BF888374268DC56035F439"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSliderItem.Binding.cs",
+    "sha256": "B254241B273523410ABF6129A5AEE77E7BC53BA7345323ED5E20EA2288E700A6"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSliderItem.cs",
+    "sha256": "64894965F6FDB89E57207C1BFAAB0F0AEF1608A1B17E0B3F7CDA330128DA1778"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSwitchItem.Binding.cs",
+    "sha256": "7E67681C87BF807DB5A19F0C0956EEE71ADE50F197174C015B656F17945B4E22"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassSwitchItem.cs",
+    "sha256": "4691E834A0D98C382077C7D6AEFD4FC2BC9E38705BF3EE003EFA8F9948AE140B"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassVerticalSliderItem.Binding.cs",
+    "sha256": "32F6A8284DC624956FF6917F7BAF481BAAE5DDEE61547902EFC734ED0DBAC39E"
+  },
+  {
+    "path": "Assets\\Game\\UI\\Runtime\\Module\\UIFoundation\\EUISoftGlassVerticalSliderItem.cs",
+    "sha256": "E23388AF0EFBD8EF9CCA338F61863E8D24F8AF825E3F2C03EFE0DA2E4E443C85"
+  },
+  {
+    "path": "Assets\\Game\\UI\\GamePages.User.cs",
+    "sha256": "304DA11D12605DB94CD94528E27E890FC9C32D7DD7F35B306155E887E1610544"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassAlertPage.prefab.meta",
+    "sha256": "19CDCE6AFE62039EEFFBA8CDDDE27A6CD555FCD553A60505DCC8A0B318955D82"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassCloseButtonItem.prefab.meta",
+    "sha256": "5C1A5383314FBE9AEA7A2F7D54561E34F177C8BBDD11825B86CD8195A1BF1EE8"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassConfirmPage.prefab.meta",
+    "sha256": "0F4B12E6E61EC384168B5422EFD245586104CE7D3AF4A7D8D897939BF9A37F91"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassExtensionExampleItem.prefab.meta",
+    "sha256": "C34EF17A454E2678E58392EC7EB0264AA230CBA54AE8EEDB3300114280394C01"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassExtensionExamplePage.prefab.meta",
+    "sha256": "FAA875DE786D5E37A46E7E12B94193DAE939CBB1D45CC94D100EB915009522F4"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMActionItem.prefab.meta",
+    "sha256": "4352068D0B9645463DE65A7D5023F4E9DF699DEF9956E14D49E04C65623A2369"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMCenterItem.prefab.meta",
+    "sha256": "C5B476BDBF4587E1FBF1941942E869500CB2517A5B7F32D88B4FA47F94599041"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMEntryItem.prefab.meta",
+    "sha256": "98766E47EFBBEA809AC58CD51A881CD8031DD59C11D99BDB3537F92F29E4FED2"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMPage.prefab.meta",
+    "sha256": "BD7004FCBB0DB527B9EF0353EDA2C821156746232911F702719F4A627C50F9A3"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMStateItem.prefab.meta",
+    "sha256": "2EE0BDD25D97934D27D215316A7452A050C40FBC07FF566971F4C7F21AFCF25B"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMTestItem.prefab.meta",
+    "sha256": "DD9548436AB231C1BF26329D925385B299E62CE7C40F9882A53FB9710FA254BD"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassGMTimeItem.prefab.meta",
+    "sha256": "3FEA514AFABA621EADA61BE2B00BB15D3310830A3CBB869A87866DA8BEFCB216"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassIconButtonItem.prefab.meta",
+    "sha256": "FAD1790ED3C9844957198D69820D82A614681D1BE7F84D15F0EB7699729D3AFA"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassInputItem.prefab.meta",
+    "sha256": "591099DB91817EE40599E02AFD2FA3B16B672EA9F51C391DCFB4C8CDEBBB4271"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassPanelItem.prefab.meta",
+    "sha256": "7B7DB92864FBB42879B2F1773FE0DB5AC37C07249652BBCE880A62993369FE9E"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassPrimaryButtonItem.prefab.meta",
+    "sha256": "195FB199A04BE5C4DAA1D78DFAA80D24B38FB62E204E03D9AB91E171A19CA8A2"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassSearchItem.prefab.meta",
+    "sha256": "F8FA8884F73038A9DD2261F6D5A2863A6626FD484FFAC6DABCC7C4758C41DAE0"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassSecondaryButtonItem.prefab.meta",
+    "sha256": "493D1B18A17DB7225B93E231DF5B20EDDA35FD37EE98CD69A778E95D2F5058FA"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassShowcasePage.prefab.meta",
+    "sha256": "BD90589CF883A4DEF5C727B2A85BA268DAA68D81115736504371236BAFBA52C9"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassSliderItem.prefab.meta",
+    "sha256": "7506FDC0C97FA72D453A4899F039BF05B2A05BD7216FCB02D68887E24115477B"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassStandardPage.prefab.meta",
+    "sha256": "C7EE69772DD5E0E5DFC0479011ACF4E7B88CDC84588F8D344203762E3B5C5C7D"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassStandardPopupPage.prefab.meta",
+    "sha256": "E35631783C116C471F179C6A3EB3C6EFED005B2FEF255BBD493139600BF5C014"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassSwitchItem.prefab.meta",
+    "sha256": "35FF9AA51E0C1339628857F9C451F2E39FE01D09DBC49BBB6CD59CCD6FB5A185"
+  },
+  {
+    "path": "Assets\\GameResource\\Resources\\UI\\Module\\UIFoundation\\Prefabs\\EUISoftGlassVerticalSliderItem.prefab.meta",
+    "sha256": "3C4893590C09F8301B3260FBCC569433B0FD3AC543DAE55D1DD8741C00B485CF"
+  }
+]

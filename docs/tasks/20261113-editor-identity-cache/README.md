@@ -80,3 +80,10 @@
 七模板实际/封存 hash 与六份父快照/指针全部匹配，graph issues=0。候选 staged 共享二进制及 autocrlf=false/true 干净检出通过，字体策略通过，PowerShell 7 下技能 bundle 检查 12 技能/34 文件通过；旧 Windows PowerShell 5 的 GBK JSON 误解码失败单独保留，不记通过。模板、依赖和 bundle 不变；没有保存/Bump/部署模板或升级 Windward。
 
 [发布说明](../../dev/release-0.25.4.md)、[发布轮测试](evidence/release/tests-0.25.4.json)、[实际模板检查](evidence/release/templates-actual.json)、[编译及加载](evidence/release/compile-final-loaded.json)、[二进制](evidence/release/binaries-staged.json)、[字体](evidence/release/fonts-staged.json)、[技能 bundle](evidence/release/bundle-staged.json)。正式发布身份以远端 main 与 annotated v0.25.4 的 peeled commit 为准，发布完成后另记远端证明。
+
+
+## 正式发布结果（2026-11-13）
+
+已发布 annotated `v0.25.4`。`origin/main` 与 tag peeled commit 均为 `c5a2fe90b45ea5343a66f086c2663d35c6f6eac6`；tag 对象为 `ab6d444982c7608d3d5b7e61e04f62e66986fb5e`。原子推送和远端查询一致，提交后 HEAD 二进制/字体检查通过，见[正式发布证明](evidence/release/remote-proof.json)、[推送](evidence/release/push.json)、[远端核对](evidence/release/remote-verification.json)。
+
+当前开发分支及其他任务修改保留，本次发布来自独立干净候选。Windward 未升级，前台四条件及产品功能复验仍待接续；必要的扩展 hash 重新绑定先展示实际预览并取得独立授权。

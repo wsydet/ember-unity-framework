@@ -1,0 +1,336 @@
+{
+  "started": "2026-11-18T16:15:14.816605+08:00",
+  "finished": "2026-11-18T16:15:25.7606435+08:00",
+  "checks": [
+    {
+      "id": "home-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "home-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 3
+      }
+    },
+    {
+      "id": "actual-pointer-EUIUiGameHomePage-Start",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "play-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "play-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 11
+      }
+    },
+    {
+      "id": "formal-image-contributes-real-pixels",
+      "pass": false,
+      "data": {
+        "on": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "off": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "actual-pointer-EUIUiGamePlayPage-Advance",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "first-step-and-original-specialized-rows",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "actual-pointer-EUIUiGamePlayPage-Settings",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "settings-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1500,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "settings-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 2
+      }
+    },
+    {
+      "id": "same-session-paused",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "actual-pointer-EUISettingPage-Btn_Close",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "same-session-resumes",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "actual-pointer-EUIUiGamePlayPage-Advance",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "actual-pointer-EUIUiGamePlayPage-Advance",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "three-steps-real-result",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "result-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "result-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 3
+      }
+    },
+    {
+      "id": "actual-pointer-EUIUiGameResultPage-Restart",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "restart-new-session-keeps-background",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "restarted-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "restarted-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 11
+      }
+    },
+    {
+      "id": "actual-pointer-EUIUiGamePlayPage-Home",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "returned-home-same-low-background-covers",
+      "pass": false,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -39084,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779
+      }
+    },
+    {
+      "id": "returned-home-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 3
+      }
+    },
+    {
+      "id": "background-identity-through-entire-route",
+      "pass": true,
+      "data": {
+        "bgId": -39084,
+        "observedFrames": 1267
+      }
+    }
+  ],
+  "records": [
+    {
+      "file": "home.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIUiGameHomePage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:15.1682468+08:00"
+    },
+    {
+      "file": "play.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIUiGamePlayPage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:20.1786642+08:00"
+    },
+    {
+      "file": "settings.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUISettingPage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:21.3025815+08:00"
+    },
+    {
+      "file": "result.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIUiGameResultPage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:22.4828868+08:00"
+    },
+    {
+      "file": "restarted.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIUiGamePlayPage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:23.156094+08:00"
+    },
+    {
+      "file": "returned-home.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIUiGameHomePage",
+      "bgId": -39084,
+      "utc": "2026-11-18T16:15:25.7606435+08:00"
+    }
+  ],
+  "observedFrames": 1267,
+  "bgId": -39084,
+  "formalRestored": true
+}

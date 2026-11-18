@@ -1,0 +1,55 @@
+[
+  {
+    "id": "control-no-hide-return-chain",
+    "pass": true,
+    "selected": "BackgroundMode"
+  },
+  {
+    "id": "hide-top-modal-after-30-frames",
+    "pass": false,
+    "p1State": "Paused",
+    "p2State": "ViewHidden",
+    "p1Interactable": false,
+    "p1Raycast": false,
+    "p1Alpha": 1.0,
+    "selected": null,
+    "p1Selectables": [
+      {
+        "name": "Accept",
+        "active": true,
+        "enabled": false
+      },
+      {
+        "name": "Cancel",
+        "active": true,
+        "enabled": false
+      },
+      {
+        "name": "Close",
+        "active": true,
+        "enabled": false
+      }
+    ]
+  },
+  {
+    "id": "after-top-hide-reshow-close-return-chain",
+    "pass": true,
+    "selected": "BackgroundMode",
+    "mainInteractable": true
+  },
+  {
+    "id": "isolated-deactivate-restores-main",
+    "pass": true,
+    "selected": "BackgroundMode"
+  },
+  {
+    "id": "isolated-reactivate-close-restores-main",
+    "pass": true,
+    "selected": "BackgroundMode"
+  },
+  {
+    "id": "isolated-hidden-lower-destroy-return-chain",
+    "pass": true,
+    "selected": "BackgroundMode"
+  }
+]

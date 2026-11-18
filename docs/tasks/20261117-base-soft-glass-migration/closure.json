@@ -1,0 +1,117 @@
+{
+  "task": "20261117-base-soft-glass-migration",
+  "date": "2026-11-18",
+  "timezone": "Asia/Shanghai",
+  "status": "complete",
+  "acceptance": {
+    "independent": "A-BASE1, A-FINAL1–7",
+    "final": "R4 approved and independently verified",
+    "initialUiGameChecks": {
+      "passed": 20,
+      "total": 27,
+      "fixtureFailuresClosedByTargetedRecheck": 7
+    },
+    "targetedUiGameChecks": {
+      "passed": 8,
+      "total": 8
+    },
+    "baseChecks": {
+      "passed": 16,
+      "total": 16
+    },
+    "visualApproval": {
+      "otherFiveChildTemplates": "其他模板没问题了",
+      "baseAndUiGame": "背景效果符合要求"
+    }
+  },
+  "head": "16cff3d85d3b40a5ddab11e30801dfa5e36ed0c2",
+  "indexSha256": "07b2454ab28af72dce996b96f1ad27eba074c651c05f53f8f22a6d3a151655f0",
+  "templates": {
+    "base": {
+      "version": "0.11.0",
+      "contentHash": "9077bd5b5271898e8055d1c7cf72b0a7",
+      "versionedContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": ""
+    },
+    "ui-game": {
+      "version": "0.2.3",
+      "contentHash": "44b95096df206b5a160a1853333cc498",
+      "versionedContentHash": "0c4917852d8cf6d759e629d2b21371f3",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "visual-novel": {
+      "version": "0.22.4",
+      "contentHash": "13f45e806dd12d33be1779b11864c40e",
+      "versionedContentHash": "b577b887cef72e3db2264e5f33dd5c3c",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "source3d-2p5d": {
+      "version": "0.6.3",
+      "contentHash": "ba33dd3fe620c9ec3aed3818315bd02f",
+      "versionedContentHash": "74704cf53ae4b8f370529da2c268e255",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "lane-defense-2d": {
+      "version": "0.1.3",
+      "contentHash": "7630a27da3efa0620ab038eab47da4b0",
+      "versionedContentHash": "311fe58fa7647e2bcd13c36978118ec0",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "platformer-2d": {
+      "version": "0.13.3",
+      "contentHash": "27eeb3e3f26785b4c0ef92b469598adc",
+      "versionedContentHash": "c36da4ad3bca03ecd80cb2e62d7a10ac",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    },
+    "topdown-2d": {
+      "version": "0.1.3",
+      "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
+      "versionedContentHash": "b12be21dcf8b95eb059f875f23b7e7f7",
+      "parentId": "base",
+      "parentVersion": "0.11.0",
+      "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+    }
+  },
+  "verifiedMatrixRows": 687,
+  "verifiedOriginalPreviews": 30,
+  "restoredEditor": {
+    "templateId": "topdown-2d",
+    "version": "0.1.3",
+    "observedAt": "2026-11-18T16:32:55.0398926+08:00",
+    "layoutSha256": "6e4452224022c3df9a1bb4aa357caff8028e06c4d84e882d155394010787d3c5",
+    "verifiedStartFiles": 1351,
+    "protectedProductFiles": 16578
+  },
+  "releaseWork": "Workspace deliverables saved. Template sealing, parent synchronization and framework release are separate.",
+  "originalEvidence": {
+    "status": "preserved intact outside the active task directory",
+    "path": ".utmp/ember-workflow-retained/20261117-base-soft-glass-migration",
+    "formerPath": ".utmp/ember-workflow/20261117-base-soft-glass-migration",
+    "verification": {
+      "directories": 8197,
+      "files": 84857,
+      "bytes": 3421397221,
+      "inventorySha256": "838c692c65cd6a4214a2677988237672620b2bce77760bb0c9a35f631b139ced"
+    },
+    "sha256Anchors": {
+      "requirements.md": "af3af9020051f6dfb3d7c71a27a383a419f335cfa4b50f94ba37d80f58f47f7a",
+      "handoff.md": "9b3d472f16af9d2b1687cc1ddf1f77bf9c0aec357a90ecab2a488be96b8f74c3",
+      "acceptance.md": "6ff18f0f79a495a96f325a4d47412810a5fed7ab95ee85cc5fefc7b8c17fb122",
+      "vp2-review-manifest.json": "dead9369436a02516347fd9e0a37b131a8f00ee5f819c5f3c5e336a081c3622c",
+      "backups/i-r15-topdown-start/manifest.json": "85c926c6b12801b3f1b0e38f946dfb80662286edda2c3ab7ad11d491e43153df"
+    },
+    "cleanupMethod": "same-volume relocation; zero original files deleted"
+  }
+}

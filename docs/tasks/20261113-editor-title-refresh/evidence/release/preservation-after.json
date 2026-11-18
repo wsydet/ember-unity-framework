@@ -1,0 +1,14 @@
+{
+  "original_branch_retained": true,
+  "primary_index_unchanged_empty": true,
+  "existing_files_unchanged": 259,
+  "intentional_release_pointer_updates": [
+    "Packages/com.ember/CHANGELOG.md",
+    "Packages/com.ember/Dependencies~/README.md",
+    "Packages/com.ember/README.md",
+    "Packages/com.ember/package.json",
+    "docs/dev/framework-progress.md",
+    "docs/dev/upm-migration-plan.md"
+  ],
+  "unexpected_changes": []
+}

@@ -1,0 +1,106 @@
+var report = new System.Collections.Generic.List<object>();
+var path = ".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/r2/runtime-validation.json";
+System.Action<string,bool,object> check = (name,pass,detail) => report.Add(new {name=name,pass=pass,detail=detail});
+System.Func<int,System.Threading.Tasks.Task> frames=async count=>{for(int i=0;i<count;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Func<Ember.UI.EUIPageDef,object,System.Threading.Tasks.Task<Ember.UI.EUIPage>> popup=async(def,args)=>{
+    Ember.UI.EUIPage result=null;Ember.UI.EUIManager.Instance.ShowPopup(def,args,p=>result=p);
+    for(int i=0;i<300&&result==null;i++)await frames(1);
+    if(result==null)throw new System.Exception("Popup open timeout: "+def);
+    return result;
+};
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var manager=Ember.UI.EUIManager.Instance;
+var host=Ember.UIRendering.EUIBackdropCameraHost.Active;
+var gmField=typeof(Game.UI.EUIAppearanceBootstrap).GetField("_gm",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic);
+var gm=(Ember.UI.EUIPage)gmField.GetValue(null);
+var gmLogic=(Game.UI.EUISoftGlassGMPage)gm.Logic;
+gmLogic.SetExpanded(false);
+Ember.UI.EUIPage showcase=null;manager.ShowMainPage(Game.UI.GamePages.EUISoftGlassShowcasePage,null,p=>showcase=p);
+for(int i=0;i<300&&showcase==null;i++)await frames(1);
+if(showcase==null)throw new System.Exception("Showcase timeout");
+await frames(10);
+var mainGroup=showcase.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>();
+check("many surfaces share one lease",mainGroup.Lease!=null&&showcase.GameObject.GetComponentsInChildren<Ember.UI.EUIBackdropGraphic>(true).All(g=>g.Lease==mainGroup.Lease),showcase.GameObject.GetComponentsInChildren<Ember.UI.EUIBackdropGraphic>(true).Length);
+var activeMasks=(System.Collections.IDictionary)typeof(Ember.UI.EUIManager).GetField("_activeMasks",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetValue(manager);
+int baseline=host.BoundaryCount;
+int completed=0;Game.UI.EUIDialogResult resultValue=Game.UI.EUIDialogResult.Dismissed;
+var p1=await popup(Game.UI.GamePages.EUISoftGlassConfirmPage,new Game.UI.EUIDialogRequest{Title="Default blur validation",Completed=r=>{completed++;resultValue=r;}});
+await frames(8);
+var p1group=p1.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>();
+var mask=(GameObject)activeMasks[p1];
+check("default Popup blur ready",p1group.Lease!=null&&p1group.Lease.IsReady&&mask!=null,new{boundaries=host.BoundaryCount,baseline=baseline});
+var pointer=new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current){position=new Vector2(10,10)};
+var hits=new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();UnityEngine.EventSystems.EventSystem.current.RaycastAll(pointer,hits);
+check("mask blocks unrelated lower input",hits.Count>0&&hits[0].gameObject==mask,hits.Select(h=>h.gameObject.name).Take(5).ToArray());
+p1.MaskEffectOverride=Ember.UI.EUIMaskEffect.Solid;manager.RefreshBackdrop(p1);await frames(5);
+mask=(GameObject)activeMasks[p1];
+check("explicit Solid uses visible color",mask.GetComponent<UnityEngine.UI.Image>().color.a>0&&!mask.transform.Find("Blur Surface").gameObject.activeSelf,mask.GetComponent<UnityEngine.UI.Image>().color.ToString());
+p1.UseMask=false;manager.RefreshBackdrop(p1);await frames(4);
+check("UseMask false has no mask",!activeMasks.Contains(p1),activeMasks.Count);
+p1.UseMask=true;p1.MaskEffectOverride=Ember.UI.EUIMaskEffect.Blur;p1.ClickMaskToClose=false;manager.RefreshBackdrop(p1);await frames(6);
+mask=(GameObject)activeMasks[p1];mask.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();await frames(5);
+check("click-close false keeps Popup",p1.IsOpened,p1.State.ToString());
+p1.ClickMaskToClose=true;mask.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();await frames(30);
+check("click-close true closes exactly once",!p1.IsOpened&&completed==1&&resultValue==Game.UI.EUIDialogResult.Dismissed,new{callbacks=completed,result=resultValue.ToString()});
+var lower=await popup(Game.UI.GamePages.EUISoftGlassConfirmPage,new Game.UI.EUIDialogRequest{Title="Lower Popup"});
+var upper=await popup(Game.UI.GamePages.EUISoftGlassAlertPage,new Game.UI.EUIDialogRequest{Title="Upper Popup"});await frames(8);
+check("two Popup layers distinct shared outputs",host.BoundaryCount==baseline+2&&lower.Canvas.sortingOrder<upper.Canvas.sortingOrder&&lower.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease.Texture!=upper.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease.Texture,new{count=host.BoundaryCount,lower=lower.Canvas.sortingOrder,upper=upper.Canvas.sortingOrder});
+manager.ClosePage(upper);await frames(30);check("upper close restores lower",lower.IsOpened&&host.BoundaryCount==baseline+1,host.BoundaryCount);
+manager.ClosePage(lower);await frames(30);
+var fullDef=new Ember.UI.EUIPageDef(Game.UI.GamePages.EUISoftGlassAlertPage.PrefabPath,Ember.UI.UILayer.Popup,Ember.UI.PageType.FullScreenPopup);
+float originalDistance=showcase.Canvas.planeDistance;var full=await popup(fullDef,new Game.UI.EUIDialogRequest{Title="FullScreen first-capture barrier"});await frames(8);
+var frozen=full.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease;int v=frozen.TextureVersion;await frames(10);
+check("FullScreen first capture then frozen",frozen.IsReady&&frozen.TextureVersion==v,new{ready=frozen.IsReady,version=v,after=frozen.TextureVersion});
+manager.ClosePage(full);await frames(30);
+check("lower resumes after FullScreen",showcase.IsOpened&&Mathf.Abs(showcase.Canvas.planeDistance-originalDistance)<.01f&&showcase.CanvasGroup.alpha>0,new{state=showcase.State.ToString(),before=originalDistance,after=showcase.Canvas.planeDistance});
+await frames(8);int cycleBaseline=host.BoundaryCount;
+for(int i=0;i<20;i++){
+var cycle=await popup(i%2==0?Game.UI.GamePages.EUISoftGlassAlertPage:Game.UI.GamePages.EUISoftGlassConfirmPage,null);
+await frames(3);manager.ClosePage(cycle);await frames(24);
+if(host.BoundaryCount!=cycleBaseline)throw new System.Exception("Boundary leak cycle "+i+": "+host.BoundaryCount);
+}
+check("20 open-close cycles release leases",host.BoundaryCount==cycleBaseline,new{cycles=20,boundaries=host.BoundaryCount,masks=activeMasks.Count});
+gmLogic.SetExpanded(true);await frames(12);
+var timeRoot=gm.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).First(b=>b.name=="EUISoftGlassGMTimeItem").gameObject;
+var enable=timeRoot.GetComponentInChildren<Ember.UIExtension.EUIToggleEx>(true);var slider=timeRoot.GetComponentInChildren<UnityEngine.UI.Slider>(true);
+enable.isOn=true;slider.value=2.25f;await frames(3);
+check("GM Unity and Ember time sync",Mathf.Approximately(Time.timeScale,2.25f)&&Mathf.Approximately(Ember.Core.EmberTimeManager.Instance.TimeScale,2.25f),new{unity=Time.timeScale,ember=Ember.Core.EmberTimeManager.Instance.TimeScale});
+gmLogic.SetExpanded(false);await frames(3);
+check("collapse preserves time",Mathf.Approximately(Time.timeScale,2.25f),Time.timeScale);
+gmLogic.SetExpanded(true);await frames(8);enable.isOn=false;await frames(3);
+check("disable time control resets one",Mathf.Approximately(Time.timeScale,1)&&!slider.interactable,new{scale=Time.timeScale,interactable=slider.interactable});
+Game.UI.GMActionDescriptor dummy;bool before=Game.UI.GMActionRegistry.TryFind("ember.gm.components",out dummy)&&dummy.ReadToggle();Game.UI.GMActionRegistry.TryExecute("ember.gm.components");
+Game.UI.GMActionRegistry.TryFind("ember.gm.components",out dummy);
+check("enhanced action toggles live state",dummy.ReadToggle()!=before,dummy.ReadToggle());
+gmLogic.SetExpanded(false);await frames(8);
+check("core action scope ends on collapse",!Game.UI.GMActionRegistry.TryFind("ember.gm.components",out dummy),Game.UI.GMActionRegistry.Snapshot().Select(a=>a.Key).ToArray());
+var floating=gm.GameObject.GetComponentInChildren<Ember.UIExtension.EUIFloatingEntry>();var entryRect=(RectTransform)floating.transform;
+int activated=0;System.Action activation=()=>activated++;floating.Activated+=activation;
+var eventSystem=UnityEngine.EventSystems.EventSystem.current;
+var pos=RectTransformUtility.WorldToScreenPoint(gm.Canvas.worldCamera,entryRect.position);
+var touch=new UnityEngine.EventSystems.PointerEventData(eventSystem){pointerId=47,position=pos};
+floating.OnPointerDown(touch);touch.position=pos+new Vector2(-Screen.width*.45f,-150);floating.OnDrag(touch);
+var other=new UnityEngine.EventSystems.PointerEventData(eventSystem){pointerId=48,position=pos};floating.OnEndDrag(other);floating.OnPointerUp(other);
+floating.OnPointerUp(touch);floating.OnEndDrag(touch);await frames(20);
+check("drag no click and safe-area clamp",activated==0&&Screen.safeArea.Contains(RectTransformUtility.WorldToScreenPoint(gm.Canvas.worldCamera,entryRect.position)),new{activated=activated,position=entryRect.anchoredPosition.ToString()});
+pos=RectTransformUtility.WorldToScreenPoint(gm.Canvas.worldCamera,entryRect.position);touch.position=pos;floating.OnPointerDown(touch);floating.OnPointerUp(touch);await frames(10);
+check("click expands center",activated==1&&gmLogic.IsExpanded,new{activated=activated,expanded=gmLogic.IsExpanded});floating.Activated-=activation;
+gmLogic.SetExpanded(false);await frames(5);
+Game.UI.EUIAppearanceBootstrap.SwitchGM(Game.UI.EUIGmPresentation.Legacy);await frames(55);
+var legacy=(Ember.UI.EUIPage)gmField.GetValue(null);check("Legacy GM remains selectable",legacy!=null&&legacy.Logic is Game.UI.GMPage,legacy!=null?legacy.Logic.GetType().FullName:"missing");
+Game.UI.EUIAppearanceBootstrap.SwitchGM(Game.UI.EUIGmPresentation.SoftGlass);await frames(55);
+var replacement=(Ember.UI.EUIPage)gmField.GetValue(null);check("SoftGlass GM reselects without duplicate",replacement!=null&&replacement.Logic is Game.UI.EUISoftGlassGMPage,UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Count(c=>c.name=="EUISoftGlassGMPage"));
+Ember.UI.EUIPage extension=null;manager.ShowMainPage(Game.UI.GamePages.EUISoftGlassExtensionExamplePage,null,p=>extension=p);for(int i=0;i<300&&extension==null;i++)await frames(1);await frames(20);
+check("consumer static and dynamic items",extension!=null&&extension.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).Count(b=>b.name.StartsWith("EUISoftGlassExtensionExampleItem"))==2,extension!=null?extension.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).Select(b=>b.name).ToArray():null);
+manager.ClosePage(extension);await frames(30);
+check("detached background cleaned on dispose",UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Count(c=>c.name=="Backdrop")==1,UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).Where(c=>c.name=="Backdrop").Select(c=>c.transform.parent.name).ToArray());
+}
+catch(System.Exception e){report.Add(new{name="probe exception",pass=false,detail=e.ToString()});}
+System.IO.File.WriteAllText(path,Newtonsoft.Json.JsonConvert.SerializeObject(report,Newtonsoft.Json.Formatting.Indented));
+};
+run();
+return "Started bounded runtime checks; evidence written asynchronously";
+
+
+

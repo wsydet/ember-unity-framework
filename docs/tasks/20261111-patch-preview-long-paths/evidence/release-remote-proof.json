@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-12 Asia/Shanghai",
+  "version": "0.25.3",
+  "repository": "https://github.com/wsydet/ember-unity-framework.git",
+  "releaseCommit": "e31fedd240678d82dbd6fdb71f79a77d8deba70f",
+  "remoteMain": "e31fedd240678d82dbd6fdb71f79a77d8deba70f",
+  "annotatedTag": "v0.25.3",
+  "remoteTagObject": "4a847aae16a76351297ba01bc93f68bcad86cde0",
+  "remoteTagPeeledCommit": "e31fedd240678d82dbd6fdb71f79a77d8deba70f",
+  "push": "git push --atomic origin HEAD:refs/heads/main refs/tags/v0.25.3 succeeded",
+  "verification": "git ls-remote confirmed main and peeled tag at release commit",
+  "postCommitBinaryCheck": "passed --revision HEAD",
+  "postCommitFontCheck": "passed --revision HEAD",
+  "consumerValidated": false,
+  "fileSymlink": "pending: environment-limited Win32 1314, user accepted limitation; not passed",
+  "originalWorkingBranch": "preserved; not reset or switched",
+  "releaseWorktreeCleanup": "archive_worktree declined: task primary checkout protected; retained managed release checkout without bypass deletion"
+}

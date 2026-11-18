@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-13 Asia/Shanghai",
+  "version": "0.25.4",
+  "commit": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "remote_main": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "annotated_tag": "v0.25.4",
+  "remote_tag_object": "ab6d444982c7608d3d5b7e61e04f62e66986fb5e",
+  "remote_tag_peeled_commit": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "push": "git push --atomic origin HEAD:refs/heads/main refs/tags/v0.25.4 succeeded",
+  "post_commit_binary_check": "passed --revision HEAD",
+  "post_commit_font_check": "passed --revision HEAD",
+  "staged_bundle_check": "PowerShell 7: 12 skills / 34 files passed; unchanged sourceCommit 31618f43ee8744d46ea9be9c45e881ba9e2c79be",
+  "unity_release_version": "0.25.4",
+  "targeted_tests": {
+    "passed": 33,
+    "failed": 0,
+    "skipped": 0
+  },
+  "actual_templates_verified": 7,
+  "actual_parent_snapshots_verified": 6,
+  "windward_upgraded": false,
+  "original_development_branch": "codex/local-snapshot-20261111-162819 retained, no reset or switch"
+}

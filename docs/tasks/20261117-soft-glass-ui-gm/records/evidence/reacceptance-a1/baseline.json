@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-17T17:41:34.3741275+08:00",
+  "manifestHash": "816A14A2C661BBF226BCC3515C67765A41AEB9569CC1B808B3248507733DDA33",
+  "files": 890,
+  "drift": [],
+  "changed": [
+    "Packages/com.ember/Documentation~/ui/popup-backdrop.md",
+    "Packages/com.ember/Tests/EditMode/EUIBackdropLeaseEditTests.cs",
+    "Packages/com.ember/UI/Runtime/Backdrop/EUIBackdropGroup.cs",
+    "Packages/com.ember/UI/Runtime/Backdrop/EUIBackdropMaskSession.cs",
+    "Packages/com.ember/UI/Runtime/EUIManager.cs",
+    "Packages/com.ember/UI/Runtime/EUIPage.cs",
+    "Packages/com.ember/UI/Runtime/EUIPageContext.cs",
+    "Packages/com.ember/UI/Runtime/EUIViewEngine.cs"
+  ],
+  "added": [
+    "Packages/com.ember/UI/Runtime/EUIModalInputScope.cs",
+    "Packages/com.ember/UI/Runtime/EUIModalInputScope.cs.meta",
+    "Packages/com.ember/Tests/EditMode/EUIModalInputEditTests.cs",
+    "Packages/com.ember/Tests/EditMode/EUIModalInputEditTests.cs.meta"
+  ],
+  "declaredChanged": [
+    {
+      "path": "Packages/com.ember/Documentation~/ui/popup-backdrop.md",
+      "before": "5FAD3D47E085219928437355723F0B32A398DF55D0093D9B7466F31FC20B874B",
+      "after": "C5A56F08DF686FABED0B8549E99BE39821B16CB57782CDE5DFD859D23C983672"
+    },
+    {
+      "path": "Packages/com.ember/Tests/EditMode/EUIBackdropLeaseEditTests.cs",
+      "before": "531432FC9CAD5DB656310A14EDFA4781C175B9E68F9EAC77825C7BDAA01E09C8",
+      "after": "6C91A10F7709FE6CFD91EE6F24C884670F456AFB664818A2732DCAAEFF9D5466"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/Backdrop/EUIBackdropGroup.cs",
+      "before": "378588F3CC54B39F33E721353CB23AF6C1781CDF79B78F669A90608EBF0161A2",
+      "after": "A63AB889AFF73AF0BA057BA2530142E403AB454BCE3420EBF4542A642C6086D6"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/Backdrop/EUIBackdropMaskSession.cs",
+      "before": "C55A1087E4151785E3EC64732EB89D4A157F32F13FDDEBD87EBA63B4A42E1DA0",
+      "after": "55D03FD4DC5BD68FCAA9C6C51D49181C9FB13272F8AEBA7093F3C15E99CA8603"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/EUIManager.cs",
+      "before": "87D91029F65A6CDB28515083505F5B00A1F9A534BCDEB60BD02146A7BE1D2EFF",
+      "after": "314089EE93C6881D9F4D56B7C907E12430B302032C5484CAB7E484697D96C904"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/EUIPage.cs",
+      "before": "CD469B97DBA9933E5E2F454B8F37B2FB3A1F8B91C2A78F4BF3AC29A5FE074F1B",
+      "after": "2CA4FC441A652853E3060EC959A964BBFF4ECE09EE63F7844CDEA3C20AA6809B"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/EUIPageContext.cs",
+      "before": "964A8A310EF78D1C4BB1067EC31DFBEBA5DC81677F2814C54804CDB41D8F327F",
+      "after": "EA31F7E9B546C10A1A3A0B648C5C3214E5082A9C3AB5D122274B0FE6C84B13E8"
+    },
+    {
+      "path": "Packages/com.ember/UI/Runtime/EUIViewEngine.cs",
+      "before": "65A6F8D43A7CBDC0A326F47F2E5A3C73BF21CA68AE36BECCE6BBE61CCA228CE6",
+      "after": "CBD6F3B4DAC3305061C5F7D5E4589AC4FD103B608F54A4FF121A9CB55E0175B6"
+    }
+  ],
+  "declaredAdded": [
+    "Packages/com.ember/UI/Runtime/EUIModalInputScope.cs",
+    "Packages/com.ember/UI/Runtime/EUIModalInputScope.cs.meta",
+    "Packages/com.ember/Tests/EditMode/EUIModalInputEditTests.cs",
+    "Packages/com.ember/Tests/EditMode/EUIModalInputEditTests.cs.meta"
+  ]
+}

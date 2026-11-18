@@ -1,0 +1,154 @@
+{
+  "stage": "A-FINAL7",
+  "scope": "R4 background only, base and ui-game independent incremental verification",
+  "technical": "completed; ui-game original fixture failures preserved and closed by targeted checks; base 16/16",
+  "humanR4Visual": "approved in main: 背景效果符合要求",
+  "baseLive": "9077bd5b5271898e8055d1c7cf72b0a7",
+  "baseSealed": "1c5918eb6d798246aa4d080ac7b9eeee",
+  "uiGameLive": "44b95096df206b5a160a1853333cc498",
+  "restoration": "completed using verified I-R15 topdown start 1351, no duplicated full payload",
+  "native": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Code executed successfully.\",\"data\":{\"result\":{\"utc\":\"2026-11-18T16:32:55.0398926+08:00\",\"identity\":{\"templateId\":\"topdown-2d\",\"templateVersion\":\"0.1.3\",\"contentHash\":\"8789d264af2650178116bbdbe8ea4c5f\",\"loadedAt\":\"2026-11-18 16:25:36\"},\"playing\":false,\"willPlay\":false,\"compiling\":false,\"updating\":false,\"sceneDirty\":false,\"index\":5,\"window\":\"(x:0.00, y:803.33, width:933.00, height:542.67)\",\"docked\":true,\"selection\":[],\"foregroundCameras\":[],\"outputs\":[],\"dirtyFonts\":[],\"devices\":[\"Keyboard\",\"Mouse\",\"Touchscreen\"],\"reservedDirectories\":[]},\"compiler\":\"codedom\"}}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Code executed successfully.",
+      "data": {
+        "result": {
+          "utc": "2026-11-18T16:32:55.0398926+08:00",
+          "identity": {
+            "templateId": "topdown-2d",
+            "templateVersion": "0.1.3",
+            "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
+            "loadedAt": "2026-11-18 16:25:36"
+          },
+          "playing": false,
+          "willPlay": false,
+          "compiling": false,
+          "updating": false,
+          "sceneDirty": false,
+          "index": 5,
+          "window": "(x:0.00, y:803.33, width:933.00, height:542.67)",
+          "docked": true,
+          "selection": [],
+          "foregroundCameras": [],
+          "outputs": [],
+          "dirtyFonts": [],
+          "devices": [
+            "Keyboard",
+            "Mouse",
+            "Touchscreen"
+          ],
+          "reservedDirectories": []
+        },
+        "compiler": "codedom"
+      }
+    },
+    "isError": false
+  },
+  "state": {
+    "success": true,
+    "message": "Retrieved editor state.",
+    "error": null,
+    "data": {
+      "schema_version": "unity-mcp/editor_state@2",
+      "observed_at_unix_ms": 1794990775495,
+      "sequence": 3,
+      "unity": {
+        "instance_id": "ember-unity-framework@b23e9b768e85ed30",
+        "unity_version": "6000.5.4f1",
+        "project_id": null,
+        "platform": "WindowsEditor",
+        "is_batch_mode": false
+      },
+      "editor": {
+        "is_focused": false,
+        "play_mode": {
+          "is_playing": false,
+          "is_paused": false,
+          "is_changing": false
+        },
+        "active_scene": {
+          "path": "Assets/Game/Scenes/FrameworkScene.unity",
+          "guid": "30fc7ce87c922d343a7920d067a6930e",
+          "name": "FrameworkScene"
+        }
+      },
+      "activity": {
+        "phase": "idle",
+        "since_unix_ms": 1794990497553,
+        "reasons": [
+          "tick"
+        ]
+      },
+      "compilation": {
+        "is_compiling": false,
+        "is_domain_reload_pending": false,
+        "last_compile_started_unix_ms": 1794990456076,
+        "last_compile_finished_unix_ms": 1794990470995,
+        "last_domain_reload_before_unix_ms": null,
+        "last_domain_reload_after_unix_ms": 1794990477650
+      },
+      "assets": {
+        "is_updating": false,
+        "external_changes_dirty": false,
+        "external_changes_last_seen_unix_ms": null,
+        "external_changes_dirty_since_unix_ms": null,
+        "external_changes_last_cleared_unix_ms": 1794990372002,
+        "refresh": {
+          "is_refresh_in_progress": false,
+          "last_refresh_requested_unix_ms": null,
+          "last_refresh_finished_unix_ms": null
+        }
+      },
+      "tests": {
+        "is_running": false,
+        "mode": null,
+        "current_job_id": null,
+        "started_unix_ms": null,
+        "started_by": "unknown",
+        "last_run": null
+      },
+      "transport": {
+        "unity_bridge_connected": null,
+        "last_message_unix_ms": null
+      },
+      "settings": {
+        "batch_execute_max_commands": 25
+      },
+      "advice": {
+        "ready_for_tools": true,
+        "blocking_reasons": [],
+        "recommended_retry_after_ms": 0,
+        "recommended_next_action": "none"
+      },
+      "staleness": {
+        "age_ms": 1118,
+        "is_stale": false
+      }
+    },
+    "hint": null
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Retrieved 0 log entries.\",\"data\":[]}"
+      }
+    ],
+    "structuredContent": {
+      "success": true,
+      "message": "Retrieved 0 log entries.",
+      "data": []
+    },
+    "isError": false
+  },
+  "noPendingTaskOperations": true,
+  "protection": "final-protection.json",
+  "readyForMainCloseout": true,
+  "noProductSaveBumpApplyCommitPublishOrCleanup": true
+}

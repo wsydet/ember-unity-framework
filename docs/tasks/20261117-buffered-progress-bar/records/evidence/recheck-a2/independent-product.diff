@@ -1,0 +1,200 @@
+--- A1/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs
++++ S2/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs
+@@ -192,6 +192,16 @@
+                     return "Slider 要求有限 min < max。";
+                 if (slider.wholeNumbers || !slider.fillRect || slider.interactable)
+                     return "Slider 要求 wholeNumbers=false、fillRect、interactable=false；不支持交互/外部双写。";
++                var fill = slider.fillRect.GetComponent<Image>();
++                if (fill && fill.type == Image.Type.Filled)
++                {
++                    // Native Slider only writes fillAmount for Filled images; it does not
++                    // synchronize their method/origin with its own direction.
++                    string issue = TargetIssue(null, fill, out var fillDirection);
++                    if (issue != null) return "Slider fillRect：" + issue;
++                    if (fillDirection != direction)
++                        return "Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。";
++                }
+                 return null;
+             }
+             if (!image) return "缺少显示目标。";
+--- A1/Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs
++++ S2/Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs
+@@ -57,7 +57,7 @@
+                         if (textChanged) bar.RefreshText();
+                     }
+                 }
+-            EditorGUILayout.HelpBox("排序 Background → Slow → White → Main → Text；完整轨道对齐、同向，无相对旋转或斜切。白条必须是完整 White Track 的直接子 Image。\n仅展示 Slider / H/V Filled Image；禁止交互、Animator 或业务同时写同一目标。TMPEx Key 留空。", MessageType.Info);
++            EditorGUILayout.HelpBox("排序 Background → Slow → White → Main → Text；完整轨道对齐、同向，无相对旋转或斜切。白条必须是完整 White Track 的直接子 Image。\nSlider 内部若为 Filled Image，其 H/V method 与 origin 必须匹配 Slider.direction，且 preserveAspect=false；不支持 radial。禁止交互、Animator 或业务同时写同一目标。TMPEx Key 留空。", MessageType.Info);
+             foreach (var item in targets)
+             {
+                 var bar = (EUIBufferedProgressBar)item;
+--- A1/Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs
++++ S2/Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs
+@@ -19,6 +19,8 @@
+         private RectTransform _track;
+         private EUIBufferedProgressBar _bar;
+         private TMP_FontAsset _font;
++        private Sprite _sprite;
++        private Texture2D _texture;
+         private readonly Color _baseColor = new Color(.9f, .8f, .7f, .75f);
+         private readonly MethodInfo _tick = typeof(EUIBufferedProgressBar).GetMethod("Tick", BindingFlags.Instance | BindingFlags.NonPublic);
+ 
+@@ -40,6 +42,45 @@
+         private Image Fill(string name)
+         { var image = Rect(name, _track).gameObject.AddComponent<Image>(); image.type = Image.Type.Filled; image.fillMethod = Image.FillMethod.Horizontal; return image; }
+         private void Tick(float dt) => _tick.Invoke(_bar, new object[] { dt });
++        private Slider SpriteSlider(Slider.Direction direction, Image.Type type, out Image fill)
++        {
++            if (!_sprite)
++            {
++                _texture = new Texture2D(8, 8);
++                var pixels = new Color[64]; for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.white;
++                _texture.SetPixels(pixels); _texture.Apply();
++                _sprite = Sprite.Create(_texture, new Rect(0, 0, 8, 8), Vector2.one * .5f, 100, 0,
++                    SpriteMeshType.FullRect, Vector4.one * 2);
++            }
++            var slider = Rect("SpriteSlider", _track).gameObject.AddComponent<Slider>();
++            fill = Rect("SpriteFill", slider.transform).gameObject.AddComponent<Image>();
++            fill.rectTransform.anchorMin = Vector2.zero; fill.rectTransform.anchorMax = Vector2.one;
++            fill.rectTransform.offsetMin = fill.rectTransform.offsetMax = Vector2.zero;
++            fill.sprite = _sprite; fill.type = type;
++            fill.fillMethod = (int)direction > 1 ? Image.FillMethod.Vertical : Image.FillMethod.Horizontal;
++            fill.fillOrigin = direction == Slider.Direction.RightToLeft || direction == Slider.Direction.TopToBottom ? 1 : 0;
++            slider.interactable = false; slider.minValue = -50; slider.maxValue = 150;
++            slider.fillRect = fill.rectTransform; slider.direction = direction;
++            return slider;
++        }
++        private Rect MeshBoundsInTrack(Image image)
++        {
++            using (var helper = new VertexHelper())
++            {
++                typeof(Image).GetMethod("OnPopulateMesh", BindingFlags.Instance | BindingFlags.NonPublic,
++                    null, new[] { typeof(VertexHelper) }, null).Invoke(image, new object[] { helper });
++                Assert.Greater(helper.currentVertCount, 0, "Need actual sprite vertices, not only Slider.value/anchors.");
++                Vector2 min = Vector2.positiveInfinity, max = Vector2.negativeInfinity;
++                var vertex = new UIVertex();
++                for (int i = 0; i < helper.currentVertCount; i++)
++                {
++                    helper.PopulateUIVertex(ref vertex, i);
++                    Vector2 p = _track.InverseTransformPoint(image.rectTransform.TransformPoint(vertex.position));
++                    min = Vector2.Min(min, p); max = Vector2.Max(max, p);
++                }
++                return UnityEngine.Rect.MinMaxRect(min.x, min.y, max.x, max.y);
++            }
++        }
+         private TMPEx Text()
+         {
+             _font = TMP_FontAsset.CreateFontAsset(AssetDatabase.LoadAssetAtPath<Font>("Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf"));
+@@ -54,6 +95,8 @@
+         [TearDown] public void TearDown()
+         {
+             Object.DestroyImmediate(_root);
++            if (_sprite) Object.DestroyImmediate(_sprite);
++            if (_texture) Object.DestroyImmediate(_texture);
+             if (_font)
+             {
+                 var material = _font.material; var textures = _font.atlasTextures;
+@@ -107,6 +150,77 @@
+             Assert.That(v ? _white.rectTransform.anchorMin.y : _white.rectTransform.anchorMin.x, Is.EqualTo(origin == 0 ? .6f : 0).Within(.0001));
+         }
+ 
++        [TestCase(Slider.Direction.LeftToRight, Image.Type.Filled)]
++        [TestCase(Slider.Direction.RightToLeft, Image.Type.Filled)]
++        [TestCase(Slider.Direction.BottomToTop, Image.Type.Filled)]
++        [TestCase(Slider.Direction.TopToBottom, Image.Type.Filled)]
++        [TestCase(Slider.Direction.LeftToRight, Image.Type.Simple)]
++        [TestCase(Slider.Direction.RightToLeft, Image.Type.Simple)]
++        [TestCase(Slider.Direction.BottomToTop, Image.Type.Simple)]
++        [TestCase(Slider.Direction.TopToBottom, Image.Type.Simple)]
++        [TestCase(Slider.Direction.LeftToRight, Image.Type.Sliced)]
++        [TestCase(Slider.Direction.RightToLeft, Image.Type.Sliced)]
++        [TestCase(Slider.Direction.BottomToTop, Image.Type.Sliced)]
++        [TestCase(Slider.Direction.TopToBottom, Image.Type.Sliced)]
++        public void SliderSpriteMeshAndLossMeshAgreeInFourDirections(Slider.Direction direction, Image.Type type)
++        {
++            var slider = SpriteSlider(direction, type, out var fill);
++            _white.sprite = _sprite; _bar.SlowBufferEnabled = false;
++            _bar.ConfigureTargets(slider, null, null, null, _white, _track, null);
++            int notifications = 0; slider.onValueChanged.AddListener(_ => notifications++);
++            _bar.SetValue(100, 100, true); _bar.SetValue(60, 100);
++            Assert.IsNull(_bar.Diagnostic); Assert.That(slider.value, Is.EqualTo(70).Within(.0001));
++            Assert.AreEqual(0, notifications); Assert.AreEqual(-50, slider.minValue); Assert.AreEqual(150, slider.maxValue);
++            var main = MeshBoundsInTrack(fill); var loss = MeshBoundsInTrack(_white); var track = _track.rect;
++            bool vertical = (int)direction > 1;
++            bool reverse = direction == Slider.Direction.RightToLeft || direction == Slider.Direction.TopToBottom;
++            float mainMin = vertical ? (main.yMin - track.yMin) / track.height : (main.xMin - track.xMin) / track.width;
++            float mainMax = vertical ? (main.yMax - track.yMin) / track.height : (main.xMax - track.xMin) / track.width;
++            float lossMin = vertical ? (loss.yMin - track.yMin) / track.height : (loss.xMin - track.xMin) / track.width;
++            float lossMax = vertical ? (loss.yMax - track.yMin) / track.height : (loss.xMax - track.xMin) / track.width;
++            Assert.That(mainMin, Is.EqualTo(reverse ? .4f : 0).Within(.0001));
++            Assert.That(mainMax, Is.EqualTo(reverse ? 1 : .6f).Within(.0001));
++            Assert.That(lossMin, Is.EqualTo(reverse ? 0 : .6f).Within(.0001));
++            Assert.That(lossMax, Is.EqualTo(reverse ? .4f : 1).Within(.0001));
++            Assert.That(vertical ? main.width : main.height, Is.EqualTo(vertical ? track.width : track.height).Within(.001));
++            Assert.That(vertical ? loss.width : loss.height, Is.EqualTo(vertical ? track.width : track.height).Within(.001));
++        }
++
++        [TestCase(true, Image.FillMethod.Horizontal, 0, false)]
++        [TestCase(false, Image.FillMethod.Horizontal, 0, false)]
++        [TestCase(true, Image.FillMethod.Vertical, 1, false)]
++        [TestCase(false, Image.FillMethod.Vertical, 1, false)]
++        [TestCase(true, Image.FillMethod.Radial360, 0, false)]
++        [TestCase(false, Image.FillMethod.Radial360, 0, false)]
++        [TestCase(true, Image.FillMethod.Horizontal, 1, true)]
++        [TestCase(false, Image.FillMethod.Horizontal, 1, true)]
++        public void InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(bool mainInvalid,
++            Image.FillMethod method, int origin, bool preserveAspect)
++        {
++            var slider = SpriteSlider(Slider.Direction.RightToLeft, Image.Type.Filled, out var fill);
++            _main.fillOrigin = _slow.fillOrigin = 1;
++            var text = Text();
++            _bar.ConfigureTargets(mainInvalid ? slider : null, mainInvalid ? null : _main,
++                mainInvalid ? null : slider, mainInvalid ? _slow : null, _white, _track, text);
++            _bar.SetValue(100, 100, true); _bar.SetValue(60, 100); Tick(.1f);
++            Assert.IsTrue(_white.enabled);
++            fill.fillMethod = method; fill.fillOrigin = origin; fill.preserveAspect = preserveAspect;
++            float before = slider.value;
++            _bar.SetValue(30, 100); Tick(.01f);
++            StringAssert.Contains("Slider fillRect", _bar.Diagnostic);
++            StringAssert.StartsWith(mainInvalid ? "主条：" : "慢尾：", _bar.Diagnostic);
++            Assert.That(slider.value, Is.EqualTo(before).Within(.0001), "Invalid Slider must not be written.");
++            Assert.AreEqual(30, _bar.CurrentValue); Assert.AreEqual("30%", text.text);
++            if (mainInvalid) { Assert.IsFalse(_white.enabled); Assert.AreEqual(_baseColor, _white.color); Assert.IsFalse(_bar.IsAnimating); }
++            else { Assert.AreEqual(.3f, _main.fillAmount); Assert.IsTrue(_white.enabled); }
++            Assert.AreEqual(method, fill.fillMethod); Assert.AreEqual(origin, fill.fillOrigin); Assert.AreEqual(preserveAspect, fill.preserveAspect);
++            fill.fillMethod = Image.FillMethod.Horizontal; fill.fillOrigin = 1; fill.preserveAspect = false;
++            _bar.SyncImmediate();
++            Assert.IsNull(_bar.Diagnostic); Assert.That(slider.value, Is.EqualTo(10).Within(.0001));
++            Assert.IsFalse(_bar.IsAnimating); Assert.IsFalse(_white.enabled); Assert.AreEqual(_baseColor, _white.color);
++            Assert.AreEqual("30%", text.text);
++        }
++
+         [Test] public void ContinuousLossRestartsFromCurrentTail_SameValueDoesNotRestart()
+         {
+             _bar.SlowDelay = _bar.WhiteDelay = 0; _bar.SlowDuration = _bar.WhiteDuration = 1;
+--- A1/Packages/com.ember/Documentation~/ui/buffered-progress-bar.md
++++ S2/Packages/com.ember/Documentation~/ui/buffered-progress-bar.md
+@@ -23,11 +23,22 @@
+ 
+ | 目标 | 支持范围 | 无效配置 |
+ | --- | --- | --- |
+-| Slider | 有限 min < max，wholeNumbers=false，interactable=false，有 fillRect；四方向；实际值映射到原 min/max，SetValueWithoutNotify | 缺失 fillRect、非法范围、整数或交互 Slider 诊断后停止写该目标 |
++| Slider | 有限 min < max，wholeNumbers=false，interactable=false，有 fillRect；四方向；实际值映射到原 min/max，SetValueWithoutNotify。内部 Filled Image 须按下表匹配方向且 preserveAspect=false | 缺失 fillRect、非法范围、整数/交互 Slider、内部 Filled 的径向填充/方向不符/保持比例均诊断后停止写该目标 |
+ | Image | Filled Horizontal / Vertical，fillOrigin 0/1，preserveAspect=false | Simple、Sliced、Tiled 主条以及 radial 不支持；旧包装支持行为不变 |
+ | White | 独立 Simple/Sliced Image 与完整轨道 | 复用主/慢 Graphic、fillRect 或轨道，错误父子关系，布局/Animator 竞争均不支持 |
+ 
+ 组件不订阅 Slider.onValueChanged，也不把拖动或外部赋值当业务输入。不要继续用旧包装、Animator 或其他脚本写同一目标。极大有限 Slider 范围使用 double 映射并修复原生 float 范围差溢出时的显示锚点；业务读取真实值使用组件属性。
++
++Slider 的 fillRect 使用 Simple/Sliced Image 时沿用原生锚点伸缩；若使用 Filled Image，原生 Slider 只更新 fillAmount，不会替作者同步 fillMethod/fillOrigin，因此必须配置：
++
++| Slider.direction | 内部 Filled fillMethod | fillOrigin |
++| --- | --- | --- |
++| LeftToRight | Horizontal | 0（Left） |
++| RightToLeft | Horizontal | 1（Right） |
++| BottomToTop | Vertical | 0（Bottom） |
++| TopToBottom | Vertical | 1（Top） |
++
++这项校验同样适用于慢尾 Slider；内部 Filled 不支持 radial 或 preserveAspect。组件仅报告诊断，不自动改作者的方向、图形类型、origin、范围或布局。主目标无效时取消两类反馈并清退已借入的白图，保留真实数据及文字，停止目标写入；仅慢尾无效时停止慢尾写入/计时，主条与有效白图仍独立工作。无效目标本身保留作者当前图形，不能把它的残留显示当有效反馈。修正配置后调用 SyncImmediate 或 ConfigureTargets，按最新真实值恢复，避免同值 Set 的去重阻止重新校验。
+ 
+ ## 数值与配置
+ 

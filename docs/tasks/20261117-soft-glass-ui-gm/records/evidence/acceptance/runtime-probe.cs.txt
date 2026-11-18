@@ -1,0 +1,64 @@
+var rows=new System.Collections.Generic.List<object>();
+System.Action<string,bool,object> check=(id,pass,detail)=>rows.Add(new{id=id,pass=pass,detail=detail});
+System.Func<int,System.Threading.Tasks.Task> frames=async n=>{for(int i=0;i<n;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Func<Ember.UI.EUIPageDef,System.Threading.Tasks.Task<Ember.UI.EUIPage>> open=async def=>{Ember.UI.EUIPage p=null;Ember.UI.EUIManager.Instance.ShowPopup(def,null,x=>p=x);for(int i=0;i<120&&p==null;i++)await frames(1);if(p==null)throw new System.Exception("open timeout "+def);await frames(8);return p;};
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var mgr=Ember.UI.EUIManager.Instance;
+var masks=(System.Collections.IDictionary)typeof(Ember.UI.EUIManager).GetField("_activeMasks",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).GetValue(mgr);
+var gm=(Ember.UI.EUIPage)typeof(Game.UI.EUIAppearanceBootstrap).GetField("_gm",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static).GetValue(null);
+var gml=(Game.UI.EUISoftGlassGMPage)gm.Logic;gml.SetExpanded(false);
+Ember.UI.EUIPage main=null;mgr.ShowMainPage(Game.UI.GamePages.EUISoftGlassShowcasePage,null,p=>main=p);for(int i=0;i<120&&main==null;i++)await frames(1);if(main==null)throw new System.Exception("main timeout");await frames(10);
+var host=Ember.UIRendering.EUIBackdropCameraHost.Active;
+var es=UnityEngine.EventSystems.EventSystem.current;
+var input=main.GameObject.GetComponentsInChildren<TMPro.TMP_InputField>(true).First();
+var actions=input.GetComponent<Ember.UIExtension.EUIInputActions>();
+input.text="Accept";es.SetSelectedGameObject(input.gameObject);input.ActivateInputField();await frames(3);
+check("input-focus",input.isFocused,new{focus=input.isFocused,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+var clear=input.transform.Find("Clear");
+actions.SetReadOnly(true);input.ProcessEvent(Event.KeyboardEvent("x"));await frames(2);check("readonly-input",input.text=="Accept",input.text);actions.SetReadOnly(false);
+actions.SetInteractable(false);check("disabled-input",!input.IsInteractable(),input.interactable);actions.SetInteractable(true);
+actions.SetError("Acceptance error");check("error-foreground",input.GetComponentsInChildren<TMPro.TMP_Text>(true).Any(t=>t.text=="Acceptance error"&&t.gameObject.activeSelf),"explicit error text");actions.SetError(null);
+var lowerGroup=main.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>();int v=lowerGroup.Lease.TextureVersion;await frames(8);check("live-glass-updates",lowerGroup.Lease.TextureVersion>v,new{before=v,after=lowerGroup.Lease.TextureVersion});
+var p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);var group=p1.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>();
+var mask=(GameObject)masks[p1];
+check("default-blur",Ember.UI.EUIManager.PopupMaskEffect==Ember.UI.EUIMaskEffect.Blur&&p1.MaskEffectOverride==Ember.UI.EUIMaskEffect.Inherit&&group.Lease!=null&&group.Lease.IsReady,new{effect=p1.MaskEffectOverride.ToString(),ready=group.Lease!=null&&group.Lease.IsReady,boundaries=host.BoundaryCount});
+check("lower-input-paused",!main.CanvasGroup.interactable&&!main.CanvasGroup.blocksRaycasts,new{interactable=main.CanvasGroup.interactable,focused=input.isFocused,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+var pointer=new UnityEngine.EventSystems.PointerEventData(es){position=new Vector2(12,12),button=UnityEngine.EventSystems.PointerEventData.InputButton.Left};var hits=new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();es.RaycastAll(pointer,hits);
+check("mask-first-raycast",hits.Count>0&&hits[0].gameObject==mask,hits.Take(3).Select(h=>h.gameObject.name).ToArray());
+int baseCount=host.BoundaryCount;
+p1.MaskEffectOverride=Ember.UI.EUIMaskEffect.Solid;mgr.RefreshBackdrop(p1);await frames(5);
+check("solid-override",((GameObject)masks[p1]).GetComponent<UnityEngine.UI.Image>().color.a>0&&group.Lease!=null&&group.Lease.IsReady,new{count=host.BoundaryCount,ready=group.Lease!=null&&group.Lease.IsReady});
+p1.MaskEffectOverride=Ember.UI.EUIMaskEffect.Blur;mgr.RefreshBackdrop(p1);await frames(5);var previous=group.Lease;
+p1.UseMask=false;mgr.RefreshBackdrop(p1);await frames(8);
+check("mask-off-removes-mask",!masks.Contains(p1),masks.Count);
+check("mask-off-retains-local-glass",group.Lease!=null&&!group.Lease.IsDisposed&&group.Lease.IsReady,new{leasePresent=group.Lease!=null,disposed=group.Lease!=null&&group.Lease.IsDisposed,ready=group.Lease!=null&&group.Lease.IsReady,boundaries=host.BoundaryCount});
+p1.UseMask=true;mgr.RefreshBackdrop(p1);await frames(5);
+var ab=System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly(new System.Reflection.AssemblyName("AcceptanceMaskGate"),System.Reflection.Emit.AssemblyBuilderAccess.Run);
+var tb=ab.DefineDynamicModule("main").DefineType("AcceptanceNoMaskLogic",System.Reflection.TypeAttributes.Public,typeof(Ember.UI.EUILogic));
+var baseGetter=typeof(Ember.UI.EUILogic).GetProperty("AutoCreateClickableMask",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetGetMethod(true);
+var method=tb.DefineMethod(baseGetter.Name,System.Reflection.MethodAttributes.Family|System.Reflection.MethodAttributes.Virtual|System.Reflection.MethodAttributes.HideBySig|System.Reflection.MethodAttributes.SpecialName,typeof(bool),System.Type.EmptyTypes);var il=method.GetILGenerator();il.Emit(System.Reflection.Emit.OpCodes.Ldc_I4_0);il.Emit(System.Reflection.Emit.OpCodes.Ret);tb.DefineMethodOverride(method,baseGetter);
+var reject=(Ember.UI.EUILogic)System.Activator.CreateInstance(tb.CreateType());reject.Page=p1;
+var lf=typeof(Ember.UI.EUIPage).GetField("_logic",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);var original=p1.Logic;
+lf.SetValue(p1,reject);mgr.RefreshBackdrop(p1);await frames(3);check("logic-reject-mask",!masks.Contains(p1),new{useMask=p1.UseMask,masks=masks.Count});lf.SetValue(p1,original);mgr.RefreshBackdrop(p1);await frames(5);
+p1.ClickMaskToClose=false;mask=(GameObject)masks[p1];UnityEngine.EventSystems.ExecuteEvents.Execute(mask,pointer,UnityEngine.EventSystems.ExecuteEvents.pointerClickHandler);await frames(3);check("click-policy-false",p1.IsOpened,p1.State.ToString());
+var p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);check("stack-distinct",p1.Canvas.sortingOrder<p2.Canvas.sortingOrder&&group.Lease.Texture!=p2.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease.Texture,host.BoundaryCount);
+mgr.ClosePage(p1);await frames(25);check("close-lower-first",p2.IsOpened&&masks.Count==1,new{state=p2.State.ToString(),masks=masks.Count});
+p2.ClickMaskToClose=true;UnityEngine.EventSystems.ExecuteEvents.Execute((GameObject)masks[p2],pointer,UnityEngine.EventSystems.ExecuteEvents.pointerClickHandler);await frames(25);check("click-policy-true",!p2.IsOpened&&masks.Count==0,masks.Count);
+var legacy=await open(Game.UI.GamePages.EUIConfirmPage);check("legacy-popup-default-blur",masks.Contains(legacy)&&legacy.MaskEffectOverride==Ember.UI.EUIMaskEffect.Inherit,legacy.MaskColorOverride.ToString());mgr.ClosePage(legacy);await frames(25);
+gml.SetExpanded(true);await frames(15);
+var slider=gm.GameObject.GetComponentInChildren<UnityEngine.UI.Slider>();var timeRoot=gm.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).First(b=>b.name=="EUISoftGlassGMTimeItem");var toggle=timeRoot.GetComponentInChildren<Ember.UIExtension.EUIToggleEx>();toggle.isOn=true;slider.value=1.85f;await frames(2);check("time-sync",Mathf.Approximately(Time.timeScale,1.85f)&&Mathf.Approximately(Ember.Core.EmberTimeManager.Instance.TimeScale,1.85f),Time.timeScale);
+var axis=new UnityEngine.EventSystems.AxisEventData(es){moveDir=UnityEngine.EventSystems.MoveDirection.Up};slider.OnMove(axis);check("handleless-keyboard",slider.handleRect==null&&slider.value>1.85f,slider.value);toggle.isOn=false;
+check("gm-actions",Game.UI.GMActionRegistry.Snapshot().Select(a=>a.Key).Distinct().Count()==6,Game.UI.GMActionRegistry.Snapshot().Select(a=>a.Key).ToArray());
+gml.SetExpanded(false);await frames(10);
+var floatEntry=gm.GameObject.GetComponentInChildren<Ember.UIExtension.EUIFloatingEntry>();var rt=(RectTransform)floatEntry.transform;var screen=RectTransformUtility.WorldToScreenPoint(gm.Canvas.worldCamera,rt.position);int activated=0;System.Action onActivated=()=>activated++;floatEntry.Activated+=onActivated;
+pointer.pointerId=-1;pointer.position=screen;pointer.pointerPressRaycast=new UnityEngine.EventSystems.RaycastResult{module=gm.GameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>()};floatEntry.OnPointerDown(pointer);pointer.position=screen+new Vector2(-300,-90);floatEntry.OnDrag(pointer);floatEntry.OnPointerUp(pointer);floatEntry.OnEndDrag(pointer);await frames(20);check("drag-and-snap",activated==0&&Screen.safeArea.Contains(RectTransformUtility.WorldToScreenPoint(gm.Canvas.worldCamera,rt.position)),rt.anchoredPosition.ToString());floatEntry.Activated-=onActivated;
+hits.Clear();pointer.position=new Vector2(Screen.width*.5f,Screen.height*.5f);es.RaycastAll(pointer,hits);check("collapsed-entry-input-area",!hits.Any(h=>h.gameObject.transform.IsChildOf(gm.Transform)),hits.Take(3).Select(h=>h.gameObject.name).ToArray());
+await frames(60);var fps=gm.GameObject.GetComponentInChildren<Ember.UI.FPSDisplay>();int number;check("original-fps-entry",fps&&int.TryParse(fps.GetComponentsInChildren<TMPro.TMP_Text>().First(t=>t.name=="FrameRate").text,out number)&&!fps.transform.Find("Ring")&&!fps.transform.Find("Dot"),fps?fps.name:"missing");
+var nestedGO=new GameObject("AcceptanceNested",typeof(RectTransform),typeof(Canvas));nestedGO.transform.SetParent(main.Transform,false);var nested=nestedGO.GetComponent<Canvas>();nested.overrideSorting=true;var lease=(Ember.UI.IEUIBackdropLease)typeof(Ember.UIRendering.EUIBackdropCameraHost).GetMethod("Acquire").Invoke(host,new object[]{new Ember.UI.EUIBackdropRequest(nested,900,null,1)});check("nested-boundary-rejected",lease==null,host.Diagnostic);lease?.Dispose();UnityEngine.Object.Destroy(nestedGO);
+check("input-resumes",main.CanvasGroup.interactable&&main.CanvasGroup.blocksRaycasts,new{state=main.State.ToString(),interactable=main.CanvasGroup.interactable});
+}
+catch(System.Exception e){check("probe-error",false,e.ToString());}
+System.IO.File.WriteAllText(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/acceptance/runtime.json",Newtonsoft.Json.JsonConvert.SerializeObject(rows,Newtonsoft.Json.Formatting.Indented));
+};run();return "Independent bounded checks started";
+

@@ -1,0 +1,132 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Frame Debugger events 0-27 of 28.\",\"data\":{\"events\":[{\"index\":0,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 1:0) DrawDepthNormalPrepass/RenderLoop.DrawSRPBatcher\"},{\"index\":1,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 2:0) SSAO\"},{\"index\":2,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 3:0) SSAO\"},{\"index\":3,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 4:0) SSAO\"},{\"index\":4,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 5:0) SSAO\"},{\"index\":5,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 6:0) DrawOpaqueObjects/RenderLoop.DrawSRPBatcher\"},{\"index\":6,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 7:0) CopyColor\"},{\"index\":7,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/(RP 9:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":8,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/(RP 10:0) CopyDepth\"},{\"index\":9,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Downsample\"},{\"index\":10,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Horizontal\"},{\"index\":11,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Vertical\"},{\"index\":12,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Horizontal\"},{\"index\":13,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Vertical\"},{\"index\":14,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":15,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":16,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":17,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 12:0) CopyDepth\"},{\"index\":18,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Downsample\"},{\"index\":19,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Horizontal\"},{\"index\":20,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Vertical\"},{\"index\":21,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Horizontal\"},{\"index\":22,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Vertical\"},{\"index\":23,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":24,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":25,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch\"},{\"index\":26,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 14:0) CopyDepth\"},{\"index\":27,\"name\":\"UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 14:1) BlitFinalToBackBuffer\"}],\"total_events\":28,\"page_size\":100,\"cursor\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Frame Debugger events 0-27 of 28.",
+    "data": {
+      "events": [
+        {
+          "index": 0,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 1:0) DrawDepthNormalPrepass/RenderLoop.DrawSRPBatcher"
+        },
+        {
+          "index": 1,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 2:0) SSAO"
+        },
+        {
+          "index": 2,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 3:0) SSAO"
+        },
+        {
+          "index": 3,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 4:0) SSAO"
+        },
+        {
+          "index": 4,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 5:0) SSAO"
+        },
+        {
+          "index": 5,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 6:0) DrawOpaqueObjects/RenderLoop.DrawSRPBatcher"
+        },
+        {
+          "index": 6,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe World Camera/ExecuteRenderGraph/(RP 7:0) CopyColor"
+        },
+        {
+          "index": 7,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/(RP 9:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 8,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/(RP 10:0) CopyDepth"
+        },
+        {
+          "index": 9,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Downsample"
+        },
+        {
+          "index": 10,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Horizontal"
+        },
+        {
+          "index": 11,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Vertical"
+        },
+        {
+          "index": 12,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Horizontal"
+        },
+        {
+          "index": 13,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: Probe UI Camera/ExecuteRenderGraph/EUI Backdrop / Vertical"
+        },
+        {
+          "index": 14,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 15,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 16,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 11:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 17,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/(RP 12:0) CopyDepth"
+        },
+        {
+          "index": 18,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Downsample"
+        },
+        {
+          "index": 19,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Horizontal"
+        },
+        {
+          "index": 20,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Vertical"
+        },
+        {
+          "index": 21,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Horizontal"
+        },
+        {
+          "index": 22,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 0/ExecuteRenderGraph/EUI Backdrop / Vertical"
+        },
+        {
+          "index": 23,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 24,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 25,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 13:0) DrawTransparentObjects/RenderLoop.Draw/Canvas.RenderSubBatch"
+        },
+        {
+          "index": 26,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 14:0) CopyDepth"
+        },
+        {
+          "index": 27,
+          "name": "UniversalRenderPipeline.RenderSingleCameraInternal: EUI Foreground Segment 1/ExecuteRenderGraph/(RP 14:1) BlitFinalToBackBuffer"
+        }
+      ],
+      "total_events": 28,
+      "page_size": 100,
+      "cursor": 0
+    }
+  },
+  "isError": false
+}

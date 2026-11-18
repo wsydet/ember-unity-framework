@@ -1,0 +1,376 @@
+[
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassAlertPage.prefab",
+    "guid": "22d0275be79d4114282532ea183e5217",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassCloseButtonItem.prefab",
+    "guid": "313759a9828f67f408ec5cd92fd99c30",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassConfirmPage.prefab",
+    "guid": "3c19fa03430d9034f87abac8428d8ca0",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExampleItem.prefab",
+    "guid": "4fe620d1280b46b46806bbbd63a1460c",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExamplePage.prefab",
+    "guid": "e4cf6babadae4f2469e9bee5410e5f9e",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMActionItem.prefab",
+    "guid": "2d6f3c559cb9a5f448d0a5c941ab06d3",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMCenterItem.prefab",
+    "guid": "2917b7c2ba74daf4ca511dfc6b67d83a",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "ScrollRect",
+      "EUIConstrainedPanel"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null
+    ]
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMEntryItem.prefab",
+    "guid": "825853067942e184094daf048cea1f6b",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx",
+      "EUIFloatingEntry",
+      "FPSDisplay"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMPage.prefab",
+    "guid": "e420b347aa489e140a22e07af74e7f0c",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null
+    ]
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMStateItem.prefab",
+    "guid": "8ad3905634c277945a34ca91834b14e2",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTestItem.prefab",
+    "guid": "1b6347e89212dc2449dfec086484e0d1",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "ScrollRect"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTimeItem.prefab",
+    "guid": "26e2480bb19da8a48ad69f2dacef929a",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null
+    ]
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassIconButtonItem.prefab",
+    "guid": "8de0746071d460d43b66ac139770e9bc",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassInputItem.prefab",
+    "guid": "e2077725046ede247bff4d7a3392d69d",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "TMP_InputField",
+      "EUIInputActions"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPanelItem.prefab",
+    "guid": "4908bde224cf99d488fa42750c78206e",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPrimaryButtonItem.prefab",
+    "guid": "e9cb9c338865ad84a9b88c1fa8f91e74",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSearchItem.prefab",
+    "guid": "c20bb861bb3ab9e44884726cf5aa071d",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "TMP_InputField",
+      "EUIInputActions"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSecondaryButtonItem.prefab",
+    "guid": "bc7199fb3e09e1343af2a89dc4a7aef9",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIButtonEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassShowcasePage.prefab",
+    "guid": "fdb31c710b6be9e45b3abdb67629f10b",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null,
+      null
+    ]
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSliderItem.prefab",
+    "guid": "440ac2baf22070e42beb4a189b2fbfa1",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "Slider"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null
+    ]
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPage.prefab",
+    "guid": "42bb70bc27c31e54a8b1e3cc0f59da16",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPopupPage.prefab",
+    "guid": "72f59dddd3722ee41a623583d4ee486f",
+    "rootComponents": [
+      "RectTransform",
+      "Canvas",
+      "CanvasScaler",
+      "GraphicRaycaster",
+      "CanvasGroup",
+      "EUIBinding",
+      "EUIBackdropGroup"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSwitchItem.prefab",
+    "guid": "9b0a9a69cdc179b4f81cf5c8fd8fef8f",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "CanvasRenderer",
+      "EUIGlassImage",
+      "EUIToggleEx"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": []
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassVerticalSliderItem.prefab",
+    "guid": "1fb30ce3493b40d469d5e5faa8b6e61e",
+    "rootComponents": [
+      "RectTransform",
+      "CanvasGroup",
+      "EUIBinding",
+      "Slider"
+    ],
+    "scriptFields": [],
+    "hasMissing": false,
+    "handles": [
+      null
+    ]
+  }
+]

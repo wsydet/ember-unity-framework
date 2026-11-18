@@ -1,0 +1,98 @@
+{
+  "other_preexisting_tracked_diffs": 23,
+  "all_unchanged": true,
+  "details": [
+    {
+      "diff_header": "diff --git a/.agents/skills/ember-solution-design/SKILL.md b/.agents/skills/ember-solution-design/SKILL.md",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs b/Packages/com.ember/Core/Editor/EmberConditionalMenu.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs b/Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs b/Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs b/Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberExtensionProject.cs b/Packages/com.ember/Core/Editor/EmberExtensionProject.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs b/Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberProjectSetup.cs b/Packages/com.ember/Core/Editor/EmberProjectSetup.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberSetupWindow.cs b/Packages/com.ember/Core/Editor/EmberSetupWindow.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs b/Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs b/Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Documentation~/maintenance/ai-workflow.md b/Packages/com.ember/Documentation~/maintenance/ai-workflow.md",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs b/Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs b/Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs b/Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset b/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset b/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs b/Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs",
+      "unchanged": true
+    },
+    {
+      "diff_header": "diff --git a/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs b/Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+// Independent A2 probe, executed only through Unity MCP. No product/test source changes.
+var preview = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+var root = new GameObject("A2IndependentProbe", typeof(RectTransform));
+UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root, preview);
+var results = new System.Collections.Generic.List<object>();
+var texture = new Texture2D(8, 8);
+var pixels = new Color[64]; for (int i=0;i<64;i++) pixels[i]=Color.white;
+texture.SetPixels(pixels); texture.Apply();
+var sprite = Sprite.Create(texture,new Rect(0,0,8,8),Vector2.one*.5f,100,0,SpriteMeshType.FullRect,Vector4.one*2);
+var font = TMPro.TMP_FontAsset.CreateFontAsset(UnityEditor.AssetDatabase.LoadAssetAtPath<Font>("Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf"));
+font.fallbackFontAssetTable = new System.Collections.Generic.List<TMPro.TMP_FontAsset>();
+var fontMaterial=font.material; var fontTextures=font.atlasTextures;
+var flags=System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic;
+var tick=typeof(Ember.UIExtension.EUIBufferedProgressBar).GetMethod("Tick",flags);
+System.Action<bool,string> check=(ok,msg)=>{if(!ok)throw new System.Exception("A2 assertion: "+msg);};
+System.Func<string,Transform,RectTransform> rect=(name,parent)=>{
+ var go=new GameObject(name,typeof(RectTransform)); go.SetActive(false); go.transform.SetParent(parent,false);
+ var rt=(RectTransform)go.transform;rt.sizeDelta=new Vector2(400,40);return rt;
+};
+System.Func<RectTransform,string,UnityEngine.UI.Image> image=(parent,name)=>{
+ var rt=rect(name,parent);rt.anchorMin=Vector2.zero;rt.anchorMax=Vector2.one;rt.offsetMin=rt.offsetMax=Vector2.zero;
+ var im=rt.gameObject.AddComponent<UnityEngine.UI.Image>();im.sprite=sprite;im.raycastTarget=false;rt.gameObject.SetActive(true);return im;
+};
+System.Func<UnityEngine.UI.Image,float[]> mesh=(im)=>{
+ using(var vh=new UnityEngine.UI.VertexHelper()) {
+ typeof(UnityEngine.UI.Image).GetMethod("OnPopulateMesh",flags,null,new[]{typeof(UnityEngine.UI.VertexHelper)},null).Invoke(im,new object[]{vh});
+ if(vh.currentVertCount==0)return new[]{0f};
+ float lo=1e30f,hi=-1e30f;var v=new UIVertex();
+ for(int j=0;j<vh.currentVertCount;j++){vh.PopulateUIVertex(ref v,j);var p=im.transform.parent.InverseTransformPoint(im.transform.TransformPoint(v.position));lo=Mathf.Min(lo,p.x);hi=Mathf.Max(hi,p.x);}
+ return new[]{(float)vh.currentVertCount,lo,hi}; }
+};
+try {
+ check(font.TryAddCharacters("0123456789% /."),"independent font glyphs");font.atlasPopulationMode=TMPro.AtlasPopulationMode.Static;
+ for(int kind=0;kind<5;kind++) for(int role=0;role<2;role++) {
+  bool mainBad=role==0;
+  var rt=rect("Case"+kind+"-"+role,root.transform);
+  var slider=rt.gameObject.AddComponent<UnityEngine.UI.Slider>();slider.interactable=false;slider.minValue=-37;slider.maxValue=263;
+  var fill=image(rt,"SliderFill");fill.type=UnityEngine.UI.Image.Type.Filled;fill.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;fill.fillOrigin=1;
+  slider.fillRect=fill.rectTransform;slider.direction=UnityEngine.UI.Slider.Direction.RightToLeft;
+  var main=image(rt,"Main");main.type=UnityEngine.UI.Image.Type.Filled;main.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;main.fillOrigin=1;
+  var slow=image(rt,"Slow");slow.type=UnityEngine.UI.Image.Type.Filled;slow.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;slow.fillOrigin=1;
+  var white=image(rt,"White");var baseColor=new Color(.7f,.8f,.9f,.8f);white.color=baseColor;
+  var tr=rect("Text",rt);var text=tr.gameObject.AddComponent<Ember.UIExtension.TMPEx>();text.SetFontSkin(-1,1);text.Key="";text.font=font;text.fontSharedMaterial=fontMaterial;
+  var bar=rt.gameObject.AddComponent<Ember.UIExtension.EUIBufferedProgressBar>();
+  bar.WhiteMode=Ember.UIExtension.EUIProgressWhiteMode.Fade;
+  bar.ConfigureTargets(mainBad?slider:null,mainBad?null:main,mainBad?null:slider,mainBad?slow:null,white,rt,text);
+  tr.gameObject.SetActive(true);rt.gameObject.SetActive(true);
+  int events=0;slider.onValueChanged.AddListener(v=>events++);
+  bar.SetValue(100,100,true);bar.SetValue(60,100);tick.Invoke(bar,new object[]{.19f});
+  check(white.enabled && white.color.a<baseColor.a,"feedback before invalidation");
+  if(kind==0)fill.fillOrigin=0;
+  if(kind==1)fill.fillMethod=UnityEngine.UI.Image.FillMethod.Vertical;
+  if(kind==2)fill.fillMethod=UnityEngine.UI.Image.FillMethod.Radial90;
+  if(kind==3)fill.preserveAspect=true;
+  if(kind==4)fill.fillOrigin=2;
+  int authoredOrigin=fill.fillOrigin;var authoredMethod=fill.fillMethod;bool authoredAspect=fill.preserveAspect;
+  float before=slider.value,amountBefore=fill.fillAmount;
+  // No new business value: the running feedback tick itself must detect invalidity.
+  tick.Invoke(bar,new object[]{.01f});
+  check(bar.Diagnostic!=null&&bar.Diagnostic.StartsWith(mainBad?"主条：":"慢尾："),"specific live diagnosis "+kind);
+  check(slider.value==before&&fill.fillAmount==amountBefore,"invalid target never written by tick");
+  if(mainBad)check(!white.enabled&&white.color==baseColor&&!bar.IsAnimating,"main invalid retires borrowed faded white");
+  else check(white.enabled&&bar.IsAnimating,"slow invalid preserves independent white feedback");
+  bar.SetValue(30,100);
+  check(bar.CurrentValue==30&&bar.MaxValue==100&&Mathf.Abs(bar.NormalizedValue-.3f)<.00001f&&text.text=="30%","real data/text survive");
+  check(slider.value==before&&fill.fillAmount==amountBefore,"invalid target never written by Set");
+  if(!mainBad)check(Mathf.Abs(main.fillAmount-.3f)<.00001f&&white.enabled,"valid main and white independent");
+  check(fill.fillMethod==authoredMethod&&fill.fillOrigin==authoredOrigin&&fill.preserveAspect==authoredAspect,"author settings untouched");
+  string diagnostic=bar.Diagnostic;
+  fill.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;fill.fillOrigin=1;fill.preserveAspect=false;
+  bar.SetValue(30,100);
+  check(slider.value==before,"same-value Set retains dedup contract, no automatic recovery write");
+  if(mainBad)bar.ConfigureTargets(slider,null,null,slow,white,rt,text);else bar.SyncImmediate();
+  check(bar.Diagnostic==null&&Mathf.Abs(slider.value-53)<.0001f&&Mathf.Abs(fill.fillAmount-.3f)<.0001f,"explicit latest-value recovery");
+  check(!white.enabled&&white.color==baseColor&&!bar.IsAnimating&&text.text=="30%","no old loss replay");
+  check(events==0&&slider.minValue==-37&&slider.maxValue==263,"WithoutNotify and arbitrary range");
+  results.Add(new{Case="live-invalid-and-recovery",Kind=kind,MainInvalid=mainBad,Origin=authoredOrigin,Diagnostic=diagnostic,Recovered=slider.value,Text=text.text,Events=events});
+  UnityEngine.Object.DestroyImmediate(rt.gameObject);
+ }
+ // Original RTL + Horizontal/origin0 defect, initially invalid/never borrowed.
+ {
+  var rt=rect("OriginalRTLNeverBorrowed",root.transform);
+  var slider=rt.gameObject.AddComponent<UnityEngine.UI.Slider>();slider.interactable=false;
+  var fill=image(rt,"Fill");fill.type=UnityEngine.UI.Image.Type.Filled;fill.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;fill.fillOrigin=0;
+  slider.fillRect=fill.rectTransform;slider.direction=UnityEngine.UI.Slider.Direction.RightToLeft;slider.SetValueWithoutNotify(.23f);
+  var white=image(rt,"White");var color=new Color(.8f,.7f,.6f,.65f);white.color=color;
+  var beforeMin=white.rectTransform.anchorMin;var beforeMax=white.rectTransform.anchorMax;
+  var bar=rt.gameObject.AddComponent<Ember.UIExtension.EUIBufferedProgressBar>();bar.SlowBufferEnabled=false;
+  bar.ConfigureTargets(slider,null,null,null,white,rt,null);rt.gameObject.SetActive(true);
+  bar.SetValue(100,100,true);bar.SetValue(60,100);
+  var bounds=mesh(fill);
+  check(bar.Diagnostic!=null&&bar.Diagnostic.Contains("方向"),"original mismatch diagnosed");
+  check(Mathf.Abs(slider.value-.23f)<.0001f&&bar.CurrentValue==60&&!bar.IsAnimating,"original invalid value untouched, data still accepted");
+  check(white.enabled&&white.color==color&&white.rectTransform.anchorMin==beforeMin&&white.rectTransform.anchorMax==beforeMax,"never-borrowed authored white untouched");
+  check(typeof(Ember.UIExtension.EUIBufferedProgressBar).GetField("_ownedWhite",flags).GetValue(bar)==null,"never borrowed image is not owned feedback");
+  string d=bar.Diagnostic;fill.fillOrigin=1;bar.ConfigureTargets(slider,null,null,null,white,rt,null);
+  check(!white.enabled&&!bar.IsAnimating&&Mathf.Abs(slider.value-.6f)<.0001f,"never-borrowed recovery sync without replay");
+  results.Add(new{Case="original-mismatch-never-borrowed",Diagnostic=d,BeforeRecoveryVertexCount=bounds[0],Bounds=bounds,Recovered=slider.value,NoOldReplay=true});
+  UnityEngine.Object.DestroyImmediate(rt.gameObject);
+ }
+ // A previously borrowed white becomes a main Graphic alias: cleanup must not mutate it.
+ {
+  var rt=rect("AliasCleanup",root.transform);var main=image(rt,"Main");main.type=UnityEngine.UI.Image.Type.Filled;main.fillMethod=UnityEngine.UI.Image.FillMethod.Horizontal;
+  var white=image(rt,"White");white.color=new Color(.7f,.8f,.9f,.8f);
+  var bar=rt.gameObject.AddComponent<Ember.UIExtension.EUIBufferedProgressBar>();bar.SlowBufferEnabled=false;bar.WhiteMode=Ember.UIExtension.EUIProgressWhiteMode.Fade;
+  bar.ConfigureTargets(null,main,null,null,white,rt,null);rt.gameObject.SetActive(true);bar.SetValue(100,100,true);bar.SetValue(60,100);tick.Invoke(bar,new object[]{.19f});
+  check(white.enabled,"alias fixture has borrowed feedback");
+  typeof(Ember.UIExtension.EUIBufferedProgressBar).GetField("_mainImage",flags).SetValue(bar,white);
+  var c=white.color;var min=white.rectTransform.anchorMin;var max=white.rectTransform.anchorMax;bool enabled=white.enabled;
+  tick.Invoke(bar,new object[]{.01f});bar.SetValue(30,100);
+  check(bar.Diagnostic!=null&&!bar.IsAnimating,"aliased invalid target diagnosed and feedback ended");
+  check(white.enabled==enabled&&white.color==c&&white.rectTransform.anchorMin==min&&white.rectTransform.anchorMax==max,"cleanup never writes aliased Graphic");
+  results.Add(new{Case="borrowed-white-became-main-alias",Diagnostic=bar.Diagnostic,GraphicUntouched=true,Current=bar.CurrentValue});
+  UnityEngine.Object.DestroyImmediate(rt.gameObject);
+ }
+ return Newtonsoft.Json.JsonConvert.SerializeObject(new{Passed=true,Rows=results});
+} finally {
+ UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(preview);
+ UnityEngine.Object.DestroyImmediate(sprite);UnityEngine.Object.DestroyImmediate(texture);
+ UnityEngine.Object.DestroyImmediate(font);UnityEngine.Object.DestroyImmediate(fontMaterial);
+ foreach(var t in fontTextures)if(t)UnityEngine.Object.DestroyImmediate(t);
+}

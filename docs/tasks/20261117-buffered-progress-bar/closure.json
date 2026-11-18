@@ -1,0 +1,131 @@
+{
+  "task": "20261117-buffered-progress-bar",
+  "date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "status": "complete",
+  "sourceAcceptance": "A1 historical original and independent A2 recheck",
+  "BPP-A01": "closed independently by A2",
+  "BPP-A02": "excluded historical suspicion; not an open issue",
+  "AC01": "passed by A2 within D1 scope",
+  "AC08": "passed by A2 within D1 scope",
+  "otherAC": "affected parts rechecked by A2; unchanged parts carried from A1; preserve all boundaries",
+  "remainingRequiredWork": [],
+  "recordedA2Tests": {
+    "EditMode": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.9319251,
+      "resultState": "Passed"
+    },
+    "PlayMode": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 1.2481733,
+      "resultState": "Passed"
+    },
+    "independentProbeRows": 12,
+    "FormalPage": false
+  },
+  "recordedA2Unity": {
+    "Scene": "Assets/Game/Scenes/FrameworkScene.unity",
+    "SceneDirty": false,
+    "TimeScale": 1,
+    "Bars": 0,
+    "PageLoaded": false,
+    "ProbeLoaded": false,
+    "Playing": false,
+    "Compiling": false,
+    "Updating": false,
+    "RuntimeMvid": "42cc011e-b222-4652-ac3b-501b8486b6e0",
+    "EditMvid": "0f75e22c-c505-40a3-ac90-d74be143a202"
+  },
+  "entryRuntimeTestsRun": false,
+  "entryProductOrAssetChanges": false,
+  "preflight": {
+    "task": "20261117-buffered-progress-bar",
+    "date": "2026-11-17",
+    "timezone": "Asia/Shanghai",
+    "authorization": "User explicitly requested archive, then mark complete and exact temporary-directory cleanup after verification",
+    "branch": "codex/local-snapshot-20261111-162819",
+    "head": "16cff3d85d3b40a5ddab11e30801dfa5e36ed0c2",
+    "ownedDeliveryFiles": 12,
+    "protectedFinalFiles": 201,
+    "backupFilesVerified": 201,
+    "historicalRootEvidenceVerified": 90,
+    "sharedFontFileCount": 34,
+    "mismatches": [],
+    "temporaryProbes": [],
+    "A1Sha256": "D71426CECC52445D50039AABE458A4F92EBFFAD6BED3F7F3990297564EA82958",
+    "A2Sha256": "820B85CBAB433F37887095AC1E2A0F069228AEA25C257E0C9B96D8A93CBD0BCB",
+    "requirementsSha256": "58E5322FA22CC57B225136A3FBD38B0212C87B7AFEECA5FD66C8B19C93F15DC3",
+    "designSha256": "C016C4B8B366A10A89A442B0BD7D87F8A642D6C693D5D568058A1E7FE2A4C91B",
+    "handoffSha256": "6C65F3907D5EFA5A457E21B744A98924FD74A0F49453CF469EC7AB297B81C376",
+    "recordedA2Results": {
+      "EditMode": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.9319251,
+        "resultState": "Passed"
+      },
+      "PlayMode": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 1.2481733,
+        "resultState": "Passed"
+      },
+      "independentProbeRows": 12,
+      "FormalPage": false
+    },
+    "recordedFinalUnity": {
+      "Scene": "Assets/Game/Scenes/FrameworkScene.unity",
+      "SceneDirty": false,
+      "TimeScale": 1,
+      "Bars": 0,
+      "PageLoaded": false,
+      "ProbeLoaded": false,
+      "Playing": false,
+      "Compiling": false,
+      "Updating": false,
+      "RuntimeMvid": "42cc011e-b222-4652-ac3b-501b8486b6e0",
+      "EditMvid": "0f75e22c-c505-40a3-ac90-d74be143a202"
+    },
+    "sourceFileCountBeforeClosure": 1004,
+    "sourceBytesBeforeClosure": 267479265,
+    "reparsePoints": [],
+    "remainingRequiredItems": [],
+    "runtimeVerificationInClosure": "None: archive-only; code/assets unchanged, A1/A2 evidence reused with scope intact"
+  },
+  "archiveVerification": {
+    "sourceFileCount": 1006,
+    "allArchivedFileHashesMatchSource": true,
+    "allMembersReadAndVerified": true,
+    "expandedRecordFiles": 24,
+    "manifest": "archive-manifest.json",
+    "localLinksAndAnchorsChecked": 26,
+    "verificationRecord": "archive-verification.json"
+  },
+  "temporaryCleanup": {
+    "target": ".utmp/ember-workflow/20261117-buffered-progress-bar",
+    "performed": true,
+    "authorization": "Explicit current user instruction: archive, verify, mark complete, then exact task-directory cleanup",
+    "state": "deleted exact authorized task directory after resolved-path/reparse/ownership/file-set/hash checks",
+    "date": "2026-11-17",
+    "taskDirectoryExistsAfter": false,
+    "otherTaskDirectoriesPreserved": [
+      "20261111-ui-template-alignment",
+      "20261113-editor-title-refresh"
+    ],
+    "protectedFilesOutsideTemporaryTreeUnchanged": 196
+  },
+  "gitCommitPushPublishPerformed": false,
+  "versionOrTemplateOperationsPerformed": false,
+  "completedDate": "2026-11-17"
+}

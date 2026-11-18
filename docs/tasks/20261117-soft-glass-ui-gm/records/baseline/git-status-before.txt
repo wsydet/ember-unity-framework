@@ -1,0 +1,115 @@
+ M .agents/skills/ember-solution-design/SKILL.md
+ M AGENTS.md
+ M Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
+ M Packages/com.ember/CHANGELOG.md
+ M Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+ M Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+ M Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+ M Packages/com.ember/Dependencies~/README.md
+ M Packages/com.ember/Documentation~/maintenance/ai-skills.md
+ M Packages/com.ember/Documentation~/maintenance/ai-workflow.md
+ M Packages/com.ember/Documentation~/maintenance/glossary.md
+ M Packages/com.ember/Documentation~/resource/README.md
+ M Packages/com.ember/Documentation~/ui/README.md
+ M Packages/com.ember/Documentation~/ui/dynamic-lists.md
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+ M Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+ M Packages/com.ember/README.md
+ M Packages/com.ember/Resource/Runtime/EmberAssetHandle.cs
+ M Packages/com.ember/Resource/Runtime/EmberAssetHandleSlot.cs
+ M Packages/com.ember/Resource/Runtime/IResourceProvider.cs
+ M Packages/com.ember/Resource/Runtime/ResourcesProvider.cs
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset"
+ M Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+ M Packages/com.ember/Tests/Ember.UI.Tests.asmdef
+ M Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs
+ M Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs
+ M Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs
+ M Packages/com.ember/UIExtension/Runtime/Components/EUIButton.cs
+ M Packages/com.ember/UIExtension/Runtime/Components/EUIComponent.cs
+ M Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIButtonEx.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+ M Packages/com.ember/package.json
+ M docs/dev/ember-api-reference.md
+ M docs/dev/framework-progress.md
+ M docs/dev/upm-migration-plan.md
+ M ember-unity-framework.slnx
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta
+?? Packages/com.ember/Basic/Tests.meta
+?? Packages/com.ember/Basic/Tests/
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? Packages/com.ember/Dependencies~/manifest-0.25.3.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.4.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.5.json
+?? Packages/com.ember/Dependencies~/release-0.25.3.json
+?? Packages/com.ember/Dependencies~/release-0.25.4.json
+?? Packages/com.ember/Dependencies~/release-0.25.5.json
+?? Packages/com.ember/Documentation~/ui/buffered-progress-bar.md
+?? Packages/com.ember/Documentation~/ui/runtime-extensions.md
+?? Packages/com.ember/Resource/Tests.meta
+?? Packages/com.ember/Resource/Tests/
+?? Packages/com.ember/Tests/EditMode/EUIAsyncImageEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIAsyncImageEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIButtonEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIButtonEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeExtensionsBindingEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeExtensionsBindingEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs.meta
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs.meta
+?? Packages/com.ember/UIExtension/Tests.meta
+?? Packages/com.ember/UIExtension/Tests/
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/dev/release-0.25.3.md
+?? docs/dev/release-0.25.4.md
+?? docs/dev/release-0.25.5.md
+?? docs/tasks/

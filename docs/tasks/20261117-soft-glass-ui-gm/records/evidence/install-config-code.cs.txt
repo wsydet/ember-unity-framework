@@ -1,0 +1,13 @@
+var folder="Assets/GameResource/Resources/Config/UIFoundation";
+System.IO.Directory.CreateDirectory(folder);AssetDatabase.Refresh();
+System.Func<string,string,ScriptableObject> getOrCreate=(type,path)=>{var asset=AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);if(asset)return asset;var created=ScriptableObject.CreateInstance(type);if(!created)throw new System.InvalidOperationException("Missing type "+type);AssetDatabase.CreateAsset(created,path);return created;};
+var settings=getOrCreate("Ember.UI.EUIBackdropSettings",folder+"/EUIBackdropSettings.asset");
+var appearance=getOrCreate("Game.UI.EUIAppearanceConfig",folder+"/EUIAppearance.asset");
+var a=new SerializedObject(appearance);a.FindProperty("_commonSkin").enumValueIndex=1;a.FindProperty("_gmPresentation").enumValueIndex=1;a.ApplyModifiedPropertiesWithoutUndo();
+var installation=getOrCreate("Ember.UIRendering.EUIBackdropInstallation",folder+"/EUIBackdropInstallation.asset");
+var ins=new SerializedObject(installation);var layers=ins.FindProperty("_reservedLayers");layers.arraySize=4;for(int i=0;i<4;i++)layers.GetArrayElementAtIndex(i).stringValue="EUIBackdrop"+i;
+var pipelines=ins.FindProperty("_pipelines");pipelines.arraySize=2;var renderer=AssetDatabase.LoadAssetAtPath<ScriptableObject>("Assets/GameResource/Settings/UIFoundation/SoftGlassUI_Renderer.asset");int k=0;
+foreach(var path in new[]{"Assets/Settings/PC_RPAsset.asset","Assets/Settings/Mobile_RPAsset.asset"}){var rp=AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);var so=new SerializedObject(rp);var list=so.FindProperty("m_RendererDataList");int index=-1;for(int i=0;i<list.arraySize;i++)if(list.GetArrayElementAtIndex(i).objectReferenceValue==renderer)index=i;if(index<0)throw new System.InvalidOperationException("Renderer not installed: "+path);var item=pipelines.GetArrayElementAtIndex(k++);item.FindPropertyRelative("Pipeline").objectReferenceValue=rp;item.FindPropertyRelative("RendererIndex").intValue=index;}
+ins.FindProperty("_originalUiRendererIndex").intValue=-1;ins.ApplyModifiedPropertiesWithoutUndo();
+foreach(var entry in new[]{new{n="Neutral",c=new Color(.1f,.14f,.23f,.58f)},new{n="Light",c=new Color(.88f,.93f,1,.8f)},new{n="Accent",c=new Color(.13f,.4f,.92f,.7f)}}){var style=getOrCreate("Ember.UIExtension.EUIGlassStyle",folder+"/SoftGlass"+entry.n+".asset");var so=new SerializedObject(style);so.FindProperty("_tint").colorValue=entry.c;so.ApplyModifiedPropertiesWithoutUndo();}
+AssetDatabase.SaveAssets();return new{folder,appearance=AssetDatabase.GetAssetPath(appearance),settings=AssetDatabase.GetAssetPath(settings),installation=AssetDatabase.GetAssetPath(installation)};

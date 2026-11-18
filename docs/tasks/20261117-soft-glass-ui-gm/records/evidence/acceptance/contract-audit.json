@@ -1,0 +1,218 @@
+[
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassAlertPage.prefab",
+    "role": "Page",
+    "type": "Popup",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassAlertPage.Binding.cs",
+    "bindings": 6
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassCloseButtonItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassCloseButtonItem.Binding.cs",
+    "bindings": 4
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassConfirmPage.prefab",
+    "role": "Page",
+    "type": "Popup",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassConfirmPage.Binding.cs",
+    "bindings": 6
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExampleItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExampleItem.Binding.cs",
+    "bindings": 4
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExamplePage.prefab",
+    "role": "Page",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExamplePage.Binding.cs",
+    "bindings": 14
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMActionItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMActionItem.Binding.cs",
+    "bindings": 5
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMCenterItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMCenterItem.Binding.cs",
+    "bindings": 24
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMEntryItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMEntryItem.Binding.cs",
+    "bindings": 2
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMPage.prefab",
+    "role": "Page",
+    "type": "FreePage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMPage.Binding.cs",
+    "bindings": 29
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMStateItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMStateItem.Binding.cs",
+    "bindings": 3
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTestItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTestItem.Binding.cs",
+    "bindings": 5
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTimeItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTimeItem.Binding.cs",
+    "bindings": 8
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassIconButtonItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassIconButtonItem.Binding.cs",
+    "bindings": 4
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassInputItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassInputItem.Binding.cs",
+    "bindings": 2
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPanelItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPanelItem.Binding.cs",
+    "bindings": 3
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPrimaryButtonItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPrimaryButtonItem.Binding.cs",
+    "bindings": 4
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSearchItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSearchItem.Binding.cs",
+    "bindings": 2
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSecondaryButtonItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSecondaryButtonItem.Binding.cs",
+    "bindings": 4
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassShowcasePage.prefab",
+    "role": "Page",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassShowcasePage.Binding.cs",
+    "bindings": 32
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSliderItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSliderItem.Binding.cs",
+    "bindings": 2
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPage.prefab",
+    "role": "Page",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassStandardPage.Binding.cs",
+    "bindings": 0
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPopupPage.prefab",
+    "role": "Page",
+    "type": "Popup",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassStandardPopupPage.Binding.cs",
+    "bindings": 0
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSwitchItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSwitchItem.Binding.cs",
+    "bindings": 2
+  },
+  {
+    "path": "Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassVerticalSliderItem.prefab",
+    "role": "Item",
+    "type": "MainPage",
+    "mode": "Business",
+    "blockers": 0,
+    "generated": "Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassVerticalSliderItem.Binding.cs",
+    "bindings": 2
+  }
+]

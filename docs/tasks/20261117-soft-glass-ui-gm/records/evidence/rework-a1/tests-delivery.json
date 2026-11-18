@@ -1,0 +1,209 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "3faf0fa5330949a5bc8b336cbb92b418",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1794908149835,
+      "finished_unix_ms": 1794908158903,
+      "last_update_unix_ms": 1794908158903,
+      "progress": {
+        "completed": 18,
+        "total": 18,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.UIModuleEditTests.BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+        "last_finished_unix_ms": 1794908158643,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 18,
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.2262788,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+            "state": "Passed",
+            "durationSeconds": 0.0601352,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MaskRelease_RevokesBorrowBeforeDisposal_AndLocalGlassReacquires_AcrossPoolReuse",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.MaskRelease_RevokesBorrowBeforeDisposal_AndLocalGlassReacquires_AcrossPoolReuse",
+            "state": "Passed",
+            "durationSeconds": 0.0116912,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OldSessionRelease_DoesNotDetachANewerExternalLoan",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.OldSessionRelease_DoesNotDetachANewerExternalLoan",
+            "state": "Passed",
+            "durationSeconds": 0.0012658,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0022271,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0002532,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+            "state": "Passed",
+            "durationSeconds": 0.0000947,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+            "state": "Passed",
+            "durationSeconds": 0.000087,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0000846,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+            "state": "Passed",
+            "durationSeconds": 0.0450135,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+            "state": "Passed",
+            "durationSeconds": 0.0095749,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FullScreenCulling_RestoresOriginalPhysicalDistance_AndOrdinaryResumeDoesNotMoveCanvas",
+            "fullName": "Ember.UI.Tests.EUIFullscreenBackdropEditTests.FullScreenCulling_RestoresOriginalPhysicalDistance_AndOrdinaryResumeDoesNotMoveCanvas",
+            "state": "Passed",
+            "durationSeconds": 0.0082959,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ClosingModal_PreservesFocusMovedToHigherIndependentUI",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.ClosingModal_PreservesFocusMovedToHigherIndependentUI",
+            "state": "Passed",
+            "durationSeconds": 0.0396459,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages",
+            "state": "Passed",
+            "durationSeconds": 0.0020895,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection",
+            "state": "Passed",
+            "durationSeconds": 0.0067689,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ModalRelease_PreservesAnAlreadyDisabledPageRoot",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.ModalRelease_PreservesAnAlreadyDisabledPageRoot",
+            "state": "Passed",
+            "durationSeconds": 0.0009414,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(False)",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(False)",
+            "state": "Passed",
+            "durationSeconds": 0.0020618,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(True)",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(True)",
+            "state": "Passed",
+            "durationSeconds": 0.0005829,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+            "fullName": "Ember.UI.Tests.UIModuleEditTests.BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+            "state": "Passed",
+            "durationSeconds": 0.0101302,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

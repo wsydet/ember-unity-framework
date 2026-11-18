@@ -1,0 +1,34 @@
+[
+  {
+    "id": "extension-two-instances",
+    "pass": true,
+    "instances": [
+      {
+        "name": "EUISoftGlassExtensionExampleItem",
+        "owned": true
+      },
+      {
+        "name": "EUISoftGlassExtensionExampleItem(Clone)",
+        "owned": true
+      }
+    ]
+  },
+  {
+    "id": "single-owner",
+    "pass": true,
+    "detail": "EUIItem 'EUISoftGlassExtensionExampleItem' already has a logic owner."
+  },
+  {
+    "id": "teardown-gm-requested",
+    "pass": true,
+    "detail": [
+      "UnityEngine.RectTransform",
+      "UnityEngine.Canvas",
+      "UnityEngine.UI.CanvasScaler",
+      "UnityEngine.UI.GraphicRaycaster",
+      "UnityEngine.CanvasGroup",
+      "Ember.UIExtension.EUIBinding",
+      "Ember.UI.EUIBackdropGroup"
+    ]
+  }
+]

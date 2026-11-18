@@ -1,0 +1,1360 @@
+{
+  "task": "20261116-ui-runtime-extensions",
+  "date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "format": "ZIP source-task/ paths preserve exact original bytes, including historical paths as provenance only",
+  "bundle": "task-evidence.zip",
+  "bundleAvailability": "maintainer-local-backup",
+  "bundleBytes": 45567964,
+  "bundleSha256": "4FFD1B89D62611284E61BE95AACF68A0E565028D17A67A1171083B43421E00A6",
+  "uncompressedBytes": 117121662,
+  "files": [
+    {
+      "path": "acceptance-recheck.md",
+      "bytes": 14265,
+      "sha256": "8049FEE5C0D10F1E0F83ABA1EEC5DA39A581CFEFC313308CEAE6933B39CF877E"
+    },
+    {
+      "path": "acceptance.md",
+      "bytes": 16640,
+      "sha256": "0BFF7FD325B2267DC52B8A49F91DFE897FC7E6613F01CE25A2896579C4F22761"
+    },
+    {
+      "path": "design.md",
+      "bytes": 41892,
+      "sha256": "FA0AFB001FFEFA3201FE7F210564188319F6ACD79518CBBA0CCB911D51B29F8A"
+    },
+    {
+      "path": "evidence/acceptance/atlas-byte-summary.json",
+      "bytes": 374,
+      "sha256": "80FC037E5D2835056A3D520DA99F02552FF89DDAC77D2DE45192CF24D4DD4A64"
+    },
+    {
+      "path": "evidence/acceptance/backup-integrity.json",
+      "bytes": 7179,
+      "sha256": "7A9A780CD8B7D9C5E4A64A901EAF6112B250D34D63F228F6C03C3DA42F10C47E"
+    },
+    {
+      "path": "evidence/acceptance/cleanup-compile-console.json",
+      "bytes": 274,
+      "sha256": "434AB7005AF0D8EBB695CDBD30ED5F3DEEDFF6CB08EFA16BFD091658A34F527B"
+    },
+    {
+      "path": "evidence/acceptance/cleanup-compile-loaded.json",
+      "bytes": 1098,
+      "sha256": "9EBC111A382380C034C907498DA50E2DFC993080A5F7614618CF9BBA1710A105"
+    },
+    {
+      "path": "evidence/acceptance/cleanup-compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/acceptance/cleanup-compile-state.json",
+      "bytes": 2263,
+      "sha256": "2AE006EAA21ED15015052BFAAFF4FD0BFA7A4F27AA2910EB71A936293B16D873"
+    },
+    {
+      "path": "evidence/acceptance/component-removal.json",
+      "bytes": 552,
+      "sha256": "434F3DB665997DAC66CD7FCF96E1C26B42517EB55AE357D7CEB72F8004BDCE12"
+    },
+    {
+      "path": "evidence/acceptance/DingTalk-after-probe.asset",
+      "bytes": 4349496,
+      "sha256": "1869CB8EFA4FBA1D7AD971639D8E2262BC125528A2D112C48982F1117AB42719"
+    },
+    {
+      "path": "evidence/acceptance/DingTalk-before-probe.asset",
+      "bytes": 4349496,
+      "sha256": "EA416AE2392408783BB68D38B2527B8B63D316FB9151006700E2ECABAF381469"
+    },
+    {
+      "path": "evidence/acceptance/DingTalk.asset.meta.txt",
+      "bytes": 189,
+      "sha256": "BB82CC1AFD3F9E21210AEBD94CCC005B1E10E5C777737AB06EE3C55D510599D7"
+    },
+    {
+      "path": "evidence/acceptance/document-links.json",
+      "bytes": 338,
+      "sha256": "FE409AD3651CB6BB81FCF49BC1302E11838A849CBB63B945020E626033716B64"
+    },
+    {
+      "path": "evidence/acceptance/edit-result.json",
+      "bytes": 53299,
+      "sha256": "DE8C81DA15D1EC417D4ED56E4EC7004655F31218EBC08572CBDA9CC27289D34D"
+    },
+    {
+      "path": "evidence/acceptance/edit-start.json",
+      "bytes": 693,
+      "sha256": "DABE1991C4A411F12AE415C7E3D7E3A88FE0C10BC5CA0A865DFDE5471B5F5300"
+    },
+    {
+      "path": "evidence/acceptance/EUIRuntimeAcceptanceProbe.cs.txt",
+      "bytes": 5614,
+      "sha256": "915934F879EE3680878BC968BB63AC0D3F90996D5BF993B3CD3C2FDDA485F6CD"
+    },
+    {
+      "path": "evidence/acceptance/font-probe-diff.json",
+      "bytes": 759,
+      "sha256": "08BD5BDD28B1246C8BFDAC66F35A76C360495192286AE92640AA89480826603C"
+    },
+    {
+      "path": "evidence/acceptance/geometry-result.json",
+      "bytes": 14175,
+      "sha256": "440102FE8B44A53BBE4740006C0EB914F9B0318536112A3ECEEED8AA69ACA4FB"
+    },
+    {
+      "path": "evidence/acceptance/geometry-start.json",
+      "bytes": 693,
+      "sha256": "5B85ED4824DCC8D5F677847B4CDC9514ACF9403A5F8F4815E508DD422DD0553A"
+    },
+    {
+      "path": "evidence/acceptance/handoff-H3.md",
+      "bytes": 6166,
+      "sha256": "41EB1524D053317E403EA789F3769F029A3D85FFF678400493F970D7848B6142"
+    },
+    {
+      "path": "evidence/acceptance/historical-evidence-audit.json",
+      "bytes": 27155,
+      "sha256": "010F552F633D16027E40EC10C5F4753F025085E33B2ADBD401831AB4F03620F9"
+    },
+    {
+      "path": "evidence/acceptance/live-baseline.json",
+      "bytes": 1094,
+      "sha256": "4EA380623353AEABE158F3634B313F76C477C185DF5B30A67890154E06E79271"
+    },
+    {
+      "path": "evidence/acceptance/play-result.json",
+      "bytes": 8534,
+      "sha256": "4DF2AAC7381FA7757423ECFFFB7DE54F57B81F945850124BC238F0EFD4F6E032"
+    },
+    {
+      "path": "evidence/acceptance/play-start.json",
+      "bytes": 693,
+      "sha256": "7CCA808BD029C0B5E4833A8F238F3C13D77336B56BD25F51A22C117874CBC90D"
+    },
+    {
+      "path": "evidence/acceptance/probe-compile-console.json",
+      "bytes": 274,
+      "sha256": "434AB7005AF0D8EBB695CDBD30ED5F3DEEDFF6CB08EFA16BFD091658A34F527B"
+    },
+    {
+      "path": "evidence/acceptance/probe-compile-loaded.json",
+      "bytes": 624,
+      "sha256": "6A2515A2DBD2D5C085FF868FFE65242E27CBE96E7FDCD46C2D00F180BEF62CD8"
+    },
+    {
+      "path": "evidence/acceptance/probe-compile-state.json",
+      "bytes": 2263,
+      "sha256": "45A3AC996790BFAA42068CEF1BE8A11F763E0266DDCD306AEBA285E092161AEA"
+    },
+    {
+      "path": "evidence/acceptance/probe-first-compile-request.json",
+      "bytes": 907,
+      "sha256": "7F9E6D3533419F6812459FABEF1309A18752D22301429A198E40BC5075D3E123"
+    },
+    {
+      "path": "evidence/acceptance/probe-fixed-compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/acceptance/probe-import-compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/acceptance/probe-meta.txt",
+      "bytes": 61,
+      "sha256": "8ED38E46175B250E3B29955231F432F3BEC0D46197C91D15EF341ABC63901A27"
+    },
+    {
+      "path": "evidence/acceptance/workspace-baseline.json",
+      "bytes": 58641,
+      "sha256": "6067219CCD6B9A54EC887ADB321114F0A220EDF9D69A292AFB99BCE377BCD4AA"
+    },
+    {
+      "path": "evidence/acceptance/workspace-final.json",
+      "bytes": 34595,
+      "sha256": "C8CCC394678326936AE1E6F21E551C393F8B80E35DD192DCA1E88F27FC030D0B"
+    },
+    {
+      "path": "evidence/acceptance-dispatch.json",
+      "bytes": 2257,
+      "sha256": "2D969DB99C28EFB4AB46143EFC9E6859A9E277BACABCD62576A78B20FA20A3C1"
+    },
+    {
+      "path": "evidence/backup-manifest.json",
+      "bytes": 6675,
+      "sha256": "FC05C4AC7FDBD2C3D3A077A61C35A970F474810E1429BDB66CBE20F9872BFE20"
+    },
+    {
+      "path": "evidence/backups/docs/dev/ember-api-reference.md",
+      "bytes": 94700,
+      "sha256": "287F5A452CED5EC6D09FEEA88EE6E7AA9439BFA760738EA07DC2A2A143A3B0F6"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Documentation~/resource/README.md",
+      "bytes": 3037,
+      "sha256": "7B22343DC1B613F0DDEA56160044EB90656304B153A62CA543D07B1381D0CF02"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Documentation~/ui/dynamic-lists.md",
+      "bytes": 4663,
+      "sha256": "79476701DE1F9D3B2BA441E1BB88345803183197A7F3F21743B58386CC61BECF"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Documentation~/ui/README.md",
+      "bytes": 4071,
+      "sha256": "492D27274B2F8AE138FA22F0C80CD3B23AE0CF2EEB1DDA3F85F1E72EBF99FB15"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/EmberAssetHandle.cs",
+      "bytes": 4660,
+      "sha256": "F5476CC0DF80D0E7EA7EFF19B550E6531C05423727A8AB9F2C35D217D6CF73F7"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/EmberAssetHandle.cs.meta",
+      "bytes": 59,
+      "sha256": "BF5178140965D2498E9D1B75921A4D664ED7ACD4DAE9B0BA922D02C126BC0B23"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/EmberAssetHandleSlot.cs",
+      "bytes": 8931,
+      "sha256": "16C28C6EB0919F8EB398B55244AC7849EFECD814AFC1D1D931DC70ED51D9FBE0"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/EmberAssetHandleSlot.cs.meta",
+      "bytes": 59,
+      "sha256": "EA4C8671B641D2EA06759B3C189501FD60D3238017BCA51928655038B98E1B1D"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/IResourceProvider.cs",
+      "bytes": 4558,
+      "sha256": "F3DF9486DFA35097A4ECD689E18BBDC8BB2573724CBB590A146D42BA616F2FC4"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/IResourceProvider.cs.meta",
+      "bytes": 60,
+      "sha256": "8D36BC5E02848233C2D5FAC6F838DBA48674EB4B9009AEF764D17DD54F73B5D7"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/ResourcesProvider.cs",
+      "bytes": 6851,
+      "sha256": "0FF5457E3A3FDAC246E09D5DB0FBDF8F00F2E9FEC52EE5BEEDB7981FDC9E127F"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Resource/Runtime/ResourcesProvider.cs.meta",
+      "bytes": 60,
+      "sha256": "8B9D86228F5BF31A9DBDBBD92AEF5D7AE43C7B9DEE09572C75137DBF910C3D3F"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Tests/Ember.UI.Tests.asmdef",
+      "bytes": 860,
+      "sha256": "0EA0415C244DB01B0DFBB8B6867CCD88D2254D88FA631EDB1BCCB2440DB1317C"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/Tests/Ember.UI.Tests.asmdef.meta",
+      "bytes": 166,
+      "sha256": "6B52939720DCDFEC58A24A64D4B8FB3046CE01AFEC2B27233C1DEE66B59091FB"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs",
+      "bytes": 54104,
+      "sha256": "2218D121E2156CE2358D60332D408B2DE03ED41EC9729885FCD009834B0D5F6F"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs.meta",
+      "bytes": 59,
+      "sha256": "FBFEA94652C791CE6B314C33DF4EC1A0C591286AEC07127AFDD3F74A9267E398"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs",
+      "bytes": 4308,
+      "sha256": "429E9128F44204DE54E912AC40AC63EDE88776033A6C5F506A12C3318EA88B6F"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs.meta",
+      "bytes": 59,
+      "sha256": "DE9056FC0BF100C6085ACC0331DB0B7017FF705346DD5C5AB9970519D6DE8B57"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs",
+      "bytes": 8918,
+      "sha256": "AA41069586B08BE4B7E38FDD0475218A9E21E547E75ADF073A86A0E8A01E058A"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs.meta",
+      "bytes": 59,
+      "sha256": "1DD251600EF7960DC66C9B7016F9B2B834C8FCAE151E197412AA0BF3F5EF2253"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef",
+      "bytes": 607,
+      "sha256": "7A49C924C955BAD868C30FA36EBD19D5A1DDF050A6CD987A174BAB580870601A"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef.meta",
+      "bytes": 166,
+      "sha256": "D7C53FD04103CFD69504E699E68B24D63BDC29DCF2DF161877D4D473ECC866D0"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs",
+      "bytes": 1704,
+      "sha256": "6E2F1EB43B3964F3E7FE139F0DA81611D98742F4308BE0203EBA4FED9D570436"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs.meta",
+      "bytes": 59,
+      "sha256": "2A7C47617A2038E7D73DD00D27A612AE45A9AD02F07F0E5DC9956048795C2FB1"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs",
+      "bytes": 6653,
+      "sha256": "C4D142F0B6D6DE657B4F8E115B79B01BC856996F46A6D0C4AE3C8CE734E7B4A7"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs.meta",
+      "bytes": 59,
+      "sha256": "05D71651E9094CABECC619F9D9A0175B4686DE052C06598E234E30268C14B78F"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs",
+      "bytes": 8752,
+      "sha256": "974CFC8DBB8D3399D67A65AB5608078CACD7DFFF2CC4448A363FECE504D6C25A"
+    },
+    {
+      "path": "evidence/backups/Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs.meta",
+      "bytes": 59,
+      "sha256": "4059BA694159785F4086CFA2824C6BB655B06D20457115AAB767CFA6A514F737"
+    },
+    {
+      "path": "evidence/closure/font-decision.json",
+      "bytes": 1217,
+      "sha256": "82DB252ACBF2F8BEB0D0037F81F54AED37B4C932B04CE6A2F9E9917B8CB4657A"
+    },
+    {
+      "path": "evidence/closure/git-status-before.txt",
+      "bytes": 6745,
+      "sha256": "85A4AE13DEC47D9260683BDE3C8DA661C649D934DF1028AD71E786BBDF57AF6C"
+    },
+    {
+      "path": "evidence/closure/preflight.json",
+      "bytes": 1026,
+      "sha256": "9656CA12D7D44313BE4511B67E632E2114E9D89C7404E408FB6EB95B6001BAC3"
+    },
+    {
+      "path": "evidence/completion-compile.json",
+      "bytes": 3741,
+      "sha256": "07C2F5A19BF684EF87E3D35CFDED3A263186015017F68859DF4E64719FC6CAEB"
+    },
+    {
+      "path": "evidence/completion-edit-tests.json",
+      "bytes": 3936,
+      "sha256": "0716E6D2AF64482024C3CC32AAA2498D7CAC1D61FE459FC04B4AFB574CA3B97A"
+    },
+    {
+      "path": "evidence/completion-editor.json",
+      "bytes": 3413,
+      "sha256": "3B377BD7E89AC1FF38DA683AA4F9D60A75A975984749233A4EAA7DD0C8480682"
+    },
+    {
+      "path": "evidence/completion-play-tests.json",
+      "bytes": 2671,
+      "sha256": "37C46FA9E8C5A84E81F3FF18C2FBCDE384236E242E25E890BCF6F29AA1EC0A4C"
+    },
+    {
+      "path": "evidence/design-baseline.json",
+      "bytes": 12427,
+      "sha256": "2820405646753AE3769234BAD5CA363D38141BFF2F359A442E3ABFE3DA4391F7"
+    },
+    {
+      "path": "evidence/entry-closure-check-20261117.json",
+      "bytes": 1285,
+      "sha256": "2527998367A261BD9799CAEFD6BE500BAFCE9AB1864EACFBB595A64D4B748E0D"
+    },
+    {
+      "path": "evidence/entry-reception-A2-20261117.json",
+      "bytes": 2385,
+      "sha256": "D26B9A0B3824A769B76F11A08036DCE8B129E78692F7FFA92794A1231396AAC0"
+    },
+    {
+      "path": "evidence/finalCompileApi.json",
+      "bytes": 1081,
+      "sha256": "85A39A8C004371C9C4AE4510D83D442D77DF27B63272BB4C4E6646BDE1656118"
+    },
+    {
+      "path": "evidence/finalCompileConsole.json",
+      "bytes": 274,
+      "sha256": "434AB7005AF0D8EBB695CDBD30ED5F3DEEDFF6CB08EFA16BFD091658A34F527B"
+    },
+    {
+      "path": "evidence/finalCompileState.json",
+      "bytes": 2263,
+      "sha256": "AE7F6F707A40D4CA44DA4490F21418BAB23E593A5CF5141714ABA4B36EA56B84"
+    },
+    {
+      "path": "evidence/finalPlayTests.json",
+      "bytes": 3538,
+      "sha256": "BF309CBC800226D23994A629C547732E07DD9E93DCB9392B42DC07001DFC1E3B"
+    },
+    {
+      "path": "evidence/fixture-source-fonts.json",
+      "bytes": 394,
+      "sha256": "EBAEFF9676EA1FB7D5286E0CA33446EBB40B91473C8F0F469FA6345918990859"
+    },
+    {
+      "path": "evidence/font-writeback/DingTalk-after-tests.asset",
+      "bytes": 4349496,
+      "sha256": "EA416AE2392408783BB68D38B2527B8B63D316FB9151006700E2ECABAF381469"
+    },
+    {
+      "path": "evidence/font-writeback/DingTalk-after-tests.asset.meta",
+      "bytes": 189,
+      "sha256": "BB82CC1AFD3F9E21210AEBD94CCC005B1E10E5C777737AB06EE3C55D510599D7"
+    },
+    {
+      "path": "evidence/font-writeback.json",
+      "bytes": 1186,
+      "sha256": "11C07460304C34019A5716C26053D68A4C27AF9A4DA0BFD13C651B58050C747B"
+    },
+    {
+      "path": "evidence/handoff-H2.md",
+      "bytes": 10902,
+      "sha256": "06B6C56A7831A14A0B20937498B9D8573001984F4444A23253AB8C4F4B2FE796"
+    },
+    {
+      "path": "evidence/image-async-rounded.png",
+      "bytes": 69283,
+      "sha256": "AD4759FD8FCEDF8B3C20C5E72405C06A2D924F70F09D5083E974B3FC5931C6F2"
+    },
+    {
+      "path": "evidence/image-index-rounded.png",
+      "bytes": 69952,
+      "sha256": "D1DC848766B9B9CDC2EE8C3A0E2820E53AF13B02AE1FD6F39AF7344E4F28F5AB"
+    },
+    {
+      "path": "evidence/imageCompileApi.json",
+      "bytes": 981,
+      "sha256": "AED7136A6D9B5FF69CAF60C9D1C5A92309385EFD4DA75DCD1FE84B590E2BCC24"
+    },
+    {
+      "path": "evidence/imageCompileState.json",
+      "bytes": 2254,
+      "sha256": "7AE2EAEECE5B1F6AC18D206C929153DF1CEC7053657894860BDA319B40FEC310"
+    },
+    {
+      "path": "evidence/imageRetryCompile.json",
+      "bytes": 304,
+      "sha256": "FD2382F0257607C52030D59FCF872B43E089CBFC59F720523C180FC284E39399"
+    },
+    {
+      "path": "evidence/imageRetryCompileState.json",
+      "bytes": 2254,
+      "sha256": "630D240A29C2843F184C327925AE1182E92F918B0A9148F09DF78A25D445415B"
+    },
+    {
+      "path": "evidence/imageTests1.json",
+      "bytes": 10333,
+      "sha256": "2DAB8636572B0ED799CD73CD8E3628E4CE209864AB649876F7A6CB3FB2142130"
+    },
+    {
+      "path": "evidence/imageTests2.json",
+      "bytes": 26954,
+      "sha256": "A3A306AD49631E41BD83B8AF094FFA4967A482DBCBE5D4C73DA0E155FF01AD16"
+    },
+    {
+      "path": "evidence/imageTests3.json",
+      "bytes": 23247,
+      "sha256": "B0C1562FDD32B1A4421A0C1DD57F0B6C4B6F0F3CD7C169131BE7B047C7B39E4E"
+    },
+    {
+      "path": "evidence/implementation-dispatch.json",
+      "bytes": 1667,
+      "sha256": "F1E58B379FB7345A36B7EB77004F842B1524DEB655DF326D3FDB827D8161D068"
+    },
+    {
+      "path": "evidence/implementation-final-status.txt",
+      "bytes": 6745,
+      "sha256": "85A4AE13DEC47D9260683BDE3C8DA661C649D934DF1028AD71E786BBDF57AF6C"
+    },
+    {
+      "path": "evidence/implementation-start-status.txt",
+      "bytes": 3823,
+      "sha256": "3524D37AFAAF6FD5A3DDFF3B518123D6EF6BAEB51E63231707EF7516A485F37A"
+    },
+    {
+      "path": "evidence/layoutTests.json",
+      "bytes": 1745,
+      "sha256": "0F73E118FAE2361EE0AA597F4F216EFA0CF602782179EE9729D2D320B405EB7B"
+    },
+    {
+      "path": "evidence/loaderDetachCompileApi.json",
+      "bytes": 967,
+      "sha256": "E0939407E0390C9E8A4EA1F1A618AA971E875AF6406B24BDFBB161B70F063535"
+    },
+    {
+      "path": "evidence/loaderDetachCompileState.json",
+      "bytes": 2254,
+      "sha256": "46BC0B8BE197100506BB68047E87194B28BBA033D7D46082E5921C952FC64BFF"
+    },
+    {
+      "path": "evidence/marquee-mask.png",
+      "bytes": 74373,
+      "sha256": "F983C577465C934C6295041A34857373EDB8F2AC17BD731A53EBEA6CBC0CA7B5"
+    },
+    {
+      "path": "evidence/marquee-mesh.json",
+      "bytes": 1189,
+      "sha256": "74645809CF3DED490705D5232D46B6AE2DB5710E153420E14DE0ABD01A157E23"
+    },
+    {
+      "path": "evidence/marquee-rectmask.png",
+      "bytes": 75006,
+      "sha256": "2C83034DCB36571A11DAB4C04E615E582C31609438115052AA872E4DF90FB8CD"
+    },
+    {
+      "path": "evidence/motionTests1.json",
+      "bytes": 8822,
+      "sha256": "E89A3CD120B9DE5CE3CCC6B8CF284867C06D147525EFB71D111CB83C070B7D5A"
+    },
+    {
+      "path": "evidence/owned-files.json",
+      "bytes": 15019,
+      "sha256": "A885DD207E981D2564DDA28D22DD1E94725AB5EBC37F96B3C8967A3D028C93C8"
+    },
+    {
+      "path": "evidence/playRetryCompileApi.json",
+      "bytes": 594,
+      "sha256": "D1AD336ABB1C0DC641F41701F52B2CB3231BAAB639349D54F8EA4787E38D013D"
+    },
+    {
+      "path": "evidence/playRetryCompileState.json",
+      "bytes": 2263,
+      "sha256": "4E62F871508D671C60477D221D2299E96B588BB6D180705D520175F376D65FE3"
+    },
+    {
+      "path": "evidence/playTests1.json",
+      "bytes": 14255,
+      "sha256": "8501E63741910D1606CEB8B74F4F3187D0E3D13EDACA9AC2C7C28DA34BA74D8C"
+    },
+    {
+      "path": "evidence/playTests2.json",
+      "bytes": 5301,
+      "sha256": "13A4F673C23F1CC8B7758BC25F379199B28D0A65837BEEE93F5BE896FF609082"
+    },
+    {
+      "path": "evidence/protected-baseline.json",
+      "bytes": 6573,
+      "sha256": "6D3A9EA6B0FE8987C545BE36948DFBBFBDE7170B45A1FEE88703E652E849F8B0"
+    },
+    {
+      "path": "evidence/recheck/cleanup-compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/recheck/compile-assemblies.json",
+      "bytes": 1369,
+      "sha256": "FD0B8A4D2064E38E8A9BCC92EEF941081AFBFAF7A069DB8593776DB249310B72"
+    },
+    {
+      "path": "evidence/recheck/compile-completion.json",
+      "bytes": 1931,
+      "sha256": "5FBDCF70A9623564A3D33ABFB30577F01B8AF7948280165E9C2404AC593025FE"
+    },
+    {
+      "path": "evidence/recheck/compile-console.json",
+      "bytes": 274,
+      "sha256": "434AB7005AF0D8EBB695CDBD30ED5F3DEEDFF6CB08EFA16BFD091658A34F527B"
+    },
+    {
+      "path": "evidence/recheck/compile-ready.json",
+      "bytes": 305,
+      "sha256": "5B9375A51C0D08C2C9F4353076C5A4A7AC108475D6ADB7BA0F4E4C3817BAF3B5"
+    },
+    {
+      "path": "evidence/recheck/compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/recheck/compile-state.json",
+      "bytes": 305,
+      "sha256": "5B9375A51C0D08C2C9F4353076C5A4A7AC108475D6ADB7BA0F4E4C3817BAF3B5"
+    },
+    {
+      "path": "evidence/recheck/component-removal.json",
+      "bytes": 556,
+      "sha256": "9F4B54B5EFE10AB6FFD9EC94C7A205C8BFC62995A0C110B33F305E5E88C59684"
+    },
+    {
+      "path": "evidence/recheck/edit-request.json",
+      "bytes": 859,
+      "sha256": "27C850A08158E9CE104B9343EDFEC85BAD14FBD15C326F73C110C2EF66FA11EE"
+    },
+    {
+      "path": "evidence/recheck/edit-result.json",
+      "bytes": 28699,
+      "sha256": "95FDA989D52AEBB35160FF3C6DF7122FBFB85B13362DD10A739E27EC926696AF"
+    },
+    {
+      "path": "evidence/recheck/EUIRuntimeAcceptanceProbe.compiled.cs.txt",
+      "bytes": 5617,
+      "sha256": "459BAD2C0B2591BA4E9F1E78681F72602FCB9BB3BDCDD1C84C1853EE90297C83"
+    },
+    {
+      "path": "evidence/recheck/EUIRuntimeAcceptanceProbe.cs.meta.txt",
+      "bytes": 59,
+      "sha256": "32327527D0BF223D2A12C90730F68E8612B1417C3D87EDF8B08B61CC11E8DA6E"
+    },
+    {
+      "path": "evidence/recheck/EUIRuntimeAcceptanceProbe.cs.txt",
+      "bytes": 5614,
+      "sha256": "915934F879EE3680878BC968BB63AC0D3F90996D5BF993B3CD3C2FDDA485F6CD"
+    },
+    {
+      "path": "evidence/recheck/final-console.json",
+      "bytes": 274,
+      "sha256": "434AB7005AF0D8EBB695CDBD30ED5F3DEEDFF6CB08EFA16BFD091658A34F527B"
+    },
+    {
+      "path": "evidence/recheck/final-editor.json",
+      "bytes": 2086,
+      "sha256": "E7010D0946137820DB9CE61283B44D33DF69A7D986ED0CEC6DB6F399ACE32D43"
+    },
+    {
+      "path": "evidence/recheck/font-after.json",
+      "bytes": 13136,
+      "sha256": "55D66CC29E4E80C116D898DEA8BB7A8D4318C1BBCCF83255585D10D99615E944"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/7000汉字+符号+英文字符集.txt",
+      "bytes": 21216,
+      "sha256": "F94E8BAA9BFDFE914734A8C34466CC28B3957D12F0969BBA5097A5425FCF40EA"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/7000汉字+符号+英文字符集.txt.meta",
+      "bytes": 158,
+      "sha256": "86D9AB18FD100590B3CBCA5AEDB6C31B5AE7C29AC5844BF69E060B8A408C7986"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+      "bytes": 2105426,
+      "sha256": "7D3BCC258DE65D2D73C5FFC05BE7E641B5BF6C07FA0BC839034EBF44794E52F9"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "916F9FC11DAD2026404D07061BCBABF11DD3B66BFC0FE6CC6E862B1A98C9D5CA"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular.ttf",
+      "bytes": 1233128,
+      "sha256": "7D5FB73B7CA67A6798101741F5D280A3D016A56A197AFCD4199DBB57B4B82A21"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular.ttf.meta",
+      "bytes": 484,
+      "sha256": "11EEAE9CFF949322E349B302CD8C8BBE5601F340588C9F41A0C5835B0181E883"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/OFL.txt",
+      "bytes": 4382,
+      "sha256": "E87C2ED7FF174C637D55FA381939EBB96F43F0415AD94605A37589228F4CBF4F"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/OFL.txt.meta",
+      "bytes": 158,
+      "sha256": "E60AE3A3565E9F81C06D156D62FADB4E3046B03BFCE20B48576640C2FF96DB6B"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/README.txt",
+      "bytes": 2139,
+      "sha256": "78884FAAEEF207110C831460F5E92202F472203D9E3AF01460BE8187C8C72514"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/README.txt.meta",
+      "bytes": 158,
+      "sha256": "C73914919DCDFB49C29353FC4DAECCB21E2A2CC97F52BF8FB4D1518F05BDD2D5"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2.meta",
+      "bytes": 172,
+      "sha256": "8C6479A81F25FE2C74B0025AF4FD15CA124E4EAD60A176BB5DB99F6DE82E643C"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NotoSerifSC.ttf",
+      "bytes": 25125512,
+      "sha256": "050080D9255A86808F2945BFFAC582B31EF32BC36411CE29563B4961670C66F9"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NotoSerifSC.ttf.meta",
+      "bytes": 478,
+      "sha256": "029EB7AE94EA468226D9352D2924393F69F4FFFD5D6AA693D9E750CD1B4D5C2B"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
+      "bytes": 8638792,
+      "sha256": "09E0B43339DACAFCFA3FF75DB639738FCD58FB514D1F18DC54A7837AEB6DB2B1"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "2DE6FC0944B76AF2E764B2AAD6ED808344D88F67B44AC268FBCDE5879DF6451F"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/OFL.txt",
+      "bytes": 4350,
+      "sha256": "5E0DA210FB04058A8C0087985D2D456B931C2579811A49655721D3CF0C36B6D6"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/OFL.txt.meta",
+      "bytes": 158,
+      "sha256": "7A912B1ED8C9F6733C68C6725A88CD5D4C602EB9E96544FDA3AFBBD1BD3279FD"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC.meta",
+      "bytes": 172,
+      "sha256": "F5434BF5BD31710795D934A46ABC5E57D14860C3E5537FC140ADDD3CD318B5B4"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+      "bytes": 4349496,
+      "sha256": "1869CB8EFA4FBA1D7AD971639D8E2262BC125528A2D112C48982F1117AB42719"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "BB82CC1AFD3F9E21210AEBD94CCC005B1E10E5C777737AB06EE3C55D510599D7"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf",
+      "bytes": 2129136,
+      "sha256": "6F6A1E15F33D559FF3D0D7DCC8BD9AB25A6DBD8E9BCD29865DAF7615A17EA284"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf.meta",
+      "bytes": 481,
+      "sha256": "B99663110A50EE9B97589AA5377931D639EF0131771E1EF189D49DF44DB7C2A0"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/LICENSE.txt",
+      "bytes": 2115,
+      "sha256": "D89AB2AB2C4DEF8D758C16766CF596A4010517A9B9CC0E84079F3C0CCDAA624E"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/LICENSE.txt.meta",
+      "bytes": 158,
+      "sha256": "1001EB1D64722FE68443D84562DBAD5B0A070CAB51A018C56C34A70D28387DD6"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体.meta",
+      "bytes": 172,
+      "sha256": "E845D9DBDA1C0A157B2D429238EC17C761DB71CDDE13B68D94F4D8B2B3E57828"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset",
+      "bytes": 2110652,
+      "sha256": "CBEBD71FFA981FB030C20C2C990F4335D491F6C391119E4D1EF9930A7BD00BCC"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "14FB876F70FC0F83AF211519F5635D6E40ADFFCFDBF0CCADE9BE68C5ACA21490"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf",
+      "bytes": 5251184,
+      "sha256": "043CEBA922A6EE7A376687F36D27E3D96EB2B6E0784CC32826D8B062E9038214"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf.meta",
+      "bytes": 486,
+      "sha256": "E3D81B3164A186B8D656D867BEEF1CDC841B3CDF51E940004E83A8823CE5C21B"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/INSTRUCTION.txt",
+      "bytes": 189,
+      "sha256": "7F09081B89D2AA065AF759177C83F7E971760451128A42B0F2905EAB03FE9E37"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/INSTRUCTION.txt.meta",
+      "bytes": 158,
+      "sha256": "8FB3DEB09D45EB5E137D76D124A19792EF799BFDECE93579DB899D5D1A474789"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/LICENSE.txt",
+      "bytes": 1977,
+      "sha256": "0215279F40A979EEE28D26188F0405628387923DCCE5F1CEDC4481C13EDDC169"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/LICENSE.txt.meta",
+      "bytes": 158,
+      "sha256": "CC57AED2F0C02C8886A50548683FB7E3A6B11B18828F14B94B48AF2766A9CC31"
+    },
+    {
+      "path": "evidence/recheck/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷.meta",
+      "bytes": 172,
+      "sha256": "462C0A39316E65F71FBE34756A75F69E4A95FA2FABA44C3D21DA6AF047260B74"
+    },
+    {
+      "path": "evidence/recheck/font-manifest.json",
+      "bytes": 16515,
+      "sha256": "F61D1805738EB5756BF81422F59A4139818D30FE8B474F82F8C3070646B7DC07"
+    },
+    {
+      "path": "evidence/recheck/git-after.txt",
+      "bytes": 6745,
+      "sha256": "85A4AE13DEC47D9260683BDE3C8DA661C649D934DF1028AD71E786BBDF57AF6C"
+    },
+    {
+      "path": "evidence/recheck/git-before.txt",
+      "bytes": 6745,
+      "sha256": "85A4AE13DEC47D9260683BDE3C8DA661C649D934DF1028AD71E786BBDF57AF6C"
+    },
+    {
+      "path": "evidence/recheck/git-final.txt",
+      "bytes": 6745,
+      "sha256": "85A4AE13DEC47D9260683BDE3C8DA661C649D934DF1028AD71E786BBDF57AF6C"
+    },
+    {
+      "path": "evidence/recheck/handoff-H5.md",
+      "bytes": 10919,
+      "sha256": "75FA16BAE677DFE27008D0A2FAC441D79911891921B4C852E9FBE03A22234F4D"
+    },
+    {
+      "path": "evidence/recheck/loader-removal.json",
+      "bytes": 2499,
+      "sha256": "2B44F32E67184B481BBBBD9E91864C61632C57F43BFE21876F0D92EE1F57D84B"
+    },
+    {
+      "path": "evidence/recheck/marquee-mask.png",
+      "bytes": 74017,
+      "sha256": "ABF6AC088528095773B78C562CD8A5A84FDB437DCA0D31D05DDAB0A485F6A5C4"
+    },
+    {
+      "path": "evidence/recheck/marquee-mesh.json",
+      "bytes": 938,
+      "sha256": "38004D7D9B1A5E8A9735370C8D8EC752C400A78722FDD948F373CF29B6593953"
+    },
+    {
+      "path": "evidence/recheck/marquee-rectmask.png",
+      "bytes": 74255,
+      "sha256": "F711B728BF21ABD1F8A627A0B2F0AFF3292B208E1848E6E70534EC04FF3ABB71"
+    },
+    {
+      "path": "evidence/recheck/play-request.json",
+      "bytes": 1275,
+      "sha256": "FF7585959B93622484FB50567BB28D2E6FF81B43A47FCB394C5C6318AE735082"
+    },
+    {
+      "path": "evidence/recheck/play-result.json",
+      "bytes": 7988,
+      "sha256": "D1664A46B54A1E99C8D89FEA7E6472877B8CED0188FBAD9F95A002129CFD4D47"
+    },
+    {
+      "path": "evidence/recheck/pre-removal-compile-completion.json",
+      "bytes": 1931,
+      "sha256": "9B182CF771C72D63EAEBF32F4A4191E605B3C1579EEADDE5AE2AECDE5A00650D"
+    },
+    {
+      "path": "evidence/recheck/probe-byte-diff.json",
+      "bytes": 474,
+      "sha256": "71E76D51130D5843D8D3F551DE3316292485272539CDD82471211CB340920D05"
+    },
+    {
+      "path": "evidence/recheck/protection-summary.json",
+      "bytes": 467,
+      "sha256": "6071EACCBF6D738A864F85A40D92426320F7F7FB7F95ACD0F0130A85E921206F"
+    },
+    {
+      "path": "evidence/recheck/removal-compile-completion.json",
+      "bytes": 1931,
+      "sha256": "5FF72F44B67ACC8ED61F6B0C358CF783B3A41C9D6226D50BDCB3062ABEAA2F7B"
+    },
+    {
+      "path": "evidence/recheck/removal-compile-request.json",
+      "bytes": 905,
+      "sha256": "F2454CD2531358973FCA556703C5AE1DF0C4A14845BF514C7132306569C8DF73"
+    },
+    {
+      "path": "evidence/recheck/s1-changes-audit.json",
+      "bytes": 781,
+      "sha256": "1891FBE94CBC9F80E669B15D112F55D4A63698477F779D43508561D1C47C05D3"
+    },
+    {
+      "path": "evidence/recheck/workspace-after.json",
+      "bytes": 22446,
+      "sha256": "98208F5AADAEF891E390EDEA6A8F4F9ACE5AE326CF40E0592104323E0DA9A242"
+    },
+    {
+      "path": "evidence/recheck/workspace-before.json",
+      "bytes": 22446,
+      "sha256": "98208F5AADAEF891E390EDEA6A8F4F9ACE5AE326CF40E0592104323E0DA9A242"
+    },
+    {
+      "path": "evidence/regressionCompileState.json",
+      "bytes": 2254,
+      "sha256": "72293F46BE54B55B67F787D85FF0D989666BF4111AA0CEDCB7455121A4D52B05"
+    },
+    {
+      "path": "evidence/regressionTests.json",
+      "bytes": 21683,
+      "sha256": "B9E9E80F76B2E5EA55C586CEC21ACA2F3C88AC66693174BEA30118F65389BE3E"
+    },
+    {
+      "path": "evidence/renderCompileState.json",
+      "bytes": 2263,
+      "sha256": "951D05DFF561A0756D24AB5CD74B4F06576F5D01A7B0E58C2D1B7C4A83EF752A"
+    },
+    {
+      "path": "evidence/renderTests1.json",
+      "bytes": 1990,
+      "sha256": "1C19ACFB22B4A8FD0FBB67D7E17F2D42D55681D29FED447295A80A72DA0AA5D1"
+    },
+    {
+      "path": "evidence/resource-compile.json",
+      "bytes": 562,
+      "sha256": "2B64615B89390FFE0DF8813685CD526A4EA96A2F831725F214D41E372018941A"
+    },
+    {
+      "path": "evidence/resource-tests.json",
+      "bytes": 17977,
+      "sha256": "1FB010ED156B337F24B739347F16570B41FA39FC1008B7A573729CCE44DF21DD"
+    },
+    {
+      "path": "evidence/rework/changes.json",
+      "bytes": 790,
+      "sha256": "398741FB89439D629D47AE1181B245DB040E3009A7DA1A8A07EF706F47656497"
+    },
+    {
+      "path": "evidence/rework/code-backup-manifest.json",
+      "bytes": 2332,
+      "sha256": "DE104A00C0413FF4A0DE50E3DFAFBD3FA4E56DE443A0DE9F28B70B2687E85B17"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs",
+      "bytes": 9348,
+      "sha256": "15B55973890A48C12FC294823463E52E1F957E2CAAC48089E32396A20F3EB62A"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs.meta",
+      "bytes": 59,
+      "sha256": "74C37D20F08B222BC641A982D8A810D6276FC7C42E83E9D360227E8613B3C0C1"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs",
+      "bytes": 7793,
+      "sha256": "27D6C11D80EC2039B0C8C1DC47BF70856306826B60FF707E966A099ABE88618C"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs.meta",
+      "bytes": 59,
+      "sha256": "ED3BFB21ED6C4257929651FCF14597B075D7DE3D4F189CEEC2BBA4FE6AE598E1"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/UIExtension/Tests/PlayMode/EUIRuntimeExtensionsPlayTests.cs",
+      "bytes": 24139,
+      "sha256": "B072B1812D4C781384164DC84F5A5A965E97B8DB4AE42CE34D379C9EF0B7F7D2"
+    },
+    {
+      "path": "evidence/rework/code-before/Packages/com.ember/UIExtension/Tests/PlayMode/EUIRuntimeExtensionsPlayTests.cs.meta",
+      "bytes": 59,
+      "sha256": "B7858503F2CB614F3842A9DA6CDEEC435FC1AA70A9EFDBA192E499BFD5D38C54"
+    },
+    {
+      "path": "evidence/rework/compile-completion.json",
+      "bytes": 1729,
+      "sha256": "5527FB2931B3EB510EF46604DB2663455D669A73CB83002BE97428F9285BFB3C"
+    },
+    {
+      "path": "evidence/rework/compile-ready.json",
+      "bytes": 2263,
+      "sha256": "473AEE33000422A6C604F290C28D79999719B96A1491725642CAA61AC9AB3127"
+    },
+    {
+      "path": "evidence/rework/compile-request.json",
+      "bytes": 1838,
+      "sha256": "757A2CF4DF9E73A6AE2DA33BCDFDEFDF17B17303735FF84C7574E949A398C5D0"
+    },
+    {
+      "path": "evidence/rework/dispatch-started.json",
+      "bytes": 673,
+      "sha256": "1000E3420FE491F352D7292B5E24EA2B66296B1C6C0E4AB5CF07AE5D8C476F58"
+    },
+    {
+      "path": "evidence/rework/dispatch.json",
+      "bytes": 524,
+      "sha256": "30A5AB3BB189F63A9C08394CCBF8B1372B5A02923EF30FE6BFE184ED8398FB86"
+    },
+    {
+      "path": "evidence/rework/edit-request-corrected.json",
+      "bytes": 693,
+      "sha256": "152C7AA165F5532B19E7DB38F69215A46D7EC9D2B606CEA8491657CAD15DE250"
+    },
+    {
+      "path": "evidence/rework/edit-request.json",
+      "bytes": 693,
+      "sha256": "8B5063D012A86B3B2013BE4682CE765DB745C276196008DA20A10497768F848A"
+    },
+    {
+      "path": "evidence/rework/edit-result-corrected.json",
+      "bytes": 28707,
+      "sha256": "365FA8D46111398712520535B1E48767C10B8DF10A49B40C313F46BD10BEDC8A"
+    },
+    {
+      "path": "evidence/rework/edit-result.json",
+      "bytes": 2346,
+      "sha256": "4B8370EC7C367BBFE1E1260EEF55EA57DD3962589065CF83A6C01E090731BDC6"
+    },
+    {
+      "path": "evidence/rework/final-editor.json",
+      "bytes": 3930,
+      "sha256": "A889CF92808DB3A566BD07C76959601CFE51CA0D1EF3A769D71F7B082969490B"
+    },
+    {
+      "path": "evidence/rework/font-after.json",
+      "bytes": 10960,
+      "sha256": "42FF1A087AC0A8B6B63C076170F57C292CB7D0CF733803AB15CD7E4D4D4AA4DD"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/7000汉字+符号+英文字符集.txt",
+      "bytes": 21216,
+      "sha256": "F94E8BAA9BFDFE914734A8C34466CC28B3957D12F0969BBA5097A5425FCF40EA"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/7000汉字+符号+英文字符集.txt.meta",
+      "bytes": 158,
+      "sha256": "86D9AB18FD100590B3CBCA5AEDB6C31B5AE7C29AC5844BF69E060B8A408C7986"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset",
+      "bytes": 2105426,
+      "sha256": "7D3BCC258DE65D2D73C5FFC05BE7E641B5BF6C07FA0BC839034EBF44794E52F9"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "916F9FC11DAD2026404D07061BCBABF11DD3B66BFC0FE6CC6E862B1A98C9D5CA"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular.ttf",
+      "bytes": 1233128,
+      "sha256": "7D5FB73B7CA67A6798101741F5D280A3D016A56A197AFCD4199DBB57B4B82A21"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular.ttf.meta",
+      "bytes": 484,
+      "sha256": "11EEAE9CFF949322E349B302CD8C8BBE5601F340588C9F41A0C5835B0181E883"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/OFL.txt",
+      "bytes": 4382,
+      "sha256": "E87C2ED7FF174C637D55FA381939EBB96F43F0415AD94605A37589228F4CBF4F"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/OFL.txt.meta",
+      "bytes": 158,
+      "sha256": "E60AE3A3565E9F81C06D156D62FADB4E3046B03BFCE20B48576640C2FF96DB6B"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/README.txt",
+      "bytes": 2139,
+      "sha256": "78884FAAEEF207110C831460F5E92202F472203D9E3AF01460BE8187C8C72514"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/README.txt.meta",
+      "bytes": 158,
+      "sha256": "C73914919DCDFB49C29353FC4DAECCB21E2A2CC97F52BF8FB4D1518F05BDD2D5"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2.meta",
+      "bytes": 172,
+      "sha256": "8C6479A81F25FE2C74B0025AF4FD15CA124E4EAD60A176BB5DB99F6DE82E643C"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NotoSerifSC.ttf",
+      "bytes": 25125512,
+      "sha256": "050080D9255A86808F2945BFFAC582B31EF32BC36411CE29563B4961670C66F9"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NotoSerifSC.ttf.meta",
+      "bytes": 478,
+      "sha256": "029EB7AE94EA468226D9352D2924393F69F4FFFD5D6AA693D9E750CD1B4D5C2B"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset",
+      "bytes": 8638792,
+      "sha256": "09E0B43339DACAFCFA3FF75DB639738FCD58FB514D1F18DC54A7837AEB6DB2B1"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "2DE6FC0944B76AF2E764B2AAD6ED808344D88F67B44AC268FBCDE5879DF6451F"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/OFL.txt",
+      "bytes": 4350,
+      "sha256": "5E0DA210FB04058A8C0087985D2D456B931C2579811A49655721D3CF0C36B6D6"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/OFL.txt.meta",
+      "bytes": 158,
+      "sha256": "7A912B1ED8C9F6733C68C6725A88CD5D4C602EB9E96544FDA3AFBBD1BD3279FD"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/NotoSerifSC.meta",
+      "bytes": 172,
+      "sha256": "F5434BF5BD31710795D934A46ABC5E57D14860C3E5537FC140ADDD3CD318B5B4"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset",
+      "bytes": 4349496,
+      "sha256": "1869CB8EFA4FBA1D7AD971639D8E2262BC125528A2D112C48982F1117AB42719"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "BB82CC1AFD3F9E21210AEBD94CCC005B1E10E5C777737AB06EE3C55D510599D7"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf",
+      "bytes": 2129136,
+      "sha256": "6F6A1E15F33D559FF3D0D7DCC8BD9AB25A6DBD8E9BCD29865DAF7615A17EA284"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi.ttf.meta",
+      "bytes": 481,
+      "sha256": "B99663110A50EE9B97589AA5377931D639EF0131771E1EF189D49DF44DB7C2A0"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/LICENSE.txt",
+      "bytes": 2115,
+      "sha256": "D89AB2AB2C4DEF8D758C16766CF596A4010517A9B9CC0E84079F3C0CCDAA624E"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体/LICENSE.txt.meta",
+      "bytes": 158,
+      "sha256": "1001EB1D64722FE68443D84562DBAD5B0A070CAB51A018C56C34A70D28387DD6"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/钉钉进步体.meta",
+      "bytes": 172,
+      "sha256": "E845D9DBDA1C0A157B2D429238EC17C761DB71CDDE13B68D94F4D8B2B3E57828"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset",
+      "bytes": 2110652,
+      "sha256": "CBEBD71FFA981FB030C20C2C990F4335D491F6C391119E4D1EF9930A7BD00BCC"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset.meta",
+      "bytes": 189,
+      "sha256": "14FB876F70FC0F83AF211519F5635D6E40ADFFCFDBF0CCADE9BE68C5ACA21490"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf",
+      "bytes": 5251184,
+      "sha256": "043CEBA922A6EE7A376687F36D27E3D96EB2B6E0784CC32826D8B062E9038214"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai-Regular.ttf.meta",
+      "bytes": 486,
+      "sha256": "E3D81B3164A186B8D656D867BEEF1CDC841B3CDF51E940004E83A8823CE5C21B"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/INSTRUCTION.txt",
+      "bytes": 189,
+      "sha256": "7F09081B89D2AA065AF759177C83F7E971760451128A42B0F2905EAB03FE9E37"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/INSTRUCTION.txt.meta",
+      "bytes": 158,
+      "sha256": "8FB3DEB09D45EB5E137D76D124A19792EF799BFDECE93579DB899D5D1A474789"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/LICENSE.txt",
+      "bytes": 1977,
+      "sha256": "0215279F40A979EEE28D26188F0405628387923DCCE5F1CEDC4481C13EDDC169"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/LICENSE.txt.meta",
+      "bytes": 158,
+      "sha256": "CC57AED2F0C02C8886A50548683FB7E3A6B11B18828F14B94B48AF2766A9CC31"
+    },
+    {
+      "path": "evidence/rework/font-before/Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷.meta",
+      "bytes": 172,
+      "sha256": "462C0A39316E65F71FBE34756A75F69E4A95FA2FABA44C3D21DA6AF047260B74"
+    },
+    {
+      "path": "evidence/rework/font-manifest.json",
+      "bytes": 13455,
+      "sha256": "44B43820FB649F9C51CC9656E9A3224CBC3B4B3DF4C5AD9702DD96FACA191BDF"
+    },
+    {
+      "path": "evidence/rework/handoff-H4.md",
+      "bytes": 6180,
+      "sha256": "95A2D3AAF9924A79600FE996B3B32EE37F23E52465F57C462D2FC4F76E60678A"
+    },
+    {
+      "path": "evidence/rework/loader-removal.json",
+      "bytes": 2499,
+      "sha256": "2B44F32E67184B481BBBBD9E91864C61632C57F43BFE21876F0D92EE1F57D84B"
+    },
+    {
+      "path": "evidence/rework/marquee-mask.png",
+      "bytes": 74243,
+      "sha256": "CECA5DE1A1C5D12088AF052473187A16D0537C562500192EACFFEB44E8B7EA6A"
+    },
+    {
+      "path": "evidence/rework/marquee-mesh.json",
+      "bytes": 936,
+      "sha256": "C2495FDA6B00A517E2B1AF08F959FE92DA9793F6BFE1EC2EFEFE920E828E21EB"
+    },
+    {
+      "path": "evidence/rework/marquee-rectmask.png",
+      "bytes": 74255,
+      "sha256": "F711B728BF21ABD1F8A627A0B2F0AFF3292B208E1848E6E70534EC04FF3ABB71"
+    },
+    {
+      "path": "evidence/rework/owned-files-S1.json",
+      "bytes": 15019,
+      "sha256": "EDB4871CAB0C4CD7977DE19C93DB7A4AABC95F9749D41797DAC8C5D07A8E6886"
+    },
+    {
+      "path": "evidence/rework/play-request.json",
+      "bytes": 1423,
+      "sha256": "252C11A661A88E5D3808849A0D9C60A85B992235C5B8DCDACA853680A15CAA9A"
+    },
+    {
+      "path": "evidence/rework/play-result.json",
+      "bytes": 8826,
+      "sha256": "855C6D3A6452BC033055B2BA9B54627DBDCF7F522F2D8344B7CE899B6049313F"
+    },
+    {
+      "path": "evidence/rework/recheck-owned-baseline.json",
+      "bytes": 17230,
+      "sha256": "699523A2DFB2F75473868743B7C495D562D5414EE66CC978C5FF40E60153E6EA"
+    },
+    {
+      "path": "evidence/rework/stage-baseline.json",
+      "bytes": 732,
+      "sha256": "82D66E9E8F6E2E4E4C3BF17DA19B08DA6A5C3065E5FA05A5B74491ECC4D5ED20"
+    },
+    {
+      "path": "evidence/rework/visual-review.txt",
+      "bytes": 408,
+      "sha256": "EA28595E03E20215E87EB1FF743897F124BF131D33F31ED3D22A33588D00D327"
+    },
+    {
+      "path": "evidence/rework/workspace-baseline.json",
+      "bytes": 22520,
+      "sha256": "B430792064E071BBFF2B11B668FD9C973D56073B5F4DC1FC89F433F9DB7AFB9A"
+    },
+    {
+      "path": "evidence/rework/workspace-final.json",
+      "bytes": 22967,
+      "sha256": "183662537888E16BFFE1527F4E362E36D3A16917613338131E3A5165CF0A863D"
+    },
+    {
+      "path": "evidence/scroll-events.txt",
+      "bytes": 230,
+      "sha256": "C0ED157985BBBBCDED294D1B1323B906026A80AFF3B78313300389A222525EF6"
+    },
+    {
+      "path": "evidence/scroll-horizontal-begin.png",
+      "bytes": 68838,
+      "sha256": "19EFFC84A3CBB1938BCD744FC09B8F2152BCD86DC430A429742B69685EE2F96F"
+    },
+    {
+      "path": "evidence/scroll-horizontal-end.png",
+      "bytes": 68824,
+      "sha256": "4C03DF2E3B99B2D84AA00207BE7C82555061DCEA4263BF85AAA73522401AF4FD"
+    },
+    {
+      "path": "evidence/scroll-vertical-begin.png",
+      "bytes": 69319,
+      "sha256": "034141B25A1A79D4D74CD337930C3D0B8337F55C9BB0E3CC429D23C497C766A3"
+    },
+    {
+      "path": "evidence/scroll-vertical-end.png",
+      "bytes": 69319,
+      "sha256": "2B90F4BCF97F7236E87D7398F821E4433C37404B46F4E91E3E9A11CE88A6142B"
+    },
+    {
+      "path": "evidence/source-baseline.json",
+      "bytes": 4238,
+      "sha256": "E683D5069295AFFE51EF7881371AB3A97BB4065BB79FD6C3F77C3CC65E27EDF7"
+    },
+    {
+      "path": "evidence/static-final-checks.txt",
+      "bytes": 118,
+      "sha256": "3DCF439C921DF41669E84D64D5DB587D193D26FFE2A7AE3CA8CD1B6732C376C3"
+    },
+    {
+      "path": "evidence/tmp-edit-summary.json",
+      "bytes": 418,
+      "sha256": "768A004D44FF02A6A13CD039AA2B6BFA25FE462A9BB74E42C687A11F900213D7"
+    },
+    {
+      "path": "evidence/visual-review.txt",
+      "bytes": 1194,
+      "sha256": "C981BCF3FE4E35500B99A678CE3B015ACFB94EBB3CC8802A537A9F3705667285"
+    },
+    {
+      "path": "evidence/workspace-baseline.txt",
+      "bytes": 4097,
+      "sha256": "CCF1A583469EEB0B5C0ED9CA847B3B2CB5E04232449ECD0B1ED5EADA578406E7"
+    },
+    {
+      "path": "handoff.md",
+      "bytes": 17303,
+      "sha256": "F9BE3B272095A493B439C3A5C3E68EB2ADFCEEA0EBE57630D09C10590C7732A8"
+    },
+    {
+      "path": "implementation.md",
+      "bytes": 21115,
+      "sha256": "F7A11C732C22DDA300E870F6087210E438373EDF1F47F1DDAB235214AD6F025F"
+    },
+    {
+      "path": "prompts/02-design.md",
+      "bytes": 3357,
+      "sha256": "5D046E1770E80F3F3A92D8BD55E1E9A4793D350CD567F29B8A088FAB4558DDB1"
+    },
+    {
+      "path": "prompts/03-implementation.md",
+      "bytes": 7651,
+      "sha256": "F641F7FF653F614B0811D6AE0CE4E3838014E54470D7509590D9E922BA9A2CEA"
+    },
+    {
+      "path": "prompts/04-acceptance.md",
+      "bytes": 9011,
+      "sha256": "E120E90C0B669E8BDE146F6ABCBF529D3B51A9F1A1E78F6EC6BB2C488B14E5F0"
+    },
+    {
+      "path": "prompts/05-implementation-rework.md",
+      "bytes": 2859,
+      "sha256": "5CB65870404219BBC4508D7DBA1C8A42B8586CAC551CB7046DE664F67794766F"
+    },
+    {
+      "path": "prompts/06-independent-recheck.md",
+      "bytes": 4799,
+      "sha256": "7284B0C1A591D7C1B4C19739A730A31C0187A78B5306E3C9D16AED6107595586"
+    },
+    {
+      "path": "requirements.md",
+      "bytes": 6782,
+      "sha256": "00FADFDC7B61B6055B595A731C24C72321E50E2D156F72D48BEA08161251D42B"
+    }
+  ],
+  "recordCopiesSha256": {
+    "requirements.md": "00FADFDC7B61B6055B595A731C24C72321E50E2D156F72D48BEA08161251D42B",
+    "design.md": "FA0AFB001FFEFA3201FE7F210564188319F6ACD79518CBBA0CCB911D51B29F8A",
+    "implementation.md": "F7A11C732C22DDA300E870F6087210E438373EDF1F47F1DDAB235214AD6F025F",
+    "acceptance.md": "0BFF7FD325B2267DC52B8A49F91DFE897FC7E6613F01CE25A2896579C4F22761",
+    "acceptance-recheck.md": "8049FEE5C0D10F1E0F83ABA1EEC5DA39A581CFEFC313308CEAE6933B39CF877E"
+  }
+}

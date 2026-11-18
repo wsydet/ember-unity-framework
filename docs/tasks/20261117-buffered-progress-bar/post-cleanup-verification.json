@@ -1,0 +1,19 @@
+{
+  "task": "20261117-buffered-progress-bar",
+  "date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "status": "complete",
+  "taskTemporaryDirectoryExists": false,
+  "archiveSourceFiles": 1006,
+  "archiveBytes": 20577776,
+  "archiveSha256": "57DBC405F6EB66A08907CC78BC45B849CACA6217B2B7D8DB2CC1C68D6F7AB27F",
+  "historicalRecordCopiesUnchanged": 24,
+  "protectedOutsideTemporaryTreeUnchanged": 196,
+  "protectedTemporaryRecordsArchived": 5,
+  "historicalRootEvidenceArchived": 90,
+  "fontSourcesUnchanged": 34,
+  "localMarkdownLinksAndAnchorsChecked": 26,
+  "errors": [],
+  "entryUnityTestsRun": false,
+  "entryProductAssetChanges": false
+}

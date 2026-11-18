@@ -68,3 +68,13 @@ Windows 原生 fallback 已直接调用，同一标题传入且请求计数不�
 [候选审计](evidence/release/candidate-audit.json)确认 9 个标题源码/meta/asmdef 与已验证字节一致；solution 仅从 v0.25.4 增加标题测试项目引用，排除了主工作区较早 WIP 的其他自动生成差异。3591 个包内 C#/asmdef 对照仅有两份既有规则同步文件不同，它们不提供标题或缓存 API，未收入候选。259 份既有文件 SHA256 不变，另 6 份为本轮明确更新的版本/发布指针。
 
 候选 staged [共享二进制](evidence/release/binaries-staged.txt)、[字体配置](evidence/release/fonts-staged.txt)、[12 技能/34 文件 bundle](evidence/release/bundle-staged.txt)全部通过；二进制同时覆盖 core.autocrlf=false/true 干净检出。仅静态完整性，不替代 Unity 字体渲染或 Play 测试，本轮也未变字体或重建 bundle。
+
+## 正式发布结果（2026-11-13）
+
+已提交并发布 **Ember 0.25.5**，发布提交 `f3ea76bd2e45f57d1412f7fcdf540751d55f0abf`，父提交为已发布的 v0.25.4。77 个文件包括本轮实现/测试、必要发布资料与取证文档；其他任务未加入发布。annotated tag 对象为 `07200f95cce19557e95b89a01512d6041627fc98`。
+
+`git push --atomic origin HEAD:refs/heads/main refs/tags/v0.25.5` 成功，远端 main 与 `v0.25.5^{}` 均为上述发布提交，见[推送](evidence/release/push.json)、[远端查询](evidence/release/remote-verification.json)、[正式发布证明](evidence/release/remote-proof.json)。提交后 HEAD [二进制](evidence/release/binaries-head.txt)/[字体配置](evidence/release/fonts-head.txt)也通过。
+
+原开发分支及其他工作区改动保留，发布来自已存在的干净候选 checkout。后续生成的远端证明留在本地主任务证据中，不修改已发布 tag。Windward 本轮未升级，未重新绑定扩展内容 hash；消费接入和原前台四条件仍需后续独立授权。整体性能问题继续开放。
+
+[发布后保护核对](evidence/release/preservation-after.json)确认原分支保留、主工作区 index 仍为空、259 份既有文件 SHA256 未变，只有 6 份已授权的包版本/发布指针更新；候选 checkout 干净，HEAD 与本地 peeled tag 仍一致。[发布后 Console](evidence/release/published-console.json)仍仅两条 MCP 连接警告。已向 Windward 原性能回执追加本版发布链接和“暂不升级”边界，仅文档写入。

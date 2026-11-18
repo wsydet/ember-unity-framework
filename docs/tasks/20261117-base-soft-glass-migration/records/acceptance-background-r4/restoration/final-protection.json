@@ -1,0 +1,65 @@
+{
+  "identity": {
+    "templateId": "topdown-2d",
+    "templateVersion": "0.1.3",
+    "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
+    "loadedAt": "2026-11-18 16:25:36"
+  },
+  "verifiedI15TopdownProtection": 1351,
+  "legitimateStartDifferences": [
+    "Assets/Editor/EmberEditingTemplate.json",
+    "Packages/com.ember/Templates~/base/template.json",
+    "Packages/com.ember/Templates~/ui-game/template.json"
+  ],
+  "onlyBaseUiMetadataContentHashChanged": true,
+  "productFiles": 16578,
+  "productDrift": [],
+  "onlyOriginalLocalCacheVsTopdownStored": [
+    "GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+  ],
+  "skills": 43,
+  "indexSha256": "07b2454ab28af72dce996b96f1ad27eba074c651c05f53f8f22a6d3a151655f0",
+  "layoutSha256": "6e4452224022c3df9a1bb4aa357caff8028e06c4d84e882d155394010787d3c5",
+  "editor": {
+    "utc": "2026-11-18T16:31:26.1046879+08:00",
+    "identity": {
+      "templateId": "topdown-2d",
+      "templateVersion": "0.1.3",
+      "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
+      "loadedAt": "2026-11-18 16:25:36"
+    },
+    "playing": false,
+    "compiling": false,
+    "updating": false,
+    "sceneDirty": false,
+    "index": 5,
+    "labels": [
+      "Free Aspect",
+      "16:9 Aspect",
+      "16:10 Aspect",
+      "Full HD (1920x1080)",
+      "WXGA (1366x768)",
+      "QHD (2560x1440)",
+      "4K UHD (3840x2160)",
+      "1080x2000",
+      "720x1560",
+      "1080x1920"
+    ],
+    "window": "(x:0.00, y:803.33, width:933.00, height:542.67)",
+    "selection": [],
+    "prefs": [
+      {
+        "k": "Ember.Localization.Language",
+        "has": false,
+        "value": ""
+      },
+      {
+        "k": "Ember.Novel.Language",
+        "has": false,
+        "value": ""
+      }
+    ],
+    "skin": 1,
+    "docked": true
+  }
+}

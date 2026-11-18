@@ -1,0 +1,41 @@
+{
+  "FormalPage": false,
+  "source": "Temp/EmberBufferedProgressTests after A2 Play job e70b4a9fa6654231a9754cf2b82744ef",
+  "files": [
+    {
+      "path": "check_pixels.py",
+      "sha256": "1f3936b79c7921b6e6c4a7922e7c8fd6ae717e75c5212028f31025f4eafcb901",
+      "bytes": 1629
+    },
+    {
+      "path": "six-0.00.png",
+      "sha256": "36f6a8259e9276d349dadbc66b477c7e223b111bbf18322efedcff6de05943b5",
+      "bytes": 24761
+    },
+    {
+      "path": "six-0.19.png",
+      "sha256": "16ffc2f77fe12fe7ddac67674c7644e8193cebf3dac10be52da099110038d668",
+      "bytes": 24799
+    },
+    {
+      "path": "six-0.31.png",
+      "sha256": "98d85d391ff3c83e29ab209185d6eedd2be44797cabc5db70921467b2a861636",
+      "bytes": 24770
+    },
+    {
+      "path": "six-0.68.png",
+      "sha256": "2f0b1797e503a91cb81d8bfe3b739f1138c08c6023e27c0dee4fe6b3ad493da8",
+      "bytes": 24780
+    },
+    {
+      "path": "six-1.08.png",
+      "sha256": "20fd2c8fab2da9f09b8b4c528ebcd8483731d3a967130b9765f6da15a4a3466e",
+      "bytes": 24754
+    },
+    {
+      "path": "six-frames.json",
+      "sha256": "ea1d6587f18799344b7feedf660d458d93bc8c187733c222d25fa4aac6c8f829",
+      "bytes": 23451
+    }
+  ]
+}

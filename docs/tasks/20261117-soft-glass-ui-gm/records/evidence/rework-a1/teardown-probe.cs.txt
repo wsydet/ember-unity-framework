@@ -1,0 +1,12 @@
+var mgr=Ember.UI.EUIManager.Instance;
+foreach(var p in Ember.UI.EUIViewEngine.Instance.ActivePages.ToArray())if(p.Name.StartsWith("EUISoftGlass"))mgr.ClosePage(p);
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+for(int i=0;i<40;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();
+var h=Ember.UIRendering.EUIBackdropCameraHost.Active;int before=h.CaptureCount;
+for(int i=0;i<60;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();
+var r=new {h.BoundaryCount,capturesBefore=before,capturesAfter=h.CaptureCount,
+outputs=Resources.FindObjectsOfTypeAll<RenderTexture>().Count(t=>t.name.StartsWith("EUI Backdrop Output")),
+segments=UnityEngine.Object.FindObjectsByType<Camera>(FindObjectsSortMode.None).Count(c=>c.name.StartsWith("EUI Foreground Segment")),
+materials=Resources.FindObjectsOfTypeAll<Material>().Where(m=>m.shader&&(m.shader.name=="Ember/UI/Backdrop"||m.shader.name=="Hidden/Ember/BackdropBlur")).Select(m=>m.name).ToArray(),h.Diagnostic};
+System.IO.File.WriteAllText(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/rework-a1/teardown.json",Newtonsoft.Json.JsonConvert.SerializeObject(r,Newtonsoft.Json.Formatting.Indented));
+};run();return "Closed all task consumers; bounded 60-frame teardown started";

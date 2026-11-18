@@ -1,0 +1,45 @@
+var path=".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/performance.json";
+var output=new System.Collections.Generic.List<object>();
+System.Func<int,System.Threading.Tasks.Task> frames=async count=>{for(int i=0;i<count;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Func<string,System.Threading.Tasks.Task> sample=async label=>{
+await frames(30);
+var timings=new FrameTiming[1];var rows=new System.Collections.Generic.List<object>();
+var main=new System.Collections.Generic.List<double>();var cpu=new System.Collections.Generic.List<double>();var gpu=new System.Collections.Generic.List<double>();var render=new System.Collections.Generic.List<double>();
+var draw=Unity.Profiling.ProfilerRecorder.StartNew(Unity.Profiling.ProfilerCategory.Render,"Draw Calls Count",1);
+var gc=Unity.Profiling.ProfilerRecorder.StartNew(Unity.Profiling.ProfilerCategory.Memory,"GC Allocated In Frame",1);
+var host=Ember.UIRendering.EUIBackdropCameraHost.Active;int begin=host.CaptureCount;ulong previous=0;
+for(int i=0;i<180;i++){
+FrameTimingManager.CaptureFrameTimings();await frames(1);
+if(FrameTimingManager.GetLatestTimings(1,timings)>0&&timings[0].frameStartTimestamp!=previous){
+var t=timings[0];previous=t.frameStartTimestamp;cpu.Add(t.cpuFrameTime);main.Add(t.cpuMainThreadFrameTime);render.Add(t.cpuRenderThreadFrameTime);if(t.gpuFrameTime>0)gpu.Add(t.gpuFrameTime);
+rows.Add(new{cpu=t.cpuFrameTime,main=t.cpuMainThreadFrameTime,render=t.cpuRenderThreadFrameTime,gpu=t.gpuFrameTime,draw=draw.Valid?draw.LastValue:-1,gcBytes=gc.Valid?gc.LastValue:-1,stamp=t.frameStartTimestamp});
+}}
+System.Func<System.Collections.Generic.List<double>,object> stats=list=>{list.Sort();return new{count=list.Count,mean=list.Count>0?list.Average():0,p50=list.Count>0?list[list.Count/2]:0,p95=list.Count>0?list[(int)((list.Count-1)*.95)]:0};};
+var rt=Resources.FindObjectsOfTypeAll<RenderTexture>().Where(r=>r.name.StartsWith("EUI Backdrop Output")&&r.IsCreated()).ToArray();
+output.Add(new{label=label,warmup=30,frames=180,screen=new[]{Screen.width,Screen.height},boundaries=host.BoundaryCount,captures=host.CaptureCount-begin,rt=rt.Select(r=>new{w=r.width,h=r.height,format=r.graphicsFormat.ToString(),bytes=UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(r)}).ToArray(),cpu=stats(cpu),main=stats(main),render=stats(render),gpu=stats(gpu),rows=rows});
+draw.Dispose();gc.Dispose();System.IO.File.WriteAllText(path,Newtonsoft.Json.JsonConvert.SerializeObject(output,Newtonsoft.Json.Formatting.Indented));
+};
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var manager=Ember.UI.EUIManager.Instance;manager.CloseAllPopups();await frames(30);
+var gmField=typeof(Game.UI.EUIAppearanceBootstrap).GetField("_gm",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic);
+var gm=(Ember.UI.EUIPage)gmField.GetValue(null);((Game.UI.EUISoftGlassGMPage)gm.Logic).SetExpanded(false);
+Ember.UI.EUIPage showcase=null;manager.ShowMainPage(Game.UI.GamePages.EUISoftGlassShowcasePage,null,p=>showcase=p);for(int i=0;i<300&&showcase==null;i++)await frames(1);await frames(20);
+Ember.UI.EUIManager.PopupMaskEffect=Ember.UI.EUIMaskEffect.Solid;
+Ember.UI.EUIPage popup=null;manager.ShowPopup(Game.UI.GamePages.EUISoftGlassConfirmPage,new Game.UI.EUIDialogRequest{Title="Performance sample"},p=>popup=p);for(int i=0;i<300&&popup==null;i++)await frames(1);
+foreach(var group in UnityEngine.Object.FindObjectsByType<Ember.UI.EUIBackdropGroup>(FindObjectsSortMode.None))group.enabled=false;
+await sample("A Solid; all local glass sampling disabled");
+foreach(var group in UnityEngine.Object.FindObjectsByType<Ember.UI.EUIBackdropGroup>(FindObjectsSortMode.None))group.enabled=true;
+Ember.UI.EUIManager.PopupMaskEffect=Ember.UI.EUIMaskEffect.Blur;manager.RefreshBackdrop(popup);
+await sample("B 1 Popup + 20 lower shared surfaces + collapsed GM");
+((Game.UI.EUISoftGlassGMPage)gm.Logic).SetExpanded(true);
+Ember.UI.EUIPage upper=null;manager.ShowPopup(Game.UI.GamePages.EUISoftGlassAlertPage,new Game.UI.EUIDialogRequest{Title="Second capture boundary"},p=>upper=p);for(int i=0;i<300&&upper==null;i++)await frames(1);
+await sample("C 2 Popup + expanded GM + lower shared surfaces");
+manager.CloseAllPopups();manager.ClosePage(gm);manager.ClosePage(showcase);await frames(60);
+await sample("D All SoftGlass consumers closed");
+output.Add(new{label="final",diagnostic=Ember.UIRendering.EUIBackdropCameraHost.Active.Diagnostic,segments=Camera.allCameras.Count(c=>c.name.StartsWith("EUI Foreground Segment")),blurMaterials=Resources.FindObjectsOfTypeAll<Material>().Count(m=>m.shader&&m.shader.name=="Hidden/Ember/BackdropBlur"&&m.hideFlags==HideFlags.HideAndDontSave),surfaceMaterials=Resources.FindObjectsOfTypeAll<Material>().Count(m=>m.shader&&m.shader.name=="Ember/UI/Backdrop"&&m.hideFlags==HideFlags.HideAndDontSave)});
+}
+catch(System.Exception e){output.Add(new{error=e.ToString()});}
+System.IO.File.WriteAllText(path,Newtonsoft.Json.JsonConvert.SerializeObject(output,Newtonsoft.Json.Formatting.Indented));
+};run();return "Started four short 30+180 frame samples";
+

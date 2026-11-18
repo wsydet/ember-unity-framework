@@ -1,0 +1,17 @@
+[
+  {
+    "step": "blur",
+    "ready": true,
+    "disposed": false
+  },
+  {
+    "step": "mask-off",
+    "ready": false,
+    "disposed": true
+  },
+  {
+    "step": "mask-back-on",
+    "ready": true,
+    "disposed": false
+  }
+]

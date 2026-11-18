@@ -96,6 +96,12 @@
     "dependsOnTemporaryDirectory": false
   },
   {
+    "document": "README.md",
+    "target": "evidence/release-remote-proof.json",
+    "exists": true,
+    "dependsOnTemporaryDirectory": false
+  },
+  {
     "document": "implementation.md",
     "target": "README.md",
     "exists": true,

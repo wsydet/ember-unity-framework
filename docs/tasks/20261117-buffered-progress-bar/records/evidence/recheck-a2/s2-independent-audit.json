@@ -1,0 +1,24 @@
+{
+  "s2BackupCount": 201,
+  "s2BackupErrors": [],
+  "ownedCount": 12,
+  "ownedErrors": [],
+  "historyCount": 90,
+  "historyErrors": [],
+  "s2ActualDifferences": [
+    ".utmp/ember-workflow/20261117-buffered-progress-bar/handoff.md",
+    ".utmp/ember-workflow/20261117-buffered-progress-bar/implementation.md",
+    "Packages/com.ember/Documentation~/ui/buffered-progress-bar.md",
+    "Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs",
+    "Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs",
+    "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs"
+  ],
+  "s2FinalErrors": [],
+  "productsChangedSinceA1": [
+    "Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs",
+    "Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs",
+    "Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs",
+    "Packages/com.ember/Documentation~/ui/buffered-progress-bar.md"
+  ],
+  "fontCount": 34
+}

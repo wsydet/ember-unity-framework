@@ -1,0 +1,328 @@
+ M .agents/skills/ember-solution-design/SKILL.md
+ M AGENTS.md
+ M Assets/Game/Documentation/base/README.md
+ M Assets/Game/State/GameInitState.cs
+ M Assets/Game/UI/GamePages.User.cs
+ M Assets/Settings/Mobile_RPAsset.asset
+ M Assets/Settings/PC_RPAsset.asset
+ M Packages/com.ember/Basic/Editor/EditorMainWindowTitle.cs
+ M Packages/com.ember/CHANGELOG.md
+ M Packages/com.ember/Core/Editor/EmberConditionalMenu.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionCatalog.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionDocuments.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberExtensionProject.cs
+ M Packages/com.ember/Core/Editor/EmberFsmBlueprintAccess.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.AISkills.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Identity.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.Patch.cs
+ M Packages/com.ember/Core/Editor/EmberProjectSetup.cs
+ M Packages/com.ember/Core/Editor/EmberSetupWindow.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateInheritanceEngine.cs
+ M Packages/com.ember/Core/Editor/EmberTemplateTransaction.cs
+ M Packages/com.ember/Dependencies~/README.md
+ M Packages/com.ember/Documentation~/maintenance/ai-skills.md
+ M Packages/com.ember/Documentation~/maintenance/ai-workflow.md
+ M Packages/com.ember/Documentation~/maintenance/glossary.md
+ M Packages/com.ember/Documentation~/resource/README.md
+ M Packages/com.ember/Documentation~/ui/README.md
+ M Packages/com.ember/Documentation~/ui/dynamic-lists.md
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelContracts.cs
+ M Packages/com.ember/LevelAuthoring/Editor/EmberLevelTrialSession.cs
+ M Packages/com.ember/LevelAuthoring/Tests/EmberLevelTrialProtocolTests.cs
+ M Packages/com.ember/README.md
+ M Packages/com.ember/Resource/Runtime/EmberAssetHandle.cs
+ M Packages/com.ember/Resource/Runtime/EmberAssetHandleSlot.cs
+ M Packages/com.ember/Resource/Runtime/IResourceProvider.cs
+ M Packages/com.ember/Resource/Runtime/ResourcesProvider.cs
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSansSymbols2/NotoSansSymbols2-Regular SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/NotoSerifSC/NovelSerif SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/钉钉进步体/DingTalk-JinBuTi SDF.asset"
+ M "Packages/com.ember/SharedAssets/Fonts/阿里妈妈东方大楷/AlimamaDongFangDaKai SDF.asset"
+ M Packages/com.ember/Tests/EditMode/EmberTemplatePatchEditTests.cs
+ M Packages/com.ember/Tests/Ember.UI.Tests.asmdef
+ M Packages/com.ember/UI/Runtime/EUIBgMaskPool.cs
+ M Packages/com.ember/UI/Runtime/EUIManager.cs
+ M Packages/com.ember/UI/Runtime/EUIPage.cs
+ M Packages/com.ember/UI/Runtime/EUIPageContext.cs
+ M Packages/com.ember/UI/Runtime/EUIViewEngine.cs
+ M Packages/com.ember/UIExtension/Editor/Pages/EUIBindingEditorUtility.cs
+ M Packages/com.ember/UIExtension/Editor/Pages/EUICreationService.cs
+ M Packages/com.ember/UIExtension/Editor/Pages/EUIPrefabManagerWindow.cs
+ M Packages/com.ember/UIExtension/Editor/UIExt/EUIImageExEditor.cs
+ M Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRoundedImageModifier.cs
+ M Packages/com.ember/UIExtension/Runtime/Components/EUIButton.cs
+ M Packages/com.ember/UIExtension/Runtime/Components/EUIComponent.cs
+ M Packages/com.ember/UIExtension/Runtime/EUIBinding.cs
+ M Packages/com.ember/UIExtension/Runtime/EUIBindingBridge.cs
+ M Packages/com.ember/UIExtension/Runtime/Ember.UIExtension.Runtime.asmdef
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIButtonEx.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIExtensionAttribute.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/EUIImageEx.cs
+ M Packages/com.ember/UIExtension/Runtime/UIExt/TMPMarquee.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.Templates.cs
+ M Packages/com.ember/UPMManager/Editor/EmberAISkillInstaller.cs
+ M Packages/com.ember/package.json
+ M ProjectSettings/TagManager.asset
+ M docs/dev/ember-api-reference.md
+ M docs/dev/framework-progress.md
+ M docs/dev/upm-migration-plan.md
+ M ember-unity-framework.slnx
+?? Assets/Ember/Editor/UILibrary/SoftGlassLibrary.asset
+?? Assets/Ember/Editor/UILibrary/SoftGlassLibrary.asset.meta
+?? Assets/Ember/Editor/UILibrary/SoftGlassLibrary.catalog.json
+?? Assets/Ember/Editor/UILibrary/SoftGlassLibrary.catalog.json.meta
+?? Assets/Game/Documentation/base/soft-glass-ui.md
+?? Assets/Game/Documentation/base/soft-glass-ui.md.meta
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUIAuthoringWindow.cs
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUIAuthoringWindow.cs.meta
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUILibraryBuilder.cs
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUILibraryBuilder.cs.meta
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUIRevisionTwo.cs
+?? Assets/Game/UI/Editor/UIFoundation/SoftGlassUIRevisionTwo.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceBootstrap.GM.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceBootstrap.GM.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceBootstrap.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceBootstrap.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceConfig.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUIAppearanceConfig.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUICommonDialogs.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUICommonDialogs.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassAlertPage.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassAlertPage.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassAlertPage.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassAlertPage.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassCloseButtonItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassCloseButtonItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassCloseButtonItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassCloseButtonItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassConfirmPage.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassConfirmPage.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassConfirmPage.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassConfirmPage.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExampleItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExampleItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExampleItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExampleItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExamplePage.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExamplePage.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExamplePage.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassExtensionExamplePage.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMActionItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMActionItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMActionItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMActionItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMCenterItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMCenterItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMCenterItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMCenterItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMEntryItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMEntryItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMEntryItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMEntryItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMPage.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMPage.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMPage.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMPage.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMStateItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMStateItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMStateItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMStateItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTestItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTestItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTestItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTestItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTimeItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTimeItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTimeItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassGMTimeItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassIconButtonItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassIconButtonItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassIconButtonItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassIconButtonItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassInputItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassInputItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassInputItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassInputItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPanelItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPanelItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPanelItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPanelItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPrimaryButtonItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPrimaryButtonItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPrimaryButtonItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassPrimaryButtonItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSearchItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSearchItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSearchItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSearchItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSecondaryButtonItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSecondaryButtonItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSecondaryButtonItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSecondaryButtonItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassShowcasePage.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassShowcasePage.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassShowcasePage.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassShowcasePage.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSliderItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSliderItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSliderItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSliderItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSwitchItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSwitchItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSwitchItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassSwitchItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassVerticalSliderItem.Binding.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassVerticalSliderItem.Binding.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassVerticalSliderItem.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/EUISoftGlassVerticalSliderItem.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/GMActionRegistry.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/GMActionRegistry.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassBackdropAttachment.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassBackdropAttachment.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassDemoActions.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassDemoActions.cs.meta
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassDemoContrast.cs
+?? Assets/Game/UI/Runtime/Module/UIFoundation/SoftGlassDemoContrast.cs.meta
+?? Assets/GameResource/Resources/Config/UIFoundation.meta
+?? Assets/GameResource/Resources/Config/UIFoundation/
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassAlertPage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassAlertPage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassCloseButtonItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassCloseButtonItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassConfirmPage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassConfirmPage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExampleItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExampleItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExamplePage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassExtensionExamplePage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMActionItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMActionItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMCenterItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMCenterItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMEntryItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMEntryItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMPage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMPage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMStateItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMStateItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTestItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTestItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTimeItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassGMTimeItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassIconButtonItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassIconButtonItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassInputItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassInputItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPanelItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPanelItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPrimaryButtonItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassPrimaryButtonItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSearchItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSearchItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSecondaryButtonItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSecondaryButtonItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassShowcasePage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassShowcasePage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSliderItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSliderItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPopupPage.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassStandardPopupPage.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSwitchItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassSwitchItem.prefab.meta
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassVerticalSliderItem.prefab
+?? Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs/EUISoftGlassVerticalSliderItem.prefab.meta
+?? Assets/GameResource/Settings.meta
+?? Assets/GameResource/Settings/
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs
+?? Packages/com.ember/Basic/Editor/EmberTitleSnapshot.cs.meta
+?? Packages/com.ember/Basic/Tests.meta
+?? Packages/com.ember/Basic/Tests/
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs
+?? Packages/com.ember/Core/Editor/EmberEditorMetadataCache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs
+?? Packages/com.ember/Core/Editor/EmberExtensionProject.Cache.cs.meta
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs
+?? Packages/com.ember/Core/Editor/EmberTemplateTemporaryDirectory.cs.meta
+?? Packages/com.ember/Dependencies~/manifest-0.25.3.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.4.json
+?? Packages/com.ember/Dependencies~/manifest-0.25.5.json
+?? Packages/com.ember/Dependencies~/release-0.25.3.json
+?? Packages/com.ember/Dependencies~/release-0.25.4.json
+?? Packages/com.ember/Dependencies~/release-0.25.5.json
+?? Packages/com.ember/Documentation~/ui/buffered-progress-bar.md
+?? Packages/com.ember/Documentation~/ui/popup-backdrop.md
+?? Packages/com.ember/Documentation~/ui/runtime-extensions.md
+?? Packages/com.ember/Documentation~/ui/soft-glass.md
+?? Packages/com.ember/Resource/Tests.meta
+?? Packages/com.ember/Resource/Tests/
+?? Packages/com.ember/Tests/EditMode/EUIAsyncImageEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIAsyncImageEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIBackdropLeaseEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIBackdropLeaseEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIBackdropPolicyEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIBackdropPolicyEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIBufferedProgressBarEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIButtonEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIButtonEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIFullscreenBackdropEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIFullscreenBackdropEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIGlassGeometryEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIGlassGeometryEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeExtensionsBindingEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeExtensionsBindingEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EUIRuntimeMotionEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberEditorIdentityCacheEditTests.cs.meta
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs
+?? Packages/com.ember/Tests/EditMode/EmberTemplateFileSystemEditTests.cs.meta
+?? Packages/com.ember/UI/Runtime/Backdrop.meta
+?? Packages/com.ember/UI/Runtime/Backdrop/
+?? Packages/com.ember/UI/Runtime/Resources.meta
+?? Packages/com.ember/UI/Runtime/Resources/
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIBufferedProgressBarEditor.cs.meta
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs
+?? Packages/com.ember/UIExtension/Editor/UIExt/EUIRuntimeExtensionsEditor.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIAssetImageSlot.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIBufferedProgressBar.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIConstrainedPanel.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIConstrainedPanel.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIControlGlyph.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIControlGlyph.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIFloatingEntry.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIFloatingEntry.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGlassImage.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGlassImage.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGlassStyle.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIGlassStyle.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoadResult.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIImageLoader.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIRawImageLoader.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIResponsiveCardGrid.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIResponsiveCardGrid.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIResponsiveFlowLayout.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIResponsiveFlowLayout.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollContracts.cs.meta
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs
+?? Packages/com.ember/UIExtension/Runtime/Behaviour/EUIScrollController.cs.meta
+?? Packages/com.ember/UIExtension/Tests.meta
+?? Packages/com.ember/UIExtension/Tests/
+?? Packages/com.ember/UIRendering.meta
+?? Packages/com.ember/UIRendering/
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs
+?? Packages/com.ember/UPMManager/Editor/EmberTemplateFileSystem.cs.meta
+?? docs/dev/release-0.25.3.md
+?? docs/dev/release-0.25.4.md
+?? docs/dev/release-0.25.5.md
+?? docs/tasks/

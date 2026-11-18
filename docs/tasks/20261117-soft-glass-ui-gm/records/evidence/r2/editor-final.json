@@ -1,0 +1,35 @@
+{
+  "play": false,
+  "sceneDirty": false,
+  "runtimeMvid": "758efd54-60f7-442a-a396-8a0a4201ab01",
+  "coreMvid": "3ceb14e0-74f6-4ee5-bd86-904395d7273b",
+  "editorMvid": "e344b005-e32d-49ff-9ac3-c5ffe4a22e50",
+  "restoredIndex": 5,
+  "images": [
+    {
+      "file": "01-controls-glass.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "02-popup-blur.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "03-gm-landscape.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "04-gm-portrait.png",
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "file": "05-fps-entry.png",
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}

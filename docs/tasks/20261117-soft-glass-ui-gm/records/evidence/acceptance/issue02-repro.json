@@ -1,0 +1,19 @@
+[
+  {
+    "id": "gameview-key-event",
+    "focusedBefore": true,
+    "focusedAfter": true,
+    "before": "Before",
+    "after": "z",
+    "sent": true,
+    "selected": "EUISoftGlassInputItem"
+  },
+  {
+    "id": "selected-submit-behind-modal-mask",
+    "selected": "BackgroundMode",
+    "routed": true,
+    "lowerActionCount": 1,
+    "mainInteractable": true,
+    "modal": true
+  }
+]

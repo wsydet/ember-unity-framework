@@ -1,0 +1,76 @@
+{
+  "task": "20261116-ui-runtime-extensions",
+  "date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "status": "complete",
+  "independentAcceptance": "records/acceptance.md (A1) + records/acceptance-recheck.md (A2)",
+  "userDisposition": "decisions.md D02",
+  "A01": "closed by independent A2",
+  "A02": "closed by explicit user acceptance of current font and recovery limitation",
+  "AC10": "technical evidence preserved; final resource disposition fulfilled by D02, not a new provenance finding",
+  "recordedA2Tests": {
+    "EditMode": {
+      "passed": 19,
+      "total": 19
+    },
+    "PlayMode": {
+      "passed": 4,
+      "total": 4
+    }
+  },
+  "recordedA2ConsoleErrors": 0,
+  "entryTestsRun": false,
+  "productOrFontChangesByClosure": false,
+  "preflight": {
+    "task": "20261116-ui-runtime-extensions",
+    "date": "2026-11-17",
+    "timezone": "Asia/Shanghai",
+    "branch": "codex/local-snapshot-20261111-162819",
+    "head": "16cff3d85d3b40a5ddab11e30801dfa5e36ed0c2",
+    "ownedCount": 61,
+    "protectedCount": 13,
+    "fontsAndBackupsChecked": 34,
+    "mismatches": [],
+    "A1Sha256": "0BFF7FD325B2267DC52B8A49F91DFE897FC7E6613F01CE25A2896579C4F22761",
+    "A2Sha256": "8049FEE5C0D10F1E0F83ABA1EEC5DA39A581CFEFC313308CEAE6933B39CF877E",
+    "currentFontSha256": "1869CB8EFA4FBA1D7AD971639D8E2262BC125528A2D112C48982F1117AB42719",
+    "temporaryProbeFiles": [],
+    "sourceFilesBeforeClosure": 265,
+    "sourceBytesBeforeClosure": 117112674,
+    "reparsePoints": [],
+    "sourceAbsolutePath": "C:\\Users\\wuyu\\My\\ember-unity-framework\\.utmp\\ember-workflow\\20261116-ui-runtime-extensions",
+    "archiveRelativePath": "docs\\tasks\\20261116-ui-runtime-extensions",
+    "runtimeChecks": "None in entry closure: document/archive operations only; accepted A1/A2 runtime evidence preserved"
+  },
+  "archiveVerification": {
+    "files": 268,
+    "allZipFileHashesMatchSources": true,
+    "crcPassed": true,
+    "recordCopiesMatch": true,
+    "manifest": "archive-manifest.json",
+    "localMarkdownLinksChecked": 20,
+    "verificationRecord": "archive-verification.json"
+  },
+  "temporaryCleanup": {
+    "target": ".utmp/ember-workflow/20261116-ui-runtime-extensions",
+    "performed": true,
+    "authorization": "User explicitly requested archive and cleanup after closure conditions are met",
+    "state": "deleted exact authorized task directory after path/reparse/file-set/hash checks",
+    "date": "2026-11-17",
+    "otherTaskDirectoriesPreserved": [
+      "20261111-ui-template-alignment",
+      "20261113-editor-title-refresh"
+    ],
+    "acceptedFontSha256After": "1869CB8EFA4FBA1D7AD971639D8E2262BC125528A2D112C48982F1117AB42719",
+    "taskDirectoryExistsAfter": false
+  },
+  "remainingRequiredWork": [],
+  "limitations": [
+    "Earlier exact font bytes unavailable; writeback provenance unknown; accepted by user",
+    "No new global-font-skin integration coverage in A2; A1 historical scope retained",
+    "No full-suite, device, player-build or manual-input signoff"
+  ],
+  "gitCommitOrPublishPerformed": false,
+  "templateOrVersionOperationsPerformed": false,
+  "completedDate": "2026-11-17"
+}

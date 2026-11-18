@@ -1,0 +1,31 @@
+{
+  "task": "20261117-soft-glass-ui-gm",
+  "date": "2026-11-17T17:55:26.409979+08:00",
+  "fullSnapshotFiles": 2204,
+  "fullSnapshotBytes": 144106444,
+  "archiveBytes": 45733608,
+  "streamVerifiedFiles": 2204,
+  "expandedVerifiedFiles": 214,
+  "brokenLocalMarkdownLinks": [],
+  "projectLinks": [
+    {
+      "file": "README.md",
+      "target": "../../../Packages/com.ember/Documentation~/ui/popup-backdrop.md"
+    },
+    {
+      "file": "README.md",
+      "target": "../../../Packages/com.ember/Documentation~/ui/soft-glass.md"
+    },
+    {
+      "file": "README.md",
+      "target": "../../../Assets/Game/Documentation/base/soft-glass-ui.md"
+    }
+  ],
+  "sourceStillPresent": true,
+  "productDrift": [],
+  "previewDrift": [],
+  "complete": false,
+  "passed": true,
+  "verificationPasses": 2,
+  "firstPassNote": "The verification record itself was linked before it was first written; a second check after creation resolves that link. Original first result retained."
+}

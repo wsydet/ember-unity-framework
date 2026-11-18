@@ -1,0 +1,41 @@
+var rows=new System.Collections.Generic.List<object>();
+System.Action<string,bool,object> check=(id,pass,detail)=>rows.Add(new{id=id,pass=pass,detail=detail});
+System.Func<int,System.Threading.Tasks.Task> frames=async n=>{for(int i=0;i<n;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Func<Ember.UI.EUIPageDef,System.Threading.Tasks.Task<Ember.UI.EUIPage>> open=async def=>{Ember.UI.EUIPage p=null;Ember.UI.EUIManager.Instance.ShowPopup(def,new Game.UI.EUIDialogRequest{Title="Independent A2 recheck",Message="Focus and local glass are checked in the actual running view."},x=>p=x);for(int i=0;i<120&&p==null;i++)await frames(1);if(p==null)throw new System.Exception("Popup timeout");await frames(8);return p;};
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var manager=Ember.UI.EUIManager.Instance;var engine=Ember.UI.EUIViewEngine.Instance;
+var context=(Ember.UI.EUIPageContext)typeof(Ember.UI.EUIManager).GetProperty("_context",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetValue(manager,null);
+var main=context.CurrentMainPage;var es=UnityEngine.EventSystems.EventSystem.current;
+var field=main.GameObject.GetComponentInChildren<TMPro.TMP_InputField>();field.text="Independent A2";field.interactable=true;field.readOnly=false;
+es.SetSelectedGameObject(field.gameObject);field.ActivateInputField();await frames(3);bool initiallyFocused=field.isFocused;
+var page=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);string originalText=field.text;
+var gv=Resources.FindObjectsOfTypeAll<UnityEditor.EditorWindow>().First(w=>w.GetType().Name=="GameView");bool delivered=gv.SendEvent(Event.KeyboardEvent("k"));await frames(5);
+check("A1-original-character-repro-fixed",initiallyFocused&&delivered&&!field.isFocused&&field.text==originalText,new{initiallyFocused,delivered,field.isFocused,originalText,actual=field.text});
+var group=page.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>();var lease=group.Lease;int version=lease.TextureVersion;await frames(8);
+check("modal-live-source-and-visible-lower",lease.IsReady&&lease.TextureVersion>version&&main.Canvas.enabled&&main.CanvasGroup.alpha==1&&main.Canvas.planeDistance<main.Canvas.worldCamera.farClipPlane,new{version,after=lease.TextureVersion,alpha=main.CanvasGroup.alpha});
+ScreenCapture.CaptureScreenshot(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/reacceptance-a1/01-modal-focus.png");await frames(4);
+page.UseMask=false;manager.RefreshBackdrop(page);await frames(10);
+var surfaces=page.GameObject.GetComponentsInChildren<Ember.UI.EUIBackdropGraphic>(true);
+check("A1-original-mask-off-repro-fixed",lease.IsDisposed&&group.Lease!=null&&!group.Lease.IsDisposed&&group.Lease.IsReady&&!object.ReferenceEquals(lease,group.Lease)&&surfaces.All(g=>!object.ReferenceEquals(g.Lease,lease)),new{oldDisposed=lease.IsDisposed,newReady=group.Lease!=null&&group.Lease.IsReady,newDisposed=group.Lease!=null&&group.Lease.IsDisposed,surfaces=surfaces.Length});
+check("mask-off-returned-input-selection",es.currentSelectedGameObject==field.gameObject&&field.isFocused,es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+gv.SendEvent(Event.KeyboardEvent("u"));await frames(4);check("mask-off-business-character-path-works",field.text!=originalText,new{before=originalText,actual=field.text});
+ScreenCapture.CaptureScreenshot(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/reacceptance-a1/02-mask-off-local.png");await frames(4);
+page.UseMask=true;manager.RefreshBackdrop(page);await frames(8);manager.ClosePage(page);await frames(28);
+var slider=main.GameObject.GetComponentsInChildren<UnityEngine.UI.Slider>(true).First();es.SetSelectedGameObject(slider.gameObject);
+var p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);var p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);
+manager.HidePageViewOnly(p2.EUIPageDef);await frames(8);check("double-hide-top-focuses-lower",es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p1.Transform),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+manager.ShowPageViewOnly(p2.EUIPageDef);await frames(10);check("double-reshow-top-reclaims-focus",es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p2.Transform)&&p2.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease.IsReady,es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+manager.HidePageViewOnly(p1.EUIPageDef);await frames(7);check("hide-lower-preserves-top-selection",es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p2.Transform)&&!slider.IsInteractable(),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+manager.ShowPageViewOnly(p1.EUIPageDef);await frames(10);check("reshow-lower-does-not-steal-top-selection",es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p2.Transform),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+manager.ClosePage(p2);await frames(28);check("double-hide-chain-top-close-restores-p1",es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p1.Transform),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+manager.ClosePage(p1);await frames(28);check("double-hide-chain-final-restores-slider",es.currentSelectedGameObject==slider.gameObject&&slider.IsInteractable(),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);manager.HidePageViewOnly(p1.EUIPageDef);await frames(7);UnityEngine.Object.Destroy(p1.GameObject);await frames(9);manager.ClosePage(p2);await frames(28);
+check("destroy-hidden-lower-return-chain",es.currentSelectedGameObject==slider.gameObject&&slider.IsInteractable(),es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);p1.GameObject.SetActive(false);await frames(8);check("external-deactivate-releases-scope-and-lease",slider.IsInteractable()&&es.currentSelectedGameObject==slider.gameObject&&p1.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease==null,es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+p1.GameObject.SetActive(true);await frames(12);var resumed=p1.GameObject.GetComponent<Ember.UI.EUIBackdropGroup>().Lease;check("external-reactivate-reacquires-scope-and-lease",!slider.IsInteractable()&&resumed!=null&&resumed.IsReady&&es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p1.Transform),new{ready=resumed!=null&&resumed.IsReady,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});manager.ClosePage(p1);await frames(28);
+check("reactivation-final-restores-slider",slider.IsInteractable()&&es.currentSelectedGameObject==slider.gameObject,es.currentSelectedGameObject?es.currentSelectedGameObject.name:null);
+}
+catch(System.Exception e){check("probe-exception",false,e.ToString());}
+System.IO.File.WriteAllText(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/reacceptance-a1/independent.json",Newtonsoft.Json.JsonConvert.SerializeObject(rows,Newtonsoft.Json.Formatting.Indented));
+};run();return "Independent original fault and additional lifecycle checks started";

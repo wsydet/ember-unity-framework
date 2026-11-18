@@ -1,0 +1,16 @@
+{
+  "task": "20261116-ui-runtime-extensions",
+  "date": "2026-11-17",
+  "status": "complete",
+  "temporaryDirectoryExists": false,
+  "ownedUnchanged": 61,
+  "protectedUnchanged": 13,
+  "fontSourcesUnchanged": 34,
+  "A1A2OriginalBytesPreserved": true,
+  "archiveBundleSha256": "4FFD1B89D62611284E61BE95AACF68A0E565028D17A67A1171083B43421E00A6",
+  "archivedSourceFiles": 268,
+  "localLinksAndAnchorsChecked": 20,
+  "errors": [],
+  "codeOrAssetChangesInClosure": false,
+  "newUnityTestsRunInClosure": false
+}

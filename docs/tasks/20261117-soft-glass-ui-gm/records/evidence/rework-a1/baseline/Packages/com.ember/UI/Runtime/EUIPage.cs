@@ -1,0 +1,1257 @@
+﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Cysharp.Threading.Tasks;
+
+using Ember.Basic;
+
+using UnityEngine;
+using UnityEngine.Profiling;
+using UnityEngine.UI;
+
+namespace Ember.UI
+{
+    /// <summary>
+    /// UI 页面包装类 —— 纯 C# 类，非 MonoBehaviour。
+    /// 包装一个已实例化的预制体 GameObject，管理其 Canvas/CanvasGroup 生命周期。
+    ///
+    /// <para>架构（对标 Burner GamePage）：</para>
+    /// <code>
+    /// 预制体上只有: Canvas + 子控件 + EUIBinding
+    /// 运行时创建:   EUIPage (此类) → EUILogic (生成的数据类)
+    /// </code>
+    ///
+    /// <para><b>自研生命周期（完整流程）：</b></para>
+    /// <code>
+    /// // ── 构造阶段 ──
+    /// new EUIPage(go)                     // 包装已实例化的预制体
+    ///   → CreateLogic(populateControlMap)    // 反射创建 Logic + OnBind
+    ///
+    /// // ── 打开流程 ──
+    /// Init(args)                             // 数据阶段：填文字、设图片、注册事件
+    ///   → OnInitialize(args)                 //   [子类 override] 框架层自定义初始化
+    ///   → Logic.OnResetDefault()             //   [用户 override] 恢复默认状态（OnInit 之前，不依赖上次残留）
+    ///   → Logic.OnInit()                     //   [用户 override] 注册事件、设初始值
+    ///   → Logic.OnOpen(args)                 //   [用户 override] 携带打开参数
+    ///   → Logic.OnReset()                    //   [用户 override] 重置 UI 到默认状态
+    ///   → PlayShow()                         // 表现阶段：播放打开动画
+    ///       → Logic.OnShow()                 //   [用户 override] 页面即将可见
+    ///       → 当前单一过渡驱动             //   Preset / Animator / Custom
+    ///           → CompleteShow()             // 动画结束：α=1, 可交互, State→Opened
+    ///
+    /// // ── 运行时 ──
+    /// OnPause()                              // 被其他页面遮挡
+    ///   → OnPaused()                         //   [子类 override]
+    ///   → Logic.OnPause()                    //   [用户 override]
+    /// OnResume()                             // 重新回到顶层
+    ///   → OnResumed()                        //   [子类 override]
+    ///   → Logic.OnResume()                   //   [用户 override]
+    ///
+    /// // ── 关闭流程 ──
+    /// PlayHide()                             // 表现阶段：播放关闭动画
+    ///   → Logic.OnHide()                     //   [用户 override] 页面即将隐藏
+    ///   → 当前单一过渡驱动                 //   Preset / Animator / Custom
+    ///       → CompleteHide()                 // 动画结束：α=0, 不可交互, State→Closed
+    ///   → Cleanup()                          // 数据阶段：注销事件、释放引用
+    ///       → OnCleanup()                    //   [子类 override] 框架层清理
+    ///       → Logic.OnClose()                //   [用户 override] 关闭时持久化（此时 UI 状态还在）
+    ///       → Logic.OnResetDefault()         //   [用户 override] 恢复默认状态（为复用留下干净状态）
+    ///       → Logic.OnReset()                //   [用户 override] 重置到默认状态
+    ///       → Logic.OnDispose()              //   [用户 override] 注销事件、释放引用
+    ///       → Destroy(gameObject)            // 框架销毁 GameObject
+    ///
+    /// // ── 复用路径 ──
+    /// OnReopen(args)                         // 已关闭页面重新打开（跳过 Init）
+    ///   → OnReopened(args)                   //   [子类 override]
+    ///   → Logic.OnOpen(args)                 //   [用户 override]
+    ///   → PlayShow()                         // 直接进入 Show 流程
+    ///
+    /// // ── 输入 ──
+    /// TryEscapeKeyClose()                    // 返回键处理（递归询问子页面）
+    ///   → OnEscapeKey()                      //   [子类 override] return true 阻止冒泡
+    /// </code>
+    ///
+    /// <para><b>三层分工：</b></para>
+    /// <list type="bullet">
+    ///   <item><b>IEUIView</b> — 契约：定义生命周期方法签名，<see cref="EUIViewEngine"/> 只认这个接口</item>
+    ///   <item><b>EUIPage</b> — 框架实现：管理 GameObject/Canvas/CanvasGroup，驱动 Logic 钩子与单一过渡流程</item>
+    ///   <item><b>EUILogic</b> — 业务基类：用户继承后 override 钩子方法，写具体业务逻辑，
+    ///        不需要知道框架流程怎么走的</item>
+    /// </list>
+    /// </summary>
+    public class EUIPage : IEUIView
+    {
+        private const string TAG = LogTags.UIManager;
+
+        #region 内部参数
+
+        private readonly GameObject _gameObject;
+        private readonly CanvasGroup _canvasGroup;
+        private readonly Canvas _canvas;
+        private readonly RectTransform _rectTransform;
+        private Animator _animator;
+        private bool _disposed;
+        public EUIMaskEffect MaskEffectOverride { get; set; } = EUIMaskEffect.Inherit;
+        public EUIBackdropSettings BackdropSettingsOverride { get; set; }
+        private EUICurtainSession _curtainSession;
+
+        private PageState _state = PageState.Unloaded;
+        private EUIPageDef _pageDef;
+        private EUIPage _parentPage;
+        private readonly List<EUIPage> _subPages = new List<EUIPage>();
+        private EUILogic _logic;
+        private string _logicTypeName;
+
+        // 过渡动画配置（由 EUIBindingBridge 在页面创建时注入）
+        private bool _usePresetFade;
+        private bool _useTransitionBlock;
+        private bool _useAnimator;
+        private bool _useCustomTransition;
+        private float _transitionInTime;
+        private float _transitionOutTime;
+
+        /// <summary>是否存在需要 await 的过渡阶段。</summary>
+        private bool HasTransition => _usePresetFade || _useTransitionBlock || _useAnimator || _useCustomTransition;
+        private bool ShouldBlockRaycasts => _pageDef?.PageType != PageType.Background;
+        private bool CanCompleteTransition => !_disposed && _gameObject != null && _canvasGroup != null;
+        internal bool IsDisposed => _disposed;
+        private bool UseCustomTransition => _useCustomTransition && _curtainSession?.SkipCustomTransition != true;
+
+        // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
+        private Action _onShowComplete;
+        private object _showArgs;
+        private Action _onHideComplete;
+
+        // 延迟销毁（对标 Burner GamePage）
+        private bool _autoDestroy = true;
+        private float _destroyDelay = 30f;
+        private bool _isClosing;
+        private float _closeTime;
+
+        // 加载计时（对标 Burner PageLoadTiming）
+        private LoadTiming _loadTiming;
+        private float _initStartTime;
+        private float _showStartTime;
+
+        // SubPage 排序（对标 Burner SubPageOrderGrowStep）
+        private const int SubPageOrderGrowStep = 50;
+
+        // 挂起操作（对标 Burner PageTargetState）
+        private PagePendingOp _pendingOp;
+        private object _pendingOpArgs;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 嵌套类型
+
+        /// <summary>
+        /// 页面处于过渡状态时（Showing/Hiding），收到的操作挂起到此枚举。
+        /// </summary>
+        internal enum PagePendingOp
+        {
+            None,
+            Close,
+            Reopen,
+        }
+
+        /// <summary>
+        /// 页面加载耗时数据（对标 Burner PageLoadTiming）。
+        /// 仅首次打开时记录，后续 Reopen 不更新。
+        /// </summary>
+        public struct LoadTiming
+        {
+            /// <summary>Prefab 加载耗时（ms）。Ember 中 Prefab 在 Router 层同步 Instantiate，此项为 0。</summary>
+            public float AssetLoadMs;
+            /// <summary>Init 阶段耗时（ms）：OnInitialize + Logic.OnInit + OnOpen + OnReset</summary>
+            public float InitMs;
+            /// <summary>PlayShow 阶段耗时（ms）：Logic.OnShow + OnShow 动画</summary>
+            public float ShowMs;
+            /// <summary>总耗时（ms）</summary>
+            public float TotalMs;
+            /// <summary>是否首次打开（false = 本次是 Reopen）</summary>
+            public bool IsFirstOpen;
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 构造 & 销毁
+
+        /// <summary>
+        /// 创建一个页面包装实例。
+        /// </summary>
+        /// <param name="gameObject">已实例化的预制体根节点</param>
+        public EUIPage(GameObject gameObject)
+        {
+            _gameObject = gameObject ?? throw new ArgumentNullException(nameof(gameObject));
+            _canvasGroup = _gameObject.GetComponent<CanvasGroup>();
+            _canvas = _gameObject.GetComponent<Canvas>();
+            _rectTransform = _gameObject.GetComponent<RectTransform>();
+
+            if (_canvasGroup == null)
+                _canvasGroup = _gameObject.AddComponent<CanvasGroup>();
+            if (_canvas == null)
+                _canvas = _gameObject.AddComponent<Canvas>();
+
+            // 构造即隐藏：Instantiate 后到 Init 之间可能有渲染帧（分帧操作），
+            // 预制体默认 active + alpha=1 会闪现一帧内容（如 Loading 的进度条）。
+            // 这里立即归零，避免任何页面首帧闪现。
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+        }
+
+        /// <summary>
+        /// 统一 Animator 获取：优先根节点，再查找子节点，结果可复用。
+        /// </summary>
+        private Animator ResolveAnimator()
+        {
+            if (_animator != null) return _animator;
+
+            _animator = _gameObject.GetComponent<Animator>();
+            if (_animator == null)
+                _animator = _gameObject.GetComponentInChildren<Animator>(true);
+
+            return _animator;
+        }
+
+        /// <summary>
+        /// 非方块过渡时，若 Animator 节点携带 CanvasGroup，优先用它控制过渡显隐；
+        /// 否则回退到页面根 CanvasGroup。
+        /// </summary>
+        private CanvasGroup GetTransitionCanvasGroup()
+        {
+            if (_usePresetFade || _useAnimator)
+            {
+                var animator = ResolveAnimator();
+                if (animator != null)
+                {
+                    var animatorGroup = animator.GetComponent<CanvasGroup>();
+                    if (animatorGroup != null)
+                        return animatorGroup;
+                }
+            }
+
+            return _canvasGroup;
+        }
+
+        /// <summary>
+        /// 供默认过渡处理器使用的过渡目标节点：有动画器视觉层时返回其 GameObject，否则返回页面根节点。
+        /// </summary>
+        private GameObject GetTransitionTarget()
+        {
+            var transitionCanvasGroup = GetTransitionCanvasGroup();
+            if (transitionCanvasGroup != null)
+                return transitionCanvasGroup.gameObject;
+
+            return _gameObject;
+        }
+
+        /// <summary>
+        /// 创建逻辑层实例。Caller 负责填充 ControlMap。
+        /// </summary>
+        /// <param name="populateControlMap">填充 ControlMap 的回调（接收 ControlMap 和当前 Logic 实例，供子 UIBinding 注册）</param>
+        public void CreateLogic(Action<Dictionary<string, Component>, EUILogic> populateControlMap)
+        {
+            if (string.IsNullOrEmpty(_logicTypeName)) return;
+
+            // 已有 Logic 时跳过（预加载/复用路径可能重复触发 OnPageCreated）
+            if (_logic != null) return;
+
+            try
+            {
+                Type type = null;
+                foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    type = asm.GetType(_logicTypeName);
+                    if (type != null) break;
+                }
+
+                if (type != null && typeof(EUILogic).IsAssignableFrom(type) && !type.IsAbstract)
+                {
+                    _logic = (EUILogic)Activator.CreateInstance(type);
+                    _logic.Page = this;
+                    _logic.ControlMap = new Dictionary<string, Component>();
+                    populateControlMap?.Invoke(_logic.ControlMap, _logic);
+                    _logic.OnBeginLoad();
+                    _logic.OnBind();
+                }
+                else
+                {
+                    EmberDebug.LogWarning(TAG, $"Logic type '{_logicTypeName}' not found for '{_gameObject.name}'.");
+                }
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"Logic creation failed for '{_gameObject.name}': {ex}");
+            }
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region IEUIView 实现
+
+        /// <inheritdoc />
+        public void Init(object args)
+        {
+            if (args is EUICurtainOpenArgs curtainArgs)
+            {
+                _curtainSession = curtainArgs.Session;
+                _curtainSession.PageAttached?.Invoke(this);
+                args = curtainArgs.Args;
+            }
+            else _curtainSession = null;
+            // Loaded = 预加载过的页面：真正打开时补跑完整 Init（OnInit/OnOpen/OnReset 延后到这里）
+            if (_state != PageState.Unloaded && _state != PageState.Closed && _state != PageState.Loaded)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.Init: '{Name}' state={_state}, expected Unloaded/Closed/Loaded.");
+                return;
+            }
+
+            Profiler.BeginSample("EUIPage.Init");
+            _initStartTime = Time.realtimeSinceStartup;
+            _loadTiming.IsFirstOpen = true;
+            _state = PageState.Loaded;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+            _gameObject.SetActive(true);
+
+            try
+            {
+                OnInitialize(args);
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"EUIPage.Init '{Name}' error: {ex}");
+            }
+
+            // 通知逻辑层（先恢复默认，再初始化 —— 保证从干净状态开始，不依赖上次残留）
+            if (_logic != null)
+            {
+                try { _logic.BroadcastResetDefault(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResetDefault '{Name}': {ex}"); }
+
+                if (_curtainSession != null) _logic.SkipFakeProgress = _curtainSession.SkipFakeProgress;
+                try { _logic.BroadcastInit(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnInit '{Name}': {ex}"); }
+
+                try { _logic.BroadcastOpen(args); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnOpen '{Name}': {ex}"); }
+
+                try { _logic.BroadcastReset(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReset '{Name}': {ex}"); }
+            }
+
+            _loadTiming.InitMs = (Time.realtimeSinceStartup - _initStartTime) * 1000f;
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public void Preload(object args)
+        {
+            if (_state != PageState.Unloaded)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.Preload: '{Name}' state={_state}, expected Unloaded.");
+                return;
+            }
+
+            Profiler.BeginSample("EUIPage.Preload");
+            _state = PageState.Loaded;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+            _gameObject.SetActive(true);
+
+            try
+            {
+                OnPreloaded(args);
+            }
+            catch (Exception ex)
+            {
+                EmberDebug.LogError(TAG, $"EUIPage.Preload '{Name}' error: {ex}");
+            }
+
+            // 预加载钩子：OnInit/OnOpen/OnReset 不在此执行，延后到真正打开的 Init
+            if (_logic != null)
+            {
+                try { _logic.BroadcastPreload(args, false); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnPreload '{Name}': {ex}"); }
+            }
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public void PlayShow()
+        {
+            if (_state != PageState.Loaded)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.PlayShow: '{Name}' state={_state}, expected Loaded.");
+                return;
+            }
+
+            Profiler.BeginSample("EUIPage.PlayShow");
+            _showStartTime = Time.realtimeSinceStartup;
+            _state = PageState.Showing;
+
+            try { _logic?.BroadcastShow(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
+
+            PrepareShowTransition();
+            if (!HasTransition)
+            {
+                CompleteShow();
+            }
+            else
+            {
+                RunShowAnimationSequence().Forget();
+            }
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public void OnPause()
+        {
+            if (_state != PageState.Opened) return;
+            _state = PageState.Paused;
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
+            OnPaused();
+            try { _logic?.BroadcastPause(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnPause '{Name}': {ex}"); }
+        }
+
+        /// <inheritdoc />
+        public void OnResume()
+        {
+            if (_state != PageState.Paused) return;
+            _state = PageState.Opened;
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
+            OnResumed();
+            try { _logic?.BroadcastResume(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResume '{Name}': {ex}"); }
+        }
+
+        /// <inheritdoc />
+        public void OnReopen(object args)
+        {
+            if (args is EUICurtainOpenArgs curtainArgs)
+            {
+                _curtainSession = curtainArgs.Session;
+                _curtainSession.PageAttached?.Invoke(this);
+                args = curtainArgs.Args;
+            }
+            else _curtainSession = null;
+            // 已显示（或视图隐藏）页面再次 Show：纯数据刷新，不重放 Init/Open/Show 动画（对标 Burner 可见分支 OnReopen）
+            if (_state == PageState.Opened || _state == PageState.Paused || _state == PageState.ViewHidden)
+            {
+                if (_state == PageState.ViewHidden)
+                {
+                    _state = PageState.Opened;
+                    _canvasGroup.alpha = 1f;
+                    _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
+                    _canvasGroup.interactable = true;
+                }
+
+                OnReopened(args);
+                try { _logic?.BroadcastReopen(args); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReopen '{Name}': {ex}"); }
+                return;
+            }
+
+            if (_state != PageState.Closed) return;
+            _state = PageState.Loaded;
+            _canvasGroup.alpha = 0f;
+            _gameObject.SetActive(true);
+            OnReopened(args);
+
+            try { _logic?.BroadcastOpen(args); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnOpen '{Name}': {ex}"); }
+
+            PlayShow();
+        }
+
+        /// <inheritdoc />
+        public void HideViewOnly()
+        {
+            if (_state != PageState.Opened && _state != PageState.Paused)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.HideViewOnly: '{Name}' state={_state}, expected Opened/Paused.");
+                return;
+            }
+
+            _state = PageState.ViewHidden;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+
+            try { _logic?.BroadcastHide(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
+        }
+
+        /// <inheritdoc />
+        public void RestoreViewOnly()
+        {
+            if (_state != PageState.ViewHidden)
+            {
+                EmberDebug.LogWarning(TAG, $"EUIPage.RestoreViewOnly: '{Name}' state={_state}, expected ViewHidden.");
+                return;
+            }
+
+            _state = PageState.Opened;
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
+            _canvasGroup.interactable = true;
+
+            try { _logic?.BroadcastShow(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
+        }
+
+        /// <inheritdoc />
+        public void PlayHide()
+        {
+            if (_state == PageState.Unloaded || _state == PageState.Closed)
+                return;
+
+            Profiler.BeginSample("EUIPage.PlayHide");
+            _state = PageState.Hiding;
+            // 退出阶段立即禁止重复交互，但保留 blocksRaycasts 拦截下层点击，
+            // 直到 CompleteHide 再完全放行。
+            _canvasGroup.interactable = false;
+            try { _logic?.BroadcastHide(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
+
+            if (!HasTransition)
+            {
+                CompleteHide();
+            }
+            else
+            {
+                RunHideAnimationSequence().Forget();
+            }
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public void Cleanup()
+        {
+            if (_state == PageState.Unloaded && _logic == null) return;
+            Profiler.BeginSample("EUIPage.Cleanup");
+            _state = PageState.Unloaded;
+
+            try { OnCleanup(); }
+            catch (Exception ex) { EmberDebug.LogError(TAG, $"EUIPage.Cleanup '{Name}' error: {ex}"); }
+
+            // 清理逻辑层（关闭后恢复默认状态，再重置/释放 —— 为下次复用留下干净状态）
+            if (_logic != null)
+            {
+                try { _logic.BroadcastClose(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnClose '{Name}': {ex}"); }
+                try { _logic.BroadcastResetDefault(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResetDefault '{Name}': {ex}"); }
+                try { _logic.BroadcastReset(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReset '{Name}': {ex}"); }
+                try { _logic.BroadcastDispose(); }
+                catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnDispose '{Name}': {ex}"); }
+                _logic = null;
+            }
+
+            // 清理子页面
+            foreach (var sub in _subPages.ToArray())
+            {
+                if (sub != null)
+                    sub.Dispose();
+            }
+            _subPages.Clear();
+
+            if (_gameObject != null) _gameObject.SetActive(false);
+            Profiler.EndSample();
+        }
+
+        /// <inheritdoc />
+        public bool TryEscapeKeyClose()
+        {
+            foreach (var sub in _subPages)
+            {
+                if (sub != null && sub.TryEscapeKeyClose())
+                    return true;
+            }
+            return OnEscapeKey();
+        }
+
+        /// <inheritdoc />
+        public bool IsInitialized => _state >= PageState.Loaded;
+
+        /// <inheritdoc />
+        public bool IsOpened => _state == PageState.Opened;
+
+        /// <inheritdoc />
+        public PageState State => _state;
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 子类可 override 的钩子
+
+        /// <summary>
+        /// 初始化数据 —— 在 <see cref="Init"/> 的数据阶段调用，<b>早于 <see cref="EUILogic.OnInit"/> 和 <see cref="EUILogic.OnOpen"/> 和 <see cref="EUILogic.OnReset"/></b>。
+        /// </summary>
+        /// <para><b>触发时机：</b>页面首次打开（State=Unloaded）或重新打开已关闭页面（State=Closed）时，
+        /// 由 <see cref="Init"/> 调用。此时 CanvasGroup α=0，页面不可交互。</para>
+        /// <para><b>职责：</b>框架层自定义初始化数据。只做数据操作，不要做动画。
+        /// 动画逻辑请 override <see cref="OnShow"/>。</para>
+        /// <para><b>业务层对应：</b><see cref="EUILogic.OnInit"/> + <see cref="EUILogic.OnOpen"/> + <see cref="EUILogic.OnReset"/>，
+        /// 业务初始化应写在 EUILogic 子类中，不要写在这里。</para>
+        /// <param name="args">打开时传入的参数（来自 EUIManager.ShowMainPage/ShowPopup 的 args）</param>
+        protected virtual void OnInitialize(object args) { }
+
+        /// <summary>
+        /// 清理 —— 在 <see cref="Cleanup"/> 中、<b>最早调用</b>（早于 <see cref="EUILogic.OnClose"/>、<see cref="EUILogic.OnReset"/>、<see cref="EUILogic.OnDispose"/>）。
+        /// </summary>
+        /// <para><b>触发时机：</b>PlayHide 动画完成后（或无需动画时立即），在 Cleanup 中<b>第一顺位</b>调用。
+        /// 此时页面 State 刚从 Hiding/Closed 切换，GameObject 仍然存在。</para>
+        /// <para><b>职责：</b>框架层自定义清理。注销页面级事件、释放框架层引用。
+        /// 业务层的清理应写在 <see cref="EUILogic.OnDispose"/> 中，不要写在这里。</para>
+        /// <para><b>注意：</b>在此方法之后，Logic.OnClose → Logic.OnReset → Logic.OnDispose 依次执行，然后子页面递归清理，最后 SetActive(false)。</para>
+        protected virtual void OnCleanup() { }
+
+        /// <summary>
+        /// 被遮挡时回调 —— 在 <see cref="IEUIView.OnPause"/> 中、<b>早于 <see cref="EUILogic.OnPause"/></b>。
+        /// </summary>
+        /// <para><b>触发时机：</b>另一个页面 Push 到上方时（如 MainPage 上弹出 Popup、新 MainPage 替换当前）。
+        /// 被遮挡的页面不会被销毁，State 从 Opened 切换为 Paused。</para>
+        /// <para><b>职责：</b>框架层在页面被遮挡时的处理。业务层处理请用 <see cref="EUILogic.OnPause"/>。</para>
+        protected virtual void OnPaused() { }
+
+        /// <summary>
+        /// 重新可见时回调 —— 在 <see cref="IEUIView.OnResume"/> 中、<b>早于 <see cref="EUILogic.OnResume"/></b>。
+        /// </summary>
+        /// <para><b>触发时机：</b>上方遮挡的页面关闭后，当前页面重新回到栈顶。State 从 Paused 恢复为 Opened。</para>
+        /// <para><b>职责：</b>框架层在页面恢复时的处理。业务层处理请用 <see cref="EUILogic.OnResume"/>。</para>
+        protected virtual void OnResumed() { }
+
+        /// <summary>
+        /// 已加载页面被重新打开 —— 在 <see cref="IEUIView.OnReopen"/> 中调用。
+        /// </summary>
+        /// <para><b>触发时机：</b>State=Closed 的页面被 <see cref="EUIViewEngine.ReopenPage"/> 重新打开时。
+        /// 与 <see cref="OnInitialize"/> 互斥：已加载的页面走 OnReopen，不重新走 Init 流程。</para>
+        /// <para><b>职责：</b>恢复页面状态。框架随后自动调用 Logic.OnOpen + PlayShow。</para>
+        /// <param name="args">重新打开时传入的参数</param>
+        protected virtual void OnReopened(object args) { }
+
+        /// <summary>
+        /// 页面被预加载 —— 在 <see cref="IEUIView.Preload"/> 中调用。
+        /// </summary>
+        /// <para><b>触发时机：</b>EUIManager.PreloadPage 时（State=Unloaded → Loaded）。此时 α=0、不可交互。</para>
+        /// <para><b>职责：</b>框架层预加载准备。业务层处理请用 <see cref="EUILogic.OnPreload"/>。
+        /// OnInit/OnOpen 延后到页面真正打开时的 Init 执行。</para>
+        /// <param name="args">预加载时传入的参数</param>
+        protected virtual void OnPreloaded(object args) { }
+
+        /// <summary>
+        /// 返回键处理 —— 在 <see cref="TryEscapeKeyClose"/> 中、<b>子页面均未处理时</b>最后调用。
+        /// </summary>
+        /// <para><b>触发时机：</b>用户按 ESC / Android 返回键时，
+        /// <see cref="EUIViewEngine.HandleEscapeKey"/> 从 TopMost → Popup → MainPage 逐层调用每个页面的 TryEscapeKeyClose。
+        /// 每个页面先递归询问自己的 SubPage，若子页面均未处理，才调用此方法。</para>
+        /// <para><b>返回值：</b>return true 表示已处理（阻止事件继续向更低层冒泡），return false 表示未处理。</para>
+        /// <para><b>典型用法：</b>Popup 页面 override 此方法 return true 关闭自己，实现"按返回键关闭弹窗"。</para>
+        protected virtual bool OnEscapeKey() { return false; }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 内部方法
+
+        /// <summary>
+        /// 解析预设过渡处理器：勾选了「方块过渡」则用页面上的 IEUITransitionHandler 组件（如 EUITransitionBlock），
+        /// 否则用全局 DefaultUITransitionHandler（整面板 alpha 渐变）。两者互斥二选一。
+        /// </summary>
+        private IEUITransitionHandler ResolvePresetHandler()
+        {
+            if (_useTransitionBlock)
+            {
+                var block = _gameObject.GetComponentInChildren<IEUITransitionHandler>();
+                if (block != null) return block;
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 勾选了方块过渡但未找到 IEUITransitionHandler 组件，退回默认渐入渐出。");
+            }
+            return EUIViewEngine.Instance.TransitionHandler;
+        }
+
+        /// <summary>
+        /// 为过渡准备显示层 Alpha。预设渐入从 0 开始；Animator 视觉控制优先使用 Animator 所在节点的 CanvasGroup；
+        /// 自定义路径直接按根节点可见性驱动。方块过渡保持原逻辑，由 EUITransitionBlock.PlayShowAsync 自行置为可见。
+        /// </summary>
+        private void PrepareShowTransition()
+        {
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup == null)
+                transitionGroup = _canvasGroup;
+
+            transitionGroup.alpha = _usePresetFade ? 0f : 1f;
+
+            // 根节点可能承载“统一可见性”控制，不应被 0 alpha 锁死内容。
+            if (transitionGroup != _canvasGroup)
+                _canvasGroup.alpha = 1f;
+
+            // Showing 全阶段先拦住下层点击，但本页 Selectable 必须等动画完成后才开放。
+            // Loading 的透明全屏 Background 位于 Animator 子树，因此父根和承载组都要同步。
+            var shouldBlockRaycasts = ShouldBlockRaycasts;
+            _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
+            _canvasGroup.interactable = false;
+            var animatorGroup = ResolveAnimator()?.GetComponent<CanvasGroup>();
+            if (animatorGroup != null)
+            {
+                animatorGroup.blocksRaycasts = shouldBlockRaycasts;
+                animatorGroup.interactable = false;
+            }
+        }
+
+        private async UniTask RunShowAnimationSequence()
+        {
+            try
+            {
+                if (_curtainSession?.IsReleased == true) return;
+                if (_useTransitionBlock)
+                {
+                    // Loading 专用特殊链路：保持原时序（方块扫入 → Custom Enter）。
+                    if (_curtainSession != null && _gameObject.GetComponentInChildren<IEUIControlledTransitionEffect>() is { } controlled)
+                    {
+                        _canvasGroup.alpha = 1f;
+                        await controlled.PlayEnterAsync(_curtainSession.Playback, _curtainSession.EnterDuration);
+                    }
+                    else
+                        await ResolvePresetHandler().PlayShowAsync(_gameObject, _transitionInTime);
+                    // await 期间页面可能被销毁或释放，不能再进入下一段业务动画。
+                    if (!CanCompleteTransition) return;
+                    if (UseCustomTransition)
+                        await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
+                }
+                else if (_usePresetFade)
+                {
+                    await ResolvePresetHandler().PlayShowAsync(GetTransitionTarget(), _transitionInTime);
+                }
+                else if (_useAnimator)
+                {
+                    await PlayAnimatorTransitionAsync(true);
+                }
+                else if (UseCustomTransition)
+                {
+                    await (_logic?.OnCustomEnter() ?? UniTask.CompletedTask);
+                }
+            }
+            catch (OperationCanceledException) when (!CanCompleteTransition || _curtainSession?.IsReleased == true)
+            {
+                // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
+            }
+            catch (Exception ex)
+            {
+                if (_curtainSession != null) _curtainSession.AnimationError = ex;
+                EmberDebug.LogError(TAG, $"页面 '{Name}' 打开过渡异常，已强制完成: {ex}");
+            }
+            finally
+            {
+                if (CanCompleteTransition)
+                    CompleteShow();
+            }
+        }
+
+        private void CompleteShow()
+        {
+            if (!CanCompleteTransition) return;
+
+            var shouldBlockRaycasts = ShouldBlockRaycasts;
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup == null)
+                transitionGroup = _canvasGroup;
+
+            transitionGroup.alpha = 1f;
+            // Animator 视觉层也可能自带 CanvasGroup。父级根 CanvasGroup 只能做页面总闸，
+            // 不会覆盖子组的 blocksRaycasts=false；打开完成时必须同步恢复过渡层，
+            // 否则子控件（包括 Loading 背景）会始终无法接收射线。
+            transitionGroup.blocksRaycasts = shouldBlockRaycasts;
+            transitionGroup.interactable = true;
+
+            // Animator 容器承载页面全部视觉内容，但方块、Custom 与 None 模式不会把它
+            // 选为 transitionGroup。无论当前由哪种通道负责表现，打开完成后都必须恢复
+            // 该子组的交互；根 CanvasGroup 仍负责暂停、关闭和退出阶段的页面总闸。
+            var animatorGroup = ResolveAnimator()?.GetComponent<CanvasGroup>();
+            if (animatorGroup != null)
+            {
+                animatorGroup.blocksRaycasts = shouldBlockRaycasts;
+                animatorGroup.interactable = true;
+            }
+
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
+            _canvasGroup.interactable = true;
+            _state = PageState.Opened;
+
+            // 加载计时（对标 Burner PageLoadTiming）
+            if (_loadTiming.IsFirstOpen)
+            {
+                _loadTiming.ShowMs = (Time.realtimeSinceStartup - _showStartTime) * 1000f;
+                _loadTiming.TotalMs = _loadTiming.InitMs + _loadTiming.ShowMs;
+                EmberDebug.LogInit(TAG, $"页面加载完成: {Name} init={_loadTiming.InitMs:F1}ms show={_loadTiming.ShowMs:F1}ms total={_loadTiming.TotalMs:F1}ms");
+            }
+
+            // 动画真正结束 → 播报事件 + 日志 + 回调
+            if (_pageDef != null)
+                EUIObserver.NotifyOpened(_pageDef, _showArgs);
+            EmberDebug.LogEvent(TAG, $"页面已打开: {_pageDef}");
+            _onShowComplete?.Invoke();
+            _onShowComplete = null;
+            _showArgs = null;
+
+            // 过渡完成 → 执行挂起操作（对标 Burner ExecutePendingOperationIfAny）
+            FlushPendingOp();
+        }
+
+        private async UniTask RunHideAnimationSequence()
+        {
+            try
+            {
+                if (_curtainSession?.IsReleased == true) return;
+                if (_useTransitionBlock)
+                {
+                    // Loading 专用特殊链路：保持原时序（Custom Exit → 方块扫出）。
+                    if (UseCustomTransition)
+                        await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+                    // Custom Exit 可以在页面销毁后正常结束，此时不再解析方块组件。
+                    if (!CanCompleteTransition) return;
+                    if (_curtainSession != null && _gameObject.GetComponentInChildren<IEUIControlledTransitionEffect>() is { } controlled)
+                        await controlled.PlayExitAsync(_curtainSession.Playback, _curtainSession.ExitDuration);
+                    else
+                        await ResolvePresetHandler().PlayHideAsync(_gameObject, _transitionOutTime);
+                }
+                else if (_usePresetFade)
+                {
+                    await ResolvePresetHandler().PlayHideAsync(GetTransitionTarget(), _transitionOutTime);
+                }
+                else if (_useAnimator)
+                {
+                    await PlayAnimatorTransitionAsync(false);
+                }
+                else if (UseCustomTransition)
+                {
+                    await (_logic?.OnCustomExit() ?? UniTask.CompletedTask);
+                }
+            }
+            catch (OperationCanceledException) when (!CanCompleteTransition || _curtainSession?.IsReleased == true)
+            {
+                // 页面随 UI 系统关闭而销毁时，过渡任务会被正常取消。
+            }
+            catch (Exception ex)
+            {
+                if (_curtainSession != null) _curtainSession.AnimationError = ex;
+                EmberDebug.LogError(TAG, $"页面 '{Name}' 关闭过渡异常，已强制完成: {ex}");
+            }
+            finally
+            {
+                if (CanCompleteTransition)
+                    CompleteHide();
+            }
+        }
+
+        // ── Animator 过渡 ──
+
+        /// <summary>Animator 打开动画状态名约定。</summary>
+        private const string AnimatorOpenState = "EmberOpen";
+
+        /// <summary>Animator 关闭动画状态名约定。</summary>
+        private const string AnimatorCloseState = "EmberClose";
+
+        /// <summary>Animator 过渡超时兜底（毫秒）。帧事件拼错/漏加时强制完成并警告。</summary>
+        private const int AnimatorTransitionTimeoutMs = 5000;
+
+        /// <summary>
+        /// 播放 Animator 过渡（EmberOpen / EmberClose 状态）。
+        /// 完成通知 = 动画尾帧事件（经 EmberPageAnimatorBridge 转发）+ 超时兜底。
+        /// </summary>
+        private async UniTask PlayAnimatorTransitionAsync(bool open)
+        {
+            var animator = ResolveAnimator();
+
+            var stateName = open ? AnimatorOpenState : AnimatorCloseState;
+            if (animator == null || !animator.HasState(0, Animator.StringToHash(stateName)))
+            {
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 勾选了 Animator 过渡，但未找到 Animator 或状态 '{stateName}'，跳过动画。");
+                return;
+            }
+
+            if (!animator.gameObject.activeInHierarchy)
+            {
+                EmberDebug.LogWarning(TAG, $"页面 '{Name}' 的 Animator 节点未激活，已跳过状态 '{stateName}'。");
+                return;
+            }
+
+            // 选择 Animator 过渡即表示由框架驱动该组件；兼容 prefab 中预先关闭 Animator 避免空转的做法。
+            animator.enabled = true;
+
+            // Animation Event 只会发送给 Animator 所在 GameObject 上的组件，
+            // 桥先复用该节点已预挂的组件，若没有则在该节点运行时创建，避免误配到页面根节点。
+            var bridge = GetOrCreateAnimatorBridge(animator);
+
+            UniTask wait;
+            if (open)
+            {
+                wait = bridge.WaitOpenAsync();
+                animator.Play(AnimatorOpenState, 0, 0f);
+            }
+            else
+            {
+                wait = bridge.WaitCloseAsync();
+                animator.Play(AnimatorCloseState, 0, 0f);
+            }
+
+            // 帧事件通知完成 + 超时兜底（事件拼错/漏加也不会卡死页面）
+            int winIndex = await UniTask.WhenAny(wait, UniTask.Delay(AnimatorTransitionTimeoutMs));
+            if (winIndex == 1)
+                EmberDebug.LogWarning(TAG,
+                    $"页面 '{Name}' Animator 过渡超时（{AnimatorTransitionTimeoutMs}ms），已强制完成——" +
+                    $"请检查动画尾帧事件 {(open ? "OnEmberOpenAnimationEnd" : "OnEmberCloseAnimationEnd")}。");
+            bridge.Reset();
+        }
+
+        private static EmberPageAnimatorBridge GetOrCreateAnimatorBridge(Animator animator)
+        {
+            var bridge = animator.GetComponent<EmberPageAnimatorBridge>();
+            if (bridge != null)
+                return bridge;
+
+            return animator.gameObject.AddComponent<EmberPageAnimatorBridge>();
+        }
+
+        private void CompleteHide()
+        {
+            if (!CanCompleteTransition) return;
+
+            var transitionGroup = GetTransitionCanvasGroup();
+            if (transitionGroup != null)
+                transitionGroup.alpha = 0f;
+
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+            _state = PageState.Closed;
+
+            // 动画真正结束 → 播报事件 + 日志 + 回调（回调中包含 Cleanup + Destroy 调度）
+            if (_pageDef != null)
+                EUIObserver.NotifyClosed(_pageDef, null);
+            EmberDebug.LogCleanup(TAG, $"页面已关闭: {_pageDef}");
+            _onHideComplete?.Invoke();
+            _onHideComplete = null;
+
+            // 过渡完成 → 执行挂起操作（对标 Burner ExecutePendingOperationIfAny）
+            FlushPendingOp();
+        }
+
+        internal void Dispose()
+        {
+            MarkDisposed();
+            if (_gameObject != null)
+                UnityEngine.Object.Destroy(_gameObject);
+        }
+
+        #endregion
+
+        // --------------------------------------------------------
+
+        #region 外部方法
+
+        /// <summary>页面名称</summary>
+        public string Name => _gameObject ? _gameObject.name : "(destroyed)";
+
+        /// <summary>包装的 GameObject</summary>
+        public GameObject GameObject => _gameObject;
+
+        /// <summary>页面 Transform</summary>
+        public Transform Transform => _gameObject.transform;
+
+        /// <summary>CanvasGroup 引用</summary>
+        public CanvasGroup CanvasGroup => _canvasGroup;
+
+        /// <summary>Canvas 引用</summary>
+        public Canvas Canvas => _canvas;
+
+        /// <summary>RectTransform 引用</summary>
+        public RectTransform RectTransform => _rectTransform;
+
+        /// <summary>页面定义元数据</summary>
+        public EUIPageDef EUIPageDef
+        {
+            get => _pageDef;
+            internal set => _pageDef = value;
+        }
+
+        // ── 弹窗遮罩配置（由 EUIBindingBridge 从 prefab 上的 EUIBinding 注入；无 binding 时保持默认） ──
+
+        /// <summary>是否创建遮罩（false = 本弹窗打开时不创建遮罩，点击穿透由业务自行处理）。</summary>
+        public bool UseMask { get; set; } = true;
+        // FullScreenPopup culling must restore physical camera distance, never the sorting layer value.
+        internal float? CoveredPlaneDistance;
+
+        /// <summary>本弹窗专属遮罩颜色；null 表示未配置，回退 <see cref="EUIManager.PopupMaskColor"/> 全局色。</summary>
+        public Color? MaskColorOverride { get; set; }
+
+        /// <summary>点击遮罩是否关闭本弹窗（页面逻辑 override OnClickMask 时优先于此开关）。</summary>
+        public bool ClickMaskToClose { get; set; } = true;
+
+        /// <summary>父页面（SubPage 时非空）</summary>
+        public EUIPage ParentPage
+        {
+            get => _parentPage;
+            internal set => _parentPage = value;
+        }
+
+        /// <summary>子页面列表</summary>
+        public IReadOnlyList<EUIPage> SubPages => _subPages;
+
+        /// <summary>页面加载耗时数据（仅首次打开时有效）</summary>
+        public LoadTiming LoadTimingData => _loadTiming;
+
+        /// <summary>逻辑层实例</summary>
+        public EUILogic Logic => _logic;
+
+        /// <summary>逻辑层类型全名</summary>
+        public string LogicTypeName
+        {
+            get => _logicTypeName;
+            set => _logicTypeName = value;
+        }
+
+        /// <summary>注册子页面</summary>
+        internal void RegisterSubPage(EUIPage subPage)
+        {
+            if (!_subPages.Contains(subPage))
+                _subPages.Add(subPage);
+            subPage._parentPage = this;
+        }
+
+        /// <summary>注销子页面</summary>
+        internal void UnregisterSubPage(EUIPage subPage)
+        {
+            _subPages.Remove(subPage);
+            subPage._parentPage = null;
+        }
+
+        /// <summary>
+        /// 计算新 SubPage 的 Canvas.sortingOrder。
+        /// 规则：找到顶层非 SubPage 祖先，在已有子页面最大 sortingOrder 基础上递增 <see cref="SubPageOrderGrowStep"/>。
+        /// </summary>
+        /// <returns>新 SubPage 应使用的 sortingOrder</returns>
+        internal int GetNextSubPageSortingOrder()
+        {
+            // 找到顶层非 SubPage 页面
+            var root = this;
+            while (root._parentPage != null && root._parentPage.EUIPageDef?.PageType == PageType.SubPage)
+                root = root._parentPage;
+
+            int baseOrder = root._canvas ? root._canvas.sortingOrder : 0;
+
+            // 遍历 root 的所有已有子页面，找到最大 sortingOrder
+            int maxSubOrder = baseOrder;
+            if (root._subPages.Count > 0)
+            {
+                foreach (var sub in root._subPages)
+                {
+                    if (sub != this && sub._canvas)
+                        maxSubOrder = Math.Max(maxSubOrder, sub._canvas.sortingOrder);
+                }
+            }
+
+            return maxSubOrder + SubPageOrderGrowStep;
+        }
+
+        /// <summary>
+        /// 页面处于过渡状态（Showing/Hiding）时，将操作挂起。
+        /// 过渡完成后由 <see cref="CompleteShow"/> 或 <see cref="CompleteHide"/> 重放。
+        /// </summary>
+        internal bool TryQueuePendingOp(PagePendingOp op, object args)
+        {
+            if (_state != PageState.Showing && _state != PageState.Hiding)
+                return false;
+
+            _pendingOp = op;
+            _pendingOpArgs = args;
+            EmberDebug.LogWarning(TAG, $"页面 '{Name}' 处于 {_state}，操作 '{op}' 已挂起。");
+            return true;
+        }
+
+        /// <summary>当前挂起的操作类型</summary>
+        internal PagePendingOp PendingOp => _pendingOp;
+
+        /// <summary>当前挂起操作的参数（Close 时为完成回调）。</summary>
+        internal object PendingOpArgs => _pendingOpArgs;
+
+        /// <summary>清除挂起操作</summary>
+        internal void ClearPendingOp()
+        {
+            _pendingOp = PagePendingOp.None;
+            _pendingOpArgs = null;
+        }
+
+        /// <summary>
+        /// 过渡状态结束后，重放挂起的操作。
+        /// 只做日志记录，实际操作由 <see cref="EUIViewEngine"/> 通过
+        /// <see cref="PendingOp"/> 属性检查后调度执行。
+        /// </summary>
+        private void FlushPendingOp()
+        {
+            if (_pendingOp == PagePendingOp.None) return;
+
+            EmberDebug.Log(TAG, $"页面 '{Name}' 完成过渡，挂起操作 '{_pendingOp}' 等待调度。");
+            // _pendingOp 保留，由 EUIViewEngine 的 CompleteShow/CompleteHide 回调检查并调度
+        }
+
+        /// <summary>
+        /// 注入过渡动画配置。由 <see cref="EUIBindingBridge"/> 在页面创建时调用。
+        /// <see cref="PlayShow"/> / <see cref="PlayHide"/> 按下列规则选择过渡：
+        /// <list type="bullet">
+        ///   <item><b>普通 UI</b>：None / Preset / Animator / Custom 单选，不隐式串联；</item>
+        ///   <item><b>方块过渡</b>：Loading 专用特殊链路，允许保留 Custom 阶段；</item>
+        ///   <item>无过渡：立即完成。</item>
+        /// </list>
+        /// </summary>
+        /// <param name="usePreset">是否启用「默认渐入渐出」预设过渡</param>
+        /// <param name="useBlock">是否启用「方块过渡」预设过渡（与 usePreset 互斥）</param>
+        /// <param name="useAnimator">是否启用 Animator 过渡（与 usePreset/useBlock 互斥）</param>
+        /// <param name="useCustom">是否启用自定义过渡动画</param>
+        /// <param name="inTime">进入动画时长（秒），预设使用</param>
+        /// <param name="outTime">退出动画时长（秒），预设使用</param>
+        public void SetTransition(bool usePreset, bool useBlock, bool useAnimator, bool useCustom, float inTime, float outTime)
+        {
+            _useTransitionBlock = useBlock;
+
+            if (useBlock)
+            {
+                // 方块过渡是独立特殊通道：排除普通表现驱动，但保留 Loading Custom 阶段。
+                _usePresetFade = false;
+                _useAnimator = false;
+                _useCustomTransition = useCustom;
+            }
+            else
+            {
+                // 兼容旧 prefab 可能遗留多个 true：Custom > Animator > Preset，归一为单一过渡负责人。
+                _useCustomTransition = useCustom;
+                _useAnimator = !useCustom && useAnimator;
+                _usePresetFade = !useCustom && !useAnimator && usePreset;
+            }
+
+            _transitionInTime = inTime;
+            _transitionOutTime = outTime;
+
+            var animator = ResolveAnimator();
+            if (animator != null)
+            {
+                // 非 Animator 过渡页面，默认关闭 Animator 组件，避免空转；播放时由框架再按需开启。
+                animator.enabled = _useAnimator;
+            }
+        }
+
+        /// <summary>
+        /// 注入打开动画完成回调。由 <see cref="EUIViewEngine"/> 在调用 PlayShow 前设置，
+        /// 在 <see cref="CompleteShow"/> 中（动画真正结束时）执行。
+        /// </summary>
+        internal void SetShowCallback(Action onComplete, object args)
+        {
+            _onShowComplete = onComplete;
+            _showArgs = args;
+        }
+
+        /// <summary>
+        /// 注入关闭动画完成回调。由 <see cref="EUIViewEngine"/> 在调用 PlayHide 前设置，
+        /// 在 <see cref="CompleteHide"/> 中（动画真正结束时）执行，回调内负责调度 Cleanup + Destroy。
+        /// </summary>
+        internal void SetHideCallback(Action onComplete)
+        {
+            _onHideComplete = onComplete;
+        }
+
+        /// <summary>获取组件（转发到 GameObject）</summary>
+        public T GetComponent<T>() where T : Component
+        {
+            return _gameObject ? _gameObject.GetComponent<T>() : null;
+        }
+
+        // ── 延迟销毁（对标 Burner GamePage） ──
+
+        /// <summary>是否处于延迟销毁等待中</summary>
+        internal bool IsClosing => _isClosing;
+
+        /// <summary>预制体路径（用于延迟销毁复用查找）</summary>
+        internal string PrefabPath => _pageDef?.PrefabPath;
+
+        /// <summary>关闭后是否自动销毁（false = 常驻页面）</summary>
+        internal bool AutoDestroy => _autoDestroy;
+
+        /// <summary>延迟销毁等待时间（秒）</summary>
+        internal float DestroyDelay => _destroyDelay;
+
+        /// <summary>
+        /// 进入延迟销毁状态：隐藏 GameObject，记录时间戳，等待 DestroyDelay 秒后真正销毁。
+        /// </summary>
+        internal void EnterClosingState()
+        {
+            _isClosing = true;
+            _closeTime = Time.realtimeSinceStartup;
+            if (_gameObject != null)
+                _gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// 退出延迟销毁状态：GameObject 重新激活，准备被复用。
+        /// </summary>
+        internal void CancelClosing()
+        {
+            _isClosing = false;
+            if (_gameObject != null)
+                _gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// 检查延迟是否到期，到期则应执行真正销毁。
+        /// </summary>
+        internal bool ShouldDisposeNow()
+        {
+            return _isClosing && _autoDestroy
+                && (Time.realtimeSinceStartup - _closeTime) > _destroyDelay;
+        }
+
+        /// <summary>
+        /// 强制立即销毁 GameObject（跳过延迟）。
+        /// </summary>
+        internal void ForceDispose()
+        {
+            _isClosing = false;
+            MarkDisposed();
+            if (_gameObject != null)
+                UnityEngine.Object.Destroy(_gameObject);
+        }
+
+        private void MarkDisposed()
+        {
+            _disposed = true;
+            _state = PageState.Closed;
+            _curtainSession?.Dispose();
+            _curtainSession = null;
+            _onShowComplete = null;
+            _showArgs = null;
+            _onHideComplete = null;
+            ClearPendingOp();
+        }
+
+        #endregion
+    }
+}

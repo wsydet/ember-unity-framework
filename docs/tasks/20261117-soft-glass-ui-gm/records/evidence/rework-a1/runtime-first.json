@@ -1,0 +1,218 @@
+[
+  {
+    "id": "input-initial-focus",
+    "pass": true,
+    "detail": {
+      "isFocused": true,
+      "selected": "EUISoftGlassInputItem"
+    }
+  },
+  {
+    "id": "real-gameview-character-blocked",
+    "pass": true,
+    "detail": {
+      "sent": true,
+      "focusedAfterOpen": false,
+      "after": false,
+      "before": "Before",
+      "actual": "Before",
+      "selected": "Accept"
+    }
+  },
+  {
+    "id": "lower-keeps-rendering",
+    "pass": true,
+    "detail": {
+      "alpha": 1.0,
+      "planeDistance": 100.0
+    }
+  },
+  {
+    "id": "popup-owns-default-button-focus",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "directional-navigation-stays-modal",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "close-restores-input-focus",
+    "pass": true,
+    "detail": {
+      "isFocused": true,
+      "selected": "EUISoftGlassInputItem"
+    }
+  },
+  {
+    "id": "lower-submit-blocked",
+    "pass": true,
+    "detail": {
+      "lowerCalls": 0,
+      "interactable": false
+    }
+  },
+  {
+    "id": "stale-selection-reclaimed",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "blur-shared-lease",
+    "pass": true,
+    "detail": {
+      "ready": true,
+      "boundaries": 3
+    }
+  },
+  {
+    "id": "usemask-off-local-glass-reacquires",
+    "pass": true,
+    "detail": {
+      "mask": false,
+      "oldDisposed": true,
+      "ready": true,
+      "disposed": false
+    }
+  },
+  {
+    "id": "no-mask-restores-button",
+    "pass": true,
+    "detail": "BackgroundMode"
+  },
+  {
+    "id": "usemask-on-restores-modal",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "solid-modal-local-glass-independent",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "off-retains-modal-and-local-own-policy",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "logic-reject-restores-input-and-local-glass",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "logic-accept-restores-modal",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "hide-restores-underlying-and-hides-mask",
+    "pass": true,
+    "detail": {
+      "state": "ViewHidden",
+      "maskActive": false
+    }
+  },
+  {
+    "id": "reshow-reacquires-and-reclaims-focus",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "id": "upper-first-restores-lower-popup-focus",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "lower-first-keeps-top-modal",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "lower-first-final-restores-main",
+    "pass": true,
+    "detail": "BackgroundMode"
+  },
+  {
+    "id": "destroy-restores-focus-and-releases-mask",
+    "pass": true,
+    "detail": {
+      "masks": 0,
+      "selected": "BackgroundMode"
+    }
+  },
+  {
+    "id": "upper-submit-closes-and-restores",
+    "pass": true,
+    "detail": "BackgroundMode"
+  },
+  {
+    "id": "cancel-does-not-touch-lower",
+    "pass": true,
+    "detail": {
+      "lowerCalls": 0,
+      "state": "Opened"
+    }
+  },
+  {
+    "id": "esc-does-not-fall-through-modal",
+    "pass": true,
+    "detail": {
+      "escaped": false,
+      "state": "Opened"
+    }
+  },
+  {
+    "id": "fullscreen-first-capture-and-freeze",
+    "pass": true,
+    "detail": {
+      "IsReady": true,
+      "version": 1,
+      "after": 1,
+      "alpha": 0.0
+    }
+  },
+  {
+    "id": "fullscreen-restores-distance-and-focus",
+    "pass": true,
+    "detail": {
+      "distance": 100.0,
+      "actual": 100.0
+    }
+  },
+  {
+    "id": "legacy-popup-keyboard-blocked",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "six-pool-mask-toggle-cycles-no-growth",
+    "pass": true,
+    "detail": {
+      "baseline": 2,
+      "counts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "masks": 0
+    }
+  },
+  {
+    "id": "gm-expanded-keyboard-slider",
+    "pass": false,
+    "detail": {
+      "oldValue": 1.0,
+      "actual": 1.0
+    }
+  },
+  {
+    "id": "gm-collapse-clears-hidden-selection",
+    "pass": true,
+    "detail": null
+  }
+]

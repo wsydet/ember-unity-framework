@@ -1,0 +1,25 @@
+var rows=new System.Collections.Generic.List<object>();
+System.Func<int,System.Threading.Tasks.Task> frames=async n=>{for(int i=0;i<n;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Func<Ember.UI.EUIPageDef,System.Threading.Tasks.Task<Ember.UI.EUIPage>> open=async def=>{Ember.UI.EUIPage p=null;Ember.UI.EUIManager.Instance.ShowPopup(def,null,x=>p=x);for(int i=0;i<120&&p==null;i++)await frames(1);await frames(8);return p;};
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var mgr=Ember.UI.EUIManager.Instance;var es=UnityEngine.EventSystems.EventSystem.current;
+var ctx=(Ember.UI.EUIPageContext)typeof(Ember.UI.EUIManager).GetProperty("_context",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetValue(mgr,null);var main=ctx.CurrentMainPage;var button=main.GameObject.GetComponentsInChildren<UnityEngine.UI.Button>(true).First(b=>b.name=="BackgroundMode");
+mgr.CloseAllPopups();await frames(30);es.SetSelectedGameObject(button.gameObject);
+var p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);var p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);mgr.ClosePage(p2);await frames(28);mgr.ClosePage(p1);await frames(28);
+rows.Add(new{id="control-no-hide-return-chain",pass=es.currentSelectedGameObject==button.gameObject,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+es.SetSelectedGameObject(button.gameObject);p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);
+mgr.HidePageViewOnly(p2.EUIPageDef);await frames(30);
+rows.Add(new{id="hide-top-modal-after-30-frames",pass=es.currentSelectedGameObject&&es.currentSelectedGameObject.transform.IsChildOf(p1.Transform)&&p1.CanvasGroup.interactable,p1State=p1.State.ToString(),p2State=p2.State.ToString(),p1Interactable=p1.CanvasGroup.interactable,p1Raycast=p1.CanvasGroup.blocksRaycasts,p1Alpha=p1.CanvasGroup.alpha,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null,p1Selectables=p1.GameObject.GetComponentsInChildren<UnityEngine.UI.Selectable>(true).Select(s=>new{s.name,active=s.gameObject.activeInHierarchy,enabled=s.IsInteractable()}).ToArray()});
+ScreenCapture.CaptureScreenshot(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/reacceptance-a1/03-top-hidden-dead-focus.png");await frames(5);
+mgr.ShowPageViewOnly(p2.EUIPageDef);await frames(12);mgr.ClosePage(p2);await frames(28);mgr.ClosePage(p1);await frames(28);
+rows.Add(new{id="after-top-hide-reshow-close-return-chain",pass=es.currentSelectedGameObject==button.gameObject,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null,mainInteractable=main.CanvasGroup.interactable});
+es.SetSelectedGameObject(button.gameObject);p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);p1.GameObject.SetActive(false);await frames(10);
+rows.Add(new{id="isolated-deactivate-restores-main",pass=es.currentSelectedGameObject==button.gameObject,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+p1.GameObject.SetActive(true);await frames(12);mgr.ClosePage(p1);await frames(28);
+rows.Add(new{id="isolated-reactivate-close-restores-main",pass=es.currentSelectedGameObject==button.gameObject,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+es.SetSelectedGameObject(button.gameObject);p1=await open(Game.UI.GamePages.EUISoftGlassConfirmPage);p2=await open(Game.UI.GamePages.EUISoftGlassAlertPage);mgr.HidePageViewOnly(p1.EUIPageDef);await frames(8);UnityEngine.Object.Destroy(p1.GameObject);await frames(10);mgr.ClosePage(p2);await frames(28);
+rows.Add(new{id="isolated-hidden-lower-destroy-return-chain",pass=es.currentSelectedGameObject==button.gameObject,selected=es.currentSelectedGameObject?es.currentSelectedGameObject.name:null});
+}catch(System.Exception e){rows.Add(new{id="exception",pass=false,detail=e.ToString()});}
+System.IO.File.WriteAllText(".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/reacceptance-a1/hide-chain-repro.json",Newtonsoft.Json.JsonConvert.SerializeObject(rows,Newtonsoft.Json.Formatting.Indented));
+};run();return "Isolated control and hidden-top modal reproduction started";

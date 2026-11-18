@@ -1,0 +1,35 @@
+[
+  {
+    "id": "common-skin-0",
+    "pass": true,
+    "actual": [
+      "Game.UI.EUIConfirmPage"
+    ]
+  },
+  {
+    "id": "common-skin-1",
+    "pass": true,
+    "actual": [
+      "Game.UI.EUISoftGlassConfirmPage"
+    ]
+  },
+  {
+    "id": "legacy-gm",
+    "pass": true,
+    "actual": "Game.UI.GMPage"
+  },
+  {
+    "id": "softglass-gm",
+    "pass": true,
+    "actual": "Game.UI.EUISoftGlassGMPage"
+  },
+  {
+    "id": "popup-focus-and-raycast-policy",
+    "pass": false,
+    "detail": {
+      "focused": true,
+      "selected": "EUISoftGlassInputItem",
+      "mainInteractable": true
+    }
+  }
+]

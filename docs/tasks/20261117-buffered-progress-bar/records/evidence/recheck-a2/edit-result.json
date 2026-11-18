@@ -1,0 +1,236 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"0f3872893bd34d67a1610d96cb85f766\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1794883537602,\"finished_unix_ms\":1794883546154,\"last_update_unix_ms\":1794883546154,\"progress\":{\"completed\":20,\"total\":20,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)\",\"last_finished_unix_ms\":1794883546093,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":20,\"passed\":20,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.9319251,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,0,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,0,False)\",\"state\":\"Passed\",\"durationSeconds\":0.1269775,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,0,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,0,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0063578,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Vertical,1,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Vertical,1,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0048375,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Vertical,1,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Vertical,1,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0055658,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Radial360,0,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Radial360,0,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0053267,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect：Image 不支持 radial；仅 Horizontal/Vertical。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Radial360,0,False)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Radial360,0,False)\",\"state\":\"Passed\",\"durationSeconds\":0.0052197,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect：Image 不支持 radial；仅 Horizontal/Vertical。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,1,True)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,1,True)\",\"state\":\"Passed\",\"durationSeconds\":0.0053408,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect：Image 要求 Filled Horizontal/Vertical、origin 0/1、preserveAspect=false；不支持 radial。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,1,True)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,1,True)\",\"state\":\"Passed\",\"durationSeconds\":0.005173,\"message\":null,\"stackTrace\":null,\"output\":\"<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect：Image 要求 Filled Horizontal/Vertical、origin 0/1、preserveAspect=false；不支持 radial。</color>\\n<color=#888888><i>(at .\\\\Packages\\\\com.ember\\\\UIExtension\\\\Runtime\\\\Behaviour\\\\EUIBufferedProgressBar.cs:289)</i></color>\\r\\n\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Filled)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Filled)\",\"state\":\"Passed\",\"durationSeconds\":0.0204168,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Filled)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Filled)\",\"state\":\"Passed\",\"durationSeconds\":0.0018426,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Filled)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Filled)\",\"state\":\"Passed\",\"durationSeconds\":0.0014198,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Filled)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Filled)\",\"state\":\"Passed\",\"durationSeconds\":0.0012756,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Simple)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Simple)\",\"state\":\"Passed\",\"durationSeconds\":0.0019529,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Simple)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Simple)\",\"state\":\"Passed\",\"durationSeconds\":0.0015808,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Simple)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Simple)\",\"state\":\"Passed\",\"durationSeconds\":0.0013106,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Simple)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Simple)\",\"state\":\"Passed\",\"durationSeconds\":0.0011691,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Sliced)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Sliced)\",\"state\":\"Passed\",\"durationSeconds\":0.0045478,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Sliced)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Sliced)\",\"state\":\"Passed\",\"durationSeconds\":0.0019725,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Sliced)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Sliced)\",\"state\":\"Passed\",\"durationSeconds\":0.0024836,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)\",\"fullName\":\"Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)\",\"state\":\"Passed\",\"durationSeconds\":0.0022591,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "0f3872893bd34d67a1610d96cb85f766",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1794883537602,
+        "finished_unix_ms": 1794883546154,
+        "last_update_unix_ms": 1794883546154,
+        "progress": {
+          "completed": 20,
+          "total": 20,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)",
+          "last_finished_unix_ms": 1794883546093,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 20,
+            "passed": 20,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 0.9319251,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,0,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,0,False)",
+              "state": "Passed",
+              "durationSeconds": 0.1269775,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,0,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,0,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0063578,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Vertical,1,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Vertical,1,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0048375,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Vertical,1,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Vertical,1,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0055658,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect 的 Filled Image 方向必须与 Slider.direction 一致。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Radial360,0,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Radial360,0,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0053267,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect：Image 不支持 radial；仅 Horizontal/Vertical。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Radial360,0,False)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Radial360,0,False)",
+              "state": "Passed",
+              "durationSeconds": 0.0052197,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect：Image 不支持 radial；仅 Horizontal/Vertical。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,1,True)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(True,Horizontal,1,True)",
+              "state": "Passed",
+              "durationSeconds": 0.0053408,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 主条：Slider fillRect：Image 要求 Filled Horizontal/Vertical、origin 0/1、preserveAspect=false；不支持 radial。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,1,True)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.InvalidSliderFilledConfigurationStopsOnlyAffectedWritesAndCanRecover(False,Horizontal,1,True)",
+              "state": "Passed",
+              "durationSeconds": 0.005173,
+              "message": null,
+              "stackTrace": null,
+              "output": "<color=#E68C4C><b>[EmberUI.Manager]</b></color> <color=#FFFFFF>EUIBufferedProgressBar: 慢尾：Slider fillRect：Image 要求 Filled Horizontal/Vertical、origin 0/1、preserveAspect=false；不支持 radial。</color>\n<color=#888888><i>(at .\\Packages\\com.ember\\UIExtension\\Runtime\\Behaviour\\EUIBufferedProgressBar.cs:289)</i></color>\r\n"
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Filled)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Filled)",
+              "state": "Passed",
+              "durationSeconds": 0.0204168,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Filled)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Filled)",
+              "state": "Passed",
+              "durationSeconds": 0.0018426,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Filled)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Filled)",
+              "state": "Passed",
+              "durationSeconds": 0.0014198,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Filled)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Filled)",
+              "state": "Passed",
+              "durationSeconds": 0.0012756,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Simple)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Simple)",
+              "state": "Passed",
+              "durationSeconds": 0.0019529,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Simple)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Simple)",
+              "state": "Passed",
+              "durationSeconds": 0.0015808,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Simple)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Simple)",
+              "state": "Passed",
+              "durationSeconds": 0.0013106,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Simple)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Simple)",
+              "state": "Passed",
+              "durationSeconds": 0.0011691,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Sliced)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(LeftToRight,Sliced)",
+              "state": "Passed",
+              "durationSeconds": 0.0045478,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Sliced)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(RightToLeft,Sliced)",
+              "state": "Passed",
+              "durationSeconds": 0.0019725,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Sliced)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(BottomToTop,Sliced)",
+              "state": "Passed",
+              "durationSeconds": 0.0024836,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)",
+              "fullName": "Ember.UI.Tests.EUIBufferedProgressBarEditTests.SliderSpriteMeshAndLossMeshAgreeInFourDirections(TopToBottom,Sliced)",
+              "state": "Passed",
+              "durationSeconds": 0.0022591,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

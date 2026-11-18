@@ -25,3 +25,8 @@ AC06文件symlink场景仍“环境受限、待验证”，不是通过。后续
 原实施基线：`16cff3d85d3b40a5ddab11e30801dfa5e36ed0c2`本地快照；修复16文件聚合SHA256为`84084d51b877aacabf644720ab149b07d7a2b5f4d241112436e64fad91e6ce75`。发布候选从v0.25.2建立，拟为v0.25.3，仅纳入本任务；模板、依赖、技能bundle及其他本地改动不进入发布。最终发布身份及检查另见[发布说明](../../dev/release-0.25.3.md)（发布准备阶段建立）。
 
 原始阶段记录、提示词和evidence脚本保留为历史；它们含原临时路径的文字描述不是当前依赖或执行入口，正式记录及证据均在本目录独立承接。原始文档字节见evidence/archive-inputs。清理只针对已完整承接的本任务精确临时目录；检查结果见evidence/archive-manifest.json和evidence/cleanup.json。其他任务与备份保留。
+
+
+## 正式发布结果（2026-11-12）
+
+已发布 annotated `v0.25.3`，`origin/main` 与 tag peeled commit 均为 `e31fedd240678d82dbd6fdb71f79a77d8deba70f`。原子推送与远端核对、提交后检查见[发布证明](evidence/release-remote-proof.json)。本地交付及归档清理完成；消费端尚未验证。文件symlink仍待验证，用户已接受该限制，不记通过。

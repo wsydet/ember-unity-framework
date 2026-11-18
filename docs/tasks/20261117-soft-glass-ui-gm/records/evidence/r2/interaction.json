@@ -1,0 +1,59 @@
+[
+  {
+    "name": "FPS uses original component and live number",
+    "pass": true,
+    "detail": "97"
+  },
+  {
+    "name": "entry has no center ornament",
+    "pass": true,
+    "detail": "EUISoftGlassGMEntryItem"
+  },
+  {
+    "name": "handleless track pointer changes time",
+    "pass": true,
+    "detail": {
+      "value": 2.42000031,
+      "time": 2.42000031
+    }
+  },
+  {
+    "name": "handleless slider retains keyboard control",
+    "pass": true,
+    "detail": {
+      "before": 2.42000031,
+      "after": 2.71000028
+    }
+  },
+  {
+    "name": "all four samples fit viewport",
+    "pass": true,
+    "detail": [
+      {
+        "name": "EUISoftGlassGMStateItem",
+        "size": "(330.67, 300.00)",
+        "position": "(0.00, 0.00)"
+      },
+      {
+        "name": "EUISoftGlassGMTimeItem",
+        "size": "(330.67, 300.00)",
+        "position": "(350.67, 0.00)"
+      },
+      {
+        "name": "EUISoftGlassGMTestItem",
+        "size": "(330.67, 300.00)",
+        "position": "(701.33, 0.00)"
+      }
+    ]
+  },
+  {
+    "name": "light background uses dark clear foreground",
+    "pass": true,
+    "detail": "RGBA(0.035, 0.070, 0.130, 1.000)"
+  },
+  {
+    "name": "all formal slider instances have no handle",
+    "pass": true,
+    "detail": 7
+  }
+]

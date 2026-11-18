@@ -1,0 +1,208 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "088fee605dcf41e09488dc9eef178fd2",
+      "status": "failed",
+      "mode": "EditMode",
+      "started_unix_ms": 1794907051559,
+      "finished_unix_ms": 1794907061078,
+      "last_update_unix_ms": 1794907061078,
+      "progress": {
+        "completed": 16,
+        "total": 16,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": null,
+        "last_finished_test_full_name": "Ember.UI.Tests.UIModuleEditTests.BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+        "last_finished_unix_ms": 1794907060823,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "run_in_background": true,
+        "focus_nudge_attempts": null,
+        "focus_nudge_limit": null,
+        "focus_nudge_status": null,
+        "blocked_reason": null,
+        "failures_so_far": [
+          {
+            "full_name": "Ember.UI.Tests.EUIModalInputEditTests.HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages",
+            "message": "  Expected: <Popup button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n"
+          },
+          {
+            "full_name": "Ember.UI.Tests.EUIModalInputEditTests.Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection",
+            "message": "  Expected: <Popup button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n"
+          },
+          {
+            "full_name": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(False)",
+            "message": "  Expected: <Upper button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n"
+          },
+          {
+            "full_name": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(True)",
+            "message": "  Expected: <Upper button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n"
+          }
+        ],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 16,
+          "passed": 12,
+          "failed": 4,
+          "skipped": 0,
+          "durationSeconds": 1.1854683,
+          "resultState": "Failed(Child)"
+        },
+        "results": [
+          {
+            "name": "Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+            "state": "Passed",
+            "durationSeconds": 0.0560785,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MaskRelease_RevokesBorrowBeforeDisposal_AndLocalGlassReacquires_AcrossPoolReuse",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.MaskRelease_RevokesBorrowBeforeDisposal_AndLocalGlassReacquires_AcrossPoolReuse",
+            "state": "Passed",
+            "durationSeconds": 0.0114389,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OldSessionRelease_DoesNotDetachANewerExternalLoan",
+            "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.OldSessionRelease_DoesNotDetachANewerExternalLoan",
+            "state": "Passed",
+            "durationSeconds": 0.0011498,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0016048,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0001332,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+            "state": "Passed",
+            "durationSeconds": 0.0000691,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+            "state": "Passed",
+            "durationSeconds": 0.0000628,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+            "state": "Passed",
+            "durationSeconds": 0.0000637,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+            "state": "Passed",
+            "durationSeconds": 0.0409217,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+            "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+            "state": "Passed",
+            "durationSeconds": 0.0107082,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FullScreenCulling_RestoresOriginalPhysicalDistance_AndOrdinaryResumeDoesNotMoveCanvas",
+            "fullName": "Ember.UI.Tests.EUIFullscreenBackdropEditTests.FullScreenCulling_RestoresOriginalPhysicalDistance_AndOrdinaryResumeDoesNotMoveCanvas",
+            "state": "Passed",
+            "durationSeconds": 0.0096533,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages",
+            "state": "Failed",
+            "durationSeconds": 0.0366708,
+            "message": "  Expected: <Popup button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EUIModalInputEditTests.HideAndRestoreModal_AndNoMask_KeepFocusOwnedByVisiblePages () [0x000c3] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIModalInputEditTests.cs:96\r\n",
+            "output": ""
+          },
+          {
+            "name": "Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection",
+            "state": "Failed",
+            "durationSeconds": 0.0030969,
+            "message": "  Expected: <Popup button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EUIModalInputEditTests.Modal_BlocksRealSubmitAndNavigation_WithoutHidingLower_ThenRestoresSelection () [0x0008a] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIModalInputEditTests.cs:58\r\n",
+            "output": ""
+          },
+          {
+            "name": "TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(False)",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(False)",
+            "state": "Failed",
+            "durationSeconds": 0.0035842,
+            "message": "  Expected: <Upper button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain (System.Boolean destroyLower) [0x000c2] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIModalInputEditTests.cs:80\r\n",
+            "output": ""
+          },
+          {
+            "name": "TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(True)",
+            "fullName": "Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain(True)",
+            "state": "Failed",
+            "durationSeconds": 0.0013981,
+            "message": "  Expected: <Upper button (UnityEngine.GameObject)>\r\n  But was:  <Main button (UnityEngine.GameObject)>\r\n",
+            "stackTrace": "at Ember.UI.Tests.EUIModalInputEditTests.TwoModals_OutOfOrderRemovalOrDestroy_PreservesReturnChain (System.Boolean destroyLower) [0x000c2] in .\\Packages\\com.ember\\Tests\\EditMode\\EUIModalInputEditTests.cs:80\r\n",
+            "output": ""
+          },
+          {
+            "name": "BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+            "fullName": "Ember.UI.Tests.UIModuleEditTests.BgMask_ShouldRenderOnPopupLayerAndReceiveClicksAfterReuse",
+            "state": "Passed",
+            "durationSeconds": 0.010867,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

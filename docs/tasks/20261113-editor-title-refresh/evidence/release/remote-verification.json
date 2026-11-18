@@ -1,0 +1,7 @@
+{
+  "chunk_id": "469ed5",
+  "wall_time_seconds": 2.5772827,
+  "exit_code": 0,
+  "original_token_count": 45,
+  "output": "f3ea76bd2e45f57d1412f7fcdf540751d55f0abf\trefs/heads/main\n07200f95cce19557e95b89a01512d6041627fc98\trefs/tags/v0.25.5\nf3ea76bd2e45f57d1412f7fcdf540751d55f0abf\trefs/tags/v0.25.5^{}\n"
+}

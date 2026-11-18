@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Retrieved 2 log entries.\",\"data\":[\"<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Receive loop error: The remote party closed the WebSocket connection without completing the close handshake.\",\"<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Connection closed: The remote party closed the WebSocket connection without completing the close handshake.\"]}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Retrieved 2 log entries.",
+    "data": [
+      "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Receive loop error: The remote party closed the WebSocket connection without completing the close handshake.",
+      "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Connection closed: The remote party closed the WebSocket connection without completing the close handshake."
+    ]
+  },
+  "isError": false
+}

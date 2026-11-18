@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13 Asia/Shanghai",
+  "version": "0.25.5",
+  "commit": "f3ea76bd2e45f57d1412f7fcdf540751d55f0abf",
+  "parent": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "remote_main": "f3ea76bd2e45f57d1412f7fcdf540751d55f0abf",
+  "annotated_tag": "v0.25.5",
+  "tag_object": "07200f95cce19557e95b89a01512d6041627fc98",
+  "remote_tag_peeled_commit": "f3ea76bd2e45f57d1412f7fcdf540751d55f0abf",
+  "atomic_push_exit_code": 0,
+  "published_file_count": 77,
+  "targeted_tests": { "passed": 8, "failed": 0, "skipped": 0, "case_seconds": 4.9005948 },
+  "actual_templates_verified": 7,
+  "actual_parent_snapshots_verified": 6,
+  "staged_binaries_fonts_bundle_checks": "passed",
+  "committed_head_binaries_fonts_checks": "passed",
+  "production_csharp_changed_during_review": false,
+  "original_development_branch_retained": "codex/local-snapshot-20261111-162819",
+  "windward_upgraded": false,
+  "template_save_bump_deploy": false,
+  "consumer_hash_rebound": false
+}

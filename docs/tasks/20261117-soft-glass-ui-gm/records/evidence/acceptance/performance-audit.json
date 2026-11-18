@@ -1,0 +1,94 @@
+[
+  {
+    "label": "A Solid; all local glass sampling disabled",
+    "frames": 180,
+    "mainP50": 2.3852,
+    "recordedMainP50": 2.3852,
+    "gpuNonzero": 134,
+    "gpuP50": 0.81408,
+    "recordedGpuP50": 0.81408,
+    "captures": 0,
+    "boundaries": 0,
+    "rt": []
+  },
+  {
+    "label": "B 1 Popup + shared lower surfaces + collapsed GM",
+    "frames": 180,
+    "mainP50": 3.5409,
+    "recordedMainP50": 3.5409,
+    "gpuNonzero": 126,
+    "gpuP50": 0.817408,
+    "recordedGpuP50": 0.817408,
+    "captures": 126,
+    "boundaries": 3,
+    "rt": [
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      },
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      },
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      }
+    ]
+  },
+  {
+    "label": "C 2 Popup + expanded GM + lower shared surfaces",
+    "frames": 180,
+    "mainP50": 4.3501,
+    "recordedMainP50": 4.3501,
+    "gpuNonzero": 126,
+    "gpuP50": 0.955904,
+    "recordedGpuP50": 0.955904,
+    "captures": 196,
+    "boundaries": 4,
+    "rt": [
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      },
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      },
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      },
+      {
+        "w": 480,
+        "h": 270,
+        "format": "B10G11R11_UFloatPack32",
+        "bytes": 519570
+      }
+    ]
+  },
+  {
+    "label": "D All SoftGlass consumers closed",
+    "frames": 180,
+    "mainP50": 2.0903,
+    "recordedMainP50": 2.0903,
+    "gpuNonzero": 137,
+    "gpuP50": 0.65152,
+    "recordedGpuP50": 0.65152,
+    "captures": 0,
+    "boundaries": 0,
+    "rt": []
+  }
+]

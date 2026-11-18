@@ -1,0 +1,163 @@
+[
+  {
+    "name": "many surfaces share one lease",
+    "pass": true,
+    "detail": 18
+  },
+  {
+    "name": "default Popup blur ready",
+    "pass": true,
+    "detail": {
+      "boundaries": 3,
+      "baseline": 2
+    }
+  },
+  {
+    "name": "mask blocks unrelated lower input",
+    "pass": true,
+    "detail": [
+      "EmberBgMask"
+    ]
+  },
+  {
+    "name": "explicit Solid uses visible color",
+    "pass": true,
+    "detail": "RGBA(0.000, 0.000, 0.000, 0.500)"
+  },
+  {
+    "name": "UseMask false has no mask",
+    "pass": true,
+    "detail": 0
+  },
+  {
+    "name": "click-close false keeps Popup",
+    "pass": true,
+    "detail": "Opened"
+  },
+  {
+    "name": "click-close true closes exactly once",
+    "pass": true,
+    "detail": {
+      "callbacks": 1,
+      "result": "Dismissed"
+    }
+  },
+  {
+    "name": "two Popup layers distinct shared outputs",
+    "pass": true,
+    "detail": {
+      "count": 4,
+      "lower": 2000,
+      "upper": 2500
+    }
+  },
+  {
+    "name": "upper close restores lower",
+    "pass": true,
+    "detail": 3
+  },
+  {
+    "name": "FullScreen first capture then frozen",
+    "pass": true,
+    "detail": {
+      "ready": true,
+      "version": 1,
+      "after": 1
+    }
+  },
+  {
+    "name": "lower resumes after FullScreen",
+    "pass": true,
+    "detail": {
+      "state": "Opened",
+      "before": 100.0,
+      "after": 100.0
+    }
+  },
+  {
+    "name": "20 open-close cycles release leases",
+    "pass": true,
+    "detail": {
+      "cycles": 20,
+      "boundaries": 2,
+      "masks": 0
+    }
+  },
+  {
+    "name": "GM Unity and Ember time sync",
+    "pass": true,
+    "detail": {
+      "unity": 2.25,
+      "ember": 2.25
+    }
+  },
+  {
+    "name": "collapse preserves time",
+    "pass": true,
+    "detail": 2.25
+  },
+  {
+    "name": "disable time control resets one",
+    "pass": true,
+    "detail": {
+      "scale": 1.0,
+      "interactable": false
+    }
+  },
+  {
+    "name": "enhanced action toggles live state",
+    "pass": true,
+    "detail": true
+  },
+  {
+    "name": "core action scope ends on collapse",
+    "pass": true,
+    "detail": [
+      "sample.background",
+      "sample.verbose"
+    ]
+  },
+  {
+    "name": "drag no click and safe-area clamp",
+    "pass": true,
+    "detail": {
+      "activated": 0,
+      "position": "(-596.00, -316.00)"
+    }
+  },
+  {
+    "name": "click expands center",
+    "pass": true,
+    "detail": {
+      "activated": 1,
+      "expanded": true
+    }
+  },
+  {
+    "name": "Legacy GM remains selectable",
+    "pass": true,
+    "detail": "Game.UI.GMPage"
+  },
+  {
+    "name": "SoftGlass GM reselects without duplicate",
+    "pass": true,
+    "detail": 1
+  },
+  {
+    "name": "consumer static and dynamic items",
+    "pass": true,
+    "detail": [
+      "EUISoftGlassExtensionExamplePage",
+      "EUISoftGlassExtensionExampleItem",
+      "EUISoftGlassPanelItem",
+      "EUISoftGlassExtensionExampleItem(Clone)"
+    ]
+  },
+  {
+    "name": "detached background cleaned on dispose",
+    "pass": true,
+    "detail": [
+      "UI Root"
+    ]
+  }
+]

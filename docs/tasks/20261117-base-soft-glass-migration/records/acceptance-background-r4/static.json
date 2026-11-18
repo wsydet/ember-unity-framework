@@ -1,0 +1,89 @@
+{
+  "templates": {
+    "base": {
+      "metadata": {
+        "schemaVersion": 2,
+        "id": "base",
+        "displayName": "基础模板",
+        "description": "Ember 框架基础演示：完整状态继承 + 演示 UI（GM 页/主菜单/设置/游戏内）+ 演示模块（流送/全局灯光/存档/红点）+ 4 个完整场景。用户只需在状态钩子函数中填写业务代码。 内置跨模板公共 UI 多语言源表与注册，使用框架多语言中心编辑和翻译。",
+        "version": "0.11.0",
+        "frameworkVersion": "0.25.0",
+        "channel": "stable",
+        "order": 1,
+        "parentId": "",
+        "parentVersion": "",
+        "parentContentHash": "",
+        "contentHash": "9077bd5b5271898e8055d1c7cf72b0a7",
+        "versionedContentHash": "1c5918eb6d798246aa4d080ac7b9eeee"
+      },
+      "files": 889,
+      "exactWhitelist": [
+        "Game/Scenes/FrameworkScene.unity",
+        "Game/State/GameMainState.cs",
+        "GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab",
+        "GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab"
+      ],
+      "bindingUnchanged": true,
+      "otherResourcesIncludingGlassAndStepsUnchanged": true,
+      "diffs": {
+        "Game/Scenes/FrameworkScene.unity": "--- \n+++ \n@@ -328,8 +328,8 @@\n   m_GameObject: {fileID: 330585543}\n   m_Enabled: 1\n   serializedVersion: 2\n-  m_ClearFlags: 1\n-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}\n+  m_ClearFlags: 2\n+  m_BackGroundColor: {r: 0.94, g: 0.96, b: 0.98, a: 1}\n   m_projectionMatrixMode: 1\n   m_GateFitMode: 2\n   m_FOVAxisMode: 0\n",
+        "Game/State/GameMainState.cs": "--- \n+++ \n@@ -42,7 +42,6 @@\n         // [EmberManaged:end]\n         {\n             EUIManager.Instance.ClosePageByDef(GamePages.EUIMainPage);\n-            EUIManager.Instance.ClearBackground();\n         }\n \n         // [EmberManaged:begin OnOpeningAnimationEnd]\n",
+        "GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab": "--- \n+++ \n@@ -1,5 +1,92 @@\n %YAML 1.1\n %TAG !u! tag:unity3d.com,2011:\n+--- !u!1 &555135648958148242\n+GameObject:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  serializedVersion: 6\n+  m_Component:\n+  - component: {fileID: 9083255460549290261}\n+  - component: {fileID: 8962161001350837781}\n+  - component: {fileID: 8557998187924370318}\n+  - component: {fileID: 8689943302775025916}\n+  m_Layer: 5\n+  m_Name: FormalBackground\n+  m_TagString: Untagged\n+  m_Icon: {fileID: 0}\n+  m_NavMeshLayer: 0\n+  m_StaticEditorFlags: 0\n+  m_IsActive: 1\n+--- !u!224 &9083255460549290261\n+RectTransform:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 555135648958148242}\n+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}\n+  m_LocalPosition: {x: 0, y: 0, z: 0}\n+  m_LocalScale: {x: 1, y: 1, z: 1}\n+  m_ConstrainProportionsScale: 0\n+  m_Children: []\n+  m_Father: {fileID: 2882975924794957047}\n+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}\n+  m_AnchorMin: {x: 0, y: 0}\n+  m_AnchorMax: {x: 0, y: 0}\n+  m_AnchoredPosition: {x: 0, y: 0}\n+  m_SizeDelta: {x: 0, y: 0}\n+  m_Pivot: {x: 0.5, y: 0.5}\n+--- !u!222 &8962161001350837781\n+CanvasRenderer:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 555135648958148242}\n+  m_CullTransparentMesh: 1\n+--- !u!114 &8557998187924370318\n+MonoBehaviour:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 555135648958148242}\n+  m_Enabled: 1\n+  m_EditorHideFlags: 0\n+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}\n+  m_Name: \n+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage\n+  m_Material: {fileID: 0}\n+  m_Color: {r: 1, g: 1, b: 1, a: 1}\n+  m_RaycastTarget: 0\n+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}\n+  m_Maskable: 1\n+  m_OnCullStateChanged:\n+    m_PersistentCalls:\n+      m_Calls: []\n+  m_Texture: {fileID: 2800000, guid: 7bcbdb973c5c5084ba7eece4f8ca0649, type: 3}\n+  m_UVRect:\n+    serializedVersion: 2\n+    x: 0\n+    y: 0\n+    width: 1\n+    height: 1\n+--- !u!114 &8689943302775025916\n+MonoBehaviour:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 555135648958148242}\n+  m_Enabled: 1\n+  m_EditorHideFlags: 0\n+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}\n+  m_Name: \n+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter\n+  m_AspectMode: 4\n+  m_AspectRatio: 1.7777778\n --- !u!1 &6718642349177357512\n GameObject:\n   m_ObjectHideFlags: 0\n@@ -146,6 +233,10 @@\n   useUIUpdate: 0\n   useMask: 1\n   maskColor: {r: 0, g: 0, b: 0, a: 0.5}\n+  maskEffect: 0\n+  overrideMaskTint: 0\n+  backdropSettingsOverride: {fileID: 0}\n+  backdropSchema: 0\n   clickMaskToClose: 1\n   generateAutoCreateClickableMaskOverride: 0\n   generateOnClickMaskOverride: 0\n@@ -198,6 +289,7 @@\n   m_Children:\n   - {fileID: 3513235386653519973}\n   - {fileID: 5167514524427488906}\n+  - {fileID: 9083255460549290261}\n   m_Father: {fileID: 6192963462222191927}\n   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}\n   m_AnchorMin: {x: 0, y: 0}\n@@ -383,7 +475,7 @@\n       objectReference: {fileID: 0}\n     - target: {fileID: 3566007942343926706, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n       propertyPath: m_RaycastTarget\n-      value: 1\n+      value: 0\n       objectReference: {fileID: 0}\n     - target: {fileID: 7758484468011375320, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n       propertyPath: m_Pivot.x\n",
+        "GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab": "--- \n+++ \n@@ -1082,6 +1082,10 @@\n       value: 0.94\n       objectReference: {fileID: 0}\n     - target: {fileID: 3566007942343926706, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n+      propertyPath: m_Enabled\n+      value: 0\n+      objectReference: {fileID: 0}\n+    - target: {fileID: 3566007942343926706, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n       propertyPath: m_RaycastTarget\n       value: 1\n       objectReference: {fileID: 0}\n"
+      }
+    },
+    "ui-game": {
+      "metadata": {
+        "schemaVersion": 2,
+        "id": "ui-game",
+        "displayName": "UI 游戏",
+        "description": "基于 base 的通用 UI 游戏模板：中性步骤示例、主页、局内、暂停设置、结果与重开；产品规则由消费项目实现。",
+        "version": "0.2.3",
+        "frameworkVersion": "0.25.0",
+        "channel": "preview",
+        "order": 99,
+        "parentId": "base",
+        "parentVersion": "0.11.0",
+        "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
+        "contentHash": "44b95096df206b5a160a1853333cc498",
+        "versionedContentHash": "0c4917852d8cf6d759e629d2b21371f3"
+      },
+      "files": 943,
+      "exactWhitelist": [
+        "Game/Scenes/FrameworkScene.unity",
+        "Game/State/GameMainState.cs",
+        "GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab"
+      ],
+      "bindingUnchanged": true,
+      "otherResourcesIncludingGlassAndStepsUnchanged": true,
+      "diffs": {
+        "Game/Scenes/FrameworkScene.unity": "--- \n+++ \n@@ -328,8 +328,8 @@\n   m_GameObject: {fileID: 330585543}\n   m_Enabled: 1\n   serializedVersion: 2\n-  m_ClearFlags: 1\n-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}\n+  m_ClearFlags: 2\n+  m_BackGroundColor: {r: 0.94, g: 0.96, b: 0.98, a: 1}\n   m_projectionMatrixMode: 1\n   m_GateFitMode: 2\n   m_FOVAxisMode: 0\n",
+        "Game/State/GameMainState.cs": "--- \n+++ \n@@ -42,7 +42,6 @@\n         // [EmberManaged:end]\n         {\n             EUIManager.Instance.ClosePageByDef(GamePages.EUIUiGameHomePage);\n-            EUIManager.Instance.ClearBackground();\n         }\n \n         // [EmberManaged:begin OnOpeningAnimationEnd]\n",
+        "GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab": "--- \n+++ \n@@ -1,5 +1,92 @@\n %YAML 1.1\n %TAG !u! tag:unity3d.com,2011:\n+--- !u!1 &3971023923167747892\n+GameObject:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  serializedVersion: 6\n+  m_Component:\n+  - component: {fileID: 584397313251391649}\n+  - component: {fileID: 8084146903247539595}\n+  - component: {fileID: 703544433404089286}\n+  - component: {fileID: 3585697637838106150}\n+  m_Layer: 5\n+  m_Name: FormalBackground\n+  m_TagString: Untagged\n+  m_Icon: {fileID: 0}\n+  m_NavMeshLayer: 0\n+  m_StaticEditorFlags: 0\n+  m_IsActive: 1\n+--- !u!224 &584397313251391649\n+RectTransform:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 3971023923167747892}\n+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}\n+  m_LocalPosition: {x: 0, y: 0, z: 0}\n+  m_LocalScale: {x: 1, y: 1, z: 1}\n+  m_ConstrainProportionsScale: 0\n+  m_Children: []\n+  m_Father: {fileID: 2882975924794957047}\n+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}\n+  m_AnchorMin: {x: 0, y: 0}\n+  m_AnchorMax: {x: 0, y: 0}\n+  m_AnchoredPosition: {x: 0, y: 0}\n+  m_SizeDelta: {x: 0, y: 0}\n+  m_Pivot: {x: 0.5, y: 0.5}\n+--- !u!222 &8084146903247539595\n+CanvasRenderer:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 3971023923167747892}\n+  m_CullTransparentMesh: 1\n+--- !u!114 &703544433404089286\n+MonoBehaviour:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 3971023923167747892}\n+  m_Enabled: 1\n+  m_EditorHideFlags: 0\n+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}\n+  m_Name: \n+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage\n+  m_Material: {fileID: 0}\n+  m_Color: {r: 1, g: 1, b: 1, a: 1}\n+  m_RaycastTarget: 0\n+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}\n+  m_Maskable: 1\n+  m_OnCullStateChanged:\n+    m_PersistentCalls:\n+      m_Calls: []\n+  m_Texture: {fileID: 2800000, guid: 7bcbdb973c5c5084ba7eece4f8ca0649, type: 3}\n+  m_UVRect:\n+    serializedVersion: 2\n+    x: 0\n+    y: 0\n+    width: 1\n+    height: 1\n+--- !u!114 &3585697637838106150\n+MonoBehaviour:\n+  m_ObjectHideFlags: 0\n+  m_CorrespondingSourceObject: {fileID: 0}\n+  m_PrefabInstance: {fileID: 0}\n+  m_PrefabAsset: {fileID: 0}\n+  m_GameObject: {fileID: 3971023923167747892}\n+  m_Enabled: 1\n+  m_EditorHideFlags: 0\n+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}\n+  m_Name: \n+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter\n+  m_AspectMode: 4\n+  m_AspectRatio: 1.7777778\n --- !u!1 &6718642349177357512\n GameObject:\n   m_ObjectHideFlags: 0\n@@ -146,6 +233,10 @@\n   useUIUpdate: 0\n   useMask: 1\n   maskColor: {r: 0, g: 0, b: 0, a: 0.5}\n+  maskEffect: 0\n+  overrideMaskTint: 0\n+  backdropSettingsOverride: {fileID: 0}\n+  backdropSchema: 0\n   clickMaskToClose: 1\n   generateAutoCreateClickableMaskOverride: 0\n   generateOnClickMaskOverride: 0\n@@ -198,6 +289,7 @@\n   m_Children:\n   - {fileID: 3513235386653519973}\n   - {fileID: 5167514524427488906}\n+  - {fileID: 584397313251391649}\n   m_Father: {fileID: 6192963462222191927}\n   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}\n   m_AnchorMin: {x: 0, y: 0}\n@@ -383,7 +475,7 @@\n       objectReference: {fileID: 0}\n     - target: {fileID: 3566007942343926706, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n       propertyPath: m_RaycastTarget\n-      value: 1\n+      value: 0\n       objectReference: {fileID: 0}\n     - target: {fileID: 7758484468011375320, guid: 24887222be46a9e4c8d61f52dd60918d, type: 3}\n       propertyPath: m_Pivot.x\n"
+      }
+    }
+  },
+  "sixParentsUnchanged": {
+    "ui-game": 889,
+    "source3d-2p5d": 889,
+    "lane-defense-2d": 889,
+    "platformer-2d": 889,
+    "visual-novel": 889,
+    "topdown-2d": 889
+  },
+  "verifiedTopdown1351NotDuplicated": true,
+  "i15ChangesOnlyExpected9": [
+    "Packages/com.ember/Templates~/base/Assets/Game/State/GameMainState.cs",
+    "Packages/com.ember/Templates~/base/template.json",
+    "Packages/com.ember/Templates~/ui-game/template.json",
+    "Packages/com.ember/Templates~/ui-game/Assets/Game/Scenes/FrameworkScene.unity",
+    "Packages/com.ember/Templates~/base/Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab",
+    "Packages/com.ember/Templates~/ui-game/Assets/GameResource/Resources/UI/Common/Prefabs/EUIBackgroundPage.prefab",
+    "Packages/com.ember/Templates~/ui-game/Assets/Game/State/GameMainState.cs",
+    "Packages/com.ember/Templates~/base/Assets/Game/Scenes/FrameworkScene.unity",
+    "Packages/com.ember/Templates~/base/Assets/GameResource/Resources/UI/Common/Prefabs/EUIGamePlayPage.prefab"
+  ],
+  "matrixRows": 194,
+  "finalImages": 30,
+  "activeUiGameExact": true
+}

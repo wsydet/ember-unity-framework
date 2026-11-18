@@ -1,0 +1,10 @@
+{
+  "version": "0.25.5",
+  "commit": "f3ea76bd2e45f57d1412f7fcdf540751d55f0abf",
+  "parent": "c5a2fe90b45ea5343a66f086c2663d35c6f6eac6",
+  "tag": "v0.25.5",
+  "annotated_tag_object": "07200f95cce19557e95b89a01512d6041627fc98",
+  "file_count": 77,
+  "branch": "codex/release-0.25.5",
+  "candidate_clean": true
+}

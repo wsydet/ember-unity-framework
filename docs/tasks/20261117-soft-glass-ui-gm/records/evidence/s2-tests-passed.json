@@ -1,0 +1,137 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"28627a711d314a73a523aa713347abc9\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1794897303653,\"finished_unix_ms\":1794897312462,\"last_update_unix_ms\":1794897312462,\"progress\":{\"completed\":9,\"total\":9,\"current_test_full_name\":null,\"current_test_started_unix_ms\":null,\"last_finished_test_full_name\":\"Ember.UI.Tests.EUIGlassGeometryEditTests.RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage\",\"last_finished_unix_ms\":1794897312185,\"stuck_suspected\":false,\"editor_is_focused\":false,\"run_in_background\":true,\"focus_nudge_attempts\":null,\"focus_nudge_limit\":null,\"focus_nudge_status\":null,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":9,\"passed\":9,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.8747291,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers\",\"fullName\":\"Ember.UI.Tests.EUIBackdropLeaseEditTests.Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers\",\"state\":\"Passed\",\"durationSeconds\":0.0227315,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)\",\"state\":\"Passed\",\"durationSeconds\":0.0018065,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)\",\"state\":\"Passed\",\"durationSeconds\":0.0001877,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)\",\"state\":\"Passed\",\"durationSeconds\":0.0000824,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)\",\"state\":\"Passed\",\"durationSeconds\":0.0000874,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)\",\"state\":\"Passed\",\"durationSeconds\":0.000082,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"LegacyBinding_PreservesTintButInheritsNewBlurDefault\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.LegacyBinding_PreservesTintButInheritsNewBlurDefault\",\"state\":\"Passed\",\"durationSeconds\":0.0352014,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt\",\"fullName\":\"Ember.UI.Tests.EUIBackdropPolicyEditTests.Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt\",\"state\":\"Passed\",\"durationSeconds\":0.008373,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage\",\"fullName\":\"Ember.UI.Tests.EUIGlassGeometryEditTests.RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage\",\"state\":\"Passed\",\"durationSeconds\":0.003422,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "28627a711d314a73a523aa713347abc9",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1794897303653,
+        "finished_unix_ms": 1794897312462,
+        "last_update_unix_ms": 1794897312462,
+        "progress": {
+          "completed": 9,
+          "total": 9,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.UI.Tests.EUIGlassGeometryEditTests.RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage",
+          "last_finished_unix_ms": 1794897312185,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 9,
+            "passed": 9,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 0.8747291,
+            "resultState": "Passed"
+          },
+          "results": [
+            {
+              "name": "Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+              "fullName": "Ember.UI.Tests.EUIBackdropLeaseEditTests.Group_OneLeaseForManySurfaces_DisableReleasesOnceAndClearsBorrowers",
+              "state": "Passed",
+              "durationSeconds": 0.0227315,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Inherit,Blur)",
+              "state": "Passed",
+              "durationSeconds": 0.0018065,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Blur,Blur)",
+              "state": "Passed",
+              "durationSeconds": 0.0001877,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Inherit,Solid,Solid)",
+              "state": "Passed",
+              "durationSeconds": 0.0000824,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Solid,Blur,Solid)",
+              "state": "Passed",
+              "durationSeconds": 0.0000874,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.EffectPriority_ExplicitPageThenGlobalThenBuiltIn(Blur,Solid,Blur)",
+              "state": "Passed",
+              "durationSeconds": 0.000082,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.LegacyBinding_PreservesTintButInheritsNewBlurDefault",
+              "state": "Passed",
+              "durationSeconds": 0.0352014,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+              "fullName": "Ember.UI.Tests.EUIBackdropPolicyEditTests.Snapshot_RoundTripPreservesMaskPolicyAndNullablePatchDoesNotClearIt",
+              "state": "Passed",
+              "durationSeconds": 0.008373,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            },
+            {
+              "name": "RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage",
+              "fullName": "Ember.UI.Tests.EUIGlassGeometryEditTests.RoundedRaycast_ClampsRadiusAndRejectsCornerOutsideCoverage",
+              "state": "Passed",
+              "durationSeconds": 0.003422,
+              "message": null,
+              "stackTrace": null,
+              "output": ""
+            }
+          ]
+        }
+      },
+      "hint": null
+    }
+  },
+  "isError": false
+}

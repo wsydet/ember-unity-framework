@@ -1,0 +1,28 @@
+{
+  "task": "20261117-soft-glass-ui-gm",
+  "date": "2026-11-17T17:55:26.409979+08:00",
+  "status": "archived-incomplete-stage",
+  "complete": false,
+  "acceptance": "A2",
+  "failed": [
+    "AC04"
+  ],
+  "pending": [
+    "AC09",
+    "AC11"
+  ],
+  "openIssue": "SG-IA-02 hidden/reshown modal interaction and return chain",
+  "closedIssue": "SG-IA-01 at A1-RW1 baseline",
+  "productFilesChecked": 890,
+  "productDrift": [],
+  "R2PreviewDrift": [],
+  "temporaryMaterialsDeleted": false,
+  "reasonRetained": "Required failed/pending items remain; no waiver or deferment recorded",
+  "productModified": false,
+  "templateOperations": false,
+  "committedOrPublished": false,
+  "archive": "task-evidence.tar.xz",
+  "archiveSHA256": "68A427ABFA0DA2365C3A04AF682603E463E2B8CA791D54582F3A6E478E13D5C0",
+  "archiveVerified": true,
+  "markdownLinksVerified": true
+}

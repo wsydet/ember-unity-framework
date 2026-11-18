@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "count": 943,
+  "error": null,
+  "at": "2026-11-18T16:03:38.920944+08:00",
+  "before": {
+    "schemaVersion": 2,
+    "id": "ui-game",
+    "displayName": "UI 游戏",
+    "description": "基于 base 的通用 UI 游戏模板：中性步骤示例、主页、局内、暂停设置、结果与重开；产品规则由消费项目实现。",
+    "version": "0.2.3",
+    "frameworkVersion": "0.25.0",
+    "channel": "preview",
+    "order": 99,
+    "parentId": "base",
+    "parentVersion": "0.11.0",
+    "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
+    "contentHash": "a864177a6fd1c696efa5a40cf3fc55aa",
+    "versionedContentHash": "0c4917852d8cf6d759e629d2b21371f3"
+  },
+  "after": {
+    "schemaVersion": 2,
+    "id": "ui-game",
+    "displayName": "UI 游戏",
+    "description": "基于 base 的通用 UI 游戏模板：中性步骤示例、主页、局内、暂停设置、结果与重开；产品规则由消费项目实现。",
+    "version": "0.2.3",
+    "frameworkVersion": "0.25.0",
+    "channel": "preview",
+    "order": 99,
+    "parentId": "base",
+    "parentVersion": "0.11.0",
+    "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
+    "contentHash": "44b95096df206b5a160a1853333cc498",
+    "versionedContentHash": "0c4917852d8cf6d759e629d2b21371f3"
+  },
+  "identity": "{\n    \"templateId\": \"ui-game\",\n    \"templateVersion\": \"0.2.3\",\n    \"contentHash\": \"44b95096df206b5a160a1853333cc498\",\n    \"loadedAt\": \"2026-11-18 16:03:37\"\n}"
+}

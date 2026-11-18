@@ -1,0 +1,39 @@
+var path=".utmp/ember-workflow/20261117-soft-glass-ui-gm/evidence/r2/interaction.json";
+var rows=new System.Collections.Generic.List<object>();
+System.Func<int,System.Threading.Tasks.Task> frames=async count=>{for(int i=0;i<count;i++)await Cysharp.Threading.Tasks.UniTask.NextFrame();};
+System.Action<string,bool,object> check=(name,pass,detail)=>rows.Add(new{name=name,pass=pass,detail=detail});
+System.Func<System.Threading.Tasks.Task> run=async()=>{
+try{
+var gm=(Ember.UI.EUIPage)typeof(Game.UI.EUIAppearanceBootstrap).GetField("_gm",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic).GetValue(null);
+var logic=(Game.UI.EUISoftGlassGMPage)gm.Logic;logic.SetExpanded(false);await frames(70);
+var entry=gm.GameObject.GetComponentInChildren<Ember.UI.FPSDisplay>();
+var label=entry?entry.GetComponentsInChildren<TMPro.TMP_Text>().First(t=>t.name=="FrameRate"):null;int fps;
+check("FPS uses original component and live number",entry&&label&&int.TryParse(label.text,out fps),label?label.text:"missing");
+check("entry has no center ornament",entry&&!entry.transform.Find("Ring")&&!entry.transform.Find("Dot"),entry?entry.name:"missing");
+logic.SetExpanded(true);await frames(20);
+var slider=gm.GameObject.GetComponentInChildren<UnityEngine.UI.Slider>();
+var time=slider.GetComponentInParent<Ember.UIExtension.EUIBinding>().transform.parent;
+var toggle=time.GetComponentInChildren<Ember.UIExtension.EUIToggleEx>();toggle.isOn=true;
+var track=slider.targetGraphic.rectTransform;var cam=gm.Canvas.worldCamera;
+var data=new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current){pointerId=-1,button=UnityEngine.EventSystems.PointerEventData.InputButton.Left};
+data.pointerPressRaycast=new UnityEngine.EventSystems.RaycastResult{module=gm.GameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>()};
+data.position=RectTransformUtility.WorldToScreenPoint(cam,track.TransformPoint(new Vector3(0,Mathf.Lerp(track.rect.yMin,track.rect.yMax,.8f),0)));
+slider.OnPointerDown(data);slider.OnDrag(data);slider.OnPointerUp(data);await frames(3);
+check("handleless track pointer changes time",slider.handleRect==null&&slider.value>2&&Mathf.Abs(Time.timeScale-slider.value)<.001f,new{value=slider.value,time=Time.timeScale});
+float before=slider.value;var axis=new UnityEngine.EventSystems.AxisEventData(UnityEngine.EventSystems.EventSystem.current){moveDir=UnityEngine.EventSystems.MoveDirection.Up,moveVector=Vector2.up};slider.OnMove(axis);await frames(2);
+check("handleless slider retains keyboard control",slider.value>before,new{before=before,after=slider.value});toggle.isOn=false;
+var main=UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None).First(c=>c.name=="EUISoftGlassShowcasePage");
+var cards=gm.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).Where(b=>b.name=="EUISoftGlassGMStateItem"||b.name=="EUISoftGlassGMTimeItem"||b.name=="EUISoftGlassGMTestItem").Select(b=>new{name=b.name,size=((RectTransform)b.transform).rect.size.ToString(),position=((RectTransform)b.transform).anchoredPosition.ToString()}).ToArray();
+var test=gm.GameObject.GetComponentsInChildren<Ember.UIExtension.EUIBinding>(true).First(b=>b.name=="EUISoftGlassGMTestItem");var viewport=(RectTransform)test.transform.Find("Viewport");
+bool inside=true;var corners=new Vector3[4];foreach(var item in test.GetComponentsInChildren<RectTransform>(true).Where(t=>new[]{"Img_Test","Raw_Test","EUIImg_Test","Img_Circle"}.Contains(t.name)))
+{item.GetWorldCorners(corners);foreach(var corner in corners){var local=viewport.InverseTransformPoint(corner);if(!viewport.rect.Contains(new Vector2(local.x,local.y)))inside=false;}}
+check("all four samples fit viewport",inside,cards);
+logic.SetExpanded(false);Game.UI.SoftGlassDemoActions.SetBackground(1);await frames(8);
+check("light background uses dark clear foreground",main.GetComponentsInChildren<TMPro.TMP_Text>(true).First(t=>t.name=="Title").color.r<.1f,main.GetComponentsInChildren<TMPro.TMP_Text>(true).First(t=>t.name=="Title").color.ToString());
+Game.UI.SoftGlassDemoActions.SetBackground(0);await frames(8);
+var sliders=UnityEditor.AssetDatabase.FindAssets("EUISoftGlass t:Prefab",new[]{"Assets/GameResource/Resources/UI/Module/UIFoundation/Prefabs"}).Select(UnityEditor.AssetDatabase.GUIDToAssetPath).SelectMany(p=>UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(p).GetComponentsInChildren<UnityEngine.UI.Slider>(true)).ToArray();
+check("all formal slider instances have no handle",sliders.All(s=>s.handleRect==null),sliders.Length);
+}
+catch(System.Exception e){check("exception",false,e.ToString());}
+System.IO.File.WriteAllText(path,Newtonsoft.Json.JsonConvert.SerializeObject(rows,Newtonsoft.Json.Formatting.Indented));
+};run();return "Started R2 focused input, FPS and layout checks";

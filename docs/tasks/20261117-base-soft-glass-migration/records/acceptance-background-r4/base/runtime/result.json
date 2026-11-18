@@ -1,0 +1,239 @@
+{
+  "started": "2026-11-18T16:23:15.5059305+08:00",
+  "finished": "2026-11-18T16:23:26.1385433+08:00",
+  "checks": [
+    {
+      "id": "home-same-low-background-covers",
+      "pass": true,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -47224,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779,
+        "bgCamera": "UICamera",
+        "ownerCamera": "EUI Foreground Segment 0"
+      }
+    },
+    {
+      "id": "home-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 3
+      }
+    },
+    {
+      "id": "actual-pointer-EUIMainPage-Btn_Start",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "old-fullscreen-decoration-disabled",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "play-same-low-background-covers",
+      "pass": true,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -47224,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779,
+        "bgCamera": "UICamera",
+        "ownerCamera": "EUI Foreground Segment 0"
+      }
+    },
+    {
+      "id": "play-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 2
+      }
+    },
+    {
+      "id": "formal-image-contributes-real-pixels",
+      "pass": true,
+      "data": {
+        "on": [
+          [
+            0.9137255,
+            0.9372549,
+            0.972549
+          ],
+          [
+            0.9607843,
+            0.9647059,
+            0.972549
+          ],
+          [
+            0.9411765,
+            0.9607843,
+            0.9882353
+          ],
+          [
+            0.945098042,
+            0.9647059,
+            0.9882353
+          ]
+        ],
+        "off": [
+          [
+            0.9411765,
+            0.956862748,
+            0.980392158
+          ],
+          [
+            0.9411765,
+            0.956862748,
+            0.980392158
+          ],
+          [
+            0.9411765,
+            0.956862748,
+            0.980392158
+          ],
+          [
+            0.9411765,
+            0.956862748,
+            0.980392158
+          ]
+        ]
+      }
+    },
+    {
+      "id": "actual-pointer-EUIGamePlayPage-Btn_Settings",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "settings-same-low-background-covers",
+      "pass": true,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -47224,
+        "ownerOrder": 1500,
+        "ratio": 1.77777779,
+        "bgCamera": "UICamera",
+        "ownerCamera": "EUI Foreground Segment 0"
+      }
+    },
+    {
+      "id": "settings-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 2
+      }
+    },
+    {
+      "id": "actual-pointer-EUISettingPage-Btn_Close",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "settings-returns-same-gameplay-page",
+      "pass": true,
+      "data": null
+    },
+    {
+      "id": "actual-pointer-EUIGamePlayPage-Btn_Back",
+      "pass": true,
+      "data": {
+        "top": "SoftGlassSurface"
+      }
+    },
+    {
+      "id": "returned-home-same-low-background-covers",
+      "pass": true,
+      "data": {
+        "bounds": [
+          0.0,
+          0.0,
+          2560.0,
+          1440.0
+        ],
+        "backgroundId": -47224,
+        "ownerOrder": 1000,
+        "ratio": 1.77777779,
+        "bgCamera": "UICamera",
+        "ownerCamera": "EUI Foreground Segment 0"
+      }
+    },
+    {
+      "id": "returned-home-no-unity-sky-and-glass-ready",
+      "pass": true,
+      "data": {
+        "clear": "SolidColor",
+        "glassCount": 3
+      }
+    },
+    {
+      "id": "background-identity-through-entire-route",
+      "pass": true,
+      "data": {
+        "bgId": -47224,
+        "observedFrames": 880
+      }
+    }
+  ],
+  "records": [
+    {
+      "file": "home.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIMainPage",
+      "bgId": -47224,
+      "utc": "2026-11-18T16:23:15.8966094+08:00"
+    },
+    {
+      "file": "play.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIGamePlayPage",
+      "bgId": -47224,
+      "utc": "2026-11-18T16:23:21.2374777+08:00"
+    },
+    {
+      "file": "settings.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUISettingPage",
+      "bgId": -47224,
+      "utc": "2026-11-18T16:23:22.9572194+08:00"
+    },
+    {
+      "file": "returned-home.png",
+      "width": 2560,
+      "height": 1440,
+      "page": "EUIMainPage",
+      "bgId": -47224,
+      "utc": "2026-11-18T16:23:26.1385433+08:00"
+    }
+  ],
+  "observedFrames": 880,
+  "bgId": -47224,
+  "formalRestored": true
+}

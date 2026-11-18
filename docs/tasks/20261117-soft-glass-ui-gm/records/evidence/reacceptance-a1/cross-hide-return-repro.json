@@ -1,0 +1,23 @@
+[
+  {
+    "step": "baseline",
+    "selected": "BackgroundMode"
+  },
+  {
+    "step": "both-restored",
+    "selected": "Accept",
+    "p1State": "Opened",
+    "p2State": "Opened"
+  },
+  {
+    "step": "upper-closed",
+    "selected": "Accept",
+    "p1State": "Opened"
+  },
+  {
+    "step": "all-closed",
+    "pass": false,
+    "selected": null,
+    "mainInteractable": true
+  }
+]

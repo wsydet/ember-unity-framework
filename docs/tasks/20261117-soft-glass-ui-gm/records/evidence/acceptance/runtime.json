@@ -1,0 +1,169 @@
+[
+  {
+    "id": "input-focus",
+    "pass": true,
+    "detail": {
+      "focus": true,
+      "selected": "EUISoftGlassInputItem"
+    }
+  },
+  {
+    "id": "readonly-input",
+    "pass": true,
+    "detail": "Accept"
+  },
+  {
+    "id": "disabled-input",
+    "pass": true,
+    "detail": false
+  },
+  {
+    "id": "error-foreground",
+    "pass": true,
+    "detail": "explicit error text"
+  },
+  {
+    "id": "live-glass-updates",
+    "pass": true,
+    "detail": {
+      "before": 5,
+      "after": 9
+    }
+  },
+  {
+    "id": "default-blur",
+    "pass": true,
+    "detail": {
+      "effect": "Inherit",
+      "ready": true,
+      "boundaries": 3
+    }
+  },
+  {
+    "id": "lower-input-paused",
+    "pass": false,
+    "detail": {
+      "interactable": true,
+      "focused": false,
+      "selected": null
+    }
+  },
+  {
+    "id": "mask-first-raycast",
+    "pass": true,
+    "detail": [
+      "EmberBgMask"
+    ]
+  },
+  {
+    "id": "solid-override",
+    "pass": true,
+    "detail": {
+      "count": 3,
+      "ready": true
+    }
+  },
+  {
+    "id": "mask-off-removes-mask",
+    "pass": true,
+    "detail": 0
+  },
+  {
+    "id": "mask-off-retains-local-glass",
+    "pass": false,
+    "detail": {
+      "leasePresent": true,
+      "disposed": true,
+      "ready": false,
+      "boundaries": 2
+    }
+  },
+  {
+    "id": "logic-reject-mask",
+    "pass": true,
+    "detail": {
+      "useMask": true,
+      "masks": 0
+    }
+  },
+  {
+    "id": "click-policy-false",
+    "pass": true,
+    "detail": "Opened"
+  },
+  {
+    "id": "stack-distinct",
+    "pass": true,
+    "detail": 4
+  },
+  {
+    "id": "close-lower-first",
+    "pass": true,
+    "detail": {
+      "state": "Opened",
+      "masks": 1
+    }
+  },
+  {
+    "id": "click-policy-true",
+    "pass": true,
+    "detail": 0
+  },
+  {
+    "id": "legacy-popup-default-blur",
+    "pass": true,
+    "detail": "RGBA(0.000, 0.000, 0.000, 0.500)"
+  },
+  {
+    "id": "time-sync",
+    "pass": true,
+    "detail": 1.85
+  },
+  {
+    "id": "handleless-keyboard",
+    "pass": true,
+    "detail": 2.14
+  },
+  {
+    "id": "gm-actions",
+    "pass": true,
+    "detail": [
+      "ember.gm.reset-time",
+      "ember.gm.components",
+      "ember.gm.showcase",
+      "ember.gm.exit",
+      "sample.background",
+      "sample.verbose"
+    ]
+  },
+  {
+    "id": "drag-and-snap",
+    "pass": true,
+    "detail": "(596.00, 94.04)"
+  },
+  {
+    "id": "collapsed-entry-input-area",
+    "pass": true,
+    "detail": [
+      "EUISoftGlassIconButtonItem"
+    ]
+  },
+  {
+    "id": "original-fps-entry",
+    "pass": true,
+    "detail": "EUISoftGlassGMEntryItem"
+  },
+  {
+    "id": "nested-boundary-rejected",
+    "pass": true,
+    "detail": "Solid fallback: independent backdrop boundary requires a root Canvas"
+  },
+  {
+    "id": "input-resumes",
+    "pass": true,
+    "detail": {
+      "state": "Opened",
+      "interactable": true
+    }
+  }
+]

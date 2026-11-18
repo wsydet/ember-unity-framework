@@ -1,0 +1,76 @@
+{
+  "play": false,
+  "sceneDirty": false,
+  "editorMvid": "93e6be8f-87c8-4140-ad10-8012e453b2f8",
+  "runtimeMvid": "274bf481-7cd8-4574-be4d-a9077e863a47",
+  "restoredIndex": 5,
+  "sizes": [
+    "Free Aspect",
+    "16:9 Aspect",
+    "16:10 Aspect",
+    "Full HD (1920x1080)",
+    "WXGA (1366x768)",
+    "QHD (2560x1440)",
+    "4K UHD (3840x2160)",
+    "1080x2000",
+    "720x1560",
+    "1080x1920"
+  ],
+  "images": [
+    {
+      "file": "01-controls-dark-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "02-controls-light-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "03-controls-color-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "04-popup-blur-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "05-popup-stack-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "06-gm-landscape-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "07-gm-portrait-top-1080x1920.png",
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "file": "08-gm-portrait-actions-1080x1920.png",
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "file": "09-controls-portrait-720x1280.png",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "file": "10-popup-portrait-720x1280.png",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "file": "11-entry-collapsed-1920x1080.png",
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}
