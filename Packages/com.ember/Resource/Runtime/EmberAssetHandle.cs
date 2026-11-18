@@ -1,146 +1,121 @@
 ﻿using System;
+using Ember.Basic;
 using Object = UnityEngine.Object;
 
 namespace Ember.Resource
 {
-    /// <summary>
-    /// 异步资源加载句柄 —— 封装一次资源加载请求的完整生命周期。
-    ///
-    /// 与直接使用回调（Action《T》）不同，Handle 提供了：
-    /// - 状态查询（IsDone / Succeeded / Error）
-    /// - 取消支持（Cancel）
-    /// - 引用释放（Dispose）
-    ///
-    /// 设计参考了 burner 的 GameResourceHandle，去掉了对 YooAsset HandleBase 的依赖，
-    /// 改为后端无关的纯回调模式。
-    ///
-    /// 通常不直接创建，而是通过 EmberResourceManager.LoadAssetHandle 获取。
-    ///
-    /// 用法：
-    /// <code>
-    /// var handle = EmberResourceManager.Instance.LoadAssetHandle&lt;Sprite&gt;("ui/icon");
-    /// handle.Completed += (sprite) => { image.sprite = sprite; };
-    /// handle.Cancel();   // 取消加载
-    /// handle.Dispose();  // 释放资源引用
-    /// </code>
-    /// </summary>
+    /// <summary>一次主线程资源请求及其 Provider 引用凭证。Cancel 结束请求；Dispose 释放凭证。</summary>
     public sealed class EmberAssetHandle<T> : IDisposable where T : Object
     {
         #region 内部参数
-
         private readonly string _assetPath;
         private T _asset;
         private bool _isDone;
         private bool _isCancelled;
+        private bool _disposed;
         private bool _succeeded;
         private string _error;
         private Action _cancelAction;
-        private event Action<T> _completed;
-
+        private Action _releaseAction;
+        private Action<T> _completed;
         #endregion
 
         // --------------------------------------------------------
+        #region 内部方法
+        internal EmberAssetHandle(string path) { _assetPath = path; }
+        internal void SetCancellation(Action cancel) { if (!_isDone) _cancelAction = cancel; }
+        internal void Complete(T asset, bool succeeded, string error) { TryComplete(asset, succeeded, error); }
 
+        private void Notify(Action<T> callbacks, T asset)
+        {
+            if (callbacks == null) return;
+            foreach (Action<T> callback in callbacks.GetInvocationList())
+            {
+                try { callback(asset); }
+                catch (Exception e) { EmberDebug.LogWarning(LogTags.ResourceManager, $"Asset completion callback: {e}"); }
+            }
+        }
+
+        private void InvokeHook(Action action)
+        {
+            try { action?.Invoke(); }
+            catch (Exception e) { EmberDebug.LogWarning(LogTags.ResourceManager, $"Asset lifetime hook: {e}"); }
+        }
+        #endregion
+
+        // --------------------------------------------------------
         #region 外部方法
-
-        /// <summary>资源路径（与 LoadAssetHandle 传入的 path 一致）。</summary>
         public string AssetPath => _assetPath;
-
-        /// <summary>加载是否已完成（成功、失败或取消）。</summary>
         public bool IsDone => _isDone;
-
-        /// <summary>加载是否成功（IsDone && 无错误且未被取消）。</summary>
+        public bool IsCancelled => _isCancelled;
+        public bool IsDisposed => _disposed;
         public bool Succeeded => _succeeded;
-
-        /// <summary>已加载的资源（仅 Succeeded 时非 null）。</summary>
         public T Asset => _asset;
-
-        /// <summary>错误信息（仅失败时非空）。</summary>
         public string Error => _error;
 
-        /// <summary>
-        /// 加载完成事件。成功时参数为已加载的资源，失败时为 null。
-        /// 如果 Handle 在事件注册前已加载完毕，注册时会立即回调。
-        /// </summary>
+        /// <summary>成功传资源；失败/取消传 null。完成后订阅立即通知；Dispose 后不再订阅。</summary>
         public event Action<T> Completed
         {
-            add
-            {
-                if (_isDone)
-                {
-                    // 已加载完毕，立即回调（模拟同步完成）
-                    value?.Invoke(_succeeded ? _asset : null);
-                }
-                else
-                {
-                    _completed += value;
-                }
-            }
-            remove
-            {
-                _completed -= value;
-            }
+            add { if (_disposed) return; if (_isDone) Notify(value, _succeeded ? _asset : null); else _completed += value; }
+            remove { _completed -= value; }
         }
 
-        /// <summary>
-        /// 取消加载请求。已完成的请求忽略。
-        /// 取消后会触发 Completed(null)。
-        /// </summary>
+        /// <summary>供外部 Provider 创建请求。cancel 与 release 是独立、每请求至多一次的 hook。</summary>
+        [HasGC]
+        public static EmberAssetHandle<T> Create(string path, Action cancel = null, Action release = null)
+        {
+            return new EmberAssetHandle<T>(path) { _cancelAction = cancel, _releaseAction = release };
+        }
+
+        /// <summary>只接受 pending 的终态。false 表示 Provider 仍须清理其后端 token/迟到资源。</summary>
+        public bool TryComplete(T asset, bool succeeded, string error = null)
+        {
+            if (_isDone || _disposed) return false;
+            _isDone = true;
+            _succeeded = succeeded && asset != null;
+            _asset = _succeeded ? asset : null;
+            _error = _succeeded ? null : error ?? "Asset load failed.";
+            _cancelAction = null;
+            var callbacks = _completed;
+            _completed = null;
+            Notify(callbacks, _asset);
+            return true;
+        }
+
+        /// <summary>先进入取消终态，再调用后端。Cancel 不释放凭证，调用方仍须 Dispose。</summary>
         public void Cancel()
         {
-            if (_isDone || _isCancelled) return;
+            if (_isDone) return;
+            _isDone = true;
             _isCancelled = true;
-            _cancelAction?.Invoke();
-            Complete(null, false, "Cancelled");
+            _succeeded = false;
+            _asset = null;
+            _error = "Cancelled";
+            var cancel = _cancelAction;
+            var callbacks = _completed;
+            _cancelAction = null;
+            _completed = null;
+            InvokeHook(cancel);
+            Notify(callbacks, null);
         }
 
-        /// <summary>
-        /// 释放资源引用。如果加载中则先取消。
-        /// </summary>
+        /// <summary>幂等释放本请求 token；pending 先取消。先从 Graphic 卸下其拥有引用再调用。</summary>
         public void Dispose()
         {
+            if (_disposed) return;
+            _disposed = true;
+            var release = _releaseAction;
+            _releaseAction = null;
             Cancel();
             _asset = null;
+            _succeeded = false;
             _completed = null;
             _cancelAction = null;
+            InvokeHook(release);
         }
 
-        /// <summary>
-        /// 隐式转换为 T（语法糖）。仅 Succeeded 时有效，否则返回 null。
-        /// </summary>
-        public static implicit operator T(EmberAssetHandle<T> handle)
-        {
-            return handle?._asset;
-        }
-
-        #endregion
-
-        // --------------------------------------------------------
-
-        #region 内部方法（由 Provider 调用）
-
-        internal EmberAssetHandle(string path)
-        {
-            _assetPath = path;
-        }
-
-        /// <summary>Provider 注入取消委托（例如 YooAsset Handle.Release）。</summary>
-        internal void SetCancellation(Action cancel)
-        {
-            _cancelAction = cancel;
-        }
-
-        /// <summary>Provider 在加载完成时调用此方法通知 Handle。</summary>
-        internal void Complete(T asset, bool succeeded, string error)
-        {
-            if (_isDone || _isCancelled) return;
-            _isDone = true;
-            _succeeded = succeeded;
-            _asset = asset;
-            _error = error;
-            _completed?.Invoke(succeeded ? asset : null);
-        }
-
+        [NoGC]
+        public static implicit operator T(EmberAssetHandle<T> handle) => handle?._asset;
         #endregion
     }
 }

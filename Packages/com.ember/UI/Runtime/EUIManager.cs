@@ -36,6 +36,8 @@ namespace Ember.UI
         #region 内部参数
 
         private EUIViewEngine _viewEngine;
+        private EUIModalInputScope _modalInput;
+        private readonly List<EUIPage> _maskSnapshot = new();
         private EUIPageContext _context => _viewEngine.PageContext;
 
         /// <summary>
@@ -43,8 +45,10 @@ namespace Ember.UI
         /// 建议在首次打开 Popup 前设置；修改后对之后创建/复用的遮罩立即生效。
         /// </summary>
         public static Color PopupMaskColor { get; set; } = new Color(0f, 0f, 0f, 0.5f);
+        public static EUIMaskEffect PopupMaskEffect { get; set; } = EUIMaskEffect.Blur;
 
         private readonly Queue<ShowRequest> _showQueue = new();
+        private readonly List<ShowPresentation> _presentations = new();
         private bool _isProcessingQueue;
 
         private readonly Dictionary<EUIPage, EUIPage> _parentPageMap = new(); // SubPage → ParentPage
@@ -52,7 +56,7 @@ namespace Ember.UI
         private readonly HashSet<EUIPage> _closeRequestedPages = new(); // 防止退出过渡期间重复关闭
 
         // 预加载页面（对标 Burner Preload 机制）
-        private readonly Dictionary<string, EUIPage> _preloadedPages = new(); // PrefabPath → Page
+        private readonly Dictionary<string, PreloadRequest> _preloads = new();
 
         // Background 使用独立的幂等加载通道：同路径共享完成源，不同路径由最后一次请求获得写入权。
         private BackgroundRequest _backgroundRequest;
@@ -77,6 +81,23 @@ namespace Ember.UI
             public EUIPage ParentPage; // SubPage 时非空
         }
 
+        private sealed class ShowPresentation
+        {
+            public readonly List<ShowRequest> Requests = new();
+            public int InitialRequestIndex;
+            public EUIPage Page;
+            public EUIPage PopupOwner;
+        }
+
+        private sealed class PreloadRequest
+        {
+            public string Path;
+            public IEUIResourceProvider Provider;
+            public EUIPage Page;
+            public bool Ready;
+            public readonly List<Action<EUIPage>> Callbacks = new();
+        }
+
         private sealed class BackgroundRequest
         {
             public int Version;
@@ -98,6 +119,9 @@ namespace Ember.UI
             if (_initialized) return;
 
             _viewEngine = EUIViewEngine.Instance;
+            _modalInput = _viewEngine.UIRoot.gameObject.AddComponent<EUIModalInputScope>();
+            _modalInput.Initialize(_viewEngine.ActivePages, _activeMasks, SynchronizeModalMasks);
+            _viewEngine.PreparePagePresentation = PreparePagePresentationAsync;
             _initialized = true;
             _sessionStopped = false;
             _lifetimeAbort = GameLauncher.CurrentLifetime?.RegisterAbort(StopSessionPresentation);
@@ -119,13 +143,18 @@ namespace Ember.UI
             _parentPageMap.Clear();
             _returnValueMap.Clear();
             _closeRequestedPages.Clear();
-            _preloadedPages.Clear();
             _initialized = false;
+            _viewEngine.PreparePagePresentation = null;
+            if (_modalInput) UnityEngine.Object.Destroy(_modalInput);
+            _modalInput = null;
         }
 
         private void StopSessionPresentation()
         {
             _sessionStopped = true;
+            _presentations.Clear();
+            foreach (var request in new List<PreloadRequest>(_preloads.Values))
+                DiscardPreload(request, notify: false);
             _curtainSession?.Dispose();
             InvalidateBackgroundRequest();
             _showQueue.Clear();
@@ -309,59 +338,124 @@ namespace Ember.UI
         /// <param name="onComplete">预加载完成回调</param>
         public void PreloadPage(EUIPageDef pageDef, object args = null, Action<EUIPage> onComplete = null)
         {
-            var prefabPath = pageDef.PrefabPath;
-
-            // 已预加载则直接返回
-            if (_preloadedPages.ContainsKey(prefabPath))
+            if (pageDef == null || !_initialized || _sessionStopped)
             {
-                onComplete?.Invoke(_preloadedPages[prefabPath]);
+                onComplete?.Invoke(null);
                 return;
             }
 
-            EUIObserver.NotifyLoadStarted(pageDef);
-            _viewEngine.ResourceProvider.LoadPrefabAsync(prefabPath, prefab =>
+            var prefabPath = pageDef.PrefabPath;
+            if (_preloads.TryGetValue(prefabPath, out var existing))
             {
-                if (prefab == null)
+                if (!existing.Ready)
                 {
-                    EmberDebug.LogError(TAG, $"预加载失败: {prefabPath}");
-                    onComplete?.Invoke(null);
+                    if (onComplete != null) existing.Callbacks.Add(onComplete);
                     return;
                 }
 
-                var instance = UnityEngine.Object.Instantiate(prefab);
-                instance.name = prefab.name;
-
-                var page = new EUIPage(instance);
-                OnPageCreated?.Invoke(page);
-                // 提前绑定定义：路由注册在 InitPageOnly 之前执行，保持一致
-                page.EUIPageDef = pageDef;
-
-                // 路由注册（同 RouteAndOpenPage 逻辑，但不调用 OpenPage）
-                switch (pageDef.PageType)
+                if (existing.Page.GameObject && !existing.Page.IsDisposed)
                 {
-                    case PageType.MainPage:
-                        _context.PushMainPage(page);
-                        break;
-                    case PageType.Popup:
-                    case PageType.FullScreenPopup:
-                        _context.AddPopup(page);
-                        break;
-                    case PageType.TopMost:
-                        _context.AddTopMost(page);
-                        break;
-                    case PageType.Overlay:
-                        _context.AddOverlay(page);
-                        break;
+                    onComplete?.Invoke(existing.Page);
+                    return;
                 }
+                DiscardPreload(existing);
+            }
 
-                // 仅 Init，不 PlayShow
-                _viewEngine.InitPageOnly(page, pageDef, args, () =>
+            var request = new PreloadRequest { Path = prefabPath, Provider = _viewEngine.ResourceProvider };
+            if (onComplete != null) request.Callbacks.Add(onComplete);
+            _preloads.Add(prefabPath, request);
+            EUIObserver.NotifyLoadStarted(pageDef);
+            bool callbackReceived = false;
+            try
+            {
+                request.Provider.LoadPrefabAsync(prefabPath, prefab =>
                 {
-                    _preloadedPages[prefabPath] = page;
-                    EmberDebug.LogInit(TAG, $"预加载完成: {prefabPath}");
-                    onComplete?.Invoke(page);
+                    if (callbackReceived) return;
+                    callbackReceived = true;
+                    if (!IsCurrentPreload(request))
+                    {
+                        if (prefab) request.Provider.Release(prefabPath);
+                        return;
+                    }
+                    if (!prefab)
+                    {
+                        EmberDebug.LogError(TAG, $"预加载失败: {prefabPath}");
+                        DiscardPreload(request);
+                        return;
+                    }
+                    if (_viewEngine.HasPresentationFor(prefabPath))
+                    {
+                        request.Provider.Release(prefabPath);
+                        DiscardPreload(request);
+                        return;
+                    }
+
+                    request.Page = new EUIPage(UnityEngine.Object.Instantiate(prefab)) { EUIPageDef = pageDef };
+                    request.Page.GameObject.name = prefab.name;
+                    try
+                    {
+                        OnPageCreated?.Invoke(request.Page);
+                        if (!IsCurrentPreload(request)) return;
+                        _viewEngine.InitPageOnly(request.Page, pageDef, args, () =>
+                        {
+                            if (!IsCurrentPreload(request)) return;
+                            request.Ready = true;
+                            EmberDebug.LogInit(TAG, $"预加载完成: {prefabPath}");
+                            CompletePreload(request, request.Page);
+                        });
+                    }
+                    catch
+                    {
+                        if (IsCurrentPreload(request)) DiscardPreload(request);
+                        throw;
+                    }
                 });
-            });
+            }
+            catch
+            {
+                if (IsCurrentPreload(request)) DiscardPreload(request);
+                throw;
+            }
+        }
+
+        private bool IsCurrentPreload(PreloadRequest request)
+            => _preloads.TryGetValue(request.Path, out var current) && current == request;
+
+        private void CompletePreload(PreloadRequest request, EUIPage page)
+        {
+            var callbacks = request.Callbacks.ToArray();
+            request.Callbacks.Clear();
+            foreach (var callback in callbacks)
+            {
+                try { callback(page != null && !page.IsDisposed ? page : null); }
+                catch (Exception error) { EmberDebug.LogError(TAG, $"预加载回调异常 '{request.Path}': {error}"); }
+            }
+        }
+
+        private void DiscardPreload(PreloadRequest request, bool notify = true)
+        {
+            _preloads.Remove(request.Path);
+            if (request.Page != null)
+            {
+                try { _viewEngine.DiscardPreloadedPage(request.Page); }
+                finally { request.Provider.Release(request.Path); }
+            }
+            if (notify) CompletePreload(request, null);
+        }
+
+        private EUIPage TakePreloadedPage(string path, out IEUIResourceProvider provider)
+        {
+            provider = null;
+            if (!_preloads.TryGetValue(path, out var request)) return null;
+            if (!request.Ready || request.Page.IsDisposed || !request.Page.GameObject)
+            {
+                DiscardPreload(request);
+                return null;
+            }
+
+            _preloads.Remove(path);
+            provider = request.Provider;
+            return request.Page;
         }
 
         /// <summary>
@@ -388,13 +482,21 @@ namespace Ember.UI
             Action onPageTransitionComplete = null, Action onPageClosed = null)
         {
             if (page == null) return;
-            if (!_closeRequestedPages.Add(page)) return;
+            if (page.PrefabPath != null && _preloads.TryGetValue(page.PrefabPath, out var preload) &&
+                preload.Page == page)
+            {
+                DiscardPreload(preload);
+                onPageTransitionComplete?.Invoke();
+                onPageClosed?.Invoke();
+                return;
+            }
+            if (page.IsDisposed || !_closeRequestedPages.Add(page)) return;
 
             if (returnValue != null)
                 _returnValueMap[page] = returnValue;
 
             // 先关子页面
-            foreach (var subPage in page.SubPages)
+            foreach (var subPage in new List<EUIPage>(page.SubPages))
             {
                 ClosePage(subPage);
             }
@@ -449,8 +551,13 @@ namespace Ember.UI
                 onComplete: () => { _closeRequestedPages.Remove(page); onPageClosed?.Invoke(); },
                 onTransitionComplete: () =>
                 {
+                    if (resumeMainPage)
+                        _context.FinishMainPageClose(page);
                     if (hidePopupMask)
+                    {
+                        _context.FinishPopupClose(page);
                         HideBgMaskForPopup(page);
+                    }
 
                     if (restoreUnderlying && pageToResume != null)
                     {
@@ -462,6 +569,8 @@ namespace Ember.UI
 
                     onPageTransitionComplete?.Invoke();
                 });
+
+            CancelPresentations(page);
         }
 
         /// <summary>
@@ -478,10 +587,9 @@ namespace Ember.UI
         /// </summary>
         public void CloseAllPopups()
         {
-            while (_context.HasPopup())
-            {
-                CloseTopPopup();
-            }
+            var popups = new List<EUIPage>(_context.GetPopups(_context.CurrentMainPage));
+            for (int i = popups.Count - 1; i >= 0; i--)
+                ClosePageCore(popups[i], null, false);
         }
 
         /// <summary>
@@ -521,6 +629,7 @@ namespace Ember.UI
         /// </summary>
         void IEmberUpdate.Update()
         {
+            CheckDestroyedPresentations();
             ProcessShowQueue();
             _viewEngine.BroadcastPageUpdate();
         }
@@ -626,88 +735,219 @@ namespace Ember.UI
 
         private void ProcessShowRequest(ShowRequest req)
         {
-            if (req.IsCurrent != null && !req.IsCurrent()) return;
+            if (!IsShowCurrent(req)) return;
+            var pageDef = req.EUIPageDef;
+            if ((req.Args is not EUICurtainOpenArgs && pageDef.PrefabPath == _curtainPrefabPath) ||
+                (req.ParentPage != null && !CanPresent(req.ParentPage)))
+            {
+                NotifyShowComplete(req, null);
+                return;
+            }
+
+            var openedPage = FindVisiblePresentation(req);
+            if (openedPage != null)
+            {
+                _viewEngine.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
+                return;
+            }
+
+            var pending = FindPresentation(req);
+            if (pending != null)
+            {
+                pending.Requests.Add(req);
+                return;
+            }
+
+            var presentation = new ShowPresentation();
+            presentation.Requests.Add(req);
+            _presentations.Add(presentation);
             Profiler.BeginSample("EUIManager.ProcessShowRequest");
             try
             {
-                var pageDef = req.EUIPageDef;
-
-                // 已显示（含视图隐藏）页面再次 Show：走数据刷新路径（对标 Burner 可见分支 OnReopen），不再开新实例
-                var openedPage = _context.FindOpenedPage(pageDef);
-                if (openedPage != null)
+                var page = TakePreloadedPage(pageDef.PrefabPath, out var provider);
+                if (page != null)
                 {
-                    EmberDebug.Log(TAG, $"页面已显示，刷新数据: {pageDef.PrefabPath}");
-                    _viewEngine.ReopenPage(openedPage, req.Args, () => req.OnComplete?.Invoke(openedPage));
-
-                    return;
-                }
-
-                // 优先使用预加载页面（对标 Burner GamePage Preload 机制）
-                if (_preloadedPages.TryGetValue(pageDef.PrefabPath, out var preloadedPage))
-                {
-                    _preloadedPages.Remove(pageDef.PrefabPath);
                     EmberDebug.Log(TAG, $"复用预加载页面: {pageDef.PrefabPath}");
-                    RouteAndOpenPage(preloadedPage, pageDef, req, true);
-
+                    RouteAndOpenPage(presentation, page, req, provider);
                     return;
                 }
 
-                // 其次复用延迟销毁中的页面（对标 Burner GamePage 复用逻辑）
-                var reusablePage = _viewEngine.FindReusablePage(pageDef.PrefabPath);
-                if (reusablePage != null)
+                page = _viewEngine.FindReusablePage(pageDef.PrefabPath);
+                if (page != null)
                 {
-                    RouteAndOpenPage(reusablePage, pageDef, req);
-
+                    RouteAndOpenPage(presentation, page, req);
                     return;
                 }
 
-                EUIObserver.NotifyLoadStarted(pageDef);
-                var provider = _viewEngine.ResourceProvider;
-                bool callbackReceived = false;
-                provider.LoadPrefabAsync(pageDef.PrefabPath, prefab =>
-                {
-                    // One acquisition owns one completion. A duplicate callback must not route another page
-                    // or release a resource reference belonging to a later acquisition of the same path.
-                    if (callbackReceived) return;
-                    callbackReceived = true;
-                    try
-                    {
-                        // A departed owner must not route a late page over the replacement screen.
-                        if (_sessionStopped || !_initialized || (req.IsCurrent != null && !req.IsCurrent()))
-                        {
-                            provider.Release(pageDef.PrefabPath);
-                            return;
-                        }
-                        if (prefab == null)
-                        {
-                            EmberDebug.LogError(TAG, $"无法加载预制体: {pageDef.PrefabPath}");
-                            req.OnComplete?.Invoke(null);
-                            return;
-                        }
-
-                        var instance = UnityEngine.Object.Instantiate(prefab);
-                        instance.name = prefab.name;
-
-                        var page = new EUIPage(instance);
-                        RouteAndOpenPage(page, pageDef, req);
-                    }
-                    catch (Exception error)
-                    {
-                        if (req.Args is EUICurtainOpenArgs curtain) curtain.Session.Fail(error);
-                        else throw;
-                    }
-                });
-
+                LoadPresentation(presentation, pageDef);
+            }
+            catch
+            {
+                CompletePresentation(presentation, null);
+                throw;
             }
             finally { Profiler.EndSample(); }
+        }
+
+        private static bool CanPresent(EUIPage page) => !page.IsDisposed && !page.CloseRequested && page.GameObject;
+
+        private bool IsShowCurrent(ShowRequest request)
+            => _initialized && !_sessionStopped && (request.IsCurrent == null || request.IsCurrent());
+
+        private EUIPage FindVisiblePresentation(ShowRequest request)
+        {
+            if (request.EUIPageDef.PageType == PageType.SubPage || request.Args is EUICurtainOpenArgs) return null;
+            var page = _context.FindOpenedPage(request.EUIPageDef);
+            return page != null && CanPresent(page) ? page : null;
+        }
+
+        private ShowPresentation FindPresentation(ShowRequest request, ShowPresentation except = null)
+        {
+            var definition = request.EUIPageDef;
+            var curtain = (request.Args as EUICurtainOpenArgs)?.Session;
+            foreach (var candidate in _presentations)
+            {
+                if (candidate == except) continue;
+                var first = candidate.Requests[0];
+                if (first.EUIPageDef.PageType != definition.PageType || first.EUIPageDef.PrefabPath != definition.PrefabPath ||
+                    first.ParentPage != request.ParentPage || (first.Args as EUICurtainOpenArgs)?.Session != curtain)
+                    continue;
+
+                // A Popup without a view will join the current Main when its resource arrives.
+                if (candidate.Page != null && (definition.PageType == PageType.Popup || definition.PageType == PageType.FullScreenPopup) &&
+                    candidate.PopupOwner != _context.CurrentMainPage)
+                    continue;
+                return candidate;
+            }
+
+            return null;
+        }
+
+        private void LoadPresentation(ShowPresentation presentation, EUIPageDef definition)
+        {
+            EUIObserver.NotifyLoadStarted(definition);
+            var path = definition.PrefabPath;
+            var provider = _viewEngine.ResourceProvider;
+            bool callbackReceived = false;
+            provider.LoadPrefabAsync(path, prefab =>
+            {
+                if (callbackReceived) return;
+                callbackReceived = true;
+                try
+                {
+                    int first = _presentations.Contains(presentation)
+                        ? presentation.Requests.FindIndex(IsShowCurrent) : -1;
+                    if (first < 0)
+                    {
+                        if (prefab) provider.Release(path);
+                        CompletePresentation(presentation, null);
+                        return;
+                    }
+
+                    presentation.InitialRequestIndex = first;
+                    var request = presentation.Requests[first];
+                    var pending = FindPresentation(request, presentation);
+                    var existing = FindVisiblePresentation(request);
+                    if (existing != null || pending != null)
+                    {
+                        if (prefab) provider.Release(path);
+                        if (existing != null) CompletePresentation(presentation, existing, openedHere: false);
+                        else if (_presentations.Remove(presentation)) pending.Requests.AddRange(presentation.Requests);
+                        return;
+                    }
+
+                    if (!prefab)
+                    {
+                        EmberDebug.LogError(TAG, $"无法加载预制体: {path}");
+                        CompletePresentation(presentation, null);
+                        return;
+                    }
+
+                    var instance = UnityEngine.Object.Instantiate(prefab);
+                    instance.name = prefab.name;
+                    RouteAndOpenPage(presentation, new EUIPage(instance), request, provider);
+                }
+                catch (Exception error)
+                {
+                    CompletePresentation(presentation, null);
+                    if (presentation.Requests[0].Args is EUICurtainOpenArgs curtain) curtain.Session.Fail(error);
+                    else throw;
+                }
+            });
+        }
+
+        private void CompletePresentation(ShowPresentation presentation, EUIPage page, bool openedHere = true)
+        {
+            if (!_presentations.Remove(presentation)) return;
+            for (int i = presentation.InitialRequestIndex; i < presentation.Requests.Count; i++)
+            {
+                var request = presentation.Requests[i];
+                if (!IsShowCurrent(request)) continue;
+
+                EUIPage result = null;
+                try
+                {
+                    if (page != null && CanPresent(page) &&
+                        ((openedHere && i == presentation.InitialRequestIndex) ||
+                         _viewEngine.RefreshOpenedPage(page, request.Args)))
+                        result = page;
+                }
+                catch (Exception error)
+                {
+                    EmberDebug.LogError(TAG, $"页面刷新异常 '{request.EUIPageDef}': {error}");
+                }
+                NotifyShowComplete(request, result);
+            }
+        }
+
+        private static void NotifyShowComplete(ShowRequest request, EUIPage page)
+        {
+            try { request.OnComplete?.Invoke(page); }
+            catch (Exception error)
+            {
+                EmberDebug.LogError(TAG, $"页面完成回调异常 '{request.EUIPageDef}': {error}");
+            }
+        }
+
+        private void CancelPresentations(EUIPage page)
+        {
+            foreach (var presentation in _presentations.FindAll(p => p.Page == page || p.Requests[0].ParentPage == page))
+                CompletePresentation(presentation, null);
+        }
+
+        private void CheckDestroyedPresentations()
+        {
+            if (_presentations.Count == 0) return;
+            for (int i = _presentations.Count - 1; i >= 0; i--)
+            {
+                var presentation = _presentations[i];
+                var page = presentation.Page;
+                if (page == null || CanPresent(page)) continue;
+                // Complete may synchronously invoke a callback that closes a different page.
+                AbortPresentation(presentation);
+                i = _presentations.Count;
+            }
+        }
+
+        private void AbortPresentation(ShowPresentation presentation)
+        {
+            if (!_presentations.Contains(presentation)) return;
+            var page = presentation.Page;
+            if (presentation.Requests[0].Args is EUICurtainOpenArgs curtain)
+                curtain.Session.Cancel();
+            else if (!page.IsDisposed && !page.CloseRequested)
+                ClosePage(page);
+            CompletePresentation(presentation, null);
         }
 
         /// <summary>
         /// 执行路由分发 + 打开页面（新建和复用共用）。
         /// </summary>
-        /// <param name="alreadyRouted">预加载页已在 PreloadPage 中注册过路由，跳过二次注册（否则会重复压栈）</param>
-        private void RouteAndOpenPage(EUIPage page, EUIPageDef pageDef, ShowRequest req, bool alreadyRouted = false)
+        private void RouteAndOpenPage(ShowPresentation presentation, EUIPage page, ShowRequest req,
+            IEUIResourceProvider acquiredProvider = null)
         {
+            var pageDef = req.EUIPageDef;
+            presentation.Page = page;
             Profiler.BeginSample("EUIManager.RouteAndOpenPage");
             try
             {
@@ -716,32 +956,40 @@ namespace Ember.UI
                 curtain?.PageAttached?.Invoke(page);
                 // 扩展点：允许 uiextension 等外部包配置 Logic（CreateLogic 内部防重，重复调用安全）
                 OnPageCreated?.Invoke(page);
-                if (curtain?.IsReleased == true)
+                // 扩展回调可能已取消遮幕或关闭本次展示。
+                if (curtain?.IsReleased == true || page.CloseRequested || page.IsDisposed)
                 {
-                    // The extension may have cancelled before routing/initialization.
-
+                    CompletePresentation(presentation, null);
                     return;
                 }
 
-                if (!alreadyRouted)
+                // Show 的加载也可能早于稍后发起的同路径预加载。
+                if (_preloads.TryGetValue(pageDef.PrefabPath, out var unusedPreload))
+                    DiscardPreload(unusedPreload);
+                if (curtain?.IsReleased == true || page.CloseRequested || page.IsDisposed)
                 {
-                    // 提前绑定定义：路由分发的 switch（如 FreePage 的 AddFreePage）需要在 OpenPage 之前读取 EUIPageDef
-                    page.EUIPageDef = pageDef;
+                    CompletePresentation(presentation, null);
+                    return;
+                }
 
-                    switch (pageDef.PageType)
-                    {
+                switch (pageDef.PageType)
+                {
                     case PageType.MainPage:
                         _context.PushMainPage(page);
                         break;
 
                     case PageType.Popup:
                     case PageType.FullScreenPopup:
+                        presentation.PopupOwner = _context.CurrentMainPage;
                         _context.AddPopup(page);
-                        ShowBgMaskForPopup(page);
                         break;
 
                     case PageType.TopMost:
-                        _context.AddTopMost(page);
+                        if (!_context.TryAddTopMost(page))
+                        {
+                            RejectPageOrder(presentation, page, req, acquiredProvider, curtain);
+                            return;
+                        }
                         break;
 
                     case PageType.SubPage:
@@ -749,16 +997,14 @@ namespace Ember.UI
                             var parent = req.ParentPage;
                             if (parent != null)
                             {
+                                if (parent.CloseRequested || parent.IsDisposed || !parent.GameObject ||
+                                    !_context.TrySetSubPageOrder(page, parent))
+                                {
+                                    RejectPageOrder(presentation, page, req, acquiredProvider, curtain);
+                                    return;
+                                }
                                 parent.RegisterSubPage(page);
                                 _parentPageMap[page] = parent;
-
-                                // 设置 SubPage 排序（对标 Burner SubPageOrderGrowStep=50）
-                                // 必须在 OpenPage 之前设置，因为 OpenPage 只设置 overrideSorting=true，
-                                // 不覆盖 sortingOrder 的具体值
-                                var sortingOrder = parent.GetNextSubPageSortingOrder();
-                                var canvas = page.Canvas;
-                                if (canvas)
-                                    canvas.sortingOrder = sortingOrder;
                             }
                             break;
                         }
@@ -774,16 +1020,26 @@ namespace Ember.UI
                     case PageType.Background:
                         _context.SetBackground(page);
                         break;
-                    }
                 }
 
-                _viewEngine.OpenPage(page, pageDef, req.Args, () =>
-                {
-                    req.OnComplete?.Invoke(page);
-                });
-
+                _viewEngine.OpenPage(page, pageDef, req.Args,
+                    () => CompletePresentation(presentation, page),
+                    () => AbortPresentation(presentation));
             }
             finally { Profiler.EndSample(); }
+        }
+
+        private void RejectPageOrder(ShowPresentation presentation, EUIPage page, ShowRequest request,
+            IEUIResourceProvider provider, EUICurtainSession curtain)
+        {
+            string message = $"页面排序区间已满或父页面已关闭: {request.EUIPageDef.PrefabPath}";
+            if (curtain != null)
+                curtain.Fail(new InvalidOperationException(message));
+            else
+                _viewEngine.DiscardPreloadedPage(page);
+            provider?.Release(request.EUIPageDef.PrefabPath);
+            EmberDebug.LogWarning(TAG, message);
+            CompletePresentation(presentation, null);
         }
 
         /// <summary>
@@ -794,15 +1050,12 @@ namespace Ember.UI
         {
             if (!IsCurrentBackgroundRequest(request)) return;
 
-            if (_preloadedPages.TryGetValue(request.PrefabPath, out var preloadedPage))
+            var preloadedPage = TakePreloadedPage(request.PrefabPath, out _);
+            if (preloadedPage != null)
             {
-                _preloadedPages.Remove(request.PrefabPath);
-                if (preloadedPage != null && preloadedPage.GameObject != null)
-                {
-                    EmberDebug.Log(TAG, $"复用预加载背景页: {request.PrefabPath}");
-                    OpenBackgroundPage(request, pageDef, preloadedPage);
-                    return;
-                }
+                EmberDebug.Log(TAG, $"复用预加载背景页: {request.PrefabPath}");
+                OpenBackgroundPage(request, pageDef, preloadedPage);
+                return;
             }
 
             var reusablePage = _viewEngine.FindReusablePage(request.PrefabPath);
@@ -865,7 +1118,9 @@ namespace Ember.UI
                 OnPageCreated?.Invoke(page);
                 if (!IsCurrentBackgroundRequest(request)) return;
 
-                // PreloadPage 不会为 Background 注册路由，因此消费预加载页时也必须在此显式设置槽位。
+                if (_preloads.TryGetValue(request.PrefabPath, out var unusedPreload))
+                    DiscardPreload(unusedPreload);
+                if (!IsCurrentBackgroundRequest(request)) return;
                 _context.SetBackground(page);
                 _viewEngine.OpenPage(page, pageDef, null, () =>
                 {
@@ -952,19 +1207,75 @@ namespace Ember.UI
                     popup.Logic.NotifyClickMask();
                 else if (popup.ClickMaskToClose)
                     ClosePage(popup);
-            }, popup.MaskColorOverride ?? PopupMaskColor, popup.GameObject.layer);
+            }, popup.MaskColorOverride ?? PopupMaskColor, popup.GameObject.layer, popup.Canvas,
+                EUIBackdrop.ResolveEffect(popup.MaskEffectOverride, PopupMaskEffect),
+                popup.BackdropSettingsOverride ? popup.BackdropSettingsOverride : EUIBackdrop.DefaultSettings);
 
             if (mask != null)
                 _activeMasks[popup] = mask;
         }
 
-        private void HideBgMaskForPopup(EUIPage popup)
+        private void HideBgMaskForPopup(EUIPage popup, bool refreshInput = true)
         {
             if (_activeMasks.TryGetValue(popup, out var mask))
             {
                 _viewEngine.HideBgMask(mask);
                 _activeMasks.Remove(popup);
             }
+            if (refreshInput && _modalInput) _modalInput.Refresh();
+        }
+
+        private void SynchronizeModalMasks()
+        {
+            _context.SynchronizePopupInteraction();
+            _maskSnapshot.Clear();
+            foreach (var pair in _activeMasks) _maskSnapshot.Add(pair.Key);
+            foreach (var page in _maskSnapshot)
+            {
+                if (!page.GameObject) { ClosePage(page); HideBgMaskForPopup(page, false); continue; }
+                if (page.IsDisposed) { HideBgMaskForPopup(page, false); continue; }
+                var mask = _activeMasks[page];
+                if (!mask) { _activeMasks.Remove(page); continue; }
+                bool visible = page.GameObject.activeInHierarchy && page.State != PageState.ViewHidden;
+                if (mask.activeSelf == visible) continue;
+                if (!visible) mask.SetActive(false);
+                else { HideBgMaskForPopup(page, false); ShowBgMaskForPopup(page); }
+            }
+        }
+
+        private async UniTask<bool> PreparePagePresentationAsync(EUIPage page)
+        {
+            EUIBackdrop.MarkOrderDirty();
+            var type = page.EUIPageDef?.PageType;
+            if (type != PageType.Popup && type != PageType.FullScreenPopup) return true;
+            if (page.IsDisposed || _closeRequestedPages.Contains(page)) return false;
+            HideBgMaskForPopup(page, false);
+            ShowBgMaskForPopup(page);
+            if (_modalInput) _modalInput.Refresh();
+            EUIBackdropMaskSession session = null;
+            if (_activeMasks.TryGetValue(page, out var mask) && mask) session = mask.GetComponent<EUIBackdropMaskSession>();
+            var lease = session ? session.Lease : null;
+            if (lease != null)
+            {
+                // Keep the lower view rendering until its first real capture, before fullscreen culling.
+                for (int i = 0; i < 2 && !lease.IsReady && !lease.IsDisposed; i++) await UniTask.NextFrame();
+                if (page.IsDisposed || _closeRequestedPages.Contains(page) || lease.IsDisposed) return false;
+            }
+            if (type == PageType.FullScreenPopup)
+            {
+                lease?.Freeze();
+                _context.CommitFullScreenPopup(page);
+            }
+            return !page.IsDisposed && !_closeRequestedPages.Contains(page);
+        }
+
+        /// <summary>显式刷新已打开 Popup 的配置；全局配置只影响后续展示。</summary>
+        public void RefreshBackdrop(EUIPage page)
+        {
+            if (page == null || page.IsDisposed) return;
+            HideBgMaskForPopup(page, false); ShowBgMaskForPopup(page);
+            if (_modalInput) _modalInput.Refresh();
+            EUIBackdrop.MarkOrderDirty();
         }
 
         #endregion

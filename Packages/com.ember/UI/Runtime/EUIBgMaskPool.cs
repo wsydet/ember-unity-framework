@@ -20,6 +20,7 @@ namespace Ember.UI
         private const int PoolCapacity = 10;
 
         private readonly Stack<GameObject> _pool = new Stack<GameObject>();
+        private readonly HashSet<GameObject> _borrowed = new HashSet<GameObject>();
         private readonly Transform _parent;
         private readonly Camera _uiCamera;
         private readonly int _sortingOrderOffset;
@@ -74,18 +75,17 @@ namespace Ember.UI
             if (layer >= 0)
                 mask.layer = layer;
 
+            _borrowed.Add(mask);
+
             mask.transform.SetAsLastSibling();
 
             // 设置遮罩颜色（创建与复用都刷新，支持运行时改配置）
-            if (maskColor.HasValue)
-            {
-                var img = mask.GetComponent<Image>();
-                if (img) img.color = maskColor.Value;
-            }
+            var img = mask.GetComponent<Image>();
+            if (img) img.color = maskColor ?? _maskColor;
 
             // 设置 sortingOrder
             var canvas = mask.GetComponent<Canvas>();
-            if (canvas) canvas.sortingOrder = sortingOrder + _sortingOrderOffset;
+            if (canvas) { canvas.sortingOrder = sortingOrder + _sortingOrderOffset; canvas.worldCamera = _uiCamera; }
 
             // 绑定点击事件
             var button = mask.GetComponent<Button>();
@@ -99,12 +99,26 @@ namespace Ember.UI
             return mask;
         }
 
+        public GameObject Get(int sortingOrder, System.Action onClick, Color tint, int layer,
+            Canvas foreground, EUIMaskEffect effect, EUIBackdropSettings settings)
+        {
+            var mask = Get(sortingOrder, onClick, tint, layer);
+            if (foreground) mask.GetComponent<Canvas>().sortingLayerID = foreground.sortingLayerID;
+            var session = mask.GetComponent<EUIBackdropMaskSession>();
+            if (!session) session = mask.AddComponent<EUIBackdropMaskSession>();
+            session.Configure(foreground, sortingOrder + _sortingOrderOffset, effect, settings, tint);
+            return mask;
+        }
+
         /// <summary>
         /// 归还 BG Mask 到池中。
         /// </summary>
         public void Return(GameObject mask)
         {
-            if (mask == null) return;
+            if (mask == null || !_borrowed.Remove(mask)) return;
+
+            var session = mask.GetComponent<EUIBackdropMaskSession>();
+            if (session) session.Release();
 
             mask.SetActive(false);
 
@@ -122,6 +136,9 @@ namespace Ember.UI
         /// </summary>
         public void Clear()
         {
+            foreach (var active in _borrowed)
+                if (active != null) { var session = active.GetComponent<EUIBackdropMaskSession>(); if (session) session.Release(); Object.Destroy(active); }
+            _borrowed.Clear();
             while (_pool.Count > 0)
             {
                 var mask = _pool.Pop();
@@ -152,6 +169,7 @@ namespace Ember.UI
             var img = go.GetComponent<Image>();
             img.color = _maskColor;
             img.raycastTarget = true;
+            go.GetComponent<Button>().transition = Selectable.Transition.None;
 
             // Canvas：与页面一致走 ScreenSpaceCamera + UI 相机。
             // 若保持默认 ScreenSpaceOverlay，遮罩会永远渲染在所有 Camera 模式 Canvas（页面）之上，盖住弹窗。

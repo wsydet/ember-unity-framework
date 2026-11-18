@@ -17,6 +17,7 @@ namespace Ember.UIExtension
     /// 继承自 <see cref="Button"/>，额外支持：
     /// <list type="bullet">
     ///   <item>enable/disable 状态节点切换</item>
+    ///   <item>SetEnabled 联动状态与点击权限，支持灰态点击提示</item>
     ///   <item>多个附加 Graphic 同步 CrossFadeColor</item>
     /// </list>
     /// </summary>
@@ -59,6 +60,14 @@ namespace Ember.UIExtension
 
         // --------------------------------------------------------
 
+        #region 内部参数
+
+        private bool _hasExplicitEnableState;
+
+        #endregion
+
+        // --------------------------------------------------------
+
         #region 生命周期
 
         protected override void OnEnable()
@@ -75,19 +84,30 @@ namespace Ember.UIExtension
 
         /// <summary>
         /// 自定义启用状态。为 true 时显示 _enableNode 并隐藏 _disableNode。
-        /// 如果两个节点都为空，始终返回 true。
+        /// 未配置状态节点且未显式设置状态时，默认返回 true。此属性不改变点击权限。
         /// </summary>
         public bool EnableState
         {
-            get => _enableState || (!_enableNode && !_disableNode);
+            get => _enableState || (!_enableNode && !_disableNode && !_hasExplicitEnableState);
             set
             {
+                _hasExplicitEnableState = true;
                 if (_enableState != value)
                 {
                     _enableState = value;
                     RefreshEnableState();
                 }
             }
+        }
+
+        /// <summary>
+        /// 同时设置业务状态节点和点击权限。灰态可点击时，在 onClick 中检查 EnableState，
+        /// 显示条件不足等提示；EnableState 为 true 时再执行正式操作。
+        /// </summary>
+        public void SetEnabled(bool enabled, bool canClickWhenDisable = false)
+        {
+            EnableState = enabled;
+            interactable = enabled || canClickWhenDisable;
         }
 
         /// <summary>刷新启用/禁用节点的可见性</summary>

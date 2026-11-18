@@ -60,6 +60,9 @@ namespace Ember.UI
         /// </summary>
         public EUIItem Item { get; internal set; }
 
+        /// <summary>所属页面或 Item 的数据绑定。固定子 Logic 共用其所有者的绑定。</summary>
+        public EUIDataBinding DataBinding => Page?.DataBinding ?? Item?.DataBinding;
+
         /// <summary>自定义页面参数（由 EUIBindingBridge 从 EUIBinding._pageSettings 注入）</summary>
         public object CustomSettings { get; set; }
 

@@ -1,0 +1,7 @@
+{
+  "name": "Ember.UIRendering.URP",
+  "rootNamespace": "Ember.UIRendering",
+  "references": ["Ember.UI.Runtime", "Ember.Basic.Runtime", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime", "UnityEngine.UI"],
+  "versionDefines": [{"name":"com.unity.render-pipelines.universal","expression":"[17.0.0,18.0.0)","define":"EMBER_URP17"}],
+  "defineConstraints": ["EMBER_URP17"]
+}

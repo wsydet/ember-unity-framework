@@ -41,7 +41,7 @@ namespace Ember.UIExtension
 
         private bool _clickAdded;
         private bool _longPressAdded;
-        private int _longPressFrameCount;
+        private int _longPressFrameCount = -1;
 
         #endregion
 
@@ -207,8 +207,7 @@ namespace Ember.UIExtension
                 if (!_clickAdded)
                 {
                     _clickAdded = true;
-                    var lis = EUIEventTriggerListener.Get(_gameObject);
-                    lis.onClick += HandleClick;
+                    AddClickCallback();
                 }
                 _onClick = value;
             }
@@ -264,9 +263,23 @@ namespace Ember.UIExtension
 
         #region 内部方法
 
-        private void HandleClick(GameObject go)
+        /// <summary>当前状态是否允许分发点击，子类可区分业务禁用与输入屏蔽。</summary>
+        protected virtual bool CanInvokeClick => Enable;
+
+        protected virtual void AddClickCallback()
         {
-            if (!Enable) return;
+            EUIEventTriggerListener.Get(_gameObject).onClick += HandleClick;
+        }
+
+        protected virtual void RemoveClickCallback()
+        {
+            var listener = _gameObject.GetComponent<EUIEventTriggerListener>();
+            if (listener) listener.onClick -= HandleClick;
+        }
+
+        protected void HandleClick(GameObject go)
+        {
+            if (_disposed || !CanInvokeClick) return;
             if (_longPressFrameCount == Time.frameCount) return;
             _onClick?.Invoke(this);
         }
@@ -288,8 +301,7 @@ namespace Ember.UIExtension
             {
                 if (_clickAdded)
                 {
-                    var lis = _gameObject.GetComponent<EUIEventTriggerListener>();
-                    if (lis) lis.onClick = null;
+                    RemoveClickCallback();
                 }
                 if (_longPressAdded)
                 {

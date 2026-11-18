@@ -83,6 +83,9 @@ namespace Ember.Resource
         ///
         /// 与 LoadAssetAsync 的区别：返回 EmberAssetHandle《T》而非纯回调，
         /// 调用方可以在加载过程中取消（Cancel）或查询状态（IsDone / Succeeded）。
+        /// Provider 用 EmberAssetHandle《T》.Create(path, cancel, release) 捕获独立的每请求 token，
+        /// 主线程 TryComplete 交付。Cancel 只结束请求，Dispose 释放 token 一次。
+        /// 被拒绝的迟到 TryComplete 不转移资源所有权，Provider 必须清理其后端引用。
         /// </summary>
         EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : UnityEngine.Object;
 

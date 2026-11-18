@@ -121,7 +121,8 @@ namespace Ember.Resource
         /// </summary>
         public EmberAssetHandle<T> LoadAssetHandle<T>(string path) where T : Object
         {
-            var handle = new EmberAssetHandle<T>(path);
+            // Resources.Load 返回共享资产。释放句柄只放下引用，不能 Destroy/UnloadAsset。
+            var handle = EmberAssetHandle<T>.Create(path);
             if (string.IsNullOrEmpty(path))
             {
                 handle.Complete(null, false, "Asset path is null or empty.");

@@ -311,6 +311,9 @@ namespace Ember.UIExtension.Editor
                 {
                     _creationRequest.MaskColor = EditorGUILayout.ColorField("遮罩颜色",
                         _creationRequest.MaskColor);
+                    _creationRequest.MaskEffect = (EUIMaskEffect)EditorGUILayout.EnumPopup("遮罩效果", _creationRequest.MaskEffect ?? EUIMaskEffect.Inherit);
+                    _creationRequest.OverrideMaskTint = EditorGUILayout.Toggle("覆盖全局染色", _creationRequest.OverrideMaskTint ?? false);
+                    _creationRequest.BackdropSettingsOverride = (EUIBackdropSettings)EditorGUILayout.ObjectField("背景质量覆盖", _creationRequest.BackdropSettingsOverride, typeof(EUIBackdropSettings), false);
                     _creationRequest.ClickMaskToClose = EditorGUILayout.Toggle("点击遮罩关闭",
                         _creationRequest.ClickMaskToClose);
                 }

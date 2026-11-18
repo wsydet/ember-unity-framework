@@ -4,6 +4,7 @@
     "references": [
         "Ember.Core.Runtime",
         "Ember.UI.Runtime",
+        "Ember.Resource.Runtime",
         "Sirenix.OdinInspector.Attributes",
         "Ember.Basic.Runtime",
         "Unity.TextMeshPro",

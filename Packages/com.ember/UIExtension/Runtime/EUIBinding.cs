@@ -305,6 +305,17 @@ namespace Ember.UIExtension
         [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
         private Color maskColor = new Color(0f, 0f, 0f, 0.5f);
 
+        [SerializeField, LabelText("遮罩效果"), FoldoutGroup("$GROUP"), BoxGroup("$GROUP/遮罩设置")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private EUIMaskEffect maskEffect = EUIMaskEffect.Inherit;
+        [SerializeField, LabelText("覆盖遮罩染色"), FoldoutGroup("$GROUP"), BoxGroup("$GROUP/遮罩设置")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private bool overrideMaskTint;
+        [SerializeField, LabelText("背景质量覆盖"), FoldoutGroup("$GROUP"), BoxGroup("$GROUP/遮罩设置")]
+        [ShowIf("@isPage && !noCodeGen && IsPopupPage")]
+        private EUIBackdropSettings backdropSettingsOverride;
+        [SerializeField, HideInInspector] private int backdropSchema;
+
         [PropertyOrder(-67.5f)]
         [FoldoutGroup("$GROUP")]
         [BoxGroup("$GROUP/遮罩设置")]
@@ -650,6 +661,11 @@ namespace Ember.UIExtension
 
         /// <summary>本弹窗专属遮罩颜色（注入 EUIPage.MaskColorOverride，缺省回退 EUIManager.PopupMaskColor 全局色）。</summary>
         public Color MaskColor => maskColor;
+        public EUIMaskEffect MaskEffect => maskEffect;
+        public bool OverrideMaskTint => overrideMaskTint;
+        public bool HasExplicitMaskTint => backdropSchema == 0 || overrideMaskTint;
+        public EUIBackdropSettings BackdropSettingsOverride => backdropSettingsOverride;
+        public int BackdropSchema => backdropSchema;
 
         /// <summary>点击遮罩是否关闭本弹窗（页面逻辑 override OnClickMask 时优先于本开关）。</summary>
         public bool ClickMaskToClose => clickMaskToClose;

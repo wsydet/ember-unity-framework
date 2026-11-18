@@ -8,6 +8,8 @@
         "Ember.Table.Editor",
         "Ember.UPMManager.Editor",
         "Ember.UI.Runtime",
+        "Ember.Resource.Runtime",
+        "Ember.SceneUI.Integration.Runtime",
         "Ember.UIExtension.Runtime",
         "Ember.UIExtension.Editor",
         "Ember.Core.Runtime",

@@ -55,3 +55,7 @@ SceneUI 的气泡就是 Item，见 [SceneUI 接入](../scene-ui/README.md)。
 框架开发仓库另有 `docs/user/UI开发参考.md` 与 `docs/dev/eui-reference.md`，只属于仓库维护资料，单独安装 UPM 包时不要求这些文件存在。消费项目以本页、随包源码及 UI 开发中心生成结果为依据。
 
 - [EUI 契约、页面命名与嵌套所有权](eui-contract.md)：只读导出/差异、语义登记、绑定快照与实例所有权。
+- [UI 运行时扩展](runtime-extensions.md)：ScrollRect 定位吸附、TMP/TMPEx 跑马灯、Image/RawImage 地址加载、多图索引与独立圆角。
+- [缓冲进度条](buffered-progress-bar.md)：即时主条、独立慢尾、白条收缩/淡出、真实数值文字和正式 Extension 绑定。
+- [Popup 背景效果](popup-backdrop.md)：默认 Blur、逐页 Solid、旧配置迁移、URP17 安装与生命周期。
+- [柔光玻璃控件](soft-glass.md)：共享采样、圆角 token、材质与裁切契约。

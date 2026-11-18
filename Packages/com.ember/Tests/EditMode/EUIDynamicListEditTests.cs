@@ -83,6 +83,56 @@ namespace Ember.UI.Tests
         }
 
         [Test]
+        public void Replace_ResetsOnlyRegisteredFieldsBeforeBindingReusedItem()
+        {
+            Image optional = null;
+            Image decoration = null;
+            var resetObserved = false;
+            var staleWriteAccepted = false;
+            bool? cancellationWriteAccepted = null;
+            EUIDataBinding.Version oldBinding = default;
+            using var list = _host.Create<string>(value => value, lease =>
+            {
+                if (lease.Data == "A")
+                {
+                    optional = new GameObject("Optional", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+                    optional.transform.SetParent(lease.Item.RectTransform, false);
+                    decoration = new GameObject("Decoration", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+                    decoration.transform.SetParent(lease.Item.RectTransform, false);
+                    oldBinding = lease.Item.DataBinding.Capture();
+                    lease.Cancellation.Register(() => cancellationWriteAccepted =
+                        oldBinding.TryApply(() => optional.color = Color.green));
+                    lease.Item.DataBinding.RegisterReset(() =>
+                    {
+                        staleWriteAccepted = oldBinding.TryApply(() => optional.color = Color.blue);
+                        optional.enabled = false;
+                    });
+                }
+                else
+                {
+                    resetObserved = !optional.enabled && !lease.Item.IsVisible;
+                }
+            });
+
+            list.Replace(new[] { "A" });
+            var oldItem = list[0].Item;
+            Assert.That(optional.enabled, Is.True);
+            list.Hide();
+            Assert.That(oldBinding.IsCurrent, Is.True);
+            list.Show();
+            Assert.That(optional.enabled, Is.True);
+
+            list.Replace(new[] { "B" });
+            Assert.That(list[0].Item, Is.SameAs(oldItem));
+            Assert.That(list[0].Item.IsVisible, Is.True);
+            Assert.That(resetObserved, Is.True);
+            Assert.That(staleWriteAccepted, Is.False);
+            Assert.That(cancellationWriteAccepted, Is.False);
+            Assert.That(oldBinding.IsCurrent, Is.False);
+            Assert.That(decoration.enabled, Is.True);
+        }
+
+        [Test]
         public void BindingExceptionAndHostDisposalReleaseEveryLease()
         {
             var active=0;

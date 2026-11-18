@@ -111,6 +111,7 @@ namespace Ember.UIExtension
         {
             base.OnEnable();
             _accumulatedTime = 0;
+            _delayStarted = false;
             if (_animated)
                 _spriteIndex = 0;
             RefreshSpriteState();
@@ -118,10 +119,11 @@ namespace Ember.UIExtension
 
         private void Update()
         {
-            if (!_animated)
+            if (!_animated || _fps <= 0 || !float.IsFinite(_playbackSpeed) || _playbackSpeed <= 0)
                 return;
 
             var tpf = 1f / (_fps * _playbackSpeed);
+            if (!float.IsFinite(tpf) || tpf <= 0) return;
             var idx = _spriteIndex;
             var cnt = _spriteArray != null ? _spriteArray.Length : 0;
             if (cnt == 0)
@@ -158,6 +160,14 @@ namespace Ember.UIExtension
 
             SpriteIndex = idx;
         }
+
+#if UNITY_EDITOR
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            RefreshSpriteState();
+        }
+#endif
 
         #endregion
 
@@ -223,6 +233,8 @@ namespace Ember.UIExtension
                 if (_keepNativeSize)
                     SetNativeSize();
             }
+            else
+                overrideSprite = null;
         }
 
         #endregion

@@ -33,6 +33,11 @@ namespace Ember.UIExtension.Editor
         public bool? GenerateCustomSettings;
         public bool? UseMask, ClickMaskToClose, UsePresetFade, UseTransitionBlock, UseAnimator, UseCustomTransition;
         public Color? MaskColor;
+        public EUIMaskEffect? MaskEffect;
+        public bool? OverrideMaskTint;
+        public EUIBackdropSettings BackdropSettingsOverride;
+        public bool? HasBackdropSettingsOverride;
+        public int? BackdropSchema;
         public float? FadeInTime, FadeOutTime;
         public bool IsDeletionProtected;
         public bool IsPage;
@@ -203,6 +208,11 @@ namespace Ember.UIExtension.Editor
                 GenerateCustomSettings = binding.GenerateCustomSettings,
                 UseMask = binding.UseMask,
                 MaskColor = binding.MaskColor,
+                MaskEffect = binding.MaskEffect,
+                OverrideMaskTint = binding.OverrideMaskTint,
+                BackdropSettingsOverride = binding.BackdropSettingsOverride,
+                HasBackdropSettingsOverride = true,
+                BackdropSchema = binding.BackdropSchema,
                 ClickMaskToClose = binding.ClickMaskToClose,
                 UsePresetFade = binding.UsePresetFade,
                 UseTransitionBlock = binding.UseTransitionBlock,
@@ -257,6 +267,10 @@ namespace Ember.UIExtension.Editor
                 if (snapshot.GenerateCustomSettings.HasValue) so.FindProperty(GenerateCustomSettingsProperty).boolValue = snapshot.GenerateCustomSettings.Value;
                 if (snapshot.UseMask.HasValue) so.FindProperty(UseMaskProperty).boolValue = snapshot.UseMask.Value;
                 if (snapshot.MaskColor.HasValue) so.FindProperty(MaskColorProperty).colorValue = snapshot.MaskColor.Value;
+                if (snapshot.MaskEffect.HasValue) so.FindProperty("maskEffect").enumValueIndex = (int)snapshot.MaskEffect.Value;
+                if (snapshot.OverrideMaskTint.HasValue) so.FindProperty("overrideMaskTint").boolValue = snapshot.OverrideMaskTint.Value;
+                if (snapshot.HasBackdropSettingsOverride == true) so.FindProperty("backdropSettingsOverride").objectReferenceValue = snapshot.BackdropSettingsOverride;
+                if (snapshot.BackdropSchema.HasValue) so.FindProperty("backdropSchema").intValue = snapshot.BackdropSchema.Value;
                 if (snapshot.ClickMaskToClose.HasValue) so.FindProperty(ClickMaskToCloseProperty).boolValue = snapshot.ClickMaskToClose.Value;
                 if (snapshot.UsePresetFade.HasValue) so.FindProperty(UsePresetFadeProperty).boolValue = snapshot.UsePresetFade.Value;
                 if (snapshot.UseTransitionBlock.HasValue) so.FindProperty(UseTransitionBlockProperty).boolValue = snapshot.UseTransitionBlock.Value;
@@ -359,6 +373,10 @@ namespace Ember.UIExtension.Editor
 
                 so.FindProperty(UseMaskProperty).boolValue = isPopup && request.UseMask;
                 so.FindProperty(MaskColorProperty).colorValue = request.MaskColor;
+                if (request.MaskEffect.HasValue) so.FindProperty("maskEffect").enumValueIndex = (int)request.MaskEffect.Value;
+                if (request.OverrideMaskTint.HasValue) so.FindProperty("overrideMaskTint").boolValue = request.OverrideMaskTint.Value;
+                if (request.BackdropSettingsOverride) so.FindProperty("backdropSettingsOverride").objectReferenceValue = request.BackdropSettingsOverride;
+                so.FindProperty("backdropSchema").intValue = 1;
                 so.FindProperty(ClickMaskToCloseProperty).boolValue = isPopup && request.ClickMaskToClose;
                 so.FindProperty(GenerateAutoCreateClickableMaskOverrideProperty).boolValue = isPopup
                     && request.GenerateAutoCreateClickableMaskOverride;
@@ -1126,6 +1144,8 @@ namespace Ember.UIExtension.Editor
             foreach (var i in mapping)
             {
                 // 用扩展类型本身精确匹配，避免同一原生类型（如 Image）下的多个扩展互相误判
+                var attribute = (EUIExtensionAttribute)Attribute.GetCustomAttribute(i.Value.Value.Value, typeof(EUIExtensionAttribute));
+                if (attribute != null && !attribute.AutoDetect) continue;
                 if (go.GetComponent(i.Value.Value.Value)) { extensionName = i.Key; return true; }
             }
             extensionName = null;

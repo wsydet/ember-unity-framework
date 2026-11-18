@@ -14,6 +14,7 @@ namespace Ember.UIExtension.Editor
     /// 在 base 绘制之后补画增强字段：精灵数组、帧动画、点击区域、布局。
     /// </summary>
     [CustomEditor(typeof(EUIImageEx), true)]
+    [CanEditMultipleObjects]
     public class EUIImageExEditor : ImageEditor
     {
         #region 内部参数
@@ -88,7 +89,10 @@ namespace Ember.UIExtension.Editor
             EditorGUILayout.LabelField("布局", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(_keepNativeSize, new GUIContent("保持原始尺寸", "切换精灵后自动调用 SetNativeSize"));
 
-            serializedObject.ApplyModifiedProperties();
+            if (serializedObject.ApplyModifiedProperties())
+                foreach (var item in targets)
+                    ((EUIImageEx)item).RefreshSpriteState();
+            EditorGUILayout.HelpBox("静态索引切换请关闭帧动画。圆角使用独立 Rounded Image Modifier，仅支持 Simple。异步加载与帧动画互斥。", MessageType.Info);
         }
 
         #endregion

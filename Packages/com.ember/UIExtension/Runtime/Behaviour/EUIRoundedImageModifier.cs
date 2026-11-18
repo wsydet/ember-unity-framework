@@ -57,19 +57,19 @@ namespace Ember.UIExtension
         public float Radius
         {
             get => _radius;
-            set { _radius = value; graphic.SetVerticesDirty(); }
+            set { _radius = value; if (graphic) graphic.SetVerticesDirty(); }
         }
 
         /// <summary>每个角的三角形数量</summary>
         public int TriangleNum
         {
             get => _triangleNum;
-            set { _triangleNum = Mathf.Clamp(value, MinTriangleNum, MaxTriangleNum); graphic.SetVerticesDirty(); }
+            set { _triangleNum = Mathf.Clamp(value, MinTriangleNum, MaxTriangleNum); if (graphic) graphic.SetVerticesDirty(); }
         }
 
         public override void ModifyMesh(VertexHelper vh)
         {
-            if (TargetImage.type != Image.Type.Simple)
+            if (!IsActive() || !TargetImage || TargetImage.type != Image.Type.Simple)
                 return;
 
             Profiler.BeginSample("GenerateRoundedSimpleSprite");
@@ -93,10 +93,10 @@ namespace Ember.UIExtension
                 ? new Vector2(r.width, r.height)
                 : new Vector2(TargetImage.overrideSprite.rect.width, TargetImage.overrideSprite.rect.height);
 
-            var spriteW = Mathf.RoundToInt(size.x);
-            var spriteH = Mathf.RoundToInt(size.y);
+            var spriteW = Mathf.Max(1, Mathf.RoundToInt(size.x));
+            var spriteH = Mathf.Max(1, Mathf.RoundToInt(size.y));
 
-            if (shouldPreserveAspect && size.sqrMagnitude > 0f)
+            if (shouldPreserveAspect && size.x > 0 && size.y > 0 && r.width > 0 && r.height > 0)
             {
                 var spriteRatio = size.x / size.y;
                 var rectRatio = r.width / r.height;
@@ -130,16 +130,19 @@ namespace Ember.UIExtension
 
         private void GenerateSimpleSprite(VertexHelper vh)
         {
-            var v = GetDrawingDimensions(false);
+            var v = GetDrawingDimensions(TargetImage.preserveAspect);
             var uv = TargetImage.overrideSprite != null
                 ? DataUtility.GetOuterUV(TargetImage.overrideSprite)
                 : Vector4.zero;
 
             vh.Clear();
+            if (!float.IsFinite(v.x) || !float.IsFinite(v.y) || !float.IsFinite(v.z) || !float.IsFinite(v.w)
+                || v.z - v.x <= 0.0001f || v.w - v.y <= 0.0001f) return;
             var color32 = TargetImage.color;
 
             // 限制半径范围
-            var radius = _radius;
+            var radius = float.IsFinite(_radius) ? _radius : 0;
+            var triangleNum = Mathf.Clamp(_triangleNum, MinTriangleNum, MaxTriangleNum);
             if (radius > (v.z - v.x) / 2) radius = (v.z - v.x) / 2;
             if (radius > (v.w - v.y) / 2) radius = (v.w - v.y) / 2;
             if (radius < 0) radius = 0;
@@ -190,13 +193,13 @@ namespace Ember.UIExtension
             uvCenterList.Add(new Vector2(uv.z - uvRadiusX, uv.y + uvRadiusY));
             vCenterVertList.Add(8);
 
-            var degreeDelta = Mathf.PI / 2 / _triangleNum;
+            var degreeDelta = Mathf.PI / 2 / triangleNum;
             var curDegree = 0f;
 
             for (int i = 0; i < vCenterVertList.Count; i++)
             {
                 var preVertNum = vh.currentVertCount;
-                for (int j = 0; j <= _triangleNum; j++)
+                for (int j = 0; j <= triangleNum; j++)
                 {
                     var cosA = Mathf.Cos(curDegree);
                     var sinA = Mathf.Sin(curDegree);
@@ -206,7 +209,7 @@ namespace Ember.UIExtension
                     curDegree += degreeDelta;
                 }
                 curDegree -= degreeDelta;
-                for (int j = 0; j <= _triangleNum - 1; j++)
+                for (int j = 0; j <= triangleNum - 1; j++)
                 {
                     vh.AddTriangle(vCenterVertList[i], preVertNum + j + 1, preVertNum + j);
                 }

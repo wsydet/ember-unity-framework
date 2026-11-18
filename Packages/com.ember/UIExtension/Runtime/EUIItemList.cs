@@ -52,8 +52,7 @@ namespace Ember.UIExtension
             for (var i = retiring.Length - 1; i >= 0; i--)
             {
                 var lease = retiring[i];
-                lease.Dispose();
-                lease.Item.ResetForPool();
+                lease.Item.ResetForPool(lease);
                 if (_cache.Count < _host.CacheCapacity && !_disposed) _cache.Push(lease.Item);
                 else DestroyItem(lease.Item);
             }

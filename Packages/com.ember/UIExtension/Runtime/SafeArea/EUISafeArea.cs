@@ -80,6 +80,9 @@ namespace Ember.UIExtension
         private RectTransform _rectTransform;
         private DrivenRectTransformTracker _tracker;
         private Vector4 _lastPadding;
+        private Rect _lastRect;
+        private bool _hasAppliedLayout;
+        private bool _isRefreshing;
         private bool _hasSafeArea;
 
         #endregion
@@ -96,6 +99,7 @@ namespace Ember.UIExtension
 
         protected override void OnDisable()
         {
+            _hasAppliedLayout = false;
             _tracker.Clear();
             LayoutRebuilder.MarkLayoutForRebuild(RectTransform);
             base.OnDisable();
@@ -188,9 +192,16 @@ namespace Ember.UIExtension
 
         private void UpdateRect()
         {
-            if (!this || !(enabled && gameObject.activeInHierarchy))
+            if (!this || !isActiveAndEnabled || _isRefreshing)
                 return;
 
+            _isRefreshing = true;
+            try { ApplySafeArea(); }
+            finally { _isRefreshing = false; }
+        }
+
+        private void ApplySafeArea()
+        {
             var selectedOrientation = _orientationType == SupportedOrientations.Dual && IsLandscape()
                 ? _landscapePaddings
                 : _portraitOrDefaultPaddings;
@@ -220,9 +231,13 @@ namespace Ember.UIExtension
             Sanitize(ref finalPadding);
             ApplyPadding(canvasRect, finalPadding);
 
+            var rect = RectTransform.rect;
+            bool changed = !_hasAppliedLayout || rect != _lastRect || finalPadding != _lastPadding;
+            _hasAppliedLayout = true;
+            _lastRect = rect;
             _hasSafeArea = finalPadding.sqrMagnitude > 0.001f;
             _lastPadding = finalPadding;
-            SafeAreaChanged?.Invoke();
+            if (changed) SafeAreaChanged?.Invoke();
         }
 
         private static DrivenTransformProperties GetDrivenProperties(PerEdgeEvaluationModes mode)

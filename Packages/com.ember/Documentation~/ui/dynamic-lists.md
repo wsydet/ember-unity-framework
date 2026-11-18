@@ -27,6 +27,8 @@ lease.TryApply(current => image.sprite = loadedSprite);
 
 Track 保存本次使用的清理操作；结束时先失效，再取消令牌、逆序清理。某项清理抛错时继续其他项并记录错误。绑定回调抛错时清空本批全部借用，留下可再次使用的空列表。更新不能重入 Replace/Clear；Dispose 可从取消回调进入，释放幂等。
 
+地址图片可在首次 inactive Bind 中加载，并登记 `lease.Track(loader.Clear)`，保证从未 Show 就回池也能释放。GameObject Hide 会退休 loader 已有请求，Show 不自动重播地址；Hide 保留 lease，页面 OnShow 需按有效数据显式 Load。仅 alpha/Graphic.enabled 隐藏不结束资源使用，完整用法见 [运行时扩展的池化合同](runtime-extensions.md#隐藏池化和销毁)。
+
 | 对象 | 唯一所有者及结束时机 |
 | --- | --- |
 | 列表数据与业务规则 | 页面/业务模块；容器仅保存本次借用引用 |

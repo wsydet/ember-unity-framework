@@ -94,6 +94,15 @@ namespace Ember.UI
         private readonly RectTransform _rectTransform;
         private Animator _animator;
         private bool _disposed;
+        private bool _modalInputBlocked;
+        private bool _interactionEnabled;
+        private bool _pausedInteraction;
+        private bool _pausedRaycasts;
+        private PageState _viewHiddenState;
+        private bool _viewHiddenInteraction;
+        private bool _viewHiddenRaycasts;
+        public EUIMaskEffect MaskEffectOverride { get; set; } = EUIMaskEffect.Inherit;
+        public EUIBackdropSettings BackdropSettingsOverride { get; set; }
         private EUICurtainSession _curtainSession;
 
         private PageState _state = PageState.Unloaded;
@@ -116,6 +125,38 @@ namespace Ember.UI
         private bool ShouldBlockRaycasts => _pageDef?.PageType != PageType.Background;
         private bool CanCompleteTransition => !_disposed && _gameObject != null && _canvasGroup != null;
         internal bool IsDisposed => _disposed;
+        internal bool CloseRequested { get; set; }
+        internal bool IsPreloadOnly { get; set; }
+        internal bool ModalInputBlocked => _modalInputBlocked;
+
+        private bool InteractionIntent => _modalInputBlocked || _fullscreenCovered
+            ? _interactionEnabled : _canvasGroup.interactable;
+
+        internal void SetModalInputBlocked(bool blocked)
+        {
+            if (_modalInputBlocked == blocked) return;
+            if (blocked && _canvasGroup && !_fullscreenCovered) _interactionEnabled = _canvasGroup.interactable;
+            _modalInputBlocked = blocked;
+            ApplyInteraction();
+        }
+
+        internal void SetInteractionEnabled(bool enabled)
+        {
+            _interactionEnabled = enabled;
+            ApplyInteraction();
+        }
+
+        private void ApplyInteraction()
+        {
+            if (_canvasGroup)
+                _canvasGroup.interactable = _interactionEnabled && !_modalInputBlocked && !_fullscreenCovered;
+        }
+
+        private void SetViewRaycasts(bool enabled)
+        {
+            if (_fullscreenCovered) _coveredRaycasts = enabled;
+            _canvasGroup.blocksRaycasts = enabled && !_fullscreenCovered;
+        }
         private bool UseCustomTransition => _useCustomTransition && _curtainSession?.SkipCustomTransition != true;
 
         // 动画完成回调（由 EUIViewEngine 在调用 PlayShow/PlayHide 前注入）
@@ -202,7 +243,7 @@ namespace Ember.UI
             // 这里立即归零，避免任何页面首帧闪现。
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
         }
 
         /// <summary>
@@ -320,7 +361,8 @@ namespace Ember.UI
             _state = PageState.Loaded;
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
+            DataBinding.End();
             _gameObject.SetActive(true);
 
             try
@@ -341,7 +383,16 @@ namespace Ember.UI
                 if (_curtainSession != null) _logic.SkipFakeProgress = _curtainSession.SkipFakeProgress;
                 try { _logic.BroadcastInit(); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnInit '{Name}': {ex}"); }
+            }
 
+            if (!DataBinding.Begin() || CloseRequested || _disposed || !_gameObject)
+            {
+                Profiler.EndSample();
+                return;
+            }
+
+            if (_logic != null)
+            {
                 try { _logic.BroadcastOpen(args); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnOpen '{Name}': {ex}"); }
 
@@ -366,7 +417,7 @@ namespace Ember.UI
             _state = PageState.Loaded;
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
             _gameObject.SetActive(true);
 
             try
@@ -384,12 +435,19 @@ namespace Ember.UI
                 try { _logic.BroadcastPreload(args, false); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnPreload '{Name}': {ex}"); }
             }
+            if (_gameObject && !_disposed && _state == PageState.Loaded)
+            {
+                _canvasGroup.alpha = 0f;
+                _canvasGroup.blocksRaycasts = false;
+                SetInteractionEnabled(false);
+            }
             Profiler.EndSample();
         }
 
         /// <inheritdoc />
         public void PlayShow()
         {
+            if (CloseRequested || _disposed || !_gameObject) return;
             if (_state != PageState.Loaded)
             {
                 EmberDebug.LogWarning(TAG, $"EUIPage.PlayShow: '{Name}' state={_state}, expected Loaded.");
@@ -398,11 +456,30 @@ namespace Ember.UI
 
             Profiler.BeginSample("EUIPage.PlayShow");
             _showStartTime = Time.realtimeSinceStartup;
+            RefreshSafeAreaBeforeShow();
+            if (CloseRequested || _disposed || !_gameObject)
+            {
+                Profiler.EndSample();
+                return;
+            }
             _state = PageState.Showing;
 
             try { _logic?.BroadcastShow(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
 
+            RebuildPresentationLayout();
+            if (!CanCompleteTransition)
+            {
+                Profiler.EndSample();
+                return;
+            }
+            if (CloseRequested && _state == PageState.Showing)
+            {
+                _state = PageState.Loaded;
+                NotifyHide();
+                Profiler.EndSample();
+                return;
+            }
             PrepareShowTransition();
             if (!HasTransition)
             {
@@ -419,9 +496,11 @@ namespace Ember.UI
         public void OnPause()
         {
             if (_state != PageState.Opened) return;
+            _pausedInteraction = InteractionIntent;
+            _pausedRaycasts = _fullscreenCovered ? _coveredRaycasts : _canvasGroup.blocksRaycasts;
             _state = PageState.Paused;
-            _canvasGroup.interactable = false;
-            _canvasGroup.blocksRaycasts = false;
+            SetInteractionEnabled(false);
+            SetViewRaycasts(false);
             OnPaused();
             try { _logic?.BroadcastPause(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnPause '{Name}': {ex}"); }
@@ -432,8 +511,8 @@ namespace Ember.UI
         {
             if (_state != PageState.Paused) return;
             _state = PageState.Opened;
-            _canvasGroup.interactable = true;
-            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
+            SetInteractionEnabled(_pausedInteraction);
+            SetViewRaycasts(_pausedRaycasts);
             OnResumed();
             try { _logic?.BroadcastResume(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnResume '{Name}': {ex}"); }
@@ -449,27 +528,25 @@ namespace Ember.UI
                 args = curtainArgs.Args;
             }
             else _curtainSession = null;
-            // 已显示（或视图隐藏）页面再次 Show：纯数据刷新，不重放 Init/Open/Show 动画（对标 Burner 可见分支 OnReopen）
+            // 已显示页面只刷新数据。视图隐藏页刷新后走统一的恢复流程。
             if (_state == PageState.Opened || _state == PageState.Paused || _state == PageState.ViewHidden)
             {
-                if (_state == PageState.ViewHidden)
-                {
-                    _state = PageState.Opened;
-                    _canvasGroup.alpha = 1f;
-                    _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
-                    _canvasGroup.interactable = true;
-                }
-
+                if (!DataBinding.Begin() || CloseRequested || _disposed || !_gameObject) return;
+                bool restoreView = _state == PageState.ViewHidden;
                 OnReopened(args);
                 try { _logic?.BroadcastReopen(args); }
                 catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnReopen '{Name}': {ex}"); }
+                if (restoreView && _state == PageState.ViewHidden && !CloseRequested)
+                    RestoreViewOnly();
                 return;
             }
 
             if (_state != PageState.Closed) return;
             _state = PageState.Loaded;
             _canvasGroup.alpha = 0f;
+            DataBinding.End();
             _gameObject.SetActive(true);
+            if (!DataBinding.Begin() || CloseRequested || _disposed || !_gameObject) return;
             OnReopened(args);
 
             try { _logic?.BroadcastOpen(args); }
@@ -487,11 +564,20 @@ namespace Ember.UI
                 return;
             }
 
+            _viewHiddenState = _state;
+            _viewHiddenAlpha = _fullscreenCovered ? _coveredAlpha : _canvasGroup.alpha;
+            _viewHiddenInteraction = InteractionIntent;
+            _viewHiddenRaycasts = _fullscreenCovered ? _coveredRaycasts : _canvasGroup.blocksRaycasts;
             _state = PageState.ViewHidden;
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
 
+            NotifyHide();
+        }
+
+        private void NotifyHide()
+        {
             try { _logic?.BroadcastHide(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
         }
@@ -499,36 +585,75 @@ namespace Ember.UI
         /// <inheritdoc />
         public void RestoreViewOnly()
         {
+            if (CloseRequested || _disposed || !_gameObject) return;
             if (_state != PageState.ViewHidden)
             {
                 EmberDebug.LogWarning(TAG, $"EUIPage.RestoreViewOnly: '{Name}' state={_state}, expected ViewHidden.");
                 return;
             }
 
-            _state = PageState.Opened;
-            _canvasGroup.alpha = 1f;
-            _canvasGroup.blocksRaycasts = ShouldBlockRaycasts;
-            _canvasGroup.interactable = true;
+            RefreshSafeAreaBeforeShow();
+            if (CloseRequested || _disposed || !_gameObject || _state != PageState.ViewHidden) return;
 
+            var restoredState = _viewHiddenState;
+            bool paused = restoredState == PageState.Paused;
+            _state = restoredState;
+            // Stage the restored intent so OnShow can explicitly override even a value
+            // held at false by a pause or mask. Commit the effective flags in this same operation.
+            _canvasGroup.alpha = _viewHiddenAlpha;
+            _canvasGroup.blocksRaycasts = paused ? _pausedRaycasts : _viewHiddenRaycasts;
+            _interactionEnabled = paused ? _pausedInteraction : _viewHiddenInteraction;
+            _canvasGroup.interactable = _interactionEnabled;
             try { _logic?.BroadcastShow(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnShow '{Name}': {ex}"); }
+            if (!CloseRequested && !_disposed && _gameObject && _state == restoredState)
+                RebuildPresentationLayout();
+            if (CloseRequested || _disposed || !_gameObject)
+            {
+                if (!_disposed && _gameObject && _state == restoredState)
+                {
+                    _state = PageState.ViewHidden;
+                    _canvasGroup.alpha = 0f;
+                    _canvasGroup.blocksRaycasts = false;
+                    SetInteractionEnabled(false);
+                    NotifyHide();
+                }
+                return;
+            }
+            if (_state != restoredState) return;
+
+            if (_fullscreenCovered)
+            {
+                _coveredAlpha = _canvasGroup.alpha;
+                _canvasGroup.alpha = 0f;
+            }
+
+            bool raycasts = _canvasGroup.blocksRaycasts;
+            bool interaction = _canvasGroup.interactable;
+            if (paused)
+            {
+                _pausedRaycasts = raycasts;
+                _pausedInteraction = interaction;
+            }
+            SetViewRaycasts(!paused && raycasts);
+            SetInteractionEnabled(!paused && interaction);
         }
 
         /// <inheritdoc />
         public void PlayHide()
         {
-            if (_state == PageState.Unloaded || _state == PageState.Closed)
+            if (_state == PageState.Closed || (_state == PageState.Unloaded && !CloseRequested))
                 return;
 
             Profiler.BeginSample("EUIPage.PlayHide");
+            bool wasPresented = _state == PageState.Opened || _state == PageState.Paused || _state == PageState.Showing;
             _state = PageState.Hiding;
             // 退出阶段立即禁止重复交互，但保留 blocksRaycasts 拦截下层点击，
             // 直到 CompleteHide 再完全放行。
-            _canvasGroup.interactable = false;
-            try { _logic?.BroadcastHide(); }
-            catch (Exception ex) { EmberDebug.LogError(TAG, $"Logic.OnHide '{Name}': {ex}"); }
+            SetInteractionEnabled(false);
+            if (wasPresented) NotifyHide();
 
-            if (!HasTransition)
+            if (!wasPresented || _fullscreenCovered || !HasTransition)
             {
                 CompleteHide();
             }
@@ -545,6 +670,8 @@ namespace Ember.UI
             if (_state == PageState.Unloaded && _logic == null) return;
             Profiler.BeginSample("EUIPage.Cleanup");
             _state = PageState.Unloaded;
+            DataBinding.End(forgetRegistrations: true);
+            SetFullscreenCovered(false);
 
             try { OnCleanup(); }
             catch (Exception ex) { EmberDebug.LogError(TAG, $"EUIPage.Cleanup '{Name}' error: {ex}"); }
@@ -707,12 +834,50 @@ namespace Ember.UI
             // Loading 的透明全屏 Background 位于 Animator 子树，因此父根和承载组都要同步。
             var shouldBlockRaycasts = ShouldBlockRaycasts;
             _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
             var animatorGroup = ResolveAnimator()?.GetComponent<CanvasGroup>();
             if (animatorGroup != null)
             {
                 animatorGroup.blocksRaycasts = shouldBlockRaycasts;
                 animatorGroup.interactable = false;
+            }
+        }
+
+        private void RefreshSafeAreaBeforeShow()
+        {
+            if (!_rectTransform || CanvasUpdateRegistry.IsRebuildingLayout()) return;
+            _rectTransform.ForceUpdateRectTransforms();
+            using var pool = UnityEngine.Pool.ListPool<MonoBehaviour>.Get(out var components);
+            _gameObject.GetComponentsInChildren(false, components);
+            foreach (var component in components)
+                if (component && component.isActiveAndEnabled &&
+                    component is IEmberSafeAreaProvider && component is ILayoutSelfController controller)
+                    controller.SetLayoutHorizontal();
+        }
+
+        private void RebuildPresentationLayout()
+        {
+            if (!_rectTransform || CanvasUpdateRegistry.IsRebuildingLayout()) return;
+            using var componentPool = UnityEngine.Pool.ListPool<MonoBehaviour>.Get(out var components);
+            using var layoutPool = UnityEngine.Pool.HashSetPool<RectTransform>.Get(out var layouts);
+            _gameObject.GetComponentsInChildren(false, components);
+            foreach (var component in components)
+                if (component && component.isActiveAndEnabled && component is ILayoutController &&
+                    component.transform is RectTransform rect)
+                    layouts.Add(rect);
+
+            // uGUI layout calculation follows layout groups. A self-controller such as SafeArea
+            // alone does not calculate input for the layout groups it contains.
+            foreach (var component in components)
+            {
+                if (!component || !component.isActiveAndEnabled || !(component is ILayoutController) ||
+                    !(component.transform is RectTransform rect) || !layouts.Remove(rect))
+                    continue;
+                if (rect != _rectTransform && rect.parent is RectTransform parent &&
+                    parent.GetComponent<ILayoutGroup>() is Behaviour parentController &&
+                    parentController.isActiveAndEnabled)
+                    continue;
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
             }
         }
 
@@ -793,7 +958,7 @@ namespace Ember.UI
 
             _canvasGroup.alpha = 1f;
             _canvasGroup.blocksRaycasts = shouldBlockRaycasts;
-            _canvasGroup.interactable = true;
+            SetInteractionEnabled(true);
             _state = PageState.Opened;
 
             // 加载计时（对标 Burner PageLoadTiming）
@@ -941,7 +1106,7 @@ namespace Ember.UI
 
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
+            SetInteractionEnabled(false);
             _state = PageState.Closed;
 
             // 动画真正结束 → 播报事件 + 日志 + 回调（回调中包含 Cleanup + Destroy 调度）
@@ -997,6 +1162,44 @@ namespace Ember.UI
 
         /// <summary>是否创建遮罩（false = 本弹窗打开时不创建遮罩，点击穿透由业务自行处理）。</summary>
         public bool UseMask { get; set; } = true;
+        // FullScreenPopup culling must restore physical camera distance, never the sorting layer value.
+        private float? _coveredPlaneDistance;
+        private bool _fullscreenCovered;
+        private bool _coveredRaycasts;
+        private float _coveredAlpha;
+        private float _viewHiddenAlpha;
+
+        internal void SetFullscreenCovered(bool covered)
+        {
+            if (_fullscreenCovered == covered) return;
+            if (covered)
+            {
+                if (!_gameObject || (_state != PageState.Opened && _state != PageState.Paused)) return;
+                _interactionEnabled = InteractionIntent;
+                _coveredAlpha = _canvasGroup.alpha;
+                _coveredRaycasts = _canvasGroup.blocksRaycasts;
+                _canvasGroup.alpha = 0f;
+                _canvasGroup.blocksRaycasts = false;
+                if (_canvas && _canvas.renderMode == RenderMode.ScreenSpaceCamera)
+                {
+                    _coveredPlaneDistance = _canvas.planeDistance;
+                    _canvas.planeDistance = 100000f;
+                }
+            }
+            else
+            {
+                if (_canvas && _coveredPlaneDistance.HasValue)
+                    _canvas.planeDistance = _coveredPlaneDistance.Value;
+                _coveredPlaneDistance = null;
+                if (_canvasGroup && !CloseRequested && (_state == PageState.Opened || _state == PageState.Paused))
+                {
+                    _canvasGroup.alpha = _coveredAlpha;
+                    _canvasGroup.blocksRaycasts = _coveredRaycasts;
+                }
+            }
+            _fullscreenCovered = covered;
+            ApplyInteraction();
+        }
 
         /// <summary>本弹窗专属遮罩颜色；null 表示未配置，回退 <see cref="EUIManager.PopupMaskColor"/> 全局色。</summary>
         public Color? MaskColorOverride { get; set; }
@@ -1019,6 +1222,9 @@ namespace Ember.UI
 
         /// <summary>逻辑层实例</summary>
         public EUILogic Logic => _logic;
+
+        /// <summary>本页的数据绑定，首次打开或使用新参数刷新前重置已登记字段。</summary>
+        public EUIDataBinding DataBinding { get; } = new();
 
         /// <summary>逻辑层类型全名</summary>
         public string LogicTypeName
@@ -1212,6 +1418,7 @@ namespace Ember.UI
         internal void CancelClosing()
         {
             _isClosing = false;
+            CloseRequested = false;
             if (_gameObject != null)
                 _gameObject.SetActive(true);
         }
@@ -1240,6 +1447,7 @@ namespace Ember.UI
         {
             _disposed = true;
             _state = PageState.Closed;
+            DataBinding.End(forgetRegistrations: true);
             _curtainSession?.Dispose();
             _curtainSession = null;
             _onShowComplete = null;

@@ -12,6 +12,7 @@ namespace Ember.UI
         #region 内部参数
         private EUICurtainSession _curtainSession;
         private EUIPage _curtainPage;
+        private string _curtainPrefabPath;
         #endregion
 
         #region 内部方法
@@ -108,6 +109,10 @@ namespace Ember.UI
             {
                 _curtainSession = null;
                 _curtainPage = null;
+                _curtainPrefabPath = null;
+                foreach (var presentation in _presentations.FindAll(p =>
+                    (p.Requests[0].Args as EUICurtainOpenArgs)?.Session == session))
+                    CompletePresentation(presentation, null);
             }
         }
         #endregion
@@ -121,7 +126,8 @@ namespace Ember.UI
             cancellationToken.ThrowIfCancellationRequested();
             if (!_initialized || _sessionStopped || pageDef == null) throw new InvalidOperationException("Curtain is unavailable.");
             if (pageDef.PageType != PageType.TopMost) throw new ArgumentException("Curtains require a TopMost page.", nameof(pageDef));
-            if (_curtainSession != null || _context.FindOpenedPage(pageDef) != null)
+            if (_curtainSession != null || _context.FindOpenedPage(pageDef) != null ||
+                _presentations.Exists(p => p.Requests[0].EUIPageDef.PrefabPath == pageDef.PrefabPath))
                 throw new InvalidOperationException("A curtain is already active.");
             var session = new EUICurtainSession(options, RevealCurtainAsync, ReleaseCurtain);
             session.PageAttached = page =>
@@ -129,6 +135,7 @@ namespace Ember.UI
                 if (_curtainSession == session && !session.IsReleased) _curtainPage = page;
             };
             _curtainSession = session;
+            _curtainPrefabPath = pageDef.PrefabPath;
             OpenCurtainAsync(session, pageDef, args, cancellationToken).Forget();
             return session;
         }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2026 Ember Unity Framework. All rights reserved.
 
 using System;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 using Ember.Core;
@@ -196,11 +197,15 @@ namespace Ember.UI
         /// <param name="args">传递给 Init 的参数</param>
         /// <param name="onComplete">完成回调</param>
         public void OpenPage(EUIPage page, EUIPageDef pageDef, object args, Action onComplete = null)
+            => OpenPage(page, pageDef, args, onComplete, null);
+
+        internal void OpenPage(EUIPage page, EUIPageDef pageDef, object args, Action onComplete, Action onAborted)
         {
             Profiler.BeginSample("EUIViewEngine.OpenPage");
             EnsureLayerCanvas(pageDef.Layer);
 
             page.EUIPageDef = pageDef;
+            page.IsPreloadOnly = false;
             page.Transform.SetParent(_uiRoot, false);
             _sortDirty = true;
 
@@ -221,7 +226,11 @@ namespace Ember.UI
             // Phase 1: Init
             EnqueuePageOperation(() =>
             {
-                if (curtain?.IsReleased == true) return;
+                if (!CanStartPresentation(page, curtain))
+                {
+                    onAborted?.Invoke();
+                    return;
+                }
                 ((IEUIView)page).Init(args);
 
                 // 注入完成回调：动画真正结束时由 CompleteShow() 触发
@@ -237,13 +246,39 @@ namespace Ember.UI
                 // Phase 2: PlayShow
                 EnqueuePageOperation(() =>
                 {
-                    if (curtain?.IsReleased == true) return;
-                    ((IEUIView)page).PlayShow();
+                    PlayPreparedPageAsync(page, curtain, onAborted).Forget();
                     // NotifyOpened + 日志 + onComplete 现在在 EUIPage.CompleteShow() 中触发
                     // 不再使用 _nextFrameCallbacks（之前这里动画未完成就播报，是个 bug）
                 });
             });
             Profiler.EndSample();
+        }
+
+        internal Func<EUIPage, UniTask<bool>> PreparePagePresentation;
+
+        private static bool CanStartPresentation(EUIPage page, EUICurtainSession curtain)
+            => !page.CloseRequested && !page.IsDisposed && page.GameObject && curtain?.IsReleased != true;
+
+        private async UniTask PlayPreparedPageAsync(EUIPage page, EUICurtainSession curtain, Action onAborted)
+        {
+            try
+            {
+                if (!CanStartPresentation(page, curtain) ||
+                    (PreparePagePresentation != null && !await PreparePagePresentation(page)) ||
+                    !CanStartPresentation(page, curtain))
+                {
+                    onAborted?.Invoke();
+                    return;
+                }
+                ((IEUIView)page).PlayShow();
+            }
+            catch
+            {
+                onAborted?.Invoke();
+                throw;
+            }
+            if (page.CloseRequested && page.State == PageState.Loaded)
+                FlushPendingPageOp(page);
         }
 
         /// <summary>
@@ -257,6 +292,7 @@ namespace Ember.UI
         internal void AbortCurtainPage(EUIPage page)
         {
             _activePages.Remove(page);
+            _pageContext.ReleaseTopMostOrder(page);
             if (!string.IsNullOrEmpty(page.PrefabPath)) _closingPages.Remove(page.PrefabPath);
             try { ((IEUIView)page).Cleanup(); }
             finally { page.ForceDispose(); _sortDirty = true; }
@@ -265,6 +301,20 @@ namespace Ember.UI
         internal void ClosePageInternal(EUIPage page, Action onComplete = null, Action onTransitionComplete = null)
         {
             if (page == null) return;
+            page.CloseRequested = true;
+
+            // An externally destroyed view cannot run an exit transition. Still complete route/mask cleanup.
+            if (!page.GameObject)
+            {
+                _activePages.Remove(page);
+                _pageContext.ReleaseTopMostOrder(page);
+                if (!string.IsNullOrEmpty(page.PrefabPath)) _closingPages.Remove(page.PrefabPath);
+                ((IEUIView)page).Cleanup();
+                page.ForceDispose();
+                onTransitionComplete?.Invoke();
+                onComplete?.Invoke();
+                return;
+            }
 
             _sortDirty = true;
 
@@ -290,6 +340,7 @@ namespace Ember.UI
             // 注入完成回调：动画真正结束时由 CompleteHide() 触发
             page.SetHideCallback(() =>
             {
+                _pageContext.ReleaseTopMostOrder(page);
                 EmberDebug.LogCleanup(TAG, $"页面已关闭: {pageDef}");
                 try
                 {
@@ -387,6 +438,7 @@ namespace Ember.UI
 
             EnqueuePageOperation(() =>
             {
+                if (page.CloseRequested || page.IsDisposed || !page.GameObject) return;
                 // 已显示（Opened/Paused/ViewHidden）页面：纯数据刷新，无 Show 流程，直接回调
                 bool refreshOnly = page.State == PageState.Opened
                     || page.State == PageState.Paused
@@ -394,10 +446,7 @@ namespace Ember.UI
 
                 if (refreshOnly)
                 {
-                    ((IEUIView)page).OnReopen(args);
-                    EUIObserver.NotifyReopened(page.EUIPageDef, args);
-                    EmberDebug.LogEvent(TAG, $"页面数据已刷新: {page.EUIPageDef}");
-                    onComplete?.Invoke();
+                    if (RefreshOpenedPage(page, args)) onComplete?.Invoke();
                     return;
                 }
 
@@ -417,6 +466,19 @@ namespace Ember.UI
             });
         }
 
+        internal bool RefreshOpenedPage(EUIPage page, object args)
+        {
+            if (page.CloseRequested || page.IsDisposed || !page.GameObject ||
+                (page.State != PageState.Opened && page.State != PageState.Paused && page.State != PageState.ViewHidden))
+                return false;
+
+            ((IEUIView)page).OnReopen(args);
+            if (page.CloseRequested || page.IsDisposed || !page.GameObject) return false;
+            EUIObserver.NotifyReopened(page.EUIPageDef, args);
+            EmberDebug.LogEvent(TAG, $"页面数据已刷新: {page.EUIPageDef}");
+            return true;
+        }
+
         // ── 预加载 ──
 
         /// <summary>
@@ -431,6 +493,7 @@ namespace Ember.UI
             EnsureLayerCanvas(pageDef.Layer);
 
             page.EUIPageDef = pageDef;
+            page.IsPreloadOnly = true;
             page.Transform.SetParent(_uiRoot, false);
             _sortDirty = true;
 
@@ -447,10 +510,33 @@ namespace Ember.UI
 
             EnqueuePageOperation(() =>
             {
+                if (page.IsDisposed || !page.GameObject) return;
                 ((IEUIView)page).Preload(args);
                 onComplete?.Invoke();
             });
             Profiler.EndSample();
+        }
+
+        internal void DiscardPreloadedPage(EUIPage page)
+        {
+            _activePages.Remove(page);
+            try { page.Cleanup(); }
+            finally { page.ForceDispose(); }
+        }
+
+        internal bool HasPresentationFor(string prefabPath)
+        {
+            foreach (var page in _activePages)
+                if (!page.IsPreloadOnly && !page.IsDisposed && !page.CloseRequested && page.GameObject &&
+                    page.PrefabPath == prefabPath)
+                    return true;
+            return false;
+        }
+
+        internal void MarkPageOrderDirty()
+        {
+            _sortDirty = true;
+            EUIBackdrop.MarkOrderDirty();
         }
 
         // ── Canvas 层管理 ──
@@ -491,6 +577,13 @@ namespace Ember.UI
             return mask;
         }
 
+        internal GameObject ShowBgMask(int sortingOrder, Action onClick, Color tint, int layer,
+            Canvas foreground, EUIMaskEffect effect, EUIBackdropSettings settings)
+        {
+            var mask = _bgMaskPool.Get(sortingOrder, onClick, tint, layer, foreground, effect, settings);
+            _sortDirty = true; EUIBackdrop.MarkOrderDirty(); return mask;
+        }
+
         /// <summary>隐藏背景遮罩</summary>
         public void HideBgMask(GameObject mask)
         {
@@ -520,7 +613,11 @@ namespace Ember.UI
         public void BroadcastPageUpdate()
         {
             for (int i = _activePages.Count - 1; i >= 0; i--)
-                _activePages[i].Logic?.BroadcastUpdate();
+            {
+                var page = _activePages[i];
+                if (!page.IsPreloadOnly && !page.IsDisposed && page.GameObject)
+                    page.Logic?.BroadcastUpdate();
+            }
         }
 
         /// <summary>按层级从高到低查找返回键处理者</summary>

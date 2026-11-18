@@ -2071,3 +2071,15 @@ Editor 公共入口 `Ember.Table.Editor.EmberTableSourceFiles` 读取共享
 `EmberAISkillInstaller.ProjectSourceDirectory` 为 `ProjectSettings/EmberProjectSkills`，schema v3 清单声明 projectId、Skill version、精确模板 ID 和兼容范围；安装记录使用 schema v4，所有权为 project。项目中心既有 `PreviewCurrentTemplateSkills/SyncCurrentTemplateSkills` 与 `GetTemplateSkillExecutionBlockReason` 同时覆盖项目来源；配置、发现副本和记录复用既有模板事务。格式、备份、失效收回及降级边界见[项目 Skill](../../Packages/com.ember/Documentation~/manual/project-ai-skills.md)。
 
 `EmberLevelTrialSession.Stop(string requestId)`、`Retry(string requestId)` 与 `ReportFailure(string requestId, string message)` 拒绝旧请求影响当前会话；原无参数 Stop 和单参数 ReportFailure 保留兼容，适用于显式当前会话操作。异步适配器回调应携带启动时冻结的 requestId。重试额外拒绝关卡发现结果换绑配置/适配器；同步 StopTrial 异常取消重试、记录诊断并允许编辑现场恢复。框架不负责产品能力初态或项目临时存储清理。验证范围见[实施记录](../../Packages/com.ember/Documentation~/manual/level-authoring-boundary-plan.md#9-框架侧实施记录2026-10-30)。
+
+## UI 运行时 companion（工作区新增）
+
+`EUIBufferedProgressBar` 提供 SetNormalized、SetValue(current, maximum)、ConfigureTargets、SyncImmediate、Clear、RefreshText；独立 SlowBufferEnabled 与 WhiteMode（Disabled/Shrink/Fade），真实值及 Percent/CurrentOverMax/Custom 文字。显式 Extension、AutoDetect=false，旧 ProgressBar→Slider 保持。方向、损失矩形、连续输入及池化合同见 [缓冲进度条](../../Packages/com.ember/Documentation~/ui/buffered-progress-bar.md)。
+
+`Ember.UIExtension` 的 `EUIScrollController` 提供 ScrollToBegin/End/Normalized、ScrollByPixels、ScrollTo/ScrollToItem、IsVisible、Stop、SetSnapTargets/Container 与 SnapToNearest，结果携带 OperationId/Status。`TMPMarquee` 提供 SetMarqueeEnabled、Speed、StartDelay/EndDelay、ResetPosition、Refresh，只修改公开 TMP 网格。
+
+`EUIImageLoader` / `EUIRawImageLoader` 提供 Load(path, Action<EUIImageLoadResult>)、CancelLoading、Clear、SetSprite/SetTexture、IsLoading/CurrentPath/LoadingPath，以及借入占位/失败图、KeepPrevious 策略和 KeepNativeSize。首次 inactive Bind 可加载；池借用登记 `lease.Track(loader.Clear)`，隐藏后 OnShow 显式重发。正式 Binding 选择具体 Extension 后由 UI 中心生成；四 companion 的 AutoDetect=false 保留旧自动选择。
+
+`EmberAssetHandle<T>.Create(path, cancel, release)` 与 `TryComplete(asset, succeeded, error)` 为外部 Provider 的公开入口；IsCancelled/IsDisposed 可查询。Cancel 结束 pending；Dispose 每请求释放一次 token。`EmberAssetHandleSlot<T>` 新增 Clear/CurrentAsset/LastError，按 Ordinal 地址去重、失败可重试。Provider 必须处理被拒绝的迟到结果，Resources 不销毁共享资产。
+
+坐标、结果、TMP 配置前置、图片接管与多图/圆角组合的唯一使用说明见 [UI 运行时扩展](../../Packages/com.ember/Documentation~/ui/runtime-extensions.md)，资源凭证合同见 [Resource](../../Packages/com.ember/Documentation~/resource/README.md)。

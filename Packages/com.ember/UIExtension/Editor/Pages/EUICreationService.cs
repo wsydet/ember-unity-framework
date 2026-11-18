@@ -37,6 +37,9 @@ namespace Ember.UIExtension.Editor
         public bool UseUIUpdate;
         public bool UseMask = true;
         public Color MaskColor = new Color(0f, 0f, 0f, 0.5f);
+        public EUIMaskEffect? MaskEffect;
+        public bool? OverrideMaskTint;
+        public EUIBackdropSettings BackdropSettingsOverride;
         public bool ClickMaskToClose = true;
         public EUIBinding.RegularTransitionMode TransitionMode = EUIBinding.RegularTransitionMode.PresetFade;
         public float FadeInTime = 0.3f;

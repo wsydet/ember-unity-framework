@@ -44,6 +44,9 @@ namespace Ember.UIExtension
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>是否参与自动选择。伴随组件可登记到下拉框而保留原生组件的自动绑定。</summary>
+        public bool AutoDetect { get; set; } = true;
+
         /// <summary>
         /// 标记目标类为 UI 扩展组件。
         /// </summary>

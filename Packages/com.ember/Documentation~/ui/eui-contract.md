@@ -46,4 +46,34 @@ base 可生成示例：`UI/Module/UIFoundation/Prefabs/EUIOwnershipExamplePage.p
 
 相关测试：EUIContractEditTests、EUIDevelopmentCenterEditTests；Loading 命名回归使用 EUITransitionBlockPreviewTests。具体本次运行结果保存在工程开发交接，不将测试存在视为已通过。
 
+## 同一实例换数据
+
+在用户逻辑的 `EUILogic.OnInit` 中通过 `DataBinding.RegisterReset` 登记随数据变化的字段。页面在 `OnOpen` 和 `OnReopen` 应用参数前、Item 在新一轮 `BeginUse` 写入内容前，先让旧绑定失效，再执行登记的清理。固定子 Logic 共用所有者的绑定，动态 Item 各自持有绑定。临时隐藏与恢复同一份数据会沿用当前绑定。
+
+可选图片的清理同时隐藏 Image 并清除加载器持有的图。用 `SetSprite(null)` 也能清掉 Prefab 或业务直接赋值的图，并使该加载器的旧请求失效。
+
+```csharp
+public override void OnInit()
+{
+    base.OnInit();
+    DataBinding.RegisterReset(() =>
+    {
+        Icon.enabled = false;
+        IconLoader.SetSprite(null);
+    });
+}
+
+private void BindIcon(string path)
+{
+    if (string.IsNullOrEmpty(path)) return;
+    var binding = DataBinding.Capture();
+    IconLoader.Load(path, result => binding.TryApply(() =>
+    {
+        Icon.enabled = result.Status == EUIImageLoadStatus.Success;
+    }));
+}
+```
+
+页面可在 `OnOpen` 与 `OnReopen` 调用同一个绑定方法，列表 Item 可在 `EUIItemList.Replace` 的数据绑定回调中调用。自定义异步结果回到 Unity 主线程后，使用捕获的绑定版本执行 `TryApply`。
+
 

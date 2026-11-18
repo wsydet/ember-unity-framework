@@ -29,11 +29,22 @@ namespace Ember.UI
         private const int MainPageBaseOrder  = 1000;
         private const int PageGrowStep       = 500;
         private const int TopMostBaseOrder   = 25000;
+        private const int TOP_MOST_ORDER_LIMIT = 29000; // Guide overlay
+        private const int TOP_MOST_ORDER_STEP = 50;
+        private const int TOP_MOST_ORDER_CAPACITY =
+            (TOP_MOST_ORDER_LIMIT - TopMostBaseOrder) / TOP_MOST_ORDER_STEP - 1;
 
         private readonly List<StackEntry> _mainPageStack = new List<StackEntry>();
         private readonly List<EUIPage> _topMostList   = new List<EUIPage>();
+        private readonly List<EUIPage> _topMostOrders = new();
+        private readonly Dictionary<EUIPage, EUIPage> _topMostRoots = new();
+        private readonly HashSet<EUIPage> _closingMains = new();
+        private readonly HashSet<EUIPage> _mainPaused = new();
+        private readonly Dictionary<EUIPage, EUIPage> _fullscreenTargets = new();
+        private readonly Dictionary<EUIPage, StackEntry> _closingPopups = new();
         private readonly List<EUIPage> _overlayList   = new List<EUIPage>();
         private EUIPage _backgroundPage;
+        private readonly HashSet<EUIPage> _popupPaused = new();
 
         private readonly EUIViewEngine _uiManager;
 
@@ -86,14 +97,16 @@ namespace Ember.UI
                 var current = _mainPageStack[_mainPageStack.Count - 1];
                 _uiManager.EnqueuePageOperation(() =>
                 {
-                    ((IEUIView)current.Page).OnPause();
+                    if (current.Page.State != PageState.Opened || current.Page.CloseRequested) return;
+                    _mainPaused.Add(current.Page);
+                    current.Page.OnPause();
                     EUIObserver.NotifyPaused(current.Page.EUIPageDef);
                 });
 
                 // 隐藏当前 MainPage 的 Popup
                 foreach (var popup in current.Popups)
                 {
-                    _uiManager.EnqueuePageOperation(() => ((IEUIView)popup).OnPause());
+                    _uiManager.EnqueuePageOperation(() => PausePopup(popup));
                 }
             }
 
@@ -126,11 +139,11 @@ namespace Ember.UI
             var index = FindMainPageIndex(page);
             if (index < 0) return null;
 
+            bool wasCurrent = index == _mainPageStack.Count - 1;
             _mainPageStack.RemoveAt(index);
-
-            return index > 0 && index - 1 < _mainPageStack.Count
-                ? _mainPageStack[index - 1].Page
-                : null;
+            _mainPaused.Remove(page);
+            if (IsPopupVisible(page)) _closingMains.Add(page);
+            return wasCurrent ? CurrentMainPage : null;
         }
 
         /// <summary>获取指定 MainPage 当前持有的 Popup 快照源。调用方在遍历关闭前应自行复制。</summary>
@@ -140,111 +153,132 @@ namespace Ember.UI
             return index >= 0 ? _mainPageStack[index].Popups : Array.Empty<EUIPage>();
         }
 
-        /// <summary>关闭过渡完成后恢复上一个 MainPage 及其 Popup。</summary>
+        internal void FinishMainPageClose(EUIPage page)
+        {
+            _closingMains.Remove(page);
+        }
+
+        /// <summary>关闭过渡完成后恢复仍位于栈顶的 MainPage。</summary>
         public void ResumeMainPageAfterClose(EUIPage mainPage)
         {
-            int index = FindMainPageIndex(mainPage);
-            if (index < 0) return;
-
-            var entry = _mainPageStack[index];
+            if (mainPage == null) return;
             _uiManager.EnqueuePageOperation(() =>
             {
-                ((IEUIView)entry.Page).OnResume();
-                EUIObserver.NotifyResumed(entry.Page.EUIPageDef);
+                if (CurrentMainPage == mainPage && !HasClosingMainAbove(mainPage))
+                    ResumeMainIfPaused(mainPage);
             });
+        }
 
-            foreach (var popup in entry.Popups)
-            {
-                var capturedPopup = popup;
-                _uiManager.EnqueuePageOperation(() =>
-                {
-                    ((IEUIView)capturedPopup).OnResume();
-                    EUIObserver.NotifyResumed(capturedPopup.EUIPageDef);
-                });
-            }
+        private void ResumeMainIfPaused(EUIPage page)
+        {
+            if (page.State == PageState.Paused && _mainPaused.Remove(page))
+                ResumePausedPage(page);
+        }
+
+        private bool HasClosingMainAbove(EUIPage page)
+        {
+            foreach (var closing in _closingMains)
+                if (closing.GameObject && closing.Canvas.sortingOrder > page.Canvas.sortingOrder)
+                    return true;
+            return false;
+        }
+
+        private static void ResumePausedPage(EUIPage page)
+        {
+            if (page.State != PageState.Paused || page.CloseRequested || page.IsDisposed || !page.GameObject)
+                return;
+            page.OnResume();
+            EUIObserver.NotifyResumed(page.EUIPageDef);
         }
 
         // ── Popup ──
 
-        /// <summary>在当前 MainPage 上添加一个 Popup</summary>
+        /// <summary>在当前 MainPage 上添加一个 Popup。</summary>
         public void AddPopup(EUIPage popup)
         {
             if (_mainPageStack.Count == 0) return;
-
             var current = _mainPageStack[_mainPageStack.Count - 1];
-
-            // 全屏弹窗标记：完全遮盖下层时才隐藏下方页面（推裁剪面远端）；
-            // 普通弹窗不隐藏下层——下层保持渲染，弹窗四周露出的内容可见，靠遮罩拦截交互。
-            bool fullScreen = popup.EUIPageDef != null && popup.EUIPageDef.IsFullScreen;
-
-            // 如果之前没有 Popup：全屏弹窗隐藏 MainPage
-            if (current.Popups.Count == 0)
-            {
-                if (fullScreen)
-                    SetPageVisible(current.Page, false);
-            }
-            // 已有 Popup：全屏弹窗隐藏前一个 Popup（OnPause 语义保持——非全屏弹窗叠加也通知遮挡）
-            else
-            {
-                var prevPopup = current.Popups[current.Popups.Count - 1];
-                _uiManager.EnqueuePageOperation(() => ((IEUIView)prevPopup).OnPause());
-                if (fullScreen)
-                    SetPageVisible(prevPopup, false);
-            }
-
+            int order = current.SortingOrder;
+            foreach (var previous in current.Popups)
+                if (previous.Canvas) order = Mathf.Max(order, previous.Canvas.sortingOrder);
+            foreach (var closing in _closingPopups)
+                if (closing.Value == current && closing.Key.Canvas)
+                    order = Mathf.Max(order, closing.Key.Canvas.sortingOrder);
             current.Popups.Add(popup);
-
-            // 设置 Popup 的 SortingOrder
-            var canvas = popup.Canvas;
-            if (canvas)
+            if (popup.Canvas)
             {
-                canvas.overrideSorting = true;
-                canvas.sortingOrder = current.SortingOrder + current.Popups.Count * PageGrowStep;
+                popup.Canvas.overrideSorting = true;
+                popup.Canvas.sortingOrder = order + PageGrowStep;
             }
         }
 
-        /// <summary>
-        /// 将 Popup 从路由列表移除，返回退出过渡完成后需恢复的下层页面。
-        /// 本方法不立即改变下层可见性或触发 OnResume。
-        /// </summary>
+        /// <summary>采样完成后由这个全屏 Popup 持有对下层画面的裁剪。</summary>
+        internal void CommitFullScreenPopup(EUIPage popup)
+        {
+            foreach (var entry in _mainPageStack)
+            {
+                int index = entry.Popups.IndexOf(popup);
+                if (index < 0) continue;
+                SetFullscreenTarget(popup, FindFullscreenTarget(entry, index));
+                return;
+            }
+        }
+
+        private EUIPage FindFullscreenTarget(StackEntry entry, int index)
+        {
+            if (entry.Popups[index].State == PageState.ViewHidden) return null;
+            for (int i = index - 1; i >= 0; i--)
+                if (CanBeCulled(entry.Popups[i])) return entry.Popups[i];
+            return CanBeCulled(entry.Page) ? entry.Page : null;
+        }
+
+        private static bool CanBeCulled(EUIPage page)
+        {
+            return page.GameObject && !page.CloseRequested &&
+                (page.State == PageState.Opened || page.State == PageState.Paused);
+        }
+
+        private void SetFullscreenTarget(EUIPage popup, EUIPage target)
+        {
+            _fullscreenTargets.TryGetValue(popup, out var previous);
+            _fullscreenTargets[popup] = target;
+            if (previous == target) return;
+            target?.SetFullscreenCovered(true);
+            if (previous != null && !_fullscreenTargets.ContainsValue(previous))
+                previous.SetFullscreenCovered(false);
+        }
+
+        /// <summary>移除路由，保留仍在退场的 Popup 对下层的覆盖。</summary>
         public EUIPage RemovePopup(EUIPage popup)
         {
             foreach (var entry in _mainPageStack)
             {
-                if (entry.Popups.Remove(popup))
-                {
-                    return entry.Popups.Count > 0
-                        ? entry.Popups[entry.Popups.Count - 1]
-                        : entry.Page;
-                }
+                if (!entry.Popups.Remove(popup)) continue;
+                _popupPaused.Remove(popup);
+                if (IsPopupVisible(popup)) _closingPopups.Add(popup, entry);
+                return entry.Popups.Count > 0 ? entry.Popups[entry.Popups.Count - 1] : entry.Page;
             }
-
             return null;
         }
 
-        /// <summary>Popup 关闭过渡完成后，恢复下层页面可见性与生命周期。</summary>
-        public void ResumePageAfterPopupClose(EUIPage page)
+        internal void FinishPopupClose(EUIPage popup)
         {
-            if (page == null || !ContainsRoutedPage(page)) return;
-
-            SetPageVisible(page, true);
-            _uiManager.EnqueuePageOperation(() =>
+            _closingPopups.Remove(popup);
+            if (_fullscreenTargets.ContainsKey(popup))
             {
-                ((IEUIView)page).OnResume();
-                EUIObserver.NotifyResumed(page.EUIPageDef);
-            });
+                SetFullscreenTarget(popup, null);
+                _fullscreenTargets.Remove(popup);
+            }
         }
 
-        /// <summary>页面是否仍在 MainPage / Popup 路由中，防止批量关闭时恢复已移除的下层页面。</summary>
-        private bool ContainsRoutedPage(EUIPage page)
+        /// <summary>关闭过渡后只恢复仍具备当前展示资格的 Popup。</summary>
+        public void ResumePageAfterPopupClose(EUIPage page)
         {
-            foreach (var entry in _mainPageStack)
+            _uiManager.EnqueuePageOperation(() =>
             {
-                if (entry.Page == page || entry.Popups.Contains(page))
-                    return true;
-            }
-
-            return false;
+                if (page == GetTopPopup() && !HasClosingPopupAbove(page) && _popupPaused.Remove(page))
+                    ResumePausedPage(page);
+            });
         }
 
         /// <summary>获取指定 MainPage 上的 Popup 数量</summary>
@@ -268,24 +302,135 @@ namespace Ember.UI
         {
             if (_mainPageStack.Count == 0) return null;
             var popups = _mainPageStack[_mainPageStack.Count - 1].Popups;
-            return popups.Count > 0 ? popups[popups.Count - 1] : null;
+            for (int i = popups.Count - 1; i >= 0; i--)
+                if (IsPopupVisible(popups[i])) return popups[i];
+            return null;
+        }
+
+        // Called before modal selection is reconciled. Only undo pauses owned by this route.
+        internal void SynchronizePopupInteraction()
+        {
+            if (_mainPageStack.Count == 0) return;
+            var entry = _mainPageStack[_mainPageStack.Count - 1];
+            if (HasClosingMainAbove(entry.Page)) return;
+            ResumeMainIfPaused(entry.Page);
+            if (CurrentMainPage != entry.Page) return;
+
+            for (int i = 0; i < entry.Popups.Count; i++)
+            {
+                var popup = entry.Popups[i];
+                if (_fullscreenTargets.ContainsKey(popup))
+                    SetFullscreenTarget(popup, FindFullscreenTarget(entry, i));
+            }
+
+            // OnPause/OnResume may synchronously close a page. Use a pooled snapshot for callbacks.
+            using var pool = UnityEngine.Pool.ListPool<EUIPage>.Get(out var popups);
+            popups.AddRange(entry.Popups);
+            var top = GetTopPopup();
+            foreach (var popup in popups)
+            {
+                if (CurrentMainPage != entry.Page) return;
+                if (!IsPopupVisible(popup) || popup.CloseRequested) continue;
+                if (popup != top || HasClosingPopupAbove(popup)) PausePopup(popup);
+                else if (_popupPaused.Remove(popup)) ResumePausedPage(popup);
+            }
+        }
+
+        private bool HasClosingPopupAbove(EUIPage page)
+        {
+            if (page == null || !page.Canvas) return false;
+            var entry = _mainPageStack[_mainPageStack.Count - 1];
+            foreach (var closing in _closingPopups)
+                if (closing.Value == entry && closing.Key.GameObject &&
+                    closing.Key.Canvas.sortingOrder > page.Canvas.sortingOrder)
+                    return true;
+            return false;
+        }
+
+        private void PausePopup(EUIPage popup)
+        {
+            if (popup.State != PageState.Opened || popup.CloseRequested || !popup.GameObject) return;
+            _popupPaused.Add(popup);
+            popup.OnPause();
+        }
+
+        private static bool IsPopupVisible(EUIPage page)
+        {
+            return page != null && !page.IsDisposed && page.GameObject && page.GameObject.activeInHierarchy &&
+                (page.State == PageState.Opened || page.State == PageState.Paused || page.State == PageState.Showing);
         }
 
         // ── TopMost ──
 
-        /// <summary>添加置顶层页面</summary>
+        /// <summary>添加置顶层页面。</summary>
         public void AddTopMost(EUIPage page)
         {
-            _topMostList.Add(page);
-            var order = TopMostBaseOrder + _topMostList.Count * PageGrowStep;
-            var canvas = page.Canvas;
-            if (canvas) { canvas.overrideSorting = true; canvas.sortingOrder = order; }
+            if (!TryAddTopMost(page))
+                EmberDebug.LogWarning(TAG, $"TopMost 排序区间已满: {page.EUIPageDef}");
         }
 
-        /// <summary>移除置顶层页面</summary>
-        public void RemoveTopMost(EUIPage page)
+        internal bool TryAddTopMost(EUIPage page)
         {
+            if (_topMostList.Contains(page)) return true;
+            if (!TryReserveTopMostOrder(page, page, PageGrowStep)) return false;
+            _topMostList.Add(page);
+            return true;
+        }
+
+        internal bool TrySetSubPageOrder(EUIPage page, EUIPage parent)
+        {
+            if (_topMostRoots.TryGetValue(parent, out var root))
+                return !root.CloseRequested && TryReserveTopMostOrder(page, root, TOP_MOST_ORDER_STEP);
+
+            if (page.Canvas) page.Canvas.sortingOrder = parent.GetNextSubPageSortingOrder();
+            return true;
+        }
+
+        private bool TryReserveTopMostOrder(EUIPage page, EUIPage root, int step)
+        {
+            for (int i = _topMostOrders.Count - 1; i >= 0; i--)
+                if (!_topMostOrders[i].Canvas || _topMostOrders[i].IsDisposed)
+                    ReleaseTopMostOrder(_topMostOrders[i]);
+            if (_topMostOrders.Count >= TOP_MOST_ORDER_CAPACITY || !page.Canvas || _topMostRoots.ContainsKey(page))
+                return false;
+
+            int index = _topMostOrders.Count;
+            if (page != root)
+                index = _topMostOrders.FindLastIndex(occupied => _topMostRoots[occupied] == root) + 1;
+
+            int previous = index == 0 ? TopMostBaseOrder : _topMostOrders[index - 1].Canvas.sortingOrder;
+            int next = index == _topMostOrders.Count ? TOP_MOST_ORDER_LIMIT : _topMostOrders[index].Canvas.sortingOrder;
+            _topMostOrders.Insert(index, page);
+            _topMostRoots.Add(page, root);
+            if (previous + step < next)
+            {
+                SetTopMostOrder(page, previous + step);
+            }
+            else
+            {
+                // Compact the displayed order, including pages still drawing their exit animation.
+                for (int i = 0; i < _topMostOrders.Count; i++)
+                    SetTopMostOrder(_topMostOrders[i], TopMostBaseOrder + (i + 1) * TOP_MOST_ORDER_STEP);
+            }
+            _uiManager.MarkPageOrderDirty();
+            return true;
+        }
+
+        private static void SetTopMostOrder(EUIPage page, int order)
+        {
+            page.Canvas.overrideSorting = true;
+            page.Canvas.sortingOrder = order;
+        }
+
+        /// <summary>从查询路由移除。排序保留到退出过渡完成。</summary>
+        public void RemoveTopMost(EUIPage page) => _topMostList.Remove(page);
+
+        internal void ReleaseTopMostOrder(EUIPage page)
+        {
+            if (!_topMostRoots.Remove(page)) return;
+            _topMostOrders.Remove(page);
             _topMostList.Remove(page);
+            _uiManager.MarkPageOrderDirty();
         }
 
         /// <summary>最顶层 TopMost 页面</summary>
@@ -389,14 +534,14 @@ namespace Ember.UI
             // FreePage（后进先处理，最高优先级）
             for (int i = _freePageList.Count - 1; i >= 0; i--)
             {
-                if (((IEUIView)_freePageList[i]).IsOpened && action(_freePageList[i]))
+                if (!_freePageList[i].ModalInputBlocked && ((IEUIView)_freePageList[i]).IsOpened && action(_freePageList[i]))
                     return;
             }
 
             // TopMost（后进先处理）
             for (int i = _topMostList.Count - 1; i >= 0; i--)
             {
-                if (((IEUIView)_topMostList[i]).IsOpened && action(_topMostList[i]))
+                if (!_topMostList[i].ModalInputBlocked && ((IEUIView)_topMostList[i]).IsOpened && action(_topMostList[i]))
                     return;
             }
 
@@ -406,7 +551,7 @@ namespace Ember.UI
                 var popups = _mainPageStack[_mainPageStack.Count - 1].Popups;
                 for (int i = popups.Count - 1; i >= 0; i--)
                 {
-                    if (((IEUIView)popups[i]).IsOpened && action(popups[i]))
+                    if (!popups[i].ModalInputBlocked && ((IEUIView)popups[i]).IsOpened && action(popups[i]))
                         return;
                 }
             }
@@ -414,12 +559,12 @@ namespace Ember.UI
             // MainPage
             for (int i = _mainPageStack.Count - 1; i >= 0; i--)
             {
-                if (((IEUIView)_mainPageStack[i].Page).IsOpened && action(_mainPageStack[i].Page))
+                if (!_mainPageStack[i].Page.ModalInputBlocked && ((IEUIView)_mainPageStack[i].Page).IsOpened && action(_mainPageStack[i].Page))
                     return;
             }
 
             // Background（最低优先级，最后遍历）
-            if (_backgroundPage != null && ((IEUIView)_backgroundPage).IsOpened)
+            if (_backgroundPage != null && !_backgroundPage.ModalInputBlocked && ((IEUIView)_backgroundPage).IsOpened)
                 action(_backgroundPage);
         }
 
@@ -491,6 +636,11 @@ namespace Ember.UI
                 _uiManager.ClosePageInternal(entry.Page);
             }
             _mainPageStack.Clear();
+            _mainPaused.Clear();
+            _closingMains.Clear();
+            _closingPopups.Clear();
+            _fullscreenTargets.Clear();
+            _popupPaused.Clear();
 
             EUIObserver.NotifyAllClosed();
         }
@@ -508,39 +658,6 @@ namespace Ember.UI
                 if (_mainPageStack[i].Page == page) return i;
             }
             return -1;
-        }
-
-        /// <summary>
-        /// 切换页面可见性。
-        /// 隐藏时用 planeDistance=100000 推到相机远裁面之外，避免 Canvas 仍参与 Rebuild。
-        /// 对标 Burner GamePage.SetActive 中的 planeDistance 裁剪逻辑。
-        /// </summary>
-        private static void SetPageVisible(EUIPage page, bool visible)
-        {
-            // CanvasGroup alpha 控制（兼容无 Canvas 的页面）
-            var cg = page.CanvasGroup;
-            if (cg)
-            {
-                cg.alpha = visible ? 1f : 0f;
-                cg.blocksRaycasts = visible;
-                cg.interactable = visible;
-            }
-
-            // planeDistance 裁剪（对标 Burner）
-            var canvas = page.Canvas;
-            if (canvas && canvas.renderMode == RenderMode.ScreenSpaceCamera)
-            {
-                if (visible)
-                {
-                    canvas.planeDistance = page.EUIPageDef != null
-                        ? page.EUIPageDef.Layer
-                        : 100f;
-                }
-                else
-                {
-                    canvas.planeDistance = 100000f; // 推到远裁面
-                }
-            }
         }
 
         #endregion

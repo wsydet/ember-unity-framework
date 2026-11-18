@@ -68,7 +68,9 @@ namespace Ember.UIExtension
 
             // 遮罩配置注入（与 Logic/ClassName 无关，无 Logic 的页面同样生效）
             page.UseMask = binding.UseMask;
-            page.MaskColorOverride = binding.MaskColor;
+            page.MaskColorOverride = binding.HasExplicitMaskTint ? binding.MaskColor : (Color?)null;
+            page.MaskEffectOverride = binding.MaskEffect;
+            page.BackdropSettingsOverride = binding.BackdropSettingsOverride;
             page.ClickMaskToClose = binding.ClickMaskToClose;
 
             if (string.IsNullOrEmpty(binding.ClassName)) return;

@@ -100,6 +100,9 @@ namespace Ember.UI
         /// <summary>由 EUIBinding 创建的逻辑实例；无逻辑配置时为 null。</summary>
         public EUILogic Logic => _logic;
 
+        /// <summary>本 Item 的数据绑定，每次新借用在应用数据前重置已登记字段。</summary>
+        public EUIDataBinding DataBinding { get; } = new();
+
         /// <summary>Item 当前是否处于显示状态。</summary>
         public bool IsVisible => _visible;
 
@@ -124,6 +127,9 @@ namespace Ember.UI
                     InvokeLogic(_logic.BroadcastInit, "OnInit");
             }
 
+            if (!DataBinding.Begin() || _disposed || !_gameObject)
+                return;
+
             InvokeLogic(() => _logic?.BroadcastOpen(args), "OnOpen");
             if (_logic != null)
                 InvokeLogic(_logic.BroadcastReset, "OnReset");
@@ -140,6 +146,8 @@ namespace Ember.UI
                 return;
 
             BeginUse(args);
+            if (!_leaseOpened || _disposed || !_gameObject)
+                return;
             _gameObject.SetActive(true);
             if (_logic != null)
                 InvokeLogic(_logic.BroadcastShow, "OnShow");
@@ -169,7 +177,17 @@ namespace Ember.UI
         /// <summary>
         /// 结束本次借用并恢复默认状态，供对象池回收。不会销毁 Logic，下一次显示会重放 OnOpen。
         /// </summary>
-        public void ResetForPool()
+        public void ResetForPool() => ResetForPool(null);
+
+        /// <summary>先停用旧绑定，再释放宿主的数据借用并回池。</summary>
+        public void ResetForPool(IDisposable dataLease)
+        {
+            DataBinding.End();
+            try { dataLease?.Dispose(); }
+            finally { FinishResetForPool(); }
+        }
+
+        private void FinishResetForPool()
         {
             if (_disposed)
                 return;
@@ -195,6 +213,7 @@ namespace Ember.UI
 
             ResetForPool();
             _disposed = true;
+            DataBinding.End(forgetRegistrations: true);
             if (_logic != null)
             {
                 InvokeLogic(_logic.BroadcastDispose, "OnDispose");

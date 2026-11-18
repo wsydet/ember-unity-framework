@@ -1,0 +1,21 @@
+{
+  "name": "Ember.UIExtension.PlayModeTests",
+  "references": [
+    "Ember.UIExtension.Runtime",
+    "Ember.UI.Runtime",
+    "Ember.Resource.Runtime",
+    "Ember.Core.Runtime",
+    "Ember.Basic.Runtime",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "UniTask",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ]
+}
