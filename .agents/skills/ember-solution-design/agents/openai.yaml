@@ -1,4 +1,4 @@
 interface:
-  display_name: "Ember 方案评估"
-  short_description: "调研项目现状并比较实现方案，明确业务、框架与模板的改动归属和验证路径。"
-  default_prompt: "使用 $ember-solution-design 处理我指定的项目范围，并报告实际验证结果。"
+  display_name: "Ember AI 开发工作流"
+  short_description: "按工程量选择完整多对话或简化单对话模式，统一调度返工并支持消费端验收。"
+  default_prompt: "使用 $ember-solution-design 处理我的需求，先推荐完整或简化模式供我选择，并说明验收安排。"

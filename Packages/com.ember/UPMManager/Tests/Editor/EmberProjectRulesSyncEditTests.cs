@@ -48,6 +48,8 @@ namespace Ember.UPMManager.Editor.Tests
             _package = Path.Combine(_project, "Library/PackageCache/com.ember@old");
             Directory.CreateDirectory(_project);
             Write(Path.Combine(_package, EmberProjectRulesSync.RULES_PATH), "# 公共规则\n");
+            Write(Path.Combine(_package, EmberProjectRulesSync.WORKFLOW_PATH), "# 公共工作流\n");
+            Write(Path.Combine(_package, EmberProjectRulesSync.HANDOFF_PATH), "# 交接模板\n");
         }
 
         [TearDown]
@@ -68,6 +70,7 @@ namespace Ember.UPMManager.Editor.Tests
                 StringAssert.Contains("必须完整阅读并遵守", text);
                 StringAssert.Contains("主动通过 Unity MCP 请求重编译", text);
                 StringAssert.Contains("Library/PackageCache/com.ember@old/Documentation~/maintenance/glossary.md", text);
+                StringAssert.Contains("Library/PackageCache/com.ember@old/" + EmberProjectRulesSync.WORKFLOW_PATH, text);
             }
             Assert.IsFalse(Directory.Exists(Path.Combine(_project, "Assets")));
         }
@@ -126,6 +129,8 @@ namespace Ember.UPMManager.Editor.Tests
             Sync();
             _package = Path.Combine(_root, "External Package 新版本");
             Write(Path.Combine(_package, EmberProjectRulesSync.RULES_PATH), "new");
+            Write(Path.Combine(_package, EmberProjectRulesSync.WORKFLOW_PATH), "workflow");
+            Write(Path.Combine(_package, EmberProjectRulesSync.HANDOFF_PATH), "handoff");
             Sync();
             string text = File.ReadAllText(Target());
             StringAssert.DoesNotContain("com.ember@old", text);
@@ -137,6 +142,12 @@ namespace Ember.UPMManager.Editor.Tests
             Assert.AreEqual(Path.GetFullPath(Path.Combine(_package, EmberProjectRulesSync.RULES_PATH)),
                 Path.GetFullPath(Path.Combine(_project, link)));
             Assert.AreEqual(1, text.Split(new[] { EmberProjectRulesSync.BEGIN }, StringSplitOptions.None).Length - 1);
+            string workflowLabel = "[AI 分阶段开发与交接规范](<";
+            int workflowStart = text.IndexOf(workflowLabel, StringComparison.Ordinal) + workflowLabel.Length;
+            int workflowEnd = text.IndexOf(">)", workflowStart, StringComparison.Ordinal);
+            string workflowLink = Uri.UnescapeDataString(text.Substring(workflowStart, workflowEnd - workflowStart));
+            Assert.AreEqual(Path.GetFullPath(Path.Combine(_package, EmberProjectRulesSync.WORKFLOW_PATH)),
+                Path.GetFullPath(Path.Combine(_project, workflowLink)));
         }
 
         [TestCase("missing-end")]
@@ -167,12 +178,15 @@ namespace Ember.UPMManager.Editor.Tests
             CollectionAssert.AreEqual(bytes, File.ReadAllBytes(Target()));
         }
 
-        [Test]
-        public void MissingPublicDocument_DoesNotCreateDanglingEntrypoints()
+        [TestCase(EmberProjectRulesSync.RULES_PATH)]
+        [TestCase(EmberProjectRulesSync.WORKFLOW_PATH)]
+        [TestCase(EmberProjectRulesSync.HANDOFF_PATH)]
+        public void MissingPublicDocument_DoesNotCreateDanglingEntrypoints(string document)
         {
-            File.Delete(Path.Combine(_package, EmberProjectRulesSync.RULES_PATH));
+            File.Delete(Path.Combine(_package, document));
             Assert.Throws<FileNotFoundException>(() => Sync());
             Assert.IsFalse(File.Exists(Target()));
+            Assert.IsFalse(File.Exists(Target("CLAUDE.md")));
         }
 
         [Test]

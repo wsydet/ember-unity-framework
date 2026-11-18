@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "scope": "Workflow skill modes, documentation and consumer project rules text; implementation self-check",
+  "unity": {
+    "version": "6000.5.4f1",
+    "instance": "ember-unity-framework@b23e9b768e85ed30",
+    "compilation": {
+      "explicit_request": "refresh_unity compile=request scope=scripts mode=force",
+      "started_unix_ms": 1794910876280,
+      "finished_unix_ms": 1794910882599,
+      "domain_reload_finished_unix_ms": 1794910892262,
+      "mvid_before": "18af4670-80b2-431c-9dd7-e7a77b9af1f2",
+      "mvid_after": "d8d01778-57c7-41d3-a713-3171c1f1a586",
+      "ready_for_tools": true,
+      "console_error_entries": 0
+    },
+    "rules_block": "BuildBlock invoked by reflection on the loaded new assembly; modes, orchestrator and pending consumer acceptance text observed",
+    "tests": {
+      "success": true,
+      "message": "Test job status retrieved.",
+      "error": null,
+      "data": {
+        "job_id": "fe3a881862e746baad146b61608bd6dc",
+        "status": "succeeded",
+        "mode": "EditMode",
+        "started_unix_ms": 1794910939362,
+        "finished_unix_ms": 1794910948576,
+        "last_update_unix_ms": 1794910948576,
+        "progress": {
+          "completed": 20,
+          "total": 20,
+          "current_test_full_name": null,
+          "current_test_started_unix_ms": null,
+          "last_finished_test_full_name": "Ember.UPMManager.Editor.Tests.EmberProjectRulesSyncEditTests.Upgrade_UpdatesResolvedPackagePathEvenWhenVersionIsUnchanged",
+          "last_finished_unix_ms": 1794910948432,
+          "stuck_suspected": false,
+          "editor_is_focused": false,
+          "run_in_background": true,
+          "focus_nudge_attempts": null,
+          "focus_nudge_limit": null,
+          "focus_nudge_status": null,
+          "blocked_reason": null,
+          "failures_so_far": [],
+          "failures_capped": false
+        },
+        "error": null,
+        "result": {
+          "mode": "EditMode",
+          "summary": {
+            "total": 20,
+            "passed": 20,
+            "failed": 0,
+            "skipped": 0,
+            "durationSeconds": 1.3642714,
+            "resultState": "Passed"
+          },
+          "results": []
+        }
+      },
+      "hint": null
+    }
+  },
+  "limitations": [
+    "Only EmberProjectRulesSyncEditTests executed; no full suite or PlayMode.",
+    "No live stage threads were created or messaged; multi-chat orchestration, rework and consumer acceptance await actual-use validation.",
+    "Skill source not committed; generated AISkills bundle not regenerated; no release, template save/Bump or consumer upgrade performed."
+  ]
+}

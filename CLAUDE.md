@@ -2,6 +2,8 @@
 
 ## 必读规则
 
+新项目、较大功能与阶段接续遵循[AI 分阶段开发与交接规范](Packages/com.ember/Documentation~/maintenance/ai-workflow.md)。调用 `ember-solution-design` 并说明需求后按工程量推荐完整多对话或简化单对话模式，由用户选择；已有指定或接续任务沿用。完整模式由主对话统一调度方案、实施、所需独立验收及返工；简化模式在当前对话完成并记录自检。消费端验收独立安排，待反馈时保留任务与证据；满足所选验收条件后归档清理。技能不提供旧独立方案评估模式；未调用技能的小修复可简化，不改变已有授权。
+
 对话简化用语先按 [通用术语字典](Packages/com.ember/Documentation~/maintenance/glossary.md) 理解，再按正式活动模板读取其专属字典。
 
 本仓库区分框架公共能力、base 业务骨架与玩法模板。开始任务先完整阅读 [仓库架构与模板开发约束](Packages/com.ember/Documentation~/maintenance/repository-architecture.md)，不得反向依赖或把可选业务提升为 Manager。

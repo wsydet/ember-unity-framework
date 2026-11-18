@@ -14,6 +14,8 @@ namespace Ember.UPMManager.Editor
         internal const string BEGIN = "<!-- EMBER:PROJECT-RULES:BEGIN -->";
         internal const string END = "<!-- EMBER:PROJECT-RULES:END -->";
         internal const string RULES_PATH = "Documentation~/maintenance/unity-validation.md";
+        internal const string WORKFLOW_PATH = "Documentation~/maintenance/ai-workflow.md";
+        internal const string HANDOFF_PATH = "Documentation~/maintenance/ai-handoff-template.md";
         internal const string STATUS_KEY = "Ember.ProjectRules.Status";
         internal const string ERROR_KEY = "Ember.ProjectRules.Error";
         private static readonly string[] FILE_NAMES = { "AGENTS.md", "CLAUDE.md" };
@@ -29,6 +31,8 @@ namespace Ember.UPMManager.Editor
             string link = new Uri(root).MakeRelativeUri(target).ToString();
             string glossary = new Uri(root).MakeRelativeUri(new Uri(Path.GetFullPath(
                 Path.Combine(packageRoot, "Documentation~/maintenance/glossary.md")))).ToString();
+            string workflow = new Uri(root).MakeRelativeUri(new Uri(Path.GetFullPath(
+                Path.Combine(packageRoot, WORKFLOW_PATH)))).ToString();
             return string.Join(newline, new[]
             {
                 BEGIN,
@@ -37,6 +41,8 @@ namespace Ember.UPMManager.Editor
                 "需要测试或进行 Unity 验证前，必须完整阅读并遵守[项目测试与 Unity 编译验证规范](<" + link + ">)。",
                 "代码修改完成后必须主动通过 Unity MCP 请求重编译，确认本轮编译/域重载完成后读取 Console；不能以刷新请求成功代替编译完成。",
                 "理解简化用语先读[通用术语字典](<" + glossary + ">)，再按正式活动模板读取 Assets/Game/Documentation/<template-id>/glossary.md（若存在）；字典不扩展操作授权。",
+                "新项目、较大功能及跨对话接续按[AI 分阶段开发与交接规范](<" + workflow + ">)执行；调用 ember-solution-design 并说明需求后按工程量推荐完整多对话或简化单对话模式，由用户选择；已有指定或接续任务沿用。完整模式由主对话统一调度阶段、收取结果和安排返工；简化模式在当前对话完成并自检。",
+                "验收地点独立于模式，消费端待验收时保留任务与证据，不标整体完成；满足所选验收条件后由主对话归档清理。未调用技能的小修复和连续调试可简化。保留已有授权，不因阶段切换重复审批；同一对话复查不记为独立验收。",
                 "规则适用于所有模板和未部署模板的项目。包路径变化后由框架重新同步；链接暂不可用时，通过 UPM 定位当前 com.ember 包中的 `" + RULES_PATH + "`。",
                 "此区块由 Ember 管理，安装、升级和编辑器重载时更新。项目自定义规则请写在区块外；保留已有自定义规则，不以此区块覆盖它们。",
                 END
@@ -126,8 +132,9 @@ namespace Ember.UPMManager.Editor
         {
             hasErrors = false;
             if (EmberAISkillInstaller.IsSourceProject(projectRoot)) return "框架开发仓库保留自有规则入口。";
-            if (!File.Exists(Path.Combine(packageRoot, RULES_PATH)))
-                throw new FileNotFoundException("当前框架包缺少公共规则正文，未修改项目入口。", RULES_PATH);
+            foreach (string document in new[] { RULES_PATH, WORKFLOW_PATH, HANDOFF_PATH })
+                if (!File.Exists(Path.Combine(packageRoot, document)))
+                    throw new FileNotFoundException("当前框架包缺少公共规则正文，未修改项目入口。", document);
             var messages = new List<string>();
             foreach (string name in FILE_NAMES)
             {
