@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "generatedBy": "Ember AI Skill Bundle",
-  "sourceCommit": "31618f43ee8744d46ea9be9c45e881ba9e2c79be",
+  "sourceCommit": "fcc06dcb65404036eb2c6908fcd68379f3306239",
   "files": [
     {
       "path": "catalog.json",
-      "sha256": "e40bb812eaa009f84eefd0415e86b05eba667e03bf41cce896c24775b207e9c4"
+      "sha256": "a73954e85e43ab927e0e8719a2b6370de8a6ad5f0d2ecbd3a4c3d68f76db0a34"
     },
     {
       "path": "ember-add-font/agents/openai.yaml",
@@ -109,11 +109,11 @@
     },
     {
       "path": "ember-solution-design/agents/openai.yaml",
-      "sha256": "bd83c29e7c92657d962a160cc9f464b9f1b2f2c535fae35ae39c1307ed32c9a5"
+      "sha256": "b559efdf8c9fdf788604e2741c38c229ef458f4e12d7dd479d503d85c2606e09"
     },
     {
       "path": "ember-solution-design/SKILL.md",
-      "sha256": "4a7b8e41f89aea0c2d82b119ed4e54c2afa5e133382a130d60f6f22fbc2a86dd"
+      "sha256": "796087bae9af6360d1cf9ec7b236d754cfa257d7953af0e581a15cf9c30e4828"
     },
     {
       "path": "ember-template-conflict-recovery/agents/openai.yaml",
