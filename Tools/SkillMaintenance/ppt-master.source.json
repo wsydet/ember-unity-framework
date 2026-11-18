@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/hugohe3/ppt-master",
+  "upstreamDirectory": "skills/ppt-master",
+  "ref": "v6.9.0",
+  "commit": "ce92fb43e4ade9c701f4c869e286f13fce743c72",
+  "version": "6.9.0",
+  "installedAt": "2026-11-18T20:22:14+08:00",
+  "fileCount": 13090,
+  "treeSha256": "d752537d20747a160d645ba0488ec5e4ab522be55538dedf31fc5819ce285557",
+  "license": "MIT",
+  "updateInstructions": "README.md"
+}

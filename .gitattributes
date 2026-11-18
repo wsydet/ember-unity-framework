@@ -158,3 +158,6 @@ Packages/com.ember/SharedAssets/** -filter -diff -merge -text
 Packages/com.ember/SharedAssets/**/*.meta text eol=lf diff merge=unityyamlmerge
 Packages/com.ember/SharedAssets/**/*.asset text=auto eol=lf diff merge=unityyamlmerge
 Packages/com.ember/SharedAssets/**/*.txt text eol=lf diff merge=text
+
+# Keep the official PPT Master skill byte-for-byte for its integrity and update checks.
+.agents/skills/ppt-master/** -text -filter -working-tree-encoding !diff !merge

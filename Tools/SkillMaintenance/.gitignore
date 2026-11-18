@@ -1,0 +1,10 @@
+/.venv/
+/.cache/
+/.backups/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.key
+*.pem
+secrets/

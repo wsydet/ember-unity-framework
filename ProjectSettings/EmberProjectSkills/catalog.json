@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 3,
+  "skills": [
+    {
+      "id": "ember-ppt-master",
+      "projectId": "ember-unity-framework",
+      "version": "1.0.0",
+      "templateId": "topdown-2d",
+      "minimumTemplateVersion": "0.1.4",
+      "maximumTemplateVersion": "0.1.4",
+      "minimumFrameworkVersion": "0.25.1"
+    }
+  ]
+}
