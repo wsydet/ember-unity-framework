@@ -3,13 +3,13 @@
     "id": "topdown-2d",
     "displayName": "2D 俯视",
     "description": "直接继承 base 的二维俯视模板：平面移动与瞄准、可选近战与冲刺、生命与世界进度、正式场景准备及制作工具。实施中的 preview，验收范围见阶段记录。",
-    "version": "0.1.4",
-    "frameworkVersion": "0.25.0",
+    "version": "0.1.5",
+    "frameworkVersion": "0.26.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
-    "parentVersion": "0.11.0",
-    "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
-    "contentHash": "8789d264af2650178116bbdbe8ea4c5f",
-    "versionedContentHash": "8789d264af2650178116bbdbe8ea4c5f"
+    "parentVersion": "0.11.1",
+    "parentContentHash": "9077bd5b5271898e8055d1c7cf72b0a7",
+    "contentHash": "d05fa5c04586778afd4098b1f2da2203",
+    "versionedContentHash": "d05fa5c04586778afd4098b1f2da2203"
 }

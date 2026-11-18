@@ -3,13 +3,13 @@
     "id": "ui-game",
     "displayName": "UI 游戏",
     "description": "基于 base 的通用 UI 游戏模板：中性步骤示例、主页、局内、暂停设置、结果与重开；产品规则由消费项目实现。",
-    "version": "0.2.4",
-    "frameworkVersion": "0.25.0",
+    "version": "0.2.5",
+    "frameworkVersion": "0.26.0",
     "channel": "preview",
     "order": 99,
     "parentId": "base",
-    "parentVersion": "0.11.0",
-    "parentContentHash": "1c5918eb6d798246aa4d080ac7b9eeee",
-    "contentHash": "44b95096df206b5a160a1853333cc498",
-    "versionedContentHash": "44b95096df206b5a160a1853333cc498"
+    "parentVersion": "0.11.1",
+    "parentContentHash": "9077bd5b5271898e8055d1c7cf72b0a7",
+    "contentHash": "01887883cefbdc3757b296dda4167368",
+    "versionedContentHash": "01887883cefbdc3757b296dda4167368"
 }
