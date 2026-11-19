@@ -1,0 +1,13 @@
+{
+  "task": "20261119-gm-control-center",
+  "filename": "evidence-package.zip",
+  "sha256": "e22a4d58a5f95c931c8c5c4598dafb31294c709f5dd0e73f1ce1fc3f8a78e2de",
+  "bytes": 61679012,
+  "files": 1108,
+  "directory": ".utmp/ember-task-archives/20261119-gm-control-center",
+  "unpackedMaterials": ".utmp/ember-task-archives/20261119-gm-control-center/materials",
+  "gitIgnore": "project .gitignore:13 .utmp/",
+  "copyHashesMatch": true,
+  "zipCrcVerified": true,
+  "windowsLongPaths": "extended path copy preserves npm cache files"
+}

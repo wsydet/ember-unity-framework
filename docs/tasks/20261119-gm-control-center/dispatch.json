@@ -1,0 +1,32 @@
+{
+  "taskId": "20261119-gm-control-center",
+  "mainThreadId": "01a1f2a7-d1b7-7073-b4d0-4331239ed002",
+  "mainHostId": "local",
+  "designThreadId": "01a1f2ac-d6d1-7753-8a38-9624bc4f19d5",
+  "designHostId": "local",
+  "round": "closure",
+  "requirementsRevision": "R14",
+  "status": "complete-local-implementation-and-independent-acceptance",
+  "implementationApprovedInMainChat": true,
+  "implementationThreadId": "01a1f366-9c93-7cc0-b2dd-3f29baa7c3b1",
+  "acceptanceThreadId": "01a1f39c-e305-7490-93a6-2f8bafb4524c",
+  "afterCursor": "b7a3180d-d10e-4c38-8b0c-6af79ee07009:135",
+  "designRevision": "D10",
+  "designResult": "design.md; glass-ui-audit.md; prototype/index.html; prototype/README.md; decisions.md; handoff.md; evidence/d10/web-checks.json; evidence/d10/glass-source-evidence.json",
+  "implementationHostId": "local",
+  "acceptanceHostId": "local",
+  "implementationResult": "I2 completed; implementation-i2.md; evidence/i2/",
+  "implementationAfterCursor": "f3c6ca3a-3908-4915-92c9-d50f54d1d853:279",
+  "acceptanceResult": "V2 passed; AC01-AC24 passed locally; V1-001 through V1-004 closed",
+  "acceptanceAfterCursor": "59424389-fce7-4c81-ab8e-1200fa479e35:122",
+  "reworkIssueIds": [
+    "V1-001",
+    "V1-002",
+    "V1-003",
+    "V1-004"
+  ],
+  "formalRecords": "docs/tasks/20261119-gm-control-center",
+  "archive": ".utmp/ember-task-archives/20261119-gm-control-center",
+  "archiveSHA256": "e22a4d58a5f95c931c8c5c4598dafb31294c709f5dd0e73f1ce1fc3f8a78e2de",
+  "temporaryDirectoryRemoved": true
+}

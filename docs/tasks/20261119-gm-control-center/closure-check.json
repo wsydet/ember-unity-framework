@@ -1,0 +1,30 @@
+{
+  "task": "20261119-gm-control-center",
+  "result": "V2 local acceptance verified by primary",
+  "productionFiles": 54,
+  "protectedFiles": 4,
+  "differences": [],
+  "unityFinalState": {
+    "playing": false,
+    "compiling": false,
+    "updating": false,
+    "target": 124,
+    "vsync": 0,
+    "domainEnabled": true,
+    "domainOptions": "DisableDomainReload",
+    "oldLifetimeStopped": "Stopped",
+    "oldLifetimeCancelled": true,
+    "gameViewIndex": 5,
+    "scene": "Assets/Game/Scenes/FrameworkScene.unity",
+    "mvid": "4142319a-11da-4c49-9812-a81035d3a0c8"
+  },
+  "scope": "current base Assets + required framework; Windows Editor/URP",
+  "notExecuted": [
+    "template save/Bump/switch",
+    "commit/publish",
+    "consumer upgrade"
+  ],
+  "archive": ".utmp/ember-task-archives/20261119-gm-control-center",
+  "temporaryCleanup": "exact task directory removed after verified archive",
+  "formalStatus": "complete within approved local scope"
+}
