@@ -2,7 +2,7 @@
  * author       : Bingo
  * prefab name  : EUISoftGlassGMActionItem
  * page name    : 
- * update time  : 2026/11/17 15:34:02
+ * update time  : 2026/11/19 19:17:15
  * ============================================================
  * 本文件为自动生成，请勿修改
 */
@@ -20,12 +20,12 @@ namespace Game.UI
         private Ember.UIExtension.EUIButtonEx Button;
 
         /// <summary>
-        /// Label
+        /// Action/Label
         /// </summary>
         private Ember.UIExtension.TMPEx Label;
 
         /// <summary>
-        /// Action/Label
+        /// Action/Icon
         /// </summary>
         private Ember.UIExtension.TMPEx Icon;
 

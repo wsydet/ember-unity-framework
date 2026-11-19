@@ -10,6 +10,8 @@ namespace Game.UI
             if(State.text != state) State.text = state;
             UnityTime.text = "Unity  " + UnityEngine.Time.timeScale.ToString("0.00") + "×";
             EmberTime.text = "Ember  " + EmberTimeManager.Instance.TimeScale.ToString("0.00") + "×";
+            var caption=State.transform.parent.Find("Caption")?.GetComponent<TMPro.TMP_Text>();
+            if(caption)caption.text=UnityEngine.Mathf.Abs(UnityEngine.Time.timeScale-EmberTimeManager.Instance.TimeScale)>.001f?UnityTime.text+" / "+EmberTime.text:"GameLauncher";
         }
     }
 }

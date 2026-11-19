@@ -31,6 +31,8 @@ namespace Game.UI.Editor
                 if (GUILayout.Button("S3 / 制作Center与示例Pages")) Run(() => SoftGlassUILibraryBuilder.Build(1));
                 if (GUILayout.Button("S4 / 制作GM并登记独立库")) Run(() => SoftGlassUILibraryBuilder.Build(2));
                 if (GUILayout.Button("仅重新生成22个Binding")) Run(SoftGlassUILibraryBuilder.RegenerateAll);
+                if (GUILayout.Button("GM D10 / 有界预检")) Run(GMControlCenterAuthoring.Preflight);
+                if (GUILayout.Button("GM D10 / 制作已批准控制中心及玻璃接线")) Run(GMControlCenterAuthoring.Apply);
             }
             if (!string.IsNullOrEmpty(_message)) EditorGUILayout.TextArea(_message);
         }

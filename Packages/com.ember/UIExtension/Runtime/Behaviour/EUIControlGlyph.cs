@@ -20,10 +20,12 @@ namespace Ember.UIExtension
             { Arc(vh,c,s,35,320);Line(vh,c+new Vector2(s*.82f,s*.57f),c+new Vector2(s*.2f,s*.57f));Line(vh,c+new Vector2(s*.82f,s*.57f),c+new Vector2(s*.82f,0)); }
             else if(_key=="▦"||_key=="grid")
             { for(int y=-1;y<=1;y+=2)for(int x=-1;x<=1;x+=2){var p=c+new Vector2(x,y)*s*.5f;Box(vh,p,Vector2.one*s*.65f);} }
-            else if(_key=="×"||_key=="exit")
+            else if(_key=="×"||_key=="exit"||_key=="power")
             { Arc(vh,c,s,135,405);Line(vh,c+Vector2.up*s*1.15f,c+Vector2.up*s*.15f); }
             else if(_key=="≡"||_key=="log")
             { for(int y=-1;y<=1;y++)Line(vh,c+new Vector2(-s,y*s*.65f),c+new Vector2(s,y*s*.65f)); }
+            else if(_key=="drag")
+            { for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x+=2)Box(vh,c+new Vector2(x*s*.4f,y*s*.7f),Vector2.one*s*.18f); }
             else
             { Line(vh,c+new Vector2(0,s),c+new Vector2(s,0));Line(vh,c+new Vector2(s,0),c+new Vector2(0,-s));Line(vh,c+new Vector2(0,-s),c+new Vector2(-s,0));Line(vh,c+new Vector2(-s,0),c+new Vector2(0,s)); }
         }
