@@ -28,6 +28,9 @@ namespace Ember.UI
 
         private double[] _lastTimeArr;
         private int _curFrameIndex;
+        private int _sampleCount;
+        private bool _hasFrameBoundary;
+        public float FramesPerSecond { get; private set; }
         private string[] _fpsNumbers;
 
         #endregion
@@ -58,16 +61,24 @@ namespace Ember.UI
         private void Update()
         {
             if (!_fpsText) return;
+            if(!_hasFrameBoundary)
+            {
+                _hasFrameBoundary=true;
+                for(int i=0;i<_lastTimeArr.Length;i++)_lastTimeArr[i]=Time.realtimeSinceStartupAsDouble;
+                return;
+            }
 
             // 环形缓冲：写入当前帧时间，计算最近 _avgFrameNum 帧的总耗时
-            _curFrameIndex = (_curFrameIndex + 1) % _avgFrameNum;
+            _curFrameIndex = (_curFrameIndex + 1) % _lastTimeArr.Length;
             double currentFrameTime = Time.realtimeSinceStartupAsDouble;
             double totalTimeOverWindow = currentFrameTime - _lastTimeArr[_curFrameIndex];
             _lastTimeArr[_curFrameIndex] = currentFrameTime;
 
             if (totalTimeOverWindow <= 0) return;
 
-            float fps = (float)(_avgFrameNum / totalTimeOverWindow);
+            _sampleCount = Mathf.Min(_sampleCount + 1, _lastTimeArr.Length);
+            float fps = (float)(_sampleCount / totalTimeOverWindow);
+            FramesPerSecond = fps;
 
             int fpsIndex = Mathf.FloorToInt(fps);
             if (fpsIndex >= FPS_NUMBER_LIMIT) fpsIndex = FPS_NUMBER_LIMIT - 1;
@@ -75,6 +86,13 @@ namespace Ember.UI
 
             _fpsText.text = _fpsNumbers[fpsIndex];
             _fpsText.color = GetFpsColor(fps);
+        }
+
+        private void OnEnable()
+        {
+            if (_lastTimeArr == null) return;
+            _sampleCount = 0; _curFrameIndex = 0; FramesPerSecond = 0; _hasFrameBoundary=false;
+            for (int i = 0; i < _lastTimeArr.Length; i++) _lastTimeArr[i] = Time.realtimeSinceStartupAsDouble;
         }
 
         #endregion
