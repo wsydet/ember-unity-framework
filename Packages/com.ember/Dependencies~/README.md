@@ -1,12 +1,12 @@
 # Ember 消费端依赖声明
 
-当前版本为 Ember **0.26.0**，交付 EUI 生命周期与排序修复、页面和 Item 防串图、柔光玻璃 UI 与七套正式模板。第三方依赖沿用 0.25.5。 [0.26.0 发布说明](../../../docs/dev/release-0.26.0.md)
+当前源码版本为 Ember **0.27.0**，交付 GM 控制中心、收藏 HUD、共享帧率策略及 base0.12.0/六派生正式同步。第三方依赖不变，远端发布以 v0.27.0 tag 核对为准。 [0.27.0 发布说明](../../../docs/dev/release-0.27.0.md)
 
 ## 清单范围
 
-0.26.0 完整 manifest（第三方依赖沿用 0.25.5）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
+0.27.0 完整 manifest（第三方依赖沿用 0.25.5）包含 57 项直接依赖，按需选用，不代表每个消费项目都需要全部开发工具。Odin、Feel、UniRx 分别使用 `odin-v4.0.3`、`feel-v5.4.1`、`unirx-v7.1.1`；其他三方包保留原标签，可选 Unity MCP 固定到官方 v10.3.0 标签。Collections 6.5.0及其余Unity/OpenUPM和内置模块版本不变，间接依赖由 UPM 解析；本清单不是跨 Unity 版本的 lock。
 
-本版清单：[release-0.26.0.json](release-0.26.0.json)、[manifest-0.26.0.json](manifest-0.26.0.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.26.0.md)。以下带旧版本号的流程记录保留其历史含义。
+本版清单：[release-0.27.0.json](release-0.27.0.json)、[manifest-0.27.0.json](manifest-0.27.0.json)。接入与验收边界见[发布说明](../../../docs/dev/release-0.27.0.md)。以下带旧版本号的流程记录保留其历史含义。
 
 ## 已有消费项目升级
 
@@ -16,7 +16,7 @@
 
 ## 首次安装与依赖配置
 
-1. 先确认第三方仓库清单所列各包标签 和框架仓库 `v0.21.4` 已真正发布，且消费机器有私有仓库访问权限及适用的插件授权。
+1. 先确认第三方仓库清单所列各包标签 和框架仓库 `v0.27.0` 已真正发布，且消费机器有私有仓库访问权限及适用的插件授权。
 2. 备份消费项目的 `Packages/manifest.json`、`packages-lock.json` 和现有插件/设置。
 3. 将本清单的 `dependencies` 按包名合并到消费项目 manifest，将 `scopedRegistries` 按 registry URL 合并 scope。保留该项目其他依赖、registry、testables 及其他配置，不直接覆盖整份 manifest。
 4. 已有同名 embedded 包或 Assets 插件时，先核对本地修改并制定迁移；特别是 Feel/MMTools/MMFeedbacks/NiceVibrations，不能让原 Assets 插件和新 UPM 包同时被导入。本文不授权自动删除旧内容。

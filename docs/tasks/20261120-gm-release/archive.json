@@ -1,0 +1,13 @@
+{
+  "task": "20261120-gm-release",
+  "filename": "evidence-candidate.zip",
+  "sha256": "dc5fe4cd31983a836ffd08d9bf824348575c06b6901dc1e177e97d18c01ec666",
+  "bytes": 7651786,
+  "files": 1162,
+  "directory": ".utmp/ember-task-archives/20261120-gm-release",
+  "unpackedMaterials": ".utmp/ember-task-archives/20261120-gm-release/materials",
+  "gitIgnore": "project .gitignore:13 .utmp/",
+  "copyHashesMatch": true,
+  "zipCrcVerified": true,
+  "scope": "R1/R2/RV1 candidate evidence; publication/closure results are supplemental and recorded in publication-final.json and final-archive.json after actual push"
+}

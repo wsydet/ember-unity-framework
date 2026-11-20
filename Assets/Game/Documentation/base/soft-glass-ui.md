@@ -49,3 +49,5 @@ HUD 圆钮默认直径为入口的83%，角落优先改方向/弧度，再用76/
 当前接线面向 Unity6/URP17、完整 viewport、单显示器。其他管线、XR、部分 viewport 或层池耗尽有 Solid 回退。2026-11-17 的维护工程已完成 1920×1080、1280×720、1080×1920 真实页面导航与预览自检，用户认可 base 页面视觉；双 Popup 隐藏链与资源清退有相关短验证。独立验收尚未完成，六子模板、移动真机、Player 构建及消费工程未据此签收。PC/Mobile Renderer 资源存在不表示对应设备或构建通过；用户视觉反馈、实施自检和独立行为验收分别记录，不能互相代替。
 
 帧率设置由现有 `PlayerPrefsModule` 保存模式、自动选择及合法自定义目标，GM 快切与设置页共用该记录（`Ember.UI.FrameRate.v1.<Application.identifier>`）。无有效记录时使用高响应自动/自定义备用值180；非法记录整条回退，直到用户合法修改才写回。每次新运行（含禁域重载 Play）重新读取并应用，同次运行的初始化保持幂等。UI 启动接线通过会话 Cancellation 绑定的 PlayerLoop 每500ms检查刷新率，界面关闭及时间暂停时继续，退出后取消；仍保留消费端接管保护。HUD 放大候选按每个命中圆4DU额外半径构造间距，安全区、入口或避让几何变化会重置180ms连续稳定计时。
+
+GM 制作工具的 Apply 与 Inspect 都在项目 `.utmp/ember-ui/gm-control-center/` 输出独立 JSON 回执（UTC时间、唯一运行标识及操作名），不绑定开发任务目录。`GMControlCenterAuthoring.ReceiptDirectory` 给出稳定目录，`LastReceiptPath` 给出最近成功写入文件；柔光玻璃制作窗口的制作/检查结果也显示该路径。每次运行新建文件，历史回执和验收归档不覆盖。

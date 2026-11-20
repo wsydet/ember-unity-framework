@@ -11,7 +11,7 @@ namespace Game.UI
 {
     public partial class EUISoftGlassGMCenterItem
     {
-        #region 鍐呴儴鍙傛暟
+        #region 内部参数
         private readonly List<EUIItem> _actions=new();
         private EmberAssetHandle<GameObject> _prefab;
         private Action<GameObject> _loaded;
@@ -20,11 +20,11 @@ namespace Game.UI
         public event Action CloseRequested;
         public bool IsPanelOpen=>_panelOpen;
         #endregion
-        #region 鐢熷懡鍛ㄦ湡
+        #region 生命周期
         public override void OnInit() { base.OnInit(); Close.onClick.AddListener(RequestClose); }
         public override void OnDispose() { Close.onClick.RemoveListener(RequestClose); ClosePanel(); CloseRequested=null; base.OnDispose(); }
         #endregion
-        #region 鍐呴儴鏂规硶
+        #region 内部方法
         private void RequestClose()=>CloseRequested?.Invoke();
         private void ClearItems()
         {
@@ -46,7 +46,7 @@ namespace Game.UI
             Actions.GetComponentInParent<GMControlLayout>()?.RefreshActions();
         }
         #endregion
-        #region 澶栭儴鏂规硶
+        #region 外部方法
         public void OpenPanel()
         {
             if(_panelOpen)return;_panelOpen=true;

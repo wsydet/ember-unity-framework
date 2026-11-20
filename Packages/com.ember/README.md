@@ -7,11 +7,11 @@ Ember 是以单个 UPM 包交付的 Unity 游戏框架，包含事件、资源�
 
 ## 安装
 
-当前版本为 Ember **0.26.0**，交付 EUI 生命周期与排序修复、页面和 Item 防串图、柔光玻璃 UI 与七套正式模板。第三方依赖沿用 0.25.5。 [0.26.0 发布说明](../../docs/dev/release-0.26.0.md)
+当前源码版本为 Ember **0.27.0**，交付 GM 控制中心、收藏 HUD、共享帧率策略及 base0.12.0/六派生正式同步。第三方依赖不变，远端发布以 v0.27.0 tag 核对为准。 [0.27.0 发布说明](../../docs/dev/release-0.27.0.md)
 
 ```json
 {
-  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.26.0"
+  "com.ember": "https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.27.0"
 }
 ```
 
@@ -24,7 +24,7 @@ UniRx 从 OpenUPM 解析，消费项目需配置 `com.neuecc` scope。Unity Regi
 
 Rainbow 两包、Console Pro、InputDeviceDetector、Feel 也已确定纳入团队第三方交付，统一存放于私有 `ember-thirdparty-upm`，不内嵌到本包。可选包可通过 UPM Manager 按需安装；升级本包不会自动同步所有第三方依赖，详见开发仓库的包清单与交付维护文档。
 
-完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.26.0 manifest](Dependencies~/manifest-0.26.0.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。B02修复与验证边界见 [瓦片缓存恢复](Documentation~/maintenance/terrain-cache-b02.md)。
+完整工程的依赖见随包 [消费端依赖声明](Dependencies~/README.md) 与 [0.27.0 manifest](Dependencies~/manifest-0.27.0.json)。本版第三方依赖保持不变；已有项目通过 UPM Manager 升级。B02修复与验证边界见 [瓦片缓存恢复](Documentation~/maintenance/terrain-cache-b02.md)。
 
 0.21.5 正式发布后，已有 platformer-2d 0.11.1 项目需先通过 UPM Manager 更新框架，再对0.11.2进行模板三方补丁预览，保护定制。包升级不会自动修复已部署的 Player/Entity 源码，详见[本版准备说明](../../docs/dev/release-0.21.5.md)。
 

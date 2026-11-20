@@ -313,9 +313,9 @@ MonoBehaviour:
   pageFlags: 0
   useUIUpdate: 0
   useMask: 1
-  maskColor: {r: 0, g: 0, b: 0, a: 0.5}
+  maskColor: {r: 0.025, g: 0.06, b: 0.1, a: 0.18}
   maskEffect: 0
-  overrideMaskTint: 0
+  overrideMaskTint: 1
   backdropSettingsOverride: {fileID: 0}
   backdropSchema: 1
   clickMaskToClose: 1
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIGlassImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.18}
+  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.14}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.94, g: 0.96, b: 1, a: 1}
+  m_fontColor: {r: 0.035, g: 0.1, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.94, g: 0.96, b: 1, a: 1}
+  m_fontColor: {r: 0.035, g: 0.1, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -814,7 +814,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.94, g: 0.96, b: 1, a: 1}
+  m_fontColor: {r: 0.035, g: 0.1, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.94, g: 0.96, b: 1, a: 1}
+  m_fontColor: {r: 0.035, g: 0.1, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1081,14 +1081,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIGlassImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.18}
+  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.14}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  _radius: 32
+  _radius: 20
   _edgeWidth: 1
   _edgeLight: 0.52
   _gloss: 0.42
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIGlassImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06, g: 0.36, b: 0.96, a: 0.46}
+  m_Color: {r: 0.06, g: 0.38, b: 0.96, a: 0.46}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.94, g: 0.96, b: 1, a: 1}
+  m_fontColor: {r: 0.035, g: 0.1, b: 0.18, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ember.UIExtension.Runtime::Ember.UIExtension.EUIGlassImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.18}
+  m_Color: {r: 0.42, g: 0.66, b: 0.92, a: 0.14}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

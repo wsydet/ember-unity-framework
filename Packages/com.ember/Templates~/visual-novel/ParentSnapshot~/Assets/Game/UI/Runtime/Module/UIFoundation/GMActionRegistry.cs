@@ -23,6 +23,8 @@ namespace Game.UI
         #region 内部参数
         private static readonly List<Registration> Providers = new();
         public static int Version { get; private set; }
+        public static bool ConfirmationActive { get; private set; }
+        public static event Action<bool> ConfirmationVisibilityChanged;
         private sealed class Registration : IDisposable
         {
             public IGMActionProvider Provider;
@@ -67,6 +69,22 @@ namespace Game.UI
 
         [HasGC]
         public static bool TryExecute(string key)
+        {
+            if (!TryFind(key, out var action) || action.IsAvailable?.Invoke() == false) return false;
+            if (action.Dangerous)
+            {
+                if(ConfirmationActive)return false;
+                ConfirmationActive=true;ConfirmationVisibilityChanged?.Invoke(true);
+                EUICommonDialogs.ShowConfirm(new EUIDialogRequest {
+                    Title = "确认操作", Message = action.Title, AcceptText = "确认", CancelText = "取消",
+                    Completed = result => { try { if (result == EUIDialogResult.Accepted) ExecuteConfirmed(key); } finally { ConfirmationActive=false;ConfirmationVisibilityChanged?.Invoke(false); } }
+                });
+                return true;
+            }
+            return ExecuteConfirmed(key);
+        }
+
+        private static bool ExecuteConfirmed(string key)
         {
             if (!TryFind(key, out var action) || action.IsAvailable?.Invoke() == false) return false;
             if (action.ReadToggle != null && action.WriteToggle != null) action.WriteToggle(!action.ReadToggle()); else action.Execute?.Invoke();

@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "frameworkVersion": "0.27.0",
+  "frameworkTag": "v0.27.0",
+  "status": "Independently accepted Windows Editor compilation and template-seal validated UPM Git release for annotated v0.27.0, retaining CHECK-N01's documented bundle newline-check limitation. Publication identity is established by the verified remote peeled tag, not by this declaration alone.",
+  "unityBaseline": "6000.5.4f1",
+  "manifest": "manifest-0.27.0.json",
+  "coverage": "Ember0.27.0范围：紧凑GM控制中心、消费项目操作Provider、最多五项收藏快捷HUD、入口拖动/长按互斥、真实FPS与桌面三模式帧率设置、偏好持久化和新运行恢复、关闭界面后的刷新率检测、玻璃启动与GM解耦及Loading/设置/公共弹窗接线。含两项维护修复和base0.12.0向六派生的正式父同步，保留子模板启动及独有设置/小说皮肤。第三方依赖与公共技能源不变。",
+  "automaticDependencySync": false,
+  "thirdPartyRepository": "https://github.com/wsydet/ember-thirdparty-upm.git",
+  "thirdPartyTag": "ember-v0.11.1",
+  "privateRepositoryAccessRequired": true,
+  "thirdPartyPackages": [
+    {
+      "name": "com.borodar.rainbow-folders",
+      "version": "2.4.5",
+      "path": "com.borodar.rainbow-folders",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.borodar.rainbow-hierarchy",
+      "version": "2.6.5",
+      "path": "com.borodar.rainbow-hierarchy",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.demigiant.dotween",
+      "version": "1.2.815",
+      "path": "com.demigiant.dotween",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.flyingworm.consolepro",
+      "version": "3.9.81",
+      "path": "com.flyingworm.consolepro",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.moremountains.feel",
+      "version": "5.4.1",
+      "path": "com.moremountains.feel",
+      "tag": "feel-v5.4.1"
+    },
+    {
+      "name": "com.ryanindiedev.inputdevicedetector",
+      "version": "1.0.0",
+      "path": "com.ryanindiedev.inputdevicedetector",
+      "tag": "ember-v0.11.1"
+    },
+    {
+      "name": "com.sirenix.odin-inspector",
+      "version": "4.0.3",
+      "path": "com.sirenix.odin-inspector",
+      "tag": "odin-v4.0.3"
+    },
+    {
+      "name": "com.neuecc.unirx",
+      "path": "com.neuecc.unirx",
+      "version": "7.1.1",
+      "tag": "unirx-v7.1.1"
+    }
+  ],
+  "optionalDevelopmentPackages": [
+    "com.coplaydev.unity-mcp",
+    "com.github-glitchenzo.nugetforunity",
+    "com.unity.ide.rider",
+    "com.unity.ide.visualstudio",
+    "com.unity.multiplayer.center",
+    "com.unity.test-framework",
+    "com.borodar.rainbow-folders",
+    "com.borodar.rainbow-hierarchy",
+    "com.flyingworm.consolepro"
+  ],
+  "templates": [
+    {
+      "id": "base",
+      "version": "0.12.0",
+      "frameworkVersion": "0.27.0",
+      "channel": "stable",
+      "parentId": "",
+      "parentVersion": "",
+      "parentContentHash": "",
+      "contentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "versionedContentHash": "cad30f499213dc7c946e32ae45dfffc7"
+    },
+    {
+      "id": "lane-defense-2d",
+      "version": "0.1.6",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "1d718d86736e081a29fc142ab62f194c",
+      "versionedContentHash": "1d718d86736e081a29fc142ab62f194c"
+    },
+    {
+      "id": "platformer-2d",
+      "version": "0.13.7",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "361466b7ac703e8f392a7f3d7ebc81eb",
+      "versionedContentHash": "361466b7ac703e8f392a7f3d7ebc81eb"
+    },
+    {
+      "id": "source3d-2p5d",
+      "version": "0.6.6",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "e35e08a49f46c5e376b5f921c6ea2886",
+      "versionedContentHash": "e35e08a49f46c5e376b5f921c6ea2886"
+    },
+    {
+      "id": "topdown-2d",
+      "version": "0.1.7",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "7c33795be43bed897056e1daaa07a3d4",
+      "versionedContentHash": "7c33795be43bed897056e1daaa07a3d4"
+    },
+    {
+      "id": "ui-game",
+      "version": "0.2.6",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "5030a03ea18cd59fced92d37da85d5c8",
+      "versionedContentHash": "5030a03ea18cd59fced92d37da85d5c8"
+    },
+    {
+      "id": "visual-novel",
+      "version": "0.22.7",
+      "frameworkVersion": "0.27.0",
+      "channel": "preview",
+      "parentId": "base",
+      "parentVersion": "0.12.0",
+      "parentContentHash": "cad30f499213dc7c946e32ae45dfffc7",
+      "contentHash": "69bb5bc67310964b04b996fb950f3103",
+      "versionedContentHash": "69bb5bc67310964b04b996fb950f3103"
+    }
+  ],
+  "validation": "Windows Editor6000.5.4f1：R1维护主动MCP编译与九目标Inspect；R2五派生正式父同步，platformer/topdown各保留子业务补一行InitializeUI，经编译/域重载与已加载IL确认，MVID75dff62f-a120-4be6-b0d5-4b33416d7017和cf4c57a9-0758-46a9-994d-6f638e0b47cd。返回base主动请求的编译/域重载完成，MVID26a2edc8-4c5e-45c5-bcd0-710c80cf6f0e，最终Console空。七模板通过正式资产/meta/GUID校验，实际hash=contentHash=versionedContentHash，六父快照及版本/兼容指针对齐base0.12.0。2918子覆盖文件保持（两授权启动增量另计），915受管base文件逐字节恢复，原字体/新缓存/Quality用户改动排除暂存。共享二进制、字体配置及cached差异检查通过。直接bundle -Check换行限制保留，34原始bundle哈希与提交源文本等价，不重建bundle。切换期间历史导入时间戳错误与Consumer UAC1001警告留证，非全程零日志。未重跑24AC/123项、六模板Play、Player/移动/XR/触摸/硬件切Hz或消费升级。详见implementation-r2与evidence/r2。",
+  "optionalPackageInstallTargets": {
+    "com.borodar.rainbow-folders": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-folders#rainbow-folders-v2.4.5",
+    "com.borodar.rainbow-hierarchy": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.borodar.rainbow-hierarchy#rainbow-hierarchy-v2.6.5",
+    "com.flyingworm.consolepro": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.flyingworm.consolepro#consolepro-v3.9.81",
+    "com.ryanindiedev.inputdevicedetector": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.ryanindiedev.inputdevicedetector#inputdevicedetector-v1.0.0",
+    "com.moremountains.feel": "https://github.com/wsydet/ember-thirdparty-upm.git?path=/com.moremountains.feel#feel-v5.4.1",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.3.0"
+  },
+  "aiSkills": {
+    "repository": "https://github.com/wsydet/ember-unity-framework.git",
+    "catalog": ".agents/skills/catalog.json",
+    "revision": "v0.27.0",
+    "skills": [
+      "ember-add-font",
+      "ember-template-conflict-recovery",
+      "ember-eui-build",
+      "ember-commit-review",
+      "ember-region-organizer",
+      "ember-solution-design",
+      "ember-package-scan",
+      "ember-generate-doc",
+      "ember-odin-inspector",
+      "ember-doc-maintenance",
+      "ember-odin-capture-style",
+      "ember-ui-normalize"
+    ],
+    "automaticInstall": true,
+    "minimumUpdaterVersion": "0.14.0",
+    "capabilitiesBySkill": {
+      "ember-eui-build": "eui-regenerate-v1",
+      "ember-ui-normalize": "eui-regenerate-v1"
+    },
+    "templateSkills": [
+      "ember-level-add-background",
+      "ember-level-add-decoration",
+      "ember-level-add-mechanism",
+      "ember-level-add-terrain",
+      "ember-platformer-add-attack",
+      "ember-platformer-add-state",
+      "ember-platformer-replace-animation",
+      "ember-platformer-tune-feel",
+      "ember-vn-custom-node",
+      "ember-vn-edit-skin",
+      "ember-vn-export-story",
+      "ember-vn-generate-save",
+      "ember-vn-import-images",
+      "ember-vn-import-story",
+      "ember-vn-polish-presentation",
+      "ember-vn-replace-images",
+      "ember-vn-sync-images"
+    ],
+    "bundleSourceCommit": "fcc06dcb65404036eb2c6908fcd68379f3306239",
+    "templateSkillUpdaterVersion": "0.14.4",
+    "templateSkillStateSchemaVersion": 3
+  },
+  "thirdPartyTagNote": "Default baseline for unchanged packages; per-package tag takes precedence."
+}

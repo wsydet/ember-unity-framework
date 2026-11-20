@@ -20,7 +20,8 @@ namespace Game.UI.Editor
         private const string Root = SoftGlassUILibraryBuilder.ROOT;
         private const string Common = "Assets/GameResource/Resources/UI/Common/Prefabs/";
         private const string Config = "Assets/GameResource/Resources/Config/UIFoundation/";
-        private const string Evidence = ".utmp/ember-workflow/20261119-gm-control-center/evidence/i1/";
+        public const string ReceiptDirectory = ".utmp/ember-ui/gm-control-center/";
+        public static string LastReceiptPath { get; private set; }
         private static readonly Color GlassTint = new(.025f, .07f, .11f, .82f);
         private static readonly Color White = new(.95f, .98f, 1);
         private static TMP_FontAsset _font;
@@ -47,7 +48,7 @@ namespace Game.UI.Editor
         }
         private static string ApplyContents()
         {
-            Preflight(); Receipt.Clear(); Directory.CreateDirectory(Evidence);
+            Preflight(); Receipt.Clear();
             _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset");
             var dialogStyle=AssetDatabase.LoadAssetAtPath<EUIGlassStyle>(Config+"SoftGlassDialog.asset");
             if(!dialogStyle)
@@ -67,16 +68,23 @@ namespace Game.UI.Editor
             // Prefabs were saved explicitly. Avoid a global SaveAssets that could persist unrelated dynamic fonts or editor migrations.
             foreach(string name in new[]{"GMBackdropSettings","SoftGlassDialog"})AssetDatabase.SaveAssetIfDirty(AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(Config+name+".asset"));
             string result = Newtonsoft.Json.JsonConvert.SerializeObject(Receipt, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(Evidence + "eui-authoring-receipt.json", result); return result;
+            WriteReceipt("apply", result); return result;
         }
         public static string Inspect()
         {
             var paths=new[]{"GMStateItem","GMTimeItem","GMActionItem","GMCenterItem","GMPage","AlertPage","ConfirmPage"}.Select(n=>Root+"EUISoftGlass"+n+".prefab").Concat(new[]{Common+"EUISettingPage.prefab",Common+"EUILoadingPage.prefab"});
             var report=paths.Select(path=>new {path,guid=AssetDatabase.AssetPathToGUID(path),binding=Snapshot(AssetDatabase.LoadAssetAtPath<GameObject>(path).GetComponent<EUIBinding>())}).ToArray();
-            string result=Newtonsoft.Json.JsonConvert.SerializeObject(report,Newtonsoft.Json.Formatting.Indented);Directory.CreateDirectory(Evidence);File.WriteAllText(Evidence+"eui-authoring-receipt.json",result);return result;
+            string result=Newtonsoft.Json.JsonConvert.SerializeObject(report,Newtonsoft.Json.Formatting.Indented);WriteReceipt("inspect",result);return result;
         }
         #endregion
         #region 内部方法
+        private static void WriteReceipt(string operation, string result)
+        {
+            Directory.CreateDirectory(ReceiptDirectory);
+            string path = ReceiptDirectory + DateTime.UtcNow.ToString("yyyyMMddTHHmmssfffZ", System.Globalization.CultureInfo.InvariantCulture) + "-" + Guid.NewGuid().ToString("N") + "-" + operation + ".json";
+            File.WriteAllText(path, result);
+            LastReceiptPath = path;
+        }
         private static Type RuntimeType(string name) => Type.GetType("Game.UI." + name + ", Assembly-CSharp", true);
         private static object Snapshot(EUIBinding binding) => new {
             binding.ClassName,binding.ClassPath,pathMode=binding.PathMode.ToString(),binding.BackdropSchema,binding.OverrideMaskTint,

@@ -15,7 +15,6 @@ namespace Game.UI
         private readonly List<EUIItem> _actions=new();
         private EmberAssetHandle<GameObject> _prefab;
         private Action<GameObject> _loaded;
-        private IDisposable _coreActions;
         private bool _panelOpen;
         private int _generation,_registryVersion;
         public event Action CloseRequested;
@@ -26,21 +25,6 @@ namespace Game.UI
         public override void OnDispose() { Close.onClick.RemoveListener(RequestClose); ClosePanel(); CloseRequested=null; base.OnDispose(); }
         #endregion
         #region 内部方法
-        private sealed class CoreActions : IGMActionProvider
-        {
-            public IReadOnlyList<GMActionDescriptor> Actions {get;}
-            public CoreActions(EUISoftGlassGMCenterItem center)
-            {
-                Actions=new [] {
-                    new GMActionDescriptor {Key="ember.gm.reset-time",Group="0 Core",Order=0,Title="Reset time",Icon="↻",Execute=center.ResetTime},
-                    new GMActionDescriptor {Key="ember.gm.components",Group="0 Core",Order=1,Title="Enhanced",Icon="◇",ReadToggle=()=>center.Tests.IsEnhanced,WriteToggle=center.Tests.SetEnhanced},
-                    new GMActionDescriptor {Key="ember.gm.showcase",Group="0 Core",Order=2,Title="UI library",Icon="▦",Execute=center.ShowLibrary},
-                    new GMActionDescriptor {Key="ember.gm.exit",Group="0 Core",Order=99,Title="Exit game",Icon="×",Dangerous=true,Execute=()=>GameLauncher.Instance.Quit()}
-                };
-            }
-        }
-        private void ResetTime() { UnityEngine.Time.timeScale=1;EmberTimeManager.Instance.TimeScale=1;Time.RefreshValue(); }
-        private void ShowLibrary() { EUIManager.Instance.ShowMainPage(GamePages.EUISoftGlassShowcasePage);RequestClose(); }
         private void RequestClose()=>CloseRequested?.Invoke();
         private void ClearItems()
         {
@@ -59,13 +43,13 @@ namespace Game.UI
             _registryVersion=GMActionRegistry.Version;
             Page?.GameObject.GetComponent<EUIBackdropGroup>()?.RefreshSurfaces();
             Actions.GetComponentInParent<EUIBackdropGroup>()?.RefreshSurfaces();
-            Content.GetComponent<EUIResponsiveCardGrid>()?.Refresh();
+            Actions.GetComponentInParent<GMControlLayout>()?.RefreshActions();
         }
         #endregion
         #region 外部方法
         public void OpenPanel()
         {
-            if(_panelOpen)return;_panelOpen=true;_coreActions=GMActionRegistry.Register(new CoreActions(this));
+            if(_panelOpen)return;_panelOpen=true;
             int generation=++_generation;
             _prefab=EmberResourceManager.Instance.LoadAssetHandle<GameObject>("UI/Module/UIFoundation/Prefabs/EUISoftGlassGMActionItem");
             _loaded=asset=>{if(generation==_generation&&_panelOpen)BuildActions(asset);};
@@ -75,13 +59,15 @@ namespace Game.UI
         {
             if(!_panelOpen&&_prefab==null)return;_panelOpen=false;_generation++;
             if(_prefab!=null){_prefab.Completed-=_loaded;_prefab.Dispose();_prefab=null;}_loaded=null;
-            _coreActions?.Dispose();_coreActions=null;ClearItems();
+            ClearItems();
         }
         public void RefreshInfo()
         {
             if(!_panelOpen)return;State.Refresh();Time.RefreshValue();
             if(_registryVersion!=GMActionRegistry.Version&&_prefab?.Asset)BuildActions(_prefab.Asset);
             foreach(var action in _actions)((EUISoftGlassGMActionItem)action.Logic).Refresh();
+            var notice=Close.transform.parent.Find("Notice")?.GetComponent<TMPro.TMP_Text>();
+            if(notice)notice.text=GMFavorites.Notice??(_actions.Count==0?"项目尚未注册扩展操作":"");
         }
         #endregion
     }

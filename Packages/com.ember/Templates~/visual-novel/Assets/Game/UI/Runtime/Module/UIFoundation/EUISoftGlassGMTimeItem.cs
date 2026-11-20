@@ -8,7 +8,8 @@ namespace Game.UI
             base.OnInit(); Enable.SetIsOnWithoutNotify(false); Slider.SetValueWithoutNotify(UnityEngine.Time.timeScale);
             Enable.onValueChanged.AddListener(SetControlEnabled); Slider.onValueChanged.AddListener(OnValueChanged); Reset.onClick.AddListener(ResetTime);
             Slider.interactable = false; Refresh(UnityEngine.Time.timeScale);
-            var nestedValue = Slider.transform.Find("Value"); if(nestedValue) nestedValue.gameObject.SetActive(false);
+            Value.gameObject.SetActive(true);
+            var nestedValue = Slider.transform.Find("Value"); if(nestedValue&&nestedValue!=Value.transform) nestedValue.gameObject.SetActive(false);
         }
         public override void OnDispose()
         {
@@ -16,7 +17,8 @@ namespace Game.UI
         }
         private void SetControlEnabled(bool enabled)
         {
-            Slider.interactable = enabled; if(!enabled) { Slider.SetValueWithoutNotify(1); Apply(1); }
+            Slider.interactable = enabled;
+            var glyph=Enable.GetComponentInChildren<Ember.UIExtension.EUIControlGlyph>();if(glyph)glyph.color=enabled?new UnityEngine.Color(.035f,.12f,.2f):UnityEngine.Color.white;
         }
         private void ResetTime() { Slider.SetValueWithoutNotify(1); Apply(1); }
         private void OnValueChanged(float value) { if(Enable.isOn) Apply(value); }

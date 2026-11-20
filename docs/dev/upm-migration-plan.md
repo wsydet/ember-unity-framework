@@ -1,6 +1,6 @@
 # UPM 包交付与维护
 
-当前版本为 Ember **0.26.0**，交付 EUI 生命周期与排序修复、页面和 Item 防串图、柔光玻璃 UI 与七套正式模板。第三方依赖沿用 0.25.5。 [0.26.0 发布说明](release-0.26.0.md)
+当前源码版本为 Ember **0.27.0**，交付 GM 控制中心、收藏 HUD、共享帧率策略及 base0.12.0/六派生正式同步。第三方依赖不变，远端发布以 v0.27.0 tag 核对为准。 [0.27.0 发布说明](release-0.27.0.md)
 
 > 2026-10-15：框架 **0.19.2** 文档补丁：模板保存与 Bump 必须通过项目中心，禁止直接修改快照及 metadata 代替正式操作。模板、运行时代码、公共技能及依赖不变。见[0.19.2 发布说明](release-0.19.2.md)。
 
@@ -51,7 +51,7 @@
 > 2026-09-23：已发布流程推进至 **0.14.3 / visual-novel 0.7.2**，修复消费项目布局菜单身份判断；验证及定制工程迁移步骤见 [0.14.3 发布说明](release-0.14.3.md)。以下旧版本段落保留历史语境。
 
 > 更新：2026-09-17。早期转包迁移已完成；本文维护当前交付流程。
-> 当前发布版本为 **0.26.0**；历史版本验收不替代当前消费项目验证。
+> 当前源码版本为 **0.27.0**；远端发布以tag核对为准，历史版本验收不替代当前消费项目验证。
 
 ## 目录与依赖
 
@@ -80,7 +80,7 @@ Rainbow Folders、Rainbow Hierarchy、Console Pro、InputDeviceDetector、Feel �
 
 1. 取得 Odin Inspector、DOTween 以及对应仓库访问权限；当前 Runtime/Editor 仍引用这些程序集。
 2. 在项目 manifest 配置 OpenUPM 的 `com.neuecc` scope，供 UniRx 解析。
-3. 新工程添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.26.0`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.26.0.json`，不覆盖消费项目其他依赖。已有消费项目通过 `Ember/UPM Manager` 升级，不手改 manifest 或 lock。
+3. 新工程添加框架 Git URL：`https://github.com/wsydet/ember-unity-framework.git?path=/Packages/com.ember#v0.27.0`；需要完整开发环境时同时按包名合并随包 `Dependencies~/manifest-0.27.0.json`，不覆盖消费项目其他依赖。已有消费项目通过 `Ember/UPM Manager` 升级，不手改 manifest 或 lock。
 4. 让 Unity Package Manager 完成解析与编译。不要再单独导入内置 UniTask。
 5. 使用安装版本提供的项目初始化入口。当前开发版为 `Ember/项目中心 → 项目初始化`。
 6. 首次部署选择兼容模板，核对 Build Settings、场景映射、UI 资源和输入配置，再执行 Play 验收。

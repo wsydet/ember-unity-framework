@@ -1,0 +1,22 @@
+{
+  "taskId": "20261120-gm-release",
+  "mainThreadId": "01a1f2a7-d1b7-7073-b4d0-4331239ed002",
+  "implementationThreadId": "01a1f366-9c93-7cc0-b2dd-3f29baa7c3b1",
+  "acceptanceThreadId": "01a1f39c-e305-7490-93a6-2f8bafb4524c",
+  "hostId": "local",
+  "round": "P1",
+  "status": "RV1-accepted-publication-authorized",
+  "version": "0.27.0",
+  "baseTarget": "0.12.0",
+  "initialHead": "3c83986075001f3b117c0d34f96429096fa701b1",
+  "initialBranch": "codex/release-0.26.0",
+  "initialStatus": [
+    " M Assets/GameResource/Resources/UI/Common/Fonts/DefaultLight/DefaultLightSans.asset"
+  ],
+  "fontSHA256": "14C9718D55D832593C689643CD752A277E0915FE418BB71F8F85C883653C0E4D",
+  "implementationAfterCursor": "f3c6ca3a-3908-4915-92c9-d50f54d1d853:454",
+  "blockerId": null,
+  "nextPrompt": "prompts/04-publish-p1.md",
+  "userRestartConfirmed": true,
+  "acceptanceAfterCursor": "59424389-fce7-4c81-ab8e-1200fa479e35:156"
+}

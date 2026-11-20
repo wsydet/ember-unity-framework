@@ -49,9 +49,7 @@ namespace Game.UI
         public static void ShowGM()
         {
             var launcher=GameLauncher.Instance;
-            EUIBackdrop.DefaultSettings=Resources.Load<EUIBackdropSettings>("Config/UIFoundation/EUIBackdropSettings");
-            EUIBackdrop.RequestInstallation(launcher.MainCamera,launcher.UICamera,launcher.UIRoot.transform);
-            if(_samples==null){_samples=SoftGlassDemoActions.RegisterSamples();_abort=GameLauncher.CurrentLifetime?.RegisterAbort(ReleaseSamples);}
+            if(_abort==null)_abort=GameLauncher.CurrentLifetime?.RegisterAbort(ReleaseSamples);
             if(_opening||(_gm!=null&&_gm.GameObject&&_gm.IsOpened))return;
             var selected=Config?Config.GmPresentation:EUIGmPresentation.Legacy;
             OpenGM(selected,Time.timeScale,++_gmVersion);

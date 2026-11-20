@@ -6,7 +6,7 @@
 
 `Resources/Config/UIFoundation/EUIAppearance.asset` 的 `CommonSkin` 与 `GmPresentation` 分别选择 Legacy / SoftGlass；配置缺失时两者均为 Legacy。公共弹窗通过 `EUICommonDialogs.ShowAlert/ShowConfirm(EUIDialogRequest)` 选择相应 Page，旧页面、旧 GM GUID 和注册仍保留。GM 首次入口为 `EUIAppearanceBootstrap.ShowGM()`；需要在当前会话切换时调用 `SwitchGM(EUIGmPresentation.Legacy)` 或 SoftGlass，关闭旧实例后再打开，保留时间倍率。
 
-上述选择只路由公共弹窗与 GM，不会自动撤销已换肤正式页面的外观。base 设置页当前只显示来源上下文和返回操作，没有虚构音量、画质等持久化服务；小说模板的完整偏好由其自身逻辑维护。
+上述选择只路由公共弹窗与 GM，不会自动撤销已换肤正式页面的外观。base 设置页提供来源上下文、桌面帧率与响应设置和返回操作；小说模板的完整偏好由其自身逻辑维护。
 
 Popup 效果独立于上述选择：`EUIManager.PopupMaskEffect` 默认 Blur，显式设 Solid 恢复纯色。页面 `MaskEffectOverride` 可覆盖，`UseMask=false` 完全关闭模态遮罩；局部玻璃仍可采样。质量、旧 tint 迁移和不支持环境的 Solid 回退见包内 `Documentation~/ui/popup-backdrop.md`。全局变更作用于后续打开，现有页面用 `RefreshBackdrop(Page)` 明确刷新。
 
@@ -28,12 +28,26 @@ Showcase 是可操作的控件页，包含禁用按钮、开关、输入清除�
 
 ## GM 与业务扩展
 
-控制中心保留真实 FSM 状态、Unity/Ember 时间同步、0.1—3倍连续调节、1倍复位、增强 Toggle 与原 Image/RawImage/EUIImage/Circle 测试、退出。收起不重置时间；关闭按钮与 ESC 收起中心，入口恢复为同风格圆点。入口单指/鼠标拖动超过8DU后不触发打开，安全区内吸左右边，保存边和归一化高度；动效使用非缩放时间。
+控制中心采用四列紧凑布局：标题占左两格，右侧为专用拖动和关闭圆钮；顶层 FSM 方卡、时间开关/恢复和单根倍率条固定在顶部，下方为帧率模式快切和独立滚动的消费项目操作。只有拖动圆钮移动主面板，按住呈黄色。关闭时间调节只禁用滑杆并保留倍率，独立恢复按钮始终将 Unity/Ember 时间同步至 1×。原增强、UI 库及背景演示不再自动注册到正式 GM；独立 Showcase 与 Legacy 仍保留。
 
-当前入口圆钮显示原FPSDisplay的实时帧率，中心不再有环/圆点装饰。滑杆移除独立Handle，仍可在Track上点击、拖动和键盘调节；竖条用平顶填充表示数值。控制中心限制最大尺寸，横屏三张300DU卡片，竖屏两张300DU卡加240DU横向测试卡，快捷操作六/四列；四个测试样本完整显示。显式制作维护源SoftGlassUIRevisionTwo.Apply负责更新本库既有资源，普通Binding再生成不重排布局。
+入口与面板显示独立的 `FPSDisplay` 实测帧率。组件跳过启用后的第一个不完整帧区间，窗口未填满时用实际采样数作分子；目标帧率不是 FPS 读数。入口保留 8×Canvas.scaleFactor 的屏幕拖动阈值、左右吸边、安全区、0.18秒非缩放缓出及旧 Right/Y 位置键。短按开主面板，约550ms长按切换收藏 HUD；首次越过拖动阈值收起 HUD，松开不重开，下次长按使用新位置。
 
-消费模块实现 `IGMActionProvider`，`Actions` 返回稳定唯一 Key、Group、Order、Title、Icon、Execute 或 ReadToggle/WriteToggle，可选 IsAvailable 与 Dangerous。用 `GMActionRegistry.Register(provider)` 返回的 IDisposable 控制有效期，在模块退出时 Dispose。按钮只保存 key，每次执行重新解析；注销后不保留失效业务对象。样例 `SoftGlassDemoActions` 注册背景切换和 verbose 开关；核心动作只在中心打开期间注册。不要在业务项目复制修改框架 GM 受管区。
+消费模块实现 `IGMActionProvider`，`Actions` 返回稳定唯一 Key、Group、Order、Title、Icon、Execute 或 ReadToggle/WriteToggle，可选 IsAvailable 与 Dangerous。用 `GMActionRegistry.Register(provider)` 返回的 IDisposable 控制有效期，在模块退出时 Dispose。主面板与 HUD 都只保存 key 并使用同一执行入口；危险操作经公共确认后重新解析并复查可用性。确认期间 GM 暂排在该模态弹窗下方，关闭后恢复原排序与 HUD 状态。
+
+扩展操作可右键或约550ms长按收藏/取消，手势不执行原动作，移动、滚动、取消和失焦清理待决操作。最多5项，第6项明确拒绝；默认空，记录只含 schema 和稳定 key，注销项保留为潜在收藏。PlayerPrefs 按应用与系统用户隔离；有账号的消费项目在登录时调用 `GMFavorites.SetUserNamespace(userId)`。不要把业务对象或可执行委托存入收藏。
+
+HUD 圆钮默认直径为入口的83%，角落优先改方向/弧度，再用76/69/62%档位。命中圆至少48DU且不小于入口64%，以完整命中圆校验安全区、入口、相邻项和显式避让矩形。业务用 `GMHudLayout.RegisterAvoidRect(RectTransform)` 持有可释放登记；不识别世界物体或未登记 UI。缩小立即，放大需4DU余量并稳定约180ms，全部候选无解才提示改用主面板并保留收藏。入口大小保持不变。
+
+桌面模式由 `UIFrameRatePolicy` 统一管理：默认高响应自动、VSync 0；自动目标为60→66、90→95、120→124、144→147、165→168、180→182、240→242、360→361，表间取相邻更高档余量并向上取整。自定义正整数精确生效，不加余量。节能/平衡分别 VSync 2/1，禁用但保留目标类型和值。GM 只快切三模式，完整设置编辑自动/自定义；摘要读取实际 Unity 配置。仅刷新率变化时重算仍由本策略控制的自动目标，消费端主动接管后不逐帧覆盖。移动/XR不套用这套桌面映射。
+
+本轮维护源为 `GMControlCenterAuthoring`，制作窗口提供 D10 有界预检/制作，保留目标 Prefab GUID，再经公开 EUI Binding 生成入口更新代码；普通生成不重排布局。旧 RevisionTwo 属于历史库版本，不用它覆盖 D10。玻璃安装由 `EUIAppearanceBootstrap.InitializeUI()` 在 GameInit 的 UI 启动阶段调用，独立于 ShowGM；安装幂等且 GM 关闭不释放其它页面的租约。Loading 根 Canvas 提供自己的 Group，快速模式无可见玻璃进度时不占租约。`GMBackdropSettings` 提供 GM 独立模糊质量配置；`SoftGlassDialog` 是设置和公共玻璃弹窗的通透表面样式，显式遮罩染色只用于这几个目标，Legacy 和其它页面保留原声明。
+
+2026-11-19 的改动只在当前 Assets 与必要框架组件实施；活动编辑 base 0.11.1。模板保存、Bump、快照同步、提交和发布均未执行。下方2026-11-17记录是历史验证，不替代本轮任务 `20261119-gm-control-center` 的实施证据与后续独立验收。
 
 ## 验证边界
 
 当前接线面向 Unity6/URP17、完整 viewport、单显示器。其他管线、XR、部分 viewport 或层池耗尽有 Solid 回退。2026-11-17 的维护工程已完成 1920×1080、1280×720、1080×1920 真实页面导航与预览自检，用户认可 base 页面视觉；双 Popup 隐藏链与资源清退有相关短验证。独立验收尚未完成，六子模板、移动真机、Player 构建及消费工程未据此签收。PC/Mobile Renderer 资源存在不表示对应设备或构建通过；用户视觉反馈、实施自检和独立行为验收分别记录，不能互相代替。
+
+帧率设置由现有 `PlayerPrefsModule` 保存模式、自动选择及合法自定义目标，GM 快切与设置页共用该记录（`Ember.UI.FrameRate.v1.<Application.identifier>`）。无有效记录时使用高响应自动/自定义备用值180；非法记录整条回退，直到用户合法修改才写回。每次新运行（含禁域重载 Play）重新读取并应用，同次运行的初始化保持幂等。UI 启动接线通过会话 Cancellation 绑定的 PlayerLoop 每500ms检查刷新率，界面关闭及时间暂停时继续，退出后取消；仍保留消费端接管保护。HUD 放大候选按每个命中圆4DU额外半径构造间距，安全区、入口或避让几何变化会重置180ms连续稳定计时。
+
+GM 制作工具的 Apply 与 Inspect 都在项目 `.utmp/ember-ui/gm-control-center/` 输出独立 JSON 回执（UTC时间、唯一运行标识及操作名），不绑定开发任务目录。`GMControlCenterAuthoring.ReceiptDirectory` 给出稳定目录，`LastReceiptPath` 给出最近成功写入文件；柔光玻璃制作窗口的制作/检查结果也显示该路径。每次运行新建文件，历史回执和验收归档不覆盖。

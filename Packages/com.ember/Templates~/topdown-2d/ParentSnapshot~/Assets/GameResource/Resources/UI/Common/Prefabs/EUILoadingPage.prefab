@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 9082658051002559415}
   - component: {fileID: 5490609597334687098}
   - component: {fileID: 560042983560342460}
+  - component: {fileID: 532525865771711573}
   m_Layer: 5
   m_Name: EUILoadingPage
   m_TagString: Untagged
@@ -279,6 +280,20 @@ MonoBehaviour:
         tailDuration: 1
         customEnterDuration: 0.3
         customExitDuration: 0.2
+--- !u!114 &532525865771711573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030608223021594980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af51f553b864dd7478a3c4e975dc360b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ember.UI.Runtime::Ember.UI.EUIBackdropGroup
+  _settings: {fileID: 0}
+  _autoAcquire: 1
 --- !u!1001 &1108318953874429842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -657,6 +672,10 @@ PrefabInstance:
     - target: {fileID: 4077775291314444319, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_Name
       value: m_Cg_Progress
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903809812797427273, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9032436088483673119, guid: 23dd24018f7b4c444a50fdde3c742fd9, type: 3}
       propertyPath: m_Pivot.x
